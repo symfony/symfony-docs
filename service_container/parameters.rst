@@ -54,8 +54,7 @@ and hidden with the service definition:
             mailer.transport: sendmail
 
         services:
-            app.mailer:
-                class:     AppBundle\Mailer
+            AppBundle\Service\Mailer:
                 arguments: ['%mailer.transport%']
 
     .. code-block:: xml
@@ -71,7 +70,7 @@ and hidden with the service definition:
             </parameters>
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer">
+                <service id="AppBundle\Service\Mailer">
                     <argument>%mailer.transport%</argument>
                 </service>
             </services>
@@ -79,12 +78,12 @@ and hidden with the service definition:
 
     .. code-block:: php
 
-        use AppBundle\Mailer;
+        use AppBundle\Service\Mailer;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setParameter('mailer.transport', 'sendmail');
 
-        $container->register('app.mailer', Mailer::class)
+        $container->register(Mailer::class)
             ->addArgument('%mailer.transport%');
 
 .. caution::
@@ -168,8 +167,8 @@ accessor methods for parameters::
 
 .. note::
 
-    You can only set a parameter before the container is compiled. To learn
-    more about compiling the container see
+    You can only set a parameter before the container is compiled: not at run-time.
+    To learn more about compiling the container see
     :doc:`/components/dependency_injection/compilation`.
 
 .. _component-di-parameters-array:
@@ -232,6 +231,11 @@ for all parameters that are arrays.
             'en' => array('en', 'fr'),
             'fr' => array('fr', 'en'),
         ));
+
+Environment Variables and Dynamic Values
+----------------------------------------
+
+See :doc:`/configuration/external_parameters`.
 
 .. _component-di-parameters-constants:
 

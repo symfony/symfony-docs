@@ -11,16 +11,17 @@ looks like this::
 
     // ...
     use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     // ...
-    public function addEmailAction($email)
+    public function addEmailAction($email, ValidatorInterface $validator)
     {
         $emailConstraint = new Assert\Email();
         // all constraint "options" can be set this way
         $emailConstraint->message = 'Invalid email address';
 
         // use the validator to validate the value
-        $errorList = $this->get('validator')->validate(
+        $errorList = $validator->validate(
             $email,
             $emailConstraint
         );

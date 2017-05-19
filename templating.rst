@@ -445,11 +445,6 @@ to be rendered as HTML (``index.html.twig``), XML (``index.xml.twig``),
 or any other format. For more information, read the :doc:`/templating/formats`
 section.
 
-.. note::
-
-   The available "engines" can be configured and even new engines added.
-   See :ref:`Templating Configuration <template-configuration>` for more details.
-
 .. index::
    single: Templating; Tags and helpers
    single: Templating; Helpers

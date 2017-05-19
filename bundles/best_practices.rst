@@ -384,7 +384,14 @@ If the bundle defines services, they must be prefixed with the bundle alias.
 For example, AcmeBlogBundle services must be prefixed with ``acme_blog``.
 
 In addition, services not meant to be used by the application directly, should
-be :ref:`defined as private <container-private-services>`.
+be :ref:`defined as private <container-private-services>`. For public services,
+:ref:`aliases should be created <service-autowiring-alias>` from the interface/class
+to the service id. For example, in MonlogBundle, an alias is created from
+``Psr\Log\LoggerInterface`` to ``logger`` so that the ``LoggerInterface`` type-hint
+can be used for autowiring.
+
+Services should not use autowiring or autoconfiguration. Instead, all services should
+be defined explicitly.
 
 .. seealso::
 

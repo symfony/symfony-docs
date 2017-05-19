@@ -18,7 +18,7 @@ you may have multiple repository classes which need the
         protected $entityManager;
         protected $logger;
 
-        public function __construct(ObjectManager $manager)
+        public function __construct(EntityManagerInterface $manager)
         {
             $this->entityManager = $manager;
         }
@@ -40,21 +40,18 @@ duplicated service definitions:
     .. code-block:: yaml
 
         services:
-            app.base_doctrine_repository:
-                # as no class is configured, the parent service MUST be abstract
+            AppBundle\Repository\BaseDoctrineRepository:
                 abstract:  true
                 arguments: ['@doctrine.entity_manager']
                 calls:
                     - [setLogger, ['@logger']]
 
-            app.user_repository:
-                class:  AppBundle\Repository\DoctrineUserRepository
-                # extend the app.base_doctrine_repository service
-                parent: app.base_doctrine_repository
+            AppBundle\Repository\DoctrineUserRepository:
+                # extend the AppBundle\Repository\BaseDoctrineRepository service
+                parent: AppBundle\Repository\BaseDoctrineRepository
 
-            app.post_repository:
-                class:  AppBundle\Repository\DoctrinePostRepository
-                parent: app.base_doctrine_repository
+            AppBundle\Repository\DoctrinePostRepository:
+                parent: AppBundle\Repository\BaseDoctrineRepository
 
             # ...
 
@@ -67,8 +64,7 @@ duplicated service definitions:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <!-- as no class is configured, the parent service MUST be abstract -->
-                <service id="app.base_doctrine_repository" abstract="true">
+                <service id="AppBundle\Repository\BaseDoctrineRepository" abstract="true">
                     <argument type="service" id="doctrine.entity_manager" />
 
                     <call method="setLogger">
@@ -76,15 +72,13 @@ duplicated service definitions:
                     </call>
                 </service>
 
-                <!-- extends the app.base_doctrine_repository service -->
-                <service id="app.user_repository"
-                    class="AppBundle\Repository\DoctrineUserRepository"
-                    parent="app.base_doctrine_repository"
+                <!-- extends the AppBundle\Repository\BaseDoctrineRepository service -->
+                <service id="AppBundle\Repository\DoctrineUserRepository"
+                    parent="AppBundle\Repository\BaseDoctrineRepository"
                 />
 
-                <service id="app.post_repository"
-                    class="AppBundle\Repository\DoctrineUserRepository"
-                    parent="app.base_doctrine_repository"
+                <service id="AppBundle\Repository\DoctrinePostRepository"
+                    parent="AppBundle\Repository\BaseDoctrineRepository"
                 />
 
                 <!-- ... -->
@@ -95,36 +89,40 @@ duplicated service definitions:
 
         use AppBundle\Repository\DoctrineUserRepository;
         use AppBundle\Repository\DoctrinePostRepository;
+        use AppBundle\Repository\BaseDoctrineRepository;
         use Symfony\Component\DependencyInjection\ChildDefinition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // as no class is configured, the parent service MUST be abstract
-        $container->register('app.base_doctrine_repository')
+        $container->register(BaseDoctrineRepository::class)
+            ->setAbstract(true)
             ->addArgument(new Reference('doctrine.entity_manager'))
             ->addMethodCall('setLogger', array(new Reference('logger')))
         ;
 
-        // extend the app.base_doctrine_repository service
-        $definition = new ChildDefinition('app.base_doctrine_repository');
+        // extend the AppBundle\Repository\BaseDoctrineRepository service
+        $definition = new ChildDefinition(BaseDoctrineRepository::class);
         $definition->setClass(DoctrineUserRepository::class);
-        $container->setDefinition('app.user_repository', $definition);
+        $container->setDefinition(DoctrineUserRepository::class, $definition);
 
-        $definition = new ChildDefinition('app.base_doctrine_repository');
+        $definition = new ChildDefinition(BaseDoctrineRepository::class);
         $definition->setClass(DoctrinePostRepository::class);
-
-        $container->setDefinition('app.post_repository', $definition);
+        $container->setDefinition(DoctrinePostRepository::class, $definition);
 
         // ...
 
 In this context, having a ``parent`` service implies that the arguments
 and method calls of the parent service should be used for the child services.
 Specifically, the ``EntityManager`` will be injected and ``setLogger()`` will
-be called when ``app.user_repository`` is instantiated.
+be called when ``AppBundle\Repository\DoctrineUserRepository`` is instantiated.
 
-.. caution::
+All attributes on the parent service are shared with the child **except** for
+``shared``, ``abstract`` and ``tags``. These are *not* inherited from the parent.
 
-    The ``shared``, ``abstract`` and ``tags`` attributes are *not* inherited from
-    parent services.
+.. note::
+
+    If you have a ``_defaults`` section in your file, all child services are required
+    to explicitly override those values to avoid ambiguity. You will see a clear
+    error message about this.
 
 .. tip::
 
@@ -147,9 +145,8 @@ in the child class:
         services:
             # ...
 
-            app.user_repository:
-                class:  AppBundle\Repository\DoctrineUserRepository
-                parent: app.base_doctrine_repository
+            AppBundle\Repository\DoctrineUserRepository:
+                parent: AppBundle\Repository\BaseDoctrineRepository
 
                 # overrides the public setting of the parent service
                 public: false
@@ -158,9 +155,8 @@ in the child class:
                 # argument list
                 arguments: ['@app.username_checker']
 
-            app.post_repository:
-                class:  AppBundle\Repository\DoctrinePostRepository
-                parent: app.base_doctrine_repository
+            AppBundle\Repository\DoctrinePostRepository:
+                parent: AppBundle\Repository\BaseDoctrineRepository
 
                 # overrides the first argument (using the special index_N key)
                 arguments:
@@ -178,9 +174,8 @@ in the child class:
                 <!-- ... -->
 
                 <!-- overrides the public setting of the parent service -->
-                <service id="app.user_repository"
-                    class="AppBundle\Repository\DoctrineUserRepository"
-                    parent="app.base_doctrine_repository"
+                <service id="AppBundle\Repository\DoctrineUserRepository"
+                    parent="AppBundle\Repository\BaseDoctrineRepository"
                     public="false"
                 >
                     <!-- appends the '@app.username_checker' argument to the parent
@@ -188,9 +183,8 @@ in the child class:
                     <argument type="service" id="app.username_checker" />
                 </service>
 
-                <service id="app.post_repository"
-                    class="AppBundle\Repository\DoctrineUserRepository"
-                    parent="app.base_doctrine_repository"
+                <service id="AppBundle\Repository\DoctrinePostRepository"
+                    parent="AppBundle\Repository\BaseDoctrineRepository"
                 >
                     <!-- overrides the first argument (using the index attribute) -->
                     <argument index="0" type="service" id="doctrine.custom_entity_manager" />
@@ -204,20 +198,21 @@ in the child class:
 
         use AppBundle\Repository\DoctrineUserRepository;
         use AppBundle\Repository\DoctrinePostRepository;
+        use AppBundle\Repository\BaseDoctrineRepository;
         use Symfony\Component\DependencyInjection\ChildDefinition;
         use Symfony\Component\DependencyInjection\Reference;
         // ...
 
-        $definition = new ChildDefinition('app.base_doctrine_repository');
+        $definition = new ChildDefinition(BaseDoctrineRepository::class);
         $definition->setClass(DoctrineUserRepository::class);
         // overrides the public setting of the parent service
         $definition->setPublic(false);
         // appends the '@app.username_checker' argument to the parent argument list
         $definition->addArgument(new Reference('app.username_checker'));
-        $container->setDefinition('app.user_repository', $definition);
+        $container->setDefinition(DoctrineUserRepository::class, $definition);
 
-        $definition = new ChildDefinition('app.base_doctrine_repository');
+        $definition = new ChildDefinition(BaseDoctrineRepository::class);
         $definition->setClass(DoctrinePostRepository::class);
         // overrides the first argument
         $definition->replaceArgument(0, new Reference('doctrine.custom_entity_manager'));
-        $container->setDefinition('app.post_repository', $definition);
+        $container->setDefinition(DoctrinePostRepository::class, $definition);

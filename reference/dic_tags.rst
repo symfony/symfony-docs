@@ -91,7 +91,8 @@ And then register it as a tagged service:
     .. code-block:: yaml
 
         services:
-            AppBundle\Assetic\CustomWorker: [assetic.factory_worker]
+            AppBundle\Assetic\CustomWorker:
+                tags: [assetic.factory_worker]
 
     .. code-block:: xml
 
@@ -457,10 +458,11 @@ service class::
         {
             // clear your cache
         }
-
     }
 
-Then register this class and tag it with ``kernel.cache_clearer``:
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+your service will be automatically tagged with ``kernel.cache_clearer``. But, you
+can also register it manually:
 
 .. configuration-block::
 
@@ -489,7 +491,8 @@ Then register this class and tag it with ``kernel.cache_clearer``:
 
         use AppBundle\Cache\MyClearer;
 
-        $container->register(MyClearer::class)
+        $container
+            ->register(MyClearer::class)
             ->addTag('kernel.cache_clearer')
         ;
 
@@ -538,8 +541,9 @@ application without calling this cache warmer. In Symfony, optional warmers
 are always executed by default (you can change this by using the
 ``--no-optional-warmers`` option when executing the command).
 
-To register your warmer with Symfony, give it the ``kernel.cache_warmer``
-tag:
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+your service will be automatically tagged with ``kernel.cache_warmer``. But, you
+can also register it manually:
 
 .. configuration-block::
 
@@ -569,7 +573,8 @@ tag:
 
         use AppBundle\Cache\MyCustomWarmer;
 
-        $container->register(MyCustomWarmer::class)
+        $container
+            ->register(MyCustomWarmer::class)
             ->addTag('kernel.cache_warmer', array('priority' => 0))
         ;
 
@@ -625,48 +630,8 @@ kernel.event_subscriber
 
 **Purpose**: To subscribe to a set of different events/hooks in Symfony
 
-To enable a custom subscriber, add it as a regular service in one of your
-configuration and tag it with ``kernel.event_subscriber``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        services:
-            AppBundle\EventListener\CustomSubscriber: [kernel.event_subscriber]
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="AppBundle\EventListener\CustomSubscriber">
-                    <tag name="kernel.event_subscriber" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        use AppBundle\EventListener\CustomSubscriber;
-
-        $container->register(CustomSubscriber::class)
-            ->addTag('kernel.event_subscriber')
-        ;
-
-.. note::
-
-    Your service must implement the :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
-    interface.
-
-.. note::
-
-    If your service is created by a factory, you **MUST** correctly set
-    the ``class`` parameter for this tag to work correctly.
+This is an alternative way to create an event listener, and is the recommended
+way (instead of using ``kernel.event_listener``). See :ref:`events-subscriber`.
 
 kernel.fragment_renderer
 ------------------------
@@ -752,7 +717,8 @@ You can add a processor globally:
     .. code-block:: yaml
 
         services:
-            Monolog\Processor\IntrospectionProcessor: [monolog.processor]
+            Monolog\Processor\IntrospectionProcessor:
+                tags: [monolog.processor]
 
     .. code-block:: xml
 
@@ -773,7 +739,8 @@ You can add a processor globally:
 
         use Monolog\Processor\IntrospectionProcessor;
 
-        $container->register(IntrospectionProcessor::class)
+        $container
+            ->register(IntrospectionProcessor::class)
             ->addTag('monolog.processor')
         ;
 
@@ -813,7 +780,8 @@ attribute:
 
         use Monolog\Processor\IntrospectionProcessor;
 
-        $container->register(IntrospectionProcessor::class)
+        $container
+            ->register(IntrospectionProcessor::class)
             ->addTag('monolog.processor', array('handler' => 'firephp'))
         ;
 
@@ -849,7 +817,8 @@ You can also add a processor for a specific logging channel by using the
 
         use Monolog\Processor\IntrospectionProcessor;
 
-        $container->register(IntrospectionProcessor::class)
+        $container
+            ->register(IntrospectionProcessor::class)
             ->addTag('monolog.processor', array('channel' => 'security'))
         ;
 
@@ -871,7 +840,8 @@ of your configuration and tag it with ``routing.loader``:
     .. code-block:: yaml
 
         services:
-            AppBundle\Routing\CustomLoader: [routing.loader]
+            AppBundle\Routing\CustomLoader:
+                tags: [routing.loader]
 
     .. code-block:: xml
 
@@ -1030,8 +1000,7 @@ templates):
 
         use AppBundle\Templating\AppHelper;
 
-        $container
-            ->register(AppHelper::class)
+        $container->register(AppHelper::class)
             ->addTag('templating.helper', array('alias' => 'alias_name'))
         ;
 
@@ -1080,7 +1049,8 @@ Now, register your loader as a service and tag it with ``translation.loader``:
 
         use AppBundle\Translation\MyCustomLoader;
 
-        $container->register(MyCustomLoader::class)
+        $container
+            ->register(MyCustomLoader::class)
             ->addTag('translation.loader', array('alias' => 'bin'))
         ;
 
@@ -1245,14 +1215,17 @@ twig.extension
 **Purpose**: To register a custom Twig Extension
 
 To enable a Twig extension, add it as a regular service in one of your
-configuration and tag it with ``twig.extension``:
+configuration and tag it with ``twig.extension``. If you're using the
+:ref:`default services.yml configuration <service-container-services-load-example>`,
+the service is auto-registered and auto-tagged. But, you can also register it manually:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         services:
-            AppBundle\Twig\AppExtension: [twig.extension]
+            AppBundle\Twig\AppExtension:
+                tags: [twig.extension]
 
     .. code-block:: xml
 
@@ -1273,7 +1246,8 @@ configuration and tag it with ``twig.extension``:
 
         use AppBundle\Twig\AppExtension;
 
-        $container->register(AppExtension::class)
+        $container
+            ->register(AppExtension::class)
             ->addTag('twig.extension')
         ;
 
@@ -1292,8 +1266,7 @@ also have to be added as regular services:
     .. code-block:: yaml
 
         services:
-            twig.extension.intl:
-                class: Twig_Extensions_Extension_Intl
+            Twig_Extensions_Extension_Intl:
                 tags: [twig.extension]
 
     .. code-block:: xml
@@ -1305,7 +1278,7 @@ also have to be added as regular services:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="twig.extension.intl" class="Twig_Extensions_Extension_Intl">
+                <service id="Twig_Extensions_Extension_Intl">
                     <tag name="twig.extension" />
                 </service>
             </services>
@@ -1314,7 +1287,7 @@ also have to be added as regular services:
     .. code-block:: php
 
         $container
-            ->register('twig.extension.intl', 'Twig_Extensions_Extension_Intl')
+            ->register('Twig_Extensions_Extension_Intl')
             ->addTag('twig.extension')
         ;
 
@@ -1326,7 +1299,11 @@ twig.loader
 By default, Symfony uses only one `Twig Loader`_ -
 :class:`Symfony\\Bundle\\TwigBundle\\Loader\\FilesystemLoader`. If you need
 to load Twig templates from another resource, you can create a service for
-the new loader and tag it with ``twig.loader``:
+the new loader and tag it with ``twig.loader``.
+
+If you use the :ref:`default services.yml configuration <service-container-services-load-example>`,
+the service will be automatically tagged thanks to autoconfiguration. But, you can
+also register it manually:
 
 .. configuration-block::
 
@@ -1356,7 +1333,8 @@ the new loader and tag it with ``twig.loader``:
 
         use AppBundle\Twig\CustomLoader;
 
-        $container->register(CustomLoader::class)
+        $container
+            ->register(CustomLoader::class)
             ->addTag('twig.loader', array('priority' => 0))
         ;
 

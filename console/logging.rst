@@ -10,3 +10,6 @@ listener for the console.
 
 Starting from Symfony 3.3, the Console component provides automatic error and
 exception logging.
+
+You can of course also access and use the :doc:`logger </logging>` service to
+log messages.

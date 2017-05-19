@@ -318,6 +318,8 @@ setting should be present in your ``test`` environment (usually via
 
     For more information, see :doc:`/testing`.
 
+.. _config-framework-default_locale:
+
 default_locale
 ~~~~~~~~~~~~~~
 

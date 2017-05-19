@@ -9,11 +9,6 @@ It is possible to use the console to print messages for certain
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface` instance that
 is passed when a command gets executed.
 
-.. seealso::
-    Alternatively, you can use the
-    :doc:`standalone PSR-3 logger </components/console/logger>` provided with
-    the console component.
-
 When a lot of logging has to happen, it's cumbersome to print information
 depending on the verbosity settings (``-v``, ``-vv``, ``-vvv``) because the
 calls need to be wrapped in conditions. The code quickly gets verbose or dirty.
@@ -58,17 +53,25 @@ the console. If they are displayed, they are timestamped and colored appropriate
 Additionally, error logs are written to the error output (php://stderr).
 There is no need to conditionally handle the verbosity settings anymore.
 
-The Monolog console handler is enabled in the Monolog configuration.
+The Monolog console handler is enabled by default in the Symfony Framework. For
+example, in ``config_dev.yml``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/config_dev.yml
         monolog:
             handlers:
+                # ...
                 console:
-                    type: console
+                    type:   console
+                    process_psr_3_messages: false
+                    channels: ['!event', '!doctrine', '!console']
+
+                    # optionally configure the mapping between verbosity levels and log levels
+                    # verbosity_levels:
+                    #     VERBOSITY_NORMAL: NOTICE
 
     .. code-block:: xml
 
@@ -81,7 +84,15 @@ The Monolog console handler is enabled in the Monolog configuration.
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <monolog:config>
-                <monolog:handler name="console" type="console" />
+                <!-- ... -->
+
+                <monolog:handler name="console" type="console" process-psr-3-messages="false">
+                    <monolog:channels>
+                        <monolog:channel>!event</monolog:channel>
+                        <monolog:channel>!doctrine</monolog:channel>
+                        <monolog:channel>!console</monolog:channel>
+                    </monolog:channels>
+                </monolog:handler>
             </monolog:config>
         </container>
 
@@ -92,103 +103,15 @@ The Monolog console handler is enabled in the Monolog configuration.
             'handlers' => array(
                 'console' => array(
                    'type' => 'console',
+                   'process_psr_3_messages' => false,
+                   'channels' => array('!event', '!doctrine', '!console'),
                 ),
             ),
         ));
 
-With the ``verbosity_levels`` option you can adapt the mapping between
-verbosity and log level. In the given example it will also show notices in
-normal verbosity mode (instead of warnings only). Additionally, it will only
-use messages logged with the custom ``my_channel`` channel and it changes the
-display style via a custom formatter (see the
-:doc:`MonologBundle reference </reference/configuration/monolog>` for more
-information):
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        monolog:
-            handlers:
-                console:
-                    type:   console
-                    verbosity_levels:
-                        VERBOSITY_NORMAL: NOTICE
-                    channels: my_channel
-                    formatter: Symfony\Bridge\Monolog\Formatter\ConsoleFormatter
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <monolog:config>
-                <monolog:handler name="console" type="console" formatter="my_formatter">
-                    <monolog:verbosity-level verbosity-normal="NOTICE" />
-                    <monolog:channel>Symfony\Bridge\Monolog\Formatter\ConsoleFormatter</monolog:channel>
-                </monolog:handler>
-            </monolog:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use Symfony\Bridge\Monolog\Formatter\ConsoleFormatter;
-
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'console' => array(
-                    'type' => 'console',
-                    'verbosity_levels' => array(
-                        'VERBOSITY_NORMAL' => 'NOTICE',
-                    ),
-                    'channels' => 'my_channel',
-                    'formatter' => ConsoleFormatter::class,
-                ),
-            ),
-        ));
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            Symfony\Bridge\Monolog\Formatter\ConsoleFormatter:
-                arguments:
-                    - "[%%datetime%%] %%start_tag%%%%message%%%%end_tag%% (%%level_name%%) %%context%% %%extra%%\n"
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-             <services>
-                <service id="Symfony\Bridge\Monolog\Formatter\ConsoleFormatter">
-                    <argument>[%%datetime%%] %%start_tag%%%%message%%%%end_tag%% (%%level_name%%) %%context%% %%extra%%\n</argument>
-                </service>
-             </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use Symfony\Bridge\Monolog\Formatter\ConsoleFormatter;
-
-        $container
-            ->autowire(ConsoleFormatter::class)
-            ->addArgument('[%%datetime%%] %%start_tag%%%%message%%%%end_tag%% (%%level_name%%) %%context%% %%extra%%\n')
-        ;
+Now, log messages will be shown on the console based on the log levels and verbosity.
+By default (normal verbosity level), warnings and higher will be shown. But in
+:doc:`full verbostiy mode </console/verbosity>`, all messages will be shown.
 
 .. _ConsoleHandler: https://github.com/symfony/MonologBridge/blob/master/Handler/ConsoleHandler.php
 .. _MonologBridge: https://github.com/symfony/MonologBridge
