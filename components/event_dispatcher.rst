@@ -320,7 +320,7 @@ Using Event Subscribers
 
 The most common way to listen to an event is to register an *event listener*
 with the dispatcher. This listener can listen to one or more events and
-is notified each time those events are dispatched.
+it will be notified each time those events are dispatched.
 
 Another way to listen to events is via an *event subscriber*. An event
 subscriber is a PHP class that's able to tell the dispatcher exactly which
