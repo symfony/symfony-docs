@@ -184,7 +184,7 @@ events are dispatched:
 
 * ``workflow.leave``
 * ``workflow.[workflow name].leave``
-* ``workflow.[workflow name].leave.[transition name]``
+* ``workflow.[workflow name].leave.[place name]``
 
 * ``workflow.transition``
 * ``workflow.[workflow name].transition``
@@ -192,7 +192,7 @@ events are dispatched:
 
 * ``workflow.enter``
 * ``workflow.[workflow name].enter``
-* ``workflow.[workflow name].enter.[transition name]``
+* ``workflow.[workflow name].enter.[place name]``
 
 * ``workflow.announce``
 * ``workflow.[workflow name].announce``
