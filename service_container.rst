@@ -117,6 +117,11 @@ in the container.
 Creating/Configuring Services in the Container
 ----------------------------------------------
 
+.. tip::
+
+    The recommended way of configuring services changed in Symfony 3.3. For a deep
+    explanation, see :doc:`/service_container/3.3-di-changes`.
+
 You can also organize your *own* code into services. For example, suppose you need
 to show your users a random, happy message. If you put this code in your controller,
 it can't be re-used. Instead, you decide to create a new class::

@@ -80,9 +80,18 @@ your class as a service and using the  ``form.type_extension`` tag:
 
     .. code-block:: xml
 
-        <service id="AppBundle\Form\Extension\ImageTypeExtension">
-            <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FileType" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="AppBundle\Form\Extension\ImageTypeExtension">
+                    <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FileType" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

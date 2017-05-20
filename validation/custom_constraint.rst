@@ -173,10 +173,19 @@ tag so that the validation system knows about it:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <service id="app.contains_alphanumeric_validator" class="AppBundle\Validator\Constraints\ContainsAlphanumericValidator">
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
-            <tag name="validator.constraint_validator" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.contains_alphanumeric_validator" class="AppBundle\Validator\Constraints\ContainsAlphanumericValidator">
+                    <argument type="service" id="doctrine.orm.default_entity_manager" />
+                    <tag name="validator.constraint_validator" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

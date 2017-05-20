@@ -32,17 +32,14 @@ it in your configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
+        <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
             <framework:config>
                 <!-- ... -->
 		<framework:serializer enable-annotations="true" />
@@ -89,9 +86,11 @@ Adding Normalizers and Encoders
 -------------------------------
 
 Once enabled, the ``serializer`` service will be available in the container
-and will be loaded with two :ref:`encoders <component-serializer-encoders>`
-(:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder` and
-:class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`) and the
+and will be loaded with four :ref:`encoders <component-serializer-encoders>`
+(:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`,
+:class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`,
+:class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder`, and
+:class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`) and the
 :ref:`ObjectNormalizer normalizer <component-serializer-normalizers>`.
 
 You can load normalizers and/or encoders by tagging them as
@@ -116,11 +115,18 @@ Here is an example on how to load the
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer" public="false">
-                <tag name="serializer.normalizer" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer" public="false">
+                    <tag name="serializer.normalizer" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -153,10 +159,20 @@ with the following configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <!-- ... -->
-            <framework:serializer enable-annotations="true" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- ... -->
+                <framework:serializer enable-annotations="true" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -209,10 +225,20 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
     .. code-block:: xml
 
         <!-- app/config/config_prod.xml -->
-        <framework:config>
-            <!-- ... -->
-            <framework:serializer cache="serializer.mapping.cache.apc" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- ... -->
+                <framework:serializer cache="serializer.mapping.cache.apc" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 

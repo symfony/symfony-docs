@@ -121,6 +121,7 @@ define your own templates directory (or directories):
             <twig:config>
                 <twig:path>%kernel.root_dir%/../templates</twig:path>
             </twig:config>
+
         </container>
 
     .. code-block:: php
@@ -196,7 +197,8 @@ You also need to change the ``extra.symfony-web-dir`` option in the
                     http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
                 <!-- ... -->
-                <assetic:config read-from="%kernel.project_dir%/../public_html" />
+                <assetic:config read-from="%kernel.root_dir%/../../public_html" />
+
             </container>
 
         .. code-block:: php
