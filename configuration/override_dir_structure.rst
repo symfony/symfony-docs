@@ -15,6 +15,8 @@ directory structure is:
     │  ├─ cache/
     │  ├─ config/
     │  ├─ logs/
+    │  ├─ Resources/
+    │  │  └─ views/
     │  └─ ...
     ├─ src/
     │  └─ ...
@@ -79,6 +81,51 @@ method::
     }
 
 Here you have changed the location of the directory to ``app/{environment}/logs``.
+
+.. _override-templates-dir:
+
+Override the Templates Directory
+--------------------------------
+
+If your templates are not stored in the default ``app/Resources/views/``
+directory, use the :ref:`twig.paths <config-twig-paths>` configuration option to
+define your own templates directory (or directories):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        twig:
+            # ...
+            paths: ["%kernel.root_dir%/../templates"]
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <twig:path>%kernel.root_dir%/../templates</twig:path>
+            </twig:config>
+
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('twig', array(
+            'paths' => array(
+                '%kernel.root_dir%/../templates',
+            ),
+        ));
 
 .. _override-web-dir:
 
@@ -146,6 +193,7 @@ file:
 
                 <!-- ... -->
                 <assetic:config read-from="%kernel.root_dir%/../../public_html" />
+
             </container>
 
         .. code-block:: php

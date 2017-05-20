@@ -74,7 +74,7 @@ Suppose you need to access the ``doctrine.orm.entity_manager`` service so that y
 can make a query. First, add this as an argument to your form class::
 
     // src/AppBundle/Form/TaskType.php
-    
+
     use Doctrine\ORM\EntityManager;
     // ...
 
@@ -110,7 +110,8 @@ Next, register this as a service and tag it with ``form.type``:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.form.type.task" class="AppBundle\Form\TaskType">
@@ -124,18 +125,13 @@ Next, register this as a service and tag it with ``form.type``:
 
         // src/AppBundle/Resources/config/services.php
         use AppBundle\Form\TaskType;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container
-            ->setDefinition('app.form.type.task', new Definition(
-                TaskType::class,
-                array(new Reference('doctrine.orm.entity_manager'))
-            ))
+        $container->register('app.form.type.task', TaskType::class)
+            ->addArgument(new Reference('doctrine.orm.entity_manager'))
             ->addTag('form.type', array(
                 'alias' => 'app_task',
-            ))
-        ;
+            ));
 
 That's it! Use the ``alias`` key from the tag to reference your form::
 

@@ -40,23 +40,34 @@ To use it, you just need to change some parameters in the main configuration fil
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:session handler-id="session.handler.pdo" cookie-lifetime="3600" auto-start="true"/>
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-        <services>
-            <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                <argument>mysql:dbname=mydatabase</argument>
-                <argument type="collection">
-                    <argument key="db_username">myuser</argument>
-                    <argument key="db_password">mypassword</argument>
-                </argument>
-            </service>
-        </services>
+            <framework:config>
+                <framework:session handler-id="session.handler.pdo" cookie-lifetime="3600" auto-start="true"/>
+            </framework:config>
+
+            <services>
+                <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
+                    <argument>mysql:dbname=mydatabase</argument>
+                    <argument type="collection">
+                        <argument key="db_username">myuser</argument>
+                        <argument key="db_password">mypassword</argument>
+                    </argument>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         // app/config/config.php
+
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
         // ...
         $container->loadFromExtension('framework', array(
@@ -67,11 +78,11 @@ To use it, you just need to change some parameters in the main configuration fil
             ),
         ));
 
-        $storageDefinition = new Definition(PdoSessionHandler::class, array(
-            'mysql:dbname=mydatabase',
-            array('db_username' => 'myuser', 'db_password' => 'mypassword')
-        ));
-        $container->setDefinition('session.handler.pdo', $storageDefinition);
+        $container->register('session.handler.pdo', PdoSessionHandler::class)
+            ->setArguments(array(
+                'mysql:dbname=mydatabase',
+                array('db_username' => 'myuser', 'db_password' => 'mypassword'),
+            ));
 
 Configuring the Table and Column Names
 --------------------------------------
@@ -97,30 +108,36 @@ a second array argument to ``PdoSessionHandler``:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <services>
-            <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                <argument>mysql:dbname=mydatabase</argument>
-                <argument type="collection">
-                    <argument key="db_table">sessions</argument>
-                    <argument key="db_username">myuser</argument>
-                    <argument key="db_password">mypassword</argument>
-                </argument>
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
+                    <argument>mysql:dbname=mydatabase</argument>
+                    <argument type="collection">
+                        <argument key="db_table">sessions</argument>
+                        <argument key="db_username">myuser</argument>
+                        <argument key="db_password">mypassword</argument>
+                    </argument>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         // app/config/config.php
 
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
         // ...
 
-        $storageDefinition = new Definition(PdoSessionHandler::class, array(
-            'mysql:dbname=mydatabase',
-            array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword')
-        ));
-        $container->setDefinition('session.handler.pdo', $storageDefinition);
+        $container->register('session.handler.pdo', PdoSessionHandler::class)
+            ->setArguments(array(
+                'mysql:dbname=mydatabase',
+                array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword'),
+            ));
 
 .. versionadded:: 2.6
     The ``db_lifetime_col`` was introduced in Symfony 2.6. Prior to 2.6,
@@ -169,13 +186,22 @@ of your project's data, you can use the connection settings from the
 
     .. code-block:: xml
 
-        <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-            <argument>mysql:host=%database_host%;port=%database_port%;dbname=%database_name%</argument>
-            <argument type="collection">
-                <argument key="db_username">%database_user%</argument>
-                <argument key="db_password">%database_password%</argument>
-            </argument>
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="session.handler.pdo" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
+                    <argument>mysql:host=%database_host%;port=%database_port%;dbname=%database_name%</argument>
+                    <argument type="collection">
+                        <argument key="db_username">%database_user%</argument>
+                        <argument key="db_password">%database_password%</argument>
+                    </argument>
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

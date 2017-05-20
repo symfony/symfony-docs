@@ -43,8 +43,8 @@ All you have to do is to configure the ``jsonp`` format:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
             <framework:config>
                 <framework:request>
                     <framework:format name="jsonp">
@@ -91,8 +91,8 @@ All you have to do is to configure the ``jsonp`` format:
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     http://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/symfony
-                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-            >
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
                 <framework:config>
                     <framework:request>
                         <framework:format name="csv">

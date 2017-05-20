@@ -39,21 +39,16 @@ if the service does not exist:
 
         // app/config/services.php
         use AppBundle\Newsletter\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
-        $container->setDefinition('app.mailer', ...);
+        $container->register('app.mailer', ...);
 
-        $container->setDefinition('app.newsletter_manager', new Definition(
-            NewsletterManager::class,
-            array(
-                new Reference(
-                    'app.mailer',
-                    ContainerInterface::NULL_ON_INVALID_REFERENCE
-                )
-            )
-        ));
+        $container->register('app.newsletter_manager', NewsletterManager::class)
+            ->addArgument(new Reference(
+                'app.mailer',
+                ContainerInterface::NULL_ON_INVALID_REFERENCE
+            ));
 
 .. note::
 
@@ -96,7 +91,7 @@ call if the service exists and remove the method call if it does not:
 
                 <service id="app.newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
                     <call method="setMailer">
-                        <argument type="service" id="my_mailer" on-invalid="ignore"/>
+                        <argument type="service" id="app.mailer" on-invalid="ignore"/>
                     </call>
                 </service>
             </services>
@@ -115,7 +110,7 @@ call if the service exists and remove the method call if it does not:
             ->register('app.newsletter_manager', NewsletterManager::class)
             ->addMethodCall('setMailer', array(
                 new Reference(
-                    'my_mailer',
+                    'app.mailer',
                     ContainerInterface::IGNORE_ON_INVALID_REFERENCE
                 ),
             ))

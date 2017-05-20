@@ -37,8 +37,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd"
-            >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="my_mailer" class="AppBundle\Mailer">
@@ -51,13 +50,10 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
 
         // app/config/config.php
         use AppBundle\Mailer;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\ExpressionLanguage\Expression;
 
-        $container->setDefinition('my_mailer', new Definition(
-            Mailer::class,
-            array(new Expression('service("mailer_configuration").getMailerMethod()'))
-        ));
+        $container->register('my_mailer', Mailer::class)
+            ->addArgument(new Expression('service("mailer_configuration").getMailerMethod()'));
 
 To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
 
@@ -86,8 +82,7 @@ via a ``container`` variable. Here's another example:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd"
-            >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="my_mailer" class="AppBundle\Mailer">
@@ -99,15 +94,12 @@ via a ``container`` variable. Here's another example:
     .. code-block:: php
 
         use AppBundle\Mailer;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\ExpressionLanguage\Expression;
 
-        $container->setDefinition('my_mailer', new Definition(
-            Mailer::class,
-            array(new Expression(
+        $container->register('my_mailer', Mailer::class)
+            ->addArgument(new Expression(
                 "container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"
-            ))
-        ));
+            ));
 
 Expressions can be used in ``arguments``, ``properties``, as arguments with
 ``configurator`` and as arguments to ``calls`` (method calls).

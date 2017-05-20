@@ -60,7 +60,8 @@ You can mark the service as ``lazy`` by manipulating its definition:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.twig_extension" class="AppBundle\Twig\AppExtension" lazy="true" />
@@ -70,12 +71,9 @@ You can mark the service as ``lazy`` by manipulating its definition:
     .. code-block:: php
 
         use AppBundle\Twig\AppExtension;
-        use Symfony\Component\DependencyInjection\Definition;
 
-        $definition = new Definition(AppExtension::class);
-        $definition->setLazy(true);
-
-        $container->setDefinition('app.twig_extension', $definition);
+        $container->register('app.twig_extension', AppExtension::class)
+            ->setLazy(true);
 
 Once you inject the service into another service, a virtual `proxy`_ with the
 same signature of the class representing the service should be injected. The

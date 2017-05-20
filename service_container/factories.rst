@@ -55,7 +55,8 @@ configure the service container to use the
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.newsletter_manager" class="AppBundle\Email\NewsletterManager">
@@ -71,14 +72,11 @@ configure the service container to use the
 
         use AppBundle\Email\NewsletterManager;
         use AppBundle\Email\NewsletterManagerStaticFactory;
-        use Symfony\Component\DependencyInjection\Definition;
         // ...
 
-        $definition = new Definition(NewsletterManager::class);
-        // call the static method
-        $definition->setFactory(array(NewsletterManagerStaticFactory::class, 'createNewsletterManager'));
-
-        $container->setDefinition('app.newsletter_manager', $definition);
+        $container->register('app.newsletter_manager', \AppBundle\NumberGenerator::class)
+            // call the static method
+            ->setFactory(array(NewsletterManagerStaticFactory::class, 'createNewsletterManager'));
 
 .. note::
 
@@ -117,7 +115,8 @@ Configuration of the service container then looks like this:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.newsletter_manager_factory"
@@ -139,20 +138,16 @@ Configuration of the service container then looks like this:
 
         use AppBundle\Email\NewsletterManager;
         use AppBundle\Email\NewsletterManagerFactory;
-        use Symfony\Component\DependencyInjection\Definition;
         // ...
 
         $container->register('app.newsletter_manager_factory', NewsletterManagerFactory::class);
 
-        $newsletterManager = new Definition(NewsletterManager::class);
-
-        // call a method on the specified factory service
-        $newsletterManager->setFactory(array(
-            new Reference('app.newsletter_manager_factory'),
-            'createNewsletterManager'
-        ));
-
-        $container->setDefinition('app.newsletter_manager', $newsletterManager);
+        $container->register('app.newsletter_manager', NewsletterManager::class)
+            // call a method on the specified factory service
+            ->setFactory(array(
+                new Reference('app.newsletter_manager_factory'),
+                'createNewsletterManager',
+            ));
 
 .. note::
 
@@ -199,7 +194,8 @@ method in the previous example takes the ``templating`` service as an argument:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <!-- ... -->
@@ -217,14 +213,11 @@ method in the previous example takes the ``templating`` service as an argument:
 
         use AppBundle\Email\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $newsletterManager = new Definition(NewsletterManager::class, array(
-            new Reference('templating')
-        ));
-        $newsletterManager->setFactory(array(
-            new Reference('app.newsletter_manager_factory'),
-            'createNewsletterManager'
-        ));
-        $container->setDefinition('app.newsletter_manager', $newsletterManager);
+        $container->register('app.newsletter_manager', NewsletterManager::class)
+            ->addArgument(new Reference('templating'))
+            ->setFactory(array(
+                new Reference('app.newsletter_manager_factory'),
+                'createNewsletterManager',
+            ));

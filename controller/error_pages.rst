@@ -251,6 +251,7 @@ configuration option to point to it:
             <twig:config>
                 <twig:exception-controller>AppBundle:Exception:showException</twig:exception-controller>
             </twig:config>
+
         </container>
 
     .. code-block:: php
@@ -299,11 +300,12 @@ In that case, you might want to override one or both of the ``showAction()`` and
         .. code-block:: xml
 
             <!-- app/config/services.xml -->
-            <?xml version="1.0" encoding="utf-8" ?>
+            <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
-            >
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
                 <services>
                     <service id="app.exception_controller"
                         class="AppBundle\Controller\CustomExceptionController"
@@ -312,6 +314,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
                         <argument>%kernel.debug%</argument>
                     </service>
                 </services>
+
             </container>
 
         .. code-block:: php
@@ -319,13 +322,12 @@ In that case, you might want to override one or both of the ``showAction()`` and
             // app/config/services.php
             use AppBundle\Controller\CustomExceptionController;
             use Symfony\Component\DependencyInjection\Reference;
-            use Symfony\Component\DependencyInjection\Definition;
 
-            $definition = new Definition(CustomExceptionController::class, array(
-                new Reference('twig'),
-                '%kernel.debug%'
-            ));
-            $container->setDefinition('app.exception_controller', $definition);
+            $container->register('app.exception_controller', CustomExceptionController::class)
+                ->setArguments(array(
+                    new Reference('twig'),
+                    '%kernel.debug%',
+                ));
 
     And then configure ``twig.exception_controller`` using the controller as
     services syntax (e.g. ``app.exception_controller:showAction``).

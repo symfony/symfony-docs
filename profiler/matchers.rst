@@ -40,14 +40,13 @@ configuration:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <!-- ... -->
                 <framework:profiler>
                     <framework:matcher ip="168.0.0.1" />
-                </framework:profiler>    
+                </framework:profiler>
             </framework:config>
         </container>
 
@@ -128,27 +127,29 @@ won't use it directly:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="app.profiler.matcher.super_admin"
-                class="AppBundle\Profiler\SuperAdminMatcher" public="false">
-                <argument type="service" id="security.authorization_checker" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.profiler.matcher.super_admin"
+                    class="AppBundle\Profiler\SuperAdminMatcher" public="false">
+                    <argument type="service" id="security.authorization_checker" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         // app/config/services.php
         use AppBundle\Profiler\SuperAdminMatcher;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definition = new Definition(
-            SuperAdminMatcher::class,
-            array(new Reference('security.authorization_checker'))
-        );
-        $definition->setPublic(false);
-
-        $container->setDefinition('app.super_admin_matcher', $definition);
+        $container->register('app.super_admin_matcher', SuperAdminMatcher::class)
+            ->addArgument(new Reference('security.authorization_checker'))
+            ->setPublic(false);
 
 .. versionadded:: 2.6
     The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
@@ -178,14 +179,13 @@ profiler to use this service as the matcher:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <!-- ... -->
                 <framework:profiler>
                     <framework:matcher service="app.super_admin_matcher" />
-                </framework:profiler>    
+                </framework:profiler>
             </framework:config>
         </container>
 

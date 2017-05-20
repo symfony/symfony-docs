@@ -274,26 +274,23 @@ Then, define a service for this class:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
             <service id="app.brochure_uploader" class="AppBundle\FileUploader">
                 <argument>%brochures_directory%</argument>
             </service>
+
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
         use AppBundle\FileUploader;
-        use Symfony\Component\DependencyInjection\Definition;
 
         // ...
-        $container->setDefinition('app.brochure_uploader', new Definition(
-            FileUploader::class,
-            array('%brochures_directory%')
-        ));
+        $container->register('app.brochure_uploader', FileUploader::class)
+            ->addArgument('%brochures_directory%');
 
 Now you're ready to use this service in the controller::
 
@@ -397,8 +394,7 @@ Now, register this class as a Doctrine listener:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
             <service id="app.doctrine_brochure_listener"
@@ -409,27 +405,24 @@ Now, register this class as a Doctrine listener:
                 <tag name="doctrine.event_listener" event="prePersist"/>
                 <tag name="doctrine.event_listener" event="preUpdate"/>
             </service>
+
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
         use AppBundle\EventListener\BrochureUploaderListener;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $definition = new Definition(
-            BrochureUploaderListener::class,
-            array(new Reference('brochures_directory'))
-        );
-        $definition->addTag('doctrine.event_listener', array(
-            'event' => 'prePersist',
-        ));
-        $definition->addTag('doctrine.event_listener', array(
-            'event' => 'preUpdate',
-        ));
-        $container->setDefinition('app.doctrine_brochure_listener', $definition);
+        $container->register('app.doctrine_brochure_listener', BrochureUploaderListener::class)
+            ->addArgument(new Reference('brochures_directory'))
+            ->addTag('doctrine.event_listener', array(
+                'event' => 'prePersist',
+            ))
+            ->addTag('doctrine.event_listener', array(
+                'event' => 'prePersist',
+            ));
 
 This listener is now automatically executed when persisting a new Product
 entity. This way, you can remove everything related to uploading from the

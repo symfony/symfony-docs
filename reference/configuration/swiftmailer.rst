@@ -18,11 +18,15 @@ a mailer. It is also possible to configure several mailers (see
 Configuration
 -------------
 
+* `url`_
 * `transport`_
 * `username`_
 * `password`_
 * `host`_
 * `port`_
+* `timeout`_
+* `source_ip`_
+* `local_domain`_
 * `encryption`_
 * `auth_mode`_
 * `spool`_
@@ -37,6 +41,15 @@ Configuration
 * `disable_delivery`_
 * `logging`_
 
+url
+~~~
+
+**type**: ``string``
+
+The entire SwiftMailer configuration using a DSN-like URL format.
+
+Example: ``smtp://user:pass@host:port/?timeout=60&encryption=ssl&auth_mode=login&...``
+
 transport
 ~~~~~~~~~
 
@@ -46,7 +59,7 @@ The exact transport method to use to deliver emails. Valid values are:
 
 * smtp
 * gmail (see :doc:`/email/gmail`)
-* mail
+* mail (deprecated in SwiftMailer since version 5.4.5)
 * sendmail
 * null (same as setting `disable_delivery`_ to ``true``)
 
@@ -78,6 +91,30 @@ port
 
 The port when using ``smtp`` as the transport. This defaults to 465 if encryption
 is ``ssl`` and 25 otherwise.
+
+timeout
+~~~~~~~
+
+**type**: ``integer``
+
+The timeout in seconds when using ``smtp`` as the transport.
+
+source_ip
+~~~~~~~~~
+
+**type**: ``string``
+
+The source IP address when using ``smtp`` as the transport.
+
+local_domain
+~~~~~~~~~~~~
+
+**type**: ``string``
+
+.. versionadded:: 2.4.0
+    The ``local_domain`` option was introduced in SwiftMailerBundle 2.4.0.
+
+The domain name to use in ``HELO`` command.
 
 encryption
 ~~~~~~~~~~
@@ -191,6 +228,13 @@ logging
 If true, Symfony's data collector will be activated for Swift Mailer and
 the information will be available in the profiler.
 
+.. tip::
+
+    The following options can be set via environment variables using the
+    ``%env()%`` syntax: ``url``, ``transport``, ``username``, ``password``,
+    ``host``, ``port``, ``timeout``, ``source_ip``, ``local_domain``.
+    For details, see the :doc:`/configuration/external_parameters` article.
+
 Full Default Configuration
 --------------------------
 
@@ -223,7 +267,8 @@ Full Default Configuration
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <swiftmailer:config
@@ -275,8 +320,8 @@ key (the default mailer is identified by the ``default_mailer`` option):
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer
-                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+
             <swiftmailer:config default-mailer="second_mailer">
                 <swiftmailer:mailer name="first_mailer"/>
                 <swiftmailer:mailer name="second_mailer"/>

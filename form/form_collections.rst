@@ -521,6 +521,7 @@ you will learn about next!).
         .. code-block:: xml
 
             <!-- src/AppBundle/Resources/config/doctrine/Task.orm.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
             <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping

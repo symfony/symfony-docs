@@ -140,7 +140,8 @@ You can configure the service configurator using the ``configurator`` option:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.email_formatter_manager" class="AppBundle\Mail\EmailFormatterManager">
@@ -173,7 +174,6 @@ You can configure the service configurator using the ``configurator`` option:
         use AppBundle\Mail\EmailFormatterManager;
         use AppBundle\Mail\GreetingCardManager;
         use AppBundle\Mail\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
@@ -182,13 +182,11 @@ You can configure the service configurator using the ``configurator`` option:
 
         $container->register('app.newsletter_manager', NewsletterManager::class)
             ->addArgument(new Reference('mailer'))
-            ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'))
-        ;
+            ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'));
 
         $container->register('app.greeting_card_manager', GreetingCardManager::class)
             ->addArgument(new Reference('mailer'))
-            ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'))
-        ;
+            ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'));
 
 That's it! When requesting the ``app.newsletter_manager`` or
 ``app.greeting_card_manager`` service, the created instance will first be

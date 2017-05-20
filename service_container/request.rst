@@ -50,7 +50,8 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service
@@ -65,14 +66,12 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
     .. code-block:: php
 
         // src/AppBundle/Resources/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setDefinition('newsletter_manager', new Definition(
-            'AppBundle\Newsletter\NewsletterManager',
-            array(new Reference('request_stack'))
-        ));
+        $container->register('newsletter_manager', NewsletterManager::class)
+            ->addArgument(new Reference('request_stack'));
 
 .. sidebar:: Why not Inject the ``request`` Service?
 

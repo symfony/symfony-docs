@@ -95,8 +95,9 @@ First configure a listener for console exception events in the service container
         <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.listener.command_exception" class="AppBundle\EventListener\ConsoleExceptionListener">
@@ -104,27 +105,21 @@ First configure a listener for console exception events in the service container
                     <tag name="kernel.event_listener" event="console.exception" />
                 </service>
             </services>
+
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
         use AppBundle\EventListener\ConsoleExceptionListener;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definitionConsoleExceptionListener = new Definition(
-            ConsoleExceptionListener::class,
-            array(new Reference('logger'))
-        );
-        $definitionConsoleExceptionListener->addTag(
-            'kernel.event_listener',
-            array('event' => 'console.exception')
-        );
-        $container->setDefinition(
-            'app.listener.command_exception',
-            $definitionConsoleExceptionListener
-        );
+        $container->register('app.listener.command_exception', ConsoleExceptionListener::class)
+            ->addArgument(new Reference('logger'))
+            ->addTag(
+                'kernel.event_listener',
+                array('event' => 'console.exception')
+            );
 
 Then implement the actual listener::
 
@@ -196,8 +191,9 @@ First configure a listener for console terminate events in the service container
         <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.listener.command_error" class="AppBundle\EventListener\ErrorLoggerListener">
@@ -205,27 +201,21 @@ First configure a listener for console terminate events in the service container
                     <tag name="kernel.event_listener" event="console.terminate" />
                 </service>
             </services>
+
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
         use AppBundle\EventListener\ErrorLoggerListener;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definitionErrorLoggerListener = new Definition(
-            ErrorLoggerListener::class,
-            array(new Reference('logger'))
-        );
-        $definitionErrorLoggerListener->addTag(
-            'kernel.event_listener',
-            array('event' => 'console.terminate')
-        );
-        $container->setDefinition(
-            'app.listener.command_error',
-            $definitionErrorLoggerListener
-        );
+        $container->register('app.listener.command_error', ErrorLoggerListener::class)
+            ->addArgument(new Reference('logger'))
+            ->addTag(
+                'kernel.event_listener',
+                array('event' => 'console.terminate')
+            );
 
 Then implement the actual listener::
 

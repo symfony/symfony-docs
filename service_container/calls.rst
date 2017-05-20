@@ -62,7 +62,6 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
 
         // app/config/services.php
         use AppBundle\Service\MessageGenerator;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('app.message_generator', 'AppBundle\Service\MessageGenerator')

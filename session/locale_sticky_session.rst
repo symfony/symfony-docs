@@ -75,25 +75,29 @@ Then register the listener:
 
     .. code-block:: xml
 
-        <service id="app.locale_listener"
-            class="AppBundle\EventListener\LocaleListener">
-            <argument>%kernel.default_locale%</argument>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <tag name="kernel.event_subscriber" />
-        </service>
+            <services>
+                <service id="app.locale_listener"
+                    class="AppBundle\EventListener\LocaleListener">
+                    <argument>%kernel.default_locale%</argument>
+
+                    <tag name="kernel.event_subscriber" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         use AppBundle\EventListener\LocaleListener;
-        use Symfony\Component\DependencyInjection\Definition;
 
-        $container
-            ->setDefinition('app.locale_listener', new Definition(
-                LocaleListener::class,
-                array('%kernel.default_locale%')
-            ))
-            ->addTag('kernel.event_subscriber')
-        ;
+        $container->register('app.locale_listener', LocaleListener::class)
+            ->addArgument('%kernel.default_locale%')
+            ->addTag('kernel.event_subscriber');
 
 That's it! Now celebrate by changing the user's locale and seeing that it's
 sticky throughout the request. Remember, to get the user's locale, always

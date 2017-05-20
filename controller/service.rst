@@ -72,9 +72,17 @@ Then you can define it as a service as follows:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="app.hello_controller" class="AppBundle\Controller\HelloController" />
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.hello_controller" class="AppBundle\Controller\HelloController" />
+            </services>
+
+        </container>
 
     .. code-block:: php
 
@@ -112,9 +120,17 @@ the route ``_controller`` value:
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" path="/hello">
-            <default key="_controller">app.hello_controller:indexAction</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="hello" path="/hello">
+                <default key="_controller">app.hello_controller:indexAction</default>
+            </route>
+
+        </routes>
 
     .. code-block:: php
 
@@ -219,23 +235,28 @@ argument:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="app.hello_controller" class="AppBundle\Controller\HelloController">
-                <argument type="service" id="templating"/>
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.hello_controller" class="AppBundle\Controller\HelloController">
+                    <argument type="service" id="templating"/>
+                </service>
+            </services>
+
+        </container>
 
     .. code-block:: php
 
         // app/config/services.php
         use AppBundle\Controller\HelloController;
-        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->setDefinition('app.hello_controller', new Definition(
-            HelloController::class,
-            array(new Reference('templating'))
-        ));
+        $container->register('app.hello_controller', HelloController::class)
+            ->addArgument(new Reference('templating'));
 
 Rather than fetching the ``templating`` service from the container, you can
 inject *only* the exact service(s) that you need directly into the controller.

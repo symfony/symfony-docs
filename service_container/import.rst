@@ -76,14 +76,11 @@ service files:
 
         // app/config/services/mailer.php
         use AppBundle\Mailer;
-        use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('app.mailer.transport', 'sendmail');
 
-        $container->setDefinition('app.mailer', new Definition(
-            Mailer::class,
-            array('%app.mailer.transport%')
-        ));
+        $container->register('app.mailer', Mailer::class)
+            ->addArgument('%app.mailer.transport%');
 
 The definition itself hasn't changed, only its location. To make the service
 container load the definitions in this resource file, use the ``imports`` key
@@ -160,9 +157,9 @@ invokes the service container extension inside the FrameworkBundle:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config secret="xxxxxxxxxx">
                 <framework:form />

@@ -390,12 +390,19 @@ it with :ref:`dic-tags-form-type`.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <services>
-            <service id="app.form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
-                <argument type="service" id="security.token_storage" />
-                <tag name="form.type" alias="app_friend_message" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
+                    <argument type="service" id="security.token_storage" />
+                    <tag name="form.type" alias="app_friend_message" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -403,12 +410,9 @@ it with :ref:`dic-tags-form-type`.
         use AppBundle\Form\Type\FriendMessageFormType;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $definition = new Definition(FriendMessageFormType::class, array(
-            new Reference('security.token_storage')
-        ));
-        $definition->addTag('form.type', array('alias' => 'app_friend_message'));
-
-        $container->setDefinition('app.form.friend_message', $definition);
+        $container->register('app.form.friend_message', FriendMessageFormType::class)
+            ->addArgument(new Reference('security.token_storage'))
+            ->addTag('form.type', array('alias' => 'app_friend_message'));
 
 If you wish to create it from within a service that has access to the form factory,
 you then use::
