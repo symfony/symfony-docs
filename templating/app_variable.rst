@@ -6,7 +6,7 @@ How to Access the User, Request, Session & more in Twig via the ``app`` Variable
 
 During each request, Symfony will set a global template variable ``app``
 in both Twig and PHP template engines by default. The ``app`` variable
-is a :class:`Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables`
+is a :class:`Symfony\\Bridge\\Twig\\AppVariable`
 instance which will give you access to some application specific variables
 automatically:
 
