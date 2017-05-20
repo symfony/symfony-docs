@@ -1,7 +1,7 @@
 The Symfony 3.3 DI Container Changes Explained (autowiring, _defaults, etc)
 ===========================================================================
 
-If you look at the ``services.yml`` file for a new Symfony 3.3 project, you'll
+If you look at the ``services.yml`` file in a new Symfony 3.3 project, you'll
 notice some big changes: ``_defaults``, ``autowiring``, ``autoconfigure`` and more.
 These features are designed to *automate* configuration and make development faster,
 without sacrificing predictability, which is very important! Another goal is to make
@@ -22,7 +22,7 @@ which means it's always safe to upgrade across minor versions.
 All of the new features are **opt-in**: you need to actually change your configuration
 files to use them.
 
-The new default services.yml File
+The new Default services.yml File
 ---------------------------------
 
 To understand the changes, look at the new default ``services.yml`` file in the
@@ -97,7 +97,7 @@ Symfony Standard Edition:
             ->addTag('controller.service_arguments')
             ->setPublic(false);
 
-This small bit of configuration contains some big philosophical changes to how services
+This small bit of configuration contains a paradigm shift of how services
 are configured in Symfony.
 
 .. _`service-33-changes-automatic-registration`:
@@ -270,7 +270,7 @@ If you have an argument that is *not* an object, it can't be autowired. But that
 ok! Symfony will give you a clear exception (on the next refresh of *any* page) telling
 you which argument of which service could not be autowired. To fix it, you can
 :ref:`manually configure *just* that one argument <services-manually-wire-args>`.
-This is the philosophy or autowiring: only configure the parts that you need to.
+This is the philosophy of autowiring: only configure the parts that you need to.
 Most configuration is automated.
 
     Ok, but autowiring makes your applications less stable. If you change one thing
@@ -348,7 +348,8 @@ the same base ``Controller`` class or a new :ref:`AbstractController <controller
 This means you have access to all of the same shortcuts as before. Additionally,
 the ``@Route`` annotation and ``_controller`` syntax (e.g.``AppBundle:Default:homepage``)
 used in routing will automatically use your controller as a service (as long as its
-service id matches its class name, which it *does* in this case).
+service id matches its class name, which it *does* in this case). See :ref:`/controller/service`
+for more details. You can even create :ref:`invokable controllers <controller-service-invoke>`
 
 In other words, everything works the same. You can even add the above configuration
 to your existing project without any issues: your controllers will behave the same
@@ -368,10 +369,13 @@ action methods, just like you can with the constructor of services. For example:
         }
     }
 
-This is special to controllers *only*, and your controller service must be tagged
-with ``controller.service_arguments`` to make it happen. This new method is used
-throughout the documentation. You can use it, use normal constructor dependency injection,
-or continue to fetch *public* services via ``$this->container->get()``.
+This is *only* possible in a controller, and your controller service must be tagged
+with ``controller.service_arguments`` to make it happen. This new feature is used
+throughout the documentation.
+
+In general, the new best practice is to use normal constructor dependency injection
+(or "action" injection in controllers) instead of fetching public services via
+``$this->get()`` (though that does still work).
 
 4) Auto-tagging with autoconfigure
 ----------------------------------
@@ -415,7 +419,8 @@ In this case, you've created a class that implements ``EventSubscriberInterface`
 and registered it as a service. This is more than enough for the container to know
 that you want this to be used as an event subscriber: more configuration is not needed.
 And the tags system is its own, Symfony-specific mechanism. And of course, you can
-always turn this off globally, or on a service-by-service basis.
+always default ``autowire`` to false in ``services.yml``, or disable it for a specific
+service.
 
     Does this mean tags are dead? Does this work for all tags?
 
@@ -580,8 +585,8 @@ Thanks to this, any services created in this file cannot be fetched directly fro
 the container. But, since the old service id's are aliases in a separate file (``legacy_aliases.yml``),
 these *are* still public. This makes sure the app keeps working.
 
-If you have any services whose id's you did *not* change to the class (because there
-are multiple instances), you may need to make those public:
+If you did *not* change the id of some of your services (because there are multiple
+instances of the same class), you may need to make those public:
 
 .. code-block:: diff
 
@@ -663,7 +668,7 @@ Step 5) Cleanup!
 ~~~~~~~~~~~~~~~~
 
 To make sure your application didn't break, you did some extra work. Now it's time
-to things up! First, update your application to *not* use the old service id's (the
+to clean things up! First, update your application to *not* use the old service id's (the
 ones in ``legacy_aliases.yml``). This means updating any service arguments (e.g.
 ``@app.github_notifier`` to ``@AppBundle\Service\GitHubNotifier``) and updating your
 code to not fetch this service directly from the container. For example::
