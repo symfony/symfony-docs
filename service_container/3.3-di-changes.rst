@@ -348,7 +348,7 @@ the same base ``Controller`` class or a new :ref:`AbstractController <controller
 This means you have access to all of the same shortcuts as before. Additionally,
 the ``@Route`` annotation and ``_controller`` syntax (e.g.``AppBundle:Default:homepage``)
 used in routing will automatically use your controller as a service (as long as its
-service id matches its class name, which it *does* in this case). See :ref:`/controller/service`
+service id matches its class name, which it *does* in this case). See :doc:`/controller/service`
 for more details. You can even create :ref:`invokable controllers <controller-service-invoke>`
 
 In other words, everything works the same. You can even add the above configuration
