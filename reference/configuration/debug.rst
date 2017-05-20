@@ -64,7 +64,8 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
         <container xmlns="http://symfony.com/schema/dic/debug"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:debug="http://symfony.com/schema/dic/debug"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/debug http://symfony.com/schema/dic/debug/debug-1.0.xsd">
 
             <debug:config dump-destination="php://stderr" />

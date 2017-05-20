@@ -1,30 +1,16 @@
 Contributing to the Documentation
 =================================
 
-One of the essential principles of the Symfony project is that **documentation
-is as important as code**. That's why a great amount of resources are dedicated
-to documenting new features and to keeping the rest of the documentation
-up-to-date.
-
-More than 1,000 developers all around the world have contributed to Symfony's
-documentation and we are glad that you are considering joining this big family.
-This guide will explain everything you need to contribute to the Symfony
-documentation.
-
 Before Your First Contribution
 ------------------------------
 
-**Before contributing**, you should consider the following:
+**Before contributing**, you need to:
 
-* Symfony documentation is written using `reStructuredText`_ markup language.
-  If you are not familiar with this format, read
-  :doc:`this article </contributing/documentation/format>` for a quick overview
-  of its basic features.
-* Symfony documentation is hosted on `GitHub`_. You'll need a free GitHub user
-  account to contribute to the documentation.
-* Symfony documentation is published under a
-  :doc:`Creative Commons BY-SA 3.0 License </contributing/documentation/license>`
-  and all your contributions will implicitly adhere to that license.
+* Sign up for a free `GitHub`_ account, which is the service where the Symfony
+  documentation is hosted.
+* Be familiar with the `reStructuredText`_ markup language, which is used to
+  write Symfony docs. Read :doc:`this article </contributing/documentation/format>`
+  for a quick overview.
 
 .. _minor-changes-e-g-typos:
 

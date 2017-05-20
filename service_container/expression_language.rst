@@ -37,8 +37,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd"
-            >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="my_mailer" class="AppBundle\Mailer">
@@ -83,8 +82,7 @@ via a ``container`` variable. Here's another example:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd"
-            >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="my_mailer" class="AppBundle\Mailer">

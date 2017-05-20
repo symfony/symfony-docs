@@ -253,15 +253,38 @@ all the forms as a string separated by a pipe (``|``)::
 To translate pluralized messages, use the
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method::
 
+    // the %count% placeholder is assigned to the second argument...
     $translator->transChoice(
         'There is one apple|There are %count% apples',
+        10
+    );
+
+    // ...but you can define more placeholders if needed
+    $translator->transChoice(
+        'Hurry up %name%! There is one apple left.|There are %count% apples left.',
         10,
-        array('%count%' => 10)
+        // no need to include %count% here; Symfony does that for you
+        array('%name%' => $user->getName())
     );
 
 The second argument (``10`` in this example) is the *number* of objects being
 described and is used to determine which translation to use and also to populate
 the ``%count%`` placeholder.
+
+.. versionadded:: 3.2
+
+    Before Symfony 3.2, the placeholder used to select the plural (``%count%``
+    in this example) must be included in the third optional argument of the
+    ``transChoice()`` method::
+
+        $translator->transChoice(
+            'There is one apple|There are %count% apples',
+            10,
+            array('%count%' => 10)
+        );
+
+    Starting from Symfony 3.2, when the only placeholder is ``%count%``, you
+    don't have to pass this third argument.
 
 Based on the given number, the translator chooses the right plural form.
 In English, most words have a singular form when there is exactly one object
@@ -366,10 +389,24 @@ use for translation::
     $translator->transChoice(
         '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
-        array('%count%' => 10),
+        array(),
         'messages',
         'fr_FR'
     );
+
+.. note::
+
+    Starting from Symfony 3.2, the third argument of ``transChoice()`` is
+    optional when the only placeholder in use is ``%count%``. In previous
+    Symfony versions you needed to always define it::
+
+        $translator->transChoice(
+            '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
+            10,
+            array('%count%' => 10),
+            'messages',
+            'fr_FR'
+        );
 
 Retrieving the Message Catalogue
 --------------------------------

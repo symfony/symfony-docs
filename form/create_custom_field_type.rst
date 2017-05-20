@@ -176,9 +176,19 @@ link for details), create a ``gender_widget`` block to handle this:
         .. code-block:: xml
 
             <!-- app/config/config.xml -->
-            <twig:config>
-                <twig:form-theme>form/fields.html.twig</twig:form-theme>
-            </twig:config>
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:twig="http://symfony.com/schema/dic/twig"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/twig
+                    http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+                <twig:config>
+                    <twig:form-theme>form/fields.html.twig</twig:form-theme>
+                </twig:config>
+            </container>
 
         .. code-block:: php
 

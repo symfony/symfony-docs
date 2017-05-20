@@ -91,7 +91,7 @@ call if the service exists and remove the method call if it does not:
 
                 <service id="app.newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
                     <call method="setMailer">
-                        <argument type="service" id="my_mailer" on-invalid="ignore"/>
+                        <argument type="service" id="app.mailer" on-invalid="ignore"/>
                     </call>
                 </service>
             </services>
@@ -110,11 +110,17 @@ call if the service exists and remove the method call if it does not:
             ->register('app.newsletter_manager', NewsletterManager::class)
             ->addMethodCall('setMailer', array(
                 new Reference(
-                    'my_mailer',
+                    'app.mailer',
                     ContainerInterface::IGNORE_ON_INVALID_REFERENCE
                 ),
             ))
         ;
+
+.. note::
+
+    If the argument to the method call is a collection of arguments and any of
+    them is missing, those elements are removed but the method call is still
+    made with the remaining elements of the collection.
 
 In YAML, the special ``@?`` syntax tells the service container that the dependency
 is optional. Of course, the ``NewsletterManager`` must also be rewritten by

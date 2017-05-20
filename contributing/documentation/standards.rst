@@ -1,8 +1,8 @@
 Documentation Standards
 =======================
 
-In order to help the reader as much as possible and to create code examples that
-look and feel familiar, you should follow these standards.
+Contributions must follow these standards to match the style and tone of the
+rest of the Symfony documentation.
 
 Sphinx
 ------

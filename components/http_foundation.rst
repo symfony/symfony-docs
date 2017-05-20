@@ -544,7 +544,7 @@ handling, switching to chunked encoding instead::
 
     If you *just* created the file during this same request, the file *may* be sent
     without any content. This may be due to cached file stats that return zero for
-    the size of the file. To fix this issue, call ``clearstatcache(false, $file)``
+    the size of the file. To fix this issue, call ``clearstatcache(true, $file)``
     with the path to the binary file.
 
 .. _component-http-foundation-json-response:

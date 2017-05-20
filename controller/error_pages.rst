@@ -228,6 +228,7 @@ configuration option to point to it:
             <twig:config>
                 <twig:exception-controller>AppBundle:Exception:showException</twig:exception-controller>
             </twig:config>
+
         </container>
 
     .. code-block:: php
@@ -282,11 +283,12 @@ In that case, you might want to override one or both of the ``showAction()`` and
         .. code-block:: xml
 
             <!-- app/config/services.xml -->
-            <?xml version="1.0" encoding="utf-8" ?>
+            <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
-            >
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
                 <services>
                     <!-- ... be sure autowiring is enabled -->
                     <defaults autowire="true" ... />
@@ -296,6 +298,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
                         <argument key="$debug">%kernel.debug%</argument>
                     </service>
                 </services>
+
             </container>
 
         .. code-block:: php

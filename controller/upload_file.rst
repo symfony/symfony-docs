@@ -272,14 +272,11 @@ Then, define a service for this class:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
+            <!-- ... -->
 
-            <services>
-                <!-- ... -->
-
-                <service id="AppBundle\Service\FileUploader">
-                    <argument key="$targetDir">%brochures_directory%</argument>
-                </service>
-            </services>
+            <service id="AppBundle\FileUploader">
+                <argument>%brochures_directory%</argument>
+            </service>
         </container>
 
     .. code-block:: php
@@ -396,18 +393,18 @@ Now, register this class as a Doctrine listener:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-            <services>
-                <!-- ... be sure autowiring is enabled -->
-                <defaults autowire="true" ... />
-                <!-- ... -->
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-                <service id="AppBundle\EventListener\BrochureUploaderListener">
-                    <tag name="doctrine.event_listener" event="prePersist"/>
-                    <tag name="doctrine.event_listener" event="preUpdate"/>
-                </service>
-            </services>
+            <!-- ... be sure autowiring is enabled -->
+            <defaults autowire="true" ... />
+            <!-- ... -->
+
+            <service id="AppBundle\EventListener\BrochureUploaderListener">
+                <argument type="service" id="app.brochure_uploader"/>
+
+                <tag name="doctrine.event_listener" event="prePersist"/>
+                <tag name="doctrine.event_listener" event="preUpdate"/>
+            </service>
         </container>
 
     .. code-block:: php

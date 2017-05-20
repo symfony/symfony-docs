@@ -1,8 +1,8 @@
 Documentation Format
 ====================
 
-The Symfony documentation uses reStructuredText_ as its markup language and
-Sphinx_ for generating the documentation in the formats read by the end users,
+The Symfony documentation uses `reStructuredText`_ as its markup language and
+`Sphinx`_ for generating the documentation in the formats read by the end users,
 such as HTML and PDF.
 
 reStructuredText

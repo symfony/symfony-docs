@@ -83,13 +83,20 @@ Now you must let the Service Container know about your newly created Twig Extens
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="app.twig_extension"
-                class="AppBundle\Twig\AppExtension"
-                public="false">
-                <tag name="twig.extension" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.twig_extension"
+                    class="AppBundle\Twig\AppExtension"
+                    public="false">
+                    <tag name="twig.extension" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

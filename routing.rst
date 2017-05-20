@@ -542,6 +542,12 @@ and method: ``AppBundle\Controller\BlogController::showAction``. But if you
 follow some simple conventions, the logical name is more concise and allows
 more flexibility.
 
+.. tip::
+
+   To refer to an action that is implemented as the ``__invoke()`` method of a controller class,
+   you do not have to pass the method name, but can just use the fully qualified class name (e.g.
+   ``AppBundle\Controller\BlogController``).
+
 .. note::
 
    In addition to using the logical name or the fully-qualified class name,

@@ -63,11 +63,12 @@ duplicated service definitions:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <!-- as no class is configured, the parent service MUST be abstract -->
-                <service id="app.base_doctrine_repository" abstract="true"> 
+                <service id="app.base_doctrine_repository" abstract="true">
                     <argument type="service" id="doctrine.entity_manager" />
 
                     <call method="setLogger">
@@ -170,7 +171,8 @@ in the child class:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <!-- ... -->
