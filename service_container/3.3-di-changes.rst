@@ -583,6 +583,8 @@ these *are* still public. This makes sure the app keeps working.
 If you have any services whose id's you did *not* change to the class (because there
 are multiple instances), you may need to make those public:
 
+.. code-block:: diff
+
     # app/config/services.yml
     # ...
     
