@@ -95,7 +95,7 @@ Symfony Standard Edition:
         $container->autowire(DefaultController::class)
             ->setAutoconfigured(true)
             ->addTag('controller.service_arguments')
-            ->setPublic(false);
+            ->setPublic(true);
 
 This small bit of configuration contains a paradigm shift of how services
 are configured in Symfony.
@@ -341,7 +341,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
         $container->autowire(DefaultController::class)
             ->setAutoconfigured(true)
             ->addTag('controller.service_arguments')
-            ->setPublic(false);
+            ->setPublic(true);
 
 But, you might not even notice this. First, your controllers *can* still extend
 the same base ``Controller`` class or a new :ref:`AbstractController <controller-abstract-versus-controller>`.
