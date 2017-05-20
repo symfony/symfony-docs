@@ -144,6 +144,8 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
 This works automatically! The container knows to pass the ``Rot13Transformer`` service
 as the first argument when creating the ``TwitterClient`` service.
 
+.. _autowiring-logic-explained:
+
 Autowiring Logic Explained
 --------------------------
 
