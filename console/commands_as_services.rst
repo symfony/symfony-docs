@@ -27,9 +27,7 @@ with ``console.command``:
 
         # app/config/config.yml
         services:
-            app.command.my_command:
-                class: AppBundle\Command\MyCommand
-                tags: [console.command]
+            AppBundle\Command\MyCommand: [console.command]
 
     .. code-block:: xml
 
@@ -41,8 +39,7 @@ with ``console.command``:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.command.my_command"
-                    class="AppBundle\Command\MyCommand">
+                <service id="AppBundle\Command\MyCommand">
                     <tag name="console.command" />
                 </service>
             </services>
@@ -54,8 +51,7 @@ with ``console.command``:
         // app/config/config.php
         use AppBundle\Command\MyCommand;
 
-        $container
-            ->register('app.command.my_command', MyCommand::class)
+        $container->register(MyCommand::class)
             ->addTag('console.command')
         ;
 
@@ -132,8 +128,7 @@ inject the ``command.default_name`` parameter:
             command.default_name: Javier
 
         services:
-            app.command.my_command:
-                class: AppBundle\Command\MyCommand
+            AppBundle\Command\MyCommand:
                 arguments: ["%command.default_name%"]
                 tags: [console.command]
 
@@ -151,8 +146,7 @@ inject the ``command.default_name`` parameter:
             </parameters>
 
             <services>
-                <service id="app.command.my_command"
-                    class="AppBundle\Command\MyCommand">
+                <service class="AppBundle\Command\MyCommand">
                     <argument>%command.default_name%</argument>
                     <tag name="console.command" />
                 </service>
@@ -168,7 +162,7 @@ inject the ``command.default_name`` parameter:
         $container->setParameter('command.default_name', 'Javier');
 
         $container
-            ->register('app.command.my_command', MyCommand::class)
+            ->register(MyCommand::class)
             ->setArguments(array('%command.default_name%'))
             ->addTag('console.command')
         ;
