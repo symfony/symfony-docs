@@ -131,6 +131,15 @@ an email is pretty straightforward::
         return $this->render(...);
     }
 
+.. caution::
+
+    Starting from SwiftMailer 6.0, creation of ``Swift_Message`` instance 
+    is done by creating a new class instead of calling a static method.
+    
+    .. code-block:: php
+
+            $message = new \Swift_Message;
+
 To keep things decoupled, the email body has been stored in a template and
 rendered with the ``renderView()`` method. The ``registration.html.twig``
 template might look something like this:
