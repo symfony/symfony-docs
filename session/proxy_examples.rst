@@ -110,12 +110,12 @@ and decrypt the session as required::
         {
             $data = parent::read($id);
 
-            return mcrypt_decrypt(\MCRYPT_3DES, $this->key, $data);
+            return openssl_decrypt($data, \OPENSSL_ALGO_SHA1, $this->key);
         }
 
         public function write($id, $data)
         {
-            $data = mcrypt_encrypt(\MCRYPT_3DES, $this->key, $data);
+            $data = openssl_encrypt($data, \OPENSSL_ALGO_SHA1, $this->key);
 
             return parent::write($id, $data);
         }
