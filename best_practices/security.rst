@@ -224,9 +224,9 @@ more advanced use-case, you can always do the same security check in PHP:
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
-    public function editAction($id)
+    public function editAction($id, EntityManagerInterface $em)
     {
-        $post = $this->getDoctrine()->getRepository('AppBundle:Post')
+        $post = $em->getRepository('AppBundle:Post')
             ->find($id);
 
         if (!$post) {
@@ -328,7 +328,8 @@ the same ``getAuthorEmail()`` logic you used above:
         }
     }
 
-Your application will :ref:`autoconfigure <services-autoconfigure>` your security
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+your application will :ref:`autoconfigure <services-autoconfigure>` your security
 voter and inject a ``AccessDecisionManagerInterface`` instance in it thanks to
 :doc:`autowiring </service_container/autowiring>`.
 
