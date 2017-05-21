@@ -1,0 +1,50 @@
+---------------------------------------------------------------------------
+
+by GuilhemN at 2017-05-12T16:59:13Z
+
+I think I'll split this PR in smaller PRs like #7902 because it's much longer to respect https://github.com/symfony/symfony-docs/pull/7877#discussion_r116263681.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-05-16T10:49:14Z
+
+> I updated some examples using 3.3 di features, but there is still a lot to do.
+
+@GuilhemN In fact, I apologize, because I'm completely running over your work :/. There are just so many entries to update, that I've been keeping a list locally and running through them (and making GIANT PRs). That's not idea, but I don't think we'll be able to update everything in time without doing that. However, that *does* mean that those PR's need review (and also, possible some of the most important docs could/should be proofread afterwards ).
+
+However, you do have a few entires I don't. Could you rebase? So far, I'm skipping the following directories and saving for later:
+
+- best_practices
+- bundles
+- components
+- console
+- create_framework
+- reference
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by GuilhemN at 2017-05-16T15:10:55Z
+
+> @GuilhemN In fact, I apologize, because I'm completely running over your work :/. There are just so many entries to update, that I've been keeping a list locally and running through them (and making GIANT PRs).
+
+No problem, this PR didn't take me long to do :)
+
+> Could you rebase?
+
+done ;)
+
+Do you still need help for the remaining parts?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-05-19T14:06:49Z
+
+@GuilhemN Can you resolve the conflicts? :)
+
+---------------------------------------------------------------------------
+
+by GuilhemN at 2017-05-19T15:57:34Z
+
+@xabbuh done
