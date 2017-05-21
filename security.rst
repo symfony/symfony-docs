@@ -14,9 +14,9 @@ is both flexible and (hopefully) fun to work with.
 Since there's a lot to talk about, this article is organized into a few big
 sections:
 
-#. Initial ``security.yml`` setup (*authentication*).
+#. Initial ``security.yml`` setup (*authentication*);
 
-#. Denying access to your app (*authorization*).
+#. Denying access to your app (*authorization*);
 
 #. Fetching the current User object.
 
@@ -611,10 +611,10 @@ basic auth and loads users right from the ``security.yml`` file.
 Your next steps depend on your setup:
 
 * Configure a different way for your users to login, like a :ref:`login form <security-form-login>`
-  or :doc:`something completely custom </security/custom_authentication_provider>`.
+  or :doc:`something completely custom </security/custom_authentication_provider>`;
 
 * Load users from a different source, like the :doc:`database </security/entity_provider>`
-  or :doc:`some other source </security/custom_provider>`.
+  or :doc:`some other source </security/custom_provider>`;
 
 * Learn how to deny access, load the User object and deal with roles in the
   :ref:`Authorization <security-authorization>` section.
@@ -684,7 +684,7 @@ There are **two** ways to deny access to something:
 
 #. :ref:`access_control in security.yml <security-authorization-access-control>`
    allows you to protect URL patterns (e.g. ``/admin/*``). This is easy,
-   but less flexible.
+   but less flexible;
 
 #. :ref:`in your code via the security.authorization_checker service <security-securing-controller>`.
 
