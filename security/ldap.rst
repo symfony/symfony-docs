@@ -62,14 +62,14 @@ extension with the following service definition:
                 class: Symfony\Component\Ldap\Ldap
                 arguments: ['@ext_ldap_adapter']
             ext_ldap_adapter:
-		class: Symfony\Component\Ldap\Adapter\ExtLdap\Adapter
-		arguments:
-		    -   host: my-server
-			port: 389
-			encryption: tls
-			options:
-			    protocol_version: 3
-			    referrals: false
+                class: Symfony\Component\Ldap\Adapter\ExtLdap\Adapter
+                arguments:
+                    -   host: my-server
+                        port: 389
+                        encryption: tls
+                        options:
+                            protocol_version: 3
+                            referrals: false
 
     .. code-block:: xml
 
@@ -84,15 +84,15 @@ extension with the following service definition:
                     <argument type="service" id="ext_ldap_adapter" />
                 </service>
                 <service id="ext_ldap_adapter" class="Symfony\Component\Ldap\Adapter\ExtLdap\Adapter">
-		    <argument type="collection">
-			<argument key="host">my-server</argument>
-			<argument key="port">389</argument>
-			<argument key="encryption">tls</argument>
-			<argument key="options" type="collection">
-			    <argument key="protocol_version">3</argument>
-			    <argument key="referrals">false</argument>
-			</argument>
-		    </argument>
+                    <argument type="collection">
+                        <argument key="host">my-server</argument>
+                        <argument key="port">389</argument>
+                        <argument key="encryption">tls</argument>
+                        <argument key="options" type="collection">
+                            <argument key="protocol_version">3</argument>
+                            <argument key="referrals">false</argument>
+                        </argument>
+                    </argument>
                 </service>
             </services>
         </container>
