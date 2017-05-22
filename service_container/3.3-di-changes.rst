@@ -492,9 +492,9 @@ Start by adding a ``_defaults`` section with ``autowire`` and ``autoconfigure``.
 
     # app/config/services.yml
     services:
-    +    _defaults:
-    +        autowire: true
-    +        autoconfigure: true
+    +     _defaults:
+    +         autowire: true
+    +         autoconfigure: true
 
         # ...
 
@@ -519,15 +519,15 @@ Start by updating the service ids to class names:
     services:
         # ...
 
-    -    app.github_notifier:
-    -        class: AppBundle\Service\GitHubNotifier
-    +    AppBundle\Service\GitHubNotifier:
+    -     app.github_notifier:
+    -         class: AppBundle\Service\GitHubNotifier
+    +     AppBundle\Service\GitHubNotifier:
             arguments:
                 - '@app.api_client_github'
 
-    -    markdown_transformer:
-    -        class: AppBundle\Service\MarkdownTransformer
-    +    AppBundle\Service\MarkdownTransformer: ~
+    -     markdown_transformer:
+    -         class: AppBundle\Service\MarkdownTransformer
+    +     AppBundle\Service\MarkdownTransformer: ~
 
         # keep these ids because there are multiple instances per class
         app.api_client_github:
@@ -557,8 +557,8 @@ Then import this at the top of ``services.yml``:
 .. code-block:: diff
 
     # app/config/services.yml
-    +imports:
-    +    - { resource: legacy_aliases.yml }
+    + imports:
+    +     - { resource: legacy_aliases.yml }
 
     # ...
 
@@ -579,7 +579,7 @@ Now you're ready to default all services to be private:
          _defaults:
              autowire: true
              autoconfigure: true
-    +        public: false
+    +          public: false
 
 Thanks to this, any services created in this file cannot be fetched directly from
 the container. But, since the old service id's are aliases in a separate file (``legacy_aliases.yml``),
@@ -596,16 +596,16 @@ instances of the same class), you may need to make those public:
     services:
         # ...
 
-         app.api_client_github:
-             # ...
+        app.api_client_github:
+            # ...
 
-    +        # remove this if/when you are not fetching this
-    +        # directly from the container via $container->get()
-    +        public: true
+    +         # remove this if/when you are not fetching this
+    +         # directly from the container via $container->get()
+    +         public: true
 
-         app.api_client_sl_connect:
-             # ...
-    +        public: true
+        app.api_client_sl_connect:
+            # ...
+    +         public: true
 
 This is to guarantee that the application doesn't break. If you're not fetching
 these services directly from the container, this isn't needed. In a minute, you'll
@@ -625,14 +625,14 @@ You're now ready to automatically register all services in ``src/AppBundle/``
         _defaults:
             # ...
 
-    +    AppBundle\:
-    +        resource: '../../src/AppBundle/*'
-    +        exclude: '../../src/AppBundle/{Entity,Repository}'
-    +
-    +    AppBundle\Controller\:
-    +        resource: '../../src/AppBundle/Controller'
-    +        public: true
-    +        tags: ['controller.service_arguments']
+    +     AppBundle\:
+    +         resource: '../../src/AppBundle/*'
+    +         exclude: '../../src/AppBundle/{Entity,Repository}'
+    + 
+    +     AppBundle\Controller\:
+    +         resource: '../../src/AppBundle/Controller'
+    +         public: true
+    +         tags: ['controller.service_arguments']
 
         # ...
 
@@ -650,14 +650,14 @@ same class:
     services:
         # ...
 
-    +    # alias ApiClient to one of our services below
-    +    # app.api_client_github will be used to autowire ApiClient type-hints
-    +    AppBundle\Service\ApiClient: '@app.api_client_github'
+    +     # alias ApiClient to one of our services below
+    +     # app.api_client_github will be used to autowire ApiClient type-hints
+    +     AppBundle\Service\ApiClient: '@app.api_client_github'
 
-         app.api_client_github:
-             # ...
-         app.api_client_sl_connect:
-             # ...
+        app.api_client_github:
+            # ...
+        app.api_client_sl_connect:
+            # ...
 
 This guarantees that if you try to autowire an ``ApiClient`` instance, the ``app.api_client_github``
 will be used. If you *don't* have this, the auto-registration feature will try to
@@ -671,17 +671,19 @@ To make sure your application didn't break, you did some extra work. Now it's ti
 to clean things up! First, update your application to *not* use the old service id's (the
 ones in ``legacy_aliases.yml``). This means updating any service arguments (e.g.
 ``@app.github_notifier`` to ``@AppBundle\Service\GitHubNotifier``) and updating your
-code to not fetch this service directly from the container. For example::
+code to not fetch this service directly from the container. For example:
 
-    -    public function indexAction()
-    +    public function indexAction(GitHubNotifier $gitHubNotifier, MarkdownTransformer $markdownTransformer)
-         {
-    -        // the old way of fetching services
-    -        $githubNotifier = $this->container->get('app.github_notifier');
-    -        $markdownTransformer = $this->container->get('markdown_transformer');
+.. code-block:: diff
+
+    -     public function indexAction()
+    +     public function indexAction(GitHubNotifier $gitHubNotifier, MarkdownTransformer $markdownTransformer)
+        {
+    -         // the old way of fetching services
+    -         $githubNotifier = $this->container->get('app.github_notifier');
+    -         $markdownTransformer = $this->container->get('markdown_transformer');
 
             // ...
-         }
+        }
 
 As soon as you do this, you can delete ``legacy_aliases.yml`` and remove its import.
 You should do the same thing for any services that you made public, like
@@ -694,13 +696,13 @@ these directly from the container, you can remove the ``public: true`` flag:
     services:
         # ...
 
-         app.api_client_github:
-             # ...
-    -        public: true
+        app.api_client_github:
+            # ...
+    -         public: true
 
-         app.api_client_sl_connect:
-             # ...
-    -        public: true
+        app.api_client_sl_connect:
+            # ...
+    -         public: true
 
 Finally, you can optionally remove any services from ``services.yml`` whose arguments
 can be autowired. The final configuration looks like this:
