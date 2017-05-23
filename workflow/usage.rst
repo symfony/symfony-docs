@@ -214,7 +214,7 @@ Here is an example how to enable logging for every time a the "blog_publishing" 
         public function onLeave(Event $event)
         {
             $this->logger->alert(sprintf(
-                'Blog post (id: "%s") preformed transaction "%s" form "%s" to "%s"',
+                'Blog post (id: "%s") preformed transaction "%s" from "%s" to "%s"',
                 $event->getSubject()->getId(),
                 $event->getTransition()->getName(),
                 implode(', ', array_keys($event->getMarking()->getPlaces())),
