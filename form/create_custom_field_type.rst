@@ -32,9 +32,9 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
         {
             $resolver->setDefaults(array(
                 'choices' => array(
-                    'standard' => 'Standard Shipping',
-                    'expedited' => 'Expedited Shipping',
-                    'priority' => 'Priority Shipping',
+                    'Standard Shipping' => 'standard',
+                    'Expedited Shipping' => 'expedited',
+                    'Priority Shipping' => 'priority',
                 )
             ));
         }
@@ -394,7 +394,7 @@ method to ``ShippingType``, which receives the shipping configuration::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'choices' => $this->shippingOptions,
+                'choices' => array_flip($this->shippingOptions),
             ));
         }
 
