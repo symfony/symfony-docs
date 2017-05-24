@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-05-20T19:25:20Z
+
+We can't assume that users have 6.0 yet. But, the `Swift_Message` class isn't new... so does this syntax also work in Swiftmailer 5?
+
+Also, there are other spots we need to update - you can find them if you run:
+
+```
+git grep newInstance
+```
+
+Thanks - we have to make sure the details are correct, but this is a good change. And the old way definitely does *not* work in Swiftmailer 6
+
+---------------------------------------------------------------------------
+
+by grelu at 2017-05-21T14:39:32Z
+
+Apparently, no, it's a new method to create a message in 6.0. I have read the 5.x version of the documentation and it is not the same way of doing things :
+https://github.com/swiftmailer/swiftmailer/blob/5.x/doc/messages.rst
+So, what should I do now ? (I have committed the other spots changes)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-05-21T15:10:58Z
+
+Hmm, but check out the `Swift_Message::newInstance()` class on the 5.x branch - https://github.com/swiftmailer/swiftmailer/blob/5.x/lib/classes/Swift/Message.php#L73-L76. It's not doing anything special: just creating a new instance of itself. So it looks like the docs were just not using the new method. Even going WAY back to version 4.0... I can't see a reason why we were using `newInstance` instead of simply `new Swift_Message()`.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-05-21T15:11:57Z
+
+In other words 👍 - I think this is ready for merge... and into the 2.7 branch: this syntax appears to always have been valid.
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by grelu at 2017-05-21T15:46:59Z
+
+Perfect !
+
+---------------------------------------------------------------------------
+
+by grelu at 2017-05-21T18:53:24Z
+
+You're welcome and thank you !
