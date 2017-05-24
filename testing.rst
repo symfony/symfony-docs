@@ -262,7 +262,7 @@ document::
                 'Content-Type',
                 'application/json'
             ),
-            'the "Content-Type" header is "application/json"' // optional message shown on failure
+            'the "Content-Type" header should be "application/json"' // optional message shown on failure
         );
 
         // Assert that the response content contains a string
