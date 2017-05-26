@@ -74,6 +74,19 @@ matter of wrapping all the assets with a single Twig tag:
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
+
+
+As far as from Symfony 3, the Assetic is not included by default, you also need to add configuration to config.yml:
+
+.. code-block:: yaml
+assetic:
+    debug: "%kernel.debug%"
+    use_controller: "%kernel.debug%"
+    bundles: []
+    filters:
+        cssrewrite: ~
+
+
 Frontend-Based Applications
 ---------------------------
 
