@@ -313,9 +313,11 @@ example, suppose that you're storing the shipping parameters in configuration:
     .. code-block:: php
 
         // app/config/config.php
-        $container->setParameter('shipping_options.standard', 'Standard Shipping');
-        $container->setParameter('shipping_options.expedited', 'Expedited Shipping');
-        $container->setParameter('shipping_options.priority', 'Priority Shipping');
+        $container->setParameter('shipping_options', array(
+            'standard' => 'Standard Shipping',
+            'expedited' => 'Expedited Shipping',
+            'priority' => 'Priority Shipping',
+        ));
 
 To use the parameter, define your custom field type as a service, injecting the
 ``shipping_options`` parameter value as the first argument to its to-be-created
