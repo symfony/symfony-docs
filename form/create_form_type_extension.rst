@@ -5,7 +5,7 @@ How to Create a Form Type Extension
 ===================================
 
 :doc:`Custom form field types <create_custom_field_type>` are great when
-you need field types with a specific purpose, such as a gender selector,
+you need field types with a specific purpose, such as a shipping type selector,
 or a VAT number input.
 
 But sometimes, you don't really need to add new field types - you want

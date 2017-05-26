@@ -52,9 +52,9 @@ If your valid choice list is simple, you can pass them in directly via the
             protected $city;
 
             /**
-             * @Assert\Choice(choices = {"male", "female"}, message = "Choose a valid gender.")
+             * @Assert\Choice(choices = {"fiction", "non-fiction"}, message = "Choose a valid genre.")
              */
-            protected $gender;
+            protected $genre;
         }
 
     .. code-block:: yaml
@@ -64,10 +64,10 @@ If your valid choice list is simple, you can pass them in directly via the
             properties:
                 city:
                     - Choice: [New York, Berlin, Tokyo]
-                gender:
+                genre:
                     - Choice:
-                        choices:  [male, female]
-                        message:  Choose a valid gender.
+                        choices:  [fiction, non-fiction]
+                        message:  Choose a valid genre.
 
     .. code-block:: xml
 
@@ -85,13 +85,13 @@ If your valid choice list is simple, you can pass them in directly via the
                         <value>Tokyo</value>
                     </constraint>
                 </property>
-                <property name="gender">
+                <property name="genre">
                     <constraint name="Choice">
                         <option name="choices">
-                            <value>male</value>
-                            <value>female</value>
+                            <value>fiction</value>
+                            <value>non-fiction</value>
                         </option>
-                        <option name="message">Choose a valid gender.</option>
+                        <option name="message">Choose a valid genre.</option>
                     </constraint>
                 </property>
             </class>
@@ -107,7 +107,7 @@ If your valid choice list is simple, you can pass them in directly via the
 
         class Author
         {
-            protected $gender;
+            protected $genre;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
@@ -116,9 +116,9 @@ If your valid choice list is simple, you can pass them in directly via the
                      new Assert\Choice(array('New York', 'Berlin', 'Tokyo'))
                  );
 
-                $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
-                    'choices' => array('male', 'female'),
-                    'message' => 'Choose a valid gender.',
+                $metadata->addPropertyConstraint('genre', new Assert\Choice(array(
+                    'choices' => array('fiction', 'non-fiction'),
+                    'message' => 'Choose a valid genre.',
                 )));
             }
         }
@@ -138,9 +138,9 @@ form element.
 
     class Author
     {
-        public static function getGenders()
+        public static function getGenres()
         {
-            return array('male', 'female');
+            return array('fiction', 'non-fiction');
         }
     }
 
@@ -159,9 +159,9 @@ constraint.
         class Author
         {
             /**
-             * @Assert\Choice(callback = "getGenders")
+             * @Assert\Choice(callback = "getGenres")
              */
-            protected $gender;
+            protected $genre;
         }
 
     .. code-block:: yaml
@@ -169,8 +169,8 @@ constraint.
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             properties:
-                gender:
-                    - Choice: { callback: getGenders }
+                genre:
+                    - Choice: { callback: getGenres }
 
     .. code-block:: xml
 
@@ -181,9 +181,9 @@ constraint.
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
-                <property name="gender">
+                <property name="genre">
                     <constraint name="Choice">
-                        <option name="callback">getGenders</option>
+                        <option name="callback">getGenres</option>
                     </constraint>
                 </property>
             </class>
@@ -199,12 +199,12 @@ constraint.
 
         class Author
         {
-            protected $gender;
+            protected $genre;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
-                    'callback' => 'getGenders',
+                $metadata->addPropertyConstraint('genre', new Assert\Choice(array(
+                    'callback' => 'getGenres',
                 )));
             }
         }
@@ -224,9 +224,9 @@ you can pass the class name and the method as an array.
         class Author
         {
             /**
-             * @Assert\Choice(callback = {"Util", "getGenders"})
+             * @Assert\Choice(callback = {"Util", "getGenres"})
              */
-            protected $gender;
+            protected $genre;
         }
 
     .. code-block:: yaml
@@ -234,8 +234,8 @@ you can pass the class name and the method as an array.
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             properties:
-                gender:
-                    - Choice: { callback: [Util, getGenders] }
+                genre:
+                    - Choice: { callback: [Util, getGenres] }
 
     .. code-block:: xml
 
@@ -246,11 +246,11 @@ you can pass the class name and the method as an array.
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
-                <property name="gender">
+                <property name="genre">
                     <constraint name="Choice">
                         <option name="callback">
                             <value>Util</value>
-                            <value>getGenders</value>
+                            <value>getGenres</value>
                         </option>
                     </constraint>
                 </property>
@@ -267,12 +267,12 @@ you can pass the class name and the method as an array.
 
         class Author
         {
-            protected $gender;
+            protected $genre;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
-                    'callback' => array('Util', 'getGenders'),
+                $metadata->addPropertyConstraint('genre', new Assert\Choice(array(
+                    'callback' => array('Util', 'getGenres'),
                 )));
             }
         }

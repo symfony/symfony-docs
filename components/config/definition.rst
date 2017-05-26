@@ -141,13 +141,14 @@ values::
 
     $rootNode
         ->children()
-            ->enumNode('gender')
-                ->values(array('male', 'female'))
+            ->enumNode('delivery')
+                ->values(array('standard', 'expedited', 'priority'))
             ->end()
         ->end()
     ;
 
-This will restrict the ``gender`` option to be either ``male`` or ``female``.
+This will restrict the ``delivery`` options to be either ``standard``,
+``expedited``  or ``priority``.
 
 Array Nodes
 ~~~~~~~~~~~

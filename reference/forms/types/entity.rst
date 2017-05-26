@@ -156,8 +156,8 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
     For example, if the translations property is actually an associative
     array of objects, each with a name property, then you could do this::
 
-        $builder->add('gender', 'entity', array(
-           'class' => 'MyBundle:Gender',
+        $builder->add('genre', 'entity', array(
+           'class' => 'MyBundle:Genre',
            'choice_label' => 'translations[en].name',
         ));
 
