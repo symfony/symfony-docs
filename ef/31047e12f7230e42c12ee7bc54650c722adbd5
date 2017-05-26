@@ -1,0 +1,108 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-04-15T09:01:41Z
+
+Hello @rvanlaak, thank you for opening this PR :).
+
+I'm sorry I don't really get the issue you're trying to solve. The method `ereaseCredentials` is only about clearing any plain values (99,99% of cases the plain password) which are not meant to be in any database, ever.
+
+Could you explain a bit more why we should add this caution instead of trying to better describe the interface?
+
+---------------------------------------------------------------------------
+
+by rvanlaak at 2017-04-18T08:45:24Z
+
+@HeahDude the reason for the notice is that the security component is really flexible. It allows you to implement the `UserInterface` on a Doctrine entity directly. Implementing `eraseCredentials` (e.g. clearing the password) can have side effects, as you don't expect the password to be removed.
+
+A better implementation would be to decouple this and have a layer in between the security component and entity, as @iltar describes here: https://stovepipe.systems/post/decoupling-your-security-user
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-04-18T09:03:11Z
+
+@rvanlaak If you cleared the password through the `eraseCredentials()` call, this means that you would have stored the plaintext password in the database which is definitely a bad idea. Clearing credentials does not mean that you should throw away the hashed password. Is that something that could be made more clear?
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-04-18T09:06:01Z
+
+Thanks @rvanlaak for your response, but I think we don't understand each other :). When I say
+
+>The method ereaseCredentials is only about clearing any plain values
+
+You say
+
+>Implementing eraseCredentials (e.g. clearing the password) can have side effects, as you don't expect the password to be removed
+
+But this sounds wrong to me, this is a bad usage of the interface, so I think we should better explain it rather than adding a tip as you suggest (ref https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/User/UserInterface.php#L80-L87):
+
+>Removes sensitive data from the user.
+>This is important if, at any given point, sensitive information like the plain-text password is stored on this object.
+
+---------------------------------------------------------------------------
+
+by rvanlaak at 2017-04-18T09:08:12Z
+
+... well, as I now agree with all these arguments, we actually back then implemented it according to the cookbook: https://symfony.com/doc/2.2/cookbook/doctrine/registration_form.html
+
+So, yes as back then I just started with Symfony, I think there are some more documentation improvements here.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-04-19T18:17:53Z
+
+Would like to work further on this @rvanlaak or should we close here?
+
+---------------------------------------------------------------------------
+
+by rvanlaak at 2017-04-20T07:22:14Z
+
+@HeahDude yes, I'll improve the message.
+
+> The method ereaseCredentials is only about clearing any plain values (99,99% of cases the plain password) which are not meant to be in any database, ever.
+
+That actually is exactly what I think should clarified just a bit better. Yes, there never should be a plain password in the user entity, so that's why the method can be confusing when you directly implement the interface on the doctrine entity. Back then we expected the user entity to do some magic in the security component core classes.
+
+Should we improve the interface docblock too?
+```php
+/**
+ * Removes sensitive data from the user.
+ *
+ *Implement this method if, at any given point, sensitive information like
+ *the plain-text password is stored on this object. Make sure to not clear
+ *the hashed password on the object, as that then will be cleared as well.
+ */
+public function eraseCredentials();
+```
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-05-17T07:11:06Z
+
+What about something like:
+
+> The `earaseCredentials()` method is only meant to clean up possibly stored plain text passwords (or similar credentials). Be careful what to erase if your user class is also mapped to a database as the modified object will likely be persisted during the request.
+
+---------------------------------------------------------------------------
+
+by rvanlaak at 2017-05-17T07:12:24Z
+
+@xabbuh sounds good! Should it be added both in the interface itself and the docs, or you think only adding it to the docs is enough?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-05-17T07:29:07Z
+
+IMO it's enough to have this in the docs.
+
+---------------------------------------------------------------------------
+
+by rvanlaak at 2017-05-17T07:30:43Z
+
+Okay great! @xabbuh I've updated the PR
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-05-17T07:32:14Z
+
+@HeahDude good for you too now?
