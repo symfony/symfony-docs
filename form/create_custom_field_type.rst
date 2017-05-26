@@ -33,8 +33,8 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
         {
             $resolver->setDefaults(array(
                 'choices' => array(
-                    'm' => 'Male',
-                    'f' => 'Female',
+                    'Male' => 'm',
+                    'Female' => 'f',
                 )
             ));
         }
@@ -309,8 +309,13 @@ example, suppose that you're storing the gender parameters in configuration:
     .. code-block:: php
 
         // app/config/config.php
-        $container->setParameter('genders.m', 'Male');
-        $container->setParameter('genders.f', 'Female');
+        $container->setParameter(
+            'genders',
+            array(
+                'm' => 'Male',
+                'f' => 'Female',
+            )
+        );
 
 To use the parameter, define your custom field type as a service, injecting
 the ``genders`` parameter value as the first argument to its to-be-created
@@ -384,7 +389,7 @@ configuration::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'choices' => $this->genderChoices,
+                'choices' => array_flip($this->genderChoices),
             ));
         }
 
