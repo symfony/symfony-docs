@@ -21,6 +21,7 @@ sys.path.append(os.path.abspath('_theme/_exts'))
 # adding PhpLexer
 from sphinx.highlighting import lexers
 from pygments.lexers.compiled import CLexer
+from pygments.lexers.diff import DiffLexer
 from pygments.lexers.special import TextLexer
 from pygments.lexers.text import RstLexer
 from pygments.lexers.web import PhpLexer
@@ -110,6 +111,7 @@ lexers['rst'] = RstLexer()
 lexers['varnish3'] = CLexer()
 lexers['varnish4'] = CLexer()
 lexers['terminal'] = TerminalLexer()
+lexers['diff'] = DiffLexer()
 
 config_block = {
     'markdown': 'Markdown',
