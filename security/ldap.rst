@@ -49,8 +49,8 @@ The providers are configured to use a default service named ``ldap``,
 but you can override this setting in the security component's
 configuration.
 
-An LDAP client can be simply configured using the built-in ``ldap`` PHP
-extension with the following service definition:
+An LDAP client can be simply configured using the built-in
+`LDAP PHP extension`_ with the following service definition:
 
 .. configuration-block::
 
@@ -405,5 +405,6 @@ Configuration example for HTTP Basic
             ),
         );
 
+.. _`LDAP PHP extension`: http://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html
 .. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection
