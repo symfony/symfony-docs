@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-05-23T15:44:26Z
+
+Can you also fix the PHP code example setting the container parameter? Currently, it defines two parameters `genders.f` and `genders.m` while we need one parameter `genders` being an array.
+
+---------------------------------------------------------------------------
+
+by michaelperrin at 2017-05-23T15:52:14Z
+
+@xabbuh Done!
