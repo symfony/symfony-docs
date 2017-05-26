@@ -305,7 +305,6 @@ The ``security.interactive_login`` event is triggered after a user has actively
 logged into your website.  It is important to distinguish this action from
 non-interactive authentication methods, such as:
 
-* authentication based on a "remember me" cookie.
 * authentication based on your session.
 * authentication using a HTTP basic or HTTP digest header.
 

@@ -172,8 +172,8 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
         use Symfony\Bridge\Doctrine\Form\Type\EntityType;
         // ...
 
-        $builder->add('gender', EntityType::class, array(
-           'class' => 'AppBundle:Category',
+        $builder->add('genre', EntityType::class, array(
+           'class' => 'MyBundle:Genre',
            'choice_label' => 'translations[en].name',
         ));
 
