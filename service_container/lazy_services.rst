@@ -4,6 +4,10 @@
 Lazy Services
 =============
 
+.. seealso::
+
+    Another way to inject services lazily is via a :doc:`service locator </service_container/service_locators>`.
+
 Why Lazy Services?
 ------------------
 
@@ -48,8 +52,7 @@ You can mark the service as ``lazy`` by manipulating its definition:
     .. code-block:: yaml
 
         services:
-           app.twig_extension:
-             class: AppBundle\Twig\AppExtension
+           AppBundle\Twig\AppExtension:
              lazy:  true
 
     .. code-block:: xml
@@ -61,7 +64,7 @@ You can mark the service as ``lazy`` by manipulating its definition:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.twig_extension" class="AppBundle\Twig\AppExtension" lazy="true" />
+                <service id="AppBundle\Twig\AppExtension" lazy="true" />
             </services>
         </container>
 
@@ -69,7 +72,7 @@ You can mark the service as ``lazy`` by manipulating its definition:
 
         use AppBundle\Twig\AppExtension;
 
-        $container->register('app.twig_extension', AppExtension::class)
+        $container->register(AppExtension::class)
             ->setLazy(true);
 
 Once you inject the service into another service, a virtual `proxy`_ with the

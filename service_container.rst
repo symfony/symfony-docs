@@ -492,6 +492,10 @@ Thanks to this, the container will pass ``manager@example.com`` as the third arg
 to ``__construct`` when creating the ``SiteUpdateManager`` service. The other arguments
 will still be autowired.
 
+But, isn't this fragile? Fortunately, no! If you rename the ``$adminEmail`` argument
+to something else - e.g. ``$mainEmail`` - you will get a clear exception when you
+reload the next page (even if that page doesn't use this service).
+
 .. _service-container-parameters:
 
 Service Parameters

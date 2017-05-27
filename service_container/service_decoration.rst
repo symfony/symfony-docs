@@ -48,22 +48,27 @@ the original service is lost:
         $container->register('app.mailer', DecoratingMailer::class);
 
 Most of the time, that's exactly what you want to do. But sometimes,
-you might want to decorate the old one instead. In this case, the
-old service should be kept around to be able to reference it in the
-new one. This configuration replaces ``app.mailer`` with a new one, but keeps
-a reference of the old one  as ``app.decorating_mailer.inner``:
+you might want to decorate the old service instead and keep the old service so
+that you can reference it:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         services:
-            # ...
+            app.mailer:
+                class: AppBundle\Mailer
 
             app.decorating_mailer:
                 class:     AppBundle\DecoratingMailer
+                # overrides the app.mailer service
+                # but that service is still available as app.decorating_mailer.inner
                 decorates: app.mailer
+
+                # pass the old service as an argument
                 arguments: ['@app.decorating_mailer.inner']
+
+                # private, because usually you do not need to fetch app.decorating_mailer directly
                 public:    false
 
     .. code-block:: xml
@@ -74,7 +79,7 @@ a reference of the old one  as ``app.decorating_mailer.inner``:
             xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <!-- ... -->
+                <service id="app.mailer" class="AppBundle\Mailer" />
 
                 <service id="app.decorating_mailer"
                     class="AppBundle\DecoratingMailer"
@@ -90,26 +95,24 @@ a reference of the old one  as ``app.decorating_mailer.inner``:
     .. code-block:: php
 
         use AppBundle\DecoratingMailer;
+        use AppBundle\Mailer;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
+        $container->register('app.mailer', Mailer::class);
+
         $container->register('app.decorating_mailer', DecoratingMailer::class)
             ->setDecoratedService('app.mailer')
             ->addArgument(new Reference('app.decorating_mailer.inner'))
             ->setPublic(false)
         ;
 
-Here is what's going on here: the ``decorates`` option tells the container that
-the ``app.decorating_mailer`` service replaces the ``app.mailer`` service. By
-convention, the old ``app.mailer`` service is renamed to
-``app.decorating_mailer.inner``, so you can inject it into your new service.
+The ``decorates`` option tells the container that the ``app.decorating_mailer`` service
+replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed to
+``app.decorating_mailer.inner`` so you can inject it into your new service.
 
 .. tip::
 
-    Most of the time, the decorator should be declared private, as you will not
-    need to retrieve it as ``app.decorating_mailer`` from the container.
-
-    The visibility of the decorated ``app.mailer`` service (which is an alias
+    The visibility (public) of the decorated ``app.mailer`` service (which is an alias
     for the new service) will still be the same as the original ``app.mailer``
     visibility.
 
@@ -117,11 +120,8 @@ convention, the old ``app.mailer`` service is renamed to
 
     The generated inner id is based on the id of the decorator service
     (``app.decorating_mailer`` here), not of the decorated service (``app.mailer``
-    here). This is mandatory to allow several decorators on the same service
-    (they need to have different generated inner ids).
-
-    You can change the inner service name if you want to using the
-    ``decoration_inner_name`` option:
+    here). You can control the inner service name via the ``decoration_inner_name``
+    option:
 
     .. configuration-block::
 

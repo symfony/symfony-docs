@@ -19,12 +19,12 @@ The most common way to inject dependencies is via a class's constructor.
 To do this you need to add an argument to the constructor signature to accept
 the dependency::
 
-    namespace AppBundle\Mail\NewsletterManager;
+    namespace AppBundle\Mail;
 
     // ...
     class NewsletterManager
     {
-        protected $mailer;
+        private $mailer;
 
         public function __construct(MailerInterface $mailer)
         {
@@ -44,8 +44,7 @@ service container configuration:
        services:
             # ...
 
-            app.newsletter_manager:
-                class:     NewsletterManager
+            AppBundle\Mail\NewsletterManager:
                 arguments: ['@mailer']
 
     .. code-block:: xml

@@ -336,3 +336,5 @@
 /components/dependency_injection/autowiring /service_container/autowiring
 /event_dispatcher/class_extension /event_dispatcher
 /security/target_path /security
+/service_container/third_party /service_container
+/templating/templating_service /templates

@@ -155,55 +155,10 @@ configured like options on core Symfony constraints.
 Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your constraint validator has dependencies, such as a database connection,
-it will need to be configured as a service in the Dependency Injection
-Container. This service must include the ``validator.constraint_validator``
-tag so that the validation system knows about it:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.contains_alphanumeric_validator:
-                class: AppBundle\Validator\Constraints\ContainsAlphanumericValidator
-                tags: [validator.constraint_validator]
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.contains_alphanumeric_validator" class="AppBundle\Validator\Constraints\ContainsAlphanumericValidator">
-                    <argument type="service" id="doctrine.orm.default_entity_manager" />
-                    <tag name="validator.constraint_validator" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Validator\Constraints\ContainsAlphanumericValidator;
-
-        $container
-            ->register('app.contains_alphanumeric_validator', ContainsAlphanumericValidator::class)
-            ->addTag('validator.constraint_validator');
-
-Now, when Symfony looks for the ``ContainsAlphanumericValidator`` validator, it will
-load this service from the container.
-
-.. note::
-
-    In earlier versions of Symfony, the tag required an ``alias`` key (usually
-    set to the class name). This ``alias`` is now optional, but if you define
-    it, your constraint's ``validatedBy()`` method must return the same value.
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+then your validator is already registered as a service and :doc:`tagged </service_container/tags>`
+with the necessary ``validator.constraint_validator``. This means you can
+:ref:`inject services or configuration <services-constructor-injection>` like any other service.
 
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
