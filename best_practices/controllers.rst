@@ -97,16 +97,16 @@ for the homepage of our app:
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Doctrine\ORM\EntityManagerInterface;
 
     class DefaultController extends Controller
     {
         /**
          * @Route("/", name="homepage")
          */
-        public function indexAction()
+        public function indexAction(EntityManagerInterface $em)
         {
-            $posts = $this->getDoctrine()
-                ->getRepository('AppBundle:Post')
+            $posts = $em->getRepository('AppBundle:Post')
                 ->findLatest();
 
             return $this->render('default/index.html.twig', array(
@@ -114,6 +114,22 @@ for the homepage of our app:
             ));
         }
     }
+
+Fetching Services
+-----------------
+
+If you extend the base ``Controller`` class, you can access services directly from
+the container via ``$this->container->get()`` or ``$this->get()``. But instead, you
+should use dependency injection to fetch services: most easily done by
+:ref:`type-hinting action method arguments <controller-accessing-services>`:
+
+.. best-practice::
+
+    Don't use ``$this->get()`` or ``$this->container->get()`` to fetch services
+    from the container. Instead, use dependency injection.
+
+By not fetching services directly from the container, you can make your services
+*private*, which has :ref:`several advantages <services-why-private>`.
 
 .. _best-practices-paramconverter:
 

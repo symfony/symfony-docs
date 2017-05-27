@@ -84,29 +84,41 @@ Next, define a new service for that class.
 
     # app/config/services.yml
     services:
-        # keep your service names short
-        app.slugger:
-            class: AppBundle\Utils\Slugger
+        # ...
 
-Traditionally, the naming convention for a service involved following the
-class name and location to avoid name collisions. Thus, the service
-*would have been* called ``app.utils.slugger``. But by using short service names,
-your code will be easier to read and use.
+        # use the fully-qualified class name as the service id
+        AppBundle\Utils\Slugger:
+            public: false
+
+.. note::
+
+    If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+    the class is auto-registered as a service.
+
+Traditionally, the naming convention for a service was a short, but unique
+snake case key - e.g. ``app.utils.slugger``. But for most services, you should now
+use the class name.
 
 .. best-practice::
 
-    The name of your application's services should be as short as possible,
-    but unique enough that you can search your project for the service if
-    you ever need to.
+    The id of your application's services should be equal to their class name,
+    except when you have multiple services configured for the same class (in that
+    case, use a snake case id).
 
 Now you can use the custom slugger in any controller class, such as the
 ``AdminController``:
 
 .. code-block:: php
 
-    public function createAction(Request $request)
+    use AppBundle\Utils\Slugger;
+
+    public function createAction(Request $request, Slugger $slugger)
     {
         // ...
+
+        // you can also fetch a public service like this
+        // but fetching services in this way is not considered a best practice
+        // $slugger = $this->get('app.slugger');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $this->get('app.slugger')->slugify($post->getTitle());
@@ -115,6 +127,16 @@ Now you can use the custom slugger in any controller class, such as the
             // ...
         }
     }
+
+Services can also be :ref:`public or private <container-public>`. If you use the
+:ref:`default services.yml configuration <service-container-services-load-example>`,
+all services are private by default.
+
+.. best-practice::
+
+    Services should be ``private`` whenever possible. This will prevent you from
+    accessing that service via ``$container->get()``. Instead, you will need to use
+    dependency injection.
 
 Service Format: YAML
 --------------------
