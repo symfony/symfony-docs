@@ -113,7 +113,7 @@ Annotations, XML, Yaml, PHP and StaticPHP. The arguments are:
   bundle is only used with one type of Doctrine;
 * A map/hash of aliases to namespace. This should be the same convention used
   by Doctrine auto-mapping. In the example above, this allows the user to call
-  ``$om->getRepository('CmfRoutingBundle:Route')``.
+  ``$om->getRepository(Route::class)``.
 
 .. note::
 

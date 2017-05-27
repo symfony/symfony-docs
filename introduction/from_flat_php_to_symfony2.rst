@@ -562,7 +562,7 @@ them for you. Here's the same sample application, now built in Symfony::
         {
             $post = $this->get('doctrine')
                 ->getManager()
-                ->getRepository('AppBundle:Post')
+                ->getRepository(Post::class)
                 ->find($id);
 
             if (!$post) {
