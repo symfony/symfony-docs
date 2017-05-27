@@ -535,7 +535,6 @@ following ways:
 - ``ifArray()``
 - ``ifInArray()``
 - ``ifNotInArray()``
-- ``always()``
 
 A validation rule also requires a "then" part:
 
