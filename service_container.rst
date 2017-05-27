@@ -225,7 +225,7 @@ each time you ask for it.
 
     Thanks to this configuration, you can automatically use any classes from the
     ``src/AppBundle`` directory as a service, without needing to manually configure
-    it. Later, you'll learn more about this later in :ref:`service-psr4-loader`.
+    it. Later, you'll learn more about this later in :ref:`importing-many-services-at-once-with-resource`.
 
     If you'd prefer to manually wire your service, that's totally possible: see
     :ref:`services-explicitly-configure-wire-services`.
@@ -805,8 +805,6 @@ need to make your service public, just override this setting:
                 <service id="AppBundle\Service\MessageGenerator" public="true"></service>
             </services>
         </container>
-
-.. _service-psr4-loader:
 
 Importing Many Services at once with resource
 ---------------------------------------------
