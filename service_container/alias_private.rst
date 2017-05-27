@@ -57,8 +57,13 @@ You can also control the ``public`` option on a service-by-service basis:
         $container->register(Foo::class)
             ->setPublic(false);
 
+.. _services-why-private:
+
 Private services are special because they allow the container to optimize whether
-and how they are instantiated. This increases the container's performance.
+and how they are instantiated. This increases the container's performance. It also
+gives you better errors: if you try to reference a non-existent service, you will
+get a clear error when you refresh *any* page, even if the problematic code would
+not have run on that page.
 
 Now that the service is private, you *should not* fetch the service directly
 from the container::

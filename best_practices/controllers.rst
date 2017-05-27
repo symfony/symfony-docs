@@ -119,7 +119,7 @@ Fetching Services
 -----------------
 
 If you extend the base ``Controller`` class, you can access services directly from
-the container via ``$this->container->get()`` or ``$this->get()``. Instead, you
+the container via ``$this->container->get()`` or ``$this->get()``. But instead, you
 should use dependency injection to fetch services: most easily done by
 :ref:`type-hinting action method arguments <controller-accessing-services>`:
 
@@ -127,6 +127,9 @@ should use dependency injection to fetch services: most easily done by
 
     Don't use ``$this->get()`` or ``$this->container->get()`` to fetch services
     from the container. Instead, use dependency injection.
+
+By not fetching services directly from the container, you can make your services
+*private*, which has :ref:`several advantages <services-why-private>`.
 
 .. _best-practices-paramconverter:
 
@@ -177,14 +180,13 @@ manually. In our application, we have this situation in ``CommentController``:
 
 .. code-block:: php
 
-    use Doctrine\ORM\EntityManagerInterface;
-
     /**
      * @Route("/comment/{postSlug}/new", name = "comment_new")
      */
-    public function newAction(Request $request, $postSlug, EntityManagerInterface $em)
+    public function newAction(Request $request, $postSlug)
     {
-        $post = $em->getRepository('AppBundle:Post')
+        $post = $this->getDoctrine()
+            ->getRepository('AppBundle:Post')
             ->findOneBy(array('slug' => $postSlug));
 
         if (!$post) {

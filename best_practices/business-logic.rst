@@ -86,7 +86,7 @@ Next, define a new service for that class.
     services:
         # ...
 
-        # use the class name as the service id
+        # use the fully-qualified class name as the service id
         AppBundle\Utils\Slugger:
             public: false
 
@@ -116,7 +116,8 @@ Now you can use the custom slugger in any controller class, such as the
     {
         // ...
 
-        // you can also fetch a public service like this, but is not the best-practice
+        // you can also fetch a public service like this
+        // but fetching services in this way is not considered a best practice
         // $slugger = $this->get('app.slugger');
 
         if ($form->isSubmitted() && $form->isValid()) {
