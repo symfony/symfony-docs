@@ -7,21 +7,22 @@ an AWS Elastic Load Balancer) or a reverse proxy (e.g. Varnish for
 
 For the most part, this doesn't cause any problems with Symfony. But, when
 a request passes through a proxy, certain request information is sent using
-either the standard ``Forwarded`` header or non-standard special ``X-Forwarded-*``
-headers. For example, instead of reading the ``REMOTE_ADDR`` header (which
-will now be the IP address of your reverse proxy), the user's true IP will be
-stored in a standard ``Forwarded: for="..."`` header or a non standard
-``X-Forwarded-For`` header.
+either the standard ``Forwarded`` header or ``X-Forwarded-*`` headers. For example,
+instead of reading the ``REMOTE_ADDR`` header (which will now be the IP address of
+your reverse proxy), the user's true IP will be stored in a standard ``Forwarded: for="..."``
+header or a ``X-Forwarded-For`` header.
 
 If you don't configure Symfony to look for these headers, you'll get incorrect
 information about the client's IP address, whether or not the client is connecting
 via HTTPS, the client's port and the hostname being requested.
 
-Solution: trusted_proxies
--------------------------
+.. _request-set-trusted-proxies:
 
-This is no problem, but you *do* need to tell Symfony what is happening
-and which reverse proxy IP addresses will be doing this type of thing:
+Solution: setTrustedProxies()
+-----------------------------
+
+To fix this, you need to tell Symfony which reverse proxy IP addresses to trust
+and what headers your reverse proxy uses to send information:
 
 .. code-block:: php
 
@@ -30,23 +31,21 @@ and which reverse proxy IP addresses will be doing this type of thing:
     // ...
     $request = Request::createFromGlobals();
 
-    // use the setTrustedProxies() method to tell Symfony
-    // about your reverse proxy IP addresses
-    Request::setTrustedProxies(['127.0.0.1', '10.0.0.0/8']);
+    // tell Symfony about your revers proxy
+    Request::setTrustedProxies(
+        // the ip address (or range) of your proxy
+        ['192.0.0.1', '10.0.0.0/8'],
 
-    // ...
+        // trust *all* "X-Forwarded-*" headers
+        Request::HEADER_X_FORWARDED_ALL
 
-In this example, you're saying that your reverse proxy (or proxies) has
-the IP address ``192.0.0.1`` or matches the range of IP addresses that use
-the CIDR notation ``10.0.0.0/8``.
+        // or, if your proxy instead uses the "Forwarded" header
+        // Request::HEADER_FORWARDED
+    );
 
-You are also saying that you trust that the proxy does not send conflicting
-headers, e.g. sending both ``X-Forwarded-For`` and ``Forwarded`` in the same
-request.
-
-That's it! Symfony will now look for the correct headers to get information
-like the client's IP address, host, port and whether the request is
-using HTTPS.
+The Request object has several ``Request::HEADER_*`` constants that control exactly
+*which* headers from your reverse proxy are trusted. The argument is a bit field,
+so you can also pass your own value (e.g. ``0b00110``).
 
 But what if the IP of my Reverse Proxy Changes Constantly!
 ----------------------------------------------------------
@@ -59,60 +58,24 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
    other than your load balancers. For AWS, this can be done with `security groups`_.
 
 #. Once you've guaranteed that traffic will only come from your trusted reverse
-   proxies, configure Symfony to *always* trust incoming request. This is
-   done inside of your front controller:
+   proxies, configure Symfony to *always* trust incoming request:
 
    .. code-block:: diff
 
 	  // web/app.php
 
 	  // ...
-	  $request = Request::createFromGlobals();
-	  + Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR')));
+	  Request::setTrustedProxies(
+          // trust *all* requests
+          array('127.0.0.1', $request->server->get('REMOTE_ADDR')),
 
-	  // ...
-
-#. Ensure that the trusted_proxies setting in your ``app/config/config.yml``
-   is not set or it will overwrite the ``setTrustedProxies()`` call above.
+          // if you're using ELB, otherwise use a constant from above
+          Request::HEADER_X_FORWARDED_AWS_ELB
+      );
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
-
-.. _request-untrust-header:
-
-My Reverse Proxy Sends X-Forwarded-For but Does not Filter the Forwarded Header
--------------------------------------------------------------------------------
-
-Many popular proxy implementations do not yet support the ``Forwarded`` header
-and do not filter it by default. Ideally, you would configure this in your
-proxy. If this is not possible, you can tell Symfony to distrust the ``Forwarded``
-header, while still trusting your proxy's ``X-Forwarded-For`` header.
-
-This is done inside of your front controller::
-
-       // web/app.php
-
-       // ...
-       Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);
-
-       $response = $kernel->handle($request);
-       // ...
-
-Configuring the proxy server trust is very important, as not doing so will
-allow malicious users to "spoof" their IP address.
-
-My Reverse Proxy Uses Non-Standard (not X-Forwarded) Headers
-------------------------------------------------------------
-
-Although `RFC 7239`_ recently defined a standard ``Forwarded`` header to disclose
-all proxy information, most reverse proxies store information in non-standard
-``X-Forwarded-*`` headers.
-
-But if your reverse proxy uses other non-standard header names, you can configure
-these (see ":doc:`/components/http_foundation/trusting_proxies`").
-
-The code for doing this will need to live in your front controller (e.g. ``web/app.php``).
 
 .. _`security groups`: http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
 .. _`RFC 7239`: http://tools.ietf.org/html/rfc7239
