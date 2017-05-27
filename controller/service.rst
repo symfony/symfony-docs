@@ -7,7 +7,7 @@ How to Define Controllers as Services
 In Symfony, a controller does *not* need to be registered as a service. But if you're
 using the :ref:`default services.yml configuration <service-container-services-load-example>`,
 your controllers *are* already registered as services. This means you can use dependency
-injection line any other normal service.
+injection like any other normal service.
 
 Referencing your Service from Routing
 -------------------------------------
@@ -88,8 +88,8 @@ When using a controller defined as a service, you can still extend any of the
 use their shortcuts. But, you don't need to! You can choose to extend *nothing*,
 and use dependency injection to access difference services.
 
-The base `Controller class source code`_ is a great way to see how to performance
-simple tasks. For example, ``$this->render()`` is usually used to render a Twig
+The base `Controller class source code`_ is a great way to see how to accomplish
+common tasks. For example, ``$this->render()`` is usually used to render a Twig
 template and return a Response. But, you can also do this directly:
 
 In a controller that's defined as a service, you can instead inject the ``templating``
@@ -112,7 +112,7 @@ service and use it directly::
         public function indexAction($name)
         {
             $content = $this->twig->renderResponse(
-                'hellp/index.html.twig',
+                'hello/index.html.twig',
                 array('name' => $name)
             );
 
@@ -130,7 +130,7 @@ The best way to see how to replace base ``Controller`` convenience methods is to
 look at the `ControllerTrait`_ that holds its logic.
 
 If you want to know what type-hints to use for each service, see the
-``getSubscribedEvents`` in `AbstractController`_.
+``getSubscribedEvents()`` method in `AbstractController`_.
 
 .. _`Controller class source code`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
 .. _`base Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php

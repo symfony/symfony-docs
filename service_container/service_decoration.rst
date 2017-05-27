@@ -48,7 +48,7 @@ the original service is lost:
         $container->register('app.mailer', DecoratingMailer::class);
 
 Most of the time, that's exactly what you want to do. But sometimes,
-you might want to decorate the old service instead: keeping the old service so
+you might want to decorate the old service instead and keep the old service so
 that you can reference it:
 
 .. configuration-block::

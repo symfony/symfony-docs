@@ -6,12 +6,12 @@ How to Define Commands as Services
 
 If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
 your command classes are already registered as services. Great! This is the recommended
-setup, but it's not required. Symfony also looks in the ``Command`` directory of
+setup, but it's not required. Symfony also looks in the ``Command/`` directory of
 each bundle and automatically registers those classes as commands.
 
 .. note::
 
-    You can also manually register your command as a service by configure the service
+    You can also manually register your command as a service by configuring the service
     and :doc:`tagging it </service_container/tags>` with ``console.command``.
 
 In either case, if your class extends :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`,
@@ -45,7 +45,7 @@ For example, suppose you want to log something from within your command::
         {
             $this
                 ->setName('app:sunshine')
-                ->setDescription('Hello PhpStorm');
+                ->setDescription('Good morning!');
         }
 
         protected function execute(InputInterface $input, OutputInterface $output)
