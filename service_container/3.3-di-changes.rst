@@ -535,6 +535,14 @@ Start by updating the service ids to class names:
         app.api_client_sl_connect:
             # ...
 
+.. caution::
+
+    Services associated with global PHP classes (i.e. not using PHP namespaces)
+    must maintain the ``class`` parameter. For example, when using the old Twig
+    classes (e.g. ``Twig_Extensions_Extension_Intl`` instead of ``Twig\Extensions\IntlExtension``)
+    you can't redefine the service as `Twig_Extensions_Extension_Intl: ~` and
+    you must keep the original ``class`` parameter.
+
 But, this change will break our app! The old service ids (e.g. ``app.github_notifier``)
 no longer exist. The simplest way to fix this is to find all your old service ids
 and update them to the new class id: ``app.github_notifier`` to ``AppBundle\Service\GitHubNotifier``.
@@ -628,7 +636,7 @@ You're now ready to automatically register all services in ``src/AppBundle/``
     +     AppBundle\:
     +         resource: '../../src/AppBundle/*'
     +         exclude: '../../src/AppBundle/{Entity,Repository}'
-    + 
+    +
     +     AppBundle\Controller\:
     +         resource: '../../src/AppBundle/Controller'
     +         public: true
