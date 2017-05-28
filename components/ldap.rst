@@ -55,11 +55,11 @@ For example, to connect to a start-TLS secured LDAP server::
     $adapter = new Adapter(array(
         'host' => 'my-server',
         'port' => 389,
-	'encryption' => 'tls',
-	'options' => array(
-	    'protocol_version' => 3,
-	    'referrals' => false,
-	),
+        'encryption' => 'tls',
+        'options' => array(
+            'protocol_version' => 3,
+            'referrals' => false,
+        ),
     ));
     $ldap = new Ldap($adapter);
 
