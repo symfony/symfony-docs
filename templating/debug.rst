@@ -46,6 +46,8 @@ The same mechanism can be used in Twig templates thanks to ``dump()`` function:
         </a>
     {% endfor %}
 
-The variables will only be dumped if Twig's ``debug`` setting (in ``config.yml``)
-is ``true``. By default this means that the variables will be dumped in the
-``dev`` environment but not the ``prod`` environment.
+By design, the ``dump()`` function is only available if the ``debug`` setting
+(in ``config.yml``) is ``true``, to avoid leaking sensitive information in
+production. In fact, trying to use the ``dump()`` function when ``debug`` is
+``false`` (for example in the ``prod`` environment) will result in an
+application error.
