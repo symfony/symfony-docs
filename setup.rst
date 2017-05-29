@@ -27,19 +27,22 @@ executable that needs to be installed on your system only once:
     $ sudo chmod a+x /usr/local/bin/symfony
 
     # Windows systems
-    c:\> php -r "readfile('https://symfony.com/installer');" > symfony
+    c:\> php -r "file_put_contents('symfony', file_get_contents('https://symfony.com/installer'));"
 
 .. note::
 
     In Linux and macOS, a global ``symfony`` command is created. In Windows,
     move the ``symfony`` file to a directory that's included in the ``PATH``
-    environment variable to create the global command or move it to any other
-    directory convenient for you:
+    environment variable and create a ``symfony.bat`` file to create the global
+    command or move it to any other directory convenient for you:
 
     .. code-block:: terminal
 
         # for example, if WAMP is used ...
         c:\> move symfony c:\wamp\bin\php
+        # create symfony.bat in the same folder
+        c:\> cd c:\wamp\bin\php
+        c:\> (echo @ECHO OFF & echo php "%~dp0symfony" %*) > symfony.bat
         # ... then, execute the command as:
         c:\> symfony
 
