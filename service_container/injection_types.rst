@@ -175,6 +175,94 @@ The disadvantages of setter injection are:
 * You cannot be sure the setter will be called and so you need to add checks
   that any required dependencies are injected.
 
+Getter Injection
+----------------
+
+.. versionadded:: 3.3
+    Getter Injection was introduced in Symfony 3.3.
+
+.. caution::
+
+    This feature is marked as **experimental**. The next Symfony versions could
+    change its behavior or even remove this feature entirely.
+
+Another possible injection point into a class is by overriding a getter method
+to make it return the dependency::
+
+    // ...
+    abstract class NewsletterManager
+    {
+        abstract protected function getMailer(): MailerInterface;
+
+        protected function getLogger(): LoggerInterface
+        {
+            return new NullLogger();
+        }
+
+        // ...
+    }
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+       services:
+            # ...
+
+            app.newsletter_manager:
+                class: AppBundle\Mail\NewsletterManager
+                getters:
+                    getMailer: '@mailer'
+                    getLogger: '@logger'
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="app.newsletter_manager" class="AppBundle\Mail\NewsletterManager">
+                    <getter name="getMailer" type="service" id="mailer" />
+                    <getter name="getLogger" type="service" id="logger" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use AppBundle\Mail\NewsletterManager;
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        // ...
+        $container->register('app.newsletter_manager', NewsletterManager::class)
+            ->addOverriddenGetter('getMailer', new Reference('mailer'))
+            ->addOverriddenGetter('getLogger', new Reference('logger'))
+        ;
+
+This time the advantages are:
+
+* The dependency can be created lazily - ie only when it is actually needed.
+
+* It works well with both optional and required dependencies: either provide
+  a default implementation for optional ones, throw an exception or make the
+  getter abstract for required ones.
+
+* You can be sure that the dependency will not change during the object's
+  lifetime.
+
+* It works well with class hierarchies since you can also override getters of
+  parent classes.
+
+The disadvantage of getter injection is:
+
+* By using inheritance to override methods, it doesn't work with final classes
+  and requires such getters to be made protected or public.
+
 Property Injection
 ------------------
 
