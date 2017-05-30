@@ -755,7 +755,7 @@ Here, we set it to 2 for the ``$child`` property:
 The metadata loader corresponding to the chosen format must be configured in
 order to use this feature. It is done automatically when using the Symfony
 Standard Edition. When using the standalone component, refer to
-:ref:`the groups documentation <component-serializer-attributes-groups>` to
+:ref:`the groups documentation <attributes-groups>` to
 learn how to do that.
 
 The check is only done if the ``enable_max_depth`` key of the serializer context
