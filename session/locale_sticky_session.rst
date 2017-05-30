@@ -5,27 +5,26 @@ Making the Locale "Sticky" during a User's Session
 ==================================================
 
 Symfony stores the locale setting in the Request, which means that this setting
-is not available in subsequent requests. In this article, you'll learn how to
-store the locale in the session, so that it'll be the same for every subsequent
-request.
+is not automtically saved ("sticky") across requests. But, you *can* store the locale
+in the session, so that it's used on subsequent requests.
 
-Creating a LocaleListener
--------------------------
+.. _creating-a-LocaleSubscriber:
 
-To simulate that the locale is stored in a session, you need to create and
-register a :doc:`new event listener </event_dispatcher>`.
-The listener will look something like this. Typically, ``_locale`` is used
-as a routing parameter to signify the locale, though it doesn't really matter
-how you determine the desired locale from the request::
+Creating a LocaleSubscriber
+---------------------------
 
-    // src/AppBundle/EventListener/LocaleListener.php
-    namespace AppBundle\EventListener;
+Create and a :ref:`new event subscriber <events-subscriber>`. Typically, ``_locale``
+is used as a routing parameter to signify the locale, though you can determine the
+correct locale however you want::
+
+    // src/AppBundle/EventSubscriber/LocaleSubscriber.php
+    namespace AppBundle\EventSubscriber;
 
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\HttpKernel\KernelEvents;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-    class LocaleListener implements EventSubscriberInterface
+    class LocaleSubscriber implements EventSubscriberInterface
     {
         private $defaultLocale;
 
@@ -59,47 +58,58 @@ how you determine the desired locale from the request::
         }
     }
 
-Then register the listener:
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+you're done! Symfony will automatically know about the event subscriber and call
+the ``onKernelRequest`` method on each request.
 
-.. configuration-block::
+To see it working, either set the ``_locale`` key on the session manually (e.g.
+via some "Change Locale" route & controller), or create a route with a the :ref:`_locale default <translation-locale-url>`.
 
-    .. code-block:: yaml
+.. sidebar:: Explicitly Configure the Subscriber
 
-        services:
-            app.locale_listener:
-                class: AppBundle\EventListener\LocaleListener
-                arguments: ['%kernel.default_locale%']
-                tags: [kernel.event_subscriber]
+    You can also explicitly configure it, in order to pass in the :ref:`default_locale <config-framework-default_locale>`:
 
-    .. code-block:: xml
+    .. configuration-block::
 
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+        .. code-block:: yaml
 
-            <services>
-                <service id="app.locale_listener"
-                    class="AppBundle\EventListener\LocaleListener">
-                    <argument>%kernel.default_locale%</argument>
+            services:
+                # ...
 
-                    <tag name="kernel.event_subscriber" />
-                </service>
-            </services>
-        </container>
+                AppBundle\EventSubscriber\LocaleSubscriber:
+                    arguments: ['%kernel.default_locale%']
+                    # redundant if you're using autoconfigure
+                    tags: [kernel.event_subscriber]
 
-    .. code-block:: php
+        .. code-block:: xml
 
-        use AppBundle\EventListener\LocaleListener;
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        $container->register('app.locale_listener', LocaleListener::class)
-            ->addArgument('%kernel.default_locale%')
-            ->addTag('kernel.event_subscriber');
+                <services>
+                    <service id="AppBundle\EventSubscriber\LocaleSubscriber">
+                        <argument>%kernel.default_locale%</argument>
+
+                        <tag name="kernel.event_subscriber" />
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            use AppBundle\EventSubscriber\LocaleSubscriber;
+
+            $container->register(LocaleSubscriber::class)
+                ->addArgument('%kernel.default_locale%')
+                ->addTag('kernel.event_subscriber');
 
 That's it! Now celebrate by changing the user's locale and seeing that it's
-sticky throughout the request. Remember, to get the user's locale, always
-use the :method:`Request::getLocale <Symfony\\Component\\HttpFoundation\\Request::getLocale>`
+sticky throughout the request.
+
+Remember, to get the user's locale, always use the :method:`Request::getLocale <Symfony\\Component\\HttpFoundation\\Request::getLocale>`
 method::
 
     // from a controller...
@@ -114,39 +124,37 @@ Setting the Locale Based on the User's Preferences
 --------------------------------------------------
 
 You might want to improve this technique even further and define the locale based on
-the user entity of the logged in user. However, since the ``LocaleListener`` is called
+the user entity of the logged in user. However, since the ``LocaleSubscriber`` is called
 before the ``FirewallListener``, which is responsible for handling authentication and
 setting the user token on the ``TokenStorage``, you have no access to the user
 which is logged in.
 
-Suppose you have defined a ``locale`` property on your ``User`` entity and
-you want to use this as the locale for the given user. To accomplish this,
+Suppose you have a ``locale`` property on your ``User`` entity and
+want to use this as the locale for the given user. To accomplish this,
 you can hook into the login process and update the user's session with this
 locale value before they are redirected to their first page.
 
-To do this, you need an event listener for the ``security.interactive_login``
+To do this, you need an event subscriber on the ``security.interactive_login``
 event:
 
 .. code-block:: php
 
-    // src/AppBundle/EventListener/UserLocaleListener.php
-    namespace AppBundle\EventListener;
+    // src/AppBundle/EventSubscriber/UserLocaleSubscriber.php
+    namespace AppBundle\EventSubscriber;
 
-    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
     /**
      * Stores the locale of the user in the session after the
-     * login. This can be used by the LocaleListener afterwards.
+     * login. This can be used by the LocaleSubscriber afterwards.
      */
-    class UserLocaleListener
+    class UserLocaleSubscriber implements EventSubscriberInterface
     {
-        /**
-         * @var Session
-         */
         private $session;
 
-        public function __construct(Session $session)
+        public function __construct(SessionInterface $session)
         {
             $this->session = $session;
         }
@@ -164,58 +172,13 @@ event:
         }
     }
 
-Then register the listener:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.user_locale_listener:
-                class: AppBundle\EventListener\UserLocaleListener
-                arguments: ['@session']
-                tags:
-                    - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.user_locale_listener"
-                    class="AppBundle\EventListener\UserLocaleListener">
-
-                    <argument type="service" id="session"/>
-
-                    <tag name="kernel.event_listener"
-                        event="security.interactive_login"
-                        method="onInteractiveLogin" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\EventListener\UserLocaleListener;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container
-            ->register('app.user_locale_listener', UserLocaleListener::class)
-            ->addArgument(new Reference('session'))
-            ->addTag(
-                'kernel.event_listener',
-                array('event' => 'security.interactive_login', 'method' => 'onInteractiveLogin')
-            );
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+you're done! Symfony will automatically know about the event subscriber will pass
+your the ``session`` service. Now, when you login, the user's locale will be set
+into the session.
 
 .. caution::
 
     In order to update the language immediately after a user has changed
-    their language preferences, you need to update the session after an update
-    to the ``User`` entity.
+    their language preferences, you also need to update the session when you change
+    the ``User`` entity.

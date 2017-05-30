@@ -22,7 +22,6 @@ Configuration
 
 * `secret`_
 * `http_method_override`_
-* `trusted_proxies`_
 * `ide`_
 * `test`_
 * `default_locale`_
@@ -188,39 +187,7 @@ named ``kernel.http_method_override``.
 trusted_proxies
 ~~~~~~~~~~~~~~~
 
-**type**: ``array``
-
-Configures the IP addresses that should be trusted as proxies. For more
-details, see :doc:`/request/load_balancer_reverse_proxy`.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            trusted_proxies:  [192.0.0.1, 10.0.0.0/8]
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8" />
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
-        ));
+The ``trusted_proxies`` option was removed in Symfony 3.3. See :doc:`/request/load_balancer_reverse_proxy`.
 
 ide
 ~~~
@@ -317,6 +284,8 @@ setting should be present in your ``test`` environment (usually via
 .. seealso::
 
     For more information, see :doc:`/testing`.
+
+.. _config-framework-default_locale:
 
 default_locale
 ~~~~~~~~~~~~~~

@@ -57,8 +57,13 @@ You can also control the ``public`` option on a service-by-service basis:
         $container->register(Foo::class)
             ->setPublic(false);
 
+.. _services-why-private:
+
 Private services are special because they allow the container to optimize whether
-and how they are instantiated. This increases the container's performance.
+and how they are instantiated. This increases the container's performance. It also
+gives you better errors: if you try to reference a non-existent service, you will
+get a clear error when you refresh *any* page, even if the problematic code would
+not have run on that page.
 
 Now that the service is private, you *should not* fetch the service directly
 from the container::
@@ -68,7 +73,7 @@ from the container::
     $container->get(Foo::class);
 
 This *may or may not work*, depending on how the container has optimized the
-service instantiation and, even in the cases where it works, is
+service instantiation and, even in the cases where it works, this possibility is
 deprecated. Simply said: A service should be marked as private if you do not want
 to access it directly from your code.
 

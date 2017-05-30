@@ -8,19 +8,19 @@ without sacrificing predictability, which is very important! Another goal is to 
 controllers and services behave more consistently. In Symfony 3.3, controllers *are*
 services by default.
 
-The documentation has already been updated to assume you have these new features enabled.
-If you're an existing Symfony user and want to understand the "what" and "why" behind
-these changes, this chapter is for you!
+The documentation has already been updated to assume you have these new features
+enabled. If you're an existing Symfony user and want to understand the "what"
+and "why" behind these changes, this article is for you!
 
-All Changes are Opt-In
-----------------------
+All Changes are Optional
+------------------------
 
 Most importantly, **you can upgrade to Symfony 3.3 today without making any changes to your app**.
 Symfony has a strict :doc:`backwards compatibility promise </contributing/code/bc>`,
 which means it's always safe to upgrade across minor versions.
 
-All of the new features are **opt-in**: you need to actually change your configuration
-files to use them.
+All of the new features are **optional**: they are not enabled by default, so you
+need to actually change your configuration files to use them.
 
 The new Default services.yml File
 ---------------------------------
@@ -151,7 +151,7 @@ thanks to the following config:
         // services cannot be automatically loaded with PHP configuration
         // you need to define your services one-by-one
 
-This means that every class in ``src/AppBundle`` is *available* to be used as a
+This means that every class in ``src/AppBundle/`` is *available* to be used as a
 service. And thanks to the ``_defaults`` section at the top of the file, all of
 these services are **autowired** and **private** (i.e. ``public: false``).
 
@@ -166,7 +166,7 @@ to determine most arguments automatically. But, you can always override the serv
 and :ref:`manually configure arguments <services-manually-wire-args>` or anything
 else special about your service.
 
-    But wait, if I have some model (non-service) classes in my ``src/AppBundle``
+    But wait, if I have some model (non-service) classes in my ``src/AppBundle/``
     directory, doesn't this mean that *they* will also be registered as services?
     Isn't that a problem?
 
@@ -230,12 +230,12 @@ To pass the ``InvoiceGenerator`` as an argument to ``InvoiceMailer``, you needed
 to specify the service's *id* as an argument: ``app.invoice_generator``. Service
 id's were the main way that you configured things.
 
-But in Symfony 3.3, thanks to autowiring, all you need to do is type-hint the argument
-with ``InvoiceGenerator``::
+But in Symfony 3.3, thanks to autowiring, all you need to do is type-hint the
+argument with ``InvoiceGenerator``::
 
     // src/AppBundle/Service/InvoiceMailer.php
     // ...
-    
+
     class InvoiceMailer
     {
         private $generator;
@@ -288,7 +288,7 @@ was designed with that in mind. Specifically:
   a service whose id matches the type-hint exactly. It does *not* scan all services
   looking for objects that have that class/interface (actually, it *does* do this
   in Symfony 3.3, but has been deprecated. If you rely on this, you will see a clear
-  deprecation warning). 
+  deprecation warning).
 
 Autowiring aims to *automate* configuration without magic.
 
@@ -387,7 +387,7 @@ create the class::
 
     // src/AppBundle/EventSubscriber/SetHeaderSusbcriber.php
     // ...
-    
+
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
     use Symfony\Component\HttpKernel\KernelEvents;
@@ -398,7 +398,7 @@ create the class::
         {
             $event->getResponse()->headers->set('X-SYMFONY-3.3', 'Less config');
         }
-    
+
         public static function getSubscribedEvents()
         {
             return [
@@ -492,15 +492,15 @@ Start by adding a ``_defaults`` section with ``autowire`` and ``autoconfigure``.
 
     # app/config/services.yml
     services:
-    +    _defaults:
-    +        autowire: true
-    +        autoconfigure: true
+    +     _defaults:
+    +         autowire: true
+    +         autoconfigure: true
 
         # ...
 
 This step is easy: you're already *explicitly* configuring all of your services.
-So, ``autowire`` does nothing. You're also already tagging your services, so ``autoconfigure``
-also doesn't change any existing services.
+So, ``autowire`` does nothing. You're also already tagging your services, so
+``autoconfigure`` also doesn't change any existing services.
 
 You have not added ``public: false`` yet. That will come in a minute.
 
@@ -519,15 +519,15 @@ Start by updating the service ids to class names:
     services:
         # ...
 
-    -    app.github_notifier:
-    -        class: AppBundle\Service\GitHubNotifier
-    +    AppBundle\Service\GitHubNotifier:
+    -     app.github_notifier:
+    -         class: AppBundle\Service\GitHubNotifier
+    +     AppBundle\Service\GitHubNotifier:
             arguments:
                 - '@app.api_client_github'
 
-    -    markdown_transformer:
-    -        class: AppBundle\Service\MarkdownTransformer
-    +    AppBundle\Service\MarkdownTransformer: ~
+    -     markdown_transformer:
+    -         class: AppBundle\Service\MarkdownTransformer
+    +     AppBundle\Service\MarkdownTransformer: ~
 
         # keep these ids because there are multiple instances per class
         app.api_client_github:
@@ -557,8 +557,8 @@ Then import this at the top of ``services.yml``:
 .. code-block:: diff
 
     # app/config/services.yml
-    +imports:
-    +    - { resource: legacy_aliases.yml }
+    + imports:
+    +     - { resource: legacy_aliases.yml }
 
     # ...
 
@@ -574,12 +574,12 @@ Now you're ready to default all services to be private:
 
     # app/config/services.yml
     # ...
-    
+
     services:
          _defaults:
              autowire: true
              autoconfigure: true
-    +        public: false
+    +          public: false
 
 Thanks to this, any services created in this file cannot be fetched directly from
 the container. But, since the old service id's are aliases in a separate file (``legacy_aliases.yml``),
@@ -592,20 +592,20 @@ instances of the same class), you may need to make those public:
 
     # app/config/services.yml
     # ...
-    
+
     services:
         # ...
 
-         app.api_client_github:
-             # ...
+        app.api_client_github:
+            # ...
 
-    +        # remove this if/when you are not fetching this
-    +        # directly from the container via $container->get()
-    +        public: true
- 
-         app.api_client_sl_connect:
-             # ...
-    +        public: true
+    +         # remove this if/when you are not fetching this
+    +         # directly from the container via $container->get()
+    +         public: true
+
+        app.api_client_sl_connect:
+            # ...
+    +         public: true
 
 This is to guarantee that the application doesn't break. If you're not fetching
 these services directly from the container, this isn't needed. In a minute, you'll
@@ -614,8 +614,8 @@ clean that up.
 Step 4) Auto-registering Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You're now ready to automatically register all services in ``src/AppBundle`` (and/or
-any other directory/bundle you have):
+You're now ready to automatically register all services in ``src/AppBundle/``
+(and/or any other directory/bundle you have):
 
 .. code-block:: diff
 
@@ -625,14 +625,14 @@ any other directory/bundle you have):
         _defaults:
             # ...
 
-    +    AppBundle\:
-    +        resource: '../../src/AppBundle/*'
-    +        exclude: '../../src/AppBundle/{Entity,Repository}'
-    +
-    +    AppBundle\Controller\:
-    +        resource: '../../src/AppBundle/Controller'
-    +        public: true
-    +        tags: ['controller.service_arguments']
+    +     AppBundle\:
+    +         resource: '../../src/AppBundle/*'
+    +         exclude: '../../src/AppBundle/{Entity,Repository}'
+    + 
+    +     AppBundle\Controller\:
+    +         resource: '../../src/AppBundle/Controller'
+    +         public: true
+    +         tags: ['controller.service_arguments']
 
         # ...
 
@@ -650,14 +650,14 @@ same class:
     services:
         # ...
 
-    +    # alias ApiClient to one of our services below
-    +    # app.api_client_github will be used to autowire ApiClient type-hints
-    +    AppBundle\Service\ApiClient: '@app.api_client_github'
+    +     # alias ApiClient to one of our services below
+    +     # app.api_client_github will be used to autowire ApiClient type-hints
+    +     AppBundle\Service\ApiClient: '@app.api_client_github'
 
-         app.api_client_github:
-             # ...
-         app.api_client_sl_connect:
-             # ...
+        app.api_client_github:
+            # ...
+        app.api_client_sl_connect:
+            # ...
 
 This guarantees that if you try to autowire an ``ApiClient`` instance, the ``app.api_client_github``
 will be used. If you *don't* have this, the auto-registration feature will try to
@@ -671,17 +671,19 @@ To make sure your application didn't break, you did some extra work. Now it's ti
 to clean things up! First, update your application to *not* use the old service id's (the
 ones in ``legacy_aliases.yml``). This means updating any service arguments (e.g.
 ``@app.github_notifier`` to ``@AppBundle\Service\GitHubNotifier``) and updating your
-code to not fetch this service directly from the container. For example::
+code to not fetch this service directly from the container. For example:
 
-    -    public function indexAction()
-    +    public function indexAction(GitHubNotifier $gitHubNotifier, MarkdownTransformer $markdownTransformer)
-         {
-    -        // the old way of fetching services
-    -        $githubNotifier = $this->container->get('app.github_notifier');
-    -        $markdownTransformer = $this->container->get('markdown_transformer');
+.. code-block:: diff
+
+    -     public function indexAction()
+    +     public function indexAction(GitHubNotifier $gitHubNotifier, MarkdownTransformer $markdownTransformer)
+        {
+    -         // the old way of fetching services
+    -         $githubNotifier = $this->container->get('app.github_notifier');
+    -         $markdownTransformer = $this->container->get('markdown_transformer');
 
             // ...
-         }
+        }
 
 As soon as you do this, you can delete ``legacy_aliases.yml`` and remove its import.
 You should do the same thing for any services that you made public, like
@@ -694,13 +696,13 @@ these directly from the container, you can remove the ``public: true`` flag:
     services:
         # ...
 
-         app.api_client_github:
-             # ...
-    -        public: true
- 
-         app.api_client_sl_connect:
-             # ...
-    -        public: true
+        app.api_client_github:
+            # ...
+    -         public: true
+
+        app.api_client_sl_connect:
+            # ...
+    -         public: true
 
 Finally, you can optionally remove any services from ``services.yml`` whose arguments
 can be autowired. The final configuration looks like this:

@@ -124,6 +124,8 @@ using a special "tag":
     of the internal Symfony listeners usually range from ``-255`` to ``255`` but
     your own listeners can use any positive or negative integer.
 
+.. _events-subscriber:
+
 Creating an Event Subscriber
 ----------------------------
 

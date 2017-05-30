@@ -4,31 +4,24 @@
 How to Write a custom Twig Extension
 ====================================
 
-The main motivation for writing an extension is to move often used code
-into a reusable class like adding support for internationalization.
-An extension can define tags, filters, tests, operators, global variables,
-functions, and node visitors.
-
-Creating an extension also makes for a better separation of code that is
-executed at compilation time and code needed at runtime. As such, it makes
-your code faster.
-
-.. tip::
-
-    Before writing your own extensions, have a look at the
-    `Twig official extension repository`_.
+If you need to create custom Twig functions, filters, tests or more, you'll need
+to create a Twig extension. You can read more about `Twig Extensions`_ in the Twig
+documentation.
 
 Create the Extension Class
 --------------------------
 
-.. note::
+Suppose you want to create a new filter called ``price`` that formats a number into
+money:
 
-    This article describes how to write a custom Twig extension as of
-    Twig 1.12. If you are using an older version, please read
-    `Twig extensions documentation legacy`_.
+.. code-block:: twig
 
-To get your custom functionality you must first create a Twig Extension class.
-As an example you'll create a price filter to format a given number into price::
+    {{ product.price|price }}
+
+    {# pass in the 3 optional arguments #}
+    {{ product.price|price(2, ',', '.') }}
+
+Create a class that extends ``\Twig_Extension`` and fill in the logic::
 
     // src/AppBundle/Twig/AppExtension.php
     namespace AppBundle\Twig;
@@ -67,72 +60,13 @@ As an example you'll create a price filter to format a given number into price::
 Register an Extension as a Service
 ----------------------------------
 
-Now you must let the Service Container know about your newly created Twig Extension:
+Next, register your class as a service and tag it with ``twig.extension``. If you're
+using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+you're done! Symfony will automatically know about your new service and add the tag.
 
-.. configuration-block::
+You can now start using your filter in any Twig template.
 
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.twig_extension:
-                class: AppBundle\Twig\AppExtension
-                public: false
-                tags: [twig.extension]
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.twig_extension"
-                    class="AppBundle\Twig\AppExtension"
-                    public="false">
-                    <tag name="twig.extension" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Twig\AppExtension;
-
-        $container
-            ->register('app.twig_extension', AppExtension::class)
-            ->setPublic(false)
-            ->addTag('twig.extension');
-
-Using the custom Extension
---------------------------
-
-Using your newly created Twig Extension is no different than any other:
-
-.. code-block:: twig
-
-    {# outputs $5,500.00 #}
-    {{ '5500'|price }}
-
-Passing other arguments to your filter:
-
-.. code-block:: twig
-
-    {# outputs $5500,2516 #}
-    {{ '5500.25155'|price(4, ',', '') }}
-
-Learning further
-----------------
-
-For a more in-depth look into Twig Extensions, please take a look at the
-`Twig extensions documentation`_.
-
-.. _`Twig official extension repository`: https://github.com/twigphp/Twig-extensions
 .. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
 .. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2
-.. _`Twig extensions documentation legacy`: http://twig.sensiolabs.org/doc/advanced_legacy.html#creating-an-extension
+.. _`Twig Extensions`: https://twig.sensiolabs.org/doc/2.x/advanced.html#creating-an-extension

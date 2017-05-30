@@ -21,10 +21,12 @@ of emails to users. Emails are passed through different formatters that
 could be enabled or not depending on some dynamic application settings.
 You start defining a ``NewsletterManager`` class like this::
 
+    // src/AppBundle/Mail/NewsletterManager.php
+    namespace AppBundle\Mail;
+
     class NewsletterManager implements EmailFormatterAwareInterface
     {
-        protected $mailer;
-        protected $enabledFormatters;
+        private $enabledFormatters;
 
         public function setEnabledFormatters(array $enabledFormatters)
         {
@@ -36,10 +38,12 @@ You start defining a ``NewsletterManager`` class like this::
 
 and also a ``GreetingCardManager`` class::
 
+    // src/AppBundle/Mail/GreetingCardManager.php
+    namespace AppBundle\Mail;
+
     class GreetingCardManager implements EmailFormatterAwareInterface
     {
-        protected $mailer;
-        protected $enabledFormatters;
+        private $enabledFormatters;
 
         public function setEnabledFormatters(array $enabledFormatters)
         {
@@ -54,9 +58,11 @@ on application settings. To do this, you also have an ``EmailFormatterManager``
 class which is responsible for loading and validating formatters enabled
 in the application::
 
+    // src/AppBundle/Mail/EmailFormatterManager.php
+    namespace AppBundle\Mail;
+
     class EmailFormatterManager
     {
-
         // ...
 
         public function getEnabledFormatters()
@@ -73,6 +79,9 @@ in the application::
 If your goal is to avoid having to couple ``NewsletterManager`` and
 ``GreetingCardManager`` with ``EmailFormatterManager``, then you might want
 to create a configurator class to configure these instances::
+
+    // src/AppBundle/Mail/EmailConfigurator.php
+    namespace AppBundle\Mail;
 
     class EmailConfigurator
     {
@@ -107,7 +116,10 @@ how to load them, keeping the single responsibility principle.
 Using the Configurator
 ----------------------
 
-You can configure the service configurator using the ``configurator`` option:
+You can configure the service configurator using the ``configurator`` option. If
+you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+all the classes are already loaded as services. All you need to do is specify the
+``configurator``:
 
 .. configuration-block::
 
@@ -115,24 +127,19 @@ You can configure the service configurator using the ``configurator`` option:
 
         # app/config/services.yml
         services:
-            app.email_formatter_manager:
-                class: EmailFormatterManager
+            # ...
+
+            # Registers all 4 classes as services, including AppBundle\Mail\EmailConfigurator
+            AppBundle\:
+                resource: '../../src/AppBundle/*'
                 # ...
 
-            app.email_configurator:
-                class:     AppBundle\Mail\EmailConfigurator
-                arguments: ['@app.email_formatter_manager']
-                # ...
+            # override the services to set the configurator
+            AppBundle\Mail\NewsletterManager:
+                configurator: 'AppBundle\Mail\EmailConfigurator:configure'
 
-            app.newsletter_manager:
-                class:        AppBundle\Mail\NewsletterManager
-                arguments:    ['@mailer']
-                configurator: 'app.email_configurator:configure'
-
-            app.greeting_card_manager:
-                class:        AppBundle\Mail\GreetingCardManager
-                arguments:    ['@mailer']
-                configurator: 'app.email_configurator:configure'
+            AppBundle\Mail\GreetingCardManager:
+                configurator: 'AppBundle\Mail\EmailConfigurator:configure'
 
     .. code-block:: xml
 
@@ -144,25 +151,14 @@ You can configure the service configurator using the ``configurator`` option:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.email_formatter_manager" class="AppBundle\Mail\EmailFormatterManager">
-                    <!-- ... -->
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" ... />
+
+                <service id="AppBundle\Mail\NewsletterManager">
+                    <configurator service="AppBundle\Mail\EmailConfigurator" method="configure" />
                 </service>
 
-                <service id="app.email_configurator" class="AppBundle\Mail\EmailConfigurator">
-                    <argument type="service" id="app.email_formatter_manager" />
-                    <!-- ... -->
-                </service>
-
-                <service id="app.newsletter_manager" class="AppBundle\Mail\NewsletterManager">
-                    <argument type="service" id="mailer" />
-
-                    <configurator service="app.email_configurator" method="configure" />
-                </service>
-
-                <service id="greeting_card_manager" class="GreetingCardManager">
-                    <argument type="service" id="mailer" />
-
-                    <configurator service="app.email_configurator" method="configure" />
+                <service id="AppBundle\Mail\GreetingCardManager">
+                    <configurator service="AppBundle\Mail\EmailConfigurator" method="configure" />
                 </service>
             </services>
         </container>
@@ -177,16 +173,14 @@ You can configure the service configurator using the ``configurator`` option:
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->register('app.email_formatter_manager', EmailFormatterManager::class);
-        $container->register('app.email_configurator', EmailConfigurator::class);
+        $container->autowire(EmailFormatterManager::class);
+        $container->autowire(EmailConfigurator::class);
 
-        $container->register('app.newsletter_manager', NewsletterManager::class)
-            ->addArgument(new Reference('mailer'))
-            ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'));
+        $container->autowire(NewsletterManager::class)
+            ->setConfigurator(array(new Reference(EmailConfigurator::class), 'configure'));
 
-        $container->register('app.greeting_card_manager', GreetingCardManager::class)
-            ->addArgument(new Reference('mailer'))
-            ->setConfigurator(array(new Reference('app.email_configurator'), 'configure'));
+        $container->autowire(GreetingCardManager::class)
+            ->setConfigurator(array(new Reference(EmailConfigurator::class), 'configure'));
 
 
 .. versionadded:: 3.2
@@ -200,10 +194,10 @@ You can configure the service configurator using the ``configurator`` option:
 
         app.newsletter_manager:
             # new syntax
-            configurator: 'app.email_configurator:configure'
+            configurator: 'AppBundle\Mail\EmailConfigurator:configure'
             # old syntax
-            configurator: ['@app.email_configurator', configure]
+            configurator: ['@AppBundle\Mail\EmailConfigurator', configure]
 
-That's it! When requesting the ``app.newsletter_manager`` or
-``app.greeting_card_manager`` service, the created instance will first be
+That's it! When requesting the ``AppBundle\Mail\NewsletterManager`` or
+``AppBundle\Mail\GreetingCardManager`` service, the created instance will first be
 passed to the ``EmailConfigurator::configure()`` method.

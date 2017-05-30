@@ -36,13 +36,13 @@ Suppose the class you want to test looks like this::
     // src/AppBundle/Salary/SalaryCalculator.php
     namespace AppBundle\Salary;
 
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\ORM\EntityManagerInterface;
 
     class SalaryCalculator
     {
         private $entityManager;
 
-        public function __construct(ObjectManager $entityManager)
+        public function __construct(EntityManagerInterface $entityManager)
         {
             $this->entityManager = $entityManager;
         }
@@ -57,7 +57,7 @@ Suppose the class you want to test looks like this::
         }
     }
 
-Since the ``ObjectManager`` gets injected into the class through the constructor,
+Since the ``EntityManagerInterface`` gets injected into the class through the constructor,
 it's easy to pass a mock object within a test::
 
     // tests/AppBundle/Salary/SalaryCalculatorTest.php
@@ -66,7 +66,7 @@ it's easy to pass a mock object within a test::
     use AppBundle\Entity\Employee;
     use AppBundle\Salary\SalaryCalculator;
     use Doctrine\ORM\EntityRepository;
-    use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\ORM\EntityManagerInterface;
     use PHPUnit\Framework\TestCase;
 
     class SalaryCalculatorTest extends TestCase
@@ -86,7 +86,7 @@ it's easy to pass a mock object within a test::
 
             // Now, mock the repository so it returns the mock of the employee
             $employeeRepository = $this
-                ->getMockBuilder(EntityRepository::class)
+                ->getMockBuilder(EntityManagerInterface::class)
                 ->disableOriginalConstructor()
                 ->getMock();
             $employeeRepository->expects($this->once())
@@ -95,7 +95,7 @@ it's easy to pass a mock object within a test::
 
             // Last, mock the EntityManager to return the mock of the repository
             $entityManager = $this
-                ->getMockBuilder(ObjectManager::class)
+                ->getMockBuilder(EntityManagerInterface::class)
                 ->disableOriginalConstructor()
                 ->getMock();
             $entityManager->expects($this->once())

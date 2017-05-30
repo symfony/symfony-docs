@@ -9,6 +9,12 @@ you have a sidebar in your layout that contains the three most recent articles.
 Retrieving the three articles may include querying the database or performing
 other heavy logic that can't be done from within a template.
 
+.. note::
+
+    Rendering embedded controllers is "heavier" than including a template or calling
+    a custom Twig function. Unless you're planning on :doc:`caching the fragment </http_cache/esi>`,
+    avoid embedding many controllers.
+
 The solution is to simply embed the result of an entire controller from your
 template. First, create a controller that renders a certain number of recent
 articles::
@@ -92,8 +98,4 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
             ) ?>
         </div>
 
-Whenever you find that you need a variable or a piece of information that
-you don't have access to in a template, consider rendering a controller.
-Controllers are fast to execute and promote good code organization and reuse.
-Of course, like all controllers, they should ideally be "skinny", meaning
-that as much code as possible lives in reusable :doc:`services </service_container>`.
+The result of an embedded controler can also be :doc:`cached </http_cache/esi>`

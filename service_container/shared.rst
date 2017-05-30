@@ -6,7 +6,7 @@ How to Define Non Shared Services
 
 In the service container, all services are shared by default. This means that
 each time you retrieve the service, you'll get the *same* instance. This is
-often the behavior you want, but in some cases, you might want to always get a
+usually the behavior you want, but in some cases, you might want to always get a
 *new* instance.
 
 In order to always get a new instance, set the ``shared`` setting to ``false``
@@ -18,8 +18,7 @@ in your service definition:
 
         # app/config/services.yml
         services:
-            app.some_not_shared_service:
-                class: ...
+            AppBundle\SomeNonSharedService:
                 shared: false
                 # ...
 
@@ -27,18 +26,17 @@ in your service definition:
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="app.some_not_shared_service" class="..." shared="false" />
+            <service id="AppBundle\SomeNonSharedService" shared="false" />
         </services>
 
     .. code-block:: php
 
         // app/config/services.php
         use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\SomeNonSharedService;
 
-        $definition = new Definition('...');
-        $definition->setShared(false);
+        $container->register(SomeNonSharedService::class)
+            ->setShared(false);
 
-        $container->setDefinition('app.some_not_shared_service', $definition);
-
-Now, whenever you call ``$container->get('app.some_not_shared_service')`` or
-inject this service, you'll receive a new instance.
+Now, whenever you request an the ``AppBundle\SomeNonSharedService`` from the container,
+you will be passed a new instance.
