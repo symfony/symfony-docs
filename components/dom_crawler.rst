@@ -399,7 +399,7 @@ form that the button lives in::
     // button example: <button id="my-super-button" type="submit">My super button</button>
     
     // you can get button my it's name
-    $form = $crawler->selectButton('My awesome button!')->form();
+    $form = $crawler->selectButton('My super button')->form();
     
     // or by by button id (#my-super-button) if button don't have name
     $form = $crawler->selectButton('my-super-button')->form();
