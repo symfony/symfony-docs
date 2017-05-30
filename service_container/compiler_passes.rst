@@ -8,7 +8,7 @@ How to Work with Compiler Passes in Bundles
 Compiler passes give you an opportunity to manipulate other service
 definitions that have been registered with the service container. You
 can read about how to create them in the components section
-":ref:`components-di-compiler-pass`".
+":ref:`creating-separate-compiler-passes`".
 
 When using :ref:`separate compiler passes <components-di-separate-compiler-passes>`,
 you need to register them in the ``build()`` method of the bundle class (this
