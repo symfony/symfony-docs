@@ -186,7 +186,7 @@ would look like this::
         }
     }
 
-That's it! The voter is done! Next, :ref:`configure it <declaring-the-voter-as-a-service>`.
+That's it! The voter is done! Next, :ref:`configure it <configuring-the-voter>`.
 
 To recap, here's what's expected from the two abstract methods:
 
