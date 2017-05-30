@@ -22,7 +22,7 @@ connections from the Varnish host instead of the real client.
 
 Remember to call the :ref:`Request::setTrustedProxies() <request-set-trusted-proxies>`
 method in your front controller so that Varnish is seen as a trusted proxy
-and the :ref:`X-Forwarded <varnish-x-forwarded-headers>` headers are used.
+and the :ref:`X-Forwarded-* <varnish-x-forwarded-headers>` headers are used.
 
 .. _varnish-x-forwarded-headers:
 

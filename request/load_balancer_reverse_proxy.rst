@@ -31,9 +31,9 @@ and what headers your reverse proxy uses to send information:
     // ...
     $request = Request::createFromGlobals();
 
-    // tell Symfony about your revers proxy
+    // tell Symfony about your reverse proxy
     Request::setTrustedProxies(
-        // the ip address (or range) of your proxy
+        // the IP address (or range) of your proxy
         ['192.0.0.1', '10.0.0.0/8'],
 
         // trust *all* "X-Forwarded-*" headers
@@ -41,6 +41,9 @@ and what headers your reverse proxy uses to send information:
 
         // or, if your proxy instead uses the "Forwarded" header
         // Request::HEADER_FORWARDED
+
+        // or, if you're using AWS ELB
+        // Request::HEADER_X_FORWARDED_AWS_ELB
     );
 
 The Request object has several ``Request::HEADER_*`` constants that control exactly
