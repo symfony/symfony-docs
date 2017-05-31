@@ -84,14 +84,13 @@ property is not empty, add the following:
             }
         }
 
-Create a translation file under the ``validators`` catalog for the constraint
-messages, typically in the ``Resources/translations/`` directory of the bundle.
+Now, create a ``validators`` catalog file in the ``app/Resources/translations`` directory:
 
 .. configuration-block::
 
     .. code-block:: xml
 
-        <!-- validators.en.xlf -->
+        <!-- app/Resources/translations/validators.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -106,12 +105,15 @@ messages, typically in the ``Resources/translations/`` directory of the bundle.
 
     .. code-block:: yaml
 
-        # validators.en.yml
+        # app/Resources/translations/validators.en.yml
         author.name.not_blank: Please enter an author name.
 
     .. code-block:: php
 
-        // validators.en.php
+        // app/Resources/translations/validators.en.php
         return array(
             'author.name.not_blank' => 'Please enter an author name.',
         );
+
+You may need to clear your cache (even in the dev environment) after creating this
+file for the first time.
