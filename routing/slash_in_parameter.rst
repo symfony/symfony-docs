@@ -76,3 +76,9 @@ a more permissive regex path.
         return $collection;
 
 That's it! Now, the ``{username}`` parameter can contain the ``/`` character.
+
+Routes with ``_format`` parameter
+-------------------
+
+Using the expression ``.+`` with the ``_format`` parameter will match the ``.{_format}`` from your route. For example it will output a username of ``test/test`` as ``test/test.html``. 
+When using the ``_format`` parameter you can use  ``[^.]+`` (providing your parameter value doesn't contain dots).
