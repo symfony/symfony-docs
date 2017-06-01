@@ -70,6 +70,20 @@ then some tags are automatically applied for you. That's true for the ``twig.ext
 tag: the container sees that your class extends ``Twig_Extension`` (or more accurately,
 that it implements ``Twig_ExtensionInterface``) and adds the tag for you.
 
+In order to have a tag automatically applied to all your services that implement an interface,
+you should create an extension following the steps described in :doc:`/bundles/extension`,
+then in the ``load()`` method call ``registerForAutoconfiguration()`` and apply your tag::
+    
+    // src/AppBundle/DependencyInjection/AppExtension.php
+
+    // ...
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $container->registerForAutoconfiguration(CustomInterface::class)
+            ->addTag('app.custom_tag')
+        ;
+    }
+
 Creating custom Tags
 --------------------
 
