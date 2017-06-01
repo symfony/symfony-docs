@@ -130,7 +130,7 @@ The best way to see how to replace base ``Controller`` convenience methods is to
 look at the `ControllerTrait`_ that holds its logic.
 
 If you want to know what type-hints to use for each service, see the
-``getSubscribedEvents()`` method in `AbstractController`_.
+``getSubscribedServices()`` method in `AbstractController`_.
 
 .. _`Controller class source code`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
 .. _`base Controller class`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
