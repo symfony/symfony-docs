@@ -29,7 +29,7 @@ to handle their respective command when it is asked for::
 
         public function handle(Command $command)
         {
-            $commandClass = get_class($command)
+            $commandClass = get_class($command);
 
             if (!isset($this->handlerMap[$commandClass])) {
                 return;
@@ -59,7 +59,7 @@ handlers could be to inject the whole dependency injection container::
 
             public function handle(Command $command)
             {
-                $commandClass = get_class($command)
+                $commandClass = get_class($command);
 
                 if ($this->container->has($commandClass)) {
                     $handler = $this->container->get($commandClass);
