@@ -240,7 +240,7 @@ be its class name in this case::
     use AppBundle\Service\MessageGenerator;
     
     // accessing services like this only works if you extend Controller
-    class ProductController extend Controller
+    class ProductController extends Controller
     {
         public function newAction()
         {
