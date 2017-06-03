@@ -100,8 +100,7 @@ Now, suppose you're sending an email to ``recipient@example.com``.
 
     public function indexAction($name, \Swift_Mailer $mailer)
     {
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Hello Email')
+        $message = new \Swift_Message('Hello Email')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
             ->setBody(

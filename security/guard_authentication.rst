@@ -148,7 +148,7 @@ user (if any).
 To create a custom authentication system, just create a class and make it implement
 :class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`. Or, extend
 the simpler :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`.
-This requires you to implement six methods::
+This requires you to implement seven methods::
 
     // src/AppBundle/Security/TokenAuthenticator.php
     namespace AppBundle\Security;

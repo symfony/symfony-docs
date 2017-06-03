@@ -49,8 +49,8 @@ The providers are configured to use a default service named ``ldap``,
 but you can override this setting in the security component's
 configuration.
 
-An LDAP client can be simply configured, using the following service
-definition:
+An LDAP client can be simply configured using the built-in
+`LDAP PHP extension`_ with the following service definition:
 
 .. configuration-block::
 
@@ -58,13 +58,16 @@ definition:
 
         # app/config/services.yml
         services:
-            Symfony\Component\Ldap\LdapClient:
+            Symfony\Component\Ldap\Ldap:
+                arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
+            Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
                 arguments:
-                    - my-server   # host
-                    - 389         # port
-                    - 3           # version
-                    - false       # SSL
-                    - true        # TLS
+                    -   host: my-server
+                        port: 389
+                        encryption: tls
+                        options:
+                            protocol_version: 3
+                            referrals: false
 
     .. code-block:: xml
 
@@ -75,12 +78,19 @@ definition:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="Symfony\Component\Ldap\LdapClient">
-                    <argument>my-server</argument>
-                    <argument>389</argument>
-                    <argument>3</argument>
-                    <argument>false</argument>
-                    <argument>true</argument>
+                <service id="Symfony\Component\Ldap\Ldap">
+                    <argument type="service" id="Symfony\Component\Ldap\Adapter\ExtLdap\Adapter" />
+                </service>
+                <service id="Symfony\Component\Ldap\Adapter\ExtLdap\Adapter">
+                    <argument type="collection">
+                        <argument key="host">my-server</argument>
+                        <argument key="port">389</argument>
+                        <argument key="encryption">tls</argument>
+                        <argument key="options" type="collection">
+                            <argument key="protocol_version">3</argument>
+                            <argument key="referrals">false</argument>
+                        </argument>
+                    </argument>
                 </service>
             </services>
         </container>
@@ -88,15 +98,23 @@ definition:
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\Ldap\LdapClient;
+        use Symfony\Component\Ldap\Ldap;
+        use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
         use Symfony\Component\DependencyInjection\Definition;
 
-        $container->register(LdapClient::class)->setArguments(array(
-                'my-server',
-                389,
-                3,
-                false,
-                true,
+        $container->register(Ldap::class)
+            ->addArgument(new Reference(Adapter::class);
+
+        $container
+            ->register(Adapter::class)
+            ->setArguments(array(
+                'host' => 'my-server',
+                'port' => 389,
+                'encryption' => 'tls',
+                'options' => array(
+                    'protocol_version' => 3,
+                    'referrals' => false
+                ),
             ));
 
 Fetching Users Using the LDAP User Provider
@@ -466,5 +484,6 @@ Configuration example for form login and query_string
             )
         );
 
+.. _`LDAP PHP extension`: http://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html
 .. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection

@@ -184,7 +184,7 @@ events are dispatched:
 
 * ``workflow.leave``
 * ``workflow.[workflow name].leave``
-* ``workflow.[workflow name].leave.[transition name]``
+* ``workflow.[workflow name].leave.[place name]``
 
 * ``workflow.transition``
 * ``workflow.[workflow name].transition``
@@ -192,7 +192,7 @@ events are dispatched:
 
 * ``workflow.enter``
 * ``workflow.[workflow name].enter``
-* ``workflow.[workflow name].enter.[transition name]``
+* ``workflow.[workflow name].enter.[place name]``
 
 * ``workflow.announce``
 * ``workflow.[workflow name].announce``
@@ -214,7 +214,7 @@ Here is an example how to enable logging for every time a the "blog_publishing" 
         public function onLeave(Event $event)
         {
             $this->logger->alert(sprintf(
-                'Blog post (id: "%s") preformed transaction "%s" form "%s" to "%s"',
+                'Blog post (id: "%s") performed transaction "%s" from "%s" to "%s"',
                 $event->getSubject()->getId(),
                 $event->getTransition()->getName(),
                 implode(', ', array_keys($event->getMarking()->getPlaces())),
