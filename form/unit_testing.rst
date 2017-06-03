@@ -174,7 +174,9 @@ allows you to return a list of extensions to register::
     // ...
     use AppBundle\Form\Type\TestedType;
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+    use Symfony\Component\Form\Form;
     use Symfony\Component\Validator\ConstraintViolationList;
+    use Symfony\Component\Validator\Mapping\ClassMetadata;
     use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     class TestedTypeTest extends TypeTestCase
@@ -189,6 +191,9 @@ allows you to return a list of extensions to register::
             $this->validator
                 ->method('validate')
                 ->will($this->returnValue(new ConstraintViolationList()));
+            $validator
+                ->method('getMetadataFor')
+                ->will($this->returnValue(new ClassMetadata(Form::class)));
 
             return array(
                 new ValidatorExtension($this->validator),
