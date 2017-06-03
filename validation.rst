@@ -318,8 +318,9 @@ Constraint Configuration
 Some constraints, like :doc:`NotBlank </reference/constraints/NotBlank>`,
 are simple whereas others, like the :doc:`Choice </reference/constraints/Choice>`
 constraint, have several configuration options available. Suppose that the
-``Author`` class has another property called ``gender`` that can be set to either
-"male", "female" or "other":
+``Author`` class has another property called ``genre`` that defines the
+literature genre mostly associated with the author, which can be set to either
+"fiction" or "non-fiction":
 
 .. configuration-block::
 
@@ -334,11 +335,11 @@ constraint, have several configuration options available. Suppose that the
         {
             /**
              * @Assert\Choice(
-             *     choices = { "male", "female", "other" },
-             *     message = "Choose a valid gender."
+             *     choices = { "fiction", "non-fiction" },
+             *     message = "Choose a valid genre."
              * )
              */
-            public $gender;
+            public $genre;
 
             // ...
         }
@@ -348,8 +349,8 @@ constraint, have several configuration options available. Suppose that the
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             properties:
-                gender:
-                    - Choice: { choices: [male, female, other], message: Choose a valid gender. }
+                genre:
+                    - Choice: { choices: [fiction, non-fiction], message: Choose a valid genre. }
                 # ...
 
     .. code-block:: xml
@@ -362,14 +363,13 @@ constraint, have several configuration options available. Suppose that the
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
-                <property name="gender">
+                <property name="genre">
                     <constraint name="Choice">
                         <option name="choices">
-                            <value>male</value>
-                            <value>female</value>
-                            <value>other</value>
+                            <value>fiction</value>
+                            <value>non-fiction</value>
                         </option>
-                        <option name="message">Choose a valid gender.</option>
+                        <option name="message">Choose a valid genre.</option>
                     </constraint>
                 </property>
 
@@ -387,7 +387,7 @@ constraint, have several configuration options available. Suppose that the
 
         class Author
         {
-            public $gender;
+            public $genre;
 
             // ...
 
@@ -395,9 +395,9 @@ constraint, have several configuration options available. Suppose that the
             {
                 // ...
 
-                $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
-                    'choices' => array('male', 'female', 'other'),
-                    'message' => 'Choose a valid gender.',
+                $metadata->addPropertyConstraint('genre', new Assert\Choice(array(
+                    'choices' => array('fiction', 'non-fiction'),
+                    'message' => 'Choose a valid genre.',
                 )));
             }
         }
@@ -421,9 +421,9 @@ options can be specified in this way.
         class Author
         {
             /**
-             * @Assert\Choice({"male", "female", "other"})
+             * @Assert\Choice({"fiction", "non-fiction"})
              */
-            protected $gender;
+            protected $genre;
 
             // ...
         }
@@ -433,8 +433,8 @@ options can be specified in this way.
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             properties:
-                gender:
-                    - Choice: [male, female, other]
+                genre:
+                    - Choice: [fiction, non-fiction]
                 # ...
 
     .. code-block:: xml
@@ -447,11 +447,10 @@ options can be specified in this way.
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
-                <property name="gender">
+                <property name="genre">
                     <constraint name="Choice">
-                        <value>male</value>
-                        <value>female</value>
-                        <value>other</value>
+                        <value>fiction</value>
+                        <value>non-fiction</value>
                     </constraint>
                 </property>
 
@@ -469,15 +468,15 @@ options can be specified in this way.
 
         class Author
         {
-            protected $gender;
+            protected $genre;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 // ...
 
                 $metadata->addPropertyConstraint(
-                    'gender',
-                    new Assert\Choice(array('male', 'female', 'other'))
+                    'genre',
+                    new Assert\Choice(array('fiction', 'non-fiction'))
                 );
             }
         }

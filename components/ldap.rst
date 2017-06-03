@@ -20,10 +20,12 @@ You can install the component in 2 different ways:
 Usage
 -----
 
-The :class:`Symfony\\Component\\Ldap\\LdapClient` class provides methods
-to authenticate and query against an LDAP server.
+The :class:`Symfony\\Component\\Ldap\\Ldap` class provides methods to authenticate
+and query against an LDAP server.
 
-The :class:`Symfony\\Component\\Ldap\\LdapClient` class can be configured
+The ``Ldap`` class uses an :class:`Symfony\\Component\\Ldap\\Adapter\\AdapterInterface`
+to communicate with an LDAP server. The :class:`adapter <Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\Adapter>`
+for PHP's built-in LDAP extension, for example, can be configured
 using the following options:
 
 ``host``
@@ -47,24 +49,32 @@ using the following options:
 
 For example, to connect to a start-TLS secured LDAP server::
 
-    use Symfony\Component\Ldap\LdapClient;
+    use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
+    use Symfony\Component\Ldap\Ldap;
 
-    $ldap = new LdapClient('my-server', 389, 3, false, true);
+    $adapter = new Adapter(array(
+        'host' => 'my-server',
+        'port' => 389,
+        'encryption' => 'tls',
+        'options' => array(
+            'protocol_version' => 3,
+            'referrals' => false,
+        ),
+    ));
+    $ldap = new Ldap($adapter);
 
-The :method:`Symfony\\Component\\Ldap\\LdapClient::bind` method
+The :method:`Symfony\\Component\\Ldap\\Ldap::bind` method
 authenticates a previously configured connection using both the
 distinguished name (DN) and the password of a user::
 
-    use Symfony\Component\Ldap\LdapClient;
     // ...
 
     $ldap->bind($dn, $password);
 
 Once bound (or if you enabled anonymous authentication on your
 LDAP server), you may query the LDAP server using the
-:method:`Symfony\\Component\\Ldap\\LdapClient::find` method::
+:method:`Symfony\\Component\\Ldap\\Ldap::find` method::
 
-    use Symfony\Component\Ldap\LdapClient;
     // ...
 
     $ldap->find('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
