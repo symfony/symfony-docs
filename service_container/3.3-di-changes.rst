@@ -217,14 +217,28 @@ service as an argument to another with the following config:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            TODO
+            <services>
+                <service id="app.invoice_generator"
+                    class="AppBundle\Service\InvoiceGenerator" />
+
+                <service id="app.invoice_mailer"
+                    class="AppBundle\Service\InvoiceMailer">
+
+                    <argument type="service" id="app.invoice_generator" />
+                </service>
+            </services>
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
+        use AppBundle\Service\InvoiceGenerator;
+        use AppBundle\Service\InvoiceMailer;
+        use Symfony\Component\DependencyInjection\Reference;
 
-        TODO
+        $container->register('app.invoice_generator', InvoiceGenerator::class);
+        $container->register('app.invoice_mailer', InvoiceMailer::class)
+            ->setArguments(array(new Reference('app.invoice_generator')));
 
 To pass the ``InvoiceGenerator`` as an argument to ``InvoiceMailer``, you needed
 to specify the service's *id* as an argument: ``app.invoice_generator``. Service
