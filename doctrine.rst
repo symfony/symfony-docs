@@ -633,9 +633,9 @@ Fetching an object back out of the database is even easier. For example,
 suppose you've configured a route to display a specific ``Product`` based
 on its ``id`` value::
 
-    use Doctrine\ORM\EnityManagerInterface;
+    use Doctrine\ORM\EntityManagerInterface;
 
-    public function showAction($productId, EnityManagerInterface $em)
+    public function showAction($productId, EntityManagerInterface $em)
     {
         $product = $em->getRepository('AppBundle:Product')
             ->find($productId);
@@ -727,7 +727,7 @@ Updating an Object
 Once you've fetched an object from Doctrine, updating it is easy. Suppose
 you have a route that maps a product id to an update action in a controller::
 
-    use Doctrine\ORM\EnityManagerInterface;
+    use Doctrine\ORM\EntityManagerInterface;
 
     public function updateAction($productId, EntityManagerInterface $em)
     {
