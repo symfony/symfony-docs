@@ -172,8 +172,8 @@ This requires you to implement seven methods::
         public function getCredentials(Request $request)
         {
             if (!$token = $request->headers->get('X-AUTH-TOKEN')) {
-                // No token?
-                $token = null;
+                // No token? Return null and show "Authentication Required"
+                return null;
             }
 
             // What you return here will be passed to getUser() as $credentials
