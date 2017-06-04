@@ -264,7 +264,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
                 # ...
 
                 main:
-                    anonymous: ~
+                    # remove anonymous authentication to force digest authentication
                     logout: ~
 
                     guard:
