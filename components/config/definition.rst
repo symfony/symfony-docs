@@ -781,10 +781,10 @@ Otherwise the result is a clean array of configuration values::
     use Acme\DatabaseConfiguration;
 
     $config1 = Yaml::parse(
-        file_get_contents(__DIR__.'/src/Matthias/config/config.yml')
+        file_get_contents(__DIR__.'/src/AppBundle/Resources/config/config.yml')
     );
     $config2 = Yaml::parse(
-        file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yml')
+        file_get_contents(__DIR__.'/src/AppBundle/Resources/config/config_extra.yml')
     );
 
     $configs = array($config1, $config2);
