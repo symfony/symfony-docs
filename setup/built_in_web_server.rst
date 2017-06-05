@@ -37,15 +37,6 @@ can change the socket passing an IP address and a port as a command-line argumen
 
 .. note::
 
-    You can use the ``--force`` option to force the web server start
-    if the process wasn't correctly stopped (without using the ``server:stop`` command).
-
-    .. code-block:: bash
-
-        $ php bin/console server:start --force
-
-.. note::
-
     You can use the ``server:status`` command to check if a web server is
     listening on a certain socket:
 
