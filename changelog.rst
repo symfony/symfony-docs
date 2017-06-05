@@ -1506,6 +1506,7 @@ Minor Documentation Changes
 - `3be0081 <https://github.com/symfony/symfony-docs/commit/3be00819b3300d6ead36fa6793d93874173a4db3>`_ #4976 Improved sentence (edsonmedina)
 - `a444220 <https://github.com/symfony/symfony-docs/commit/a4442209686f612f353b713cc1153a3e17383d25>`_ #4885 Fix typos (ifdattic)
 - `482502d <https://github.com/symfony/symfony-docs/commit/482502d02b838a7c9bbd31df9e2244e9876ec3ed>`_ #4793 [Contributing] Several tweaks (xelaris)
+- `a2395ef <https://github.com/symfony/symfony-docs/commit/a2395ef7c3945749a7b2d38135262eb70349aaaf>`_ #5054 [Changelog] fix changelog syntax (xabbuh)
 - `6b66f03 <https://github.com/symfony/symfony-docs/commit/6b66f034e2efbf488ac2192c3666e32998badc6d>`_ #5003 Updated the generic Deployment article (javiereguiluz)
 - `39a1487 <https://github.com/symfony/symfony-docs/commit/39a14875ad1ed8b4681bcb27288fc802d162c300>`_ #4999 Fixed semantic error (beni0888)
 
@@ -1546,7 +1547,6 @@ Minor Documentation Changes
 - `1726054 <https://github.com/symfony/symfony-docs/commit/1726054212bda98d4d63edb7f1364472fe91c7fe>`_ #4500 Link to standard edition  (harikt)
 - `91ff6f8 <https://github.com/symfony/symfony-docs/commit/91ff6f8198d17eda5f837c5f1c1725b8030862a1>`_ #4329 ensure consistency with the note (greg0ire)
 - `f4ab4b6 <https://github.com/symfony/symfony-docs/commit/f4ab4b65092c21642f36e9aec733c9348b4b9691>`_ #5002 Revert very bad merge (WouterJ)
-- `e747392 <https://github.com/symfony/symfony-docs/commit/e7473924e1e4233bec66eba6cf09b9dd9c1c079b>`_ Revert "#4977 Unnecessary comma (edsonmedina)"
 - `e5dbd49 <https://github.com/symfony/symfony-docs/commit/e5dbd49deb1cc6d25d4b89c4967a6511192a22ec>`_ #4977 Unnecessary comma (edsonmedina)
 - `ed80100 <https://github.com/symfony/symfony-docs/commit/ed8010062f99ccde39b7b32ffa1ea7cfbcbfdd2f>`_ #4977 Unnecessary comma (edsonmedina)
 - `5d44987 <https://github.com/symfony/symfony-docs/commit/5d4498707f7fc72653fc135a3e3caee675901ee9>`_ #4991 Fixed typo and tweaked syntax. (cdvrooman)
