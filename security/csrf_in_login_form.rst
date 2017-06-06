@@ -74,6 +74,7 @@ provider available in the Security component:
 
 The Security component can be configured further, but this is all information
 it needs to be able to use CSRF in the login form.
+Note: Make sure that CSRF Protection is enabled in ``config.yml``.
 
 Rendering the CSRF field
 ------------------------
