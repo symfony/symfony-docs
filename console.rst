@@ -153,16 +153,15 @@ Getting Services from the Service Container
 -------------------------------------------
 
 To actually create a new user, the command has to access to some
-:doc:`services </service_container>`. This can be done by making the command
-extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`
+:doc:`services </service_container>`. This can be done by making use of the :class:`Symfony\\Component\\DependencyInjection\\ContainerAwareTrait`
 instead::
 
     // ...
-    use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+    use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-    class CreateUserCommand extends ContainerAwareCommand
+    class CreateUserCommand extends Command
     {
-        // ...
+        use ContainerAwareTrait;
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
