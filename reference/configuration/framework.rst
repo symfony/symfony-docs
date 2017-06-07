@@ -71,6 +71,7 @@ Configuration
     * `version_strategy`_
     * `version`_
     * `version_format`_
+    * `json_manifest_path`_
 * `templating`_
     * `hinclude_default_template`_
     * :ref:`form <reference-templating-form>`
@@ -980,6 +981,7 @@ Each package can configure the following options:
 * :ref:`version_strategy <reference-assets-version-strategy>`
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
+* :ref:`json_manifest_path <reference-assets-json-manifest-path>`
 
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
@@ -1054,7 +1056,7 @@ option.
 
 .. note::
 
-    This parameter cannot be set at the same time as ``version_strategy``.
+    This parameter cannot be set at the same time as ``version_strategy`` or ``json_manifest_path``.
 
 .. tip::
 
@@ -1187,7 +1189,105 @@ individually for each asset package:
 
 .. note::
 
-    This parameter cannot be set at the same time as ``version``.
+    This parameter cannot be set at the same time as ``version`` or ``json_manifest_path``.
+
+.. _reference-assets-json-manifest-path:
+.. _reference-templating-json-manifest-path:
+
+json_manifest_path
+..................
+
+**type**: ``string`` **default**: ``null``
+
+.. versionadded:: 3.3
+
+    The ``json_manifest_path`` option was introduced in Symfony 3.3.
+
+The file path to a ``manifest.json`` file containing an associative array of asset
+names and their respective compiled names. A common cache-busting technique using
+a "manifest" file works by writing out assets with a "hash" appended to their
+file names (e.g. ``main.ae433f1cb.css``) during a front-end compilation routine.
+
+.. tip::
+
+    Symfony's :ref:`Webpack Encore <frontend-webpack-encore>` supports
+    :ref:`outputting hashed assets <encore-long-term-caching>`. Moreover, this
+    can be incorporate this into many other workflows, including Webpack and
+    Gulp using `webpack-manifest-plugin`_ and `gulp-rev`_, respectfully.
+
+This option can be set globally for all assets and individually for each asset
+package:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+       framework:
+            assets:
+                # this manifest is applied to every asset (including packages)
+                json_manifest_path: "%kernel.project_dir%/web/assets/manifest.json"
+                packages:
+                    foo_package:
+                        # this package uses its own manifest (the default file is ignored)
+                        json_manifest_path: "%kernel.project_dir%/web/assets/a_different_manifest.json"
+                    bar_package:
+                        # this package uses the global manifest (the default file is used)
+                        base_path: '/images'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:assets json_manifest_path="%kernel.project_dir%/web/assets/manifest.json">
+                    <!-- this package removes the manifest (the file will not apply) -->
+                    <framework:package
+                        name="foo_package"
+                        json_manifest_path="%kernel.project_dir%/web/assets/a_different_manifest.json" />
+                    <!-- this package uses the global manifest (the default file is used) -->
+                    <framework:package
+                        name="bar_package"
+                        base_path="/images" />
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'assets' => array(
+                'json_manifest_path' => '%kernel.project_dir%/web/assets/manifest.json',
+                'packages' => array(
+                    'foo_package' => array(
+                        // this package uses its own manifest (the default file is ignored)
+                        'json_manifest_path' => '%kernel.project_dir%/web/assets/a_different_manifest.json',
+                    ),
+                    'bar_package' => array(
+                        // this package uses the global manifest (the default file is used)
+                        'json_manifest_path' => '/images',
+                    ),
+                ),
+            ),
+        ));
+
+.. note::
+
+    This parameter cannot be set at the same time as ``version`` or ``version_strategy``.
+    Additionally, this option cannot be nullified at the package scope if a global manifest
+    file is specified.
+
+.. tip::
+
+    If you request an asset that is *not found* in the ``manifest.json`` file, the original -
+    *unmodified* - asset path will be returned.
 
 templating
 ~~~~~~~~~~
@@ -1901,3 +2001,5 @@ Full Default Configuration
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
 .. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
 .. _`blue/green deployment`: http://martinfowler.com/bliki/BlueGreenDeployment.html
+.. _`gulp-rev`: https://www.npmjs.com/package/gulp-rev
+.. _`webpack-manifest-plugin`: https://www.npmjs.com/package/webpack-manifest-plugin

@@ -6,6 +6,8 @@ working with CSS and JavaScript a joy. You can use it, use something else, or ju
 create static CSS and JS files in your ``web/`` directory and include them in your
 templates.
 
+.. _frontend-webpack-encore:
+
 Webpack Encore
 --------------
 
