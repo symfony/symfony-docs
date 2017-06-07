@@ -277,7 +277,7 @@ So how can you make ``blog_list`` once again match when the user visits
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{page}", name="blog_list", requirements={"page": "\d+"})
+             * @Route("/blog/{page}", name="blog_list", defaults={"page": 1}, requirements={"page": "\d+"})
              */
             public function listAction($page = 1)
             {
