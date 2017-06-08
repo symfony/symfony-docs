@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-06-02T13:14:26Z
+
+Did you try this? Symfony 3.3 should support this notation IIRC.
+
+---------------------------------------------------------------------------
+
+by michaelperrin at 2017-06-08T07:16:54Z
+
+@xabbuh I did try this (I can give you the link to the repo if needed). And it doesn't work on Symfony 3.3.
+
+What Symfony 3.3 introduced is a short syntax to define arguments (see [here](http://symfony.com/blog/new-in-symfony-3-3-simpler-service-configuration#short-syntax-for-service-configuration)).
+In the current docs, it doesn't work as `routing.loader` is passed as if it were an argument, instead of a tag.
