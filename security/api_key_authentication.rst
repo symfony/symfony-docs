@@ -444,7 +444,6 @@ configuration or set it to ``false``:
                 <firewall name="secured_area"
                     pattern="^/api"
                     stateless="false"
-                    ...
                 >
                 </firewall>
             </config>

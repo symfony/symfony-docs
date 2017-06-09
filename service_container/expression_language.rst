@@ -24,11 +24,11 @@ to another service: ``AppBundle\Mailer``. One way to do this is with an expressi
         # app/config/config.yml
         services:
             # ...
-            
+
             AppBundle\Mail\MailerConfiguration: ~
-            
+
             AppBundle\Mailer:
-                arguments: ["@=service('AppBundle\Mail\MailerConfiguration').getMailerMethod()"]
+                arguments: ["@=service('AppBundle\\Mail\\MailerConfiguration').getMailerMethod()"]
 
     .. code-block:: xml
 
@@ -56,7 +56,7 @@ to another service: ``AppBundle\Mailer``. One way to do this is with an expressi
         use AppBundle\Mail\MailerConfiguration;
         use AppBundle\Mailer;
         use Symfony\Component\ExpressionLanguage\Expression;
-        
+
         $container->autowire(AppBundle\Mail\MailerConfiguration::class);
 
         $container->autowire(Mailer::class)

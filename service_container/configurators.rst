@@ -151,7 +151,7 @@ all the classes are already loaded as services. All you need to do is specify th
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" ... />
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" />
 
                 <service id="AppBundle\Mail\NewsletterManager">
                     <configurator service="AppBundle\Mail\EmailConfigurator" method="configure" />
