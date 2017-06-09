@@ -48,7 +48,7 @@
                         <p>Each pull request of the Symfony Documentation is automatically deployed and hosted on <a href="https://platform.sh">Platform.sh</a>.<br>
                         View this page on <a href="https://symfony.com/doc/current/{{ pagename }}">symfony.com</a>.</p>
                     </div>
-                    
+
                     {%- include "globaltoc.html" %}
 
                     {% if not isIndex %}
@@ -68,8 +68,6 @@
                     <li class="active">{{ title }}</li>
                 </ol>
 
-                <h1 class="content_title">{{ title }}</h1>
-
                 <div class="page">
                 {% block body %}{% endblock %}
                 </div>
@@ -81,7 +79,7 @@
                     <a href="{{ next.link|e }}">{{ next.title|striptags|e }} »</a>
                 </div>
                 {% endif %}
-                
+
                 <div id="license">
                     <p>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 Unported <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">License</a>.</p>
                 </div>
