@@ -291,7 +291,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
 
                 <services>
                     <!-- ... be sure autowiring is enabled -->
-                    <defaults autowire="true" ... />
+                    <defaults autowire="true" />
                     <!-- ... -->
 
                     <service id="AppBundle\Controller\CustomExceptionController" public="true">
