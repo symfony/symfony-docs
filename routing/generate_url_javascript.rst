@@ -28,8 +28,10 @@ the `FOSJsRoutingBundle`_. It makes the following possible:
 
 .. code-block:: javascript
 
+    <script>
     var url = Routing.generate('blog_show', {
         'slug': 'my-blog-post'
     });
+    </script>
 
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
