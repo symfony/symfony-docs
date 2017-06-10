@@ -76,3 +76,8 @@ Full API
     :glob:
 
     frontend/*
+
+.. toctree::
+    :hidden:
+
+    frontend/encore/*
