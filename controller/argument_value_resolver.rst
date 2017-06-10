@@ -164,12 +164,12 @@ and adding a priority.
         <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="'http://www.w3.org/2001/XMLSchema-Instance"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <!-- ... be sure autowiring is enabled -->
-                <defaults autowire="true" ... />
+                <defaults autowire="true" />
                 <!-- ... -->
 
                 <service id="AppBundle\ArgumentResolver\UserValueResolver">
