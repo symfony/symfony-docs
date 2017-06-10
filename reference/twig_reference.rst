@@ -130,12 +130,12 @@ set for the package and the URL path. More information in
 :ref:`templating-assets`. For asset versioning, see
 :ref:`reference-framework-assets-version`.
 
-assets_version
+asset_version
 ~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
-    {{ assets_version(packageName = null) }}
+    {{ asset_version(packageName = null) }}
 
 ``packageName`` *(optional)*
     **type**: ``string`` | ``null`` **default**: ``null``

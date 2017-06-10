@@ -72,7 +72,7 @@ However, if a service has been marked as private, you can still alias it
 .. note::
 
     Services are by default public, but it's considered a good practice to mark
-    as much services private as possible.
+    as many services private as possible.
 
 Aliasing
 --------
