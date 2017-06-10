@@ -26,7 +26,7 @@ a more permissive regex path.
 
     .. code-block:: php-annotations
 
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class DemoController
         {

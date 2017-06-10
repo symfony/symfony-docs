@@ -34,6 +34,9 @@ syntax:
     .. code-block:: php-annotations
 
         # src/AppBundle/Controller/HelloController.php
+
+        // You need to use Sensio's annotation to specify a service id
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
         // ...
 
         /**

@@ -127,16 +127,9 @@ your ``composer.json`` file to load from there:
         }
     }
 
-Now, suppose you want to use Twig and load routes via annotations. For annotation
-routing, you need SensioFrameworkExtraBundle. This comes with a normal Symfony project.
-But in this case, you need to download it:
-
-.. code-block:: bash
-
-    $ composer require sensio/framework-extra-bundle
-
-Instead of putting *everything* in ``index.php``, create a new ``app/AppKernel.php``
-to hold the kernel. Now it looks like this::
+Now, suppose you want to use Twig and load routes via annotations. Instead of
+putting *everything* in ``index.php``, create a new ``app/AppKernel.php`` to
+hold the kernel. Now it looks like this::
 
     // app/AppKernel.php
 
@@ -161,7 +154,6 @@ to hold the kernel. Now it looks like this::
             $bundles = array(
                 new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
                 new Symfony\Bundle\TwigBundle\TwigBundle(),
-                new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle()
             );
 
             if ($this->getEnvironment() == 'dev') {
@@ -208,6 +200,12 @@ to hold the kernel. Now it looks like this::
             return __DIR__.'/../var/logs';
         }
     }
+
+
+.. versionadded:: 3.4
+    Support for annotation routing without an external bundle was added in
+    Symfony 3.4. Prior to version 3.4, you needed to install the
+    SensioFrameworkExtraBundle.
 
 Unlike the previous kernel, this loads an external ``app/config/config.yml`` file,
 because the configuration started to get bigger:
@@ -261,7 +259,7 @@ has one file in it::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class MicroController extends Controller
     {

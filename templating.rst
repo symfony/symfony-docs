@@ -579,7 +579,7 @@ configuration:
         // src/AppBundle/Controller/WelcomeController.php
 
         // ...
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class WelcomeController extends Controller
         {
@@ -648,7 +648,7 @@ route:
         // src/AppBundle/Controller/ArticleController.php
 
         // ...
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class ArticleController extends Controller
         {

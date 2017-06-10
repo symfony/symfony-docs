@@ -110,9 +110,9 @@ Finally, you need to update the code of the controller that handles the form::
     // src/AppBundle/Controller/ProductController.php
     namespace AppBundle\ProductController;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Annotation\Route;
     use AppBundle\Entity\Product;
     use AppBundle\Form\ProductType;
 

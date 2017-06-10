@@ -16,7 +16,7 @@ a routing ``{wildcard}`` to only match some regular expression:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends Controller
         {

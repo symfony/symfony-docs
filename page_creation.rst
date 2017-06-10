@@ -47,8 +47,8 @@ random) number and prints it. To do that, create a "Controller class" and a
     // src/AppBundle/Controller/LuckyController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class LuckyController
     {

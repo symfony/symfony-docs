@@ -122,8 +122,8 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
     namespace AppBundle\Controller;
 
     use AppBundle\Service\TwitterClient;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {

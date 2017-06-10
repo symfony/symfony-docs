@@ -96,7 +96,7 @@ for the homepage of our app:
     namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\Routing\Annotation\Route;
     use Doctrine\ORM\EntityManagerInterface;
 
     class DefaultController extends Controller
@@ -149,7 +149,7 @@ For example:
 .. code-block:: php
 
     use AppBundle\Entity\Post;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/{id}", name="admin_post_show")
@@ -202,9 +202,9 @@ flexible:
 .. code-block:: php
 
     use AppBundle\Entity\Post;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/comment/{postSlug}/new", name = "comment_new")

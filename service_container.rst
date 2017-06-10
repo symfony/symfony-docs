@@ -81,6 +81,7 @@ You can also use the unique "Service ID" to access a service directly::
     namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class ProductController extends Controller
     {
@@ -238,7 +239,7 @@ You can also fetch a service directly from the container via its "id", which wil
 be its class name in this case::
 
     use AppBundle\Service\MessageGenerator;
-    
+
     // accessing services like this only works if you extend Controller
     class ProductController extends Controller
     {
@@ -475,7 +476,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
         // app/config/services.php
         use AppBundle\Updates\SiteUpdateManager;
-        
+
         // _defaults and importing directories does not work in PHP
         // but registering a service explicitly does
         $container->autowire(SiteUpdateManager::class)
@@ -773,7 +774,7 @@ from the container::
     public function newAction(MessageGenerator $messageGenerator)
     {
         // type-hinting it as an argument DOES work
-    
+
         // but accessing it directly from the container does NOT Work
         $this->container->get(MessageGenerator::class);
     }

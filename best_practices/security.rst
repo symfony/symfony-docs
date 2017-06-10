@@ -109,8 +109,8 @@ Using ``@Security``, this looks like:
 
 .. code-block:: php
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     /**
@@ -135,8 +135,8 @@ method on the ``Post`` object:
 .. code-block:: php
 
     use AppBundle\Entity\Post;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
@@ -191,6 +191,7 @@ Now you can reuse this method both in the template and in the security expressio
 
     use AppBundle\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
