@@ -1002,4 +1002,4 @@ Learn more
     /service_container/*
 
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture
-.. _`Symfony Standard Edition (version 3.3) services.yml`: https://github.com/symfony/symfony-standard/blob/master/app/config/services.yml
+.. _`Symfony Standard Edition (version 3.3) services.yml`: https://github.com/symfony/symfony-standard/blob/3.3/app/config/services.yml
