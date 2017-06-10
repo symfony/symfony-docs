@@ -185,10 +185,10 @@ allows you to return a list of extensions to register::
 
         protected function getExtensions()
         {
-            $this->validator = $this->createMock(ValidatorInterface::class);
+            $validator = $this->createMock(ValidatorInterface::class);
             // use getMock() on PHPUnit 5.3 or below
             // $this->validator = $this->getMock(ValidatorInterface::class);
-            $this->validator
+            $validator
                 ->method('validate')
                 ->will($this->returnValue(new ConstraintViolationList()));
             $validator
