@@ -5,22 +5,22 @@ How to Allow a "/" Character in a Route Parameter
 =================================================
 
 Sometimes, you need to compose URLs with parameters that can contain a slash
-``/``. For example, take the classic ``/hello/{username}`` route. By default,
-``/hello/Fabien`` will match this route but not ``/hello/Fabien/Kris``. This
-is because Symfony uses this character as separator between route parts.
+``/``. For example, consider the ``/share/{token}`` route. If the ``token``
+value contains a ``/`` character this route won't match. This is because Symfony
+uses this character as separator between route parts.
 
-This guide covers how you can modify a route so that ``/hello/Fabien/Kris``
-matches the ``/hello/{username}`` route, where ``{username}`` equals ``Fabien/Kris``.
+This article explains how you can modify a route definition so that placeholders
+can contain the ``/`` character too.
 
 Configure the Route
 -------------------
 
-By default, the Symfony Routing component requires that the parameters
-match the following regex path: ``[^/]+``. This means that all characters
-are allowed except ``/``.
+By default, the Symfony Routing component requires that the parameters match
+the following regular expression: ``[^/]+``. This means that all characters are
+allowed except ``/``.
 
-You must explicitly allow ``/`` to be part of your parameter by specifying
-a more permissive regex path.
+You must explicitly allow ``/`` to be part of your placeholder by specifying
+a more permissive regular expression for it:
 
 .. configuration-block::
 
@@ -28,12 +28,12 @@ a more permissive regex path.
 
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-        class DemoController
+        class DefaultController
         {
             /**
-             * @Route("/hello/{username}", name="_hello", requirements={"username"=".+"})
+             * @Route("/share/{token}", name="share", requirements={"token"=".+"})
              */
-            public function helloAction($username)
+            public function shareAction($token)
             {
                 // ...
             }
@@ -41,11 +41,11 @@ a more permissive regex path.
 
     .. code-block:: yaml
 
-        _hello:
-            path:     /hello/{username}
-            defaults: { _controller: AppBundle:Demo:hello }
+        share:
+            path:     /share/{token}
+            defaults: { _controller: AppBundle:Default:share }
             requirements:
-                username: .+
+                token: .+
 
     .. code-block:: xml
 
@@ -55,9 +55,9 @@ a more permissive regex path.
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="_hello" path="/hello/{username}">
-                <default key="_controller">AppBundle:Demo:hello</default>
-                <requirement key="username">.+</requirement>
+            <route id="share" path="/share/{token}">
+                <default key="_controller">AppBundle:Default:share</default>
+                <requirement key="token">.+</requirement>
             </route>
         </routes>
 
@@ -67,12 +67,20 @@ a more permissive regex path.
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
-        $collection->add('_hello', new Route('/hello/{username}', array(
-            '_controller' => 'AppBundle:Demo:hello',
+        $collection->add('share', new Route('/share/{token}', array(
+            '_controller' => 'AppBundle:Default:share',
         ), array(
-            'username' => '.+',
+            'token' => '.+',
         )));
 
         return $collection;
 
-That's it! Now, the ``{username}`` parameter can contain the ``/`` character.
+That's it! Now, the ``{token}`` parameter can contain the ``/`` character.
+
+.. note::
+
+    If the route defines several placeholders and you apply this permissive
+    regular expression to all of them, the results won't be the expected. For
+    example, if the route definition is ``/share/{path}/{token}`` and both
+    ``path`` and ``token`` accept ``/``, then ``path`` will contain its contents
+    and the token, whereas ``token`` will be empty.
