@@ -368,7 +368,7 @@ routes with UTF-8 characters:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class DefaultController extends Controller
         {
@@ -442,7 +442,7 @@ You can also include UTF-8 strings as routing requirements:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class DefaultController extends Controller
         {
@@ -508,7 +508,7 @@ You can also include UTF-8 strings as routing requirements:
         // ...
 
         return $collection;
-    
+
 .. tip::
 
     In addition to UTF-8 characters, the Routing component also supports all

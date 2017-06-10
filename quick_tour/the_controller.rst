@@ -22,9 +22,9 @@ text content::
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {
@@ -57,8 +57,8 @@ a new method called ``helloAction()`` with the following content::
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {
@@ -114,7 +114,7 @@ Tweak the ``hello`` route by adding a new ``_format`` variable with ``html``
 as its default value::
 
     // src/AppBundle/Controller/DefaultController.php
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\Routing\Annotation\Route;
 
     // ...
 
@@ -152,8 +152,8 @@ To restrict the formats supported by a given action, use the ``requirements``
 option of the ``@Route()`` annotation::
 
     // src/AppBundle/Controller/DefaultController.php
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Symfony\Component\Routing\Annotation\Route;
 
     // ...
 
@@ -253,9 +253,9 @@ forget to add the new ``use`` statement that imports this ``Request`` class)::
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {
@@ -335,7 +335,7 @@ And you can display the flash message in the template like this:
     {% endfor %}
 
 .. versionadded:: 3.3
-    The ``app.flashes()`` Twig function was introduced in Symfony 3.3. Prior, 
+    The ``app.flashes()`` Twig function was introduced in Symfony 3.3. Prior,
     you had to use ``app.session.flashBag()``.
 
 Final Thoughts

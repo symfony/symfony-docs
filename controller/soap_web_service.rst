@@ -61,7 +61,7 @@ can be retrieved via ``/soap?wsdl``::
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\Routing\Annotation\Route;
     use AppBundle\Service\HelloService;
 
     class HelloServiceController extends Controller
