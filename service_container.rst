@@ -240,7 +240,7 @@ be its class name in this case::
     use AppBundle\Service\MessageGenerator;
     
     // accessing services like this only works if you extend Controller
-    class ProductController extend Controller
+    class ProductController extends Controller
     {
         public function newAction()
         {
@@ -989,7 +989,7 @@ If you want to pass the second, you'll need to :ref:`manually wire the service <
 
     If you do *not* create the alias and are :ref:`loading all services from src/AppBundle <service-container-services-load-example>`,
     then *three* services have been created (the automatic service + your two services)
-    and the automatically loaded service will be passed - by defaut - when you type-hint
+    and the automatically loaded service will be passed - by default - when you type-hint
     ``SiteUpdateManager``. That's why creating the alias is a good idea.
 
 Learn more

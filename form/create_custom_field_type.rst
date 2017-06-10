@@ -7,7 +7,7 @@ How to Create a Custom Form Field Type
 Symfony comes with a bunch of core field types available for building forms.
 However there are situations where you may want to create a custom form field
 type for a specific purpose. This recipe assumes you need a field definition
-that holds a person's gender, based on the existing choice field. This section
+that holds a shipping option, based on the existing choice field. This section
 explains how the field is defined, how you can customize its layout and finally,
 how you can register it for use in your application.
 
@@ -16,25 +16,26 @@ Defining the Field Type
 
 In order to create the custom field type, first you have to create the class
 representing the field. In this situation the class holding the field type
-will be called ``GenderType`` and the file will be stored in the default location
+will be called ``ShippingType`` and the file will be stored in the default location
 for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
 
-    // src/AppBundle/Form/Type/GenderType.php
+    // src/AppBundle/Form/Type/ShippingType.php
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-    class GenderType extends AbstractType
+    class ShippingType extends AbstractType
     {
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
                 'choices' => array(
-                    'm' => 'Male',
-                    'f' => 'Female',
+                    'Standard Shipping' => 'standard',
+                    'Expedited Shipping' => 'expedited',
+                    'Priority Shipping' => 'priority',
                 )
             ));
         }
@@ -67,8 +68,8 @@ important:
     This method is used to set any extra variables you'll
     need when rendering your field in a template. For example, in `ChoiceType`_,
     a ``multiple`` variable is set and used in the template to set (or not
-    set) the ``multiple`` attribute on the ``select`` field. See `Creating a Template for the Field`_
-    for more details.
+    set) the ``multiple`` attribute on the ``select`` field. See
+    `Creating a Template for the Field`_ for more details.
 
 ``configureOptions()``
     This defines options for your form type that
@@ -83,9 +84,9 @@ important:
     Also, if you need to modify the "view" of any of your child types from
     your parent type, use the ``finishView()`` method.
 
-The goal of this field was to extend the choice type to enable selection of
-a gender. This is achieved by fixing the ``choices`` to a list of possible
-genders.
+The goal of this field was to extend the choice type to enable selection of the
+shipping type. This is achieved by fixing the ``choices`` to a list of available
+shipping options.
 
 Creating a Template for the Field
 ---------------------------------
@@ -95,9 +96,9 @@ the class name of your type. For more information, see :ref:`form-customization-
 
 .. note::
 
-    The first part of the prefix (e.g. ``gender``) comes from the class name
-    (``GenderType`` -> ``gender``). This can be controlled by overriding ``getBlockPrefix()``
-    in ``GenderType``.
+    The first part of the prefix (e.g. ``shipping``) comes from the class name
+    (``ShippingType`` -> ``shipping``). This can be controlled by overriding ``getBlockPrefix()``
+    in ``ShippingType``.
 
 .. caution::
 
@@ -113,14 +114,14 @@ any work as the custom field type will automatically be rendered like a ``Choice
 But for the sake of this example, suppose that when your field is "expanded"
 (i.e. radio buttons or checkboxes, instead of a select field), you want to
 always render it in a ``ul`` element. In your form theme template (see above
-link for details), create a ``gender_widget`` block to handle this:
+link for details), create a ``shipping_widget`` block to handle this:
 
 .. configuration-block::
 
     .. code-block:: html+twig
 
         {# app/Resources/views/form/fields.html.twig #}
-        {% block gender_widget %}
+        {% block shipping_widget %}
             {% spaceless %}
                 {% if expanded %}
                     <ul {{ block('widget_container_attributes') }}>
@@ -140,7 +141,7 @@ link for details), create a ``gender_widget`` block to handle this:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/form/gender_widget.html.php -->
+        <!-- app/Resources/views/form/shipping_widget.html.php -->
         <?php if ($expanded) : ?>
             <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
             <?php foreach ($form as $child) : ?>
@@ -158,7 +159,7 @@ link for details), create a ``gender_widget`` block to handle this:
 .. note::
 
     Make sure the correct widget prefix is used. In this example the name should
-    be ``gender_widget`` (see :ref:`form-customization-form-themes`).
+    be ``shipping_widget`` (see :ref:`form-customization-form-themes`).
     Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
 
@@ -255,20 +256,20 @@ new instance of the type in one of your forms::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use AppBundle\Form\Type\GenderType;
+    use AppBundle\Form\Type\ShippingType;
 
-    class AuthorType extends AbstractType
+    class OrderType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('gender_code', GenderType::class, array(
-                'placeholder' => 'Choose a gender',
+            $builder->add('shipping_code', ShippingType::class, array(
+                'placeholder' => 'Choose a delivery option',
             ));
         }
     }
 
-But this only works because the ``GenderType`` is very simple. What if
-the gender codes were stored in configuration or in a database? The next
+But this only works because the ``ShippingType()`` is very simple. What if
+the shipping codes were stored in configuration or in a database? The next
 section explains how more complex field types solve this problem.
 
 .. _form-field-service:
@@ -280,13 +281,13 @@ Accessing Services and Config
 If you need to access :doc:`services </service_container>` from your form class,
 add a ``__construct()`` method like normal::
 
-    // src/AppBundle/Form/Type/GenderType.php
+    // src/AppBundle/Form/Type/ShippingType.php
     namespace AppBundle\Form\Type;
 
     // ...
     use Doctrine\ORM\EntityManagerInterface;
 
-    class GenderType extends AbstractType
+    class ShippingType extends AbstractType
     {
         private $em;
 

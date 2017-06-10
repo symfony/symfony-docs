@@ -472,7 +472,7 @@ makes dumping the compiled container easy::
     }
 
 ``ProjectServiceContainer`` is the default name given to the dumped container
-class, you can change this though this with the ``class`` option when you
+class. However you can change this with the ``class`` option when you
 dump it::
 
     // ...

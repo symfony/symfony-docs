@@ -188,7 +188,8 @@ and tag it with ``form.type_guesser``:
         services:
             # ...
 
-            AppBundle\Form\TypeGuesser\PHPDocTypeGuesser: [form.type_guesser]
+            AppBundle\Form\TypeGuesser\PHPDocTypeGuesser:
+                tags: [form.type_guesser]
 
     .. code-block:: xml
 

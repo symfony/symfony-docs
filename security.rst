@@ -48,7 +48,7 @@ configuration looks like this:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
 
-                default:
+                main:
                     anonymous: ~
 
     .. code-block:: xml
@@ -70,7 +70,7 @@ configuration looks like this:
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
                     security="false" />
 
-                <firewall name="default">
+                <firewall name="main">
                     <anonymous />
                 </firewall>
             </config>
@@ -90,7 +90,7 @@ configuration looks like this:
                     'pattern'   => '^/(_(profiler|wdt)|css|images|js)/',
                     'security'  => false,
                 ),
-                'default' => array(
+                'main' => array(
                     'anonymous' => null,
                 ),
             ),
@@ -106,7 +106,7 @@ by your security.
     You can also match a request against other details of the request (e.g. host). For more
     information and examples read :doc:`/security/firewall_restriction`.
 
-All other URLs will be handled by the ``default`` firewall (no ``pattern``
+All other URLs will be handled by the ``main`` firewall (no ``pattern``
 key means it matches *all* URLs). You can think of the firewall like your
 security system, and so it usually makes sense to have just one main firewall.
 But this does *not* mean that every URL requires authentication - the ``anonymous``
@@ -144,7 +144,7 @@ To activate this, add the ``http_basic`` key under your firewall:
 
             firewalls:
                 # ...
-                default:
+                main:
                     anonymous: ~
                     http_basic: ~
 
@@ -161,7 +161,7 @@ To activate this, add the ``http_basic`` key under your firewall:
             <config>
                 <!-- ... -->
 
-                <firewall name="default">
+                <firewall name="main">
                     <anonymous />
                     <http-basic />
                 </firewall>
@@ -175,7 +175,7 @@ To activate this, add the ``http_basic`` key under your firewall:
             // ...
             'firewalls' => array(
                 // ...
-                'default' => array(
+                'main' => array(
                     'anonymous'  => null,
                     'http_basic' => null,
                 ),
@@ -216,7 +216,7 @@ user to be logged in to access this URL:
             # ...
             firewalls:
                 # ...
-                default:
+                main:
                     # ...
 
             access_control:
@@ -236,7 +236,7 @@ user to be logged in to access this URL:
             <config>
                 <!-- ... -->
 
-                <firewall name="default">
+                <firewall name="main">
                     <!-- ... -->
                 </firewall>
 
@@ -252,7 +252,7 @@ user to be logged in to access this URL:
             // ...
             'firewalls' => array(
                 // ...
-                'default' => array(
+                'main' => array(
                     // ...
                 ),
             ),
@@ -705,7 +705,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
 
             firewalls:
                 # ...
-                default:
+                main:
                     # ...
 
             access_control:
@@ -725,7 +725,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
             <config>
                 <!-- ... -->
 
-                <firewall name="default">
+                <firewall name="main">
                     <!-- ... -->
                 </firewall>
 
@@ -742,7 +742,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
 
             'firewalls' => array(
                 // ...
-                'default' => array(
+                'main' => array(
                     // ...
                 ),
             ),
