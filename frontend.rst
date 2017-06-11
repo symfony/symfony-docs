@@ -7,25 +7,24 @@ create static CSS and JS files in your ``web/`` directory and include them in yo
 templates.
 
 Webpack Encore
-==============
+--------------
 
-`Webpack Encore`_ is a simpler way to integrate `Webpack`_ into your
-application. It *wraps* Webpack, giving you a clean & powerful API
-for bundling JavaScript modules, pre-processing CSS & JS and compiling
-and minifying assets. Encore gives you professional asset system
-that's a *delight* to use.
+`Webpack Encore`_ is a simpler way to integrate `Webpack`_ into your application.
+It *wraps* Webpack, giving you a clean & powerful API for bundling JavaScript modules,
+pre-processing CSS & JS and compiling and minifying assets. Encore gives you professional
+asset system that's a *delight* to use.
 
-Encore is inspired by `Webpacker`_ and `Mix`_, but stays in the spirit of
-Webpack: using its features, concepts and naming conventions for a familiar
-feel. It aims to solve the most common Webpack use cases.
+Encore is inspired by `Webpacker`_ and `Mix`_, but stays in the spirit of Webpack:
+using its features, concepts and naming conventions for a familiar feel. It aims
+to solve the most common Webpack use cases.
 
 .. tip::
 
     Encore is made by `Symfony`_ and works *beautifully* in Symfony applications.
     But it can easily be used in any application... in any language!
 
-Documentation
--------------
+Encore Documentation
+--------------------
 
 Getting Started
 ...............
@@ -36,16 +35,16 @@ Getting Started
 Adding more Features
 ....................
 
-* :doc:`CSS Preprocessors: SASS, LESS, etc </frontend/encore/css-preprocessors>`
+* :doc:`CSS Preprocessors: Sass, LESS, etc </frontend/encore/css-preprocessors>`
 * :doc:`PostCSS and autoprefixing </frontend/encore/postcss>`
 * :doc:`Enabling React.js </frontend/encore/reactjs>`
 * :doc:`Configuring Babel </frontend/encore/babel>`
-* :doc:`Sourcemaps </frontend/encore/sourcemaps>`
+* :doc:`Source maps </frontend/encore/sourcemaps>`
 
 Optimizing
 ..........
 
-* :doc:`Versioning and manifest.json </frontend/encore/versioning>`
+* :doc:`Versioning (and the manifest.json file) </frontend/encore/versioning>`
 * :doc:`Using A CDN </frontend/encore/cdn>`
 * :doc:`Creating a "Shared" entry for re-used modules </frontend/encore/shared-entry>`
 

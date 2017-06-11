@@ -21,9 +21,9 @@ a new ``checkout`` entry:
     +     .addEntry('checkout', './assets/js/checkout.js')
     ;
 
-Inside ``checkout.js``, add or require the JavaScript and CSS you need.
-Then, just include a ``script`` tag for ``checkout.js`` on the checkout
-page (and a ``link`` tag for ``checkout.css`` if you import any CSS).
+Inside ``checkout.js``, add or require the JavaScript and CSS you need. Then, just
+include a ``script`` tag for ``checkout.js`` on the checkout page (and a ``link``
+tag for ``checkout.css`` if you import any CSS).
 
 Multiple Entries Per Page?
 --------------------------

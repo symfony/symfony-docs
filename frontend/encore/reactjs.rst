@@ -1,8 +1,7 @@
 Enabling React.js
 =================
 
-Using React? Make sure you have React installed, along with the
-`babel-preset-react`_:
+Using React? Make sure you have React installed, along with the `babel-preset-react`_:
 
 .. code-block:: terminal
 

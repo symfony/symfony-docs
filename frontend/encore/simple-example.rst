@@ -8,7 +8,7 @@ an ``assets/`` directory:
 * ``assets/css/global.scss``
 
 With Encore, we can easily minify these files, pre-process ``global.scss``
-through SASS and a *lot* more.
+through Sass and a *lot* more.
 
 Configuring Encore/Webpack
 --------------------------
@@ -52,8 +52,8 @@ Inside, use Encore to help generate your Webpack configuration.
     // export the final configuration
     module.exports = Encore.getWebpackConfig();
 
-This is already a rich setup: it outputs 2 files, uses the
-SASS pre-processor and enables sourcemaps to help debugging.
+This is already a rich setup: it outputs 2 files, uses the Sass pre-processor and
+enables source maps to help debugging.
 
 .. _encore-build-assets:
 
@@ -99,8 +99,8 @@ In Symfony, use the ``asset()`` helper:
 Requiring JavaScript Modules
 ----------------------------
 
-Webpack is module bundler... which means that you can ``require``
-other JavaScript files. First, create a file that exports a function:
+Webpack is module bundler... which means that you can ``require`` other JavaScript
+files. First, create a file that exports a function:
 
 .. code-block:: javascript
 

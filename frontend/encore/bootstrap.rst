@@ -9,11 +9,11 @@ First, install it. To be able to customize things further, we'll install
 
     $ yarn add bootstrap-sass --dev
 
-Importing Bootstrap SASS
+Importing Bootstrap Sass
 ------------------------
 
 Now that ``bootstrap-sass`` lives in your ``node_modules`` directory, you can
-import it from any SASS or JavaScript file. For example, if you're already have
+import it from any Sass or JavaScript file. For example, if you're already have
 a ``global.scss`` file, import it from there:
 
 .. code-block:: css
@@ -34,7 +34,7 @@ file into ``global.scss``. You can even customize the Bootstrap variables first!
     If you don't need *all* of Bootstrap's features, you can include specific files
     in the ``bootstrap`` directory instead - e.g. ``~bootstrap-sass/assets/stylesheets/bootstrap/alerts``.
 
-After including ``bootstrap-sass``, your webpack builds might become slow. To fix
+After including ``bootstrap-sass``, your Webpack builds might become slow. To fix
 this, you can use the ``resolve_url_loader`` option:
 
 .. code-block:: diff
@@ -47,7 +47,7 @@ this, you can use the ``resolve_url_loader`` option:
     ;
 
 This disables the ``resolve-url-loader`` in Webpack, which means that any
-``url()`` paths in your SASS files must now be relative to the original source
+``url()`` paths in your Sass files must now be relative to the original source
 entry file instead of whatever file you're inside of (see `Problems with url()`_).
 To load Bootstrap, you'll need to override the path to its icons:
 

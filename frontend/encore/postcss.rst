@@ -33,8 +33,7 @@ Then, Enable the loader in Encore!
     +     .enablePostCssLoader()
     ;
 
-That's it! The ``postcss-loader`` will now be used for all CSS, Sass, etc
-files.
+That's it! The ``postcss-loader`` will now be used for all CSS, Sass, etc files.
 
 .. _`PostCSS`: http://postcss.org/
 .. _`autoprefixing`: https://github.com/postcss/autoprefixer
