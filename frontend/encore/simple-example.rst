@@ -99,8 +99,8 @@ In Symfony, use the ``asset()`` helper:
 Requiring JavaScript Modules
 ----------------------------
 
-Webpack is module bundler... which means that you can ``require`` other JavaScript
-files. First, create a file that exports a function:
+Webpack is a module bundler... which means that you can ``require`` other
+JavaScript files. First, create a file that exports a function:
 
 .. code-block:: javascript
 
