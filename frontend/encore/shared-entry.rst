@@ -10,8 +10,8 @@ that's included on every page:
 
     Encore
         // ...
-        .addEntry('page1', 'asssets/js/page1.js')
-        .addEntry('page2', 'asssets/js/page2.js')
+        .addEntry('page1', 'assets/js/page1.js')
+        .addEntry('page2', 'assets/js/page2.js')
 
         // this creates a 'vendor.js' file with jquery and the bootstrap JS module
         // these modules will *not* be included in page1.js or page2.js anymore
