@@ -129,7 +129,7 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
     var greet = require('./greet');
 
     $(document).ready(function() {
-        $('h1').html(greet());
+        $('h1').html(greet('john'));
     });
 
 That's it! When you build your assets, jQuery and ``greet.js`` will automatically
