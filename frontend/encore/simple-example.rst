@@ -40,7 +40,7 @@ Inside, use Encore to help generate your Webpack configuration.
         // allow sass/scss files to be processed
         .enableSassLoader()
 
-        // allows legacy applications to use $/jQuery as a global variable
+        // allow legacy applications to use $/jQuery as a global variable
         .autoProvidejQuery()
 
         .enableSourceMaps(!Encore.isProduction())
