@@ -128,8 +128,8 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
     // ./ (or ../) means to look for a local file
     var greet = require('./greet');
 
-    $(document).ready(function()) {
-        $('h1').html(greet());
+    $(document).ready(function() {
+        $('h1').html(greet('john'));
     });
 
 That's it! When you build your assets, jQuery and ``greet.js`` will automatically
