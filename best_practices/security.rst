@@ -330,7 +330,7 @@ the same ``getAuthorEmail()`` logic you used above:
 
 If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
 your application will :ref:`autoconfigure <services-autoconfigure>` your security
-voter and inject a ``AccessDecisionManagerInterface`` instance in it thanks to
+voter and inject an ``AccessDecisionManagerInterface`` instance into it thanks to
 :doc:`autowiring </service_container/autowiring>`.
 
 Now, you can use the voter with the ``@Security`` annotation:
