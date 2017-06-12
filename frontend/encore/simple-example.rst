@@ -19,7 +19,7 @@ Inside, use Encore to help generate your Webpack configuration.
 .. code-block:: javascript
 
     // webpack.config.js
-    var Encore = require('@weaverryan/webpack-remix');
+    var Encore = require('@symfony/webpack-encore');
 
     Encore
         // directory where should all compiled assets will be stored
