@@ -28,7 +28,7 @@ tag for ``checkout.css`` if you import any CSS).
 Multiple Entries Per Page?
 --------------------------
 
-Typically, you should include only *one* entry JavaScript per page. This means
+Typically, you should include only *one* JavaScript entry per page. This means
 the checkout page will include ``checkout.js``, but will *not* include the
 ``app.js`` that's used on the other pages. Think of the checkout page as its
 own "app", where ``checkout.js`` includes all the functionality you need.
