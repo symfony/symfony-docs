@@ -62,13 +62,8 @@ Full API
 
 * `Full API`_: https://github.com/symfony/webpack-encore/blob/master/index.js
 
-.. _`Webpack Encore`: https://www.npmjs.com/package/@symfony/webpack-encore
-.. _`Webpack`: https://webpack.js.org/
-.. _`Webpacker`: https://github.com/rails/webpacker
-.. _`Mix`: https://laravel.com/docs/5.4/mix
-.. _`Symfony`: http://symfony.com/
-.. _`Full API`: https://github.com/symfony/webpack-encore/blob/master/index.js
-
+Other Front-End Articles
+........................
 
 .. toctree::
     :maxdepth: 1
@@ -81,3 +76,10 @@ Full API
     :glob:
 
     frontend/encore/*
+
+.. _`Webpack Encore`: https://www.npmjs.com/package/@symfony/webpack-encore
+.. _`Webpack`: https://webpack.js.org/
+.. _`Webpacker`: https://github.com/rails/webpacker
+.. _`Mix`: https://laravel.com/docs/5.4/mix
+.. _`Symfony`: http://symfony.com/
+.. _`Full API`: https://github.com/symfony/webpack-encore/blob/master/index.js
