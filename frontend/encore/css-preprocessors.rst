@@ -22,7 +22,7 @@ And enable it in ``webpack.config.js``:
         .enableSassLoader()
     ;
 
-That's it! All files ending in ``.sass`` or ``.scss`` will be processed.
+That's it! All files ending in ``.sass`` or ``.scss`` will be pre-processed.
 
 Using LESS
 ----------
