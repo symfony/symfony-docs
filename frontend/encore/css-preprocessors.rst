@@ -1,5 +1,5 @@
-CSS Preprocessors: Sass, LESS, etc
-==================================
+CSS Preprocessors: Sass, LESS, etc.
+===================================
 
 Using Sass
 ----------
