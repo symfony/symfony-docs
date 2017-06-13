@@ -98,4 +98,36 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
             ) ?>
         </div>
 
+If your controller should be used :doc:`as a service </controller/service>`,
+you can reference it like this instead:
+
+.. configuration-block::
+
+    .. code-block:: html+twig
+
+        {# app/Resources/views/base.html.twig #}
+
+        {# ... #}
+        <div id="sidebar">
+            {{ render(controller(
+                'AppBundle\\Controller\\ArticleController:recentArticlesAction',
+                { 'max': 3 }
+            )) }}
+        </div>
+
+    .. code-block:: html+php
+
+        <!-- app/Resources/views/base.html.php -->
+
+        <!-- ... -->
+        <div id="sidebar">
+            <?php echo $view['actions']->render(
+                new \Symfony\Component\HttpKernel\Controller\ControllerReference(
+                    'AppBundle\\Controller\\ArticleController:recentArticlesAction',
+                    array('max' => 3)
+                )
+            ) ?>
+        </div>
+
+
 The result of an embedded controler can also be :doc:`cached </http_cache/esi>`

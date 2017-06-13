@@ -71,6 +71,38 @@ syntax:
     You cannot drop the ``Action`` part of the method name when using the
     single colon notation.
 
+Embedding your controller in a template
+---------------------------------------
+
+If you want to :doc:`embed your controller in a template </templating/embedding_controllers>`,
+you need to use the following syntax:
+
+.. configuration-block::
+
+    .. code-block:: html+twig
+
+        {# app/Resources/views/base.html.twig #}
+
+        {# ... #}
+        <div id="sidebar">
+            {{ render(controller(
+                'AppBundle\\Controller\\HelloController:indexAction',
+            )) }}
+        </div>
+
+    .. code-block:: html+php
+
+        <!-- app/Resources/views/base.html.php -->
+
+        <!-- ... -->
+        <div id="sidebar">
+            <?php echo $view['actions']->render(
+                new \Symfony\Component\HttpKernel\Controller\ControllerReference(
+                    'AppBundle\\Controller\\HelloController:indexAction'
+                )
+            ) ?>
+        </div>
+
 .. _controller-service-invoke:
 
 Invokable Controllers
