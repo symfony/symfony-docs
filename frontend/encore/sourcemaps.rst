@@ -1,7 +1,7 @@
 Enabling Source Maps
 ====================
 
-`Source maps`_ allow browsers to access to the original code related to some
+`Source maps`_ allow browsers to access the original code related to some
 asset (e.g. the Sass code that was compiled to CSS or the TypeScript code that
 was compiled to JavaScript). Source maps are useful for debugging purposes but
 unnecessary when executing the application in production.

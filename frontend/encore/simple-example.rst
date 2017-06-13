@@ -22,7 +22,7 @@ Inside, use Encore to help generate your Webpack configuration.
     var Encore = require('@symfony/webpack-encore');
 
     Encore
-        // directory where should all compiled assets will be stored
+        // directory where all compiled assets will be stored
         .setOutputPath('web/build/')
 
         // what's the public path to this directory (relative to your project's document root dir)
@@ -40,7 +40,7 @@ Inside, use Encore to help generate your Webpack configuration.
         // allow sass/scss files to be processed
         .enableSassLoader()
 
-        // allows legacy applications to use $/jQuery as a global variable
+        // allow legacy applications to use $/jQuery as a global variable
         .autoProvidejQuery()
 
         .enableSourceMaps(!Encore.isProduction())
@@ -99,8 +99,8 @@ In Symfony, use the ``asset()`` helper:
 Requiring JavaScript Modules
 ----------------------------
 
-Webpack is module bundler... which means that you can ``require`` other JavaScript
-files. First, create a file that exports a function:
+Webpack is a module bundler... which means that you can ``require`` other
+JavaScript files. First, create a file that exports a function:
 
 .. code-block:: javascript
 
