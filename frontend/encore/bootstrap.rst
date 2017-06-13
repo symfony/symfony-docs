@@ -21,7 +21,7 @@ a ``global.scss`` file, import it from there:
     // assets/css/global.scss
 
     // customize some Bootstrap variables
-    $brand-primary:         darken(#428bca, 20%);
+    $brand-primary: darken(#428bca, 20%);
 
     // the ~ allows you to reference things in node_modules
     @import '~bootstrap-sass/assets/stylesheets/bootstrap';
@@ -41,7 +41,7 @@ this, you can use the ``resolve_url_loader`` option:
 
     // webpack.config.js
     Encore
-    +     enableSassLoader({
+    +     .enableSassLoader({
     +         resolve_url_loader: false
     +     })
     ;
@@ -79,6 +79,7 @@ Next, make sure to call ``.autoProvidejQuery()`` in your ``webpack.config.js`` f
     Encore
         // ...
     +     .autoProvidejQuery()
+    ;
 
 This is needed because Bootstrap expects jQuery to be available as a global
 variable. Now, require bootstrap from any of your JavaScript files:
