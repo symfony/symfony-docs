@@ -146,6 +146,7 @@ Above, you created an entry called ``app`` that pointed to ``main.js``:
     Encore
         // ...
         .addEntry('app', './assets/js/main.js')
+    ;
 
 Once inside ``main.js``, you can even require CSS files:
 
