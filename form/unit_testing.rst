@@ -191,7 +191,7 @@ allows you to return a list of extensions to register::
             $this->validator
                 ->method('validate')
                 ->will($this->returnValue(new ConstraintViolationList()));
-             $this->validator
+            $this->validator
                 ->method('getMetadataFor')
                 ->will($this->returnValue(new ClassMetadata(Form::class)));
 
@@ -227,15 +227,14 @@ a good opportunity to use them::
 
     class TestedTypeTest extends TypeTestCase
     {
-       
+        /**
+         * @dataProvider getValidTestData
+         */
         public function testForm($data)
         {
             // ... your test
         }
-        
-         /**
-         * @dataProvider getValidTestData
-         */
+
         public function getValidTestData()
         {
             return array(
