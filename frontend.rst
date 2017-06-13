@@ -66,16 +66,16 @@ Other Front-End Articles
 ........................
 
 .. toctree::
-    :maxdepth: 1
-    :glob:
-
-    frontend/*
-
-.. toctree::
     :hidden:
     :glob:
 
     frontend/encore/*
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    frontend/*
 
 .. _`Webpack Encore`: https://www.npmjs.com/package/@symfony/webpack-encore
 .. _`Webpack`: https://webpack.js.org/
