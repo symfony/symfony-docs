@@ -1,9 +1,9 @@
 Installation
 ============
 
-First, make sure you `install Node.js`_ and also the `yarn package manager`_.
+First, make sure you `install Node.js`_ and also the `Yarn package manager`_.
 
-Then, install Encore into your project with yarn:
+Then, install Encore into your project with Yarn:
 
 .. code-block:: terminal
 
@@ -21,11 +21,11 @@ is also created/updated. When using npm 5, a ``package-lock.json`` file is creat
 .. tip::
 
     You should commit ``package.json`` and ``yarn.lock`` (or ``package-lock.json``
-    if using npm) to version control, but ignore ``node_modules/``.
+    if using npm 5) to version control, but ignore ``node_modules/``.
 
 Next, create your ``webpack.config.js`` in :doc:`/frontend/encore/simple-example`!
 
 .. _`install Node.js`: https://nodejs.org/en/download/
-.. _`yarn package manager`: https://yarnpkg.com/lang/en/docs/install/
+.. _`Yarn package manager`: https://yarnpkg.com/lang/en/docs/install/
 .. _`npm`: https://www.npmjs.com/
 .. _`yarn`: https://yarnpkg.com/
