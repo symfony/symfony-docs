@@ -1,5 +1,5 @@
-Installation
-============
+Encore Installation
+===================
 
 First, make sure you `install Node.js`_ and also the `Yarn package manager`_.
 
