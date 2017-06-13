@@ -99,8 +99,8 @@ In Symfony, use the ``asset()`` helper:
 Requiring JavaScript Modules
 ----------------------------
 
-Webpack is a module bundler... which means that you can ``require`` other
-JavaScript files. First, create a file that exports a function:
+Webpack is a module bundler... which means that you can ``require`` other JavaScript
+files. First, create a file that exports a function:
 
 .. code-block:: javascript
 
@@ -128,8 +128,8 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
     // ./ (or ../) means to look for a local file
     var greet = require('./greet');
 
-    $(document).ready(function()) {
-        $('h1').html(greet());
+    $(document).ready(function() {
+        $('h1').html(greet('john'));
     });
 
 That's it! When you build your assets, jQuery and ``greet.js`` will automatically
