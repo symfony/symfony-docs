@@ -69,6 +69,8 @@ Other Front-End Articles
     :hidden:
     :glob:
 
+    frontend/encore/installation
+    frontend/encore/simple-example
     frontend/encore/*
 
 .. toctree::
