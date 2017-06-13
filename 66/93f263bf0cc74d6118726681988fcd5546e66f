@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by GuilhemN at 2017-06-11T09:55:43Z
+
+What about adding this as a tip instead, and using the `Kernel::build()` in the example as it's becoming more common?
+
+```rst
+.. tip::
+
+    To apply a tag to all your autoconfigured services extending a class or an
+    interface, call ``ContainerBuilder::registerForAutoconfiguration()`` in an
+    :doc:`extension </bundles/extension>` or from your kernel::
+
+        // app/AppKernel.php
+        class AppKernel extends Kernel
+        {
+            // ...
+
+            protected function build(ContainerBuilder $container)
+            {
+                $container->registerForAutoconfiguration(CustomInterface::class)
+                    ->addTag('app.custom_tag')
+                ;
+            }
+        }
+```
+
+---------------------------------------------------------------------------
+
+by danut007ro at 2017-06-11T10:29:35Z
+
+Even better. Updated.
+
+---------------------------------------------------------------------------
+
+by danut007ro at 2017-06-11T12:01:39Z
+
+Updated, thanks @xabbuh
