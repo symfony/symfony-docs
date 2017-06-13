@@ -13,7 +13,7 @@ Importing Bootstrap Sass
 ------------------------
 
 Now that ``bootstrap-sass`` lives in your ``node_modules`` directory, you can
-import it from any Sass or JavaScript file. For example, if you're already have
+import it from any Sass or JavaScript file. For example, if you already have
 a ``global.scss`` file, import it from there:
 
 .. code-block:: css
@@ -71,7 +71,7 @@ Bootstrap JavaScript requires jQuery, so make sure you have this installed:
 
     $ yarn add jquery --dev
 
-Next, make sure call ``.autoProvidejQuery()`` in your ``webpack.config.js`` file:
+Next, make sure to call ``.autoProvidejQuery()`` in your ``webpack.config.js`` file:
 
 .. code-block:: diff
 

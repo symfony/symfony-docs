@@ -40,7 +40,7 @@ Inside, use Encore to help generate your Webpack configuration.
         // allow sass/scss files to be processed
         .enableSassLoader()
 
-        // allows legacy applications to use $/jQuery as a global variable
+        // allow legacy applications to use $/jQuery as a global variable
         .autoProvidejQuery()
 
         .enableSourceMaps(!Encore.isProduction())
@@ -99,7 +99,7 @@ In Symfony, use the ``asset()`` helper:
 Requiring JavaScript Modules
 ----------------------------
 
-Webpack is module bundler... which means that you can ``require`` other JavaScript
+Webpack is a module bundler... which means that you can ``require`` other JavaScript
 files. First, create a file that exports a function:
 
 .. code-block:: javascript
@@ -128,8 +128,8 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
     // ./ (or ../) means to look for a local file
     var greet = require('./greet');
 
-    $(document).ready(function()) {
-        $('h1').html(greet());
+    $(document).ready(function() {
+        $('h1').html(greet('john'));
     });
 
 That's it! When you build your assets, jQuery and ``greet.js`` will automatically

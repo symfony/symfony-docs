@@ -4,20 +4,18 @@
 Creating and Using Templates
 ============================
 
-As you know, the :doc:`controller </controller>` is responsible for
-handling each request that comes into a Symfony application. In reality,
-the controller delegates most of the heavy work to other places so that
-code can be tested and reused. When a controller needs to generate HTML,
+As explained in :doc:`the previous article </controller>`, controllers are
+responsible for handling each request that comes into a Symfony application and
+the usually end up rendering a template to generate the response contents.
+
+In reality, the controller delegates most of the heavy work to other places so
+that code can be tested and reused. When a controller needs to generate HTML,
 CSS or any other content, it hands the work off to the templating engine.
+
 In this article, you'll learn how to write powerful templates that can be
 used to return content to the user, populate email bodies, and more. You'll
 learn shortcuts, clever ways to extend templates and how to reuse template
 code.
-
-.. note::
-
-    How to render templates is covered in the
-    :ref:`controller <controller-rendering-templates>` article.
 
 .. index::
    single: Templating; What is a template?

@@ -26,7 +26,7 @@ Fetch this in JavaScript:
 There is no size limit for the value of the ``data-`` attributes, so you can
 store any content. In Twig, use the ``html_attr`` escaping strategy to avoid messing
 with HTML attributes. For example, if your ``User`` object has some ``getProfileData()``
-method that returns an array, you could:
+method that returns an array, you could do the following:
 
 .. code-block:: twig
 

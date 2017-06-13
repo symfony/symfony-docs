@@ -194,6 +194,10 @@ events are dispatched:
 * ``workflow.[workflow name].enter``
 * ``workflow.[workflow name].enter.[place name]``
 
+* ``workflow.entered``
+* ``workflow.[workflow name].entered``
+* ``workflow.[workflow name].entered.[place name]``
+
 * ``workflow.announce``
 * ``workflow.[workflow name].announce``
 * ``workflow.[workflow name].announce.[transition name]``

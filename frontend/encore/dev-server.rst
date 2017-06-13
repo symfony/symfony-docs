@@ -1,7 +1,7 @@
 Using webpack-dev-server and HMR
 ================================
 
-While developing, instead of using ``encore dev --watch``, you can instead use the
+While developing, instead of using ``encore dev --watch``, you can use the
 `webpack-dev-server`_:
 
 .. code-block:: terminal

@@ -8,7 +8,7 @@ By calling ``enableVersioning()``, each filename will now include a hash that
 changes whenever the *contents* of that file change (e.g. ``app.123abc.js``
 instead of ``app.js``). This allows you to use aggressive caching strategies
 (e.g. a far future ``Expires``) because, whenever a file change, its hash will change,
-invalidating any existing cache:
+ignoring any existing cache:
 
 .. code-block:: diff
 
