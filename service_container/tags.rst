@@ -70,6 +70,25 @@ then some tags are automatically applied for you. That's true for the ``twig.ext
 tag: the container sees that your class extends ``Twig_Extension`` (or more accurately,
 that it implements ``Twig_ExtensionInterface``) and adds the tag for you.
 
+.. tip::
+
+    To apply a tag to all your autoconfigured services extending a class or an
+    interface, call :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration`
+    method in an :doc:`extension </bundles/extension>` or from your kernel::
+
+        // app/AppKernel.php
+        class AppKernel extends Kernel
+        {
+            // ...
+
+            protected function build(ContainerBuilder $container)
+            {
+                $container->registerForAutoconfiguration(CustomInterface::class)
+                    ->addTag('app.custom_tag')
+                ;
+            }
+        }
+
 Creating custom Tags
 --------------------
 
