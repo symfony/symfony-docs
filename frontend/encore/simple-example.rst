@@ -139,7 +139,16 @@ may want also to :doc:`create a shared entry </frontend/encore/shared-entry>` fo
 Requiring CSS Files from JavaScript
 -----------------------------------
 
-You can also require CSS files from your JavaScript:
+Above, you created an entry called ``app`` that pointed to ``main.js``:
+
+.. code-block:: javascript
+
+    Encore
+        // ...
+        .addEntry('app', './assets/js/main.js')
+    ;
+
+Once inside ``main.js``, you can even require CSS files:
 
 .. code-block:: javascript
 
@@ -149,17 +158,8 @@ You can also require CSS files from your JavaScript:
     // a CSS file with the same name as the entry js will be output
     require('../css/main.scss');
 
-In this case, ``main.js`` is being added to an entry called ``app`` in ``webpack.config.js``:
-
-.. code-block:: javascript
-
-    Encore
-        // ...
-        .addEntry('app', './assets/js/main.js')
-
-As soon as you require a CSS file, both an ``app.js`` **and** an ``app.css`` file
-will be created. You'll need to add a link tag to the ``app.css`` file in your
-templates:
+Now, both an ``app.js`` **and** an ``app.css`` file will be created. You'll need
+to add a link tag to the ``app.css`` file in your templates:
 
 .. code-block:: diff
 
