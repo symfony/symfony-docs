@@ -73,6 +73,7 @@ decided to move some configuration to a new file:
         // ... some services
 
 To import this file, use the ``imports`` key from a file that *is* loaded:
+
 .. configuration-block::
 
     .. code-block:: yaml
