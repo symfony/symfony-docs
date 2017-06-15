@@ -83,4 +83,4 @@ That's it! Now, the ``{token}`` parameter can contain the ``/`` character.
     regular expression to all of them, the results won't be the expected. For
     example, if the route definition is ``/share/{path}/{token}`` and both
     ``path`` and ``token`` accept ``/``, then ``path`` will contain its contents
-    and the token, whereas ``token`` will be empty.
+    and the token, and ``token`` will be empty.
