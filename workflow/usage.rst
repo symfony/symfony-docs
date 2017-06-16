@@ -175,12 +175,65 @@ what actions are allowed on a blog post::
     $transitions = $workflow->getEnabledTransitions($post);
 
 Using Events
-------------
+============
 
 To make your workflows even more powerful you could construct the ``Workflow``
-object with an ``EventDispatcher``. You can now create event listeners to
-block transitions (i.e. depending on the data in the blog post). The following
-events are dispatched:
+object with an ``EventDispatcher``. If you are using the ``Workflow`` component within
+the Symfony standard edition, this is already done for you.
+
+When a workflow subject's state is updated, the component dispatches several events that
+enable you to alter the component's behaviour:
+
+* ``workflow.[workflow name].guard.[transition name]``: used to conditionally block a transition.
+* ``workflow.[workflow name].leave.[state name]``: a subject leaves a state.
+* ``workflow.[workflow name].transition.[transition name]``: a transition is being applied.
+* ``workflow.[workflow name].enter.[state name]``: a subject enters a state.
+* ``workflow.[workflow name].announce.[transition name]``: a transition was applied to the subject.
+
+Reacting to a successful transition
+-----------------------------------
+
+You can create an event listener that would perform some actions when a transition has been applied.
+To do so, the event listener needs to have a method accepting the
+:class:`Symfony\\Component\\Workflow\\Event\\Event` being dispatched, and a tag in the service
+container.
+
+The following example resembles a mailer that notifies an administrator of posts that have been sent
+to review::
+
+    use Symfony\Component\Workflow\Event\Event;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+    class BlogPostProposedListener implements EventSubscriberInterface
+    {
+        // Passing the mailer to the listener is omitted for brevity
+        private $mailer;
+
+        public function notifyPostProposal(Event $event)
+        {
+            /** @var \AppBundle\Entity\BlogPost $post */
+            $post = $event->getSubject();
+
+            $message = \Swift_Message::newInstance('New blog post proposed');
+            $message->setTo(['admin@acme.co' => 'Admin']);
+            $message->setBody('A post has been submitted to review: '.$post->getTitle());
+
+            $this->mailer->send($message);
+        }
+
+        public static function getSubscribedEvents()
+        {
+            return array(
+                'workflow.blogpost.announce.to_review' => array('notifyPostProposal'),
+            );
+        }
+    }
+
+Blocking transitions
+--------------------
+
+You can create Guard event listeners to block transitions (i.e. depending on the data in the blog
+post). The following events are dispatched:
 
 * ``workflow.leave``
 * ``workflow.[workflow name].leave``
