@@ -362,7 +362,7 @@ giving you a nice API for uploading files.
 .. tip::
 
     You will learn more about the ``Link`` and ``Form`` objects in the
-    :ref:`Crawler <testing-crawler>` section below.
+    :ref:`Crawler <the-crawler>` section below.
 
 The ``request()`` method can also be used to simulate form submissions directly
 or perform more complex requests. Some useful examples::
@@ -518,8 +518,6 @@ will no longer be followed::
 
 .. index::
    single: Tests; Crawler
-
-.. _testing-crawler:
 
 The Crawler
 -----------
