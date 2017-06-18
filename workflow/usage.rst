@@ -180,14 +180,14 @@ Using Events
 To make your workflows more flexible, you can construct the ``Workflow``
 object with an ``EventDispatcher``. You can now create event listeners to
 block transitions (i.e. depending on the data in the blog post) and do
-additional actions when a workflow operation happened (i.e. sending 
+additional actions when a workflow operation happened (e.g. sending
 announcements).
 
 Each step has three events that are fired in order:
 
-- An event for every workflow;
-- An event for the workflow concerned;
-- An event for the workflow concerned with the specific transition or place name;
+* An event for every workflow;
+* An event for the workflow concerned;
+* An event for the workflow concerned with the specific transition or place name.
 
 The following events are dispatched:
 
@@ -213,7 +213,7 @@ The following events are dispatched:
 
 When a state transition is initiated, the events are fired in the following order:
 
-- guard: Validate whether the transition is allowed at all (see below);
+- guard: Validate whether the transition is allowed at all (:ref:`see below <workflow-usage-guard-events>`);
 - leave: The object is about to leave a place;
 - transition: The object is going through this transition;
 - enter: The object entered a new place. This is the first event where the object' is marked as being in the new place;
@@ -250,6 +250,8 @@ Here is an example how to enable logging for every time a the "blog_publishing" 
             );
         }
     }
+
+.. _workflow-usage-guard-events:
 
 Guard events
 ~~~~~~~~~~~~
