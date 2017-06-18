@@ -177,10 +177,23 @@ what actions are allowed on a blog post::
 Using Events
 ------------
 
-To make your workflows even more powerful you could construct the ``Workflow``
+To make your workflows more flexible, you can construct the ``Workflow``
 object with an ``EventDispatcher``. You can now create event listeners to
-block transitions (i.e. depending on the data in the blog post). The following
-events are dispatched:
+block transitions (i.e. depending on the data in the blog post) and do
+additional actions when a workflow operation happened (e.g. sending
+announcements).
+
+Each step has three events that are fired in order:
+
+* An event for every workflow;
+* An event for the workflow concerned;
+* An event for the workflow concerned with the specific transition or place name.
+
+The following events are dispatched:
+
+* ``workflow.guard``
+* ``workflow.[workflow name].guard``
+* ``workflow.[workflow name].guard.[transition name]``
 
 * ``workflow.leave``
 * ``workflow.[workflow name].leave``
@@ -201,6 +214,14 @@ events are dispatched:
 * ``workflow.announce``
 * ``workflow.[workflow name].announce``
 * ``workflow.[workflow name].announce.[transition name]``
+
+When a state transition is initiated, the events are fired in the following order:
+
+- guard: Validate whether the transition is allowed at all (:ref:`see below <workflow-usage-guard-events>`);
+- leave: The object is about to leave a place;
+- transition: The object is going through this transition;
+- enter: The object entered a new place. This is the first event where the object' is marked as being in the new place;
+- announce: Triggered once for each workflow that now is available for the object.
 
 Here is an example how to enable logging for every time a the "blog_publishing" workflow leaves a place::
 
@@ -233,6 +254,8 @@ Here is an example how to enable logging for every time a the "blog_publishing" 
             );
         }
     }
+
+.. _workflow-usage-guard-events:
 
 Guard events
 ~~~~~~~~~~~~
