@@ -148,7 +148,7 @@ like this:
     The marking store type could be "multiple_state" or "single_state".
     A single state marking store does not support a model being on multiple places
     at the same time.
-    
+
 .. tip::
 
     The ``type`` (default value ``single_state``) and ``arguments`` (default value ``marking``)
@@ -183,55 +183,61 @@ block transitions (i.e. depending on the data in the blog post) and do
 additional actions when a workflow operation happened (e.g. sending
 announcements).
 
-Each step has three events that are fired in order:
+Each step has three events that are dispatched in order:
 
-* An event for every workflow;
+* An generic event for the step;
 * An event for the workflow concerned;
 * An event for the workflow concerned with the specific transition or place name.
 
-The following events are dispatched:
-
-* ``workflow.guard``
-* ``workflow.[workflow name].guard``
-* ``workflow.[workflow name].guard.[transition name]``
-
-* ``workflow.leave``
-* ``workflow.[workflow name].leave``
-* ``workflow.[workflow name].leave.[place name]``
-
-* ``workflow.transition``
-* ``workflow.[workflow name].transition``
-* ``workflow.[workflow name].transition.[transition name]``
-
-* ``workflow.enter``
-* ``workflow.[workflow name].enter``
-* ``workflow.[workflow name].enter.[place name]``
-
-* ``workflow.announce``
-* ``workflow.[workflow name].announce``
-* ``workflow.[workflow name].announce.[transition name]``
-
 When a state transition is initiated, the events are fired in the following order:
 
-- guard: Validate whether the transition is allowed at all (:ref:`see below <workflow-usage-guard-events>`);
-- leave: The object is about to leave a place;
-- transition: The object is going through this transition;
-- enter: The object entered a new place. This is the first event where the object' is marked as being in the new place;
-- announce: Triggered once for each workflow that now is available for the object.
+**guard**
+    Validate whether the transition is allowed at all (:ref:`see below <workflow-usage-guard-events>`
 
-Here is an example how to enable logging for every time a the "blog_publishing" workflow leaves a place::
+    * ``workflow.guard``
+    * ``workflow.[workflow name].guard``
+    * ``workflow.[workflow name].guard.[transition name]``
+**leave**
+    The object is about to leave a place;
+
+    * ``workflow.leave``
+    * ``workflow.[workflow name].leave``
+    * ``workflow.[workflow name].leave.[place name]``
+**transition**
+    The object is going through this transition;
+
+    * ``workflow.transition``
+    * ``workflow.[workflow name].transition``
+    * ``workflow.[workflow name].transition.[transition name]``
+**enter**
+    The object entered a new place. This is the first event where the object is
+    marked as being in the new place;
+
+    * ``workflow.enter``
+    * ``workflow.[workflow name].enter``
+    * ``workflow.[workflow name].enter.[place name]``
+**announce**
+    Triggered once for each workflow that now is available for the object from
+    its new state.
+
+    * ``workflow.announce``
+    * ``workflow.[workflow name].announce``
+    * ``workflow.[workflow name].announce.[transition name]``
+
+Here is an example how to enable logging for every time a the "blog_publishing"
+workflow leaves a place::
 
     use Psr\Log\LoggerInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\Event;
-    
+
     class WorkflowLogger implements EventSubscriberInterface
     {
         public function __construct(LoggerInterface $logger)
         {
             $this->logger = $logger;
         }
-    
+
         public function onLeave(Event $event)
         {
             $this->logger->alert(sprintf(
@@ -242,7 +248,7 @@ Here is an example how to enable logging for every time a the "blog_publishing" 
                 implode(', ', $event->getTransition()->getTos())
             ));
         }
-    
+
         public static function getSubscribedEvents()
         {
             return array(
@@ -256,11 +262,11 @@ Here is an example how to enable logging for every time a the "blog_publishing" 
 Guard events
 ~~~~~~~~~~~~
 
-There are a special kind of events called "Guard events". Their event listeners 
-are invoked every time a call to ``Workflow::can``, ``Workflow::apply`` or 
+There are a special kind of events called "Guard events". Their event listeners
+are invoked every time a call to ``Workflow::can``, ``Workflow::apply`` or
 ``Workflow::getEnabledTransitions`` is executed. With the guard events you may
-add custom logic to decide what transitions that are valid or not. Here is a list 
-of the guard event names. 
+add custom logic to decide what transitions that are valid or not. Here is a list
+of the guard event names.
 
 * ``workflow.guard``
 * ``workflow.[workflow name].guard``
