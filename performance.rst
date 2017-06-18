@@ -10,27 +10,99 @@ following performance checklists show how to make your application even faster.
 Symfony Application Checklist
 -----------------------------
 
-...
+#. :ref:`Install APCu Polyfill if your server uses APC <performance-install-apcu-polyfill>`
+#. :ref:`Enable APC Caching for the Autoloader <performance-autoloader-apc-cache>`
+#. :ref:`Use Bootstrap Files <performance-use-bootstrap-files>`
+
+.. _performance-install-apcu-polyfill:
 
 Install APCu Polyfill if your server uses APC
-    If your production server still uses the legacy APC PHP extension instead of
-    OPcache, install the `APCu Polyfill component`_ in your application to enable
-    compatibility with `APCu PHP functions`_ and unlock support for advanced
-    Symfony features, such as the APCu Cache adapter.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Development Machine Checklist
------------------------------
+If your production server still uses the legacy APC PHP extension instead of
+OPcache, install the `APCu Polyfill component`_ in your application to enable
+compatibility with `APCu PHP functions`_ and unlock support for advanced Symfony
+features, such as the APCu Cache adapter.
 
-...
+.. _performance-autoloader-apc-cache:
+
+Enable APC Caching for the Autoloader
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The class autoloading mechanism is one of the slowest parts in PHP applications
+that make use of lots of classes, such as Symfony. A simple way to improve its
+performance is to use the :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader`,
+which caches the location of each class after it's located the first time.
+
+To use it, adapt your front controller file to use this ``ApcClassLoader`` class::
+
+    // app.php
+    // ...
+
+    $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
+
+    // Change 'sf' by something unique to this app to prevent
+    // conflicts with other applications running in the same server
+    $loader = new ApcClassLoader('sf', $loader);
+    $loader->register(true);
+
+    // ...
+
+For more details, see :doc:`/components/class_loader/cache_class_loader`.
+
+.. note::
+
+    When using the APC autoloader, if you add new classes, they will be found
+    automatically and everything will work the same as before (i.e. no
+    reason to "clear" the cache). However, if you change the location of a
+    particular namespace or prefix, you'll need to flush your APC cache. Otherwise,
+    the autoloader will still be looking at the old location for all classes
+    inside that namespace.
+
+.. index::
+   single: Performance; Bootstrap files
+
+.. _performance-iuse-bootstrap-files:
+
+Use Bootstrap Files
+~~~~~~~~~~~~~~~~~~~
+
+The Symfony Standard Edition includes a script to generate a so-called
+`bootstrap file`_, which is a large file containing the code of the most
+commonly used classes. This saves a lot of IO operations because Symfony no
+longer needs to look for and read those files.
+
+If you're using the Symfony Standard Edition, then you're probably already
+using the bootstrap file. To be sure, open your front controller (usually
+``app.php``) and check to make sure that the following line exists::
+
+    require_once __DIR__.'/../app/bootstrap.php.cache';
+
+Note that there are two disadvantages when using a bootstrap file:
+
+* the file needs to be regenerated whenever any of the original sources change
+  (i.e. when you update the Symfony source or vendor libraries);
+
+* when debugging, one will need to place break points inside the bootstrap file.
+
+If you're using the Symfony Standard Edition, the bootstrap file is automatically
+rebuilt after updating the vendor libraries via the ``composer install`` command.
+
+.. note::
+
+  Even when using a byte code cache, performance will improve when using a
+  bootstrap file since there will be fewer files to monitor for changes. Of
+  course, if this feature is disabled in the byte code cache (e.g.
+  ``apc.stat=0`` in APC), there is no longer a reason to use a bootstrap file.
 
 Production Server Checklist
 ---------------------------
 
-* :ref:`Use the OPcache byte code cache <performance-use-opcache>`
-* :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
-* :ref:`Don't check PHP timestamps <performance-dont-check-timestamps>`
-* :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
-* :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
+#. :ref:`Use the OPcache byte code cache <performance-use-opcache>`
+#. :ref:`Configure OPcache for maximum performance <performance-configure-opcache>`
+#. :ref:`Don't check PHP timestamps <performance-dont-check-timestamps>`
+#. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
+#. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
 
 .. index::
    single: Performance; Byte code cache
@@ -136,86 +208,6 @@ deployment process too):
   environment (e.g. tests);
 * ``--classmap-authoritative`` prevents Composer from scanning the file
   system for classes that are not found in the class map.
-
-
------
-
-.. TODO:: reword the rest of this article.
-
-
-Caching the Autoloader with APC
--------------------------------
-
-Another solution is to cache the location of each class after it's located
-the first time. Symfony comes with a class - :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader` -
-that does exactly this. To use it, just adapt your front controller file.
-If you're using the Standard Distribution, this code should already be available
-as comments in this file::
-
-    // app.php
-    // ...
-
-    $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
-
-    // Use APC for autoloading to improve performance
-    // Change 'sf2' by the prefix you want in order
-    // to prevent key conflict with another application
-    /*
-    $loader = new ApcClassLoader('sf2', $loader);
-    $loader->register(true);
-    */
-
-    // ...
-
-For more details, see :doc:`/components/class_loader/cache_class_loader`.
-
-.. note::
-
-    When using the APC autoloader, if you add new classes, they will be found
-    automatically and everything will work the same as before (i.e. no
-    reason to "clear" the cache). However, if you change the location of a
-    particular namespace or prefix, you'll need to flush your APC cache. Otherwise,
-    the autoloader will still be looking at the old location for all classes
-    inside that namespace.
-
-.. index::
-   single: Performance; Bootstrap files
-
-Use Bootstrap Files
--------------------
-
-To ensure optimal flexibility and code reuse, Symfony applications leverage
-a variety of classes and 3rd party components. But loading all of these classes
-from separate files on each request can result in some overhead. To reduce
-this overhead, the Symfony Standard Edition provides a script to generate
-a so-called `bootstrap file`_, consisting of multiple classes definitions
-in a single file. By including this file (which contains a copy of many of
-the core classes), Symfony no longer needs to include any of the source files
-containing those classes. This will reduce disc IO quite a bit.
-
-If you're using the Symfony Standard Edition, then you're probably already
-using the bootstrap file. To be sure, open your front controller (usually
-``app.php``) and check to make sure that the following line exists::
-
-    require_once __DIR__.'/../app/bootstrap.php.cache';
-
-Note that there are two disadvantages when using a bootstrap file:
-
-* the file needs to be regenerated whenever any of the original sources change
-  (i.e. when you update the Symfony source or vendor libraries);
-
-* when debugging, one will need to place break points inside the bootstrap file.
-
-If you're using the Symfony Standard Edition, the bootstrap file is automatically
-rebuilt after updating the vendor libraries via the ``composer install`` command.
-
-Bootstrap Files and Byte Code Caches
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Even when using a byte code cache, performance will improve when using a bootstrap
-file since there will be fewer files to monitor for changes. Of course, if this
-feature is disabled in the byte code cache (e.g. ``apc.stat=0`` in APC), there
-is no longer a reason to use a bootstrap file.
 
 Learn more
 ----------
