@@ -1,0 +1,92 @@
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-06-08T23:40:44Z
+
+Some interesting notes:
+- Using `sphinx@1.3` allows the documentation to build **_withOUT_ error**
+- Using `sphinx@1.4` prints the invalid literal blocks **_WITH_ warnings**
+- Using `sphinx@1.5` stops on the invalid literal blocks **_WITH_ error** (stopping build on first invalid block)
+
+**Sphinx 1.3 Behavior**
+*The documentation build is successful.*
+
+**Sphinx 1.4 Behavior**
+*The documentation build prints warnings.*
+```
+/home/rmf/repositories/docs/symfony-docs/controller/argument_value_resolver.rst:162: WARNING: Could not lex literal_block as "xml". Highlighting skipped.
+/home/rmf/repositories/docs/symfony-docs/controller/error_pages.rst:283: WARNING: Could not lex literal_block as "xml". Highlighting skipped.
+/home/rmf/repositories/docs/symfony-docs/controller/upload_file.rst:389: WARNING: Could not lex literal_block as "xml". Highlighting skipped.
+/home/rmf/repositories/docs/symfony-docs/profiler/data_collector.rst:243: WARNING: Could not lex literal_block as "xml". Highlighting skipped.
+/home/rmf/repositories/docs/symfony-docs/security/api_key_authentication.rst:432: WARNING: Could not lex literal_block as "xml". Highlighting skipped.
+/home/rmf/repositories/docs/symfony-docs/service_container/configurators.rst:144: WARNING: Could not lex literal_block as "xml". Highlighting skipped.
+/home/rmf/repositories/docs/symfony-docs/service_container/expression_language.rst:22: WARNING: Could not lex literal_block as "yaml". Highlighting skipped.
+```
+
+**Sphinx 1.5 Behavior**
+*The documentation build stops on first error.*
+```
+writing output... [ 34%] controller/argument_value_resolver
+Exception occurred:
+  File "/home/rmf/.ve/local/lib/python2.7/site-packages/sphinx/highlighting.py", line 147, in highlight_block
+    type='misc', subtype='higlighting_failure')
+TypeError: warner() got an unexpected keyword argument 'type'
+```
+
+**Where to Go From Here?**
+So we have some options before us:
+- **Fix** the doc to build properly on newer `sphinx` versions (started with this PR, though I'm positive changes would be required)
+- **Ignore** the doc errors and continue to use an outdated `sphinx` version (completed in #8010)
+
+What direction do you guys want to take? Any thoughts?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-06-09T12:38:13Z
+
+The best option IMO would be to fix the code examples and then use Sphinx >= 1.5 to see this as soon as possible during Travis builds.
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-06-09T19:48:10Z
+
+There is one additional complication when choosing this option: warnings are thrown by `sphinx-php` when it overwrites the `code-block` directive, and these warnings are turned into errors due to the `-nW` flags passed to `sphinx` during the Travis build.
+
+As far as I can tell, there are no alternatives for `sphinx-php` to overwrites directives, so the warning is the current expected behavior for `sphinx` when this occurs (and if there was a way for `sphinx-php` to handle this differently, there doesn't seem much interested in doing so: https://github.com/symfony/symfony-docs/pull/7402#discussion_r97618772, #7422, fabpot/sphinx-php#33).
+
+This means we can't use the "turn warnings into errors" flags (`-nW`) when building the documentation on Travis.
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-06-10T03:16:44Z
+
+Rebased onto `3.3`, added a subset of the changes from #8010 to align Travis and platform.sh build so they both use identical environments, and removed extra spaces from #8014 (and then squashed commits). Also, per @xabbuh I've closed #8010. We still cannot use `sphinx@1.4` (or any greater version) due to the issues explained in https://github.com/symfony/symfony-docs/pull/8009#issuecomment-307483193.
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-06-11T14:46:52Z
+
+Is there anything about this PR that should be changed? We should get builds working...
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-06-12T19:31:26Z
+
+Is the `3.3` the lowest branch that contains these wrong code examples (I mean we should fix them on every branch)?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-06-12T19:32:05Z
+
+Oh and changes to our build infrastructure should be made in the `2.7` branch to have consistent builds throughout all pull requests.
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-06-12T20:05:21Z
+
+Yes, the `3.3` branch is the lowest branch where these issues were introduced (they were mainly introduced with the autowire pull requests), short of some of the extra spaces removed, which may be in lower branches. I will open a new PR with the build changes against `2.7` and update this PR to remove them.
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-06-12T20:47:52Z
+
+Ok; split out build environment changes into #8030 and squashed commits here with requested changes.
