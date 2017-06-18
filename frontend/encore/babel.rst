@@ -7,10 +7,6 @@ Configuring Babel
 
 Need to extend the Babel configuration further? The easiest way is via
 ``configureBabel()``:
-But first let's install the babel preset.
-
-``yarn add babel-preset-es2017``
-This will install the preset that we will use later to configure the babel.
 
 .. code-block:: javascript
 
@@ -19,7 +15,9 @@ This will install the preset that we will use later to configure the babel.
 
     Encore
         // ...
-
+        
+        // make sure to install any presets you want to use
+        // yarn add babel-preset-es2017
         // modify the default Babel configuration
         .configureBabel(function(babelConfig) {
             babelConfig.presets.push('es2017');
