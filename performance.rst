@@ -62,7 +62,7 @@ For more details, see :doc:`/components/class_loader/cache_class_loader`.
 .. index::
    single: Performance; Bootstrap files
 
-.. _performance-iuse-bootstrap-files:
+.. _performance-use-bootstrap-files:
 
 Use Bootstrap Files
 ~~~~~~~~~~~~~~~~~~~
