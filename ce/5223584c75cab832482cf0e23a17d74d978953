@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-06-11T08:57:35Z
+
+Won't this break the syntax highlighting now?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-06-13T02:26:28Z
+
+Now that platform.sh integration is fixed, we can find out for sure :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-06-13T07:23:36Z
+
+Doesn't look that nice:
+
+<img width="696" alt="bildschirmfoto 2017-06-13 um 09 22 49" src="https://user-images.githubusercontent.com/1957048/27070578-ea2a7550-5019-11e7-8d05-9754d36efa05.png">
+
+But we can use `html+javascript` instead, can't we?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-06-15T01:03:42Z
+
+Yep, and I would be cool with doing that
