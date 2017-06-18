@@ -191,7 +191,7 @@ allows you to return a list of extensions to register::
             $this->validator
                 ->method('validate')
                 ->will($this->returnValue(new ConstraintViolationList()));
-            $validator
+            $this->validator
                 ->method('getMetadataFor')
                 ->will($this->returnValue(new ClassMetadata(Form::class)));
 
