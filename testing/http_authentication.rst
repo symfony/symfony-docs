@@ -53,6 +53,12 @@ firewall, but only in the configuration file used by tests:
             ),
         ));
 
+.. caution::
+
+     It's crucial to use the same firewall name which is used in ``security.yml`` (e.g. ``main``
+     instead of ``your_firewall_name``). So you won't define a *new* element (a new firewall)
+     under ``security.firewalls``, but alter the original firewall configuration.
+
 Tests can now authenticate via HTTP passing the username and password as server
 variables using the second argument of ``createClient()``::
 
