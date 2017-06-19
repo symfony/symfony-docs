@@ -82,13 +82,13 @@ and decrypt the session as required::
         public function read($id)
         {
             $data = parent::read($id);
-
-            return mcrypt_decrypt(\MCRYPT_3DES, $this->key, $data);
+            
+            return openssl_decrypt($data, "DES-ECB", $this->key);
         }
 
         public function write($id, $data)
         {
-            $data = mcrypt_encrypt(\MCRYPT_3DES, $this->key, $data);
+            $data = openssl_encrypt($data, "DES-ECB", $this->key);
 
             return parent::write($id, $data);
         }
