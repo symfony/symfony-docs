@@ -505,7 +505,7 @@ and add the following logic::
             $csrfToken = $request->request->get('_csrf_token');
             
             if (false === $this->csrfTokenManager->isTokenValid(new CsrfToken('authenticate', $csrfToken))) {
-                throw new InvalidCsrfTokenException('Invalid CSRF token.');
+                return null;
             }
             
             // ... all your normal logic
