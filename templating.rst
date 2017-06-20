@@ -771,11 +771,12 @@ should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
 ``asset()`` function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.
 
-Additionally, if you use the ``asset()`` function, Symfony can automatically
-append a query string to your asset, in order to guarantee that updated static
-assets won't be loaded from cache after being deployed. For example, ``/images/logo.png`` might
-look like ``/images/logo.png?v2``. For more information, see the :ref:`reference-framework-assets-version`
-configuration option.
+.. tip::
+
+    The ``asset()`` function supports various cache busting techniques via the
+    :ref:`version <reference-framework-assets-version>`,
+    :ref:`version_format <reference-assets-version-format>`, and
+    :ref:`json_manifest_path <reference-assets-json-manifest-path>` configuration options.
 
 If you need absolute URLs for assets, use the ``absolute_url()`` Twig function
 as follows:

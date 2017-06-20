@@ -123,8 +123,10 @@ asset
 
 Returns a public path to ``path``, which takes into account the base path
 set for the package and the URL path. More information in
-:ref:`templating-assets`. For asset versioning, see
-:ref:`reference-framework-assets-version`.
+:ref:`templating-assets`. Symfony provides various cache busting
+implementations via the :ref:`reference-framework-assets-version`,
+:ref:`reference-assets-version-strategy`, and
+:ref:`reference-assets-json-manifest-path` configuration options.
 
 asset_version
 ~~~~~~~~~~~~~~
