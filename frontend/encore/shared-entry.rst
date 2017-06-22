@@ -15,7 +15,14 @@ that's included on every page:
 
         // this creates a 'vendor.js' file with jquery and the bootstrap JS module
         // these modules will *not* be included in page1.js or page2.js anymore
-        .createSharedEntry('vendor', ['jquery', 'bootstrap'])
+        .createSharedEntry('vendor', [
+            'jquery',
+            'bootstrap',
+
+            // you can also extract CSS - this will create a 'vendor.css' file
+            // this CSS will *not* be included in page1.css or page2.css anymore
+            'bootstrap-sass/assets/stylesheets/_bootstrap.scss'
+        ])
 
 As soon as you make this change, you need to include two extra JavaScript files
 on your page before any other JavaScript file:
@@ -28,6 +35,9 @@ on your page before any other JavaScript file:
 
     <!-- here you link to the specific JS files needed by the current page -->
     <script src="{{ asset('build/app.js') }}"></script>
+
+    <!-- if you extracted some CSS, include vendor.css -->
+    <link rel="stylesheet" href="{{ asset('build/vendor.css') }}" />
 
 The ``vendor.js`` file contains all the common code that has been extracted from
 the other files, so it's obvious that it must be included. The other file (``manifest.js``)
