@@ -1212,8 +1212,8 @@ file names (e.g. ``main.ae433f1cb.css``) during a front-end compilation routine.
 
     Symfony's :ref:`Webpack Encore <frontend-webpack-encore>` supports
     :ref:`outputting hashed assets <encore-long-term-caching>`. Moreover, this
-    can be incorporate this into many other workflows, including Webpack and
-    Gulp using `webpack-manifest-plugin`_ and `gulp-rev`_, respectfully.
+    can be incorporated into many other workflows, including Webpack and
+    Gulp using `webpack-manifest-plugin`_ and `gulp-rev`_, respectively.
 
 This option can be set globally for all assets and individually for each asset
 package:
@@ -1246,15 +1246,16 @@ package:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:assets json_manifest_path="%kernel.project_dir%/web/assets/manifest.json">
-                    <!-- this package removes the manifest (the file will not apply) -->
+                <!-- this manifest is applied to every asset (including packages) -->
+                <framework:assets json-manifest-path="%kernel.project_dir%/web/assets/manifest.json">
+                    <!-- this package uses its own manifest (the default file is ignored) -->
                     <framework:package
                         name="foo_package"
-                        json_manifest_path="%kernel.project_dir%/web/assets/a_different_manifest.json" />
+                        json-manifest-path="%kernel.project_dir%/web/assets/a_different_manifest.json" />
                     <!-- this package uses the global manifest (the default file is used) -->
                     <framework:package
                         name="bar_package"
-                        base_path="/images" />
+                        base-path="/images" />
                 </framework:assets>
             </framework:config>
         </container>
@@ -1264,6 +1265,7 @@ package:
         // app/config/config.php
         $container->loadFromExtension('framework', array(
             'assets' => array(
+                // this manifest is applied to every asset (including packages)
                 'json_manifest_path' => '%kernel.project_dir%/web/assets/manifest.json',
                 'packages' => array(
                     'foo_package' => array(
@@ -1272,7 +1274,7 @@ package:
                     ),
                     'bar_package' => array(
                         // this package uses the global manifest (the default file is used)
-                        'json_manifest_path' => '/images',
+                        'base_path' => '/images',
                     ),
                 ),
             ),
