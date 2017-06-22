@@ -30,7 +30,7 @@ that adds two convenient methods to lock and release commands::
             }
 
             // If you prefer to wait until the lock is released, use this:
-            // $this->lock(true);
+            // $this->lock('lockname', true);
 
             // ...
 
