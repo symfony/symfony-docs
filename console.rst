@@ -68,7 +68,7 @@ After configuring the command, you can execute it in the terminal:
 
 .. code-block:: terminal
 
-    $ php bin/console app:create-user
+    $ php app/console app:create-user
 
 As you might expect, this command will do nothing as you didn't write any logic
 yet. Add your own logic inside the ``execute()`` method, which has access to the
