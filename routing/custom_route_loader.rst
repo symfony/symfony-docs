@@ -29,8 +29,8 @@ Loading Routes
 The routes in a Symfony application are loaded by the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 This loader uses several other loaders (delegates) to load resources of
-different types, for instance YAML files or ``@Route`` and ``@Method`` annotations
-in controller files. The specialized loaders implement
+different types, for instance YAML files or ``@Route`` annotations in controller
+files. The specialized loaders implement
 :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
 and therefore have two important methods:
 :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
