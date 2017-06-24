@@ -157,24 +157,6 @@ before creating the parent form using the ``PreloadedExtension`` class::
     be getting errors that are not related to the form you are currently
     testing but to its children.
 
-Forms Using Validation
-----------------------
-
-If your form uses the ``invalid_message`` or ``constraints`` option for validation, you need to
-register the validation extension which provides these options.
-Luckily Symfony provides a base test class which takes care of it, just extend
-``Symfony\Component\Form\Tests\Extension\Validator\Type\TypeTestCase``::
-
-    // tests/AppBundle/Form/Type/TestedTypeTest.php
-    namespace Tests\AppBundle\Form\Type;
-
-    use Symfony\Component\Form\Tests\Extension\Validator\Type\TypeTestCase;
-
-    class TestedTypeTest extends TypeTestCase
-    {
-        // ...
-    }
-
 Adding Custom Extensions
 ------------------------
 
