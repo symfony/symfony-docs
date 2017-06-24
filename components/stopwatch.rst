@@ -41,6 +41,10 @@ from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`,
 The latter should be used when you need to retrieve the duration of an event
 while it is still running.
 
+The stopwatch can be reset to its original state at any given time with the
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::reset` method, which deletes
+all the data measured so far.
+
 You can also provide a category name to an event::
 
     $stopwatch->start('eventName', 'categoryName');
