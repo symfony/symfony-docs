@@ -37,3 +37,5 @@ additional information your need for the loader
 			    }
             }
         )
+
+.. _`handlebars-loader`: https://github.com/pcardune/handlebars-loader
