@@ -51,3 +51,30 @@ Uncaught ReferenceError: webpackJsonp is not defined
 If you get this error, it's probably because you've just added a :doc:`shared entry </frontend/encore/shared-entry>`
 but you *forgot* to add a ``script`` tag for the new ``manifest.js`` file. See the
 information about the :ref:`script tags <encore-shared-entry-script>` in that section.
+
+This dependency was not found: some-module in ./path/to/file.js
+---------------------------------------------------------------
+
+Usually, after you install a package via yarn, you can require / import it to use
+it. For example, after running ``yarn add respond.js``, you try to require that module:
+
+.. code-block:: javascript
+
+    require('respond.js');
+
+But, instead of working, you see an error:
+
+    This dependency was not found:
+
+    * respond.js in ./app/Resources/assets/js/app.js
+
+Typically, a package will "advertise" its "main" file by adding a ``main`` key to
+its ``package.json``. But sometimes, old libraries won't have this. Instead, you'll
+need to specifically require the file you need. In this case, the file you should
+use is located at ``node_modules/respond.js/dest/respond.src.js``. You can require
+this via:
+
+.. code-block:: javascript
+
+    // require a non-minified file whenever possible
+    require('respond.js/dest/respond.src.js');
