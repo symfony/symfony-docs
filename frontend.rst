@@ -61,6 +61,11 @@ Guides
 * :doc:`Adding custom loaders </frontend/encore/custom-loaders>`
 * :doc:`Advanced Webpack Configuration </frontend/encore/advanced-config>`
 
+Troubleshooting
+...............
+
+* :doc:`FAQ </frontend/encore/faq>`
+
 Full API
 ........
 
