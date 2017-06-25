@@ -27,6 +27,8 @@ that's included on every page:
 As soon as you make this change, you need to include two extra JavaScript files
 on your page before any other JavaScript file:
 
+.. _encore-shared-entry-script:
+
 .. code-block:: twig
 
     <!-- these two files now must be included in every page -->

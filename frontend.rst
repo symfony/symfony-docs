@@ -64,7 +64,7 @@ Guides
 Troubleshooting
 ...............
 
-* :doc:`FAQ </frontend/encore/faq>`
+* :doc:`FAQ & Common Issues </frontend/encore/faq>`
 
 Full API
 ........
