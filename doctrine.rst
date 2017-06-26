@@ -588,11 +588,11 @@ Take a look at the previous example in more detail:
 
 .. _doctrine-entity-manager:
 
-* **line 14** The ``$this->getDoctrine()->getManager()`` method gets Doctrine's
+* **line 13** The ``$this->getDoctrine()->getManager()`` method gets Doctrine's
   *entity manager* object, which is the most important object in Doctrine. It's
   responsible for saving objects to, and fetching objects from, the database.
 
-* **lines 16-18** In this section, you instantiate and work with the ``$product``
+* **lines 15-18** In this section, you instantiate and work with the ``$product``
   object like any other normal PHP object.
 
 * **line 21** The ``persist($product)`` call tells Doctrine to "manage" the
