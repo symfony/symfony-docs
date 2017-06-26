@@ -79,7 +79,7 @@ loaded on every page with the following content:
 
 .. tip::
 
-    The ``global`` variable is a special way of setting things pn the ``window``
+    The ``global`` variable is a special way of setting things in the ``window``
     variable. In a web context, using ``global`` and ``window`` are equivalent,
     except that ``window.jQuery`` won't work when using ``autoProvidejQuery()``.
     In other words, use ``global``.

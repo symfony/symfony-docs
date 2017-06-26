@@ -3,10 +3,10 @@ Advanced Webpack Config
 
 Quite simply, Encore generates the Webpack configuration that's used in your
 ``webpack.config.js`` file. Encore doesn't support adding all of Webpack's
-`configuration options`_, because many can be easy added on your own. 
+`configuration options`_, because many can be easily added on your own.
 
 For example, suppose you need to set `Webpack's watchOptions`_ setting. To do that,
-modify the config it after fetching the it from Encore:
+modify the config after fetching the it from Encore:
 
 .. code-block:: javascript
 
@@ -23,7 +23,6 @@ modify the config it after fetching the it from Encore:
     // other examples: add an alias or extension
     // config.resolve.alias.local = path.resolve(__dirname, './resources/src');
     // config.resolve.extensions.push('json');
-    
 
     // export the final config
     module.exports = config;
