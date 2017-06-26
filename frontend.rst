@@ -58,6 +58,13 @@ Guides
 * :doc:`jQuery and Legacy Applications </frontend/encore/legacy-apps>`
 * :doc:`Passing Information from Twig to JavaScript </frontend/encore/server-data>`
 * :doc:`webpack-dev-server and Hot Module Replacement (HMR) </frontend/encore/dev-server>`
+* :doc:`Adding custom loaders & plugins </frontend/encore/custom-loaders-plugins>`
+* :doc:`Advanced Webpack Configuration </frontend/encore/advanced-config>`
+
+Troubleshooting
+...............
+
+* :doc:`FAQ & Common Issues </frontend/encore/faq>`
 
 Full API
 ........

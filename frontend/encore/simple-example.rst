@@ -72,7 +72,7 @@ To build the assets, use the ``encore`` executable:
 
 .. note::
 
-    Restart ``encore`` each time you update your ``webpack.config.js`` file.
+    Re-run ``encore`` each time you update your ``webpack.config.js`` file.
 
 Actually, to use ``enableSassLoader()``, you'll need to install a few
 more packages. But Encore will tell you *exactly* what you need.
