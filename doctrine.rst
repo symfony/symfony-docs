@@ -549,12 +549,12 @@ a controller, this is pretty easy. Add the following method to the
     use AppBundle\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
     use Doctrine\ORM\EntityManagerInterface;
-    use Doctrine\Common\Persistence\ManagerRegistry;
 
-    public function createAction(EntityManagerInterface $em)
+    public function createAction()
     {
-        // or fetch the em via the container
-        // $em = $this->get('doctrine')->getManager();
+        // you can fetch the EntityManager via $this->getDoctrine()
+        // or you can add an argument to your action: createAction(EntityManagerInterface $em)
+        $em = $this->get('doctrine')->getManager();
 
         $product = new Product();
         $product->setName('Keyboard');
@@ -571,8 +571,9 @@ a controller, this is pretty easy. Add the following method to the
     }
 
     // if you have multiple entity managers, use the registry to fetch them
-    public function editAction(ManagerRegistry $doctrine)
+    public function editAction()
     {
+        $doctrine = $this->getDoctrine();
         $em = $doctrine->getManager();
         $em2 = $doctrine->getManager('other_connection')
     }
@@ -586,7 +587,7 @@ Take a look at the previous example in more detail:
 
 .. _doctrine-entity-manager:
 
-* **line 10** The ``EntityManagerInterface`` type-hint tells Symfony to pass you Doctrine's
+* **line 13** The ``$this->getDoctrine()->getManager()`` method gets Doctrine's
   *entity manager* object, which is the most important object in Doctrine. It's
   responsible for saving objects to, and fetching objects from, the database.
 
@@ -633,11 +634,10 @@ Fetching an object back out of the database is even easier. For example,
 suppose you've configured a route to display a specific ``Product`` based
 on its ``id`` value::
 
-    use Doctrine\ORM\EntityManagerInterface;
-
-    public function showAction($productId, EntityManagerInterface $em)
+    public function showAction($productId)
     {
-        $product = $em->getRepository('AppBundle:Product')
+        $product = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
             ->find($productId);
 
         if (!$product) {
@@ -727,11 +727,11 @@ Updating an Object
 Once you've fetched an object from Doctrine, updating it is easy. Suppose
 you have a route that maps a product id to an update action in a controller::
 
-    use Doctrine\ORM\EntityManagerInterface;
-
-    public function updateAction($productId, EntityManagerInterface $em)
+    public function updateAction($productId)
     {
-        $product = $em->getRepository('AppBundle:Product')->find($productId);
+        $product = $this->getDoctrine()
+            ->getRepository('AppBundle:Product')
+            ->find($productId);
 
         if (!$product) {
             throw $this->createNotFoundException(
