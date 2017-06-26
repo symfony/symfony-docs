@@ -32,13 +32,11 @@ create your form::
 
     // src/AppBundle/Controller/DefaultController.php
     use AppBundle\Form\TaskType;
-    use Doctrine\ORM\EntityManagerInterface;
 
     // ...
-    public function newAction(EntityManagerInterface $em)
+    public function newAction()
     {
-        // or fetch the em via the container
-        // $em = $this->get('doctrine')->getManager();
+        $em = $this->get('doctrine')->getManager();
 
         $task = ...;
         $form = $this->createForm(TaskType::class, $task, array(

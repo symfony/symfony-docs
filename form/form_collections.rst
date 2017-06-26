@@ -679,11 +679,11 @@ the relationship between the removed ``Tag`` and ``Task`` object.
         // src/AppBundle/Controller/TaskController.php
 
         use Doctrine\Common\Collections\ArrayCollection;
-        use Doctrine\ORM\EntityManagerInterface;
 
         // ...
-        public function editAction($id, Request $request, EntityManagerInterface $e,)
+        public function editAction($id, Request $request)
         {
+            $em = $this->getDoctrine()->getManager();
             $task = $em->getRepository('AppBundle:Task')->find($id);
 
             if (!$task) {
