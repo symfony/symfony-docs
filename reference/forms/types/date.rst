@@ -108,7 +108,7 @@ Assuming you're using jQuery, you can initialize the date picker via:
     <script>
         $(document).ready(function() {
             $('.js-datepicker').datepicker({
-                format: 'yyyy-mm-dd'
+                dateFormat: 'yy-mm-dd'
             });
         });
     </script>
