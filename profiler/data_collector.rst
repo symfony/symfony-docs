@@ -117,7 +117,7 @@ block and set the value of two variables called ``icon`` and ``text``:
 
 .. code-block:: html+twig
 
-    {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+    {% extends '@WebProfiler/Profiler/layout.html.twig' %}
 
     {% block toolbar %}
         {% set icon %}
