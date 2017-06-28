@@ -35,7 +35,7 @@ But be careful not to accidentally override any config from Encore:
     // ...
 
     // GOOD - this modifies the config.resolve.extensions array
-    // config.resolve.extensions.push('json');
+    config.resolve.extensions.push('json');
 
     // BAD - this replaces any extensions added by Encore
     // config.resolve.extensions = ['json'];

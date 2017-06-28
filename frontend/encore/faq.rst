@@ -21,7 +21,7 @@ like ``/myAppSubdir``), you just need to configure that when calling ``Encore.se
 
         + // this is now needed so that your manifest.json keys are still `build/foo.js`
         + // i.e. you won't need to change anything in your Symfony app
-        + config.setManifestKeyPrefix('build')
+        + .setManifestKeyPrefix('build')
     ;
 
 If you're :ref:`processing your assets through manifest.json <load-manifest-files>`,

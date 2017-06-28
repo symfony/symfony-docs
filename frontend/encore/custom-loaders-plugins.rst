@@ -28,16 +28,16 @@ additional information your need for the loader
         // ...
         .addLoader({
             test: /\.handlebars$/,
-		    loader: 'handlebars-loader',
-		    query: {
-			    helperDirs: [
-				    __dirname + '/helpers1',
-				    __dirname + '/helpers2',
+            loader: 'handlebars-loader',
+            options: {
+                helperDirs: [
+                    __dirname + '/helpers1',
+                    __dirname + '/helpers2',
                 ],
                 partialDirs: [
                     path.join(__dirname, 'templates', 'partials')
                 ]
-		    }
+            }
         })
     ;
 
