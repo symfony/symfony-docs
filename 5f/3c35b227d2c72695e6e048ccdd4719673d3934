@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-06-26T18:53:04Z
+
++1 for using it everywhere. At this point, I imagine we rarely show paths for rendering template bundles (since bundles are more and more rare). And as I understand it, the namespaced paths are recommended going forward.
