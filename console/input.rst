@@ -91,7 +91,7 @@ There are three argument variants you can use:
     provided;
 
 ``InputArgument::OPTIONAL``
-    The argument is optional and therefore can be omitted;
+    The argument is optional and therefore can be omitted. This is the default mode when you omit or pass null to the ``$mode`` parameter of the ``addArgument`` method;
 
 ``InputArgument::IS_ARRAY``
     The argument can contain any number of values. For that reason, it must be
@@ -178,7 +178,7 @@ There are four option variants you can use:
 ``InputOption::VALUE_IS_ARRAY``
     This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``);
 ``InputOption::VALUE_NONE``
-    Do not accept input for this option (e.g. ``--yell``);
+    Do not accept input for this option (e.g. ``--yell``). This is the default mode when you omit or pass null to the ``$mode`` parameter of the ``addOption`` method;
 ``InputOption::VALUE_REQUIRED``
     This value is required (e.g. ``--iterations=5``), the option itself is
     still optional;
