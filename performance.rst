@@ -129,7 +129,17 @@ Caching the Autoloader with APC
 -------------------------------
 
 Another solution is to cache the location of each class after it's located
-the first time. Symfony comes with a class - :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader` -
+the first time.
+
+with composer
+~~~~~~~~~~~~~
+
+``composer install --apcu-autoloader`` or ``composer dump-autoload --apcu`` does exactly this (since composer 1.3.0).
+
+adapt symfony front controller
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony comes with a class - :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader` -
 that does exactly this. To use it, just adapt your front controller file.
 If you're using the Standard Distribution, this code should already be available
 as comments in this file::
