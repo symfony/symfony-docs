@@ -388,7 +388,6 @@ object and its related ``Category`` with just one query::
     public function showAction($productId)
     {
         $product = $this->getDoctrine()
-            ->getManager()
             ->getRepository('AppBundle:Product')
             ->findOneByIdJoinedToCategory($productId);
 
