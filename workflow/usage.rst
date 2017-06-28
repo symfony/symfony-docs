@@ -221,7 +221,7 @@ When a state transition is initiated, the events are fired in the following orde
 - leave: The object is about to leave a place;
 - transition: The object is going through this transition;
 - enter: The object entered a new place. This is the first event where the object' is marked as being in the new place;
-- announce: Triggered once for each workflow that now is available for the object.
+- announce: Triggered for each place that now is available for the object.
 
 Here is an example how to enable logging for every time a the "blog_publishing" workflow leaves a place::
 
