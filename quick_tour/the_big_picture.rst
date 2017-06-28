@@ -51,8 +51,8 @@ because that will be explained in the next section)::
 
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {
@@ -95,8 +95,8 @@ at the three lines of code above the ``indexAction()`` method::
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {

@@ -40,7 +40,7 @@ The route is simple:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends Controller
         {
@@ -174,7 +174,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends Controller
         {
@@ -272,7 +272,7 @@ So how can you make ``blog_list`` once again match when the user visits
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends Controller
         {
