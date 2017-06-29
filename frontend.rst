@@ -40,6 +40,7 @@ Adding more Features
 * :doc:`CSS Preprocessors: Sass, LESS, etc </frontend/encore/css-preprocessors>`
 * :doc:`PostCSS and autoprefixing </frontend/encore/postcss>`
 * :doc:`Enabling React.js </frontend/encore/reactjs>`
+* :doc:`Enabling Vue.js (vue-loader) </frontend/encore/vuejs>`
 * :doc:`Configuring Babel </frontend/encore/babel>`
 * :doc:`Source maps </frontend/encore/sourcemaps>`
 
