@@ -340,13 +340,13 @@ form that the button lives in::
 
     // button example: <button id="my-super-button" type="submit">My super button</button>
     
-    // you can get button my its label
+    // you can get button by its label
     $form = $crawler->selectButton('My super button')->form();
     
-    // or by button id (#my-super-button) if button doesn't have a label
+    // or by button id (#my-super-button) if the button doesn't have a label
     $form = $crawler->selectButton('my-super-button')->form();
     
-    // or you can filter whole form, for example a form has a class attribute: <form class="form-vertical" method="POST">
+    // or you can filter the whole form, for example a form has a class attribute: <form class="form-vertical" method="POST">
     $crawler->filter('.form-vertical')->form();
 
     // or "fill" the form fields with data
