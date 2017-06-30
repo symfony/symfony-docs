@@ -103,7 +103,8 @@ an email is pretty straightforward::
 
     public function indexAction($name)
     {
-        $message = new \Swift_Message('Hello Email')
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Hello Email')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
             ->setBody(
