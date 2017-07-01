@@ -204,7 +204,6 @@ and a ``createAction()`` that *only* processes the form submit. Both those
 actions will be almost identical. So it's much simpler to let ``newAction()``
 handle everything.
 
-Second, we recommend using ``$form->isSubmitted()`` in the ``if`` statement
-for clarity. This isn't technically needed, since ``isValid()`` first calls
-``isSubmitted()``. But without this, the flow doesn't read well as it *looks*
-like the form is *always* processed (even on the GET request).
+Second, is it required to call ``$form->isSubmitted()`` in the ``if`` statement
+before calling ``isValid()``. Calling ``isValid()`` with an unsubmitted form
+is deprecated since version 3.2 and will throw an exception in 4.0.
