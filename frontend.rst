@@ -61,18 +61,28 @@ Guides
 * :doc:`Adding custom loaders & plugins </frontend/encore/custom-loaders-plugins>`
 * :doc:`Advanced Webpack Configuration </frontend/encore/advanced-config>`
 
-Troubleshooting
-...............
+Issues & Questions
+..................
 
 * :doc:`FAQ & Common Issues </frontend/encore/faq>`
+* :doc:`/frontend/encore/versus-assetic`
 
 Full API
 ........
 
 * `Full API`_: https://github.com/symfony/webpack-encore/blob/master/index.js
 
+Assetic
+-------
+
+Assetic is a pure PHP library that helps to process & optimize your assets (similar
+to Encore). Even though we recommend using Encore, Assetic still works great. For
+a comparison, see :doc:`/frontend/encore/versus-assetic`.
+
+For more about Assetic, see :doc:`/assetic`.
+
 Other Front-End Articles
-........................
+------------------------
 
 .. toctree::
     :hidden:
