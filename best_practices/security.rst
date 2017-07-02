@@ -224,9 +224,10 @@ more advanced use-case, you can always do the same security check in PHP:
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
-    public function editAction($id, EntityManagerInterface $em)
+    public function editAction($id)
     {
-        $post = $em->getRepository('AppBundle:Post')
+        $post = $this->getDoctrine()
+            ->getRepository('AppBundle:Post')
             ->find($id);
 
         if (!$post) {
