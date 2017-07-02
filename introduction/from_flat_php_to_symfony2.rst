@@ -545,22 +545,22 @@ them for you. Here's the same sample application, now built in Symfony::
     namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Doctrine\ORM\EntityManagerInterface;
 
     class BlogController extends Controller
     {
-        public function listAction(EntityManagerInterface $em)
+        public function listAction()
         {
-            $posts = $em
+            $posts = $this->getDoctrine()
+                ->getManager()
                 ->createQuery('SELECT p FROM AppBundle:Post p')
                 ->execute();
 
             return $this->render('Blog/list.html.php', array('posts' => $posts));
         }
 
-        public function showAction(EntityManagerInterface $em)
+        public function showAction()
         {
-            $post = $em
+            $post = $this->getDoctrine()
                 ->getRepository('AppBundle:Post')
                 ->find($id);
 
