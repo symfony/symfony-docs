@@ -24,8 +24,8 @@ by the normal `webpack-dev-server`_. For example:
 
 This will start a server at ``https://localhost:9000``.
 
-Hot Module Replace HMR
-----------------------
+Hot Module Replacement HMR
+--------------------------
 
 Encore *does* support `HMR`_, but only in some areas. To activate it, pass the ``--hot``
 option:

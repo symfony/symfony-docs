@@ -21,7 +21,18 @@ Then, activate the ``vue-loader`` in ``webpack.config.js``:
     +     .enableVueLoader()
     ;
 
-That's it! Any ``.vue`` files that you require will be processed correctly.
+That's it! Any ``.vue`` files that you require will be processed correctly. You can
+also configure the `vue-loader options`_ via a callback:
+
+.. code-block:: javascript
+
+    .enableVueLoader(function(options) {
+        // https://vue-loader.vuejs.org/en/configurations/advanced.html
+
+        options.preLoaders = {
+            js: '/path/to/custom/loader'
+        };
+    });
 
 Hot Module Replacement (HMR)
 ----------------------------
@@ -42,3 +53,4 @@ See :doc:`/frontend/encore/dev-server` for more details.
 
 .. _`babel-preset-react`: https://babeljs.io/docs/plugins/preset-react/
 .. _`Vue.js`: https://vuejs.org/
+.. _`vue-loader options`: https://vue-loader.vuejs.org/en/configurations/advanced.html
