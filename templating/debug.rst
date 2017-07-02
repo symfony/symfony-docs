@@ -46,8 +46,8 @@ The same mechanism can be used in Twig templates thanks to ``dump()`` function:
         </a>
     {% endfor %}
 
-By design, the ``dump()`` function is only available if the ``debug`` setting
-(in ``config.yml``) is ``true``, to avoid leaking sensitive information in
-production. In fact, trying to use the ``dump()`` function when ``debug`` is
-``false`` (for example in the ``prod`` environment) will result in an
+By design, the ``dump()`` function is only available if the ``kernel.debug``
+setting (in ``config.yml``) is ``true``, to avoid leaking sensitive information
+in production. In fact, trying to use the ``dump()`` function when ``kernel.debug``
+is ``false`` (for example in the ``prod`` environment) will result in an
 application error.
