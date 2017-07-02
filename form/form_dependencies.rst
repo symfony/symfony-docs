@@ -36,7 +36,7 @@ create your form::
     // ...
     public function newAction()
     {
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $task = ...;
         $form = $this->createForm(TaskType::class, $task, array(
