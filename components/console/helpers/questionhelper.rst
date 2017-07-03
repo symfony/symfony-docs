@@ -212,6 +212,7 @@ convenient for passwords::
     On Windows systems, this ``stty`` command may generate gibberish output and
     mangle the input text. If that's your case, disable it with this command::
 
+        use Symfony\Component\Console\Helper\QuestionHelper;
         use Symfony\Component\Console\Question\ChoiceQuestion;
 
         // ...
@@ -219,7 +220,7 @@ convenient for passwords::
         {
             // ...
             $helper = $this->getHelper('question');
-            $helper->disableStty();
+            QuestionHelper::disableStty();
 
             // ...
         }
