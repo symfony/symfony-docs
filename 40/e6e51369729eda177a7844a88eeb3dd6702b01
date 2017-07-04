@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by GuilhemN at 2017-06-17T14:41:37Z
+
+@weaverryan `@Method` is not part of symfony so it will still require the extra bundle.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-06-18T14:04:59Z
+
+But instead of the `@Method` annotation you could just use the `methods` option of the `@Route` annotation.
+
+---------------------------------------------------------------------------
+
+by GuilhemN at 2017-06-23T09:06:30Z
+
+@xabbuh indeed I just removed uses of `@Method`, thanks!
