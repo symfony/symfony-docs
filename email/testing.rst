@@ -14,7 +14,7 @@ Start with an easy controller action that sends an email::
 
     public function sendEmailAction($name)
     {
-        $message = new \Swift_Message('Hello Email')
+        $message = (new \Swift_Message('Hello Email'))
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
             ->setBody('You should see me from the profiler!')
