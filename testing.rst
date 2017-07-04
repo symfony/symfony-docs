@@ -29,7 +29,7 @@ command:
 
     $ phpunit
 
-PHPunit is configured by the ``phpunit.xml.dist`` file in the root of your
+PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
 
 .. tip::
