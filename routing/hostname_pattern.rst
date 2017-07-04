@@ -14,7 +14,7 @@ You can also match on the HTTP *host* of the incoming request.
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class MainController extends Controller
         {
@@ -96,7 +96,7 @@ you can use placeholders in your hostname:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class MainController extends Controller
         {
@@ -173,7 +173,7 @@ instance, if you want to match both ``m.example.com`` and
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class MainController extends Controller
         {
@@ -266,7 +266,7 @@ instance, if you want to match both ``m.example.com`` and
             namespace AppBundle\Controller;
 
             use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-            use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+            use Symfony\Component\Routing\Annotation\Route;
 
             class MainController extends Controller
             {
@@ -367,7 +367,7 @@ You can also set the host option on imported routes:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         /**
          * @Route(host="hello.example.com")

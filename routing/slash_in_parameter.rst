@@ -26,7 +26,7 @@ a more permissive regular expression for it:
 
     .. code-block:: php-annotations
 
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class DefaultController
         {

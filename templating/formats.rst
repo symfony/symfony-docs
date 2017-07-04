@@ -23,7 +23,7 @@ different formats based on the "request format". For that reason, a common
 pattern is to do the following::
 
     // ...
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class ArticleController extends Controller
     {

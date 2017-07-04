@@ -16,8 +16,8 @@ This renders a page that prints a lucky (random) number::
     // src/AppBundle/Controller/LuckyController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class LuckyController
     {
@@ -59,7 +59,7 @@ class::
     namespace AppBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class LuckyController
     {
@@ -325,7 +325,7 @@ controller's service config:
 
         // app/config/services.php
         use AppBundle\Controller\LuckyController;
-        
+
         $container->register(LuckyController::class)
             ->setPublic(true)
             ->addTag('controller.service_arguments', [
@@ -372,7 +372,7 @@ method. Here are several common services you might need::
     // you can also fetch parameters
     $someParameter = $this->getParameter('some_parameter');
 
-If you receive an eror like:
+If you receive an error like:
 
 .. code-block:: text
 

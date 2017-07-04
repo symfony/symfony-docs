@@ -16,7 +16,7 @@ a routing ``{wildcard}`` to only match some regular expression:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends Controller
         {
@@ -198,14 +198,12 @@ accomplished with the following route configuration:
         // src/AppBundle/Controller/BlogApiController.php
         namespace AppBundle\Controller;
 
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
         // ...
 
         class BlogApiController extends Controller
         {
             /**
-             * @Route("/api/posts/{id}")
-             * @Method({"GET","HEAD"})
+             * @Route("/api/posts/{id}", methods={"GET","HEAD"})
              */
             public function showAction($id)
             {
@@ -213,8 +211,7 @@ accomplished with the following route configuration:
             }
 
             /**
-             * @Route("/api/posts/{id}")
-             * @Method("PUT")
+             * @Route("/api/posts/{id}", methods="PUT")
              */
             public function editAction($id)
             {
