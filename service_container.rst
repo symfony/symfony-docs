@@ -81,6 +81,7 @@ You can also use the unique "Service ID" to access a service directly::
     namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class ProductController extends Controller
     {

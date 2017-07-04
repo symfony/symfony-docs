@@ -42,9 +42,9 @@ system, as explained below:
         // src/AppBundle/Controller/RedirectingController.php
         namespace AppBundle\Controller;
 
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class RedirectingController extends Controller
         {
