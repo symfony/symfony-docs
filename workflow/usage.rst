@@ -230,7 +230,7 @@ order:
     * ``workflow.[workflow name].enter.[place name]``
 
 ``workflow.announce``
-    Triggered once for each workflow that now is available for the object.
+    Triggered once for each place that now is available for the object.
 
     The three events being dispatched are:
 
