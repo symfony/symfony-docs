@@ -131,7 +131,7 @@ service in the constructor of the Twig extension:
                 new \Twig_SimpleFilter(
                     'md2html',
                     array($this, 'markdownToHtml'),
-                    array('is_safe' => array('html'))
+                    array('is_safe' => array('html'), 'pre_escape' => 'html')
                 ),
             );
         }
