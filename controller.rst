@@ -372,7 +372,7 @@ method. Here are several common services you might need::
     // you can also fetch parameters
     $someParameter = $this->getParameter('some_parameter');
 
-If you receive an eror like:
+If you receive an error like:
 
 .. code-block:: text
 
