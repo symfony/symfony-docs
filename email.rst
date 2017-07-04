@@ -103,7 +103,7 @@ an email is pretty straightforward::
 
     public function indexAction($name)
     {
-        $message = new \Swift_Message('Hello Email')
+        $message = (new \Swift_Message('Hello Email'))
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
             ->setBody(
@@ -125,6 +125,7 @@ an email is pretty straightforward::
             )
             */
         ;
+
         $this->get('mailer')->send($message);
 
         return $this->render(...);
