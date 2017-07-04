@@ -238,7 +238,7 @@ You can also fetch a service directly from the container via its "id", which wil
 be its class name in this case::
 
     use AppBundle\Service\MessageGenerator;
-    
+
     // accessing services like this only works if you extend Controller
     class ProductController extends Controller
     {
@@ -475,7 +475,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
         // app/config/services.php
         use AppBundle\Updates\SiteUpdateManager;
-        
+
         // _defaults and importing directories does not work in PHP
         // but registering a service explicitly does
         $container->autowire(SiteUpdateManager::class)
@@ -773,7 +773,7 @@ from the container::
     public function newAction(MessageGenerator $messageGenerator)
     {
         // type-hinting it as an argument DOES work
-    
+
         // but accessing it directly from the container does NOT Work
         $this->container->get(MessageGenerator::class);
     }
@@ -818,47 +818,47 @@ Importing Many Services at once with resource
 You've already seen that you can import many services at once by using the ``resource``
 key. For example, the default Symfony configuration contains this:
 
-    .. configuration-block::
+.. configuration-block::
 
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            # app/config/services.yml
-            services:
-                # ...
+        # app/config/services.yml
+        services:
+            # ...
 
-                # the namespace prefix for classes (must end in \)
-                AppBundle\:
-                    # accepts a glob pattern
-                    resource: '../../src/AppBundle/*'
-                    # exclude some paths
-                    exclude: '../../src/AppBundle/{Entity,Repository}'
+            # the namespace prefix for classes (must end in \)
+            AppBundle\:
+                # accepts a glob pattern
+                resource: '../../src/AppBundle/*'
+                # exclude some paths
+                exclude: '../../src/AppBundle/{Entity,Repository}'
 
-                # these were imported above, but we want to add some extra config
-                AppBundle\Controller\:
-                    resource: '../../src/AppBundle/Controller'
-                    # apply some configuration to these services
-                    public: true
-                    tags: ['controller.service_arguments']
+            # these were imported above, but we want to add some extra config
+            AppBundle\Controller\:
+                resource: '../../src/AppBundle/Controller'
+                # apply some configuration to these services
+                public: true
+                tags: ['controller.service_arguments']
 
-        .. code-block:: xml
+    .. code-block:: xml
 
-            <!-- app/config/services.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-                <services>
-                    <!-- ... -->
+            <services>
+                <!-- ... -->
 
-                    <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
 
-                    <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
-                        <tag name="controller.service_arguments" />
-                    </prototype>
-                </services>
-            </container>
+                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
+                    <tag name="controller.service_arguments" />
+                </prototype>
+            </services>
+        </container>
 
 This can be used to quickly make many classes available as services and apply some
 default configuration. The ``id`` of each service is its fully-qualified class name.
@@ -1002,4 +1002,4 @@ Learn more
     /service_container/*
 
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture
-.. _`Symfony Standard Edition (version 3.3) services.yml`: https://github.com/symfony/symfony-standard/blob/master/app/config/services.yml
+.. _`Symfony Standard Edition (version 3.3) services.yml`: https://github.com/symfony/symfony-standard/blob/3.3/app/config/services.yml

@@ -117,7 +117,7 @@ block and set the value of two variables called ``icon`` and ``text``:
 
 .. code-block:: html+twig
 
-    {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+    {% extends '@WebProfiler/Profiler/layout.html.twig' %}
 
     {% block toolbar %}
         {% set icon %}
@@ -251,10 +251,10 @@ to specify a tag that contains the template:
 
             <services>
                 <service id="AppBundle\DataCollector\RequestCollector" public="false">
+                    <!-- priority="300" -->
                     <tag name="data_collector"
                         template="data_collector/template.html.twig"
                         id="app.request_collector"
-                        <!-- priority="300" -->
                     />
                 </service>
             </services>

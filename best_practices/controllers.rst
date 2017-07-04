@@ -97,16 +97,16 @@ for the homepage of our app:
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Doctrine\ORM\EntityManagerInterface;
 
     class DefaultController extends Controller
     {
         /**
          * @Route("/", name="homepage")
          */
-        public function indexAction(EntityManagerInterface $em)
+        public function indexAction()
         {
-            $posts = $em->getRepository('AppBundle:Post')
+            $posts = $this->getDoctrine()
+                ->getRepository('AppBundle:Post')
                 ->findLatest();
 
             return $this->render('default/index.html.twig', array(

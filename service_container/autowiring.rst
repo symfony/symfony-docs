@@ -218,7 +218,7 @@ adding a service alias:
 
             # the id is not a class, so it won't be used for autowiring
             app.rot13.transformer:
-                class AppBundle\Util\Rot13Transformer
+                class: AppBundle\Util\Rot13Transformer
                 # ...
 
             # but this fixes it!
