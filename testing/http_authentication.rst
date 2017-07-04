@@ -30,14 +30,16 @@ firewall, but only in the configuration file used by tests:
         # app/config/config_test.yml
         security:
             firewalls:
-                your_firewall_name:
+                # replace 'main' by the name of your own firewall
+                main:
                     http_basic: ~
 
     .. code-block:: xml
 
         <!-- app/config/config_test.xml -->
         <security:config>
-            <security:firewall name="your_firewall_name">
+            <!-- replace 'main' by the name of your own firewall -->
+            <security:firewall name="main">
               <security:http-basic />
            </security:firewall>
         </security:config>
@@ -47,7 +49,8 @@ firewall, but only in the configuration file used by tests:
         // app/config/config_test.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'your_firewall_name' => array(
+                // replace 'main' by the name of your own firewall
+                'main' => array(
                     'http_basic' => array(),
                 ),
             ),

@@ -26,10 +26,12 @@ variables. The ``escape()`` function helps escape any non-JavaScript-safe values
 But if you *actually* need to generate routes in pure JavaScript, consider using
 the `FOSJsRoutingBundle`_. It makes the following possible:
 
-.. code-block:: javascript
+.. code-block:: html+twig
 
+    <script>
     var url = Routing.generate('blog_show', {
         'slug': 'my-blog-post'
     });
+    </script>
 
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
