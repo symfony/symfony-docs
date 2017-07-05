@@ -120,11 +120,18 @@ Check if your server meets the requirements by running:
 
     $ php app/check.php
 
-B) Configure your ``app/config/parameters.yml`` File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+B) Configure your Parameters File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This file should *not* be deployed, but managed through the automatic utilities
-provided by Symfony.
+Most Symfony applications define configuration parameters in a file called
+``app/config/parameters.yml``. This file should *not* be deployed, because
+Symfony generates it automatically using the ``app/config/parameters.yml.dist``
+file as a template (that's why ``parameters.yml.dist`` must be committed and
+deployed).
+
+If your application uses environment variables insted of these parameters, you
+must define those env vars in your production server using the tools provided by
+your hosting service.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
