@@ -360,7 +360,6 @@ the Symfony Framework, you just have to enable it in config.yml.
         property_info:
             enabled: true
 
-
 .. code-block:: php
 
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
