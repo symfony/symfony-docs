@@ -403,14 +403,6 @@ getter and setter methods (e.g. ``getName()``, ``setName($name)``) in order
 to access its properties in the rest of your application's code. Add these
 methods manually or with your own IDE.
 
-.. note::
-
-    In the past, Symfony recommended the use of the ``doctrine:generate:entities``
-    command to let Doctrine generate these getter/setter methods. However, this
-    is now considered a bad practice. This command doesn't handle edge cases,
-    doesn't generate methods for associactions and creates unnecesary backups of
-    PHP classes.
-
 .. _doctrine-creating-the-database-tables-schema:
 
 Creating the Database Tables/Schema
