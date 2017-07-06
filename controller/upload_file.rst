@@ -243,7 +243,7 @@ logic to a separate service::
         {
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
-            $file->move($this->targetDir, $fileName);
+            $file->move($this->getTargetDir(), $fileName);
 
             return $fileName;
         }
