@@ -338,10 +338,19 @@ given text. This method is especially useful because you can use it to return
 a :class:`Symfony\\Component\\DomCrawler\\Form` object that represents the
 form that the button lives in::
 
-    $form = $crawler->selectButton('validate')->form();
+    // button example: <button id="my-super-button" type="submit">My super button</button>
+    
+    // you can get button by its label
+    $form = $crawler->selectButton('My super button')->form();
+    
+    // or by button id (#my-super-button) if the button doesn't have a label
+    $form = $crawler->selectButton('my-super-button')->form();
+    
+    // or you can filter the whole form, for example a form has a class attribute: <form class="form-vertical" method="POST">
+    $crawler->filter('.form-vertical')->form();
 
     // or "fill" the form fields with data
-    $form = $crawler->selectButton('validate')->form(array(
+    $form = $crawler->selectButton('my-super-button')->form(array(
         'name' => 'Ryan',
     ));
 

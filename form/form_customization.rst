@@ -866,6 +866,8 @@ and customize the ``form_errors`` fragment.
 
     .. code-block:: html+twig
 
+        {% form_theme form _self %}
+
         {# form_errors.html.twig #}
         {% block form_errors %}
             {% spaceless %}
@@ -925,6 +927,8 @@ fields (e.g. a whole form), and not just an individual field.
 .. configuration-block::
 
     .. code-block:: html+twig
+
+        {% form_theme form _self %}
 
         {# form_errors.html.twig #}
         {% block form_errors %}
