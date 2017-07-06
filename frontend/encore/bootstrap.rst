@@ -41,7 +41,7 @@ this, you can use the ``resolve_url_loader`` option:
 
     // webpack.config.js
     Encore
-    +     .enableSassLoader({
+    +     .enableSassLoader(function(sassOptions) {}, {
     +         resolve_url_loader: false
     +     })
     ;
