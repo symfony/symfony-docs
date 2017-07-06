@@ -52,10 +52,10 @@ Using Source Control
 ~~~~~~~~~~~~~~~~~~~~
 
 If you're using source control (e.g. Git or SVN), you can simplify by having
-your live installation also be a copy of your repository. When you're ready
-to upgrade it is as simple as fetching the latest updates from your source
-control system. A common approach for this in Git is, to tag your release and
-check out the Git tag on deployment (see `Git Tagging`_).
+your live installation also be a copy of your repository. When you're ready to
+upgrade it is as simple as fetching the latest updates from your source control
+system. When using Git, a common approach is to create a tag for each release
+and check out the appropriate tag on deployment (see `Git Tagging`_).
 
 This makes updating your files *easier*, but you still need to worry about
 manually taking other steps (see `Common Post-Deployment Tasks`_).
