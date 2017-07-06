@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-07-02T17:25:20Z
+
+I have no idea if the change is correct... but it certainly makes sense when you read the next sentence :).
+
+@medinae Are you absolutely sure this change is correct? I know nothing about the ACL component.
+
+---------------------------------------------------------------------------
+
+by medinae at 2017-07-03T11:33:51Z
+
+Yep, mostly. But I think it'll better with "If at least one..."
+https://github.com/symfony/security-acl/blob/master/Domain/PermissionGrantingStrategy.php
