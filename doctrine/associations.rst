@@ -189,11 +189,8 @@ own a collection of its related ``Product`` objects.
     namespace as the targetEntity.
 
 Now that you've added new properties to both the ``Product`` and ``Category``
-classes, tell Doctrine to generate the missing getter and setter methods for you:
-
-.. code-block:: terminal
-
-    $ php app/console doctrine:generate:entities AppBundle
+classes, you must generate the missing getter and setter methods manually or
+using your own IDE.
 
 Ignore the Doctrine metadata for a moment. You now have two classes - ``Product``
 and ``Category``, with a natural many-to-one relationship. The ``Product``
