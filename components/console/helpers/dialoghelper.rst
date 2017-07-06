@@ -146,9 +146,10 @@ Using ``false`` means the amount of attempts is infinite.
 The user will be asked as long as they provide an invalid answer and will only
 be able to proceed if their input is valid.
 
-Each time the user is asked the question, if no answer is supplied, the default one is used
-and it's validated using the ``$validator`` callback.
-If the validator throws an exception on the last attempt, the exception is displayed to the user.
+Each time the user is asked the question, if no answer is supplied, the default
+one is used (and validated with the ``$validator`` callback) and the remaining
+number of attempts is displayed. If the last attempt is reached, the application
+throws an exception and ends its execution.
 
 Validating a Hidden Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
