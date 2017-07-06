@@ -466,13 +466,17 @@ API is being used. The following code, would work for *all* users::
 Resources
 ---------
 
-If the bundle references any resources (config files, templates, translation
-files, etc.), don't use physical paths (e.g. ``__DIR__/config/services.xml``)
-but logical paths (e.g. ``@AppBundle/Resources/config/services.xml``).
+If the bundle references any resources (config files, translation files, etc.),
+don't use physical paths (e.g. ``__DIR__/config/services.xml``) but logical
+paths (e.g. ``@AppBundle/Resources/config/services.xml``).
 
 The logical paths are required because of the bundle overriding mechanism that
 lets you override any resource/file of any bundle. See :ref:`http-kernel-resource-locator`
 for more details about transforming physical paths into logical paths.
+
+Beware that templates use a simplified version of the logical path showed above.
+For example, a ``index.html.twig`` template located in the ``Resources/views/Default/``
+directory of the AppBundle, is referenced as ``@App/Default/index.html.twig``
 
 Learn more
 ----------
