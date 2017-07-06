@@ -476,7 +476,7 @@ for more details about transforming physical paths into logical paths.
 
 Beware that templates use a simplified version of the logical path showed above.
 For example, a ``index.html.twig`` template located in the ``Resources/views/Default/``
-directory of the AppBundle, is referenced as ``@App/Default/index.html.twig``
+directory of the AppBundle, is referenced as ``@App/Default/index.html.twig``.
 
 Learn more
 ----------
