@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-06-04T19:00:03Z
+
+I always have doubts about what to do in these situations: accessing the property directly is faster ... but using the getter is safer because it may contain some logic besides the usual `return $this->...`  I guess it's better so be safer 😄
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-06-04T19:22:31Z
+
+Generally, I would say that "getters are for the public API and direct property access is for within the class scope." Unless you have logic required, there is no benefit to calling the getter internally, and definitely some overhead for doing so.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-06-04T19:25:14Z
+
+@robfrawley yes ... but what if my getter initially doesn't have logic ... and I access the property directly ... but later on I add login in the getter *and* forget to change the direct property access by the getter call?
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-06-04T19:35:01Z
+
+Following that same logic, what about the inverse: if the value of the getter is formatted differently due to the expectations of your API while the use internally should be direct without the additional logic. Do you always want the logic of the getter to be consumed internally? No. Could you forget you've used it internally after the external requirements change. Yup.
+
+I always directly consume properties unless I require logic, in which case I will only use the getter when it's logic aligns with what I expect internally, otherwise a special method dedicated to internal handling may be required.
+
+Regardless, the burden of course always lies with the programmer to know what he/she's doing and properly update all usage instances after refactoring anything. This requirement remains regardless of how you are consuming the data.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-06-13T02:28:30Z
+
+> Regardless, the burden of course always lies with the programmer to know what he/she's doing and properly update all usage instances after refactoring anything.
+
+Indeed :). So, it's not right or wrong either way. Personally, I do call the getter, even internally, though all the reasons listed here are valid.
+
+👍
