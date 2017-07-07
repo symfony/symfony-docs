@@ -184,7 +184,7 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
                 // ... maybe do some form processing, like saving the Task and Tag objects
             }
 
-            return $this->render('AppBundle:Task:new.html.twig', array(
+            return $this->render('@App/Task/new.html.twig', array(
                 'form' => $form->createView(),
             ));
         }

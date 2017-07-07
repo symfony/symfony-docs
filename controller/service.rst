@@ -177,7 +177,7 @@ Symfony's base controller::
         public function indexAction($name)
         {
             return $this->render(
-                'AppBundle:Hello:index.html.twig',
+                '@App/Hello/index.html.twig',
                 array('name' => $name)
             );
         }
@@ -213,7 +213,7 @@ service and use it directly::
         public function indexAction($name)
         {
             return $this->templating->renderResponse(
-                'AppBundle:Hello:index.html.twig',
+                '@App/Hello/index.html.twig',
                 array('name' => $name)
             );
         }
