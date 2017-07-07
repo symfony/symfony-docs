@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by robwent at 2017-07-06T15:08:36Z
+
+It may help people save a few hours wondering why it's not working as stated (as happened to me).
+
+Symfony 4 is another thing altogether and isn't going to work on windows out of the box as there is no native 'make' command so flex can't work.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-07-06T15:16:05Z
+
+@robwent don't worry ... you don't need "make" to make Symfony 4 work. It's totally optional and for unimportant things.
+
+---------------------------------------------------------------------------
+
+by robwent at 2017-07-06T16:09:15Z
+
+@javiereguiluz that's great news. I was starting to worry after having a test.
