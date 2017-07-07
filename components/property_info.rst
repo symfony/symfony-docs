@@ -351,8 +351,17 @@ Using PHP reflection, the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\R
 provides list, type and access information from setter and accessor methods.
 It can also provide return and scalar types for PHP 7+.
 
-This service is automatically registered with the ``property_info`` service in
-the Symfony Framework.
+.. note::
+
+    When using the Symfony framework, this service is automatically registered
+    when the ``property_info`` feature is enabled:
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            property_info:
+                enabled: true
 
 .. code-block:: php
 
