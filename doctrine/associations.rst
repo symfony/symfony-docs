@@ -276,7 +276,7 @@ did before. First, fetch a ``$product`` object and then access its related
     public function showAction($productId)
     {
         $product = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
+            ->getRepository(Product::class)
             ->find($productId);
 
         $categoryName = $product->getCategory()->getName();
@@ -303,7 +303,7 @@ You can also query in the other direction::
     public function showProductsAction($categoryId)
     {
         $category = $this->getDoctrine()
-            ->getRepository('AppBundle:Category')
+            ->getRepository(Category::class)
             ->find($categoryId);
 
         $products = $category->getProducts();
@@ -324,7 +324,7 @@ to the given ``Category`` object via their ``category_id`` value.
     example::
 
         $product = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
+            ->getRepository(Product::class)
             ->find($productId);
 
         $category = $product->getCategory();
@@ -385,7 +385,7 @@ object and its related ``Category`` with just one query::
     public function showAction($productId)
     {
         $product = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
+            ->getRepository(Product::class)
             ->findOneByIdJoinedToCategory($productId);
 
         $category = $product->getCategory();
