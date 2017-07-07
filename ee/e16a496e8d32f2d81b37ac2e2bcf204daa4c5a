@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by apfelbox at 2017-07-04T15:33:20Z
+
+Not sure whether this is a thing that is currently in use in the symfony docs, but minifying this image reduces its size by around 50%.
+
+![2017-07-04 at 17 33](https://user-images.githubusercontent.com/1032411/27836238-dcb31b4a-60de-11e7-8f58-243ffb4b5181.png)
+
+Tool: https://tinypng.com/
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-07-04T15:39:29Z
+
+@apfelbox is that a lossless compression? Because I always use ImageOptim to compress images (without losing quality) and this was the best it could do:
+
+![image-compression](https://user-images.githubusercontent.com/73419/27836425-ae985c92-60df-11e7-8ca3-15163793c42e.png)
+
+---------------------------------------------------------------------------
+
+by apfelbox at 2017-07-04T15:59:43Z
+
+It is not lossless, but you can compare the images and in several hundred images I minified I had exactly 1 image that had a *visual degradation*.
+
+So technically not lossless, but visually sort-of-lossless.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-07-04T16:11:07Z
+
+@apfelbox you are right ... the visual differences I see between the two versions are minimal, so I'm using your compressed version. Thanks!
