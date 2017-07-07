@@ -223,7 +223,7 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
         framework:
             # ...
             serializer:
-                cache: serializer.mapping.cache.apc
+                cache: serializer.mapping.cache.doctrine.apc
 
     .. code-block:: xml
 
@@ -239,7 +239,7 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
 
             <framework:config>
                 <!-- ... -->
-                <framework:serializer cache="serializer.mapping.cache.apc" />
+                <framework:serializer cache="serializer.mapping.cache.doctrine.apc" />
             </framework:config>
         </container>
 
@@ -249,9 +249,13 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(
-                'cache' => 'serializer.mapping.cache.apc',
+                'cache' => 'serializer.mapping.cache.doctrine.apc',
             ),
         ));
+
+.. versionadded:: 3.1
+    The ``serializer.mapping.cache.doctrine.apc`` service was introduced in 3.1
+    version to replace ``serializer.mapping.cache.apc``.
 
 Enabling a Name Converter
 -------------------------
