@@ -28,6 +28,8 @@ new URL with a 301 response status code::
 
             $url = str_replace($pathInfo, rtrim($pathInfo, ' /'), $requestUri);
 
+            // send 404 if page doesn't exist. Google sees a 301 as a link and
+            // will mark destination as a not found error
             try{
                 $this->get('router')->match(str_replace('/app_dev.php', '', $url))
             }catch(ResourceNotFoundException $e){
