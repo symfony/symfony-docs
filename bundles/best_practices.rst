@@ -482,8 +482,8 @@ The logical paths are required because of the bundle overriding mechanism that
 lets you override any resource/file of any bundle. See :ref:`http-kernel-resource-locator`
 for more details about transforming physical paths into logical paths.
 
-Beware that templates use a simplified version of the logical path showed above.
-For example, a ``index.html.twig`` template located in the ``Resources/views/Default/``
+Beware that templates use a simplified version of the logical path shown above.
+For example, an ``index.html.twig`` template located in the ``Resources/views/Default/``
 directory of the AppBundle, is referenced as ``@App/Default/index.html.twig``.
 
 Learn more
