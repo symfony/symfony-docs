@@ -86,6 +86,9 @@ entities, ordered alphabetically by name.
 
 You can use this new method just like the default finder methods of the repository::
 
+    use AppBundle\Entity\Post;
+    // ...
+
     $em = $this->getDoctrine()->getManager();
     $products = $em->getRepository(Product::class)
         ->findAllOrderedByName();

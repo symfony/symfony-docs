@@ -632,6 +632,9 @@ Updating an Object
 Once you've fetched an object from Doctrine, updating it is easy. Suppose
 you have a route that maps a product id to an update action in a controller::
 
+    use AppBundle\Entity\Post;
+    // ...
+
     public function updateAction($productId)
     {
         $em = $this->getDoctrine()->getManager();
