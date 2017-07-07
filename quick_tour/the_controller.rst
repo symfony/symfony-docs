@@ -340,7 +340,7 @@ And you can display the flash message in the template like this:
 Final Thoughts
 --------------
 
-That's all there is to it and I'm not even sure you'll have spent the full
+That's all there is to it and I'm not even sure you have spent the full
 10 minutes. You were briefly introduced to bundles in the first part and
 all the features you've learned about so far are part of the core FrameworkBundle.
 But thanks to bundles, everything in Symfony can be extended or replaced.

@@ -184,7 +184,7 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
                 // ... maybe do some form processing, like saving the Task and Tag objects
             }
 
-            return $this->render('AppBundle:Task:new.html.twig', array(
+            return $this->render('@App/Task/new.html.twig', array(
                 'form' => $form->createView(),
             ));
         }
@@ -685,13 +685,14 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
         // src/AppBundle/Controller/TaskController.php
 
+        use AppBundle\Entity\Task;
         use Doctrine\Common\Collections\ArrayCollection;
 
         // ...
         public function editAction($id, Request $request)
         {
             $em = $this->getDoctrine()->getManager();
-            $task = $em->getRepository('AppBundle:Task')->find($id);
+            $task = $em->getRepository(Task::class)->find($id);
 
             if (!$task) {
                 throw $this->createNotFoundException('No task found for id '.$id);

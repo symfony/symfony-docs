@@ -616,7 +616,7 @@ your application. Assume that you have a sport meetup creation controller::
             }
 
             return $this->render(
-                'AppBundle:Meetup:create.html.twig',
+                '@App/Meetup/create.html.twig',
                 array('form' => $form->createView())
             );
         }
