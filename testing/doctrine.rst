@@ -21,6 +21,7 @@ which makes all of this quite easy::
     // src/AppBundle/Tests/Repository/ProductRepositoryFunctionalTest.php
     namespace AppBundle\Tests\Repository;
 
+    use AppBundle\Entity\Product;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
     class ProductRepositoryFunctionalTest extends KernelTestCase
@@ -45,7 +46,7 @@ which makes all of this quite easy::
         public function testSearchByCategoryName()
         {
             $products = $this->em
-                ->getRepository('AppBundle:Product')
+                ->getRepository(Product::class)
                 ->searchByCategoryName('foo')
             ;
 

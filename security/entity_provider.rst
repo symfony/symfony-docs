@@ -140,12 +140,7 @@ For this entry, suppose that you already have a ``User`` entity inside an
     }
 
 To make things shorter, some of the getter and setter methods aren't shown.
-But you can :ref:`generate <doctrine-generating-getters-and-setters>` these
-by running:
-
-.. code-block:: terminal
-
-    $ php app/console doctrine:generate:entities AppBundle/Entity/User
+But you can generate these manually or with your own IDE.
 
 Next, make sure to :ref:`create the database table <doctrine-creating-the-database-tables-schema>`:
 
@@ -171,9 +166,9 @@ To learn more about each of these, see :class:`Symfony\\Component\\Security\\Cor
 
 .. caution::
 
-    The ``eraseCredentials()`` method is only meant to clean up possibly stored 
-    plain text passwords (or similar credentials). Be careful what to erase 
-    if your user class is also mapped to a database as the modified object 
+    The ``eraseCredentials()`` method is only meant to clean up possibly stored
+    plain text passwords (or similar credentials). Be careful what to erase
+    if your user class is also mapped to a database as the modified object
     will likely be persisted during the request.
 
 What do the serialize and unserialize Methods do?
