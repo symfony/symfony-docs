@@ -20,7 +20,7 @@ Internally, Symfony Flex is a Composer plugin that modifies the behavior of the
 in a Flex-enabled application, Symfony can perform tasks before and after the
 execution of Composer tasks.
 
-Consider for example the following example:
+Consider the following example:
 
 .. code-block:: terminal
 
@@ -51,7 +51,7 @@ Symfony Flex Recipes
 ~~~~~~~~~~~~~~~~~~~~
 
 Recipes are defined in a ``manifest.json`` file and can contain any number of
-other files and directories. For example, this is the full recipe for SwiftmailerBundle:
+other files and directories. For example, this is the ``manifest.json`` for SwiftmailerBundle:
 
 .. code-block:: javascript
 
