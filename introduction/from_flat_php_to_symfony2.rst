@@ -544,6 +544,7 @@ them for you. Here's the same sample application, now built in Symfony::
     // src/AppBundle/Controller/BlogController.php
     namespace AppBundle\Controller;
 
+    use AppBundle\Entity\Post;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class BlogController extends Controller
@@ -558,10 +559,10 @@ them for you. Here's the same sample application, now built in Symfony::
             return $this->render('Blog/list.html.php', array('posts' => $posts));
         }
 
-        public function showAction()
+        public function showAction($id)
         {
             $post = $this->getDoctrine()
-                ->getRepository('AppBundle:Post')
+                ->getRepository(Post::class)
                 ->find($id);
 
             if (!$post) {

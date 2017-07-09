@@ -30,22 +30,20 @@ Template Locations
     Store all your application's templates in ``app/Resources/views/`` directory.
 
 Traditionally, Symfony developers stored the application templates in the
-``Resources/views/`` directory of each bundle. Then they used the logical name
-to refer to them (e.g. ``AcmeDemoBundle:Default:index.html.twig``).
+``Resources/views/`` directory of each bundle. Then they used the Twig namespaced
+path to refer to them (e.g. ``@AcmeDemo/Default/index.html.twig``).
 
 But for the templates used in your application, it's much more convenient
 to store them in the ``app/Resources/views/`` directory. For starters, this
 drastically simplifies their logical names:
 
-=================================================  ==================================
-Templates Stored inside Bundles                    Templates Stored in ``app/``
-=================================================  ==================================
-``AcmeDemoBundle:Default:index.html.twig``         ``default/index.html.twig``
-``::layout.html.twig``                             ``layout.html.twig``
-``AcmeDemoBundle::index.html.twig``                ``index.html.twig``
-``AcmeDemoBundle:Default:subdir/index.html.twig``  ``default/subdir/index.html.twig``
-``AcmeDemoBundle:Default/subdir:index.html.twig``  ``default/subdir/index.html.twig``
-=================================================  ==================================
+============================================  ==================================
+Templates Stored inside Bundles               Templates Stored in ``app/``
+============================================  ==================================
+``@AcmeDemo/index.html.twig``                 ``index.html.twig``
+``@AcmeDemo/Default/index.html.twig``         ``default/index.html.twig``
+``@AcmeDemo/Default/subdir/index.html.twig``  ``default/subdir/index.html.twig``
+============================================  ==================================
 
 Another advantage is that centralizing your templates simplifies the work
 of your designers. They don't need to look for templates in lots of directories
@@ -121,7 +119,7 @@ class in the constructor of the Twig extension:
                 new \Twig_SimpleFilter(
                     'md2html',
                     array($this, 'markdownToHtml'),
-                    array('is_safe' => array('html'))
+                    array('is_safe' => array('html'), 'pre_escape' => 'html')
                 ),
             );
         }
