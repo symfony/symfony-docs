@@ -16,9 +16,18 @@ for CSRF. In this article you'll learn how you can use it in your login form.
 Configuring CSRF Protection
 ---------------------------
 
-First, configure the Security component so it can use CSRF protection.
-The Security component needs a CSRF token provider. You can set this to use the default
-provider available in the Security component:
+First, make sure that the CSRF protection is enabled in the main cofiguration
+file:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    framework:
+        # ...
+        csrf_protection: ~
+
+Then, the security component needs a CSRF token provider. You can set this to
+use the default provider available in the security component:
 
 .. configuration-block::
 
@@ -74,7 +83,6 @@ provider available in the Security component:
 
 The Security component can be configured further, but this is all information
 it needs to be able to use CSRF in the login form.
-Note: Make sure that CSRF Protection is enabled in ``config.yml``.
 
 Rendering the CSRF field
 ------------------------
