@@ -110,7 +110,7 @@ on a "remember-me" cookie, or even authenticated anonymously?
     use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 
     $anonymousClass = AnonymousToken::class;
-    $rememberMeClass = RememberMeToken::Class;
+    $rememberMeClass = RememberMeToken::class;
 
     $trustResolver = new AuthenticationTrustResolver($anonymousClass, $rememberMeClass);
 
