@@ -85,7 +85,7 @@ Symfony Flex recipes are contributed by the community and they are stored in
 two public repositories:
 
 * `Main recipe repository`_, is a curated list of recipes for high quality and
-  maintained packages. Symfony Flex only looks for in this repository by default.
+  maintained packages. Symfony Flex only looks in this repository by default.
 * `Contrib recipe repository`_, contains all the recipes created by the community.
   All of them are guaranteed to work, but their associated packages could be
   unmaintained. Symfony Flex ignores these recipes by default, but you can execute
@@ -97,7 +97,7 @@ two public repositories:
         $ composer config extra.symfony.allow-contrib true
 
 Read the `Symfony Recipes documentation`_ to learn everything about how to
-created recipes for your own packages.
+create recipes for your own packages.
 
 Using Symfony Flex in New Applications
 --------------------------------------
