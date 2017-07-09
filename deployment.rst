@@ -120,6 +120,8 @@ Check if your server meets the requirements by running:
 
     $ php app/check.php
 
+.. _b-configure-your-app-config-parameters-yml-file:
+
 B) Configure your Parameters File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
