@@ -604,7 +604,9 @@ file_excerpt
 ``srcContext`` *(optional)*
     **type**: ``integer``
 
-Generates an excerpt of a code file around the given ``line`` number. An optional number of displayed lines can be passed.
+Generates an excerpt of a code file around the given ``line`` number. The
+``srcContext`` argument defines the total number of lines to display around the
+given line number (use ``-1`` to display the whole file).
 
 format_file
 ~~~~~~~~~~~
