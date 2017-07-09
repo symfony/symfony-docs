@@ -53,18 +53,8 @@ To do this, add the repository class name to your entity's mapping definition:
             </entity>
         </doctrine-mapping>
 
-Doctrine can generate empty repository classes for all the entities in your
-application via the same command used earlier to generate the missing getter
-and setter methods:
-
-.. code-block:: terminal
-
-    $ php bin/console doctrine:generate:entities AppBundle
-
-.. tip::
-
-    If you opt to create the repository classes yourself, they must extend
-    ``Doctrine\ORM\EntityRepository``.
+Then, create an empty ``AppBundle\Repository\ProductRepository`` class extending
+from ``Doctrine\ORM\EntityRepository``.
 
 Next, add a new method - ``findAllOrderedByName()`` - to the newly-generated
 ``ProductRepository`` class. This method will query for all the ``Product``
@@ -96,12 +86,13 @@ entities, ordered alphabetically by name.
 
 You can use this new method just like the default finder methods of the repository::
 
+    use AppBundle\Entity\Product;
     // ...
 
     public function listAction()
     {
         $products = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
+            ->getRepository(Product::class)
             ->findAllOrderedByName();
     }
 

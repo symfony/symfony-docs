@@ -190,7 +190,7 @@ this request to an implementation of
 This allows you to replace the way access decisions are reached without actually
 modifying the ACL class itself.
 
-The ``PermissionGrantingStrategy`` first checks all your object-scope ACEs. If none
+The ``PermissionGrantingStrategy`` first checks all your object-scope ACEs. If one
 is applicable, the class-scope ACEs will be checked. If none is applicable,
 then the process will be repeated with the ACEs of the parent ACL. If no
 parent ACL exists, an exception will be thrown.

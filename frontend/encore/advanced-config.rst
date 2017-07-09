@@ -6,7 +6,7 @@ Quite simply, Encore generates the Webpack configuration that's used in your
 `configuration options`_, because many can be easily added on your own.
 
 For example, suppose you need to set `Webpack's watchOptions`_ setting. To do that,
-modify the config after fetching the it from Encore:
+modify the config after fetching it from Encore:
 
 .. code-block:: javascript
 

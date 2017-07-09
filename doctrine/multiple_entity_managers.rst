@@ -211,23 +211,25 @@ entity manager to persist and fetch its entities.
 The same applies to repository calls::
 
     use Doctrine\Common\Persistence\ManagerRegistry;
+    use AcmeStoreBundle\Entity\Customer;
+    use AcmeStoreBundle\Entity\Product;
 
     class UserController extends Controller
     {
         public function indexAction(ManagerRegistry $doctrine)
         {
             // Retrieves a repository managed by the "default" em
-            $products = $doctrine->getRepository('AcmeStoreBundle:Product')
+            $products = $doctrine->getRepository(Product::class)
                 ->findAll()
             ;
 
             // Explicit way to deal with the "default" em
-            $products = $doctrine->getRepository('AcmeStoreBundle:Product', 'default')
+            $products = $doctrine->getRepository(Product::class, 'default')
                 ->findAll()
             ;
 
             // Retrieves a repository managed by the "customer" em
-            $customers = $doctrine->getRepository('AcmeCustomerBundle:Customer', 'customer')
+            $customers = $doctrine->getRepository(Customer::class, 'customer')
                 ->findAll()
             ;
         }

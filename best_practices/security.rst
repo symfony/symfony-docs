@@ -228,7 +228,7 @@ more advanced use-case, you can always do the same security check in PHP:
     public function editAction($id)
     {
         $post = $this->getDoctrine()
-            ->getRepository('AppBundle:Post')
+            ->getRepository(Post::class)
             ->find($id);
 
         if (!$post) {
