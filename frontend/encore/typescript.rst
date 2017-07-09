@@ -31,7 +31,7 @@ also configure the `ts-loader options`_ via a callback:
         typeScriptConfigOptions.configFileName = '/path/to/tsconfig.json';
     });
 
-If React assets are enabled: `enableReactPreset()`, any ``.tsx`` file will be
+If React assets are enabled (``.enableReactPreset()``), any ``.tsx`` file will be
 processed as well by ``ts-loader``.
 
 Loader usage can be checked better in its `README`_ documentation.
