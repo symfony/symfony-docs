@@ -36,6 +36,7 @@ Suppose the class you want to test looks like this::
     // src/AppBundle/Salary/SalaryCalculator.php
     namespace AppBundle\Salary;
 
+    use AppBundle\Entity\Employee;
     use Doctrine\Common\Persistence\ObjectManager;
 
     class SalaryCalculator
@@ -50,7 +51,7 @@ Suppose the class you want to test looks like this::
         public function calculateTotalSalary($id)
         {
             $employeeRepository = $this->entityManager
-                ->getRepository('AppBundle:Employee');
+                ->getRepository(Employee::class);
             $employee = $employeeRepository->find($id);
 
             return $employee->getSalary() + $employee->getBonus();

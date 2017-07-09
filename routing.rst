@@ -723,6 +723,15 @@ route::
     // or, in Twig
     // {{ path('blog_show', {'slug': 'slug-value'}) }}
 
+Translating Routes
+------------------
+
+Symfony doesn't support defining routes with different contents depending on the
+user language. In those cases, you can define multiple routes per controller,
+one for each supported language; or use any of the bundles created by the
+community to implement this feature, such as `JMSI18nRoutingBundle`_ and
+`BeSimpleI18nRoutingBundle`_.
+
 Summary
 -------
 
@@ -750,3 +759,6 @@ Learn more about Routing
     :glob:
 
     routing/*
+
+.. _`JMSI18nRoutingBundle`: https://github.com/schmittjoh/JMSI18nRoutingBundle
+.. _`BeSimpleI18nRoutingBundle`: https://github.com/BeSimple/BeSimpleI18nRoutingBundle

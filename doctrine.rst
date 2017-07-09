@@ -445,56 +445,8 @@ Even though Doctrine now knows how to persist a ``Product`` object to the
 database, the class itself isn't really useful yet. Since ``Product`` is just
 a regular PHP class with ``private`` properties, you need to create ``public``
 getter and setter methods (e.g. ``getName()``, ``setName($name)``) in order
-to access its properties in the rest of your application's code. Fortunately,
-the following command can generate these boilerplate methods automatically:
-
-.. code-block:: terminal
-
-    $ php bin/console doctrine:generate:entities AppBundle/Entity/Product
-
-This command makes sure that all the getters and setters are generated
-for the ``Product`` class. This is a safe command - you can run it over and
-over again: it only generates getters and setters that don't exist (i.e. it
-doesn't replace your existing methods).
-
-.. caution::
-
-    Keep in mind that Doctrine's entity generator produces simple getters/setters.
-    You should review the generated methods and add any logic, if necessary,
-    to suit the needs of your application.
-
-.. sidebar:: More about ``doctrine:generate:entities``
-
-    With the ``doctrine:generate:entities`` command you can:
-
-    * generate getter and setter methods in entity classes;
-
-    * generate repository classes on behalf of entities configured with the
-      ``@ORM\Entity(repositoryClass="...")`` annotation;
-
-    * generate the appropriate constructor for 1:n and n:m relations.
-
-    The ``doctrine:generate:entities`` command saves a backup of the original
-    ``Product.php`` named ``Product.php~``. In some cases, the presence of
-    this file can cause a "Cannot redeclare class" error. It can be safely
-    removed. You can also use the ``--no-backup`` option to prevent generating
-    these backup files.
-
-    Note that you don't *need* to use this command. You could also write the
-    necessary getters and setters by hand. This option simply exists to save
-    you time, since creating these methods is often a common task during
-    development.
-
-You can also generate all known entities (i.e. any PHP class with Doctrine
-mapping information) of a bundle or an entire namespace:
-
-.. code-block:: terminal
-
-    # generates all entities in the AppBundle
-    $ php bin/console doctrine:generate:entities AppBundle
-
-    # generates all entities of bundles in the Acme namespace
-    $ php bin/console doctrine:generate:entities Acme
+to access its properties in the rest of your application's code. Add these
+methods manually or with your own IDE.
 
 .. _doctrine-creating-the-database-tables-schema:
 
@@ -634,7 +586,7 @@ on its ``id`` value::
     public function showAction($productId)
     {
         $product = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
+            ->getRepository(Product::class)
             ->find($productId);
 
         if (!$product) {
@@ -658,18 +610,18 @@ job is to help you fetch entities of a certain class. You can access the
 repository object for an entity class via::
 
     $repository = $this->getDoctrine()
-        ->getRepository('AppBundle:Product');
+        ->getRepository(Product::class);
 
 .. note::
 
-    The ``AppBundle:Product`` string is a shortcut you can use anywhere
+    You can also use ``AppBundle:Product`` syntax. This string is a shortcut you can use anywhere
     in Doctrine instead of the full class name of the entity (i.e. ``AppBundle\Entity\Product``).
     As long as your entity lives under the ``Entity`` namespace of your bundle,
     this will work.
 
 Once you have a repository object, you can access all sorts of helpful methods::
 
-    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
+    $repository = $this->getDoctrine()->getRepository(Product::class);
 
     // query for a single product by its primary key (usually "id")
     $product = $repository->find($productId);
@@ -692,7 +644,7 @@ Once you have a repository object, you can access all sorts of helpful methods::
 You can also take advantage of the useful ``findBy()`` and ``findOneBy()`` methods
 to easily fetch objects based on multiple conditions::
 
-    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
+    $repository = $this->getDoctrine()->getRepository(Product::class);
 
     // query for a single product matching the given name and price
     $product = $repository->findOneBy(
@@ -725,10 +677,13 @@ Updating an Object
 Once you've fetched an object from Doctrine, updating it is easy. Suppose
 you have a route that maps a product id to an update action in a controller::
 
+    use AppBundle\Entity\Post;
+    // ...
+
     public function updateAction($productId)
     {
         $em = $this->getDoctrine()->getManager();
-        $product = $em->getRepository('AppBundle:Product')->find($productId);
+        $product = $em->getRepository(Product::class)->find($productId);
 
         if (!$product) {
             throw $this->createNotFoundException(
@@ -774,7 +729,7 @@ Querying for Objects
 You've already seen how the repository object allows you to run basic queries
 without any work::
 
-    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
+    $repository = $this->getDoctrine()->getRepository(Product::class);
 
     $product = $repository->find($productId);
     $product = $repository->findOneByName('Keyboard');
@@ -835,7 +790,7 @@ depends on dynamic conditions, as your code soon becomes hard to read with
 DQL as you start to concatenate strings::
 
     $repository = $this->getDoctrine()
-        ->getRepository('AppBundle:Product');
+        ->getRepository(Product::class);
 
     // createQueryBuilder() automatically selects FROM AppBundle:Product
     // and aliases it to "p"

@@ -422,6 +422,21 @@ The ``composer.json`` file should include at least the following metadata:
 In order to make it easier for developers to find your bundle, register it on
 `Packagist`_, the official repository for Composer packages.
 
+Resources
+---------
+
+If the bundle references any resources (config files, translation files, etc.),
+don't use physical paths (e.g. ``__DIR__/config/services.xml``) but logical
+paths (e.g. ``@AppBundle/Resources/config/services.xml``).
+
+The logical paths are required because of the bundle overriding mechanism that
+lets you override any resource/file of any bundle. See :ref:`http-kernel-resource-locator`
+for more details about transforming physical paths into logical paths.
+
+Beware that templates use a simplified version of the logical path shown above.
+For example, an ``index.html.twig`` template located in the ``Resources/views/Default/``
+directory of the AppBundle, is referenced as ``@App/Default/index.html.twig``.
+
 Learn more
 ----------
 

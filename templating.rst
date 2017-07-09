@@ -270,11 +270,9 @@ A child template might look like this:
 
 .. note::
 
-   The parent template is identified by a special string syntax
-   (``base.html.twig``). This path is relative to the ``app/Resources/views``
-   directory of the project. You could also use the logical name equivalent:
-   ``::base.html.twig``. This naming convention is explained fully in
-   :ref:`template-naming-locations`.
+   The parent template is stored in ``app/Resources/views/``, so its path is
+   simply ``base.html.twig``. The template naming conventions are explained
+   fully in :ref:`template-naming-locations`.
 
 The key to template inheritance is the ``{% extends %}`` tag. This tells
 the templating engine to first evaluate the base template, which sets up
@@ -382,19 +380,19 @@ to render/extend ``app/Resources/views/base.html.twig``, you'll use the
 Referencing Templates in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*If* you need to refer to a template that lives in a bundle, Symfony uses a **bundle**:**directory**:**filename**
-string syntax. This allows for several types of templates, each which lives in a
-specific location:
+*If* you need to refer to a template that lives in a bundle, Symfony uses the
+Twig namespaced syntax (``@BundleName/directory/filename.html.twig``). This allows
+for several types of templates, each which lives in a specific location:
 
-* ``AcmeBlogBundle:Blog:index.html.twig``: This syntax is used to specify a
+* ``@AcmeBlog/Blog/index.html.twig``: This syntax is used to specify a
   template for a specific page. The three parts of the string, each separated
-  by a colon (``:``), mean the following:
+  by a slash (``/``), mean the following:
 
-  * ``AcmeBlogBundle``: (*bundle*) the template lives inside the AcmeBlogBundle
-    (e.g. ``src/Acme/BlogBundle``);
+  * ``@AcmeBlog``: is the bundle name without the ``Bundle`` suffix. This template
+    lives in the AcmeBlogBundle (e.g. ``src/Acme/BlogBundle``);
 
   * ``Blog``: (*directory*) indicates that the template lives inside the
-    ``Blog`` subdirectory of ``Resources/views``;
+    ``Blog`` subdirectory of ``Resources/views/``;
 
   * ``index.html.twig``: (*filename*) the actual name of the file is
     ``index.html.twig``.
@@ -402,22 +400,15 @@ specific location:
   Assuming that the AcmeBlogBundle lives at ``src/Acme/BlogBundle``, the
   final path to the layout would be ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``.
 
-* ``AcmeBlogBundle::layout.html.twig``: This syntax refers to a base template
+* ``@AcmeBlog/layout.html.twig``: This syntax refers to a base template
   that's specific to the AcmeBlogBundle. Since the middle, "directory", portion
   is missing (e.g. ``Blog``), the template lives at
-  ``Resources/views/layout.html.twig`` inside AcmeBlogBundle. Yes, there are 2
-  colons in the middle of the string when the "controller" subdirectory part is
-  missing.
+  ``Resources/views/layout.html.twig`` inside AcmeBlogBundle.
 
 In the :doc:`/templating/overriding` section, you'll find out how each
 template living inside the AcmeBlogBundle, for example, can be overridden
 by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
 directory. This gives the power to override templates from any vendor bundle.
-
-.. tip::
-
-    Hopefully the template naming syntax looks familiar - it's similar to
-    the naming convention used to refer to :ref:`controller-string-syntax`.
 
 Template Suffix
 ~~~~~~~~~~~~~~~

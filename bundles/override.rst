@@ -7,6 +7,14 @@ How to Override any Part of a Bundle
 This document is a quick reference for how to override different parts of
 third-party bundles.
 
+.. tip::
+
+    The bundle overriding mechanism means that you cannot use physical paths to
+    refer to bundle's resources (e.g. ``__DIR__/config/services.xml``). Always
+    use logical paths in your bundles (e.g. ``@AppBundle/Resources/config/services.xml``)
+    and call the :ref:`locateResource() method <http-kernel-resource-locator>`
+    to turn them into physical paths when needed.
+
 Templates
 ---------
 
