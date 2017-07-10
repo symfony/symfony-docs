@@ -99,7 +99,7 @@ console and the second one in the browser. This is needed because PHP can define
 a different configuration for both the command console and the web server, so
 you need to check both.
 
-Once you fix all the reported issues, uninstall the requirements checker:
+Once you've fixed all the reported issues, uninstall the requirements checker:
 
 .. code-block:: terminal
 
