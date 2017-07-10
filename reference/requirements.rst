@@ -20,6 +20,9 @@ Browse the ``web/config.php`` file in your browser and fix the reported issues.
 When using the PHP built-in web server, this file is available at
 ``http://127.0.0.1:8000/config.php``
 
+Once you've fixed all the reported issues, delete this ``web/config.php`` file
+to avoid leaking internal information about your application to visitors.
+
 Checking Requirements for the Command Console
 ---------------------------------------------
 
