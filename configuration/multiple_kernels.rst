@@ -201,6 +201,18 @@ return the fully qualified class name of the kernel to use::
         {
             return 'ApiKernel';
         }
+
+        // this is needed because the KernelTestCase class keeps a reference to
+        // the previously created kernel in its static $kernel property. Thus,
+        // if your functional tests do not run in isolated processes, a later run
+        // test for a different kernel will reuse the previously created instance,
+        // which points to a different kernel
+        protected function tearDown()
+        {
+            parent::tearDown();
+
+            static::$class = null;
+        }
     }
 
 Adding more Kernels to the Application
