@@ -82,7 +82,7 @@ The following configuration attributes are available:
 * ``auth_mode`` (``plain``, ``login``, or ``cram-md5``)
 * ``spool``
 
-  * ``type`` (how to queue the messages, ``file`` or ``memory`` is supported, see :doc:`/email/spool`)
+  * ``type`` (how to queue the messages, ``file`` or ``memory`` are supported by default, see :doc:`/email/spool`; you can also use ``automailer`` spool type which stores messages in a DB queue, see https://github.com/radutopala/TSSAutomailerBundle)
   * ``path`` (where to store the messages)
 * ``delivery_addresses`` (an array of email addresses where to send ALL emails)
 * ``disable_delivery`` (set to true to disable delivery completely)
