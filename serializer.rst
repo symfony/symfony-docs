@@ -209,11 +209,10 @@ stored in one of the following locations:
 Enabling the Metadata Cache
 ---------------------------
 
-Metadata used by the Serializer component such as groups can be cached to
-enhance application performance. Any service implementing the ``Doctrine\Common\Cache\Cache``
-interface can be used.
-
-A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
+Metadata used by the serializer can be cached to improve application performance.
+By default, Symfony uses the same `APCu`_ (or APC for PHP < 5.5) cache already
+configured in the application, but you can override it using any other service
+implementing the ``Doctrine\Common\Cache\Cache`` interface:
 
 .. configuration-block::
 
@@ -223,7 +222,7 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
         framework:
             # ...
             serializer:
-                cache: serializer.mapping.cache.doctrine.apc
+                cache: id.of.my.own.cache.service
 
     .. code-block:: xml
 
@@ -239,7 +238,7 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
 
             <framework:config>
                 <!-- ... -->
-                <framework:serializer cache="serializer.mapping.cache.doctrine.apc" />
+                <framework:serializer cache="id.of.my.own.cache.service" />
             </framework:config>
         </container>
 
@@ -249,13 +248,9 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(
-                'cache' => 'serializer.mapping.cache.doctrine.apc',
+                'cache' => 'id.of.my.own.cache.service',
             ),
         ));
-
-.. versionadded:: 3.1
-    The ``serializer.mapping.cache.doctrine.apc`` service was introduced in 3.1
-    version to replace ``serializer.mapping.cache.apc``.
 
 Enabling a Name Converter
 -------------------------
