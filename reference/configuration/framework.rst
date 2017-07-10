@@ -121,6 +121,7 @@ Configuration
             * `public`_
             * `default_lifetime`_
             * `provider`_
+            * `namespace`_
             * `clearer`_
     * `prefix_seed`_
 
@@ -1805,6 +1806,13 @@ provider
 **type**: ``string``
 
 The service name to use as provider when the specified adapter needs one.
+
+namespace
+"""""""""
+
+**type**: ``string``
+
+The namespace used for cache item keys.
 
 clearer
 """""""
