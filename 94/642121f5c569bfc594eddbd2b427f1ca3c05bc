@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2017-07-06T10:56:34Z
+
+I don't know what causes the linked issue, but the listener *is* registered automatically, here:
+https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/PhpUnit/TextUI/TestRunner.php
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-07-09T13:09:59Z
+
+@nicolas-grekas That only happens when you use the `simple-phpunit` wrapper script but not when using PHPUnit directly, right?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2017-07-09T13:13:59Z
+
+Indeed
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-07-09T13:15:02Z
+
+@javiereguiluz I think we can point it out that you only need to adapt your config if you do not want to make use of the wrapper script.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-07-10T06:55:22Z
+
+Thanks for your help and comments. I've reworded this.
