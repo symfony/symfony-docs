@@ -161,7 +161,7 @@ block and set the value of two variables called ``icon`` and ``text``:
 
     .. code-block:: twig
 
-        {{ include('@App/data_collector/icon.svg') }}
+        {{ include('data_collector/icon.svg') }}
 
     You are encouraged to use the latter technique for your own toolbar panels.
 

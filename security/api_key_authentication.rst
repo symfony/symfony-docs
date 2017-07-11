@@ -593,7 +593,7 @@ current URL is before creating the token in ``createToken()``::
             // set the only URL where we should look for auth information
             // and only return the token if we're at that URL
             $targetUrl = '/login/check';
-            if ($request->getPathInfo() !== $targetUrl)
+            if ($request->getPathInfo() !== $targetUrl) {
                 return;
             }
 
