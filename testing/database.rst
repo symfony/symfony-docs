@@ -87,7 +87,7 @@ it's easy to pass a mock object within a test::
 
             // Now, mock the repository so it returns the mock of the employee
             $employeeRepository = $this
-                ->getMockBuilder(EntityManagerInterface::class)
+                ->getMockBuilder(EntityRepository::class)
                 ->disableOriginalConstructor()
                 ->getMock();
             $employeeRepository->expects($this->once())
