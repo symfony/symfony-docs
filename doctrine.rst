@@ -506,7 +506,7 @@ a controller, this is pretty easy. Add the following method to the
     {
         // you can fetch the EntityManager via $this->getDoctrine()
         // or you can add an argument to your action: createAction(EntityManagerInterface $em)
-        $em = $this->get('doctrine')->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $product = new Product();
         $product->setName('Keyboard');

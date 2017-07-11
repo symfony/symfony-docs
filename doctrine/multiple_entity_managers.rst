@@ -185,21 +185,19 @@ When working with multiple entity managers to update your schema:
 If you *do* omit the entity manager's name when asking for it,
 the default entity manager (i.e. ``default``) is returned::
 
-    use Doctrine\ORM\EntityManagerInterface;
-    use Doctrine\Common\Persistence\ManagerRegistry;
+    // ...
 
     class UserController extends Controller
     {
-        public function indexAction(EntityManagerInterface $em, ManagerRegistry $doctrine)
+        public function indexAction()
         {
-            // All 4  return the "default" entity manager
-            // $em from the EntityManagerInterface
-            $em = $doctrine->getManager();
-            $em = $doctrine->getManager('default');
+            // All 3 return the "default" entity manager
+            $em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager('default');
             $em = $this->get('doctrine.orm.default_entity_manager');
 
             // Both of these return the "customer" entity manager
-            $customerEm = $doctrine->getManager('customer');
+            $customerEm = $this->getDoctrine()->getManager('customer');
             $customerEm = $this->get('doctrine.orm.customer_entity_manager');
         }
     }
@@ -210,26 +208,29 @@ entity manager to persist and fetch its entities.
 
 The same applies to repository calls::
 
-    use Doctrine\Common\Persistence\ManagerRegistry;
     use AcmeStoreBundle\Entity\Customer;
     use AcmeStoreBundle\Entity\Product;
+    // ...
 
     class UserController extends Controller
     {
-        public function indexAction(ManagerRegistry $doctrine)
+        public function indexAction()
         {
             // Retrieves a repository managed by the "default" em
-            $products = $doctrine->getRepository(Product::class)
+            $products = $this->getDoctrine()
+                ->getRepository(Product::class)
                 ->findAll()
             ;
 
             // Explicit way to deal with the "default" em
-            $products = $doctrine->getRepository(Product::class, 'default')
+            $products = $this->getDoctrine()
+                ->getRepository(Product::class, 'default')
                 ->findAll()
             ;
 
             // Retrieves a repository managed by the "customer" em
-            $customers = $doctrine->getRepository(Customer::class, 'customer')
+            $customers = $this->getDoctrine()
+                ->getRepository(Customer::class, 'customer')
                 ->findAll()
             ;
         }

@@ -114,7 +114,7 @@ service and use it directly::
 
         public function indexAction($name)
         {
-            $content = $this->twig->renderResponse(
+            $content = $this->twig->render(
                 'hello/index.html.twig',
                 array('name' => $name)
             );

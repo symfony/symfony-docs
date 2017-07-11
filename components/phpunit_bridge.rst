@@ -56,10 +56,16 @@ to register a new `test listener`_ called ``SymfonyTestsListener``:
 Usage
 -----
 
-Once the component is installed, it automatically registers a
-`PHPUnit event listener`_ which in turn registers a `PHP error handler`_
-called :class:`Symfony\\Bridge\\PhpUnit\\DeprecationErrorHandler`. After
-running your PHPUnit tests, you will get a report similar to this one:
+Once the component is installed, a ``simple-phpunit`` script is created in the
+``vendor/`` directory to run tests. This script wraps the original PHPUnit binary
+to provide more features:
+
+.. code-block:: terminal
+
+    $ cd my-project/
+    $ ./vendor/bin/simple-phpunit
+
+After running your PHPUnit tests, you will get a report similar to this one:
 
 .. image:: /_images/components/phpunit_bridge/report.png
 
@@ -75,6 +81,21 @@ The summary includes:
 **Remaining/Other**
     Deprecation notices are all other (non-legacy) notices, grouped by message,
     test class and method.
+
+.. note::
+
+    If you don't want to use the ``simple-phpunit`` script, register the following
+    `PHPUnit event listener`_ in your PHPUnit configuration file to get the same
+    report about deprecations (which is created by a `PHP error handler`_
+    called :class:`Symfony\\Bridge\\PhpUnit\\DeprecationErrorHandler`):
+
+    .. code-block:: xml
+
+        <!-- phpunit.xml.dist -->
+        <!-- ... -->
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        </listeners>
 
 Trigger Deprecation Notices
 ---------------------------
