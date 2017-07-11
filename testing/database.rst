@@ -41,16 +41,16 @@ Suppose the class you want to test looks like this::
 
     class SalaryCalculator
     {
-        private $entityManager;
+        private $objectManager;
 
-        public function __construct(ObjectManager $entityManager)
+        public function __construct(ObjectManager $objectManager)
         {
-            $this->entityManager = $entityManager;
+            $this->objectManager = $objectManager;
         }
 
         public function calculateTotalSalary($id)
         {
-            $employeeRepository = $this->entityManager
+            $employeeRepository = $this->objectManager
                 ->getRepository(Employee::class);
             $employee = $employeeRepository->find($id);
 
@@ -66,44 +66,35 @@ it's easy to pass a mock object within a test::
 
     use AppBundle\Entity\Employee;
     use AppBundle\Salary\SalaryCalculator;
-    use Doctrine\ORM\EntityRepository;
     use Doctrine\Common\Persistence\ObjectManager;
+    use Doctrine\Common\Persistence\ObjectRepository;
     use PHPUnit\Framework\TestCase;
 
     class SalaryCalculatorTest extends TestCase
     {
         public function testCalculateTotalSalary()
         {
-            // First, mock the object to be used in the test
-            $employee = $this->createMock(Employee::class);
-            // use getMock() on PHPUnit 5.3 or below
-            // $employee = $this->getMock(Employee::class);
-            $employee->expects($this->once())
-                ->method('getSalary')
-                ->will($this->returnValue(1000));
-            $employee->expects($this->once())
-                ->method('getBonus')
-                ->will($this->returnValue(1100));
+            $employee = new Employee();
+            $employee->setSalaray(1000);
+            $employee->setBonus(1100);
 
             // Now, mock the repository so it returns the mock of the employee
-            $employeeRepository = $this
-                ->getMockBuilder(EntityRepository::class)
-                ->disableOriginalConstructor()
-                ->getMock();
-            $employeeRepository->expects($this->once())
+            $employeeRepository = $this->createMock(ObjectRepository::class);
+            // use getMock() on PHPUnit 5.3 or below
+            // $employeeRepository = $this->getMock(ObjectRepository::class);
+            $employeeRepository->expects($this->any())
                 ->method('find')
-                ->will($this->returnValue($employee));
+                ->willReturn($employee);
 
             // Last, mock the EntityManager to return the mock of the repository
-            $entityManager = $this
-                ->getMockBuilder(ObjectManager::class)
-                ->disableOriginalConstructor()
-                ->getMock();
-            $entityManager->expects($this->once())
+            $objectManager = $this->createMock(ObjectManager::class);
+            // use getMock() on PHPUnit 5.3 or below
+            // $objectManager = $this->getMock(ObjectManager::class);
+            $objectManager->expects($this->any())
                 ->method('getRepository')
-                ->will($this->returnValue($employeeRepository));
+                ->willReturn($employeeRepository);
 
-            $salaryCalculator = new SalaryCalculator($entityManager);
+            $salaryCalculator = new SalaryCalculator($objectManager);
             $this->assertEquals(2100, $salaryCalculator->calculateTotalSalary(1));
         }
     }

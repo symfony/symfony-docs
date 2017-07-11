@@ -25,7 +25,7 @@ TwigBundle Configuration ("twig")
                 - foundation_5_layout.html.twig
 
                 # Example:
-                - @App/form.html.twig
+                - form.html.twig
 
             globals:
 
@@ -77,7 +77,7 @@ TwigBundle Configuration ("twig")
                 optimizations="true"
             >
                 <twig:form-theme>form_div_layout.html.twig</twig:form-theme> <!-- Default -->
-                <twig:form-theme>@App/form.html.twig</twig:form-theme>
+                <twig:form-theme>form.html.twig</twig:form-theme>
 
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
@@ -93,7 +93,7 @@ TwigBundle Configuration ("twig")
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 'form_div_layout.html.twig', // Default
-                '@App/form.html.twig',
+                'form.html.twig',
              ),
              'globals' => array(
                  'foo' => '@bar',
