@@ -83,7 +83,7 @@ Command Options
 
 The built-in web server expects a "router" script (read about the "router"
 script on `php.net`_) as an argument. Symfony already passes such a router
-script when the command is executed in the ``prod`` or ``dev`` environments.
+script when the command is executed in the ``prod`` or ``dev`` environment.
 Use the ``--router`` option to use your own router script:
 
 .. code-block:: terminal
