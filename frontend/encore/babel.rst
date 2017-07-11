@@ -15,8 +15,9 @@ Need to extend the Babel configuration further? The easiest way is via
 
     Encore
         // ...
-
-        // modify the default Babel configuration
+        
+        // first, install any presets you want to use (e.g. yarn add babel-preset-es2017)
+        // then, modify the default Babel configuration
         .configureBabel(function(babelConfig) {
             babelConfig.presets.push('es2017');
         })
