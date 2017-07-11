@@ -43,6 +43,7 @@ Adding more Features
 * :doc:`Enabling Vue.js (vue-loader) </frontend/encore/vuejs>`
 * :doc:`Configuring Babel </frontend/encore/babel>`
 * :doc:`Source maps </frontend/encore/sourcemaps>`
+* :doc:`Enabling TypeScript (ts-loader) </frontend/encore/typescript>`
 
 Optimizing
 ..........
