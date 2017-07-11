@@ -595,18 +595,14 @@ file_excerpt
 
 .. code-block:: twig
 
-    {{ file|file_excerpt(line, srcContext = 3) }}
+    {{ file|file_excerpt(line) }}
 
 ``file``
     **type**: ``string``
 ``line``
     **type**: ``integer``
-``srcContext`` *(optional)*
-    **type**: ``integer``
 
-Generates an excerpt of a code file around the given ``line`` number. The
-``srcContext`` argument defines the total number of lines to display around the
-given line number (use ``-1`` to display the whole file).
+Generates an excerpt of a code file around the given ``line`` number.
 
 format_file
 ~~~~~~~~~~~
