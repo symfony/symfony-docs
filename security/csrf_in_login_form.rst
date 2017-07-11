@@ -16,9 +16,44 @@ for CSRF. In this article you'll learn how you can use it in your login form.
 Configuring CSRF Protection
 ---------------------------
 
-First, configure the Security component so it can use CSRF protection.
-The Security component needs a CSRF token provider. You can set this to use the default
-provider available in the Security component:
+First, make sure that the CSRF protection is enabled in the main cofiguration
+file:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            # ...
+            csrf_protection: ~
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:csrf-protection enabled="true" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'csrf_protection' => null,
+        ));
+
+Then, the security component needs a CSRF token provider. You can set this to
+use the default provider available in the security component:
 
 .. configuration-block::
 

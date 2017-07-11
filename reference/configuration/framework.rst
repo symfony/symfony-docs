@@ -68,7 +68,9 @@ Configuration
     * `gc_divisor`_
     * `gc_probability`_
     * `gc_maxlifetime`_
+    * `use_strict_mode`_
     * `save_path`_
+    * `metadata_update_threshold`_
 * `assets`_
     * `base_path`_
     * `base_urls`_
@@ -826,6 +828,17 @@ This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session
 start and depends on `gc_divisor`_ and `gc_probability`_.
 
+use_strict_mode
+...............
+
+**type**: ``boolean`` **default**: ``false``
+
+This specifies whether the session module will use the strict session id mode.
+If this mode is enabled, the module does not accept uninitialized session IDs.
+If an uninitialized session ID is sent from browser, a new session ID is sent
+to browser. Applications are protected from session fixation via session
+adoption with strict mode.
+
 save_path
 .........
 
@@ -871,6 +884,19 @@ setting the value to ``null``:
                 'save_path' => null,
             ),
         ));
+
+metadata_update_threshold
+.........................
+
+**type**: ``integer`` **default**: ``0``
+
+This is how many seconds to wait between two session metadata updates. It will
+also prevent the session handler to write if the session has not changed.
+
+.. seealso::
+
+    You can see an example of the usage of this in
+    :doc:`/session/limit_metadata_writes`.
 
 assets
 ~~~~~~
