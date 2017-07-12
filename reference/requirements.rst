@@ -11,7 +11,7 @@ requirements. To make things simple, Symfony provides a tool to quickly check if
 your system meets all those requirements.
 
 Beware that PHP can define a different configuration for the command console and
-the web server, so you need to check requirements in both.
+the web server, so you need to check requirements in both environments.
 
 Checking Requirements for the Web Server
 ----------------------------------------
@@ -20,7 +20,7 @@ Browse the ``web/config.php`` file in your browser and fix the reported issues.
 When using the PHP built-in web server, this file is available at
 ``http://127.0.0.1:8000/config.php``
 
-Once you've fixed all the reported issues, delete this ``web/config.php`` file
+Once you've fixed all the reported issues, delete the ``web/config.php`` file
 to avoid leaking internal information about your application to visitors.
 
 Checking Requirements for the Command Console
