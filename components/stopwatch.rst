@@ -34,12 +34,23 @@ microtime by yourself. Instead, use the simple
     $event = $stopwatch->stop('eventName');
 
 The :class:`Symfony\\Component\\Stopwatch\\StopwatchEvent` object can be retrieved
-from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`, 
-:method:`Symfony\\Component\\Stopwatch\\Stopwatch::stop`, 
-:method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap` and 
-:method:`Symfony\\Component\\Stopwatch\\Stopwatch::getEvent` methods. 
+from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`,
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::stop`,
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap` and
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::getEvent` methods.
 The latter should be used when you need to retrieve the duration of an event
 while it is still running.
+
+.. tip::
+
+    By default, the stopwatch truncates any sub-millisecond time measure to ``0``,
+    so you can't measure microseconds or nanoseconds. If you need more precision,
+    pass ``true`` to the ``Stopwatch`` class constructor to enable full precision::
+
+        $stopwatch = new Stopwatch(true);
+
+    .. versionadded:: 3.4
+        The full precision feature was introduced in Symfony 3.4.
 
 You can also provide a category name to an event::
 
