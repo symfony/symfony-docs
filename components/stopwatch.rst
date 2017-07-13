@@ -43,7 +43,7 @@ while it is still running.
 
 .. tip::
 
-    By default, Stopwatch truncates any sub-millisecond time measure to ``0``,
+    By default, the stopwatch truncates any sub-millisecond time measure to ``0``,
     so you can't measure microseconds or nanoseconds. If you need more precision,
     pass ``true`` to the ``Stopwatch`` class constructor to enable full precision::
 
