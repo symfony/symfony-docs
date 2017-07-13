@@ -16,9 +16,8 @@ the web server, so you need to check requirements in both environments.
 Checking Requirements for the Web Server
 ----------------------------------------
 
-Browse the ``web/config.php`` file in your browser and fix the reported issues.
-When using the PHP built-in web server, this file is available at
-``http://127.0.0.1:8000/config.php``
+Symfony includes a ``config.php`` file in the ``web/`` directory of your project.
+Open that file with your browser to check the requirements.
 
 Once you've fixed all the reported issues, delete the ``web/config.php`` file
 to avoid leaking internal information about your application to visitors.
