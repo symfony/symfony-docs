@@ -133,19 +133,13 @@ build a HelloAction class that use the ADR principes ::
          *
          * @return Response
          */
-        public function __invoke() : Response
+        public function __invoke()
         {
             return new Response(
                 $this->renderEngine->render('default/index.html.twig')
             );
         }
     }
-
-.. note::
-
-    Please note that the PHP 7.1 syntax isn't mandatory.
-    
-.. _controller-service-invoke:
 
 By default, we define the class with the final keyword because this class shouldn't been extended,
 the logic is pretty simple to understand as you understand the ADR pattern, in fact, the 'Action' 
