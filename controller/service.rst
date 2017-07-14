@@ -24,17 +24,11 @@ syntax:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # app/config/routing.yml
-        hello:
-            path:     /hello
-            defaults: { _controller: app.hello_controller:indexAction }
-
     .. code-block:: php-annotations
 
         # src/AppBundle/Controller/HelloController.php
-        // ...
+        
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
         /**
          * @Route(service="app.hello_controller")
@@ -43,6 +37,13 @@ syntax:
         {
             // ...
         }
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        hello:
+            path:     /hello
+            defaults: { _controller: app.hello_controller:indexAction }
 
     .. code-block:: xml
 
