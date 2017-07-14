@@ -108,31 +108,16 @@ build a HelloAction class that use the ADR principes ::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Templating\EngineInterface;
 
-    /**
-     * Class HelloAction
-     */
     final class HelloAction
     {
-        /** @var EngineInterface */
-        private $renderEngine;
-
-        /**
-         * HelloAction constructor.
-         *
-         * @param EngineInterface $renderEngine
-         */
+        private $render;
+        
         public function __construct(
-            EngineInterface $renderEngine
+            EngineInterface $engine
         ) {
-            $this->renderEngine = $renderEngine;
+            $this->renderEngine = $render;
         }
 
-        /**
-         * @throws \InvalidArgumentException
-         * @throws \RuntimeException
-         *
-         * @return Response
-         */
         public function __invoke()
         {
             return new Response(
