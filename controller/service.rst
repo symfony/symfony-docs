@@ -119,9 +119,7 @@ build a HelloAction class that use the ADR principes ::
 
         public function __invoke()
         {
-            return new Response(
-                $this->render->render('default/index.html.twig')
-            );
+            return new Response($this->render->render('default/index.html.twig'));
         }
     }
 
