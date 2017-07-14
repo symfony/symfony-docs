@@ -192,8 +192,6 @@ Once this is done, you can define the routes like before using multiples approac
             '_controller' => 'AppBundle\Action\HelloAction',
         )));
 
-.. note::
-
 Alternatives to base Controller Methods
 ---------------------------------------
 
