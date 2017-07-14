@@ -112,10 +112,9 @@ build a HelloAction class that use the ADR principes ::
     {
         private $render;
         
-        public function __construct(
-            EngineInterface $engine
-        ) {
-            $this->renderEngine = $render;
+        public function __construct(EngineInterface $render) 
+        {
+            $this->render = $render;
         }
 
         public function __invoke()
