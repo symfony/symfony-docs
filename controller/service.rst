@@ -131,14 +131,6 @@ Once this is done, you can define the routes like before using multiples approac
 
 .. configuration-block::
 
-    .. code-block:: yaml
-    
-        # app/config/routing.yml
-        hello:
-            path:     /hello
-            methods: ['GET']
-            defaults: { _controller: AppBundle\Action\HelloAction }
-
     .. code-block:: php-annotations
     
         # src/AppBundle/Action/HelloAction.php
@@ -151,6 +143,13 @@ Once this is done, you can define the routes like before using multiples approac
         {
             // ...
         }
+
+    .. code-block:: yaml
+    
+        # app/config/routing.yml
+        hello:
+            path:     /hello
+            defaults: { _controller: AppBundle\Action\HelloAction }
 
     .. code-block:: xml
 
