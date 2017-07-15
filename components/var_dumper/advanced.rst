@@ -53,16 +53,23 @@ Before calling :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::cloneV
 you can configure these limits:
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxItems`
-    configures the maximum number of items that will be cloned
-    *past the first nesting level*. Items are counted using a breadth-first
+    Configures the maximum number of items that will be cloned
+    *past the minimum nesting depth*. Items are counted using a breadth-first
     algorithm so that lower level items have higher priority than deeply nested
-    items;
+    items. Specifying ``-1`` removes the limit.
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMinDepth`
+    .. versionadded:: 3.4
+        The ``setMinDepth()`` method was introduced in Symfony 3.4.
+
+    Configures the minimum tree depth where we are guaranteed to clone
+    all the items. After this depth is reached, only ``setMaxItems``
+    items will be cloned. The default value is ``1``, which is consistent
+    with older Symfony versions.
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxString`
-    configures the maximum number of characters that will be cloned before
-    cutting overlong strings;
-
-In both cases, specifying ``-1`` removes any limit.
+    Configures the maximum number of characters that will be cloned before
+    cutting overlong strings.  Specifying ``-1`` removes the limit.
 
 Before dumping it, you can further limit the resulting
 :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object using the following methods:
