@@ -162,6 +162,10 @@ If you use several handlers, you can also register a processor at the
 handler level or at the channel level instead of registering it globally
 (see the following sections).
 
+.. versionadded:: 3.4
+    The :class:``Symfony\\Bridge\\Monolog\\Processor\\TokenProcessor`` class was added in Symfony 3.4.
+    This processor adds the current security token to the log entry (username, authenticated status and roles).
+
 Registering Processors per Handler
 ----------------------------------
 
