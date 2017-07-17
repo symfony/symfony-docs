@@ -84,8 +84,7 @@ If you want to use the ADR pattern rather than the default controller approach, 
 the new features provided by the container like public/private injections and autowiring, 
 in order to work, you must update the services.yml file ::
 
-    parameters:
-        #parameter_name: value
+# ...
 
     services:
         _defaults:
