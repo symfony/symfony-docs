@@ -102,7 +102,7 @@ Use environment variables in values by prefixing variables with ``$``:
 
         # '%kernel.project_dir%' is not resolved, so the value of this
         # variable won't be the expected one and the application won't work
-        DB_URL=sqlite:///%kernel.project_dir%/test.db
+        DATABASE_URL=sqlite:///%kernel.project_dir%/test.db
 
 Embed commands via ``$()`` (not supported on Windows):
 
