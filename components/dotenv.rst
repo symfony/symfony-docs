@@ -96,7 +96,7 @@ Use environment variables in values by prefixing variables with ``$``:
 .. note::
 
     When using the Dotenv component within the Symfony Framework, beware that
-    variables can't contain container parameters because they are not solved:
+    variables can't contain container parameters because they are not resolved:
 
     .. code-block:: shell
 
