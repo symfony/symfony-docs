@@ -21,7 +21,7 @@ confirmed, the core-team works on a solution following these steps:
 
 #. Send an acknowledgement to the reporter;
 #. Work on a patch;
-#. Get a CVE identifier from mitre.org;
+#. Get a CVE identifier from `mitre.org`_;
 #. Write a security announcement for the official Symfony `blog`_ about the
    vulnerability. This post should contain the following information:
 
@@ -142,3 +142,4 @@ releases, starting from Symfony 1.0.0:
 .. _blog: https://symfony.com/blog/
 .. _Security Advisories: https://symfony.com/blog/category/security-advisories
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
+.. _`mitre.org`: https://cveform.mitre.org/
