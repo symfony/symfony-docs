@@ -49,7 +49,7 @@ Load a ``.env`` file in your PHP application via ``Dotenv::load()``::
 
 Given the following ``.env`` file content:
 
-.. code-block:: bash
+.. code-block:: shell
 
     # .env
     DB_USER=root
@@ -76,11 +76,11 @@ shell scripts:
 
 .. code-block:: terminal
 
-    source .env
+    $ source .env
 
 Add comments by prefixing them with ``#``:
 
-.. code-block:: bash
+.. code-block:: shell
 
     # Database credentials
     DB_USER=root
@@ -88,14 +88,25 @@ Add comments by prefixing them with ``#``:
 
 Use environment variables in values by prefixing variables with ``$``:
 
-.. code-block:: bash
+.. code-block:: shell
 
     DB_USER=root
     DB_PASS=${DB_USER}pass # Include the user as a password prefix
 
+.. note::
+
+    When using the Dotenv component within the Symfony Framework, beware that
+    variables can't contain container parameters because they are not solved:
+
+    .. code-block:: shell
+
+        # '%kernel.project_dir%' is not resolved, so the value of this
+        # variable won't be the expected one and the application won't work
+        DB_URL=sqlite:///%kernel.project_dir%/test.db
+
 Embed commands via ``$()`` (not supported on Windows):
 
-.. code-block:: bash
+.. code-block:: shell
 
     START_TIME=$(date)
 
