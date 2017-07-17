@@ -229,7 +229,7 @@ order:
     * ``workflow.[workflow name].enter``
     * ``workflow.[workflow name].enter.[place name]``
 
-``work.flow.entered``
+``workflow.entered``
 
     Similar to ``workflow.enter``, except the marking store is updated before this
     event (making it a good place to flush data in Doctrine). 
@@ -241,7 +241,7 @@ order:
     * ``workflow.[workflow name].entered.[place name]``
 
 ``workflow.announce``
-    Triggered once for each workflow that now is available for the object.
+    Triggered for each place that now is available for the object.
 
     The three events being dispatched are:
 

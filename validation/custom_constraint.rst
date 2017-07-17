@@ -45,7 +45,7 @@ includes some simple default logic::
     // in the base Symfony\Component\Validator\Constraint class
     public function validatedBy()
     {
-        return get_class($this).'Validator';
+        return ContainsAlphanumericValidator::class;
     }
 
 In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),

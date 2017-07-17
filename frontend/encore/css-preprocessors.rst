@@ -22,7 +22,21 @@ And enable it in ``webpack.config.js``:
         .enableSassLoader()
     ;
 
-That's it! All files ending in ``.sass`` or ``.scss`` will be pre-processed.
+That's it! All files ending in ``.sass`` or ``.scss`` will be pre-processed. You
+can also pass options to ``sass-loader``:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+        .enableSassLoader(function(sassOptions) {
+            // https://github.com/sass/node-sass#options
+            // options.includePaths = [...]
+        });
+    ;
 
 Using LESS
 ----------

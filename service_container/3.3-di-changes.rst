@@ -433,7 +433,7 @@ In this case, you've created a class that implements ``EventSubscriberInterface`
 and registered it as a service. This is more than enough for the container to know
 that you want this to be used as an event subscriber: more configuration is not needed.
 And the tags system is its own, Symfony-specific mechanism. And of course, you can
-always default ``autowire`` to false in ``services.yml``, or disable it for a specific
+always default ``autoconfigure`` to false in ``services.yml``, or disable it for a specific
 service.
 
     Does this mean tags are dead? Does this work for all tags?

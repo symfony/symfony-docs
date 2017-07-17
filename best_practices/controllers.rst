@@ -95,6 +95,7 @@ for the homepage of our app:
 
     namespace AppBundle\Controller;
 
+    use AppBundle\Entity\Post;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -106,7 +107,7 @@ for the homepage of our app:
         public function indexAction()
         {
             $posts = $this->getDoctrine()
-                ->getRepository('AppBundle:Post')
+                ->getRepository(Post::class)
                 ->findLatest();
 
             return $this->render('default/index.html.twig', array(
@@ -186,7 +187,7 @@ manually. In our application, we have this situation in ``CommentController``:
     public function newAction(Request $request, $postSlug)
     {
         $post = $this->getDoctrine()
-            ->getRepository('AppBundle:Post')
+            ->getRepository(Post::class)
             ->findOneBy(array('slug' => $postSlug));
 
         if (!$post) {

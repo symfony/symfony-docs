@@ -372,7 +372,7 @@ method. Here are several common services you might need::
     // you can also fetch parameters
     $someParameter = $this->getParameter('some_parameter');
 
-If you receive an eror like:
+If you receive an error like:
 
 .. code-block:: text
 
@@ -453,8 +453,8 @@ Managing the Session
 --------------------
 
 Symfony provides a nice session object that you can use to store information
-about the user between requests. By default, Symfony stores the attributes in a
-cookie by using native PHP sessions.
+about the user between requests. By default, Symfony stores the token in a
+cookie and writes the attributes to a file by using native PHP sessions.
 
 .. versionadded:: 3.3
     The ability to request a ``Session`` instance in controllers was introduced

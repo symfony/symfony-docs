@@ -528,7 +528,7 @@ your application. Assume that you have a sport meetup creation controller::
             }
 
             return $this->render(
-                'AppBundle:Meetup:create.html.twig',
+                'meetup/create.html.twig',
                 array('form' => $form->createView())
             );
         }
@@ -543,7 +543,7 @@ field according to the current selection in the ``sport`` field:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/Meetup/create.html.twig #}
+        {# app/Resources/views/meetup/create.html.twig #}
         {{ form_start(form) }}
             {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
             {{ form_row(form.position) }} {# <select id="meetup_position" ... #}

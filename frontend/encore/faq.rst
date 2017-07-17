@@ -1,6 +1,57 @@
 FAQ and Common Issues
 =====================
 
+How do I deploy my Encore Assets?
+---------------------------------
+
+There are two important things to remember when deploying your assets.
+
+**1) Run ``encore production``**
+
+Optimize your assets for production by running:
+
+.. code-block:: terminal
+
+    $ ./node_modules/.bin/encore production
+
+That will minify your assets and make other performance optimizations. Yay!
+
+But, what server should you run this command on? That depends on how you deploy.
+For example, you could execute this locally (or on a build server), and use rsync
+or something else to transfer the built files to your server. Or, you could put your
+files on your production server first (e.g. via a git pull) and then run this command
+on production (ideally, before traffic hits your code). In this case, you'll need
+to install Node.js on your production server.
+
+**2) Only Deploy the Built Assets**
+
+The *only* files that need to be deployed to your production servers are the
+final, built assets (e.g. the ``web/build`` directory). You do *not* need to install
+Node.js, deploy ``webpack.config.js``, the ``node_modules`` directory or even your source
+asset files, **unless** you plan on running ``encore production`` on your production
+machine. Once your assets are built, these are the *only* thing that need to live
+on the production server.
+
+Do I need to Install Node.js on my Production Server?
+-----------------------------------------------------
+
+No, unless you plan to build your production assets on your production server,
+which is not recommended. See `How do I deploy my Encore Assets?`_.
+
+What Files Should I commit to git? And which should I Ignore?
+-------------------------------------------------------------
+
+You should commit all of your files to git, except for the ``node_modules/`` directory
+and the built files. Your ``.gitignore`` file should include:
+
+.. code-block:: text
+
+    /node_modules/
+    # whatever path you're passing to Encore.setOutputPath()
+    /web/build
+
+You *should* commit all of your source asset files, ``package.json`` and ``yarn.lock``.
+
 My App Lives under a Subdirectory
 ---------------------------------
 
@@ -15,13 +66,13 @@ like ``/myAppSubdir``), you just need to configure that when calling ``Encore.se
 
         .setOutputPath('web/build/')
 
-        - .setPublicPath('/build')
-        + // this is your *true* public path
-        + .setPublicPath('/myAppSubdir/build')
+    -     .setPublicPath('/build')
+    +     // this is your *true* public path
+    +     .setPublicPath('/myAppSubdir/build')
 
-        + // this is now needed so that your manifest.json keys are still `build/foo.js`
-        + // i.e. you won't need to change anything in your Symfony app
-        + .setManifestKeyPrefix('build')
+    +     // this is now needed so that your manifest.json keys are still `build/foo.js`
+    +     // i.e. you won't need to change anything in your Symfony app
+    +     .setManifestKeyPrefix('build')
     ;
 
 If you're :ref:`processing your assets through manifest.json <load-manifest-files>`,

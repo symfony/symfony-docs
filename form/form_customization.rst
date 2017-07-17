@@ -333,8 +333,8 @@ name of all the templates as an array using the ``with`` keyword:
 
     {# ... #}
 
-The templates can also be located in different bundles, use the functional name
-to reference these templates, e.g. ``AcmeFormExtraBundle:form:fields.html.twig``.
+The templates can also be located in different bundles, use the Twig namespaced
+path to reference these templates, e.g. ``@AcmeFormExtra/form/fields.html.twig``.
 
 Child Forms
 ...........
@@ -873,6 +873,8 @@ and customize the ``form_errors`` fragment.
 
     .. code-block:: html+twig
 
+        {% form_theme form _self %}
+
         {# form_errors.html.twig #}
         {% block form_errors %}
             {% spaceless %}
@@ -932,6 +934,8 @@ fields (e.g. a whole form), and not just an individual field.
 .. configuration-block::
 
     .. code-block:: html+twig
+
+        {% form_theme form _self %}
 
         {# form_errors.html.twig #}
         {% block form_errors %}
