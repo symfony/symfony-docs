@@ -178,6 +178,43 @@ In order to solve this issue, add the following configuration to your kernel:
             # allows to use app/Resources/views/ templates in the ApiKernel
             "%kernel.root_dir%/../app/Resources/views": ~
 
+Running Tests Using a Different Kernel
+--------------------------------------
+
+In Symfony applications, functional tests extend by default from the
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase` class. Inside that
+class, a method called ``getKernelClass()`` tries to find the class of the kernel
+to use to run the application during tests. The logic of this method does not
+support multiple kernel applications, so your tests won't use the right kernel.
+
+The solution is to create a custom base class for functional tests extending
+from ``WebTestCase`` class and overriding the ``getKernelClass()`` method to
+return the fully qualified class name of the kernel to use::
+
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+    // tests needing the ApiKernel to work, now must extend this
+    // ApiTestCase class instead of the default WebTestCase class
+    class ApiTestCase extends WebTestCase
+    {
+        protected static function getKernelClass()
+        {
+            return 'ApiKernel';
+        }
+
+        // this is needed because the KernelTestCase class keeps a reference to
+        // the previously created kernel in its static $kernel property. Thus,
+        // if your functional tests do not run in isolated processes, a later run
+        // test for a different kernel will reuse the previously created instance,
+        // which points to a different kernel
+        protected function tearDown()
+        {
+            parent::tearDown();
+
+            static::$class = null;
+        }
+    }
+
 Adding more Kernels to the Application
 --------------------------------------
 
