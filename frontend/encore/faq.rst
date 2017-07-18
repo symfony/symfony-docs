@@ -66,13 +66,13 @@ like ``/myAppSubdir``), you just need to configure that when calling ``Encore.se
 
         .setOutputPath('web/build/')
 
-        - .setPublicPath('/build')
-        + // this is your *true* public path
-        + .setPublicPath('/myAppSubdir/build')
+    -     .setPublicPath('/build')
+    +     // this is your *true* public path
+    +     .setPublicPath('/myAppSubdir/build')
 
-        + // this is now needed so that your manifest.json keys are still `build/foo.js`
-        + // i.e. you won't need to change anything in your Symfony app
-        + .setManifestKeyPrefix('build')
+    +     // this is now needed so that your manifest.json keys are still `build/foo.js`
+    +     // i.e. you won't need to change anything in your Symfony app
+    +     .setManifestKeyPrefix('build')
     ;
 
 If you're :ref:`processing your assets through manifest.json <load-manifest-files>`,

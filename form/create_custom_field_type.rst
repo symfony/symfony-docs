@@ -36,7 +36,8 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
                     'Standard Shipping' => 'standard',
                     'Expedited Shipping' => 'expedited',
                     'Priority Shipping' => 'priority',
-                )
+                ),
+                'choices_as_values' => true,
             ));
         }
 
