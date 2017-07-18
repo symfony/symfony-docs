@@ -70,16 +70,15 @@ Active Core Members
 
   * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component;
 
-  * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_
-    bundle;
+  * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_;
 
   * **Grégoire Pineau** (`lyrixx`_) can merge into the Workflow_ component;
 
   * **Ryan Weaver** (`weaverryan`_) can merge into the Security_ component and
-    the SecurityBundle_ bundle;
+    the SecurityBundle_;
 
   * **Robin Chalas** (`chalasr`_) can merge into the Console_ and Security_
-    components and the SecurityBundle_ bundle;
+    components and the SecurityBundle_;
 
   * **Maxime Steinhausser** (`ogizanagi`_) can merge into Config_, Console_,
     Form_, Serializer_, DependencyInjection_, and HttpKernel_ components;
