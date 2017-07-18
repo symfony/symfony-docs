@@ -49,10 +49,6 @@ Active Core Members
 
 * **Mergers** (``@symfony/mergers`` on GitHub):
 
-  * **Bernhard Schussek** (`webmozart`_) can merge into the Form_,
-    Validator_, Icu_, Intl_, Locale_, OptionsResolver_ and PropertyAccess_
-    components;
-
   * **Tobias Schultze** (`Tobion`_) can merge into the Routing_,
     OptionsResolver_ and PropertyAccess_ components;
 
@@ -69,9 +65,6 @@ Active Core Members
   * **Kévin Dunglas** (`dunglas`_) can merge into the PropertyInfo_,
     Serializer_ component;
 
-  * **Abdellatif AitBoudad** (`aitboudad`_) can merge into the Translation_
-    component;
-
   * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component;
 
   * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component;
@@ -81,11 +74,28 @@ Active Core Members
 
   * **Grégoire Pineau** (`lyrixx`_) can merge into the Workflow_ component.
 
+  * **Ryan Weaver** (`weaverryan`_) can merge into the Security_ component and
+    the SecurityBundle_ bundle.
+
+  * **Robin Chalas** (`chalasr`_) can merge into the Console_ and Security_
+    components and the SecurityBundle_ bundle.
+
+  * **Maxime Steinhausser** (`ogizanagi`_) can merge into Config_, Console_,
+    Form_, Serializer_, DependencyInjection_, and HttpKernel_ components.
+
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
   * **Lukas Kahwe Smith** (`lsmith77`_);
-  * **Ryan Weaver** (`weaverryan`_).
+
+Former Core Members
+~~~~~~~~~~~~~~~~~~~
+
+They are no longer part of the Core Team, but we are very grateful for all their
+Symfony contributions:
+
+  * **Bernhard Schussek** (`webmozart`_).
+  * **Abdellatif AitBoudad** (`aitboudad`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -158,7 +168,6 @@ Symfony Core Rules and Protocol Amendments
 The rules described in this document may be amended at anytime at the
 discretion of the **Project Leader**.
 
-
 .. [1] Minor changes comprise typos, DocBlock fixes, code standards
        violations, and minor CSS, JavaScript and HTML modifications.
 
@@ -187,6 +196,8 @@ discretion of the **Project Leader**.
 .. _Routing: https://github.com/symfony/routing
 .. _Serializer: https://github.com/symfony/serializer
 .. _Translation: https://github.com/symfony/translation
+.. _Security: https://github.com/symfony/security
+.. _SecurityBundle: https://github.com/symfony/security-bundle
 .. _Stopwatch: https://github.com/symfony/stopwatch
 .. _TwigBridge: https://github.com/symfony/twig-bridge
 .. _Validator: https://github.com/symfony/validator
@@ -209,3 +220,5 @@ discretion of the **Project Leader**.
 .. _`xabbuh`: https://github.com/xabbuh/
 .. _`javiereguiluz`: https://github.com/javiereguiluz/
 .. _`lyrixx`: https://github.com/lyrixx/
+.. _`chalasr`: https://github.com/chalasr/
+.. _`ogizanagi`: https://github.com/ogizanagi/
