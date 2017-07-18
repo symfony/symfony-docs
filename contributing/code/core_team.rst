@@ -65,28 +65,31 @@ Active Core Members
   * **Kévin Dunglas** (`dunglas`_) can merge into the PropertyInfo_,
     Serializer_ component;
 
-  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component;
+  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ and Intl_
+    components;
 
   * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component;
 
   * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_
-    bundle.
+    bundle;
 
-  * **Grégoire Pineau** (`lyrixx`_) can merge into the Workflow_ component.
+  * **Grégoire Pineau** (`lyrixx`_) can merge into the Workflow_ component;
 
   * **Ryan Weaver** (`weaverryan`_) can merge into the Security_ component and
-    the SecurityBundle_ bundle.
+    the SecurityBundle_ bundle;
 
   * **Robin Chalas** (`chalasr`_) can merge into the Console_ and Security_
-    components and the SecurityBundle_ bundle.
+    components and the SecurityBundle_ bundle;
 
   * **Maxime Steinhausser** (`ogizanagi`_) can merge into Config_, Console_,
-    Form_, Serializer_, DependencyInjection_, and HttpKernel_ components.
+    Form_, Serializer_, DependencyInjection_, and HttpKernel_ components;
+
+  * **Charles Sarrazin** (`csarrazi`_) can merge into the LDAP_ component.
 
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
-  * **Lukas Kahwe Smith** (`lsmith77`_);
+  * **Lukas Kahwe Smith** (`lsmith77`_).
 
 Former Core Members
 ~~~~~~~~~~~~~~~~~~~
@@ -94,7 +97,7 @@ Former Core Members
 They are no longer part of the Core Team, but we are very grateful for all their
 Symfony contributions:
 
-  * **Bernhard Schussek** (`webmozart`_).
+  * **Bernhard Schussek** (`webmozart`_);
   * **Abdellatif AitBoudad** (`aitboudad`_).
 
 Core Membership Application
@@ -187,6 +190,7 @@ discretion of the **Project Leader**.
 .. _HttpKernel: https://github.com/symfony/http-kernel
 .. _Icu: https://github.com/symfony/icu
 .. _Intl: https://github.com/symfony/intl
+.. _LDAP: https://github.com/symfony/ldap
 .. _Locale: https://github.com/symfony/locale
 .. _MonologBridge: https://github.com/symfony/monolog-bridge
 .. _OptionsResolver: https://github.com/symfony/options-resolver
