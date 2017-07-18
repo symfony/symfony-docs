@@ -26,7 +26,8 @@ syntax:
 
     .. code-block:: php-annotations
 
-        # src/AppBundle/Controller/HelloController.php
+        // src/AppBundle/Controller/HelloController.php
+        // ...
         
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
