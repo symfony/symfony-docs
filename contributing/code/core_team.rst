@@ -60,14 +60,14 @@ Active Core Members
     Process_ component;
 
   * **Nicolas Grekas** (`nicolas-grekas`_) can merge into the Cache_, Debug_,
-    Process_, PropertyAccess_, VarDumper_ components, PhpUnitBridge_ and
+    Process_, PropertyAccess_, VarDumper_ components, the PhpUnitBridge_ and
     the DebugBundle_;
 
   * **Christophe Coevoet** (`stof`_) can merge into all components, bridges and
     bundles;
 
-  * **Kévin Dunglas** (`dunglas`_) can merge into the PropertyInfo_,
-    Serializer_ component;
+  * **Kévin Dunglas** (`dunglas`_) can merge into the PropertyInfo_ and
+    Serializer_ components;
 
   * **Abdellatif AitBoudad** (`aitboudad`_) can merge into the Translation_
     component;
@@ -76,16 +76,23 @@ Active Core Members
 
   * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component;
 
-  * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_
-    bundle.
+  * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_;
 
-  * **Grégoire Pineau** (`lyrixx`_) can merge into the Workflow_ component.
+  * **Grégoire Pineau** (`lyrixx`_) can merge into the Workflow_ component;
+
+  * **Ryan Weaver** (`weaverryan`_) can merge into Security_ component and
+    the SecurityBundle_;
+
+  * **Robin Chalas** (`chalasr`_) can merge into the Console_ and Security_
+    components and the SecurityBundle_;
+
+  * **Maxime Steinhausser** (`ogizanagi`_) can merge into the Config_, Console_,
+    DependencyInjection_, Form_, HttpKernel_ and Serializer_ components.
 
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
-  * **Lukas Kahwe Smith** (`lsmith77`_);
-  * **Ryan Weaver** (`weaverryan`_).
+  * **Lukas Kahwe Smith** (`lsmith77`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -209,3 +216,5 @@ discretion of the **Project Leader**.
 .. _`xabbuh`: https://github.com/xabbuh/
 .. _`javiereguiluz`: https://github.com/javiereguiluz/
 .. _`lyrixx`: https://github.com/lyrixx/
+.. _`chalasr`: https://github.com/chalasr/
+.. _`ogizanagi`: https://github.com/ogizanagi/
