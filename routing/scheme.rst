@@ -57,7 +57,7 @@ will automatically generate an absolute URL with HTTPS as the scheme:
     {# generates /secure #}
 
     {# If the current scheme is HTTP #}
-    {{ path('secure') }}
+    {{ url('secure') }}
     {# generates https://example.com/secure #}
 
 The requirement is also enforced for incoming requests. If you try to access
