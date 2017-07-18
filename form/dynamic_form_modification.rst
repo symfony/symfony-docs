@@ -446,9 +446,10 @@ sport like this::
                     $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                     $form->add('position', EntityType::class, array(
-                        'class'       => 'AppBundle:Position',
+                        'class' => 'AppBundle:Position',
                         'placeholder' => '',
-                        'choices'     => $positions,
+                        'choices' => $positions,
+                        'choices_as_values' => true,
                     ));
                 }
             );
@@ -502,9 +503,10 @@ The type would now look like::
                 $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                 $form->add('position', EntityType::class, array(
-                    'class'       => 'AppBundle:Position',
+                    'class' => 'AppBundle:Position',
                     'placeholder' => '',
-                    'choices'     => $positions,
+                    'choices' => $positions,
+                    'choices_as_values' => true,
                 ));
             };
 
