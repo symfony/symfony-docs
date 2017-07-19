@@ -238,6 +238,10 @@ order:
     * ``workflow.[workflow name].announce``
     * ``workflow.[workflow name].announce.[transition name]``
 
+.. note::
+
+    The leaving and entering events are triggered even for transitions that stay in same place.
+
 Here is an example how to enable logging for every time a the "blog_publishing" workflow leaves a place::
 
     use Psr\Log\LoggerInterface;
