@@ -81,9 +81,7 @@ Active Core Members
     components and the SecurityBundle_;
 
   * **Maxime Steinhausser** (`ogizanagi`_) can merge into Config_, Console_,
-    Form_, Serializer_, DependencyInjection_, and HttpKernel_ components;
-
-  * **Charles Sarrazin** (`csarrazi`_) can merge into the LDAP_ component.
+    Form_, Serializer_, DependencyInjection_, and HttpKernel_ components.
 
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
