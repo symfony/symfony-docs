@@ -31,4 +31,4 @@ command and fix the reported issues:
 .. code-block:: terminal
 
     $ cd my-project/
-    $ php app/check.php
+    $ php bin/symfony_requirements
