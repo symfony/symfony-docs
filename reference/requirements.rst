@@ -6,7 +6,7 @@
 Requirements for Running Symfony
 ================================
 
-Symfony 3.2 requires **PHP 5.5.9** or higher to run, in addition to other minor
+Symfony 3.3 requires **PHP 5.5.9** or higher to run, in addition to other minor
 requirements. To make things simple, Symfony provides a tool to quickly check if
 your system meets all those requirements.
 
