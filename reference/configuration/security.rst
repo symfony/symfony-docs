@@ -348,7 +348,9 @@ use_referer
 **type**: ``boolean`` **default**: ``false``
 
 If ``true``, the user is redirected to the value stored in the ``HTTP_REFERER``
-header when no previous URL was stored in the session.
+header when no previous URL was stored in the session. If the referrer URL is
+the same as the one generated with the ``login_path`` route, the user is
+redirected to the ``default_target_path`` to avoid a redirection loop.
 
 .. _reference-security-pbkdf2:
 
