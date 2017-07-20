@@ -11,12 +11,13 @@ The Translation Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
-
-* :doc:`Install it via Composer </components/using_components>` (``symfony/translation`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/translation).
+```terminal
+composer require symfony/translation
+```
 
 .. include:: /components/require_autoload.rst.inc
+
+Alternatively, you can clone the official component repository at https://github.com/symfony/translation
 
 Constructing the Translator
 ---------------------------
@@ -215,14 +216,16 @@ Read how to use the Translation component in :doc:`/components/translation/usage
 Learn More
 ----------
 
-.. toctree::
-    :maxdepth: 1
-    :glob:
+* :doc:`Translating Symfony Applications </translation>`
+* :doc:`How to Find Missing or Unused Translation Messages </translation/debug>`
+* :doc:`Managing the User's Locale </translation/locale>`
 
-    /components/translation/*
-    /translation
-    /translation/*
-    /validation/translations
+Advanced Tutorials
+~~~~~~~~~~~~~~~~~~
+
+* :doc:`Translating Messages with Variables and Pluralizing Messages </components/translation/usage>`
+* :doc:`How to Translate Validation Constraint Messages </validation/translations>`
+* :doc:`Defining Custom Translation Formats </components/translation/custom_formats>`
 
 .. _Packagist: https://packagist.org/packages/symfony/translation
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
