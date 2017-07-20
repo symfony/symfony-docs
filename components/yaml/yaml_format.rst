@@ -300,4 +300,25 @@ Comments can be added in YAML by prefixing them with a hash mark (``#``):
     Comments are simply ignored by the YAML parser and do not need to be
     indented according to the current level of nesting in a collection.
 
+Explicity Typing
+----------------
+
+The YAML specification defines some tags to set the type of any data explicitly:
+
+.. code-block:: yaml
+
+    data:
+        # this value is parsed as a string (it's not transformed into a DateTime)
+        start_date: !str 2002-12-14
+
+        # this value is parsed as a float number (it will be 3.0 instead of 3)
+        price: !!float 3
+
+        # this value is parsed as binary data encoded in base64
+        picture: !!binary |
+            R0lGODlhDAAMAIQAAP//9/X
+            17unp5WZmZgAAAOfn515eXv
+            Pz7Y6OjuDg4J+fn5OTk6enp
+            56enmleECcgggoBADs=
+
 .. _YAML: http://yaml.org/
