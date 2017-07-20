@@ -149,6 +149,19 @@ the ``create-project`` command:
 
     $ composer create-project symfony/framework-standard-edition my_project_name "2.8.*"
 
+If your system has more than one version of PHP installed and you're going to use that
+for the Symfony install you can specify that before composer in the command:
+
+.. code-block:: terminal
+
+    $ {path to php}/php {path to composer}/composer create-project symfony/framework-standard-edition my_project_name
+
+Here's an example for a system running Plesk
+
+.. code-block:: terminal
+
+    $ /opt/plesk/php/7.0/bin/php /usr/local/bin/composer create-project symfony/framework-standard-edition my_project_name
+
 .. tip::
 
     If your Internet connection is slow, you may think that Composer is not
