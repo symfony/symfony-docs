@@ -300,8 +300,8 @@ Comments can be added in YAML by prefixing them with a hash mark (``#``):
     Comments are simply ignored by the YAML parser and do not need to be
     indented according to the current level of nesting in a collection.
 
-Explicity Typing
-----------------
+Explicit Typing
+---------------
 
 The YAML specification defines some tags to set the type of any data explicitly:
 
