@@ -99,6 +99,7 @@ picker:
 
     <script>
         $(document).ready(function() {
+            // configure the bootstrap datepicker
             $('.js-datepicker').datepicker({
                 format: 'yyyy-mm-dd'
             });
