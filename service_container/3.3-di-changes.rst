@@ -78,7 +78,7 @@ Symfony Standard Edition:
 
                 <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
 
-                <prototype namespace="AppBundle\Controller" resource="../../src/AppBundle/Controller" public="true">
+                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
                     <tag name="controller.service_arguments" />
                 </prototype>
             </services>
@@ -338,7 +338,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
             <services>
                 <!-- ... -->
 
-                <prototype namespace="AppBundle\Controller" resource="../../src/AppBundle/Controller" public="true">
+                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
                     <tag name="controller.service_arguments" />
                 </prototype>
             </services>
