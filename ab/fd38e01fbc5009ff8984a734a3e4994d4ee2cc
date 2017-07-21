@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by Koc at 2017-04-15T15:30:25Z
+
+fixes #5354
+
+---------------------------------------------------------------------------
+
+by Koc at 2017-04-15T15:31:13Z
+
+@wouterj can you also add example of validation lists (`All` constraint)? http://knplabs.com/en/blog/symfony-validators-standalone  - starting from "Also, if you have an array of all of the same type – like an array of email addresses – you should check out the..."
