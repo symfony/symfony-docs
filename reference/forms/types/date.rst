@@ -101,7 +101,8 @@ make the following changes::
         'attr' => ['class' => 'js-datepicker'],
     ));
 
-Assuming you're using jQuery, you can initialize the date picker via:
+Then, add the following JavaScript code in your template to initialize the date
+picker:
 
 .. code-block:: html
 
