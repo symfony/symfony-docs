@@ -77,6 +77,8 @@ option on the form.
 
 .. include:: /reference/forms/types/options/data_class.rst.inc
 
+.. _reference-form-option-empty-data:
+
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER
 
