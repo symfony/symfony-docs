@@ -31,6 +31,30 @@ you may have multiple repository classes which need the
         // ...
     }
 
+Your child service classes may look like::
+
+    // src/AppBundle/Repository/DoctrineUserRepository.php
+    namespace AppBundle\Repository;
+    
+    use AppBundle\Repository\BaseDoctrineRepository
+
+    // ...
+    class DoctrineUserRepository extends BaseDoctrineRepository
+    {
+        // ...
+    }
+    
+    // src/AppBundle/Repository/DoctrinePostRepository.php
+    namespace AppBundle\Repository;
+    
+    use AppBundle\Repository\BaseDoctrineRepository
+
+    // ...
+    class DoctrinePostRepository extends BaseDoctrineRepository
+    {
+        // ...
+    }
+
 Just as you use PHP inheritance to avoid duplication in your PHP code, the
 service container allows you to extend parent services in order to avoid
 duplicated service definitions:
