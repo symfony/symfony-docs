@@ -21,7 +21,7 @@ confirmed, the core-team works on a solution following these steps:
 
 #. Send an acknowledgement to the reporter;
 #. Work on a patch;
-#. Get a CVE identifier from mitre.org;
+#. Get a CVE identifier from `mitre.org`_;
 #. Write a security announcement for the official Symfony `blog`_ about the
    vulnerability. This post should contain the following information:
 
@@ -103,6 +103,7 @@ Security Advisories
 This section indexes security vulnerabilities that were fixed in Symfony
 releases, starting from Symfony 1.0.0:
 
+* Jul 17, 2017, `CVE-2017-11365: Empty passwords validation issue <https://symfony.com/blog/cve-2017-11365-empty-passwords-validation-issue>`_ (2.7.30, 2.7.31, 2.8.23, 2.8.24, 3.2.10, 3.2.11, 3.3.3, and 3.3.4)
 * May 9, 2016: `CVE-2016-2403: Unauthorized access on a misconfigured Ldap server when using an empty password <https://symfony.com/blog/cve-2016-2403-unauthorized-access-on-a-misconfigured-ldap-server-when-using-an-empty-password>`_ (2.8.0-2.8.5, 3.0.0-3.0.5)
 * May 9, 2016: `CVE-2016-4423: Large username storage in session <https://symfony.com/blog/cve-2016-4423-large-username-storage-in-session>`_ (2.3.0-2.3.40, 2.7.0-2.7.12, 2.8.0-2.8.5, 3.0.0-3.0.5)
 * January 18, 2016: `CVE-2016-1902: SecureRandom's fallback not secure when OpenSSL fails <https://symfony.com/blog/cve-2016-1902-securerandom-s-fallback-not-secure-when-openssl-fails>`_ (2.3.0-2.3.36, 2.6.0-2.6.12, 2.7.0-2.7.8)
@@ -142,3 +143,4 @@ releases, starting from Symfony 1.0.0:
 .. _blog: https://symfony.com/blog/
 .. _Security Advisories: https://symfony.com/blog/category/security-advisories
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
+.. _`mitre.org`: https://cveform.mitre.org/
