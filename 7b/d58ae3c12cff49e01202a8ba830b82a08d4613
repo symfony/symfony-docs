@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-07-06T09:44:42Z
+
+@iltar you know a lot about this controller/argument resolver thing. Could you please check if this proposal is correct? Thanks!
+
+---------------------------------------------------------------------------
+
+by iltar at 2017-07-06T09:47:44Z
+
+@GNi33 which tutorial are you referring to? This page seems to be up-to-date for the latest version (not the master at 4.0.0): https://symfony.com/doc/current/create_framework/http_kernel_controller_resolver.html
+
+---------------------------------------------------------------------------
+
+by GNi33 at 2017-07-06T10:05:05Z
+
+@iltar I'm referring to the page about the [Event Dispatcher](https://symfony.com/doc/current/create_framework/event_dispatcher.html) in the Create Framework tutorial:
+
+The pull request changes the code block after the "The last step is the creation..." paragraph, where `Simplex\Framework` is instantiated. There is only one `$resolver` parameter being passed.
+
+On the [Seperation of concerns](https://symfony.com/doc/current/create_framework/separation_of_concerns.html) page, the instantiation is correct (second code block), as well as on the unit testing page.
+
+This is still present in 3.3, as well as in 3.4
+
+---------------------------------------------------------------------------
+
+by iltar at 2017-07-06T10:10:18Z
+
+Looks like the fix is to rename this to `$controllerResolver` and add an `$argumentResolver` after that. Note: the variables are not initialized in this particular example
+
+---------------------------------------------------------------------------
+
+by GNi33 at 2017-07-06T10:18:45Z
+
+Yes, you are absolutely right, I missed that. Added it to the pull request.
+
+The matcher isn't being initialized as well here. Are these being left out deliberately in this example?
