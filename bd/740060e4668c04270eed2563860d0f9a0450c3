@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2017-07-19T13:43:40Z
+
+Please, could you take account this comment https://github.com/symfony/symfony/issues/17529#issuecomment-316390347 in this PR? thanks.
+
+---------------------------------------------------------------------------
+
+by yceruto at 2017-07-19T13:58:52Z
+
+See @dmaicher's [comment](https://github.com/symfony/symfony/issues/17529#issuecomment-204534951) which also explains the only use case of this option:
+> So it only works for use cases where the form POST comes from a different page than /login
+> Maybe its meant to be used if you have the login form embedded in the header of your page or something. So once you logged in you get redirected back to the page where the POST came from.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-07-20T06:38:58Z
+
+@yceruto thanks for letting me know this. I've updated the article. Cheers!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-07-21T15:21:59Z
+
+@xabbuh thank you for the time you dedicated to review this. As usual, a great review! Thanks.
