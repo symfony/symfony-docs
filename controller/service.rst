@@ -23,17 +23,19 @@ These are the main **advantages** of defining controllers as services:
   service container configuration. This is useful when developing reusable bundles;
 * Your controllers are more "sandboxed". By looking at the constructor arguments,
   it's easy to see what types of things this controller may or may not do;
+* If you're not passing some required dependencies or if you are injecting some
+  non-existent services, you'll get errors during the container compilation
+  instead of during runtime execution;
 * Since dependencies must be injected manually, it's more obvious when your
   controller is becoming too big (i.e. if you have many constructor arguments).
 
 These are the main **drawbacks** of defining controllers as services:
 
-* It takes more work to create the controllers because they don't have
-  automatic access to the services or to the base controller shortcuts;
+* It takes more work to create the controllers and they become more verbose
+  because they don't have automatic access to the services and the base
+  controller shortcuts;
 * The constructor of the controllers can rapidly become too complex because you
-  must inject every single dependency needed by them;
-* The code of the controllers is more verbose because you can't use the shortcuts
-  of the base controller and you must replace them with some lines of code.
+  must inject every single dependency needed by them.
 
 The recommendation from the :doc:`best practices </best_practices/controllers>`
 is also valid for controllers defined as services: avoid putting your business
