@@ -280,10 +280,10 @@ the empty values will be kept.
 .. caution::
 
     The ``delete_empty`` option only removes items when the normalized value is
-    ``null``. If the nested `type`_ is a compound form type, you must either set
-    the ``required`` option to ``false`` or set the ``empty_data`` option to 
-    ``null``. Both of these options can be set inside `entry_options`_. Read
-    about the :ref:`form's empty_data option <reference-form-option-empty-data>`
+    ``null``. If the nested `entry_type`_ is a compound form type, you must
+    either set the ``required`` option to ``false`` or set the ``empty_data``
+    option to ``null``. Both of these options can be set inside `entry_options`_.
+    Read about the :ref:`form's empty_data option <reference-form-option-empty-data>`
     to learn why this is necessary.
 
 entry_options
