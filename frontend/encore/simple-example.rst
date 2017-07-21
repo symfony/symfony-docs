@@ -4,10 +4,10 @@ First Example
 Imagine you have a simple project with one CSS and one JS file, organized into
 an ``assets/`` directory:
 
-* ``assets/js/main.js``
-* ``assets/css/global.scss``
+* ``assets/js/app.js``
+* ``assets/css/app.scss``
 
-With Encore, we can easily minify these files, pre-process ``global.scss``
+With Encore, we can easily minify these files, pre-process ``app.scss``
 through Sass and a *lot* more.
 
 Configuring Encore/Webpack
@@ -22,20 +22,20 @@ Inside, use Encore to help generate your Webpack configuration.
     var Encore = require('@symfony/webpack-encore');
 
     Encore
-        // directory where all compiled assets will be stored
+        // the project directory where all compiled assets will be stored
         .setOutputPath('web/build/')
 
-        // what's the public path to this directory (relative to your project's document root dir)
+        // the public path used by the web server to access the previous directory
         .setPublicPath('/build')
 
         // empty the outputPath dir before each build
         .cleanupOutputBeforeBuild()
 
-        // will output as web/build/app.js
-        .addEntry('app', './assets/js/main.js')
+        // will output as web/build/js/app.js
+        .addEntry('js/app', './assets/js/app.js')
 
-        // will output as web/build/global.css
-        .addStyleEntry('global', './assets/css/global.scss')
+        // will output as web/build/css/app.css
+        .addStyleEntry('css/app', './assets/css/app.scss')
 
         // allow sass/scss files to be processed
         .enableSassLoader()
@@ -78,7 +78,7 @@ Actually, to use ``enableSassLoader()``, you'll need to install a few
 more packages. But Encore will tell you *exactly* what you need.
 
 After running one of these commands, you can now add ``script`` and ``link`` tags
-to the new, compiled assets (e.g. ``/build/global.css`` and ``/build/app.js``).
+to the new, compiled assets (e.g. ``/build/css/app.css`` and ``/build/js/app.js``).
 In Symfony, use the ``asset()`` helper:
 
 .. code-block:: twig
@@ -88,11 +88,11 @@ In Symfony, use the ``asset()`` helper:
     <html>
         <head>
             <!-- ... -->
-            <link rel="stylesheet" href="{{ asset('build/global.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
         </head>
         <body>
             <!-- ... -->
-            <script src="{{ asset('build/app.js') }}"></script>
+            <script src="{{ asset('build/js/app.js') }}"></script>
         </body>
     </html>
 
@@ -139,29 +139,51 @@ may want also to :doc:`create a shared entry </frontend/encore/shared-entry>` fo
 Requiring CSS Files from JavaScript
 -----------------------------------
 
-Above, you created an entry called ``app`` that pointed to ``main.js``:
+Above, you created an entry called ``js/app`` that pointed to ``app.js``:
 
 .. code-block:: javascript
 
     Encore
         // ...
-        .addEntry('app', './assets/js/main.js')
+        .addEntry('js/app', './assets/js/app.js')
     ;
 
-Once inside ``main.js``, you can even require CSS files:
+Once inside ``app.js``, you can even require CSS files:
 
 .. code-block:: javascript
 
-    // assets/js/main.js
+    // assets/js/app.js
     // ...
 
     // a CSS file with the same name as the entry js will be output
-    require('../css/main.scss');
+    require('../css/app.scss');
 
-Now, both an ``app.js`` **and** an ``app.css`` file will be created. You'll need
-to add a link tag to the ``app.css`` file in your templates:
+Now, both an ``app.js`` **and** an ``app.css`` file will be created in the
+``build/js/`` dir. You'll need to add a link tag to the ``app.css`` file in your
+templates:
 
 .. code-block:: diff
 
-    <link rel="stylesheet" href="{{ asset('build/global.css') }}">
-    + <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+    + <link rel="stylesheet" href="{{ asset('build/js/app.css') }}">
+
+This article follows the traditional setup where you have just one main CSS file
+and one main JavaScript file. In lots of modern JavaScript applications, it's
+common to have one "entry" for each important section (homepage, blog, store, etc.)
+
+In those application, it's better to just add JavaScript entries in the Webpack
+configuration file and import the CSS files from the JavaScript entries, as
+shown above:
+
+.. code-block:: javascript
+
+    Encore
+        // ...
+        .addEntry('homepage', './assets/js/homepage.js')
+        .addEntry('blog', './assets/js/blog.js')
+        .addEntry('store', './assets/js/store.js')
+    ;
+
+If those entries include CSS/Sass files (e.g. ``homepage.js`` requires
+``assets/css/homepage.scss``), two files will be generated for each of them
+(e.g. ``build/homepage.js`` and ``build/homepage.css``).
