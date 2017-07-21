@@ -35,7 +35,7 @@ Your child service classes may look like this::
 
     // src/AppBundle/Repository/DoctrineUserRepository.php
     namespace AppBundle\Repository;
-    
+
     use AppBundle\Repository\BaseDoctrineRepository
 
     // ...
@@ -43,10 +43,10 @@ Your child service classes may look like this::
     {
         // ...
     }
-    
+
     // src/AppBundle/Repository/DoctrinePostRepository.php
     namespace AppBundle\Repository;
-    
+
     use AppBundle\Repository\BaseDoctrineRepository
 
     // ...
