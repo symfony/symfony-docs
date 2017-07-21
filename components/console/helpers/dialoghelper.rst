@@ -142,10 +142,14 @@ in the console, so it is a good practice to put some useful information in it. T
 function should also return the value of the user's input if the validation was successful.
 
 You can set the max number of times to ask in the ``$attempts`` argument.
-If you reach this max number it will use the default value.
 Using ``false`` means the amount of attempts is infinite.
 The user will be asked as long as they provide an invalid answer and will only
 be able to proceed if their input is valid.
+
+Each time the user is asked the question, if no answer is supplied, the default
+one is used (and validated with the ``$validator`` callback) and the remaining
+number of attempts is displayed. If the last attempt is reached, the application
+throws an exception and ends its execution.
 
 Validating a Hidden Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
