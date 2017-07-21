@@ -153,7 +153,7 @@ exist::
     // returns 'baz'
 
 When PHP imports the request query, it handles request parameters like
-``foo[bar]=bar`` in a special way as it creates an array. So you can get the
+``foo[bar]=baz`` in a special way as it creates an array. So you can get the
 ``foo`` parameter and you will get back an array with a ``bar`` element::
 
     // the query string is '?foo[bar]=baz'
