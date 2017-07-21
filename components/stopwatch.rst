@@ -50,7 +50,7 @@ while it is still running.
         $stopwatch = new Stopwatch(true);
 
     .. versionadded:: 3.4
-        The full precision feature was introduced in Symfony 3.4.
+        Full precision support was introduced in Symfony 3.4.
 
 You can also provide a category name to an event::
 
