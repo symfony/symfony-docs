@@ -171,7 +171,7 @@ This article follows the traditional setup where you have just one main CSS file
 and one main JavaScript file. In lots of modern JavaScript applications, it's
 common to have one "entry" for each important section (homepage, blog, store, etc.)
 
-In those application, it's better to just add JavaScript entries in the Webpack
+In those applications, it's better to just add JavaScript entries in the Webpack
 configuration file and import the CSS files from the JavaScript entries, as
 shown above:
 
