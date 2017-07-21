@@ -158,6 +158,7 @@ things are even easier because the ``data-prototype`` attribute is rendered
 automatically for you (with a slight difference - see note below) and all
 you need is the JavaScript:
 
+
 .. configuration-block::
 
     .. code-block:: html+twig
@@ -167,7 +168,8 @@ you need is the JavaScript:
 
             {# store the prototype on the data-prototype attribute #}
             <ul id="email-fields-list"
-                data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
+                data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}"
+                data-widget-tags="{{ '<li></li>'|e }}">
             {% for emailField in form.emails %}
                 <li>
                     {{ form_errors(emailField) }}
@@ -176,35 +178,43 @@ you need is the JavaScript:
             {% endfor %}
             </ul>
 
-            <a href="#" id="add-another-email">Add another email</a>
+            <a href="#" 
+                class="add-another-collection-widget"
+                data-list="#email-field-list>Add another email</a>
 
             {# ... #}
         {{ form_end(form) }}
 
-        <script type="text/javascript">
-            // keep track of how many email fields have been rendered
-            var emailCount = '{{ form.emails|length }}';
+        <script src="add-collection-widget.js"></script>
 
-            jQuery(document).ready(function() {
-                jQuery('#add-another-email').click(function(e) {
-                    e.preventDefault();
+    .. code-block:: javascript
 
-                    var emailList = jQuery('#email-fields-list');
+        // add-collection-widget.js
+        jQuery(document).ready(function () {
+            jQuery('.add-another-collection-widget').click(function (e) {
+                e.preventDefault();
+                var list = jQuery(jQuery(this).attr('data-list'));
+                // Try to find the counter of the list
+                var counter = list.data('widget-counter');
+                // If the counter does not exist, use the length of the list
+                if (!counter) { counter = list.children().length; }
 
-                    // grab the prototype template
-                    var newWidget = emailList.attr('data-prototype');
-                    // replace the "__name__" used in the id and name of the prototype
-                    // with a number that's unique to your emails
-                    // end name attribute looks like name="contact[emails][2]"
-                    newWidget = newWidget.replace(/__name__/g, emailCount);
-                    emailCount++;
+                // grab the prototype template
+                var newWidget = list.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/__name__/g, counter);
+                // Increase the counter
+                counter++;
+                // And store it, the length cannot be used if deleting widgets is allowed
+                list.data(' widget-counter', counter);
 
-                    // create a new list element and add it to the list
-                    var newLi = jQuery('<li></li>').html(newWidget);
-                    newLi.appendTo(emailList);
-                });
-            })
-        </script>
+                // create a new list element and add it to the list
+                var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+                newElem.appendTo(list);
+            });
+        });
 
 .. tip::
 
