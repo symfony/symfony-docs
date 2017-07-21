@@ -31,7 +31,7 @@ you may have multiple repository classes which need the
         // ...
     }
 
-Your child service classes may look like::
+Your child service classes may look like this::
 
     // src/AppBundle/Repository/DoctrineUserRepository.php
     namespace AppBundle\Repository;
