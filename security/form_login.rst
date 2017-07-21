@@ -179,10 +179,10 @@ Defining the redirect URL via POST using a hidden form field:
     .. code-block:: html+php
 
         <!-- app/Resources/views/security/login.html.php -->
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             // ...
 
-            <input type="hidden" name="_target_path" value="<?php echo $view['router']->generate('account') ?>" />
+            <input type="hidden" name="_target_path" value="<?php echo $view['router']->path('account') ?>" />
             <input type="submit" name="login" />
         </form>
 
@@ -336,7 +336,7 @@ This option can also be set via the ``_failure_path`` request parameter:
         <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <!-- ... -->
 
-            <input type="hidden" name="_failure_path" value="<?php echo $view['router']->generate('forgot_password') ?>" />
+            <input type="hidden" name="_failure_path" value="<?php echo $view['router']->path('forgot_password') ?>" />
             <input type="submit" name="login" />
         </form>
 
@@ -423,10 +423,10 @@ are now fully customized:
     .. code-block:: html+php
 
         <!-- app/Resources/views/security/login.html.php -->
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <!-- ... -->
 
-            <input type="hidden" name="go_to" value="<?php echo $view['router']->generate('dashboard') ?>" />
-            <input type="hidden" name="back_to" value="<?php echo $view['router']->generate('forgot_password') ?>" />
+            <input type="hidden" name="go_to" value="<?php echo $view['router']->path('dashboard') ?>" />
+            <input type="hidden" name="back_to" value="<?php echo $view['router']->path('forgot_password') ?>" />
             <input type="submit" name="login" />
         </form>
