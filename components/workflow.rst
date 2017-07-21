@@ -44,8 +44,8 @@ these statuses are called **places**. You can define the workflow like this::
     use Symfony\Component\Workflow\Workflow;
     use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
 
-    $definition = new DefinitionBuilder();
-    $definition->addPlaces(['draft', 'review', 'rejected', 'published'])
+    $definitionBuilder = new DefinitionBuilder();
+    $definition = $definitionBuilder->addPlaces(['draft', 'review', 'rejected', 'published'])
         // Transitions are defined with a unique name, an origin place and a destination place
         ->addTransition(new Transition('to_review', 'draft', 'review'))
         ->addTransition(new Transition('publish', 'review', 'published'))
