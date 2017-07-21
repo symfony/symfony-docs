@@ -132,9 +132,9 @@ following directory structure, which is the same used by default in Symfony 4:
     ├── Makefile
     ├── config/
     │   ├── bundles.php
-    │   ├── container.yaml
     │   ├── packages/
-    │   └── routing.yaml
+    │   ├── routes.yaml
+    │   └── services.yaml
     ├── public/
     │   └── index.php
     ├── src/
@@ -158,7 +158,7 @@ these manual steps:
    file of your original project. Beware that this is the most time-consuming
    and error-prone step of the upgrade process.
 #. Move the original parameters defined in ``app/config/parameters.*.yml`` to the
-   new ``config/container.yaml`` and ``.env`` files depending on your needs.
+   new ``config/services.yaml`` and ``.env`` files depending on your needs.
 #. Move the original source code from ``src/{App,...}Bundle/`` to ``src/`` and
    update the namespaces of every PHP file (advanced IDEs can do this automatically).
 #. Move the original templates from ``app/Resources/views/`` to ``templates/``
