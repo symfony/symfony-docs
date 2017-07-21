@@ -148,21 +148,21 @@ is not enough. You must also upgrade the directory structure to the one showed
 above. Sadly, there's no automatic tool to make this upgrade, so you must follow
 these manual steps:
 
-1. Create a new empty Symfony application (``composer create-project symfony/skeleton my-project-flex``)
-2. Copy the ``require`` and ``require-dev`` dependencies defined in your original
+#. Create a new empty Symfony application (``composer create-project symfony/skeleton my-project-flex``)
+#. Copy the ``require`` and ``require-dev`` dependencies defined in your original
    project's ``composer.json`` file to the ``composer.json`` file of the new project.
-3. Install the dependencies in the new project executing ``composer install``. This
+#. Install the dependencies in the new project executing ``composer install``. This
    will make Symfony Flex generate all the configuration files in ``config/packages/``
-4. Review the generated ``config/packages/*.yaml`` files and make any needed
+#. Review the generated ``config/packages/*.yaml`` files and make any needed
    changes according to the configuration defined in the ``app/config/config_*.yml``
    file of your original project. Beware that this is the most time-consuming
    and error-prone step of the upgrade process.
-5. Move the original parameters defined in ``app/config/parameters.*.yml`` to the
+#. Move the original parameters defined in ``app/config/parameters.*.yml`` to the
    new ``config/container.yaml`` and ``.env`` files depending on your needs.
-6. Move the original source code from ``src/{App,...}Bundle/`` to ``src/`` and
+#. Move the original source code from ``src/{App,...}Bundle/`` to ``src/`` and
    update the namespaces of every PHP file (advanced IDEs can do this automatically).
-7. Move the original templates from ``app/Resources/views/`` to ``templates/``
-8. Make any other change needed by your application. For example, if your original
+#. Move the original templates from ``app/Resources/views/`` to ``templates/``
+#. Make any other change needed by your application. For example, if your original
    ``web/app_*.php`` front controllers were customized, add those changes to the
    new ``public/index.php`` controller.
 
