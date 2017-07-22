@@ -185,10 +185,10 @@ adding a ``setDefined()`` method. The recommended check in this case would be::
 
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
-    if (!method_exists(OptionsResolver::class, 'setDefined')) {
-        // code for the old OptionsResolver API
-    } else {
+    if (method_exists(OptionsResolver::class, 'setDefined')) {
         // code for the new OptionsResolver API
+    } else {
+        // code for the old OptionsResolver API
     }
 
 .. tip::
