@@ -239,6 +239,16 @@ order:
     * ``workflow.entered``
     * ``workflow.[workflow name].entered``
     * ``workflow.[workflow name].entered.[place name]``
+    
+``workflow.completed``
+    The object has completed this transition.
+    
+    The three events being dispatched are:
+
+    * ``workflow.transition``
+    * ``workflow.[workflow name].completed``
+    * ``workflow.[workflow name].completed.[transition name]``
+
 
 ``workflow.announce``
     Triggered for each place that now is available for the object.
