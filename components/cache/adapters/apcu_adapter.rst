@@ -7,19 +7,17 @@
 APCu Cache Adapter
 ==================
 
-This adapter is a high-performance, shared memory cache. It can increase the
-application performance very significantly because the cache contents are
-stored in the shared memory of your server, a component that is much faster than
-others, such as the filesystem.
+This adapter is a high-performance, shared memory cache. It can *significantly* increase
+an application's performance, as its cache contents are stored in shared memory, a component
+appreciably faster than many others, such as the filesystem.
 
 .. caution::
 
     **Requirement:** The `APCu extension`_ must be installed and active to use
     this adapter.
 
-This adapter can be provided an optional namespace string as its first parameter, a
-default cache lifetime as its second parameter, and a version string as its third
-parameter::
+The ApcuAdapter can optionally be provided a namespace, default cache lifetime, and cache
+items version string as constructor arguments::
 
     use Symfony\Component\Cache\Adapter\ApcuAdapter;
 
@@ -40,15 +38,13 @@ parameter::
 
 .. caution::
 
-    It is *not* recommended to use this adapter when performing a large number of
-    write and delete operations, as these operations result in fragmentation of the
-    APCu memory, resulting in *significantly* degraded performance.
+    Use of this adapter is discouraged in write/delete heavy workloads, as these
+    operations cause memory fragmentation that results in significantly degraded performance.
 
 .. tip::
 
-    Note that this adapter's CRUD operations are specific to the PHP SAPI it is running
-    under. This means adding a cache item using the CLI will not result in the item
-    appearing under FPM. Likewise, deletion of an item using CGI will not result in the
-    item being deleted under the CLI.
+    This adapter's CRUD operations are specific to the PHP SAPI it is running under. This
+    means cache operations (such as additions, deletions, etc) using the CLI will not be
+    available under the FPM or CGI SAPIs.
 
 .. _`APCu extension`: https://pecl.php.net/package/APCu

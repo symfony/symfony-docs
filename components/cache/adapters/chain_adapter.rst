@@ -2,15 +2,18 @@
     single: Cache Pool
     single: Chain Cache
 
+.. _component-cache-chain-adapter:
+
 Chain Cache Adapter
 ===================
 
-This adapter allows to combine any number of the other available cache adapters.
-Cache items are fetched from the first adapter which contains them and cache items are
-saved in all the given adapters. This offers a simple way of creating a layered cache.
+This adapter allows combining any number of the other
+:ref:`available cache adapters <component-cache-creating-cache-pools>`. Cache items are
+fetched from the first adapter containing them and cache items are saved to all the
+given adapters. This exposes a simple and efficient method for creating a layeted cache.
 
-This adapter expects an array of adapters as its first parameter, and optionally a
-maximum cache lifetime as its second parameter::
+The ChainAdapter must be provided an array of adapters and optionally a maximum cache
+lifetime as its constructor arguments::
 
     use Symfony\Component\Cache\Adapter\ApcuAdapter;
 
@@ -26,7 +29,7 @@ maximum cache lifetime as its second parameter::
 .. note::
 
     When an item is not found in the first adapter but is found in the next ones, this
-    adapter ensures that the fetched item is saved in all the adapters where it was
+    adapter ensures that the fetched item is saved to all the adapters where it was
     previously missing.
 
 The following example shows how to create a chain adapter instance using the fastest and
@@ -41,3 +44,26 @@ slowest storage engines, :class:`Symfony\\Component\\Cache\\Adapter\\ApcuAdapter
         new ApcuAdapter(),
         new FilesystemAdapter(),
     ));
+
+When calling this adapter's :method:`Symfony\\Component\\Cache\\ChainAdapter::prune` method,
+the call is deligated to all its compatibe cache adapters. It is safe to mix both adapters
+that *do* and do *not* implement :class:`Symfony\\Component\\Cache\\PruneableInterface`, as
+incompatible adapters are silently ignored::
+
+    use Symfony\Component\Cache\Adapter\ApcuAdapter;
+    use Symfony\Component\Cache\Adapter\ChainAdapter;
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+
+    $cache = new ChainAdapter(array(
+        new ApcuAdapter(),        // does NOT implement PruneableInterface
+        new FilesystemAdapter(),  // DOES implement PruneableInterface
+    ));
+
+    // prune will proxy the call to FilesystemAdapter while silently skipping ApcuAdapter
+    $cache->prune();
+
+.. note::
+
+    Since Symfony 3.4, this adapter implements :class:`Symfony\\Component\\Cache\\PruneableInterface`,
+    allowing for manual :ref:`pruning of expired cache entries <component-cache-cache-pool-prune>` by
+    calling its ``prune()`` method.
