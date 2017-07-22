@@ -198,6 +198,56 @@ adding a ``setDefined()`` method. The recommended check in this case would be::
     to detect the version of the ``symfony/http-kernel`` component, because it
     is the component where this constant is defined.
 
+Generic conditions for component version detection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You should strive to detect the exact feature that you want to use as
+soon as it is available. That is not always possible however, so here is
+a list of generic conditions you may use for lack of a better
+alternative. These conditions detect new APIs as soon as they are
+available.
+
+2.6
+...
+
+OptionsResolver
+"""""""""""""""
+
+.. code-block:: php
+
+    method_exists(Symfony\Component\OptionsResolver\OptionsResolver, 'setDefined')
+
+2.7
+...
+
+Form
+""""
+
+.. code-block:: php
+
+    method_exists('Symfony\Component\Form\AbstractType', 'configureOptions')
+
+2.8
+...
+
+Form
+""""
+
+.. code-block:: php
+
+    method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')
+
+3.0
+...
+
+Form
+""""
+
+.. code-block:: php
+
+    method_exists('Symfony\Component\Form\FormTypeInterface', 'configureOptions')
+
+
 .. _`symfony/phpunit-bridge package`: https://github.com/symfony/phpunit-bridge
 .. _`Official Symfony Guide to Upgrade from 2.x to 3.0`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-3.0.md
 .. _`SensioLabs DeprecationDetector`: https://github.com/sensiolabs-de/deprecation-detector
