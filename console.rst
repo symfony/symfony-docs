@@ -177,7 +177,7 @@ instead::
     }
 
 Now, once you created the required services and logic, the command will execute
-the ``generate()`` method of the ``app.user_manager`` service and the user will
+the ``create()`` method of the ``app.user_manager`` service and the user will
 be created.
 
 Command Lifecycle
