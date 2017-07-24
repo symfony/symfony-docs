@@ -46,11 +46,11 @@ it in your configuration:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
             <framework:config>
                 <!-- ... -->
-		<framework:serializer enable-annotations="true" />
-		<!--
-		Alternatively, if you don't want to use annotations
-		<framework:serializer enabled="true" />
-		-->
+                <framework:serializer enable-annotations="true" />
+                <!--
+                Alternatively, if you don't want to use annotations
+                <framework:serializer enabled="true" />
+                -->
             </framework:config>
         </container>
 
