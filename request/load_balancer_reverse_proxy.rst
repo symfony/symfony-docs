@@ -87,13 +87,13 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 
    .. code-block:: diff
 
-	  // web/app.php
+        // web/app.php
 
-	  // ...
-	  $request = Request::createFromGlobals();
-	  + Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR')));
+        // ...
+        $request = Request::createFromGlobals();
+        + Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR')));
 
-	  // ...
+        // ...
 
 #. Ensure that the trusted_proxies setting in your ``app/config/config.yml``
    is not set or it will overwrite the ``setTrustedProxies()`` call above.
