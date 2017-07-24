@@ -296,6 +296,20 @@ of the guard event names.
 * ``workflow.[workflow name].guard``
 * ``workflow.[workflow name].guard.[transition name]``
 
+* ``workflow.leave``
+* ``workflow.[workflow name].leave``
+* ``workflow.[workflow name].leave.[place name]``
+
+* ``workflow.transition``
+* ``workflow.[workflow name].transition``
+* ``workflow.[workflow name].transition.[transition name]``
+
+* ``workflow.enter``
+* ``workflow.[workflow name].enter``
+* ``workflow.[workflow name].enter.[place name]``
+
+* ``workflow.[workflow name].announce.[transition name]``
+
 See example to make sure no blog post without title is moved to "review"::
 
     use Symfony\Component\Workflow\Event\GuardEvent;
