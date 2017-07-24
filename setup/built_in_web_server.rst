@@ -33,7 +33,14 @@ can change the socket passing an IP address and a port as a command-line argumen
 
 .. code-block:: terminal
 
+    # passing a specific IP and port
     $ php bin/console server:start 192.168.0.1:8080
+
+    # passing '*' as the IP means to use 0.0.0.0 (i.e. any local IP address)
+    $ php bin/console server:start *:8080
+
+.. versionadded:: 3.4
+    The support of ``*`` as a valid IP address was introduced in Symfony 3.4.
 
 .. note::
 
