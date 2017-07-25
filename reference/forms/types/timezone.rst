@@ -17,6 +17,9 @@ manually, but then you should just use the ``ChoiceType`` directly.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
+| Options     | - `input`_                                                             |
+|             | - `regions`_                                                           |
++-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
 | options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
@@ -44,6 +47,27 @@ manually, but then you should just use the ``ChoiceType`` directly.
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
 +-------------+------------------------------------------------------------------------+
+
+Fields Options
+--------------
+
+input
+~~~~~
+
+**type**: ``string`` **default**: ``string``
+
+The format of the *input* data - i.e. the format that the timezone is stored
+on your underlying object. Valid values are:
+
+* ``string`` (e.g. ``America/New_York``)
+* ``datetimezone`` (a ``DateTimeZone`` object)
+
+regions
+~~~~~~~
+
+**type**: ``int`` **default**: ``DateTimeZone::ALL``
+
+The available regions in the timezone choice list. For example: ``DateTimeZone::AMERICA | DateTimeZone::EUROPE``
 
 Overridden Options
 ------------------
