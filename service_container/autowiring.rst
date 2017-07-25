@@ -318,7 +318,8 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
             # the ``AppBundle\Util\Rot13Transformer`` service will be injected when
             # an ``AppBundle\Util\TransformerInterface`` type-hint is detected
-            AppBundle\Util\TransformerInterface: '@AppBundle\Util\Rot13Transformer'
+            AppBundle\Util\TransformerInterface:
+                alias: '@AppBundle\Util\Rot13Transformer'
 
     .. code-block:: xml
 
