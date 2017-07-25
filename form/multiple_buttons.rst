@@ -35,7 +35,7 @@ querying if the "Save and add" button was clicked::
 Or you can get the button's name by using the 
 :method:`Symfony\\Component\\Form\\Form::getClickedButton` method of the form::
     
-    if ('saveAndAdd' === $form->getClickedButton()->getName()) {
+    if ($form->getClickedButton() && 'saveAndAdd' === $form->getClickedButton()->getName()) {
         // ...
     }
     
