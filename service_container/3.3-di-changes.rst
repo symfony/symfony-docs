@@ -539,8 +539,8 @@ Start by updating the service ids to class names:
 
     Services associated with global PHP classes (i.e. not using PHP namespaces)
     must maintain the ``class`` parameter. For example, when using the old Twig
-    classes (e.g. ``Twig_Extensions_Extension_Intl`` instead of ``Twig\Extensions\IntlExtension``)
-    you can't redefine the service as `Twig_Extensions_Extension_Intl: ~` and
+    classes (e.g. ``Twig_Extensions_Extension_Intl`` instead of ``Twig\Extensions\IntlExtension``),
+    you can't redefine the service as ``Twig_Extensions_Extension_Intl: ~`` and
     you must keep the original ``class`` parameter.
 
 But, this change will break our app! The old service ids (e.g. ``app.github_notifier``)
