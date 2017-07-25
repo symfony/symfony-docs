@@ -59,23 +59,12 @@ using the ``bin`` option of the ``jpegoptim`` filter:
 
 It can now be used from a template:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% image '@AppBundle/Resources/public/images/example.jpg'
-            filter='jpegoptim' output='/images/example.jpg' %}
-            <img src="{{ asset_url }}" alt="Example"/>
-        {% endimage %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->image(
-            array('@AppBundle/Resources/public/images/example.jpg'),
-            array('jpegoptim')
-        ) as $url): ?>
-            <img src="<?php echo $view->escape($url) ?>" alt="Example"/>
-        <?php endforeach ?>
+    {% image '@AppBundle/Resources/public/images/example.jpg'
+        filter='jpegoptim' output='/images/example.jpg' %}
+        <img src="{{ asset_url }}" alt="Example"/>
+    {% endimage %}
 
 Removing all EXIF Data
 ~~~~~~~~~~~~~~~~~~~~~~

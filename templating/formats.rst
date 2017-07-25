@@ -61,22 +61,11 @@ special ``_format`` placeholder in your route definition::
 Now, include the ``_format`` placeholder when generating a route for another
 format:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <a href="{{ path('article_show', {'slug': 'about-us', '_format': 'xml'}) }}">
-            View as XML
-        </a>
-
-    .. code-block:: html+php
-
-        <a href="<?php echo $view['router']->generate('article_show', array(
-            'slug' => 'about-us',
-            '_format' => 'xml',
-        )) ?>">
-            View as XML
-        </a>
+    <a href="{{ path('article_show', {'slug': 'about-us', '_format': 'xml'}) }}">
+        View as XML
+    </a>
 
 .. seealso::
 

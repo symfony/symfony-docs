@@ -7,27 +7,15 @@ How to Control the Rendering of a Form
 So far, you've seen how an entire form can be rendered with just one line
 of code. Of course, you'll usually need much more flexibility when rendering:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# app/Resources/views/default/new.html.twig #}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-        {# app/Resources/views/default/new.html.twig #}
-        {{ form_start(form) }}
-            {{ form_errors(form) }}
-
-            {{ form_row(form.task) }}
-            {{ form_row(form.dueDate) }}
-        {{ form_end(form) }}
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/default/newAction.html.php -->
-        <?php echo $view['form']->start($form) ?>
-            <?php echo $view['form']->errors($form) ?>
-
-            <?php echo $view['form']->row($form['task']) ?>
-            <?php echo $view['form']->row($form['dueDate']) ?>
-        <?php echo $view['form']->end($form) ?>
+        {{ form_row(form.task) }}
+        {{ form_row(form.dueDate) }}
+    {{ form_end(form) }}
 
 You already know the ``form_start()`` and ``form_end()`` functions, but what do
 the other functions do?
@@ -49,17 +37,10 @@ output can be customized on many different levels.
 
     You can access the current data of your form via ``form.vars.value``:
 
-    .. configuration-block::
+.. code-block:: twig
 
-        .. code-block:: twig
+    {{ form.vars.value.task }}
 
-            {{ form.vars.value.task }}
-
-        .. code-block:: html+php
-
-            <?php echo $form->vars['value']->getTask() ?>
-
-.. index::
     single: Forms; Rendering each field by hand
 
 Rendering each Field by Hand
@@ -71,67 +52,35 @@ well). But since life isn't always so simple, you can also render each field
 entirely by hand. The end-product of the following is the same as when you
 used the ``form_row()`` helper:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-        {{ form_start(form) }}
-            {{ form_errors(form) }}
+        <div>
+            {{ form_label(form.task) }}
+            {{ form_errors(form.task) }}
+            {{ form_widget(form.task) }}
+        </div>
 
-            <div>
-                {{ form_label(form.task) }}
-                {{ form_errors(form.task) }}
-                {{ form_widget(form.task) }}
-            </div>
+        <div>
+            {{ form_label(form.dueDate) }}
+            {{ form_errors(form.dueDate) }}
+            {{ form_widget(form.dueDate) }}
+        </div>
 
-            <div>
-                {{ form_label(form.dueDate) }}
-                {{ form_errors(form.dueDate) }}
-                {{ form_widget(form.dueDate) }}
-            </div>
+        <div>
+            {{ form_widget(form.save) }}
+        </div>
 
-            <div>
-                {{ form_widget(form.save) }}
-            </div>
-
-        {{ form_end(form) }}
-
-    .. code-block:: html+php
-
-        <?php echo $view['form']->start($form) ?>
-
-            <?php echo $view['form']->errors($form) ?>
-
-            <div>
-                <?php echo $view['form']->label($form['task']) ?>
-                <?php echo $view['form']->errors($form['task']) ?>
-                <?php echo $view['form']->widget($form['task']) ?>
-            </div>
-
-            <div>
-                <?php echo $view['form']->label($form['dueDate']) ?>
-                <?php echo $view['form']->errors($form['dueDate']) ?>
-                <?php echo $view['form']->widget($form['dueDate']) ?>
-            </div>
-
-            <div>
-                <?php echo $view['form']->widget($form['save']) ?>
-            </div>
-
-        <?php echo $view['form']->end($form) ?>
+    {{ form_end(form) }}
 
 If the auto-generated label for a field isn't quite right, you can explicitly
 specify it:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {{ form_label(form.task, 'Task Description') }}
-
-    .. code-block:: html+php
-
-        <?php echo $view['form']->label($form['task'], 'Task Description') ?>
+    {{ form_label(form.task, 'Task Description') }}
 
 Some field types have additional rendering options that can be passed
 to the widget. These options are documented with each type, but one common
@@ -139,44 +88,24 @@ option is ``attr``, which allows you to modify attributes on the form element.
 The following would add the ``task_field`` class to the rendered input text
 field:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
-
-    .. code-block:: html+php
-
-        <?php echo $view['form']->widget($form['task'], array(
-            'attr' => array('class' => 'task_field'),
-        )) ?>
+    {{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
 
 If you need to render form fields "by hand" then you can access individual
 values for fields such as the ``id``, ``name`` and ``label``. For example
 to get the ``id``:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {{ form.task.vars.id }}
-
-    .. code-block:: html+php
-
-        <?php echo $form['task']->vars['id']?>
+    {{ form.task.vars.id }}
 
 To get the value used for the form field's name attribute you need to use
 the ``full_name`` value:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {{ form.task.vars.full_name }}
-
-    .. code-block:: html+php
-
-        <?php echo $form['task']->vars['full_name'] ?>
+    {{ form.task.vars.full_name }}
 
 Twig Template Function Reference
 --------------------------------

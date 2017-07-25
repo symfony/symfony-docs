@@ -87,27 +87,16 @@ Now, update the template that renders the form to display the new ``brochure``
 field (the exact template code to add depends on the method used by your application
 to :doc:`customize form rendering </form/form_customization>`):
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# app/Resources/views/product/new.html.twig #}
+    <h1>Adding a new product</h1>
 
-        {# app/Resources/views/product/new.html.twig #}
-        <h1>Adding a new product</h1>
+    {{ form_start(form) }}
+        {# ... #}
 
-        {{ form_start(form) }}
-            {# ... #}
-
-            {{ form_row(form.brochure) }}
-        {{ form_end(form) }}
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/product/new.html.twig -->
-        <h1>Adding a new product</h1>
-
-        <?php echo $view['form']->start($form) ?>
-            <?php echo $view['form']->row($form['brochure']) ?>
-        <?php echo $view['form']->end($form) ?>
+        {{ form_row(form.brochure) }}
+    {{ form_end(form) }}
 
 Finally, you need to update the code of the controller that handles the form::
 
@@ -192,17 +181,9 @@ There are some important things to consider in the code of the above controller:
 
 You can use the following code to link to the PDF brochure of a product:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <a href="{{ asset('uploads/brochures/' ~ product.brochure) }}">View brochure (PDF)</a>
-
-    .. code-block:: html+php
-
-        <a href="<?php echo $view['assets']->getUrl('uploads/brochures/'.$product->getBrochure()) ?>">
-            View brochure (PDF)
-        </a>
+    <a href="{{ asset('uploads/brochures/' ~ product.brochure) }}">View brochure (PDF)</a>
 
 .. tip::
 

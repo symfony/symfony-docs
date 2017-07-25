@@ -55,21 +55,11 @@ Including JavaScript Files
 
 To include JavaScript files, use the ``javascripts`` tag in any template:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts '@AppBundle/Resources/public/js/*' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array('@AppBundle/Resources/public/js/*')
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts '@AppBundle/Resources/public/js/*' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 .. note::
 
@@ -111,22 +101,11 @@ Including CSS Stylesheets
 To bring in CSS stylesheets, you can use the same technique explained above,
 except with the ``stylesheets`` tag:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
-            <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->stylesheets(
-            array('bundles/app/css/*'),
-            array('cssrewrite')
-        ) as $url): ?>
-            <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
-        <?php endforeach ?>
+    {% stylesheets 'bundles/app/css/*' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 
 .. note::
 
@@ -164,21 +143,11 @@ Including Images
 
 To include an image you can use the ``image`` tag.
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% image '@AppBundle/Resources/public/images/example.jpg' %}
-            <img src="{{ asset_url }}" alt="Example" />
-        {% endimage %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->image(
-            array('@AppBundle/Resources/public/images/example.jpg')
-        ) as $url): ?>
-            <img src="<?php echo $view->escape($url) ?>" alt="Example" />
-        <?php endforeach ?>
+    {% image '@AppBundle/Resources/public/images/example.jpg' %}
+        <img src="{{ asset_url }}" alt="Example" />
+    {% endimage %}
 
 You can also use Assetic for image optimization. More information in
 :doc:`/assetic/jpeg_optimize`.
@@ -216,28 +185,14 @@ manageable parts. This can help with re-usability as you can easily split
 project-specific files from those which can be used in other applications,
 but still serve them as a single file:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts
-            '@AppBundle/Resources/public/js/*'
-            '@AcmeBarBundle/Resources/public/js/form.js'
-            '@AcmeBarBundle/Resources/public/js/calendar.js' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array(
-                '@AppBundle/Resources/public/js/*',
-                '@AcmeBarBundle/Resources/public/js/form.js',
-                '@AcmeBarBundle/Resources/public/js/calendar.js',
-            )
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts
+        '@AppBundle/Resources/public/js/*'
+        '@AcmeBarBundle/Resources/public/js/form.js'
+        '@AcmeBarBundle/Resources/public/js/calendar.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 In the ``dev`` environment, each file is still served individually, so that
 you can debug problems more easily. However, in the ``prod`` environment
@@ -255,26 +210,13 @@ the JavaScript files.
 And combining files doesn't only apply to *your* files. You can also use Assetic to
 combine third party assets, such as jQuery, with your own into a single file:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts
-            '@AppBundle/Resources/public/js/thirdparty/jquery.js'
-            '@AppBundle/Resources/public/js/*' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array(
-                '@AppBundle/Resources/public/js/thirdparty/jquery.js',
-                '@AppBundle/Resources/public/js/*',
-            )
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts
+        '@AppBundle/Resources/public/js/thirdparty/jquery.js'
+        '@AppBundle/Resources/public/js/*' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 Using Named Assets
 ~~~~~~~~~~~~~~~~~~
@@ -333,26 +275,13 @@ configuration under the ``assetic`` section. Read more in the
 After you have defined the named assets, you can reference them in your templates
 with the ``@named_asset`` notation:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts
-            '@jquery_and_ui'
-            '@AppBundle/Resources/public/js/*' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array(
-                '@jquery_and_ui',
-                '@AppBundle/Resources/public/js/*',
-            )
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts
+        '@jquery_and_ui'
+        '@AppBundle/Resources/public/js/*' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 .. _assetic-filters:
 
@@ -423,22 +352,11 @@ should be defined:
 Now, to actually *use* the filter on a group of JavaScript files, add it
 into your template:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts '@AppBundle/Resources/public/js/*' filter='uglifyjs2' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array('@AppBundle/Resources/public/js/*'),
-            array('uglifyjs2')
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts '@AppBundle/Resources/public/js/*' filter='uglifyjs2' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 A more detailed guide about configuring and using Assetic filters as well as
 details of Assetic's debug mode can be found in :doc:`/assetic/uglifyjs`.
@@ -449,23 +367,11 @@ Controlling the URL Used
 If you wish to, you can control the URLs that Assetic produces. This is
 done from the template and is relative to the public document root:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts '@AppBundle/Resources/public/js/*' output='js/compiled/main.js' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array('@AppBundle/Resources/public/js/*'),
-            array(),
-            array('output' => 'js/compiled/main.js')
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts '@AppBundle/Resources/public/js/*' output='js/compiled/main.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 .. note::
 
@@ -586,22 +492,10 @@ Since running this command in the ``dev`` environment may generate a bunch
 of files, it's usually a good idea to point your generated asset files to
 some isolated directory (e.g. ``/js/compiled``), to keep things organized:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts '@AppBundle/Resources/public/js/*' output='js/compiled/main.js' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array('@AppBundle/Resources/public/js/*'),
-            array(),
-            array('output' => 'js/compiled/main.js')
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts '@AppBundle/Resources/public/js/*' output='js/compiled/main.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 .. _`LiipImagineBundle`: https://github.com/liip/LiipImagineBundle

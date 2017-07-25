@@ -154,41 +154,23 @@ the ``FrameworkBundle/Resources/views/Form`` folder.
 
 The default implementation of the ``integer_widget`` fragment looks like this:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {# form_div_layout.html.twig #}
-        {% block integer_widget %}
-            {% set type = type|default('number') %}
-            {{ block('form_widget_simple') }}
-        {% endblock integer_widget %}
-
-    .. code-block:: html+php
-
-        <!-- integer_widget.html.php -->
-        <?php echo $view['form']->block($form, 'form_widget_simple', array('type' => isset($type) ? $type : "number")) ?>
+    {# form_div_layout.html.twig #}
+    {% block integer_widget %}
+        {% set type = type|default('number') %}
+        {{ block('form_widget_simple') }}
+    {% endblock integer_widget %}
 
 As you can see, this fragment itself renders another fragment - ``form_widget_simple``:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {# form_div_layout.html.twig #}
-        {% block form_widget_simple %}
-            {% set type = type|default('text') %}
-            <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
-        {% endblock form_widget_simple %}
-
-    .. code-block:: html+php
-
-        <!-- FrameworkBundle/Resources/views/Form/form_widget_simple.html.php -->
-        <input
-            type="<?php echo isset($type) ? $view->escape($type) : 'text' ?>"
-            <?php if (!empty($value)): ?>value="<?php echo $view->escape($value) ?>"<?php endif ?>
-            <?php echo $view['form']->block($form, 'widget_attributes') ?>
-        />
+    {# form_div_layout.html.twig #}
+    {% block form_widget_simple %}
+        {% set type = type|default('text') %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    {% endblock form_widget_simple %}
 
 The point is, the fragments dictate the HTML output of each part of a form. To
 customize the form output, you just need to identify and override the correct
@@ -688,31 +670,17 @@ accomplished by customizing a fragment whose name is a combination of the field'
 ``id`` attribute and which part of the field is being customized. For example, to
 customize the ``name`` field only:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {% form_theme form _self %}
 
-        {% form_theme form _self %}
-
-        {% block _product_name_widget %}
-            <div class="text_widget">
-                {{ block('form_widget_simple') }}
-            </div>
-        {% endblock %}
-
-        {{ form_widget(form.name) }}
-
-    .. code-block:: html+php
-
-        <!-- Main template -->
-        <?php echo $view['form']->setTheme($form, array(':form')); ?>
-
-        <?php echo $view['form']->widget($form['name']); ?>
-
-        <!-- app/Resources/views/form/_product_name_widget.html.php -->
+    {% block _product_name_widget %}
         <div class="text_widget">
-            <?php echo $view['form']->block('form_widget_simple') ?>
+            {{ block('form_widget_simple') }}
         </div>
+    {% endblock %}
+
+    {{ form_widget(form.name) }}
 
 Here, the ``_product_name_widget`` fragment defines the template to use for the
 field whose *id* is ``product_name`` (and name is ``product[name]``).
@@ -743,35 +711,19 @@ field whose *id* is ``product_name`` (and name is ``product[name]``).
 
 You can also override the markup for an entire field row using the same method:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {% form_theme form _self %}
 
-        {% form_theme form _self %}
-
-        {% block _product_name_row %}
-            <div class="name_row">
-                {{ form_label(form) }}
-                {{ form_errors(form) }}
-                {{ form_widget(form) }}
-            </div>
-        {% endblock %}
-
-        {{ form_row(form.name) }}
-
-    .. code-block:: html+php
-
-        <!-- Main template -->
-        <?php echo $view['form']->setTheme($form, array(':form')); ?>
-
-        <?php echo $view['form']->row($form['name']); ?>
-
-        <!-- app/Resources/views/form/_product_name_row.html.php -->
+    {% block _product_name_row %}
         <div class="name_row">
-            <?php echo $view['form']->label($form) ?>
-            <?php echo $view['form']->errors($form) ?>
-            <?php echo $view['form']->widget($form) ?>
+            {{ form_label(form) }}
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
         </div>
+    {% endblock %}
+
+    {{ form_row(form.name) }}
 
 .. _form-custom-prototype:
 
@@ -783,26 +735,16 @@ the prototype can be overridden with a completely custom prototype by
 overriding a block. For example, if your form field is named ``tasks``, you
 will be able to change the widget for each task as follows:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {% form_theme form _self %}
 
-        {% form_theme form _self %}
-
-        {% block _tasks_entry_widget %}
-            <tr>
-                <td>{{ form_widget(form.task) }}</td>
-                <td>{{ form_widget(form.dueDate) }}</td>
-            </tr>
-        {% endblock %}
-
-    .. code-block:: html+php
-
-        <!-- src/AppBundle/Resources/views/Form/_tasks_entry_widget.html.php -->
+    {% block _tasks_entry_widget %}
         <tr>
-            <td><?php echo $view['form']->widget($form->task) ?></td>
-            <td><?php echo $view['form']->widget($form->dueDate) ?></td>
+            <td>{{ form_widget(form.task) }}</td>
+            <td>{{ form_widget(form.dueDate) }}</td>
         </tr>
+    {% endblock %}
 
 Not only can you override the rendered widget, but you can also change the
 complete form row or the label as well. For the ``tasks`` field given above,
@@ -862,35 +804,22 @@ By default, the errors are rendered inside an unordered list:
 To override how errors are rendered for *all* fields, simply copy, paste
 and customize the ``form_errors`` fragment.
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {% form_theme form _self %}
 
-        {% form_theme form _self %}
-
-        {# form_errors.html.twig #}
-        {% block form_errors %}
-            {% spaceless %}
-                {% if errors|length > 0 %}
-                <ul>
-                    {% for error in errors %}
-                        <li>{{ error.message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            {% endspaceless %}
-        {% endblock form_errors %}
-
-    .. code-block:: html+php
-
-        <!-- form_errors.html.php -->
-        <?php if ($errors): ?>
+    {# form_errors.html.twig #}
+    {% block form_errors %}
+        {% spaceless %}
+            {% if errors|length > 0 %}
             <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?php echo $error->getMessage() ?></li>
-                <?php endforeach ?>
+                {% for error in errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
             </ul>
-        <?php endif ?>
+            {% endif %}
+        {% endspaceless %}
+    {% endblock form_errors %}
 
 .. tip::
 
@@ -924,44 +853,26 @@ as above, but now check if the ``compound`` variable is set to ``true``. If it
 is ``true``, it means that what's being currently rendered is a collection of
 fields (e.g. a whole form), and not just an individual field.
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {% form_theme form _self %}
 
-        {% form_theme form _self %}
-
-        {# form_errors.html.twig #}
-        {% block form_errors %}
-            {% spaceless %}
-                {% if errors|length > 0 %}
-                    {% if compound %}
-                        <ul>
-                            {% for error in errors %}
-                                <li>{{ error.message }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        {# ... display the errors for a single field #}
-                    {% endif %}
+    {# form_errors.html.twig #}
+    {% block form_errors %}
+        {% spaceless %}
+            {% if errors|length > 0 %}
+                {% if compound %}
+                    <ul>
+                        {% for error in errors %}
+                            <li>{{ error.message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    {# ... display the errors for a single field #}
                 {% endif %}
-            {% endspaceless %}
-        {% endblock form_errors %}
-
-    .. code-block:: html+php
-
-        <!-- form_errors.html.php -->
-        <?php if ($errors): ?>
-            <?php if ($compound): ?>
-                <ul>
-                    <?php foreach ($errors as $error): ?>
-                        <li><?php echo $error->getMessage() ?></li>
-                    <?php endforeach ?>
-                </ul>
-            <?php else: ?>
-                <!-- ... render the errors for a single field -->
-            <?php endif ?>
-        <?php endif ?>
-
+            {% endif %}
+        {% endspaceless %}
+    {% endblock form_errors %}
 
 Customizing the "Form Row"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -972,27 +883,16 @@ a field. To customize the markup used for rendering *all* form field rows,
 override the ``form_row`` fragment. For example, suppose you want to add a
 class to the ``div`` element around each row:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {# form_row.html.twig #}
-        {% block form_row %}
-            <div class="form_row">
-                {{ form_label(form) }}
-                {{ form_errors(form) }}
-                {{ form_widget(form) }}
-            </div>
-        {% endblock form_row %}
-
-    .. code-block:: html+php
-
-        <!-- form_row.html.php -->
+    {# form_row.html.twig #}
+    {% block form_row %}
         <div class="form_row">
-            <?php echo $view['form']->label($form) ?>
-            <?php echo $view['form']->errors($form) ?>
-            <?php echo $view['form']->widget($form) ?>
+            {{ form_label(form) }}
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
         </div>
+    {% endblock form_row %}
 
 .. tip::
 

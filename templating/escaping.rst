@@ -10,15 +10,9 @@ is that dynamic content could break the HTML of the resulting page or allow
 a malicious user to perform a `Cross Site Scripting`_ (XSS) attack. Consider
 this classic example:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        Hello {{ name }}
-
-    .. code-block:: html+php
-
-        Hello <?php echo $name ?>
+    Hello {{ name }}
 
 Imagine the user enters the following code for their name:
 
