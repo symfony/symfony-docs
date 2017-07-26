@@ -65,7 +65,7 @@ on your underlying object. Valid values are:
 regions
 ~~~~~~~
 
-**type**: ``int`` **default**: ``DateTimeZone::ALL``
+**type**: ``int`` **default**: ``\DateTimeZone::ALL``
 
 The available regions in the timezone choice list. For example: ``DateTimeZone::AMERICA | DateTimeZone::EUROPE``
 
