@@ -6,15 +6,13 @@ How to Customize Form Rendering
 
 Symfony gives you a wide variety of ways to customize how a form is rendered.
 In this guide, you'll learn how to customize every possible part of your
-form with as little effort as possible whether you use Twig or PHP as your
-templating engine.
+form with as little effort as possible.
 
 Form Rendering Basics
 ---------------------
 
 Recall that the label, error and HTML widget of a form field can easily
-be rendered by using the ``form_row()`` Twig function or the ``row`` PHP helper
-method:
+be rendered by using the ``form_row()`` Twig function:
 
 .. code-block:: twig
 
@@ -66,9 +64,8 @@ What are Form Themes?
 
 Symfony uses form fragments - a small piece of a template that renders just
 one part of a form - to render each part of a form - field labels, errors,
-``input`` text fields, ``select`` tags, etc.
-
-The fragments are defined as blocks in Twig and as template files in PHP.
+``input`` text fields, ``select`` tags, etc. The fragments are defined as blocks
+in Twig templates.
 
 A *theme* is nothing more than a set of fragments that you want to use when
 rendering a form. In other words, if you want to customize one portion of
@@ -115,12 +112,8 @@ This is because the field type is ``integer`` and you're rendering its ``widget`
 (as opposed to its ``label`` or ``errors``).
 
 In Twig that would default to the block ``integer_widget`` from the `form_div_layout.html.twig`_
-template.
-
-In PHP it would rather be the ``integer_widget.html.php`` file located in
-the ``FrameworkBundle/Resources/views/Form`` folder.
-
-The default implementation of the ``integer_widget`` fragment looks like this:
+template. The default implementation of the ``integer_widget`` fragment looks
+like this:
 
 .. code-block:: twig
 
@@ -147,9 +140,6 @@ When rendering a form, you can choose which form theme(s) you want to apply.
 
 In Twig a theme is a single template file and the fragments are the blocks defined
 in this file.
-
-In PHP a theme is a folder and the fragments are individual template files in
-this folder.
 
 .. _form-customization-sidebar:
 
@@ -298,55 +288,10 @@ different than the one of your main form. Just specify both your themes:
 
     {% form_theme form.child 'form/fields_child.html.twig' %}
 
-Form Theming in PHP
--------------------
+.. _referencing-base-form-blocks-twig-specific:
 
-When using PHP as a templating engine, the only method to customize a fragment
-is to create a new template file - this is similar to the second method used by
-Twig.
-
-The template file must be named after the fragment. You must create a ``integer_widget.html.php``
-file in order to customize the ``integer_widget`` fragment.
-
-.. code-block:: html+php
-
-    <!-- app/Resources/views/form/integer_widget.html.php -->
-    <div class="integer_widget">
-        <?php echo $view['form']->block(
-            $form,
-            'form_widget_simple',
-            array('type' => isset($type) ? $type : "number")
-        ) ?>
-    </div>
-
-Now that you've created the customized form template, you need to tell Symfony
-to use it. Inside the template where you're actually rendering your form,
-tell Symfony to use the theme via the ``setTheme()`` helper method::
-
-    <?php $view['form']->setTheme($form, array(':form')); ?>
-
-    <?php $view['form']->widget($form['age']) ?>
-
-When the ``form.age`` widget is rendered, Symfony will use the customized
-``integer_widget.html.php`` template and the ``input`` tag will be wrapped in
-the ``div`` element.
-
-If you want to apply a theme to a specific child form, pass it to the ``setTheme()``
-method:
-
-.. code-block:: php
-
-    <?php $view['form']->setTheme($form['child'], ':form'); ?>
-
-.. note::
-
-    The ``:form`` syntax is based on the functional names for templates:
-    ``Bundle:Directory``. As the form directory lives in the
-    ``app/Resources/views`` directory, the ``Bundle`` part is empty, resulting
-    in ``:form``.
-
-Referencing base Form Blocks (Twig specific)
---------------------------------------------
+Referencing base Form Blocks
+----------------------------
 
 So far, to override a particular form block, the best method is to copy
 the default block from `form_div_layout.html.twig`_, paste it into a different template,
@@ -396,21 +341,12 @@ the base block by using the ``parent()`` Twig function:
         </div>
     {% endblock %}
 
-.. note::
-
-    It is not possible to reference the base block when using PHP as the
-    templating engine. You have to manually copy the content from the base block
-    to your new template file.
-
 Making Application-wide Customizations
 --------------------------------------
 
 If you'd like a certain form customization to be global to your application,
 you can accomplish this by making the form customizations in an external
 template and then importing it inside your application configuration.
-
-Twig
-~~~~
 
 By using the following configuration, any customized form blocks inside the
 ``form/fields.html.twig`` template will be used globally when a form is
@@ -506,125 +442,6 @@ your template file rather than adding the template as a resource:
     {% form_theme form 'form_table_layout.html.twig' %}
 
 Note that the ``form`` variable in the above code is the form view variable
-that you passed to your template.
-
-PHP
-~~~
-
-By using the following configuration, any customized form fragments inside the
-``app/Resources/views/Form`` folder will be used globally when a
-form is rendered.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            templating:
-                form:
-                    resources:
-                        - 'AppBundle:Form'
-            # ...
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:templating>
-                    <framework:form>
-                        <framework:resource>AppBundle:Form</framework:resource>
-                    </framework:form>
-                </framework:templating>
-                <!-- ... -->
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        // PHP
-        $container->loadFromExtension('framework', array(
-            'templating' => array(
-                'form' => array(
-                    'resources' => array(
-                        'AppBundle:Form',
-                    ),
-                ),
-             ),
-
-             // ...
-        ));
-
-By default, the PHP engine uses a *div* layout when rendering forms. Some people,
-however, may prefer to render forms in a *table* layout. Use the ``FrameworkBundle:FormTable``
-resource to use such a layout:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            templating:
-                form:
-                    resources:
-                        - 'FrameworkBundle:FormTable'
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:templating>
-                    <framework:form>
-                        <resource>FrameworkBundle:FormTable</resource>
-                    </framework:form>
-                </framework:templating>
-                <!-- ... -->
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'templating' => array(
-                'form' => array(
-                    'resources' => array(
-                        'FrameworkBundle:FormTable',
-                    ),
-                ),
-            ),
-
-             // ...
-        ));
-
-If you only want to make the change in one template, add the following line to
-your template file rather than adding the template as a resource:
-
-.. code-block:: html+php
-
-    <?php $view['form']->setTheme($form, array('FrameworkBundle:FormTable')); ?>
-
-Note that the ``$form`` variable in the above code is the form view variable
 that you passed to your template.
 
 How to Customize an individual Field
@@ -787,10 +604,10 @@ and customize the ``form_errors`` fragment.
 
     See :ref:`form-theming-methods` for how to apply this customization.
 
-You can also customize the error output for just one specific field type.
-To customize *only* the markup used for these errors, follow the same directions
-as above but put the contents in a relative ``_errors`` block (or file in case
-of PHP templates). For example: ``text_errors`` (or ``text_errors.html.php``).
+You can also customize the error output for just one specific field type. To
+customize *only* the markup used for these errors, follow the same directions as
+above but put the contents in a relative ``_errors`` block. For example:
+``text_errors``.
 
 .. tip::
 
@@ -860,7 +677,7 @@ Adding a "Required" Asterisk to Field Labels
 If you want to denote all of your required fields with a required asterisk (``*``),
 you can do this by customizing the ``form_label`` fragment.
 
-In Twig, if you're making the form customization inside the same template as your
+If you're making the form customization inside the same template as your
 form, modify the ``use`` tag and add the following:
 
 .. code-block:: html+twig
@@ -875,7 +692,7 @@ form, modify the ``use`` tag and add the following:
         {% endif %}
     {% endblock %}
 
-In Twig, if you're making the form customization inside a separate template, use
+If you're making the form customization inside a separate template, use
 the following:
 
 .. code-block:: html+twig
@@ -889,24 +706,6 @@ the following:
             <span class="required" title="This field is required">*</span>
         {% endif %}
     {% endblock %}
-
-When using PHP as a templating engine you have to copy the content from the
-original template:
-
-.. code-block:: html+php
-
-    <!-- form_label.html.php -->
-
-    <!-- original content -->
-    <?php if ($required) { $label_attr['class'] = trim((isset($label_attr['class']) ? $label_attr['class'] : '').' required'); } ?>
-    <?php if (!$compound) { $label_attr['for'] = $id; } ?>
-    <?php if (!$label) { $label = $view['form']->humanize($name); } ?>
-    <label <?php foreach ($label_attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?php echo $view->escape($view['translator']->trans($label, array(), $translation_domain)) ?></label>
-
-    <!-- customization -->
-    <?php if ($required) : ?>
-        <span class="required" title="This field is required">*</span>
-    <?php endif ?>
 
 .. tip::
 
@@ -928,7 +727,7 @@ Adding "help" Messages
 
 You can also customize your form widgets to have an optional "help" message.
 
-In Twig, if you're making the form customization inside the same template as your
+If you're making the form customization inside the same template as your
 form, modify the ``use`` tag and add the following:
 
 .. code-block:: html+twig
@@ -943,7 +742,7 @@ form, modify the ``use`` tag and add the following:
         {% endif %}
     {% endblock %}
 
-In Twig, if you're making the form customization inside a separate template, use
+If you're making the form customization inside a separate template, use
 the following:
 
 .. code-block:: html+twig
@@ -957,25 +756,6 @@ the following:
             <span class="help-block">{{ help }}</span>
         {% endif %}
     {% endblock %}
-
-When using PHP as a templating engine you have to copy the content from the
-original template:
-
-.. code-block:: html+php
-
-    <!-- form_widget_simple.html.php -->
-
-    <!-- Original content -->
-    <input
-        type="<?php echo isset($type) ? $view->escape($type) : 'text' ?>"
-        <?php if (!empty($value)): ?>value="<?php echo $view->escape($value) ?>"<?php endif ?>
-        <?php echo $view['form']->block($form, 'widget_attributes') ?>
-    />
-
-    <!-- Customization -->
-    <?php if (isset($help)) : ?>
-        <span class="help"><?php echo $view->escape($help) ?></span>
-    <?php endif ?>
 
 To render a help message below a field, pass in a ``help`` variable:
 
