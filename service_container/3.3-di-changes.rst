@@ -360,7 +360,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
 But, you might not even notice this. First, your controllers *can* still extend
 the same base ``Controller`` class or a new :ref:`AbstractController <controller-abstract-versus-controller>`.
 This means you have access to all of the same shortcuts as before. Additionally,
-the ``@Route`` annotation and ``_controller`` syntax (e.g.``AppBundle:Default:homepage``)
+the ``@Route`` annotation and ``_controller`` syntax (e.g. ``AppBundle:Default:homepage``)
 used in routing will automatically use your controller as a service (as long as its
 service id matches its class name, which it *does* in this case). See :doc:`/controller/service`
 for more details. You can even create :ref:`invokable controllers <controller-service-invoke>`
@@ -433,7 +433,7 @@ In this case, you've created a class that implements ``EventSubscriberInterface`
 and registered it as a service. This is more than enough for the container to know
 that you want this to be used as an event subscriber: more configuration is not needed.
 And the tags system is its own, Symfony-specific mechanism. And of course, you can
-always default ``autoconfigure`` to false in ``services.yml``, or disable it for a specific
+always set ``autoconfigure`` to ``false`` (=default) in ``services.yml``, or disable it for a specific
 service.
 
     Does this mean tags are dead? Does this work for all tags?
@@ -449,7 +449,7 @@ see what it autoconfigures.
 
 Many autoconfigured tags have an optional priority. If you need to specify a priority
 (or any other optional tag attribute), no problem! Just :ref:`manually configure your service <services-manually-wire-args>`
-and add the tag. Your tag will take precedent over the one added by auto-configuration.
+and add the tag. Your tag will take precedence over the one added by auto-configuration.
 
 What about Performance
 ----------------------
