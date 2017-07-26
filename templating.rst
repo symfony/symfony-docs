@@ -684,7 +684,7 @@ configuration option.
 If you need absolute URLs for assets, use the ``absolute_url()`` Twig function
 as follows:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!" />
 

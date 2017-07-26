@@ -962,7 +962,7 @@ special attributes like this:
 
 You can also use expressions inside your templates:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {% if is_granted(expression(
         '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
