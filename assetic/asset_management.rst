@@ -14,15 +14,9 @@ to the user.
 Without Assetic, you just serve the files that are stored in the application
 directly:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <script src="{{ asset('js/script.js') }}"></script>
-
-    .. code-block:: php
-
-        <script src="<?php echo $view['assets']->getUrl('js/script.js') ?>"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 
 But *with* Assetic, you can manipulate these assets however you want (or
 load them from anywhere) before serving them. This means you can:

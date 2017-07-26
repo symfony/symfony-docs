@@ -962,23 +962,13 @@ special attributes like this:
 
 You can also use expressions inside your templates:
 
-.. configuration-block::
+.. code-block:: html+jinja
 
-    .. code-block:: html+jinja
-
-        {% if is_granted(expression(
-            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
-        )) %}
-            <a href="...">Delete</a>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <?php if ($view['security']->isGranted(new Expression(
-            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
-        ))): ?>
-            <a href="...">Delete</a>
-        <?php endif; ?>
+    {% if is_granted(expression(
+        '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+    )) %}
+        <a href="...">Delete</a>
+    {% endif %}
 
 For more details on expressions and security, see :ref:`expressions-security`.
 

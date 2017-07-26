@@ -16,35 +16,19 @@ Recall that the label, error and HTML widget of a form field can easily
 be rendered by using the ``form_row()`` Twig function or the ``row`` PHP helper
 method:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {{ form_row(form.age) }}
-
-    .. code-block:: php
-
-        <?php echo $view['form']->row($form['age']); ?>
+    {{ form_row(form.age) }}
 
 You can also render each of the three parts of the field individually:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <div>
-            {{ form_label(form.age) }}
-            {{ form_errors(form.age) }}
-            {{ form_widget(form.age) }}
-        </div>
-
-    .. code-block:: php
-
-        <div>
-            <?php echo $view['form']->label($form['age']); ?>
-            <?php echo $view['form']->errors($form['age']); ?>
-            <?php echo $view['form']->widget($form['age']); ?>
-        </div>
+    <div>
+        {{ form_label(form.age) }}
+        {{ form_errors(form.age) }}
+        {{ form_widget(form.age) }}
+    </div>
 
 In both cases, the form label, errors and HTML widget are rendered by using
 a set of markup that ships standard with Symfony. For example, both of the
@@ -63,23 +47,13 @@ above templates would render:
 To quickly prototype and test a form, you can render the entire form with
 just one line:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
+    {# renders all fields #}
+    {{ form_widget(form) }}
 
-        {# renders all fields #}
-        {{ form_widget(form) }}
-
-        {# renders all fields *and* the form start and end tags #}
-        {{ form(form) }}
-
-    .. code-block:: php
-
-        <!-- renders all fields -->
-        <?php echo $view['form']->widget($form) ?>
-
-        <!-- renders all fields *and* the form start and end tags -->
-        <?php echo $view['form']->form($form) ?>
+    {# renders all fields *and* the form start and end tags #}
+    {{ form(form) }}
 
 The remainder of this recipe will explain how every part of the form's markup
 can be modified at several different levels. For more information about form
@@ -126,15 +100,9 @@ some or all of its fragments.
 For example, when the widget of an ``integer`` type field is rendered, an ``input``
 ``number`` field is generated
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {{ form_widget(form.age) }}
-
-    .. code-block:: php
-
-        <?php echo $view['form']->widget($form['age']) ?>
+    {{ form_widget(form.age) }}
 
 renders:
 
@@ -783,15 +751,9 @@ There are many different ways to customize how errors are rendered when a
 form is submitted with errors. The error messages for a field are rendered
 when you use the ``form_errors()`` helper:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {{ form_errors(form.age) }}
-
-    .. code-block:: php
-
-        <?php echo $view['form']->errors($form['age']); ?>
+    {{ form_errors(form.age) }}
 
 By default, the errors are rendered inside an unordered list:
 
@@ -838,15 +800,9 @@ of PHP templates). For example: ``text_errors`` (or ``text_errors.html.php``).
 Certain errors that are more global to your form (i.e. not specific to just one
 field) are rendered separately, usually at the top of your form:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {{ form_errors(form) }}
-
-    .. code-block:: php
-
-        <?php echo $view['form']->render($form); ?>
+    {{ form_errors(form) }}
 
 To customize *only* the markup used for these errors, follow the same directions
 as above, but now check if the ``compound`` variable is set to ``true``. If it
@@ -1023,15 +979,9 @@ original template:
 
 To render a help message below a field, pass in a ``help`` variable:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {{ form_widget(form.title, {'help': 'foobar'}) }}
-
-    .. code-block:: php
-
-        <?php echo $view['form']->widget($form['title'], array('help' => 'foobar')) ?>
+    {{ form_widget(form.title, {'help': 'foobar'}) }}
 
 .. tip::
 
@@ -1044,21 +994,10 @@ Most of the functions available for rendering different parts of a form (e.g.
 the form widget, form label, form errors, etc.) also allow you to make certain
 customizations directly. Look at the following example:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {# render a widget, but add a "foo" class to it #}
-        {{ form_widget(form.name, { 'attr': {'class': 'foo'} }) }}
-
-    .. code-block:: php
-
-        <!-- render a widget, but add a "foo" class to it -->
-        <?php echo $view['form']->widget($form['name'], array(
-            'attr' => array(
-                'class' => 'foo',
-            ),
-        )) ?>
+    {# render a widget, but add a "foo" class to it #}
+    {{ form_widget(form.name, { 'attr': {'class': 'foo'} }) }}
 
 The array passed as the second argument contains form "variables". For
 more details about this concept in Twig, see :ref:`twig-reference-form-variables`.
