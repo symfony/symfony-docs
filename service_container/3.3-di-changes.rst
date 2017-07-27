@@ -81,21 +81,37 @@ Symfony Standard Edition:
                 <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
                     <tag name="controller.service_arguments" />
                 </prototype>
+
+                <!-- add more services, or override services that need manual wiring -->
             </services>
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
 
-        // _defaults and loading entire directories is not possible with PHP configuration
-        // you need to define your services one-by-one
-        use AppBundle\Controller\DefaultController;
+        // To use as default template
+        $definition = new Definition();
 
-        $container->autowire(DefaultController::class)
+        $definition
+            ->setAutowired(true)
             ->setAutoconfigured(true)
+            ->setPublic(false)
+        ;
+
+        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+
+        // Changes default config
+        $definition
+            ->setPublic(true)
             ->addTag('controller.service_arguments')
-            ->setPublic(true);
+        ;
+
+        // $this is a reference to the current loader
+        $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
+
+        // add more services, or override services that need manual wiring
 
 This small bit of configuration contains a paradigm shift of how services
 are configured in Symfony.
@@ -147,9 +163,18 @@ thanks to the following config:
     .. code-block:: php
 
         // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
 
-        // services cannot be automatically loaded with PHP configuration
-        // you need to define your services one-by-one
+        // To use as default template
+        $definition = new Definition();
+
+        $definition
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            ->setPublic(false)
+        ;
+
+        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
 
 This means that every class in ``src/AppBundle/`` is *available* to be used as a
 service. And thanks to the ``_defaults`` section at the top of the file, all of
@@ -347,15 +372,14 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
     .. code-block:: php
 
         // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
 
-        // loading entire directories is not possible with PHP configuration
-        // you need to define your services one-by-one
-        use AppBundle\Controller\DefaultController;
+        // To use as default template
+        $definition = new Definition();
 
-        $container->autowire(DefaultController::class)
-            ->setAutoconfigured(true)
-            ->addTag('controller.service_arguments')
-            ->setPublic(true);
+        $definition->setPublic(true);
+
+        $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
 
 But, you might not even notice this. First, your controllers *can* still extend
 the same base ``Controller`` class or a new :ref:`AbstractController <controller-abstract-versus-controller>`.
@@ -642,7 +666,7 @@ You're now ready to automatically register all services in ``src/AppBundle/``
     +     AppBundle\:
     +         resource: '../../src/AppBundle/*'
     +         exclude: '../../src/AppBundle/{Entity,Repository}'
-    + 
+    +
     +     AppBundle\Controller\:
     +         resource: '../../src/AppBundle/Controller'
     +         public: true
