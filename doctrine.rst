@@ -527,7 +527,7 @@ a controller, this is pretty easy. Add the following method to the
     {
         $doctrine = $this->getDoctrine();
         $em = $doctrine->getManager();
-        $em2 = $doctrine->getManager('other_connection')
+        $em2 = $doctrine->getManager('other_connection');
     }
 
 .. note::
