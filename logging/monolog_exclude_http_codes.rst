@@ -4,7 +4,7 @@
    single: Monolog; Exclude HTTP Codes
 
 How to Configure Monolog to Exclude Specific HTTP Codes from the Log
-===========================================================
+====================================================================
 
 Sometimes your logs become flooded with unwanted HTTP errors, for example,
 403s and 404s. When using a ``fingers_crossed`` handler, you can exclude
