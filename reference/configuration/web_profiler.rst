@@ -5,7 +5,7 @@ WebProfilerBundle Configuration ("web_profiler")
 ================================================
 
 The WebProfilerBundle provides detailed technical information about each request
-execution and displays it both the web debug toolbar and the profiler.
+execution and displays it in both the web debug toolbar and the profiler.
 
 .. caution::
 
