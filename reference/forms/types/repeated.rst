@@ -172,7 +172,7 @@ the label (see `first_options`_).
 type
 ~~~~
 
-**type**: ``string`` **default**: ``text``
+**type**: ``string`` **default**: ``Symfony\Component\Form\Extension\Core\Type\RepeatedType``
 
 The two underlying fields will be of this field type. For example, passing
 ``PasswordType::class`` will render two password fields.
