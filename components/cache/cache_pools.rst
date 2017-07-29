@@ -285,6 +285,12 @@ when all items are successfully deleted)::
 
     .. code-block:: terminal
 
-        $ ./bin/console cache:pool:clear <cache-pool-name>
+        $ php bin/console cache:pool:clear <cache-pool-name>
+        
+        # clears the "cache.app" pool
+        $ php bin/console cache:pool:clear cache.app
+
+        # clears the "cache.validation" and "cache.app" pool
+        $ php bin/console cache:pool:clear cache.validation cache.app
 
 .. _`Doctrine Cache`: https://github.com/doctrine/cache
