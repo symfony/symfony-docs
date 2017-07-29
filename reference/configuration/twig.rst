@@ -90,7 +90,6 @@ TwigBundle Configuration ("twig")
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
                 
-                
                 <twig:date format="d.m.Y, H:i:s" interval-format="%d days" timezone="Asia/Tokyo" />
                 <twig:number-format decimals="2" decimal-point="," thousands-separator="." />
 
