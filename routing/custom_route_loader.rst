@@ -29,8 +29,8 @@ Loading Routes
 The routes in a Symfony application are loaded by the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 This loader uses several other loaders (delegates) to load resources of
-different types, for instance YAML files or ``@Route`` and ``@Method`` annotations
-in controller files. The specialized loaders implement
+different types, for instance YAML files or ``@Route`` annotations in controller
+files. The specialized loaders implement
 :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
 and therefore have two important methods:
 :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
@@ -120,7 +120,7 @@ you do. The resource name itself is not actually used in the example::
     }
 
 Make sure the controller you specify really exists. In this case you
-have to create an ``extraAction`` method in the ``ExtraController``
+have to create an ``extraAction()`` method in the ``ExtraController``
 of the ``AppBundle``::
 
     // src/AppBundle/Controller/ExtraController.php
@@ -145,20 +145,23 @@ Now define a service for the ``ExtraLoader``:
 
         # app/config/services.yml
         services:
-            app.routing_loader:
-                class: AppBundle\Routing\ExtraLoader
-                tags:
-                    - { name: routing.loader }
+            # ...
+
+            AppBundle\Routing\ExtraLoader:
+                tags: [routing.loader]
 
     .. code-block:: xml
 
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.routing_loader" class="AppBundle\Routing\ExtraLoader">
+                <!-- ... -->
+
+                <service id="AppBundle\Routing\ExtraLoader">
                     <tag name="routing.loader" />
                 </service>
             </services>
@@ -166,13 +169,10 @@ Now define a service for the ``ExtraLoader``:
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Routing\ExtraLoader;
 
         $container
-            ->setDefinition(
-                'app.routing_loader',
-                new Definition('AppBundle\Routing\ExtraLoader')
-            )
+            ->autowire(ExtraLoader::class)
             ->addTag('routing.loader')
         ;
 
@@ -201,7 +201,8 @@ What remains to do is adding a few lines to the routing configuration:
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import resource="." type="extra" />
         </routes>
@@ -277,7 +278,15 @@ configuration file - you can call the
     be anything that would normally be supported by the routing configuration
     loader (YAML, XML, PHP, annotation, etc.).
 
+.. note::
+
+    For more advanced uses, check out the `ChainRouter`_ provided by the Symfony
+    CMF project. This router allows applications to use two or more routers
+    combined, for example to keep using the default Symfony routing system when
+    writing a custom router.
+
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
 .. _`JMSI18nRoutingBundle`: https://github.com/schmittjoh/JMSI18nRoutingBundle
 .. _`KnpRadBundle`: https://github.com/KnpLabs/KnpRadBundle
 .. _`SonataAdminBundle`: https://github.com/sonata-project/SonataAdminBundle
+.. _`ChainRouter`: https://symfony.com/doc/current/cmf/components/routing/chain.html

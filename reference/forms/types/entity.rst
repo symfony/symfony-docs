@@ -107,7 +107,7 @@ If you already have the exact collection of entities that you want to include
 in the choice element, just pass them via the ``choices`` key.
 
 For example, if you have a ``$group`` variable (passed into your form perhaps
-as a form option) and ``getUsers`` returns a collection of ``User`` entities,
+as a form option) and ``getUsers()`` returns a collection of ``User`` entities,
 then you can supply the ``choices`` option directly::
 
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -167,8 +167,8 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
         use Symfony\Bridge\Doctrine\Form\Type\EntityType;
         // ...
 
-        $builder->add('gender', EntityType::class, array(
-           'class' => 'AppBundle:Category',
+        $builder->add('genre', EntityType::class, array(
+           'class' => 'MyBundle:Genre',
            'choice_label' => 'translations[en].name',
         ));
 
@@ -203,6 +203,14 @@ passed the ``EntityRepository`` of the entity as the only argument and should
 return a ``QueryBuilder``. Returning ``null`` in the Closure will result in
 loading all entities.
 
+.. caution::
+
+    The entity used in the ``FROM`` clause of the `query_builder`_ option
+    will always be validated against the class which you have specified with
+    the form's `class`_ option. If you return another entity instead of the
+    one used in your ``FROM`` clause (for instance if you return an entity
+    from a joined table), it will break validation.
+    
 Overridden Options
 ------------------
 

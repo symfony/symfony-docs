@@ -4,6 +4,10 @@
 Lazy Services
 =============
 
+.. seealso::
+
+    Another way to inject services lazily is via a :doc:`service locator </service_container/service_locators>`.
+
 Why Lazy Services?
 ------------------
 
@@ -48,8 +52,7 @@ You can mark the service as ``lazy`` by manipulating its definition:
     .. code-block:: yaml
 
         services:
-           app.twig_extension:
-             class: AppBundle\Twig\AppExtension
+           AppBundle\Twig\AppExtension:
              lazy:  true
 
     .. code-block:: xml
@@ -57,21 +60,20 @@ You can mark the service as ``lazy`` by manipulating its definition:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.twig_extension" class="AppBundle\Twig\AppExtension" lazy="true" />
+                <service id="AppBundle\Twig\AppExtension" lazy="true" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Twig\AppExtension;
 
-        $definition = new Definition('AppBundle\Twig\AppExtension');
-        $definition->setLazy(true);
-
-        $container->setDefinition('app.twig_extension', $definition);
+        $container->register(AppExtension::class)
+            ->setLazy(true);
 
 Once you inject the service into another service, a virtual `proxy`_ with the
 same signature of the class representing the service should be injected. The

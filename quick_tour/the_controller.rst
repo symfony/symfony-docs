@@ -22,9 +22,9 @@ text content::
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {
@@ -57,8 +57,8 @@ a new method called ``helloAction()`` with the following content::
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {
@@ -114,8 +114,7 @@ Tweak the ``hello`` route by adding a new ``_format`` variable with ``html``
 as its default value::
 
     // src/AppBundle/Controller/DefaultController.php
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Symfony\Component\Routing\Annotation\Route;
 
     // ...
 
@@ -153,8 +152,8 @@ To restrict the formats supported by a given action, use the ``requirements``
 option of the ``@Route()`` annotation::
 
     // src/AppBundle/Controller/DefaultController.php
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+    use Symfony\Component\Routing\Annotation\Route;
 
     // ...
 
@@ -254,9 +253,9 @@ forget to add the new ``use`` statement that imports this ``Request`` class)::
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {
@@ -299,12 +298,10 @@ in a cookie by using native PHP sessions.
 Storing and retrieving information from the session can be easily achieved
 from any controller::
 
-    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Session\Session;
 
-    public function indexAction(Request $request)
+    public function indexAction(Session $session)
     {
-        $session = $request->getSession();
-
         // store an attribute for reuse during a later user request
         $session->set('foo', 'bar');
 
@@ -319,7 +316,7 @@ You can also store "flash messages" that will auto-delete after the next
 request. They are useful when you need to set a success message before
 redirecting the user to another page (which will then show the message)::
 
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         // ...
 
@@ -331,16 +328,20 @@ And you can display the flash message in the template like this:
 
 .. code-block:: html+twig
 
-    {% for flashMessage in app.session.flashBag.get('notice') %}
+    {% for message in app.flashes('notice') %}
         <div class="flash-notice">
-            {{ flashMessage }}
+            {{ message }}
         </div>
     {% endfor %}
+
+.. versionadded:: 3.3
+    The ``app.flashes()`` Twig function was introduced in Symfony 3.3. Prior,
+    you had to use ``app.session.flashBag()``.
 
 Final Thoughts
 --------------
 
-That's all there is to it and I'm not even sure you'll have spent the full
+That's all there is to it and I'm not even sure you have spent the full
 10 minutes. You were briefly introduced to bundles in the first part and
 all the features you've learned about so far are part of the core FrameworkBundle.
 But thanks to bundles, everything in Symfony can be extended or replaced.

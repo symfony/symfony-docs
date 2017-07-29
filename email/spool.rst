@@ -60,9 +60,9 @@ swiftmailer with the memory option, use the following configuration:
 Spool Using Files
 ------------------
 
-When you use the filesystem for spooling, Symfony creates a folder in the given 
+When you use the filesystem for spooling, Symfony creates a folder in the given
 path for each mail service (e.g. "default" for the default service). This folder
-will contain files for each email in the spool. So make sure this directory is 
+will contain files for each email in the spool. So make sure this directory is
 writable by Symfony (or your webserver/php)!
 
 In order to use the spool with files, use the following configuration:
@@ -85,7 +85,8 @@ In order to use the spool with files, use the following configuration:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <swiftmailer:config>
@@ -111,12 +112,12 @@ In order to use the spool with files, use the following configuration:
 .. tip::
 
     If you want to store the spool somewhere with your project directory,
-    remember that you can use the ``%kernel.root_dir%`` parameter to reference
+    remember that you can use the ``%kernel.project_dir%`` parameter to reference
     the project's root:
 
     .. code-block:: yaml
 
-        path: '%kernel.root_dir%/spool'
+        path: '%kernel.project_dir%/app/spool'
 
 Now, when your app sends an email, it will not actually be sent but instead
 added to the spool. Sending the messages from the spool is done separately.
@@ -150,12 +151,12 @@ at a regular interval.
 
     If you use the memory spool, this change is transparent and has no impact.
     But when using the filesystem spool, the message class is serialized in
-    a file with the randomized class name. The problem is that this random 
+    a file with the randomized class name. The problem is that this random
     class name changes on every cache clear. So if you send a mail and then you
     clear the cache, the message will not be unserializable.
 
     On the next execution of ``swiftmailer:spool:send`` an error will raise because
     the class ``Swift_Message_<someRandomCharacters>`` doesn't exist (anymore).
 
-    The solutions are either to use the memory spool or to load the 
+    The solutions are either to use the memory spool or to load the
     ``swiftmailer`` service without the ``lazy`` option (see :doc:`/service_container/lazy_services`).

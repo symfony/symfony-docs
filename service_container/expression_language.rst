@@ -10,15 +10,12 @@ How to Inject Values Based on Complex Expressions
 The service container also supports an "expression" that allows you to inject
 very specific values into a service.
 
-For example, suppose you have a third service (not shown here), called ``mailer_configuration``,
-which has a ``getMailerMethod()`` method on it, which will return a string
-like ``sendmail`` based on some configuration. Remember that the first argument
-to the ``my_mailer`` service is the simple string ``sendmail``:
+For example, suppose you have a service (not shown here), called ``AppBundle\Mail\MailerConfiguration``,
+which has a ``getMailerMethod()`` method on it. This returns a string - like ``sendmail``
+based on some configuration.
 
-.. include:: /_includes/service_container/_my_mailer.rst.inc
-
-But instead of hardcoding this, how could we get this value from the ``getMailerMethod()``
-of the new ``mailer_configuration`` service? One way is to use an expression:
+Suppose that you want to pass the result of this method as a constructor argument
+to another service: ``AppBundle\Mailer``. One way to do this is with an expression:
 
 .. configuration-block::
 
@@ -26,9 +23,12 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
 
         # app/config/config.yml
         services:
-            my_mailer:
-                class:        AppBundle\Mailer
-                arguments:    ["@=service('mailer_configuration').getMailerMethod()"]
+            # ...
+
+            AppBundle\Mail\MailerConfiguration: ~
+
+            AppBundle\Mailer:
+                arguments: ["@=service('AppBundle\\Mail\\MailerConfiguration').getMailerMethod()"]
 
     .. code-block:: xml
 
@@ -37,12 +37,15 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd"
-            >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="my_mailer" class="AppBundle\Mailer">
-                    <argument type="expression">service('mailer_configuration').getMailerMethod()</argument>
+                <!-- ... -->
+
+                <service id="AppBundle\Mail\MailerConfiguration"></service>
+
+                <service id="AppBundle\Mailer">
+                    <argument type="expression">service('AppBundle\Mail\MailerConfiguration').getMailerMethod()</argument>
                 </service>
             </services>
         </container>
@@ -50,13 +53,14 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
     .. code-block:: php
 
         // app/config/config.php
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Mail\MailerConfiguration;
+        use AppBundle\Mailer;
         use Symfony\Component\ExpressionLanguage\Expression;
 
-        $container->setDefinition('my_mailer', new Definition(
-            'AppBundle\Mailer',
-            array(new Expression('service("mailer_configuration").getMailerMethod()'))
-        ));
+        $container->autowire(AppBundle\Mail\MailerConfiguration::class);
+
+        $container->autowire(Mailer::class)
+            ->addArgument(new Expression('service("AppBundle\Mail\MailerConfiguration").getMailerMethod()'));
 
 To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
 
@@ -75,8 +79,7 @@ via a ``container`` variable. Here's another example:
     .. code-block:: yaml
 
         services:
-            my_mailer:
-                class:     AppBundle\Mailer
+            AppBundle\Mailer:
                 arguments: ["@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"]
 
     .. code-block:: xml
@@ -85,11 +88,10 @@ via a ``container`` variable. Here's another example:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd"
-            >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="my_mailer" class="AppBundle\Mailer">
+                <service id="AppBundle\Mailer">
                     <argument type="expression">container.hasParameter('some_param') ? parameter('some_param') : 'default_value'</argument>
                 </service>
             </services>
@@ -97,15 +99,13 @@ via a ``container`` variable. Here's another example:
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Mailer;
         use Symfony\Component\ExpressionLanguage\Expression;
 
-        $container->setDefinition('my_mailer', new Definition(
-            'AppBundle\Mailer',
-            array(new Expression(
+        $container->autowire(Mailer::class)
+            ->addArgument(new Expression(
                 "container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"
-            ))
-        ));
+            ));
 
 Expressions can be used in ``arguments``, ``properties``, as arguments with
 ``configurator`` and as arguments to ``calls`` (method calls).

@@ -4,127 +4,136 @@
 How to Set external Parameters in the Service Container
 =======================================================
 
-In the chapter :doc:`/configuration`, you learned how to manage your application
-configuration. At times, it may benefit your application
-to store certain credentials outside of your project code. Database configuration
-is one such example. The flexibility of the Symfony service container allows
-you to easily do this.
+In the article :doc:`/configuration`, you learned how to manage your application
+configuration. At times, it may benefit your application to store certain
+credentials outside of your project code. Database configuration is one such
+example. The flexibility of the Symfony service container allows you to easily
+do this.
 
 Environment Variables
 ---------------------
 
-Symfony will grab any environment variable prefixed with ``SYMFONY__`` and
-set it as a parameter in the service container. Some transformations are
-applied to the resulting parameter name:
+.. versionadded:: 3.2
+    ``env()`` parameters were introduced in Symfony 3.2.
 
-* ``SYMFONY__`` prefix is removed;
-* Parameter name is lowercased;
-* Double underscores are replaced with a period, as a period is not
-  a valid character in an environment variable name.
+You can reference environment variables by using special parameters named after
+the variables you want to use enclosed between ``env()``. Their actual values
+will be resolved at runtime (once per request), so that dumped containers can be
+reconfigured dynamically even after being compiled.
 
-For example, if you're using Apache, environment variables can be set using the
-`SetEnv`_ directive with the following ``VirtualHost`` configuration:
-
-.. code-block:: apache
-
-    <VirtualHost *:80>
-        ServerName      Symfony
-        DocumentRoot    "/path/to/symfony_2_app/web"
-        DirectoryIndex  index.php index.html
-        SetEnv          SYMFONY__DATABASE__USER user
-        SetEnv          SYMFONY__DATABASE__PASSWORD secret
-
-        <Directory "/path/to/symfony_2_app/web">
-            AllowOverride All
-            Allow from All
-        </Directory>
-    </VirtualHost>
-
-For Nginx web servers, the environment variables can be set with the `fastcgi_param`_
-directive. For example, in the configuration file where the ``fastcgi_params``
-file is included:
-
-.. code-block:: nginx
-
-    server {
-        server_name domain.tld www.domain.tld;
-        root /var/www/project/web;
-
-        location / {
-            try_files $uri /app.php$is_args$args;
-        }
-
-        location ~ ^/app\.php(/|$) {
-            fastcgi_pass unix:/var/run/php5-fpm.sock;
-            fastcgi_split_path_info ^(.+\.php)(/.*)$;
-            include fastcgi_params;
-            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-            fastcgi_param DOCUMENT_ROOT $realpath_root;
-            fastcgi_param SYMFONY__DATABASE__USER user;
-            fastcgi_param SYMFONY__DATABASE__PASSWORD secret;
-            internal;
-        }
-
-        # ...
-    }
-
-.. note::
-
-    The examples above are for an Apache and Nginx configuration. However, this
-    will work for any web server which supports the setting of environment
-    variables.
-
-    Also, in order for your console to work (which does not use a web server),
-    you must export these as shell variables. On a Unix system, you can run
-    the following:
-
-    .. code-block:: terminal
-
-        $ export SYMFONY__DATABASE__USER=user
-        $ export SYMFONY__DATABASE__PASSWORD=secret
-
-Now that you have declared an environment variable, it will be present
-in the PHP ``$_SERVER`` global variable. Symfony then automatically sets all
-``$_SERVER`` variables prefixed with ``SYMFONY__`` as parameters in the service
-container.
-
-You can now reference these parameters wherever you need them.
+For example, if you want to use the value of the ``DATABASE_HOST`` environment
+variable in your service container configuration, you can reference it using
+``%env(DATABASE_HOST)%`` in your configuration files:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         doctrine:
             dbal:
-                driver:   pdo_mysql
-                dbname:   symfony_project
-                user:     '%database.user%'
-                password: '%database.password%'
+                host: '%env(DATABASE_HOST)%'
 
     .. code-block:: xml
 
-        <!-- xmlns:doctrine="http://symfony.com/schema/dic/doctrine" -->
-        <!-- xsi:schemaLocation="http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"> -->
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
-        <doctrine:config>
-            <doctrine:dbal
-                driver="pdo_mysql"
-                dbname="symfony_project"
-                user="%database.user%"
-                password="%database.password%"
-            />
-        </doctrine:config>
+            <doctrine:config>
+                <doctrine:dbal
+                    host="%env(DATABASE_HOST)%"
+                />
+            </doctrine:config>
+
+        </container>
 
     .. code-block:: php
 
+        // app/config/config.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
-                'driver'   => 'pdo_mysql',
-                'dbname'   => 'symfony_project',
-                'user'     => '%database.user%',
-                'password' => '%database.password%',
+                'host' => '%env(DATABASE_HOST)%',
             )
         ));
+
+You can also give the ``env()`` parameters a default value: the default value
+will be used whenever the corresponding environment variable is *not* found:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/parameters.yml
+        parameters:
+            database_host: '%env(DATABASE_HOST)%'
+            env(DATABASE_HOST): localhost
+
+    .. code-block:: xml
+
+        <!-- app/config/parameters.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="database_host">%env(DATABASE_HOST)%</parameter>
+                <parameter key="env(DATABASE_HOST)">localhost</parameter>
+            </parameters>
+         </container>
+
+    .. code-block:: php
+
+        // app/config/parameters.php
+        $container->setParameter('database_host', '%env(DATABASE_HOST)%');
+        $container->setParameter('env(DATABASE_HOST)', 'localhost');
+
+Setting environment variables is generally done at the web server level or in the
+terminal. If you're using Apache, Nginx or just the console, you can use e.g. one
+of the following:
+
+.. configuration-block::
+
+    .. code-block:: apache
+
+        <VirtualHost *:80>
+            # ...
+
+            SetEnv DATABASE_USER user
+            SetEnv DATABASE_PASSWORD secret
+        </VirtualHost>
+
+    .. code-block:: nginx
+
+        fastcgi_param DATABASE_USER user;
+        fastcgi_param DATABASE_PASSWORD secret;
+
+    .. code-block:: terminal
+
+        $ export DATABASE_USER=user
+        $ export DATABASE_PASSWORD=secret
+
+.. tip::
+
+    .. versionadded:: 3.3
+        The support of the special ``SYMFONY__`` environment variables was
+        deprecated in Symfony 3.3 and it will be removed in 4.0. Instead of
+        using those variables, define regular environment variables and get
+        their values using the ``%env(...)%`` syntax in your config files.
+
+    You can also define the default value of any existing parameters using
+    special environment variables named after their corresponding parameter
+    prefixed with ``SYMFONY__`` after replacing dots by double underscores
+    (e.g. ``SYMFONY__KERNEL__CHARSET`` to set the default value of the
+    ``kernel.charset`` parameter). These default values are resolved when
+    compiling the service container and won't change at runtime once dumped.
 
 Constants
 ---------
@@ -150,9 +159,17 @@ in the container. The following imports a file named ``parameters.php``.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <imports>
-            <import resource="parameters.php" />
-        </imports>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <imports>
+                <import resource="parameters.php" />
+            </imports>
+
+        </container>
 
     .. code-block:: php
 

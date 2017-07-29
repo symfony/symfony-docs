@@ -21,8 +21,8 @@ First, create a new class that implements
 Eventually, this will allow you to create custom logic for authenticating
 the user::
 
-    // src/Acme/HelloBundle/Security/TimeAuthenticator.php
-    namespace Acme\HelloBundle\Security;
+    // src/AppBundle/Security/TimeAuthenticator.php
+    namespace AppBundle\Security;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -61,7 +61,7 @@ the user::
                     // (so don't put any un-trusted messages / error strings here)
                     throw new CustomUserMessageAuthenticationException(
                         'You can only log in between 2 and 4!',
-                        100
+                        412 // HTTP 412 Precondition Failed
                     );
                 }
 
@@ -114,7 +114,7 @@ Whatever token object you create here will be passed to you later in ``authentic
 3) authenticateToken
 ~~~~~~~~~~~~~~~~~~~~
 
-If ``supportsToken`` returns ``true``, Symfony will now call ``authenticateToken()``.
+If ``supportsToken()`` returns ``true``, Symfony will now call ``authenticateToken()``.
 Your job here is to check that the token is allowed to log in by first
 getting the ``User`` object via the user provider and then, by checking the password
 and the current time.
@@ -142,53 +142,11 @@ the ``encoders`` key. Below, you'll see how to inject that into the ``TimeAuthen
 Configuration
 -------------
 
-Now, configure your ``TimeAuthenticator`` as a service:
+Now, make sure your ``TimeAuthenticator`` is registered as as service. If you're
+using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+that happens automatically.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        services:
-            # ...
-
-            time_authenticator:
-                class:     Acme\HelloBundle\Security\TimeAuthenticator
-                arguments: ["@security.password_encoder"]
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-            <services>
-                <!-- ... -->
-
-                <service id="time_authenticator"
-                    class="Acme\HelloBundle\Security\TimeAuthenticator"
-                >
-                    <argument type="service" id="security.password_encoder" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
-        
-        // ...
-
-        $container->setDefinition('time_authenticator', new Definition(
-            'Acme\HelloBundle\Security\TimeAuthenticator',
-            array(new Reference('security.password_encoder'))
-        ));
-
-Then, activate it in the ``firewalls`` section of the security configuration
+Finally, activate the service in the ``firewalls`` section of the security configuration
 using the ``simple_form`` key:
 
 .. configuration-block::
@@ -204,7 +162,7 @@ using the ``simple_form`` key:
                     pattern: ^/admin
                     # ...
                     simple_form:
-                        authenticator: time_authenticator
+                        authenticator: AppBundle\Security\TimeAuthenticator
                         check_path:    login_check
                         login_path:    login
 
@@ -223,7 +181,7 @@ using the ``simple_form`` key:
                 <firewall name="secured_area"
                     pattern="^/admin"
                     >
-                    <simple-form authenticator="time_authenticator"
+                    <simple-form authenticator="AppBundle\Security\TimeAuthenticator"
                         check-path="login_check"
                         login-path="login"
                     />
@@ -235,7 +193,8 @@ using the ``simple_form`` key:
 
         // app/config/security.php
 
-        // ..
+        // ...
+        use AppBundle\Security\TimeAuthenticator;
 
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -243,7 +202,7 @@ using the ``simple_form`` key:
                     'pattern'     => '^/admin',
                     'simple_form' => array(
                         'provider'      => ...,
-                        'authenticator' => 'time_authenticator',
+                        'authenticator' => AppBundle\Security\TimeAuthenticator::class,
                         'check_path'    => 'login_check',
                         'login_path'    => 'login',
                     ),

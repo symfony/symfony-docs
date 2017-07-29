@@ -13,6 +13,8 @@ directory structure is:
     your-project/
     ├─ app/
     │  ├─ config/
+    │  ├─ Resources/
+    │  │  └─ views/
     │  └─ ...
     ├─ bin/
     │  └─ ...
@@ -35,7 +37,7 @@ directory structure is:
 Override the ``cache`` Directory
 --------------------------------
 
-You can change the default cache directory by overriding the ``getCacheDir`` method
+You can change the default cache directory by overriding the ``getCacheDir()`` method
 in the ``AppKernel`` class of your application::
 
     // app/AppKernel.php
@@ -68,7 +70,7 @@ Override the ``logs`` Directory
 -------------------------------
 
 Overriding the ``logs`` directory is the same as overriding the ``cache``
-directory. The only difference is that you need to override the ``getLogDir``
+directory. The only difference is that you need to override the ``getLogDir()``
 method::
 
     // app/AppKernel.php
@@ -85,6 +87,51 @@ method::
     }
 
 Here you have changed the location of the directory to ``var/{environment}/logs``.
+
+.. _override-templates-dir:
+
+Override the Templates Directory
+--------------------------------
+
+If your templates are not stored in the default ``app/Resources/views/``
+directory, use the :ref:`twig.paths <config-twig-paths>` configuration option to
+define your own templates directory (or directories):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        twig:
+            # ...
+            paths: ["%kernel.root_dir%/../templates"]
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <twig:path>%kernel.root_dir%/../templates</twig:path>
+            </twig:config>
+
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('twig', array(
+            'paths' => array(
+                '%kernel.root_dir%/../templates',
+            ),
+        ));
 
 .. _override-web-dir:
 
@@ -135,7 +182,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
             # ...
             assetic:
                 # ...
-                read_from: '%kernel.root_dir%/../../public_html'
+                read_from: '%kernel.project_dir%/../public_html'
 
         .. code-block:: xml
 
@@ -151,6 +198,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
 
                 <!-- ... -->
                 <assetic:config read-from="%kernel.root_dir%/../../public_html" />
+
             </container>
 
         .. code-block:: php
@@ -160,7 +208,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
             // ...
             $container->loadFromExtension('assetic', array(
                 // ...
-                'read_from' => '%kernel.root_dir%/../../public_html',
+                'read_from' => '%kernel.project_dir%/../public_html',
             ));
 
     Now you just need to clear the cache and dump the assets again and your
@@ -168,7 +216,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
 
     .. code-block:: terminal
 
-        $ php bin/console cache:clear --env=prod
+        $ php bin/console cache:clear --no-warmup --env=prod
         $ php bin/console assetic:dump --env=prod --no-debug
 
 Override the ``vendor`` Directory

@@ -139,7 +139,7 @@ corresponding firewall in your security configuration:
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
-                    'pattern'     => '^/'
+                    'pattern'     => '^/',
                     'remote_user' => array(
                         'provider' => 'your_user_provider',
                     ),

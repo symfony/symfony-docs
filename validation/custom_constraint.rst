@@ -24,7 +24,7 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
      */
     class ContainsAlphanumeric extends Constraint
     {
-        public $message = 'The string "%string%" contains an illegal character: it can only contain letters or numbers.';
+        public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
     }
 
 .. note::
@@ -45,7 +45,7 @@ includes some simple default logic::
     // in the base Symfony\Component\Validator\Constraint class
     public function validatedBy()
     {
-        return get_class($this).'Validator';
+        return ContainsAlphanumericValidator::class;
     }
 
 In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
@@ -66,7 +66,7 @@ The validator class is also simple, and only has one required method ``validate(
         {
             if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
                 $this->context->buildViolation($constraint->message)
-                    ->setParameter('%string%', $value)
+                    ->setParameter('{{ string }}', $value)
                     ->addViolation();
             }
         }
@@ -74,10 +74,10 @@ The validator class is also simple, and only has one required method ``validate(
 
 Inside ``validate``, you don't need to return a value. Instead, you add violations
 to the validator's ``context`` property and a value will be considered valid
-if it causes no violations. The ``buildViolation`` method takes the error
+if it causes no violations. The ``buildViolation()`` method takes the error
 message as its argument and returns an instance of
 :class:`Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilderInterface`.
-The ``addViolation`` method call finally adds the violation to the context.
+The ``addViolation()`` method call finally adds the violation to the context.
 
 Using the new Validator
 -----------------------
@@ -155,45 +155,10 @@ configured like options on core Symfony constraints.
 Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your constraint validator has dependencies, such as a database connection,
-it will need to be configured as a service in the Dependency Injection
-Container. This service must include the ``validator.constraint_validator``
-tag so that the validation system knows about it:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            validator.contains_alphanumeric:
-                class: AppBundle\Validator\Constraints\ContainsAlphanumericValidator
-                tags:
-                    - { name: validator.constraint_validator }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <service id="validator.contains_alphanumeric" class="AppBundle\Validator\Constraints\ContainsAlphanumericValidator">
-            <argument type="service" id="doctrine.orm.default_entity_manager" />
-            <tag name="validator.constraint_validator" />
-        </service>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        $container
-            ->register('validator.contains_alphanumeric', 'AppBundle\Validator\Constraints\ContainsAlphanumericValidator')
-            ->addTag('validator.constraint_validator');
-
-Now, when Symfony looks for the ``ContainsAlphanumericValidator`` validator, it will
-load this service from the container.
-
-.. note::
-
-    In earlier versions of Symfony, the tag required an ``alias`` key (usually set
-    to the class name). This is still allowed your constraint's ``validateBy``
-    method can return this alias (instead of a class name).
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+then your validator is already registered as a service and :doc:`tagged </service_container/tags>`
+with the necessary ``validator.constraint_validator``. This means you can
+:ref:`inject services or configuration <services-constructor-injection>` like any other service.
 
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

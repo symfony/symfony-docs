@@ -5,13 +5,13 @@ Security
 ========
 
 Symfony's security system is incredibly powerful, but it can also be confusing
-to set up. In this chapter, you'll learn how to set up your application's security
+to set up. In this article, you'll learn how to set up your application's security
 step-by-step, from configuring your firewall and how you load users to denying
 access and fetching the User object. Depending on what you need, sometimes
 the initial setup can be tough. But once it's done, Symfony's security system
 is both flexible and (hopefully) fun to work with.
 
-Since there's a lot to talk about, this chapter is organized into a few big
+Since there's a lot to talk about, this article is organized into a few big
 sections:
 
 #. Initial ``security.yml`` setup (*authentication*);
@@ -25,6 +25,7 @@ like :ref:`logging out <security-logging-out>` and
 :doc:`encoding user passwords </security/password_encoding>`.
 
 .. _security-firewalls:
+.. _firewalls-authentication:
 
 1) Initial security.yml Setup (Authentication)
 ----------------------------------------------
@@ -47,7 +48,7 @@ configuration looks like this:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
 
-                default:
+                main:
                     anonymous: ~
 
     .. code-block:: xml
@@ -69,7 +70,7 @@ configuration looks like this:
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
                     security="false" />
 
-                <firewall name="default">
+                <firewall name="main">
                     <anonymous />
                 </firewall>
             </config>
@@ -86,11 +87,11 @@ configuration looks like this:
             ),
             'firewalls' => array(
                 'dev' => array(
-                    'pattern'    => '^/(_(profiler|wdt)|css|images|js)/',
-                    'security'   => false,
+                    'pattern'   => '^/(_(profiler|wdt)|css|images|js)/',
+                    'security'  => false,
                 ),
-                'default' => array(
-                    'anonymous'  => null,
+                'main' => array(
+                    'anonymous' => null,
                 ),
             ),
         ));
@@ -105,7 +106,7 @@ by your security.
     You can also match a request against other details of the request (e.g. host). For more
     information and examples read :doc:`/security/firewall_restriction`.
 
-All other URLs will be handled by the ``default`` firewall (no ``pattern``
+All other URLs will be handled by the ``main`` firewall (no ``pattern``
 key means it matches *all* URLs). You can think of the firewall like your
 security system, and so it usually makes sense to have just one main firewall.
 But this does *not* mean that every URL requires authentication - the ``anonymous``
@@ -143,7 +144,7 @@ To activate this, add the ``http_basic`` key under your firewall:
 
             firewalls:
                 # ...
-                default:
+                main:
                     anonymous: ~
                     http_basic: ~
 
@@ -160,7 +161,7 @@ To activate this, add the ``http_basic`` key under your firewall:
             <config>
                 <!-- ... -->
 
-                <firewall name="default">
+                <firewall name="main">
                     <anonymous />
                     <http-basic />
                 </firewall>
@@ -174,7 +175,7 @@ To activate this, add the ``http_basic`` key under your firewall:
             // ...
             'firewalls' => array(
                 // ...
-                'default' => array(
+                'main' => array(
                     'anonymous'  => null,
                     'http_basic' => null,
                 ),
@@ -188,9 +189,9 @@ example, if you use annotations, create something like this::
     // src/AppBundle/Controller/DefaultController.php
     // ...
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {
@@ -215,7 +216,7 @@ user to be logged in to access this URL:
             # ...
             firewalls:
                 # ...
-                default:
+                main:
                     # ...
 
             access_control:
@@ -235,7 +236,7 @@ user to be logged in to access this URL:
             <config>
                 <!-- ... -->
 
-                <firewall name="default">
+                <firewall name="main">
                     <!-- ... -->
                 </firewall>
 
@@ -251,13 +252,13 @@ user to be logged in to access this URL:
             // ...
             'firewalls' => array(
                 // ...
-                'default' => array(
+                'main' => array(
                     // ...
                 ),
             ),
            'access_control' => array(
                // require ROLE_ADMIN for /admin*
-                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
+                array('path' => '^/admin', 'roles' => 'ROLE_ADMIN'),
             ),
         ));
 
@@ -450,6 +451,7 @@ If you'd like to load your users via the Doctrine ORM, that's easy! See
 :doc:`/security/entity_provider` for all the details.
 
 .. _security-encoding-user-password:
+.. _encoding-the-user-s-password:
 
 C) Encoding the User's Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -703,7 +705,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
 
             firewalls:
                 # ...
-                default:
+                main:
                     # ...
 
             access_control:
@@ -723,7 +725,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
             <config>
                 <!-- ... -->
 
-                <firewall name="default">
+                <firewall name="main">
                     <!-- ... -->
                 </firewall>
 
@@ -740,7 +742,7 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
 
             'firewalls' => array(
                 // ...
-                'default' => array(
+                'main' => array(
                     // ...
                 ),
             ),
@@ -995,13 +997,13 @@ After authentication, the ``User`` object of the current user can be accessed
 via the ``security.token_storage`` service. From inside a controller, this will
 look like::
 
-    public function indexAction()
+    use Symfony\Component\Security\Core\User\UserInterface;
+
+    public function indexAction(UserInterface $user)
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-
-        $user = $this->getUser();
 
         // the above is a shortcut for this
         $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -1011,6 +1013,12 @@ look like::
 
     The user will be an object and the class of that object will depend on
     your :ref:`user provider <security-user-providers>`.
+
+.. versionadded:: 3.2
+    The functionality to get the user via the method signature was introduced in
+    Symfony 3.2. You can still retrieve it by calling ``$this->getUser()`` if you
+    extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
+    class.
 
 Now you can call whatever methods are on *your* User object. For example,
 if your User object has a ``getFirstName()`` method, you could use that::
@@ -1032,10 +1040,17 @@ It's important to check if the user is authenticated first. If they're not,
 ``$user`` will either be ``null`` or the string ``anon.``. Wait, what? Yes,
 this is a quirk. If you're not logged in, the user is technically the string
 ``anon.``, though the ``getUser()`` controller shortcut converts this to
-``null`` for convenience.
+``null`` for convenience. When type-hinting the
+:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface\\UserInterface`
+and being logged-in is optional, you can allow a null value for the argument::
+
+    public function indexAction(UserInterface $user = null)
+    {
+        // $user is null when not logged-in or anon.
+    }
 
 The point is this: always check to see if the user is logged in before using
-the User object, and use the ``isGranted`` method (or
+the User object, and use the ``isGranted()`` method (or
 :ref:`access_control <security-authorization-access-control>`) to do this::
 
     // yay! Use this to see if the user is logged in
@@ -1274,7 +1289,6 @@ Authentication (Identifying/Logging in the User)
     security/api_key_authentication
     security/custom_authentication_provider
     security/pre_authenticated
-    security/target_path
     security/csrf_in_login_form
     security/named_encoders
     security/multiple_user_providers
@@ -1295,6 +1309,7 @@ Authorization (Denying Access)
     security/force_https
     security/securing_services
     security/access_control
+    security/access_denied_handler
 
 Other Security Related Topics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

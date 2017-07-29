@@ -2,7 +2,7 @@
    single: Configuration; Semantic
    single: Bundle; Extension configuration
 
-How to Simplify Configuration of multiple Bundles
+How to Simplify Configuration of Multiple Bundles
 =================================================
 
 When building reusable and extensible applications, developers are often
@@ -12,9 +12,9 @@ users to choose to remove functionality they are not using. Creating multiple
 bundles has the drawback that configuration becomes more tedious and settings
 often need to be repeated for various bundles.
 
-Using the below approach, it is possible to remove the disadvantage of the
-multiple bundle approach by enabling a single Extension to prepend the settings
-for any bundle. It can use the settings defined in the ``app/config/config.yml``
+It is possible to remove the disadvantage of the multiple bundle approach
+by enabling a single Extension to prepend the settings for any bundle.
+It can use the settings defined in the ``app/config/config.yml``
 to prepend settings just as if they had been written explicitly by
 the user in the application configuration.
 
@@ -56,6 +56,7 @@ The following example illustrates how to prepend
 a configuration setting in multiple bundles as well as disable a flag in multiple bundles
 in case a specific other bundle is not registered::
 
+    // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
     public function prepend(ContainerBuilder $container)
     {
         // get all bundles
@@ -69,8 +70,10 @@ in case a specific other bundle is not registered::
                     case 'acme_something':
                     case 'acme_other':
                         // set use_acme_goodbye to false in the config of
-                        // acme_something and acme_other note that if the user manually
-                        // configured use_acme_goodbye to true in the app/config/config.yml
+                        // acme_something and acme_other
+                        //
+                        // note that if the user manually configured
+                        // use_acme_goodbye to true in app/config/config.yml
                         // then the setting would in the end be true and not false
                         $container->prependExtensionConfig($name, $config);
                         break;
@@ -113,11 +116,21 @@ The above would be the equivalent of writing the following into the
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <acme-something:config use-acme-goodbye="false">
-            <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>
-        </acme-something:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:acme-something="http://example.org/schema/dic/acme_something"
+            xmlns:acme-other="http://example.org/schema/dic/acme_other"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <acme-other:config use-acme-goodbye="false" />
+            <acme-something:config use-acme-goodbye="false">
+                <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>
+            </acme-something:config>
+
+            <acme-other:config use-acme-goodbye="false" />
+
+        </container>
 
     .. code-block:: php
 

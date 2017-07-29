@@ -16,7 +16,7 @@ a routing ``{wildcard}`` to only match some regular expression:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends Controller
         {
@@ -75,7 +75,7 @@ a routing ``{wildcard}`` to only match some regular expression:
 Thanks to the ``\d+`` requirement (i.e. a "digit" of any length), ``/blog/2`` will
 match this route but ``/blog/some-string`` will *not* match.
 
-.. sidebar:: Earlier Routes always Win
+.. sidebar:: Earlier Routes Always Win
 
     Why would you ever care about requirements? If a request matches *two* routes,
     then the first route always wins. By adding requirements to the first route,
@@ -195,17 +195,15 @@ accomplished with the following route configuration:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
+        // src/AppBundle/Controller/BlogApiController.php
         namespace AppBundle\Controller;
 
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
         // ...
 
         class BlogApiController extends Controller
         {
             /**
-             * @Route("/api/posts/{id}")
-             * @Method({"GET","HEAD"})
+             * @Route("/api/posts/{id}", methods={"GET","HEAD"})
              */
             public function showAction($id)
             {
@@ -213,8 +211,7 @@ accomplished with the following route configuration:
             }
 
             /**
-             * @Route("/api/posts/{id}")
-             * @Method("PUT")
+             * @Route("/api/posts/{id}", methods="PUT")
              */
             public function editAction($id)
             {

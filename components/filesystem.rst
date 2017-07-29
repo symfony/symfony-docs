@@ -49,7 +49,7 @@ endpoint for filesystem operations::
 mkdir
 ~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory.
+:method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory recursively.
 On POSIX filesystems, directories are created with a default mode value
 `0777`. You can use the second argument to set your own mode::
 
@@ -282,6 +282,21 @@ complete new file (but never a partially-written file)::
     $fs->dumpFile('file.txt', 'Hello World');
 
 The ``file.txt`` file contains ``Hello World`` now.
+
+appendToFile
+~~~~~~~~~~~~
+
+.. versionadded:: 3.3
+    The :method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile`
+    method was introduced in Symfony 3.3.
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile` adds new
+contents at the end of some file::
+
+    $fs->appendToFile('logs.txt', 'Email sent to user@example.com');
+
+If either the file or its containing directory doesn't exist, this method
+creates them before appending the contents.
 
 Error Handling
 --------------

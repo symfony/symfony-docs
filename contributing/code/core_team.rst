@@ -1,7 +1,15 @@
 Symfony Core Team
 =================
 
-This document states the rules that govern the Symfony Core group. These rules
+The **Symfony Core** team is the group of developers that determine the
+direction and evolution of the Symfony project. Their votes rule if the
+features and patches proposed by the community are approved or rejected.
+
+All the Symfony Core members are long-time contributors with solid technical
+expertise and they have demonstrated a strong commitment to drive the project
+forward.
+
+This document states the rules that govern the Symfony Core team. These rules
 are effective upon publication of this document and all Symfony Core members
 must adhere to said rules and protocol.
 
@@ -41,10 +49,6 @@ Active Core Members
 
 * **Mergers** (``@symfony/mergers`` on GitHub):
 
-  * **Bernhard Schussek** (`webmozart`_) can merge into the Form_,
-    Validator_, Icu_, Intl_, Locale_, OptionsResolver_ and PropertyAccess_
-    components;
-
   * **Tobias Schultze** (`Tobion`_) can merge into the Routing_,
     OptionsResolver_ and PropertyAccess_ components;
 
@@ -58,26 +62,40 @@ Active Core Members
   * **Christophe Coevoet** (`stof`_) can merge into all components, bridges and
     bundles;
 
-  * **Kévin Dunglas** (`dunglas`_) can merge into the Serializer_
+  * **Kévin Dunglas** (`dunglas`_) can merge into the PropertyInfo_ and the Serializer_
     component;
 
-  * **Abdellatif AitBoudad** (`aitboudad`_) can merge into the Translation_
-    component;
-
-  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ component;
+  * **Jakub Zalas** (`jakzal`_) can merge into the DomCrawler_ and Intl_
+    components;
 
   * **Christian Flothmann** (`xabbuh`_) can merge into the Yaml_ component;
 
-  * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_
-    bundle.
+  * **Javier Eguiluz** (`javiereguiluz`_) can merge into the WebProfilerBundle_;
 
-  * **Grégoire Pineau** (`lyrixx`_) can merge into the Workflow_ component.
+  * **Grégoire Pineau** (`lyrixx`_) can merge into the Workflow_ component;
+
+  * **Ryan Weaver** (`weaverryan`_) can merge into the Security_ component and
+    the SecurityBundle_;
+
+  * **Robin Chalas** (`chalasr`_) can merge into the Console_ and Security_
+    components and the SecurityBundle_;
+
+  * **Maxime Steinhausser** (`ogizanagi`_) can merge into Config_, Console_,
+    Form_, Serializer_, DependencyInjection_, and HttpKernel_ components.
 
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
-  * **Lukas Kahwe Smith** (`lsmith77`_);
-  * **Ryan Weaver** (`weaverryan`_).
+  * **Lukas Kahwe Smith** (`lsmith77`_).
+
+Former Core Members
+~~~~~~~~~~~~~~~~~~~
+
+They are no longer part of the Core Team, but we are very grateful for all their
+Symfony contributions:
+
+  * **Bernhard Schussek** (`webmozart`_);
+  * **Abdellatif AitBoudad** (`aitboudad`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -150,7 +168,6 @@ Symfony Core Rules and Protocol Amendments
 The rules described in this document may be amended at anytime at the
 discretion of the **Project Leader**.
 
-
 .. [1] Minor changes comprise typos, DocBlock fixes, code standards
        violations, and minor CSS, JavaScript and HTML modifications.
 
@@ -170,6 +187,7 @@ discretion of the **Project Leader**.
 .. _HttpKernel: https://github.com/symfony/http-kernel
 .. _Icu: https://github.com/symfony/icu
 .. _Intl: https://github.com/symfony/intl
+.. _LDAP: https://github.com/symfony/ldap
 .. _Locale: https://github.com/symfony/locale
 .. _MonologBridge: https://github.com/symfony/monolog-bridge
 .. _OptionsResolver: https://github.com/symfony/options-resolver
@@ -179,6 +197,8 @@ discretion of the **Project Leader**.
 .. _Routing: https://github.com/symfony/routing
 .. _Serializer: https://github.com/symfony/serializer
 .. _Translation: https://github.com/symfony/translation
+.. _Security: https://github.com/symfony/security
+.. _SecurityBundle: https://github.com/symfony/security-bundle
 .. _Stopwatch: https://github.com/symfony/stopwatch
 .. _TwigBridge: https://github.com/symfony/twig-bridge
 .. _Validator: https://github.com/symfony/validator
@@ -201,3 +221,6 @@ discretion of the **Project Leader**.
 .. _`xabbuh`: https://github.com/xabbuh/
 .. _`javiereguiluz`: https://github.com/javiereguiluz/
 .. _`lyrixx`: https://github.com/lyrixx/
+.. _`chalasr`: https://github.com/chalasr/
+.. _`ogizanagi`: https://github.com/ogizanagi/
+.. _`csarrazi`: https://github.com/csarrazi/

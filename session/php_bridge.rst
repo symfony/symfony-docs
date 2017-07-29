@@ -8,7 +8,7 @@ If you're integrating the Symfony full-stack Framework into a legacy application
 that starts the session with ``session_start()``, you may still be able to
 use Symfony's session management by using the PHP Bridge session.
 
-If the application has it's own PHP save handler, you can specify null
+If the application has its own PHP save handler, you can specify null
 for the ``handler_id``:
 
 .. configuration-block::
@@ -24,7 +24,10 @@ for the ``handler_id``:
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:framework="http://symfony.com/schema/dic/symfony">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <framework:config>
                 <framework:session storage-id="session.storage.php_bridge"
@@ -39,6 +42,7 @@ for the ``handler_id``:
             'session' => array(
                 'storage_id' => 'session.storage.php_bridge',
                 'handler_id' => null,
+            ),
         ));
 
 Otherwise, if the problem is simply that you cannot avoid the application
@@ -59,7 +63,10 @@ the example below:
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:framework="http://symfony.com/schema/dic/symfony">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <framework:config>
                 <framework:session storage-id="session.storage.php_bridge"
@@ -74,6 +81,7 @@ the example below:
             'session' => array(
                 'storage_id' => 'session.storage.php_bridge',
                 'handler_id' => 'session.storage.native_file',
+            ),
         ));
 
 .. note::

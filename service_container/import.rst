@@ -8,9 +8,8 @@ How to Import Configuration Files/Resources
 .. tip::
 
     In this section, service configuration files are referred to as *resources*.
-    This is to highlight the fact that, while most configuration resources
-    will be files (e.g. YAML, XML, PHP), Symfony is so flexible that configuration
-    could be loaded from anywhere (e.g. a database or even via an external
+    While most configuration resources are files (e.g. YAML, XML, PHP), Symfony is
+    able to load configuration from anywhere (e.g. a database or even via an external
     web service).
 
 The service container is built using a single configuration resource
@@ -33,11 +32,9 @@ methods.
 Importing Configuration with ``imports``
 ----------------------------------------
 
-So far, you've placed your ``app.mailer`` service container definition directly
-in the services configuration file (e.g. ``app/config/services.yml``). If your
-application ends up having many services, this file becomes huge and hard to
-maintain. To avoid this, you can split your service configuration into multiple
-service files:
+By default, service configuration lives in ``app/config/services.yml``. But if that
+file becomes large, you're free to organize into multiple files. For suppose you
+decided to move some configuration to a new file:
 
 .. configuration-block::
 
@@ -45,12 +42,10 @@ service files:
 
         # app/config/services/mailer.yml
         parameters:
-            app.mailer.transport: sendmail
+            # ... some parameters
 
         services:
-            app.mailer:
-                class:        AppBundle\Mailer
-                arguments:    ['%app.mailer.transport%']
+            # ... some services
 
     .. code-block:: xml
 
@@ -62,32 +57,22 @@ service files:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
-                <parameter key="app.mailer.transport">sendmail</parameter>
+                <!-- ... some parameters -->
             </parameters>
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer">
-                    <argument>%app.mailer.transport%</argument>
-                </service>
+                <!-- ... some services -->
             </services>
         </container>
 
     .. code-block:: php
 
         // app/config/services/mailer.php
-        use Symfony\Component\DependencyInjection\Definition;
 
-        $container->setParameter('app.mailer.transport', 'sendmail');
+        // ... some parameters
+        // ... some services
 
-        $container->setDefinition('app.mailer', new Definition(
-            'AppBundle\Mailer',
-            array('%app.mailer.transport%')
-        ));
-
-The definition itself hasn't changed, only its location. To make the service
-container load the definitions in this resource file, use the ``imports`` key
-in any already loaded resource (e.g. ``app/config/services.yml`` or
-``app/config/config.yml``):
+To import this file, use the ``imports`` key from a file that *is* loaded:
 
 .. configuration-block::
 
@@ -130,72 +115,18 @@ Importing Configuration via Container Extensions
 ------------------------------------------------
 
 Third-party bundle container configuration, including Symfony core services,
-are usually loaded using another method that's more flexible and easy to
-configure in your application.
+are usually loaded using another method: a container extension.
 
-Internally, each bundle defines its services like you've seen so far. However,
-these files aren't imported using the ``import`` directive. These bundles use a
-*dependency injection extension* to load the files. The extension also allows
-bundles to provide configuration to dynamically load some services.
+Internally, each bundle defines its services in files like you've seen so far.
+However, these files aren't imported using the ``import`` directive. Instead, bundles
+use a *dependency injection extension* to load the files automatically. As soon
+as you enable a bundle, its extension is called, which is able to load service
+configuration files.
 
-Take the FrameworkBundle - the core Symfony Framework bundle - as an
-example. The presence of the following code in your application configuration
-invokes the service container extension inside the FrameworkBundle:
+In fact, each configuration block in ``config.yml`` - e.g. ``framework`` or ``twig``-
+is passed to the extension for that bundle - e.g. ``FrameworkBundle`` or ``TwigBundle`` -
+and used to configure those services further.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            secret: xxxxxxxxxx
-            form:   true
-            # ...
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
-
-            <framework:config secret="xxxxxxxxxx">
-                <framework:form />
-
-                <!-- ... -->
-            </framework>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'secret' => 'xxxxxxxxxx',
-            'form'   => array(),
-
-            // ...
-        ));
-
-When the resources are parsed, the container looks for an extension that
-can handle the ``framework`` directive. The extension in question, which lives
-in the FrameworkBundle, is invoked and the service configuration for the
-FrameworkBundle is loaded.
-
-The settings under the ``framework`` directive (e.g. ``form: true``) indicate
-that the extension should load all services related to the Form component. If
-form was disabled, these services wouldn't be loaded and Form integration would
-not be available.
-
-When installing or configuring a bundle, see the bundle's documentation for
-how the services for the bundle should be installed and configured. The options
-available for the core bundles can be found inside the :doc:`Reference Guide </reference/index>`.
-
-.. seealso::
-
-    If you want to use dependency injection extensions in your own shared
-    bundles and provide user friendly configuration, take a look at the
-    :doc:`/bundles/extension` article.
+If you want to use dependency injection extensions in your own shared
+bundles and provide user friendly configuration, take a look at the
+:doc:`/bundles/extension` article.

@@ -123,6 +123,7 @@ Here's an example of how this might look::
     // src/AppBundle/Security/User/WebserviceUserProvider.php
     namespace AppBundle\Security\User;
 
+    use AppBundle\Security\User\WebserviceUser;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -162,60 +163,16 @@ Here's an example of how this might look::
 
         public function supportsClass($class)
         {
-            return $class === 'AppBundle\Security\User\WebserviceUser';
+            return WebserviceUser::class === $class;
         }
     }
 
 Create a Service for the User Provider
 --------------------------------------
 
-Now you make the user provider available as a service:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.webservice_user_provider:
-                class: AppBundle\Security\User\WebserviceUserProvider
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.webservice_user_provider"
-                    class="AppBundle\Security\User\WebserviceUserProvider"
-                />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        $container->setDefinition(
-            'app.webservice_user_provider',
-            new Definition('AppBundle\Security\User\WebserviceUserProvider')
-        );
-
-.. tip::
-
-    The real implementation of the user provider will probably have some
-    dependencies or configuration options or other services. Add these as
-    arguments in the service definition.
-
-.. note::
-
-    Make sure the services file is being imported. See :ref:`service-container-imports-directive`
-    for details.
+Now you make the user provider available as a service. If you're using the
+:ref:`default services.yml configuration <service-container-services-load-example>`,
+this happens automatically.
 
 Modify ``security.yml``
 -----------------------
@@ -234,7 +191,7 @@ to the list of providers in the "security" section. Choose a name for the user p
 
             providers:
                 webservice:
-                    id: app.webservice_user_provider
+                    id: AppBundle\Security\User\WebserviceUserProvider
 
     .. code-block:: xml
 
@@ -249,19 +206,21 @@ to the list of providers in the "security" section. Choose a name for the user p
             <config>
                 <!-- ... -->
 
-                <provider name="webservice" id="app.webservice_user_provider" />
+                <provider name="webservice" id="AppBundle\Security\User\WebserviceUserProvider" />
             </config>
         </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
+        use AppBundle\Security\User\WebserviceUserProvider;
+
         $container->loadFromExtension('security', array(
             // ...
 
             'providers' => array(
                 'webservice' => array(
-                    'id' => 'app.webservice_user_provider',
+                    'id' => WebserviceUserProvider::class,
                 ),
             ),
         ));
@@ -302,11 +261,13 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
     .. code-block:: php
 
         // app/config/security.php
+        use AppBundle\Security\User\WebserviceUser;
+
         $container->loadFromExtension('security', array(
             // ...
 
             'encoders' => array(
-                'AppBundle\Security\User\WebserviceUser' => 'bcrypt',
+                WebserviceUser::class => 'bcrypt',
             ),
             // ...
         ));
@@ -330,7 +291,7 @@ is compared to the hashed password returned by your ``getPassword()`` method.
     then you'll need to do a bit more work so that Symfony properly encodes
     the password. That is beyond the scope of this entry, but would include
     sub-classing ``MessageDigestPasswordEncoder`` and overriding the
-    ``mergePasswordAndSalt`` method.
+    ``mergePasswordAndSalt()`` method.
 
     Additionally, you can configure the details of the algorithm used to hash
     passwords. In this example, the application sets explicitly the cost of
@@ -371,11 +332,13 @@ is compared to the hashed password returned by your ``getPassword()`` method.
         .. code-block:: php
 
             // app/config/security.php
+            use AppBundle\Security\User\WebserviceUser;
+
             $container->loadFromExtension('security', array(
                 // ...
 
                 'encoders' => array(
-                    'AppBundle\Security\User\WebserviceUser' => array(
+                    WebserviceUser::class => array(
                         'algorithm' => 'bcrypt',
                         'cost' => 12,
                     ),

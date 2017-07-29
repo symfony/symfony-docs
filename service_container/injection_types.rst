@@ -19,12 +19,12 @@ The most common way to inject dependencies is via a class's constructor.
 To do this you need to add an argument to the constructor signature to accept
 the dependency::
 
-    namespace AppBundle\Mail\NewsletterManager;
+    namespace AppBundle\Mail;
 
     // ...
     class NewsletterManager
     {
-        protected $mailer;
+        private $mailer;
 
         public function __construct(MailerInterface $mailer)
         {
@@ -44,8 +44,7 @@ service container configuration:
        services:
             # ...
 
-            app.newsletter_manager:
-                class:     NewsletterManager
+            AppBundle\Mail\NewsletterManager:
                 arguments: ['@mailer']
 
     .. code-block:: xml
@@ -53,7 +52,8 @@ service container configuration:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <!-- ... -->
@@ -66,14 +66,12 @@ service container configuration:
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->setDefinition('app.newsletter_manager', new Definition(
-            'AppBundle\Mail\NewsletterManager',
-            array(new Reference('mailer'))
-        ));
+        $container->register('app.newsletter_manager', NewsletterManager::class)
+            ->addArgument(new Reference('mailer'));
 
 .. tip::
 
@@ -135,7 +133,8 @@ that accepts the dependency::
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <!-- ... -->
@@ -150,13 +149,12 @@ that accepts the dependency::
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->register('app.newsletter_manager', 'AppBundle\Mail\NewsletterManager')
-            ->addMethodCall('setMailer', array(new Reference('mailer')))
-        ;
+        $container->register('app.newsletter_manager', NewsletterManager::class)
+            ->addMethodCall('setMailer', array(new Reference('mailer')));
 
 This time the advantages are:
 
@@ -207,7 +205,8 @@ Another possibility is just setting public fields of the class directly::
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <!-- ... -->
@@ -220,13 +219,12 @@ Another possibility is just setting public fields of the class directly::
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->register('newsletter_manager', 'AppBundle\Mail\NewsletterManager')
-            ->setProperty('mailer', new Reference('mailer'))
-        ;
+        $container->register('newsletter_manager', NewsletterManager::class)
+            ->setProperty('mailer', new Reference('mailer'));
 
 There are mainly only disadvantages to using property injection, it is similar
 to setter injection but with these additional important problems:

@@ -49,8 +49,8 @@ The providers are configured to use a default service named ``ldap``,
 but you can override this setting in the security component's
 configuration.
 
-An LDAP client can be simply configured, using the following service
-definition:
+An LDAP client can be simply configured using the built-in
+`LDAP PHP extension`_ with the following service definition:
 
 .. configuration-block::
 
@@ -58,14 +58,16 @@ definition:
 
         # app/config/services.yml
         services:
-            ldap:
-                class: 'Symfony\Component\Ldap\LdapClient'
+            Symfony\Component\Ldap\Ldap:
+                arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
+            Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
                 arguments:
-                    - my-server   # host
-                    - 389         # port
-                    - 3           # version
-                    - false       # SSL
-                    - true        # TLS
+                    -   host: my-server
+                        port: 389
+                        encryption: tls
+                        options:
+                            protocol_version: 3
+                            referrals: false
 
     .. code-block:: xml
 
@@ -76,12 +78,19 @@ definition:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="ldap" class="Symfony\Component\Ldap\LdapClient">
-                    <argument>my-server</argument>
-                    <argument>389</argument>
-                    <argument>3</argument>
-                    <argument>false</argument>
-                    <argument>true</argument>
+                <service id="Symfony\Component\Ldap\Ldap">
+                    <argument type="service" id="Symfony\Component\Ldap\Adapter\ExtLdap\Adapter" />
+                </service>
+                <service id="Symfony\Component\Ldap\Adapter\ExtLdap\Adapter">
+                    <argument type="collection">
+                        <argument key="host">my-server</argument>
+                        <argument key="port">389</argument>
+                        <argument key="encryption">tls</argument>
+                        <argument key="options" type="collection">
+                            <argument key="protocol_version">3</argument>
+                            <argument key="referrals">false</argument>
+                        </argument>
+                    </argument>
                 </service>
             </services>
         </container>
@@ -89,17 +98,24 @@ definition:
     .. code-block:: php
 
         // app/config/services.php
-        $container
-            ->register('ldap', 'Symfony\Component\Ldap\LdapClient')
-            ->addArgument('my-server')
-            ->addArgument(389)
-            ->addArgument(3)
-            ->addArgument(false)
-            ->addArgument(true);
+        use Symfony\Component\Ldap\Ldap;
+        use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $container->register(Ldap::class)
+            ->addArgument(new Reference(Adapter::class);
 
         $container
-            ->register('newsletter_manager', 'NewsletterManager')
-            ->addMethodCall('setMailer', array(new Reference('mailer')));
+            ->register(Adapter::class)
+            ->setArguments(array(
+                'host' => 'my-server',
+                'port' => 389,
+                'encryption' => 'tls',
+                'options' => array(
+                    'protocol_version' => 3,
+                    'referrals' => false
+                ),
+            ));
 
 Fetching Users Using the LDAP User Provider
 -------------------------------------------
@@ -118,12 +134,13 @@ use the ``ldap`` user provider.
             providers:
                 my_ldap:
                     ldap:
-                        service: ldap
+                        service: Symfony\Component\Ldap\Ldap
                         base_dn: dc=example,dc=com
                         search_dn: "cn=read-only-admin,dc=example,dc=com"
                         search_password: password
                         default_roles: ROLE_USER
                         uid_key: uid
+
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
@@ -137,7 +154,7 @@ use the ``ldap`` user provider.
             <config>
                 <provider name="my_ldap">
                     <ldap
-                            service="ldap"
+                            service="Symfony\Component\Ldap\Ldap"
                             base-dn="dc=example,dc=com"
                             search-dn="cn=read-only-admin,dc=example,dc=com"
                             search-password="password"
@@ -150,11 +167,13 @@ use the ``ldap`` user provider.
 
     .. code-block:: php
 
+        use Symfony\Component\Ldap\Ldap;
+
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'ldap_users' => array(
                     'ldap' => array(
-                        'service' => 'ldap',
+                        'service' => Ldap::class,
                         'base_dn' => 'dc=example,dc=com',
                         'search_dn' => 'cn=read-only-admin,dc=example,dc=com',
                         'search_password' => 'password',
@@ -164,6 +183,13 @@ use the ``ldap`` user provider.
                 ),
             ),
         );
+
+.. caution::
+
+    The Security component escapes provided input data when the LDAP user
+    provider is used. However, the LDAP component itself does not provide
+    any escaping yet. Thus, it's your responsibility to prevent LDAP injection
+    attacks when using the component directly.
 
 The ``ldap`` user provider supports many different configuration options:
 
@@ -244,7 +270,7 @@ Authenticating against an LDAP server can be done using either the form
 login or the HTTP Basic authentication providers.
 
 They are configured exactly as their non-LDAP counterparts, with the
-addition of two configuration keys:
+addition of two configuration keys and one optional key:
 
 service
 .......
@@ -268,6 +294,28 @@ For example, if your users have DN strings in the form
 ``uid=einstein,dc=example,dc=com``, then the ``dn_string`` will be
 ``uid={username},dc=example,dc=com``.
 
+query_string
+............
+
+**type**: ``string`` **default**: ``null``
+
+This (optional) key makes the user provider search for a user and then use the
+found DN for the bind process. This is useful when using multiple LDAP user
+providers with different ``base_dn``. The value of this option must be a valid
+search string (e.g. ``uid="{username}"``). The placeholder value will be
+replaced by the actual username.
+
+When this option is used, ``dn_string`` has to be updated accordingly. Following
+the previous example, if your users have the following two DN:
+``dc=companyA,dc=example,dc=com`` and ``dc=companyB,dc=example,dc=com``, then
+``dn_string`` should be ``dc=example,dc=com``. If the ``query_string`` option is
+``uid="{username}"``, then the authentication provider can authenticate users
+from both DN.
+
+Bear in mind that usernames must be unique across both DN, as the authentication
+provider won't be able to select the correct user for the bind process if more
+than one is found.
+
 Examples are provided below, for both ``form_login_ldap`` and
 ``http_basic_ldap``.
 
@@ -286,10 +334,8 @@ Configuration example for form login
                 main:
                     # ...
                     form_login_ldap:
-                        login_path: login
-                        check_path: login_check
                         # ...
-                        service: ldap
+                        service: Symfony\Component\Ldap\Ldap;
                         dn_string: 'uid={username},dc=example,dc=com'
 
     .. code-block:: xml
@@ -305,9 +351,7 @@ Configuration example for form login
             <config>
                 <firewall name="main">
                     <form-login-ldap
-                            login-path="login"
-                            check-path="login_check"
-                            service="ldap"
+                            service="Symfony\Component\Ldap\Ldap"
                             dn-string="uid={username},dc=example,dc=com" />
                 </firewall>
             </config>
@@ -315,13 +359,13 @@ Configuration example for form login
 
     .. code-block:: php
 
+        use Symfony\Component\Ldap\Ldap;
+
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array(
                     'form_login_ldap' => array(
-                        'login_path' => 'login',
-                        'check_path' => 'login_check',
-                        'service' => 'ldap',
+                        'service' => Ldap::class,
                         'dn_string' => 'uid={username},dc=example,dc=com',
                         // ...
                     ),
@@ -345,7 +389,7 @@ Configuration example for HTTP Basic
                     # ...
                     http_basic_ldap:
                         # ...
-                        service: ldap
+                        service: Symfony\Component\Ldap\Ldap
                         dn_string: 'uid={username},dc=example,dc=com'
 
     .. code-block:: xml
@@ -360,18 +404,20 @@ Configuration example for HTTP Basic
 
             <config>
                 <firewall name="main" stateless="true">
-                    <http-basic-ldap service="ldap" dn-string="uid={username},dc=example,dc=com" />
+                    <http-basic-ldap service="Symfony\Component\Ldap\Ldap" dn-string="uid={username},dc=example,dc=com" />
                 </firewall>
             </config>
         </srv:container>
 
     .. code-block:: php
 
+        use Symfony\Component\Ldap\Ldap;
+
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array(
                     'http_basic_ldap' => array(
-                        'service' => 'ldap',
+                        'service' => Ldap::class,
                         'dn_string' => 'uid={username},dc=example,dc=com',
                         // ...
                     ),
@@ -380,5 +426,64 @@ Configuration example for HTTP Basic
             ),
         );
 
+Configuration example for form login and query_string
+.....................................................
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    form_login_ldap:
+                        # ...
+                        service: Symfony\Component\Ldap\Ldap
+                        dn_string: 'dc=example,dc=com'
+                        query_string: '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))'
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <form-login-ldap
+                            service="Symfony\Component\Ldap\Ldap"
+                            dn-string="dc=example,dc=com"
+                            query-string="(&amp;(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))" />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        use Symfony\Component\Ldap\Ldap;
+
+        $container->loadFromExtension('security', array(
+            'firewalls' => array(
+                'main' => array(
+                    'form_login_ldap' => array(
+                        'service' => Ldap::class,
+                        'dn_string' => 'dc=example,dc=com',
+                        'query_string' => '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))',
+                        // ...
+                    ),
+                ),
+            )
+        );
+
+.. _`LDAP PHP extension`: http://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html
 .. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection

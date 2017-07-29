@@ -38,9 +38,7 @@ and :ref:`user serialization to the session <security-serialize-equatable>`
 
 For this entry, suppose that you already have a ``User`` entity inside an
 ``AppBundle`` with the following fields: ``id``, ``username``, ``password``,
-``email`` and ``isActive``:
-
-.. code-block:: php
+``email`` and ``isActive``::
 
     // src/AppBundle/Entity/User.php
     namespace AppBundle\Entity;
@@ -140,12 +138,7 @@ For this entry, suppose that you already have a ``User`` entity inside an
     }
 
 To make things shorter, some of the getter and setter methods aren't shown.
-But you can :ref:`generate <doctrine-generating-getters-and-setters>` these
-by running:
-
-.. code-block:: terminal
-
-    $ php bin/console doctrine:generate:entities AppBundle/Entity/User
+But you can generate these manually or with your own IDE.
 
 Next, make sure to :ref:`create the database table <doctrine-creating-the-database-tables-schema>`:
 
@@ -168,6 +161,13 @@ forces the class to have the five following methods:
 * :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::eraseCredentials`
 
 To learn more about each of these, see :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
+
+.. caution::
+
+    The ``eraseCredentials()`` method is only meant to clean up possibly stored
+    plain text passwords (or similar credentials). Be careful what to erase
+    if your user class is also mapped to a database as the modified object
+    will likely be persisted during the request.
 
 What do the serialize and unserialize Methods do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -255,9 +255,11 @@ the username and then check the password (more on passwords in a moment):
     .. code-block:: php
 
         // app/config/security.php
+        use AppBundle\Entity\User;
+
         $container->loadFromExtension('security', array(
             'encoders' => array(
-                'AppBundle\Entity\User' => array(
+                User::class => array(
                     'algorithm' => 'bcrypt',
                 ),
             ),
@@ -522,7 +524,7 @@ the user will be logged out for security reasons.
 
 Even though this all happens automatically, there are a few important side-effects.
 
-First, the :phpclass:`Serializable` interface and its ``serialize`` and ``unserialize``
+First, the :phpclass:`Serializable` interface and its ``serialize()`` and ``unserialize()``
 methods have been added to allow the ``User`` class to be serialized
 to the session. This may or may not be needed depending on your setup,
 but it's probably a good idea. In theory, only the ``id`` needs to be serialized,

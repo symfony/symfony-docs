@@ -1,30 +1,16 @@
 Contributing to the Documentation
 =================================
 
-One of the essential principles of the Symfony project is that **documentation
-is as important as code**. That's why a great amount of resources are dedicated
-to documenting new features and to keeping the rest of the documentation
-up-to-date.
-
-More than 1,000 developers all around the world have contributed to Symfony's
-documentation and we are glad that you are considering joining this big family.
-This guide will explain everything you need to contribute to the Symfony
-documentation.
-
 Before Your First Contribution
 ------------------------------
 
-**Before contributing**, you should consider the following:
+**Before contributing**, you need to:
 
-* Symfony documentation is written using `reStructuredText`_ markup language.
-  If you are not familiar with this format, read
-  :doc:`this article </contributing/documentation/format>` for a quick overview
-  of its basic features.
-* Symfony documentation is hosted on `GitHub`_. You'll need a free GitHub user
-  account to contribute to the documentation.
-* Symfony documentation is published under a
-  :doc:`Creative Commons BY-SA 3.0 License </contributing/documentation/license>`
-  and all your contributions will implicitly adhere to that license.
+* Sign up for a free `GitHub`_ account, which is the service where the Symfony
+  documentation is hosted.
+* Be familiar with the `reStructuredText`_ markup language, which is used to
+  write Symfony docs. Read :doc:`this article </contributing/documentation/format>`
+  for a quick overview.
 
 .. _minor-changes-e-g-typos:
 
@@ -126,9 +112,9 @@ memorable name for the new branch (if you are fixing a reported issue, use
 
 .. code-block:: terminal
 
-    $ git checkout -b improve_install_chapter upstream/2.7
+    $ git checkout -b improve_install_article upstream/2.7
 
-In this example, the name of the branch is ``improve_install_chapter`` and the
+In this example, the name of the branch is ``improve_install_article`` and the
 ``upstream/2.7`` value tells Git to create this branch based on the ``2.7``
 branch of the ``upstream`` remote, which is the original Symfony Docs repository.
 
@@ -151,10 +137,10 @@ even remove any content and do your best to comply with the
 
 .. code-block:: terminal
 
-    $ git push origin improve_install_chapter
+    $ git push origin improve_install_article
 
 The ``origin`` value is the name of the Git remote that corresponds to your
-forked repository and ``improve_install_chapter`` is the name of the branch you
+forked repository and ``improve_install_article`` is the name of the branch you
 created previously.
 
 **Step 7.** Everything is now ready to initiate a **pull request**. Go to your
@@ -171,7 +157,7 @@ changes should be applied:
 In this example, the **base fork** should be ``symfony/symfony-docs`` and
 the **base** branch should be the ``2.7``, which is the branch that you selected
 to base your changes on. The **head fork** should be your forked copy
-of ``symfony-docs`` and the **compare** branch should be ``improve_install_chapter``,
+of ``symfony-docs`` and the **compare** branch should be ``improve_install_article``,
 which is the name of the branch you created and where you made your changes.
 
 .. _pull-request-format:
@@ -192,7 +178,7 @@ changes and push the new changes:
 .. code-block:: terminal
 
     $ cd projects/symfony-docs/
-    $ git checkout improve_install_chapter
+    $ git checkout improve_install_article
 
     # ... do your changes
 
@@ -279,11 +265,8 @@ purposes following these steps:
 
    .. code-block:: terminal
 
-       # Linux and macOS
-       $ ./_build/make html
-
-       # Windows
-       $ _build\make html
+       $ cd _build/
+       $ make html
 
 The generated documentation is available in the ``_build/html`` directory.
 

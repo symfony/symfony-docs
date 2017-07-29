@@ -10,38 +10,12 @@ a custom save handler just by defining a class that extends the
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\SessionHandlerProxy`
 class.
 
-Then, define a new service related to the custom session handler:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.session_handler:
-                class: AppBundle\Session\CustomSessionHandler
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.session_handler" class="AppBundle\Session\CustomSessionHandler" />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->register('app.session_handler', 'AppBundle\Session\CustomSessionHandler');
+Then, define the class as a :ref:`service <service-container-creating-service>`.
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+that happens automatically.
 
 Finally, use the ``framework.session.handler_id`` configuration option to tell
-Symfony to use your own session handler instead of the default one:
+Symfony to use your session handler instead of the default one:
 
 .. configuration-block::
 
@@ -51,7 +25,7 @@ Symfony to use your own session handler instead of the default one:
         framework:
             session:
                 # ...
-                handler_id: app.session_handler
+                handler_id: AppBundle\Session\CustomSessionHandler
 
     .. code-block:: xml
 
@@ -61,19 +35,21 @@ Symfony to use your own session handler instead of the default one:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <framework:config>
-                <framework:session handler-id="app.session_handler" />
+                <framework:session handler-id="AppBundle\Session\CustomSessionHandler" />
             </framework:config>
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Session\CustomSessionHandler;
         $container->loadFromExtension('framework', array(
             // ...
             'session' => array(
                 // ...
-                'handler_id' => 'app.session_handler',
+                'handler_id' => CustomSessionHandler::class,
             ),
         ));
 
@@ -130,24 +106,37 @@ can intercept the session before it is written::
 
     use AppBundle\Entity\User;
     use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;
+    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
     class ReadOnlySessionProxy extends SessionHandlerProxy
     {
-        private $user;
+        private $tokenStorage;
 
-        public function __construct(\SessionHandlerInterface $handler, User $user)
+        public function __construct(\SessionHandlerInterface $handler, TokenStorageInterface $tokenStorage)
         {
-            $this->user = $user;
+            $this->tokenStorage = $tokenStorage;
 
             parent::__construct($handler);
         }
 
         public function write($id, $data)
         {
-            if ($this->user->isGuest()) {
+            if ($this->getUser() && $this->getUser()->isGuest()) {
                 return;
             }
 
             return parent::write($id, $data);
+        }
+
+        private function getUser()
+        {
+            if (!$token = $tokenStorage->getToken()) {
+                return;
+            }
+
+            $user = $token->getUser();
+            if (is_object($user)) {
+                return $user;
+            }
         }
     }

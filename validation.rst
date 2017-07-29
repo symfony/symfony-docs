@@ -71,7 +71,8 @@ following:
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
                 <property name="name">
@@ -109,7 +110,7 @@ following:
 Using the ``validator`` Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Next, to actually validate an ``Author`` object, use the ``validate`` method
+Next, to actually validate an ``Author`` object, use the ``validate()`` method
 on the ``validator`` service (class :class:`Symfony\\Component\\Validator\\Validator`).
 The job of the ``validator`` is easy: to read the constraints (i.e. rules)
 of a class and verify if the data on the object satisfies those
@@ -150,7 +151,7 @@ message:
 
 .. code-block:: text
 
-    AppBundle\Author.name:
+    AppBundle\Entity\Author.name:
         This value should not be blank
 
 If you insert a value into the ``name`` property, the happy success message
@@ -206,8 +207,44 @@ Inside the template, you can output the list of errors exactly as needed:
 Configuration
 -------------
 
-The Symfony validator is enabled by default, but you must explicitly enable
-annotations if you're using the annotation method to specify your constraints:
+Before using the Symfony validator, make sure it's enabled in the main config
+file:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            validation: { enabled: true }
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:validation enabled="true" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'validation' => array(
+                'enabled' => true,
+            ),
+        ));
+
+Besides, if you plan to use annotations to configure validation, replace the
+previous configuration by the following:
 
 .. configuration-block::
 
@@ -224,7 +261,8 @@ annotations if you're using the annotation method to specify your constraints:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -280,8 +318,9 @@ Constraint Configuration
 Some constraints, like :doc:`NotBlank </reference/constraints/NotBlank>`,
 are simple whereas others, like the :doc:`Choice </reference/constraints/Choice>`
 constraint, have several configuration options available. Suppose that the
-``Author`` class has another property called ``gender`` that can be set to either
-"male", "female" or "other":
+``Author`` class has another property called ``genre`` that defines the
+literature genre mostly associated with the author, which can be set to either
+"fiction" or "non-fiction":
 
 .. configuration-block::
 
@@ -296,11 +335,11 @@ constraint, have several configuration options available. Suppose that the
         {
             /**
              * @Assert\Choice(
-             *     choices = { "male", "female", "other" },
-             *     message = "Choose a valid gender."
+             *     choices = { "fiction", "non-fiction" },
+             *     message = "Choose a valid genre."
              * )
              */
-            public $gender;
+            public $genre;
 
             // ...
         }
@@ -310,8 +349,8 @@ constraint, have several configuration options available. Suppose that the
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             properties:
-                gender:
-                    - Choice: { choices: [male, female, other], message: Choose a valid gender. }
+                genre:
+                    - Choice: { choices: [fiction, non-fiction], message: Choose a valid genre. }
                 # ...
 
     .. code-block:: xml
@@ -320,17 +359,17 @@ constraint, have several configuration options available. Suppose that the
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
-                <property name="gender">
+                <property name="genre">
                     <constraint name="Choice">
                         <option name="choices">
-                            <value>male</value>
-                            <value>female</value>
-                            <value>other</value>
+                            <value>fiction</value>
+                            <value>non-fiction</value>
                         </option>
-                        <option name="message">Choose a valid gender.</option>
+                        <option name="message">Choose a valid genre.</option>
                     </constraint>
                 </property>
 
@@ -348,7 +387,7 @@ constraint, have several configuration options available. Suppose that the
 
         class Author
         {
-            public $gender;
+            public $genre;
 
             // ...
 
@@ -356,9 +395,9 @@ constraint, have several configuration options available. Suppose that the
             {
                 // ...
 
-                $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
-                    'choices' => array('male', 'female', 'other'),
-                    'message' => 'Choose a valid gender.',
+                $metadata->addPropertyConstraint('genre', new Assert\Choice(array(
+                    'choices' => array('fiction', 'non-fiction'),
+                    'message' => 'Choose a valid genre.',
                 )));
             }
         }
@@ -382,9 +421,9 @@ options can be specified in this way.
         class Author
         {
             /**
-             * @Assert\Choice({"male", "female", "other"})
+             * @Assert\Choice({"fiction", "non-fiction"})
              */
-            protected $gender;
+            protected $genre;
 
             // ...
         }
@@ -394,8 +433,8 @@ options can be specified in this way.
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             properties:
-                gender:
-                    - Choice: [male, female, other]
+                genre:
+                    - Choice: [fiction, non-fiction]
                 # ...
 
     .. code-block:: xml
@@ -404,14 +443,14 @@ options can be specified in this way.
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
-                <property name="gender">
+                <property name="genre">
                     <constraint name="Choice">
-                        <value>male</value>
-                        <value>female</value>
-                        <value>other</value>
+                        <value>fiction</value>
+                        <value>non-fiction</value>
                     </constraint>
                 </property>
 
@@ -429,15 +468,15 @@ options can be specified in this way.
 
         class Author
         {
-            protected $gender;
+            protected $genre;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 // ...
 
                 $metadata->addPropertyConstraint(
-                    'gender',
-                    new Assert\Choice(array('male', 'female', 'other'))
+                    'genre',
+                    new Assert\Choice(array('fiction', 'non-fiction'))
                 );
             }
         }
@@ -449,6 +488,29 @@ If you're ever unsure of how to specify an option, either check the API document
 for the constraint or play it safe by always passing in an array of options
 (the first method shown above).
 
+Constraints in Form Classes
+---------------------------
+
+Constraints can be defined while building the form via the ``constraints`` option
+of the form fields::
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('myField', TextType::class, array(
+                'required' => true,
+                'constraints' => array(new Length(array('min' => 3)))
+            ))
+    }
+
+The ``constraints`` option is only available if the ``ValidatorExtension``
+was enabled through the form factory builder::
+
+    Forms::createFormFactoryBuilder()
+        ->addExtension(new ValidatorExtension(Validation::createValidator()))
+        ->getFormFactory()
+    ;
+
 .. index::
    single: Validation; Constraint targets
 
@@ -458,7 +520,7 @@ Constraint Targets
 ------------------
 
 Constraints can be applied to a class property (e.g. ``name``), a public
-getter method (e.g. ``getFullName``) or an entire class. Property constraints
+getter method (e.g. ``getFullName()``) or an entire class. Property constraints
 are the most common and easy to use. Getter constraints allow you to specify
 more complex validation rules. Finally, class constraints are intended
 for scenarios where you want to validate a class as a whole.
@@ -510,7 +572,8 @@ class to have at least 3 characters.
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
                 <property name="firstName">
@@ -558,7 +621,7 @@ as "getters".
 The benefit of this technique is that it allows you to validate your object
 dynamically. For example, suppose you want to make sure that a password field
 doesn't match the first name of the user (for security reasons). You can
-do this by creating an ``isPasswordLegal`` method, and then asserting that
+do this by creating an ``isPasswordLegal()`` method, and then asserting that
 this method must return ``true``:
 
 .. configuration-block::
@@ -595,7 +658,8 @@ this method must return ``true``:
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
                 <getter property="passwordLegal">
@@ -634,9 +698,9 @@ Now, create the ``isPasswordLegal()`` method and include the logic you need::
 .. note::
 
     The keen-eyed among you will have noticed that the prefix of the getter
-    ("get", "is" or "has") is omitted in the mapping. This allows you to move
-    the constraint to a property with the same name later (or vice versa)
-    without changing your validation logic.
+    ("get", "is" or "has") is omitted in the mappings for the YAML, XML and PHP
+    formats. This allows you to move the constraint to a property with the same
+    name later (or vice versa) without changing your validation logic.
 
 .. _validation-class-target:
 

@@ -31,7 +31,8 @@ inside your routing configuration:
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" path="/{_locale}/contact">
                 <default key="_controller">AppBundle:Main:contact</default>
@@ -68,9 +69,16 @@ in your container:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <parameters>
-            <parameter key="app.locales">en|es</parameter>
-        </parameters>
+        <?xml version="1.0" charset="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="app.locales">en|es</parameter>
+            </parameters>
+        </container>
 
     .. code-block:: php
 
@@ -95,7 +103,8 @@ path):
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="some_route" path="/%app.route_prefix%/contact">
                 <default key="_controller">AppBundle:Main:contact</default>

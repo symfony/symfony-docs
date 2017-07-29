@@ -35,7 +35,7 @@ your autoloader to load the Routing component::
     use Symfony\Component\Routing\RouteCollection;
     use Symfony\Component\Routing\Route;
 
-    $route = new Route('/foo', array('controller' => 'MyController'));
+    $route = new Route('/foo', array('_controller' => 'MyController'));
     $routes = new RouteCollection();
     $routes->add('route_name', $route);
 
@@ -44,7 +44,7 @@ your autoloader to load the Routing component::
     $matcher = new UrlMatcher($routes, $context);
 
     $parameters = $matcher->match('/foo');
-    // array('controller' => 'MyController', '_route' => 'route_name')
+    // array('_controller' => 'MyController', '_route' => 'route_name')
 
 .. note::
 
@@ -102,7 +102,7 @@ Take the following route, which combines several of these ideas::
 
    $route = new Route(
        '/archive/{month}', // path
-       array('controller' => 'showArchive'), // default values
+       array('_controller' => 'showArchive'), // default values
        array('month' => '[0-9]{4}-[0-9]{2}', 'subdomain' => 'www|m'), // requirements
        array(), // options
        '{subdomain}.example.com', // host
@@ -114,7 +114,7 @@ Take the following route, which combines several of these ideas::
 
    $parameters = $matcher->match('/archive/2012-01');
    // array(
-   //     'controller' => 'showArchive',
+   //     '_controller' => 'showArchive',
    //     'month' => '2012-01',
    //     'subdomain' => 'www',
    //     '_route' => ...
@@ -206,6 +206,9 @@ to find a route that fits the given request you can also build a URL from
 a certain route::
 
     use Symfony\Component\Routing\Generator\UrlGenerator;
+    use Symfony\Component\Routing\RequestContext;
+    use Symfony\Component\Routing\Route;
+    use Symfony\Component\Routing\RouteCollection;
 
     $routes = new RouteCollection();
     $routes->add('show_post', new Route('/show/{slug}'));
@@ -279,7 +282,7 @@ have to provide the name of a PHP file which returns a :class:`Symfony\\Componen
     $collection = new RouteCollection();
     $collection->add(
         'route_name',
-        new Route('/foo', array('controller' => 'ExampleController'))
+        new Route('/foo', array('_controller' => 'ExampleController'))
     );
     // ...
 
@@ -321,7 +324,7 @@ a path to the main route definition and some other settings::
         $resource,
         array $options = array(),
         RequestContext $context = null,
-        array $defaults = array()
+        LoggerInterface $logger = null
     );
 
 With the ``cache_dir`` option you can enable route caching (if you provide a
@@ -365,14 +368,12 @@ routes with UTF-8 characters:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class DefaultController extends Controller
         {
             /**
-             *
              * @Route("/category/{name}", name="route1", options={"utf8": true})
-             *
              */
             public function categoryAction()
             {
@@ -441,20 +442,18 @@ You can also include UTF-8 strings as routing requirements:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class DefaultController extends Controller
         {
             /**
-                *
-                * @Route(
-                *     "/category/{name}",
-                *     name="route2",
-                *     requirements={"default"="한국어"},
-                *     options={"utf8": true}
-                * )
-                *
-                */
+             * @Route(
+             *     "/category/{name}",
+             *     name="route2",
+             *     requirements={"default"="한국어"},
+             *     options={"utf8": true}
+             * )
+             */
             public function defaultAction()
             {
                 // ...
@@ -509,7 +508,7 @@ You can also include UTF-8 strings as routing requirements:
         // ...
 
         return $collection;
-    
+
 .. tip::
 
     In addition to UTF-8 characters, the Routing component also supports all

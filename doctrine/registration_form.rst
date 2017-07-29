@@ -120,6 +120,11 @@ With some validation added, your class may look something like this::
             $this->plainPassword = $password;
         }
 
+        public function getPassword()
+        {
+            return $this->password;
+        }
+
         public function setPassword($password)
         {
             $this->password = $password;
@@ -165,6 +170,7 @@ Next, create the form for the ``User`` entity::
     // src/AppBundle/Form/UserType.php
     namespace AppBundle\Form;
 
+    use AppBundle\Entity\User;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -184,14 +190,14 @@ Next, create the form for the ``User`` entity::
                     'type' => PasswordType::class,
                     'first_options'  => array('label' => 'Password'),
                     'second_options' => array('label' => 'Repeat Password'),
-                )
-            );
+                ))
+            ;
         }
 
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\User',
+                'data_class' => User::class,
             ));
         }
     }
@@ -216,16 +222,17 @@ into the database::
 
     use AppBundle\Form\UserType;
     use AppBundle\Entity\User;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
     class RegistrationController extends Controller
     {
         /**
          * @Route("/register", name="user_registration")
          */
-        public function registerAction(Request $request)
+        public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
         {
             // 1) build the form
             $user = new User();
@@ -236,8 +243,7 @@ into the database::
             if ($form->isSubmitted() && $form->isValid()) {
 
                 // 3) Encode the password (you could also do this via Doctrine listener)
-                $password = $this->get('security.password_encoder')
-                    ->encodePassword($user, $user->getPlainPassword());
+                $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
 
                 // 4) save the User!
@@ -283,19 +289,20 @@ encoder in the security configuration:
                 <encoder class="AppBundle\Entity\User">bcrypt</encoder>
             </config>
         </srv:container>
-        
+
     .. code-block:: php
 
         // app/config/security.php
+        use AppBundle\Entity\User;
+
         $container->loadFromExtension('security', array(
             'encoders' => array(
-                'AppBundle\Entity\User' => 'bcrypt',
+                User::class => 'bcrypt',
             ),
         ));
 
-In this case the recommended ``bcrypt`` algorithm is used. To learn more
-about how to encode the users password have a look into the
-:ref:`security chapter <security-encoding-user-password>`.
+In this case the recommended ``bcrypt`` algorithm is used. If needed, check out
+the :ref:`user password encoding <security-encoding-user-password>` article.
 
 .. note::
 

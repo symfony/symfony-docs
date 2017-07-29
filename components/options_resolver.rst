@@ -90,7 +90,7 @@ the ``Mailer`` class makes a mistake?
 .. code-block:: php
 
     $mailer = new Mailer(array(
-        'usernme' => 'johndoe',  // usernAme misspelled 
+        'usernme' => 'johndoe',  // usernme misspelled (instead of username)
     ));
 
 No error will be shown. In the best case, the bug will appear during testing,
@@ -376,7 +376,7 @@ is thrown::
 For options with more complicated validation schemes, pass a closure which
 returns ``true`` for acceptable values and ``false`` for invalid values::
 
-    
+
     // ...
     $resolver->setAllowedValues('transport', function ($value) {
         // return true or false

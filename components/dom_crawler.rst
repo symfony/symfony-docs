@@ -81,7 +81,7 @@ This allows you to use jQuery-like selectors to traverse::
 
     $crawler = $crawler->filter('body > p');
 
-Anonymous function can be used to filter with more complex criteria::
+An anonymous function can be used to filter with more complex criteria::
 
     use Symfony\Component\DomCrawler\Crawler;
     // ...
@@ -285,7 +285,7 @@ and :phpclass:`DOMNode` objects:
 Expression Evaluation
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded::
+.. versionadded:: 3.2
     The :method:`Symfony\\Component\\DomCrawler\\Crawler::evaluate` method was
     introduced in Symfony 3.2.
 
@@ -345,7 +345,7 @@ Links
 ~~~~~
 
 To find a link by name (or a clickable image by its ``alt`` attribute), use
-the ``selectLink`` method on an existing crawler. This returns a ``Crawler``
+the ``selectLink()`` method on an existing crawler. This returns a ``Crawler``
 instance with just the selected link(s). Calling ``link()`` gives you a special
 :class:`Symfony\\Component\\DomCrawler\\Link` object::
 
@@ -396,10 +396,19 @@ given text. This method is especially useful because you can use it to return
 a :class:`Symfony\\Component\\DomCrawler\\Form` object that represents the
 form that the button lives in::
 
-    $form = $crawler->selectButton('validate')->form();
+    // button example: <button id="my-super-button" type="submit">My super button</button>
+    
+    // you can get button by its label
+    $form = $crawler->selectButton('My super button')->form();
+    
+    // or by button id (#my-super-button) if the button doesn't have a label
+    $form = $crawler->selectButton('my-super-button')->form();
+    
+    // or you can filter the whole form, for example a form has a class attribute: <form class="form-vertical" method="POST">
+    $crawler->filter('.form-vertical')->form();
 
     // or "fill" the form fields with data
-    $form = $crawler->selectButton('validate')->form(array(
+    $form = $crawler->selectButton('my-super-button')->form(array(
         'name' => 'Ryan',
     ));
 
@@ -414,6 +423,12 @@ The :method:`Symfony\\Component\\DomCrawler\\Form::getUri` method does more
 than just return the ``action`` attribute of the form. If the form method
 is GET, then it mimics the browser's behavior and returns the ``action``
 attribute followed by a query string of all of the form's values.
+
+.. versionadded:: 3.3
+    Starting from Symfony 3.3, the optional ``formaction`` and ``formmethod``
+    button attributes are supported. The ``getUri()`` and ``getMethod()``
+    methods take into account those attributes to always return the right action
+    and method depending on the button used to get the form.
 
 You can virtually set and get values on the form::
 

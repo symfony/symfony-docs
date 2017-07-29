@@ -22,7 +22,6 @@ Configuration
 
 * `secret`_
 * `http_method_override`_
-* `trusted_proxies`_
 * `ide`_
 * `test`_
 * `default_locale`_
@@ -64,13 +63,17 @@ Configuration
     * `gc_divisor`_
     * `gc_probability`_
     * `gc_maxlifetime`_
+    * `use_strict_mode`_
     * `save_path`_
+    * `metadata_update_threshold`_
 * `assets`_
     * `base_path`_
     * `base_urls`_
     * `packages`_
+    * `version_strategy`_
     * `version`_
     * `version_format`_
+    * `json_manifest_path`_
 * `templating`_
     * `hinclude_default_template`_
     * :ref:`form <reference-templating-form>`
@@ -92,6 +95,8 @@ Configuration
     * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
+    * `mapping`_
+        * :ref:`paths <reference-validation-mapping-paths>`
 * `annotations`_
     * :ref:`cache <reference-annotations-cache>`
     * `file_cache_dir`_
@@ -101,9 +106,25 @@ Configuration
     * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
     * :ref:`name_converter <reference-serializer-name_converter>`
+    * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
 * `php_errors`_
     * `log`_
     * `throw`_
+* :ref:`cache <reference-cache>`
+    * :ref:`app <reference-cache-app>`
+    * `system`_
+    * `directory`_
+    * `default_doctrine_provider`_
+    * `default_psr6_provider`_
+    * `default_redis_provider`_
+    * `pools`_
+        * :ref:`name <reference-cache-pools-name>`
+            * `adapter`_
+            * `public`_
+            * `default_lifetime`_
+            * `provider`_
+            * `clearer`_
+    * `prefix_seed`_
 
 secret
 ~~~~~~
@@ -115,8 +136,7 @@ used to add more entropy to security related operations. Its value should
 be a series of characters, numbers and symbols chosen randomly and the
 recommended length is around 32 characters.
 
-In practice, Symfony uses this value for generating the
-:doc:`CSRF tokens </form/csrf_protection>`, for encrypting the cookies used
+In practice, Symfony uses this value for encrypting the cookies used
 in the :doc:`remember me functionality </security/remember_me>` and for
 creating signed URIs when using :ref:`ESI (Edge Side Includes) <edge-side-includes>`.
 
@@ -170,63 +190,27 @@ named ``kernel.http_method_override``.
 trusted_proxies
 ~~~~~~~~~~~~~~~
 
-**type**: ``array``
-
-Configures the IP addresses that should be trusted as proxies. For more
-details, see :doc:`/request/load_balancer_reverse_proxy`.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            trusted_proxies:  [192.0.0.1, 10.0.0.0/8]
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8" />
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'trusted_proxies' => array('192.0.0.1', '10.0.0.0/8'),
-        ));
+The ``trusted_proxies`` option was removed in Symfony 3.3. See :doc:`/request/load_balancer_reverse_proxy`.
 
 ide
 ~~~
 
 **type**: ``string`` **default**: ``null``
 
-Symfony can turn file paths seen in dumps and exception messages into links
-that will open in your preferred text editor or IDE.
+Symfony turns file paths seen in variable dumps and exception messages into
+links that open those files right inside your browser. If you prefer to open
+those files in your favorite IDE or text editor, set this option to any of the
+following values: ``phpstorm``, ``sublime``, ``textmate``, ``macvim`` and ``emacs``.
 
-Since every developer uses a different IDE, the recommended way to enable this
-feature is to configure it on a system level. This can be done by setting the
-``xdebug.file_link_format`` option in your ``php.ini`` configuration file.
+.. note::
 
-.. tip::
+    The ``phpstorm`` option is supported natively by PhpStorm on MacOS,
+    Windows requires `PhpStormProtocol`_ and Linux requires `phpstorm-url-handler`_.
 
-    Setting the ``xdebug.file_link_format`` ini option works even if the Xdebug
-    extension is not enabled.
-
-Alternatively, you can use this ``ide`` configuration key.
-
-In both cases, the expected configuration value is a URL template that contains an
-``%f`` where the file path is expected and ``%l`` for the line number. When using
-the ``ide`` configuration key, percentages signs (``%``) must be escaped by
-doubling them. For example, if you use PHPstorm on the Mac OS platform, you will
-do something like:
+If you use another editor, the expected configuration value is a URL template
+that contains an ``%f`` placeholder where the file path is expected and ``%l``
+placeholder for the line number (percentage signs (``%``) must be escaped by
+doubling them to prevent Symfony from interpreting them as container parameters).
 
 .. configuration-block::
 
@@ -234,7 +218,7 @@ do something like:
 
         # app/config/config.yml
         framework:
-            ide: 'phpstorm://open?file=%%f&line=%%l'
+            ide: 'myide://open?url=file://%%f&line=%%l'
 
     .. code-block:: xml
 
@@ -243,18 +227,35 @@ do something like:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config ide="phpstorm://open?file=%%f&line=%%l" />
+            <framework:config ide="myide://open?url=file://%%f&line=%%l" />
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'ide' => 'phpstorm://open?file=%%f&line=%%l',
+            'ide' => 'myide://open?url=file://%%f&line=%%l',
         ));
+
+Since every developer uses a different IDE, the recommended way to enable this
+feature is to configure it on a system level. This can be done by setting the
+``xdebug.file_link_format`` option in your ``php.ini`` configuration file. The
+format to use is the same as for the ``framework.ide`` option, but without the
+need to escape the percent signs (``%``) by doubling them.
+
+.. note::
+
+    If both ``framework.ide`` and ``xdebug.file_link_format`` are defined,
+    Symfony uses the value of the ``framework.ide`` option.
+
+.. tip::
+
+    Setting the ``xdebug.file_link_format`` ini option works even if the Xdebug
+    extension is not enabled.
 
 .. tip::
 
@@ -271,16 +272,6 @@ do something like:
     .. versionadded:: 3.2
         Guest to host mappings were introduced in Symfony 3.2.
 
-.. tip::
-
-    Symfony contains preconfigured URLs for some popular IDEs, you can set them
-    using the following values: ``textmate``, ``macvim``, ``emacs`` or ``sublime``.
-
-.. tip::
-
-    If you're on a Windows PC, you can install the `PhpStormProtocol`_ to
-    be able to use this.
-
 .. _reference-framework-test:
 
 test
@@ -296,6 +287,8 @@ setting should be present in your ``test`` environment (usually via
 .. seealso::
 
     For more information, see :doc:`/testing`.
+
+.. _config-framework-default_locale:
 
 default_locale
 ~~~~~~~~~~~~~~
@@ -334,7 +327,7 @@ the configuration of your web server. One simple solution to avoid these
 attacks is to whitelist the hosts that your Symfony application can respond
 to. That's the purpose of this ``trusted_hosts`` option. If the incoming
 request's hostname doesn't match one in this list, the application won't
-respond and the user will receive a 500 response.
+respond and the user will receive a 400 response.
 
 .. configuration-block::
 
@@ -351,14 +344,15 @@ respond and the user will receive a 500 response.
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <trusted-host>example.com</trusted-host>
-                <trusted-host>example.org</trusted-host>
+                <framework:trusted-host>example.com</framework:trusted-host>
+                <framework:trusted-host>example.org</framework:trusted-host>
                 <!-- ... -->
-            </framework>
+            </framework:config>
         </container>
 
     .. code-block:: php
@@ -368,14 +362,14 @@ respond and the user will receive a 500 response.
             'trusted_hosts' => array('example.com', 'example.org'),
         ));
 
-Hosts can also be configured using regular expressions (e.g.  ``.*\.?example.com$``),
+Hosts can also be configured using regular expressions (e.g.  ``^(.+\.)?example.com$``),
 which make it easier to respond to any subdomain.
 
 In addition, you can also set the trusted hosts in the front controller
 using the ``Request::setTrustedHosts()`` method::
 
     // web/app.php
-    Request::setTrustedHosts(array('.*\.?example.com$', '.*\.?example.org$'));
+    Request::setTrustedHosts(array('^(.+\.)?example.com$', '^(.+\.)?example.org$'));
 
 The default value for this option is an empty array, meaning that the application
 can respond to any given host.
@@ -466,11 +460,12 @@ You can also set ``esi`` to ``true`` to enable it:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <esi />
+                <framework:esi />
             </framework:config>
         </container>
 
@@ -693,6 +688,8 @@ installation.
     :doc:`/doctrine/pdo_session_storage` or
     :doc:`/doctrine/dbal_session_storage`.
 
+.. _name:
+
 name
 ....
 
@@ -772,6 +769,17 @@ This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session
 start and depends on `gc_divisor`_ and `gc_probability`_.
 
+use_strict_mode
+...............
+
+**type**: ``boolean`` **default**: ``false``
+
+This specifies whether the session module will use the strict session id mode.
+If this mode is enabled, the module does not accept uninitialized session IDs.
+If an uninitialized session ID is sent from browser, a new session ID is sent
+to browser. Applications are protected from session fixation via session
+adoption with strict mode.
+
 save_path
 .........
 
@@ -800,7 +808,8 @@ setting the value to ``null``:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -816,6 +825,19 @@ setting the value to ``null``:
                 'save_path' => null,
             ),
         ));
+
+metadata_update_threshold
+.........................
+
+**type**: ``integer`` **default**: ``0``
+
+This is how many seconds to wait between two session metadata updates. It will
+also prevent the session handler to write if the session has not changed.
+
+.. seealso::
+
+    You can see an example of the usage of this in
+    :doc:`/session/limit_metadata_writes`.
 
 assets
 ~~~~~~
@@ -846,11 +868,12 @@ This option allows you to define a base path to be used for assets:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:assets base_path="/images" />
+                <framework:assets base-path="/images" />
             </framework:config>
         </container>
 
@@ -894,7 +917,8 @@ collection each time it generates an asset's path:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -911,6 +935,8 @@ collection each time it generates an asset's path:
                 'base_urls' => array('http://cdn.example.com/'),
             ),
         ));
+
+.. _reference-framework-assets-packages:
 
 packages
 ........
@@ -936,7 +962,8 @@ You can group assets into packages, to specify different base URLs for them:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -978,8 +1005,10 @@ Each package can configure the following options:
 
 * :ref:`base_path <reference-assets-base-path>`
 * :ref:`base_urls <reference-assets-base-urls>`
+* :ref:`version_strategy <reference-assets-version-strategy>`
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
+* :ref:`json_manifest_path <reference-assets-json-manifest-path>`
 
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
@@ -991,7 +1020,7 @@ version
 
 This option is used to *bust* the cache on assets by globally adding a query
 parameter to all rendered asset paths (e.g. ``/images/logo.png?v2``). This
-applies only to assets rendered via the Twig ``asset`` function (or PHP
+applies only to assets rendered via the Twig ``asset()`` function (or PHP
 equivalent) as well as assets rendered with Assetic.
 
 For example, suppose you have the following:
@@ -1026,7 +1055,8 @@ Now, activate the ``version`` option:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -1050,6 +1080,10 @@ before each deployment so that the query parameters change.
 
 You can also control how the query string works via the `version_format`_
 option.
+
+.. note::
+
+    This parameter cannot be set at the same time as ``version_strategy`` or ``json_manifest_path``.
 
 .. tip::
 
@@ -1096,6 +1130,193 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
     appropriate version path as part of your deployment process and forgot
     any URL rewriting. The latter option is useful if you would like older
     asset versions to remain accessible at their original URL.
+
+.. _reference-assets-version-strategy:
+.. _reference-templating-version-strategy:
+
+version_strategy
+................
+
+**type**: ``string`` **default**: ``null``
+
+The service id of the :doc:`asset version strategy </frontend/custom_version_strategy>`
+applied to the assets. This option can be set globally for all assets and
+individually for each asset package:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+       framework:
+            assets:
+                # this strategy is applied to every asset (including packages)
+                version_strategy: 'app.asset.my_versioning_strategy'
+                packages:
+                    foo_package:
+                        # this package removes any versioning (its assets won't be versioned)
+                        version: ~
+                    bar_package:
+                        # this package uses its own strategy (the default strategy is ignored)
+                        version_strategy: 'app.asset.another_version_strategy'
+                    baz_package:
+                        # this package inherits the default strategy
+                        base_path: '/images'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:assets version-strategy="app.asset.my_versioning_strategy">
+                    <!-- this package removes any versioning (its assets won't be versioned) -->
+                    <framework:package
+                        name="foo_package"
+                        version="null" />
+                    <!-- this package uses its own strategy (the default strategy is ignored) -->
+                    <framework:package
+                        name="bar_package"
+                        version-strategy="app.asset.another_version_strategy" />
+                    <!-- this package inherits the default strategy -->
+                    <framework:package
+                        name="baz_package"
+                        base_path="/images" />
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'assets' => array(
+                'version_strategy' => 'app.asset.my_versioning_strategy',
+                'packages' => array(
+                    'foo_package' => array(
+                        // this package removes any versioning (its assets won't be versioned)
+                        'version' => null,
+                    ),
+                    'bar_package' => array(
+                        // this package uses its own strategy (the default strategy is ignored)
+                        'version_strategy' => 'app.asset.another_version_strategy',
+                    ),
+                    'baz_package' => array(
+                        // this package inherits the default strategy
+                        'base_path' => '/images',
+                    ),
+                ),
+            ),
+        ));
+
+.. note::
+
+    This parameter cannot be set at the same time as ``version`` or ``json_manifest_path``.
+
+.. _reference-assets-json-manifest-path:
+.. _reference-templating-json-manifest-path:
+
+json_manifest_path
+..................
+
+**type**: ``string`` **default**: ``null``
+
+.. versionadded:: 3.3
+
+    The ``json_manifest_path`` option was introduced in Symfony 3.3.
+
+The file path to a ``manifest.json`` file containing an associative array of asset
+names and their respective compiled names. A common cache-busting technique using
+a "manifest" file works by writing out assets with a "hash" appended to their
+file names (e.g. ``main.ae433f1cb.css``) during a front-end compilation routine.
+
+.. tip::
+
+    Symfony's :ref:`Webpack Encore <frontend-webpack-encore>` supports
+    :ref:`outputting hashed assets <encore-long-term-caching>`. Moreover, this
+    can be incorporated into many other workflows, including Webpack and
+    Gulp using `webpack-manifest-plugin`_ and `gulp-rev`_, respectively.
+
+This option can be set globally for all assets and individually for each asset
+package:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+       framework:
+            assets:
+                # this manifest is applied to every asset (including packages)
+                json_manifest_path: "%kernel.project_dir%/web/assets/manifest.json"
+                packages:
+                    foo_package:
+                        # this package uses its own manifest (the default file is ignored)
+                        json_manifest_path: "%kernel.project_dir%/web/assets/a_different_manifest.json"
+                    bar_package:
+                        # this package uses the global manifest (the default file is used)
+                        base_path: '/images'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- this manifest is applied to every asset (including packages) -->
+                <framework:assets json-manifest-path="%kernel.project_dir%/web/assets/manifest.json">
+                    <!-- this package uses its own manifest (the default file is ignored) -->
+                    <framework:package
+                        name="foo_package"
+                        json-manifest-path="%kernel.project_dir%/web/assets/a_different_manifest.json" />
+                    <!-- this package uses the global manifest (the default file is used) -->
+                    <framework:package
+                        name="bar_package"
+                        base-path="/images" />
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'assets' => array(
+                // this manifest is applied to every asset (including packages)
+                'json_manifest_path' => '%kernel.project_dir%/web/assets/manifest.json',
+                'packages' => array(
+                    'foo_package' => array(
+                        // this package uses its own manifest (the default file is ignored)
+                        'json_manifest_path' => '%kernel.project_dir%/web/assets/a_different_manifest.json',
+                    ),
+                    'bar_package' => array(
+                        // this package uses the global manifest (the default file is used)
+                        'base_path' => '/images',
+                    ),
+                ),
+            ),
+        ));
+
+.. note::
+
+    This parameter cannot be set at the same time as ``version`` or ``version_strategy``.
+    Additionally, this option cannot be nullified at the package scope if a global manifest
+    file is specified.
+
+.. tip::
+
+    If you request an asset that is *not found* in the ``manifest.json`` file, the original -
+    *unmodified* - asset path will be returned.
 
 templating
 ~~~~~~~~~~
@@ -1147,7 +1368,8 @@ Assume you have custom global form themes in
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -1345,6 +1567,19 @@ If this option is enabled, the `egulias/email-validator`_ library will be
 used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
 the validator uses a simple regular expression to validate email addresses.
 
+mapping
+.......
+
+.. _reference-validation-mapping-paths:
+
+paths
+"""""
+
+**type**: ``array`` **default**: ``[]``
+
+This option allows to define an array of paths with files or directories where
+the component will look for additional validation files.
+
 annotations
 ~~~~~~~~~~~
 
@@ -1431,9 +1666,6 @@ name_converter
 
 **type**: ``string``
 
-.. versionadded:: 2.8
-    The ``name_converter`` option was introduced in Symfony 2.8.
-
 The name converter to use.
 The :class:`Symfony\\Component\\Serializer\\NameConverter\\CamelCaseToSnakeCaseNameConverter`
 name converter can enabled by using the ``serializer.name_converter.camel_case_to_snake_case``
@@ -1443,6 +1675,22 @@ value.
 
     For more information, see
     :ref:`component-serializer-converting-property-names-when-serializing-and-deserializing`.
+
+.. _reference-serializer-circular_reference_handler:
+
+circular_reference_handler
+..........................
+
+**type** ``string``
+
+The service id that is used as the circular reference handler of the default
+serializer. The service has to implement the magic ``__invoke($object)``
+method.
+
+.. seealso::
+
+    For more information, see
+    :ref:`component-serializer-handling-circular-references`.
 
 php_errors
 ~~~~~~~~~~
@@ -1467,6 +1715,152 @@ throw
 
 Throw PHP errors as ``\ErrorException`` instances. The parameter
 ``debug.error_handler.throw_at`` controls the threshold.
+
+.. _reference-cache:
+
+cache
+~~~~~
+
+.. _reference-cache-app:
+
+app
+...
+
+**type**: ``string`` **default**: ``cache.adapter.filesystem``
+
+The cache adapter used by the ``cache.app`` service. The FrameworkBundle
+ships with multiple adapters: ``apcu``, ``doctrine``, ``system``, ``filesystem``,
+``psr6`` and ``redis``.
+
+.. tip::
+
+    It might be tough to understand at the beginning, so to avoid confusion remember that all pools perform the
+    same actions but on different medium given the adapter they are based on. Internally, a pool wraps the definition
+    of an adapter.
+
+system
+......
+
+**type**: ``string`` **default**: ``cache.adapter.system``
+
+The cache adapter used by the ``cache.system`` service.
+
+directory
+.........
+
+**type**: ``string`` **default**: ``%kernel.cache_dir%/pools``
+
+The path to the cache directory used by services inheriting from the
+``cache.adapter.filesystem`` adapter (including ``cache.app``).
+
+default_doctrine_provider
+.........................
+
+**type**: ``string``
+
+The service name to use as your default Doctrine provider. The provider is
+available as the ``cache.doctrine`` service.
+
+default_psr6_provider
+.....................
+
+**type**: ``string``
+
+The service name to use as your default PSR-6 provider. It is available as
+the ``cache.psr6`` service.
+
+default_redis_provider
+......................
+
+**type**: ``string`` **default**: ``redis://localhost``
+
+The DSN to use by the Redis provider. The provider is available as the ``cache.redis``
+service.
+
+pools
+.....
+
+**type**: ``array``
+
+A list of cache pools to be created by the framework extension.
+
+.. seealso::
+
+    For more information about how pools works, see :ref:`cache pools <component-cache-cache-pools>`.
+
+.. _reference-cache-pools-name:
+
+name
+""""
+
+**type**: ``prototype``
+
+Name of the pool you want to create.
+
+.. note::
+
+    Your pool name must differ from ``cache.app`` or ``cache.system``.
+
+adapter
+"""""""
+
+**type**: ``string`` **default**: ``cache.app``
+
+The name of the adapter to use. You could also use your own implementation.
+
+.. note::
+
+    Your service MUST implement the :class:`Psr\\Cache\\CacheItemPoolInterface` interface.
+
+public
+""""""
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether your service should be public or not.
+
+default_lifetime
+""""""""""""""""
+
+**type**: ``integer``
+
+Default lifetime of your cache items in seconds.
+
+provider
+""""""""
+
+**type**: ``string``
+
+The service name to use as provider when the specified adapter needs one.
+
+clearer
+"""""""
+
+**type**: ``string``
+
+The cache clearer used to clear your PSR-6 cache.
+
+.. seealso::
+
+    For more information, see :class:`Symfony\\Component\\HttpKernel\\CacheClearer\\Psr6CacheClearer`.
+
+prefix_seed
+...........
+
+.. versionadded:: 3.2
+    The ``prefix_seed`` option was introduced in Symfony 3.2.
+
+**type**: ``string`` **default**: ``null``
+
+If defined, this value is used as part of the "namespace" generated for the
+cache item keys. A common practice is to use the unique name of the application
+(e.g. ``symfony.com``) because that prevents naming collisions when deploying
+multiple applications into the same path (on different servers) that share the
+same cache backend.
+
+It's also useful when using `blue/green deployment`_ strategies and more
+generally, when you need to abstract out the actual deployment directory (for
+example, when warming caches offline).
 
 Full Default Configuration
 --------------------------
@@ -1550,7 +1944,10 @@ Full Default Configuration
 
             # serializer configuration
             serializer:
-               enabled: false
+               enabled:                   false
+               cache:                      ~
+               name_converter:             ~
+               circular_reference_handler: ~
 
             # assets configuration
             assets:
@@ -1595,6 +1992,8 @@ Full Default Configuration
                 cache:                ~
                 enable_annotations:   false
                 translation_domain:   validators
+                mapping:
+                    paths:            []
 
             # annotation configuration
             annotations:
@@ -1607,8 +2006,29 @@ Full Default Configuration
                 log:                  false
                 throw:                '%kernel.debug%'
 
+            # cache configuration
+            cache:
+                app: cache.app
+                system: cache.system
+                directory: '%kernel.cache_dir%/pools'
+                default_doctrine_provider: ~
+                default_psr6_provider: ~
+                default_redis_provider: 'redis://localhost'
+                pools:
+                    # Prototype
+                    name:
+                        adapter: cache.app
+                        public: false
+                        default_lifetime: ~
+                        provider: ~
+                        clearer: ~
+
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
 .. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
+.. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
+.. _`blue/green deployment`: http://martinfowler.com/bliki/BlueGreenDeployment.html
+.. _`gulp-rev`: https://www.npmjs.com/package/gulp-rev
+.. _`webpack-manifest-plugin`: https://www.npmjs.com/package/webpack-manifest-plugin

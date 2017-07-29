@@ -50,7 +50,7 @@ the Finder instance.
 
 .. tip::
 
-    A Finder instance is a PHP :phpclass:`Iterator`. So, instead of iterating over the
+    A Finder instance is a PHP :phpclass:`Iterator`. So, in addition to iterating over the
     Finder with ``foreach``, you can also convert it to an array with the
     :phpfunction:`iterator_to_array` method, or get the number of items with
     :phpfunction:`iterator_count`.

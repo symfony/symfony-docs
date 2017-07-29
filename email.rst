@@ -45,7 +45,8 @@ already included:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <swiftmailer:config
@@ -83,8 +84,14 @@ The following configuration attributes are available:
 
   * ``type`` (how to queue the messages, ``file`` or ``memory`` is supported, see :doc:`/email/spool`)
   * ``path`` (where to store the messages)
-* ``delivery_address`` (an email address where to send ALL emails)
+* ``delivery_addresses`` (an array of email addresses where to send ALL emails)
 * ``disable_delivery`` (set to true to disable delivery completely)
+
+.. caution::
+
+    Starting from SwiftMailer 5.4.5, the ``mail`` transport is deprecated
+    and will be removed in version 6. Consider using another transport like
+    ``smtp``, ``sendmail`` or ``gmail``.
 
 Sending Emails
 --------------
@@ -94,10 +101,9 @@ The Swift Mailer library works by creating, configuring and then sending
 of the message and is accessible via the ``mailer`` service. Overall, sending
 an email is pretty straightforward::
 
-    public function indexAction($name)
+    public function indexAction($name, \Swift_Mailer $mailer)
     {
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Hello Email')
+        $message = (new \Swift_Message('Hello Email'))
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
             ->setBody(
@@ -119,7 +125,11 @@ an email is pretty straightforward::
             )
             */
         ;
-        $this->get('mailer')->send($message);
+
+        $mailer->send($message);
+
+        // or, you can also fetch the mailer service this way
+        // $this->get('mailer')->send($message);
 
         return $this->render(...);
     }

@@ -196,7 +196,7 @@ And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template
 needs some variable not available in the main template.
 
-Suppose you've created a ``topArticlesAction`` controller method to display
+Suppose you've created a ``topArticlesAction()`` controller method to display
 the most popular articles of your website. If you want to "render" the result
 of that method (usually some HTML content) inside the ``index`` template,
 use the ``render()`` function:
@@ -207,7 +207,7 @@ use the ``render()`` function:
     {{ render(controller('AppBundle:Default:topArticles')) }}
 
 Here, the ``render()`` and ``controller()`` functions use the special
-``AppBundle:Default:topArticles`` syntax to refer to the ``topArticlesAction``
+``AppBundle:Default:topArticles`` syntax to refer to the ``topArticlesAction()``
 action of the ``Default`` controller (the ``AppBundle`` part will be explained
 later)::
 

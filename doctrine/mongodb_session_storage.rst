@@ -77,7 +77,7 @@ need to change/add some parameters in the main configuration file:
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
 
         $container->loadFromExtension('framework', array(
             'session' => array(
@@ -88,17 +88,19 @@ need to change/add some parameters in the main configuration file:
             ),
         ));
 
-        $container->setDefinition('mongo_client', new Definition('MongoClient', array(
-            // if using a username and password
-            array('mongodb://%mongodb_username%:%mongodb_password%@%mongodb_host%:27017'),
-            // if not using a username and password
-            array('mongodb://%mongodb_host%:27017'),
-        )));
+        $container->register('mongo_client', \MongoClient::class)
+            ->setArguments(array(
+                // if using a username and password
+                array('mongodb://%mongodb_username%:%mongodb_password%@%mongodb_host%:27017'),
+                // if not using a username and password
+                array('mongodb://%mongodb_host%:27017'),
+            ));
 
-        $container->setDefinition('session.handler.mongo', new Definition(
-            'Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler',
-            array(new Reference('mongo_client'), '%mongo.session.options%')
-        ));
+        $container->register('session.handler.mongo', MongoDbSessionHandler::class)
+            ->setArguments(array(
+                new Reference('mongo_client'),
+                '%mongo.session.options%',
+            ));
 
 The parameters used above should be defined somewhere in your application, often in your main
 parameters configuration:
@@ -145,7 +147,6 @@ parameters configuration:
     .. code-block:: php
 
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\DependencyInjection\Definition;
 
         $container->setParameter('mongo.session.options', array(
             'database'   => 'session_db', // your MongoDB database name

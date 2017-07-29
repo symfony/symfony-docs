@@ -38,10 +38,12 @@ to apply to all instances of a specific class:
     .. code-block:: php
 
         // app/config/security.php
+        use Symfony\Component\Security\Core\User\User;
+
         $container->loadFromExtension('security', array(
             // ...
             'encoders' => array(
-                'Symfony\Component\Security\Core\User\User' => array(
+                User::class => array(
                     'algorithm' => 'sha512',
                 ),
             ),
@@ -102,7 +104,7 @@ named encoders:
 This creates an encoder named ``harsh``. In order for a ``User`` instance
 to use it, the class must implement
 :class:`Symfony\\Component\\Security\\Core\\Encoder\\EncoderAwareInterface`.
-The interface requires one method - ``getEncoderName`` - which should return
+The interface requires one method - ``getEncoderName()`` - which should return
 the name of the encoder to use::
 
     // src/Acme/UserBundle/Entity/User.php

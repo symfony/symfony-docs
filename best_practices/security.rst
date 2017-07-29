@@ -109,8 +109,8 @@ Using ``@Security``, this looks like:
 
 .. code-block:: php
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     /**
@@ -129,14 +129,14 @@ Using Expressions for Complex Security Restrictions
 
 If your security logic is a little bit more complex, you can use an :doc:`expression </components/expression_language>`
 inside ``@Security``. In the following example, a user can only access the
-controller if their email matches the value returned by the ``getAuthorEmail``
+controller if their email matches the value returned by the ``getAuthorEmail()``
 method on the ``Post`` object:
 
 .. code-block:: php
 
     use AppBundle\Entity\Post;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
@@ -191,6 +191,7 @@ Now you can reuse this method both in the template and in the security expressio
 
     use AppBundle\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
@@ -216,7 +217,7 @@ Checking Permissions without @Security
 
 The above example with ``@Security`` only works because we're using the
 :ref:`ParamConverter <best-practices-paramconverter>`, which gives the expression
-access to the a ``post`` variable. If you don't use this, or have some other
+access to the ``post`` variable. If you don't use this, or have some other
 more advanced use-case, you can always do the same security check in PHP:
 
 .. code-block:: php
@@ -226,7 +227,8 @@ more advanced use-case, you can always do the same security check in PHP:
      */
     public function editAction($id)
     {
-        $post = $this->getDoctrine()->getRepository('AppBundle:Post')
+        $post = $this->getDoctrine()
+            ->getRepository(Post::class)
             ->find($id);
 
         if (!$post) {
@@ -235,16 +237,15 @@ more advanced use-case, you can always do the same security check in PHP:
 
         if (!$post->isAuthor($this->getUser())) {
             $this->denyAccessUnlessGranted('edit', $post);
-
-	    // or without the shortcut:
-	    //
-	    // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-	    // ...
-	    //
-	    // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
-	    //    throw $this->createAccessDeniedException();
-	    // }
         }
+        // equivalent code without using the "denyAccessUnlessGranted()" shortcut:
+        //
+        // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+        // ...
+        //
+        // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
+        //    throw $this->createAccessDeniedException();
+        // }
 
         // ...
     }
@@ -258,7 +259,7 @@ of magnitude easier than :doc:`ACLs </security/acl>` and will give
 you the flexibility you need in almost all cases.
 
 First, create a voter class. The following example shows a voter that implements
-the same ``getAuthorEmail`` logic you used above:
+the same ``getAuthorEmail()`` logic you used above:
 
 .. code-block:: php
 
@@ -329,19 +330,10 @@ the same ``getAuthorEmail`` logic you used above:
         }
     }
 
-To enable the security voter in the application, define a new service:
-
-.. code-block:: yaml
-
-    # app/config/services.yml
-    services:
-        # ...
-        post_voter:
-            class:      AppBundle\Security\PostVoter
-            arguments: ['@security.access.decision_manager']
-            public:     false
-            tags:
-               - { name: security.voter }
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+your application will :ref:`autoconfigure <services-autoconfigure>` your security
+voter and inject an ``AccessDecisionManagerInterface`` instance into it thanks to
+:doc:`autowiring </service_container/autowiring>`.
 
 Now, you can use the voter with the ``@Security`` annotation:
 
@@ -398,6 +390,6 @@ If your company uses a user login method not supported by Symfony, you can
 develop :doc:`your own user provider </security/custom_provider>` and
 :doc:`your own authentication provider </security/custom_authentication_provider>`.
 
-.. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`@Security annotation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
+.. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`@Security annotation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle

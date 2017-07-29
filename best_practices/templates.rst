@@ -30,22 +30,20 @@ Template Locations
     Store all your application's templates in ``app/Resources/views/`` directory.
 
 Traditionally, Symfony developers stored the application templates in the
-``Resources/views/`` directory of each bundle. Then they used the logical name
-to refer to them (e.g. ``AcmeDemoBundle:Default:index.html.twig``).
+``Resources/views/`` directory of each bundle. Then they used the Twig namespaced
+path to refer to them (e.g. ``@AcmeDemo/Default/index.html.twig``).
 
 But for the templates used in your application, it's much more convenient
 to store them in the ``app/Resources/views/`` directory. For starters, this
 drastically simplifies their logical names:
 
-=================================================  ==================================
-Templates Stored inside Bundles                    Templates Stored in ``app/``
-=================================================  ==================================
-``AcmeDemoBundle:Default:index.html.twig``         ``default/index.html.twig``
-``::layout.html.twig``                             ``layout.html.twig``
-``AcmeDemoBundle::index.html.twig``                ``index.html.twig``
-``AcmeDemoBundle:Default:subdir/index.html.twig``  ``default/subdir/index.html.twig``
-``AcmeDemoBundle:Default/subdir:index.html.twig``  ``default/subdir/index.html.twig``
-=================================================  ==================================
+============================================  ==================================
+Templates Stored inside Bundles               Templates Stored in ``app/``
+============================================  ==================================
+``@AcmeDemo/index.html.twig``                 ``index.html.twig``
+``@AcmeDemo/Default/index.html.twig``         ``default/index.html.twig``
+``@AcmeDemo/Default/subdir/index.html.twig``  ``default/subdir/index.html.twig``
+============================================  ==================================
 
 Another advantage is that centralizing your templates simplifies the work
 of your designers. They don't need to look for templates in lots of directories
@@ -60,8 +58,8 @@ Twig Extensions
 
 .. best-practice::
 
-    Define your Twig extensions in the ``AppBundle/Twig/`` directory and
-    configure them using the ``app/config/services.yml`` file.
+    Define your Twig extensions in the ``AppBundle/Twig/`` directory. Your
+    application will automatically detect them and configure them.
 
 Our application needs a custom ``md2html`` Twig filter so that we can transform
 the Markdown contents of each post into HTML.
@@ -73,18 +71,8 @@ a new dependency of the project:
 
     $ composer require erusev/parsedown
 
-Then, create a new ``Markdown`` service that will be used later by the Twig
-extension. The service definition only requires the path to the class:
-
-.. code-block:: yaml
-
-    # app/config/services.yml
-    services:
-        # ...
-        app.markdown:
-            class: AppBundle\Utils\Markdown
-
-And the ``Markdown`` class just needs to define one single method to transform
+Then, create a new ``Markdown`` class that will be used later by the Twig
+extension. It just needs to define one single method to transform
 Markdown content into HTML::
 
     namespace AppBundle\Utils;
@@ -107,8 +95,8 @@ Markdown content into HTML::
     }
 
 Next, create a new Twig extension and define a new filter called ``md2html``
-using the ``Twig_SimpleFilter`` class. Inject the newly defined ``markdown``
-service in the constructor of the Twig extension:
+using the ``Twig_SimpleFilter`` class. Inject the newly defined ``Markdown``
+class in the constructor of the Twig extension:
 
 .. code-block:: php
 
@@ -131,7 +119,7 @@ service in the constructor of the Twig extension:
                 new \Twig_SimpleFilter(
                     'md2html',
                     array($this, 'markdownToHtml'),
-                    array('is_safe' => array('html'))
+                    array('is_safe' => array('html'), 'pre_escape' => 'html')
                 ),
             );
         }
@@ -147,19 +135,11 @@ service in the constructor of the Twig extension:
         }
     }
 
-Lastly define a new service to enable this Twig extension in the app (the service
-name is irrelevant because you never use it in your own code):
+And that's it!
 
-.. code-block:: yaml
-
-    # app/config/services.yml
-    services:
-        app.twig.app_extension:
-            class:     AppBundle\Twig\AppExtension
-            arguments: ['@app.markdown']
-            public:    false
-            tags:
-                - { name: twig.extension }
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+you're done! Symfony will automatically know about your new service and tag it to
+be used as a Twig extension.
 
 .. _`Twig`: http://twig.sensiolabs.org/
 .. _`Parsedown`: http://parsedown.org/

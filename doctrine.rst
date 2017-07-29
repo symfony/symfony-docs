@@ -44,10 +44,10 @@ information. By convention, this information is usually configured in an
 
     # app/config/parameters.yml
     parameters:
-        database_host:      localhost
-        database_name:      test_project
-        database_user:      root
-        database_password:  password
+        database_host:     localhost
+        database_name:     test_project
+        database_user:     root
+        database_password: password
 
     # ...
 
@@ -95,7 +95,7 @@ information. By convention, this information is usually configured in an
         .. code-block:: php
 
             // app/config/config.php
-            $configuration->loadFromExtension('doctrine', array(
+            $container->loadFromExtension('doctrine', array(
                 'dbal' => array(
                     'driver'   => 'pdo_mysql',
                     'host'     => '%database_host%',
@@ -138,7 +138,7 @@ can automatically generate an empty ``test_project`` database for you:
 
         [mysqld]
         # Version 5.5.3 introduced "utf8mb4", which is recommended
-        collation-server     = utf8mb4_general_ci # Replaces utf8_general_ci
+        collation-server     = utf8mb4_unicode_ci # Replaces utf8_unicode_ci
         character-set-server = utf8mb4            # Replaces utf8
 
     You can also change the defaults for Doctrine so that the generated SQL
@@ -207,7 +207,7 @@ can automatically generate an empty ``test_project`` database for you:
             doctrine:
                 dbal:
                     driver: pdo_sqlite
-                    path: '%kernel.root_dir%/sqlite.db'
+                    path: '%kernel.project_dir%/app/sqlite.db'
                     charset: UTF8
 
         .. code-block:: xml
@@ -225,7 +225,7 @@ can automatically generate an empty ``test_project`` database for you:
                 <doctrine:config>
                     <doctrine:dbal
                         driver="pdo_sqlite"
-                        path="%kernel.root_dir%/sqlite.db"
+                        path="%kernel.project_dir%/app/sqlite.db"
                         charset="UTF-8" />
                 </doctrine:config>
             </container>
@@ -236,7 +236,7 @@ can automatically generate an empty ``test_project`` database for you:
             $container->loadFromExtension('doctrine', array(
                 'dbal' => array(
                     'driver'  => 'pdo_sqlite',
-                    'path'    => '%kernel.root_dir%/sqlite.db',
+                    'path'    => '%kernel.project_dir%/app/sqlite.db',
                     'charset' => 'UTF-8',
                 ),
             ));
@@ -427,6 +427,15 @@ see the :ref:`doctrine-field-types` section.
         class Product
         // ...
 
+.. tip::
+
+    After creating your entities you should validate the mappings with the
+    following command:
+
+    .. code-block:: terminal
+
+        $ php bin/console doctrine:schema:validate
+
 .. _doctrine-generating-getters-and-setters:
 
 Generating Getters and Setters
@@ -436,56 +445,8 @@ Even though Doctrine now knows how to persist a ``Product`` object to the
 database, the class itself isn't really useful yet. Since ``Product`` is just
 a regular PHP class with ``private`` properties, you need to create ``public``
 getter and setter methods (e.g. ``getName()``, ``setName($name)``) in order
-to access its properties in the rest of your application's code. Fortunately,
-the following command can generate these boilerplate methods automatically:
-
-.. code-block:: terminal
-
-    $ php bin/console doctrine:generate:entities AppBundle/Entity/Product
-
-This command makes sure that all the getters and setters are generated
-for the ``Product`` class. This is a safe command - you can run it over and
-over again: it only generates getters and setters that don't exist (i.e. it
-doesn't replace your existing methods).
-
-.. caution::
-
-    Keep in mind that Doctrine's entity generator produces simple getters/setters.
-    You should review the generated methods and add any logic, if necessary,
-    to suit the needs of your application.
-
-.. sidebar:: More about ``doctrine:generate:entities``
-
-    With the ``doctrine:generate:entities`` command you can:
-
-    * generate getter and setter methods in entity classes;
-
-    * generate repository classes on behalf of entities configured with the
-      ``@ORM\Entity(repositoryClass="...")`` annotation;
-
-    * generate the appropriate constructor for 1:n and n:m relations.
-
-    The ``doctrine:generate:entities`` command saves a backup of the original
-    ``Product.php`` named ``Product.php~``. In some cases, the presence of
-    this file can cause a "Cannot redeclare class" error. It can be safely
-    removed. You can also use the ``--no-backup`` option to prevent generating
-    these backup files.
-
-    Note that you don't *need* to use this command. You could also write the
-    necessary getters and setters by hand. This option simply exists to save
-    you time, since creating these methods is often a common task during
-    development.
-
-You can also generate all known entities (i.e. any PHP class with Doctrine
-mapping information) of a bundle or an entire namespace:
-
-.. code-block:: terminal
-
-    # generates all entities in the AppBundle
-    $ php bin/console doctrine:generate:entities AppBundle
-
-    # generates all entities of bundles in the Acme namespace
-    $ php bin/console doctrine:generate:entities Acme
+to access its properties in the rest of your application's code. Add these
+methods manually or with your own IDE.
 
 .. _doctrine-creating-the-database-tables-schema:
 
@@ -509,7 +470,7 @@ in your application. To do this, run:
     your entities) with how it *actually* looks, and executes the SQL statements
     needed to *update* the database schema to where it should be. In other
     words, if you add a new property with mapping metadata to ``Product``
-    and run this task, it will execute the "ALTER TABLE" statement needed
+    and run this command, it will execute the "ALTER TABLE" statement needed
     to add that new column to the existing ``product`` table.
 
     An even better way to take advantage of this functionality is via
@@ -539,16 +500,18 @@ a controller, this is pretty easy. Add the following method to the
     // ...
     use AppBundle\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
+    use Doctrine\ORM\EntityManagerInterface;
 
-    // ...
     public function createAction()
     {
+        // you can fetch the EntityManager via $this->getDoctrine()
+        // or you can add an argument to your action: createAction(EntityManagerInterface $em)
+        $em = $this->getDoctrine()->getManager();
+
         $product = new Product();
         $product->setName('Keyboard');
         $product->setPrice(19.99);
         $product->setDescription('Ergonomic and stylish!');
-
-        $em = $this->getDoctrine()->getManager();
 
         // tells Doctrine you want to (eventually) save the Product (no queries yet)
         $em->persist($product);
@@ -559,33 +522,34 @@ a controller, this is pretty easy. Add the following method to the
         return new Response('Saved new product with id '.$product->getId());
     }
 
+    // if you have multiple entity managers, use the registry to fetch them
+    public function editAction()
+    {
+        $doctrine = $this->getDoctrine();
+        $em = $doctrine->getManager();
+        $em2 = $doctrine->getManager('other_connection')
+    }
+
 .. note::
 
     If you're following along with this example, you'll need to create a
     route that points to this action to see it work.
 
-.. tip::
-
-    This article shows working with Doctrine from within a controller by using
-    the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine`
-    method of the controller. This method is a shortcut to get the
-    ``doctrine`` service. You can work with Doctrine anywhere else
-    by injecting that service in the service. See
-    :doc:`/service_container` for more on creating your own services.
-
 Take a look at the previous example in more detail:
 
-* **lines 10-13** In this section, you instantiate and work with the ``$product``
+.. _doctrine-entity-manager:
+
+* **line 13** The ``$this->getDoctrine()->getManager()`` method gets Doctrine's
+  *entity manager* object, which is the most important object in Doctrine. It's
+  responsible for saving objects to, and fetching objects from, the database.
+
+* **lines 15-18** In this section, you instantiate and work with the ``$product``
   object like any other normal PHP object.
 
-* **line 15** This line fetches Doctrine's *entity manager* object, which is
-  responsible for the process of persisting objects to, and fetching objects
-  from, the database.
-
-* **line 18** The ``persist($product)`` call tells Doctrine to "manage" the
+* **line 21** The ``persist($product)`` call tells Doctrine to "manage" the
   ``$product`` object. This does **not** cause a query to be made to the database.
 
-* **line 21** When the ``flush()`` method is called, Doctrine looks through
+* **line 24** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object's data doesn't
   exist in the database, so the entity manager executes an ``INSERT`` query,
@@ -599,6 +563,11 @@ Take a look at the previous example in more detail:
     slightly improve the performance. For example, if you persist a total of 100
     ``Product`` objects and then subsequently call ``flush()``, Doctrine will
     execute 100 ``INSERT`` queries using a single prepared statement object.
+
+.. note::
+
+    If the ``flush()`` call fails, a ``Doctrine\ORM\ORMException`` exception
+    is thrown. See `Transactions and Concurrency`_.
 
 Whether creating or updating objects, the workflow is always the same. In
 the next section, you'll see how Doctrine is smart enough to automatically
@@ -620,7 +589,7 @@ on its ``id`` value::
     public function showAction($productId)
     {
         $product = $this->getDoctrine()
-            ->getRepository('AppBundle:Product')
+            ->getRepository(Product::class)
             ->find($productId);
 
         if (!$product) {
@@ -644,18 +613,18 @@ job is to help you fetch entities of a certain class. You can access the
 repository object for an entity class via::
 
     $repository = $this->getDoctrine()
-        ->getRepository('AppBundle:Product');
+        ->getRepository(Product::class);
 
 .. note::
 
-    The ``AppBundle:Product`` string is a shortcut you can use anywhere
+    You can also use ``AppBundle:Product`` syntax. This string is a shortcut you can use anywhere
     in Doctrine instead of the full class name of the entity (i.e. ``AppBundle\Entity\Product``).
     As long as your entity lives under the ``Entity`` namespace of your bundle,
     this will work.
 
 Once you have a repository object, you can access all sorts of helpful methods::
 
-    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
+    $repository = $this->getDoctrine()->getRepository(Product::class);
 
     // query for a single product by its primary key (usually "id")
     $product = $repository->find($productId);
@@ -678,7 +647,7 @@ Once you have a repository object, you can access all sorts of helpful methods::
 You can also take advantage of the useful ``findBy()`` and ``findOneBy()`` methods
 to easily fetch objects based on multiple conditions::
 
-    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
+    $repository = $this->getDoctrine()->getRepository(Product::class);
 
     // query for a single product matching the given name and price
     $product = $repository->findOneBy(
@@ -693,19 +662,17 @@ to easily fetch objects based on multiple conditions::
 
 .. tip::
 
-    When you render any page, you can see how many queries were made in the
-    bottom right corner of the web debug toolbar.
+    When rendering a page requires to make some database calls, the web debug
+    toolbar at the bottom of the page displays the number of queries and the
+    time it took to execute them:
 
-    .. image:: /_images/doctrine/web_debug_toolbar.png
+    .. image:: /_images/doctrine/doctrine_web_debug_toolbar.png
        :align: center
-       :scale: 50
-       :width: 350
+       :class: with-browser
 
-    If you click the icon, the profiler will open, showing you the exact
-    queries that were made.
-
-    The icon will turn yellow if there were more than 50 queries on the
-    page. This could indicate that something is not correct.
+    If the number of database queries is too high, the icon will turn yellow to
+    indicate that something may not be correct. Click on the icon to open the
+    Symfony Profiler and see the exact queries that were executed.
 
 Updating an Object
 ~~~~~~~~~~~~~~~~~~
@@ -713,10 +680,13 @@ Updating an Object
 Once you've fetched an object from Doctrine, updating it is easy. Suppose
 you have a route that maps a product id to an update action in a controller::
 
+    use AppBundle\Entity\Post;
+    // ...
+
     public function updateAction($productId)
     {
         $em = $this->getDoctrine()->getManager();
-        $product = $em->getRepository('AppBundle:Product')->find($productId);
+        $product = $em->getRepository(Product::class)->find($productId);
 
         if (!$product) {
             throw $this->createNotFoundException(
@@ -762,7 +732,7 @@ Querying for Objects
 You've already seen how the repository object allows you to run basic queries
 without any work::
 
-    $repository = $this->getDoctrine()->getRepository('AppBundle:Product');
+    $repository = $this->getDoctrine()->getRepository(Product::class);
 
     $product = $repository->find($productId);
     $product = $repository->findOneByName('Keyboard');
@@ -782,7 +752,6 @@ Imagine that you want to query for products that cost more than ``19.99``,
 ordered from least to most expensive. You can use DQL, Doctrine's native
 SQL-like language, to construct a query for this scenario::
 
-    $em = $this->getDoctrine()->getManager();
     $query = $em->createQuery(
         'SELECT p
         FROM AppBundle:Product p
@@ -823,7 +792,7 @@ depends on dynamic conditions, as your code soon becomes hard to read with
 DQL as you start to concatenate strings::
 
     $repository = $this->getDoctrine()
-        ->getRepository('AppBundle:Product');
+        ->getRepository(Product::class);
 
     // createQueryBuilder() automatically selects FROM AppBundle:Product
     // and aliases it to "p"
@@ -916,3 +885,4 @@ Learn more
 .. _`DoctrineFixturesBundle`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`newer utf8mb4 character set`: https://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html
+.. _`Transactions and Concurrency`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/transactions-and-concurrency.html

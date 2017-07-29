@@ -211,7 +211,7 @@ configuration option to point to it:
 
         # app/config/config.yml
         twig:
-            exception_controller:  AppBundle:Exception:showException
+            exception_controller: AppBundle:Exception:showException
 
     .. code-block:: xml
 
@@ -228,6 +228,7 @@ configuration option to point to it:
             <twig:config>
                 <twig:exception-controller>AppBundle:Exception:showException</twig:exception-controller>
             </twig:config>
+
         </container>
 
     .. code-block:: php
@@ -269,42 +270,44 @@ In that case, you might want to override one or both of the ``showAction()`` and
 
             # app/config/services.yml
             services:
-                app.exception_controller:
-                    class: AppBundle\Controller\CustomExceptionController
-                    arguments: ['@twig', '%kernel.debug%']
+                _defaults:
+                    # ... be sure autowiring is enabled
+                    autowire: true
+                # ...
+
+                AppBundle\Controller\CustomExceptionController:
+                    public: true
+                    arguments:
+                        $debug: '%kernel.debug%'
 
         .. code-block:: xml
 
             <!-- app/config/services.xml -->
-            <?xml version="1.0" encoding="utf-8" ?>
+            <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
-            >
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
                 <services>
-                    <service id="app.exception_controller"
-                        class="AppBundle\Controller\CustomExceptionController"
-                    >
-                        <argument type="service" id="twig"/>
-                        <argument>%kernel.debug%</argument>
+                    <!-- ... be sure autowiring is enabled -->
+                    <defaults autowire="true" />
+                    <!-- ... -->
+
+                    <service id="AppBundle\Controller\CustomExceptionController" public="true">
+                        <argument key="$debug">%kernel.debug%</argument>
                     </service>
                 </services>
+
             </container>
 
         .. code-block:: php
 
             // app/config/services.php
-            use Symfony\Component\DependencyInjection\Reference;
-            use Symfony\Component\DependencyInjection\Definition;
+            use AppBundle\Controller\CustomExceptionController;
 
-            $definition = new Definition('AppBundle\Controller\CustomExceptionController', array(
-                new Reference('twig'),
-                '%kernel.debug%'
-            ));
-            $container->setDefinition('app.exception_controller', $definition);
-
-    And then configure ``twig.exception_controller`` using the controller as
-    services syntax (e.g. ``app.exception_controller:showAction``).
+            $container->autowire(CustomExceptionController::class)
+                ->setArgument('$debug', '%kernel.debug%');
 
 .. tip::
 

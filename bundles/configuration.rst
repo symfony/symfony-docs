@@ -81,14 +81,14 @@ bundle configuration would look like:
 
         <!-- app/config/config.xml -->
         <?xml version="1.0" ?>
-
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:acme-social="http://example.org/dic/schema/acme_social"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:acme-social="http://example.org/schema/dic/acme_social"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
            <acme-social:config>
-               <twitter client-id="123" client-secret="your_secret" />
+               <acme-social:twitter client-id="123" client-secret="your_secret" />
            </acme-social:config>
 
            <!-- ... -->
@@ -218,17 +218,63 @@ This class can now be used in your ``load()`` method to merge configurations and
 force validation (e.g. if an additional option was passed, an exception will be
 thrown)::
 
+    // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
+
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
 
         $config = $this->processConfiguration($configuration, $configs);
-        // ...
+
+        // you now have these 2 config keys
+        // $config['twitter']['client_id'] and $config['twitter']['client_secret']
     }
 
 The ``processConfiguration()`` method uses the configuration tree you've defined
 in the ``Configuration`` class to validate, normalize and merge all the
 configuration arrays together.
+
+Now, you can use the ``$config`` variable to modify a service provided by your bundle.
+For example, imagine your bundle has the following example config:
+
+.. code-block:: xml
+
+    <!-- src/Acme/SocialBundle/Resources/config/services.xml -->
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <container xmlns="http://symfony.com/schema/dic/services"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/dic/services
+            http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+        <services>
+            <service id="acme.social.twitter_client" class="Acme\SocialBundle\TwitterClient">
+                <argument></argument> <!-- will be filled in with client_id dynamically -->
+                <argument></argument> <!-- will be filled in with client_secret dynamically -->
+            </service>
+        </services>
+    </container>
+
+In your extension, you can load this and dynamically set its arguments::
+
+    // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
+    // ...
+
+    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+    use Symfony\Component\Config\FileLocator;
+
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__).'/Resources/config'));
+        $loader->load('services.xml');
+
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $def = $container->getDefinition('acme.social.twitter_client');
+        $def->replaceArgument(0, $config['twitter']['client_id']);
+        $def->replaceArgument(1, $config['twitter']['client_secret']);
+    }
+
 
 .. tip::
 
@@ -253,9 +299,7 @@ configuration arrays together.
         }
 
     This class uses the ``getConfiguration()`` method to get the Configuration
-    instance. You should override it if your Configuration class is not called
-    ``Configuration`` or if it is not placed in the same namespace as the
-    extension.
+    instance.
 
 .. sidebar:: Processing the Configuration yourself
 
@@ -325,7 +369,7 @@ configuration of a specific bundle. The namespace is returned from the
 :method:`Extension::getNamespace() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getNamespace>`
 method. By convention, the namespace is a URL (it doesn't have to be a valid
 URL nor does it need to exists). By default, the namespace for a bundle is
-``http://example.org/dic/schema/DI_ALIAS``, where ``DI_ALIAS`` is the DI alias of
+``http://example.org/schema/dic/DI_ALIAS``, where ``DI_ALIAS`` is the DI alias of
 the extension. You might want to change this to a more professional URL::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
@@ -380,7 +424,6 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
 
     <!-- app/config/config.xml -->
     <?xml version="1.0" ?>
-
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:acme-hello="http://acme_company.com/schema/dic/hello"

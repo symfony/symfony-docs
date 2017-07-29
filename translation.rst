@@ -28,7 +28,7 @@ into the language of the user::
     *language* code, an underscore (``_``), then the `ISO 3166-1 alpha-2`_
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
-In this chapter, you'll learn how to use the Translation component in the
+In this article, you'll learn how to use the Translation component in the
 Symfony Framework. You can read the
 :doc:`Translation component documentation </components/translation/usage>`
 to learn even more. Overall, the process has several steps:
@@ -385,7 +385,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
             framework:
                 translator:
                     paths:
-                        - '%kernel.root_dir%/../translations'
+                        - '%kernel.project_dir%/translations'
 
         .. code-block:: xml
 
@@ -402,7 +402,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
                 <framework:config>
                     <framework:translator>
-                        <framework:path>%kernel.root_dir%/../translations</framework:path>
+                        <framework:path>%kernel.project_dir%/translations</framework:path>
                     </framework:translator>
                 </framework:config>
             </container>
@@ -413,7 +413,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
             $container->loadFromExtension('framework', array(
                 'translator' => array(
                     'paths' => array(
-                        '%kernel.root_dir%/../translations',
+                        '%kernel.project_dir%/translations',
                     ),
                 ),
             ));
@@ -455,8 +455,8 @@ checks translation resources for several locales:
 
 .. note::
 
-    When Symfony doesn't find a translation in the given locale, it will 
-    add the missing translation to the log file. For details, 
+    When Symfony doesn't find a translation in the given locale, it will
+    add the missing translation to the log file. For details,
     see :ref:`reference-framework-translator-logging`.
 
 Handling the User's Locale

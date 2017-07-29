@@ -44,16 +44,16 @@ and can be registered with the container with::
 
     $container->registerExtension($extension);
 
-The main work of the extension is done in the ``load`` method. In the ``load``
+The main work of the extension is done in the ``load()`` method. In the ``load()``
 method you can load configuration from one or more configuration files as
 well as manipulate the container definitions using the methods shown in
 :doc:`/service_container/definitions`.
 
-The ``load`` method is passed a fresh container to set up, which is then
+The ``load()`` method is passed a fresh container to set up, which is then
 merged afterwards into the container it is registered with. This allows
 you to have several extensions managing container definitions independently.
 The extensions do not add to the containers configuration when they are
-added but are processed when the container's ``compile`` method is called.
+added but are processed when the container's ``compile()`` method is called.
 
 A very simple extension may just load configuration files into the container::
 
@@ -85,7 +85,7 @@ sections of config files loaded directly into the container as being for
 a particular extension. These sections on the config will not be processed
 directly by the container but by the relevant Extension.
 
-The Extension must specify a ``getAlias`` method to implement the interface::
+The Extension must specify a ``getAlias()`` method to implement the interface::
 
     // ...
 
@@ -100,7 +100,7 @@ The Extension must specify a ``getAlias`` method to implement the interface::
     }
 
 For YAML configuration files specifying the alias for the extension as a
-key will mean that those values are passed to the Extension's ``load`` method:
+key will mean that those values are passed to the Extension's ``load()`` method:
 
 .. code-block:: yaml
 
@@ -133,7 +133,7 @@ are loaded::
     or an exception will be thrown.
 
 The values from those sections of the config files are passed into the first
-argument of the ``load`` method of the extension::
+argument of the ``load()`` method of the extension::
 
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -190,7 +190,7 @@ the XML configuration::
 
 .. note::
 
-    XSD validation is optional, returning ``false`` from the ``getXsdValidationBasePath``
+    XSD validation is optional, returning ``false`` from the ``getXsdValidationBasePath()``
     method will disable it.
 
 The XML version of the config would then look like this:
@@ -204,7 +204,7 @@ The XML version of the config would then look like this:
         xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
 
         <acme_demo:config>
-            <acme_demo:foo>fooValue</acme_hello:foo>
+            <acme_demo:foo>fooValue</acme_demo:foo>
             <acme_demo:bar>barValue</acme_demo:bar>
         </acme_demo:config>
     </container>
@@ -292,7 +292,7 @@ method is called by implementing
     {
         // ...
 
-        public function prepend()
+        public function prepend(ContainerBuilder $container)
         {
             // ...
 
@@ -423,6 +423,23 @@ been run, use::
         PassConfig::TYPE_AFTER_REMOVING
     );
 
+.. versionadded:: 3.2
+    The option to prioritize compiler passes was added in Symfony 3.2.
+
+You can also control the order in which compiler passes are run for each
+compilation phase. Use the optional third argument of ``addCompilerPass()`` to
+set the priority as an integer number. The default priority is ``0`` and the higher
+its value, the earlier it's executed::
+
+    // ...
+    // FirstPass is executed after SecondPass because its priority is lower
+    $container->addCompilerPass(
+        new FirstPass(), PassConfig::TYPE_AFTER_REMOVING, 10
+    );
+    $container->addCompilerPass(
+        new SecondPass(), PassConfig::TYPE_AFTER_REMOVING, 30
+    );
+
 .. _components-dependency-injection-dumping:
 
 Dumping the Configuration for Performance
@@ -455,7 +472,7 @@ makes dumping the compiled container easy::
     }
 
 ``ProjectServiceContainer`` is the default name given to the dumped container
-class, you can change this though this with the ``class`` option when you
+class. However you can change this with the ``class`` option when you
 dump it::
 
     // ...

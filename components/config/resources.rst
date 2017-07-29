@@ -87,8 +87,6 @@ the resource::
     $loaderResolver = new LoaderResolver(array(new YamlUserLoader($locator)));
     $delegatingLoader = new DelegatingLoader($loaderResolver);
 
+    // YamlUserLoader is used to load this resource because it supports
+    // files with the '.yml' extension
     $delegatingLoader->load(__DIR__.'/users.yml');
-    /*
-    The YamlUserLoader will be used to load this resource,
-    since it supports files with a "yml" extension
-    */

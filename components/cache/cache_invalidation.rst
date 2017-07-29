@@ -1,13 +1,13 @@
 .. index::
-   single: Cache; Invalidation
-   single: Cache; Tags
+    single: Cache; Invalidation
+    single: Cache; Tags
 
 Cache Invalidation
 ==================
 
 Cache invalidation is the process of removing all cached items related to a
 change in the state of your model. The most basic kind of invalidation is direct
-items deletion. But when the state of a primary resource has spread accross
+items deletion. But when the state of a primary resource has spread across
 several cached items, keeping them in sync can be difficult.
 
 The Symfony Cache component provides two mechanisms to help solving this problem:

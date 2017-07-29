@@ -11,6 +11,7 @@ Full Default Configuration
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         web_profiler:
 
             # DEPRECATED, it is not useful anymore and can be removed
@@ -31,9 +32,20 @@ Full Default Configuration
 
     .. code-block:: xml
 
-        <web-profiler:config
-            toolbar="false"
-            verbose="true"
-            intercept_redirects="false"
-            excluded_ajax_paths="^/bundles|^/_wdt"
-        />
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" charset="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/webprofiler
+                http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd">
+
+            <web-profiler:config
+                toolbar="false"
+                verbose="true"
+                intercept-redirects="false"
+                excluded-ajax-paths="^/bundles|^/_wdt"
+            />
+        </container>

@@ -37,7 +37,7 @@ Creating a Page: Route and Controller
 .. tip::
 
     Before continuing, make sure you've read the :doc:`Setup </setup>`
-    chapter and can access your new Symfony app in the browser.
+    article and can access your new Symfony app in the browser.
 
 Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (well,
 random) number and prints it. To do that, create a "Controller class" and a
@@ -47,8 +47,8 @@ random) number and prints it. To do that, create a "Controller class" and a
     // src/AppBundle/Controller/LuckyController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class LuckyController
     {
@@ -68,12 +68,7 @@ random) number and prints it. To do that, create a "Controller class" and a
 Before diving into this, test it out! If you are using PHP's internal web server
 go to:
 
-    http://localhost:8000/app_dev.php/lucky/number
-
-.. tip::
-
-    If you're using the built-in PHP web-server, you can omit the ``app_dev.php``
-    part of the URL.
+    http://localhost:8000/lucky/number
 
 If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works. Remember the two steps
@@ -84,7 +79,7 @@ to creating a page?
    in its own section, including how to make *variable* URLs;
 
 #. *Create a controller*: The method below the route - ``numberAction()`` - is called
-   the *controller*: this is a function where *you* build the page and ultimately
+   the *controller*. This is a function where *you* build the page and ultimately
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
    in their own section, including how to return JSON responses.
 
@@ -154,7 +149,7 @@ to get your *new* lucky number!
 
     http://localhost:8000/lucky/number
 
-In the :doc:`/templating` chapter, you'll learn all about Twig: how to loop, render
+In the :doc:`/templating` article, you'll learn all about Twig: how to loop, render
 other templates and leverage its powerful layout inheritance system.
 
 Checking out the Project Structure
@@ -230,7 +225,7 @@ That exists!
 
 You can control how your bundles behave via the ``app/config/config.yml`` file.
 That file - and other details like environments & parameters - are discussed in
-the :doc:`/configuration` chapter.
+the :doc:`/configuration` article.
 
 What's Next?
 ------------
@@ -238,7 +233,7 @@ What's Next?
 Congrats! You're already starting to master Symfony and learn a whole new
 way of building beautiful, functional, fast and maintainable apps.
 
-Ok, time to finish mastering the fundamentals by reading these chapters:
+Ok, time to finish mastering the fundamentals by reading these articles:
 
 * :doc:`/routing`
 * :doc:`/controller`

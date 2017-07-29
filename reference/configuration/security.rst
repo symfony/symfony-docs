@@ -124,7 +124,7 @@ Each part will be explained in the next section.
                     pattern: .*
                     # restrict the firewall to a specific host
                     host: admin\.example\.com
-                     # restrict the firewall to specific http methods
+                    # restrict the firewall to specific HTTP methods
                     methods: [GET, POST]
                     request_matcher: some.service.id
                     access_denied_url: /foo/error403
@@ -142,9 +142,10 @@ Each part will be explained in the next section.
                     http_basic:
                         provider: some_key_from_above
                     http_basic_ldap:
-                        provider:  some_key_from_above
-                        service:   ldap
-                        dn_string: '{username}'
+                        provider:     some_key_from_above
+                        service:      ldap
+                        dn_string:    '{username}'
+                        query_string: ~
                     http_digest:
                         provider: some_key_from_above
                     guard:
@@ -237,8 +238,9 @@ Each part will be explained in the next section.
                         # new in Symfony 2.3
                         require_previous_session: true
 
-                        service:   ~
-                        dn_string: '{username}'
+                        service:      ~
+                        dn_string:    '{username}'
+                        query_string: ~
 
                     remember_me:
                         token_provider: name
@@ -384,10 +386,44 @@ request to the ``check_path`` URL.
 Redirecting after Login
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* ``always_use_default_target_path`` (type: ``boolean``, default: ``false``)
-* ``default_target_path`` (type: ``string``, default: ``/``)
-* ``target_path_parameter`` (type: ``string``, default: ``_target_path``)
-* ``use_referer`` (type: ``boolean``, default: ``false``)
+always_use_default_target_path
+..............................
+
+**type**: ``boolean`` **default**: ``false``
+
+If ``true``, users are always redirected to the default target path regardless
+of the previous URL that was stored in the session.
+
+default_target_path
+....................
+
+**type**: ``string`` **default**: ``/``
+
+The page users are redirected to when there is no previous page stored in the
+session (for example, when the users browse the login page directly).
+
+target_path_parameter
+.....................
+
+**type**: ``string`` **default**: ``_target_path``
+
+When using a login form, if you include an HTML element to set the target path,
+this option lets you change the name of the HTML element itself.
+
+use_referer
+...........
+
+**type**: ``boolean`` **default**: ``false``
+
+If ``true``, the user is redirected to the value stored in the ``HTTP_REFERER``
+header when no previous URL was stored in the session. If the referrer URL is
+the same as the one generated with the ``login_path`` route, the user is
+redirected to the ``default_target_path`` to avoid a redirection loop.
+
+.. note::
+
+    For historical reasons, and to match the misspelling of the HTTP standard,
+    the option is called ``use_referer`` instead of ``use_referrer``.
 
 .. _reference-security-pbkdf2:
 
@@ -445,6 +481,17 @@ This is the string which will be used as the bind DN. The ``{username}``
 placeholder will be replaced with the user-provided value (his login).
 Depending on your LDAP server's configuration, you may need to override
 this value.
+
+query_string
+............
+
+**type**: ``string`` **default**: ``null``
+
+This is the string which will be used to query for the DN. The ``{username}``
+placeholder will be replaced with the user-provided value (their login).
+Depending on your LDAP server's configuration, you will need to override
+this value. This setting is only necessary if the user's DN cannot be derived
+statically using the ``dn_string`` config option.
 
 User provider
 ~~~~~~~~~~~~~
@@ -510,22 +557,32 @@ Using the BCrypt Password Encoder
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <!-- ... -->
-            <encoder
-                class="Symfony\Component\Security\Core\User\User"
-                algorithm="bcrypt"
-                cost="15"
-            />
-        </config>
+        <?xml version="1.0" charset="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+                <encoder
+                    class="Symfony\Component\Security\Core\User\User"
+                    algorithm="bcrypt"
+                    cost="15"
+                />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
+        use Symfony\Component\Security\Core\User\User;
+
         $container->loadFromExtension('security', array(
             // ...
             'encoders' => array(
-                'Symfony\Component\Security\Core\User\User' => array(
+                User::class => array(
                     'algorithm' => 'bcrypt',
                     'cost'      => 15,
                 ),
@@ -590,14 +647,22 @@ multiple firewalls, the "context" could actually be shared:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <security:config>
-            <firewall name="somename" context="my_context">
-                <! ... ->
-            </firewall>
-            <firewall name="othername" context="my_context">
-                <! ... ->
-            </firewall>
-        </security:config>
+        <?xml version="1.0" charset="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <firewall name="somename" context="my_context">
+                    <!-- ... -->
+                </firewall>
+                <firewall name="othername" context="my_context">
+                    <!-- ... -->
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -614,6 +679,13 @@ multiple firewalls, the "context" could actually be shared:
                 ),
             ),
         ));
+
+.. note::
+
+    The firewall context key is stored in session, so every firewall using it
+    must set its ``stateless`` option to ``false``. Otherwise, the context is
+    ignored and you won't be able to authenticate on multiple firewalls at the
+    same time.
 
 HTTP-Digest Authentication
 --------------------------
@@ -635,11 +707,19 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <security:config>
-            <firewall name="somename">
-                <http-digest secret="%secret%" realm="secure-api" />
-            </firewall>
-        </security:config>
+        <?xml version="1.0" charset="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <firewall name="somename">
+                    <http-digest secret="%secret%" realm="secure-api" />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 

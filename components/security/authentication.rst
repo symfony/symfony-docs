@@ -71,6 +71,7 @@ The default authentication manager is an instance of
 :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationProviderManager`::
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
+    use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
     // instances of Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface
     $providers = array(...);
@@ -140,7 +141,7 @@ password was valid::
         )
     );
 
-    // for some extra checks: is account enabled, locked, expired, etc.?
+    // for some extra checks: is account enabled, locked, expired, etc.
     $userChecker = new UserChecker();
 
     // an array of password encoders (see below)
@@ -172,19 +173,19 @@ user. This allows you to use different encoding strategies for different
 types of users. The default :class:`Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactory`
 receives an array of encoders::
 
+    use Acme\Entity\LegacyUser;
     use Symfony\Component\Security\Core\Encoder\EncoderFactory;
     use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+    use Symfony\Component\Security\Core\User\User;
 
     $defaultEncoder = new MessageDigestPasswordEncoder('sha512', true, 5000);
     $weakEncoder = new MessageDigestPasswordEncoder('md5', true, 1);
 
     $encoders = array(
-        'Symfony\\Component\\Security\\Core\\User\\User' => $defaultEncoder,
-        'Acme\\Entity\\LegacyUser'                       => $weakEncoder,
-
+        User::class       => $defaultEncoder,
+        LegacyUser::class => $weakEncoder,
         // ...
     );
-
     $encoderFactory = new EncoderFactory($encoders);
 
 Each encoder should implement :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`
@@ -229,6 +230,7 @@ own, it just needs to follow these rules:
                }
 
                // ...
+           }
        }
 
 Using Password Encoders
@@ -303,7 +305,6 @@ The ``security.interactive_login`` event is triggered after a user has actively
 logged into your website.  It is important to distinguish this action from
 non-interactive authentication methods, such as:
 
-* authentication based on a "remember me" cookie.
 * authentication based on your session.
 * authentication using a HTTP basic or HTTP digest header.
 

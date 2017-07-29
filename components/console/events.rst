@@ -86,6 +86,10 @@ C/C++ standard.::
 The ``ConsoleEvents::EXCEPTION`` Event
 --------------------------------------
 
+.. versionadded:: 3.3
+    The ``ConsoleEvents::EXCEPTION`` event was deprecated in Symfony 3.3. Use
+    the ``ConsoleEvents::ERROR`` event instead.
+
 **Typical Purposes**: Handle exceptions thrown during the execution of a
 command.
 
@@ -112,6 +116,19 @@ Listeners receive a
         // change the exception to another one
         $event->setException(new \LogicException('Caught exception', $exitCode, $event->getException()));
     });
+
+The ``ConsoleEvents::ERROR`` Event
+----------------------------------
+
+.. versionadded:: 3.3
+    The ``ConsoleEvents::ERROR`` event was introduced in Symfony 3.3.
+
+**Typical Purposes**: Handle exceptions thrown during the execution of a
+command.
+
+This event is an improved version of the ``ConsoleEvents::EXCEPTION`` event,
+because it can handle every exception thrown during the execution of a command,
+including those triggered from event listeners.
 
 The ``ConsoleEvents::TERMINATE`` Event
 --------------------------------------

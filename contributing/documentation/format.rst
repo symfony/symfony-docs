@@ -1,8 +1,8 @@
 Documentation Format
 ====================
 
-The Symfony documentation uses reStructuredText_ as its markup language and
-Sphinx_ for generating the documentation in the formats read by the end users,
+The Symfony documentation uses `reStructuredText`_ as its markup language and
+`Sphinx`_ for generating the documentation in the formats read by the end users,
 such as HTML and PDF.
 
 reStructuredText
@@ -178,7 +178,7 @@ Symfony, you should precede your description of the change with a
 .. code-block:: rst
 
     .. versionadded:: 2.7
-        The ``askHiddenResponse`` method was introduced in Symfony 2.7.
+        The ``askHiddenResponse()`` method was introduced in Symfony 2.7.
 
     You can also ask a question and hide the response. This is particularly [...]
 
@@ -195,8 +195,8 @@ Whenever a new minor version of Symfony is released (e.g. 2.4, 2.5, etc),
 a new branch of the documentation is created from the ``master`` branch.
 At this point, all the ``versionadded`` tags for Symfony versions that have
 reached end-of-maintenance will be removed. For example, if Symfony 2.5 were
-released today, and 2.2 had recently reached its end-of-life, the 2.2 ``versionadded``
-tags would be removed from the new ``2.5`` branch.
+released today, and 2.2 had recently reached its end-of-maintenance, the 2.2
+``versionadded`` tags would be removed from the new ``2.5`` branch.
 
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Sphinx: http://sphinx-doc.org/

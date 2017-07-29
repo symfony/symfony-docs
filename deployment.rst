@@ -80,7 +80,7 @@ specifically tailored to the requirements of Symfony.
 `Capistrano`_ with `Symfony plugin`_
     `Capistrano`_ is a remote server automation and deployment tool written in Ruby.
     `Symfony plugin`_ is a plugin to ease Symfony related tasks, inspired by `Capifony`_
-    (which works only with Capistrano 2 )
+    (which works only with Capistrano 2).
 
 `sf2debpkg`_
     Helps you build a native Debian package for your Symfony project.
@@ -120,11 +120,20 @@ Check if your server meets the requirements by running:
 
     $ php bin/symfony_requirements
 
-B) Configure your ``app/config/parameters.yml`` File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _b-configure-your-app-config-parameters-yml-file:
 
-This file should *not* be deployed, but managed through the automatic utilities
-provided by Symfony.
+B) Configure your Parameters File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Most Symfony applications define configuration parameters in a file called
+``app/config/parameters.yml``. This file should *not* be deployed, because
+Symfony generates it automatically using the ``app/config/parameters.yml.dist``
+file as a template (that's why ``parameters.yml.dist`` must be committed and
+deployed).
+
+If your application uses environment variables instead of these parameters, you
+must define those env vars in your production server using the tools provided by
+your hosting service.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -153,11 +162,12 @@ as you normally do:
 D) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Make sure you clear (and warm-up) your Symfony cache:
+Make sure you clear and warm-up your Symfony cache:
 
 .. code-block:: terminal
 
-    $ php bin/console cache:clear --env=prod --no-debug
+    $ php bin/console cache:clear --env=prod --no-debug --no-warmup
+    $ php bin/console cache:warmup --env=prod
 
 E) Dump your Assetic Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -181,12 +191,12 @@ setup:
 * Pushing assets to a CDN
 * ...
 
-Application Lifecycle: Continuous Integration, QA, etc
-------------------------------------------------------
+Application Lifecycle: Continuous Integration, QA, etc.
+-------------------------------------------------------
 
 While this entry covers the technical details of deploying, the full lifecycle
-of taking code from development up to production may have a lot more steps
-(think deploying to staging, QA (Quality Assurance), running tests, etc).
+of taking code from development up to production may have more steps:
+deploying to staging, QA (Quality Assurance), running tests, etc.
 
 The use of staging, testing, QA, continuous integration, database migrations
 and the capability to roll back in case of failure are all strongly advised. There
@@ -197,13 +207,13 @@ Don't forget that deploying your application also involves updating any dependen
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
-.. _`Capifony`: http://capifony.org/
+.. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: http://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
 .. _`Fabric`: http://www.fabfile.org/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
 .. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
-.. _`bundles that add deployment features`: http://knpbundles.com/search?q=deploy
+.. _`bundles that add deployment features`: https://github.com/search?utf8=✓&q=topic%3Asymfony-bundle+topic%3Adeploy&type=Repositories&ref=searchresults
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/

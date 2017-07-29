@@ -58,7 +58,9 @@ snippet of PHP code is not natural and feels ugly. Here is a tentative PHPUnit
 unit test for the above code::
 
     // framework/test.php
-    class IndexTest extends \PHPUnit_Framework_TestCase
+    use PHPUnit\Framework\TestCase;
+
+    class IndexTest extends TestCase
     {
         public function testHello()
         {
@@ -119,18 +121,7 @@ To use this component, add it as a dependency of the project:
 Running this command will also automatically download the Symfony
 HttpFoundation component and install it under the ``vendor/`` directory.
 A ``composer.json`` and a ``composer.lock`` file will be generated as well,
-containing the new requirement:
-
-.. code-block:: json
-
-    {
-        "require": {
-            "symfony/http-foundation": "^3.0"
-        }
-    }
-
-The code block shows the content of the ``composer.json`` file (the actual
-version may vary).
+containing the new requirement.
 
 .. sidebar:: Class Autoloading
 
@@ -299,8 +290,8 @@ applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 
 .. _`Twig`: http://twig.sensiolabs.org/
 .. _`HTTP specification`: http://tools.ietf.org/wg/httpbis/
-.. _`audited`: http://symfony.com/blog/symfony2-security-audit
-.. _`Symfony`: http://symfony.com/
+.. _`audited`: https://symfony.com/blog/symfony2-security-audit
+.. _`Symfony`: https://symfony.com/
 .. _`Drupal 8`: https://drupal.org/
 .. _`phpBB 4`: https://www.phpbb.com/
 .. _`ezPublish 5`: http://ez.no/
@@ -310,4 +301,4 @@ applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 4`_, `ezPublish
 .. _`Zikula`: http://zikula.org/
 .. _`autoloaded`: http://php.net/autoload
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
-.. _`more`: http://symfony.com/components/HttpFoundation
+.. _`more`: https://symfony.com/components/HttpFoundation

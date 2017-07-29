@@ -141,13 +141,14 @@ values::
 
     $rootNode
         ->children()
-            ->enumNode('gender')
-                ->values(array('male', 'female'))
+            ->enumNode('delivery')
+                ->values(array('standard', 'expedited', 'priority'))
             ->end()
         ->end()
     ;
 
-This will restrict the ``gender`` option to be either ``male`` or ``female``.
+This will restrict the ``delivery`` options to be either ``standard``,
+``expedited``  or ``priority``.
 
 Array Nodes
 ~~~~~~~~~~~
@@ -189,6 +190,18 @@ A prototype can be used to add a definition which may be repeated many times
 inside the current node. According to the prototype definition in the example
 above, it is possible to have multiple connection arrays (containing a ``driver``,
 ``host``, etc.).
+
+.. versionadded:: 3.3
+    The ``castToArray()`` helper was added in Symfony 3.3.
+
+Sometimes, to improve the user experience of your application or bundle, you may
+allow to use a simple string or numeric value where an array value is required.
+Use the ``castToArray()`` helper to turn those variables into arrays::
+
+    ->arrayNode('hosts')
+        ->beforeNormalization()->castToArray()->end()
+        // ...
+    ->end()
 
 Array Node Options
 ~~~~~~~~~~~~~~~~~~
@@ -471,7 +484,7 @@ methods::
                 ->defaultFalse()
     ;
 
-The ``canBeDisabled`` method looks about the same except that the section
+The ``canBeDisabled()`` method looks about the same except that the section
 would be enabled by default.
 
 Merging Options
@@ -651,7 +664,7 @@ a second argument::
         ->end()
     ;
 
-As well as fixing this, ``fixXmlConfig`` ensures that single XML elements
+As well as fixing this, ``fixXmlConfig()`` ensures that single XML elements
 are still turned into an array. So you may have:
 
 .. code-block:: xml
@@ -667,7 +680,7 @@ and sometimes only:
 
 By default ``connection`` would be an array in the first case and a string
 in the second making it difficult to validate. You can ensure it is always
-an array with ``fixXmlConfig``.
+an array with ``fixXmlConfig()``.
 
 You can further control the normalization process if you need to. For example,
 you may want to allow a string to be set and used as a particular key or
@@ -750,8 +763,7 @@ A validation rule also requires a "then" part:
 - ``thenUnset()``
 
 Usually, "then" is a closure. Its return value will be used as a new value
-for the node, instead
-of the node's original value.
+for the node, instead of the node's original value.
 
 Processing Configuration Values
 -------------------------------

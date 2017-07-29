@@ -12,7 +12,7 @@ The PHPUnit Testing Framework
 -----------------------------
 
 Symfony integrates with an independent library - called PHPUnit - to give
-you a rich testing framework. This chapter won't cover PHPUnit itself, but
+you a rich testing framework. This article won't cover PHPUnit itself, but
 it has its own excellent `documentation`_.
 
 .. note::
@@ -29,7 +29,7 @@ command:
 
     $ phpunit
 
-PHPunit is configured by the ``phpunit.xml.dist`` file in the root of your
+PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
 
 .. tip::
@@ -69,8 +69,9 @@ of your application::
     namespace Tests\AppBundle\Util;
 
     use AppBundle\Util\Calculator;
+    use PHPUnit\Framework\TestCase;
 
-    class CalculatorTest extends \PHPUnit_Framework_TestCase
+    class CalculatorTest extends TestCase
     {
         public function testAdd()
         {
@@ -282,8 +283,9 @@ document::
 
         // Assert that the response is a redirect to /demo/contact
         $this->assertTrue(
-            $client->getResponse()->isRedirect('/demo/contact'),
-            'response is a redirect to /demo/contact'
+            $client->getResponse()->isRedirect('/demo/contact')
+            // if the redirection URL was generated as an absolute URL
+            // $client->getResponse()->isRedirect('http://localhost/demo/contact')
         );
         // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
@@ -360,7 +362,7 @@ giving you a nice API for uploading files.
     You will learn more about the ``Link`` and ``Form`` objects in the
     :ref:`Crawler <testing-crawler>` section below.
 
-The ``request`` method can also be used to simulate form submissions directly
+The ``request()`` method can also be used to simulate form submissions directly
 or perform more complex requests. Some useful examples::
 
     // Directly submit a form (but using the Crawler is easier!)
@@ -457,7 +459,7 @@ Injection Container::
     $container = $client->getContainer();
 
 For a list of services available in your application, use the ``debug:container``
-console task.
+command.
 
 .. tip::
 
@@ -715,11 +717,11 @@ add the values to the raw data array::
     $values = $form->getPhpValues();
 
     // Add fields to the raw values.
-    $values['task']['tag'][0]['name'] = 'foo';
-    $values['task']['tag'][1]['name'] = 'bar';
+    $values['task']['tags'][0]['name'] = 'foo';
+    $values['task']['tags'][1]['name'] = 'bar';
 
     // Submit the form with the existing and new values.
-    $crawler = $this->client->request($form->getMethod(), $form->getUri(), $values,
+    $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
         $form->getPhpFiles());
 
     // The 2 tags have been added to the collection.

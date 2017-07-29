@@ -4,7 +4,7 @@
 How to Use advanced ACL Concepts
 ================================
 
-The aim of this chapter is to give a more in-depth view of the ACL system, and
+The aim of this article is to give a more in-depth view of the ACL system, and
 also explain some of the design decisions behind it.
 
 Design Concepts
@@ -83,7 +83,7 @@ Access control entries can have different scopes in which they apply. In
 Symfony, there are basically two different scopes:
 
 - Class-Scope: These entries apply to all objects with the same class.
-- Object-Scope: This was the scope solely used in the previous chapter, and
+- Object-Scope: This was the scope solely used in the previous article, and
   it only applies to one specific object.
 
 Sometimes, you will find the need to apply an ACE only to a specific field of
@@ -183,14 +183,14 @@ Process for Reaching Authorization Decisions
 --------------------------------------------
 
 The ACL class provides two methods for determining whether a security identity
-has the required bitmasks, ``isGranted`` and ``isFieldGranted``. When the ACL
+has the required bitmasks, ``isGranted()`` and ``isFieldGranted()``. When the ACL
 receives an authorization request through one of these methods, it delegates
 this request to an implementation of
 :class:`Symfony\\Component\\Security\\Acl\\Domain\\PermissionGrantingStrategy`.
 This allows you to replace the way access decisions are reached without actually
 modifying the ACL class itself.
 
-The ``PermissionGrantingStrategy`` first checks all your object-scope ACEs. If none
+The ``PermissionGrantingStrategy`` first checks all your object-scope ACEs. If one
 is applicable, the class-scope ACEs will be checked. If none is applicable,
 then the process will be repeated with the ACEs of the parent ACL. If no
 parent ACL exists, an exception will be thrown.

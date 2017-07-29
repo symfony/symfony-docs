@@ -6,7 +6,7 @@ Forms
 
 Dealing with HTML forms is one of the most common - and challenging - tasks for
 a web developer. Symfony integrates a Form component that makes dealing with
-forms easy. In this chapter, you'll build a complex form from the ground up,
+forms easy. In this article, you'll build a complex form from the ground up,
 learning the most important features of the form library along the way.
 
 .. note::
@@ -59,9 +59,9 @@ going to need to build a form. But before you begin, first focus on the generic
 This class is a "plain-old-PHP-object" because, so far, it has nothing
 to do with Symfony or any other library. It's quite simply a normal PHP object
 that directly solves a problem inside *your* application (i.e. the need to
-represent a task in your application). Of course, by the end of this chapter,
+represent a task in your application). Of course, by the end of this article,
 you'll be able to submit data to a ``Task`` instance (via an HTML form), validate
-its data, and persist it to the database.
+its data and persist it to the database.
 
 .. index::
    single: Forms; Create a form in a controller
@@ -114,7 +114,7 @@ from inside a controller::
 
 Creating a form requires relatively little code because Symfony form objects
 are built with a "form builder". The form builder's purpose is to allow you
-to write simple form "recipes", and have it do all the heavy-lifting of actually
+to write simple form "recipes" and have it do all the heavy-lifting of actually
 building the form.
 
 In this example, you've added two fields to your form - ``task`` and ``dueDate`` -
@@ -255,11 +255,11 @@ your controller::
 
 .. caution::
 
-    Be aware that the ``createView()`` method should be called *after* ``handleRequest``
+    Be aware that the ``createView()`` method should be called *after* ``handleRequest()``
     is called. Otherwise, changes done in the ``*_SUBMIT`` events aren't applied to the
     view (like validation errors).
 
-This controller follows a common pattern for handling forms, and has three
+This controller follows a common pattern for handling forms and has three
 possible paths:
 
 #. When initially loading the page in a browser, the form is created and
@@ -385,7 +385,7 @@ object.
                 $metadata->addPropertyConstraint('dueDate', new NotBlank());
                 $metadata->addPropertyConstraint(
                     'dueDate',
-                    new Type('\DateTime')
+                    new Type(\DateTime::class)
                 );
             }
         }
@@ -394,7 +394,7 @@ That's it! If you re-submit the form with invalid data, you'll see the
 corresponding errors printed out with the form.
 
 Validation is a very powerful feature of Symfony and has its own
-:doc:`dedicated chapter </validation>`.
+:doc:`dedicated article </validation>`.
 
 .. _forms-html5-validation-disable:
 
@@ -562,10 +562,10 @@ the correct values of a number of field options.
     field ``nullable``). This is very useful, as your client-side validation will
     automatically match your validation rules.
 
-``max_length``
-    If the field is some sort of text field, then the ``max_length`` option can be
-    guessed from the validation constraints (if ``Length`` or ``Range`` is used) or
-    from the Doctrine metadata (via the field's length).
+``maxlength``
+    If the field is some sort of text field, then the ``maxlength`` option attribute
+    can be guessed from the validation constraints (if ``Length`` or ``Range`` is used)
+    or from the Doctrine metadata (via the field's length).
 
 .. caution::
 
@@ -633,18 +633,20 @@ the choice is ultimately up to you.
 
     Every form needs to know the name of the class that holds the underlying
     data (e.g. ``AppBundle\Entity\Task``). Usually, this is just guessed
-    based off of the object passed to the second argument to ``createForm``
+    based off of the object passed to the second argument to ``createForm()``
     (i.e. ``$task``). Later, when you begin embedding forms, this will no
     longer be sufficient. So, while not always necessary, it's generally a
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
+        use AppBundle\Entity\Task;
         use Symfony\Component\OptionsResolver\OptionsResolver;
 
+        // ...
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class' => 'AppBundle\Entity\Task',
+                'data_class' => Task::class,
             ));
         }
 
@@ -664,7 +666,8 @@ the choice is ultimately up to you.
         {
             $builder
                 ->add('task')
-                ->add('dueDate', null, array('mapped' => false))
+                ->add('dueDate')
+                ->add('agreeTerms', CheckboxType::class, array('mapped' => false))
                 ->add('save', SubmitType::class)
             ;
         }
@@ -674,11 +677,11 @@ the choice is ultimately up to you.
 
     The field data can be accessed in a controller with::
 
-        $form->get('dueDate')->getData();
+        $form->get('agreeTerms')->getData();
 
     In addition, the data of an unmapped field can also be modified directly::
 
-        $form->get('dueDate')->setData(new \DateTime());
+        $form->get('agreeTerms')->setData(true);
 
 Final Thoughts
 --------------

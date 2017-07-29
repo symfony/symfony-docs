@@ -35,13 +35,37 @@ You can install the component in 2 different ways:
 
 .. include:: /components/require_autoload.rst.inc
 
+If you plan to :ref:`write-assertions-about-deprecations` and use the regular
+PHPUnit script (not the modified PHPUnit script provided by Symfony), you have
+to register a new `test listener`_ called ``SymfonyTestsListener``:
+
+.. code-block:: xml
+
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        </listeners>
+    </phpunit>
+
 Usage
 -----
 
-Once the component installed, it automatically registers a
-`PHPUnit event listener`_ which in turn registers a `PHP error handler`_
-called :class:`Symfony\\Bridge\\PhpUnit\\DeprecationErrorHandler`. After
-running your PHPUnit tests, you will get a report similar to this one:
+Once the component is installed, a ``simple-phpunit`` script is created in the
+``vendor/`` directory to run tests. This script wraps the original PHPUnit binary
+to provide more features:
+
+.. code-block:: terminal
+
+    $ cd my-project/
+    $ ./vendor/bin/simple-phpunit
+
+After running your PHPUnit tests, you will get a report similar to this one:
 
 .. image:: /_images/components/phpunit_bridge/report.png
 
@@ -57,6 +81,21 @@ The summary includes:
 **Remaining/Other**
     Deprecation notices are all other (non-legacy) notices, grouped by message,
     test class and method.
+
+.. note::
+
+    If you don't want to use the ``simple-phpunit`` script, register the following
+    `PHPUnit event listener`_ in your PHPUnit configuration file to get the same
+    report about deprecations (which is created by a `PHP error handler`_
+    called :class:`Symfony\\Bridge\\PhpUnit\\DeprecationErrorHandler`):
+
+    .. code-block:: xml
+
+        <!-- phpunit.xml.dist -->
+        <!-- ... -->
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        </listeners>
 
 Trigger Deprecation Notices
 ---------------------------
@@ -74,15 +113,8 @@ in the **Unsilenced** section of the deprecation report.
 Mark Tests as Legacy
 --------------------
 
-There are four ways to mark a test as legacy:
-
-* (**Recommended**) Add the ``@group legacy`` annotation to its class or method;
-
-* Make its class name start with the ``Legacy`` prefix;
-
-* Make its method name start with ``testLegacy`` instead of ``test``;
-
-* Make its data provider start with ``provideLegacy`` or ``getLegacy``.
+Add the ``@group legacy`` annotation to a test class or method to mark it
+as legacy.
 
 Configuration
 -------------
@@ -94,9 +126,9 @@ message, enclosed with ``/``. For example, with:
 
 .. code-block:: xml
 
-    <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
     <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
     >
 
         <!-- ... -->
@@ -121,17 +153,33 @@ also set the value ``"weak"`` which will make the bridge ignore any deprecation
 notices. This is useful to projects that must use deprecated interfaces for
 backward compatibility reasons.
 
+When you maintain a library, having the test suite fail as soon as a dependency
+introduces a new deprecation is not desirable, because it shifts the burden of
+fixing that deprecation to any contributor that happens to submit a pull
+request shortly after a new vendor release is made with that deprecation. To
+mitigate this, you can either use tighter requirements, in the hope that
+dependencies will not introduce deprecations in a patch version, or even commit
+the Composer lock file, which would create another class of issues. Libraries
+will often use ``SYMFONY_DEPRECATIONS_HELPER=weak`` because of this. This has
+the drawback of allowing contributions that introduce deprecations but:
+
+* forget to fix the deprecated calls if there are any;
+* forget to mark appropriate tests with the ``@group legacy`` annotations.
+
+By using the ``"weak_vendors"`` value, deprecations that are triggered outside
+the ``vendors`` directory will make the test suite fail, while deprecations
+triggered from a library inside it will not, giving you the best of both
+worlds.
+
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.1
-    The ability to disable the deprecation helper was introduced in Symfony
-    3.1.
 
 Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled`` to
 completely disable the deprecation helper. This is useful to make use of the
 rest of features provided by this component without getting errors or messages
 related to deprecations.
+
+.. _write-assertions-about-deprecations:
 
 Write Assertions about Deprecations
 -----------------------------------
@@ -163,17 +211,18 @@ Use Case
 
 If you have this kind of time-related tests::
 
+    use PHPUnit\Framework\TestCase;
     use Symfony\Component\Stopwatch\Stopwatch;
 
-    class MyTest extends \PHPUnit_Framework_TestCase
+    class MyTest extends TestCase
     {
         public function testSomething()
         {
             $stopwatch = new Stopwatch();
 
-            $stopwatch->start();
+            $stopwatch->start('event_name');
             sleep(10);
-            $duration = $stopwatch->stop();
+            $duration = $stopwatch->stop('event_name')->getDuration();
 
             $this->assertEquals(10, $duration);
         }
@@ -181,7 +230,7 @@ If you have this kind of time-related tests::
 
 You used the :doc:`Symfony Stopwatch Component </components/stopwatch>` to
 calculate the duration time of your process, here 10 seconds. However, depending
-on the load of the server your the processes running on your local machine, the
+on the load of the server or the processes running on your local machine, the
 ``$duration`` could for example be `10.000023s` instead of `10s`.
 
 This kind of tests are called transient tests: they are failing randomly
@@ -195,24 +244,36 @@ The :class:`Symfony\\Bridge\\PhpUnit\\ClockMock` class provided by this bridge
 allows you to mock the PHP's built-in time functions ``time()``,
 ``microtime()``, ``sleep()`` and ``usleep()``.
 
-To use the ``ClockMock`` class in your test, you can:
+To use the ``ClockMock`` class in your test, add the ``@group time-sensitive``
+annotation to its class or methods. This annotation only works when executing
+PHPUnit using the ``vendor/bin/simple-phpunit`` script or when registering the
+following listener in your PHPUnit configuration:
 
-* (**Recommended**) Add the ``@group time-sensitive`` annotation to its class or
-  method;
+.. code-block:: xml
 
-* Register it manually by calling ``ClockMock::register(__CLASS__)`` and
-  ``ClockMock::withClockMock(true)`` before the test and
-  ``ClockMock::withClockMock(false)`` after the test.
+    <!-- phpunit.xml.dist -->
+    <!-- ... -->
+    <listeners>
+        <listener class="\Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+
+.. note::
+
+    If you don't want to use the ``@group time-sensitive`` annotation, you can
+    register the ``ClockMock`` class manually by calling
+    ``ClockMock::register(__CLASS__)`` and ``ClockMock::withClockMock(true)``
+    before the test and ``ClockMock::withClockMock(false)`` after the test.
 
 As a result, the following is guaranteed to work and is no longer a transient
 test::
 
+    use PHPUnit\Framework\TestCase;
     use Symfony\Component\Stopwatch\Stopwatch;
 
     /**
      * @group time-sensitive
      */
-    class MyTest extends \PHPUnit_Framework_TestCase
+    class MyTest extends TestCase
     {
         public function testSomething()
         {
@@ -239,9 +300,6 @@ And that's all!
 DNS-sensitive Tests
 -------------------
 
-.. versionadded:: 3.1
-    The mocks for DNS related functions were introduced in Symfony 3.1.
-
 Tests that make network connections, for example to check the validity of a DNS
 record, can be slow to execute and unreliable due to the conditions of the
 network. For that reason, this component also provides mocks for these PHP
@@ -262,9 +320,10 @@ Use Case
 Consider the following example that uses the ``checkMX`` option of the ``Email``
 constraint to test the validity of the email domain::
 
+    use PHPUnit\Framework\TestCase;
     use Symfony\Component\Validator\Constraints\Email;
 
-    class MyTest extends \PHPUnit_Framework_TestCase
+    class MyTest extends TestCase
     {
         public function testEmail()
         {
@@ -280,12 +339,13 @@ In order to avoid making a real network connection, add the ``@dns-sensitive``
 annotation to the class and use the ``DnsMock::withMockedHosts()`` to configure
 the data you expect to get for the given hosts::
 
+    use PHPUnit\Framework\TestCase;
     use Symfony\Component\Validator\Constraints\Email;
 
     /**
      * @group dns-sensitive
      */
-    class MyTest extends \PHPUnit_Framework_TestCase
+    class MyTest extends TestCase
     {
         public function testEmails()
         {
@@ -344,7 +404,7 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
             <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
                 <arguments>
                     <array>
-                        <element><string>Symfony\Component\HttpFoundation</string></element>
+                        <element key="time-sensitive"><string>Symfony\Component\HttpFoundation</string></element>
                     </array>
                 </arguments>
             </listener>
@@ -355,7 +415,8 @@ Modified PHPUnit script
 -----------------------
 
 .. versionadded:: 3.2
-    The modified PHPUnit script script was introduced in Symfony 3.2.
+    This modified PHPUnit script was introduced in the 3.2 version of 
+    this component.
 
 This bridge provides a modified version of PHPUnit that you can call by using
 its ``bin/simple-phpunit`` command. It has the following features:
@@ -387,8 +448,8 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
 .. tip::
 
-    Set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml`` if you need
-    ``prophecy`` but not ``symfony/yaml``.
+    If you still need to use ``prophecy`` (but not ``symfony/yaml``), 
+    then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
 
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
@@ -399,3 +460,4 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 .. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
+.. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners

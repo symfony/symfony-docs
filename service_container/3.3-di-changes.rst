@@ -1,0 +1,763 @@
+The Symfony 3.3 DI Container Changes Explained (autowiring, _defaults, etc)
+===========================================================================
+
+If you look at the ``services.yml`` file in a new Symfony 3.3 project, you'll
+notice some big changes: ``_defaults``, ``autowiring``, ``autoconfigure`` and more.
+These features are designed to *automate* configuration and make development faster,
+without sacrificing predictability, which is very important! Another goal is to make
+controllers and services behave more consistently. In Symfony 3.3, controllers *are*
+services by default.
+
+The documentation has already been updated to assume you have these new features
+enabled. If you're an existing Symfony user and want to understand the "what"
+and "why" behind these changes, this article is for you!
+
+All Changes are Optional
+------------------------
+
+Most importantly, **you can upgrade to Symfony 3.3 today without making any changes to your app**.
+Symfony has a strict :doc:`backwards compatibility promise </contributing/code/bc>`,
+which means it's always safe to upgrade across minor versions.
+
+All of the new features are **optional**: they are not enabled by default, so you
+need to actually change your configuration files to use them.
+
+The new Default services.yml File
+---------------------------------
+
+To understand the changes, look at the new default ``services.yml`` file in the
+Symfony Standard Edition:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # default configuration for services in *this* file
+            _defaults:
+                # automatically injects dependencies in your services
+                autowire: true
+                # automatically registers your services as commands, event subscribers, etc.
+                autoconfigure: true
+                # this means you cannot fetch services directly from the container via $container->get()
+                # if you need to do this, you can override this setting on individual services
+                public: false
+
+            # makes classes in src/AppBundle available to be used as services
+            # this creates a service per class whose id is the fully-qualified class name
+            AppBundle\:
+                resource: '../../src/AppBundle/*'
+                # you can exclude directories or files
+                # but if a service is unused, it's removed anyway
+                exclude: '../../src/AppBundle/{Entity,Repository}'
+
+            # controllers are imported separately to make sure they're public
+            # and have a tag that allows actions to type-hint services
+            AppBundle\Controller\:
+                resource: '../../src/AppBundle/Controller'
+                public: true
+                tags: ['controller.service_arguments']
+
+            # add more services, or override services that need manual wiring
+            # AppBundle\Service\ExampleService:
+            #     arguments:
+            #         $someArgument: 'some_value'
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <defaults autowire="true" autoconfigure="true" public="false" />
+
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+
+                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
+                    <tag name="controller.service_arguments" />
+                </prototype>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+
+        // _defaults and loading entire directories is not possible with PHP configuration
+        // you need to define your services one-by-one
+        use AppBundle\Controller\DefaultController;
+
+        $container->autowire(DefaultController::class)
+            ->setAutoconfigured(true)
+            ->addTag('controller.service_arguments')
+            ->setPublic(true);
+
+This small bit of configuration contains a paradigm shift of how services
+are configured in Symfony.
+
+.. _`service-33-changes-automatic-registration`:
+
+1) Services are Loaded Automatically
+------------------------------------
+
+.. seealso::
+
+    Read the documentation for :ref:`automatic service loading <service-psr4-loader>`.
+
+The first big change is that services do *not* need to be defined one-by-one anymore,
+thanks to the following config:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ...
+
+            # makes classes in src/AppBundle available to be used as services
+            # this creates a service per class whose id is the fully-qualified class name
+            AppBundle\:
+                resource: '../../src/AppBundle/*'
+                # you can exclude directories or files
+                # but if a service is unused, it's removed anyway
+                exclude: '../../src/AppBundle/{Entity,Repository}'
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+
+        // services cannot be automatically loaded with PHP configuration
+        // you need to define your services one-by-one
+
+This means that every class in ``src/AppBundle/`` is *available* to be used as a
+service. And thanks to the ``_defaults`` section at the top of the file, all of
+these services are **autowired** and **private** (i.e. ``public: false``).
+
+The service ids are equal to the class name (e.g. ``AppBundle\Service\InvoiceGenerator``).
+And that's another change you'll notice in Symfony 3.3: we recommend that you use
+the class name as your service id, unless you have :ref:`multiple services for the same class <services-explicitly-configure-wire-services>`.
+
+    But how does the container know the arguments to my services?
+
+Since each service is :ref:`autowired <services-autowire>`, the container is able
+to determine most arguments automatically. But, you can always override the service
+and :ref:`manually configure arguments <services-manually-wire-args>` or anything
+else special about your service.
+
+    But wait, if I have some model (non-service) classes in my ``src/AppBundle/``
+    directory, doesn't this mean that *they* will also be registered as services?
+    Isn't that a problem?
+
+Actually, this is *not* a problem. Since all the new services are :ref:`private <container-public>`
+(thanks to ``_defaults``), if any of the services are *not* used in your code, they're
+automatically removed from the compiled container. This means that the number of
+services in your container should be the *same* whether your explicitly configure
+each service or load them all at once with this method.
+
+    Ok, but can I exclude some paths that I *know* won't contain services?
+
+Yes! The ``exclude`` key is a glob pattern that can be used to *blacklist* paths
+that you do *not* want to be included as services. But, since unused services are
+automatically removed from the container, ``exclude`` is not that important. The
+biggest benefit is that those paths are not *tracked* by the container, and so may
+result in the container needing to be rebuilt less-often in the ``dev`` environment.
+
+2) Autowiring by Default: Use Type-hint instead of Service id
+-------------------------------------------------------------
+
+The second big change is that autowiring is enabled (via ``_defaults``) for all
+services you register. This also means that service id's are now *less* important
+and "types" (i.e. class or interface names) are now *more* important.
+
+For example, before Symfony 3.3 (and this is still allowed), you could pass one
+service as an argument to another with the following config:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.invoice_generator:
+                class: AppBundle\Service\InvoiceGenerator
+
+            app.invoice_mailer:
+                class: AppBundle\Service\InvoiceMailer
+                arguments:
+                    - '@app.invoice_generator'
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.invoice_generator"
+                    class="AppBundle\Service\InvoiceGenerator" />
+
+                <service id="app.invoice_mailer"
+                    class="AppBundle\Service\InvoiceMailer">
+
+                    <argument type="service" id="app.invoice_generator" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use AppBundle\Service\InvoiceGenerator;
+        use AppBundle\Service\InvoiceMailer;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->register('app.invoice_generator', InvoiceGenerator::class);
+        $container->register('app.invoice_mailer', InvoiceMailer::class)
+            ->setArguments(array(new Reference('app.invoice_generator')));
+
+To pass the ``InvoiceGenerator`` as an argument to ``InvoiceMailer``, you needed
+to specify the service's *id* as an argument: ``app.invoice_generator``. Service
+id's were the main way that you configured things.
+
+But in Symfony 3.3, thanks to autowiring, all you need to do is type-hint the
+argument with ``InvoiceGenerator``::
+
+    // src/AppBundle/Service/InvoiceMailer.php
+    // ...
+
+    class InvoiceMailer
+    {
+        private $generator;
+
+        public function __construct(InvoiceGenerator $generator)
+        {
+            $this->generator = $generator
+        }
+
+        // ...
+    }
+
+That's it! Both services are :ref:`automatically registered <service-33-changes-automatic-registration>`
+and set to autowire. Without *any* configuration, the container knows to pass the
+auto-registered ``AppBundle\Service\InvoiceGenerator`` as the first argument. As
+you can see, the *type* of the class - ``AppBundle\Service\InvoiceGenerator`` - is
+what's most important, not the id. You request an *instance* of a specific type and
+the container automatically passes you the correct service.
+
+    Isn't that magic? How does it know which service to pass me exactly? What if
+    I have multiple services of the same instance?
+
+The autowiring system was designed to be *super* predictable. It first works by looking
+for a service whose id *exactly* matches the type-hint. This means you're in full
+control of what type-hint maps to what service. You can even use service aliases
+to get more control. If you have multiple services for a specific type, *you* choose
+which should be used for autowiring. For full details on the autowiring logic, see :ref:`autowiring-logic-explained`.
+
+    But what if I have a scalar (e.g. string) argument? How does it autowire that?
+
+If you have an argument that is *not* an object, it can't be autowired. But that's
+ok! Symfony will give you a clear exception (on the next refresh of *any* page) telling
+you which argument of which service could not be autowired. To fix it, you can
+:ref:`manually configure *just* that one argument <services-manually-wire-args>`.
+This is the philosophy of autowiring: only configure the parts that you need to.
+Most configuration is automated.
+
+    Ok, but autowiring makes your applications less stable. If you change one thing
+    or make a mistake, unexpected things might happen. Isn't that a problem?
+
+Symfony has always valued stability, security and predictability first. Autowiring
+was designed with that in mind. Specifically:
+
+* If there is a problem wiring *any* argument to *any* service, a clear exception
+  is thrown on the next refresh of *any* page, even if you don't use that service
+  on that page. That's *powerful*: it is *not* possible to make an autowiring mistake
+  and not realize it.
+
+* The container determines *which* service to pass in an explicit way: it looks for
+  a service whose id matches the type-hint exactly. It does *not* scan all services
+  looking for objects that have that class/interface (actually, it *does* do this
+  in Symfony 3.3, but has been deprecated. If you rely on this, you will see a clear
+  deprecation warning).
+
+Autowiring aims to *automate* configuration without magic.
+
+3) Controllers are Registered as Services
+-----------------------------------------
+
+The third big change is that, in a new Symfony 3.3 project, your controllers are *services*:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ...
+
+            # controllers are imported separately to make sure they're public
+            # and have a tag that allows actions to type-hint services
+            AppBundle\Controller\:
+                resource: '../../src/AppBundle/Controller'
+                public: true
+                tags: ['controller.service_arguments']
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
+                    <tag name="controller.service_arguments" />
+                </prototype>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+
+        // loading entire directories is not possible with PHP configuration
+        // you need to define your services one-by-one
+        use AppBundle\Controller\DefaultController;
+
+        $container->autowire(DefaultController::class)
+            ->setAutoconfigured(true)
+            ->addTag('controller.service_arguments')
+            ->setPublic(true);
+
+But, you might not even notice this. First, your controllers *can* still extend
+the same base ``Controller`` class or a new :ref:`AbstractController <controller-abstract-versus-controller>`.
+This means you have access to all of the same shortcuts as before. Additionally,
+the ``@Route`` annotation and ``_controller`` syntax (e.g.``AppBundle:Default:homepage``)
+used in routing will automatically use your controller as a service (as long as its
+service id matches its class name, which it *does* in this case). See :doc:`/controller/service`
+for more details. You can even create :ref:`invokable controllers <controller-service-invoke>`
+
+In other words, everything works the same. You can even add the above configuration
+to your existing project without any issues: your controllers will behave the same
+as before. But now that your controllers are services, you can use dependency injection
+and autowiring like any other service.
+
+To make life even easier, it's now possible to autowire arguments to your controller
+action methods, just like you can with the constructor of services. For example::
+
+    use Psr\Log\LoggerInterface;
+
+    class InvoiceController extends Controller
+    {
+        public function listAction(LoggerInterface $logger)
+        {
+            $logger->info('A new way to access services!');
+        }
+    }
+
+This is *only* possible in a controller, and your controller service must be tagged
+with ``controller.service_arguments`` to make it happen. This new feature is used
+throughout the documentation.
+
+In general, the new best practice is to use normal constructor dependency injection
+(or "action" injection in controllers) instead of fetching public services via
+``$this->get()`` (though that does still work).
+
+4) Auto-tagging with autoconfigure
+----------------------------------
+
+The last big change is the ``autoconfigure`` key, which is set to ``true`` under
+``_defaults``. Thanks to this, the container will auto-tag services registered in
+this file. For example, suppose you want to create an event subscriber. First, you
+create the class::
+
+    // src/AppBundle/EventSubscriber/SetHeaderSusbcriber.php
+    // ...
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+    use Symfony\Component\HttpKernel\KernelEvents;
+
+    class SetHeaderSusbcriber implements EventSubscriberInterface
+    {
+        public function onKernelResponse(FilterResponseEvent $event)
+        {
+            $event->getResponse()->headers->set('X-SYMFONY-3.3', 'Less config');
+        }
+
+        public static function getSubscribedEvents()
+        {
+            return [
+                KernelEvents::RESPONSE => 'onKernelResponse'
+            ];
+        }
+    }
+
+Great! In Symfony 3.2 or lower, you would now need to register this as a service
+in ``services.yml`` and tag it with ``kernel.event_subscriber``. In Symfony 3.3,
+you're already done! The service is :ref:`automatically registered <service-33-changes-automatic-registration>`.
+And thanks to ``autoconfigure``, Symfony automatically tags the service because
+it implements ``EventSubscriberInterface``.
+
+    That sounds like magic - it *automatically* tags my services?
+
+In this case, you've created a class that implements ``EventSubscriberInterface``
+and registered it as a service. This is more than enough for the container to know
+that you want this to be used as an event subscriber: more configuration is not needed.
+And the tags system is its own, Symfony-specific mechanism. And of course, you can
+always default ``autoconfigure`` to false in ``services.yml``, or disable it for a specific
+service.
+
+    Does this mean tags are dead? Does this work for all tags?
+
+This does *not* work for all tags. Many tags have *required* attributes, like event
+*listeners*, where you also need to specify the event name and method in your tag.
+Autoconfigure works only for tags without any required tag attributes, and as you
+read the docs for a feature, it'll tell you whether or not the tag is needed. You
+can also look at the extension classes (e.g. `FrameworkExtension for 3.3.0`_) to
+see what it autoconfigures.
+
+    What if I need to add a priority to my tag?
+
+Many autoconfigured tags have an optional priority. If you need to specify a priority
+(or any other optional tag attribute), no problem! Just :ref:`manually configure your service <services-manually-wire-args>`
+and add the tag. Your tag will take precedent over the one added by auto-configuration.
+
+What about Performance
+----------------------
+
+Symfony is unique because it has a *compiled* container. This means that there is
+*no* runtime performance impact for using any of these features. That's also why
+the autowiring system can give you such clear errors.
+
+However, there is some performance impact in the ``dev`` environment. Most importantly,
+your container will likely be rebuilt more often when you modify your service classes.
+This is because it needs to rebuild whenever you add a new argument to a service,
+or add an interface to your class that should be autoconfigured.
+
+In very big projects, this may be a problem. If it is, you can always opt to *not*
+use autowiring. If you think the cache rebuilding system could be smarter in some
+situation, please open an issue!
+
+Upgrading to the new Symfony 3.3 Configuration
+----------------------------------------------
+
+Ready to upgrade your existing project? Great! Suppose you have the following configuration:
+
+.. code-block:: yaml
+
+    # app/config/services.yml
+    services:
+        app.github_notifier:
+            class: AppBundle\Service\GitHubNotifier
+            arguments:
+                - '@app.api_client_github'
+
+        markdown_transformer:
+            class: AppBundle\Service\MarkdownTransformer
+
+        app.api_client_github:
+            class: AppBundle\Service\ApiClient
+            arguments:
+                - 'https://api.github.com'
+
+        app.api_client_sl_connect:
+            class: AppBundle\Service\ApiClient
+            arguments:
+                - 'https://connect.sensiolabs.com/api'
+
+It's optional, but let's upgrade this to the new Symfony 3.3 configuration step-by-step,
+*without* breaking our application.
+
+Step 1): Adding _defaults
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Start by adding a ``_defaults`` section with ``autowire`` and ``autoconfigure``.
+
+.. code-block:: diff
+
+    # app/config/services.yml
+    services:
+    +     _defaults:
+    +         autowire: true
+    +         autoconfigure: true
+
+        # ...
+
+This step is easy: you're already *explicitly* configuring all of your services.
+So, ``autowire`` does nothing. You're also already tagging your services, so
+``autoconfigure`` also doesn't change any existing services.
+
+You have not added ``public: false`` yet. That will come in a minute.
+
+Step 2) Using Class Service id's
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Right now, the service ids are machine names - e.g. ``app.github_notifier``. To
+work well with the new configuration system, your service ids should be class names,
+except when you have multiple instances of the same service.
+
+Start by updating the service ids to class names:
+
+.. code-block:: diff
+
+    # app/config/services.yml
+    services:
+        # ...
+
+    -     app.github_notifier:
+    -         class: AppBundle\Service\GitHubNotifier
+    +     AppBundle\Service\GitHubNotifier:
+            arguments:
+                - '@app.api_client_github'
+
+    -     markdown_transformer:
+    -         class: AppBundle\Service\MarkdownTransformer
+    +     AppBundle\Service\MarkdownTransformer: ~
+
+        # keep these ids because there are multiple instances per class
+        app.api_client_github:
+            # ...
+        app.api_client_sl_connect:
+            # ...
+
+But, this change will break our app! The old service ids (e.g. ``app.github_notifier``)
+no longer exist. The simplest way to fix this is to find all your old service ids
+and update them to the new class id: ``app.github_notifier`` to ``AppBundle\Service\GitHubNotifier``.
+
+In large projects, there's a better way: create legacy aliases that map the old id
+to the new id. Create a new ``legacy_aliases.yml`` file:
+
+.. code-block:: yaml
+
+    # app/config/legacy_aliases.yml
+    services:
+        # aliases so that the old service ids can still be accessed
+        # remove these if/when you are not fetching these directly
+        # from the container via $container->get()
+        app.github_notifier: '@AppBundle\Service\GitHubNotifier'
+        markdown_transformer: '@AppBundle\Service\MarkdownTransformer'
+
+Then import this at the top of ``services.yml``:
+
+.. code-block:: diff
+
+    # app/config/services.yml
+    + imports:
+    +     - { resource: legacy_aliases.yml }
+
+    # ...
+
+That's it! The old service ids still work. Later, (see the cleanup step below), you
+can remove these from your app.
+
+Step 3) Make the Services Private
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now you're ready to default all services to be private:
+
+.. code-block:: diff
+
+    # app/config/services.yml
+    # ...
+
+    services:
+         _defaults:
+             autowire: true
+             autoconfigure: true
+    +          public: false
+
+Thanks to this, any services created in this file cannot be fetched directly from
+the container. But, since the old service id's are aliases in a separate file (``legacy_aliases.yml``),
+these *are* still public. This makes sure the app keeps working.
+
+If you did *not* change the id of some of your services (because there are multiple
+instances of the same class), you may need to make those public:
+
+.. code-block:: diff
+
+    # app/config/services.yml
+    # ...
+
+    services:
+        # ...
+
+        app.api_client_github:
+            # ...
+
+    +         # remove this if/when you are not fetching this
+    +         # directly from the container via $container->get()
+    +         public: true
+
+        app.api_client_sl_connect:
+            # ...
+    +         public: true
+
+This is to guarantee that the application doesn't break. If you're not fetching
+these services directly from the container, this isn't needed. In a minute, you'll
+clean that up.
+
+Step 4) Auto-registering Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You're now ready to automatically register all services in ``src/AppBundle/``
+(and/or any other directory/bundle you have):
+
+.. code-block:: diff
+
+    # app/config/services.yml
+
+    services:
+        _defaults:
+            # ...
+
+    +     AppBundle\:
+    +         resource: '../../src/AppBundle/*'
+    +         exclude: '../../src/AppBundle/{Entity,Repository}'
+    + 
+    +     AppBundle\Controller\:
+    +         resource: '../../src/AppBundle/Controller'
+    +         public: true
+    +         tags: ['controller.service_arguments']
+
+        # ...
+
+That's it! Actually, you're already overriding and reconfiguring all the services
+you're using (``AppBundle\Service\GitHubNotifier`` and ``AppBundle\Service\MarkdownTransformer``).
+But now, you won't need to manually register future services.
+
+Once again, there is one extra complication if you have multiple services of the
+same class:
+
+.. code-block:: diff
+
+    # app/config/services.yml
+
+    services:
+        # ...
+
+    +     # alias ApiClient to one of our services below
+    +     # app.api_client_github will be used to autowire ApiClient type-hints
+    +     AppBundle\Service\ApiClient: '@app.api_client_github'
+
+        app.api_client_github:
+            # ...
+        app.api_client_sl_connect:
+            # ...
+
+This guarantees that if you try to autowire an ``ApiClient`` instance, the ``app.api_client_github``
+will be used. If you *don't* have this, the auto-registration feature will try to
+register a third ``ApiClient`` service and use that for autowiring (which will fail,
+because the class has a non-autowireable argument).
+
+Step 5) Cleanup!
+~~~~~~~~~~~~~~~~
+
+To make sure your application didn't break, you did some extra work. Now it's time
+to clean things up! First, update your application to *not* use the old service id's (the
+ones in ``legacy_aliases.yml``). This means updating any service arguments (e.g.
+``@app.github_notifier`` to ``@AppBundle\Service\GitHubNotifier``) and updating your
+code to not fetch this service directly from the container. For example:
+
+.. code-block:: diff
+
+    -     public function indexAction()
+    +     public function indexAction(GitHubNotifier $gitHubNotifier, MarkdownTransformer $markdownTransformer)
+        {
+    -         // the old way of fetching services
+    -         $githubNotifier = $this->container->get('app.github_notifier');
+    -         $markdownTransformer = $this->container->get('markdown_transformer');
+
+            // ...
+        }
+
+As soon as you do this, you can delete ``legacy_aliases.yml`` and remove its import.
+You should do the same thing for any services that you made public, like
+``app.api_client_github`` and ``app.api_client_sl_connect``. Once you're not fetching
+these directly from the container, you can remove the ``public: true`` flag:
+
+.. code-block:: diff
+
+    # app/config/services.yml
+    services:
+        # ...
+
+        app.api_client_github:
+            # ...
+    -         public: true
+
+        app.api_client_sl_connect:
+            # ...
+    -         public: true
+
+Finally, you can optionally remove any services from ``services.yml`` whose arguments
+can be autowired. The final configuration looks like this:
+
+.. code-block:: yaml
+
+    services:
+        _defaults:
+            autowire: true
+            autoconfigure: true
+            public: false
+
+        AppBundle\:
+            resource: '../../src/AppBundle/*'
+            exclude: '../../src/AppBundle/{Entity,Repository}'
+
+        AppBundle\Controller\:
+            resource: '../../src/AppBundle/Controller'
+            public: true
+            tags: ['controller.service_arguments']
+
+        AppBundle\Service\GitHubNotifier:
+            # this could be deleted, or I can keep being explicit
+            arguments:
+                - '@app.api_client_github'
+
+        # alias ApiClient to one of our services below
+        # app.api_client_github will be used to autowire ApiClient type-hints
+        AppBundle\Service\ApiClient: '@app.api_client_github'
+
+        # keep these ids because there are multiple instances per class
+        app.api_client_github:
+            class: AppBundle\Service\ApiClient
+            arguments:
+                - 'https://api.github.com'
+
+        app.api_client_sl_connect:
+            class: AppBundle\Service\ApiClient
+            arguments:
+                - 'https://connect.sensiolabs.com/api'
+
+You can now take advantage of the new features going forward.
+
+.. _`FrameworkExtension for 3.3.0`: https://github.com/symfony/symfony/blob/7938fdeceb03cc1df277a249cf3da70f0b50eb98/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/FrameworkExtension.php#L247-L284

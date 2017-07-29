@@ -25,26 +25,28 @@ it in your configuration:
         # app/config/config.yml
         framework:
             # ...
-            serializer:
-                enabled: true
+            serializer: { enable_annotations: true }
+            # Alternatively, if you don't want to use annotations
+            #serializer: { enabled: true }
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
+        <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
             <framework:config>
                 <!-- ... -->
-                <framework:serializer enabled="true" />
+		<framework:serializer enable-annotations="true" />
+		<!--
+		Alternatively, if you don't want to use annotations
+		<framework:serializer enabled="true" />
+		-->
             </framework:config>
         </container>
 
@@ -54,7 +56,9 @@ it in your configuration:
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(
-                'enabled' => true,
+                'enable_annotations' => true,
+                // Alternatively, if you don't want to use annotations
+                //'enabled' => true,
             ),
         ));
 
@@ -62,20 +66,19 @@ Using the Serializer Service
 ----------------------------
 
 Once enabled, the ``serializer`` service can be injected in any service where
-you need it or it can be used in a controller like the following::
+you need it or it can be used in a controller::
 
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Serializer\SerializerInterface;
 
     class DefaultController extends Controller
     {
-        public function indexAction()
+        public function indexAction(SerializerInterface $serializer)
         {
-            $serializer = $this->get('serializer');
-
-            // ...
+            // keep reading for usage examples
         }
     }
 
@@ -83,9 +86,11 @@ Adding Normalizers and Encoders
 -------------------------------
 
 Once enabled, the ``serializer`` service will be available in the container
-and will be loaded with two :ref:`encoders <component-serializer-encoders>`
-(:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder` and
-:class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`) and the
+and will be loaded with four :ref:`encoders <component-serializer-encoders>`
+(:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`,
+:class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`,
+:class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder`, and
+:class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`) and the
 :ref:`ObjectNormalizer normalizer <component-serializer-normalizers>`.
 
 You can load normalizers and/or encoders by tagging them as
@@ -105,29 +110,33 @@ Here is an example on how to load the
             get_set_method_normalizer:
                 class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
                 public: false
-                tags:
-                    - { name: serializer.normalizer }
+                tags: [serializer.normalizer]
 
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer" public="false">
-                <tag name="serializer.normalizer" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer" public="false">
+                    <tag name="serializer.normalizer" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-        $definition = new Definition(
-            'Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer'
-        ));
-        $definition->setPublic(false);
-        $definition->addTag('serializer.normalizer');
-        $container->setDefinition('get_set_method_normalizer', $definition);
+        $container->register('get_set_method_normalizer', GetSetMethodNormalizer::class)
+            ->setPublic(false)
+            ->addTag('serializer.normalizer')
+        ;
 
 .. _serializer-using-serialization-groups-annotations:
 
@@ -150,10 +159,20 @@ with the following configuration:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <!-- ... -->
-            <framework:serializer enable-annotations="true" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- ... -->
+                <framework:serializer enable-annotations="true" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -168,12 +187,11 @@ with the following configuration:
 Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
 to your class and choose which groups to use when serializing::
 
-    $serializer = $this->get('serializer');
     $json = $serializer->serialize(
         $someObject,
         'json', array('groups' => array('group1'))
     );
-    
+
 In addition to the ``@Groups`` annotation, the Serializer component also
 supports Yaml or XML files. These files are automatically loaded when being
 stored in one of the following locations:
@@ -207,10 +225,20 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
     .. code-block:: xml
 
         <!-- app/config/config_prod.xml -->
-        <framework:config>
-            <!-- ... -->
-            <framework:serializer cache="serializer.mapping.cache.apc" />
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- ... -->
+                <framework:serializer cache="serializer.mapping.cache.apc" />
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -224,9 +252,6 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
 
 Enabling a Name Converter
 -------------------------
-
-.. versionadded:: 2.8
-    The ``name_converter`` option was introduced in Symfony 2.8.
 
 The use of a :ref:`name converter <component-serializer-converting-property-names-when-serializing-and-deserializing>`
 service can be defined in the configuration using the :ref:`name_converter <reference-serializer-name_converter>`

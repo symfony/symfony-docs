@@ -1,7 +1,7 @@
 .. index::
-   single: Cache Item
-   single: Cache Expiration
-   single: Cache Exceptions
+    single: Cache Item
+    single: Cache Expiration
+    single: Cache Exceptions
 
 Cache Items
 ===========

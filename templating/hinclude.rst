@@ -6,7 +6,7 @@ How to Embed Asynchronous Content with hinclude.js
 
 Controllers can be embedded asynchronously using the hinclude.js_ JavaScript library.
 As the embedded content comes from another page (or controller for that matter),
-Symfony uses a version of the standard ``render`` function to configure ``hinclude``
+Symfony uses a version of the standard ``render()`` function to configure ``hinclude``
 tags:
 
 .. configuration-block::
@@ -56,12 +56,13 @@ tags:
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:framework="http://symfony.com/schema/dic/symfony"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <!-- ... -->
                 <framework:config>
-                    <framework:fragments path="/_fragment" />
+                    <framework:fragment path="/_fragment" />
                 </framework:config>
             </container>
 
@@ -93,7 +94,8 @@ in your application configuration:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <!-- ... -->
@@ -114,7 +116,7 @@ in your application configuration:
             ),
         ));
 
-You can define default templates per ``render`` function (which will override
+You can define default templates per ``render()`` function (which will override
 any global default template that is defined):
 
 .. configuration-block::

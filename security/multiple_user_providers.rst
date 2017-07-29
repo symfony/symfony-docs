@@ -57,6 +57,8 @@ a new provider that chains the two together:
     .. code-block:: php
 
         // app/config/security.php
+        use AppBundle\Entity\User;
+
         $container->loadFromExtension('security', array(
             'providers' => array(
                 'chain_provider' => array(
@@ -73,16 +75,17 @@ a new provider that chains the two together:
                 ),
                 'user_db' => array(
                     'entity' => array(
-                        'class' => 'AppBundle\Entity\User',
+                        'class'    => User::class,
                         'property' => 'username',
                     ),
                 ),
             ),
         ));
 
-Now, all authentication mechanisms will use the ``chain_provider``, since
-it's the first specified. The ``chain_provider`` will, in turn, try to load
-the user from both the ``in_memory`` and ``user_db`` providers.
+Now, all firewalls without an explicitly configured user provider will use
+the ``chain_provider`` since it's the first specified. The ``chain_provider``
+will, in turn, try to load the user from both the ``in_memory`` and ``user_db``
+providers.
 
 You can also configure the firewall or individual authentication mechanisms
 to use a specific provider. Again, unless a provider is specified explicitly,

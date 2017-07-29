@@ -49,7 +49,7 @@ do this, create a new template file that will store the new markup:
         </div>
 
 The ``form_row`` form fragment is used when rendering most fields via the
-``form_row`` function. To tell the Form component to use your new ``form_row``
+``form_row()`` function. To tell the Form component to use your new ``form_row``
 fragment defined above, add the following to the top of the template that
 renders the form:
 
@@ -77,7 +77,7 @@ renders the form:
 
 The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
 template and uses them when rendering the form. In other words, when the
-``form_row`` function is called later in this template, it will use the ``form_row``
+``form_row()`` function is called later in this template, it will use the ``form_row``
 block from your custom theme (instead of the default ``form_row`` block
 that ships with Symfony).
 
@@ -117,10 +117,10 @@ the ``Resources/views/Form`` directory of the FrameworkBundle (`view on GitHub`_
 Each fragment name follows the same basic pattern and is broken up into two pieces,
 separated by a single underscore character (``_``). A few examples are:
 
-* ``form_row`` - used by ``form_row`` to render most fields;
-* ``textarea_widget`` - used by ``form_widget`` to render a ``textarea`` field
+* ``form_row`` - used by ``form_row()`` to render most fields;
+* ``textarea_widget`` - used by ``form_widget()`` to render a ``textarea`` field
   type;
-* ``form_errors`` - used by ``form_errors`` to render errors for a field;
+* ``form_errors`` - used by ``form_errors()`` to render errors for a field;
 
 Each fragment follows the same basic pattern: ``type_part``. The ``type`` portion
 corresponds to the field *type* being rendered (e.g. ``textarea``, ``checkbox``,
@@ -128,15 +128,15 @@ corresponds to the field *type* being rendered (e.g. ``textarea``, ``checkbox``,
 rendered (e.g. ``label``, ``widget``, ``errors``, etc). By default, there
 are 4 possible *parts* of a form that can be rendered:
 
-+-------------+--------------------------+---------------------------------------------------------+
-| ``label``   | (e.g. ``form_label``)    | renders the field's label                               |
-+-------------+--------------------------+---------------------------------------------------------+
-| ``widget``  | (e.g. ``form_widget``)   | renders the field's HTML representation                 |
-+-------------+--------------------------+---------------------------------------------------------+
-| ``errors``  | (e.g. ``form_errors``)   | renders the field's errors                              |
-+-------------+--------------------------+---------------------------------------------------------+
-| ``row``     | (e.g. ``form_row``)      | renders the field's entire row (label, widget & errors) |
-+-------------+--------------------------+---------------------------------------------------------+
++-------------+----------------------------+---------------------------------------------------------+
+| ``label``   | (e.g. ``form_label()``)    | renders the field's label                               |
++-------------+----------------------------+---------------------------------------------------------+
+| ``widget``  | (e.g. ``form_widget()``)   | renders the field's HTML representation                 |
++-------------+----------------------------+---------------------------------------------------------+
+| ``errors``  | (e.g. ``form_errors()``)   | renders the field's errors                              |
++-------------+----------------------------+---------------------------------------------------------+
+| ``row``     | (e.g. ``form_row()``)      | renders the field's entire row (label, widget & errors) |
++-------------+----------------------------+---------------------------------------------------------+
 
 .. note::
 
@@ -212,7 +212,8 @@ file:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
@@ -294,7 +295,8 @@ file:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>

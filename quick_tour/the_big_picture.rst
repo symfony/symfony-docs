@@ -51,8 +51,8 @@ because that will be explained in the next section)::
 
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {
@@ -61,7 +61,9 @@ because that will be explained in the next section)::
          */
         public function indexAction()
         {
-            return $this->render('default/index.html.twig');
+            return $this->render('default/index.html.twig', [
+                // ...
+            ]);
         }
     }
 
@@ -79,8 +81,8 @@ just call other parts of the application to get or generate the needed
 information and then they render a template to show the results to the user.
 
 In this example, the ``index`` action is practically empty because it doesn't
-need to call any other method. The action just renders a template with the
-*Homepage* content.
+need to call any other method. The action just renders a template to welcome
+you to Symfony.
 
 Routing
 ~~~~~~~
@@ -93,8 +95,8 @@ at the three lines of code above the ``indexAction()`` method::
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {
@@ -103,7 +105,9 @@ at the three lines of code above the ``indexAction()`` method::
          */
         public function indexAction()
         {
-            return $this->render('default/index.html.twig');
+            return $this->render('default/index.html.twig', [
+                // ...
+            ]);
         }
     }
 
@@ -136,7 +140,9 @@ Templates
 
 The only content of the ``index`` action is this PHP instruction::
 
-    return $this->render('default/index.html.twig');
+    return $this->render('default/index.html.twig', [
+        // ...
+    ]);
 
 The ``$this->render()`` method is a convenient shortcut to render a template.
 Symfony provides some useful shortcuts to any controller extending from

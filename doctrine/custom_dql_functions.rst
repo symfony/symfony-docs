@@ -32,8 +32,10 @@ In Symfony, you can register your custom DQL functions as follows:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
             <doctrine:config>
                 <doctrine:orm>
@@ -51,19 +53,24 @@ In Symfony, you can register your custom DQL functions as follows:
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\DQL\StringFunction;
+        use AppBundle\DQL\SecondStringFunction;
+        use AppBundle\DQL\NumericFunction;
+        use AppBundle\DQL\DatetimeFunction;
+
         $container->loadFromExtension('doctrine', array(
             'orm' => array(
                 // ...
                 'dql' => array(
                     'string_functions' => array(
-                        'test_string'   => 'AppBundle\DQL\StringFunction',
-                        'second_string' => 'AppBundle\DQL\SecondStringFunction',
+                        'test_string'   => StringFunction::class,
+                        'second_string' => SecondStringFunction::class,
                     ),
                     'numeric_functions' => array(
-                        'test_numeric' => 'AppBundle\DQL\NumericFunction',
+                        'test_numeric' => NumericFunction::class,
                     ),
                     'datetime_functions' => array(
-                        'test_datetime' => 'AppBundle\DQL\DatetimeFunction',
+                        'test_datetime' => DatetimeFunction::class,
                     ),
                 ),
             ),
@@ -73,22 +80,22 @@ In Symfony, you can register your custom DQL functions as follows:
 
     In case the ``entity_managers`` were named explicitly, configuring the functions with the
     orm directly will trigger the exception `Unrecognized option "dql" under "doctrine.orm"`.
-    The `dql` configuration block must be defined under the named entity manager.
+    The ``dql`` configuration block must be defined under the named entity manager.
 
     .. configuration-block::
 
-	.. code-block:: yaml
+        .. code-block:: yaml
 
-	    # app/config/config.yml
-	    doctrine:
-		orm:
-		    # ...
-		    entity_managers:
-			example_manager:
-			    # Place your functions here
-			    dql:
-				datetime_functions:
-				    test_datetime: AppBundle\DQL\DatetimeFunction
+            # app/config/config.yml
+            doctrine:
+                orm:
+                    # ...
+                    entity_managers:
+                        example_manager:
+                            # Place your functions here
+                            dql:
+                                datetime_functions:
+                                    test_datetime: AppBundle\DQL\DatetimeFunction
 
         .. code-block:: xml
 
@@ -121,6 +128,8 @@ In Symfony, you can register your custom DQL functions as follows:
         .. code-block:: php
 
             // app/config/config.php
+            use AppBundle\DQL\DatetimeFunction;
+
             $container->loadFromExtension('doctrine', array(
                 'doctrine' => array(
                     'orm' => array(
@@ -130,7 +139,7 @@ In Symfony, you can register your custom DQL functions as follows:
                                 // place your functions here
                                 'dql' => array(
                                     'datetime_functions' => array(
-                                        'test_datetime' => 'AppBundle\DQL\DatetimeFunction',
+                                        'test_datetime' => DatetimeFunction::class,
                                     ),
                                 ),
                             ),

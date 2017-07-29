@@ -24,7 +24,7 @@ submissions::
             return $this->redirectToRoute('task_success');
         }
 
-        return $this->render('AppBundle:Default:new.html.twig', array(
+        return $this->render('product/new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -63,7 +63,7 @@ method, pass the submitted data directly to
             }
         }
 
-        return $this->render('AppBundle:Default:new.html.twig', array(
+        return $this->render('product/new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -81,5 +81,12 @@ method, pass the submitted data directly to
 
     When submitting a form via a "PATCH" request, you may want to update only a few
     submitted fields. To achieve this, you may pass an optional second boolean
-    parameter to ``submit()``. Passing ``false`` will remove any missing fields
+    argument to ``submit()``. Passing ``false`` will remove any missing fields
     within the form object. Otherwise, the missing fields will be set to ``null``.
+
+.. caution::
+
+    When the second parameter ``$clearMissing`` is ``false``, like with the
+    "PATCH" method, the validation extension will only handle the submitted
+    fields. If the underlying data needs to be validated, this should be done
+    manually, i.e. using the validator.

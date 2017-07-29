@@ -20,7 +20,7 @@ Initial Project Setup
 ---------------------
 
 To get started, you'll need to download Symfony and get things running. See
-the :doc:`/setup` chapter for details.
+the :doc:`/setup` article for details.
 
 Once your project is running, just follow these simple steps:
 
@@ -63,7 +63,7 @@ At this point, you have a fully-functional Symfony project that's correctly
 committed to Git. You can immediately begin development, committing the new
 changes to your Git repository.
 
-You can continue to follow along with the :doc:`/page_creation` chapter
+You can continue to follow along with the :doc:`/page_creation` article
 to learn more about how to configure and develop inside your application.
 
 .. tip::

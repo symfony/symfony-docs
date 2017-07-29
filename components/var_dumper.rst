@@ -88,7 +88,7 @@ of your application may just break it by e.g. sending HTTP headers or
 corrupting your view, the bundle configures the ``dump()`` function so that
 variables are dumped in the web debug toolbar.
 
-But if the toolbar can not be displayed because you e.g. called ``die``/``exit``
+But if the toolbar cannot be displayed because you e.g. called ``die``/``exit``
 or a fatal error occurred, then dumps are written on the regular output.
 
 In a Twig template, two constructs are available for dumping a variable.
@@ -105,6 +105,18 @@ This behavior can be changed by configuring the ``dump.dump_destination``
 option. Read more about this and other options in
 :doc:`the DebugBundle configuration reference </reference/configuration/debug>`.
 
+.. tip::
+
+    .. versionadded:: 3.3
+        The local search box was introduced in Symfony 3.3.
+
+    If the dumped contents are complex, consider using the local search box to
+    look for specific variables or values. First, click anywhere on the dumped
+    contents and then press :kbd:`Ctrl. + F` or :kbd:`Cmd. + F` to make the local
+    search box appear. All the common shortcuts to navigate the search results
+    are supported (:kbd:`Ctrl. + G` or :kbd:`Cmd. + G`, :kbd:`F3`, etc.) When
+    finished, press :kbd:`Esc.` to hide the box again.
+
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------
 
@@ -120,11 +132,13 @@ This will provide you with two new assertions:
 
 :method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpMatchesFormat`
     is like the previous method but accepts placeholders in the expected dump,
-    based on the ``assertStringMatchesFormat`` method provided by PHPUnit.
+    based on the ``assertStringMatchesFormat()`` method provided by PHPUnit.
 
 Example::
 
-    class ExampleTest extends \PHPUnit_Framework_TestCase
+    use PHPUnit\Framework\TestCase;
+
+    class ExampleTest extends TestCase
     {
         use \Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 

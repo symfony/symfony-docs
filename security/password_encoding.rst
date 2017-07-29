@@ -15,19 +15,23 @@ the users' passwords before inserting them. No matter what algorithm you
 configure for your user object, the hashed password can always be determined
 in the following way from a controller::
 
-    // whatever *your* User object is
-    $user = new AppBundle\Entity\User();
-    $plainPassword = 'ryanpass';
-    $encoder = $this->container->get('security.password_encoder');
-    $encoded = $encoder->encodePassword($user, $plainPassword);
+    use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-    $user->setPassword($encoded);
+    public function registerAction(UserPasswordEncoderInterface $encoder)
+    {
+        // whatever *your* User object is
+        $user = new AppBundle\Entity\User();
+        $plainPassword = 'ryanpass';
+        $encoded = $encoder->encodePassword($user, $plainPassword);
+
+        $user->setPassword($encoded);
+    }
 
 In order for this to work, just make sure that you have the encoder for your
 user class (e.g. ``AppBundle\Entity\User``) configured under the ``encoders``
 key in ``app/config/security.yml``.
 
-The ``$encoder`` object also has an ``isPasswordValid`` method, which takes
+The ``$encoder`` object also has an ``isPasswordValid()`` method, which takes
 the ``User`` object as the first argument and the plain password to check
 as the second argument.
 

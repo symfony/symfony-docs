@@ -25,7 +25,8 @@ Use the ``parameters`` section of a config file to set parameters:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="mailer.transport">sendmail</parameter>
@@ -53,8 +54,7 @@ and hidden with the service definition:
             mailer.transport: sendmail
 
         services:
-            app.mailer:
-                class:     AppBundle\Mailer
+            AppBundle\Service\Mailer:
                 arguments: ['%mailer.transport%']
 
     .. code-block:: xml
@@ -62,14 +62,15 @@ and hidden with the service definition:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="mailer.transport">sendmail</parameter>
             </parameters>
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer">
+                <service id="AppBundle\Service\Mailer">
                     <argument>%mailer.transport%</argument>
                 </service>
             </services>
@@ -77,11 +78,12 @@ and hidden with the service definition:
 
     .. code-block:: php
 
+        use AppBundle\Service\Mailer;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->setParameter('mailer.transport', 'sendmail');
 
-        $container->register('app.mailer', 'AppBundle\Mailer')
+        $container->register(Mailer::class)
             ->addArgument('%mailer.transport%');
 
 .. caution::
@@ -108,22 +110,38 @@ and hidden with the service definition:
 
 .. note::
 
-    The percent sign inside a parameter or argument, as part of the string,
-    must be escaped with another percent sign:
+    If you use a string that starts with ``@`` or  has ``%`` anywhere in it, you
+    need to escape it by adding another ``@`` or ``%``:
 
     .. configuration-block::
 
         .. code-block:: yaml
 
-            arguments: ['http://symfony.com/?foo=%%s&bar=%%d']
+            # app/config/parameters.yml
+            parameters:
+                # This will be parsed as string '@securepass'
+                mailer_password: '@@securepass'
+
+                # Parsed as http://symfony.com/?foo=%s&amp;bar=%d
+                url_pattern: 'http://symfony.com/?foo=%%s&amp;bar=%%d'
 
         .. code-block:: xml
 
-            <argument>http://symfony.com/?foo=%%s&amp;bar=%%d</argument>
+            <parameters>
+                <!-- the @ symbol does NOT need to be escaped in XML -->
+                <parameter key="mailer_password">@securepass</parameter>
+
+                <!-- But % does need to be escaped -->
+                <parameter key="url_pattern">http://symfony.com/?foo=%%s&amp;bar=%%d</parameter>
+            </parameters>
 
         .. code-block:: php
 
-            ->addArgument('http://symfony.com/?foo=%%s&bar=%%d');
+            // the @ symbol does NOT need to be escaped in XML
+            $container->setParameter('mailer_password', '@securepass');
+
+            // But % does need to be escaped
+            $container->setParameter('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
 
 Getting and Setting Container Parameters in PHP
 -----------------------------------------------
@@ -149,8 +167,8 @@ accessor methods for parameters::
 
 .. note::
 
-    You can only set a parameter before the container is compiled. To learn
-    more about compiling the container see
+    You can only set a parameter before the container is compiled: not at run-time.
+    To learn more about compiling the container see
     :doc:`/components/dependency_injection/compilation`.
 
 .. _component-di-parameters-array:
@@ -182,7 +200,8 @@ for all parameters that are arrays.
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="my_mailer.gateways" type="collection">
@@ -213,23 +232,35 @@ for all parameters that are arrays.
             'fr' => array('fr', 'en'),
         ));
 
+Environment Variables and Dynamic Values
+----------------------------------------
+
+See :doc:`/configuration/external_parameters`.
+
 .. _component-di-parameters-constants:
 
 Constants as Parameters
 -----------------------
 
-The XML and PHP formats also have support for setting PHP constants as parameters.
+Setting PHP constants as parameters is also supported.
 To take advantage of this feature, map the name of your constant to a parameter
 key and define the type as ``constant``.
 
 .. configuration-block::
+
+    .. code-block:: yaml
+
+        parameters:
+            global.constant.value: !php/const:GLOBAL_CONSTANT
+            my_class.constant.value: !php/const:My_Class::CONSTANT_NAME
 
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
                 <parameter key="global.constant.value" type="constant">GLOBAL_CONSTANT</parameter>
@@ -241,16 +272,6 @@ key and define the type as ``constant``.
 
         $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
         $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
-
-.. tip::
-
-    If you're using YAML, you can :doc:`import an XML file </service_container/import>`
-    to take advantage of this functionality:
-
-    .. code-block:: yaml
-
-        imports:
-            - { resource: parameters.xml }
 
 PHP Keywords in XML
 -------------------

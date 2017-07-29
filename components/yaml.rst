@@ -203,12 +203,31 @@ changed using the third argument as follows::
             foo: bar
             bar: baz
 
+Numeric Literals
+................
+
+.. versionadded:: 3.2
+    Support for parsing integers grouped by underscores was introduced in
+    Symfony 3.2.
+
+Long numeric literals, being integer, float or hexadecimal, are known for their
+poor readability in code and configuration files. That's why YAML files allow to
+add underscores to improve their readability:
+
+.. code-block:: yaml
+
+    parameters:
+        credit_card_number: 1234_5678_9012_3456
+        long_number: 10_000_000_000
+        pi: 3.14159_26535_89793
+        hex_words: 0x_CAFE_F00D
+
+During the parsing of the YAML contents, all the ``_`` characters are removed
+from the numeric literal contents, so there is not a limit in the number of
+underscores you can include or the way you group contents.
+
 Advanced Usage: Flags
 ---------------------
-
-.. versionadded:: 3.1
-    Flags were introduced in Symfony 3.1 and replaced the earlier boolean
-    arguments.
 
 .. _objects-for-mappings:
 
@@ -253,7 +272,7 @@ flag::
 Similarly you can use ``DUMP_EXCEPTION_ON_INVALID_TYPE`` when dumping::
 
     $data = new \stdClass(); // by default objects are invalid.
-    Yaml::dump($data, Yaml::DUMP_EXCEPTION_ON_INVALID_TYPE); // throws an exception
+    Yaml::dump($data, 2, 4, Yaml::DUMP_EXCEPTION_ON_INVALID_TYPE); // throws an exception
 
     echo $yaml; // { foo: bar }
 
@@ -292,6 +311,62 @@ flag::
     //       Multiple
     //       Line
     //       String
+
+Parsing PHP Constants
+~~~~~~~~~~~~~~~~~~~~~
+
+By default, the YAML parser treats the PHP constants included in the contents as
+regular strings. Use the ``PARSE_CONSTANT`` flag and the special ``!php/const:``
+syntax to parse them as proper PHP constants::
+
+    $yaml = '{ foo: PHP_INT_SIZE, bar: !php/const:PHP_INT_SIZE }';
+    $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // $parameters = array('foo' => 'PHP_INT_SIZE', 'bar' => 8);
+
+Syntax Validation
+~~~~~~~~~~~~~~~~~
+
+The syntax of YAML contents can be validated through the CLI using the
+:class:`Symfony\\Component\\Yaml\\Command\\LintCommand` command.
+
+First, install the Console component:
+
+.. code-block:: terminal
+
+    $ composer require symfony/console
+
+Create a console application with ``lint:yaml`` as its only command::
+
+    // lint.php
+
+    use Symfony\Component\Console\Application;
+    use Symfony\Component\Yaml\Command\LintCommand;
+
+    (new Application('yaml/lint'))
+        ->add(new LintCommand())
+        ->getApplication()
+        ->setDefaultCommand('lint:yaml', true)
+        ->run();
+
+Then, execute the script for validating contents:
+
+.. code-block:: terminal
+
+    # validates a single file
+    $ php lint.php path/to/file.yml
+
+    # or all the files in a directory
+    $ php lint.php path/to/directory
+
+    # or contents passed to STDIN
+    $ cat path/to/file.yml | php lint.php
+
+The result is written to STDOUT and uses a plain text format by default.
+Add the ``--format`` option to get the output in JSON format:
+
+.. code-block:: terminal
+
+    $ php lint.php path/to/file.yml --format json
 
 Learn More
 ----------

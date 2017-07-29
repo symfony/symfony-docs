@@ -357,7 +357,6 @@ of your commands to change their appearance::
     use AppBundle\Console\CustomStyle;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
-    use Symfony\Component\Console\Style\SymfonyStyle;
 
     class GreetCommand extends ContainerAwareCommand
     {
@@ -374,3 +373,35 @@ of your commands to change their appearance::
             // ...
         }
     }
+
+Writing to the error output
+---------------------------
+
+If you reuse the output of a command as the input of other commands or dump it
+into a file for later reuse, you probably want to exclude progress bars, notes
+and other output that provides no real value.
+
+Commands can output information in two different streams: ``stdout`` (standard
+output) is the stream where the real contents should be output and ``stderr``
+(standard error) is the stream where the errors and the debugging messages
+should be output.
+
+The :class:`Symfony\\Component\\Console\\Style\\SymfonyStyle` class provides a
+convenient method called :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::getErrorStyle`
+to switch between both streams. This method returns a new ``SymfonyStyle``
+instance which makes use of the error output::
+
+    $io = new SymfonyStyle($input, $output);
+
+    // Write to the standard output
+    $io->write('Reusable information');
+
+    // Write to the error output
+    $io->getErrorStyle()->warning('Debugging information or errors');
+
+.. note::
+
+    If you create a ``SymfonyStyle`` instance with an ``OutputInterface`` object
+    that is not an instance of :class:`Symfony\\Component\\Console\\Output\\ConsoleOutputInterface`,
+    the ``getErrorStyle()`` method will have no effect and the returned object
+    will still write to the standard output instead of the error output.

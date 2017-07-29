@@ -40,17 +40,28 @@ To get started, configure the database connection parameters:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <doctrine:config>
-            <doctrine:dbal
-                name="default"
-                dbname="Symfony"
-                user="root"
-                password="null"
-                charset="UTF8"
-                server-version="5.6"
-                driver="pdo_mysql"
-            />
-        </doctrine:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+            <doctrine:config>
+                <doctrine:dbal
+                    name="default"
+                    dbname="Symfony"
+                    user="root"
+                    password="null"
+                    charset="UTF8"
+                    server-version="5.6"
+                    driver="pdo_mysql"
+                />
+            </doctrine:config>
+
+        </container>
 
     .. code-block:: php
 
@@ -72,11 +83,12 @@ connections, see :ref:`reference-dbal-configuration`.
 You can then access the Doctrine DBAL connection by accessing the
 ``database_connection`` service::
 
+    use Doctrine\DBAL\Driver\Connection;
+
     class UserController extends Controller
     {
-        public function indexAction()
+        public function indexAction(Connection $conn)
         {
-            $conn = $this->get('database_connection');
             $users = $conn->fetchAll('SELECT * FROM users');
 
             // ...
@@ -107,8 +119,10 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
             <doctrine:config>
                 <doctrine:dbal>
@@ -121,11 +135,14 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Type\CustomFirst;
+        use AppBundle\Type\CustomSecond;
+
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'types' => array(
-                    'custom_first'  => 'AppBundle\Type\CustomFirst',
-                    'custom_second' => 'AppBundle\Type\CustomSecond',
+                    'custom_first'  => CustomFirst::class,
+                    'custom_second' => CustomSecond::class,
                 ),
             ),
         ));
@@ -156,8 +173,10 @@ mapping type:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
             <doctrine:config>
                 <doctrine:dbal>

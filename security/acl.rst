@@ -16,13 +16,13 @@ the ACL system comes in.
     to check if a Blog is owned by the current User), then consider using
     :doc:`voters </security/voters>`. A voter is passed the object
     being voted on, which you can use to make complex decisions and effectively
-    implement your own ACL. Enforcing authorization (e.g. the ``isGranted``
+    implement your own ACL. Enforcing authorization (e.g. the ``isGranted()``
     part) will look similar to what you see in this entry, but your voter
     class will handle the logic behind the scenes, instead of the ACL system.
 
 Imagine you are designing a blog system where your users can comment on your
 posts. Now, you want a user to be able to edit their own comments, but not those
-of other users; besides, you yourself want to be able to edit all comments. In
+of other users; besides, you want to be able to edit all comments. In
 this scenario, ``Comment`` would be the domain object that you want to
 restrict access to. You could take several approaches to accomplish this using
 Symfony, two basic approaches are (non-exhaustive):
@@ -77,10 +77,12 @@ First, you need to configure the connection the ACL system is supposed to use:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', 'acl', array(
+        $container->loadFromExtension('security', array(
             // ...
 
-            'connection' => 'default',
+            'acl' => array(
+                'connection' => 'default',
+            ),
         ));
 
 .. note::
@@ -91,8 +93,8 @@ First, you need to configure the connection the ACL system is supposed to use:
     domain objects. You can use whatever mapper you like for your objects, be it
     Doctrine ORM, MongoDB ODM, Propel, raw SQL, etc. The choice is yours.
 
-After the connection is configured, you have to import the database structure.
-Fortunately, there is a task for this. Simply run the following command:
+After the connection is configured, you have to import the database structure
+running the following command:
 
 .. code-block:: terminal
 

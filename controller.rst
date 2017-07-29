@@ -16,8 +16,8 @@ This renders a page that prints a lucky (random) number::
     // src/AppBundle/Controller/LuckyController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class LuckyController
     {
@@ -59,7 +59,7 @@ class::
     namespace AppBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class LuckyController
     {
@@ -116,18 +116,15 @@ For more information on routing, see :doc:`/routing`.
 .. index::
    single: Controller; Base controller class
 
-The Base Controller Class & Services
-------------------------------------
+.. _the-base-controller-class-services:
 
-For convenience, Symfony comes with an optional base
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class.
-If you extend it, this won't change anything about how your controller
-works, but you'll get access to a number of **helper methods** and the
-**service container** (see :ref:`controller-accessing-services`): an
-array-like object that gives you access to every useful object in the
-system. These useful objects are called **services**, and Symfony ships
-with a service object that can render Twig templates, another that can
-log messages and many more.
+The Base Controller Classes & Services
+--------------------------------------
+
+For convenience, Symfony comes with two optional base
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` and
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`
+classes. You can extend either to get access to a number of `helper methods`_.
 
 Add the ``use`` statement atop the ``Controller`` class and then modify
 ``LuckyController`` to extend it::
@@ -142,11 +139,21 @@ Add the ``use`` statement atop the ``Controller`` class and then modify
         // ...
     }
 
-Helper methods are just shortcuts to using core Symfony functionality
-that's available to you with or without the use of the base
-``Controller`` class. A great way to see the core functionality in
-action is to look in the
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class.
+That's it! You now have access to methods like :ref:`$this->render() <controller-rendering-templates>`
+and many others that you'll learn about next.
+
+.. _controller-abstract-versus-controller:
+
+.. tip::
+
+    You can extend either ``Controller`` or ``AbstractController``. The difference
+    is that when you extend ``AbstractController``, you can't access services directly
+    via ``$this->get()`` or ``$this->container->get()``. This forces you to write
+    more robust code to access services. But if you *do* need direct access to the
+    container, using ``Controller`` is fine.
+
+.. versionadded:: 3.3
+    The ``AbstractController`` class was added in Symfony 3.3.
 
 .. index::
    single: Controller; Redirecting
@@ -180,7 +187,14 @@ and ``redirect()`` methods::
         return $this->redirect('http://symfony.com/doc');
     }
 
-For more information, see the :doc:`Routing chapter </routing>`.
+For more information, see the :doc:`Routing article </routing>`.
+
+.. caution::
+
+    The ``redirect()`` method does not check its destination in any way. If you
+    redirect to some URL provided by the end-users, your application may be open
+    to the `unvalidated redirects security vulnerability`_.
+
 
 .. tip::
 
@@ -215,29 +229,139 @@ creating unnecessarily deep structures::
 
     // renders app/Resources/views/lottery/lucky/number.html.twig
     return $this->render('lottery/lucky/number.html.twig', array(
-        'name' => $name
+        'name' => $name,
     ));
 
 The Symfony templating system and Twig are explained more in the
-:doc:`Creating and Using Templates chapter </templating>`.
+:doc:`Creating and Using Templates article </templating>`.
 
 .. index::
    single: Controller; Accessing services
 
 .. _controller-accessing-services:
 
-Accessing other Services
-~~~~~~~~~~~~~~~~~~~~~~~~
+Fetching Services as Controller Arguments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony comes packed with a lot of useful objects, called *services*. These
-are used for rendering templates, sending emails, querying the database and
-any other "work" you can think of. When you install a new bundle, it probably
-brings in even *more* services.
+.. versionadded:: 3.3
+    The ability to type-hint a controller argument in order to receive a service
+    was added in Symfony 3.3.
 
-When extending the base controller class, you can access any Symfony service
+Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
+These are used for rendering templates, sending emails, querying the database and
+any other "work" you can think of.
+
+If you need a service in a controller, just type-hint an argument with its class
+(or interface) name. Symfony will automatically pass you the service you need::
+
+    use Psr\Log\LoggerInterface
+    // ...
+
+    /**
+     * @Route("/lucky/number/{max}")
+     */
+    public function numberAction($max, LoggerInterface $logger)
+    {
+        $logger->info('We are logging!');
+        // ...
+    }
+
+Awesome!
+
+What other services can you type-hint? To see them, use the ``debug:container`` console
+command:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --types
+
+If you need control over the *exact* value of an argument, you can override your
+controller's service config:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ...
+
+            # explicitly configure the service
+            AppBundle\Controller\LuckyController:
+                public: true
+                tags:
+                    # add multiple tags to control multiple args
+                    - name: controller.service_arguments
+                      action: numberAction
+                      argument: logger
+                      # pass this specific service id
+                      id: monolog.logger.doctrine
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <!-- Explicitly configure the service -->
+                <service id="AppBundle\Controller\LuckyController" public="true">
+                    <tag
+                        name="controller.service_arguments"
+                        action="numberAction"
+                        argument="logger"
+                        id="monolog.logger.doctrine"
+                    />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use AppBundle\Controller\LuckyController;
+
+        $container->register(LuckyController::class)
+            ->setPublic(true)
+            ->addTag('controller.service_arguments', [
+                'action' => 'numberAction',
+                'argument' => 'logger',
+                'id' => 'monolog.logger.doctrine',
+            ])
+        ;
+
+You can of course also use normal :ref:`constructor injection <services-constructor-injection>`
+in your controllers.
+
+For more information about services, see the :doc:`/service_container` article.
+
+.. _controller-service-arguments-tag:
+
+.. note::
+    If this isn't working, make sure your controller is registered as a service,
+    is :ref:`autoconfigured <services-autoconfigure>` and extends either
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` or
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. If
+    you use the :ref:`services.yml configuration from the Symfony Standard Edition <service-container-services-load-example>`,
+    then your controllers are already registered as services and autoconfigured.
+
+    If you're not using the default configuration, you can tag your service manually
+    with ``controller.service_arguments``.
+
+.. _accessing-other-services:
+.. _controller-access-services-directly:
+
+Accessing the Container Directly
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you extend the base ``Controller`` class, you can access any Symfony service
 via the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::get`
-method of the ``Controller`` class. Here are several common services you might
-need::
+method. Here are several common services you might need::
 
     $templating = $this->get('templating');
 
@@ -245,23 +369,17 @@ need::
 
     $mailer = $this->get('mailer');
 
-What other services exist? To list all services, use the ``debug:container``
-console command:
+    // you can also fetch parameters
+    $someParameter = $this->getParameter('some_parameter');
 
-.. code-block:: terminal
+If you receive an error like:
 
-    $ php bin/console debug:container
+.. code-block:: text
 
-For more information, see the :doc:`/service_container` chapter.
+    You have requested a non-existent service "my_service_id"
 
-.. tip::
-
-    To get a :ref:`container configuration parameter <config-parameter-intro>`,
-    use the
-    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getParameter`
-    method::
-
-        $from = $this->getParameter('app.mailer.from');
+Check to make sure the service exists (use :ref:`debug:container <container-debug-container>`)
+and that it's :ref:`public <container-public>`.
 
 .. index::
    single: Controller; Managing errors
@@ -272,7 +390,8 @@ Managing Errors and 404 Pages
 
 When things are not found, you should play well with the HTTP protocol and
 return a 404 response. To do this, you'll throw a special type of exception.
-If you're extending the base ``Controller`` class, do the following::
+If you're extending the base ``Controller`` or the base ``AbstractController``
+class, do the following::
 
     public function indexAction()
     {
@@ -334,21 +453,20 @@ Managing the Session
 --------------------
 
 Symfony provides a nice session object that you can use to store information
-about the user between requests. By default, Symfony stores the attributes in a
-cookie by using native PHP sessions.
+about the user between requests. By default, Symfony stores the token in a
+cookie and writes the attributes to a file by using native PHP sessions.
 
-To retrieve the session, call
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getSession`
-method on the ``Request`` object. This method returns a
-:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface` with easy
-methods for storing and fetching things from the session::
+.. versionadded:: 3.3
+    The ability to request a ``Session`` instance in controllers was introduced
+    in Symfony 3.3.
 
-    use Symfony\Component\HttpFoundation\Request;
+To retrieve the session, add the :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`
+type-hint to your argument and Symfony will provide you with a session::
 
-    public function indexAction(Request $request)
+    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
+    public function indexAction(SessionInterface $session)
     {
-        $session = $request->getSession();
-
         // store an attribute for reuse during a later user request
         $session->set('foo', 'bar');
 
@@ -360,6 +478,11 @@ methods for storing and fetching things from the session::
     }
 
 Stored attributes remain in the session for the remainder of that user's session.
+
+.. tip::
+
+    Every ``SessionInterface`` implementation is supported. If you have your
+    own implementation, type-hint this in the arguments instead.
 
 .. index::
    single: Session; Flash messages
@@ -387,7 +510,7 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
                 'notice',
                 'Your changes were saved!'
             );
-            // $this->addFlash is equivalent to $request->getSession()->getFlashBag()->add
+            // $this->addFlash() is equivalent to $request->getSession()->getFlashBag()->add()
 
             return $this->redirectToRoute(...);
         }
@@ -400,27 +523,53 @@ and then redirects. The message key (``notice`` in this example) can be anything
 you'll use this key to retrieve the message.
 
 In the template of the next page (or even better, in your base layout template),
-read any flash messages from the session:
+read any flash messages from the session using ``app.flashes()``:
 
 .. configuration-block::
 
     .. code-block:: html+twig
 
         {# app/Resources/views/base.html.twig #}
-        {% for flash_message in app.session.flashBag.get('notice') %}
+
+        {# you can read and display just one flash message type... #}
+        {% for message in app.flashes('notice') %}
             <div class="flash-notice">
-                {{ flash_message }}
+                {{ message }}
             </div>
+        {% endfor %}
+
+        {# ...or you can read and display every flash message available #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
         {% endfor %}
 
     .. code-block:: html+php
 
         <!-- app/Resources/views/base.html.php -->
-        <?php foreach ($view['session']->getFlash('notice') as $message): ?>
+
+        // you can read and display just one flash message type...
+        <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>
             <div class="flash-notice">
-                <?php echo "<div class='flash-error'>$message</div>" ?>
+                <?php echo $message ?>
             </div>
         <?php endforeach ?>
+
+        // ...or you can read and display every flash message available
+        <?php foreach ($view['session']->getFlashBag()->all() as $type => $flash_messages): ?>
+            <?php foreach ($flash_messages as $flash_message): ?>
+                <div class="flash-<?php echo $type ?>">
+                    <?php echo $message ?>
+                </div>
+            <?php endforeach ?>
+        <?php endforeach ?>
+
+.. versionadded:: 3.3
+    The ``app.flashes()`` Twig function was introduced in Symfony 3.3. Prior,
+    you had to use ``app.session.flashBag()``.
 
 .. note::
 
@@ -513,9 +662,6 @@ There are special classes that make certain kinds of responses easier:
 JSON Helper
 ~~~~~~~~~~~
 
-.. versionadded:: 3.1
-    The ``json()`` helper was introduced in Symfony 3.1.
-
 To return JSON from a controller, use the ``json()`` helper method on the base controller.
 This returns a special ``JsonResponse`` object that encodes the data automatically::
 
@@ -576,14 +722,9 @@ and it's a PHP function where you can do anything in order to return the
 final ``Response`` object that will be returned to the user.
 
 To make life easier, you'll probably extend the base ``Controller`` class because
-this gives two things:
+this gives access to shortcut methods (like ``render()`` and ``redirectToRoute()``).
 
-A) Shortcut methods (like ``render()`` and ``redirectToRoute``);
-
-B) Access to *all* of the useful objects (services) in the system via the
-   :ref:`get() <controller-accessing-services>` method.
-
-In other chapters, you'll learn how to use specific services from inside your controller
+In other articles, you'll learn how to use specific services from inside your controller
 that will help you persist and fetch objects from a database, process form submissions,
 handle caching and more.
 
@@ -605,3 +746,6 @@ Learn more about Controllers
     :glob:
 
     controller/*
+
+.. _`helper methods`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php
+.. _`unvalidated redirects security vulnerability`: https://www.owasp.org/index.php/Open_redirect

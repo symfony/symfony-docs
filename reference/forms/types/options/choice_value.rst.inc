@@ -11,10 +11,13 @@ configure the value that will be sent in the API request).
 This can be a callable or a property path. See `choice_label`_ for similar usage.
 If ``null`` is used, an incrementing integer is used as the name.
 
+If you are using a callable to populate ``choice_value``, you need to check
+for the case that the value of the field may be ``null``.
+
 .. caution::
 
     In Symfony 2.7, there was a small backwards-compatibility break with how the
-    `value` attribute of options is generated. This is not a problem unless you
+    ``value`` attribute of options is generated. This is not a problem unless you
     rely on the option values in JavaScript. See `issue #14825`_ for details.
 
 .. _`issue #14825`: https://github.com/symfony/symfony/pull/14825

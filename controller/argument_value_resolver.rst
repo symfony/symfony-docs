@@ -4,9 +4,6 @@
 Extending Action Argument Resolving
 ===================================
 
-.. versionadded:: 3.1
-    The ``ArgumentResolver`` and value resolvers were introduced in Symfony 3.1.
-
 In the :doc:`controller guide </controller>`, you've learned that you can get the
 :class:`Symfony\\Component\\HttpFoundation\\Request` object via an argument in
 your controller. This argument has to be type-hinted by the ``Request`` class
@@ -18,7 +15,10 @@ functionality.
 Functionality Shipped with the HttpKernel
 -----------------------------------------
 
-Symfony ships with four value resolvers in the HttpKernel component:
+.. versionadded:: 3.3
+    The ``SessionValueResolver`` and ``ServiceValueResolver`` were both added in Symfony 3.3.
+
+Symfony ships with five value resolvers in the HttpKernel component:
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
     Attempts to find a request attribute that matches the name of the argument.
@@ -26,6 +26,15 @@ Symfony ships with four value resolvers in the HttpKernel component:
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestValueResolver`
     Injects the current ``Request`` if type-hinted with ``Request`` or a class
     extending ``Request``.
+
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\ServiceValueResolver`
+    Injects a service if type-hinted with a valid service class or interface. This
+    works like :doc:`autowiring </service_container/autowiring>`.
+
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\SessionValueResolver`
+    Injects the configured session class extending ``SessionInterface`` if
+    type-hinted with ``SessionInterface`` or a class extending
+    ``SessionInterface``.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\DefaultValueResolver`
     Will set the default value of the argument if present and the argument
@@ -141,10 +150,12 @@ and adding a priority.
 
         # app/config/services.yml
         services:
-            app.value_resolver.user:
-                class: AppBundle\ArgumentResolver\UserValueResolver
-                arguments:
-                    - '@security.token_storage'
+            _defaults:
+                # ... be sure autowiring is enabled
+                autowire: true
+            # ...
+
+            AppBundle\ArgumentResolver\UserValueResolver:
                 tags:
                     - { name: controller.argument_value_resolver, priority: 50 }
 
@@ -153,14 +164,15 @@ and adding a priority.
         <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="'http://www.w3.org/2001/XMLSchema-Instance"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.value_resolver.user"
-                    class="AppBundle\ArgumentResolver\UserValueResolver"
-                >
-                    <argument type="service" id="security.token_storage">
+                <!-- ... be sure autowiring is enabled -->
+                <defaults autowire="true" />
+                <!-- ... -->
+
+                <service id="AppBundle\ArgumentResolver\UserValueResolver">
                     <tag name="controller.argument_value_resolver" priority="50" />
                 </service>
             </services>
@@ -170,14 +182,10 @@ and adding a priority.
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        use AppBundle\ArgumentResolver\UserValueResolver;
 
-        $definition = new Definition(
-            'AppBundle\ArgumentResolver\UserValueResolver',
-            array(new Reference('security.token_storage'))
-        );
-        $definition->addTag('controller.argument_value_resolver', array('priority' => 50));
-        $container->setDefinition('app.value_resolver.user', $definition);
+        $container->autowire(UserValueResolver::class)
+            ->addTag('controller.argument_value_resolver', array('priority' => 50));
 
 While adding a priority is optional, it's recommended to add one to make sure
 the expected value is injected. The ``RequestAttributeValueResolver`` has a

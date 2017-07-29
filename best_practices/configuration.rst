@@ -153,6 +153,31 @@ whereas they cannot access the container parameters:
 The only notable disadvantage of using constants for this kind of configuration
 values is that you cannot redefine them easily in your tests.
 
+Parameter Naming
+----------------
+
+.. best-practice::
+
+    The name of your configuration parameters should be as short as possible and
+    should include a common prefix for the entire application.
+
+Using ``app.`` as the prefix of your parameters is a common practice to avoid
+collisions with Symfony and third-party bundles/libraries parameters. Then, use
+just one or two words to describe the purpose of the parameter:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    parameters:
+        # don't do this: 'dir' is too generic and it doesn't convey any meaning
+        app.dir: '...'
+        # do this: short but easy to understand names
+        app.contents_dir: '...'
+        # it's OK to use dots, underscores, dashes or nothing, but always
+        # be consistent and use the same format for all the parameters
+        app.dir.contents: '...'
+        app.contents-dir: '...'
+
 Semantic Configuration: Don't Do It
 -----------------------------------
 
@@ -175,8 +200,20 @@ Moving Sensitive Options Outside of Symfony Entirely
 
 When dealing with sensitive options, like database credentials, we also recommend
 that you store them outside the Symfony project and make them available
-through environment variables. Learn how to do it in the following article:
-:doc:`/configuration/external_parameters`.
+through environment variables:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    doctrine:
+        dbal:
+            # ...
+            password: "%env(DB_PASSWORD)%"
+
+.. versionadded:: 3.2
+    Support for runtime environment variables via the ``%env(...)%`` syntax
+    was added in Symfony 3.2. Prior to version 3.2, you needed to use the
+    :doc:`special SYMFONY__ variables </configuration/external_parameters>`.
 
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html

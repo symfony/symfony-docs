@@ -40,12 +40,13 @@ configuration:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <!-- ... -->
-                <framework:profiler ip="168.0.0.1" />
+                <framework:profiler>
+                    <framework:matcher ip="168.0.0.1" />
+                </framework:profiler>
             </framework:config>
         </container>
 
@@ -55,7 +56,9 @@ configuration:
         $container->loadFromExtension('framework', array(
             // ...
             'profiler' => array(
-                'ip' => '168.0.0.1',
+                'matcher' => array(
+                    'ip' => '168.0.0.1',
+                )
             ),
         ));
 
@@ -102,42 +105,9 @@ matcher::
         }
     }
 
-Then, configure a new service and set it as ``private`` because the application
-won't use it directly:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.super_admin_matcher:
-                class: AppBundle\Profiler\SuperAdminMatcher
-                arguments: ['@security.authorization_checker']
-                public: false
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <services>
-            <service id="app.profiler.matcher.super_admin"
-                class="AppBundle\Profiler\SuperAdminMatcher" public="false">
-                <argument type="service" id="security.authorization_checker" />
-        </services>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $definition = new Definition(
-            'AppBundle\Profiler\SuperAdminMatcher',
-            array(new Reference('security.authorization_checker'))
-        );
-        $definition->setPublic(false);
-
-        $container->setDefinition('app.super_admin_matcher', $definition);
+Then, you'll need to make sure your class is defined as as service. If you're using
+the :ref:`default services.yml configuration <service-container-services-load-example>`,
+you don't need to do anything!
 
 Once the service is registered, the only thing left to do is configure the
 profiler to use this service as the matcher:
@@ -151,7 +121,7 @@ profiler to use this service as the matcher:
             # ...
             profiler:
                 matcher:
-                    service: app.super_admin_matcher
+                    service: AppBundle\Profiler\SuperAdminMatcher
 
     .. code-block:: xml
 
@@ -163,21 +133,26 @@ profiler to use this service as the matcher:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
                 <!-- ... -->
-                <framework:profiler service="app.super_admin_matcher" />
+                <framework:profiler>
+                    <framework:matcher service="AppBundle\Profiler\SuperAdminMatcher" />
+                </framework:profiler>
             </framework:config>
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
+        use AppBundle\Profiler\SuperAdminMatcher;
+
         $container->loadFromExtension('framework', array(
             // ...
             'profiler' => array(
-                'service' => 'app.super_admin_matcher',
+                'matcher' => array(
+                    'service' => SuperAdminMatcher::class,
+                )
             ),
         ));

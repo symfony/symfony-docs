@@ -55,6 +55,6 @@ what's going on and if the tests are broken because of the new code.
     to see colored test results.
 
 .. _Cmder: http://cmder.net/
-.. _ConEmu: https://code.google.com/p/conemu-maximus5/
+.. _ConEmu: https://conemu.github.io/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
 .. _Mintty: https://mintty.github.io/

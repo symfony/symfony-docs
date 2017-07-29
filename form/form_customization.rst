@@ -13,7 +13,7 @@ Form Rendering Basics
 ---------------------
 
 Recall that the label, error and HTML widget of a form field can easily
-be rendered by using the ``form_row`` Twig function or the ``row`` PHP helper
+be rendered by using the ``form_row()`` Twig function or the ``row`` PHP helper
 method:
 
 .. configuration-block::
@@ -333,8 +333,8 @@ name of all the templates as an array using the ``with`` keyword:
 
     {# ... #}
 
-The templates can also be located in different bundles, use the functional name
-to reference these templates, e.g. ``AcmeFormExtraBundle:form:fields.html.twig``.
+The templates can also be located in different bundles, use the Twig namespaced
+path to reference these templates, e.g. ``@AcmeFormExtra/form/fields.html.twig``.
 
 Child Forms
 ...........
@@ -377,7 +377,7 @@ file in order to customize the ``integer_widget`` fragment.
 
 Now that you've created the customized form template, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
-tell Symfony to use the theme via the ``setTheme`` helper method::
+tell Symfony to use the theme via the ``setTheme()`` helper method::
 
     <?php $view['form']->setTheme($form, array(':form')); ?>
 
@@ -387,7 +387,7 @@ When the ``form.age`` widget is rendered, Symfony will use the customized
 ``integer_widget.html.php`` template and the ``input`` tag will be wrapped in
 the ``div`` element.
 
-If you want to apply a theme to a specific child form, pass it to the ``setTheme``
+If you want to apply a theme to a specific child form, pass it to the ``setTheme()``
 method:
 
 .. code-block:: php
@@ -443,7 +443,7 @@ the base block by using the ``parent()`` Twig function:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/Form/fields.html.twig #}
+    {# app/Resources/views/form/fields.html.twig #}
     {% extends 'form_div_layout.html.twig' %}
 
     {% block integer_widget %}
@@ -485,10 +485,20 @@ rendered.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <twig:config>
-            <twig:form-theme>form/fields.html.twig</twig:form-theme>
-            <!-- ... -->
-        </twig:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <twig:form-theme>form/fields.html.twig</twig:form-theme>
+                <!-- ... -->
+            </twig:config>
+        </container>
 
     .. code-block:: php
 
@@ -518,10 +528,20 @@ resource to use such a layout:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <twig:config>
-            <twig:form-theme>form_table_layout.html.twig</twig:form-theme>
-            <!-- ... -->
-        </twig:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <twig:form-theme>form_table_layout.html.twig</twig:form-theme>
+                <!-- ... -->
+            </twig:config>
+        </container>
 
     .. code-block:: php
 
@@ -566,14 +586,24 @@ form is rendered.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:templating>
-                <framework:form>
-                    <resource>AppBundle:Form</resource>
-                </framework:form>
-            </framework:templating>
-            <!-- ... -->
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:templating>
+                    <framework:form>
+                        <framework:resource>AppBundle:Form</framework:resource>
+                    </framework:form>
+                </framework:templating>
+                <!-- ... -->
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -609,14 +639,24 @@ resource to use such a layout:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config>
-            <framework:templating>
-                <framework:form>
-                    <resource>FrameworkBundle:FormTable</resource>
-                </framework:form>
-            </framework:templating>
-            <!-- ... -->
-        </framework:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:templating>
+                    <framework:form>
+                        <resource>FrameworkBundle:FormTable</resource>
+                    </framework:form>
+                </framework:templating>
+                <!-- ... -->
+            </framework:config>
+        </container>
 
     .. code-block:: php
 
@@ -802,11 +842,11 @@ Customizing Error Output
    The Form component only handles *how* the validation errors are rendered,
    and not the actual validation error messages. The error messages themselves
    are determined by the validation constraints you apply to your objects.
-   For more information, see the chapter on :doc:`validation </validation>`.
+   For more information, see the article on :doc:`validation </validation>`.
 
 There are many different ways to customize how errors are rendered when a
 form is submitted with errors. The error messages for a field are rendered
-when you use the ``form_errors`` helper:
+when you use the ``form_errors()`` helper:
 
 .. configuration-block::
 
@@ -832,6 +872,8 @@ and customize the ``form_errors`` fragment.
 .. configuration-block::
 
     .. code-block:: html+twig
+
+        {% form_theme form _self %}
 
         {# form_errors.html.twig #}
         {% block form_errors %}
@@ -893,6 +935,8 @@ fields (e.g. a whole form), and not just an individual field.
 
     .. code-block:: html+twig
 
+        {% form_theme form _self %}
+
         {# form_errors.html.twig #}
         {% block form_errors %}
             {% spaceless %}
@@ -930,7 +974,7 @@ Customizing the "Form Row"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you can manage it, the easiest way to render a form field is via the
-``form_row`` function, which renders the label, errors and HTML widget of
+``form_row()`` function, which renders the label, errors and HTML widget of
 a field. To customize the markup used for rendering *all* form field rows,
 override the ``form_row`` fragment. For example, suppose you want to add a
 class to the ``div`` element around each row:

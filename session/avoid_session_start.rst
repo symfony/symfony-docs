@@ -15,9 +15,9 @@ that a session is *always* started:
 
 .. code-block:: html+twig
 
-    {% for flashMessage in app.session.flashBag.get('notice') %}
+    {% for message in app.flashes('notice') %}
         <div class="flash-notice">
-            {{ flashMessage }}
+            {{ message }}
         </div>
     {% endfor %}
 
@@ -30,9 +30,13 @@ access the flash messages:
 .. code-block:: html+twig
 
     {% if app.request.hasPreviousSession %}
-        {% for flashMessage in app.session.flashBag.get('notice') %}
+        {% for message in app.flashes('notice') %}
             <div class="flash-notice">
-                {{ flashMessage }}
+                {{ message }}
             </div>
         {% endfor %}
     {% endif %}
+
+.. versionadded:: 3.3
+    The ``app.flashes()`` Twig function was introduced in Symfony 3.3. Prior, 
+    you had to use ``app.session.flashBag()``.

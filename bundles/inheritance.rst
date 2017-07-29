@@ -10,11 +10,12 @@ in one of your own bundles. Symfony gives you a very convenient way to override
 things like controllers, templates, and other files in a bundle's
 ``Resources/`` directory.
 
-For example, suppose that you're installing the `FOSUserBundle`_, but you
-want to override its base ``layout.html.twig`` template, as well as one of
-its controllers. Suppose also that you have your own UserBundle where you want
-the overridden files to live. Start by registering the FOSUserBundle as the
-"parent" of your bundle::
+For example, suppose that you have installed `FOSUserBundle`_, but you want to
+override its base ``layout.html.twig`` template, as well as one of its
+controllers.
+
+First, create a new bundle called UserBundle and enable it in your application.
+Then, register the third-party FOSUserBundle as the "parent" of your bundle::
 
     // src/UserBundle/UserBundle.php
     namespace UserBundle;
@@ -40,7 +41,7 @@ simply by creating a file with the same name.
 Overriding Controllers
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Suppose you want to add some functionality to the ``registerAction`` of a
+Suppose you want to add some functionality to the ``registerAction()`` of a
 ``RegistrationController`` that lives inside FOSUserBundle. To do so,
 just create your own ``RegistrationController.php`` file, override the bundle's
 original method, and change its functionality::
@@ -92,8 +93,9 @@ The same goes for routing files and some other resources.
 
     The overriding of resources only works when you refer to resources with
     the ``@FOSUserBundle/Resources/config/routing/security.xml`` method.
-    If you refer to resources without using the ``@BundleName`` shortcut, they
-    can't be overridden in this way.
+    You need to use the ``@BundleName`` shortcut when referring to resources
+    so they can be successfully overridden (except templates, which are
+    overridden in a different way, as explained in :doc:`/templating/overriding`).
 
 .. caution::
 

@@ -12,6 +12,7 @@ Full Default Configuration
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         doctrine:
             dbal:
                 default_connection:   default
@@ -21,9 +22,9 @@ Full Default Configuration
                     some_custom_type:
                         class:                Acme\HelloBundle\MyCustomType
                         commented:            true
-                # If enabled all tables not prefixed with sf2_ will be ignored by the schema
-                # tool. This is for custom tables which should not be altered automatically.
-                #schema_filter:        ^sf2_
+                # If defined, all the tables whose names match this regular expression are ignored
+                # by the schema tool (in this example, any table name starting with `wp_`)
+                #schema_filter:               "/^wp_/"
 
                 connections:
                     # A collection of different named connections (e.g. default, conn2, etc)
@@ -183,6 +184,7 @@ Full Default Configuration
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -203,7 +205,7 @@ Full Default Configuration
                         password="secret"
                         driver="pdo_mysql"
                         driver-class="MyNamespace\MyDriverImpl"
-                        path="%kernel.data_dir%/data.sqlite"
+                        path="%kernel.project_dir%/var/data/data.sqlite"
                         memory="true"
                         unix-socket="/tmp/mysql.sock"
                         wrapper-class="MyDoctrineDbalConnectionWrapper"
@@ -262,7 +264,7 @@ Full Default Configuration
                         <doctrine:mapping
                             name="DoctrineExtensions"
                             type="xml"
-                            dir="%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/DoctrineExtensions/Entity"
+                            dir="%kernel.project_dir%/vendor/gedmo/doctrine-extensions/lib/DoctrineExtensions/Entity"
                             prefix="DoctrineExtensions\Entity"
                             alias="DExt"
                         />
@@ -297,8 +299,9 @@ certain classes, but those are for very advanced use-cases only.
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
-For the caching drivers you can specify the values ``array``, ``apc``, ``memcache``,
-``memcached``, ``redis``, ``wincache``, ``zenddata``, ``xcache`` or ``service``.
+For the caching drivers you can specify the values ``array``, ``apc``, ``apcu``,
+``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata``, ``xcache``
+or ``service``.
 
 The following example shows an overview of the caching configurations:
 
@@ -337,7 +340,7 @@ Path to the mapping or entity files (depending on the driver). If this path
 is relative it is assumed to be relative to the bundle root. This only works
 if the name of your mapping is a bundle name. If you want to use this option
 to specify absolute paths you should prefix the path with the kernel parameters
-that exist in the DIC (for example ``%kernel.root_dir%``).
+that exist in the DIC (for example ``%kernel.project_dir%``).
 
 prefix
 ......
@@ -395,7 +398,7 @@ The following block shows all possible configuration keys:
                 # the DBAL driverOptions option
                 options:
                     foo: bar
-                path:                 '%kernel.data_dir%/data.sqlite'
+                path:                 '%kernel.project_dir%/app/data/data.sqlite'
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
                 # the DBAL wrapperClass option
@@ -418,8 +421,7 @@ The following block shows all possible configuration keys:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/doctrine
-                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
             <doctrine:config>
                 <doctrine:dbal
@@ -431,7 +433,7 @@ The following block shows all possible configuration keys:
                     password="secret"
                     driver="pdo_mysql"
                     driver-class="MyNamespace\MyDriverImpl"
-                    path="%kernel.data_dir%/data.sqlite"
+                    path="%kernel.project_dir%/var/data/data.sqlite"
                     memory="true"
                     unix-socket="/tmp/mysql.sock"
                     wrapper-class="MyDoctrineDbalConnectionWrapper"
@@ -561,7 +563,10 @@ directory instead:
 
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <doctrine:config>
                 <doctrine:orm auto-mapping="true">
@@ -602,7 +607,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                         # ...
                         SomeEntityNamespace:
                             type: annotation
-                            dir: '%kernel.root_dir%/../src/Entity'
+                            dir: '%kernel.project_dir%/src/Entity'
                             is_bundle: false
                             prefix: App\Entity
                             alias: App
@@ -611,13 +616,16 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <doctrine:config>
                 <doctrine:orm>
                     <mapping name="SomeEntityNamespace"
                         type="annotation"
-                        dir="%kernel.root_dir%/../src/Entity"
+                        dir="%kernel.project_dir%/src/Entity"
                         is-bundle="false"
                         prefix="App\Entity"
                         alias="App"
@@ -634,7 +642,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                 'mappings' => array(
                     'SomeEntityNamespace' => array(
                         'type'      => 'annotation',
-                        'dir'       => '%kernel.root_dir%/../src/Entity',
+                        'dir'       => '%kernel.project_dir%/src/Entity',
                         'is_bundle' => false,
                         'prefix'    => 'App\Entity',
                         'alias'     => 'App',

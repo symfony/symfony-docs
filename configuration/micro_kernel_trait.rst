@@ -82,7 +82,7 @@ That's it! To test it, you can start the built-in web server:
 
 Then see the JSON response in your browser:
 
-> http://localhost:8000/random/10
+    http://localhost:8000/random/10
 
 The Methods of a "Micro" Kernel
 -------------------------------
@@ -127,16 +127,9 @@ your ``composer.json`` file to load from there:
         }
     }
 
-Now, suppose you want to use Twig and load routes via annotations. For annotation
-routing, you need SensioFrameworkExtraBundle. This comes with a normal Symfony project.
-But in this case, you need to download it:
-
-.. code-block:: bash
-
-    $ composer require sensio/framework-extra-bundle
-
-Instead of putting *everything* in ``index.php``, create a new ``app/AppKernel.php``
-to hold the kernel. Now it looks like this::
+Now, suppose you want to use Twig and load routes via annotations. Instead of
+putting *everything* in ``index.php``, create a new ``app/AppKernel.php`` to
+hold the kernel. Now it looks like this::
 
     // app/AppKernel.php
 
@@ -161,7 +154,6 @@ to hold the kernel. Now it looks like this::
             $bundles = array(
                 new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
                 new Symfony\Bundle\TwigBundle\TwigBundle(),
-                new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle()
             );
 
             if ($this->getEnvironment() == 'dev') {
@@ -208,6 +200,12 @@ to hold the kernel. Now it looks like this::
             return __DIR__.'/../var/logs';
         }
     }
+
+
+.. versionadded:: 3.4
+    Support for annotation routing without an external bundle was added in
+    Symfony 3.4. Prior to version 3.4, you needed to install the
+    SensioFrameworkExtraBundle.
 
 Unlike the previous kernel, this loads an external ``app/config/config.yml`` file,
 because the configuration started to get bigger:
@@ -261,7 +259,7 @@ has one file in it::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class MicroController extends Controller
     {
@@ -280,7 +278,20 @@ has one file in it::
 
 Template files should live in the ``Resources/views`` directory of whatever directory
 your *kernel* lives in. Since ``AppKernel`` lives in ``app/``, this template lives
-at ``app/Resources/views/micro/random.html.twig``.
+at ``app/Resources/views/micro/random.html.twig``:
+
+.. code-block:: html+twig
+
+    <!-- app/Resources/views/micro/random.html.twig -->
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Random action</title>
+        </head>
+        <body>
+            <p>{{ number }}</p>
+        </body>
+    </html>
 
 Finally, you need a front controller to boot and run the application. Create a
 ``web/index.php``::
@@ -309,7 +320,6 @@ this:
     │  ├─ config/
     │  └─ Resources
     |     └─ views
-    |        ├─ base.html.twig
     |        └─ micro
     |           └─ random.html.twig
     ├─ src/
@@ -325,6 +335,17 @@ this:
     |  └─ index.php
     ├─ composer.json
     └─ composer.lock
+
+As before you can use PHP built-in server:
+
+.. code-block:: bash
+
+    cd web/
+    $ php -S localhost:8000
+
+Then see webpage in browser:
+
+    http://localhost:8000/random/10
 
 Hey, that looks a lot like a *traditional* Symfony application! You're right: the
 ``MicroKernelTrait`` *is* still Symfony: but you can control your structure and

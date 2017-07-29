@@ -159,8 +159,8 @@ Structure
 * Declare class properties before methods;
 
 * Declare public methods first, then protected ones and finally private ones.
-  The exceptions to this rule are the class constructor and the ``setUp`` and
-  ``tearDown`` methods of PHPUnit tests, which must always be the first methods
+  The exceptions to this rule are the class constructor and the ``setUp()`` and
+  ``tearDown()`` methods of PHPUnit tests, which must always be the first methods
   to increase readability;
 
 * Declare all the arguments on the same line as the method/function name, no
@@ -186,7 +186,7 @@ Naming Conventions
 * Use camelCase, not underscores, for variable, function and method
   names, arguments;
 
-* Use underscores for option names and parameter names;
+* Use underscores for configuration options and parameters;
 
 * Use namespaces for all classes;
 
@@ -218,14 +218,16 @@ Service Naming Conventions
 
 * The DI alias of the bundle is the first group (e.g. ``fos_user``);
 
-* Use lowercase letters for service and parameter names;
+* Use lowercase letters for service and parameter names (except when referring
+  to environment variables with the ``%env(VARIABLE_NAME)%`` syntax);
 
 * A group name uses the underscore notation.
 
 Documentation
 -------------
 
-* Add PHPDoc blocks for all classes, methods, and functions;
+* Add PHPDoc blocks for all classes, methods, and functions (though you may
+  be asked to remove PHPDoc that do not add value);
 
 * Group annotations together so that annotations of the same type immediately
   follow each other, and annotations of a different type are separated by a

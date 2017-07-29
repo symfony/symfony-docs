@@ -10,11 +10,11 @@ Symfony versus Flat PHP
 
 If you've never used a PHP framework, aren't familiar with the
 `Model-View-Controller`_ (MVC) philosophy, or just wonder what all the *hype*
-is around Symfony, this chapter is for you. Instead of *telling* you that
+is around Symfony, this article is for you. Instead of *telling* you that
 Symfony allows you to develop faster and better software than with flat PHP,
 you'll see for yourself.
 
-In this chapter, you'll write a simple application in flat PHP, and then
+In this article, you'll write a simple application in flat PHP, and then
 refactor it to be more organized. You'll travel through time, seeing the
 decisions behind why web development has evolved over the past several years
 to where it is now.
@@ -25,7 +25,7 @@ let you take back control of your code.
 A Simple Blog in Flat PHP
 -------------------------
 
-In this chapter, you'll build the token blog application using only flat PHP.
+In this article, you'll build the token blog application using only flat PHP.
 To begin, create a single page that displays blog entries that have been
 persisted to the database. Writing in flat PHP is quick and dirty:
 
@@ -370,7 +370,7 @@ on the requested URI::
         echo '<html><body><h1>Page Not Found</h1></body></html>';
     }
 
-For organization, both controllers (formerly ``index.php`` and ``show.php``)
+For organization, both controllers (formerly ``/index.php`` and ``/index.php/show``)
 are now PHP functions and each has been moved into a separate file named ``controllers.php``::
 
     // controllers.php
@@ -392,7 +392,7 @@ one of the two controllers (the ``list_action()`` and ``show_action()``
 functions) is called. In reality, the front controller is beginning to look and
 act a lot like how Symfony handles and routes requests.
 
-But but careful not to confuse the terms *front controller* and *controller*. Your
+But be careful not to confuse the terms *front controller* and *controller*. Your
 app will usually have just *one* front controller, which boots your code. You will
 have *many* controller functions: one for each page.
 
@@ -544,13 +544,14 @@ them for you. Here's the same sample application, now built in Symfony::
     // src/AppBundle/Controller/BlogController.php
     namespace AppBundle\Controller;
 
+    use AppBundle\Entity\Post;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class BlogController extends Controller
     {
         public function listAction()
         {
-            $posts = $this->get('doctrine')
+            $posts = $this->getDoctrine()
                 ->getManager()
                 ->createQuery('SELECT p FROM AppBundle:Post p')
                 ->execute();
@@ -560,9 +561,8 @@ them for you. Here's the same sample application, now built in Symfony::
 
         public function showAction($id)
         {
-            $post = $this->get('doctrine')
-                ->getManager()
-                ->getRepository('AppBundle:Post')
+            $post = $this->getDoctrine()
+                ->getRepository(Post::class)
                 ->find($id);
 
             if (!$post) {
@@ -717,14 +717,14 @@ And rewriting ``layout.html.php`` template in Twig would look like this:
 
 Twig is well-supported in Symfony. And while PHP templates will always
 be supported in Symfony, the many advantages of Twig will continue to
-be discussed. For more information, see the :doc:`templating chapter </templating>`.
+be discussed. For more information, see the :doc:`templating article </templating>`.
 
 Where Symfony Delivers
 ----------------------
 
-In the upcoming chapters, you'll learn more about how each piece of Symfony
-works and how you can organize your project. For now, celebrate at how migrating
-the blog from flat PHP to Symfony has improved life:
+In the rest of documentation articles, you'll learn more about how each piece of
+Symfony works and how you can organize your project. For now, celebrate at how
+migrating the blog from flat PHP to Symfony has improved life:
 
 * Your application now has **clear and consistently organized code** (though
   Symfony doesn't force you into this). This promotes **reusability** and
@@ -746,12 +746,12 @@ the blog from flat PHP to Symfony has improved life:
 
 * Symfony's HTTP-centric architecture gives you access to powerful tools
   such as **HTTP caching** powered by **Symfony's internal HTTP cache** or
-  more powerful tools such as `Varnish`_. This is covered in a later chapter
+  more powerful tools such as `Varnish`_. This is covered in another article
   all about :doc:`caching </http_cache>`.
 
 And perhaps best of all, by using Symfony, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony community**!
-A good selection of Symfony community tools can be found on `KnpBundles.com`_.
+A good selection of `Symfony community tools`_ can be found on GitHub.
 
 .. _`Model-View-Controller`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _`Doctrine`: http://www.doctrine-project.org
@@ -760,5 +760,5 @@ A good selection of Symfony community tools can be found on `KnpBundles.com`_.
 .. _`download Composer`: https://getcomposer.org/download/
 .. _`Validator`: https://github.com/symfony/validator
 .. _`Varnish`: https://www.varnish-cache.org/
-.. _`KnpBundles.com`: http://knpbundles.com/
 .. _`Twig`: http://twig.sensiolabs.org
+.. _`Symfony community tools`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories

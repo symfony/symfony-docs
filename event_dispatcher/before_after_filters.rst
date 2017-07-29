@@ -49,12 +49,19 @@ parameters key:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <parameters>
-            <parameter key="tokens" type="collection">
-                <parameter key="client1">pass1</parameter>
-                <parameter key="client2">pass2</parameter>
-            </parameter>
-        </parameters>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="tokens" type="collection">
+                    <parameter key="client1">pass1</parameter>
+                    <parameter key="client2">pass2</parameter>
+                </parameter>
+            </parameters>
+        </container>
 
     .. code-block:: php
 
@@ -67,9 +74,9 @@ parameters key:
 Tag Controllers to Be Checked
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A ``kernel.controller`` listener gets notified on *every* request, right before
-the controller is executed. So, first, you need some way to identify if the
-controller that matches the request needs token validation.
+A ``kernel.controller`` (aka ``KernelEvents::CONTROLLER``) listener gets notified
+on *every* request, right before the controller is executed. So, first, you need
+some way to identify if the controller that matches the request needs token validation.
 
 A clean and easy way is to create an empty interface and make the controllers
 implement it::
@@ -97,21 +104,23 @@ A controller that implements this interface simply looks like this::
         }
     }
 
-Creating an Event Listener
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Creating an Event Subscriber
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, you'll need to create an event listener, which will hold the logic
-that you want executed before your controllers. If you're not familiar with
+that you want to be executed before your controllers. If you're not familiar with
 event listeners, you can learn more about them at :doc:`/event_dispatcher`::
 
-    // src/AppBundle/EventListener/TokenListener.php
-    namespace AppBundle\EventListener;
+    // src/AppBundle/EventSubscriber/TokenSubscriber.php
+    namespace AppBundle\EventSubscriber;
 
     use AppBundle\Controller\TokenAuthenticatedController;
     use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
     use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\KernelEvents;
 
-    class TokenListener
+    class TokenSubscriber implements EventSubscriberInterface
     {
         private $tokens;
 
@@ -140,52 +149,28 @@ event listeners, you can learn more about them at :doc:`/event_dispatcher`::
                 }
             }
         }
+
+        public static function getSubscribedEvents()
+        {
+            return array(
+                KernelEvents::CONTROLLER => 'onKernelController',
+            );
+        }
     }
 
-Registering the Listener
-~~~~~~~~~~~~~~~~~~~~~~~~
+That's it! Your ``services.yml`` file should already be setup to load services from
+the ``EventSubscriber`` directory. Symfony takes care of the rest. Your
+``TokenSubscriber`` ``onKernelController()`` method will be executed on each request.
+If the controller that is about to be executed implements ``TokenAuthenticatedController``,
+token authentication is applied. This lets you have a "before" filter on any controller
+you want.
 
-Finally, register your listener as a service and tag it as an event listener.
-By listening on ``kernel.controller``, you're telling Symfony that you want
-your listener to be called just before any controller is executed.
+.. tip::
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.tokens.action_listener:
-                class: AppBundle\EventListener\TokenListener
-                arguments: ['%tokens%']
-                tags:
-                    - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <service id="app.tokens.action_listener" class="AppBundle\EventListener\TokenListener">
-            <argument>%tokens%</argument>
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
-        </service>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        $listener = new Definition('AppBundle\EventListener\TokenListener', array('%tokens%'));
-        $listener->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.controller',
-            'method' => 'onKernelController'
-        ));
-        $container->setDefinition('app.tokens.action_listener', $listener);
-
-With this configuration, your ``TokenListener`` ``onKernelController`` method
-will be executed on each request. If the controller that is about to be executed
-implements ``TokenAuthenticatedController``, token authentication is
-applied. This lets you have a "before" filter on any controller that you
-want.
+    If your subscriber is *not* called on each request, double-check that
+    you're :ref:`loading services <service-container-services-load-example>` from
+    the ``EventSubscriber`` directory and have :ref:`autoconfigure <services-autoconfigure>`
+    enabled. You can also manually add the ``kernel.event_subscriber`` tag.
 
 After Filters with the ``kernel.response`` Event
 ------------------------------------------------
@@ -195,12 +180,12 @@ can also add a hook that's executed *after* your controller. For this example,
 imagine that you want to add a sha1 hash (with a salt using that token) to
 all responses that have passed this token authentication.
 
-Another core Symfony event - called ``kernel.response`` - is notified on
-every request, but after the controller returns a Response object. Creating
-an "after" listener is as easy as creating a listener class and registering
+Another core Symfony event - called ``kernel.response`` (aka ``KernelEvents::RESPONSE``) -
+is notified on every request, but after the controller returns a Response object.
+Creating an "after" listener is as easy as creating a listener class and registering
 it as a service on this event.
 
-For example, take the ``TokenListener`` from the previous example and first
+For example, take the ``TokenSubscriber`` from the previous example and first
 record the authentication token inside the request attributes. This will
 serve as a basic flag that this request underwent token authentication::
 
@@ -219,9 +204,9 @@ serve as a basic flag that this request underwent token authentication::
         }
     }
 
-Now, add another method to this class - ``onKernelResponse`` - that looks
-for this flag on the request object and sets a custom header on the response
-if it's found::
+Now, configure the subscriber to listen to another event and add ``onKernelResponse()``.
+This will look for the ``auth_token`` flag on the request object and set a custom
+header on the response if it's found::
 
     // add the new use statement at the top of your file
     use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -240,51 +225,17 @@ if it's found::
         $response->headers->set('X-CONTENT-HASH', $hash);
     }
 
-Finally, a second "tag" is needed in the service definition to notify Symfony
-that the ``onKernelResponse`` event should be notified for the ``kernel.response``
-event:
+    public static function getSubscribedEvents()
+    {
+        return array(
+            KernelEvents::CONTROLLER => 'onKernelController',
+            KernelEvents::RESPONSE => 'onKernelResponse',
+        );
+    }
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.tokens.action_listener:
-                class: AppBundle\EventListener\TokenListener
-                arguments: ['%tokens%']
-                tags:
-                    - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-                    - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <service id="app.tokens.action_listener" class="AppBundle\EventListener\TokenListener">
-            <argument>%tokens%</argument>
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
-            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
-        </service>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        $listener = new Definition('AppBundle\EventListener\TokenListener', array('%tokens%'));
-        $listener->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.controller',
-            'method' => 'onKernelController'
-        ));
-        $listener->addTag('kernel.event_listener', array(
-            'event'  => 'kernel.response',
-            'method' => 'onKernelResponse'
-        ));
-        $container->setDefinition('app.tokens.action_listener', $listener);
-
-That's it! The ``TokenListener`` is now notified before every controller is
-executed (``onKernelController``) and after every controller returns a response
-(``onKernelResponse``). By making specific controllers implement the ``TokenAuthenticatedController``
+That's it! The ``TokenSubscriber`` is now notified before every controller is
+executed (``onKernelController()``) and after every controller returns a response
+(``onKernelResponse()``). By making specific controllers implement the ``TokenAuthenticatedController``
 interface, your listener knows which controllers it should take action on.
-And by storing a value in the request's "attributes" bag, the ``onKernelResponse``
+And by storing a value in the request's "attributes" bag, the ``onKernelResponse()``
 method knows to add the extra header. Have fun!

@@ -7,6 +7,12 @@ The ClassLoader Component
     The ClassLoader component provides tools to autoload your classes and
     cache their locations for performance.
 
+.. caution::
+
+    The ClassLoader component was deprecated in Symfony 3.3 and it will be
+    removed in 4.0. As an alternative, use any of the `class loading optimizations`_
+    provided by Composer.
+
 Usage
 -----
 
@@ -52,9 +58,18 @@ Learn More
     :maxdepth: 1
 
     class_loader/class_loader
-    class_loader/*
+    class_loader/class_map_generator.rst
+    class_loader/debug_class_loader.rst
+    class_loader/map_class_loader.rst
+    class_loader/psr4_class_loader.rst
+
+.. toctree::
+    :hidden:
+
+    class_loader/cache_class_loader
 
 .. _PSR-0: http://www.php-fig.org/psr/psr-0/
 .. _PSR-4: http://www.php-fig.org/psr/psr-4/
 .. _`autoloading mechanism`: http://php.net/manual/en/language.oop5.autoload.php
 .. _Packagist: https://packagist.org/packages/symfony/class-loader
+.. _`class loading optimizations`: https://getcomposer.org/doc/articles/autoloader-optimization.md

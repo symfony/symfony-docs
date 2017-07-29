@@ -11,7 +11,7 @@ using a CSRF token inside your forms.
 
 The good news is that, by default, Symfony embeds and validates CSRF tokens
 automatically for you. This means that you can take advantage of the CSRF
-protection without doing anything. In fact, every form in this chapter has
+protection without doing anything. In fact, every form in this article has
 taken advantage of the CSRF protection!
 
 CSRF protection works by adding a hidden field to your form - called ``_token``
@@ -30,6 +30,8 @@ that all un-rendered fields are output.
 
 The CSRF token can be customized on a form-by-form basis. For example::
 
+    // ...
+    use AppBundle\Entity\Task;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class TaskType extends AbstractType
@@ -39,7 +41,7 @@ The CSRF token can be customized on a form-by-form basis. For example::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'data_class'      => 'AppBundle\Entity\Task',
+                'data_class'      => Task::class,
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 // a unique key to help generate the secret token

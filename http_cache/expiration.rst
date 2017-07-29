@@ -36,7 +36,7 @@ Most of the time, you will use the ``Cache-Control`` header. Recall that the
 ``Cache-Control`` header is used to specify many different cache directives::
 
     // Sets the number of seconds after which the response
-    // should no longer be considered fresh
+    // should no longer be considered fresh by shared caches
     $response->setSharedMaxAge(600);
 
 The ``Cache-Control`` header would take on the following format (it may have
@@ -85,5 +85,12 @@ the lifetime calculation vulnerable to clock skew. Another limitation
 of the ``Expires`` header is that the specification states that "HTTP/1.1
 servers should not send ``Expires`` dates more than one year in the future."
 
+.. note::
+
+    According to `RFC 7234 - Caching`_, the ``Expires`` header value is ignored
+    when the ``s-maxage`` or ``max-age`` directive of the ``Cache-Control``
+    header is defined.
+
 .. _`expiration model`: http://tools.ietf.org/html/rfc2616#section-13.2
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/cache.html
+.. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234#section-4.2.1

@@ -162,10 +162,9 @@ Using mod_proxy_fcgi with Apache 2.4
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you are running Apache 2.4, you can easily use ``mod_proxy_fcgi`` to pass
-incoming requests to PHP-FPM. Configure PHP-FPM to listen on a TCP socket
-(``mod_proxy`` currently `does not support Unix sockets`_), enable ``mod_proxy``
-and ``mod_proxy_fcgi`` in your Apache configuration and use the ``SetHandler``
-directive to pass requests for PHP files to PHP FPM:
+incoming requests to PHP-FPM. Configure PHP-FPM to listen on a TCP or Unix socket,
+enable ``mod_proxy`` and ``mod_proxy_fcgi`` in your Apache configuration, and
+use the ``SetHandler`` directive to pass requests for PHP files to PHP FPM:
 
 .. code-block:: apache
 
@@ -183,6 +182,8 @@ directive to pass requests for PHP files to PHP FPM:
         # with mod_rewrite or mod_autoindex
         <FilesMatch \.php$>
             SetHandler proxy:fcgi://127.0.0.1:9000
+            # for Unix sockets, Apache 2.4.10 or higher
+            # SetHandler proxy:unix:/path/to/fpm.sock|fcgi://dummy
         </FilesMatch>
 
         # If you use Apache version below 2.4.9 you must consider update or use this instead
@@ -305,11 +306,11 @@ The **minimum configuration** to get your application running under Nginx is:
             # Remove the internal directive to allow URIs like this
             internal;
         }
-        
+
         # return 404 for all other php files not matching the front controller
         # this prevents access to other php files you don't want to be accessible.
         location ~ \.php$ {
-          return 404;
+            return 404;
         }
 
         error_log /var/log/nginx/project_error.log;
@@ -335,9 +336,15 @@ The **minimum configuration** to get your application running under Nginx is:
     or ``config.php`` scripts (i.e. ``http://example.com/app_dev.php`` and ``http://example.com/config.php``).
     If you *can* access these, be sure to remove the ``DEV`` section from the above configuration.
 
+.. note::
+
+    By default, Symfony applications include several ``.htaccess`` files to
+    configure redirections and to prevent unauthorized access to some sensitive
+    directories. Those files are only useful when using Apache, so you can
+    safely remove them when using Nginx.
+
 For advanced Nginx configuration options, read the official `Nginx documentation`_.
 
 .. _`Apache documentation`: http://httpd.apache.org/docs/
-.. _`does not support Unix sockets`: https://bz.apache.org/bugzilla/show_bug.cgi?id=54101
-.. _`FastCgiExternalServer`: http://www.fastcgi.com/mod_fastcgi/docs/mod_fastcgi.html#FastCgiExternalServer
-.. _`Nginx documentation`: http://wiki.nginx.org/Symfony
+.. _`FastCgiExternalServer`: https://docs.oracle.com/cd/B31017_01/web.1013/q20204/mod_fastcgi.html#FastCgiExternalServer
+.. _`Nginx documentation`: https://www.nginx.com/resources/wiki/start/topics/recipes/symfony/

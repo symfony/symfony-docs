@@ -34,9 +34,9 @@ needed permissions:
     $ rm -rf var/cache/*
     $ rm -rf var/logs/*
 
-    $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-    $ sudo chmod -R +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var
-    $ sudo chmod -R +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" var
+    $ HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1)
+    $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var
+    $ sudo chmod +a "$(whoami) allow delete,write,append,file_inherit,directory_inherit" var
 
 3. Using ACL on a System that Supports ``setfacl`` (Linux/BSD)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,15 +48,20 @@ following script to determine your web server user and grant the needed permissi
 
 .. code-block:: terminal
 
-    $ HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+    $ HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1)
     # if this doesn't work, try adding `-n` option
-    $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
-    $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
+    $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
+    $ sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
 
 .. note::
 
-    setfacl isn't available on NFS mount points. However, storing cache and logs
-    over NFS is strongly discouraged for performance reasons.
+    The first ``setfacl`` command sets permissions on the existing files and
+    folders, while the second one sets permissions for future files and folders.
+    Both of these commands assign permissions for the system user and the Apache 
+    user.
+
+    ``setfacl`` isn't available on NFS mount points. However, storing cache and
+    logs over NFS is strongly discouraged for performance reasons.
 
 4. Without Using ACL
 ~~~~~~~~~~~~~~~~~~~~
