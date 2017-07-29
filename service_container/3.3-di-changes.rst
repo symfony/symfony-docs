@@ -372,11 +372,10 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
 
-        // To use as default template
-        $definition = new Definition();
+        // ...
 
+        // override default template
         $definition->setPublic(true);
 
         $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
