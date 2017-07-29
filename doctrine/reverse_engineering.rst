@@ -88,21 +88,17 @@ The generated ``BlogPost.orm.xml`` metadata file looks as follows:
     </doctrine-mapping>
 
 Once the metadata files are generated, you can ask Doctrine to build related
-entity classes by executing the following two commands.
+entity classes by executing the following command.
 
 .. code-block:: terminal
 
+    // generates entity classes with annotation mappings
     $ php app/console doctrine:mapping:convert annotation ./src
-    $ php app/console doctrine:generate:entities AcmeBlogBundle
-
-The first command generates entity classes with annotation mappings. But
-if you want to use YAML or XML mapping instead of annotations, you should
-execute the second command only.
 
 .. caution::
 
     If you want to use annotations, you must remove the XML (or YAML) files
-    after running these two commands. This is necessary as
+    after running this command. This is necessary as
     :ref:`it is not possible to mix mapping configuration formats <doctrine-adding-mapping>`
 
 For example, the newly created ``BlogComment`` entity class looks as follow::

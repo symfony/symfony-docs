@@ -28,7 +28,7 @@ submissions::
             return $this->redirectToRoute('task_success');
         }
 
-        return $this->render('AppBundle:Default:new.html.twig', array(
+        return $this->render('default/new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -67,7 +67,7 @@ method, pass the submitted data directly to
             }
         }
 
-        return $this->render('AppBundle:Default:new.html.twig', array(
+        return $this->render('default/new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -126,7 +126,7 @@ a convenient shortcut to the previous example::
             }
         }
 
-        return $this->render('AppBundle:Default:new.html.twig', array(
+        return $this->render('default/new.html.twig', array(
             'form' => $form->createView(),
         ));
     }

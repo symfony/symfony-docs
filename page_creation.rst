@@ -63,12 +63,7 @@ random) number and prints it. To do that, create a "Controller class" and a
 Before diving into this, test it out! If you are using PHP's internal web server
 go to:
 
-    http://localhost:8000/app_dev.php/lucky/number
-
-.. tip::
-
-    If you're using the built-in PHP web-server, you can omit the ``app_dev.php``
-    part of the URL.
+    http://localhost:8000/lucky/number
 
 If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works. Remember the two steps
