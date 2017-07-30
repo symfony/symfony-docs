@@ -500,8 +500,7 @@ with some other dispatchers:
 
 * :doc:`/components/event_dispatcher/container_aware_dispatcher`
 * :doc:`/components/event_dispatcher/immutable_dispatcher`
-* :doc:`/components/event_dispatcher/traceable_dispatcher` (provided by the
-  :doc:`HttpKernel component </components/http_kernel>`)
+* :doc:`/components/event_dispatcher/traceable_dispatcher`
 
 Learn More
 ----------
