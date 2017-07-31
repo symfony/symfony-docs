@@ -308,9 +308,6 @@ The YAML specification defines some tags to set the type of any data explicitly:
 .. code-block:: yaml
 
     data:
-        # this value is parsed as a string (it's not transformed into a DateTime)
-        start_date: !str 2002-12-14
-
         # this value is parsed as a float number (it will be 3.0 instead of 3)
         price: !!float 3
 
