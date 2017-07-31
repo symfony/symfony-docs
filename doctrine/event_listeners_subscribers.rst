@@ -256,8 +256,6 @@ to the tag like so:
     .. code-block:: php
 
         use AppBundle\EventListener\SearchIndexer;
-        use AppBundle\EventListener\SearchIndexer2;
-        use AppBundle\EventListener\SearchIndexerSubscriber;
 
         $container
             ->register('my.listener', SearchIndexer::class)
