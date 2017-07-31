@@ -1,6 +1,13 @@
 LockHandler
 ===========
 
+.. versionadded:: 3.4
+
+    The ``LockHandler`` class has been deprecated in Symfony 3.4
+    and it will be removed in Symfony 4.0. Use ``SemaphoreStore`` or
+    ``FlockStore`` from the ``Lock`` component  instead.
+
+
 What is a Lock?
 ---------------
 
