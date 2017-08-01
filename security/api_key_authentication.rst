@@ -113,7 +113,7 @@ method, if any.
 
     In case you return ``null`` from your ``createToken()`` method, Symfony
     passes this request to the next authentication provider. If you haven't
-    configured any other provider, enable the ``anonymous`` option in you
+    configured any other provider, enable the ``anonymous`` option in your
     firewall. This way Symfony executes the anonymous authentication provider
     and you'll get an ``AnonymousToken``.
 
