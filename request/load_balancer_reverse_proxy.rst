@@ -65,16 +65,16 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 
    .. code-block:: diff
 
-	  // web/app.php
+       // web/app.php
 
-	  // ...
-	  Request::setTrustedProxies(
-          // trust *all* requests
-          array('127.0.0.1', $request->server->get('REMOTE_ADDR')),
+       // ...
+       Request::setTrustedProxies(
+           // trust *all* requests
+           array('127.0.0.1', $request->server->get('REMOTE_ADDR')),
 
-          // if you're using ELB, otherwise use a constant from above
-          Request::HEADER_X_FORWARDED_AWS_ELB
-      );
+           // if you're using ELB, otherwise use a constant from above
+           Request::HEADER_X_FORWARDED_AWS_ELB
+       );
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
