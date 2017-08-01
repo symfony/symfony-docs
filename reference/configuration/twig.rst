@@ -55,6 +55,16 @@ TwigBundle Configuration ("twig")
             paths:
                 '%kernel.project_dir%/vendor/acme/foo-bar/templates': foo_bar
 
+            # The following were added in Symfony 2.7.
+            date:
+                format: d.m.Y, H:i:s
+                interval_format: '%%d days'
+                timezone: Asia/Tokyo
+            number_format:
+                decimals: 2
+                decimal_point: ','
+                thousands_separator: '.'
+
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
@@ -81,6 +91,9 @@ TwigBundle Configuration ("twig")
 
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
+                
+                <twig:date format="d.m.Y, H:i:s" interval-format="%d days" timezone="Asia/Tokyo" />
+                <twig:number-format decimals="2" decimal-point="," thousands-separator="." />
 
                 <twig:exception-controller>AcmeFooBundle:Exception:showException</twig:exception-controller>
                 <twig:path namespace="foo_bar">%kernel.project_dir%/vendor/acme/foo-bar/templates</twig:path>
@@ -111,6 +124,16 @@ TwigBundle Configuration ("twig")
              'paths' => array(
                  '%kernel.project_dir%/vendor/acme/foo-bar/templates' => 'foo_bar',
              ),
+            'date' => array(
+                'format' => 'd.m.Y, H:i:s',
+                'interval_format' => '%%d days',
+                'timezone' => 'Asia/Tokyo',
+            ),
+            'number_format' => array(
+                'decimals' => 2,
+                'decimal_point' => ',',
+                'thousands_separator' => '.',
+            ),
         ));
 
 .. caution::
@@ -210,6 +233,37 @@ charset
 The charset used by the template files. In the Symfony Standard edition this
 defaults to the ``UTF-8`` charset.
 
+date
+~~~~
+
+These options define the default values used by the ``date`` filter to format
+date and time values. They are useful to avoid passing the same arguments on
+every ``date`` filter call.
+
+format
+......
+
+**type**: ``string`` **default**: ``F j, Y H:i``
+
+The format used by the ``date`` filter to display values when no specific format
+is passed as argument.
+
+internal_format
+...............
+
+**type**: ``string`` **default**: ``%d days``
+
+The format used by the ``date`` filter to display ``DateInterval`` instances
+when no specific format is passed as argument.
+
+timezone
+........
+
+**type**: ``string`` **default**: (the value returned by ``date_default_timezone_get()``)
+
+The timezone used when formatting date values with the ``date`` filter and no
+specific timezone is passed as argument.
+
 debug
 ~~~~~
 
@@ -233,6 +287,38 @@ conditions (see :doc:`/controller/error_pages`). Modifying this
 option is advanced. If you need to customize an error page you should use
 the previous link. If you need to perform some behavior on an exception,
 you should add a listener to the ``kernel.exception`` event (see :ref:`dic-tags-kernel-event-listener`).
+
+number_format
+~~~~~~~~~~~~~
+
+These options define the default values used by the ``number_format`` filter to
+format numeric values. They are useful to avoid passing the same arguments on
+every ``number_format`` filter call.
+
+decimals
+........
+
+**type**: ``integer`` **default**: ``0``
+
+The number of decimals used to format numeric values when no specific number is
+passed as argument to the ``number_format`` filter.
+
+decimal_point
+.............
+
+**type**: ``string`` **default**: ``.``
+
+The character used to separate the decimals from the integer part of numeric
+values when no specific character is passed as argument to the ``number_format``
+filter.
+
+thousands_separator
+...................
+
+**type**: ``string`` **default**: ``,``
+
+The character used to separate every group of thousands in numeric values when
+no specific character is passed as argument to the ``number_format`` filter.
 
 optimizations
 ~~~~~~~~~~~~~
