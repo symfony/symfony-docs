@@ -527,7 +527,7 @@ a controller, this is pretty easy. Add the following method to the
     {
         $doctrine = $this->getDoctrine();
         $em = $doctrine->getManager();
-        $em2 = $doctrine->getManager('other_connection')
+        $em2 = $doctrine->getManager('other_connection');
     }
 
 .. note::
@@ -680,7 +680,7 @@ Updating an Object
 Once you've fetched an object from Doctrine, updating it is easy. Suppose
 you have a route that maps a product id to an update action in a controller::
 
-    use AppBundle\Entity\Post;
+    use AppBundle\Entity\Product;
     // ...
 
     public function updateAction($productId)

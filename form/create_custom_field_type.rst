@@ -6,10 +6,9 @@ How to Create a Custom Form Field Type
 
 Symfony comes with a bunch of core field types available for building forms.
 However there are situations where you may want to create a custom form field
-type for a specific purpose. This recipe assumes you need a field definition
+type for a specific purpose. This article assumes you need a field definition
 that holds a shipping option, based on the existing choice field. This section
-explains how the field is defined, how you can customize its layout and finally,
-how you can register it for use in your application.
+explains how the field is defined and how you can customize its layout.
 
 Defining the Field Type
 -----------------------

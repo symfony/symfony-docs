@@ -144,7 +144,7 @@ This means that when using the container directly, you can access the
 
         services:
             # ...
-            app.mailer: '@app.phpmailer'
+            app.mailer: '@AppBundle\Mail\PhpMailer'
 
 Deprecating Services
 --------------------

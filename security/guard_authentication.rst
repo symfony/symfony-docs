@@ -190,7 +190,6 @@ This requires you to implement seven methods::
                 return;
             }
 
-            // if null, authentication will fail
             // if a User object, checkCredentials() is called
             return $userProvider->loadUserByUsername($apiKey);
         }
