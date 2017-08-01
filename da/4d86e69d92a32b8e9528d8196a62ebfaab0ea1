@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-07-27T12:51:17Z
+
+For the record, using:
+```php
+<?php
+
+use AppBundle\Command\ListUsersCommand;
+use AppBundle\EventListener\CommentNotificationSubscriber;
+use AppBundle\EventListener\RedirectToPreferredLocaleSubscriber;
+use AppBundle\Twig\AppExtension;
+use AppBundle\Utils\Slugger;
+use Symfony\Component\DependencyInjection\Definition;
+use Twig\Extensions\IntlExtension;
+
+$definition = new Definition();
+
+$definition
+    ->setAutowired(true)
+    ->setAutoconfigured(true)
+    ->setPublic(false)
+;
+
+$this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Controller,Entity,Repository}');
+
+$definition
+    ->setPublic(true)
+    ->addTag('controller.service_arguments')
+;
+
+$this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
+
+$container->getDefinition(ListUsersCommand::class)
+    ->setArgument('$emailSender', '%app.notifications.email_sender%')
+;
+$container->getDefinition(AppExtension::class)
+    ->setArgument('$locales', '%app_locales%')
+;
+$container->getDefinition(CommentNotificationSubscriber::class)
+    ->setArgument('$sender', '%app.notifications.email_sender%')
+;
+$container->getDefinition(RedirectToPreferredLocaleSubscriber::class)
+    ->setArgument('$locales', '%app_locales%')
+    ->setArgument('$defaultLocale', '%locale%')
+;
+$container->getDefinition(Slugger::class)
+    ->setPublic(true)
+;
+$container->setAlias('slugger', Slugger::class);
+$container->register(IntlExtension::class)
+    ->addTag('twig.extension')
+;
+```
+in https://github.com/symfony/symfony-demo worked like a charm :).
