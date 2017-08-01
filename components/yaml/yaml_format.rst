@@ -4,16 +4,11 @@
 The YAML Format
 ===============
 
-According to the official `YAML`_ website, YAML is "a human friendly data
-serialization standard for all programming languages".
-
-Even if the YAML format can describe complex nested data structure, this
-article only describes the minimum set of features needed to use YAML as a
-configuration file format.
-
-YAML is a simple language that describes data. As PHP, it has a syntax for
-simple types like strings, booleans, floats, or integers. But unlike PHP, it
-makes a difference between arrays (sequences) and hashes (mappings).
+According to the official `YAML website`_, YAML is "a human friendly data
+serialization standard for all programming languages". The Symfony Yaml
+component implements a subset of the `YAML specification`_. Specifically, it
+implements the minimum set of features needed to use YAML as a configuration
+file format.
 
 Scalars
 -------
@@ -171,8 +166,8 @@ Collections
 -----------
 
 A YAML file is rarely used to describe a simple scalar. Most of the time, it
-describes a collection. A collection can be a sequence or a mapping of
-elements. Both sequences and mappings are converted to PHP arrays.
+describes a collection. YAML collections can be a sequence (scalar arrays in PHP)
+or a mapping of elements (key/value arrays in PHP).
 
 Sequences use a dash followed by a space:
 
@@ -318,4 +313,20 @@ The YAML specification defines some tags to set the type of any data explicitly:
             Pz7Y6OjuDg4J+fn5OTk6enp
             56enmleECcgggoBADs=
 
-.. _YAML: http://yaml.org/
+Unsupported YAML Features
+-------------------------
+
+The following YAML features are not supported by the Symfony Yaml component:
+
+* Structures and multi-documents (``---`` and ``...`` markers);
+* Complex mapping keys and complex values starting with ``?``;
+* Tagged values as keys;
+* The following tags and types: `!!set`, `!!omap`, `!!pairs`, `!!set`, `!!seq`,
+  `!!bool`, `!!int`, `!!merge`, `!!null`, `!!timestamp`, `!!value`, `!!yaml`;
+* Global tags (``TAG`` directive; example: ``%TAG ! tag:example.com,2000:app/``)
+  and global references to a tag (example: ``!<tag:example.com,2000:app/foo>``);
+* Not having a key in a mapping (example: ``{foo, bar}``; use
+  ``{foo: ~, bar: ~}`` instead).
+
+.. _`YAML website`: http://yaml.org/
+.. _`YAML specification`: http://www.yaml.org/spec/1.2/spec.html
