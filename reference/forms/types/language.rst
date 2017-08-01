@@ -14,7 +14,7 @@ in the `International Components for Unicode`_ (e.g. ``fr`` or ``zh_Hant``).
 .. note::
 
    The locale of your user is guessed using :phpmethod:`Locale::getDefault`,
-   which requires to have installed and enabled the ``intl`` PHP extension.
+   which requires the ``intl`` PHP extension to be installed and enabled.
 
 Unlike the ``choice`` type, you don't need to specify a ``choices`` or
 ``choice_list`` option as the field type automatically uses a large list
