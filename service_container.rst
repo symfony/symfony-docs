@@ -215,13 +215,19 @@ each time you ask for it.
         .. code-block:: php
 
             // app/config/services.php
-            // _defaults and loading entire directories is not possible with PHP configuration
-            // you need to define your services one-by-one
-            use AppBundle\Service\MessageGenerator;
+            use Symfony\Component\DependencyInjection\Definition;
 
-            $container->autowire(MessageGenerator::class)
+            // To use as default template
+            $definition = new Definition();
+
+            $definition
+                ->setAutowired(true)
                 ->setAutoconfigured(true)
-                ->setPublic(false);
+                ->setPublic(false)
+            ;
+
+            // $this is a reference to the current loader
+            $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
 
     Thanks to this configuration, you can automatically use any classes from the
     ``src/AppBundle`` directory as a service, without needing to manually configure
@@ -475,12 +481,21 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
         // app/config/services.php
         use AppBundle\Updates\SiteUpdateManager;
+        use Symfony\Component\DependencyInjection\Definition;
 
-        // _defaults and importing directories does not work in PHP
-        // but registering a service explicitly does
-        $container->autowire(SiteUpdateManager::class)
+        // Same as before
+        $definition = new Definition();
+
+        $definition
+            ->setAutowired(true)
             ->setAutoconfigured(true)
             ->setPublic(false)
+        ;
+
+        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+
+        // Explicitly configure the service
+        $container->getDefinition(SiteUpdateManager::class)
             ->setArgument('$adminEmail', 'manager@example.com');
 
 .. versionadded:: 3.3
@@ -859,6 +874,31 @@ key. For example, the default Symfony configuration contains this:
                 </prototype>
             </services>
         </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        // To use as default template
+        $definition = new Definition();
+
+        $definition
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            ->setPublic(false)
+        ;
+
+        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+
+        // Changes default config
+        $definition
+            ->setPublic(true)
+            ->addTag('controller.service_arguments')
+        ;
+
+        // $this is a reference to the current loader
+        $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
 
 This can be used to quickly make many classes available as services and apply some
 default configuration. The ``id`` of each service is its fully-qualified class name.
