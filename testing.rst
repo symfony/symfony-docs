@@ -421,6 +421,11 @@ The Client supports many operations that can be done in a real browser::
     // Clears all cookies and the history
     $client->restart();
 
+.. versionadded:: 3.4
+    Starting from Symfony 3.4, the ``back()`` and ``forward()`` methods skip the
+    redirects that may have occurred when requesting a URL, as normal browsers
+    do. In previous Symfony versions they weren't skipped.
+
 Accessing Internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
