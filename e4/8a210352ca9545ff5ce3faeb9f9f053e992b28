@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-07-26T15:39:33Z
+
+I don't think this needs to be documented this way. It may happen that you want to edit the dot file before transforming it. Having two steps here seems fine to me.
+
+---------------------------------------------------------------------------
+
+by philwc at 2017-07-26T16:50:37Z
+
+I would have thought that was pretty rare for most use cases, but if you'd rather leave as is, that's fine.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-07-27T07:44:54Z
+
+To me this looks good. It's IMO easy to figure out how to dump the file first if you need to manipulate it while it may not be obvious that you can pass the definition to be dumped to STDIN of the `dot` command.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-07-27T10:05:14Z
+
+Fair enough then.
