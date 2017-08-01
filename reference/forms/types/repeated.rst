@@ -12,7 +12,8 @@ accuracy.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | input ``text`` field by default, but see `type`_ option                |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `first_name`_                                                        |
+| Options     | - `comparator`_                                                        |
+|             | - `first_name`_                                                        |
 |             | - `first_options`_                                                     |
 |             | - `options`_                                                           |
 |             | - `second_name`_                                                       |
@@ -114,6 +115,15 @@ be displayed when the two fields do not match each other.
 Field Options
 -------------
 
+comparator
+~~~~~~~~~~
+
+**type**: ``callable`` **default**: ``null``
+
+The callable receives two values to compare, and should return a boolean: ``true`` if the fields are considered equal, ``false`` otherwise. The callable also receives the currently compared key as a third value.
+
+By default a strict comparison is done. This option can be used to compare a ``password_hash`` with ``password_verify`` against the second field.
+    
 first_name
 ~~~~~~~~~~
 
@@ -176,7 +186,7 @@ type
 
 The two underlying fields will be of this field type. For example, passing
 ``PasswordType::class`` will render two password fields.
-
+    
 Overridden Options
 ------------------
 
