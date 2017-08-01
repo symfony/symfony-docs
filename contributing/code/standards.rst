@@ -1,19 +1,32 @@
 Coding Standards
 ================
 
-When contributing code to Symfony, you must follow its coding standards. To
-make a long story short, here is the golden rule: **Imitate the existing
-Symfony code**. Most open-source Bundles and libraries used by Symfony also
-follow the same guidelines, and you should too.
+Symfony code is contributed by thousands of developers around the world. To make
+every piece of code look and feel familiar, Symfony defines some coding standards
+that all contributions must follow.
 
-Remember that the main advantage of standards is that every piece of code
-looks and feels familiar, it's not about this or that being more readable.
+These Symfony coding standards are based on the `PSR-0`_, `PSR-1`_, `PSR-2`_ and
+`PSR-4`_ standards, so you may already know most of them.
 
-Symfony follows the standards defined in the `PSR-0`_, `PSR-1`_, `PSR-2`_ and `PSR-4`_
-documents.
+Making your Code Follow the Coding Standards
+--------------------------------------------
 
-Since a picture - or some code - is worth a thousand words, here's a short
-example containing most features described below:
+Instead of reviewing your code manually, Symfony makes it simple to ensure that
+your contributed code matches the expected code syntax. First, install the
+`PHP-CS-Fixer tool`_ and then, run this command to fix any problem:
+
+.. code-block:: terminal
+
+    $ php php-cs-fixer.phar fix /path/to/project --rules=@Symfony
+
+If you forget to run this command and make a pull request with any syntax issue,
+our automated tools will warn you about that and will provide the solution.
+
+Symfony Coding Standards in Detail
+----------------------------------
+
+If you want to learn about the Symfony coding standards in detail, here's a
+short example containing most features described below:
 
 .. code-block:: html+php
 
@@ -122,7 +135,7 @@ example containing most features described below:
     }
 
 Structure
----------
+~~~~~~~~~
 
 * Add a single space after each comma delimiter;
 
@@ -181,7 +194,7 @@ Structure
 * Do not use spaces around ``[`` offset accessor and before ``]`` offset accessor.
 
 Naming Conventions
-------------------
+~~~~~~~~~~~~~~~~~~
 
 * Use camelCase, not underscores, for variable, function and method
   names, arguments;
@@ -223,7 +236,7 @@ Service Naming Conventions
 * A group name uses the underscore notation.
 
 Documentation
--------------
+~~~~~~~~~~~~~
 
 * Add PHPDoc blocks for all classes, methods, and functions (though you may
   be asked to remove PHPDoc that do not add value);
@@ -234,14 +247,17 @@ Documentation
 
 * Omit the ``@return`` tag if the method does not return anything;
 
-* The ``@package`` and ``@subpackage`` annotations are not used.
+* The ``@package`` and ``@subpackage`` annotations are not used;
+
+* Inline the ``@inheritdoc`` tag.
 
 License
--------
+~~~~~~~
 
 * Symfony is released under the MIT license, and the license block has to be
   present at the top of every PHP file, before the namespace.
 
+.. _`PHP-CS-Fixer tool`: https://github.com/FriendsOfPHP/PHP-CS-Fixer
 .. _`PSR-0`: http://www.php-fig.org/psr/psr-0/
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
