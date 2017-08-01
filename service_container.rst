@@ -15,7 +15,7 @@ a very special object called the **service container**. If you have the service 
 then you can fetch a service by using that service's id::
 
     $logger = $container->get('logger');
-    $entityManager = $container->get('doctrine.entity_manager');
+    $entityManager = $container->get('doctrine.orm.entity_manager');
 
 The container is the *heart* of Symfony: it allows you to standardize and centralize
 the way objects are constructed. It makes your life easier, is super fast, and emphasizes
