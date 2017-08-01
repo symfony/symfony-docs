@@ -241,7 +241,7 @@ order:
     * ``workflow.[workflow name].entered.[place name]``
 
 ``workflow.announce``
-    Triggered for each place that now is available for the object.
+    Triggered for each transition that now is accessible for the object.
 
     The three events being dispatched are:
 
