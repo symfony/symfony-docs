@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by chalasr at 2016-12-02T14:50:55Z
+
+Should we mention that the command allows to clear multiple cache pools at once?
+Otherwise 👍
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-12-18T16:02:42Z
+
+@chalasr in docs we usually just mention commands without explaining the details (same as our policy of not documenting the arguments of the methods). But if @xabbuh and @wouterj agrees with you, I'll update this. Thanks!
