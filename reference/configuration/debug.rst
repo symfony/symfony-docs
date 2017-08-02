@@ -38,7 +38,7 @@ min_depth
 
 Configures the minimum tree depth until which all items are guaranteed to
 be cloned. After this depth is reached, only ``max_items`` items will be
-cloned. The default value is ``1``, which is consistentcwith older Symfony
+cloned. The default value is ``1``, which is consistent with older Symfony
 versions.
 
 .. versionadded:: 3.4
