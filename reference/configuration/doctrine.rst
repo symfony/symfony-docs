@@ -299,9 +299,10 @@ certain classes, but those are for very advanced use-cases only.
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
-For the caching drivers you can specify the values ``array``, ``apc``, ``apcu``,
-``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata``, ``xcache``
-or ``service``.
+The built-in types of caching drivers are: ``array``, ``apc``, ``apcu``,
+``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata`` and ``xcache``.
+There is a special type called ``service`` which lets you define the ID of your
+own caching service.
 
 The following example shows an overview of the caching configurations:
 
@@ -310,15 +311,17 @@ The following example shows an overview of the caching configurations:
     doctrine:
         orm:
             auto_mapping: true
+            # each caching driver type defines its own config options
             metadata_cache_driver: apc
-            query_cache_driver:
-                type: service
-                id: my_doctrine_common_cache_service
             result_cache_driver:
                 type: memcache
                 host: localhost
                 port: 11211
                 instance_class: Memcache
+            # the 'service' type requires to define the 'id' option too
+            query_cache_driver:
+                type: service
+                id: my_doctrine_common_cache_service
 
 Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
