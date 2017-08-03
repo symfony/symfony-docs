@@ -18,7 +18,7 @@ your contributed code matches the expected code syntax. First, install the
 .. code-block:: terminal
 
     $ cd your-project/
-    $ php php-cs-fixer.phar fix -v
+    $ php php-cs-fixer.phar fix /path/to/modified/file.php
 
 If you forget to run this command and make a pull request with any syntax issue,
 our automated tools will warn you about that and will provide the solution.
