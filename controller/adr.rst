@@ -4,14 +4,15 @@ single: Action Domain Responder approach
 How to implement the ADR pattern
 ================================
 
-In Symfony, you're used to implement the MVC pattern and extending the default 'Controller'
-class, since the 3.3 update, Symfony is capable of using natively the ADR approach.
+In Symfony, you're used to implement the MVC pattern and extending the default :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
+class. 
+Since the 3.3 update, Symfony is capable of using natively the ADR approach.
 
-Updating your internal logic
-----------------------------
+Updating your configuration
+---------------------------
 
-As you saw from earlier example, you must update the services.yml file in order to
-use the latest features of the DependencyInjection component, this way, here's the updates ::
+As the framework evolve, you must update the services.yml file in order to
+use the latest features of the DependencyInjection component, this way, here's the updates::
 
     # ...
 
@@ -26,14 +27,13 @@ use the latest features of the DependencyInjection component, this way, here's t
             resource: '../../src/AppBundle/Action/'
             public: true
 
-Once the file is updated, delete your Controller folder and create an Action class using the ADR principles, i.e ::
+Once the file is updated, delete your Controller folder and create an Action class using the ADR principles, i.e::
 
     <?php
 
     namespace AppBundle\Action;
 
     use Twig\Environment;
-    use Symfony\Component\Templating\EngineInterface;
 
     final class HelloAction
     {
@@ -53,10 +53,10 @@ Once the file is updated, delete your Controller folder and create an Action cla
 .. tip::
 
     As described in the DependencyInjection doc, you must use the __construct() injection
-    approach, this way, your class is easier to update and keep in sync with the framework internal
+    approach, this way, your class is easier to update and keep in sync with any framework internal
     services.
 
-By default, we define the class with the final keyword because this class shouldn't been extended,
+By default, we define the class with the final keyword because this class shouldn't be extended,
 the logic is pretty simple to understand as you understand the ADR pattern, in fact, the 'Action'
 is linked to a single request and his dependencies are linked to this precise Action.
 
@@ -66,7 +66,7 @@ is linked to a single request and his dependencies are linked to this precise Ac
     is faster to return and easier to keep out of the framework logic.
 
 
-Once this is done, you can define the routes like before using multiples approach :
+Once this is done, you can define the routes like before using multiples approach:
 
 .. configuration-block::
 
@@ -158,7 +158,7 @@ using this approach, a simple update is recommended ::
         }
     }
 
-This way, you can easily access to parameters ::
+This way, you can easily access to parameters::
 
     <?php
 
@@ -174,7 +174,7 @@ This way, you can easily access to parameters ::
         {
             $data = $this->requestStack->getCurrentRequest()->get('id');
 
-            return new Response($this->twig->render('default/index.html.twig'));
+            return new Response($this->twig->render('default/index.html.twig', ['data' => $data]));
         }
     }
 
