@@ -651,7 +651,7 @@ monolog.logger
 **Purpose**: To use a custom logging channel with Monolog
 
 Monolog allows you to share its handlers between several logging channels.
-The logger service uses the channel ``app`` but you can change the
+The logger service uses the channel ``acme`` but you can change the
 channel when injecting the logger in a service.
 
 .. configuration-block::
