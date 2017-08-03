@@ -81,7 +81,7 @@ Action-Domain-Response (ADR) pattern, you can simply refer to the service id
 (``AppBundle\Controller\HelloController`` or ``app.hello_controller`` for example).
 
 As this approach is evolving faster and can be easily transposed into Symfony, we recommend
-you to read the following part :
+you to read the following part:
 
 * :doc:`/controller/adr`
 
