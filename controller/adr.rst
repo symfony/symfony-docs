@@ -37,16 +37,16 @@ Once the file is updated, delete your Controller folder and create an Action cla
 
     final class HelloAction
     {
-        private $renderer;
+        private $twig;
 
-        public function __construct(Environment $render)
+        public function __construct(Environment $twig)
         {
-            $this->render = $render;
+            $this->twig = $twig;
         }
 
         public function __invoke()
         {
-            return new Response($this->render->render('default/index.html.twig'));
+            return new Response($this->twig->render('default/index.html.twig'));
         }
     }
 
@@ -124,7 +124,7 @@ the request from simple method injection like this ::
 
         public function __invoke(Request $request)
         {
-            return new Response($this->render->render('default/index.html.twig'));
+            return new Response($this->twig->render('default/index.html.twig'));
         }
     }
 
@@ -144,17 +144,17 @@ using this approach, a simple update is recommended ::
     {
         private $requestStack;
 
-        private $renderer;
+        private $twig;
 
-        public function __construct(RequestStack $requestStack, Environment $render)
+        public function __construct(RequestStack $requestStack, Environment $twig)
         {
             $this->requestStack = $requestStack
-            $this->render = $render;
+            $this->twig = $twig;
         }
 
         public function __invoke(Request $request)
         {
-            return new Response($this->render->render('default/index.html.twig'));
+            return new Response($this->twig->render('default/index.html.twig'));
         }
     }
 
@@ -164,21 +164,21 @@ This way, you can easily access to parameters ::
 
         // ...
 
-        public function __construct(RequestStack $requestStack, Environment $render)
+        public function __construct(RequestStack $requestStack, Environment $twig)
         {
             $this->requestStack = $requestStack
-            $this->render = $render;
+            $this->twig = $twig;
         }
 
         public function __invoke(Request $request)
         {
             $data = $this->requestStack->getCurrentRequest()->get('id');
 
-            return new Response($this->render->render('default/index.html.twig'));
+            return new Response($this->twig->render('default/index.html.twig'));
         }
     }
 
-Final though
+Final thought
 ------------
 
 Keep in mind that this approach can be completely different from what you're used to use, in order to
