@@ -80,96 +80,10 @@ If your controller implements the ``__invoke()`` method - popular with the
 Action-Domain-Response (ADR) pattern, you can simply refer to the service id
 (``AppBundle\Controller\HelloController`` or ``app.hello_controller`` for example).
 
-If you want to use the ADR pattern rather than the default controller approach, you can use
-the new features provided by the container like public/private injections and autowiring, 
-in order to work, you must update the services.yml file ::
+As this approach is evolving faster and can be easily transposed into Symfony, we recommend
+you to read the following part :
 
-    # ...
-
-    services:
-        _defaults:
-            autowire: true
-            autoconfigure: true
-            public: false
-            
-        # Allow to load every actions
-        AppBundle\Action\:
-            resource: '../../src/AppBundle/Action/'
-            public: true
-
-Once the file is updated, delete your Controller folder and create an Action class using the ADR principles, i.e ::
-
-    <?php
-
-    namespace AppBundle\Action;
-
-    use Twig\Environment;
-    use Symfony\Component\Templating\EngineInterface;
-
-    final class HelloAction
-    {
-        private $renderer;
-        
-        public function __construct(Environment $render) 
-        {
-            $this->render = $render;
-        }
-
-        public function __invoke()
-        {
-            return new Response($this->render->render('default/index.html.twig'));
-        }
-    }
-
-By default, we define the class with the final keyword because this class shouldn't been extended,
-the logic is pretty simple to understand as you understand the ADR pattern, in fact, the 'Action' 
-is linked to a single request and his dependencies are linked to this precise Action.
-
-Once this is done, you can define the routes like before using multiples approach :
-
-.. configuration-block::
-
-    .. code-block:: php-annotations
-    
-        # src/AppBundle/Action/HelloAction.php
-        // ...
-
-        /**
-         * @Route("/hello", name="hello")
-         */
-        final class HelloAction
-        {
-            // ...
-        }
-
-    .. code-block:: yaml
-    
-        # app/config/routing.yml
-        hello:
-            path:     /hello
-            defaults: { _controller: AppBundle\Action\HelloAction }
-
-    .. code-block:: xml
-
-        <!-- app/config/routing.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="hello" path="/hello">
-                <default key="_controller">AppBundle\Action\HelloAction</default>
-            </route>
-
-        </routes>
-
-    .. code-block:: php
-
-        // app/config/routing.php
-        $collection->add('hello', new Route('/hello', array(
-            '_controller' => 'HelloAction::class',
-        )));
+* :doc:`/controller/adr`
 
 Alternatives to base Controller Methods
 ---------------------------------------
