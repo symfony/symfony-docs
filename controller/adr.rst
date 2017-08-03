@@ -108,14 +108,16 @@ Once this is done, you can define the routes like before using multiples approac
     .. code-block:: php
 
         // app/config/routing.php
+        use AppBundle\Action\HelloAction
+        
         $collection->add('hello', new Route('/hello', array(
-            '_controller' => 'HelloAction::class',
+            '_controller' => HelloAction::class,
         )));
 
 Accessing the request
 ---------------------
 
-As you can imagine, as the logic evolve, your class isn't capable of accessing
+As you can imagine, as the logic evolve, your class is capable of accessing
 the request from simple method injection like this ::
 
     <?php
