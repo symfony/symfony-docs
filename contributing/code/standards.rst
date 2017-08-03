@@ -5,19 +5,20 @@ Symfony code is contributed by thousands of developers around the world. To make
 every piece of code look and feel familiar, Symfony defines some coding standards
 that all contributions must follow.
 
-These Symfony coding standards are based on the `PSR-0`_, `PSR-1`_, `PSR-2`_ and
-`PSR-4`_ standards, so you may already know most of them.
+These Symfony coding standards are based on the `PSR-1`_, `PSR-2`_ and `PSR-4`_
+standards, so you may already know most of them.
 
 Making your Code Follow the Coding Standards
 --------------------------------------------
 
 Instead of reviewing your code manually, Symfony makes it simple to ensure that
 your contributed code matches the expected code syntax. First, install the
-`PHP-CS-Fixer tool`_ and then, run this command to fix any problem:
+`PHP CS Fixer tool`_ and then, run this command to fix any problem:
 
 .. code-block:: terminal
 
-    $ php php-cs-fixer.phar fix /path/to/project --rules=@Symfony
+    $ cd your-project/
+    $ php php-cs-fixer.phar fix -v
 
 If you forget to run this command and make a pull request with any syntax issue,
 our automated tools will warn you about that and will provide the solution.
