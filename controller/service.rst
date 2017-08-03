@@ -97,21 +97,20 @@ in order to work, you must update the services.yml file ::
             resource: '../../src/AppBundle/Action/'
             public: true
 
-Once the file is updated, delete your Controller folder and create an Action one then 
-build a HelloAction class that use the ADR principes ::
+Once the file is updated, delete your Controller folder and create an Action class using the ADR principles, i.e ::
 
     <?php
 
     namespace AppBundle\Action;
 
-    use Symfony\Component\HttpFoundation\Response;
+    use Twig\Environment;
     use Symfony\Component\Templating\EngineInterface;
 
     final class HelloAction
     {
-        private $render;
+        private $renderer;
         
-        public function __construct(EngineInterface $render) 
+        public function __construct(Environment $render) 
         {
             $this->render = $render;
         }
@@ -169,7 +168,7 @@ Once this is done, you can define the routes like before using multiples approac
 
         // app/config/routing.php
         $collection->add('hello', new Route('/hello', array(
-            '_controller' => 'AppBundle\Action\HelloAction',
+            '_controller' => 'HelloAction::class',
         )));
 
 Alternatives to base Controller Methods
