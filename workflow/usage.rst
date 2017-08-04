@@ -354,6 +354,37 @@ This class has two more methods:
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::setBlocked`
     Sets the blocked value.
 
+Available events
+----------------
+
+1. General events
+
+The following events are dispatched for all workflows:
+
+* ``workflow.guard``: occurs just before a transition is started and when testing which transitions are available. It allows you to define that the transition is not allowed by calling ``$event->setBlocked(true);`` as shown above.
+* ``workflow.leave``: carries the marking with the initial places, occurs just after an object has left it's current state.
+* ``workflow.transition``: carries the marking with the current places, occurs just before starting to transition to the new state.
+* ``workflow.enter``: carries the marking with the new places, occurs just after the object has entered into the new state.
+
+2. Workflow-specific events
+
+All the previous events are also triggered for each workflow individually, so
+you can react only to the events of a specific workflow:
+
+* ``workflow.<workflow_name>.guard``
+* ``workflow.<workflow_name>.leave``
+* ``workflow.<workflow_name>.transition``
+* ``workflow.<workflow_name>.enter``
+
+3. Transition or state-specific events
+
+You can even listen to some specific transitions or states for a specific workflow:
+
+* ``workflow.<workflow_name>.guard.<transition_name>``
+* ``workflow.<workflow_name>.leave.<state_name>``
+* ``workflow.<workflow_name>.transition.<transition_name>``
+* ``workflow.<workflow_name>.enter.<state_name>``
+
 Usage in Twig
 -------------
 
