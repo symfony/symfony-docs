@@ -135,7 +135,7 @@ For advanced Apache configuration options, read the official `Apache documentati
 Apache with PHP-FPM
 -------------------
 
-To make use of PHP5-FPM with Apache, you first have to ensure that you have
+To make use of PHP-FPM with Apache, you first have to ensure that you have
 the FastCGI process manager ``php-fpm`` binary and Apache's FastCGI module
 installed (for example, on a Debian based system you have to install the
 ``libapache2-mod-fastcgi`` and ``php5-fpm`` packages).
