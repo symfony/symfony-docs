@@ -131,7 +131,7 @@ the request from simple method injection like this ::
         }
     }
 
-Like you can easily imagine, the :class:`Symfony\\Component\Httpfoundation\RequestStack` is the best option to gain access to the request, using this approach, a simple update is recommended and the access to request parameters is way easier::
+Like you can easily imagine, the :class:`Symfony\\Component\\Httpfoundation\\RequestStack` is the best option to gain access to the request, using this approach, a simple update is recommended and the access to request parameters is way easier::
 
     <?php
 
