@@ -34,6 +34,7 @@ Once the file is updated, delete your Controller folder and create an Action cla
     namespace AppBundle\Action;
 
     use Twig\Environment;
+    use Symfony\Component\HTTPFoundation\Response;
 
     final class HelloAction
     {
@@ -44,7 +45,7 @@ Once the file is updated, delete your Controller folder and create an Action cla
             $this->twig = $twig;
         }
 
-        public function __invoke()
+        public function __invoke() : Response
         {
             return new Response($this->twig->render('default/index.html.twig'));
         }
@@ -65,8 +66,7 @@ is linked to a single request and his dependencies are linked to this precise Ac
     By using the final approach and the private visibility (inside the container), our class
     is faster to return and easier to keep out of the framework logic.
 
-
-Once this is done, you can define the routes like before using multiples approach:
+Once this is done, you can define the routes like before using multiples approaches:
 
 .. configuration-block::
 
@@ -122,25 +122,24 @@ the request from simple method injection like this ::
 
     <?php
 
+        use Symfony\Component\HTTPFoundation\Request;
         // ...
 
-        public function __invoke(Request $request)
+        public function __invoke(Request $request) : Response
         {
             return new Response($this->twig->render('default/index.html.twig'));
         }
     }
 
-Like you can easily imagine, the container is the best option to gain access to ths request,
-using this approach, a simple update is recommended ::
+Like you can easily imagine, the :class:`Symfony\\Component\Httpfoundation\RequestStack` is the best option to gain access to the request, using this approach, a simple update is recommended and the access to request parameters is way easier::
 
     <?php
 
     namespace AppBundle\Action;
 
     use Twig\Environment;
-    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HTTPFoundation\Response;
     use Symfony\Component\HttpFoundation\RequestStack;
-    use Symfony\Component\Templating\EngineInterface;
 
     final class HelloAction
     {
@@ -154,34 +153,16 @@ using this approach, a simple update is recommended ::
             $this->twig = $twig;
         }
 
-        public function __invoke(Request $request)
-        {
-            return new Response($this->twig->render('default/index.html.twig'));
-        }
-    }
-
-This way, you can easily access to parameters::
-
-    <?php
-
-        // ...
-
-        public function __construct(RequestStack $requestStack, Environment $twig)
-        {
-            $this->requestStack = $requestStack
-            $this->twig = $twig;
-        }
-
-        public function __invoke(Request $request)
+        public function __invoke() : Response
         {
             $data = $this->requestStack->getCurrentRequest()->get('id');
-
-            return new Response($this->twig->render('default/index.html.twig', ['data' => $data]));
+            
+            return new Response($this->twig->render('default/index.html.twig', array('data' => $data));
         }
     }
 
 Final thought
-------------
+-------------
 
 Keep in mind that this approach can be completely different from what you're used to use, in order to
 keep your code clean and easy to maintain, we recommend to use this approach only if your code is
