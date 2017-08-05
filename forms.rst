@@ -695,12 +695,6 @@ There's a lot more to learn and a lot of *powerful* tricks in the form system.
 
 Learn more
 ----------
-
-.. toctree::
-    :hidden:
-
-    form/use_virtuals_forms
-
 .. toctree::
     :maxdepth: 1
     :glob:
