@@ -479,11 +479,11 @@ and add the tag. Your tag will take precedence over the one added by auto-config
 5) Auto-configure with _instanceof
 ----------------------------------
 
-And the final big change is ``_instanceof``, it acts as a default definition
-template (see `service-33-default_definition`_), but only for service whose
+And the final big change is ``_instanceof``. It acts as a default definition
+template (see `service-33-default_definition`_), but only for services whose
 class matches a defined one.
-This can be very useful when many services shares some tag that cannot be
-inherited from abstract definition:
+This can be very useful when many services share some tag that cannot be
+inherited from an abstract definition:
 
 .. configuration-block::
 
