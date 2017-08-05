@@ -255,7 +255,7 @@
 /cookbook/upgrade/minor_version /setup/upgrade_major
 /cookbook/upgrade/patch_version /upgrade/bundles
 /cookbook/validation/custom_constraint /validation/custom_constraint
-/cookbook/validation/group_service_resolver /validation/group_service_resolver
+/cookbook/validation/group_service_resolver /form/validation_group_service_resolver
 /cookbook/validation/index /validation
 /cookbook/validation/severity /validation/severity
 /cookbook/web_server/built_in /setup/built_in_web_server
