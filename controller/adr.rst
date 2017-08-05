@@ -1,11 +1,11 @@
 .. index::
-single: Action Domain Responder approach
+    single: Action Domain Responder approach
 
 How to implement the ADR pattern
 ================================
 
 In Symfony, you're used to implement the MVC pattern and extending the default :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
-class. 
+class.
 Since the 3.3 update, Symfony is capable of using natively the ADR approach.
 
 Updating your configuration
@@ -109,7 +109,7 @@ Once this is done, you can define the routes like before using multiples approac
 
         // app/config/routing.php
         use AppBundle\Action\HelloAction
-        
+
         $collection->add('hello', new Route('/hello', array(
             '_controller' => HelloAction::class,
         )));
@@ -156,7 +156,7 @@ Like you can easily imagine, the :class:`Symfony\\Component\Httpfoundation\Reque
         public function __invoke() : Response
         {
             $data = $this->requestStack->getCurrentRequest()->get('id');
-            
+
             return new Response($this->twig->render('default/index.html.twig', array('data' => $data));
         }
     }
