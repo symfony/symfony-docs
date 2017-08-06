@@ -34,7 +34,7 @@ Once the file is updated, delete your Controller folder and create an Action cla
     namespace AppBundle\Action;
 
     use Twig\Environment;
-    use Symfony\Component\HTTPFoundation\Response;
+    use Symfony\Component\HttpFoundation\Response;
 
     final class HelloAction
     {
@@ -45,7 +45,7 @@ Once the file is updated, delete your Controller folder and create an Action cla
             $this->twig = $twig;
         }
 
-        public function __invoke() : Response
+        public function __invoke(): Response
         {
             return new Response($this->twig->render('default/index.html.twig'));
         }
@@ -122,10 +122,10 @@ the request from simple method injection like this ::
 
     <?php
 
-        use Symfony\Component\HTTPFoundation\Request;
+        use Symfony\Component\HttpFoundation\Request;
         // ...
 
-        public function __invoke(Request $request) : Response
+        public function __invoke(Request $request): Response
         {
             return new Response($this->twig->render('default/index.html.twig'));
         }
@@ -138,7 +138,7 @@ Like you can easily imagine, the :class:`Symfony\\Component\\Httpfoundation\\Req
     namespace AppBundle\Action;
 
     use Twig\Environment;
-    use Symfony\Component\HTTPFoundation\Response;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\RequestStack;
 
     final class HelloAction
@@ -153,7 +153,7 @@ Like you can easily imagine, the :class:`Symfony\\Component\\Httpfoundation\\Req
             $this->twig = $twig;
         }
 
-        public function __invoke() : Response
+        public function __invoke(): Response
         {
             $data = $this->requestStack->getCurrentRequest()->get('id');
 
