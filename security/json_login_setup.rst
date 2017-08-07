@@ -79,6 +79,26 @@ path:
              */
             public function loginAction(Request $request)
             {
+              // Remember to create a route to a 'secure_location' where a user will be 
+              // redirected to after a successful login
+              return $this->redirectToRoute('secure_location');
+            }
+            
+            
+            /**
+             * @Route("/secure", name="secure_location")
+             */
+            public function SecureAction(Request $request)
+            {
+              if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {              
+                return new JsonResponse(array(
+                  error' => "Login first",
+                ));
+              }
+              
+              return new JsonResponse(array(
+                'message' => "This is a secure area",
+              ));
             }
         }
 
@@ -88,6 +108,11 @@ path:
         login:
             path:     /login
             defaults: { _controller: AppBundle:Security:login }
+            
+        secure_location: 
+            path:     /secure
+            defaults: { _controller: AppBundle:Security:secure }
+        
 
     .. code-block:: xml
 
@@ -101,6 +126,10 @@ path:
             <route id="login" path="/login">
                 <default key="_controller">AppBundle:Security:login</default>
             </route>
+            
+            <route id="secure_location" path="/secure">
+                <default key="_controller">AppBundle:Security:secure</default>
+            </route>
         </routes>
 
     .. code-block:: php
@@ -113,14 +142,15 @@ path:
         $collection->add('login', new Route('/login', array(
             '_controller' => 'AppBundle:Security:login',
         )));
+        
+        $collection->add('secure_location', new Route('/secure', array(
+            '_controller' => 'AppBundle:Security:secure',
+        )));
 
         return $collection;
 
-Don't let this empty controller confuse you. When you submit a ``POST`` request
-to the ``/login`` URL with the following JSON document as the body, the security
-system intercepts the requests. It takes care of authenticating the user with
-the submitted username and password or triggers an error in case the authentication
-process fails:
+When you submit a ``POST`` request to the ``/login`` URL with the 
+following JSON document as the body, the security system intercepts the request and perform the authentication:
 
 .. code-block:: json
 
@@ -128,11 +158,12 @@ process fails:
         "username": "dunglas",
         "password": "MyPassword"
     }
+    
+The security system takes care of authenticating the user with the submitted username and password and return a json response of whether authentication was successfully or not. 
+If the authentication was successfully, the security system will redirect the response to ``secure_location`` route.
+This ``secure_location`` can be defined anywhere in your controller. Just remember to guard it against accessing it without authentication.
 
-If the JSON document has a different structure, you can specify the path to
-access the ``username`` and ``password`` properties using the ``username_path``
-and ``password_path`` keys (they default respectively to ``username`` and
-``password``). For example, if the JSON document has the following structure:
+If the JSON document has a different structure, you can specify the path to access the ``username`` and ``password`` properties using the ``username_path`` and ``password_path`` keys (they default respectively to ``username`` and ``password``). For example, if the JSON document has the following structure:
 
 .. code-block:: json
 
@@ -143,7 +174,7 @@ and ``password_path`` keys (they default respectively to ``username`` and
                 "password": "MyPassword"
             }
         }
-    }
+    }    
 
 The security configuration should be:
 
