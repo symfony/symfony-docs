@@ -326,3 +326,4 @@
 /install/bundles /setup/bundles
 /form /forms
 /testing/simulating_authentication /testing/http_authentication
+/validation/group_service_resolver /form/validation_group_service_resolver
