@@ -243,8 +243,9 @@ Constants as Parameters
 -----------------------
 
 Setting PHP constants as parameters is also supported.
-To take advantage of this feature, map the name of your constant to a parameter
-key and define the type as ``constant``.
+For the XML format, you need to map the name of your constant to a parameter
+key and define the type as ``constant``. For the YAML format, you need to prefix 
+the name of your constant with ``!php/const:``.
 
 .. configuration-block::
 
