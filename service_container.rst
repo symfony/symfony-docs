@@ -1003,7 +1003,7 @@ admin email. In this case, each needs to have a unique service id:
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('site_update_manager.superadmin', SiteUpdateManager::class)
-            ->setAutowire(false)
+            ->setAutowired(false)
             ->setArguments(array(
                 new Reference(MessageGenerator::class),
                 new Reference('mailer'),
@@ -1011,7 +1011,7 @@ admin email. In this case, each needs to have a unique service id:
             ));
 
         $container->register('site_update_manager.normal_users', SiteUpdateManager::class)
-            ->setAutowire(false)
+            ->setAutowired(false)
             ->setArguments(array(
                 new Reference(MessageGenerator::class),
                 new Reference('mailer'),
