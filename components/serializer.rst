@@ -563,6 +563,13 @@ There are several types of normalizers available:
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
     string (``data:...``) such that files can be embedded into serialized data.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
+    This normalizer converts :phpclass:`DateInterval` objects into strings.
+    By default it uses the "P%yY%mM%dDT%hH%iM%sS" format.
+
+    .. versionadded:: 3.4
+        The ``DateIntervalNormalizer`` normalizer was added in Symfony 3.4.
+
 Encoders
 --------
 
