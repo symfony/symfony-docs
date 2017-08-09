@@ -5,9 +5,13 @@ How to Define Commands as Services
 ==================================
 
 If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
-your command classes are already registered as services. Great! This is the recommended
-setup, but it's not required. Symfony also looks in the ``Command/`` directory of
-each bundle and automatically registers those classes as commands.
+your command classes are already registered as services. Great! This is the
+recommended setup.
+
+Symfony also looks in the ``Command/`` directory of each bundle for commands
+non registered as a service and automatically registers those classes as
+commands. However this auto-registration was deprecated in Symfony 3.4. In
+Symfony 4.0, commands won't be auto-registered anymore.
 
 .. note::
 
