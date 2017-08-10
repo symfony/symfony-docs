@@ -81,21 +81,37 @@ Symfony Standard Edition:
                 <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
                     <tag name="controller.service_arguments" />
                 </prototype>
+
+                <!-- add more services, or override services that need manual wiring -->
             </services>
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
 
-        // _defaults and loading entire directories is not possible with PHP configuration
-        // you need to define your services one-by-one
-        use AppBundle\Controller\DefaultController;
+        // To use as default template
+        $definition = new Definition();
 
-        $container->autowire(DefaultController::class)
+        $definition
+            ->setAutowired(true)
             ->setAutoconfigured(true)
+            ->setPublic(false)
+        ;
+
+        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+
+        // Changes default config
+        $definition
+            ->setPublic(true)
             ->addTag('controller.service_arguments')
-            ->setPublic(true);
+        ;
+
+        // $this is a reference to the current loader
+        $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
+
+        // add more services, or override services that need manual wiring
 
 This small bit of configuration contains a paradigm shift of how services
 are configured in Symfony.
@@ -147,9 +163,18 @@ thanks to the following config:
     .. code-block:: php
 
         // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
 
-        // services cannot be automatically loaded with PHP configuration
-        // you need to define your services one-by-one
+        // To use as default template
+        $definition = new Definition();
+
+        $definition
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            ->setPublic(false)
+        ;
+
+        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
 
 This means that every class in ``src/AppBundle/`` is *available* to be used as a
 service. And thanks to the ``_defaults`` section at the top of the file, all of
@@ -348,19 +373,17 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
 
         // app/config/services.php
 
-        // loading entire directories is not possible with PHP configuration
-        // you need to define your services one-by-one
-        use AppBundle\Controller\DefaultController;
+        // ...
 
-        $container->autowire(DefaultController::class)
-            ->setAutoconfigured(true)
-            ->addTag('controller.service_arguments')
-            ->setPublic(true);
+        // override default template
+        $definition->setPublic(true);
+
+        $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
 
 But, you might not even notice this. First, your controllers *can* still extend
 the same base ``Controller`` class or a new :ref:`AbstractController <controller-abstract-versus-controller>`.
 This means you have access to all of the same shortcuts as before. Additionally,
-the ``@Route`` annotation and ``_controller`` syntax (e.g.``AppBundle:Default:homepage``)
+the ``@Route`` annotation and ``_controller`` syntax (e.g. ``AppBundle:Default:homepage``)
 used in routing will automatically use your controller as a service (as long as its
 service id matches its class name, which it *does* in this case). See :doc:`/controller/service`
 for more details. You can even create :ref:`invokable controllers <controller-service-invoke>`
@@ -433,7 +456,7 @@ In this case, you've created a class that implements ``EventSubscriberInterface`
 and registered it as a service. This is more than enough for the container to know
 that you want this to be used as an event subscriber: more configuration is not needed.
 And the tags system is its own, Symfony-specific mechanism. And of course, you can
-always default ``autoconfigure`` to false in ``services.yml``, or disable it for a specific
+always set ``autoconfigure`` to ``false`` in ``services.yml``, or disable it for a specific
 service.
 
     Does this mean tags are dead? Does this work for all tags?
@@ -449,7 +472,7 @@ see what it autoconfigures.
 
 Many autoconfigured tags have an optional priority. If you need to specify a priority
 (or any other optional tag attribute), no problem! Just :ref:`manually configure your service <services-manually-wire-args>`
-and add the tag. Your tag will take precedent over the one added by auto-configuration.
+and add the tag. Your tag will take precedence over the one added by auto-configuration.
 
 What about Performance
 ----------------------
@@ -553,8 +576,13 @@ Start by updating the service ids to class names:
 
     Services associated with global PHP classes (i.e. not using PHP namespaces)
     must maintain the ``class`` parameter. For example, when using the old Twig
+<<<<<<< HEAD
     classes (e.g. ``Twig_Extensions_Extension_Intl`` instead of ``Twig\Extensions\IntlExtension``)
     you can't redefine the service as `Twig_Extensions_Extension_Intl: ~` and
+=======
+    classes (e.g. ``Twig_Extensions_Extension_Intl`` instead of ``Twig\Extensions\IntlExtension``),
+    you can't redefine the service as ``Twig_Extensions_Extension_Intl: ~`` and
+>>>>>>> upstream/3.3
     you must keep the original ``class`` parameter.
 
 But, this change will break our app! The old service ids (e.g. ``app.github_notifier``)
