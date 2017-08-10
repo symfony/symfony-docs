@@ -38,19 +38,6 @@ For example, you may want a command to create an user::
         }
     }
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
-your command classes are automatically registered as services. You have nothing
-else to do!
-
-.. note::
-
-    You can also manually register your command as a service by configuring the service
-    and :doc:`tagging it </service_container/tags>` with ``console.command``.
-
-    Symfony also looks in the ``Command/`` directory of bundles for commands
-    non registered as a service but this is deprecated since Symfony 3.4 and
-    won't be supported in Symfony 4.0.
-
 Configuring the Command
 -----------------------
 
@@ -77,11 +64,25 @@ method. Then you can optionally define a help message and the
 Executing the Command
 ---------------------
 
-After configuring the command, you can execute it in the terminal:
+Symfony registers any PHP class extending from :class:`Symfony\\Component\\Console\\Command\\Command`
+as a console command automatically, so you can now execute this command in the
+terminal:
 
 .. code-block:: terminal
 
     $ php bin/console app:create-user
+
+.. note::
+
+    If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+    your command classes are automatically registered as services.
+
+    You can also manually register your command as a service by configuring the service
+    and :doc:`tagging it </service_container/tags>` with ``console.command``.
+
+    Otherwise, Symfony looks in the ``Command/`` directory of bundles for commands
+    non registered as a service but this is deprecated since Symfony 3.4 and
+    won't be supported in Symfony 4.0.
 
 As you might expect, this command will do nothing as you didn't write any logic
 yet. Add your own logic inside the ``execute()`` method, which has access to the
