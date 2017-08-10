@@ -24,6 +24,19 @@ by the normal `webpack-dev-server`_. For example:
 
 This will start a server at ``https://localhost:9000``.
 
+Using dev-server inside a VM
+----------------------------
+
+If you're using ``dev-server`` from inside a virtual machine, then you'll need
+to bind to all IP addresses and allow any host to access the server:
+
+.. code-block:: terminal
+
+    $ ./node_modules/.bin/encore dev-server --host 0.0.0.0 --disable-host-check
+
+You can now access the dev-server using the IP address to your virtual machine on
+port 8080 - e.g. http://192.168.1.1:8080.
+
 Hot Module Replacement HMR
 --------------------------
 

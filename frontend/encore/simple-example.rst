@@ -70,6 +70,11 @@ To build the assets, use the ``encore`` executable:
     # compile assets, but also minify & optimize them
     $ ./node_modules/.bin/encore production
 
+    # shorter version of the above 3 commands
+    $ yarn run encore dev
+    $ yarn run encore dev -- --watch
+    $ yarn run encore prodution
+
 .. note::
 
     Re-run ``encore`` each time you update your ``webpack.config.js`` file.
