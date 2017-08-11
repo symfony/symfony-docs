@@ -64,8 +64,8 @@ method. Then you can optionally define a help message and the
 Executing the Command
 ---------------------
 
-Symfony registers any PHP class extending from :class:`Symfony\\Component\\Console\\Command\\Command`
-as a console command automatically, so you can now execute this command in the
+Symfony registers any PHP class extending :class:`Symfony\\Component\\Console\\Command\\Command`
+as a console command automatically. So you can now execute this command in the
 terminal:
 
 .. code-block:: terminal
@@ -80,7 +80,9 @@ terminal:
     You can also manually register your command as a service by configuring the service
     and :doc:`tagging it </service_container/tags>` with ``console.command``.
 
-    Otherwise, Symfony looks in the ``Command/`` directory of bundles for commands
+.. caution::
+
+    Symfony also looks in the ``Command/`` directory of bundles for commands
     non registered as a service but this is deprecated since Symfony 3.4 and
     won't be supported in Symfony 4.0.
 
