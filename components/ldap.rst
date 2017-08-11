@@ -38,7 +38,7 @@ using the following options:
     The version of the LDAP protocol to use
 
 ``encryption``
-    Whether or not to secure the connection using StartTLS
+    The encryption protocol : ``ssl``, ``tls`` or ``none`` (default)
 
 ``options``
     LDAP server's options as defined in :class:`ConnectionOptions <Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\ConnectionOptions>`
