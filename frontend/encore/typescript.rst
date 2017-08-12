@@ -42,7 +42,7 @@ Loader usage can be checked better in its `README`_ documentation.
     -- Running section of ts-loader documentation
 
 
-Checking types in a separate process
+Checking Types in a separate Process
 ------------------------------------
 
 In order to get `Faster builds`_ it is possible to enable the `fork-ts-checker-webpack-plugin`_ plugin.
