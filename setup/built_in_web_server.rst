@@ -24,7 +24,7 @@ Installing the Web Server Bundle
 
 First, execute this command:
 
-.. terminal::
+.. code-block:: terminal
 
     $ cd your-project/
     $ composer require symfony/web-server-bundle
