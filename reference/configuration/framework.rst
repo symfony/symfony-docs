@@ -85,6 +85,7 @@ Configuration
     * :ref:`enabled <reference-translator-enabled>`
     * `fallbacks`_
     * `logging`_
+    * `formatter`_
     * :ref:`paths <reference-translator-paths>`
 * `property_access`_
     * `magic_call`_
@@ -1480,6 +1481,20 @@ When ``true``, a log entry is made whenever the translator cannot find a transla
 for a given key. The logs are made to the ``translation`` channel and at the
 ``debug`` for level for keys where there is a translation in the fallback
 locale and the ``warning`` level if there is no translation to use at all.
+
+.. _reference-framework-translator-formatter:
+
+formatter
+.........
+
+**type**: ``string`` **default**: ``translator.formatter.default``
+
+The service that is used to format message. The service
+has to implement the :class:`Symfony\\Component\\Translation\\Formatter\\MessageFormatterInterface`.
+
+.. seealso::
+
+    For more details, see :doc:`/components/translation/custom_message_formatter`.
 
 .. _reference-translator-paths:
 
