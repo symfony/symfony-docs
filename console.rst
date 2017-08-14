@@ -16,7 +16,7 @@ Commands are defined in classes which should be created in the ``Command`` names
 of your bundle (e.g. ``AppBundle\Command``) and their names should end with the
 ``Command`` suffix.
 
-For example, you may want a command to create an user::
+For example, you may want a command to create a user::
 
     // src/AppBundle/Command/CreateUserCommand.php
     namespace AppBundle\Command;
