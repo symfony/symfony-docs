@@ -23,7 +23,7 @@ Need to extend the Babel configuration further? The easiest way is via
             babelConfig.presets.push('es2017');
 
             // no plugins are added by default, but you can add some
-            // babelConfig.plugins = ['styled-jsx/babel'];
+            // babelConfig.plugins.push('styled-jsx/babel');
         })
     ;
 
