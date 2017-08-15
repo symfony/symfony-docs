@@ -51,6 +51,8 @@ to use the `IgnorePlugin`_ (see `moment/moment#2373`_):
 .. code-block:: diff
 
     // webpack.config.js
+    + var webpack = require('webpack');
+    
     Encore
         // ...
 
