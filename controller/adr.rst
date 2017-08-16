@@ -127,40 +127,12 @@ the request from simple method injection like this ::
 
         public function __invoke(Request $request): Response
         {
-            return new Response($this->twig->render('default/index.html.twig'));
+            $id = $this->requestStack->getCurrentRequest()->get('id');
+            
+            return new Response($this->twig->render('default/index.html.twig', array('id' => $id));
         }
     }
-
-Like you can easily imagine, the :class:`Symfony\\Component\\Httpfoundation\\RequestStack` is the best option to gain access to the request, using this approach, a simple update is recommended and the access to request parameters is way easier::
-
-    <?php
-
-    namespace AppBundle\Action;
-
-    use Twig\Environment;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpFoundation\RequestStack;
-
-    final class HelloAction
-    {
-        private $requestStack;
-
-        private $twig;
-
-        public function __construct(RequestStack $requestStack, Environment $twig)
-        {
-            $this->requestStack = $requestStack
-            $this->twig = $twig;
-        }
-
-        public function __invoke(): Response
-        {
-            $data = $this->requestStack->getCurrentRequest()->get('id');
-
-            return new Response($this->twig->render('default/index.html.twig', array('data' => $data));
-        }
-    }
-
+    
 Final thought
 -------------
 
