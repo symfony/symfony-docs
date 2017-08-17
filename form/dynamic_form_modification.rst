@@ -412,7 +412,6 @@ sport like this::
                         'class' => 'AppBundle:Position',
                         'placeholder' => '',
                         'choices' => $positions,
-                        'choices_as_values' => true,
                     ));
                 }
             );
@@ -469,7 +468,6 @@ The type would now look like::
                     'class' => 'AppBundle:Position',
                     'placeholder' => '',
                     'choices' => $positions,
-                    'choices_as_values' => true,
                 ));
             };
 
