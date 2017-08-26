@@ -73,7 +73,7 @@ To build the assets, use the ``encore`` executable:
     # shorter version of the above 3 commands
     $ yarn run encore dev
     $ yarn run encore dev -- --watch
-    $ yarn run encore prodution
+    $ yarn run encore production
 
 .. note::
 
