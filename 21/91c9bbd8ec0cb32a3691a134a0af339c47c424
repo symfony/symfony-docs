@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2017-08-27T15:28:56Z
+
+Wow, did you run a PHP linter on our code examples to catch all these? :) 👍
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by atailouloute at 2017-08-27T16:53:17Z
+
+@wouterj No I did not, I was just reading the doc before catching the first one, and then I searched in all files on the repo to make sure that there is always a semicolon at the end of each use statement.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-08-27T22:05:52Z
+
+Ah, alright. Thanks for your time to check all files then! (I was thinking about automating it if you used a linter, but I don't think we can automate you 😄)
+
+---------------------------------------------------------------------------
+
+by atailouloute at 2017-08-28T07:50:36Z
+
+@wouterj I'll think about doing it when I have some time :D
