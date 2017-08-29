@@ -312,6 +312,11 @@ callback for better readability::
     // src/AppBundle/Form/SubscriptionType.php
     namespace AppBundle\Form;
 
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\FormEvents;
+
     // ...
     class SubscriptionType extends AbstractType
     {
@@ -397,6 +402,9 @@ Event subscribers have different uses:
 To register the event subscriber, use the ``addEventSubscriber()`` method::
 
     use AppBundle\Form\EventListener\AddEmailFieldListener;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
     // ...
 
     $form = $formFactory->createBuilder()
