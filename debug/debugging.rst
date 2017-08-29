@@ -75,6 +75,9 @@ that can help you visualize and find the information.
 ``debug:config``
     Shows all configured bundles, their class and their alias.
 
+``debug:event-dispatcher``
+    Displays information about all the registered listeners in the event dispatcher.
+
 ``debug:router``
     Displays information about all configured routes in the application as a
     table with the name, method, scheme, host and path for each route.

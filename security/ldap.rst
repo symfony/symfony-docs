@@ -335,7 +335,7 @@ Configuration example for form login
                     # ...
                     form_login_ldap:
                         # ...
-                        service: Symfony\Component\Ldap\Ldap;
+                        service: Symfony\Component\Ldap\Ldap
                         dn_string: 'uid={username},dc=example,dc=com'
 
     .. code-block:: xml
