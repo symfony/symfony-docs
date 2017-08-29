@@ -72,7 +72,7 @@ Validation of arrays is possible using the ``Collection`` constraint::
         'password' => new Assert\Length(array('min' => 60)),
     ));
 
-    $violations = $validator->validateValue($input, $constraint);
+    $violations = $validator->validate($input, $constraint);
 
 The ``validate()`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
 object, which acts just like an array of errors. Each error in the collection

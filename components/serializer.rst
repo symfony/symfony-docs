@@ -397,7 +397,7 @@ class extending :class:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNorm
 including :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
 and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
-    use Symfony\Component\Serializer\Encoder\JsonEncoder
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 

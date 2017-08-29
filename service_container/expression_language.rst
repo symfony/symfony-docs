@@ -24,7 +24,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/services.yml
         services:
             my_mailer:
                 class:     AppBundle\Mailer
@@ -32,7 +32,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -48,7 +48,7 @@ of the new ``mailer_configuration`` service? One way is to use an expression:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/services.php
         use AppBundle\Mailer;
         use Symfony\Component\ExpressionLanguage\Expression;
 
