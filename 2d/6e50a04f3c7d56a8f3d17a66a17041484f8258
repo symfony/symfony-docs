@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-08-09T08:33:21Z
+
+IMO we can merge this into the `2.7` branch as the old class/interface was already deprecated in Symfony 2.5.
