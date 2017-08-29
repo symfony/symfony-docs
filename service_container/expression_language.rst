@@ -21,7 +21,7 @@ to another service: ``AppBundle\Mailer``. One way to do this is with an expressi
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/services.yml
         services:
             # ...
 
@@ -32,7 +32,7 @@ to another service: ``AppBundle\Mailer``. One way to do this is with an expressi
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -52,12 +52,12 @@ to another service: ``AppBundle\Mailer``. One way to do this is with an expressi
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/services.php
         use AppBundle\Mail\MailerConfiguration;
         use AppBundle\Mailer;
         use Symfony\Component\ExpressionLanguage\Expression;
 
-        $container->autowire(AppBundle\Mail\MailerConfiguration::class);
+        $container->autowire(MailerConfiguration::class);
 
         $container->autowire(Mailer::class)
             ->addArgument(new Expression('service("AppBundle\Mail\MailerConfiguration").getMailerMethod()'));
