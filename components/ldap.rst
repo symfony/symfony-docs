@@ -37,15 +37,11 @@ using the following options:
 ``version``
     The version of the LDAP protocol to use
 
-``useSsl``
-    Whether or not to secure the connection using SSL
+``encryption``
+    The encryption protocol : ``ssl``, ``tls`` or ``none`` (default)
 
-``useStartTls``
-    Whether or not to secure the connection using StartTLS
-
-``optReferrals``
-    Specifies whether to automatically follow referrals
-    returned by the LDAP server
+``options``
+    LDAP server's options as defined in :class:`ConnectionOptions <Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\ConnectionOptions>`
 
 For example, to connect to a start-TLS secured LDAP server::
 
@@ -73,10 +69,10 @@ distinguished name (DN) and the password of a user::
 
 Once bound (or if you enabled anonymous authentication on your
 LDAP server), you may query the LDAP server using the
-:method:`Symfony\\Component\\Ldap\\Ldap::find` method::
+:method:`Symfony\\Component\\Ldap\\Ldap::query` method::
 
     // ...
 
-    $ldap->find('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
+    $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
 
 .. _Packagist: https://packagist.org/packages/symfony/ldap

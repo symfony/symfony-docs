@@ -268,7 +268,7 @@ Working with Interfaces
 -----------------------
 
 You might also find yourself type-hinting abstractions (e.g. interfaces) instead
-of concreate classes as it makes it easy to replace your dependencies with other
+of concrete classes as it makes it easy to replace your dependencies with other
 objects.
 
 To follow this best practice, suppose you decide to create a ``TransformerInterface``::
