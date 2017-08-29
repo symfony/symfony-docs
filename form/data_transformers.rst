@@ -23,7 +23,7 @@ Simple Example: Transforming String Tags from User Input to an Array
 
 Suppose you have a Task form with a tags ``text`` type::
 
-    // src/AppBundle/Form/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
     use AppBundle\Entity\Task;
@@ -55,7 +55,7 @@ This is a *perfect* time to attach a custom data transformer to the ``tags``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
 class::
 
-    // src/AppBundle/Form/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\CallbackTransformer;
@@ -116,7 +116,7 @@ issue number.
 
 Start by setting up the text field like normal::
 
-    // src/AppBundle/Form/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
     use AppBundle\Entity\Task;
@@ -247,7 +247,7 @@ of the entity manager (because ``IssueToNumberTransformer`` needs this).
 No problem! Just add a ``__construct()`` function to ``TaskType`` and force this
 to be passed in. Then, you can easily create and add the transformer::
 
-    // src/AppBundle/Form/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
     use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
@@ -418,7 +418,7 @@ it's recognized as a custom field type:
 Now, whenever you need to use your special ``issue_selector`` field type,
 it's quite easy::
 
-    // src/AppBundle/Form/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
     use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
