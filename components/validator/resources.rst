@@ -179,14 +179,14 @@ Using a Custom MetadataFactory
 ------------------------------
 
 All the loaders and the cache are passed to an instance of
-:class:`Symfony\\Component\\Validator\\Mapping\\ClassMetadataFactory`. This
-class is responsible for creating a ``ClassMetadata`` instance from all the
+:class:`Symfony\\Component\\Validator\\Mapping\\Factory\\LazyLoadingMetadataFactory`. 
+This class is responsible for creating a ``ClassMetadata`` instance from all the
 configured resources.
 
 You can also use a custom metadata factory implementation by creating a class
 which implements
-:class:`Symfony\\Component\\Validator\\MetadataFactoryInterface`. You can set
-this custom implementation using
+:class:`Symfony\\Component\\Validator\\Mapping\\Factory\\MetadataFactoryInterface`. 
+You can set this custom implementation using
 :method:`Symfony\\Component\\Validator\\ValidatorBuilder::setMetadataFactory`::
 
     use Acme\Validation\CustomMetadataFactory;
