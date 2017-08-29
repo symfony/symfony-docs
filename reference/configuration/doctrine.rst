@@ -24,7 +24,7 @@ Full Default Configuration
                         commented:            true
                 # If defined, all the tables whose names match this regular expression are ignored
                 # by the schema tool (in this example, any table name starting with `wp_`)
-                #schema_filter:               ~^(?!wp_)~
+                #schema_filter:               '/^(?!wp_)/'
 
                 connections:
                     # A collection of different named connections (e.g. default, conn2, etc)
