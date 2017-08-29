@@ -224,7 +224,7 @@ If you have this kind of time-related tests::
             sleep(10);
             $duration = $stopwatch->stop('event_name')->getDuration();
 
-            $this->assertEquals(10, $duration);
+            $this->assertEquals(10000, $duration);
         }
     }
 
