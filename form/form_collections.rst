@@ -135,7 +135,7 @@ Notice that you embed a collection of ``TagType`` forms using the
 
             $builder->add('tags', 'collection', array(
                 'type' => new TagType(),
-                'options' => array('label' => false)
+                'options' => array('label' => false),
             ));
         }
 
