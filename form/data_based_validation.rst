@@ -43,7 +43,7 @@ You can also define whole logic inline by using a ``Closure``::
                 }
 
                 return array('company');
-            },
+            }
         ));
     }
 
