@@ -70,7 +70,10 @@ On POSIX filesystems, directories are created with a default mode value
 
 .. note::
 
-    The directory permissions are affected by the current `umask`_. Set the umask for your webserver, use PHP's :phpfunction:`umask` function or use the :phpfunction:`chmod` function after the directory has been created.
+    The directory permissions are affected by the current `umask`_.
+    Set the umask for your webserver, use PHP's :phpfunction:`umask`
+    function or use the :phpfunction:`chmod` function after the
+    directory has been created.
 
 exists
 ~~~~~~
