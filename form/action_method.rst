@@ -49,7 +49,7 @@ form, you can use ``setAction()`` and ``setMethod()``:
         $formFactory = $formFactoryBuilder->getFormFactory();
 
         $form = $formFactory->createBuilder('form', $task)
-            ->setAction($this->generateUrl('target_route'))
+            ->setAction($router->generate('target_route'))
             ->setMethod('GET')
             ->add('task', 'text')
             ->add('dueDate', 'date')
@@ -102,7 +102,7 @@ options:
         $formFactory = $formFactoryBuilder->getFormFactory();
 
         $form = $formFactory->create(new TaskType(), $task, array(
-            'action' => $this->generateUrl('target_route'),
+            'action' => $router->generate('target_route'),
             'method' => 'GET',
         ));
 
