@@ -121,7 +121,10 @@ variable so we can render that::
     // src/AppBundle/Controller/LuckyController.php
     namespace AppBundle\Controller;
 
-    // ...
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
     class LuckyController extends Controller
     {
         /**
