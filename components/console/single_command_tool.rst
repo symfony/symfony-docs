@@ -39,9 +39,8 @@ Of course, you can still register a command as usual::
   <?php
   require __DIR__.'/vendor/autoload.php';
 
-  use Symfony\Component\Console\Application;
-
   use Acme\Command\DefaultCommand;
+  use Symfony\Component\Console\Application;
 
   $application = new Application('echo', '1.0.0');
   $command = new DefaultCommand();
