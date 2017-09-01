@@ -368,8 +368,7 @@ following method to the ``ProductRepository`` class::
     // src/AppBundle/Repository/ProductRepository.php
     public function findOneByIdJoinedToCategory($productId)
     {
-        $query = $this->getDoctrine()
-            ->getManager()
+        $query = $this->getEntityManager()
             ->createQuery(
             'SELECT p, c FROM AppBundle:Product p
             JOIN p.category c
