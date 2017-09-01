@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by chalasr at 2017-08-30T12:23:39Z
+
+Profiler ref https://github.com/symfony/symfony/blob/22f6091bc7bc3a22d60b802693ccbfa37a5fb3a3/src/Symfony/Bundle/SecurityBundle/DataCollector/SecurityDataCollector.php#L78
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-08-30T20:01:42Z
+
+Very nice PR with the references to core code, makes it really easy to review! (and I agree :+1: )
+
+status: reviewed
