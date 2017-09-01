@@ -22,6 +22,7 @@ like this:
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         framework:
             workflows:
                 blog_publishing:
@@ -99,39 +100,39 @@ like this:
 
         // app/config/config.php
 
-                $container->loadFromExtension('framework', array(
-                    // ...
-                    'workflows' => array(
-                        'blog_publishing' => array(
-                          'type' => 'workflow', // or 'state_machine'
-                          'marking_store' => array(
-                            'type' => 'multiple_state', // or 'single_state'
-                            'arguments' => array('currentPlace')
-                          ),
-                          'supports' => array('AppBundle\Entity\BlogPost'),
-                          'places' => array(
-                            'draft',
-                            'review',
-                            'rejected',
-                            'published',
-                          ),
-                          'transitions' => array(
-                            'to_review'=> array(
-                              'from' => 'draft',
-                              'to' => 'review',
-                            ),
-                            'publish'=> array(
-                              'from' => 'review',
-                              'to' => 'published',
-                            ),
-                            'reject'=> array(
-                              'from' => 'review',
-                              'to' => 'rejected',
-                            ),
-                          ),
-                        ),
+        $container->loadFromExtension('framework', array(
+            // ...
+            'workflows' => array(
+                'blog_publishing' => array(
+                    'type' => 'workflow', // or 'state_machine'
+                    'marking_store' => array(
+                        'type' => 'multiple_state', // or 'single_state'
+                        'arguments' => array('currentPlace')
                     ),
-                ));
+                    'supports' => array('AppBundle\Entity\BlogPost'),
+                    'places' => array(
+                        'draft',
+                        'review',
+                        'rejected',
+                        'published',
+                    ),
+                    'transitions' => array(
+                        'to_review'=> array(
+                            'from' => 'draft',
+                            'to' => 'review',
+                         ),
+                         'publish'=> array(
+                             'from' => 'review',
+                             'to' => 'published',
+                         ),
+                         'reject'=> array(
+                             'from' => 'review',
+                             'to' => 'rejected',
+                         ),
+                     ),
+                 ),
+             ),
+         ));
 
 .. code-block:: php
 
