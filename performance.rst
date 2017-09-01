@@ -165,8 +165,12 @@ For more details, see :doc:`/components/class_loader/cache_class_loader`.
 .. index::
    single: Performance; Bootstrap files
 
-Use Bootstrap Files
--------------------
+Use Bootstrap Files (For < PHP 7)
+---------------------------------
+
+.. note::
+
+    For PHP 7 and higher versions it is not necessary. It is deprecated for Symfony 4.0.
 
 To ensure optimal flexibility and code reuse, Symfony applications leverage
 a variety of classes and 3rd party components. But loading all of these classes
