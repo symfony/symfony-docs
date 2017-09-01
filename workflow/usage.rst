@@ -62,7 +62,7 @@ like this:
             <framework:config>
                 <framework:workflow name="blog_publishing" type="workflow">
                     <framework:marking-store type="single_state">
-                      <framework:arguments>currentPlace</framework:arguments>
+                      <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
 
                     <framework:support>AppBundle\Entity\BlogPost</framework:support>
