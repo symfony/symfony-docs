@@ -332,6 +332,7 @@
 /deployment/tools /deployment
 /install/bundles /setup/bundles
 /form /forms
+/form/use_virtual_forms /form/inherit_data_option
 /testing/simulating_authentication /testing/http_authentication
 /components/dependency_injection/autowiring /service_container/autowiring
 /event_dispatcher/class_extension /event_dispatcher
