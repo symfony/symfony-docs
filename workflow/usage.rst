@@ -117,11 +117,11 @@ like this:
                         'published',
                     ),
                     'transitions' => array(
-                        'to_review'=> array(
+                        'to_review' => array(
                             'from' => 'draft',
                             'to' => 'review',
                          ),
-                         'publish'=> array(
+                         'publish' => array(
                              'from' => 'review',
                              'to' => 'published',
                          ),
