@@ -39,7 +39,7 @@ Then, enable the bundle in the kernel of the application::
             $bundles = array(
                 // ...
 
-                if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+                if ('dev' === $this->getEnvironment()) {
                     // ...
                     $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
                 }
