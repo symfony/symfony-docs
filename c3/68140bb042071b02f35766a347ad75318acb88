@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by flip111 at 2017-08-30T16:07:59Z
+
+Don't know what wrong with the build
+
+```
+/home/travis/build/symfony/symfony-docs/components/filesystem.rst:73: ERROR: Unknown target name: "umask<https://en.wikipedia.org/wiki/umask/>".
+```
+
+was following http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#embedded-uris-and-aliases
