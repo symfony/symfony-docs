@@ -410,9 +410,9 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
     $obj->name = 'Acme Inc.';
     $obj->address = '123 Main Street, Big City';
 
-    $json = $serializer->serialize($obj);
+    $json = $serializer->serialize($obj, 'json');
     // {"org_name": "Acme Inc.", "org_address": "123 Main Street, Big City"}
-    $objCopy = $serializer->deserialize($json);
+    $objCopy = $serializer->deserialize($json, Company::class, 'json');
     // Same data as $obj
 
 .. _using-camelized-method-names-for-underscored-attributes:

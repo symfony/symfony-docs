@@ -412,7 +412,7 @@ registered as a service. Because you used the ``form.type`` tag in its configura
 your service will be used instead of creating a *new* ``ShippingType``. In other words,
 your controller *does not need to change*, it still looks like this::
 
-    // src/AppBundle/Form/Type/AuthorType.php
+    // src/AppBundle/Form/Type/OrderType.php
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;

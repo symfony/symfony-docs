@@ -317,6 +317,7 @@ callback for better readability::
 
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
 
     // ...
@@ -404,9 +405,9 @@ Event subscribers have different uses:
 
 To register the event subscriber, use the ``addEventSubscriber()`` method::
 
+    use AppBundle\Form\EventListener\AddEmailFieldListener;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-        use AppBundle\Form\EventListener\AddEmailFieldListener;
 
     // ...
 
