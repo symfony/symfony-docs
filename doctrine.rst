@@ -543,7 +543,7 @@ Take a look at the previous example in more detail:
   *entity manager* object, which is the most important object in Doctrine. It's
   responsible for saving objects to, and fetching objects from, the database.
 
-* **lines 14-11** In this section, you instantiate and work with the ``$product``
+* **lines 14-17** In this section, you instantiate and work with the ``$product``
   object like any other normal PHP object.
 
 * **line 20** The ``persist($product)`` call tells Doctrine to "manage" the
