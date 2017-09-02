@@ -549,7 +549,7 @@ Take a look at the previous example in more detail:
 * **line 20** The ``persist($product)`` call tells Doctrine to "manage" the
   ``$product`` object. This does **not** cause a query to be made to the database.
 
-* **line 22** When the ``flush()`` method is called, Doctrine looks through
+* **line 23** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object's data doesn't
   exist in the database, so the entity manager executes an ``INSERT`` query,
