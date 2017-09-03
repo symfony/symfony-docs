@@ -126,12 +126,13 @@ following file (it's your role to add this file to your code base)::
     # Store session into /tmp.
     ini_set('session.save_path', '/tmp/sessions');
 
-Make sure this file is listed in your *imports*:
+Make sure this file is listed in your *imports* (after the default `parameters.yml` file):
 
 .. code-block:: yaml
 
     # app/config/config.yml
     imports:
+        - { resource: parameters.yml }
         - { resource: parameters_platform.php }
 
 Deploy your Application
