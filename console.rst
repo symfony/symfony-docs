@@ -83,8 +83,8 @@ terminal:
 .. caution::
 
     Symfony also looks in the ``Command/`` directory of bundles for commands
-    non registered as a service but this is deprecated since Symfony 3.4 and
-    won't be supported in Symfony 4.0.
+    that are not registered as a service. But this auto discovery is deprecated
+    since Symfony 3.4 and won't be supported anymore in Symfony 4.0.
 
 As you might expect, this command will do nothing as you didn't write any logic
 yet. Add your own logic inside the ``execute()`` method, which has access to the
