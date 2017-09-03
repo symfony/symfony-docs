@@ -273,7 +273,7 @@ When you need to fetch associated objects, your workflow looks just like it
 did before. First, fetch a ``$product`` object and then access its related
 ``Category`` object::
 
-    use AppBundle\Entity\Post;
+    use AppBundle\Entity\Product;
     // ...
 
     public function showAction($productId)
