@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-09-01T06:22:20Z
+
+I think not using the Symfony URL generator at all would be a good idea indeed.
+
+---------------------------------------------------------------------------
+
+by atailouloute at 2017-09-01T09:35:14Z
+
+@xabbuh I made the changes
