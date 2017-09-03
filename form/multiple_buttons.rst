@@ -31,3 +31,10 @@ querying if the "Save and add" button was clicked::
 
         return $this->redirectToRoute($nextAction);
     }
+
+.. caution::
+
+    When the user submits your form by pressing the ``Enter`` key on the keyboard,
+    some browsers do include the submit button field in the form data, and
+    some don't. So you should take care of handling the case when ``isClicked()``
+    returns ``false`` on all buttons, and ``getClickedButton()`` returns ``null``.
