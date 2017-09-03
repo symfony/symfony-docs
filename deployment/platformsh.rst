@@ -126,7 +126,8 @@ following file (it's your role to add this file to your code base)::
     # Store session into /tmp.
     ini_set('session.save_path', '/tmp/sessions');
 
-Make sure this file is listed in your *imports* (after the default `parameters.yml` file):
+Make sure this file is listed in your *imports* (after the default ``parameters.yml``
+file):
 
 .. code-block:: yaml
 
