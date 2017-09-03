@@ -143,7 +143,7 @@ then passes them onto the nested handler in one go, but only if the records are
 unique over a given period of time (60 seconds by default). If the records are
 duplicates they are simply discarded. Adding this handler reduces the amount of
 notifications to a manageable level, specially in critical failure scenarios.
-You can adjust the time period:
+You can adjust the time period using the ``time`` option:
 
 .. configuration-block::
 
@@ -152,17 +152,18 @@ You can adjust the time period:
         # app/config/config_prod.yml
         monolog:
             handlers:
-                # ... 
+                # ...
                 deduplicated:
                     type: deduplication
                     # the time in seconds during which duplicate entries are discarded (default: 60)
                     time: 10
                     handler: swift
- 
+
     .. code-block:: xml
 
         <!-- app/config/config_prod.xml -->
-        <!-- use the `time` attribute for values other than the default of 60 seconds: -->
+
+        <!-- time: the time in seconds during which duplicate entries are discarded (default: 60) -->
         <monolog:handler name="deduplicated"
             type="deduplication"
             time="10"
