@@ -18,31 +18,31 @@ using a processor.
 
 .. code-block:: php
 
-    namespace AppBundle;
+    namespace AppBundle\Logger;
 
-    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
     class SessionRequestProcessor
     {
         private $session;
-        private $token;
+        private $sessionId;
 
-        public function __construct(Session $session)
+        public function __construct(SessionInterface $session)
         {
             $this->session = $session;
         }
 
         public function processRecord(array $record)
         {
-            if (null === $this->token) {
-                try {
-                    $this->token = substr($this->session->getId(), 0, 8);
-                } catch (\RuntimeException $e) {
-                    $this->token = '????????';
-                }
-                $this->token .= '-' . substr(uniqid(), -8);
+            if (!$this->session->isStarted()) {
+                return $record;
             }
-            $record['extra']['token'] = $this->token;
+
+            if (!$this->sessionId) {
+                $this->sessionId = substr($this->session->getId(), 0, 8) ?: '????????';
+            }
+
+            $record['extra']['token'] = $this->sessionId.'-'.substr(uniqid('', true), -8);
 
             return $record;
         }
@@ -59,8 +59,8 @@ using a processor.
                 arguments:
                     - "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n"
 
-            monolog.processor.session_request:
-                class: AppBundle\SessionRequestProcessor
+            app.logger.session_request_processor:
+                class: AppBundle\Logger\SessionRequestProcessor
                 arguments:  ['@session']
                 tags:
                     - { name: monolog.processor, method: processRecord }
@@ -71,7 +71,7 @@ using a processor.
                     type: stream
                     path: '%kernel.logs_dir%/%kernel.environment%.log'
                     level: debug
-                    formatter: monolog.formatter.session_request
+                    formatter: app.logger.session_request_processor
 
     .. code-block:: xml
 
@@ -92,8 +92,8 @@ using a processor.
                     <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%&#xA;</argument>
                 </service>
 
-                <service id="monolog.processor.session_request"
-                    class="AppBundle\SessionRequestProcessor">
+                <service id="app.logger.session_request_processor"
+                    class="AppBundle\Logger\SessionRequestProcessor">
 
                     <argument type="service" id="session" />
                     <tag name="monolog.processor" method="processRecord" />
@@ -106,7 +106,7 @@ using a processor.
                     type="stream"
                     path="%kernel.logs_dir%/%kernel.environment%.log"
                     level="debug"
-                    formatter="monolog.formatter.session_request"
+                    formatter="app.logger.session_request_processor"
                 />
             </monolog:config>
         </container>
@@ -114,7 +114,7 @@ using a processor.
     .. code-block:: php
 
         // app/config/config.php
-        use AppBundle\SessionRequestProcessor;
+        use AppBundle\Logger\SessionRequestProcessor;
         use Monolog\Formatter\LineFormatter;
 
         $container
@@ -122,7 +122,7 @@ using a processor.
             ->addArgument('[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n');
 
         $container
-            ->register('monolog.processor.session_request', SessionRequestProcessor::class)
+            ->register('app.logger.session_request_processor', SessionRequestProcessor::class)
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord'));
 
@@ -132,7 +132,7 @@ using a processor.
                     'type'      => 'stream',
                     'path'      => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level'     => 'debug',
-                    'formatter' => 'monolog.formatter.session_request',
+                    'formatter' => 'app.logger.session_request_processor',
                 ),
             ),
         ));
@@ -155,8 +155,8 @@ the ``monolog.processor`` tag:
 
         # app/config/config.yml
         services:
-            monolog.processor.session_request:
-                class: AppBundle\SessionRequestProcessor
+            app.logger.session_request_processor:
+                class: AppBundle\Logger\SessionRequestProcessor
                 arguments:  ['@session']
                 tags:
                     - { name: monolog.processor, method: processRecord, handler: main }
@@ -174,8 +174,8 @@ the ``monolog.processor`` tag:
                 http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <services>
-                <service id="monolog.processor.session_request"
-                    class="AppBundle\SessionRequestProcessor">
+                <service id="app.logger.session_request_processor
+                    class="AppBundle\Logger\SessionRequestProcessor">
 
                     <argument type="service" id="session" />
                     <tag name="monolog.processor" method="processRecord" handler="main" />
@@ -190,7 +190,7 @@ the ``monolog.processor`` tag:
         // ...
         $container
             ->register(
-                'monolog.processor.session_request',
+                'app.logger.session_request_processor',
                 SessionRequestProcessor::class
             )
             ->addArgument(new Reference('session'))
@@ -208,8 +208,8 @@ the ``monolog.processor`` tag:
 
         # app/config/config.yml
         services:
-            monolog.processor.session_request:
-                class: AppBundle\SessionRequestProcessor
+            app.logger.session_request_processor:
+                class: AppBundle\Logger\SessionRequestProcessor
                 arguments:  ['@session']
                 tags:
                     - { name: monolog.processor, method: processRecord, channel: main }
@@ -227,8 +227,8 @@ the ``monolog.processor`` tag:
                 http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <services>
-                <service id="monolog.processor.session_request"
-                    class="AppBundle\SessionRequestProcessor">
+                <service id="app.logger.session_request_processor"
+                    class="AppBundle\Logger\SessionRequestProcessor">
 
                     <argument type="service" id="session" />
                     <tag name="monolog.processor" method="processRecord" channel="main" />
@@ -242,6 +242,6 @@ the ``monolog.processor`` tag:
 
         // ...
         $container
-            ->register('monolog.processor.session_request', SessionRequestProcessor::class)
+            ->register('app.logger.session_request_processor', SessionRequestProcessor::class)
             ->addArgument(new Reference('session'))
             ->addTag('monolog.processor', array('method' => 'processRecord', 'channel' => 'main'));
