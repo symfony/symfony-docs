@@ -15,6 +15,42 @@ a full-featured web server such as
     The built-in web server is meant to be run in a controlled environment.
     It is not designed to be used on public networks.
 
+Symfony provides a web server built on top of this PHP server to simplify your
+local setup. This server is distributed as a bundle, so you must first install
+and enable the server bundle.
+
+Installing the Web Server Bundle
+--------------------------------
+
+First, execute this command:
+
+.. code-block:: terminal
+
+    $ cd your-project/
+    $ composer require symfony/web-server-bundle
+
+Then, enable the bundle in the kernel of the application::
+
+    // app/AppKernel.php
+    class AppKernel extends Kernel
+    {
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
+            );
+
+            if ('dev' === $this->getEnvironment()) {
+                // ...
+                $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
+            }
+
+            // ...
+        }
+
+        // ...
+    }
+
 Starting the Web Server
 -----------------------
 

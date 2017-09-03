@@ -101,7 +101,7 @@ to show a link to exit impersonation:
             </a>
         <?php endif ?>
 
-In some cases you may need to get the object that represents the impersonating
+In some cases you may need to get the object that represents the impersonator
 user rather than the impersonated user. Use the following snippet to iterate
 over the user's roles until you find one that a ``SwitchUserRole`` object::
 
@@ -113,7 +113,7 @@ over the user's roles until you find one that a ``SwitchUserRole`` object::
     if ($authChecker->isGranted('ROLE_PREVIOUS_ADMIN')) {
         foreach ($tokenStorage->getToken()->getRoles() as $role) {
             if ($role instanceof SwitchUserRole) {
-                $impersonatingUser = $role->getSource()->getUser();
+                $impersonatorUser = $role->getSource()->getUser();
                 break;
             }
         }
