@@ -277,6 +277,9 @@ value in pixels.
 minPixels
 ~~~~~~~~~
 
+.. versionadded:: 3.4
+    The ``minPixels`` option has been introduced in Symfony 3.4.
+
 **type**: ``integer``
 
 If set, the amount of pixels of the image file must be greater than or equal to this
@@ -284,6 +287,9 @@ value.
 
 maxPixels
 ~~~~~~~~~
+
+.. versionadded:: 3.4
+    The ``maxPixels`` option has been introduced in Symfony 3.4.
 
 **type**: ``integer``
 
@@ -382,6 +388,9 @@ The error message if the height of the image is less than `minHeight`_.
 maxPixelsMessage
 ~~~~~~~~~~~~~~~~
 
+.. versionadded:: 3.4
+    The ``maxPixelsMessage`` option has been introduced in Symfony 3.4.
+
 **type**: ``string`` **default**: ``The image has to many pixels ({{ pixels }} pixels).
 Maximum amount expected is {{ max_pixels }} pixels.``
 
@@ -389,6 +398,9 @@ The error message if the amount of pixels of the image exceeds `maxPixels`_.
 
 minPixelsMessage
 ~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.4
+    The ``minPixelsMessage`` option has been introduced in Symfony 3.4.
 
 **type**: ``string`` **default**: ``The image has to few pixels ({{ pixels }} pixels).
 Minimum amount expected is {{ min_pixels }} pixels.``
