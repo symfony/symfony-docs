@@ -224,14 +224,14 @@ If you have this kind of time-related tests::
             sleep(10);
             $duration = $stopwatch->stop('event_name')->getDuration();
 
-            $this->assertEquals(10, $duration);
+            $this->assertEquals(10000, $duration);
         }
     }
 
 You used the :doc:`Symfony Stopwatch Component </components/stopwatch>` to
 calculate the duration time of your process, here 10 seconds. However, depending
 on the load of the server or the processes running on your local machine, the
-``$duration`` could for example be `10.000023s` instead of `10s`.
+``$duration`` could for example be ``10.000023s`` instead of ``10s``.
 
 This kind of tests are called transient tests: they are failing randomly
 depending on spurious and external circumstances. They are often cause trouble

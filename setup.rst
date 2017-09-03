@@ -56,16 +56,13 @@ optional third argument of the ``create-project`` command:
 Running the Symfony Application
 -------------------------------
 
-Symfony provides a utility called ``server`` that leverages the internal PHP web
-server to run applications while developing them. First, install that utility
-in your application:
+On production servers, Symfony applications use web servers such as Apache or
+Nginx (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
+However, on your local development machine you can also use the web server
+provided by Symfony, which in turn uses the built-in web server provided by PHP.
 
-.. code-block:: terminal
-
-    $ cd my-project/
-    $ composer require server
-
-Then, whenever you want to run the application, execute this command:
+First, :doc:`install the Symfony Web Server </setup/built_in_web_server>` and
+then, execute this command:
 
 .. code-block:: terminal
 
@@ -77,7 +74,7 @@ stop the server by pressing ``Ctrl+C`` from the terminal or command console.
 
 .. tip::
 
-    PHP's internal web server is great for developing, but should **not** be
+    Symfony's web server is great for developing, but should **not** be
     used on production. Instead, use Apache or Nginx.
     See :doc:`/setup/web_server_configuration`.
 

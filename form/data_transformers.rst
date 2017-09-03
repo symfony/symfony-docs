@@ -23,7 +23,7 @@ Simple Example: Transforming String Tags from User Input to an Array
 
 Suppose you have a Task form with a tags ``text`` type::
 
-    // src/AppBundle/Form/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
     use AppBundle\Entity\Task;
@@ -56,7 +56,7 @@ This is a *perfect* time to attach a custom data transformer to the ``tags``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
 class::
 
-    // src/AppBundle/Form/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\CallbackTransformer;
@@ -120,7 +120,7 @@ issue number.
 
 Start by setting up the text field like normal::
 
-    // src/AppBundle/Form/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
     use AppBundle\Entity\Task;
@@ -250,7 +250,7 @@ Next, you need to use the ``IssueToNumberTransformer`` object inside if ``TaskTy
 and add it to the ``issue`` field. No problem! Just add a ``__construct()`` method
 and type-hint the new class::
 
-    // src/AppBundle/Form/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
     use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
@@ -374,7 +374,7 @@ have the data transformer *and* a nice default value for the ``invalid_message``
 As long as you're using :ref:`autowire <services-autowire>` and
 :ref:`autoconfigure <services-autoconfigure>`, you can start using the form immediately::
 
-    // src/AppBundle/Form/TaskType.php
+    // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
     use AppBundle\Form\DataTransformer\IssueToNumberTransformer;

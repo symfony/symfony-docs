@@ -55,8 +55,8 @@ following script to determine your web server user and grant the needed permissi
 
 .. note::
 
-    The first ``setfacl`` command sets permissions on the existing files and
-    folders, while the second one sets permissions for future files and folders.
+    The first ``setfacl`` command sets permissions for future files and folders,
+    while the second one sets permissions on the existing files and folders.
     Both of these commands assign permissions for the system user and the Apache 
     user.
 

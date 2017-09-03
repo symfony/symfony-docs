@@ -368,7 +368,7 @@ made. To do that, you create a new class::
                 );
             $this->mailer->send($message);
 
-            return $message;
+            return $happyMessage;
         }
     }
 
