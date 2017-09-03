@@ -158,9 +158,9 @@ the ``create-project`` command:
 Running the Symfony Application
 -------------------------------
 
-In production servers, Symfony applications use web servers such as Apache or
+On production servers, Symfony applications use web servers such as Apache or
 Nginx (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
-However, in your local development machine you can also use the web server
+However, on your local development machine you can also use the web server
 provided by Symfony, which in turn uses the built-in web server provided by PHP.
 
 First, :doc:`install the Symfony Web Server </setup/built_in_web_server>` and
