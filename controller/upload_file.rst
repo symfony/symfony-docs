@@ -449,9 +449,8 @@ controller.
                     return;
                 }
 
-                $this->fileName = $entity->getBrochure()
-                if ($this->fileName) {
-                    $entity->setBrochure(new File($this->uploader->getTargetDir().'/'.$this->fileName));
+                if ($fileName = $entity->getBrochure()) {
+                    $entity->setBrochure(new File($this->uploader->getTargetDir().'/'.$fileName));
                 }
             }
         }
