@@ -38,12 +38,12 @@ Then, enable the bundle in the kernel of the application::
         {
             $bundles = array(
                 // ...
-
-                if ('dev' === $this->getEnvironment()) {
-                    // ...
-                    $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
-                }
             );
+
+            if ('dev' === $this->getEnvironment()) {
+                // ...
+                $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
+            }
 
             // ...
         }
