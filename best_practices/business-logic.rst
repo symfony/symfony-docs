@@ -52,6 +52,26 @@ and put things there:
     The recommended approach of using the ``AppBundle/`` directory is for
     simplicity. If you're advanced enough to know what needs to live in
     a bundle and what can live outside of one, then feel free to do that.
+    
+Future of Symfony Today Thoughts
+---------------------------
+
+Community is about working together to solve common problems and be greater than the sum of the components.  Several major communities are spouting up developing bundle eco-systems. (Sonata-Project.org for example). The concept of a reusable and thus sharable bundle is a utltimate best practice. 
+
+Note: The following is for advanced users who understand the Symfony framework and its true power and who have built several projects implementing third party libraries using the defact AppBundle namespace. The following is an implementation plan of :doc:`https://symfony.com/doc/current/bundles/best_practices.html`
+
+Shareable bundles can expand the community.  Sharing AppBundle namespace folders means possible overwrites of code when sharing code. (anti-community!)
+
+Note: Only use bundles whenever logically seperate functionality exists. For example there would generally be no reason to have one bundle  that implements the functionalty to store a blog post title and a second bundle that handles the functionality to store the content and settings.
+
+1. Develop your own Bundle directory namespace to prevent namespace collisions as per reusable bundle best practices. Example:  GitHubUsername/ExampleNamedBundle/Utils/MyClass.php
+2. Implement existing best practice bundles if they fit your requirements such as from Sontata Project or other community bundles.
+3. If no best practice bundle meets your requirements then build a shareable bundle with the base features you need in one bundle. Build encapsulated functionality (similar to Facebook Flux Model) using Symfony bundles including the model, view, and controllers. Segmentation away from one large AppBundle allows sharing specific features and functionality. Develop the core generic featureset in one bundle and implement with specific content, integration with your custom system, or branding in configuration file or seperate bundle.
+4. Contirbute tutorials and example implementations using the bundle(s) you develop to help to implementors of your bundles and newcomers to Symfony. Growing the community grows the strength of Symfony as a whole.
+5. Contribute those bundles to Github to help solve common problems until a marketplace is developed.
+6. Help the Symfony core team to build a marketplace and overcome the hurdle of licensing Symfony bundles using common php encoders like Ioncube Php Encoder. Bring Premium products and free core bundles similar to Wordpree developers licensing models.
+7. Grow a Symfony business model for bundle developers to grow the worldwide team solving common problems more "out of the box" versus several weeks for the most basic things because there is so many options that all need specific implementation in code not GUI.
+8. Change the fact that Wordpress hosts more than 20% of the worlds websites merely because it is more "plug and play" than Symfony infrastructure despite Symfony being a much more flexible eco-system more specifically built for SaaS and self-healing infrastructures.
 
 Services: Naming and Format
 ---------------------------
