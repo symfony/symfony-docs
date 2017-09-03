@@ -1,0 +1,22 @@
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2017-05-15T11:40:46Z
+
+@javiereguiluz Don't know what you mean exactly.
+
+My motivation for committing this: Right now, the `time` setting is explained nowhere. I basically guessed how to write it ;-) The existence of the setting is mentioned a few paragraphs further down:
+
+> The deduplicated handler simply keeps all the messages for a request and then passes them onto the nested handler in one go, but only if the records are unique over a given period of time (60 seconds by default).
+
+So I figured I could squeeze it right into the first code block. Not ideal, but better than nothing :-)
+
+However, we could certainly create a separate code block for this, maybe something like:
+````
+monolog:
+    handlers:
+        deduplicated:
+            type:    deduplication
+            handler: swift
+            time: 10
+
+... and position it right below the cited paragraph.
