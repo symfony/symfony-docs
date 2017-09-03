@@ -366,8 +366,6 @@ made. To do that, you create a new class::
                     'Someone just updated the site. We told them: '.$happyMessage
                 );
             $this->mailer->send($message);
-
-            return $happyMessage;
         }
     }
 
@@ -381,8 +379,8 @@ you can use the service immediately::
     {
         // ...
 
-        $message = $siteUpdateManager->notifyOfSiteUpdate();
-        $this->addFlash('success', $message);
+        $siteUpdateManager->notifyOfSiteUpdate();
+        $this->addFlash('success', 'Notification mail was sent successfully.');
         // ...
     }
 
