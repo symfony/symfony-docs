@@ -151,7 +151,7 @@ Make sure this file is imported into the main config file:
             <!-- .. -->
             <framework:config>
                 <!-- .. -->
-                <framework:session save-path="null" />
+                <framework:session handler-id="null" />
             </framework:config>
         </container>
 
