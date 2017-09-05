@@ -82,8 +82,9 @@ you need it or it can be used in a controller like the following::
 Adding Normalizers and Encoders
 -------------------------------
 
-Once enabled, the ``serializer`` service will be available in the container. It comes with a set of useful :ref:`encoders <component-serializer-encoders>`
-and `normalizers <component-serializer-normalizers>`.
+Once enabled, the ``serializer`` service will be available in the container.
+It comes with a set of useful :ref:`encoders <component-serializer-encoders>`
+and :ref:`normalizers <component-serializer-normalizers>`.
 
 Encoders supporting the following formats are enabled:
 
@@ -92,20 +93,26 @@ Encoders supporting the following formats are enabled:
 
 As well as the following normalizers:
 
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` to handle typical data objects
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` for objects implementing the :class:`DateTimeInterface` interface
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to transform :class:`SplFileInfo` objects in `Data URIs`_
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer` to deal with object implementing the :class:`JsonSerializable` interface
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` to
+  handle typical data objects
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` for
+  objects implementing the :class:`DateTimeInterface` interface
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
+  transform :class:`SplFileInfo` objects in `Data URIs`_
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
+  to deal with object implementing the :class:`JsonSerializable` interface
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
+  denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
 
-You can also load custom normalizers and/or encoders by tagging them as
+Custom normalizers and/or encoders can also be loaded by tagging as
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
 :ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It's also
 possible to set the priority of the tag in order to decide the matching order.
 
 Here is an example on how to load the
-:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a faster alternative to the `ObjectNormalizer`
-if your data objects always use getters and setters:
+:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
+faster alternative to the `ObjectNormalizer` when data objects always use
+getters and setters:
 
 .. configuration-block::
 
