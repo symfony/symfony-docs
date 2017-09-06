@@ -166,8 +166,8 @@ Collections
 -----------
 
 A YAML file is rarely used to describe a simple scalar. Most of the time, it
-describes a collection. YAML collections can be a sequence (scalar arrays in PHP)
-or a mapping of elements (key/value arrays in PHP).
+describes a collection. YAML collections can be a sequence (indexed arrays in PHP)
+or a mapping of elements (associative arrays in PHP).
 
 Sequences use a dash followed by a space:
 
@@ -318,14 +318,14 @@ Unsupported YAML Features
 
 The following YAML features are not supported by the Symfony Yaml component:
 
-* Structures and multi-documents (``---`` and ``...`` markers);
+* Multi-documents (``---`` and ``...`` markers);
 * Complex mapping keys and complex values starting with ``?``;
 * Tagged values as keys;
 * The following tags and types: `!!set`, `!!omap`, `!!pairs`, `!!set`, `!!seq`,
   `!!bool`, `!!int`, `!!merge`, `!!null`, `!!timestamp`, `!!value`, `!!yaml`;
-* Global tags (``TAG`` directive; example: ``%TAG ! tag:example.com,2000:app/``)
-  and global references to a tag (example: ``!<tag:example.com,2000:app/foo>``);
-* Not having a key in a mapping (example: ``{foo, bar}``; use
+*  Tags (``TAG`` directive; example: ``%TAG ! tag:example.com,2000:app/``)
+  and tag references (example: ``!<tag:example.com,2000:app/foo>``);
+* Using sequence-like syntax for mapping elements (example: ``{foo, bar}``; use
   ``{foo: ~, bar: ~}`` instead).
 
 .. _`YAML website`: http://yaml.org/
