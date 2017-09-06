@@ -241,7 +241,7 @@ In the following example, the action is only allowed if the user has the
 .. code-block:: php
 
     // ...
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     // ...
     public function editAction()

@@ -251,7 +251,7 @@ Using the Field Type
 You can now use your custom field type immediately, simply by creating a
 new instance of the type in one of your forms::
 
-    // src/AppBundle/Form/Type/AuthorType.php
+    // src/AppBundle/Form/Type/OrderType.php
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\AbstractType;

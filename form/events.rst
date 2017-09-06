@@ -84,8 +84,8 @@ View data        ``null``
 
 .. sidebar:: ``FormEvents::PRE_SET_DATA`` in the Form component
 
-    The ``collection`` form type relies on the
-    ``Symfony\Component\Form\Extension\Core\EventListener\ResizeFormListener``
+    The ``Symfony\Component\Form\Extension\Core\Type\CollectionType`` form type relies
+    on the ``Symfony\Component\Form\Extension\Core\EventListener\ResizeFormListener``
     subscriber, listening to the ``FormEvents::PRE_SET_DATA`` event in order
     to reorder the form's fields depending on the data from the pre-populated
     object, by removing and adding all form rows.
@@ -304,6 +304,7 @@ callback for better readability::
 
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
 
     // ...
@@ -391,9 +392,9 @@ Event subscribers have different uses:
 
 To register the event subscriber, use the ``addEventSubscriber()`` method::
 
+    use AppBundle\Form\EventListener\AddEmailFieldListener;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-        use AppBundle\Form\EventListener\AddEmailFieldListener;
 
     // ...
 

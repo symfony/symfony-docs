@@ -539,17 +539,17 @@ Take a look at the previous example in more detail:
 
 .. _doctrine-entity-manager:
 
-* **line 13** The ``$this->getDoctrine()->getManager()`` method gets Doctrine's
+* **line 12** The ``$this->getDoctrine()->getManager()`` method gets Doctrine's
   *entity manager* object, which is the most important object in Doctrine. It's
   responsible for saving objects to, and fetching objects from, the database.
 
-* **lines 15-18** In this section, you instantiate and work with the ``$product``
+* **lines 14-17** In this section, you instantiate and work with the ``$product``
   object like any other normal PHP object.
 
-* **line 21** The ``persist($product)`` call tells Doctrine to "manage" the
+* **line 20** The ``persist($product)`` call tells Doctrine to "manage" the
   ``$product`` object. This does **not** cause a query to be made to the database.
 
-* **line 24** When the ``flush()`` method is called, Doctrine looks through
+* **line 23** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object's data doesn't
   exist in the database, so the entity manager executes an ``INSERT`` query,

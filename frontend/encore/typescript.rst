@@ -34,13 +34,33 @@ also configure the `ts-loader options`_ via a callback:
 If React assets are enabled (``.enableReactPreset()``), any ``.tsx`` file will be
 processed as well by ``ts-loader``.
 
-Loader usage can be checked better in its `README`_ documentation.
+More information about the ``ts-loader`` can be found in its `README`_.
 
-    "Use webpack like normal, including ``webpack --watch`` and ``webpack-dev-server``,
-    or through another build system using the Node.js API."
+Faster Builds with fork-ts-checker-webpack-plugin
+-------------------------------------------------
 
-    -- Running section of ts-loader documentation
+By using `fork-ts-checker-webpack-plugin`_, you can run type checking in a separate
+process, which can speedup compile time. To enable it, install the plugin:
+
+.. code-block:: terminal
+
+    $ yarn add --dev fork-ts-checker-webpack-plugin
+
+Then enable it by calling:
+
+.. code-block:: diff
+
+    // webpack.config.js
+
+    Encore
+        // ...
+        enableForkedTypeScriptTypesChecking()
+    ;
+
+This plugin requires that you have a `tsconfig.json`_ file that is setup correctly.
 
 .. _`TypeScript`: https://www.typescriptlang.org/
 .. _`ts-loader options`: https://github.com/TypeStrong/ts-loader#options
 .. _`README`: https://github.com/TypeStrong/ts-loader#typescript-loader-for-webpack
+.. _`fork-ts-checker-webpack-plugin`: https://www.npmjs.com/package/fork-ts-checker-webpack-plugin
+.. _`tsconfig.json`: https://www.npmjs.com/package/fork-ts-checker-webpack-plugin#modules-resolution

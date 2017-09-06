@@ -639,6 +639,7 @@ the choice is ultimately up to you.
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
+        // src/AppBundle/Form/TaskType.php
         use AppBundle\Entity\Task;
         use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -695,12 +696,6 @@ There's a lot more to learn and a lot of *powerful* tricks in the form system.
 
 Learn more
 ----------
-
-.. toctree::
-    :hidden:
-
-    form/use_virtuals_forms
-
 .. toctree::
     :maxdepth: 1
     :glob:

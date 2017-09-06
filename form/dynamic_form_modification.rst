@@ -260,7 +260,7 @@ Customizing the Form Type
 Now that you have all the basics in place you can take advantage of the ``TokenStorageInterface``
 and fill in the listener logic::
 
-    // src/AppBundle/FormType/FriendMessageFormType.php
+    // src/AppBundle/Form/Type/FriendMessageFormType.php
 
     use AppBundle\Entity\User;
     use Doctrine\ORM\EntityRepository;
@@ -412,7 +412,6 @@ sport like this::
                         'class' => 'AppBundle:Position',
                         'placeholder' => '',
                         'choices' => $positions,
-                        'choices_as_values' => true,
                     ));
                 }
             );
@@ -469,7 +468,6 @@ The type would now look like::
                     'class' => 'AppBundle:Position',
                     'placeholder' => '',
                     'choices' => $positions,
-                    'choices_as_values' => true,
                 ));
             };
 
