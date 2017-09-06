@@ -407,7 +407,7 @@ Great! The ``ShippingType`` is now fueled by the configuration parameters and
 registered as a service. Additionally, because you used the ``form.type`` tag in its
 configuration, using the field is now much easier::
 
-    // src/AppBundle/Form/Type/AuthorType.php
+    // src/AppBundle/Form/Type/OrderType.php
     namespace AppBundle\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;

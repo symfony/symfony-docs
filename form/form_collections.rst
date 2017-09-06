@@ -133,7 +133,10 @@ Notice that you embed a collection of ``TagType`` forms using the
         {
             $builder->add('description');
 
-            $builder->add('tags', 'collection', array('type' => new TagType()));
+            $builder->add('tags', 'collection', array(
+                'type' => new TagType(),
+                'options' => array('label' => false),
+            ));
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -290,9 +293,10 @@ add the ``allow_add`` option to your collection field::
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('description');
-
+        
         $builder->add('tags', 'collection', array(
             'type'         => new TagType(),
+            'options'      => array('label' => false),
             'allow_add'    => true,
         ));
     }
@@ -399,9 +403,15 @@ one example:
         // get the new index
         var index = $collectionHolder.data('index');
 
+        var newForm = prototype;
+        // You need this only if you didn't set 'label' => false in your tags field in TaskType
+        // Replace '__name__label__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        // newForm = newForm.replace(/__name__label__/g, index);
+        
         // Replace '__name__' in the prototype's HTML to
         // instead be a number based on how many items we have
-        var newForm = prototype.replace(/__name__/g, index);
+        newForm = newForm.replace(/__name__/g, index);
 
         // increase the index with one for the next item
         $collectionHolder.data('index', index + 1);
