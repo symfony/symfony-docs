@@ -991,7 +991,7 @@ admin email. In this case, each needs to have a unique service id:
                     <argument>contact@example.com</argument>
                 </service>
 
-                <alias id="AppBundle\Updates\SiteUpdateManager" service="site_update_manager.superadmin">
+                <alias id="AppBundle\Updates\SiteUpdateManager" service="site_update_manager.superadmin" />
             </services>
         </container>
 
