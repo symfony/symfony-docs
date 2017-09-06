@@ -325,7 +325,7 @@ Writing to Array Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``PropertyAccessor`` class allows to update the content of arrays stored in
-properties through `adder` and `remover` methods.
+properties through *adder* and *remover* methods.
 
 .. code-block:: php
 
@@ -358,13 +358,13 @@ properties through `adder` and `remover` methods.
 
     var_dump($person->getChildren()); // array('kevin', 'wouter')
 
-The PropertyAccess component will check for methods called `add<SingularOfThePropertyName>`
-and `remove<SingularOfThePropertyName>`. Both methods must be present.
-For instance, in the previous example, the component looks for `addChild` and
-`removeChild` methods to access to the `children` property.
+The PropertyAccess component checks for methods called ``add<SingularOfThePropertyName>()``
+and ``remove<SingularOfThePropertyName>()``. Both methods must be defined.
+For instance, in the previous example, the component looks for ``addChild()`` and
+``removeChild()`` methods to access to the ``children`` property.
 `The Inflector component`_ is used to find the singular of a property name.
 
-If available, `adder` and `remover` methods have priority over a setter method.
+If available, *adder* and *remover* methods have priority over a *setter* method.
 
 Checking Property Paths
 -----------------------
