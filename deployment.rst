@@ -208,7 +208,36 @@ Don't forget that deploying your application also involves updating any dependen
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
-.. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
+Troubleshooting
+---------------
+
+Deployments not Using the ``composer.json`` File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony applications provide a ``kernel.project_dir`` parameter and a related
+:method:`Symfony\\Component\\HttpKernel\\Kernel\\Kernel::getProjectDir>` method
+so you can perform file operations relative to your project's root directory.
+The logic to find that directory is based on the location of the
+``composer.json`` file.
+
+If your deployment method doesn't use Composer, you may have removed the
+``composer.json`` file and the application won't work on the production server.
+The solution is to override the ``getProjectDir()`` method in the application
+kernel and return your project's root directory::
+
+    // app/AppKernel.php
+    // ...
+    class AppKernel extends Kernel
+    {
+        // ...
+
+        public function getProjectDir()
+        {
+            return __DIR__.'/..';
+        }
+    }
+
+
 .. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: http://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
@@ -220,3 +249,4 @@ other potential things like pushing assets to a CDN (see `Common Post-Deployment
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: http://deployer.org/
+.. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
