@@ -256,6 +256,8 @@ method::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
+        $helper = $this->getHelper('question');
+
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
         $question->setValidator(function ($answer) {
             if (!is_string($answer) || 'Bundle' !== substr($answer, -6)) {
