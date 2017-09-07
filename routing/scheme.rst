@@ -72,11 +72,11 @@ using the ``path()`` function:
 
 .. code-block:: twig
 
-    {# If the current scheme is HTTPS #}
+    {# If the current scheme is HTTP #}
     {{ path('secure') }}
     {# generates a relative URL: /secure #}
 
-    {# If the current scheme is HTTP #}
+    {# If the current scheme is HTTPS #}
     {{ path('secure') }}
     {# generates an absolute URL: https://example.com/secure #}
 
