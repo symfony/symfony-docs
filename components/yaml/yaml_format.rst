@@ -323,7 +323,7 @@ The following YAML features are not supported by the Symfony Yaml component:
 * Tagged values as keys;
 * The following tags and types: `!!set`, `!!omap`, `!!pairs`, `!!set`, `!!seq`,
   `!!bool`, `!!int`, `!!merge`, `!!null`, `!!timestamp`, `!!value`, `!!yaml`;
-*  Tags (``TAG`` directive; example: ``%TAG ! tag:example.com,2000:app/``)
+* Tags (``TAG`` directive; example: ``%TAG ! tag:example.com,2000:app/``)
   and tag references (example: ``!<tag:example.com,2000:app/foo>``);
 * Using sequence-like syntax for mapping elements (example: ``{foo, bar}``; use
   ``{foo: ~, bar: ~}`` instead).
