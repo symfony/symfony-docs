@@ -406,13 +406,12 @@ example, suppose you want to make the admin email configurable:
     class SiteUpdateManager
     {
         // ...
-    +    private $adminEmail;
+        private $adminEmail;
 
-    -    public function __construct(MessageGenerator $messageGenerator, \Swift_Mailer $mailer)
-    +    public function __construct(MessageGenerator $messageGenerator, \Swift_Mailer $mailer, $adminEmail)
+        public function __construct(MessageGenerator $messageGenerator, \Swift_Mailer $mailer, $adminEmail)
         {
             // ...
-    +        $this->adminEmail = $adminEmail;
+            $this->adminEmail = $adminEmail;
         }
 
         public function notifyOfSiteUpdate()
@@ -421,8 +420,7 @@ example, suppose you want to make the admin email configurable:
 
             $message = \Swift_Message::newInstance()
                 // ...
-    -            ->setTo('manager@example.com')
-    +            ->setTo($this->adminEmail)
+                ->setTo($this->adminEmail)
                 // ...
             ;
             // ...
