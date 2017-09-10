@@ -96,6 +96,7 @@ In Symfony, use the ``asset()`` helper:
             <link rel="stylesheet" href="{{ asset('build/global.css') }}">
         </head>
         <body>
+            <h1></h1>
             <!-- ... -->
             <script src="{{ asset('build/app.js') }}"></script>
         </body>
