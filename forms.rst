@@ -161,7 +161,7 @@ helper functions:
 
 .. note::
 
-    This example assumes that you submit the form in a "POST" request and to
+    This example assumes that you submit the form in a "POST" request to
     the same URL that it was displayed in. You will learn later how to
     change the request method and the target URL of the form.
 
