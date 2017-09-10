@@ -68,7 +68,7 @@ other files and directories. For example, this is the ``manifest.json`` for Swif
         "aliases": ["mailer", "mail"]
     }
 
-The ``alias`` option allows Flex to install packages using short and easy to
+The ``aliases`` option allows Flex to install packages using short and easy to
 remember names (``composer require mailer`` vs ``composer require symfony/swiftmailer-bundle``).
 The ``bundles`` option tells Flex in which environments should this bundle be
 enabled automatically (``all`` in this case). The ``env`` option makes Flex to
