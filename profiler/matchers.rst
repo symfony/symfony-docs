@@ -4,6 +4,11 @@
 How to Use Matchers to Enable the Profiler Conditionally
 ========================================================
 
+.. caution::
+
+    The possibility to use a matcher to enable the profiler conditionally is
+    deprecated since Symfony 3.4 and will be removed in 4.0.
+
 The Symfony profiler is only activated in the development environment to not hurt
 your application performance. However, sometimes it may be useful to conditionally
 enable the profiler in the production environment to assist you in debugging
