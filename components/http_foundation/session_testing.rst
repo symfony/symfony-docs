@@ -56,3 +56,13 @@ separate PHP processes, simply change the storage engine to
     use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
     $session = new Session(new MockFileSessionStorage());
+
+Disabling the Mock Session
+--------------------------
+
+If you want to use the normal session as defined in `php.ini`, just remove this line
+from your `config_test.yml`:
+
+    framework:
+        session:
+            storage_id: session.storage.mock_file
