@@ -253,6 +253,227 @@ Instead of the simple majority strategy (``ConsensusStrategy``) an
 ``UnanimousStrategy`` can be used to require the lock to be acquired in all
 the stores.
 
+Reliability
+-----------
+
+The component guarantees that the same resource can't be lock twice as long as
+the component is used in the following way.
+
+Remote Stores
+~~~~~~~~~~~~~
+
+Remote stores (:ref:`MemcachedStore <lock-store-memcached>` and
+:ref:`RedisStore <lock-store-redis>`) use an unique token to recognize the true
+owner of the lock. This token is stored in the
+:class:`Symfony\\Component\\Lock\\Key` object and is used internally by the
+``Lock``, therefore this Key must not be shared between processes (Session,
+Caching, fork, ...).
+
+.. caution::
+
+    Do not share a Key between processes.
+
+Every concurrent process must store the ``Lock`` in the same Server otherwise two
+distinguished machines may allow two distinguished process to acquire the same ``Lock``.
+
+.. caution::
+
+    To guarantee that the same Server will always be sure, do not use Memcached
+    behind a LoadBalancer, a cluster or round-robin DNS. Even if the main server
+    is Down, the calls must not be forwarded to a backup or failover server.
+
+Expiring Stores
+~~~~~~~~~~~~~~~
+
+Expiring stores (:ref:`MemcachedStore <lock-store-memcached>` and
+:ref:`RedisStore <lock-store-redis>`) guarantee that the lock is acquired
+only for the defined duration of time. If the task takes longer to be
+accomplished, then the lock can be released by the store and acquired by
+someone else.
+
+The ``Lock`` provide several methods to check it health. The ``isExpired``
+method provide an quick way to check whether or not it lifetime is over.
+While the ``getRemainingLifetime`` method returns it time to live in seconds.
+
+With the above methods, a more robust code would be::
+
+    // ...
+    $lock = $factory->createLock('invoice-publication', 30);
+
+    $lock->acquire();
+    while (!$finished) {
+        if ($lock->getRemainingLifetime() <= 5) {
+            if ($lock->isExpired()) {
+                // reliability was lost, perform a rollback or send a notification
+                throw new \RuntimeException('Lock lost during the overall process');
+            }
+
+            $lock->refresh();
+        }
+
+        // Perform the task whose duration MUST be less than 5 minutes
+    }
+
+.. caution::
+
+    Choose wisely the lifetime of the ``Lock``. And check if it remaining
+    time to leave is enough to perform the task.
+
+.. caution::
+
+    Storing a ``Lock`` could take time. Even if, most of the time, it take
+    few milliseconds, Network, may have trouble and the duration to perform
+    this simple task could be up to few seconds. Take it into accound when
+    choosing the right TTL.
+
+By design, Lock are stored in Server with a defined Lifetime. If the date or
+time of the machine changes, a Lock could be released sooner than expected.
+
+.. caution::
+
+    To guarantee that date wouldn't change, the NTP service should be disabled
+    and the date should be updated when while the service is stopped.
+
+FlockStore
+~~~~~~~~~~
+
+By using the file system, this ``Store`` is reliable as long as concurrent
+processes use the same physical directory to stores locks.
+
+Processes must run on the same Machine, Virtual Machine or Container.
+Be careful when updating a Kubernetes or Swarm service because for a short
+period of time, there can be 2 running containers in parallel.
+
+The absolute path to the directory must remain the same. Be careful to
+symlinks on the path that could change at anytime: Capistrano and blue/green
+deployment often use that trick. Be careful when the path to that directory
+change between 2 deployments.
+
+Some file systems (such as some types of NFS) do not support locking.
+
+.. caution::
+
+    All concurrent processes MUST use the same physical file system by running
+    on the same machine and using the same absolute path to locks directory.
+
+    By definition, usage of ``FlockStore`` in an HTTP context is incompatible
+    with multiple front server, unless to be sure that the same resource will
+    alway be locked on the same machine or to use a well configured shared file
+    system.
+
+Files on file system can be removed during a maintenance operation. For instance
+to cleanup the ``/tmp`` directory or after a reboot of the machine when directory
+uses tmpfs. It's not an issue if the lock is released when the process ended, but
+it is in case of ``Lock`` reused between requests.
+
+.. caution::
+
+    Do not store locks on a volatil file system if they have to be reused during
+    several requests.
+
+MemcachedStore
+~~~~~~~~~~~~~~
+
+The way Memcached works is to store items in Memory, that's means that by using
+the :ref:`MemcachedStore <lock-store-memcached>` the locks are not persisted
+and may disappear by mistake at anytime.
+
+If the Memcached service or the machine hosting it restarts, every locks would
+be lost without notify running processes.
+
+.. caution::
+
+    To avoid that someone else acquires a lock after a restart, we recommend
+    to delayed service start and wait at least as long as the longest lock TTL.
+
+By default Memcached use a LRU mechanism to remove old entries when the service
+need space to add new items.
+
+.. caution::
+
+    Number of items stored in the Memcached must be under control. If it's not
+    possible, LRU should be disabled and Lock should be stored in a dedicated
+    Memcached service away from Cache.
+
+When the Memcached service is shared and used for multiple usage, Locks could be
+removed by mistake. For instance some implementation of the PSR-6 ``clear``
+method use the Memcached's ``flush`` method which purge and remove everything.
+
+.. caution::
+
+    The method ``flush`` MUST not be called, or Locks should be stored in a
+    dedicated Memcached service away from Cache.
+
+RedisStore
+~~~~~~~~~~
+
+The way Redis works is to store items in Memory, that's means that by using
+the :ref:`RedisStore <lock-store-redis>` the locks are not persisted
+and may disappear by mistake at anytime.
+
+If the Redis service or the machine hosting it restarts, every locks would
+be lost without notify running processes.
+
+.. caution::
+
+    To avoid that someone else acquires a lock after a restart, we recommend
+    to delayed service start and wait at least as long as the longest lock TTL.
+
+.. tips::
+
+    Redis can be configured to persist items on disk, but this option would
+    slow down writes on the service. This could go against other uses of the
+    server.
+
+When the Redis service is shared and used for multiple usage, Locks could be
+removed by mistake.
+
+.. caution::
+
+    The command ``FLUSHDB`` MUST not be called, or Locks should be stored in a
+    dedicated Redis service away from Cache.
+
+CombinedStore
+~~~~~~~~~~~~~
+
+Combined stores allows to store locks across several backend. It's a common
+mistake to think that the lock mechanism will be more reliable. This is wrong
+The ``CombinedStore`` will be, at best, as reliable than the less reliable of
+all managed stores. As soon as one managed store returns erroneous information,
+the ``CombinedStore`` would be not reliable.
+
+.. caution::
+
+    All concurrent processes MUST use the same configuration. with the same
+    amount of managed stored and the same endpoint.
+
+.. tips::
+
+    Instead of using Cluster of Redis or memcached servers, we recommend to use
+    a ``CombinedStore`` with & single server per managed store.
+
+SemaphoreStore
+~~~~~~~~~~~~~~
+
+Semaphore are handled by the Kernel level, to be reliable, processes must run
+on the same Machine, Virtual Machine or Container.
+Be careful when updating a Kubernetes or Swarm service because for a short
+period of time, there can be 2 running containers in parallel.
+
+.. caution::
+
+    All concurrent processes MUST use the same machine. Before starting a
+    concurrent process on a new machine, check that other process are stopped
+    on the old one.
+
+Overall
+~~~~~~~
+
+Changing the configuration of stores should be done very carefully. For
+instance, during the deployment of a new version. Processes with new
+configuration MUST NOT be started while Old processes with old configuration
+are still running
+
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
 .. _Packagist: https://packagist.org/packages/symfony/lock
 .. _`PHP semaphore functions`: http://php.net/manual/en/book.sem.php
