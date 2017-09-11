@@ -417,7 +417,7 @@ application, configure it with the following content:
               <action type="CustomResponse" statusCode="403" statusReason="Forbidden: Access is denied." statusDescription="You do not have permission to view this directory or page using the credentials that you supplied." />
             </rule>
             <rule name="RewriteAssetsToPublic" stopProcessing="true">
-              <match url="^(.*)(\.css|\.js|\.jpg|\.png|\.gif)$" />
+              <match url="^(.*)(\.css|\.js|\.jpg|\.png|\.gif|\.ico)$" />
               <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
               </conditions>
               <action type="Rewrite" url="web/{R:0}" />
