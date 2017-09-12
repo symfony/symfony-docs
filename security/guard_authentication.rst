@@ -155,7 +155,6 @@ This requires you to implement seven methods::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\JsonResponse;
-    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -218,7 +217,7 @@ This requires you to implement seven methods::
                 // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
             );
 
-            return new JsonResponse($data, Response::HTTP_FORBIDDEN);
+            return new JsonResponse($data, JsonResponse::HTTP_FORBIDDEN);
         }
 
         /**
@@ -231,7 +230,7 @@ This requires you to implement seven methods::
                 'message' => 'Authentication Required'
             );
 
-            return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
+            return new JsonResponse($data, JsonResponse::HTTP_UNAUTHORIZED);
         }
 
         public function supportsRememberMe()
