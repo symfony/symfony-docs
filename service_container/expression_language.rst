@@ -28,7 +28,7 @@ to another service: ``AppBundle\Mailer``. One way to do this is with an expressi
             AppBundle\Mail\MailerConfiguration: ~
 
             AppBundle\Mailer:
-                arguments: ["@=service('AppBundle\\Mail\\MailerConfiguration').getMailerMethod()"]
+                arguments: ["@=service('AppBundle\\\\Mail\\\\MailerConfiguration').getMailerMethod()"]
 
     .. code-block:: xml
 
