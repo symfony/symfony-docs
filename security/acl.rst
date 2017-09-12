@@ -99,6 +99,10 @@ running the following command:
 .. code-block:: terminal
 
     $ php bin/console init:acl
+    
+    For creating acl environment in test environment
+    
+    $ php bin/console init:acl --env=test
 
 Getting Started
 ---------------
