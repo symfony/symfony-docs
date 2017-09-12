@@ -416,7 +416,7 @@ Now, register this class as a Doctrine listener:
 
         // ...
         $container->register('app.doctrine_brochure_listener', BrochureUploaderListener::class)
-            ->addArgument(new Reference('brochures_directory'))
+            ->addArgument(new Reference('app.brochure_uploader'))
             ->addTag('doctrine.event_listener', array(
                 'event' => 'prePersist',
             ))
