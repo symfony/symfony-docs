@@ -127,9 +127,9 @@ the request from simple method injection like this ::
 
         public function __invoke(Request $request): Response
         {
-            $id = $this->requestStack->getCurrentRequest()->get('id');
+            $id = $request->get('id');
             
-            return new Response($this->twig->render('default/index.html.twig', array('id' => $id));
+            return $this->twig->render('default/index.html.twig', array('id' => $id));
         }
     }
     
