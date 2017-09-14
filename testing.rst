@@ -91,7 +91,7 @@ of your application::
     directory.
 
 Just like in your real application - autoloading is automatically enabled
-via the ``app/autoload.php`` file (as configured by default in the
+via the ``vendor/autoload.php`` file (as configured by default in the
 ``phpunit.xml.dist`` file).
 
 Running tests for a given file or directory is also very easy:
