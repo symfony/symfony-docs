@@ -48,7 +48,7 @@ random) number and prints it. To do that, create a "Controller class" and a
     class LuckyController
     {
         /**
-         * @Route("/lucky/number")
+          @Route("/lucky/number")
          */
         public function numberAction()
         {
