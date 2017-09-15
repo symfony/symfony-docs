@@ -39,23 +39,25 @@ Platform.sh how to deploy your application (read more about
     name: myphpproject
     
     # The type of the application to build.
-    type: php:5.6
+    type: php:7.1
     build:
-      flavor: symfony
+      flavor: composer
 
     # The relationships of the application with services or other applications.
     # The left-hand side is the name of the relationship as it will be exposed
     # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
     # side is in the form `<service name>:<endpoint name>`.
     relationships:
-        database: 'mysql:mysql'
+        database: 'mydatabase:mysql'
 
     # The configuration of app when it is exposed to the web.
     web:
-        # The public directory of the app, relative to its root.
-        document_root: '/web'
-        # The front-controller script to send non-static requests to.
-        passthru: '/app.php'
+        locations:
+            '/':
+                # The public directory of the app, relative to its root.
+                root: 'web'
+                # The front-controller script to send non-static requests to.
+                passthru: '/app.php'
 
     # The size of the persistent disk of the application (in MB).
     disk: 2048
@@ -73,21 +75,21 @@ Platform.sh how to deploy your application (read more about
         deploy: |
           bin/console --env=prod cache:clear
 
-For best practices, you should also add a ``.platform`` folder at the root of
+You also need add a ``.platform`` folder at the root of
 your Git repository which contains the following files:
 
 .. code-block:: yaml
 
     # .platform/routes.yaml
-    "http://{default}/":
+    'https://{default}/':
         type: upstream
         # the first part should be your project name
-        upstream: 'myphpproject:php'
+        upstream: 'myphpproject:http'
 
 .. code-block:: yaml
 
     # .platform/services.yaml
-    mysql:
+    mydatabase:
         type: mysql
         disk: 2048
 
@@ -155,7 +157,7 @@ Commit the Platform.sh specific files created in the previous section:
 
 .. code-block:: terminal
 
-    $ git add .platform.app.yaml .platform/*
+    $ git add .platform.app.yaml .platform/*.yaml
     $ git add app/config/config.yml app/config/parameters_platform.php
     $ git commit -m "Adding Platform.sh configuration files."
 
