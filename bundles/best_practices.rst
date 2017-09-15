@@ -31,7 +31,7 @@ Bundle Name
 A bundle is also a PHP namespace. The namespace must follow the `PSR-0`_ or
 `PSR-4`_ interoperability standards for PHP namespaces and class names: it starts
 with a vendor segment, followed by zero or more category segments, and it ends
-with the namespace short name, which must end with a ``Bundle`` suffix.
+with the namespace short name, which must end with ``Bundle``.
 
 A namespace becomes a bundle as soon as you add a bundle class to it. The
 bundle class name must follow these simple rules:
@@ -48,8 +48,8 @@ Here are some valid bundle namespaces and class names:
 ==========================  ==================
 Namespace                   Bundle Class Name
 ==========================  ==================
-``Acme\Bundle\BlogBundle``  ``AcmeBlogBundle``
-``Acme\BlogBundle``         ``AcmeBlogBundle``
+``Acme\Bundle\BlogBundle``  AcmeBlogBundle
+``Acme\BlogBundle``         AcmeBlogBundle
 ==========================  ==================
 
 By convention, the ``getName()`` method of the bundle class should return the
@@ -58,8 +58,7 @@ class name.
 .. note::
 
     If you share your bundle publicly, you must use the bundle class name as
-    the name of the repository (``AcmeBlogBundle`` and not ``BlogBundle``
-    for instance).
+    the name of the repository (AcmeBlogBundle and not BlogBundle for instance).
 
 .. note::
 
@@ -68,7 +67,7 @@ class name.
     :class:`Symfony\\Bundle\\FrameworkBundle\\FrameworkBundle`.
 
 Each bundle has an alias, which is the lower-cased short version of the bundle
-name using underscores (``acme_blog`` for ``AcmeBlogBundle``). This alias
+name using underscores (``acme_blog`` for AcmeBlogBundle). This alias
 is used to enforce uniqueness within a project and for defining bundle's
 configuration options (see below for some usage examples).
 
@@ -105,8 +104,8 @@ that automated tools can rely on:
   bundles are published under the MIT license, but you can `choose any license`_;
 * ``Resources/doc/index.rst``: The root file for the Bundle documentation.
 
-The depth of sub-directories should be kept to the minimum for most used
-classes and files (two levels maximum).
+The depth of subdirectories should be kept to a minimum for the most used
+classes and files. Two levels is the maximum.
 
 The bundle directory is read-only. If you need to write temporary files, store
 them under the ``cache/`` or ``log/`` directory of the host application. Tools
@@ -138,9 +137,9 @@ Classes
 -------
 
 The bundle directory structure is used as the namespace hierarchy. For
-instance, a ``ContentController`` controller is stored in
-``Acme/BlogBundle/Controller/ContentController.php`` and the fully qualified
-class name is ``Acme\BlogBundle\Controller\ContentController``.
+instance, a ``ContentController`` controller which is stored in
+``Acme/BlogBundle/Controller/ContentController.php`` would have the fully
+qualified class name of ``Acme\BlogBundle\Controller\ContentController``.
 
 All classes and files must follow the :doc:`Symfony coding standards </contributing/code/standards>`.
 
@@ -158,8 +157,8 @@ Vendors
 A bundle must not embed third-party PHP libraries. It should rely on the
 standard Symfony autoloading instead.
 
-A bundle should not embed third-party libraries written in JavaScript, CSS or
-any other language.
+A bundle should also not embed third-party libraries written in JavaScript,
+CSS or any other language.
 
 Tests
 -----
@@ -183,10 +182,13 @@ Documentation
 
 All classes and functions must come with full PHPDoc.
 
-Extensive documentation should also be provided in the
-:doc:`reStructuredText </contributing/documentation/format>` format, under
-the ``Resources/doc/`` directory; the ``Resources/doc/index.rst`` file is
-the only mandatory file and must be the entry point for the documentation.
+Extensive documentation should also be provided in the ``Resources/doc/`` 
+directory.
+The index file (for example ``Resources/doc/index.rst`` or 
+``Resources/doc/index.md``) is the only mandatory file and must be the entry 
+point for the documentation. The 
+:doc:`reStructuredText (rST) </contributing/documentation/format>` is the format
+used to render the documentation on symfony.com.
 
 Installation Instructions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -232,7 +234,6 @@ following standardized instructions in your ``README.md`` file.
             {
                 $bundles = array(
                     // ...
-
                     new <vendor>\<bundle-name>\<bundle-long-name>(),
                 );
 
@@ -399,9 +400,9 @@ The ``composer.json`` file should include at least the following metadata:
 ``name``
     Consists of the vendor and the short bundle name. If you are releasing the
     bundle on your own instead of on behalf of a company, use your personal name
-    (e.g. ``johnsmith/blog-bundle``). The bundle short name excludes the vendor
-    name and separates each word with an hyphen. For example: ``AcmeBlogBundle``
-    is transformed into ``blog-bundle`` and ``AcmeSocialConnectBundle`` is
+    (e.g. ``johnsmith/blog-bundle``). Exclude the vendor name from the bundle
+    short name and separate each word with an hyphen. For example: AcmeBlogBundle
+    is transformed into ``blog-bundle`` and AcmeSocialConnectBundle is
     transformed into ``social-connect-bundle``.
 
 ``description``
@@ -411,8 +412,7 @@ The ``composer.json`` file should include at least the following metadata:
     Use the ``symfony-bundle`` value.
 
 ``license``
-    ``MIT`` is the preferred license for Symfony bundles, but you can use any
-    other license.
+    a string (or array of strings) with a `valid license identifier`_, such as ``MIT``.
 
 ``autoload``
     This information is used by Symfony to load the classes of the bundle. The
@@ -497,3 +497,4 @@ Learn more
 .. _`Semantic Versioning Standard`: http://semver.org/
 .. _`Packagist`: https://packagist.org/
 .. _`choose any license`: http://choosealicense.com/
+.. _`valid license identifier`: https://spdx.org/licenses/

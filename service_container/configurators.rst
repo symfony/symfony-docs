@@ -116,7 +116,7 @@ You can configure the service configurator using the ``configurator`` option:
         # app/config/services.yml
         services:
             app.email_formatter_manager:
-                class: EmailFormatterManager
+                class: AppBundle\Mail\EmailFormatterManager
                 # ...
 
             app.email_configurator:
@@ -159,7 +159,7 @@ You can configure the service configurator using the ``configurator`` option:
                     <configurator service="app.email_configurator" method="configure" />
                 </service>
 
-                <service id="greeting_card_manager" class="GreetingCardManager">
+                <service id="greeting_card_manager" class="AppBundle\Mail\GreetingCardManager">
                     <argument type="service" id="mailer" />
 
                     <configurator service="app.email_configurator" method="configure" />
