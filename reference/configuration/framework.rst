@@ -571,6 +571,10 @@ The DSN where to store the profiling information.
 matcher
 .......
 
+.. caution::
+
+    This option is deprecated since Symfony 3.4 and will be removed in 4.0.
+
 Matcher options are configured to dynamically enable the profiler. For
 instance, based on the `ip`_ or :ref:`path <reference-profiler-matcher-path>`.
 
