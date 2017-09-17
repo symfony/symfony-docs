@@ -11,7 +11,6 @@ The Console Helpers
     formatterhelper
     processhelper
     progressbar
-    progresshelper
     questionhelper
     table
     debug_formatter
