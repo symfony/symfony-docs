@@ -405,3 +405,92 @@ The double loop may be confusing. This is because a service can have more
 than one tag. You tag a service twice or more with the ``app.mail_transport``
 tag. The second foreach loop iterates over the ``app.mail_transport``
 tags set for the current service and gives you the attributes.
+
+Reference tagged services
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In case your tag doesn't require any further additional attributes writing compiler 
+passes per tag might become tedious. A way to overcome this is is to make your compiler 
+pass more generic. The downside of this approach is you have to write and maintain
+additional code, considering you want to reuse it over multiple projects.
+
+ThereBecause this task is so generic and common to do, Symfony provides a way to achieve this 
+directly in your service container confguration. This enables to inject services tagged 
+with e.g. `app.handler` into another service that collects all handlers.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\Handler\One:
+                tags: [app.handler]
+
+            App\Handler\Two:
+                tags: [app.handler]
+
+            App\HandlerCollection:
+                arguments: [!tagged app.handler]
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Handler\One">
+                    <tag name="app.handler" />
+                </service>
+
+                <service id="App\Handler\Two">
+                    <tag name="app.handler" />
+                </service>
+
+                <service id="App\HandlerCollection">
+                    <argument type="tagged" tag="app.handler" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+
+        $container->register(\App\Handler\One::class)
+            ->addTag('app.handler');
+
+        $container->register(\App\Handler\One::class)
+            ->addTag('app.handler');
+
+        $container->register(\App\HandlerCollection::class)
+            ->addArgument(new TaggedIteratorArgument('app.handler'));
+
+After compilation the `HandlerCollection` service is able to iterate over your application handlers.
+
+    .. code-block:: php
+
+        class HandlerCollection
+        {
+            public function __construct(iterable $handlers)
+            {
+            }
+        }
+
+.. tip::
+
+   The collected services can be prioritized using the `priority` attribute.
+
+    .. code-block:: yaml
+
+        services:
+            App\Handler\One:
+                tags:
+                    - { name: app.handler, priority: 20 }
+
+.. versionadded:: 3.4
+
+    Support for the tagged service notation in YAML, XML and PHP was introduced
+    in Symfony 3.4.
