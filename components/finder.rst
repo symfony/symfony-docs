@@ -57,6 +57,12 @@ the Finder instance.
 
 .. caution::
 
+    The ``Finder`` object doesn't reset its internal state automatically.
+    This means that you need to create a new instance if you do not want
+    get mixed results.
+
+.. caution::
+
     When searching through multiple locations passed to the
     :method:`Symfony\\Component\\Finder\\Finder::in` method, a separate iterator
     is created internally for every location. This means we have multiple result
@@ -83,7 +89,7 @@ Search in several locations by chaining calls to
 :method:`Symfony\\Component\\Finder\\Finder::in`::
 
     // search inside *both* directories
-    $finder->files()->in(array(__DIR__, '/elsewhere'));
+    $finder->in(array(__DIR__, '/elsewhere'));
 
     // same as above
     $finder->in(__DIR__)->in('/elsewhere');

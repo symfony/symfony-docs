@@ -181,7 +181,7 @@ To include an image you can use the ``image`` tag.
         <?php endforeach ?>
 
 You can also use Assetic for image optimization. More information in
-:doc:`/assetic/jpeg_optimize`.
+:doc:`/frontend/assetic/jpeg_optimize`.
 
 .. tip::
 
@@ -441,7 +441,7 @@ into your template:
         <?php endforeach ?>
 
 A more detailed guide about configuring and using Assetic filters as well as
-details of Assetic's debug mode can be found in :doc:`/assetic/uglifyjs`.
+details of Assetic's debug mode can be found in :doc:`/frontend/assetic/uglifyjs`.
 
 Controlling the URL Used
 ------------------------

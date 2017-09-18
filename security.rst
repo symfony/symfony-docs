@@ -5,8 +5,8 @@ Security
 ========
 
 Symfony's security system is incredibly powerful, but it can also be confusing
-to set up. In this article, you'll learn how to set up your application's security
-step-by-step, from configuring your firewall and how you load users to denying
+to set up. In this article you'll learn how to set up your application's security
+step-by-step, from configuring your firewall and how you load users, to denying
 access and fetching the User object. Depending on what you need, sometimes
 the initial setup can be tough. But once it's done, Symfony's security system
 is both flexible and (hopefully) fun to work with.
@@ -988,7 +988,7 @@ You can also use expressions inside your templates:
             <a href="...">Delete</a>
         <?php endif; ?>
 
-For more details on expressions and security, see :ref:`expressions-security`.
+For more details on expressions and security, see :doc:`/security/expressions`.
 
 .. _security-secure-objects:
 

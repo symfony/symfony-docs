@@ -88,19 +88,22 @@ guest sessions.
 Encryption of Session Data
 --------------------------
 
-If you wanted to encrypt the session data, you could use the proxy to encrypt
-and decrypt the session as required::
+If you want to encrypt the session data, you can use the proxy to encrypt and
+decrypt the session as required. The following example uses the `php-encryption`_
+library, but you can adapt it to any other library that you may be using::
 
     // src/AppBundle/Session/EncryptedSessionProxy.php
     namespace AppBundle\Session;
 
+    use Defuse\Crypto\Crypto;
+    use Defuse\Crypto\Key;
     use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;
 
     class EncryptedSessionProxy extends SessionHandlerProxy
     {
         private $key;
 
-        public function __construct(\SessionHandlerInterface $handler, $key)
+        public function __construct(\SessionHandlerInterface $handler, Key $key)
         {
             $this->key = $key;
 
@@ -111,12 +114,12 @@ and decrypt the session as required::
         {
             $data = parent::read($id);
 
-            return mcrypt_decrypt(\MCRYPT_3DES, $this->key, $data);
+            return Crypto::decrypt($data, $this->key);
         }
 
         public function write($id, $data)
         {
-            $data = mcrypt_encrypt(\MCRYPT_3DES, $this->key, $data);
+            $data = Crypto::encrypt($data, $this->key);
 
             return parent::write($id, $data);
         }
@@ -155,3 +158,5 @@ can intercept the session before it is written::
             return parent::write($id, $data);
         }
     }
+
+.. _`php-encryption`: https://github.com/defuse/php-encryption

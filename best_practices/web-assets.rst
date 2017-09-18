@@ -49,7 +49,7 @@ tools like GruntJS.
     Use Assetic to compile, combine and minimize web assets, unless you're
     comfortable with frontend tools like GruntJS.
 
-:doc:`Assetic </assetic/asset_management>` is an asset manager capable
+:doc:`Assetic </frontend/assetic/asset_management>` is an asset manager capable
 of compiling assets developed with a lot of different frontend technologies
 like LESS, Sass and CoffeeScript. Combining all your assets with Assetic is a
 matter of wrapping all the assets with a single Twig tag:
@@ -87,8 +87,8 @@ Learn More about Assetic
 ------------------------
 
 Assetic can also minimize CSS and JavaScript assets
-:doc:`using UglifyCSS/UglifyJS </assetic/uglifyjs>` to speed up your
-websites. You can even :doc:`compress images </assetic/jpeg_optimize>`
+:doc:`using UglifyCSS/UglifyJS </frontend/assetic/uglifyjs>` to speed up your
+websites. You can even :doc:`compress images </frontend/assetic/jpeg_optimize>`
 with Assetic to reduce their size before serving them to the user. Check out
 the `official Assetic documentation`_ to learn more about all the available
 features.

@@ -50,7 +50,7 @@ uses MySQL as the storage for the profiler with a lifetime of one hour:
         // ...
         $container->loadFromExtension('framework', array(
             'profiler' => array(
-                'dsn'      => 'mysql:host=localhost;dbname=%database_name%',
+                'dsn' => 'mysql:host=localhost;dbname=%database_name%',
                 'username' => '%database_user',
                 'password' => '%database_password%',
                 'lifetime' => 3600,
