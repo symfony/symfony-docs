@@ -127,7 +127,8 @@
 /cookbook/controller/index /controller
 /cookbook/controller/service /controller/service
 /cookbook/controller/upload_file /controller/upload_file
-/cookbook/debugging /debug/debugging
+/cookbook/debugging /
+/debug/debugging /
 /cookbook/deployment/azure-website /cookbook/azure-website
 /cookbook/deployment/fortrabbit /deployment/fortrabbit
 /cookbook/deployment/heroku /deployment/heroku
