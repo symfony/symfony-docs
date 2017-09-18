@@ -279,7 +279,7 @@ need to escape the percent signs (``%``) by doubling them.
 .. note::
 
     If both ``framework.ide`` and ``xdebug.file_link_format`` are defined,
-    Symfony uses the value of the ``framework.ide`` option.
+    Symfony uses the value of the ``xdebug.file_link_format`` option.
 
 .. tip::
 
