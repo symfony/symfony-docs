@@ -125,81 +125,23 @@ your deploy process:
   Prevents Composer from scanning the file system for classes that are not
   found in the class map.
 
-Caching the Autoloader with APC
--------------------------------
+Caching the Autoloader with APCu
+--------------------------------
 
 Another solution is to cache the location of each class after it's located
-the first time. Symfony comes with a class - :class:`Symfony\\Component\\ClassLoader\\ApcClassLoader` -
-that does exactly this. To use it, just adapt your front controller file.
-If you're using the Standard Distribution, make the following changes::
-
-    // app.php
-    // ...
-    
-    use Symfony\Component\ClassLoader\ApcClassLoader;
-
-    // do not use $loader as a variable name here as it would
-    // be overwritten when loading the bootstrap.php.cache file
-    $classLoader = require __DIR__.'/../app/autoload.php';
-    include_once __DIR__.'/../app/bootstrap.php.cache';
-
-    // Use APC for autoloading to improve performance
-    // Change 'sf2' by the prefix you want in order
-    // to prevent key conflict with another application
-    $loader = new ApcClassLoader('sf2', $classLoader);
-    $loader->register(true);
-
-    // ...
-
-For more details, see :doc:`/components/class_loader/cache_class_loader`.
+the first time: use `composer install --apcu-autoloader`.
 
 .. note::
 
-    When using the APC autoloader, if you add new classes, they will be found
+    When using the APCu autoloader, if you add new classes, they will be found
     automatically and everything will work the same as before (i.e. no
     reason to "clear" the cache). However, if you change the location of a
-    particular namespace or prefix, you'll need to flush your APC cache. Otherwise,
+    particular namespace or prefix, you'll need to flush your APCu cache. Otherwise,
     the autoloader will still be looking at the old location for all classes
     inside that namespace.
 
 .. index::
-   single: Performance; Bootstrap files
-
-Use Bootstrap Files
--------------------
-
-To ensure optimal flexibility and code reuse, Symfony applications leverage
-a variety of classes and 3rd party components. But loading all of these classes
-from separate files on each request can result in some overhead. To reduce
-this overhead, the Symfony Standard Edition provides a script to generate
-a so-called `bootstrap file`_, consisting of multiple classes definitions
-in a single file. By including this file (which contains a copy of many of
-the core classes), Symfony no longer needs to include any of the source files
-containing those classes. This will reduce disc IO quite a bit.
-
-If you're using the Symfony Standard Edition, then you're probably already
-using the bootstrap file. To be sure, open your front controller (usually
-``app.php``) and check to make sure that the following line exists::
-
-    include_once __DIR__.'/../var/bootstrap.php.cache';
-
-Note that there are two disadvantages when using a bootstrap file:
-
-* the file needs to be regenerated whenever any of the original sources change
-  (i.e. when you update the Symfony source or vendor libraries);
-
-* when debugging, one will need to place break points inside the bootstrap file.
-
-If you're using the Symfony Standard Edition, the bootstrap file is automatically
-rebuilt after updating the vendor libraries via the ``composer install`` command.
-
-Bootstrap Files and Byte Code Caches
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Even when using a byte code cache, performance will improve when using a bootstrap
-file since there will be fewer files to monitor for changes. Of course, if this
-feature is disabled in the byte code cache (e.g. ``apc.stat=0`` in APC), there
-is no longer a reason to use a bootstrap file.
+   single: Performance; APCu
 
 Learn more
 ----------
