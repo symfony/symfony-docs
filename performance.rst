@@ -123,8 +123,9 @@ Optimize Composer Autoloader
 
 The class loader used while developing the application is optimized to find
 new and changed classes. In production servers, PHP files should never change,
-unless a new application version is deployed. That's why you can optimize
-Composer's autoloader to scan the entire application once and build a "class map",
+unless a new application version is deployed.
+That's why you can use `Composer's autoloader optimization`
+to scan the entire application once and build a "class map",
 which is a big array of the locations of all the classes and it's stored
 in ``vendor/composer/autoload_classmap.php``.
 
@@ -173,6 +174,7 @@ Learn more
 
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`OPcache`: http://php.net/manual/en/book.opcache.php
+.. _`Composer's autoloader optimization`: https://getcomposer.org/doc/articles/autoloader-optimization.md
 .. _`APC`: http://php.net/manual/en/book.apc.php
 .. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu
 .. _`APCu PHP functions`: http://php.net/manual/en/ref.apcu.php
