@@ -25,6 +25,7 @@ it::
             // some logic to determine the $locale
             $request->setLocale($locale);
         }
+
 .. note::
 
     Using a listener like this requires that it is called **before** 
