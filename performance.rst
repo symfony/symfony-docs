@@ -128,25 +128,26 @@ Composer's autoloader to scan the entire application once and build a "class map
 which is a big array of the locations of all the classes and it's stored
 in ``vendor/composer/autoload_classmap.php``.
 
-Execute this command to generate the class map (and make it part of your
+Execute this command to generate the class map at install time (and thus make it part of your
 deployment process too):
 
 .. code-block:: bash
 
-    $ composer install --no-dev --optimize --classmap-authoritative --apcu
+    $ composer install --no-dev --optimize-autoloader --classmap-authoritative --apcu-autoloader
 
 ``--no-dev``
   Excludes the classes that are only needed in the development environment
   (e.g. tests).
-``--optimize``
+``--optimize-autoloader``
   Dumps every PSR-0 and PSR-4 compatible class used in your application.
 ``--classmap-authoritative``
   Prevents Composer from scanning the file system for classes that are not
   found in the class map.
-``--apcu``
+``--apcu-autoloader``
   You need to install APCu PHP extension to use this option.
   It will cache the classmap in APCu. It won't generate the classmap though,
   so you need to always use it with ``--optimize-autoloader``
+
 
 .. tip::
 
