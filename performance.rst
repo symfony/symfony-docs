@@ -8,7 +8,7 @@ Symfony is fast, right out of the box. Of course, if you really need speed, the
 following performance checklists show how to make your application even faster.
 
 .. index::
-single: Performance; Byte code cache; APCu
+single: Performance; Byte code cache
 
 Production Server Checklist
 ---------------------------
