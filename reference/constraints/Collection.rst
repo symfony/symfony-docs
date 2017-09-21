@@ -314,7 +314,7 @@ error will be returned. If set to ``true``, extra fields are ok.
 extraFieldsMessage
 ~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``The fields {{ fields }} were not expected.``
+**type**: ``boolean`` **default**: ``This field was not expected.``
 
 The message shown if `allowExtraFields`_ is false and an extra field is
 detected.
@@ -332,7 +332,7 @@ option are not present in the underlying collection.
 missingFieldsMessage
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``The fields {{ fields }} are missing.``
+**type**: ``boolean`` **default**: ``This field is missing.``
 
 The message shown if `allowMissingFields`_ is false and one or more fields
 are missing from the underlying collection.
