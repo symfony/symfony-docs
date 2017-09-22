@@ -360,8 +360,8 @@ properties through *adder* and *remover* methods.
 
 The PropertyAccess component checks for methods called ``add<SingularOfThePropertyName>()``
 and ``remove<SingularOfThePropertyName>()``. Both methods must be defined.
-For instance, in the previous example, the component looks for ``addChild()`` and
-``removeChild()`` methods to access to the ``children`` property.
+For instance, in the previous example, the component looks for the ``addChild()``
+and ``removeChild()`` methods to access to the ``children`` property.
 `The Inflector component`_ is used to find the singular of a property name.
 
 If available, *adder* and *remover* methods have priority over a *setter* method.
