@@ -1,0 +1,61 @@
+---------------------------------------------------------------------------
+
+by ro0NL at 2017-09-18T08:23:32Z
+
+https://github.com/symfony/symfony/issues/24129 might need clarification as well :+1:
+
+---------------------------------------------------------------------------
+
+by aik099 at 2017-09-18T08:54:49Z
+
+@ro0NL , I've left a note in that issue. Hope that helps.
+
+---------------------------------------------------------------------------
+
+by ro0NL at 2017-09-18T08:58:37Z
+
+I think the part as of `When running your app in a container or in a virtual machine...` should be updated to a config context, we are in fact describing the ide config setting.
+
+Thus instead of
+
+```
+// /path/to/guest/.../file will be opened
+// as /path/to/host/.../file on the host
+// and /foo/.../file as /bar/.../file also
+'myide://%f:%l&/path/to/guest/>/path/to/host/&/foo/>/bar/&...'
+```
+
+I'd say
+
+```
+framework:
+    ide: 'myide://%%f:%%l&/path/to/guest/>/path/to/host/&/foo/>/bar/&...'
+```
+
+Thus escaped.
+
+---------------------------------------------------------------------------
+
+by aik099 at 2017-09-18T09:37:35Z
+
+> https://github.com/symfony/symfony-docs/pull/8405#issuecomment-330162932
+
+@ro0NL , is this related to changes I've made in this PR?
+
+If so, the I don't understand what you want me to change. If you have push access to this repo, then you already can add more commits to my PR branch.
+
+---------------------------------------------------------------------------
+
+by ro0NL at 2017-09-18T09:41:53Z
+
+Not really related. I thought it was an issue (not a PR) so i quickly comment as well :) related to the same subject though.
+
+Ill have a look in different PR soonish otherwise. Issue solved, feel free to ignore :)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-09-19T11:27:01Z
+
+:+1: Seems correct to me. Thanks for your detailed PR description & patch!
+
+status: reviewed
