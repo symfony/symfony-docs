@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by issei-m at 2017-09-21T02:17:00Z
+
+Btw, IMMIC, ELB can be provisoned with specific IP range, if you use VPC.
+So following sentence
+
+```
+Some reverse proxies (like AWS Elastic Load Balancing) don't have a static IP address or even a range that you can target with the CIDR notation.
+```
+
+would be better to be:
+
+```
+Some reverse proxies (like AWS Elastic Load Balancing, unless you don't provision it in VPC) don't have a static IP address or even a range that you can target with the CIDR notation.
+```
