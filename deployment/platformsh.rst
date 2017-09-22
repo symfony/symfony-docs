@@ -41,7 +41,7 @@ Platform.sh how to deploy your application (read more about
     # The type of the application to build.
     type: php:5.6
     build:
-      flavor: symfony
+      flavor: composer
 
     # The relationships of the application with services or other applications.
     # The left-hand side is the name of the relationship as it will be exposed

@@ -232,7 +232,7 @@ each time you ask for it.
 
     Thanks to this configuration, you can automatically use any classes from the
     ``src/AppBundle`` directory as a service, without needing to manually configure
-    it. Later, you'll learn more about this later in :ref:`service-psr4-loader`.
+    it. Later, you'll learn more about this in :ref:`service-psr4-loader`.
 
     If you'd prefer to manually wire your service, that's totally possible: see
     :ref:`services-explicitly-configure-wire-services`.
@@ -992,7 +992,7 @@ admin email. In this case, each needs to have a unique service id:
                     <argument>contact@example.com</argument>
                 </service>
 
-                <alias id="AppBundle\Updates\SiteUpdateManager" service="site_update_manager.superadmin">
+                <alias id="AppBundle\Updates\SiteUpdateManager" service="site_update_manager.superadmin" />
             </services>
         </container>
 
