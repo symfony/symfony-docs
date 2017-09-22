@@ -285,7 +285,7 @@ value:
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(
-                'name_converter' => 'serializer.name_converter.camel_case_to_snake_case,
+                'name_converter' => 'serializer.name_converter.camel_case_to_snake_case',
             ),
         ));
 

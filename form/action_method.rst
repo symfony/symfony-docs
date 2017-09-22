@@ -56,7 +56,7 @@ form, you can use ``setAction()`` and ``setMethod()``:
         $formFactory = $formFactoryBuilder->getFormFactory();
 
         $form = $formFactory->createBuilder(FormType::class, $task)
-            ->setAction($this->generateUrl('target_route'))
+            ->setAction('...')
             ->setMethod('GET')
             ->add('task', TextType::class)
             ->add('dueDate', DateType::class)
@@ -108,7 +108,7 @@ options:
         $formFactory = $formFactoryBuilder->getFormFactory();
 
         $form = $formFactory->create(TaskType::class, $task, array(
-            'action' => $this->generateUrl('target_route'),
+            'action' => '...',
             'method' => 'GET',
         ));
 
