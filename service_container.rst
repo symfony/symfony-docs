@@ -402,6 +402,20 @@ Actually, once you define a parameter, it can be referenced via the ``%parameter
 syntax in *any* other service configuration file - like ``config.yml``. Many parameters
 are defined in a :ref:`parameters.yml file <config-parameters-yml>`.
 
+You can then fetch the parameter in the service::
+
+    class SiteUpdateManager
+    {
+        // ...
+
+        private $adminEmail;
+
+        public function __construct($adminEmail)
+        {
+            $this->adminEmail = $adminEmail;
+        }
+    }
+
 You can also fetch parameters directly from the container::
 
     public function newAction()
