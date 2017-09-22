@@ -501,6 +501,7 @@ of the form fields::
                 'required' => true,
                 'constraints' => array(new Length(array('min' => 3)))
             ))
+        ;
     }
 
 The ``constraints`` option is only available if the ``ValidatorExtension``

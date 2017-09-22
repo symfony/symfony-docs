@@ -400,8 +400,6 @@ Now, register this class as a Doctrine listener:
             <!-- ... -->
 
             <service id="AppBundle\EventListener\BrochureUploaderListener">
-                <argument type="service" id="app.brochure_uploader"/>
-
                 <tag name="doctrine.event_listener" event="prePersist"/>
                 <tag name="doctrine.event_listener" event="preUpdate"/>
             </service>
