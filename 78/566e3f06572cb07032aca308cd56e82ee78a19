@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by aik099 at 2017-09-19T12:09:04Z
+
+I wonder why the Platform.sh build was triggered on my other PR, but not on this one.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-09-19T15:31:57Z
+
+It is triggered (at least now) if you collapse the status item you can see it.
