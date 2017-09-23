@@ -50,6 +50,8 @@ Configuration
         * `ip`_
         * :ref:`path <reference-profiler-matcher-path>`
         * `service`_
+* `request`_:
+    * `formats`_
 * `router`_
     * `resource`_
     * `type`_
@@ -646,6 +648,16 @@ service
 **type**: ``string``
 
 This setting contains the service id of a custom matcher.
+
+request
+~~~~~~~
+
+formats
+.......
+
+**type**: ``array`` **default**: ``[]``
+
+---> TODO
 
 router
 ~~~~~~
