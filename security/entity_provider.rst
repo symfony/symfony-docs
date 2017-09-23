@@ -12,15 +12,6 @@ you how to load your users from the database via a Doctrine entity.
 Introduction
 ------------
 
-.. tip::
-
-    Before you start, you should check out `FOSUserBundle`_. This external
-    bundle allows you to load users from the database (like you'll learn here)
-    *and* gives you built-in routes & controllers for things like login,
-    registration and forgot password. But, if you need to heavily customize
-    your user system *or* if you want to learn how things work, this tutorial
-    is even better.
-
 Loading users via a Doctrine entity has 2 basic steps:
 
 #. :ref:`Create your User entity <security-crete-user-entity>`
