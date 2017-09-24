@@ -3,10 +3,11 @@ Length
 
 Validates that a given string length is *between* some minimum and maximum value.
 
-**Warning**: *null* and *blank* values are not handled by this constraint. To
-handle them, refers to the :doc:`/reference/constraints/Null`,
-:doc:`/reference/constraints/NotNull`, :doc:`/reference/constraints/Blank` and
-:doc:`/reference/constraints/NotBlank` constraints.
+.. caution::
+
+    ``null`` and empty strings are not handled by this constraint. You need to
+    also add the :doc:`/reference/constraints/NotBlank` or :doc:`/reference/constraints/NotNull`
+    constraints to validate against these.
 
 +----------------+----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`               |
