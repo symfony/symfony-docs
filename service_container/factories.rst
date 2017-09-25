@@ -102,7 +102,7 @@ Configuration of the service container then looks like this:
 
             AppBundle\Email\NewsletterManager:
                 # call a method on the specified factory service
-                factory: 'AppBundle\Email\NewsletterManagerFactory:createNewsletterManager'
+                factory: 'AppBundle\Email\NewsletterManagerFactory::createNewsletterManager'
 
     .. code-block:: xml
 
@@ -154,7 +154,7 @@ Configuration of the service container then looks like this:
 
         app.newsletter_manager:
             # new syntax
-            factory: 'AppBundle\Email\NewsletterManagerFactory:createNewsletterManager'
+            factory: 'AppBundle\Email\NewsletterManagerFactory::createNewsletterManager'
             # old syntax
             factory: ['@AppBundle\Email\NewsletterManagerFactory', createNewsletterManager]
 
@@ -182,7 +182,7 @@ example takes the ``templating`` service as an argument:
             # ...
 
             AppBundle\Email\NewsletterManager:
-                factory:   'AppBundle\Email\NewsletterManagerFactory:createNewsletterManager'
+                factory:   'AppBundle\Email\NewsletterManagerFactory::createNewsletterManager'
                 arguments: ['@templating']
 
     .. code-block:: xml
