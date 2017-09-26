@@ -645,7 +645,7 @@ The process of authorization has two different sides:
 Roles
 ~~~~~
 
-When a user logs in, they receive a set of roles (e.g. ``ROLE_ADMIN``). In
+When a user logs in, he receives a set of roles (e.g. ``ROLE_ADMIN``). In
 the example above, these are hardcoded into ``security.yml``. If you're
 loading users from the database, these are probably stored on a column
 in your table.
