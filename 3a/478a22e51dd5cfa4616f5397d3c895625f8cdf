@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-02-22T22:28:55Z
+
+:+1: to be more explicit with this option.
+Also, I've read in an issue that someone was missing the fact that it's an entity which is passed in `EntityType`. It would be nice to explicit the fact that it's the choice model data that is passed.
+And a caution as this callable is also called with the default data which is often `null` or an empty string so it throws an exception if you used method on object choices.
+Finally I would suggest to say something about the responsibility to return a unique string representation.
+
+---------------------------------------------------------------------------
+
+by backbone87 at 2016-02-22T22:52:12Z
+
+@HeahDude i agree with you on everything, but i think its out of scope for this PR, since it is just a quick doc fix, to avoid errors
+
+https://github.com/symfony/symfony-docs/issues/6144 requests a general overhaul / clarification of the choice type / choice list components
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2016-02-22T23:01:50Z
+
+Alright then ;) But at least, to quickly avoid errors, I hardly recommend to remove that line as I said in inline comment.
+
+---------------------------------------------------------------------------
+
+by backbone87 at 2016-02-23T21:16:50Z
+
+i have applied your feedback, can be autosquashed for clean history
+
+---------------------------------------------------------------------------
+
+by backbone87 at 2016-02-23T21:35:07Z
+
+done
