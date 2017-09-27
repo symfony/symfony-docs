@@ -29,9 +29,8 @@ it::
 .. note::
 
     Using a listener like this requires that it is called **before** 
-    LocaleListener attempts to access it. In Symfony Framework it is called
-    with priority 8 by default. You will need to set your event listener
-    with a higher one if you want this to work.
+    LocaleListener attempts to access it. You will need to set your event listener
+    with a higher priority if you want this to work.
 
 Read :doc:`/session/locale_sticky_session` for more information on making
 the user's locale "sticky" to their session.
