@@ -11,8 +11,14 @@ in HTML and submitted in the POST/PUT requests. You don't normally need to worry
 about this, but it might be handy when processing an API request (since you can
 configure the value that will be sent in the API request).
 
-This can be a callable or a property path. See `choice_label`_ for similar usage.
-If ``null`` is used, an incrementing integer is used as the name.
+This can be a callable or a property path. If ``null`` is given, an incrementing
+integer is used as the value.
+
+.. note::
+
+    In contrast to other choice options (e.g. `choice_label`_), the callable for
+    the ``choice_value`` option takes as **only** argument the actual choice, which
+    is also the value that gets passed to your model when submitting the form.
 
 If you are using a callable to populate ``choice_value``, you need to check
 for the case that the value of the field may be ``null``.
