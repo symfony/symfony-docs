@@ -4,6 +4,11 @@
 How to Override any Part of a Bundle
 ====================================
 
+.. caution::
+
+    Bundle inheritance is deprecated since Symfony 3.4 and will be removed in
+    4.0.
+
 This document is a quick reference for how to override different parts of
 third-party bundles.
 
