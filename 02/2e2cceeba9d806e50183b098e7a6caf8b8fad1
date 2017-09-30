@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-09-27T08:24:33Z
+
+Can you update the other examples on the same page too?
+
+---------------------------------------------------------------------------
+
+by alexpts at 2017-09-27T08:29:09Z
+
+OK, I will test that name service as className not work too and update other examples for yaml
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-09-27T08:31:36Z
+
+Sorry, you are right. I missed that this PR was for the 3.3 branch. It's all good. :)
+
+---------------------------------------------------------------------------
+
+by alexpts at 2017-09-27T08:38:00Z
+
+Do You need anything else from me?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-09-27T08:41:30Z
+
+It's fine it is. :) When we'll do the next round of merges, this one will be a part of it. :)
+
+---------------------------------------------------------------------------
+
+by alexpts at 2017-09-27T08:43:59Z
+
+Ok, Thank you
