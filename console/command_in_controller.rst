@@ -36,8 +36,9 @@ Run this command from inside your controller via::
 
     class SpoolController extends Controller
     {
-        public function sendSpoolAction($messages = 10, KernelInterface $kernel)
+        public function sendSpoolAction($messages = 10)
         {
+            $kernel = $this->get('kernel');
             $application = new Application($kernel);
             $application->setAutoExit(false);
 
