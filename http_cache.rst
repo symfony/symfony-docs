@@ -289,7 +289,7 @@ two things:
 * Don't try to cache PUT, POST or DELETE requests. It won't work and with good
   reason. These methods are meant to be used when mutating the state of your application
   (e.g. deleting a blog post). Caching them would prevent certain requests from hitting
-  and mutating your application.
+  and mutating your application. (Technically caching POST requests is possible however this is very narrow case `Caching POST`_
 
 * You should *never* change the state of your application (e.g. update a blog post)
   when responding to a GET or HEAD request. If those requests are cached, future
@@ -366,3 +366,4 @@ Learn more
 .. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234
 .. _`RFC 7232 - Conditional Requests`: https://tools.ietf.org/html/rfc7232
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`Caching POST`: https://www.mnot.net/blog/2012/09/24/caching_POST
