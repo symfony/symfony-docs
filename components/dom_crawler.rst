@@ -237,10 +237,19 @@ The crawler supports multiple ways of adding the content::
 
 .. note::
 
-    When dealing with character sets other than ISO-8859-1, always add HTML
-    content using the :method:`Symfony\\Component\\DomCrawler\\Crawler::addHtmlContent`
-    method where you can specify the second parameter to be your target character
-    set.
+    The :method:`Symfony\\Component\\DomCrawler\\Crawler::addHtmlContent` and
+    :method:`Symfony\\Component\\DomCrawler\\Crawler::addXmlContent` methods
+    default to UTF-8 encoding but you can change this behavior with their second
+    optional argument.
+
+    The :method:`Symfony\\Component\\DomCrawler\\Crawler::addContent` method
+    detects the best charset according to the given contents and defaults to
+    ``ISO-8859-1`` in case no charset can be guessed.
+
+    .. versionadded:: 3.4
+        The charst guessing mechanism of the ``addContent()`` method was added
+        in Symfony 3.4. In previous Symfony versions, ``ISO-8859-1`` charset was
+        always used.
 
 As the Crawler's implementation is based on the DOM extension, it is also able
 to interact with native :phpclass:`DOMDocument`, :phpclass:`DOMNodeList`
@@ -397,13 +406,13 @@ a :class:`Symfony\\Component\\DomCrawler\\Form` object that represents the
 form that the button lives in::
 
     // button example: <button id="my-super-button" type="submit">My super button</button>
-    
+
     // you can get button by its label
     $form = $crawler->selectButton('My super button')->form();
-    
+
     // or by button id (#my-super-button) if the button doesn't have a label
     $form = $crawler->selectButton('my-super-button')->form();
-    
+
     // or you can filter the whole form, for example a form has a class attribute: <form class="form-vertical" method="POST">
     $crawler->filter('.form-vertical')->form();
 
