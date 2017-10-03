@@ -349,9 +349,9 @@ UTF-8.
 Sending the Response
 ~~~~~~~~~~~~~~~~~~~~
 
-Before sending the Response, you can ensure that it is compliant with the HTTP
-specification by calling the
-:method:`Symfony\\Component\\HttpFoundation\\Response::prepare` method::
+Before sending the Response, you can optionally call the
+:method:`Symfony\\Component\\HttpFoundation\\Response::prepare` method to fix any
+incompatibility with the HTTP specification (e.g. a wrong ``Content-Type`` header)::
 
     $response->prepare($request);
 
