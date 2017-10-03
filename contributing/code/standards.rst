@@ -221,7 +221,10 @@ Service Naming Conventions
 * Use lowercase letters for service and parameter names (except when referring
   to environment variables with the ``%env(VARIABLE_NAME)%`` syntax);
 
-* A group name uses the underscore notation.
+* A group name uses the underscore notation;
+
+* Add class aliases for public services (e.g. alias ``Symfony\Component\Something\ClassName``
+to ``something.service_name``).
 
 Documentation
 -------------
