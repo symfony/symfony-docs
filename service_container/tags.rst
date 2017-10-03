@@ -468,14 +468,14 @@ constructor argument to the ``App\HandlerCollection`` service:
         $container->register(\App\Handler\One::class)
             ->addTag('app.handler');
 
-        $container->register(\App\Handler\One::class)
+        $container->register(\App\Handler\Two::class)
             ->addTag('app.handler');
 
         $container->register(\App\HandlerCollection::class)
             // inject all services tagged with app.handler as first argument
             ->addArgument(new TaggedIteratorArgument('app.handler'));
 
-After compilation the `HandlerCollection` service is able to iterate over your application handlers.
+After compilation the ``HandlerCollection`` service is able to iterate over your application handlers.
 
 .. code-block:: php
 
