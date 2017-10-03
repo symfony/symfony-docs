@@ -406,17 +406,21 @@ than one tag. You tag a service twice or more with the ``app.mail_transport``
 tag. The second foreach loop iterates over the ``app.mail_transport``
 tags set for the current service and gives you the attributes.
 
-Reference tagged services
+Reference Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In case your tag doesn't require any further additional attributes writing compiler 
-passes per tag might become tedious. A way to overcome this is is to make your compiler 
-pass more generic. The downside of this approach is you have to write and maintain
-additional code, considering you want to reuse it over multiple projects.
+.. versionadded:: 3.4
 
-ThereBecause this task is so generic and common to do, Symfony provides a way to achieve this 
-directly in your service container confguration. This enables to inject services tagged 
-with e.g. `app.handler` into another service that collects all handlers.
+    Support for the tagged service notation in YAML, XML and PHP was introduced
+    in Symfony 3.4.
+
+If you use tags to inject a list of services as an argument, writing a compiler 
+pass is a bit tedious. As this is a very common case, Symfony provides a way to 
+inject all services tagged with a specific tag.
+
+The downside of this feature is that you can't have any custom attributes. In the 
+example below, all services tagged with app.handler are passed in an array as the 
+first constructor argument to the ``App\HandlerCollection`` service:
 
 .. configuration-block::
 
@@ -430,6 +434,7 @@ with e.g. `app.handler` into another service that collects all handlers.
                 tags: [app.handler]
 
             App\HandlerCollection:
+                # inject all services tagged with app.handler as first argument
                 arguments: [!tagged app.handler]
 
     .. code-block:: xml
@@ -450,6 +455,7 @@ with e.g. `app.handler` into another service that collects all handlers.
                 </service>
 
                 <service id="App\HandlerCollection">
+                    <!-- inject all services tagged with app.handler as first argument -->
                     <argument type="tagged" tag="app.handler" />
                 </service>
             </services>
@@ -466,18 +472,19 @@ with e.g. `app.handler` into another service that collects all handlers.
             ->addTag('app.handler');
 
         $container->register(\App\HandlerCollection::class)
+            // inject all services tagged with app.handler as first argument
             ->addArgument(new TaggedIteratorArgument('app.handler'));
 
 After compilation the `HandlerCollection` service is able to iterate over your application handlers.
 
-    .. code-block:: php
+.. code-block:: php
 
-        class HandlerCollection
+    class HandlerCollection
+    {
+        public function __construct(iterable $handlers)
         {
-            public function __construct(iterable $handlers)
-            {
-            }
         }
+    }
 
 .. tip::
 
@@ -489,8 +496,3 @@ After compilation the `HandlerCollection` service is able to iterate over your a
             App\Handler\One:
                 tags:
                     - { name: app.handler, priority: 20 }
-
-.. versionadded:: 3.4
-
-    Support for the tagged service notation in YAML, XML and PHP was introduced
-    in Symfony 3.4.
