@@ -15,7 +15,7 @@ This can be a callable or a property path. If ``null`` is given, an incrementing
 integer is used as the value.
 
 If you pass a callable, it will receive one argument: the choice itself. When using
-the :doc:`/references/forms/types/entity`, the argument will be the entity object
+the :doc:`/reference/forms/types/entity`, the argument will be the entity object
 for each choice or ``null`` in some cases, which you need to handle:
 
 .. code-block:: php
