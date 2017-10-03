@@ -229,6 +229,11 @@ each time you ask for it.
             // $this is a reference to the current loader
             $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
 
+    .. tip::
+
+        The value of the ``resource`` and ``exclude`` options can be any valid
+        `glob pattern`_.
+
     Thanks to this configuration, you can automatically use any classes from the
     ``src/AppBundle`` directory as a service, without needing to manually configure
     it. Later, you'll learn more about this in :ref:`service-psr4-loader`.
@@ -1043,3 +1048,4 @@ Learn more
 
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture
 .. _`Symfony Standard Edition (version 3.3) services.yml`: https://github.com/symfony/symfony-standard/blob/3.3/app/config/services.yml
+.. _`glob pattern`: https://en.wikipedia.org/wiki/Glob_(programming)
