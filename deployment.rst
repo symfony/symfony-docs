@@ -215,10 +215,10 @@ Deployments not Using the ``composer.json`` File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony applications provide a ``kernel.project_dir`` parameter and a related
-:method:`Symfony\\Component\\HttpKernel\\Kernel\\Kernel::getProjectDir>` method
-so you can perform file operations relative to your project's root directory.
-The logic to find that directory is based on the location of the
-``composer.json`` file.
+:method:`Symfony\\Component\\HttpKernel\\Kernel\\Kernel::getProjectDir>` method.
+You can use this method to perform operations with file paths relative to your
+project's root directory. The logic to find that project root directory is based
+on the location of the main ``composer.json`` file.
 
 If your deployment method doesn't use Composer, you may have removed the
 ``composer.json`` file and the application won't work on the production server.
@@ -236,7 +236,6 @@ kernel and return your project's root directory::
             return __DIR__.'/..';
         }
     }
-
 
 .. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: http://capistranorb.com/
