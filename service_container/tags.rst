@@ -419,8 +419,8 @@ pass is a bit tedious. As this is a very common case, Symfony provides a way to
 inject all services tagged with a specific tag.
 
 The downside of this feature is that you can't have any custom attributes. In the 
-example below, all services tagged with app.handler are passed in an array as the 
-first constructor argument to the ``App\HandlerCollection`` service:
+example below, all services tagged with ``app.handler`` are passed as first 
+constructor argument to the ``App\HandlerCollection`` service:
 
 .. configuration-block::
 
