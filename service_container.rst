@@ -843,9 +843,9 @@ key. For example, the default Symfony configuration contains this:
 
             # the namespace prefix for classes (must end in \)
             AppBundle\:
-                # accepts a glob pattern
+                # create services for all the classes found in this directory...
                 resource: '../../src/AppBundle/*'
-                # exclude some paths
+                # ...except for the classes located in these directories
                 exclude: '../../src/AppBundle/{Entity,Repository}'
 
             # these were imported above, but we want to add some extra config
@@ -899,6 +899,11 @@ key. For example, the default Symfony configuration contains this:
 
         // $this is a reference to the current loader
         $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
+
+.. tip::
+
+    The value of the ``resource`` and ``exclude`` options can be any valid
+    `glob pattern`_.
 
 This can be used to quickly make many classes available as services and apply some
 default configuration. The ``id`` of each service is its fully-qualified class name.
@@ -1043,3 +1048,4 @@ Learn more
 
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture
 .. _`Symfony Standard Edition (version 3.3) services.yml`: https://github.com/symfony/symfony-standard/blob/3.3/app/config/services.yml
+.. _`glob pattern`: https://en.wikipedia.org/wiki/Glob_(programming)
