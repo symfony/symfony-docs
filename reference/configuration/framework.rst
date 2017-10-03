@@ -389,11 +389,14 @@ form
 enabled
 .......
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: (see explanation below)
 
 Whether to enable the form services or not in the service container. If
 you don't use forms, setting this to ``false`` may increase your application's
 performance because less services will be loaded into the container.
+
+The default value is ``true`` when the project uses ``symfony/symfony`` as a
+dependency. Otherwise, it defaults to ``false``.
 
 This option will automatically be set to ``true`` when one of the child
 settings is configured.
