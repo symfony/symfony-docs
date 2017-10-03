@@ -224,7 +224,7 @@ Service Naming Conventions
 * A group name uses the underscore notation;
 
 * Add class aliases for public services (e.g. alias ``Symfony\Component\Something\ClassName``
-to ``something.service_name``).
+  to ``something.service_name``).
 
 Documentation
 -------------
