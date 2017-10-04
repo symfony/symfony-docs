@@ -1,6 +1,11 @@
 How to Use multiple User Providers
 ==================================
 
+.. versionadded:: 3.4
+    Using the first user provider when the firewall doesn't define a provider
+    has been deprecated in Symfony 3.4 and will throw an exception in 4.0.
+    Always define the provider used by the firewall when there are multiple providers.
+
 Each authentication mechanism (e.g. HTTP Authentication, form login, etc)
 uses exactly one user provider, and will use the first declared user provider
 by default. But what if you want to specify a few users via configuration
