@@ -40,13 +40,15 @@ Run this command from inside your controller via::
         {
             $application = new Application($kernel);
             $application->setAutoExit(false);
-            // if your command define an argument (example: fooArgument) 
-            // you can pass it in the array under ArrayInput 
+
             $input = new ArrayInput(array(
                'command' => 'swiftmailer:spool:send',
-               '--message-limit' => $messages,
+               // (optional) define the value of command arguments
                'fooArgument' => 'barValue',
+               // (optional) pass options to the command
+               '--message-limit' => $messages,
             ));
+
             // You can use NullOutput() if you don't need the output
             $output = new BufferedOutput();
             $application->run($input, $output);
