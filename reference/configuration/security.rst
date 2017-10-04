@@ -82,6 +82,10 @@ Each part will be explained in the next section.
                     algorithm:            plaintext
                     ignore_case:          false
 
+                # Argon2i encoder
+                Acme\DemoBundle\Entity\User6:
+                    algorithm:            argon2i
+
             providers:            # Required
                 # Examples:
                 my_in_memory_provider:
@@ -611,7 +615,7 @@ persisting the encoded password alone is enough.
 
 .. note::
 
-    All the encoded passwords are ``60`` characters long, so make sure to
+    BCrypt encoded passwords are ``60`` characters long, so make sure to
     allocate enough space for them to be persisted.
 
 .. tip::
@@ -621,6 +625,64 @@ persisting the encoded password alone is enough.
     environment configuration.
 
     .. _reference-security-firewall-context:
+
+.. _reference-security-argon2i:
+
+Using the Argon2i Password Encoder
+----------------------------------
+
+.. caution::
+
+    To use this encoder, you either need to use PHP version 7.2 or install
+    the `libsodium`_ extension.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+
+            encoders:
+                Symfony\Component\Security\Core\User\User:
+                    algorithm: argon2i
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <!-- ... -->
+            <encoder
+                class="Symfony\Component\Security\Core\User\User"
+                algorithm="argon2i"
+            />
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        use Symfony\Component\Security\Core\User\User;
+
+        $container->loadFromExtension('security', array(
+            // ...
+            'encoders' => array(
+                User::class => array(
+                    'algorithm' => 'argon2i',
+                ),
+            ),
+        ));
+
+A salt for each new password is generated automatically and need not be
+persisted. Since an encoded password contains the salt used to encode it,
+persisting the encoded password alone is enough.
+
+.. note::
+
+    Argon2i encoded passwords are ``96`` characters long, but due to the hashing
+    requirements saved in the resulting hash this may change in the future.
+
+.. _reference-security-firewall-context:
 
 Firewall Context
 ----------------
@@ -749,3 +811,4 @@ To use HTTP-Digest authentication you need to provide a realm and a secret:
 
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
+.. _`libsodium`: https://pecl.php.net/package/libsodium

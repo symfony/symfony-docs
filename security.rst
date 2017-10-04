@@ -457,8 +457,8 @@ C) Encoding the User's Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Whether your users are stored in ``security.yml``, in a database or somewhere
-else, you'll want to encode their passwords. The best algorithm to use is
-``bcrypt``:
+else, you'll want to encode their passwords. The most suitable algorithm to use
+is ``bcrypt``:
 
 .. configuration-block::
 
@@ -593,8 +593,8 @@ before inserting them into the database? Don't worry, see
 
     Supported algorithms for this method depend on your PHP version, but
     include the algorithms returned by the PHP function :phpfunction:`hash_algos`
-    as well as a few others (e.g. bcrypt). See the ``encoders`` key in the
-    :doc:`Security Reference Section </reference/configuration/security>`
+    as well as a few others (e.g. bcrypt and argon2i). See the ``encoders`` key
+    in the :doc:`Security Reference Section </reference/configuration/security>`
     for examples.
 
     It's also possible to use different hashing algorithms on a user-by-user
