@@ -117,6 +117,7 @@ Configuration
     * `default_doctrine_provider`_
     * `default_psr6_provider`_
     * `default_redis_provider`_
+    * `default_memcached_provider`_
     * `pools`_
         * :ref:`name <reference-cache-pools-name>`
             * `adapter`_
@@ -250,7 +251,7 @@ need to escape the percent signs (``%``) by doubling them.
 .. note::
 
     If both ``framework.ide`` and ``xdebug.file_link_format`` are defined,
-    Symfony uses the value of the ``framework.ide`` option.
+    Symfony uses the value of the ``xdebug.file_link_format`` option.
 
 .. tip::
 
@@ -1733,7 +1734,7 @@ app
 
 The cache adapter used by the ``cache.app`` service. The FrameworkBundle
 ships with multiple adapters: ``apcu``, ``doctrine``, ``system``, ``filesystem``,
-``psr6`` and ``redis``.
+``psr6``, ``redis`` and ``memcached``.
 
 .. tip::
 
@@ -1778,6 +1779,17 @@ default_redis_provider
 **type**: ``string`` **default**: ``redis://localhost``
 
 The DSN to use by the Redis provider. The provider is available as the ``cache.redis``
+service.
+
+default_memcached_provider
+..........................
+
+.. versionadded:: 3.3
+    The ``default_memcached_provider`` option was introduced in Symfony 3.3.
+
+**type**: ``string`` **default**: ``memcached://localhost``
+
+The DSN to use by the Memcached provider. The provider is available as the ``cache.memcached``
 service.
 
 pools
@@ -2017,6 +2029,7 @@ Full Default Configuration
                 default_doctrine_provider: ~
                 default_psr6_provider: ~
                 default_redis_provider: 'redis://localhost'
+                default_memcached_provider: 'memcached://localhost'
                 pools:
                     # Prototype
                     name:

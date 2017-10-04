@@ -56,7 +56,6 @@ Symfony Standard Edition:
             # and have a tag that allows actions to type-hint services
             AppBundle\Controller\:
                 resource: '../../src/AppBundle/Controller'
-                public: true
                 tags: ['controller.service_arguments']
 
             # add more services, or override services that need manual wiring
@@ -78,7 +77,7 @@ Symfony Standard Edition:
 
                 <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
 
-                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
+                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller">
                     <tag name="controller.service_arguments" />
                 </prototype>
 
@@ -104,7 +103,6 @@ Symfony Standard Edition:
 
         // Changes default config
         $definition
-            ->setPublic(true)
             ->addTag('controller.service_arguments')
         ;
 
@@ -348,7 +346,6 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
             # and have a tag that allows actions to type-hint services
             AppBundle\Controller\:
                 resource: '../../src/AppBundle/Controller'
-                public: true
                 tags: ['controller.service_arguments']
 
     .. code-block:: xml
@@ -363,7 +360,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
             <services>
                 <!-- ... -->
 
-                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
+                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller">
                     <tag name="controller.service_arguments" />
                 </prototype>
             </services>
@@ -374,9 +371,6 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
         // app/config/services.php
 
         // ...
-
-        // override default template
-        $definition->setPublic(true);
 
         $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
 
@@ -676,7 +670,6 @@ You're now ready to automatically register all services in ``src/AppBundle/``
     +
     +     AppBundle\Controller\:
     +         resource: '../../src/AppBundle/Controller'
-    +         public: true
     +         tags: ['controller.service_arguments']
 
         # ...
@@ -766,7 +759,6 @@ can be autowired. The final configuration looks like this:
 
         AppBundle\Controller\:
             resource: '../../src/AppBundle/Controller'
-            public: true
             tags: ['controller.service_arguments']
 
         AppBundle\Service\GitHubNotifier:
