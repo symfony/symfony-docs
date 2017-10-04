@@ -125,9 +125,9 @@ the name of the encoder to use::
         }
     }
 
-If you implemented your own password encoder as explained in
-:doc:`authentication </security/authentication>`,
-you can also use it as a named encoder, note that it must be registered as a service.
+If you created your own password encoder implementing the
+:class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`,
+you must register a service for it in order to use it as a named encoder:
 
 .. configuration-block::
 
@@ -170,4 +170,5 @@ you can also use it as a named encoder, note that it must be registered as a ser
             ),
         ));
 
-This creates an encoder named ``app_encoder`` from a service named ``app.password_encoder_service``.
+This creates an encoder named ``app_encoder`` from a service named
+``app.password_encoder_service``.
