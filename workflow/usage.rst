@@ -125,7 +125,7 @@ like this:
                              'from' => 'review',
                              'to' => 'published',
                          ),
-                         'reject'=> array(
+                         'reject' => array(
                              'from' => 'review',
                              'to' => 'rejected',
                          ),
