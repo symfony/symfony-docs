@@ -32,6 +32,10 @@ environment.
 position
 ~~~~~~~~
 
+.. versionadded:: 3.4
+    The ``position`` option was deprecated in Symfony 3.4 and it will be removed
+    in Symfony 4.0, where the toolbar is always displayed in the ``bottom`` position.
+
 **type**: ``string`` **default**: ``bottom``
 
 It defines the location of the browser window where the toolbar is displayed.
@@ -79,9 +83,11 @@ Full Default Configuration
         # app/config/config.yml
         web_profiler:
             toolbar:              false
-            position:             bottom
             intercept_redirects:  false
             excluded_ajax_paths:  ^/bundles|^/_wdt
+
+            # DEPRECATED, it can be removed safely from your configuration
+            position:             bottom
 
             # DEPRECATED, it can be removed safely from your configuration
             verbose:              true
