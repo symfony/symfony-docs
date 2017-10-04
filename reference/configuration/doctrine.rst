@@ -108,9 +108,6 @@ Full Default Configuration
                                 # True to use a pooled server with the oci8 driver
                                 pooled:               ~
 
-                                # the version of your database engine
-                                server_version:       ~
-
                                 # Configuring MultipleActiveResultSets for the pdo_sqlsrv driver
                                 MultipleActiveResultSets:  ~
 
