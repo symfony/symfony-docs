@@ -6,7 +6,7 @@ Creating and Using Templates
 
 As explained in :doc:`the previous article </controller>`, controllers are
 responsible for handling each request that comes into a Symfony application and
-the usually end up rendering a template to generate the response contents.
+they usually end up rendering a template to generate the response contents.
 
 In reality, the controller delegates most of the heavy work to other places so
 that code can be tested and reused. When a controller needs to generate HTML,

@@ -16,7 +16,7 @@ for CSRF. In this article you'll learn how you can use it in your login form.
 Configuring CSRF Protection
 ---------------------------
 
-First, make sure that the CSRF protection is enabled in the main cofiguration
+First, make sure that the CSRF protection is enabled in the main configuration
 file:
 
 .. configuration-block::
