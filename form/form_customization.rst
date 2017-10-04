@@ -113,9 +113,16 @@ fragment needed to render every part of a form:
 * `bootstrap_3_horizontal_layout.html.twig`_, it's similar to the previous theme,
   but the CSS classes applied are the ones used to display the forms horizontally
   (i.e. the label and the widget in the same row).
+* `bootstrap_4_layout.html.twig`_, same as ``bootstrap_3_layout.html.twig``, but
+  updated for `Bootstrap 4 CSS framework`_ styles.
+* `bootstrap_4_horizontal_layout.html.twig`_, same as ``bootstrap_3_horizontal_layout.html.twig``
+  but updated for Bootstrap 4 styles.
 * `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>`` element
   with the appropriate CSS classes to apply the default `Foundation CSS framework`_
   styles.
+
+.. versionadded:: 3.4
+    The Bootstrap 4 form themes were introduced in Symfony 3.4.
 
 .. caution::
 
@@ -211,7 +218,7 @@ this folder.
     In this example, the customized fragment name is ``integer_widget`` because
     you want to override the HTML ``widget`` for all ``integer`` field types. If
     you need to customize ``textarea`` fields, you would customize ``textarea_widget``.
-    
+
     The ``integer`` part comes from the class name: ``IntegerType`` becomes ``integer``,
     based on a standard.
 
@@ -1174,6 +1181,9 @@ more details about this concept in Twig, see :ref:`twig-reference-form-variables
 .. _`form_table_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_table_layout.html.twig
 .. _`bootstrap_3_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_layout.html.twig
 .. _`bootstrap_3_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_horizontal_layout.html.twig
-.. _`Bootstrap 3 CSS framework`: http://getbootstrap.com/
+.. _`bootstrap_4_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_layout.html.twig
+.. _`bootstrap_4_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_horizontal_layout.html.twig
+.. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.3/
+.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.0/
 .. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
 .. _`Foundation CSS framework`: http://foundation.zurb.com/
