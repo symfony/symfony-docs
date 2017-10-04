@@ -6,9 +6,14 @@
 Requirements for Running Symfony
 ================================
 
-Symfony 3.4 requires **PHP 5.5.9** or higher to run, in addition to other minor
+Symfony 4.0 requires **PHP 7.1.3** or higher to run, in addition to other minor
 requirements. To make things simple, Symfony provides a tool to quickly check if
-your system meets all those requirements.
+your system meets all those requirements. Run this command to install the tool:
+
+.. code-block:: terminal
+
+    $ cd your-project/
+    $ composer require requirements-checker
 
 Beware that PHP can define a different configuration for the command console and
 the web server, so you need to check requirements in both environments.
@@ -16,19 +21,21 @@ the web server, so you need to check requirements in both environments.
 Checking Requirements for the Web Server
 ----------------------------------------
 
-Symfony includes a ``config.php`` file in the ``web/`` directory of your project.
-Open that file with your browser to check the requirements.
+The requirements checker tool creates a file called ``check.php`` in the
+``public/`` directory of your project. Open that file with your browser to check
+the requirements.
 
-Once you've fixed all the reported issues, delete the ``web/config.php`` file
-to avoid leaking internal information about your application to visitors.
+Once you've fixed all the reported issues, uninstall the requirements checker
+to avoid leaking internal information about your application to visitors:
+
+.. code-block:: terminal
+
+    $ cd your-project/
+    $ composer remove requirements-checker
 
 Checking Requirements for the Command Console
 ---------------------------------------------
 
-Open your console or terminal, enter in your project directory, execute this
-command and fix the reported issues:
-
-.. code-block:: terminal
-
-    $ cd my-project/
-    $ php bin/symfony_requirements
+The requirements checker tool adds a script to your Composer configuration to
+check the requirements automatically. There's no need to execute any command; if
+there is any issue, you'll see them in the console output.
