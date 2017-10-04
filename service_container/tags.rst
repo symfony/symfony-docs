@@ -410,17 +410,16 @@ Reference Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
-
     Support for the tagged service notation in YAML, XML and PHP was introduced
     in Symfony 3.4.
 
-If you use tags to inject a list of services as an argument, writing a compiler 
-pass is a bit tedious. As this is a very common case, Symfony provides a way to 
-inject all services tagged with a specific tag.
+Symfony provides a shortcut to inject all services tagged with a specific tag,
+which is a common need in some applications, so you don't have to write a
+compiler pass just for that. The only downside of this feature is that you can't
+have any custom attributes.
 
-The downside of this feature is that you can't have any custom attributes. In the 
-example below, all services tagged with ``app.handler`` are passed as first 
-constructor argument to the ``App\HandlerCollection`` service:
+In the following example, all services tagged with ``app.handler`` are passed as
+first  constructor argument to the ``App\HandlerCollection`` service:
 
 .. configuration-block::
 
@@ -475,7 +474,8 @@ constructor argument to the ``App\HandlerCollection`` service:
             // inject all services tagged with app.handler as first argument
             ->addArgument(new TaggedIteratorArgument('app.handler'));
 
-After compilation the ``HandlerCollection`` service is able to iterate over your application handlers.
+After compilation the ``HandlerCollection`` service is able to iterate over your
+application handlers.
 
 .. code-block:: php
 
@@ -488,7 +488,7 @@ After compilation the ``HandlerCollection`` service is able to iterate over your
 
 .. tip::
 
-   The collected services can be prioritized using the `priority` attribute.
+   The collected services can be prioritized using the ``priority`` attribute.
 
     .. code-block:: yaml
 
