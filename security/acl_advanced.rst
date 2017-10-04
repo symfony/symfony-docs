@@ -4,6 +4,10 @@
 How to Use advanced ACL Concepts
 ================================
 
+.. versionadded::
+    ACL support was deprecated in Symfony 3.4 and will be removed in 4.0. Install
+    the `Symfony ACL bundle`_ if you wan to keep using ACL.
+
 The aim of this article is to give a more in-depth view of the ACL system, and
 also explain some of the design decisions behind it.
 
@@ -195,4 +199,5 @@ is applicable, the class-scope ACEs will be checked. If none is applicable,
 then the process will be repeated with the ACEs of the parent ACL. If no
 parent ACL exists, an exception will be thrown.
 
+.. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
 .. _JMSSecurityExtraBundle: https://github.com/schmittjoh/JMSSecurityExtraBundle
