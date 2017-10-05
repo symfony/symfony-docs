@@ -415,8 +415,7 @@ Reference Tagged Services
 
 Symfony provides a shortcut to inject all services tagged with a specific tag,
 which is a common need in some applications, so you don't have to write a
-compiler pass just for that. The only downside of this feature is that you can't
-have any custom attributes.
+compiler pass just for that.
 
 In the following example, all services tagged with ``app.handler`` are passed as
 first  constructor argument to the ``App\HandlerCollection`` service:
@@ -524,3 +523,6 @@ application handlers.
             // app/config/services.php
             $container->register(App\Handler\One::class)
                 ->addTag('app.handler', array('priority' => 20));
+
+    Note that any other custom attributes will be ignored by this feature.
+
