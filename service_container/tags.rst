@@ -493,7 +493,6 @@ application handlers.
 
     The collected services can be prioritized using the ``priority`` attribute:
 
-    
     .. configuration-block::
 
         .. code-block:: yaml
