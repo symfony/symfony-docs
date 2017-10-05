@@ -690,7 +690,8 @@ installation.
 .. seealso::
 
     You can see an example of the usage of this in
-    :doc:`/doctrine/pdo_session_storage`.
+    :doc:`/doctrine/pdo_session_storage` or
+    :doc:`/doctrine/dbal_session_storage`.
 
 .. _name:
 
