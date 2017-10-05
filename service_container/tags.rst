@@ -425,6 +425,7 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
     .. code-block:: yaml
 
+        # app/config/services.yml
         services:
             App\Handler\One:
                 tags: [app.handler]
@@ -438,6 +439,7 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
     .. code-block:: xml
 
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -462,15 +464,16 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
     .. code-block:: php
 
+        // app/config/services.php
         use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-        $container->register(\App\Handler\One::class)
+        $container->register(App\Handler\One::class)
             ->addTag('app.handler');
 
-        $container->register(\App\Handler\Two::class)
+        $container->register(App\Handler\Two::class)
             ->addTag('app.handler');
 
-        $container->register(\App\HandlerCollection::class)
+        $container->register(App\HandlerCollection::class)
             // inject all services tagged with app.handler as first argument
             ->addArgument(new TaggedIteratorArgument('app.handler'));
 
@@ -488,11 +491,37 @@ application handlers.
 
 .. tip::
 
-   The collected services can be prioritized using the ``priority`` attribute.
+    The collected services can be prioritized using the ``priority`` attribute:
 
-    .. code-block:: yaml
+    
+    .. configuration-block::
 
-        services:
-            App\Handler\One:
-                tags:
-                    - { name: app.handler, priority: 20 }
+        .. code-block:: yaml
+
+            # app/config/services.yml
+            services:
+                App\Handler\One:
+                    tags:
+                        - { name: app.handler, priority: 20 }
+
+        .. code-block:: xml
+
+            <!-- app/config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <service id="App\Handler\One">
+                        <tag name="app.handler" priority="20" />
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/services.php
+            $container->register(App\Handler\One::class)
+                ->addTag('app.handler', array('priority' => 20));
