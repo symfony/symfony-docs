@@ -55,6 +55,12 @@ the Finder instance.
     :phpfunction:`iterator_to_array` method, or get the number of items with
     :phpfunction:`iterator_count`.
 
+.. tip::
+
+    The Finder object keeps internal state. If you want to find another set of results you
+    should create a new Finder object or call :phpfunction:`create` on the existing object. Otherwise
+    the results will be added to the ones previously found.
+
 .. caution::
 
     When searching through multiple locations passed to the
