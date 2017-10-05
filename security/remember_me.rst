@@ -122,7 +122,8 @@ The ``remember_me`` firewall defines the following configuration options:
 ``always_remember_me`` (default value: ``false``)
     If ``true``, the value of the ``remember_me_parameter`` is ignored and the
     "Remember Me" feature is always enabled, regardless of the desire of the
-    end user.
+    end user. If you are utilising access_control you may need to
+    add IS_AUTHENTICATED_REMEMBERED to the roles key, dependent on your setup.
 
 ``token_provider`` (default value: ``null``)
     Defines the service id of a token provider to use. By default, tokens are
