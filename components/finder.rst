@@ -57,9 +57,10 @@ the Finder instance.
 
 .. tip::
 
-    The Finder object keeps internal state. If you want to find another set of results you
-    should create a new Finder object or call :phpfunction:`create` on the existing object. Otherwise
-    the results will be added to the ones previously found.
+    The ``Finder`` object doesn't reset its internal state automatically, which
+    means that results are always added to the previous ones. Instantiate a new
+    object or call :phpfunction:`create` on the existing object to reset the
+    previous state.
 
 .. caution::
 
