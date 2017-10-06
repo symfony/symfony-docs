@@ -243,13 +243,13 @@ The crawler supports multiple ways of adding the content::
     optional argument.
 
     The :method:`Symfony\\Component\\DomCrawler\\Crawler::addContent` method
-    detects the best charset according to the given contents and defaults to
+    guesses the best charset according to the given contents and defaults to
     ``ISO-8859-1`` in case no charset can be guessed.
 
     .. versionadded:: 3.4
-        The charst guessing mechanism of the ``addContent()`` method was added
-        in Symfony 3.4. In previous Symfony versions, ``ISO-8859-1`` charset was
-        always used.
+        The charset guessing mechanism of the ``addContent()`` method was
+        introduced in Symfony 3.4. In previous Symfony versions, ``ISO-8859-1``
+        charset was always used.
 
 As the Crawler's implementation is based on the DOM extension, it is also able
 to interact with native :phpclass:`DOMDocument`, :phpclass:`DOMNodeList`
