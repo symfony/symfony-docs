@@ -12,6 +12,8 @@ Text Fields
 * :doc:`SearchType </reference/forms/types/search>`
 * :doc:`UrlType </reference/forms/types/url>`
 * :doc:`RangeType </reference/forms/types/range>`
+* :doc:`TelType </reference/forms/types/tel>`
+* :doc:`ColorType </reference/forms/types/color>`
 
 Choice Fields
 ~~~~~~~~~~~~~
