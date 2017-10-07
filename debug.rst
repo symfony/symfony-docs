@@ -24,51 +24,6 @@ with any PHP debug environment, among them:
  * `PsySH`_, a PHP `REPL`_ (Read-eval-print loop) debugger. Use the
    `FidryPsyshBundle`_ for a dedicated Symfony integration of PsySH.
 
-Disabling the Bootstrap File and Class Caching
-----------------------------------------------
-
-To make Symfony run as fast as possible, it creates big PHP files in your cache
-containing the aggregation of PHP classes your project needs for every request.
-However, this behavior can confuse your IDE or your debugger. This recipe shows
-you how you can tweak this caching mechanism to make it friendlier when you
-need to debug code that involves Symfony classes.
-
-The ``app_dev.php`` front controller reads as follows by default::
-
-    // ...
-
-    $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
-    require_once __DIR__.'/../app/AppKernel.php';
-
-    $kernel = new AppKernel('dev', true);
-    $kernel->loadClassCache();
-    $request = Request::createFromGlobals();
-
-To make your debugger happier, disable all PHP class caches by removing the
-call to ``loadClassCache()`` and by replacing the require statements like
-below::
-
-    // ...
-
-    // $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
-    $loader = require_once __DIR__.'/../app/autoload.php';
-    require_once __DIR__.'/../app/AppKernel.php';
-
-    $kernel = new AppKernel('dev', true);
-    // $kernel->loadClassCache();
-    $request = Request::createFromGlobals();
-
-.. tip::
-
-    If you disable the PHP caches, don't forget to revert these changes after
-    your debugging session.
-
-Some IDEs do not like the fact that some classes are stored in different
-locations. To avoid problems, you can either tell your IDE to ignore the PHP
-cache files, or you can change the extension used by Symfony for these files::
-
-    $kernel->loadClassCache('classes', '.php.cache');
-
 Dumping Variables with the VarDumper
 ------------------------------------
 
