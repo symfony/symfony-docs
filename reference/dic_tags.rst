@@ -689,6 +689,10 @@ channel when injecting the logger in a service.
             ->addArgument(new Reference('logger'))
             ->addTag('monolog.logger', array('channel' => 'acme'));
 
+.. caution::
+    Even if you use `autowire` for your services, you need to inject the
+    `logger` service manually in this case.
+
 .. tip::
 
     You can also configure custom channels in the configuration and retrieve
