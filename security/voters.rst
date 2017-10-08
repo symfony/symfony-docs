@@ -5,7 +5,7 @@ How to Use Voters to Check User Permissions
 ===========================================
 
 Security voters are the most granular way of checking permissions (e.g. "can this
-specific user edit ta given item?"). This article explains voters in detail.
+specific user edit the given item?"). This article explains voters in detail.
 
 .. tip::
 

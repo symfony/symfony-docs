@@ -969,9 +969,9 @@ For more details on expressions and security, see :ref:`expressions-security`.
 Access Control Lists (ACLs): Securing individual Database Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded::
+.. versionadded:: 3.4
     ACL support was deprecated in Symfony 3.4 and will be removed in 4.0. Install
-    the `Symfony ACL bundle`_ if you wan to keep using ACL.
+    the `Symfony ACL bundle`_ if you want to keep using ACL.
 
 Imagine you are designing a blog where users can comment on your posts. You
 also want a user to be able to edit their own comments, but not those of
