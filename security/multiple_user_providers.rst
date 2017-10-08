@@ -1,11 +1,6 @@
 How to Use multiple User Providers
 ==================================
 
-.. versionadded:: 3.4
-    Using the first user provider when the firewall doesn't define a provider
-    has been deprecated in Symfony 3.4 and will throw an exception in 4.0.
-    Always define the provider used by the firewall when there are multiple providers.
-
 Each authentication mechanism (e.g. HTTP Authentication, form login, etc)
 uses exactly one user provider, and will use the first declared user provider
 by default. But what if you want to specify a few users via configuration
@@ -87,10 +82,16 @@ a new provider that chains the two together:
             ),
         ));
 
-Now, all firewalls without an explicitly configured user provider will use
-the ``chain_provider`` since it's the first specified. The ``chain_provider``
-will, in turn, try to load the user from both the ``in_memory`` and ``user_db``
-providers.
+Now, all firewalls that explicitly define ``chain_provider`` as their user
+provider will, in turn, try to load the user from both the ``in_memory`` and
+``user_db`` providers.
+
+.. versionadded:: 3.4
+    In previous Symfony versions, firewalls that didn't define their user provider
+    explicitly, used the first existing provider (``chain_provider`` in this
+    example). However, auto-selecting the first user provider has been deprecated
+    in Symfony 3.4 and will throw an exception in 4.0. Always define the provider
+    used by the firewall when there are multiple providers.
 
 You can also configure the firewall or individual authentication mechanisms
 to use a specific provider. Again, unless a provider is specified explicitly,
