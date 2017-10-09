@@ -533,7 +533,7 @@ Add the following configuration to the ``phpunit.xml.dist`` file
 If the logic followed to find the related code is too simple or doesn't work for
 your application, you can use your own SUT (System Under Test) solver:
 
-    .. code-block:: xml
+.. code-block:: xml
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\CoverageListener">
@@ -549,7 +549,7 @@ current test classname as its first argument.
 Finally, the listener can also display warning messages when the SUT solver does
 not find the SUT:
 
-    .. code-block:: xml
+.. code-block:: xml
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\CoverageListener">
