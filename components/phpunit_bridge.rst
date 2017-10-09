@@ -451,22 +451,22 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     If you still need to use ``prophecy`` (but not ``symfony/yaml``),
     then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
 
-
 Code coverage listener
 ----------------------
 
 Use case
 ~~~~~~~~
 
-By default the code coverage is computed with the following rule: If a line of
-code is executed then it is marked as covered. And the test who executes a line
-of code is therefore marked as "covering the line of code".
+By default the code coverage is computed with the following rule: if a line of
+code is executed, then it is marked as covered. And the test which executes a
+line of code is therefore marked as "covering the line of code". This can be
+misleading.
 
-This can be misleading. Considering the following example::
+Consider the following example::
 
     class Bar
     {
-        public function barZ()
+        public function barMethod()
         {
             return 'bar';
         }
@@ -481,9 +481,9 @@ This can be misleading. Considering the following example::
             $this->bar = $bar;
         }
 
-        public function fooZ()
+        public function fooMethod()
         {
-            $this->bar->barZ();
+            $this->bar->barMethod();
 
             return 'bar';
         }
@@ -496,21 +496,20 @@ This can be misleading. Considering the following example::
             $bar = new Bar();
             $foo = new Foo($bar);
 
-            $this->assertSame('bar', $foo->barZ());
+            $this->assertSame('bar', $foo->fooMethod());
         }
     }
 
 
-Here the ``FooTest::test`` will execute every lines of code so the code coverage
-will be 100%. But the ``Bar`` class is not tested.
+The ``FooTest::test`` method executes every single line of code of both ``Foo``
+and ``Bar`` classes, but ``Bar`` is not truly tested. The ``CoverageListener``
+aims to fix this behavior by adding the appropriate ``@covers`` annotation on
+each test class.
 
-The ``CoverageListener`` aim to fix this behavior by adding the ``@covers``
-annotation on the test class. If an annotation already exist then the listener
-do nothing.
-
-By default the listener try to find the tested class by removing the ``Test`` part
-of the classname: ``My\Namespace\Tests\FooTest`` -> ``My\Namespace\Foo``.
-
+If a test class already defines the ``@covers`` annotation, this listener does
+nothing. Otherwise, it tries to find the code related to the test by removing
+the ``Test`` part of the classname: ``My\Namespace\Tests\FooTest`` ->
+``My\Namespace\Foo``.
 
 Installation
 ~~~~~~~~~~~~
@@ -531,7 +530,8 @@ Add the following configuration to the ``phpunit.xml.dist`` file
         </listeners>
     </phpunit>
 
-You can also configure a new System Under Test solver:
+If the logic followed to find the related code is too simple or doesn't work for
+your application, you can use your own SUT (System Under Test) solver:
 
     .. code-block:: xml
 
@@ -543,10 +543,11 @@ You can also configure a new System Under Test solver:
         </listener>
     </listeners>
 
-The ``My\Namespace\SutSolver::solve`` should be a callable and will receive the
-current test classname as first argument.
+The ``My\Namespace\SutSolver::solve`` can be any PHP callable and receives the
+current test classname as its first argument.
 
-Finally the listener can add warning when the SUT solver does not find the SUT:
+Finally, the listener can also display warning messages when the SUT solver does
+not find the SUT:
 
     .. code-block:: xml
 
