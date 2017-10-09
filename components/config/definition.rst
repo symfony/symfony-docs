@@ -423,24 +423,27 @@ has a certain value:
         ->end()
     ;
 
-Deprecated the Option
----------------------
+Deprecating the Option
+----------------------
 
-You can depreciate an option by using the
+You can deprecate options using the
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::setDeprecated`
-method.
-
-.. code-block:: php
+method::
 
     $rootNode
         ->children()
             ->integerNode('old_option')
+                // this outputs the following generic deprecation message:
+                // The child node "old_option" at path "..." is deprecated.
                 ->setDeprecated()
+
+                // you can also pass a custom deprecation message (%node% and %path% placeholders are available):
+                ->setDeprecated('The "%node%" option is deprecated. Use "new_config_option" instead.')
             ->end()
         ->end()
     ;
 
-If you use the Web Debug Toolbar, the deprecation notice will be showed when the
+If you use the Web Debug Toolbar, these deprecation notices are shown when the
 configuration is rebuilt.
 
 Documenting the Option
