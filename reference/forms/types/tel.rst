@@ -5,7 +5,13 @@ TelType Field
 ===============
 
 The ``TelType`` field is a text field that is rendered using the HTML5
-``<input type="tel">`` tag.
+``<input type="tel">`` tag. Following the recommended HTML5 behavior, the value
+of this type is not validated in any way, because formats for telephone numbers
+vary too much depending on each country.
+
+Nevertheless it may be useful to use this type in web applications because some
+browsers (e.g. smartphone browsers) adapt the input keyboard to make it easier
+to input phone numbers.
 
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``tel`` field (a text box)                                |
