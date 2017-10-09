@@ -66,6 +66,73 @@ works! You can call the ``app:sunshine`` command and start logging.
 
 .. caution::
 
-    You *do* have access to services in ``configure()``. However, try to avoid doing
-    any work (e.g. making database queries), as that code will be run, even if you're
-    using the console to execute a different command.
+    You *do* have access to services in ``configure()``. However, if your command is
+    not :ref:`lazy <console-command-service-lazy-loading>`, try to avoid doing any
+    work (e.g. making database queries), as that code will be run, even if you're using
+    the console to execute a different command.
+
+.. _console-command-service-lazy-loading:
+
+Lazy Loading
+------------
+
+.. versionadded:: 3.4
+    Support for command lazy loading was introduced in Symfony 3.4.
+
+To make your command lazily loaded, either define its ``$defaultName`` static property::
+
+    class SunshineCommand extends Command
+    {
+        protected static $defaultName = 'app:sunshine';
+
+        // ...
+    }
+
+Or set the ``command`` attribute on the ``console.command`` tag in your service definition:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+
+            AppBundle\Command\SunshineCommand:
+                tags:
+                    - { name: 'console.command', command: 'app:sunshine' }
+                # ...
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+
+                <service id="AppBundle\Command\SunshineCommand">
+                     <tag name="console.command" command="app:sunshine" />
+                </service>
+
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use AppBundle\Command\SunshineCommand;
+
+        //...
+
+        $container
+            ->register(SunshineCommand::class)
+            ->addTag('console.command', array('command' => 'app:sunshine'))
+        ;
+
+That's it. In one way or another, the ``SunshineCommand`` will be instantiated only when
+the ``app:sunshine`` command is actually called.
+
+.. note::
+    You don't need to call ``setName()`` for configuring the command when it is lazy.
+
+.. caution::
+    Calling the ``list`` command requires to load all commands, lazy ones included.
