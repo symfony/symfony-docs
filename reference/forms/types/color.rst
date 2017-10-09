@@ -5,7 +5,14 @@ ColorType Field
 ===============
 
 The ``ColorType`` field is a text field that is rendered using the HTML5
-``<input type="color">`` tag.
+``<input type="color">`` tag. Depending on each browser, the behavior of this
+form field can vary substantially. Some browsers display it as a simple text
+field, while others display a native color picker.
+
+The value of the underlying ``<input type="color">`` field is always a
+7-character string specifying an RGB color in lower case hexadecimal notation.
+That's why it's not possible to select semi-transparent colors with this
+element.
 
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``color`` field (a text box)                              |
