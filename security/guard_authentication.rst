@@ -370,10 +370,10 @@ Each authenticator needs the following methods:
     authenticator should be used for this request (return ``true``) or if it
     should be skipped (return ``false``).
 
-.. versionadded:: 3.4
-    The ``supports()`` method was introduced in Symfony 3.4. In previous Symfony
-    versions, the authenticator could be skipped returning ``null`` in the
-    ``getCredentials()`` method.
+    .. versionadded:: 3.4
+        The ``supports()`` method was introduced in Symfony 3.4. In previous Symfony
+        versions, the authenticator could be skipped returning ``null`` in the
+        ``getCredentials()`` method.
 
 **getCredentials(Request $request)**
     This will be called on *every* request and your job is to read the token (or
