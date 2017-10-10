@@ -45,7 +45,11 @@ if the service does not exist:
                 'logger',
                 ContainerInterface::NULL_ON_INVALID_REFERENCE
             ));
+            
+.. note::
 
+    When using type-hinting, failing to set a "null" default value for the dependency in the constructor definition will throw an error when the service is missing.
+    
 .. note::
 
     The "null" strategy is not currently supported by the YAML driver.
