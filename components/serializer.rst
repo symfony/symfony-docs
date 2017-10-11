@@ -880,9 +880,9 @@ The ``XmlEncoder`` encodes this object as follows:
 
 The array keys beginning with ``@`` are considered XML attributes::
 
-    $encoder = new XmlEncoder();
-    $encoder->encode(array('foo' => array('@bar' => 'value')));
-    // will return:
+    array('foo' => array('@bar' => 'value'));
+
+    // is encoded as follows:
     // <?xml version="1.0"?>
     // <response>
     //     <foo bar="value" />
@@ -986,34 +986,45 @@ the type of the property is ``int``, an :class:`Symfony\\Component\\Serializer\\
 will be thrown.
 =======
 
+=======
+
+>>>>>>> Minor rewords
 Context
 ~~~~~~~
 
-The XmlEncoder ``encode()`` method defines a third optional parameter called
-``context`` to define some configuration options for the XmlEncoder::
+The ``encode()`` method defines a third optional parameter called ``context``
+which defines the configuration options for the XmlEncoder an associative array::
 
     $xmlEncoder->encode($array, 'xml', $context);
 
 These are the options available:
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> Minor rewords
 ``xml_format_output``
-    If set to true, format the output XML with line breaks and indentation.
+    If set to true, formats the generated XML with line breaks and indentation.
 
 ``xml_version``
-    Change the XML version attribute.
+    Sets the XML version attribute (default: ``1.1``).
 
 ``xml_encoding``
-    Change the XML encoding attribute.
+    Sets the XML encoding attribute (default: ``utf-8``).
 
 ``xml_standalone``
-    Add standalone attribute in XML output .
+    Adds standalone attribute in the generated XML (default: ``true``).
 
 ``xml_root_node_name``
-    Change the root node name (default: ``response``).
+    Sets the root node name (default: ``response``).
 
 ``remove_empty_tags``
+<<<<<<< HEAD
     If set to true, remove all empty tags in the XML output.
 >>>>>>> Minor syntax issues and some rewordings
+=======
+    If set to true, removes all empty tags in the generated XML.
+>>>>>>> Minor rewords
 
 Learn more
 ----------
