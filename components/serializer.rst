@@ -674,7 +674,7 @@ you indicate that you're expecting an array instead of a single object.
 
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
-	
+    
 The ``XmlEncoder``
 ------------------
 
@@ -696,41 +696,41 @@ The ``XmlEncoder`` encodes this object as follows:
 
 The array keys beginning with ``@`` are considered XML attributes::
 
-    $encoder = new XmlEncoder();
-    $encoder->encode(array('foo' => array('@bar' => 'value')));
-    // will return:
+    array('foo' => array('@bar' => 'value'));
+
+    // is encoded as follows:
     // <?xml version="1.0"?>
     // <response>
     //     <foo bar="value" />
     // </response>
-	
+    
 Context
 ~~~~~~~
 
-The XmlEncoder ``encode()`` method defines a third optional parameter called
-``context`` to define some configuration options for the XmlEncoder::
+The ``encode()`` method defines a third optional parameter called ``context``
+which defines the configuration options for the XmlEncoder an associative array::
 
     $xmlEncoder->encode($array, 'xml', $context);
 
 These are the options available:
-	
+    
 ``xml_format_output``
-    If set to true, format the output XML with line breaks and indentation.
+    If set to true, formats the generated XML with line breaks and indentation.
 
 ``xml_version``
-    Change the XML version attribute.
+    Sets the XML version attribute (default: ``1.1``).
 
 ``xml_encoding``
-    Change the XML encoding attribute.
+    Sets the XML encoding attribute (default: ``utf-8``).
 
 ``xml_standalone``
-    Add standalone attribute in XML output .
+    Adds standalone attribute in the generated XML (default: ``true``).
 
 ``xml_root_node_name``
-    Change the root node name (default: ``response``).
+    Sets the root node name (default: ``response``).
 
 ``remove_empty_tags``
-    If set to true, remove all empty tags in the XML output.
+    If set to true, removes all empty tags in the generated XML.
 
 Learn more
 ----------
