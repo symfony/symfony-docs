@@ -595,7 +595,12 @@ below for more details).
        use the ``setHeaders()`` method on exceptions derived from the
        :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException` class.
 
-    3) A controller is executed and passed the flattened exception. The exact
+    3) If the original exception implements
+       :class:`Symfony\\Component\\HttpKernel\\Exception\\RequestExceptionInterface`,
+       then the status code of the ``FlattenException`` object is populated with
+       ``400`` and no other headers are modified.
+
+    4) A controller is executed and passed the flattened exception. The exact
        controller to render is passed as a constructor argument to this listener.
        This controller will return the final ``Response`` for this error page.
 
