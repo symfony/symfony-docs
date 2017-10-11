@@ -2,7 +2,7 @@ How to Configure Symfony to Work behind a Load Balancer or a Reverse Proxy
 ==========================================================================
 
 When you deploy your application, you may be behind a load balancer (e.g.
-an AWS Elastic Load Balancer) or a reverse proxy (e.g. Varnish for
+an AWS Elastic Load Balancing) or a reverse proxy (e.g. Varnish for
 :doc:`caching</http_cache>`).
 
 For the most part, this doesn't cause any problems with Symfony. But, when
@@ -53,7 +53,7 @@ so you can also pass your own value (e.g. ``0b00110``).
 But what if the IP of my Reverse Proxy Changes Constantly!
 ----------------------------------------------------------
 
-Some reverse proxies (like Amazon's Elastic Load Balancers) don't have a
+Some reverse proxies (like AWS Elastic Load Balancing) don't have a
 static IP address or even a range that you can target with the CIDR notation.
 In this case, you'll need to - *very carefully* - trust *all* proxies.
 

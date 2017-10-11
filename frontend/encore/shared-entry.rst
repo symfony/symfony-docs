@@ -32,7 +32,7 @@ on your page before any other JavaScript file:
 .. code-block:: twig
 
     <!-- these two files now must be included in every page -->
-    <script src="{{ asset('build/manifest.js') }}"></script>
+    <script src="{{ asset('build/manifest.json') }}"></script>
     <script src="{{ asset('build/vendor.js') }}"></script>
 
     <!-- here you link to the specific JS files needed by the current page -->
@@ -42,7 +42,7 @@ on your page before any other JavaScript file:
     <link rel="stylesheet" href="{{ asset('build/vendor.css') }}" />
 
 The ``vendor.js`` file contains all the common code that has been extracted from
-the other files, so it's obvious that it must be included. The other file (``manifest.js``)
+the other files, so it's obvious that it must be included. The other file (``manifest.json``)
 is less obvious: it's needed so that Webpack knows how to load those shared modules.
 
 .. tip::

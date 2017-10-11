@@ -78,8 +78,7 @@ and hidden with the service definition:
 
     .. code-block:: php
 
-        use AppBundle\Service\Mailer;
-        use Symfony\Component\DependencyInjection\Reference;
+        use AppBundle\Mailer;
 
         $container->setParameter('mailer.transport', 'sendmail');
 
