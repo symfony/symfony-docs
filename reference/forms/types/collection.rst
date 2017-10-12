@@ -270,10 +270,10 @@ For more information, see :ref:`form-collections-remove`.
 delete_empty
 ~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``Boolean`` or ``callable`` **default**: ``false``
 
 If you want to explicitly remove entirely empty collection entries from your
-form you have to set this option to true. However, existing collection entries
+form you have to set this option to ``true``. However, existing collection entries
 will only be deleted if you have the allow_delete_ option enabled. Otherwise
 the empty values will be kept.
 
@@ -285,6 +285,27 @@ the empty values will be kept.
     option to ``null``. Both of these options can be set inside `entry_options`_.
     Read about the :ref:`form's empty_data option <reference-form-option-empty-data>`
     to learn why this is necessary.
+
+A value is deleted from the collection only if the normalized value is ``null``.
+However, you can also set the option value to a ``callable``, which will be called
+for each value in the submitted collection. The ``callable`` should return
+whether or not a value must be removed from the collection. For example::
+
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    // ...
+
+    $builder->add('users', CollectionType::class, array(
+        // ...
+        'delete_empty' => function (User $user = null) {
+            return null === $user || empty($user->getFirstName());
+        },
+    ));
+
+Using a ``callable`` is particularly useful in case of a compound form type
+which may have complex conditions for being empty.
+
+.. versionadded:: 3.4
+    Using a ``callable`` as an option value was introduced in Symfony 3.4.
 
 entry_options
 ~~~~~~~~~~~~~
