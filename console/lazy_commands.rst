@@ -5,13 +5,15 @@ How to Make Commands Lazily Loaded
     Support for command lazy loading was introduced in Symfony 3.4.
 
 .. note::
+
     If you are using the Symfony full-stack framework, you are probably looking for
     :ref:`lazy loading of commands defined as services <console-command-service-lazy-loading>`
 
 The traditional way of adding commands to your application is to use
 :method:`Symfony\\Component\\Console\\Application::add` which expects a
 ``Command`` instance as argument.
-In order to get commands loaded lazily, you need to register an intermediate router
+
+In order to lazy load commands, you need to register an intermediate loader
 which will be responsible for returning ``Command`` instances::
 
     use AppBundle\Command\HeavyCommand;
@@ -34,7 +36,7 @@ This example makes use of the built-in
 but the :method:`Symfony\\Component\\Console\\Application::setCommandLoader`
 method accepts any
 :class:`Symfony\\Component\\Console\\CommandLoader\\CommandLoaderInterface`
-instance so you can easily create and use your own implementation.
+instance so you can use your own implementation.
 
 Built-in Command Loaders
 ------------------------
@@ -61,9 +63,9 @@ is called.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Console\\CommandLoader\\ContainerCommandLoader`
-class can be used to load commands from a PSR-11 container.
-As such, its constructor takes a PSR-11 ``ContainerInterface`` implementation as
-first argument and a command map as last argument. The command map must be an array
+class can be used to load commands from a PSR-11 container. As such, its
+constructor takes a PSR-11 ``ContainerInterface`` implementation as first
+argument and a command map as last argument. The command map must be an array
 with command names as keys and service identifiers as values::
 
     use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
