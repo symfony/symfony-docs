@@ -64,6 +64,7 @@ Platform.sh how to deploy your application (read more about
     mounts:
         '/var/cache': 'shared:files/cache'
         '/var/logs': 'shared:files/logs'
+        '/var/sessions': 'shared:files/sessions'
 
     # The hooks that will be performed when the package is deployed.
     hooks:
