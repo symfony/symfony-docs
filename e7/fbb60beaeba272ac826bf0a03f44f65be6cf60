@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by jdeniau at 2017-10-04T13:47:14Z
+
+@javiereguiluz it does throw the following exception :
+```
+ Unrecognized option "server_version" under "doctrine.dbal.connections.foo_master.slaves.foo_slave"
+```
+
+Apparently, it's more a bug in the DoctrineBundle implementation, because if you look in doctrine's MasterSlaveConnection, you can see a [chooseConnectionConfiguration](https://github.com/doctrine/dbal/blob/ce7560f2d65a2fe0d3521921f208c60fed209090/lib/Doctrine/DBAL/Connections/MasterSlaveConnection.php#L221-L228).
+
+This methods seems to get the master or slave configuration, to do platform specific things, like converting from/to database, so the serverVersion seems to be "host-specific".
+
+I can eventually help with this, but I do not really know DoctrineBundle internals, so maybe another person can be more at ease with this ;)
+
+Anyhow, I think that the case "Our master is Mysql 5.7, our slave is Mysql 5.6, and there is a doctrine specific code that will target only 5.7" ;)
+
+If you want to close this, because it "should" work like this, no problem.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-04T13:52:40Z
+
+@jdeniau thanks for the info. I agree merging this change because the current behavior is wrong. But I've created https://github.com/doctrine/DoctrineBundle/issues/711 too to see if this can be changed or not. Thanks!
