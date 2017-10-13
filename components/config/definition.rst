@@ -190,7 +190,7 @@ Or you may define a prototype for each node inside an array node::
     The ``arrayPrototype()`` method (and the related ``booleanPrototype()``
     ``integerPrototype()``, ``floatPrototype()``, ``scalarPrototype()`` and
     ``enumPrototype()``) was introduced in Symfony 3.3. In previous versions,
-    you needed to use ``prototype('array')``, ``prototype('boolean')``, etc.)
+    you needed to use ``prototype('array')``, ``prototype('boolean')``, etc.
 
 A prototype can be used to add a definition which may be repeated many times
 inside the current node. According to the prototype definition in the example
