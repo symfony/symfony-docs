@@ -93,7 +93,7 @@ from inside a controller::
             $form = $this->createFormBuilder($task)
                 ->add('task', 'text')
                 ->add('dueDate', 'date')
-                ->add('save', 'submit', array('label' => 'Create Post'))
+                ->add('save', 'submit', array('label' => 'Create Task'))
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(
