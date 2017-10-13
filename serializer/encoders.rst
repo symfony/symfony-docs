@@ -23,10 +23,23 @@ You can add new encoders to a Serializer instance by using its second constructo
 Built-in Encoders
 -----------------
 
-Two encoders are used in the example above:
+The Serializer component provides built-in encoders:
 
-* :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder` to encode/decode XML
+* :class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder` to encode/decode CSV
 * :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder` to encode/decode JSON
+* :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder` to encode/decode XML
+* :class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder` to encode/decode Yaml
+
+.. versionadded:: 3.2
+    The :class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder` and the
+    :class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder` were added in
+    Symfony 3.2.
+
+The ``JsonEncoder``
+~~~~~~~~~~~~~~~~~~~
+
+The ``JsonEncoder`` is much simpler and is based on the PHP
+:phpfunction:`json_encode` and :phpfunction:`json_decode` functions.
 
 The ``XmlEncoder``
 ~~~~~~~~~~~~~~~~~~
@@ -56,8 +69,7 @@ Be aware that this encoder will consider keys beginning with ``@`` as attributes
     //     <foo bar="value" />
     // </response>
 
-The ``JsonEncoder``
+The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
 
-The ``JsonEncoder`` is much simpler and is based on the PHP
-:phpfunction:`json_encode` and :phpfunction:`json_decode` functions.
+This encoder requires the :doc:`Yaml Component </components/yaml>`.
