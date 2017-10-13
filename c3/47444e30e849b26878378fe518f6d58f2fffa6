@@ -1,0 +1,93 @@
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-08-05T07:29:37Z
+
+I'm fine with targeting 3.3 since at the time of its release PHP 5 was not maintained anymore.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-08-09T12:43:08Z
+
+I am not convinced that we should handle the `2.x` branches differently. IMO we could safely merge this into the `2.7` branch.
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2017-08-09T12:49:15Z
+
+WDYT @javiereguiluz @Simperfit @HeahDude ? Maybe merge this into `2.7` will mean less differences and thus, less maintenance?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-08-29T07:24:43Z
+
+ping @HeahDude @javiereguiluz @weaverryan @wouterj :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-08-29T07:38:56Z
+
+The real problem I see with this proposal is that the move from PHP 5 to 7 or *vice versa* is not automatic. Sometimes `php5` turns into `php7` (e.g. `Action php5-fcgi /php5-fcgi` -> `Action php7-fcgi /php7-fcgi`) and sometimes `php5` turns into `php7.1` (e.g. `listen = /var/run/php5-fpm.sock` -> `listen = /var/run/php7.1-fpm.sock`).
+
+If the changes were consistent (`php5` -> `php7` or `php7` -> `php5`) then I wouldn't see any issue making this change. For now, I have some concerns.
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2017-08-29T09:35:36Z
+
+To be more clear about the "sometimes" part, I think it boils down to how apache and php-fpm are packaged on Ubuntu. Can someone using apache confirm that there is no minor version in apache config files for php 7?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-09-02T11:52:52Z
+
+@javiereguiluz I don't really understand your concerns. As I read blog posts, it feels like Apache always will be `php7-fcgi` and the FPM socket `php7.1-fpm.sock`. I don't think it'll change, or at least, I don't think we can force the Linux developers to change this naming :)
+
+I'm :+1: for making the docs assume PHP 7 (also in the PHP code examples).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-09-02T13:08:34Z
+
+@wouterj my concern was that the transform from PHP 7 to 5 is not consistent. If all changes where `php7` -> `php5` or `php5` -> `php7` then I can read some config file and transform it into the other PHP version. However, now it looks like a lottery: sometimes is `php7` and sometimes `php7.1` so I don't know if I have to change everything to `php5` or `php5` and `php5.6` for example.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-09-02T13:46:22Z
+
+Well, I think it works just the other way around: If you setup config, I really don't think you should be using PHP 5.x anymore. So you just can read the Symfony docs and see the PHP 7 config.
+
+In the current situation, you see the PHP 5.x config. You don't have any idea how to change this to PHP 7 and changing 5 to 7, it doesn't work (in all cases).
+
+To make both worlds perfect, we can add comments with the PHP 5 way. But I think we it's engouh to make the PHP 7 world perfect :)
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2017-09-19T06:29:06Z
+
+ping @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-09-19T06:38:41Z
+
+I don't agree with this comment:
+
+> I really don't think you should be using PHP 5.x anymore
+
+Developers are not stupid. They know PHP 7 exists and it's better than PHP 5. They'd love to use PHP 7. But sometimes, for some reasons that can't be changed, you must still use PHP 5.
+
+In any case, Symfony goes full PHP 7.1 in two months, so let's change this! 👍
+
+---------------------------------------------------------------------------
+
+by Simperfit at 2017-09-19T09:13:48Z
+
+i'm agree with this change too 👍
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2017-09-19T09:26:47Z
+
+>  Developers are not stupid. They know PHP 7 exists and it's better than PHP 5. They'd love to use PHP 7. But sometimes, for some reasons that can't be changed, you must still use PHP 5.
+
+I don't think @wouterj was suggesting that. I think he was just saying that nowadays, when you start a project, it is more likely that you are using php 7.1 .
