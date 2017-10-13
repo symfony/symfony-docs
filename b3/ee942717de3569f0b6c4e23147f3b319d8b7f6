@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-10-06T10:59:38Z
+
+We should now also update the paragraph after the first configuration block as it still mentions that the first user provider will be auto-picked. In fact, I think we should not only reword that part, but also move the added directive there.
