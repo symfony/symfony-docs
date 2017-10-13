@@ -55,12 +55,11 @@ the Finder instance.
     :phpfunction:`iterator_to_array` method, or get the number of items with
     :phpfunction:`iterator_count`.
 
-.. tip::
+.. caution::
 
-    The ``Finder`` object doesn't reset its internal state automatically, which
-    means that results are always added to the previous ones. Instantiate a new
-    object or call :phpfunction:`create` on the existing object to reset the
-    previous state.
+    The ``Finder`` object doesn't reset its internal state automatically.
+    This means that you need to create a new instance if you do not want
+    get mixed results.
 
 .. caution::
 
