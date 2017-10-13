@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2017-09-30T10:30:55Z
+
+:-1: This article is exactly explaining how to override stuff **without bundle inheritance**. So this article becomes more important now inheritance is deprecated. It makes no sense to add this caution there imo.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-03T12:55:05Z
+
+This article may not be about bundle inheritance, but it mentions that four times:
+
+![inheritance-1](https://user-images.githubusercontent.com/73419/31126047-c884799e-a84a-11e7-9e1c-f39698b42516.png)
+
+![inheritance-2](https://user-images.githubusercontent.com/73419/31126051-cab21118-a84a-11e7-97db-25cc7bfe6dba.png)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-10-04T11:08:04Z
+
+Then, instead of adding this confusing warning, I think we should remove the references to the other article in this article.
