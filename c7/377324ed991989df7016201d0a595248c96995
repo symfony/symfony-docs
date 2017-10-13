@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-10-09T09:43:14Z
+
+This was only recently changed in #8438. Can someone confirm which extension is the right one?
+
+ping @weaverryan
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-10T08:36:46Z
+
+I've just rebuild all assets for symfony.com app:
+
+![encore-assets](https://user-images.githubusercontent.com/73419/31376889-a12213aa-ada6-11e7-81dd-263d50334aa5.png)
+
+There are two manifest files:
+
+* `manifest.json` (which is always called like that) is just a JSON array of files.
+* `manifest.js` (which can be versioned) is the file you must include in your template.
+
+In symfony.com templates we have this:
+
+```twig
+<script src="{{ asset('build/manifest.js') }}"></script>
+```
+
+The JSON file is only used in the `framework.assets` config:
+
+```yaml
+framework:
+    assets:
+        json_manifest_path: '%kernel.project_dir%/web/build/manifest.json'
+```
