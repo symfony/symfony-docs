@@ -368,6 +368,12 @@ Add the ``--format`` option to get the output in JSON format:
 
     $ php lint.php path/to/file.yml --format json
 
+.. tip::
+
+    The linting command will also report any deprecations in the checked
+    YAML files. This may for example be useful for recognizing deprecations of
+    contents of YAML files during automated tests.
+
 Learn More
 ----------
 
