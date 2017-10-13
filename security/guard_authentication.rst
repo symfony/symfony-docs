@@ -378,7 +378,7 @@ Each authenticator needs the following methods:
 **getCredentials(Request $request)**
     This will be called on *every* request and your job is to read the token (or
     whatever your "authentication" information is) from the request and return it.
-    These credentials are later passed as the first argument ot ``getUser()``.
+    These credentials are later passed as the first argument of ``getUser()``.
 
 **getUser($credentials, UserProviderInterface $userProvider)**
     The ``$credentials`` argument is the value returned by ``getCredentials()``.
