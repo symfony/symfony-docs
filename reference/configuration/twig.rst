@@ -20,6 +20,8 @@ TwigBundle Configuration ("twig")
                 # Bootstrap:
                 - bootstrap_3_layout.html.twig
                 - bootstrap_3_horizontal_layout.html.twig
+                - bootstrap_4_layout.html.twig
+                - bootstrap_4_horizontal_layout.html.twig
 
                 # Foundation
                 - foundation_5_layout.html.twig
@@ -91,7 +93,7 @@ TwigBundle Configuration ("twig")
 
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
-                
+
                 <twig:date format="d.m.Y, H:i:s" interval-format="%d days" timezone="Asia/Tokyo" />
                 <twig:number-format decimals="2" decimal-point="," thousands-separator="." />
 
