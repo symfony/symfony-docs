@@ -129,11 +129,9 @@ read more about it, see the ":doc:`/bundles/configuration`" article.
 Adding Classes to Compile
 -------------------------
 
-.. note::
-
-    The ``addClassesToCompile()`` method was deprecated in Symfony 3.3, and will
-    be removed in Symfony 4.0. If you want to use this method and be compatible
-    with Symfony 4.0, check to see if the method exists before calling it.
+.. versionadded:: 3.3
+    This technique is discouraged and the ``addClassesToCompile()`` method was
+    deprecated in Symfony 3.3 because modern PHP versions make it unnecessary.
 
 Symfony creates a big ``classes.php`` file in the cache directory to aggregate
 the contents of the PHP classes that are used in every request. This reduces the
