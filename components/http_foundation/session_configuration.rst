@@ -72,7 +72,6 @@ The Symfony HttpFoundation component provides some by default and these can
 easily serve as examples if you wish to write your own.
 
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`
-* :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcacheSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MongoDbSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NullSessionHandler`
@@ -261,58 +260,6 @@ particular cookie by reading the ``getLifetime()`` method::
 
 The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
-
-PHP 5.4 Compatibility
-~~~~~~~~~~~~~~~~~~~~~
-
-Since PHP 5.4.0, :phpclass:`SessionHandler` and :phpclass:`SessionHandlerInterface`
-are available. Symfony provides forward compatibility for the :phpclass:`SessionHandlerInterface`
-so it can be used under PHP 5.3. This greatly improves interoperability with other
-libraries.
-
-:phpclass:`SessionHandler` is a special PHP internal class which exposes native save
-handlers to PHP user-space.
-
-In order to provide a solution for those using PHP 5.4, Symfony has a special
-class called :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeSessionHandler`
-which under PHP 5.4, extends from ``\SessionHandler`` and under PHP 5.3 is just a
-empty base class. This provides some interesting opportunities to leverage
-PHP 5.4 functionality if it is available.
-
-Save Handler Proxy
-~~~~~~~~~~~~~~~~~~
-
-A Save Handler Proxy is basically a wrapper around a Save Handler that was
-introduced to seamlessly support the migration from PHP 5.3 to PHP 5.4+. It
-further creates an extension point from where custom logic can be added that
-works independently of which handler is being wrapped inside.
-
-There are two kinds of save handler class proxies which inherit from
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\AbstractProxy`:
-they are :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\NativeProxy`
-and :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\SessionHandlerProxy`.
-
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
-automatically injects storage handlers into a save handler proxy unless already
-wrapped by one.
-
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\NativeProxy`
-is used automatically under PHP 5.3 when internal PHP save handlers are specified
-using the ``Native*SessionHandler`` classes, while
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\SessionHandlerProxy`
-will be used to wrap any custom save handlers, that implement :phpclass:`SessionHandlerInterface`.
-
-From PHP 5.4 and above, all session handlers implement :phpclass:`SessionHandlerInterface`
-including ``Native*SessionHandler`` classes which inherit from :phpclass:`SessionHandler`.
-
-The proxy mechanism allows you to get more deeply involved in session save handler
-classes. A proxy for example could be used to encrypt any session transaction
-without knowledge of the specific save handler.
-
-.. note::
-
-    Before PHP 5.4, you can only proxy user-land save handlers but not
-    native PHP save handlers.
 
 .. _`php.net/session.customhandler`: http://php.net/session.customhandler
 .. _`php.net/session.configuration`: http://php.net/session.configuration
