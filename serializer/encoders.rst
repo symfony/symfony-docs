@@ -32,13 +32,13 @@ The Serializer component provides built-in encoders:
 
 .. versionadded:: 3.2
     The :class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder` and the
-    :class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder` were added in
+    :class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder` were introduced in
     Symfony 3.2.
 
 The ``JsonEncoder``
 ~~~~~~~~~~~~~~~~~~~
 
-The ``JsonEncoder`` is much simpler and is based on the PHP
+The ``JsonEncoder`` encodes to and decodes from JSON strings, based on the PHP
 :phpfunction:`json_encode` and :phpfunction:`json_decode` functions.
 
 The ``XmlEncoder``
@@ -72,4 +72,5 @@ Be aware that this encoder will consider keys beginning with ``@`` as attributes
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
 
-This encoder requires the :doc:`Yaml Component </components/yaml>`.
+This encoder requires the :doc:`Yaml Component </components/yaml>` and
+transforms from and to Yaml.
