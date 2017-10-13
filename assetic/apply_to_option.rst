@@ -65,22 +65,11 @@ Filter a single File
 You can now serve up a single CoffeeScript file as JavaScript from within your
 templates:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts '@AppBundle/Resources/public/js/example.coffee' filter='coffee' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array('@AppBundle/Resources/public/js/example.coffee'),
-            array('coffee')
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts '@AppBundle/Resources/public/js/example.coffee' filter='coffee' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 This is all that's needed to compile this CoffeeScript file and serve it
 as the compiled JavaScript.
@@ -90,27 +79,13 @@ Filter multiple Files
 
 You can also combine multiple CoffeeScript files into a single output file:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts '@AppBundle/Resources/public/js/example.coffee'
-                       '@AppBundle/Resources/public/js/another.coffee'
-            filter='coffee' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array(
-                '@AppBundle/Resources/public/js/example.coffee',
-                '@AppBundle/Resources/public/js/another.coffee',
-            ),
-            array('coffee')
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts '@AppBundle/Resources/public/js/example.coffee'
+                   '@AppBundle/Resources/public/js/another.coffee'
+        filter='coffee' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 Both files will now be served up as a single file compiled into regular JavaScript.
 

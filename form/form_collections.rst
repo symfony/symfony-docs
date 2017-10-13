@@ -199,48 +199,26 @@ that are already related to this ``Task``. In the above controller, I added
 some dummy code so that you can see this in action (since a ``Task`` has
 zero tags when first created).
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# app/Resources/views/task/new.html.twig #}
 
-        {# app/Resources/views/task/new.html.twig #}
+    {# ... #}
 
-        {# ... #}
+    {{ form_start(form) }}
+        {# render the task's only field: description #}
+        {{ form_row(form.description) }}
 
-        {{ form_start(form) }}
-            {# render the task's only field: description #}
-            {{ form_row(form.description) }}
+        <h3>Tags</h3>
+        <ul class="tags">
+            {# iterate over each existing tag and render its only field: name #}
+            {% for tag in form.tags %}
+                <li>{{ form_row(tag.name) }}</li>
+            {% endfor %}
+        </ul>
+    {{ form_end(form) }}
 
-            <h3>Tags</h3>
-            <ul class="tags">
-                {# iterate over each existing tag and render its only field: name #}
-                {% for tag in form.tags %}
-                    <li>{{ form_row(tag.name) }}</li>
-                {% endfor %}
-            </ul>
-        {{ form_end(form) }}
-
-        {# ... #}
-
-    .. code-block:: html+php
-
-        <!-- src/AppBundle/Resources/views/Task/new.html.php -->
-
-        <!-- ... -->
-
-        <?php echo $view['form']->start($form) ?>
-            <!-- render the task's only field: description -->
-            <?php echo $view['form']->row($form['description']) ?>
-
-            <h3>Tags</h3>
-            <ul class="tags">
-                <?php foreach ($form['tags'] as $tag): ?>
-                    <li><?php echo $view['form']->row($tag['name']) ?></li>
-                <?php endforeach ?>
-            </ul>
-        <?php echo $view['form']->end($form) ?>
-
-        <!-- ... -->
+    {# ... #}
 
 When the user submits the form, the submitted data for the ``tags`` field are
 used to construct an ``ArrayCollection`` of ``Tag`` objects, which is then set
@@ -306,21 +284,11 @@ In addition to telling the field to accept any number of submitted objects, the
 is a little "template" that contains all the HTML to be able to render any
 new "tag" forms. To render it, make the following change to your template:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
-            ...
-        </ul>
-
-    .. code-block:: html+php
-
-        <ul class="tags" data-prototype="<?php
-            echo $view->escape($view['form']->row($form['tags']->vars['prototype']))
-        ?>">
-            ...
-        </ul>
+    <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
+        ...
+    </ul>
 
 .. note::
 

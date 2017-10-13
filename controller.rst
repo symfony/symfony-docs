@@ -420,47 +420,25 @@ you'll use this key to retrieve the message.
 In the template of the next page (or even better, in your base layout template),
 read any flash messages from the session:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# app/Resources/views/base.html.twig #}
 
-        {# app/Resources/views/base.html.twig #}
+    {# you can read and display just one flash message type... #}
+    {% for flash_message in app.session.flashBag.get('notice') %}
+        <div class="flash-notice">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
 
-        {# you can read and display just one flash message type... #}
-        {% for flash_message in app.session.flashBag.get('notice') %}
-            <div class="flash-notice">
+    {# ...or you can read and display every flash message available #}
+    {% for type, flash_messages in app.session.flashBag.all %}
+        {% for flash_message in flash_messages %}
+            <div class="flash-{{ type }}">
                 {{ flash_message }}
             </div>
         {% endfor %}
-
-        {# ...or you can read and display every flash message available #}
-        {% for type, flash_messages in app.session.flashBag.all %}
-            {% for flash_message in flash_messages %}
-                <div class="flash-{{ type }}">
-                    {{ flash_message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/base.html.php -->
-
-        // you can read and display just one flash message type...
-        <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>
-            <div class="flash-notice">
-                <?php echo $message ?>
-            </div>
-        <?php endforeach ?>
-
-        // ...or you can read and display every flash message available
-        <?php foreach ($view['session']->getFlashBag()->all() as $type => $flash_messages): ?>
-            <?php foreach ($flash_messages as $flash_message): ?>
-                <div class="flash-<?php echo $type ?>">
-                    <?php echo $message ?>
-                </div>
-            <?php endforeach ?>
-        <?php endforeach ?>
+    {% endfor %}
 
 .. note::
 

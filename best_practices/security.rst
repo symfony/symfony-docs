@@ -156,7 +156,7 @@ be reused in other parts of the application. Imagine that you want to add
 a link in a template that will only be seen by authors. Right now you'll
 need to repeat the expression code using Twig syntax:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {% if app.user and app.user.email == post.authorEmail %}
         <a href=""> ... </a>
@@ -201,7 +201,7 @@ Now you can reuse this method both in the template and in the security expressio
         // ...
     }
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {% if post.isAuthor(app.user) %}
         <a href=""> ... </a>

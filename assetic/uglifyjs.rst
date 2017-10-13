@@ -181,22 +181,11 @@ Minify your Assets
 In order to apply UglifyJS on your assets, add the ``filter`` option in the
 asset tags of your templates to tell Assetic to use the ``uglifyjs2`` filter:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts '@AppBundle/Resources/public/js/*' filter='uglifyjs2' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array('@AppBundle/Resources/public/js/*'),
-            array('uglifyj2s')
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts '@AppBundle/Resources/public/js/*' filter='uglifyjs2' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 .. note::
 
@@ -216,22 +205,11 @@ debug (e.g. ``app_dev.php``) mode. You can do this by prefixing the filter name
 in your template with a question mark: ``?``. This tells Assetic to only
 apply this filter when debug mode is off (e.g. ``app.php``):
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts '@AppBundle/Resources/public/js/*' filter='?uglifyjs2' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array('@AppBundle/Resources/public/js/*'),
-            array('?uglifyjs2')
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts '@AppBundle/Resources/public/js/*' filter='?uglifyjs2' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 To try this out, switch to your ``prod`` environment (``app.php``). But before
 you do, don't forget to :ref:`clear your cache <page-creation-prod-cache-clear>`
@@ -303,23 +281,11 @@ Next, add the configuration for this filter:
 To use the filter for your CSS files, add the filter to the Assetic ``stylesheets``
 helper:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% stylesheets 'bundles/App/css/*' filter='uglifycss' filter='cssrewrite' %}
-             <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->stylesheets(
-            array('bundles/App/css/*'),
-            array('uglifycss'),
-            array('cssrewrite')
-        ) as $url): ?>
-            <link rel="stylesheet" href="<?php echo $view->escape($url) ?>" />
-        <?php endforeach ?>
+    {% stylesheets 'bundles/App/css/*' filter='uglifycss' filter='cssrewrite' %}
+         <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 
 Just like with the ``uglifyjs2`` filter, if you prefix the filter name with
 ``?`` (i.e. ``?uglifycss``), the minification will only happen when you're

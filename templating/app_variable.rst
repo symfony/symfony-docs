@@ -30,23 +30,13 @@ automatically:
 ``app.debug``
     True if in debug mode. False otherwise.
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <p>Username: {{ app.user.username }}</p>
-        {% if app.debug %}
-            <p>Request method: {{ app.request.method }}</p>
-            <p>Application Environment: {{ app.environment }}</p>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
-        <?php if ($app->getDebug()): ?>
-            <p>Request method: <?php echo $app->getRequest()->getMethod() ?></p>
-            <p>Application Environment: <?php echo $app->getEnvironment() ?></p>
-        <?php endif ?>
+    <p>Username: {{ app.user.username }}</p>
+    {% if app.debug %}
+        <p>Request method: {{ app.request.method }}</p>
+        <p>Application Environment: {{ app.environment }}</p>
+    {% endif %}
 
 .. versionadded:: 2.6
     The global ``app.security`` variable (or the ``$app->getSecurity()``

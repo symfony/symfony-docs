@@ -629,77 +629,40 @@ your application. Assume that you have a sport meetup creation controller::
 The associated template uses some JavaScript to update the ``position`` form
 field according to the current selection in the ``sport`` field:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# app/Resources/views/meetup/create.html.twig #}
+    {{ form_start(form) }}
+        {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
+        {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
+        {# ... #}
+    {{ form_end(form) }}
 
-        {# app/Resources/views/meetup/create.html.twig #}
-        {{ form_start(form) }}
-            {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
-            {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
-            {# ... #}
-        {{ form_end(form) }}
-
-        <script>
-        var $sport = $('#meetup_sport');
-        // When sport gets selected ...
-        $sport.change(function() {
-          // ... retrieve the corresponding form.
-          var $form = $(this).closest('form');
-          // Simulate form data, but only include the selected sport value.
-          var data = {};
-          data[$sport.attr('name')] = $sport.val();
-          // Submit data via AJAX to the form's action path.
-          $.ajax({
-            url : $form.attr('action'),
-            type: $form.attr('method'),
-            data : data,
-            success: function(html) {
-              // Replace current position field ...
-              $('#meetup_position').replaceWith(
-                // ... with the returned one from the AJAX response.
-                $(html).find('#meetup_position')
-              );
-              // Position field now displays the appropriate positions.
-            }
-          });
-        });
-        </script>
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/Meetup/create.html.php -->
-        <?php echo $view['form']->start($form) ?>
-            <?php echo $view['form']->row($form['sport']) ?>    <!-- <select id="meetup_sport" ... -->
-            <?php echo $view['form']->row($form['position']) ?> <!-- <select id="meetup_position" ... -->
-            <!-- ... -->
-        <?php echo $view['form']->end($form) ?>
-
-        <script>
-        var $sport = $('#meetup_sport');
-        // When sport gets selected ...
-        $sport.change(function() {
-          // ... retrieve the corresponding form.
-          var $form = $(this).closest('form');
-          // Simulate form data, but only include the selected sport value.
-          var data = {};
-          data[$sport.attr('name')] = $sport.val();
-          // Submit data via AJAX to the form's action path.
-          $.ajax({
-            url : $form.attr('action'),
-            type: $form.attr('method'),
-            data : data,
-            success: function(html) {
-              // Replace current position field ...
-              $('#meetup_position').replaceWith(
-                // ... with the returned one from the AJAX response.
-                $(html).find('#meetup_position')
-              );
-              // Position field now displays the appropriate positions.
-            }
-          });
-        });
-        </script>
+    <script>
+    var $sport = $('#meetup_sport');
+    // When sport gets selected ...
+    $sport.change(function() {
+      // ... retrieve the corresponding form.
+      var $form = $(this).closest('form');
+      // Simulate form data, but only include the selected sport value.
+      var data = {};
+      data[$sport.attr('name')] = $sport.val();
+      // Submit data via AJAX to the form's action path.
+      $.ajax({
+        url : $form.attr('action'),
+        type: $form.attr('method'),
+        data : data,
+        success: function(html) {
+          // Replace current position field ...
+          $('#meetup_position').replaceWith(
+            // ... with the returned one from the AJAX response.
+            $(html).find('#meetup_position')
+          );
+          // Position field now displays the appropriate positions.
+        }
+      });
+    });
+    </script>
 
 The major benefit of submitting the whole form to just extract the updated
 ``position`` field is that no additional server-side code is needed; all the

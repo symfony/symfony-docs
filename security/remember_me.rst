@@ -143,48 +143,25 @@ the cookie will automatically be set when the checkbox is checked and the user
 successfully logs in. So, your specific login form might ultimately look like
 this:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# app/Resources/views/security/login.html.twig #}
+    {% if error %}
+        <div>{{ error.message }}</div>
+    {% endif %}
 
-        {# app/Resources/views/security/login.html.twig #}
-        {% if error %}
-            <div>{{ error.message }}</div>
-        {% endif %}
+    <form action="{{ path('login') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
-        <form action="{{ path('login') }}" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password" />
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password" />
+        <input type="checkbox" id="remember_me" name="_remember_me" checked />
+        <label for="remember_me">Keep me logged in</label>
 
-            <input type="checkbox" id="remember_me" name="_remember_me" checked />
-            <label for="remember_me">Keep me logged in</label>
-
-            <input type="submit" name="login" />
-        </form>
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/security/login.html.php -->
-        <?php if ($error): ?>
-            <div><?php echo $error->getMessage() ?></div>
-        <?php endif ?>
-
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username"
-                   name="_username" value="<?php echo $last_username ?>" />
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password" />
-
-            <input type="checkbox" id="remember_me" name="_remember_me" checked />
-            <label for="remember_me">Keep me logged in</label>
-
-            <input type="submit" name="login" />
-        </form>
+        <input type="submit" name="login" />
+    </form>
 
 The user will then automatically be logged in on subsequent visits while
 the cookie remains valid.

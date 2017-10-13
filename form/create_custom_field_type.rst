@@ -113,45 +113,26 @@ type. But for the sake of this example, suppose that when your field is "expande
 always render it in a ``ul`` element. In your form theme template (see above
 link for details), create a ``shipping_widget`` block to handle this:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {# app/Resources/views/form/fields.html.twig #}
-        {% block shipping_widget %}
-            {% spaceless %}
-                {% if expanded %}
-                    <ul {{ block('widget_container_attributes') }}>
-                    {% for child in form %}
-                        <li>
-                            {{ form_widget(child) }}
-                            {{ form_label(child) }}
-                        </li>
-                    {% endfor %}
-                    </ul>
-                {% else %}
-                    {# just let the choice widget render the select tag #}
-                    {{ block('choice_widget') }}
-                {% endif %}
-            {% endspaceless %}
-        {% endblock %}
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/form/shipping_widget.html.php -->
-        <?php if ($expanded) : ?>
-            <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
-            <?php foreach ($form as $child) : ?>
-                <li>
-                    <?php echo $view['form']->widget($child) ?>
-                    <?php echo $view['form']->label($child) ?>
-                </li>
-            <?php endforeach ?>
-            </ul>
-        <?php else : ?>
-            <!-- just let the choice widget render the select tag -->
-            <?php echo $view['form']->renderBlock('choice_widget') ?>
-        <?php endif ?>
+    {# app/Resources/views/form/fields.html.twig #}
+    {% block shipping_widget %}
+        {% spaceless %}
+            {% if expanded %}
+                <ul {{ block('widget_container_attributes') }}>
+                {% for child in form %}
+                    <li>
+                        {{ form_widget(child) }}
+                        {{ form_label(child) }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                {# just let the choice widget render the select tag #}
+                {{ block('choice_widget') }}
+            {% endif %}
+        {% endspaceless %}
+    {% endblock %}
 
 .. note::
 

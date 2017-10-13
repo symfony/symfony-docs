@@ -93,22 +93,11 @@ You have YUI Compressor configured now, but nothing is going to happen until
 you apply one of these filters to an asset. Since your assets are a part of
 the view layer, this work is done in your templates:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts '@AppBundle/Resources/public/js/*' filter='yui_js' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array('@AppBundle/Resources/public/js/*'),
-            array('yui_js')
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts '@AppBundle/Resources/public/js/*' filter='yui_js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 .. note::
 
@@ -121,22 +110,11 @@ With the addition of the ``yui_js`` filter to the asset tags above, you should
 now see minified JavaScripts coming over the wire much faster. The same process
 can be repeated to minify your stylesheets.
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% stylesheets '@AppBundle/Resources/public/css/*' filter='yui_css' %}
-            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
-        {% endstylesheets %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->stylesheets(
-            array('@AppBundle/Resources/public/css/*'),
-            array('yui_css')
-        ) as $url): ?>
-            <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $view->escape($url) ?>" />
-        <?php endforeach ?>
+    {% stylesheets '@AppBundle/Resources/public/css/*' filter='yui_css' %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+    {% endstylesheets %}
 
 Disable Minification in Debug Mode
 ----------------------------------
@@ -147,22 +125,11 @@ application is in debug mode. You can do this by prefixing the filter name
 in your template with a question mark: ``?``. This tells Assetic to only
 apply this filter when debug mode is off.
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% javascripts '@AppBundle/Resources/public/js/*' filter='?yui_js' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
-    .. code-block:: html+php
-
-        <?php foreach ($view['assetic']->javascripts(
-            array('@AppBundle/Resources/public/js/*'),
-            array('?yui_js')
-        ) as $url): ?>
-            <script src="<?php echo $view->escape($url) ?>"></script>
-        <?php endforeach ?>
+    {% javascripts '@AppBundle/Resources/public/js/*' filter='?yui_js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 
 .. tip::
 

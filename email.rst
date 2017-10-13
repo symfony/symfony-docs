@@ -135,7 +135,7 @@ To keep things decoupled, the email body has been stored in a template and
 rendered with the ``renderView()`` method. The ``registration.html.twig``
 template might look something like this:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     {# app/Resources/views/Emails/registration.html.twig #}
     <h3>You did it! You registered!</h3>
