@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by ro0NL at 2017-10-03T19:12:44Z
+
+ping @wouterj comments addressed :)
+
+---------------------------------------------------------------------------
+
+by Tobion at 2017-10-04T09:57:12Z
+
+IMO it should be mentioned the passed iterable is a generator that loads each service lazily when iterating.
+
+---------------------------------------------------------------------------
+
+by ro0NL at 2017-10-04T11:11:10Z
+
+Agree. You can have them, however you cant leverage them with _this specific_ feature. That needs to be clarified yes.
+
+Status: needs work
+
+---------------------------------------------------------------------------
+
+by ro0NL at 2017-10-05T19:24:27Z
+
+Last commit 2e5c87f0e64a6c588251e0479fff3ea4e25e4d48 addresses @javiereguiluz comment.
