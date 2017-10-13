@@ -94,7 +94,7 @@ directory of the application and add just the following content:
 
 .. code-block:: text
 
-    web: vendor/bin/heroku-php-apache2 web/
+    web: vendor/bin/heroku-php-apache2 public/
 
 .. note::
 
@@ -104,14 +104,14 @@ directory of the application and add just the following content:
 
     .. code-block:: text
 
-        web: vendor/bin/heroku-php-nginx -C nginx_app.conf web/
+        web: vendor/bin/heroku-php-nginx -C nginx_app.conf public/
 
 If you prefer working on the command console, execute the following commands to
 create the ``Procfile`` file and to add it to the repository:
 
 .. code-block:: terminal
 
-    $ echo "web: vendor/bin/heroku-php-apache2 web/" > Procfile
+    $ echo "web: vendor/bin/heroku-php-apache2 public/" > Procfile
     $ git add .
     $ git commit -m "Procfile for Apache and PHP"
     [master 35075db] Procfile for Apache and PHP
@@ -227,38 +227,13 @@ application will respond:
 
 You should be seeing your Symfony application in your browser.
 
-.. caution::
-
-    If you take your first steps on Heroku using a fresh installation of
-    the Symfony Standard Edition, you may run into a 404 page not found error.
-    This is because the route for ``/`` is defined by the AcmeDemoBundle, but the
-    AcmeDemoBundle is only loaded in the dev environment (check out your
-    ``AppKernel`` class). Try opening ``/app/example`` from the AppBundle.
 
 Custom Compile Steps
 ~~~~~~~~~~~~~~~~~~~~
 
 If you wish to execute additional custom commands during a build, you can leverage
-Heroku's `custom compile steps`_. Imagine you want to remove the ``dev`` front controller
-from your production environment on Heroku in order to avoid a potential vulnerability.
-Adding a command to remove ``web/app_dev.php`` to Composer's `post-install-commands`_ would
-work, but it also removes the controller in your local development environment on each
-``composer install`` or ``composer update`` respectively. Instead, you can add a
-`custom Composer command`_ named ``compile`` (this key name is a Heroku convention) to the
-``scripts`` section of your ``composer.json``. The listed commands hook into Heroku's deploy
-process:
-
-.. code-block:: json
-
-    {
-        "scripts": {
-            "compile": [
-                "rm web/app_dev.php"
-            ]
-        }
-    }
-
-This is also very useful to build assets on the production system, e.g. with Assetic:
+Heroku's `custom compile steps`_. The listed commands hook into Heroku's deploy
+process, this is very useful for building assets on the production system, e.g. with Assetic:
 
 .. code-block:: json
 
