@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-09T13:30:56Z
+
+After reading https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/color I wonder if the ColorType of Symfony follows the HTML5 spec regarding this:
+
+> The value of a <input> element of type "color" is always a DOMString which contains a 7-character string specifying an RGB color in lower case hexadecimal notation. The value is never in any other form, and is never empty.
+>
+> Setting the value to anything that isn't a valid, fully-opaque, RGB color in hexadecimal notation will result in the value being set to "#000000". In particular, you can't use CSS's standardized color names, or any CSS functions, to set the value.
