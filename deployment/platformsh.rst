@@ -16,9 +16,8 @@ In this guide, it is assumed your codebase is already versioned with Git.
 Get a Project on Platform.sh
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You need to subscribe to a `Platform.sh project`_. Choose the development plan
-and go through the checkout process. Once your project is ready, give it a name
-and choose: **Import an existing site**.
+You need to `subscribe to a Platform.sh plan`_ and go through the checkout process.
+Once your project is ready, give it a name and choose: **Import an existing site**.
 
 Prepare Your Application
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,6 +188,7 @@ soon be able to see it in your browser.
 .. _`Platform.sh`: https://platform.sh
 .. _`Platform.sh documentation`: https://docs.platform.sh/frameworks/symfony.html
 .. _`Platform.sh project`: https://accounts.platform.sh/platform/buy-now
+.. _`subscribe to a Platform.sh plan`: https://accounts.platform.sh/platform/buy-now
 .. _`Platform.sh configuration files`: https://docs.platform.sh/configuration/services.html
 .. _`GitHub`: https://github.com/platformsh/platformsh-examples
 .. _`available services`: https://docs.platform.sh/reference/configuration-files/#configure-services
