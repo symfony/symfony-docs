@@ -218,4 +218,21 @@ handling the form submit. For example, you *could* have a ``new()`` action that
 submit. Both those actions will be almost identical. So it's much simpler to let
 ``new()`` handle everything.
 
+.. versionadded:: 4.3
+
+   The ``AbstractController::isFormValid()`` method was added in Symfony 4.3.
+
+It's also possible to use a short-cut if your controller extends ``AbstractController``::
+
+    public function new(Request $request)
+    {
+        // build the form ...
+
+        if ($this->isFormValid($form, $request)) {
+            // process the form data
+        }
+
+        // render the template
+    }
+
 Next: :doc:`/best_practices/i18n`

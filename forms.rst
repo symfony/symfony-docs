@@ -264,6 +264,25 @@ your controller::
     is called. Otherwise, changes done in the ``*_SUBMIT`` events aren't applied to the
     view (like validation errors).
 
+
+.. versionadded:: 4.3
+
+   The ``AbstractController::isFormValid()`` method was added in Symfony 4.3.
+
+It's also possible to use a short-cut if your controller extends ``AbstractController``::
+
+    public function new(Request $request)
+    {
+        // build the form ...
+
+        if ($this->isFormValid($form, $request)) {
+            // process the form data
+        }
+
+        // render the template
+    }
+
+
 This controller follows a common pattern for handling forms and has three
 possible paths:
 
