@@ -259,6 +259,28 @@ your controller::
     is called. Otherwise, changes done in the ``*_SUBMIT`` events aren't applied to the
     view (like validation errors).
 
+
+.. versionadded:: 4.1
+   The ``ControllerTrait::isFormValid()`` method was added in Symfony 4.1.
+
+
+It's also possible to use a short-cut if the ``ControllerTrait`` is imported:
+
+
+.. code-block:: php
+
+    public function newAction(Request $request)
+    {
+        // build the form ...
+
+        if ($this->isFormValid($form)) {
+            // process the form data
+        }
+
+        // render the template
+    }
+
+
 This controller follows a common pattern for handling forms and has three
 possible paths:
 
