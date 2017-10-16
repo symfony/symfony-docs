@@ -25,6 +25,7 @@ use the latest features of the DependencyInjection component, this way, here's t
         # Allow to load every actions
         AppBundle\Action\:
             resource: '../../src/AppBundle/Action/'
+            tags: ['controller.service_arguments']
             public: true
 
 Once the file is updated, delete your Controller folder and create an Action class using the ADR principles, i.e::
@@ -38,24 +39,16 @@ Once the file is updated, delete your Controller folder and create an Action cla
 
     final class HelloAction
     {
-        private $twig;
-
-        public function __construct(Environment $twig)
+        public function __invoke(Environment $twig): Response
         {
-            $this->twig = $twig;
-        }
-
-        public function __invoke(): Response
-        {
-            return new Response($this->twig->render('default/index.html.twig'));
+            return new Response($twig->render('default/index.html.twig'));
         }
     }
 
 .. tip::
 
-    As described in the DependencyInjection doc, you must use the __construct() injection
-    approach, this way, your class is easier to update and keep in sync with any framework internal
-    services.
+    As described in the DependencyInjection doc, you can still use the __construct() injection
+    approach.
 
 By default, we define the class with the final keyword because this class shouldn't be extended,
 the logic is pretty simple to understand as you understand the ADR pattern, in fact, the 'Action'
@@ -125,11 +118,11 @@ the request from simple method injection like this ::
         use Symfony\Component\HttpFoundation\Request;
         // ...
 
-        public function __invoke(Request $request): Response
+        public function __invoke(Environment $twig, Request $request): Response
         {
             $id = $request->get('id');
             
-            return $this->twig->render('default/index.html.twig', array('id' => $id));
+            return $twig->render('default/index.html.twig', array('id' => $id));
         }
     }
     
