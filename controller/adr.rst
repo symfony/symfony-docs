@@ -8,26 +8,10 @@ In Symfony, you're used to implement the MVC pattern and extending the default :
 class.
 Since the 3.3 update, Symfony is capable of using natively the ADR approach.
 
-Updating your configuration
----------------------------
+Updating your classes
+---------------------
 
-As the framework evolve, you must update the services.yml file in order to
-use the latest features of the DependencyInjection component, this way, here's the updates::
-
-    # ...
-
-    services:
-        _defaults:
-            autowire: true
-            autoconfigure: true
-            public: false
-
-        # Allow to load every actions
-        AppBundle\Action\:
-            resource: '../../src/AppBundle/Action/'
-            tags: ['controller.service_arguments']
-
-Once the file is updated, delete your Controller folder and create an Action class using the ADR principles, i.e::
+As the framework evolve, you must update your classes, first, delete your Controller folder and create an Action one then a new class using the ADR principles, i.e::
 
     <?php
 
