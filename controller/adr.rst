@@ -26,7 +26,6 @@ use the latest features of the DependencyInjection component, this way, here's t
         AppBundle\Action\:
             resource: '../../src/AppBundle/Action/'
             tags: ['controller.service_arguments']
-            public: true
 
 Once the file is updated, delete your Controller folder and create an Action class using the ADR principles, i.e::
 
