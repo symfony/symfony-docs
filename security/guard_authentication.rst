@@ -171,23 +171,17 @@ This requires you to implement several methods::
          */
         public function supports(Request $request)
         {
-            return true;
+            return $request->headers->has('X-AUTH-TOKEN')
         }
 
         /**
          * Called on every request. Return whatever credentials you want to
-         * be passed to getUser().
+         * be passed to getUser() as $credentials.
          */
         public function getCredentials(Request $request)
         {
-            if (!$token = $request->headers->get('X-AUTH-TOKEN')) {
-                // No token?
-                $token = null;
-            }
-
-            // What you return here will be passed to getUser() as $credentials
             return array(
-                'token' => $token,
+                'token' => $request->headers->get('X-AUTH-TOKEN'),
             );
         }
 
