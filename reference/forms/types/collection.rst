@@ -287,9 +287,9 @@ the empty values will be kept.
     to learn why this is necessary.
 
 A value is deleted from the collection only if the normalized value is ``null``.
-However, you can also set the option value to a ``callable``, which will be called
-for each value in the submitted collection. The ``callable`` should return
-whether or not a value must be removed from the collection. For example::
+However, you can also set the option value to a callable, which will be executed
+for each value in the submitted collection. If the callable returns ``false``,
+the value is removed from the collection. For example::
 
     use Symfony\Component\Form\Extension\Core\Type\CollectionType;
     // ...
@@ -301,11 +301,11 @@ whether or not a value must be removed from the collection. For example::
         },
     ));
 
-Using a ``callable`` is particularly useful in case of a compound form type
-which may have complex conditions for being empty.
+Using a callable is particularly useful in case of compound form types, which
+may define complex conditions for considering them empty.
 
 .. versionadded:: 3.4
-    Using a ``callable`` as an option value was introduced in Symfony 3.4.
+    Using a callable for the ``delete_empty`` option was introduced in Symfony 3.4.
 
 entry_options
 ~~~~~~~~~~~~~
