@@ -140,9 +140,7 @@ that group are valid, the second group, ``Strict``, will be validated.
     sequence, which will contain the ``Default`` group which references the
     same group sequence, ...).
 
-You can also define a group sequence in the `validation_groups` form option:
-
-.. code-block:: php
+You can also define a group sequence in the ``validation_groups`` form option::
 
     use Symfony\Component\Validator\Constraints\GroupSequence;
     use Symfony\Component\Form\AbstractType;
