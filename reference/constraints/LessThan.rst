@@ -12,6 +12,7 @@ than another value, see :doc:`/reference/constraints/GreaterThan`.
 | Options        | - `value`_                                                             |
 |                | - `message`_                                                           |
 |                | - `payload`_                                                           |
+|                | - `propertyPath`_                                                      |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\LessThan`          |
 +----------------+------------------------------------------------------------------------+
@@ -299,5 +300,7 @@ This is the message that will be shown if the value is not less than the
 comparison value.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. include:: /reference/constraints/_comparison-propertypath-option.rst.inc
 
 .. _`accepted by the DateTime constructor`: http://www.php.net/manual/en/datetime.formats.php
