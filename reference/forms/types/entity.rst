@@ -186,8 +186,8 @@ query_builder
 Allows you to create a custom query for your choices. See
 :ref:`ref-form-entity-query-builder` for an example.
 
-The value of this option can either be a ``QueryBuilder`` object, a ``callable`` or
-``null`` (which will load all entities). When using a ``callable``, you will be
+The value of this option can either be a ``QueryBuilder`` object, a callable or
+``null`` (which will load all entities). When using a callable, you will be
 passed the ``EntityRepository`` of the entity as the only argument and should
 return a ``QueryBuilder``.
 
