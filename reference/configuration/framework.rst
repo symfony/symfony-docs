@@ -107,6 +107,8 @@ Configuration
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
     * :ref:`name_converter <reference-serializer-name_converter>`
     * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
+    * `mapping`_
+        * :ref:`paths <reference-serializer-mapping-paths>`
 * `php_errors`_
     * `log`_
     * `throw`_
@@ -1691,6 +1693,19 @@ method.
 
     For more information, see
     :ref:`component-serializer-handling-circular-references`.
+
+mapping
+.......
+
+.. _reference-serializer-mapping-paths:
+
+paths
+"""""
+
+**type**: ``array`` **default**: ``[]``
+
+This option allows to define an array of paths with files or directories where
+the component will look for additional validation files.
 
 php_errors
 ~~~~~~~~~~
