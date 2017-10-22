@@ -157,7 +157,8 @@
 /cookbook/event_dispatcher/event_listener /event_dispatcher
 /cookbook/event_dispatcher/index /event_dispatcher
 /cookbook/event_dispatcher/method_behavior /event_dispatcher/method_behavior
-/cookbook/expressions /expressions/expressions
+/cookbook/expressions /security/expressions
+/expressions /security/expressions
 /cookbook/form/create_custom_field_type /form/create_custom_field_type
 /cookbook/form/create_form_type_extension /form/create_form_type_extension
 /cookbook/form/data_transformers /form/data_transformers
