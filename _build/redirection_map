@@ -184,7 +184,7 @@
 /cookbook/psr7 /request/psr7
 /cookbook/request/index /request
 /cookbook/request/load_balancer_reverse_proxy /deployment/proxies
-/cookbook/request/mime_type /request/mime_type
+/cookbook/request/mime_type /reference/configuration/framework#formats
 /cookbook/routing/conditions /routing/conditions
 /cookbook/routing/custom_route_loader /routing/custom_route_loader
 /cookbook/routing/debug /routing/debug

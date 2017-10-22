@@ -657,7 +657,15 @@ formats
 
 **type**: ``array`` **default**: ``[]``
 
----> TODO
+This setting is used to associate additional request formats (e.g. ``html``)
+to one or more mime types (e.g. ``text/html``), which will allow you to use the
+format & mime types to call
+:method:`Request::getFormat($mimeType) <Symfony\\Component\\HttpFoundation\\Request::getFormat>` or
+:method:`Request::getMimeType($format) <Symfony\\Component\\HttpFoundation\\Request::getMimeType>`.
+In practice, this is important because Symfony uses it to automatically set the
+``Content-Type`` header on the ``Response`` (if you don't explicitly set one).
+If you pass an array of mime types, the first will be used for the header.
+
 
 router
 ~~~~~~
