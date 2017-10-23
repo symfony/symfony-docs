@@ -993,9 +993,9 @@ shown above.
 Retrieving the User Object
 --------------------------
 
-After authentication, the ``User`` object of the current user can be accessed
-via the ``security.token_storage`` service. From inside a controller, this will
-look like::
+After authentication, the ``User`` object of the current user can be accessed either
+via the ``security.token_storage`` service or via type-hinting the ``UserInterface`` as an argument. 
+From inside a controller, this will look like::
 
     use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -1005,7 +1005,7 @@ look like::
             throw $this->createAccessDeniedException();
         }
 
-        // the above is a shortcut for this
+        // type-hinting the UserInterface like above is a shortcut for this
         $user = $this->get('security.token_storage')->getToken()->getUser();
     }
 
