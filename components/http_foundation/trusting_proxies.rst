@@ -7,7 +7,7 @@ Trusting Proxies
 .. tip::
 
     If you're using the Symfony Framework, start by reading
-    :doc:`/request/load_balancer_reverse_proxy`.
+    :doc:`/deployment/proxies`.
 
 If you find yourself behind some sort of proxy - like a load balancer - then
 certain header information may be sent to you using special ``X-Forwarded-*``
