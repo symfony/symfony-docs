@@ -64,7 +64,7 @@ Now you need to associate this controller function with a public URL (e.g. ``/lu
 so that the ``number()`` method is executed when a user browses to it. This association
 is defined by creating a **route** in the ``config/routes.yaml`` file:
 
-.. code-block:: yml
+.. code-block:: yaml
 
     # config/routes.yaml
 
