@@ -50,7 +50,6 @@ Topics
     logging
     performance
     profiler
-    request
     routing
     security
     session
