@@ -143,10 +143,10 @@ that Flex resolves to ``sensio/framework-extra-bundle``.
 
 Second, after this package was downloaded, Flex executed a *recipe*, which is a
 set of automated instructions that tell Symfony how to integrate an external
-package. Flex recipes exist for many packages (not just bundles) and have the
-ability to do a lot, like adding configuration files, creating directories,
-updating ``.gitignore`` and adding new config to your ``.env`` file. Flex
-*automates* the installation of packages so you can get back to coding.
+package. Flex recipes exist for many packages and have the ability to do a lot, like
+adding configuration files, creating directories, updating ``.gitignore`` and adding
+new config to your ``.env`` file. Flex *automates* the installation of packages so
+you can get back to coding.
 
 You can learn more about Flex by reading ":doc:`/setup/flex`". But that's not necessary:
 Flex works automatically in the background when you add packages.
