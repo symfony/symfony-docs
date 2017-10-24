@@ -182,7 +182,7 @@ Finally, create the template:
         {# app/Resources/views/security/login.html.twig #}
         {# ... you will probably extend your base template, like base.html.twig #}
 
-        {% if error %}
+        {% if error is defined %}
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
@@ -205,7 +205,7 @@ Finally, create the template:
     .. code-block:: html+php
 
         <!-- src/AppBundle/Resources/views/Security/login.html.php -->
-        <?php if ($error): ?>
+        <?php if (isset($error)): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
