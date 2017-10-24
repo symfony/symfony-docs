@@ -11,7 +11,9 @@ Installing & Setting up the Symfony Framework
 
 To create your new Symfony application, first make sure you're using PHP 7.1 or higher
 and have `Composer`_ installed. If you don't, start by :doc:`installing Composer globally </setup/composer>`
-on your system. Then, create a new project by running:
+on your system. If you want to use a virtual machine (VM), check out :doc:`Homestead </setup/homestead>`.
+
+Create your new project by running:
 
 .. code-block:: terminal
 
@@ -41,7 +43,7 @@ Running your Symfony Application
 
 On production, you should use a web server like Nginx or Apache
 (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
-But for development, it's even easier to use the Symfony PHP web server.
+But for development, it's even easier to use the :doc:`Symfony PHP web server <setup/built_in_web_server>`.
 
 First, move into your new project and install the server:
 
@@ -99,37 +101,14 @@ Once you've fixed any issues, uninstall the requirements checker:
 
     $ composer remove req-checker
 
-.. _installation-updating-vendors:
-
-Updating Symfony Applications
------------------------------
-
-At this point, you've created a fully-functional Symfony application! Every
-Symfony app depends on a number of third-party libraries stored in the
-``vendor/`` directory and managed by Composer.
-
-Updating those libraries frequently is a good practice to fix bugs and prevent
-security vulnerabilities. Execute the ``update`` Composer command to update them
-all at once (this can take up to several minutes to complete depending on the
-complexity of your project):
-
-.. code-block:: terminal
-
-    $ cd my_project_name/
-    $ composer update
-
 .. _install-existing-app:
 
-Installing an Existing Symfony Application
-------------------------------------------
+Setting up an Existing Symfony Project
+--------------------------------------
 
-When working collaboratively in a Symfony application, it's uncommon to create
-a new Symfony application as explained in the previous sections. Instead,
-someone else has already created and submitted it to a shared repository.
-
-It's recommended to not submit some files (``.env``) and directories (``vendor/``,
-cache, logs) to the repository, so you'll have to do the following when
-installing an existing Symfony application:
+If you're working on an existing Symfony application, you'll just need to do a few
+things to get your project setup. Assuming your team uses git, you can setup your
+project with the following commands:
 
 .. code-block:: terminal
 
@@ -141,10 +120,13 @@ installing an existing Symfony application:
     $ cd my-project/
     $ composer install
 
+You'll probably also need to customize your :ref:`.env <config-dot-env>` and do a
+few other project-specific tasks (e.g. creating database schema).
+
 Checking for Security Vulnerabilities
 -------------------------------------
 
-Symfony provides a utility called "Security Checker" (or ``sec-checker``) to
+Symfony provides a utility called the "Security Checker" (or ``sec-checker``) to
 check whether your project's dependencies contain any known security
 vulnerability. Run this command to install it in your application:
 
@@ -153,32 +135,21 @@ vulnerability. Run this command to install it in your application:
     $ cd my-project/
     $ composer require sec-checker
 
-From now on, this command will be run automatically whenever you install or
-update any dependency in the application.
+From now on, this utility will be run automatically whenever you install or
+update any dependency in the application. If a dependency contains a vulnerability,
+you'll see a clear message.
 
-Installing the Symfony Demo application
----------------------------------------
+The Symfony Demo application
+----------------------------
 
 `The Symfony Demo Application`_ is a fully-functional application that shows the
 recommended way to develop Symfony applications. It's a great learning tool for
 Symfony newcomers and its code contains tons of comments and helpful notes.
 
-Run the following command to download and install the Symfony Demo application:
+To check out its code and install it locally, see `symfony/symfony-demo`_.
 
-.. code-block:: terminal
-
-    $ composer create-project symfony/symfony-demo my-project
-
-Now, enter the ``my-project/`` directory, run the internal web server and
-browse ``http://127.0.0.1:8000``:
-
-.. code-block:: terminal
-
-    $ cd my-project
-    $ php bin/console server:start
-
-Keep Going!
------------
+Start Coding!
+-------------
 
 With setup behind you, it's time to :doc:`Create your first page in Symfony </page_creation>`.
 
@@ -205,3 +176,4 @@ Go Deeper with Setup
 .. _`Composer`: https://getcomposer.org/
 .. _`technical requirements`: https://symfony.com/doc/current/reference/requirements.html
 .. _`The Symfony Demo application`: https://github.com/symfony/symfony-demo
+.. _`symfony/symfony-demo`: https://github.com/symfony/demo
