@@ -994,8 +994,8 @@ Retrieving the User Object
 --------------------------
 
 After authentication, the ``User`` object of the current user can be accessed either
-via the ``security.token_storage`` service or via type-hinting the ``UserInterface`` as an argument. 
-From inside a controller, this will look like::
+via the ``security.token_storage`` service or via type-hinting the ``UserInterface``
+as an argument. From inside a controller, this will look like::
 
     use Symfony\Component\Security\Core\User\UserInterface;
 
