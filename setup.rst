@@ -107,7 +107,7 @@ Setting up an Existing Symfony Project
 --------------------------------------
 
 If you're working on an existing Symfony application, you'll just need to do a few
-things to get your project setup. Assuming your team uses git, you can setup your
+things to get your project setup. Assuming your team uses Git, you can setup your
 project with the following commands:
 
 .. code-block:: terminal

@@ -60,7 +60,9 @@ random) number and prints it. To do that, create a "Controller class" and a
         }
     }
 
-To map a URL to this controller, create a route in ``config/routes.yaml``:
+Now you need to associate this controller function with a public URL (e.g. ``/lucky/number``)
+so that the ``number()`` method is executed when a user browses to it. This association
+is defined by creating a **route** in the ``config/routes.yaml`` file:
 
 .. code-block:: yml
 
@@ -106,7 +108,7 @@ the annotation route import at the bottom:
         resource: ../src/Controller/
         type: annotation
 
-After this one-time setup, you can nowadd your route directly *above* the controller:
+After this one-time setup, you can now add your route directly *above* the controller:
 
 .. code-block:: diff
 
@@ -139,11 +141,12 @@ special things happened, both thanks to a powerful Composer plugin called
 First, ``annotations`` isn't a real package name: it's an *alias* (i.e. shortcut)
 that Flex resolves to ``sensio/framework-extra-bundle``.
 
-Second, after this package was downloaded, Flex executed a *recipe*, which automatically
-enabled the bundle. Flex recipes exist for many packages (not just bundles) and have
-have the ability to do a lot, like adding configuration files, creating directories,
-updating ``.gitignore`` and adding new config to your ``.env`` file. Flex *automates*
-the installation of packages so you can get back to coding.
+Second, after this package was downloaded, Flex executed a *recipe*, which is a
+set of automated instructions that tell Symfony how to integrate an external
+package. Flex recipes exist for many packages (not just bundles) and have the
+ability to do a lot, like adding configuration files, creating directories,
+updating ``.gitignore`` and adding new config to your ``.env`` file. Flex
+*automates* the installation of packages so you can get back to coding.
 
 You can learn more about Flex by reading ":doc:`/setup/flex`". But that's not necessary:
 Flex works automatically in the background when you add packages.
@@ -239,7 +242,7 @@ variable so you can use it in Twig::
         }
     }
 
-Template files live in the ``templates/`` directory, which was created for your automatically
+Template files live in the ``templates/`` directory, which was created for you automatically
 when you installed Twig. Create a new ``templates/lucky`` directory with a new 
 ``number.html.twig`` file inside:
 
@@ -265,7 +268,7 @@ project:
 
 ``config/``
     Contains... configuration of course!. You will configure routes, :doc:`services </service_container>`
-    and pckages.
+    and packages.
 
 ``src/``
     All your PHP code lives here.
