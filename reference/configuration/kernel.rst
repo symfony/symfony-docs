@@ -121,7 +121,7 @@ This returns the path to the cache directory. To change it, override the
 Log Directory
 ~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``$this->rootDir/logs``
+**type**: ``string`` **default**: ``$this->rootDir/log``
 
 This returns the path to the log directory. To change it, override the
 :method:`Symfony\\Component\\HttpKernel\\Kernel::getLogDir` method. Read

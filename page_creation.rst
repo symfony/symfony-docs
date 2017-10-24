@@ -179,7 +179,7 @@ So what about the other directories in the project?
 
 ``var/``
     This is where automatically-created files are stored, like cache files
-    (``var/cache/``), logs (``var/logs/``) and sessions (``var/sessions/``).
+    (``var/cache/``), logs (``var/log/``) and sessions (``var/sessions/``).
 
 ``vendor/``
     Third-party (i.e. "vendor") libraries live here! These are downloaded via the `Composer`_
