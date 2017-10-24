@@ -43,8 +43,12 @@ Run this command from inside your controller via::
 
             $input = new ArrayInput(array(
                'command' => 'swiftmailer:spool:send',
+               // (optional) define the value of command arguments
+               'fooArgument' => 'barValue',
+               // (optional) pass options to the command
                '--message-limit' => $messages,
             ));
+
             // You can use NullOutput() if you don't need the output
             $output = new BufferedOutput();
             $application->run($input, $output);

@@ -79,12 +79,13 @@ exists
 ~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::exists` checks for the
-presence of all files or directories and returns ``false`` if a file is missing::
+presence of one or more files or directories and returns ``false`` if any of
+them is missing::
 
     // this directory exists, return true
     $fs->exists('/tmp/photos');
 
-    // rabbit.jpg exists, bottle.png does not exists, return false
+    // rabbit.jpg exists, bottle.png does not exist, return false
     $fs->exists(array('rabbit.jpg', 'bottle.png'));
 
 .. note::
@@ -95,10 +96,11 @@ presence of all files or directories and returns ``false`` if a file is missing:
 copy
 ~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::copy` is used to copy
-files. If the target already exists, the file is copied only if the source
-modification date is later than the target. This behavior can be overridden by
-the third boolean argument::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::copy` makes a copy of a
+single file (use :method:`Symfony\\Component\\Filesystem\\Filesystem::mirror` to
+copy directories). If the target already exists, the file is copied only if the
+source modification date is later than the target. This behavior can be overridden
+by the third boolean argument::
 
     // works only if image-ICC has been modified after image.jpg
     $fs->copy('image-ICC.jpg', 'image.jpg');
@@ -128,8 +130,8 @@ your own with the second argument. The third argument is the access time::
 chown
 ~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::chown` is used to change
-the owner of a file. The third argument is a boolean recursive option::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::chown` changes the owner of
+a file. The third argument is a boolean recursive option::
 
     // set the owner of the lolcat video to www-data
     $fs->chown('lolcat.mp4', 'www-data');
@@ -144,8 +146,8 @@ the owner of a file. The third argument is a boolean recursive option::
 chgrp
 ~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` is used to change
-the group of a file. The third argument is a boolean recursive option::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` changes the group of
+a file. The third argument is a boolean recursive option::
 
     // set the group of the lolcat video to nginx
     $fs->chgrp('lolcat.mp4', 'nginx');
@@ -160,8 +162,8 @@ the group of a file. The third argument is a boolean recursive option::
 chmod
 ~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::chmod` is used to change
-the mode of a file. The fourth argument is a boolean recursive option::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::chmod` changes the mode or
+permissions of a file. The fourth argument is a boolean recursive option::
 
     // set the mode of the video to 0600
     $fs->chmod('video.ogg', 0600);
@@ -176,8 +178,8 @@ the mode of a file. The fourth argument is a boolean recursive option::
 remove
 ~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::remove` is used to remove
-files, symlinks, directories easily::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::remove` deletes files,
+directories and symlinks::
 
     $fs->remove(array('symlink', '/path/to/directory', 'activity.log'));
 
@@ -189,8 +191,8 @@ files, symlinks, directories easily::
 rename
 ~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::rename` is used to rename
-files and directories::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::rename` changes the name
+of a single file or directory::
 
     // rename a file
     $fs->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
@@ -213,8 +215,8 @@ support symbolic links, a third boolean argument is available::
 makePathRelative
 ~~~~~~~~~~~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::makePathRelative` returns
-the relative path of a directory given another one::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::makePathRelative` takes two
+absolute paths and returns the relative path from the second path to the first one::
 
     // returns '../'
     $fs->makePathRelative(
@@ -227,8 +229,10 @@ the relative path of a directory given another one::
 mirror
 ~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::mirror` mirrors a
-directory::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::mirror` copies all the
+contents of the source directory into the target one (use the
+:method:`Symfony\\Component\\Filesystem\\Filesystem::copy` method to copy single
+files)::
 
     $fs->mirror('/path/to/source', '/path/to/target');
 
@@ -253,8 +257,8 @@ dumpFile
 .. versionadded:: 2.3
     The ``dumpFile()`` was introduced in Symfony 2.3.
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` allows you to
-dump contents to a file. It does this in an atomic manner: it writes a temporary
+:method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` saves the given
+contents into a file. It does this in an atomic manner: it writes a temporary
 file first and then moves it to the new file location when it's finished.
 This means that the user will always see either the complete old file or
 complete new file (but never a partially-written file)::

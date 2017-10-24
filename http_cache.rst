@@ -33,7 +33,6 @@ Nottingham's `Cache Tutorial`_.
 .. index::
    single: Cache; Proxy
    single: Cache; Reverse proxy
-   single: Cache; Gateway
 
 .. _gateway-caches:
 
@@ -286,10 +285,14 @@ Safe Methods: Only caching GET or HEAD requests
 HTTP caching only works for "safe" HTTP methods (like GET and HEAD). This means
 two things:
 
-* Don't try to cache PUT, POST or DELETE requests. It won't work and with good
-  reason. These methods are meant to be used when mutating the state of your application
+* Don't try to cache PUT or DELETE requests. It won't work and with good reason.
+  These methods are meant to be used when mutating the state of your application
   (e.g. deleting a blog post). Caching them would prevent certain requests from hitting
   and mutating your application.
+
+* POST requests are generally considered uncachable, but `they can be cached`_
+  when they include explicit freshness information. However POST caching is not
+  widely implemented, so you should avoid it if possible.
 
 * You should *never* change the state of your application (e.g. update a blog post)
   when responding to a GET or HEAD request. If those requests are cached, future
@@ -366,3 +369,4 @@ Learn more
 .. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234
 .. _`RFC 7232 - Conditional Requests`: https://tools.ietf.org/html/rfc7232
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`they can be cached`: https://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-20#section-2.3.4
