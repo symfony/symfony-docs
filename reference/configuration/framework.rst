@@ -95,7 +95,7 @@ Configuration
     * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
-    * `mapping`_
+    * :ref:`mapping <reference-validation-mapping>`
         * :ref:`paths <reference-validation-mapping-paths>`
 * `annotations`_
     * :ref:`cache <reference-annotations-cache>`
@@ -107,7 +107,7 @@ Configuration
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
     * :ref:`name_converter <reference-serializer-name_converter>`
     * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
-    * `mapping`_
+    * :ref:`mapping <reference-serializer-mapping>`
         * :ref:`paths <reference-serializer-mapping-paths>`
 * `php_errors`_
     * `log`_
@@ -1569,6 +1569,8 @@ If this option is enabled, the `egulias/email-validator`_ library will be
 used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
 the validator uses a simple regular expression to validate email addresses.
 
+.. _reference-validation-mapping:
+
 mapping
 .......
 
@@ -1693,6 +1695,8 @@ method.
 
     For more information, see
     :ref:`component-serializer-handling-circular-references`.
+
+.. _reference-serializer-mapping:
 
 mapping
 .......
