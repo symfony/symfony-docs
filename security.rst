@@ -993,19 +993,20 @@ shown above.
 Retrieving the User Object
 --------------------------
 
-After authentication, the ``User`` object of the current user can be accessed either
-via the ``security.token_storage`` service or via type-hinting the ``UserInterface``
-as an argument. From inside a controller, this will look like::
+After authentication, the ``User`` object of the current user can be accessed
+via the ``security.token_storage`` service. From inside a controller, this will 
+look like::
 
     use Symfony\Component\Security\Core\User\UserInterface;
 
-    public function indexAction(UserInterface $user)
+    public function indexAction()
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
 
-        // type-hinting the UserInterface like above is a shortcut for this
+        // This is the recommended way but type-hinting the 
+        // UserInterface as a method argument also works
         $user = $this->get('security.token_storage')->getToken()->getUser();
     }
 
