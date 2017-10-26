@@ -98,6 +98,9 @@ specifically tailored to the requirements of Symfony.
     This is another native PHP rewrite of Capistrano, with some ready recipes for
     Symfony.
 
+`Automate`_
+    A deployment tool written in php. Automate is based on a yaml configuration file.
+
 Bundles
     There are some `bundles that add deployment features`_ directly into your
     Symfony console.
@@ -220,3 +223,4 @@ other potential things like pushing assets to a CDN (see `Common Post-Deployment
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: http://deployer.org/
+.. _`Automate`: https://automatephp.github.io/automate/
