@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-10-24T08:18:17Z
+
+Actually, inside `uploadFile()` the `$fileName` variable may not be defined when we use it. Can you fix that too? :)
+
+---------------------------------------------------------------------------
+
+by matt9mg at 2017-10-24T08:46:11Z
+
+@xabbuh https://github.com/symfony/symfony-docs/pull/8541
