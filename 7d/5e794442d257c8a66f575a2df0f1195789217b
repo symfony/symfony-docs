@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2017-10-25T13:49:57Z
+
+Thanks @javiereguiluz, updated.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-25T13:54:28Z
+
+@yceruto thanks! I have two more comments:
+
+1) In my previous comment, I made up the priority of Twig directories. I don't know if that's the right order, so we must double check it.
+2) Instead of this comment in the config sample: `# The following was added in Symfony 3.4.` it's better to add a `.. versionadded:: 3.4` directive. Something like this: https://github.com/symfony/symfony-docs/blob/3.3/reference/configuration/framework.rst#json_manifest_path
+
+---------------------------------------------------------------------------
+
+by yceruto at 2017-10-25T14:58:41Z
+
+> In my previous comment, I made up the priority of Twig directories. I don't know if that's the right order, so we must double check it.
+
+Fixed order.
+
+> Instead of this comment in the config sample: # The following was added in Symfony 3.4. it's better to add a .. versionadded:: 3.4 directive.
+
+Done. Thanks!
+
+---------------------------------------------------------------------------
+
+by yceruto at 2017-10-25T15:13:05Z
+
+However, there is other paths have not been mentioned here, such as:
+
+* The ``src/Resources/<BundleName>/views/`` directories to override templates of the bundles used in the application.
+* The ``<default_path>/bundles/<BundleName>/`` directories to override templates of the bundles used in the application (added in 3.4).
+
+Do you think we should add them too?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-10-25T20:41:35Z
+
+Hmmm, I don’t think so. Let’s keep/add that info to wherever we talk about overriding bundles. And in that spot, we probably do need to update it for the new paths :). We could do that here or in another pr
+
+---------------------------------------------------------------------------
+
+by yceruto at 2017-10-25T20:53:02Z
+
+Agree, so I finished here :)
