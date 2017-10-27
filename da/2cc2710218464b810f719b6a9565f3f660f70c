@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by spolischook at 2017-10-19T15:40:11Z
+
+I guess this should be cherry picked in other versions, did I need to do it by myself?
+
+---------------------------------------------------------------------------
+
+by spolischook at 2017-10-19T15:44:21Z
+
+reference https://github.com/symfony/http-foundation/blob/3.3/Request.php#L909
+argument was deprecated since 2.0 https://github.com/symfony/http-foundation/blob/2.0/Request.php#L553
