@@ -224,8 +224,8 @@ console::
     {
         public function testExecute()
         {
-            self::bootKernel();
-            $application = new Application(self::$kernel);
+            $kernel = self::bootKernel();
+            $application = new Application($kernel);
 
             $application->add(new CreateUserCommand());
 

@@ -36,9 +36,9 @@ which makes all of this quite easy::
          */
         protected function setUp()
         {
-            self::bootKernel();
+            $kernel = self::bootKernel();
 
-            $this->em = static::$kernel->getContainer()
+            $this->em = $kernel->getContainer()
                 ->get('doctrine')
                 ->getManager();
         }
