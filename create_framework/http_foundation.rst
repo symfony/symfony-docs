@@ -258,7 +258,7 @@ explicitly trust your reverse proxies by calling ``setTrustedProxies()``::
 
     Request::setTrustedProxies(array('10.0.0.1'));
 
-    if ($myIp === $request->getClientIp(true)) {
+    if ($myIp === $request->getClientIp()) {
         // the client is a known one, so give it some more privilege
     }
 
