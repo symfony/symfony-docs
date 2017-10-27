@@ -73,6 +73,10 @@ When developing a large application, it can be hard to keep track of all the
 different services, routes and translations. Luckily, Symfony has some commands
 that can help you visualize and find the information.
 
+``about``
+    Shows information about the current project, such as the Symfony version,
+    the Kernel and PHP.
+
 ``debug:container``
     Displays information about the contents of the Symfony container for all public
     services. To find only those matching a name, append the name as an argument.
