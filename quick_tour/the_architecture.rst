@@ -280,7 +280,7 @@ the ``prod`` environment:
     $ php bin/console cache:clear --env=prod
 
 When developing a web application, things can go wrong in many ways. The
-log files in the ``var/logs/`` directory tell you everything about the requests
+log files in the ``var/log/`` directory tell you everything about the requests
 and help you fix the problem quickly.
 
 Using the Command Line Interface

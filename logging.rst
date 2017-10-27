@@ -41,8 +41,8 @@ The configuration for *where* logs are stored lives in the specific
 :doc:`environment </configuration/environments>` configuration files: ``config_dev.yml``
 and ``config_prod.yml``.
 
-By default, log entries are written to the ``var/logs/dev.log`` file when you're in
-the ``dev`` environment. In the ``prod`` environment, logs are written to ``var/logs/prod.log``,
+By default, log entries are written to the ``var/log/dev.log`` file when you're in
+the ``dev`` environment. In the ``prod`` environment, logs are written to ``var/log/prod.log``,
 but *only* during a request where an error or high-priority log entry was made
 (i.e. ``error()`` , ``critical()``, ``alert()`` or ``emergency()``).
 
@@ -77,7 +77,7 @@ to write logs using the :phpfunction:`syslog` function:
                 # this "file_log" key could be anything
                 file_log:
                     type: stream
-                    # log to var/logs/(environment).log
+                    # log to var/log/(environment).log
                     path: "%kernel.logs_dir%/%kernel.environment%.log"
                     # log *all* messages (debug is lowest level)
                     level: debug

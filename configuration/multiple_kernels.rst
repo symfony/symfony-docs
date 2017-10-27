@@ -96,7 +96,7 @@ they don't collide with the files from ``AppKernel``::
 
         public function getLogDir()
         {
-            return dirname(__DIR__).'/var/logs/api';
+            return dirname(__DIR__).'/var/log/api';
         }
 
         public function registerContainerConfiguration(LoaderInterface $loader)

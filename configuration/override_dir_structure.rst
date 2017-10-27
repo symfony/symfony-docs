@@ -82,11 +82,11 @@ method::
 
         public function getLogDir()
         {
-            return dirname(__DIR__).'/var/'.$this->environment.'/logs';
+            return dirname(__DIR__).'/var/'.$this->environment.'/log';
         }
     }
 
-Here you have changed the location of the directory to ``var/{environment}/logs``.
+Here you have changed the location of the directory to ``var/{environment}/log``.
 
 .. _override-templates-dir:
 

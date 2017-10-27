@@ -32,7 +32,7 @@ needed permissions:
 .. code-block:: terminal
 
     $ rm -rf var/cache/*
-    $ rm -rf var/logs/*
+    $ rm -rf var/log/*
 
     $ HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1)
     $ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var

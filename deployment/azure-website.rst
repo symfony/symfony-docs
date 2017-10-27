@@ -255,9 +255,9 @@ directory with at least the following contents:
     /var/bootstrap.php.cache
     /var/cache/*
     /app/config/parameters.yml
-    /var/logs/*
+    /var/log/*
     !var/cache/.gitkeep
-    !var/logs/.gitkeep
+    !var/log/.gitkeep
     /var/SymfonyRequirements.php
     /build/
     /vendor/

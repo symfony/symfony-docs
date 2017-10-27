@@ -75,18 +75,18 @@ with these steps:
    .. code-block:: terminal
 
         $ cd myproject/
-        $ svn add --depth=empty app var var/cache var/logs app/config web
+        $ svn add --depth=empty app var var/cache var/log app/config web
 
         $ svn propset svn:ignore "vendor" .
         $ svn propset svn:ignore "bootstrap*" var/
         $ svn propset svn:ignore "parameters.yml" app/config/
         $ svn propset svn:ignore "*" var/cache/
-        $ svn propset svn:ignore "*" var/logs/
+        $ svn propset svn:ignore "*" var/log/
         $ svn propset svn:ignore "*" var/sessions/
 
         $ svn propset svn:ignore "bundles" web
 
-        $ svn ci -m "commit basic Symfony ignore list (vendor, var/bootstrap*, app/config/parameters.yml, var/cache/*, var/logs/*, web/bundles)"
+        $ svn ci -m "commit basic Symfony ignore list (vendor, var/bootstrap*, app/config/parameters.yml, var/cache/*, var/log/*, web/bundles)"
 
 #. The rest of the files can now be added and committed to the project:
 
