@@ -362,10 +362,10 @@ This option defines the directories where Symfony will look for Twig templates
 in addition to the default locations. Symfony looks for the templates in the
 following order:
 
-1. The directories defined in this option;
-2. The ``Resources/views/`` directories of the bundles used in the application;
-3. The ``src/Resources/views/`` directory of the application;
-4. The directory defined in the ``default_path`` option.
+#. The directories defined in this option;
+#. The ``Resources/views/`` directories of the bundles used in the application;
+#. The ``src/Resources/views/`` directory of the application;
+#. The directory defined in the ``default_path`` option.
 
 The values of the ``paths`` option are defined as ``key: value`` pairs where the
 ``value`` part can be ``null``. For example:
