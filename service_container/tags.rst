@@ -405,3 +405,126 @@ The double loop may be confusing. This is because a service can have more
 than one tag. You tag a service twice or more with the ``app.mail_transport``
 tag. The second foreach loop iterates over the ``app.mail_transport``
 tags set for the current service and gives you the attributes.
+
+Reference Tagged Services
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.4
+    Support for the tagged service notation in YAML, XML and PHP was introduced
+    in Symfony 3.4.
+
+Symfony provides a shortcut to inject all services tagged with a specific tag,
+which is a common need in some applications, so you don't have to write a
+compiler pass just for that.
+
+In the following example, all services tagged with ``app.handler`` are passed as
+first  constructor argument to the ``App\HandlerCollection`` service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            AppBundle\Handler\One:
+                tags: [app.handler]
+
+            AppBundle\Handler\Two:
+                tags: [app.handler]
+
+            AppBundle\HandlerCollection:
+                # inject all services tagged with app.handler as first argument
+                arguments: [!tagged app.handler]
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="AppBundle\Handler\One">
+                    <tag name="app.handler" />
+                </service>
+
+                <service id="AppBundle\Handler\Two">
+                    <tag name="app.handler" />
+                </service>
+
+                <service id="AppBundle\HandlerCollection">
+                    <!-- inject all services tagged with app.handler as first argument -->
+                    <argument type="tagged" tag="app.handler" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+
+        $container->register(AppBundle\Handler\One::class)
+            ->addTag('app.handler');
+
+        $container->register(AppBundle\Handler\Two::class)
+            ->addTag('app.handler');
+
+        $container->register(AppBundle\HandlerCollection::class)
+            // inject all services tagged with app.handler as first argument
+            ->addArgument(new TaggedIteratorArgument('app.handler'));
+
+After compilation the ``HandlerCollection`` service is able to iterate over your
+application handlers.
+
+.. code-block:: php
+
+    // src/AppBundle/HandlerCollection.php
+    namespace AppBundle;
+
+    class HandlerCollection
+    {
+        public function __construct(iterable $handlers)
+        {
+        }
+    }
+
+.. tip::
+
+    The collected services can be prioritized using the ``priority`` attribute:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/services.yml
+            services:
+                AppBundle\Handler\One:
+                    tags:
+                        - { name: app.handler, priority: 20 }
+
+        .. code-block:: xml
+
+            <!-- app/config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <service id="AppBundle\Handler\One">
+                        <tag name="app.handler" priority="20" />
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/services.php
+            $container->register(AppBundle\Handler\One::class)
+                ->addTag('app.handler', array('priority' => 20));
+
+    Note that any other custom attributes will be ignored by this feature.

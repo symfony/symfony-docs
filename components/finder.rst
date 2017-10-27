@@ -69,7 +69,12 @@ the Finder instance.
 Criteria
 --------
 
-There are lots of ways to filter and sort your results.
+There are lots of ways to filter and sort your results. You can also use the
+:method:`Symfony\\Component\\Finder\\Finder::hasResults` method to check if
+there's any file or directory matching the search criteria.
+
+.. versionadded:: 3.4
+    The ``hasResults()`` method was introduced in Symfony 3.4.
 
 Location
 ~~~~~~~~

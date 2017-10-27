@@ -146,9 +146,9 @@ on each request with their API token. Your job is to read this and find the asso
 user (if any).
 
 To create a custom authentication system, just create a class and make it implement
-:class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`. Or, extend
+:class:`Symfony\\Component\\Security\\Guard\\AuthenticatorInterface`. Or, extend
 the simpler :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`.
-This requires you to implement seven methods::
+This requires you to implement several methods::
 
     // src/AppBundle/Security/TokenAuthenticator.php
     namespace AppBundle\Security;
@@ -165,9 +165,18 @@ This requires you to implement seven methods::
     class TokenAuthenticator extends AbstractGuardAuthenticator
     {
         /**
-         * Called on every request. Return whatever credentials you want to
-         * be passed to getUser(). Returning null will cause this authenticator
+         * Called on every request to decide if this authenticator should be
+         * used for the request. Returning false will cause this authenticator
          * to be skipped.
+         */
+        public function supports(Request $request)
+        {
+            return true;
+        }
+
+        /**
+         * Called on every request. Return whatever credentials you want to
+         * be passed to getUser().
          */
         public function getCredentials(Request $request)
         {
@@ -239,6 +248,10 @@ This requires you to implement seven methods::
             return false;
         }
     }
+
+.. versionadded:: 3.4
+    ``AuthenticatorInterface`` was introduced in Symfony 3.4. In previous Symfony
+    versions, authenticators needed to implement ``GuardAuthenticatorInterface``.
 
 Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods<guard-auth-methods>`.
 
@@ -352,19 +365,27 @@ The Guard Authenticator Methods
 
 Each authenticator needs the following methods:
 
+**supports(Request $request)**
+    This will be called on *every* request and your job is to decide if the
+    authenticator should be used for this request (return ``true``) or if it
+    should be skipped (return ``false``).
+
+    .. versionadded:: 3.4
+        The ``supports()`` method was introduced in Symfony 3.4. In previous Symfony
+        versions, the authenticator could be skipped returning ``null`` in the
+        ``getCredentials()`` method.
+
 **getCredentials(Request $request)**
     This will be called on *every* request and your job is to read the token (or
     whatever your "authentication" information is) from the request and return it.
-    If you return ``null``, the rest of the authentication process is skipped. Otherwise,
-    ``getUser()`` will be called and the return value is passed as the first argument.
+    These credentials are later passed as the first argument of ``getUser()``.
 
 **getUser($credentials, UserProviderInterface $userProvider)**
-    If ``getCredentials()`` returns a non-null value, then this method is called
-    and its return value is passed here as the ``$credentials`` argument. Your job
-    is to return an object that implements ``UserInterface``. If you do, then
-    ``checkCredentials()`` will be called. If you return ``null`` (or throw an
-    :ref:`AuthenticationException <guard-customize-error>`)
-    authentication will fail.
+    The ``$credentials`` argument is the value returned by ``getCredentials()``.
+    Your job is to return an object that implements ``UserInterface``. If you do,
+    then ``checkCredentials()`` will be called. If you return ``null`` (or throw
+    an :ref:`AuthenticationException <guard-customize-error>`) authentication
+    will fail.
 
 **checkCredentials($credentials, UserInterface $user)**
     If ``getUser()`` returns a User object, this method is called. Your job is to
@@ -390,8 +411,7 @@ Each authenticator needs the following methods:
 
 **start(Request $request, AuthenticationException $authException = null)**
     This is called if the client accesses a URI/resource that requires authentication,
-    but no authentication details were sent (i.e. you returned ``null`` from
-    ``getCredentials()``). Your job is to return a
+    but no authentication details were sent. Your job is to return a
     :class:`Symfony\\Component\\HttpFoundation\\Response` object that helps
     the user authenticate (e.g. a 401 response that says "token is missing!").
 
@@ -400,9 +420,9 @@ Each authenticator needs the following methods:
     You will still need to active ``remember_me`` under your firewall for it to work.
     Since this is a stateless API, you do not want to support "remember me"
     functionality in this example.
-    
+
 **createAuthenticatedToken(UserInterface $user, string $providerKey)**
-    If you are implementing the :class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`
+    If you are implementing the :class:`Symfony\\Component\\Security\\Guard\\AuthenticatorInterface`
     instead of extending the :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`
     class, you have to implement this method. It will be called
     after a successful authentication to create and return the token
@@ -502,11 +522,11 @@ and add the following logic::
         public function getCredentials(Request $request)
         {
             $csrfToken = $request->request->get('_csrf_token');
-            
+
             if (false === $this->csrfTokenManager->isTokenValid(new CsrfToken('authenticate', $csrfToken))) {
                 throw new InvalidCsrfTokenException('Invalid CSRF token.');
             }
-            
+
             // ... all your normal logic
         }
 

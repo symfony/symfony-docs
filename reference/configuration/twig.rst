@@ -20,6 +20,8 @@ TwigBundle Configuration ("twig")
                 # Bootstrap:
                 - bootstrap_3_layout.html.twig
                 - bootstrap_3_horizontal_layout.html.twig
+                - bootstrap_4_layout.html.twig
+                - bootstrap_4_horizontal_layout.html.twig
 
                 # Foundation
                 - foundation_5_layout.html.twig
@@ -52,6 +54,7 @@ TwigBundle Configuration ("twig")
             strict_variables:          ~
             auto_reload:               ~
             optimizations:             ~
+            default_path: '%kernel.project_dir%/templates'
             paths:
                 '%kernel.project_dir%/vendor/acme/foo-bar/templates': foo_bar
 
@@ -85,13 +88,14 @@ TwigBundle Configuration ("twig")
                 debug="%kernel.debug%"
                 strict-variables="false"
                 optimizations="true"
+                default-path="%kernel.project_dir%/templates"
             >
                 <twig:form-theme>form_div_layout.html.twig</twig:form-theme> <!-- Default -->
                 <twig:form-theme>form.html.twig</twig:form-theme>
 
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
-                
+
                 <twig:date format="d.m.Y, H:i:s" interval-format="%d days" timezone="Asia/Tokyo" />
                 <twig:number-format decimals="2" decimal-point="," thousands-separator="." />
 
@@ -134,6 +138,7 @@ TwigBundle Configuration ("twig")
                 'decimal_point' => ',',
                 'thousands_separator' => '.',
             ),
+            'default_path' => '%kernel.project_dir%/templates',
         ));
 
 .. caution::
@@ -336,6 +341,16 @@ on. Set it to ``0`` to disable all the optimizations. You can even enable or
 disable these optimizations selectively, as explained in the Twig documentation
 about `the optimizer extension`_.
 
+default_path
+~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``'%kernel.project_dir%/templates'``
+
+.. versionadded:: 3.4
+    The ``default_path`` option was introduced in Symfony 3.4.
+
+The default directory where Symfony will look for Twig templates.
+
 .. _config-twig-paths:
 
 paths
@@ -344,9 +359,13 @@ paths
 **type**: ``array`` **default**: ``null``
 
 This option defines the directories where Symfony will look for Twig templates
-in addition to the default locations (``app/Resources/views/`` and the bundles'
-``Resources/views/`` directories). This is useful to integrate the templates
-included in some library or package used by your application.
+in addition to the default locations. Symfony looks for the templates in the
+following order:
+
+#. The directories defined in this option;
+#. The ``Resources/views/`` directories of the bundles used in the application;
+#. The ``src/Resources/views/`` directory of the application;
+#. The directory defined in the ``default_path`` option.
 
 The values of the ``paths`` option are defined as ``key: value`` pairs where the
 ``value`` part can be ``null``. For example:

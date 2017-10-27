@@ -5,7 +5,8 @@ How to Override any Part of a Bundle
 ====================================
 
 This document is a quick reference for how to override different parts of
-third-party bundles.
+third-party bundles without using :doc:`/bundles/inheritance`, which is
+deprecated since Symfony 3.4.
 
 .. tip::
 
@@ -18,10 +19,7 @@ third-party bundles.
 Templates
 ---------
 
-For information on overriding templates, see
-
-* :doc:`/templating/overriding`.
-* :doc:`/bundles/inheritance`
+See :doc:`/templating/overriding`.
 
 Routing
 -------
@@ -37,10 +35,10 @@ that routing file into your application, modify it, and import it instead.
 Controllers
 -----------
 
-Assuming the third-party bundle involved uses non-service controllers (which
-is almost always the case), you can easily override controllers via bundle
-inheritance. For more information, see :doc:`/bundles/inheritance`.
 If the controller is a service, see the next section on how to override it.
+Otherwise, define a new route + controller with the same path associated to the
+controller you want to override (and make sure that the new route is loaded
+before the bundle one).
 
 Services & Configuration
 ------------------------
@@ -152,13 +150,4 @@ Translations are not related to bundles, but to domains. That means that you
 can override the translations from any translation file, as long as it is in
 :ref:`the correct domain <using-message-domains>`.
 
-.. caution::
-
-    Translation files are not aware of :doc:`bundle inheritance </bundles/inheritance>`.
-    If you want to override translations from the parent bundle or another bundle,
-    make sure that the bundle containing *your* translations is loaded after any
-    bundle whose translations you're overriding. This is done in ``AppKernel``.
-
-    Finally, translations located in ``app/Resources/translations`` will override
-    all the other translations since those files are always loaded last.
 .. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides
