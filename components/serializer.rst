@@ -877,7 +877,7 @@ parameter of the ``ObjectNormalizer``::
         public $bar;
     }
 
-    $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor()); //
+    $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor());
     $serializer = new Serializer(array(new DateTimeNormalizer(), $normalizer));
 
     $obj = $serializer->denormalize(
@@ -892,7 +892,9 @@ parameter of the ``ObjectNormalizer``::
 When a ``PropertyTypeExtractor`` is available, the normalizer will also check that the data to denormalize
 matches the type of the property (even for primitive types). For instance, if a ``string`` is provided, but
 the type of the property is ``int``, an :class:`Symfony\\Component\\Serializer\\Exception\\UnexpectedValueException`
-will be thrown.
+will be thrown. The type enforcement of the properties can be disabled by setting
+the serializer context option ``ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT``
+to ``true``.
 
 Learn more
 ----------
