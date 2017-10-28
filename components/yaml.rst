@@ -102,7 +102,7 @@ string and converts it to a PHP array:
 
     use Symfony\Component\Yaml\Yaml;
 
-    $value = Yaml::parse("foo:\n    'bar'");
+    $value = Yaml::parse("foo: bar");
     // $value = array('foo' => 'bar')
 
 If an error occurs during parsing, the parser throws a
@@ -124,13 +124,11 @@ Reading YAML Files
 ~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::parseFile` method parses the YAML
-contents of the given file path and converts them to a PHP array:
-
-.. code-block:: php
+contents of the given file path and converts them to a PHP value::
 
     use Symfony\Component\Yaml\Yaml;
 
-    $value = Yaml::parseFile(file_get_contents('/path/to/file.yml'));
+    $value = Yaml::parseFile('/path/to/file.yml');
 
 .. versionadded:: 3.4
     The ``parseFile()`` method was introduced in Symfony 3.4.
