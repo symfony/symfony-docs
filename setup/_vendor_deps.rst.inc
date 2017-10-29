@@ -11,8 +11,7 @@ you need for each.
 
 By default, these libraries are downloaded by running a ``composer install``
 "downloader" binary. This ``composer`` file is from a library called `Composer`_
-and you can read more about installing it in the :ref:`Installation <installation-updating-vendors>`
-article.
+and you can read more about :doc:`installing Composer globally </setup/composer>`.
 
 The ``composer`` command reads from the ``composer.json`` file at the root
 of your project. This is an JSON-formatted file, which holds a list of each
