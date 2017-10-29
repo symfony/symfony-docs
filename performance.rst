@@ -168,6 +168,12 @@ For more details, see :doc:`/components/class_loader/cache_class_loader`.
 Use Bootstrap Files
 -------------------
 
+.. caution::
+
+    The performance optimalizations in PHP 7 removed any overhead. As such,
+    using the bootstrap file is discouraged when using PHP 7+ and was
+    deprecated in Symfony 3.3 and it will be removed in 4.0. 
+
 To ensure optimal flexibility and code reuse, Symfony applications leverage
 a variety of classes and 3rd party components. But loading all of these classes
 from separate files on each request can result in some overhead. To reduce
