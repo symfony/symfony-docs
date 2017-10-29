@@ -415,7 +415,7 @@ Modified PHPUnit script
 -----------------------
 
 .. versionadded:: 3.2
-    This modified PHPUnit script was introduced in the 3.2 version of 
+    This modified PHPUnit script was introduced in the 3.2 version of
     this component.
 
 This bridge provides a modified version of PHPUnit that you can call by using
@@ -448,8 +448,117 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
 .. tip::
 
-    If you still need to use ``prophecy`` (but not ``symfony/yaml``), 
+    If you still need to use ``prophecy`` (but not ``symfony/yaml``),
     then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
+
+Code coverage listener
+----------------------
+
+Use case
+~~~~~~~~
+
+By default the code coverage is computed with the following rule: if a line of
+code is executed, then it is marked as covered. And the test which executes a
+line of code is therefore marked as "covering the line of code". This can be
+misleading.
+
+Consider the following example::
+
+    class Bar
+    {
+        public function barMethod()
+        {
+            return 'bar';
+        }
+    }
+
+    class Foo
+    {
+        private $bar;
+
+        public function __construct(Bar $bar)
+        {
+            $this->bar = $bar;
+        }
+
+        public function fooMethod()
+        {
+            $this->bar->barMethod();
+
+            return 'bar';
+        }
+    }
+
+    class FooTest extends PHPUnit\Framework\TestCase
+    {
+        public function test()
+        {
+            $bar = new Bar();
+            $foo = new Foo($bar);
+
+            $this->assertSame('bar', $foo->fooMethod());
+        }
+    }
+
+
+The ``FooTest::test`` method executes every single line of code of both ``Foo``
+and ``Bar`` classes, but ``Bar`` is not truly tested. The ``CoverageListener``
+aims to fix this behavior by adding the appropriate ``@covers`` annotation on
+each test class.
+
+If a test class already defines the ``@covers`` annotation, this listener does
+nothing. Otherwise, it tries to find the code related to the test by removing
+the ``Test`` part of the classname: ``My\Namespace\Tests\FooTest`` ->
+``My\Namespace\Foo``.
+
+Installation
+~~~~~~~~~~~~
+
+Add the following configuration to the ``phpunit.xml.dist`` file
+
+.. code-block:: xml
+
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\CoverageListener" />
+        </listeners>
+    </phpunit>
+
+If the logic followed to find the related code is too simple or doesn't work for
+your application, you can use your own SUT (System Under Test) solver:
+
+.. code-block:: xml
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\CoverageListener">
+            <arguments>
+                <string>My\Namespace\SutSolver::solve</string>
+            </arguments>
+        </listener>
+    </listeners>
+
+The ``My\Namespace\SutSolver::solve`` can be any PHP callable and receives the
+current test classname as its first argument.
+
+Finally, the listener can also display warning messages when the SUT solver does
+not find the SUT:
+
+.. code-block:: xml
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\CoverageListener">
+            <arguments>
+                <null/>
+                <boolean>true</boolean>
+            </arguments>
+        </listener>
+    </listeners>
 
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
