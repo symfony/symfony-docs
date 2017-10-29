@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-10-24T13:08:39Z
+
+@javiereguiluz I have the same question here as #8538
+
+> On Symfony.com, we would need to remove the "Assetic", "Expressions" and "Request" guides
+
+Will that be automatic?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-24T14:44:18Z
+
+It's not automatic, but I've removed them in symfony.com repo, so they'll disappear after the next deployment. This is how it'd look:
+
+![tag-cloud](https://user-images.githubusercontent.com/73419/31949835-8ba2b400-b8da-11e7-8fb2-d9d3d128efea.png)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-10-24T20:01:29Z
+
+Thank you @javiereguiluz! It sounds like we should wait until that deploy, correct?
