@@ -37,7 +37,6 @@ Topics
 .. toctree::
     :maxdepth: 1
 
-    assetic
     bundles
     console
     doctrine
@@ -45,14 +44,12 @@ Topics
     deployment
     email
     event_dispatcher
-    expressions
     forms
     frontend
     http_cache
     logging
     performance
     profiler
-    request
     routing
     security
     session

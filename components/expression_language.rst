@@ -119,7 +119,6 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    /expressions
     /components/expression_language/*
     /service_container/expression_language
     /reference/constraints/Expression
