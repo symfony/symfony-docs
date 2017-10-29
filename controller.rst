@@ -338,6 +338,13 @@ controller's service config:
 You can of course also use normal :ref:`constructor injection <services-constructor-injection>`
 in your controllers.
 
+.. caution::
+
+    You can *only* pass *services* to your controller arguments in this way. It's
+    not possible, for example, to pass a service parameter as a controller argument.
+    If you need a parameter, use the ``$this->getParameter('kernel.debug')`` shortcut
+    or pass the value through your controller's ``__construct()`` method.
+
 For more information about services, see the :doc:`/service_container` article.
 
 .. _controller-service-arguments-tag:
