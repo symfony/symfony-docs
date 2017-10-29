@@ -128,7 +128,7 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
             ->addTag('console.command', array('command' => 'app:sunshine'))
         ;
 
-That's it. In one way or another, the ``SunshineCommand`` will be instantiated
+That's it. One way or another, the ``SunshineCommand`` will be instantiated
 only when the ``app:sunshine`` command is actually called.
 
 .. note::
@@ -137,4 +137,4 @@ only when the ``app:sunshine`` command is actually called.
 
 .. caution::
 
-    Calling the ``list`` command requires to load all commands, lazy ones included.
+    Calling the ``list`` command will instantiate all commands, including lazy commands.

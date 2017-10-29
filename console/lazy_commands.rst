@@ -7,13 +7,13 @@ How to Make Commands Lazily Loaded
 .. note::
 
     If you are using the Symfony full-stack framework, you are probably looking for
-    :ref:`lazy loading of commands defined as services <console-command-service-lazy-loading>`
+    details about :ref:`creating lazy commands <console-command-service-lazy-loading>`
 
 The traditional way of adding commands to your application is to use
-:method:`Symfony\\Component\\Console\\Application::add` which expects a
-``Command`` instance as argument.
+:method:`Symfony\\Component\\Console\\Application::add`, which expects a
+``Command`` instance as an argument.
 
-In order to lazy load commands, you need to register an intermediate loader
+In order to lazy-load commands, you need to register an intermediate loader
 which will be responsible for returning ``Command`` instances::
 
     use AppBundle\Command\HeavyCommand;
@@ -46,7 +46,7 @@ Built-in Command Loaders
 
 The :class:`Symfony\\Component\\Console\\CommandLoader\\FactoryCommandLoader`
 class provides a simple way of getting commands lazily loaded as it takes an
-array of ``Command`` factories as only constructor argument::
+array of ``Command`` factories as its only constructor argument::
 
     use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
 
@@ -64,8 +64,8 @@ is called.
 
 The :class:`Symfony\\Component\\Console\\CommandLoader\\ContainerCommandLoader`
 class can be used to load commands from a PSR-11 container. As such, its
-constructor takes a PSR-11 ``ContainerInterface`` implementation as first
-argument and a command map as last argument. The command map must be an array
+constructor takes a PSR-11 ``ContainerInterface`` implementation as its first
+argument and a command map as its last argument. The command map must be an array
 with command names as keys and service identifiers as values::
 
     use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
