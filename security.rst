@@ -962,7 +962,7 @@ You can also use expressions inside your templates:
             <a href="...">Delete</a>
         <?php endif; ?>
 
-For more details on expressions and security, see :ref:`expressions-security`.
+For more details on expressions and security, see :doc:`/security/expressions`.
 
 .. _security-secure-objects:
 

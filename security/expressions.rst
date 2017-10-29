@@ -1,29 +1,13 @@
 .. index::
    single: Expressions in the Framework
 
-How to use Expressions in Security, Routing, Services, and Validation
-=====================================================================
-
-Symfony comes with a powerful
-:doc:`ExpressionLanguage </components/expression_language>`
-component. It allows you to add highly customized logic inside configuration.
-
-The Symfony Framework leverages expressions out of the box in the following
-ways:
-
-* :doc:`Configuring services </service_container/expression_language>`;
-* :doc:`Route matching conditions </routing/conditions>`;
-* :ref:`Checking security <expressions-security>` (explained below) and
-  :ref:`access controls with allow_if <security-allow-if>`;
-* :doc:`Validation </reference/constraints/Expression>`.
-
-For more information about how to create and work with expressions, see
-:doc:`/components/expression_language/syntax`.
-
-.. _expressions-security:
-
 Security: Complex Access Controls with Expressions
---------------------------------------------------
+==================================================
+
+.. seealso::
+
+    The best solution for handling complex authorization rules is to use
+    the :doc:`Voter System </security/voters>`.
 
 In addition to a role like ``ROLE_ADMIN``, the ``isGranted()`` method also
 accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
