@@ -281,6 +281,7 @@
 /components/class_loader/index /components/class_loader
 /components/config/introduction /components/config
 /components/config/index /components/config
+/components/console/helpers/tablehelper /components/console/helpers/table
 /components/console/introduction /components/console
 /components/console/index /components/console
 /components/debug/class_loader /components/debug
