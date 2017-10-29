@@ -30,8 +30,10 @@ Each part will be explained in the next section.
                 strategy:             affirmative # One of affirmative, consensus, unanimous
                 allow_if_all_abstain:  false
                 allow_if_equal_granted_denied:  true
-            acl:
 
+            # ACL support was deprecated in Symfony 3.4 and removed in Symfony 4.0
+            # Use https://github.com/symfony/acl-bundle instead
+            acl:
                 # any name configured in doctrine.dbal section
                 connection:           ~
                 cache:
