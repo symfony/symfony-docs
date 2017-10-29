@@ -687,57 +687,5 @@ multiple firewalls, the "context" could actually be shared:
     ignored and you won't be able to authenticate on multiple firewalls at the
     same time.
 
-HTTP-Digest Authentication
---------------------------
-
-.. versionadded:: 3.4
-    HTTP-Digest Authentication was deprecated in Symfony 3.4 and it will be
-    removed in Symfony 4.0.
-
-To use HTTP-Digest authentication you need to provide a realm and a secret:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            firewalls:
-                somename:
-                    http_digest:
-                        secret: '%secret%'
-                        realm: 'secure-api'
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <firewall name="somename">
-                    <http-digest secret="%secret%" realm="secure-api" />
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'somename' => array(
-                    'http_digest' => array(
-                        'secret' => '%secret%',
-                        'realm'  => 'secure-api',
-                    ),
-                ),
-            ),
-        ));
-
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
