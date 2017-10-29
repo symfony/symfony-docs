@@ -272,8 +272,7 @@ class. However, you can't inject that service because it causes a
 
 The solution is to inject the ``service_container`` service and use it to get
 the ``security.authorization_checker`` service and call to the ``isGranted()``
-method. Another solution is to upgrade your Symfony version, because this issue
-was fixed starting from Symfony 3.1.
+method.
 
 .. _security-voters-change-strategy:
 
