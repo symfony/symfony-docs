@@ -323,7 +323,7 @@ type-hints by running:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:container --types
+    $ php bin/console debug:autowiring
 
 This is just a small subset of the output:
 

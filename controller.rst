@@ -268,12 +268,12 @@ If you need a service in a controller, just type-hint an argument with its class
 
 Awesome!
 
-What other services can you type-hint? To see them, use the ``debug:container`` console
+What other services can you type-hint? To see them, use the ``debug:autowiring`` console
 command:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:container --types
+    $ php bin/console debug:autowiring
 
 If you need control over the *exact* value of an argument, you can override your
 controller's service config:
