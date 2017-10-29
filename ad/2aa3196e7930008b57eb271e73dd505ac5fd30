@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-09-08T14:01:23Z
+
+Not sure about this ... because the previous example doesn't include it either. This `$helper` var is defined at the very beginning of the article.
+
+---------------------------------------------------------------------------
+
+by yceruto at 2017-09-08T16:20:59Z
+
+Well, I could say too, because the next example include it :smile: ...
+
+As I can understand, this article doesn't have a tutorial format, where we always need to start with the first step to complete the rest, so each example is independent and should work as is, plus if each sub-topic is linkable, I didn't like to review the whole article to make it work, it's annoying and boring have to do it... I'd like just copy & paste the code example and see it work, you don't think?
+
+---------------------------------------------------------------------------
+
+by yceruto at 2017-09-08T16:27:21Z
+
+I just update other examples, note that were not all, the other half had included ;)
