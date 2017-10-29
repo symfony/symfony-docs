@@ -35,8 +35,8 @@ This renders a page that prints a lucky (random) number::
     }
 
 But in the real world, your controller will probably do a lot of work in order to
-create the response. It might read information from the request, load a database
-resource, send an email or set information on the user's session.
+create the response. It might read information from the request, load data from a
+database (or API), send an email or set information on the user's session.
 But in all cases, the controller will eventually return the ``Response`` object
 that will be delivered back to the client.
 
