@@ -11,7 +11,7 @@ configured under the ``framework`` key in your application configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php bin/console config:dump-reference framework
+    $ php bin/console config:dump framework
 
     # displays the actual config values used by your application
     $ php bin/console debug:config framework
