@@ -89,6 +89,8 @@ to creating a page?
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
    in their own section, including how to return JSON responses.
 
+.. _annotation-routes:
+
 Annotation Routes
 -----------------
 

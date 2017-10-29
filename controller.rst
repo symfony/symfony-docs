@@ -66,7 +66,7 @@ class::
         /**
          * @Route("/lucky/number/{max}")
          */
-        public function numberAction($max)
+        public function number($max)
         {
             $number = mt_rand(0, $max);
 
@@ -76,7 +76,7 @@ class::
         }
     }
 
-The controller is the ``numberAction()`` method, which lives inside a
+The controller is the ``number()`` method, which lives inside a
 controller class ``LuckyController``.
 
 This controller is pretty straightforward:
@@ -89,12 +89,10 @@ This controller is pretty straightforward:
   must return.
 
 * *line 7*: The class can technically be called anything - but should end in the
-  word ``Controller`` (this isn't *required*, but some shortcuts rely on this).
+  word ``Controller``
 
-* *line 12*: Each action method in a controller class is suffixed with ``Action``
-  (again, this isn't *required*, but some shortcuts rely on this). This method
-  is allowed to have a ``$max`` argument thanks to the ``{max}``
-  :doc:`wildcard in the route </routing>`.
+* *line 12*: The action method is allowed to have a ``$max`` argument thanks to the
+  ``{max}`` :doc:`wildcard in the route </routing>`.
 
 * *line 16*: The controller creates and returns a ``Response`` object.
 
@@ -105,7 +103,8 @@ Mapping a URL to a Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to *view* the result of this controller, you need to map a URL to it via
-a route. This was done above with the ``@Route("/lucky/number/{max}")`` annotation.
+a route. This was done above with the ``@Route("/lucky/number/{max}")``
+:ref:`route annotation <annotation-routes>`.
 
 To see your page, go to this URL in your browser:
 
@@ -121,12 +120,12 @@ For more information on routing, see :doc:`/routing`.
 The Base Controller Classes & Services
 --------------------------------------
 
-For convenience, Symfony comes with two optional base
+To make life nicer, Symfony comes with two optional base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` and
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`
-classes. You can extend either to get access to a number of `helper methods`_.
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`.
+You can extend either to get access to some `helper methods`_.
 
-Add the ``use`` statement atop the ``Controller`` class and then modify
+Add the ``use`` statement atop your controller class and then modify
 ``LuckyController`` to extend it::
 
     // src/Controller/LuckyController.php
@@ -146,11 +145,12 @@ and many others that you'll learn about next.
 
 .. tip::
 
-    You can extend either ``Controller`` or ``AbstractController``. The difference
-    is that when you extend ``AbstractController``, you can't access services directly
-    via ``$this->get()`` or ``$this->container->get()``. This forces you to write
-    more robust code to access services. But if you *do* need direct access to the
-    container, using ``Controller`` is fine.
+    What's the difference between ``Controller`` or ``AbstractController``. Not much:
+    both are identical, except that ``AbstractController`` is more restrictive: it
+    does not allow you to access services directly via ``$this->get()`` or
+    ``$this->container->get()``. This forces you to write more robust code to access
+    services. But if you *do* need direct access to the container, using ``Controller``
+    is fine.
 
 .. index::
    single: Controller; Redirecting
@@ -169,10 +169,16 @@ Redirecting
 If you want to redirect the user to another page, use the ``redirectToRoute()``
 and ``redirect()`` methods::
 
+    use Symfony\Component\HttpFoundation\RedirectResponse;
+
+    // ...
     public function indexAction()
     {
         // redirect to the "homepage" route
         return $this->redirectToRoute('homepage');
+
+        // redirectToRoute is a shortcut for:
+        // return new RedirectResponse($this->generateUrl('homepage'));
 
         // do a permanent - 301 redirect
         return $this->redirectToRoute('homepage', array(), 301);
@@ -189,22 +195,8 @@ For more information, see the :doc:`Routing article </routing>`.
 .. caution::
 
     The ``redirect()`` method does not check its destination in any way. If you
-    redirect to some URL provided by the end-users, your application may be open
+    redirect to some URL provided byend-users, your application may be open
     to the `unvalidated redirects security vulnerability`_.
-
-
-.. tip::
-
-    The ``redirectToRoute()`` method is simply a shortcut that creates a
-    ``Response`` object that specializes in redirecting the user. It's
-    equivalent to::
-
-        use Symfony\Component\HttpFoundation\RedirectResponse;
-
-        public function indexAction()
-        {
-            return new RedirectResponse($this->generateUrl('homepage'));
-        }
 
 .. index::
    single: Controller; Rendering templates
@@ -221,15 +213,7 @@ object for you::
     // renders templates/lucky/number.html.twig
     return $this->render('lucky/number.html.twig', array('name' => $name));
 
-Templates can also live in deeper sub-directories. Just try to avoid
-creating unnecessarily deep structures::
-
-    // renders templates/lottery/lucky/number.html.twig
-    return $this->render('lottery/lucky/number.html.twig', array(
-        'name' => $name,
-    ));
-
-The Symfony templating system and Twig are explained more in the
+Templating and Twig are explained more in the
 :doc:`Creating and Using Templates article </templating>`.
 
 .. index::
