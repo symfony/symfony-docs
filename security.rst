@@ -637,10 +637,9 @@ The process of authorization has two different sides:
 .. tip::
 
     In addition to roles (e.g. ``ROLE_ADMIN``), you can protect a resource
-    using other attributes/strings (e.g. ``EDIT``) and use voters or Symfony's
-    ACL system to give these meaning. This might come in handy if you need
-    to check if user A can "EDIT" some object B (e.g. a Product with id 5).
-    See :ref:`security-secure-objects`.
+    using other attributes/strings (e.g. ``EDIT``) and use voters to give these
+    meaning. This might come in handy if you need to check if user A can "EDIT"
+    some object B (e.g. a Product with id 5). See :ref:`security-secure-objects`.
 
 Roles
 ~~~~~
@@ -963,12 +962,16 @@ You can also use expressions inside your templates:
             <a href="...">Delete</a>
         <?php endif; ?>
 
-For more details on expressions and security, see :ref:`expressions-security`.
+For more details on expressions and security, see :doc:`/security/expressions`.
 
 .. _security-secure-objects:
 
 Access Control Lists (ACLs): Securing individual Database Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.4
+    ACL support was deprecated in Symfony 3.4 and will be removed in 4.0. Install
+    the `Symfony ACL bundle`_ if you want to keep using ACL.
 
 Imagine you are designing a blog where users can comment on your posts. You
 also want a user to be able to edit their own comments, but not those of
@@ -1322,3 +1325,4 @@ Other Security Related Topics
 
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
+.. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle

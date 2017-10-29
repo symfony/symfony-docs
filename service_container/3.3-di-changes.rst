@@ -22,6 +22,8 @@ which means it's always safe to upgrade across minor versions.
 All of the new features are **optional**: they are not enabled by default, so you
 need to actually change your configuration files to use them.
 
+.. _`service-33-default_definition`:
+
 The new Default services.yml File
 ---------------------------------
 
@@ -411,7 +413,7 @@ In general, the new best practice is to use normal constructor dependency inject
 4) Auto-tagging with autoconfigure
 ----------------------------------
 
-The last big change is the ``autoconfigure`` key, which is set to ``true`` under
+The fourth big change is the ``autoconfigure`` key, which is set to ``true`` under
 ``_defaults``. Thanks to this, the container will auto-tag services registered in
 this file. For example, suppose you want to create an event subscriber. First, you
 create the class::
@@ -467,6 +469,59 @@ see what it autoconfigures.
 Many autoconfigured tags have an optional priority. If you need to specify a priority
 (or any other optional tag attribute), no problem! Just :ref:`manually configure your service <services-manually-wire-args>`
 and add the tag. Your tag will take precedence over the one added by auto-configuration.
+
+5) Auto-configure with _instanceof
+----------------------------------
+
+And the final big change is ``_instanceof``. It acts as a default definition
+template (see `service-33-default_definition`_), but only for services whose
+class matches a defined one.
+
+This can be very useful when many services share some tag that cannot be
+inherited from an abstract definition:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # ...
+
+            _instanceof:
+                AppBundle\Domain\LoaderInterface:
+                    public: true
+                    tags: ['app.domain_loader']
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <instanceof id="AppBundle\Domain\LoaderInterface" public="true">
+                    <tag name="app.domain_loader" />
+                </instanceof>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use AppBundle\Domain\LoaderInterface;
+
+        // ...
+
+        /* This method returns a child definition to define the default
+           configuration of the given class or interface */
+        $container->registerForAutoconfiguration(LoaderInterface::class)
+            ->addTag('app.domain_loader');
 
 What about Performance
 ----------------------

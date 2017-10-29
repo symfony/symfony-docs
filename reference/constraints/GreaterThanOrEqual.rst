@@ -11,6 +11,7 @@ the options. To force that a value is greater than another value, see
 | Options        | - `value`_                                                                       |
 |                | - `message`_                                                                     |
 |                | - `payload`_                                                                     |
+|                | - `propertyPath`_                                                                |
 +----------------+----------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanOrEqual`          |
 +----------------+----------------------------------------------------------------------------------+
@@ -298,5 +299,7 @@ This is the message that will be shown if the value is not greater than or equal
 to the comparison value.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. include:: /reference/constraints/_comparison-propertypath-option.rst.inc
 
 .. _`accepted by the DateTime constructor`: http://www.php.net/manual/en/datetime.formats.php

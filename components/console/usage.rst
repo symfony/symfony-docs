@@ -148,6 +148,16 @@ can run it with:
 
     $ php application.php d:g Fabien
 
+    # as long as it's unambiguous, you can also mix upper and lower case
+    # php application.php Demo:g Fabien
+    # php application.php de:Gr Fabien
+    # php application.php DE:Gre Fabien
+
 If you enter a short command that's ambiguous (i.e. there are more than one
 command that match), then no command will be run and some suggestions of
 the possible commands to choose from will be output.
+
+.. versionadded:: 3.4
+    Case-insensitivity of command shortcuts was introduced in Symfony 3.4. In
+    previous Symfony versions, shortcuts had to match the case of the original
+    command name (e.g. ``d:g`` was not the same shortcut as ``D:G``).

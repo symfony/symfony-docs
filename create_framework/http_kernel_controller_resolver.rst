@@ -62,8 +62,8 @@ based on a Request object. All controller resolvers implement the following inte
 
     The ``getArguments()`` method is deprecated as of Symfony 3.1. and will be
     removed in 4.0. You can use the
-    :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolver` which
-    uses the :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolverInterface`
+    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver` which
+    uses the :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolverInterface`
     instead.
 
 The ``getController()`` method relies on the same convention as the one we

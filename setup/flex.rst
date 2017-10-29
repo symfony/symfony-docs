@@ -129,7 +129,6 @@ following directory structure, which is the same used by default in Symfony 4:
 .. code-block:: text
 
     your-project/
-    ├── Makefile
     ├── config/
     │   ├── bundles.php
     │   ├── packages/

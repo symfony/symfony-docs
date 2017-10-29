@@ -192,7 +192,7 @@ you switch users, add an event subscriber on this event::
         use Symfony\Component\EventDispatcher\EventSubscriberInterface;
         use Symfony\Component\Security\Http\SecurityEvents;
 
-        class SwitchUserSusbcriber implements EventSubscriberInterface
+        class SwitchUserSubscriber implements EventSubscriberInterface
         {
             public function onSwitchUser(SwitchUserEvent $event)
             {
