@@ -1,8 +1,8 @@
 .. index::
     single: Configuration reference; Framework
 
-FrameworkBundle Configuration
-=============================
+FrameworkBundle Configuration ("framework")
+===========================================
 
 The FrameworkBundle defines the main framework configuration, from sessions and
 translations to forms, validation, routing and more. All these options are
@@ -11,10 +11,10 @@ configured under the ``framework`` key in your application configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ ./bin/console config:dump-reference framework
+    $ php bin/console config:dump-reference framework
 
     # displays the actual config values used by your application
-    $ ./bin/console debug:config framework
+    $ php bin/console debug:config framework
 
 .. note::
 
