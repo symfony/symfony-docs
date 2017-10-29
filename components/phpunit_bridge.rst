@@ -454,10 +454,7 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 Code coverage listener
 ----------------------
 
-Use case
-~~~~~~~~
-
-By default the code coverage is computed with the following rule: if a line of
+By default, the code coverage is computed with the following rule: if a line of
 code is executed, then it is marked as covered. And the test which executes a
 line of code is therefore marked as "covering the line of code". This can be
 misleading.
@@ -503,7 +500,7 @@ Consider the following example::
 
 The ``FooTest::test`` method executes every single line of code of both ``Foo``
 and ``Bar`` classes, but ``Bar`` is not truly tested. The ``CoverageListener``
-aims to fix this behavior by adding the appropriate ``@covers`` annotation on
+aims to fix this behavior by adding the appropriate `@covers`_ annotation on
 each test class.
 
 If a test class already defines the ``@covers`` annotation, this listener does
@@ -530,7 +527,7 @@ Add the following configuration to the ``phpunit.xml.dist`` file
         </listeners>
     </phpunit>
 
-If the logic followed to find the related code is too simple or doesn't work for
+If the logic used to find the related code is too simple or doesn't work for
 your application, you can use your own SUT (System Under Test) solver:
 
 .. code-block:: xml
@@ -570,3 +567,4 @@ not find the SUT:
 .. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
 .. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
+.. _`@covers`: https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.covers
