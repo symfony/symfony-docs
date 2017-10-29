@@ -71,7 +71,7 @@ In this context, you have access to 2 functions:
 ``parameter``
     Returns a specific parameter value (syntax is just like ``service``).
 
-You also have access to the :class:`Symfony\\Component\\DependencyInjection\\ContainerBuilder`
+You also have access to the :class:`Symfony\\Component\\DependencyInjection\\Container`
 via a ``container`` variable. Here's another example:
 
 .. configuration-block::
