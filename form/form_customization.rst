@@ -355,10 +355,11 @@ themes:
 
 .. caution::
 
-    When using the ``only`` keyword, form themes shipped with Symfony
-    (``form_div_layout.html.twig`` and others) will not be used, so to render your
-    forms correcly, you need to either provide the base form theme yourself, or
-    ``use`` one of the built in form themes from your own theme:
+    When using the ``only`` keyword, none of Symfony's built-in form themes
+    (``form_div_layout.html.twig``, etc.) will be applied. In order to render
+    your forms correctly, you need to either provide a full-featured form theme
+    yourself, or extend one of the built-in form themes with Twig's ``use``
+    keyword instead of ``extends`` to reuse the original theme contents.
 
     .. code-block:: html+twig
 
