@@ -604,7 +604,6 @@ Learn More
     /components/http_foundation/*
     /controller
     /controller/*
-    /request/*
     /session/*
     /http_cache/*
 
