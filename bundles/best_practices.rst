@@ -116,20 +116,23 @@ files are going to be part of the repository.
 The following classes and files have specific emplacements (some are mandatory
 and others are just conventions followed by most developers):
 
-===============================  ========================================  ==========
-Type                             Directory                                 Mandatory?
-===============================  ========================================  ==========
-Commands                         ``Command/``                              Yes
-Controllers                      ``Controller/``                           No
-Service Container Extensions     ``DependencyInjection/``                  Yes
-Doctrine entities and documents  ``Entity/`` (ORM) or ``Document/`` (ODM)  No 
-Event Listeners                  ``EventListener/``                        No
-Configuration                    ``Resources/config/``                     No
-Web Resources (CSS, JS, images)  ``Resources/public/``                     Yes
-Translation files                ``Resources/translations/``               Yes
-Templates                        ``Resources/views/``                      Yes
-Unit and Functional Tests        ``Tests/``                                No
-===============================  ========================================  ==========
+===================================================  ========================================
+Type                                                 Directory                               
+===================================================  ========================================
+Commands                                             ``Command/``                            
+Controllers                                          ``Controller/``                         
+Service Container Extensions                         ``DependencyInjection/``                
+Doctrine ORM entities (when not using annotations)   ``Entity/``
+Doctrine ODM documents (when not using annotations)  ``Document/``
+Event Listeners                                      ``EventListener/``                      
+Configuration                                        ``Resources/config/``                   
+Web Resources (CSS, JS, images)                      ``Resources/public/``                   
+Translation files                                    ``Resources/translations/``     
+Validation (when not using annotations)              ``Resources/config/validation/``
+Serialization (when not using annotations)           ``Resources/config/serialization/``
+Templates                                            ``Resources/views/``                    
+Unit and Functional Tests                            ``Tests/``                              
+===================================================  ========================================
 
 Classes
 -------
