@@ -99,7 +99,7 @@ routes. First, install the annotations package:
 
     $ composer require annotations
 
-Then, in ``config/routes.yaml``, remove the route we just created and uncomment
+Then, in ``config/routes.yaml``, remove the route you just created and uncomment
 the annotation route import at the bottom:
 
 .. code-block:: yaml
@@ -113,8 +113,8 @@ After this one-time setup, you can now add your route directly *above* the contr
 .. code-block:: diff
 
     // src/Controller/LuckyController.php
-    // ...
 
+    // ...
     + use Symfony\Component\Routing\Annotation\Route;
 
     + /**
@@ -143,15 +143,15 @@ that Flex resolves to ``sensio/framework-extra-bundle``.
 
 Second, after this package was downloaded, Flex executed a *recipe*, which is a
 set of automated instructions that tell Symfony how to integrate an external
-package. Flex recipes exist for many packages and have the ability to do a lot, like
-adding configuration files, creating directories, updating ``.gitignore`` and adding
-new config to your ``.env`` file. Flex *automates* the installation of packages so
-you can get back to coding.
+package. Flex recipes exist for many packages (see `symfony.sh`_) and have the ability
+to do a lot, like adding configuration files, creating directories, updating ``.gitignore``
+and adding new config to your ``.env`` file. Flex *automates* the installation of
+packages so you can get back to coding.
 
 You can learn more about Flex by reading ":doc:`/setup/flex`". But that's not necessary:
 Flex works automatically in the background when you add packages.
 
-The bin/console Utility
+The bin/console Command
 -----------------------
 
 Your project already has a powerful debugging tool inside: the ``bin/console`` command.
@@ -159,7 +159,7 @@ Try running it:
 
 .. code-block:: terminal
 
-    php bin/console
+    $ php bin/console
 
 You should see a list of commands that can give you debugging information, help generate
 code, generate database migrations and a lot more. As you install more packages,
@@ -169,7 +169,7 @@ To get a list of *all* of the routes in your system, use the ``debug:router`` co
 
 .. code-block:: terminal
 
-    php bin/console debug:router
+    $ php bin/console debug:router
 
 You'll learn about many more commands as you continue!
 
@@ -331,3 +331,4 @@ Go Deeper with HTTP & Framework Fundamentals
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`Composer`: https://getcomposer.org
 .. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony/first-page
+.. _`symfony.sh`: https://symfony.sh/
