@@ -275,8 +275,8 @@ command:
 
     $ php bin/console debug:autowiring
 
-If you need control over the *exact* value of an argument, you can override your
-controller's service config:
+If you need control over the *exact* value of an argument, you can :ref:`bind <services-binding>`
+the argument by its name:
 
 .. configuration-block::
 
@@ -289,13 +289,9 @@ controller's service config:
             # explicitly configure the service
             AppBundle\Controller\LuckyController:
                 public: true
-                tags:
-                    # add multiple tags to control multiple args
-                    - name: controller.service_arguments
-                      action: numberAction
-                      argument: logger
-                      # pass this specific service id
-                      id: monolog.logger.doctrine
+                bind:
+                    # for any $logger argument, pass this specific service
+                    $logger: '@monolog.logger.doctrine'
 
     .. code-block:: xml
 
@@ -311,10 +307,8 @@ controller's service config:
 
                 <!-- Explicitly configure the service -->
                 <service id="AppBundle\Controller\LuckyController" public="true">
-                    <tag
-                        name="controller.service_arguments"
-                        action="numberAction"
-                        argument="logger"
+                    <bind key="$logger"
+                        type="service"
                         id="monolog.logger.doctrine"
                     />
                 </service>
@@ -325,14 +319,13 @@ controller's service config:
 
         // app/config/services.php
         use AppBundle\Controller\LuckyController;
+        use Symfony\Component\DependencyInjection\Reference;
 
         $container->register(LuckyController::class)
             ->setPublic(true)
-            ->addTag('controller.service_arguments', [
-                'action' => 'numberAction',
-                'argument' => 'logger',
-                'id' => 'monolog.logger.doctrine',
-            ])
+            ->setBindings(array(
+                '$logger' => new Reference('monolog.logger.doctrine'),
+            ))
         ;
 
 You can of course also use normal :ref:`constructor injection <services-constructor-injection>`
@@ -340,10 +333,11 @@ in your controllers.
 
 .. caution::
 
-    You can *only* pass *services* to your controller arguments in this way. It's
-    not possible, for example, to pass a service parameter as a controller argument.
-    If you need a parameter, use the ``$this->getParameter('kernel.debug')`` shortcut
-    or pass the value through your controller's ``__construct()`` method.
+    You can *only* pass *services* to your controller arguments in this way. It's not
+    possible, for example, to pass a service parameter as a controller argument,
+    even by using ``bind``. If you need a parameter, use the ``$this->getParameter('kernel.debug')``
+    shortcut or pass the value through your controller's ``__construct()`` method
+    and specify its value with ``bind``.
 
 For more information about services, see the :doc:`/service_container` article.
 
