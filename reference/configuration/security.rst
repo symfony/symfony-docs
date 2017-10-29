@@ -690,6 +690,10 @@ multiple firewalls, the "context" could actually be shared:
 HTTP-Digest Authentication
 --------------------------
 
+.. versionadded:: 3.4
+    HTTP-Digest Authentication was deprecated in Symfony 3.4 and it will be
+    removed in Symfony 4.0.
+
 To use HTTP-Digest authentication you need to provide a realm and a secret:
 
 .. configuration-block::
