@@ -11,7 +11,7 @@ the options. To force that a value is greater than another value, see
 | Options        | - `value`_                                                                       |
 |                | - `message`_                                                                     |
 |                | - `payload`_                                                                     |
-|                | - `propertyPath`_                                                                 |
+|                | - `propertyPath`_                                                                |
 +----------------+----------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanOrEqual`          |
 +----------------+----------------------------------------------------------------------------------+
