@@ -92,8 +92,8 @@ other dumps a PHP array to a YAML string
 On top of these two classes, the :class:`Symfony\\Component\\Yaml\\Yaml` class
 acts as a thin wrapper that simplifies common uses.
 
-Reading YAML Files
-~~~~~~~~~~~~~~~~~~
+Reading YAML Contents
+~~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::parse` method parses a YAML
 string and converts it to a PHP array:
@@ -102,13 +102,8 @@ string and converts it to a PHP array:
 
     use Symfony\Component\Yaml\Yaml;
 
-    $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
-
-.. caution::
-
-    Because it is currently possible to pass a filename to this method, you
-    must validate the input first. Passing a filename is deprecated in
-    Symfony 2.2, and was removed in Symfony 3.0.
+    $value = Yaml::parse("foo: bar");
+    // $value = array('foo' => 'bar')
 
 If an error occurs during parsing, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\ParseException` exception
@@ -120,10 +115,25 @@ error occurred:
     use Symfony\Component\Yaml\Exception\ParseException;
 
     try {
-        $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
+        $value = Yaml::parse('...');
     } catch (ParseException $e) {
-        printf("Unable to parse the YAML string: %s", $e->getMessage());
+        printf('Unable to parse the YAML string: %s', $e->getMessage());
     }
+
+Reading YAML Files
+~~~~~~~~~~~~~~~~~~
+
+The :method:`Symfony\\Component\\Yaml\\Yaml::parseFile` method parses the YAML
+contents of the given file path and converts them to a PHP value::
+
+    use Symfony\Component\Yaml\Yaml;
+
+    $value = Yaml::parseFile('/path/to/file.yml');
+
+.. versionadded:: 3.4
+    The ``parseFile()`` method was introduced in Symfony 3.4.
+
+If an error occurs during parsing, the parser throws a ``ParseException`` exception.
 
 .. _components-yaml-dump:
 
