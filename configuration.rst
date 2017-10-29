@@ -295,6 +295,15 @@ signs - e.g. ``%locale%``.
 For more information about parameters - including how to reference them from inside
 a controller - see :ref:`service-container-parameters`.
 
+.. _config-dot-env:
+
+The .env File
+~~~~~~~~~~~~~
+
+There is also a ``.env`` file which is loaded. Its contents become environment variables
+in the dev environment, making it easier to reference environment variables in your
+code.
+
 .. _config-parameters-yml:
 
 The Special parameters.yml File

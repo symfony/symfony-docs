@@ -1,7 +1,7 @@
 Building your own Framework with the MicroKernelTrait
 =====================================================
 
-A :ref:`traditional Symfony app <installation-creating-the-app>` contains a sensible
+A traditional Symfony app contains a sensible
 directory structure, various configuration files and an ``AppKernel`` with several
 bundles already-registered. This is a fully-featured app that's ready to go.
 
