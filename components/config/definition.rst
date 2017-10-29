@@ -174,7 +174,7 @@ Or you may define a prototype for each node inside an array node::
     $rootNode
         ->children()
             ->arrayNode('connections')
-                ->prototype('array')
+                ->arrayPrototype()
                     ->children()
                         ->scalarNode('driver')->end()
                         ->scalarNode('host')->end()
@@ -185,6 +185,12 @@ Or you may define a prototype for each node inside an array node::
             ->end()
         ->end()
     ;
+
+.. versionadded:: 3.3
+    The ``arrayPrototype()`` method (and the related ``booleanPrototype()``
+    ``integerPrototype()``, ``floatPrototype()``, ``scalarPrototype()`` and
+    ``enumPrototype()``) was introduced in Symfony 3.3. In previous versions,
+    you needed to use ``prototype('array')``, ``prototype('boolean')``, etc.
 
 A prototype can be used to add a definition which may be repeated many times
 inside the current node. According to the prototype definition in the example
@@ -229,7 +235,7 @@ A basic prototyped array configuration can be defined as follows::
         ->fixXmlConfig('driver')
         ->children()
             ->arrayNode('drivers')
-                ->prototype('scalar')->end()
+                ->scalarPrototype()->end()
             ->end()
         ->end()
     ;
@@ -260,7 +266,7 @@ A more complex example would be to define a prototyped array with children::
         ->fixXmlConfig('connection')
         ->children()
             ->arrayNode('connections')
-                ->prototype('array')
+                ->arrayPrototype()
                     ->children()
                         ->scalarNode('table')->end()
                         ->scalarNode('user')->end()
@@ -334,7 +340,7 @@ In order to maintain the array keys use the ``useAttributeAsKey()`` method::
         ->children()
             ->arrayNode('connections')
                 ->useAttributeAsKey('name')
-                ->prototype('array')
+                ->arrayPrototype()
                     ->children()
                         ->scalarNode('table')->end()
                         ->scalarNode('user')->end()
@@ -549,7 +555,7 @@ tree with ``append()``::
             ->isRequired()
             ->requiresAtLeastOneElement()
             ->useAttributeAsKey('name')
-            ->prototype('array')
+            ->arrayPrototype
                 ->children()
                     ->scalarNode('value')->isRequired()->end()
                 ->end()
@@ -647,7 +653,7 @@ with ``fixXmlConfig()``::
         ->fixXmlConfig('extension')
         ->children()
             ->arrayNode('extensions')
-                ->prototype('scalar')->end()
+                ->scalarPrototype()->end()
             ->end()
         ->end()
     ;
