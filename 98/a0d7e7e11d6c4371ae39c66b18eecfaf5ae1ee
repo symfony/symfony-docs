@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by chalasr at 2017-10-11T08:17:54Z
+
+@yceruto comments addressed, thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-13T12:57:41Z
+
+@chalasr thanks for providing this feature and for documenting it. In a minor reword commit, I made this change:
+
+```diff
+-register an intermediate router ...
++register an intermediate loader ...
+```
+
+Please confirm that it's correct to use "loader" instead of "router". Thanks!
+
+---------------------------------------------------------------------------
+
+by chalasr at 2017-10-13T13:00:03Z
+
+@javiereguiluz Absolutely correct, thank you for that and your other fixes.
