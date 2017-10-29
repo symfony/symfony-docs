@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by chalasr at 2017-10-10T17:30:05Z
+
+I think https://github.com/symfony/symfony-docs/blob/master/reference/configuration/security.rst should be updated too, all the `security.acl` configuration node has been deprecated and will be removed in 4.0 (now available as `acl` when using `symfony/acl-bundle`).
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-10-29T02:17:09Z
+
+@javiereguiluz I agree - can you update the reference section?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-29T11:15:49Z
+
+I've added a note about ACL deprecation in the security config reference ... and we'll remove it in `master`.
