@@ -17,6 +17,7 @@ To force that a value is *not* identical, see
 | Options        | - `value`_                                                               |
 |                | - `message`_                                                             |
 |                | - `payload`_                                                             |
+|                | - `propertyPath`_                                                        |
 +----------------+--------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IdenticalTo`         |
 +----------------+--------------------------------------------------------------------------+
@@ -112,3 +113,5 @@ message
 This is the message that will be shown if the value is not identical.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. include:: /reference/constraints/_comparison-propertypath-option.rst.inc
