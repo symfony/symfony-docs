@@ -1015,7 +1015,7 @@ To accomplish this you have 2 options:
 In both cases, you'll still deny access using methods similar to what was
 shown above.
 
-Retrieving the User Object
+3) Retrieving the User Object
 --------------------------
 
 .. versionadded:: 2.6
