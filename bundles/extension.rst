@@ -116,7 +116,7 @@ Other available loaders are the ``YamlFileLoader``, ``PhpFileLoader`` and
 .. caution::
 
     If you removed the default file with service definitions (i.e.
-    ``app/config/services.yml``), make sure to also remove it from the
+    ``app/config/services.yaml``), make sure to also remove it from the
     ``imports`` key in ``app/config/config.yml``.
 
 Using Configuration to Change the Services
@@ -146,8 +146,8 @@ work in the same way, but the second one is for classes that contain PHP
 annotations). Define the classes to compile as an array of their fully qualified
 class names::
 
-    use AppBundle\Manager\UserManager;
-    use AppBundle\Utils\Slugger;
+    use App\Manager\UserManager;
+    use App\Utils\Slugger;
 
     // ...
     public function load(array $configs, ContainerBuilder $container)
@@ -163,7 +163,7 @@ class names::
 
         // add here only classes that contain PHP annotations
         $this->addAnnotatedClassesToCompile(array(
-            'AppBundle\\Controller\\DefaultController',
+            'App\\Controller\\DefaultController',
             // ...
         ));
     }

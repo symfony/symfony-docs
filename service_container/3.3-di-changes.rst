@@ -1,7 +1,7 @@
 The Symfony 3.3 DI Container Changes Explained (autowiring, _defaults, etc)
 ===========================================================================
 
-If you look at the ``services.yml`` file in a new Symfony 3.3 project, you'll
+If you look at the ``services.yaml`` file in a new Symfony 3.3 project, you'll
 notice some big changes: ``_defaults``, ``autowiring``, ``autoconfigure`` and more.
 These features are designed to *automate* configuration and make development faster,
 without sacrificing predictability, which is very important! Another goal is to make
@@ -24,17 +24,17 @@ need to actually change your configuration files to use them.
 
 .. _`service-33-default_definition`:
 
-The new Default services.yml File
+The new Default services.yaml File
 ---------------------------------
 
-To understand the changes, look at the new default ``services.yml`` file in the
+To understand the changes, look at the new default ``services.yaml`` file in the
 Symfony Standard Edition:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # default configuration for services in *this* file
             _defaults:
@@ -48,20 +48,20 @@ Symfony Standard Edition:
 
             # makes classes in src/AppBundle available to be used as services
             # this creates a service per class whose id is the fully-qualified class name
-            AppBundle\:
-                resource: '../../src/AppBundle/*'
+            App\:
+                resource: '../../src/*'
                 # you can exclude directories or files
                 # but if a service is unused, it's removed anyway
-                exclude: '../../src/AppBundle/{Entity,Repository}'
+                exclude: '../../src/{Entity,Repository}'
 
             # controllers are imported separately to make sure they're public
             # and have a tag that allows actions to type-hint services
-            AppBundle\Controller\:
-                resource: '../../src/AppBundle/Controller'
+            App\Controller\:
+                resource: '../../src/Controller'
                 tags: ['controller.service_arguments']
 
             # add more services, or override services that need manual wiring
-            # AppBundle\Service\ExampleService:
+            # App\Service\ExampleService:
             #     arguments:
             #         $someArgument: 'some_value'
 
@@ -77,9 +77,9 @@ Symfony Standard Edition:
             <services>
                 <defaults autowire="true" autoconfigure="true" public="false" />
 
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+                <prototype namespace="App\" resource="../../src/*" exclude="../../src/{Entity,Repository}" />
 
-                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller">
+                <prototype namespace="App\Controller\" resource="../../src/Controller">
                     <tag name="controller.service_arguments" />
                 </prototype>
 
@@ -101,7 +101,7 @@ Symfony Standard Edition:
             ->setPublic(false)
         ;
 
-        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+        $this->registerClasses($definition, 'App\\', '../../src/*', '../../src/{Entity,Repository}');
 
         // Changes default config
         $definition
@@ -109,7 +109,7 @@ Symfony Standard Edition:
         ;
 
         // $this is a reference to the current loader
-        $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
+        $this->registerClasses($definition, 'App\\Controller\\', '../../src/Controller/*');
 
         // add more services, or override services that need manual wiring
 
@@ -132,17 +132,17 @@ thanks to the following config:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ...
 
             # makes classes in src/AppBundle available to be used as services
             # this creates a service per class whose id is the fully-qualified class name
-            AppBundle\:
-                resource: '../../src/AppBundle/*'
+            App\:
+                resource: '../../src/*'
                 # you can exclude directories or files
                 # but if a service is unused, it's removed anyway
-                exclude: '../../src/AppBundle/{Entity,Repository}'
+                exclude: '../../src/{Entity,Repository}'
 
     .. code-block:: xml
 
@@ -156,7 +156,7 @@ thanks to the following config:
             <services>
                 <!-- ... -->
 
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+                <prototype namespace="App\" resource="../../src/*" exclude="../../src/{Entity,Repository}" />
             </services>
         </container>
 
@@ -174,9 +174,9 @@ thanks to the following config:
             ->setPublic(false)
         ;
 
-        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+        $this->registerClasses($definition, 'App\\', '../../src/*', '../../src/{Entity,Repository}');
 
-This means that every class in ``src/AppBundle/`` is *available* to be used as a
+This means that every class in ``src/`` is *available* to be used as a
 service. And thanks to the ``_defaults`` section at the top of the file, all of
 these services are **autowired** and **private** (i.e. ``public: false``).
 
@@ -191,7 +191,7 @@ to determine most arguments automatically. But, you can always override the serv
 and :ref:`manually configure arguments <services-manually-wire-args>` or anything
 else special about your service.
 
-    But wait, if I have some model (non-service) classes in my ``src/AppBundle/``
+    But wait, if I have some model (non-service) classes in my ``src/``
     directory, doesn't this mean that *they* will also be registered as services?
     Isn't that a problem?
 
@@ -223,13 +223,13 @@ service as an argument to another with the following config:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             app.invoice_generator:
-                class: AppBundle\Service\InvoiceGenerator
+                class: App\Service\InvoiceGenerator
 
             app.invoice_mailer:
-                class: AppBundle\Service\InvoiceMailer
+                class: App\Service\InvoiceMailer
                 arguments:
                     - '@app.invoice_generator'
 
@@ -244,10 +244,10 @@ service as an argument to another with the following config:
 
             <services>
                 <service id="app.invoice_generator"
-                    class="AppBundle\Service\InvoiceGenerator" />
+                    class="App\Service\InvoiceGenerator" />
 
                 <service id="app.invoice_mailer"
-                    class="AppBundle\Service\InvoiceMailer">
+                    class="App\Service\InvoiceMailer">
 
                     <argument type="service" id="app.invoice_generator" />
                 </service>
@@ -257,8 +257,8 @@ service as an argument to another with the following config:
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Service\InvoiceGenerator;
-        use AppBundle\Service\InvoiceMailer;
+        use App\Service\InvoiceGenerator;
+        use App\Service\InvoiceMailer;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('app.invoice_generator', InvoiceGenerator::class);
@@ -272,7 +272,7 @@ id's were the main way that you configured things.
 But in Symfony 3.3, thanks to autowiring, all you need to do is type-hint the
 argument with ``InvoiceGenerator``::
 
-    // src/AppBundle/Service/InvoiceMailer.php
+    // src/Service/InvoiceMailer.php
     // ...
 
     class InvoiceMailer
@@ -340,14 +340,14 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ...
 
             # controllers are imported separately to make sure they're public
             # and have a tag that allows actions to type-hint services
-            AppBundle\Controller\:
-                resource: '../../src/AppBundle/Controller'
+            App\Controller\:
+                resource: '../../src/Controller'
                 tags: ['controller.service_arguments']
 
     .. code-block:: xml
@@ -362,7 +362,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
             <services>
                 <!-- ... -->
 
-                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller">
+                <prototype namespace="App\Controller\" resource="../../src/Controller">
                     <tag name="controller.service_arguments" />
                 </prototype>
             </services>
@@ -374,7 +374,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
 
         // ...
 
-        $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
+        $this->registerClasses($definition, 'App\\Controller\\', '../../src/Controller/*');
 
 But, you might not even notice this. First, your controllers *can* still extend
 the same base ``Controller`` class or a new :ref:`AbstractController <controller-abstract-versus-controller>`.
@@ -418,7 +418,7 @@ The fourth big change is the ``autoconfigure`` key, which is set to ``true`` und
 this file. For example, suppose you want to create an event subscriber. First, you
 create the class::
 
-    // src/AppBundle/EventSubscriber/SetHeaderSusbcriber.php
+    // src/EventSubscriber/SetHeaderSusbcriber.php
     // ...
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -441,7 +441,7 @@ create the class::
     }
 
 Great! In Symfony 3.2 or lower, you would now need to register this as a service
-in ``services.yml`` and tag it with ``kernel.event_subscriber``. In Symfony 3.3,
+in ``services.yaml`` and tag it with ``kernel.event_subscriber``. In Symfony 3.3,
 you're already done! The service is :ref:`automatically registered <service-33-changes-automatic-registration>`.
 And thanks to ``autoconfigure``, Symfony automatically tags the service because
 it implements ``EventSubscriberInterface``.
@@ -452,7 +452,7 @@ In this case, you've created a class that implements ``EventSubscriberInterface`
 and registered it as a service. This is more than enough for the container to know
 that you want this to be used as an event subscriber: more configuration is not needed.
 And the tags system is its own, Symfony-specific mechanism. And of course, you can
-always set ``autoconfigure`` to ``false`` in ``services.yml``, or disable it for a specific
+always set ``autoconfigure`` to ``false`` in ``services.yaml``, or disable it for a specific
 service.
 
     Does this mean tags are dead? Does this work for all tags?
@@ -484,12 +484,12 @@ inherited from an abstract definition:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ...
 
             _instanceof:
-                AppBundle\Domain\LoaderInterface:
+                App\Domain\LoaderInterface:
                     public: true
                     tags: ['app.domain_loader']
 
@@ -505,7 +505,7 @@ inherited from an abstract definition:
             <services>
                 <!-- ... -->
 
-                <instanceof id="AppBundle\Domain\LoaderInterface" public="true">
+                <instanceof id="App\Domain\LoaderInterface" public="true">
                     <tag name="app.domain_loader" />
                 </instanceof>
             </services>
@@ -514,7 +514,7 @@ inherited from an abstract definition:
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Domain\LoaderInterface;
+        use App\Domain\LoaderInterface;
 
         // ...
 
@@ -546,23 +546,23 @@ Ready to upgrade your existing project? Great! Suppose you have the following co
 
 .. code-block:: yaml
 
-    # app/config/services.yml
+    # app/config/services.yaml
     services:
         app.github_notifier:
-            class: AppBundle\Service\GitHubNotifier
+            class: App\Service\GitHubNotifier
             arguments:
                 - '@app.api_client_github'
 
         markdown_transformer:
-            class: AppBundle\Service\MarkdownTransformer
+            class: App\Service\MarkdownTransformer
 
         app.api_client_github:
-            class: AppBundle\Service\ApiClient
+            class: App\Service\ApiClient
             arguments:
                 - 'https://api.github.com'
 
         app.api_client_sl_connect:
-            class: AppBundle\Service\ApiClient
+            class: App\Service\ApiClient
             arguments:
                 - 'https://connect.sensiolabs.com/api'
 
@@ -576,7 +576,7 @@ Start by adding a ``_defaults`` section with ``autowire`` and ``autoconfigure``.
 
 .. code-block:: diff
 
-    # app/config/services.yml
+    # app/config/services.yaml
     services:
     +     _defaults:
     +         autowire: true
@@ -601,19 +601,19 @@ Start by updating the service ids to class names:
 
 .. code-block:: diff
 
-    # app/config/services.yml
+    # app/config/services.yaml
     services:
         # ...
 
     -     app.github_notifier:
-    -         class: AppBundle\Service\GitHubNotifier
-    +     AppBundle\Service\GitHubNotifier:
+    -         class: App\Service\GitHubNotifier
+    +     App\Service\GitHubNotifier:
             arguments:
                 - '@app.api_client_github'
 
     -     markdown_transformer:
-    -         class: AppBundle\Service\MarkdownTransformer
-    +     AppBundle\Service\MarkdownTransformer: ~
+    -         class: App\Service\MarkdownTransformer
+    +     App\Service\MarkdownTransformer: ~
 
         # keep these ids because there are multiple instances per class
         app.api_client_github:
@@ -643,14 +643,14 @@ to the new id. Create a new ``legacy_aliases.yml`` file:
         # aliases so that the old service ids can still be accessed
         # remove these if/when you are not fetching these directly
         # from the container via $container->get()
-        app.github_notifier: '@AppBundle\Service\GitHubNotifier'
-        markdown_transformer: '@AppBundle\Service\MarkdownTransformer'
+        app.github_notifier: '@App\Service\GitHubNotifier'
+        markdown_transformer: '@App\Service\MarkdownTransformer'
 
-Then import this at the top of ``services.yml``:
+Then import this at the top of ``services.yaml``:
 
 .. code-block:: diff
 
-    # app/config/services.yml
+    # app/config/services.yaml
     + imports:
     +     - { resource: legacy_aliases.yml }
 
@@ -666,7 +666,7 @@ Now you're ready to default all services to be private:
 
 .. code-block:: diff
 
-    # app/config/services.yml
+    # app/config/services.yaml
     # ...
 
     services:
@@ -684,7 +684,7 @@ instances of the same class), you may need to make those public:
 
 .. code-block:: diff
 
-    # app/config/services.yml
+    # app/config/services.yaml
     # ...
 
     services:
@@ -708,23 +708,23 @@ clean that up.
 Step 4) Auto-registering Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You're now ready to automatically register all services in ``src/AppBundle/``
+You're now ready to automatically register all services in ``src/``
 (and/or any other directory/bundle you have):
 
 .. code-block:: diff
 
-    # app/config/services.yml
+    # app/config/services.yaml
 
     services:
         _defaults:
             # ...
 
-    +     AppBundle\:
-    +         resource: '../../src/AppBundle/*'
-    +         exclude: '../../src/AppBundle/{Entity,Repository}'
+    +     App\:
+    +         resource: '../../src/*'
+    +         exclude: '../../src/{Entity,Repository}'
     +
-    +     AppBundle\Controller\:
-    +         resource: '../../src/AppBundle/Controller'
+    +     App\Controller\:
+    +         resource: '../../src/Controller'
     +         tags: ['controller.service_arguments']
 
         # ...
@@ -738,14 +738,14 @@ same class:
 
 .. code-block:: diff
 
-    # app/config/services.yml
+    # app/config/services.yaml
 
     services:
         # ...
 
     +     # alias ApiClient to one of our services below
     +     # app.api_client_github will be used to autowire ApiClient type-hints
-    +     AppBundle\Service\ApiClient: '@app.api_client_github'
+    +     App\Service\ApiClient: '@app.api_client_github'
 
         app.api_client_github:
             # ...
@@ -785,7 +785,7 @@ these directly from the container, you can remove the ``public: true`` flag:
 
 .. code-block:: diff
 
-    # app/config/services.yml
+    # app/config/services.yaml
     services:
         # ...
 
@@ -797,7 +797,7 @@ these directly from the container, you can remove the ``public: true`` flag:
             # ...
     -         public: true
 
-Finally, you can optionally remove any services from ``services.yml`` whose arguments
+Finally, you can optionally remove any services from ``services.yaml`` whose arguments
 can be autowired. The final configuration looks like this:
 
 .. code-block:: yaml
@@ -808,31 +808,31 @@ can be autowired. The final configuration looks like this:
             autoconfigure: true
             public: false
 
-        AppBundle\:
-            resource: '../../src/AppBundle/*'
-            exclude: '../../src/AppBundle/{Entity,Repository}'
+        App\:
+            resource: '../../src/*'
+            exclude: '../../src/{Entity,Repository}'
 
-        AppBundle\Controller\:
-            resource: '../../src/AppBundle/Controller'
+        App\Controller\:
+            resource: '../../src/Controller'
             tags: ['controller.service_arguments']
 
-        AppBundle\Service\GitHubNotifier:
+        App\Service\GitHubNotifier:
             # this could be deleted, or I can keep being explicit
             arguments:
                 - '@app.api_client_github'
 
         # alias ApiClient to one of our services below
         # app.api_client_github will be used to autowire ApiClient type-hints
-        AppBundle\Service\ApiClient: '@app.api_client_github'
+        App\Service\ApiClient: '@app.api_client_github'
 
         # keep these ids because there are multiple instances per class
         app.api_client_github:
-            class: AppBundle\Service\ApiClient
+            class: App\Service\ApiClient
             arguments:
                 - 'https://api.github.com'
 
         app.api_client_sl_connect:
-            class: AppBundle\Service\ApiClient
+            class: App\Service\ApiClient
             arguments:
                 - 'https://connect.sensiolabs.com/api'
 

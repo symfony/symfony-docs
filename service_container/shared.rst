@@ -16,9 +16,9 @@ in your service definition:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
-            AppBundle\SomeNonSharedService:
+            App\SomeNonSharedService:
                 shared: false
                 # ...
 
@@ -26,16 +26,16 @@ in your service definition:
 
         <!-- app/config/services.xml -->
         <services>
-            <service id="AppBundle\SomeNonSharedService" shared="false" />
+            <service id="App\SomeNonSharedService" shared="false" />
         </services>
 
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\SomeNonSharedService;
+        use App\SomeNonSharedService;
 
         $container->register(SomeNonSharedService::class)
             ->setShared(false);
 
-Now, whenever you request an the ``AppBundle\SomeNonSharedService`` from the container,
+Now, whenever you request an the ``App\SomeNonSharedService`` from the container,
 you will be passed a new instance.

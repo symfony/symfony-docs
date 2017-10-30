@@ -23,10 +23,10 @@ Simple Example: Transforming String Tags from User Input to an Array
 
 Suppose you have a Task form with a tags ``text`` type::
 
-    // src/AppBundle/Form/Type/TaskType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/TaskType.php
+    namespace App\Form\Type;
 
-    use AppBundle\Entity\Task;
+    use App\Entity\Task;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -56,8 +56,8 @@ This is a *perfect* time to attach a custom data transformer to the ``tags``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
 class::
 
-    // src/AppBundle/Form/Type/TaskType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/TaskType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\CallbackTransformer;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -120,10 +120,10 @@ issue number.
 
 Start by setting up the text field like normal::
 
-    // src/AppBundle/Form/Type/TaskType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/TaskType.php
+    namespace App\Form\Type;
 
-    use AppBundle\Entity\Task;
+    use App\Entity\Task;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -161,10 +161,10 @@ complex, creating a new transformer class will keep the ``TaskType`` form class 
 Create an ``IssueToNumberTransformer`` class: it will be responsible for converting
 to and from the issue number and the ``Issue`` object::
 
-    // src/AppBundle/Form/DataTransformer/IssueToNumberTransformer.php
-    namespace AppBundle\Form\DataTransformer;
+    // src/Form/DataTransformer/IssueToNumberTransformer.php
+    namespace App\Form\DataTransformer;
 
-    use AppBundle\Entity\Issue;
+    use App\Entity\Issue;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\Form\DataTransformerInterface;
     use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -250,10 +250,10 @@ Next, you need to use the ``IssueToNumberTransformer`` object inside if ``TaskTy
 and add it to the ``issue`` field. No problem! Just add a ``__construct()`` method
 and type-hint the new class::
 
-    // src/AppBundle/Form/Type/TaskType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/TaskType.php
+    namespace App\Form\Type;
 
-    use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
+    use App\Form\DataTransformer\IssueToNumberTransformer;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -332,10 +332,10 @@ that does this automatically.
 
 First, create the custom field type class::
 
-    // src/AppBundle/Form/IssueSelectorType.php
-    namespace AppBundle\Form;
+    // src/Form/IssueSelectorType.php
+    namespace App\Form;
 
-    use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
+    use App\Form\DataTransformer\IssueToNumberTransformer;
     use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -374,10 +374,10 @@ have the data transformer *and* a nice default value for the ``invalid_message``
 As long as you're using :ref:`autowire <services-autowire>` and
 :ref:`autoconfigure <services-autoconfigure>`, you can start using the form immediately::
 
-    // src/AppBundle/Form/Type/TaskType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/TaskType.php
+    namespace App\Form\Type;
 
-    use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
+    use App\Form\DataTransformer\IssueToNumberTransformer;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     // ...
 

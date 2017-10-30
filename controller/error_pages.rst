@@ -185,8 +185,8 @@ With this route added, you can use URLs like
 
 .. code-block:: text
 
-     http://localhost/app_dev.php/_error/{statusCode}
-     http://localhost/app_dev.php/_error/{statusCode}.{format}
+     http://localhost/index.php/_error/{statusCode}
+     http://localhost/index.php/_error/{statusCode}.{format}
 
 to preview the *error* page for a given status code as HTML or for a
 given status code and format.
@@ -268,14 +268,14 @@ In that case, you might want to override one or both of the ``showAction()`` and
 
         .. code-block:: yaml
 
-            # app/config/services.yml
+            # app/config/services.yaml
             services:
                 _defaults:
                     # ... be sure autowiring is enabled
                     autowire: true
                 # ...
 
-                AppBundle\Controller\CustomExceptionController:
+                App\Controller\CustomExceptionController:
                     public: true
                     arguments:
                         $debug: '%kernel.debug%'
@@ -294,7 +294,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
                     <defaults autowire="true" />
                     <!-- ... -->
 
-                    <service id="AppBundle\Controller\CustomExceptionController" public="true">
+                    <service id="App\Controller\CustomExceptionController" public="true">
                         <argument key="$debug">%kernel.debug%</argument>
                     </service>
                 </services>
@@ -304,7 +304,7 @@ In that case, you might want to override one or both of the ``showAction()`` and
         .. code-block:: php
 
             // app/config/services.php
-            use AppBundle\Controller\CustomExceptionController;
+            use App\Controller\CustomExceptionController;
 
             $container->autowire(CustomExceptionController::class)
                 ->setArgument('$debug', '%kernel.debug%');

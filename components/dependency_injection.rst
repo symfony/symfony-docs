@@ -210,7 +210,7 @@ Loading a YAML config file::
 
     $container = new ContainerBuilder();
     $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
-    $loader->load('services.yml');
+    $loader->load('services.yaml');
 
 .. note::
 

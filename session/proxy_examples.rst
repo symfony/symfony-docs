@@ -11,7 +11,7 @@ a custom save handler just by defining a class that extends the
 class.
 
 Then, define the class as a :ref:`service <service-container-creating-service>`.
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that happens automatically.
 
 Finally, use the ``framework.session.handler_id`` configuration option to tell
@@ -25,7 +25,7 @@ Symfony to use your session handler instead of the default one:
         framework:
             session:
                 # ...
-                handler_id: AppBundle\Session\CustomSessionHandler
+                handler_id: App\Session\CustomSessionHandler
 
     .. code-block:: xml
 
@@ -38,14 +38,14 @@ Symfony to use your session handler instead of the default one:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <framework:config>
-                <framework:session handler-id="AppBundle\Session\CustomSessionHandler" />
+                <framework:session handler-id="App\Session\CustomSessionHandler" />
             </framework:config>
         </container>
 
     .. code-block:: php
 
         // app/config/config.php
-        use AppBundle\Session\CustomSessionHandler;
+        use App\Session\CustomSessionHandler;
         $container->loadFromExtension('framework', array(
             // ...
             'session' => array(
@@ -65,8 +65,8 @@ If you want to encrypt the session data, you can use the proxy to encrypt and
 decrypt the session as required. The following example uses the `php-encryption`_
 library, but you can adapt it to any other library that you may be using::
 
-    // src/AppBundle/Session/EncryptedSessionProxy.php
-    namespace AppBundle\Session;
+    // src/Session/EncryptedSessionProxy.php
+    namespace App\Session;
 
     use Defuse\Crypto\Crypto;
     use Defuse\Crypto\Key;
@@ -105,10 +105,10 @@ There are some applications where a session is required for guest users, but
 where there is no particular need to persist the session. In this case you
 can intercept the session before it is written::
 
-    // src/AppBundle/Session/ReadOnlySessionProxy.php
-    namespace AppBundle\Session;
+    // src/Session/ReadOnlySessionProxy.php
+    namespace App\Session;
 
-    use AppBundle\Entity\User;
+    use App\Entity\User;
     use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 

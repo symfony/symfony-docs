@@ -117,7 +117,7 @@ Annotations, XML, Yaml, PHP and StaticPHP. The arguments are:
 
         use Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator;
         use Doctrine\ORM\Mapping\Driver\XmlDriver;
-        use AppBundle\Model;
+        use App\Model;
 
         // ...
         private function buildMappingCompilerPass()

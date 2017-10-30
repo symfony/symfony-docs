@@ -24,7 +24,7 @@ action to redirect to this new url:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
 
         # load some routes - one should ultimately have the path "/app"
         AppBundle:
@@ -104,7 +104,7 @@ action:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
 
         # ...
 

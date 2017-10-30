@@ -59,8 +59,8 @@ each ``ETag`` must be unique across all representations of the same resource.
 
 To see a simple implementation, generate the ETag as the md5 of the content::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Request;
 
@@ -121,13 +121,13 @@ For instance, you can use the latest update date for all the objects needed to
 compute the resource representation as the value for the ``Last-Modified``
 header value::
 
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\Request;
-    use AppBundle\Entity\Article;
+    use App\Entity\Article;
 
     class ArticleController extends Controller
     {
@@ -181,8 +181,8 @@ Put another way, the less you do in your application to return a 304 response,
 the better. The ``Response::isNotModified()`` method does exactly that by
 exposing a simple and efficient pattern::
 
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
 
     // ...
     use Symfony\Component\HttpFoundation\Response;

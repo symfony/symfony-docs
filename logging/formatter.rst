@@ -14,7 +14,7 @@ configure your handler to use it:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ...
 

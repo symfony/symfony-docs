@@ -81,7 +81,7 @@ some way to identify if the controller that matches the request needs token vali
 A clean and easy way is to create an empty interface and make the controllers
 implement it::
 
-    namespace AppBundle\Controller;
+    namespace App\Controller;
 
     interface TokenAuthenticatedController
     {
@@ -90,9 +90,9 @@ implement it::
 
 A controller that implements this interface simply looks like this::
 
-    namespace AppBundle\Controller;
+    namespace App\Controller;
 
-    use AppBundle\Controller\TokenAuthenticatedController;
+    use App\Controller\TokenAuthenticatedController;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class FooController extends Controller implements TokenAuthenticatedController
@@ -111,10 +111,10 @@ Next, you'll need to create an event listener, which will hold the logic
 that you want to be executed before your controllers. If you're not familiar with
 event listeners, you can learn more about them at :doc:`/event_dispatcher`::
 
-    // src/AppBundle/EventSubscriber/TokenSubscriber.php
-    namespace AppBundle\EventSubscriber;
+    // src/EventSubscriber/TokenSubscriber.php
+    namespace App\EventSubscriber;
 
-    use AppBundle\Controller\TokenAuthenticatedController;
+    use App\Controller\TokenAuthenticatedController;
     use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
     use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -158,7 +158,7 @@ event listeners, you can learn more about them at :doc:`/event_dispatcher`::
         }
     }
 
-That's it! Your ``services.yml`` file should already be setup to load services from
+That's it! Your ``services.yaml`` file should already be setup to load services from
 the ``EventSubscriber`` directory. Symfony takes care of the rest. Your
 ``TokenSubscriber`` ``onKernelController()`` method will be executed on each request.
 If the controller that is about to be executed implements ``TokenAuthenticatedController``,

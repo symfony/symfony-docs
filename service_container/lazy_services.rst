@@ -52,7 +52,7 @@ You can mark the service as ``lazy`` by manipulating its definition:
     .. code-block:: yaml
 
         services:
-           AppBundle\Twig\AppExtension:
+           App\Twig\AppExtension:
              lazy:  true
 
     .. code-block:: xml
@@ -64,13 +64,13 @@ You can mark the service as ``lazy`` by manipulating its definition:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Twig\AppExtension" lazy="true" />
+                <service id="App\Twig\AppExtension" lazy="true" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Twig\AppExtension;
+        use App\Twig\AppExtension;
 
         $container->register(AppExtension::class)
             ->setLazy(true);

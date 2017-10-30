@@ -54,7 +54,7 @@ Platform.sh how to deploy your application (read more about
         # The public directory of the app, relative to its root.
         document_root: '/web'
         # The front-controller script to send non-static requests to.
-        passthru: '/app.php'
+        passthru: '/index.php'
 
     # The size of the persistent disk of the application (in MB).
     disk: 2048
@@ -68,7 +68,7 @@ Platform.sh how to deploy your application (read more about
     # The hooks that will be performed when the package is deployed.
     hooks:
         build: |
-          rm web/app_dev.php
+          rm public/index.php
           bin/console --env=prod assetic:dump --no-debug
         deploy: |
           bin/console --env=prod cache:clear

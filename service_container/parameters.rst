@@ -54,7 +54,7 @@ and hidden with the service definition:
             mailer.transport: sendmail
 
         services:
-            AppBundle\Service\Mailer:
+            App\Service\Mailer:
                 arguments: ['%mailer.transport%']
 
     .. code-block:: xml
@@ -70,7 +70,7 @@ and hidden with the service definition:
             </parameters>
 
             <services>
-                <service id="AppBundle\Service\Mailer">
+                <service id="App\Service\Mailer">
                     <argument>%mailer.transport%</argument>
                 </service>
             </services>
@@ -78,7 +78,7 @@ and hidden with the service definition:
 
     .. code-block:: php
 
-        use AppBundle\Mailer;
+        use App\Mailer;
 
         $container->setParameter('mailer.transport', 'sendmail');
 

@@ -25,10 +25,10 @@ recommended structure is as follows:
     Generated files (cache, logs, etc.).
 ``vendor/``
     The third-party dependencies.
-``web/``
+``public/``
     The web root directory.
 
-The ``web/`` Directory
+The ``public/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The web root directory is the home of all public and static files like images,
@@ -36,18 +36,18 @@ stylesheets and JavaScript files. It is also where each front controller (the
 file that handles all requests to your application) lives, such as the
 production controller shown here::
 
-    // web/app.php
+    // public/index.php
     require_once __DIR__.'/../var/bootstrap.php.cache';
-    require_once __DIR__.'/../app/AppKernel.php';
+    require_once __DIR__.'/../src/Kernel.php';
 
     use Symfony\Component\HttpFoundation\Request;
 
-    $kernel = new AppKernel('prod', false);
+    $kernel = new Kernel('prod', false);
     $request = Request::createFromGlobals();
     $response = $kernel->handle($request);
     $response->send();
 
-The controller first bootstraps the application using a kernel class (``AppKernel``
+The controller first bootstraps the application using a kernel class (``Kernel``
 in this case). Then, it creates the ``Request`` object using the PHP's global
 variables and passes it to the kernel. The last step is to send the response
 contents returned by the kernel back to the user.
@@ -108,7 +108,7 @@ An application is made up of bundles as defined in the ``registerBundles()``
 method of the ``AppKernel`` class. Each bundle is a directory that contains
 a single Bundle class that describes it::
 
-    // app/AppKernel.php
+    // src/Kernel.php
     public function registerBundles()
     {
         $bundles = array(

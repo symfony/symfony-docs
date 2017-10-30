@@ -33,10 +33,10 @@ class.
 
 Suppose the class you want to test looks like this::
 
-    // src/AppBundle/Salary/SalaryCalculator.php
-    namespace AppBundle\Salary;
+    // src/Salary/SalaryCalculator.php
+    namespace App\Salary;
 
-    use AppBundle\Entity\Employee;
+    use App\Entity\Employee;
     use Doctrine\Common\Persistence\ObjectManager;
 
     class SalaryCalculator
@@ -62,10 +62,10 @@ Since the ``EntityManagerInterface`` gets injected into the class through the co
 it's easy to pass a mock object within a test::
 
     // tests/AppBundle/Salary/SalaryCalculatorTest.php
-    namespace Tests\AppBundle\Salary;
+    namespace Tests\App\Salary;
 
-    use AppBundle\Entity\Employee;
-    use AppBundle\Salary\SalaryCalculator;
+    use App\Entity\Employee;
+    use App\Salary\SalaryCalculator;
     use Doctrine\Common\Persistence\ObjectManager;
     use Doctrine\Common\Persistence\ObjectRepository;
     use PHPUnit\Framework\TestCase;

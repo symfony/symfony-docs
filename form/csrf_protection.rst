@@ -31,7 +31,7 @@ that all un-rendered fields are output.
 The CSRF token can be customized on a form-by-form basis. For example::
 
     // ...
-    use AppBundle\Entity\Task;
+    use App\Entity\Task;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class TaskType extends AbstractType

@@ -13,7 +13,7 @@ to your controller, and as attributes of the ``Request`` object:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog:
             path:      /blog/{page}
             defaults:

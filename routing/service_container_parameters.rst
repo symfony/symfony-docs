@@ -18,7 +18,7 @@ inside your routing configuration:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         contact:
             path:     /{_locale}/contact
             defaults: { _controller: AppBundle:Main:contact }
@@ -92,7 +92,7 @@ path):
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         some_route:
             path:     /%app.route_prefix%/contact
             defaults: { _controller: AppBundle:Main:contact }

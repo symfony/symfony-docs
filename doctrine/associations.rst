@@ -42,7 +42,7 @@ property on the ``Product`` class, annotated as follows:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Product.php
+        // src/Entity/Product.php
 
         // ...
         class Product
@@ -58,8 +58,8 @@ property on the ``Product`` class, annotated as follows:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/doctrine/Product.orm.yml
-        AppBundle\Entity\Product:
+        # src/Resources/config/doctrine/Product.orm.yml
+        App\Entity\Product:
             type: entity
             # ...
             manyToOne:
@@ -72,14 +72,14 @@ property on the ``Product`` class, annotated as follows:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/doctrine/Product.orm.xml -->
+        <!-- src/Resources/config/doctrine/Product.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-            <entity name="AppBundle\Entity\Product">
+            <entity name="App\Entity\Product">
                 <!-- ... -->
                 <many-to-one
                     field="category"
@@ -104,7 +104,7 @@ to hold those associated objects.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Category.php
+        // src/Entity/Category.php
 
         // ...
         use Doctrine\Common\Collections\ArrayCollection;
@@ -126,8 +126,8 @@ to hold those associated objects.
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/doctrine/Category.orm.yml
-        AppBundle\Entity\Category:
+        # src/Resources/config/doctrine/Category.orm.yml
+        App\Entity\Category:
             type: entity
             # ...
             oneToMany:
@@ -139,14 +139,14 @@ to hold those associated objects.
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/doctrine/Category.orm.xml -->
+        <!-- src/Resources/config/doctrine/Category.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-            <entity name="AppBundle\Entity\Category">
+            <entity name="App\Entity\Category">
                 <!-- ... -->
                 <one-to-many
                     field="products"
@@ -230,8 +230,8 @@ Now you can see this new code in action! Imagine you're inside a controller::
 
     // ...
 
-    use AppBundle\Entity\Category;
-    use AppBundle\Entity\Product;
+    use App\Entity\Category;
+    use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
 
     class DefaultController extends Controller
@@ -273,7 +273,7 @@ When you need to fetch associated objects, your workflow looks just like it
 did before. First, fetch a ``$product`` object and then access its related
 ``Category`` object::
 
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
     // ...
 
     public function showAction($productId)
@@ -365,7 +365,7 @@ Of course, if you know up front that you'll need to access both objects, you
 can avoid the second query by issuing a join in the original query. Add the
 following method to the ``ProductRepository`` class::
 
-    // src/AppBundle/Repository/ProductRepository.php
+    // src/Repository/ProductRepository.php
     public function findOneByIdJoinedToCategory($productId)
     {
         $query = $this->getEntityManager()

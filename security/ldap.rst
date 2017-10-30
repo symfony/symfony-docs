@@ -56,7 +56,7 @@ An LDAP client can be simply configured using the built-in
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             Symfony\Component\Ldap\Ldap:
                 arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']

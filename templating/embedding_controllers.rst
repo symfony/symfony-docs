@@ -19,8 +19,8 @@ The solution is to simply embed the result of an entire controller from your
 template. First, create a controller that renders a certain number of recent
 articles::
 
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
 
     // ...
 
@@ -45,7 +45,7 @@ The ``recent_list`` template is perfectly straightforward:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/article/recent_list.html.twig #}
+        {# templates/article/recent_list.html.twig #}
         {% for article in articles %}
             <a href="/article/{{ article.slug }}">
                 {{ article.title }}
@@ -54,7 +54,7 @@ The ``recent_list`` template is perfectly straightforward:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/article/recent_list.html.php -->
+        <!-- templates/article/recent_list.html.php -->
         <?php foreach ($articles as $article): ?>
             <a href="/article/<?php echo $article->getSlug() ?>">
                 <?php echo $article->getTitle() ?>
@@ -74,7 +74,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/base.html.twig #}
+        {# templates/base.html.twig #}
 
         {# ... #}
         <div id="sidebar">
@@ -86,7 +86,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/base.html.php -->
+        <!-- templates/base.html.php -->
 
         <!-- ... -->
         <div id="sidebar">

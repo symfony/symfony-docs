@@ -24,8 +24,8 @@ Defining the Form Type Extension
 
 First, create the form type extension class::
 
-    // src/AppBundle/Form/Extension/ImageTypeExtension.php
-    namespace AppBundle\Form\Extension;
+    // src/Form/Extension/ImageTypeExtension.php
+    namespace App\Form\Extension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
     use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -74,7 +74,7 @@ your class as a service and using the  ``form.type_extension`` tag:
         services:
             # ...
 
-            AppBundle\Form\Extension\ImageTypeExtension:
+            App\Form\Extension\ImageTypeExtension:
                 tags:
                     - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
 
@@ -87,7 +87,7 @@ your class as a service and using the  ``form.type_extension`` tag:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Form\Extension\ImageTypeExtension">
+                <service id="App\Form\Extension\ImageTypeExtension">
                     <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FileType" />
                 </service>
             </services>
@@ -95,7 +95,7 @@ your class as a service and using the  ``form.type_extension`` tag:
 
     .. code-block:: php
 
-        use AppBundle\Form\Extension\ImageTypeExtension;
+        use App\Form\Extension\ImageTypeExtension;
         use Symfony\Component\Form\Extension\Core\Type\FileType;
 
         $container->autowire(ImageTypeExtension::class)
@@ -134,8 +134,8 @@ you use an approach similar to the one described in
 you have a Media model with a path property, corresponding to the image path in
 the database::
 
-    // src/AppBundle/Entity/Media.php
-    namespace AppBundle\Entity;
+    // src/Entity/Media.php
+    namespace App\Entity;
 
     use Symfony\Component\Validator\Constraints as Assert;
 
@@ -167,8 +167,8 @@ the ``FileType::class`` form type:
 
 For example::
 
-    // src/AppBundle/Form/Extension/ImageTypeExtension.php
-    namespace AppBundle\Form\Extension;
+    // src/Form/Extension/ImageTypeExtension.php
+    namespace App\Form\Extension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
     use Symfony\Component\Form\FormView;
@@ -256,8 +256,8 @@ From now on, when adding a field of type ``FileType::class`` to your form, you c
 specify an ``image_property`` option that will be used to display an image
 next to the file field. For example::
 
-    // src/AppBundle/Form/Type/MediaType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/MediaType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;

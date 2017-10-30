@@ -27,8 +27,8 @@ display "tasks". Because your users will need to edit and create tasks, you're
 going to need to build a form. But before you begin, first focus on the generic
 ``Task`` class that represents and stores the data for a single task::
 
-    // src/AppBundle/Entity/Task.php
-    namespace AppBundle\Entity;
+    // src/Entity/Task.php
+    namespace App\Entity;
 
     class Task
     {
@@ -74,10 +74,10 @@ render the actual HTML form. In Symfony, this is done by building a form
 object and then rendering it in a template. For now, this can all be done
 from inside a controller::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
 
-    use AppBundle\Entity\Task;
+    use App\Entity\Task;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -144,14 +144,14 @@ helper functions:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/default/new.html.twig #}
+        {# templates/default/new.html.twig #}
         {{ form_start(form) }}
         {{ form_widget(form) }}
         {{ form_end(form) }}
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/default/new.html.php -->
+        <!-- templates/default/new.html.php -->
         <?php echo $view['form']->start($form) ?>
         <?php echo $view['form']->widget($form) ?>
         <?php echo $view['form']->end($form) ?>
@@ -317,8 +317,8 @@ object.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Task.php
-        namespace AppBundle\Entity;
+        // src/Entity/Task.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -338,8 +338,8 @@ object.
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Task:
+        # src/Resources/config/validation.yml
+        App\Entity\Task:
             properties:
                 task:
                     - NotBlank: ~
@@ -349,14 +349,14 @@ object.
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- src/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Task">
+            <class name="App\Entity\Task">
                 <property name="task">
                     <constraint name="NotBlank" />
                 </property>
@@ -369,7 +369,7 @@ object.
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Task.php
+        // src/Entity/Task.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
@@ -418,12 +418,12 @@ Validation is a very powerful feature of Symfony and has its own
 
        .. code-block:: html+twig
 
-           {# app/Resources/views/default/new.html.twig #}
+           {# templates/default/new.html.twig #}
            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
        .. code-block:: html+php
 
-           <!-- app/Resources/views/default/new.html.php -->
+           <!-- templates/default/new.html.php -->
            <?php echo $view['form']->form($form, array(
                'attr' => array('novalidate' => 'novalidate'),
            )) ?>
@@ -590,8 +590,8 @@ However, a better practice is to build the form in a separate, standalone PHP
 class, which can then be reused anywhere in your application. Create a new class
 that will house the logic for building the task form::
 
-    // src/AppBundle/Form/TaskType.php
-    namespace AppBundle\Form;
+    // src/Form/TaskType.php
+    namespace App\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -612,8 +612,8 @@ that will house the logic for building the task form::
 This new class contains all the directions needed to create the task form. It can
 be used to quickly build a form object in the controller::
 
-    // src/AppBundle/Controller/DefaultController.php
-    use AppBundle\Form\TaskType;
+    // src/Controller/DefaultController.php
+    use App\Form\TaskType;
 
     public function newAction()
     {
@@ -639,8 +639,8 @@ the choice is ultimately up to you.
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
-        // src/AppBundle/Form/TaskType.php
-        use AppBundle\Entity\Task;
+        // src/Form/TaskType.php
+        use App\Entity\Task;
         use Symfony\Component\OptionsResolver\OptionsResolver;
 
         // ...

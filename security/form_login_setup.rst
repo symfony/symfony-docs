@@ -72,8 +72,8 @@ Now, when the security system initiates the authentication process, it will
 redirect the user to the login form ``/login``. Implementing this login form
 is your job. First, create a new ``SecurityController`` inside a bundle::
 
-    // src/AppBundle/Controller/SecurityController.php
-    namespace AppBundle\Controller;
+    // src/Controller/SecurityController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -88,7 +88,7 @@ configuration (``login``):
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/SecurityController.php
+        // src/Controller/SecurityController.php
 
         // ...
         use Symfony\Component\HttpFoundation\Request;
@@ -106,7 +106,7 @@ configuration (``login``):
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         login:
             path:     /login
             defaults: { _controller: AppBundle:Security:login }
@@ -140,7 +140,7 @@ configuration (``login``):
 
 Great! Next, add the logic to ``loginAction()`` that displays the login form::
 
-    // src/AppBundle/Controller/SecurityController.php
+    // src/Controller/SecurityController.php
     use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
     public function loginAction(Request $request, AuthenticationUtils $authUtils)
@@ -173,7 +173,7 @@ Finally, create the template:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/security/login.html.twig #}
+        {# templates/security/login.html.twig #}
         {# ... you will probably extend your base template, like base.html.twig #}
 
         {% if error %}
@@ -198,7 +198,7 @@ Finally, create the template:
 
     .. code-block:: html+php
 
-        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
+        <!-- src/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>

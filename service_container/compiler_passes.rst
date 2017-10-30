@@ -14,12 +14,12 @@ When using :ref:`separate compiler passes <components-di-separate-compiler-passe
 you need to register them in the ``build()`` method of the bundle class (this
 is not needed when implementing the ``process()`` method in the extension)::
 
-    // src/AppBundle/AppBundle.php
+    // src/AppBundle.php
     namespace AppBundle;
 
     use Symfony\Component\HttpKernel\Bundle\Bundle;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use AppBundle\DependencyInjection\Compiler\CustomPass;
+    use App\DependencyInjection\Compiler\CustomPass;
 
     class AppBundle extends Bundle
     {

@@ -24,8 +24,8 @@ which represents the functionality that you'll expose in your SOAP service.
 In this case, the SOAP service will allow the client to call a method called
 ``hello``, which happens to send an email::
 
-    // src/AppBundle/Service/HelloService.php
-    namespace AppBundle\Service;
+    // src/Service/HelloService.php
+    namespace App\Service;
 
     class HelloService
     {
@@ -57,12 +57,12 @@ Finally, below is an example of a controller that is capable of handling a SOAP
 request. Because ``indexAction()`` is accessible via ``/soap``, the WSDL document
 can be retrieved via ``/soap?wsdl``::
 
-    namespace AppBundle\Controller;
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
-    use AppBundle\Service\HelloService;
+    use App\Service\HelloService;
 
     class HelloServiceController extends Controller
     {
@@ -99,7 +99,7 @@ Below is an example calling the service using a `NuSOAP`_ client. This example
 assumes that the ``indexAction()`` in the controller above is accessible via the
 route ``/soap``::
 
-    $client = new \Soapclient('http://example.com/app.php/soap?wsdl');
+    $client = new \Soapclient('http://example.com/index.php/soap?wsdl');
 
     $result = $client->call('hello', array('name' => 'Scott'));
 
@@ -160,7 +160,7 @@ An example WSDL is below.
 
         <service name="hellowsdl">
             <port name="hellowsdlPort" binding="tns:hellowsdlBinding">
-                <soap:address location="http://example.com/app.php/soap" />
+                <soap:address location="http://example.com/index.php/soap" />
             </port>
         </service>
     </definitions>

@@ -21,8 +21,8 @@ First, create a new class that implements
 Eventually, this will allow you to create custom logic for authenticating
 the user::
 
-    // src/AppBundle/Security/TimeAuthenticator.php
-    namespace AppBundle\Security;
+    // src/Security/TimeAuthenticator.php
+    namespace App\Security;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -143,7 +143,7 @@ Configuration
 -------------
 
 Now, make sure your ``TimeAuthenticator`` is registered as as service. If you're
-using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that happens automatically.
 
 Finally, activate the service in the ``firewalls`` section of the security configuration
@@ -162,7 +162,7 @@ using the ``simple_form`` key:
                     pattern: ^/admin
                     # ...
                     simple_form:
-                        authenticator: AppBundle\Security\TimeAuthenticator
+                        authenticator: App\Security\TimeAuthenticator
                         check_path:    login_check
                         login_path:    login
 
@@ -181,7 +181,7 @@ using the ``simple_form`` key:
                 <firewall name="secured_area"
                     pattern="^/admin"
                     >
-                    <simple-form authenticator="AppBundle\Security\TimeAuthenticator"
+                    <simple-form authenticator="App\Security\TimeAuthenticator"
                         check-path="login_check"
                         login-path="login"
                     />
@@ -194,7 +194,7 @@ using the ``simple_form`` key:
         // app/config/security.php
 
         // ...
-        use AppBundle\Security\TimeAuthenticator;
+        use App\Security\TimeAuthenticator;
 
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -202,7 +202,7 @@ using the ``simple_form`` key:
                     'pattern'     => '^/admin',
                     'simple_form' => array(
                         'provider'      => ...,
-                        'authenticator' => AppBundle\Security\TimeAuthenticator::class,
+                        'authenticator' => App\Security\TimeAuthenticator::class,
                         'check_path'    => 'login_check',
                         'login_path'    => 'login',
                     ),

@@ -17,8 +17,8 @@ user registers and when a user updates their contact information later:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         use Symfony\Component\Security\Core\User\UserInterface;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -44,8 +44,8 @@ user registers and when a user updates their contact information later:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\User:
+        # src/Resources/config/validation.yml
+        App\Entity\User:
             properties:
                 email:
                     - Email: { groups: [registration] }
@@ -58,7 +58,7 @@ user registers and when a user updates their contact information later:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- src/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -67,7 +67,7 @@ user registers and when a user updates their contact information later:
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd
             ">
 
-            <class name="AppBundle\Entity\User">
+            <class name="App\Entity\User">
                 <property name="email">
                     <constraint name="Email">
                         <option name="groups">
@@ -100,8 +100,8 @@ user registers and when a user updates their contact information later:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

@@ -59,7 +59,7 @@ by the routing system using the special ``_locale`` parameter:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         contact:
             path:     /{_locale}/contact
             defaults: { _controller: AppBundle:Contact:index }

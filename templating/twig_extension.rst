@@ -23,8 +23,8 @@ money:
 
 Create a class that extends ``\Twig_Extension`` and fill in the logic::
 
-    // src/AppBundle/Twig/AppExtension.php
-    namespace AppBundle\Twig;
+    // src/Twig/AppExtension.php
+    namespace App\Twig;
 
     class AppExtension extends \Twig_Extension
     {
@@ -61,7 +61,7 @@ Register an Extension as a Service
 ----------------------------------
 
 Next, register your class as a service and tag it with ``twig.extension``. If you're
-using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you're done! Symfony will automatically know about your new service and add the tag.
 
 You can now start using your filter in any Twig template.

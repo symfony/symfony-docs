@@ -28,7 +28,7 @@ These are like *tools*: waiting for you to take advantage of them. In your contr
 you can "ask" for a service from the container by type-hinting an argument with the
 service's class or interface name. Want to :doc:`log </logging>` something? No problem::
 
-    // src/AppBundle/Controller/ProductController.php
+    // src/Controller/ProductController.php
     // ...
 
     use Psr\Log\LoggerInterface;
@@ -77,8 +77,8 @@ validator                       ``Symfony\Component\Validator\Validator\Validato
 
 You can also use the unique "Service ID" to access a service directly::
 
-    // src/AppBundle/Controller/ProductController.php
-    namespace AppBundle\Controller;
+    // src/Controller/ProductController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Routing\Annotation\Route;
@@ -127,8 +127,8 @@ You can also organize your *own* code into services. For example, suppose you ne
 to show your users a random, happy message. If you put this code in your controller,
 it can't be re-used. Instead, you decide to create a new class::
 
-    // src/AppBundle/Service/MessageGenerator.php
-    namespace AppBundle\Service;
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
 
     class MessageGenerator
     {
@@ -149,7 +149,7 @@ it can't be re-used. Instead, you decide to create a new class::
 Congratulations! You've just created your first service class! You can use it immediately
 inside your controller::
 
-    use AppBundle\Service\MessageGenerator;
+    use App\Service\MessageGenerator;
 
     public function newAction(MessageGenerator $messageGenerator)
     {
@@ -170,17 +170,17 @@ each time you ask for it.
 
 .. _service-container-services-load-example:
 
-.. sidebar:: Automatic Service Loading in services.yml
+.. sidebar:: Automatic Service Loading in services.yaml
 
     The documentation assumes you're using
-    `Symfony Standard Edition (version 3.3) services.yml`_ configuration. The most
+    `Symfony Standard Edition (version 3.3) services.yaml`_ configuration. The most
     important part is this:
 
     .. configuration-block::
 
         .. code-block:: yaml
 
-            # app/config/services.yml
+            # app/config/services.yaml
             services:
                 # default configuration for services in *this* file
                 _defaults:
@@ -189,11 +189,11 @@ each time you ask for it.
                     public: false
 
                 # makes classes in src/AppBundle available to be used as services
-                AppBundle\:
-                    resource: '../../src/AppBundle/*'
+                App\:
+                    resource: '../../src/*'
                     # you can exclude directories or files
                     # but if a service is unused, it's removed anyway
-                    exclude: '../../src/AppBundle/{Entity,Repository}'
+                    exclude: '../../src/{Entity,Repository}'
 
         .. code-block:: xml
 
@@ -209,7 +209,7 @@ each time you ask for it.
                     <defaults autowire="true" autoconfigure="true" public="false" />
 
                     <!-- Load services from whatever directories you want (you can update this!) -->
-                    <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+                    <prototype namespace="App\" resource="../../src/*" exclude="../../src/{Entity,Repository}" />
                 </services>
             </container>
 
@@ -228,7 +228,7 @@ each time you ask for it.
             ;
 
             // $this is a reference to the current loader
-            $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+            $this->registerClasses($definition, 'App\\', '../../src/*', '../../src/{Entity,Repository}');
 
     .. tip::
 
@@ -249,7 +249,7 @@ each time you ask for it.
 You can also fetch a service directly from the container via its "id", which will
 be its class name in this case::
 
-    use AppBundle\Service\MessageGenerator;
+    use App\Service\MessageGenerator;
 
     // accessing services like this only works if you extend Controller
     class ProductController extends Controller
@@ -286,7 +286,7 @@ No problem! Instead, create a ``__construct()`` method with a ``$logger`` argume
 that has the ``LoggerInterface`` type-hint. Set this on a new ``$logger`` property
 and use it later::
 
-    // src/AppBundle/Service/MessageGenerator.php
+    // src/Service/MessageGenerator.php
     // ...
 
     use Psr\Log\LoggerInterface;
@@ -311,7 +311,7 @@ That's it! The container will *automatically* know to pass the ``logger`` servic
 when instantiating the ``MessageGenerator``. How does it know to do this?
 :ref:`Autowiring <services-autowire>`. The key is the ``LoggerInterface``
 type-hint in your ``__construct()`` method and the ``autowire: true`` config in
-``services.yml``. When you type-hint an argument, the container will automatically
+``services.yaml``. When you type-hint an argument, the container will automatically
 find the matching service. If it can't, you'll see a clear exception with a helpful
 suggestion.
 
@@ -344,10 +344,10 @@ Handling Multiple Services
 Suppose you also want to email a site administrator each time a site update is
 made. To do that, you create a new class::
 
-    // src/AppBundle/Updates/SiteUpdateManager.php
-    namespace AppBundle\Updates;
+    // src/Updates/SiteUpdateManager.php
+    namespace App\Updates;
 
-    use AppBundle\Service\MessageGenerator;
+    use App\Service\MessageGenerator;
 
     class SiteUpdateManager
     {
@@ -381,7 +381,7 @@ This uses the ``MessageGenerator`` *and* the ``Swift_Mailer`` service. As long a
 you're :ref:`loading all services from src/AppBundle <service-container-services-load-example>`,
 you can use the service immediately::
 
-    use AppBundle\Updates\SiteUpdateManager;
+    use App\Updates\SiteUpdateManager;
 
     public function newAction(SiteUpdateManager $siteUpdateManager)
     {
@@ -406,7 +406,7 @@ example, suppose you want to make the admin email configurable:
 
 .. code-block:: diff
 
-    // src/AppBundle/Updates/SiteUpdateManager.php
+    // src/Updates/SiteUpdateManager.php
     // ...
 
     class SiteUpdateManager
@@ -447,17 +447,17 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ...
 
             # same as before
-            AppBundle\:
-                resource: '../../src/AppBundle/*'
-                exclude: '../../src/AppBundle/{Entity,Repository}'
+            App\:
+                resource: '../../src/*'
+                exclude: '../../src/{Entity,Repository}'
 
             # explicitly configure the service
-            AppBundle\Updates\SiteUpdateManager:
+            App\Updates\SiteUpdateManager:
                 arguments:
                     $adminEmail: 'manager@example.com'
 
@@ -474,10 +474,10 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 <!-- ... -->
 
                 <!-- Same as before -->
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+                <prototype namespace="App\" resource="../../src/*" exclude="../../src/{Entity,Repository}" />
 
                 <!-- Explicitly configure the service -->
-                <service id="AppBundle\Updates\SiteUpdateManager">
+                <service id="App\Updates\SiteUpdateManager">
                     <argument key="$adminEmail">manager@example.com</argument>
                 </service>
             </services>
@@ -486,7 +486,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Updates\SiteUpdateManager;
+        use App\Updates\SiteUpdateManager;
         use Symfony\Component\DependencyInjection\Definition;
 
         // Same as before
@@ -498,7 +498,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
             ->setPublic(false)
         ;
 
-        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+        $this->registerClasses($definition, 'App\\', '../../src/*', '../../src/{Entity,Repository}');
 
         // Explicitly configure the service
         $container->getDefinition(SiteUpdateManager::class)
@@ -530,14 +530,14 @@ and reference it with the ``%parameter_name%`` syntax:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         parameters:
             admin_email: manager@example.com
 
         services:
             # ...
 
-            AppBundle\Updates\SiteUpdateManager:
+            App\Updates\SiteUpdateManager:
                 arguments:
                     $adminEmail: '%admin_email%'
 
@@ -557,7 +557,7 @@ and reference it with the ``%parameter_name%`` syntax:
             <services>
                 <!-- ... -->
 
-                <service id="AppBundle\Updates\SiteUpdateManager">
+                <service id="App\Updates\SiteUpdateManager">
                     <argument key="$adminEmail">%admin_email%</argument>
                 </service>
             </services>
@@ -566,7 +566,7 @@ and reference it with the ``%parameter_name%`` syntax:
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Updates\SiteUpdateManager;
+        use App\Updates\SiteUpdateManager;
         $container->setParameter('admin_email', 'manager@example.com');
 
         $container->autowire(SiteUpdateManager::class)
@@ -613,7 +613,7 @@ Choose a Specific Service
 
 The ``MessageGenerator`` service created earlier requires a ``LoggerInterface`` argument::
 
-    // src/AppBundle/Service/MessageGenerator.php
+    // src/Service/MessageGenerator.php
     // ...
 
     use Psr\Log\LoggerInterface;
@@ -641,12 +641,12 @@ But, you can control this and pass in a different logger:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ... same code as before
 
             # explicitly configure the service
-            AppBundle\Service\MessageGenerator:
+            App\Service\MessageGenerator:
                 arguments:
                     $logger: '@monolog.logger.request'
 
@@ -663,7 +663,7 @@ But, you can control this and pass in a different logger:
                 <!-- ... same code as before -->
 
                 <!-- Explicitly configure the service -->
-                <service id="AppBundle\Service\MessageGenerator">
+                <service id="App\Service\MessageGenerator">
                     <argument key="$logger" type="service" id="monolog.logger.request" />
                 </service>
             </services>
@@ -673,7 +673,7 @@ But, you can control this and pass in a different logger:
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Service\MessageGenerator;
+        use App\Service\MessageGenerator;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->autowire(MessageGenerator::class)
@@ -695,7 +695,7 @@ service whose id is ``monolog.logger.request``.
 The autowire Option
 -------------------
 
-Above, the ``services.yml`` file has ``autowire: true`` in the ``_defaults`` section
+Above, the ``services.yaml`` file has ``autowire: true`` in the ``_defaults`` section
 so that it applies to all services defined in that file. With this setting, you're
 able to type-hint arguments in the ``__construct()`` method of your services and
 the container will automatically pass you the correct arguments. This entire entry
@@ -711,7 +711,7 @@ The autoconfigure Option
 .. versionadded:: 3.3
     The ``autoconfigure`` option was added in Symfony 3.3.
 
-Above, the ``services.yml`` file has ``autoconfigure: true`` in the ``_defaults``
+Above, the ``services.yaml`` file has ``autoconfigure: true`` in the ``_defaults``
 section so that it applies to all services defined in that file. With this setting,
 the container will automatically apply certain configuration to your services, based
 on your service's *class*. This is mostly used to *auto-tag* your services.
@@ -723,11 +723,11 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ...
 
-            AppBundle\Twig\MyTwigExtension:
+            App\Twig\MyTwigExtension:
                 tags: [twig.extension]
 
     .. code-block:: xml
@@ -742,7 +742,7 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
             <services>
                 <!-- ... -->
 
-                <service id="AppBundle\Twig\MyTwigExtension">
+                <service id="App\Twig\MyTwigExtension">
                     <tag name="twig.extension" />
                 </service>
             </services>
@@ -751,13 +751,13 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Twig\MyTwigExtension;
+        use App\Twig\MyTwigExtension;
 
         $container->autowire(MyTwigExtension::class)
             ->addTag('twig.extension');
 
 But, with ``autoconfigure: true``, you don't need the tag. In fact, if you're using
-the :ref:`Symfony Standard Edition services.yml config <service-container-services-load-example>`,
+the :ref:`Symfony Standard Edition services.yaml config <service-container-services-load-example>`,
 you don't need to do *anything*: the service will be automatically loaded. Then,
 ``autoconfigure`` will add the ``twig.extension`` tag *for* you, because your class
 implements ``Twig_ExtensionInterface``. And thanks to ``autowire``, you can even add
@@ -771,14 +771,14 @@ if you need to.
 Public Versus Private Services
 ------------------------------
 
-Thanks to the ``_defaults`` section in ``services.yml``, every service defined in
+Thanks to the ``_defaults`` section in ``services.yaml``, every service defined in
 this file is ``public: false`` by default:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # default configuration for services in *this* file
             _defaults:
@@ -803,7 +803,7 @@ this file is ``public: false`` by default:
 What does this mean? When a service is **not** public, you cannot access it directly
 from the container::
 
-    use AppBundle\Service\MessageGenerator;
+    use App\Service\MessageGenerator;
 
     public function newAction(MessageGenerator $messageGenerator)
     {
@@ -820,12 +820,12 @@ need to make your service public, just override this setting:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ... same code as before
 
             # explicitly configure the service
-            AppBundle\Service\MessageGenerator:
+            App\Service\MessageGenerator:
                 public: true
 
     .. code-block:: xml
@@ -841,7 +841,7 @@ need to make your service public, just override this setting:
                 <!-- ... same code as before -->
 
                 <!-- Explicitly configure the service -->
-                <service id="AppBundle\Service\MessageGenerator" public="true"></service>
+                <service id="App\Service\MessageGenerator" public="true"></service>
             </services>
         </container>
 
@@ -857,20 +857,20 @@ key. For example, the default Symfony configuration contains this:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ...
 
             # the namespace prefix for classes (must end in \)
-            AppBundle\:
+            App\:
                 # create services for all the classes found in this directory...
-                resource: '../../src/AppBundle/*'
+                resource: '../../src/*'
                 # ...except for the classes located in these directories
-                exclude: '../../src/AppBundle/{Entity,Repository}'
+                exclude: '../../src/{Entity,Repository}'
 
             # these were imported above, but we want to add some extra config
-            AppBundle\Controller\:
-                resource: '../../src/AppBundle/Controller'
+            App\Controller\:
+                resource: '../../src/Controller'
                 # apply some configuration to these services
                 public: true
                 tags: ['controller.service_arguments']
@@ -887,9 +887,9 @@ key. For example, the default Symfony configuration contains this:
             <services>
                 <!-- ... -->
 
-                <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
+                <prototype namespace="App\" resource="../../src/*" exclude="../../src/{Entity,Repository}" />
 
-                <prototype namespace="AppBundle\Controller\" resource="../../src/AppBundle/Controller" public="true">
+                <prototype namespace="App\Controller\" resource="../../src/Controller" public="true">
                     <tag name="controller.service_arguments" />
                 </prototype>
             </services>
@@ -909,7 +909,7 @@ key. For example, the default Symfony configuration contains this:
             ->setPublic(false)
         ;
 
-        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+        $this->registerClasses($definition, 'App\\', '../../src/*', '../../src/{Entity,Repository}');
 
         // Changes default config
         $definition
@@ -918,7 +918,7 @@ key. For example, the default Symfony configuration contains this:
         ;
 
         // $this is a reference to the current loader
-        $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
+        $this->registerClasses($definition, 'App\\Controller\\', '../../src/Controller/*');
 
 .. tip::
 
@@ -965,32 +965,32 @@ admin email. In this case, each needs to have a unique service id:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ...
 
             # this is the service's id
             site_update_manager.superadmin:
-                class: AppBundle\Updates\SiteUpdateManager
+                class: App\Updates\SiteUpdateManager
                 # you CAN still use autowiring: we just want to show what it looks like without
                 autowire: false
                 # manually wire all arguments
                 arguments:
-                    - '@AppBundle\Service\MessageGenerator'
+                    - '@App\Service\MessageGenerator'
                     - '@mailer'
                     - 'superadmin@example.com'
 
             site_update_manager.normal_users:
-                class: AppBundle\Updates\SiteUpdateManager
+                class: App\Updates\SiteUpdateManager
                 autowire: false
                 arguments:
-                    - '@AppBundle\Service\MessageGenerator'
+                    - '@App\Service\MessageGenerator'
                     - '@mailer'
                     - 'contact@example.com'
 
             # Create an alias, so that - by default - if you type-hint SiteUpdateManager,
             # the site_update_manager.superadmin will be used
-            AppBundle\Updates\SiteUpdateManager: '@site_update_manager.superadmin'
+            App\Updates\SiteUpdateManager: '@site_update_manager.superadmin'
 
     .. code-block:: xml
 
@@ -1004,27 +1004,27 @@ admin email. In this case, each needs to have a unique service id:
             <services>
                 <!-- ... -->
 
-                <service id="site_update_manager.superadmin" class="AppBundle\Updates\SiteUpdateManager" autowire="false">
-                    <argument type="service" id="AppBundle\Service\MessageGenerator" />
+                <service id="site_update_manager.superadmin" class="App\Updates\SiteUpdateManager" autowire="false">
+                    <argument type="service" id="App\Service\MessageGenerator" />
                     <argument type="service" id="mailer" />
                     <argument>superadmin@example.com</argument>
                 </service>
 
-                <service id="site_update_manager.normal_users" class="AppBundle\Updates\SiteUpdateManager" autowire="false">
-                    <argument type="service" id="AppBundle\Service\MessageGenerator" />
+                <service id="site_update_manager.normal_users" class="App\Updates\SiteUpdateManager" autowire="false">
+                    <argument type="service" id="App\Service\MessageGenerator" />
                     <argument type="service" id="mailer" />
                     <argument>contact@example.com</argument>
                 </service>
 
-                <alias id="AppBundle\Updates\SiteUpdateManager" service="site_update_manager.superadmin" />
+                <alias id="App\Updates\SiteUpdateManager" service="site_update_manager.superadmin" />
             </services>
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Updates\SiteUpdateManager;
-        use AppBundle\Service\MessageGenerator;
+        use App\Updates\SiteUpdateManager;
+        use App\Service\MessageGenerator;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('site_update_manager.superadmin', SiteUpdateManager::class)
@@ -1067,5 +1067,5 @@ Learn more
     /service_container/*
 
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture
-.. _`Symfony Standard Edition (version 3.3) services.yml`: https://github.com/symfony/symfony-standard/blob/3.3/app/config/services.yml
+.. _`Symfony Standard Edition (version 3.3) services.yaml`: https://github.com/symfony/symfony-standard/blob/3.3/app/config/services.yaml
 .. _`glob pattern`: https://en.wikipedia.org/wiki/Glob_(programming)

@@ -12,8 +12,8 @@ Create a controller that will match any URL with a trailing slash, remove
 the trailing slash (keeping query parameters if any) and redirect to the
 new URL with a 301 response status code::
 
-    // src/AppBundle/Controller/RedirectingController.php
-    namespace AppBundle\Controller;
+    // src/Controller/RedirectingController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
@@ -39,8 +39,8 @@ system, as explained below:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/RedirectingController.php
-        namespace AppBundle\Controller;
+        // src/Controller/RedirectingController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\HttpFoundation\Request;

@@ -16,7 +16,7 @@ The traditional way of adding commands to your application is to use
 In order to lazy-load commands, you need to register an intermediate loader
 which will be responsible for returning ``Command`` instances::
 
-    use AppBundle\Command\HeavyCommand;
+    use App\Command\HeavyCommand;
     use Symfony\Component\Console\Application;
     use Symfony\Component\Console\CommandLoader\FactoryCommmandLoader;
 

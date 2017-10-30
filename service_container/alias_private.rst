@@ -23,7 +23,7 @@ And in this case, those services do *not* need to be public.
 
 So unless you *specifically* need to access a service directly from the container
 via ``$container->get()``, the best-practice is to make your services *private*.
-In fact, the :ref:`default services.yml configuration <container-public>` configures
+In fact, the :ref:`default services.yaml configuration <container-public>` configures
 all services to be private by default.
 
 You can also control the ``public`` option on a service-by-service basis:
@@ -35,7 +35,7 @@ You can also control the ``public`` option on a service-by-service basis:
         services:
             # ...
 
-            AppBundle\Service\Foo:
+            App\Service\Foo:
                 public: false
 
     .. code-block:: xml
@@ -46,13 +46,13 @@ You can also control the ``public`` option on a service-by-service basis:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Service\Foo" public="false" />
+                <service id="App\Service\Foo" public="false" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Service\Foo;
+        use App\Service\Foo;
 
         $container->register(Foo::class)
             ->setPublic(false);
@@ -68,7 +68,7 @@ not have run on that page.
 Now that the service is private, you *should not* fetch the service directly
 from the container::
 
-    use AppBundle\Service\Foo;
+    use App\Service\Foo;
 
     $container->get(Foo::class);
 
@@ -100,11 +100,11 @@ services.
 
         services:
             # ...
-            AppBundle\Mail\PhpMailer:
+            App\Mail\PhpMailer:
                 public: false
 
             app.mailer:
-                alias: AppBundle\Mail\PhpMailer
+                alias: App\Mail\PhpMailer
                 public: true
 
     .. code-block:: xml
@@ -116,15 +116,15 @@ services.
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service class="AppBundle\Mail\PhpMailer" public="false" />
+                <service class="App\Mail\PhpMailer" public="false" />
 
-                <service id="app.mailer" alias="AppBundle\Mail\PhpMailer" />
+                <service id="app.mailer" alias="App\Mail\PhpMailer" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Mail\PhpMailer;
+        use App\Mail\PhpMailer;
 
         $container->register(PhpMailer::class)
             ->setPublic(false);
@@ -144,7 +144,7 @@ This means that when using the container directly, you can access the
 
         services:
             # ...
-            app.mailer: '@AppBundle\Mail\PhpMailer'
+            app.mailer: '@App\Mail\PhpMailer'
 
 Deprecating Services
 --------------------
@@ -156,7 +156,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
     .. code-block:: yaml
 
-       AppBundle\Service\OldService:
+       App\Service\OldService:
            deprecated: The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.
 
     .. code-block:: xml
@@ -167,7 +167,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Service\OldService">
+                <service id="App\Service\OldService">
                     <deprecated>The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.</deprecated>
                 </service>
             </services>
@@ -175,7 +175,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
     .. code-block:: php
 
-        use AppBundle\Service\OldService;
+        use App\Service\OldService;
 
         $container
             ->register(OldService::class)

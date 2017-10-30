@@ -4,7 +4,7 @@
 How to Include External Routing Resources
 =========================================
 
-All routes are loaded via a single configuration file - usually ``app/config/routing.yml``
+All routes are loaded via a single configuration file - usually ``config/routes.yaml``
 (see :ref:`routing-creating-routes`). However, if you use routing annotations,
 you'll need to point the router to the controllers with the annotations.
 This can be done by "importing" directories into the routing configuration:
@@ -13,7 +13,7 @@ This can be done by "importing" directories into the routing configuration:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         app:
             resource: '@AppBundle/Controller/'
             type:     annotation # required to enable the Annotation reader for this resource
@@ -64,7 +64,7 @@ in that directory are parsed and put into the routing.
 
         .. code-block:: yaml
 
-            # app/config/routing.yml
+            # config/routes.yaml
             app:
                 resource: '@AcmeOtherBundle/Resources/config/routing.yml'
 
@@ -103,7 +103,7 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         app:
             resource: '@AppBundle/Controller/'
             type:     annotation

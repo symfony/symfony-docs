@@ -3,7 +3,7 @@ Managing CSS and JavaScript
 
 Symfony ships with a pure-JavaScript library - called Webpack Encore - that makes
 working with CSS and JavaScript a joy. You can use it, use something else, or just
-create static CSS and JS files in your ``web/`` directory and include them in your
+create static CSS and JS files in your ``public/`` directory and include them in your
 templates.
 
 .. _frontend-webpack-encore:

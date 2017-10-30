@@ -35,10 +35,10 @@ Customizing your Form Based on the Underlying Data
 Before starting with dynamic form generation, remember what
 a bare form class looks like::
 
-    // src/AppBundle/Form/Type/ProductType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/ProductType.php
+    namespace App\Form\Type;
 
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -83,8 +83,8 @@ Adding an Event Listener to a Form Class
 So, instead of directly adding that ``name`` widget, the responsibility of
 creating that particular field is delegated to an event listener::
 
-    // src/AppBundle/Form/Type/ProductType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/ProductType.php
+    namespace App\Form\Type;
 
     // ...
     use Symfony\Component\Form\FormEvent;
@@ -142,8 +142,8 @@ For better reusability or if there is some heavy logic in your event listener,
 you can also move the logic for creating the ``name`` field to an
 :ref:`event subscriber <event_dispatcher-using-event-subscribers>`::
 
-    // src/AppBundle/Form/EventListener/AddNameFieldSubscriber.php
-    namespace AppBundle\Form\EventListener;
+    // src/Form/EventListener/AddNameFieldSubscriber.php
+    namespace App\Form\EventListener;
 
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
@@ -172,11 +172,11 @@ you can also move the logic for creating the ``name`` field to an
 
 Great! Now use that in your form class::
 
-    // src/AppBundle/Form/Type/ProductType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/ProductType.php
+    namespace App\Form\Type;
 
     // ...
-    use AppBundle\Form\EventListener\AddNameFieldSubscriber;
+    use App\Form\EventListener\AddNameFieldSubscriber;
 
     class ProductType extends AbstractType
     {
@@ -206,8 +206,8 @@ Creating the Form Type
 
 Using an event listener, your form might look like this::
 
-    // src/AppBundle/Form/Type/FriendMessageFormType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/FriendMessageFormType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -260,9 +260,9 @@ Customizing the Form Type
 Now that you have all the basics in place you can take advantage of the ``TokenStorageInterface``
 and fill in the listener logic::
 
-    // src/AppBundle/Form/Type/FriendMessageFormType.php
+    // src/Form/Type/FriendMessageFormType.php
 
-    use AppBundle\Entity\User;
+    use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -376,8 +376,8 @@ will need the correct options in order for validation to pass.
 The meetup is passed as an entity field to the form. So we can access each
 sport like this::
 
-    // src/AppBundle/Form/Type/SportMeetupType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/SportMeetupType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -442,13 +442,13 @@ new field automatically and map it to the submitted client data.
 
 The type would now look like::
 
-    // src/AppBundle/Form/Type/SportMeetupType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/SportMeetupType.php
+    namespace App\Form\Type;
 
     // ...
     use Symfony\Component\Form\FormInterface;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-    use AppBundle\Entity\Sport;
+    use App\Entity\Sport;
 
     class SportMeetupType extends AbstractType
     {
@@ -507,13 +507,13 @@ One piece that is still missing is the client-side updating of your form after
 the sport is selected. This should be handled by making an AJAX call back to
 your application. Assume that you have a sport meetup creation controller::
 
-    // src/AppBundle/Controller/MeetupController.php
-    namespace AppBundle\Controller;
+    // src/Controller/MeetupController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
-    use AppBundle\Entity\SportMeetup;
-    use AppBundle\Form\Type\SportMeetupType;
+    use App\Entity\SportMeetup;
+    use App\Form\Type\SportMeetupType;
     // ...
 
     class MeetupController extends Controller
@@ -543,7 +543,7 @@ field according to the current selection in the ``sport`` field:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/meetup/create.html.twig #}
+        {# templates/meetup/create.html.twig #}
         {{ form_start(form) }}
             {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
             {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
@@ -578,7 +578,7 @@ field according to the current selection in the ``sport`` field:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Meetup/create.html.php -->
+        <!-- templates/Meetup/create.html.php -->
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->row($form['sport']) ?>    <!-- <select id="meetup_sport" ... -->
             <?php echo $view['form']->row($form['position']) ?> <!-- <select id="meetup_position" ... -->

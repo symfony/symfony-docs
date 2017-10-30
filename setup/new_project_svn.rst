@@ -86,7 +86,7 @@ with these steps:
 
         $ svn propset svn:ignore "bundles" web
 
-        $ svn ci -m "commit basic Symfony ignore list (vendor, var/bootstrap*, app/config/parameters.yml, var/cache/*, var/log/*, web/bundles)"
+        $ svn ci -m "commit basic Symfony ignore list (vendor, var/bootstrap*, app/config/parameters.yml, var/cache/*, var/log/*, public/bundles)"
 
 #. The rest of the files can now be added and committed to the project:
 

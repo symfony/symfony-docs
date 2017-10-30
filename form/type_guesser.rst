@@ -38,8 +38,8 @@ This interface requires four methods:
 
 Start by creating the class and these methods. Next, you'll learn how to fill each in::
 
-    // src/AppBundle/Form/TypeGuesser/PHPDocTypeGuesser.php
-    namespace AppBundle\Form\TypeGuesser;
+    // src/Form/TypeGuesser/PHPDocTypeGuesser.php
+    namespace App\Form\TypeGuesser;
 
     use Symfony\Component\Form\FormTypeGuesserInterface;
 
@@ -84,7 +84,7 @@ The ``TypeGuess`` constructor requires three options:
 With this knowledge, you can easily implement the ``guessType()`` method of the
 ``PHPDocTypeGuesser``::
 
-    namespace AppBundle\Form\TypeGuesser;
+    namespace App\Form\TypeGuesser;
 
     use Symfony\Component\Form\Guess\Guess;
     use Symfony\Component\Form\Guess\TypeGuess;
@@ -184,11 +184,11 @@ and tag it with ``form.type_guesser``:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ...
 
-            AppBundle\Form\TypeGuesser\PHPDocTypeGuesser:
+            App\Form\TypeGuesser\PHPDocTypeGuesser:
                 tags: [form.type_guesser]
 
     .. code-block:: xml
@@ -201,7 +201,7 @@ and tag it with ``form.type_guesser``:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Form\TypeGuesser\PHPDocTypeGuesser">
+                <service id="App\Form\TypeGuesser\PHPDocTypeGuesser">
                     <tag name="form.type_guesser"/>
                 </service>
             </services>
@@ -210,7 +210,7 @@ and tag it with ``form.type_guesser``:
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Form\TypeGuesser\PHPDocTypeGuesser;
+        use App\Form\TypeGuesser\PHPDocTypeGuesser;
 
         $container->register(PHPDocTypeGuesser::class)
             ->addTag('form.type_guesser')

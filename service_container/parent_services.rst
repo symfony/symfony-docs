@@ -9,8 +9,8 @@ have related classes that share some of the same dependencies. For example,
 you may have multiple repository classes which need the
 ``doctrine.orm.entity_manager`` service and an optional ``logger`` service::
 
-    // src/AppBundle/Repository/BaseDoctrineRepository.php
-    namespace AppBundle\Repository;
+    // src/Repository/BaseDoctrineRepository.php
+    namespace App\Repository;
 
     // ...
     abstract class BaseDoctrineRepository
@@ -33,10 +33,10 @@ you may have multiple repository classes which need the
 
 Your child service classes may look like this::
 
-    // src/AppBundle/Repository/DoctrineUserRepository.php
-    namespace AppBundle\Repository;
+    // src/Repository/DoctrineUserRepository.php
+    namespace App\Repository;
 
-    use AppBundle\Repository\BaseDoctrineRepository
+    use App\Repository\BaseDoctrineRepository
 
     // ...
     class DoctrineUserRepository extends BaseDoctrineRepository
@@ -44,10 +44,10 @@ Your child service classes may look like this::
         // ...
     }
 
-    // src/AppBundle/Repository/DoctrinePostRepository.php
-    namespace AppBundle\Repository;
+    // src/Repository/DoctrinePostRepository.php
+    namespace App\Repository;
 
-    use AppBundle\Repository\BaseDoctrineRepository
+    use App\Repository\BaseDoctrineRepository
 
     // ...
     class DoctrinePostRepository extends BaseDoctrineRepository
@@ -64,18 +64,18 @@ duplicated service definitions:
     .. code-block:: yaml
 
         services:
-            AppBundle\Repository\BaseDoctrineRepository:
+            App\Repository\BaseDoctrineRepository:
                 abstract:  true
                 arguments: ['@doctrine.orm.entity_manager']
                 calls:
                     - [setLogger, ['@logger']]
 
-            AppBundle\Repository\DoctrineUserRepository:
-                # extend the AppBundle\Repository\BaseDoctrineRepository service
-                parent: AppBundle\Repository\BaseDoctrineRepository
+            App\Repository\DoctrineUserRepository:
+                # extend the App\Repository\BaseDoctrineRepository service
+                parent: App\Repository\BaseDoctrineRepository
 
-            AppBundle\Repository\DoctrinePostRepository:
-                parent: AppBundle\Repository\BaseDoctrineRepository
+            App\Repository\DoctrinePostRepository:
+                parent: App\Repository\BaseDoctrineRepository
 
             # ...
 
@@ -88,7 +88,7 @@ duplicated service definitions:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Repository\BaseDoctrineRepository" abstract="true">
+                <service id="App\Repository\BaseDoctrineRepository" abstract="true">
                     <argument type="service" id="doctrine.orm.entity_manager" />
 
                     <call method="setLogger">
@@ -96,13 +96,13 @@ duplicated service definitions:
                     </call>
                 </service>
 
-                <!-- extends the AppBundle\Repository\BaseDoctrineRepository service -->
-                <service id="AppBundle\Repository\DoctrineUserRepository"
-                    parent="AppBundle\Repository\BaseDoctrineRepository"
+                <!-- extends the App\Repository\BaseDoctrineRepository service -->
+                <service id="App\Repository\DoctrineUserRepository"
+                    parent="App\Repository\BaseDoctrineRepository"
                 />
 
-                <service id="AppBundle\Repository\DoctrinePostRepository"
-                    parent="AppBundle\Repository\BaseDoctrineRepository"
+                <service id="App\Repository\DoctrinePostRepository"
+                    parent="App\Repository\BaseDoctrineRepository"
                 />
 
                 <!-- ... -->
@@ -111,9 +111,9 @@ duplicated service definitions:
 
     .. code-block:: php
 
-        use AppBundle\Repository\DoctrineUserRepository;
-        use AppBundle\Repository\DoctrinePostRepository;
-        use AppBundle\Repository\BaseDoctrineRepository;
+        use App\Repository\DoctrineUserRepository;
+        use App\Repository\DoctrinePostRepository;
+        use App\Repository\BaseDoctrineRepository;
         use Symfony\Component\DependencyInjection\ChildDefinition;
         use Symfony\Component\DependencyInjection\Reference;
 
@@ -123,7 +123,7 @@ duplicated service definitions:
             ->addMethodCall('setLogger', array(new Reference('logger')))
         ;
 
-        // extend the AppBundle\Repository\BaseDoctrineRepository service
+        // extend the App\Repository\BaseDoctrineRepository service
         $definition = new ChildDefinition(BaseDoctrineRepository::class);
         $definition->setClass(DoctrineUserRepository::class);
         $container->setDefinition(DoctrineUserRepository::class, $definition);
@@ -169,8 +169,8 @@ in the child class:
         services:
             # ...
 
-            AppBundle\Repository\DoctrineUserRepository:
-                parent: AppBundle\Repository\BaseDoctrineRepository
+            App\Repository\DoctrineUserRepository:
+                parent: App\Repository\BaseDoctrineRepository
 
                 # overrides the public setting of the parent service
                 public: false
@@ -179,8 +179,8 @@ in the child class:
                 # argument list
                 arguments: ['@app.username_checker']
 
-            AppBundle\Repository\DoctrinePostRepository:
-                parent: AppBundle\Repository\BaseDoctrineRepository
+            App\Repository\DoctrinePostRepository:
+                parent: App\Repository\BaseDoctrineRepository
 
                 # overrides the first argument (using the special index_N key)
                 arguments:
@@ -198,8 +198,8 @@ in the child class:
                 <!-- ... -->
 
                 <!-- overrides the public setting of the parent service -->
-                <service id="AppBundle\Repository\DoctrineUserRepository"
-                    parent="AppBundle\Repository\BaseDoctrineRepository"
+                <service id="App\Repository\DoctrineUserRepository"
+                    parent="App\Repository\BaseDoctrineRepository"
                     public="false"
                 >
                     <!-- appends the '@app.username_checker' argument to the parent
@@ -207,8 +207,8 @@ in the child class:
                     <argument type="service" id="app.username_checker" />
                 </service>
 
-                <service id="AppBundle\Repository\DoctrinePostRepository"
-                    parent="AppBundle\Repository\BaseDoctrineRepository"
+                <service id="App\Repository\DoctrinePostRepository"
+                    parent="App\Repository\BaseDoctrineRepository"
                 >
                     <!-- overrides the first argument (using the index attribute) -->
                     <argument index="0" type="service" id="doctrine.custom_entity_manager" />
@@ -220,9 +220,9 @@ in the child class:
 
     .. code-block:: php
 
-        use AppBundle\Repository\DoctrineUserRepository;
-        use AppBundle\Repository\DoctrinePostRepository;
-        use AppBundle\Repository\BaseDoctrineRepository;
+        use App\Repository\DoctrineUserRepository;
+        use App\Repository\DoctrinePostRepository;
+        use App\Repository\BaseDoctrineRepository;
         use Symfony\Component\DependencyInjection\ChildDefinition;
         use Symfony\Component\DependencyInjection\Reference;
         // ...

@@ -66,7 +66,7 @@ path:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/SecurityController.php
+        // src/Controller/SecurityController.php
 
         // ...
         use Symfony\Component\HttpFoundation\Request;
@@ -84,7 +84,7 @@ path:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         login:
             path:     /login
             defaults: { _controller: AppBundle:Security:login }

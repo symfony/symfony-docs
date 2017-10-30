@@ -127,7 +127,7 @@ This should feel familiar, as it's the same syntax you use in service configurat
             # ...
             globals:
                 # the value is the service's id
-                user_management: '@AppBundle\Service\UserManagement'
+                user_management: '@App\Service\UserManagement'
 
     .. code-block:: xml
 
@@ -143,7 +143,7 @@ This should feel familiar, as it's the same syntax you use in service configurat
 
             <twig:config>
                 <!-- ... -->
-                <twig:global key="user_management">@AppBundle\Service\UserManagement</twig:global>
+                <twig:global key="user_management">@App\Service\UserManagement</twig:global>
             </twig:config>
         </container>
 
@@ -153,6 +153,6 @@ This should feel familiar, as it's the same syntax you use in service configurat
         $container->loadFromExtension('twig', array(
              // ...
              'globals' => array(
-                 'user_management' => '@AppBundle\Service\UserManagement',
+                 'user_management' => '@App\Service\UserManagement',
              ),
         ));

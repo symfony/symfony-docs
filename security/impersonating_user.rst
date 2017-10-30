@@ -185,8 +185,8 @@ The :doc:`/session/locale_sticky_session` article does not update the locale
 when you impersonate a user. If you *do* want to be sure to update the locale when
 you switch users, add an event subscriber on this event::
 
-        // src/AppBundle/EventListener/SwitchUserListener.php
-        namespace AppBundle\EventListener;
+        // src/EventListener/SwitchUserListener.php
+        namespace App\EventListener;
 
         use Symfony\Component\Security\Http\Event\SwitchUserEvent;
         use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -212,7 +212,7 @@ you switch users, add an event subscriber on this event::
             }
         }
 
-That's it! If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+That's it! If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically discover your service and call ``onSwitchUser`` whenever
 a switch user occurs.
 

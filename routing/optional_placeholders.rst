@@ -11,7 +11,7 @@ the available blog posts for this imaginary blog application:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
+        // src/Controller/BlogController.php
 
         // ...
         class BlogController extends Controller
@@ -29,7 +29,7 @@ the available blog posts for this imaginary blog application:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog:
             path:      /blog
             defaults:  { _controller: AppBundle:Blog:index }
@@ -70,7 +70,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
+        // src/Controller/BlogController.php
 
         // ...
 
@@ -84,7 +84,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog:
             path:      /blog/{page}
             defaults:  { _controller: AppBundle:Blog:index }
@@ -130,7 +130,7 @@ This is done by including it in the ``defaults`` collection:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
+        // src/Controller/BlogController.php
 
         // ...
 
@@ -144,7 +144,7 @@ This is done by including it in the ``defaults`` collection:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog:
             path:      /blog/{page}
             defaults:  { _controller: AppBundle:Blog:index, page: 1 }

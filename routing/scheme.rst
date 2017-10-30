@@ -12,8 +12,8 @@ the URI scheme via schemes:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
-        namespace AppBundle\Controller;
+        // src/Controller/MainController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,7 +31,7 @@ the URI scheme via schemes:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         secure:
             path:     /secure
             defaults: { _controller: AppBundle:Main:secure }

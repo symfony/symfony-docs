@@ -186,7 +186,7 @@ Simple! To try this, you need to require the user to be logged in to see
 a page. To make things interesting, create a new page at ``/admin``. For
 example, if you use annotations, create something like this::
 
-    // src/AppBundle/Controller/DefaultController.php
+    // src/Controller/DefaultController.php
     // ...
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -1158,7 +1158,7 @@ Next, you'll need to create a route for this URL (but not a controller):
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         logout:
             path: /logout
 

@@ -25,7 +25,7 @@ if the service does not exist:
             <services>
                 <!-- ... -->
 
-                <service id="AppBundle\Newsletter\NewsletterManager">
+                <service id="App\Newsletter\NewsletterManager">
                     <argument type="service" id="logger" on-invalid="null" />
                 </service>
             </services>
@@ -34,7 +34,7 @@ if the service does not exist:
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Newsletter\NewsletterManager;
+        use App\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -64,10 +64,10 @@ call if the service exists and remove the method call if it does not:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             app.newsletter_manager:
-                class: AppBundle\Newsletter\NewsletterManager
+                class: App\Newsletter\NewsletterManager
                 calls:
                     - [setLogger, ['@?logger']]
 
@@ -85,7 +85,7 @@ call if the service exists and remove the method call if it does not:
                 <!-- ... -->
                 </service>
 
-                <service id="AppBundle\Newsletter\NewsletterManager">
+                <service id="App\Newsletter\NewsletterManager">
                     <call method="setLogger">
                         <argument type="service" id="logger" on-invalid="ignore"/>
                     </call>
@@ -96,7 +96,7 @@ call if the service exists and remove the method call if it does not:
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Newsletter\NewsletterManager;
+        use App\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
 

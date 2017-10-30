@@ -19,9 +19,9 @@ to get a valid connection. In this case, you'll extend the ``KernelTestCase``,
 which makes all of this quite easy::
 
     // tests/AppBundle/Repository/ProductRepositoryTest.php
-    namespace Tests\AppBundle\Repository;
+    namespace Tests\App\Repository;
 
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
     class ProductRepositoryTest extends KernelTestCase

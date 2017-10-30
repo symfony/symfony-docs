@@ -13,7 +13,7 @@ conventions or patterns. A great example for this use-case is the
 action methods in a controller.
 
 You still need to modify your routing configuration (e.g.
-``app/config/routing.yml``) manually, even when using a custom route
+``config/routes.yaml``) manually, even when using a custom route
 loader.
 
 .. note::
@@ -40,7 +40,7 @@ Take these lines from the ``routing.yml`` in the Symfony Standard Edition:
 
 .. code-block:: yaml
 
-    # app/config/routing.yml
+    # config/routes.yaml
     app:
         resource: '@AppBundle/Controller/'
         type:     annotation
@@ -75,8 +75,8 @@ The sample loader below supports loading routing resources with a type of
 support the same type of resource. Just make up a name specific to what
 you do. The resource name itself is not actually used in the example::
 
-    // src/AppBundle/Routing/ExtraLoader.php
-    namespace AppBundle\Routing;
+    // src/Routing/ExtraLoader.php
+    namespace App\Routing;
 
     use Symfony\Component\Config\Loader\Loader;
     use Symfony\Component\Routing\Route;
@@ -123,8 +123,8 @@ Make sure the controller you specify really exists. In this case you
 have to create an ``extraAction()`` method in the ``ExtraController``
 of the ``AppBundle``::
 
-    // src/AppBundle/Controller/ExtraController.php
-    namespace AppBundle\Controller;
+    // src/Controller/ExtraController.php
+    namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -143,11 +143,11 @@ Now define a service for the ``ExtraLoader``:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
             # ...
 
-            AppBundle\Routing\ExtraLoader:
+            App\Routing\ExtraLoader:
                 tags: [routing.loader]
 
     .. code-block:: xml
@@ -161,7 +161,7 @@ Now define a service for the ``ExtraLoader``:
             <services>
                 <!-- ... -->
 
-                <service id="AppBundle\Routing\ExtraLoader">
+                <service id="App\Routing\ExtraLoader">
                     <tag name="routing.loader" />
                 </service>
             </services>
@@ -169,7 +169,7 @@ Now define a service for the ``ExtraLoader``:
 
     .. code-block:: php
 
-        use AppBundle\Routing\ExtraLoader;
+        use App\Routing\ExtraLoader;
 
         $container
             ->autowire(ExtraLoader::class)
@@ -191,7 +191,7 @@ What remains to do is adding a few lines to the routing configuration:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         app_extra:
             resource: .
             type: extra
@@ -244,8 +244,8 @@ Whenever you want to load another resource - for instance a YAML routing
 configuration file - you can call the
 :method:`Symfony\\Component\\Config\\Loader\\Loader::import` method::
 
-    // src/AppBundle/Routing/AdvancedLoader.php
-    namespace AppBundle\Routing;
+    // src/Routing/AdvancedLoader.php
+    namespace App\Routing;
 
     use Symfony\Component\Config\Loader\Loader;
     use Symfony\Component\Routing\RouteCollection;

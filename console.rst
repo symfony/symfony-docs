@@ -12,14 +12,12 @@ use it to create your own commands.
 Creating a Command
 ------------------
 
-Commands are defined in classes which should be created in the ``Command`` namespace
-of your bundle (e.g. ``AppBundle\Command``) and their names should end with the
-``Command`` suffix.
+Commands are defined in classes extending
+:class:`Symfony\\Component\\Console\\Command\\Command`. For example, you may
+want a command to create a user::
 
-For example, you may want a command to create a user::
-
-    // src/AppBundle/Command/CreateUserCommand.php
-    namespace AppBundle\Command;
+    // src/Command/CreateUserCommand.php
+    namespace App\Command;
 
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
@@ -74,7 +72,7 @@ terminal:
 
 .. note::
 
-    If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
     your command classes are automatically registered as services.
 
     You can also manually register your command as a service by configuring the service
@@ -229,9 +227,9 @@ class. It uses special input and output classes to ease testing without a real
 console::
 
     // tests/AppBundle/Command/CreateUserCommandTest.php
-    namespace Tests\AppBundle\Command;
+    namespace Tests\App\Command;
 
-    use AppBundle\Command\CreateUserCommand;
+    use App\Command\CreateUserCommand;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
     use Symfony\Component\Console\Tester\CommandTester;

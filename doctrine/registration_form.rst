@@ -39,8 +39,8 @@ Your ``User`` entity will probably at least have the following fields:
 
 With some validation added, your class may look something like this::
 
-    // src/AppBundle/Entity/User.php
-    namespace AppBundle\Entity;
+    // src/Entity/User.php
+    namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -167,10 +167,10 @@ Create a Form for the Entity
 
 Next, create the form for the ``User`` entity::
 
-    // src/AppBundle/Form/UserType.php
-    namespace AppBundle\Form;
+    // src/Form/UserType.php
+    namespace App\Form;
 
-    use AppBundle\Entity\User;
+    use App\Entity\User;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -217,11 +217,11 @@ Next, you need a controller to handle the form rendering and submission. If the
 form is submitted, the controller performs the validation and saves the data
 into the database::
 
-    // src/AppBundle/Controller/RegistrationController.php
-    namespace AppBundle\Controller;
+    // src/Controller/RegistrationController.php
+    namespace App\Controller;
 
-    use AppBundle\Form\UserType;
-    use AppBundle\Entity\User;
+    use App\Form\UserType;
+    use App\Entity\User;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
@@ -274,7 +274,7 @@ encoder in the security configuration:
         # app/config/security.yml
         security:
             encoders:
-                AppBundle\Entity\User: bcrypt
+                App\Entity\User: bcrypt
 
     .. code-block:: xml
 
@@ -286,14 +286,14 @@ encoder in the security configuration:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <encoder class="AppBundle\Entity\User">bcrypt</encoder>
+                <encoder class="App\Entity\User">bcrypt</encoder>
             </config>
         </srv:container>
 
     .. code-block:: php
 
         // app/config/security.php
-        use AppBundle\Entity\User;
+        use App\Entity\User;
 
         $container->loadFromExtension('security', array(
             'encoders' => array(
@@ -313,7 +313,7 @@ the :ref:`user password encoding <security-encoding-user-password>` article.
 
         .. code-block:: yaml
 
-            # app/config/routing.yml
+            # config/routes.yaml
             user_registration:
                 path:     /register
                 defaults: { _controller: AppBundle:Registration:register }
@@ -350,7 +350,7 @@ Next, create the template:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/registration/register.html.twig #}
+        {# templates/registration/register.html.twig #}
 
         {{ form_start(form) }}
             {{ form_row(form.username) }}
@@ -363,7 +363,7 @@ Next, create the template:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/registration/register.html.php -->
+        <!-- templates/registration/register.html.php -->
 
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->row($form['username']) ?>
@@ -398,7 +398,7 @@ If you want your users to login via email and you don't need a username, then yo
 can remove it from your ``User`` entity entirely. Instead, make ``getUsername()``
 return the ``email`` property::
 
-    // src/AppBundle/Entity/User.php
+    // src/Entity/User.php
     // ...
 
     class User implements UserInterface
@@ -428,7 +428,7 @@ that you'll never need.
 To do this, add a ``termsAccepted`` field to your form, but set its
 :ref:`mapped <reference-form-option-mapped>` option to ``false``::
 
-    // src/AppBundle/Form/UserType.php
+    // src/Form/UserType.php
     // ...
     use Symfony\Component\Validator\Constraints\IsTrue;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

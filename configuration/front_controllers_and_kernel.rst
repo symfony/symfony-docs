@@ -30,9 +30,9 @@ The Front Controller
 The `front controller`_ is a well-known design pattern; it is a section of
 code that *all* requests served by an application run through.
 
-In the `Symfony Standard Edition`_, this role is taken by the `app.php`_
-and `app_dev.php`_ files in the ``web/`` directory. These are the very
-first PHP scripts executed when a request is processed.
+In the `Symfony Standard Edition`_, this role is taken by the `index.php`_ file
+in the ``public/`` directory. This is the very first PHP script executed when a
+request is processed.
 
 The main purpose of the front controller is to create an instance of the
 ``AppKernel`` (more on that in a second), make it handle the request

@@ -84,7 +84,7 @@ but the following example shows a complete example that you can adapt to your
 needs::
 
     // tests/AppBundle/Controller/DefaultControllerTest.php
-    namespace Tests\AppBundle\Controller;
+    namespace Tests\App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     use Symfony\Component\BrowserKit\Cookie;

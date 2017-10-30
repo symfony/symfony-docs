@@ -12,8 +12,8 @@ a routing ``{wildcard}`` to only match some regular expression:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
-        namespace AppBundle\Controller;
+        // src/Controller/BlogController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Routing\Annotation\Route;
@@ -31,7 +31,7 @@ a routing ``{wildcard}`` to only match some regular expression:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog_list:
             path:      /blog/{page}
             defaults:  { _controller: AppBundle:Blog:list }
@@ -91,7 +91,7 @@ URL:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
+        // src/Controller/MainController.php
 
         // ...
         class MainController extends Controller
@@ -108,7 +108,7 @@ URL:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         homepage:
             path:      /{_locale}
             defaults:  { _controller: AppBundle:Main:homepage, _locale: en }
@@ -195,8 +195,8 @@ accomplished with the following route configuration:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogApiController.php
-        namespace AppBundle\Controller;
+        // src/Controller/BlogApiController.php
+        namespace App\Controller;
 
         // ...
 
@@ -221,7 +221,7 @@ accomplished with the following route configuration:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         api_post_show:
             path:     /api/posts/{id}
             defaults: { _controller: AppBundle:BlogApi:show }

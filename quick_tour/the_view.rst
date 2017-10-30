@@ -106,19 +106,19 @@ it inherits from the ``base.html.twig`` template:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/default/index.html.twig #}
+    {# templates/default/index.html.twig #}
     {% extends 'base.html.twig' %}
 
     {% block body %}
         <h1>Welcome to Symfony!</h1>
     {% endblock %}
 
-Open the ``app/Resources/views/base.html.twig`` file that corresponds to
+Open the ``templates/base.html.twig`` file that corresponds to
 the ``base.html.twig`` template and you'll find the following Twig code:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/base.html.twig #}
+    {# templates/base.html.twig #}
     <!DOCTYPE html>
     <html>
         <head>
@@ -170,7 +170,7 @@ create a ``banner.html.twig`` template:
 
 .. code-block:: twig
 
-    {# app/Resources/views/ads/banner.html.twig #}
+    {# templates/ads/banner.html.twig #}
     <div id="ad-banner">
         ...
     </div>
@@ -180,7 +180,7 @@ using the ``include()`` function:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/default/index.html.twig #}
+    {# templates/default/index.html.twig #}
     {% extends 'base.html.twig' %}
 
     {% block body %}
@@ -203,7 +203,7 @@ use the ``render()`` function:
 
 .. code-block:: twig
 
-    {# app/Resources/views/index.html.twig #}
+    {# templates/index.html.twig #}
     {{ render(controller('AppBundle:Default:topArticles')) }}
 
 Here, the ``render()`` and ``controller()`` functions use the special
@@ -211,7 +211,7 @@ Here, the ``render()`` and ``controller()`` functions use the special
 action of the ``Default`` controller (the ``AppBundle`` part will be explained
 later)::
 
-    // src/AppBundle/Controller/DefaultController.php
+    // src/Controller/DefaultController.php
     class DefaultController extends Controller
     {
         public function topArticlesAction()
@@ -260,7 +260,7 @@ Symfony provides the ``asset()`` function to deal with them easily:
 
     <img src="{{ asset('images/logo.png') }}" />
 
-The ``asset()`` function looks for the web assets inside the ``web/`` directory.
+The ``asset()`` function looks for the web assets inside the ``public/`` directory.
 If you store them in another directory, read
 :doc:`this article </frontend/assetic/asset_management>`
 to learn how to manage web assets.

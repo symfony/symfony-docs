@@ -32,7 +32,7 @@ methods.
 Importing Configuration with ``imports``
 ----------------------------------------
 
-By default, service configuration lives in ``app/config/services.yml``. But if that
+By default, service configuration lives in ``app/config/services.yaml``. But if that
 file becomes large, you're free to organize into multiple files. For suppose you
 decided to move some configuration to a new file:
 
@@ -78,7 +78,7 @@ To import this file, use the ``imports`` key from a file that *is* loaded:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         imports:
             - { resource: services/mailer.yml }
 

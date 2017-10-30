@@ -14,7 +14,7 @@ A real-world example are applications that implement the `Command pattern`_
 using a CommandBus to map command handlers by Command class names and use them
 to handle their respective command when it is asked for::
 
-    // src/AppBundle/CommandBus.php
+    // src/CommandBus.php
     namespace AppBundle;
 
     // ...
@@ -91,15 +91,15 @@ option to include as many services as needed to it and add the
 
     .. code-block:: yaml
 
-        // app/config/services.yml
+        // app/config/services.yaml
         services:
             app.command_handler_locator:
                 class: Symfony\Component\DependencyInjection\ServiceLocator
                 tags: ['container.service_locator']
                 arguments:
                     -
-                        AppBundle\FooCommand: '@app.command_handler.foo'
-                        AppBundle\BarCommand: '@app.command_handler.bar'
+                        App\FooCommand: '@app.command_handler.foo'
+                        App\BarCommand: '@app.command_handler.bar'
 
     .. code-block:: xml
 
@@ -113,8 +113,8 @@ option to include as many services as needed to it and add the
 
                 <service id="app.command_handler_locator" class="Symfony\Component\DependencyInjection\ServiceLocator">
                     <argument type="collection">
-                        <argument key="AppBundle\FooCommand" type="service" id="app.command_handler.foo" />
-                        <argument key="AppBundle\BarCommand" type="service" id="app.command_handler.bar" />
+                        <argument key="App\FooCommand" type="service" id="app.command_handler.foo" />
+                        <argument key="App\BarCommand" type="service" id="app.command_handler.bar" />
                     </argument>
                     <tag name="container.service_locator" />
                 </service>
@@ -134,8 +134,8 @@ option to include as many services as needed to it and add the
             ->register('app.command_handler_locator', ServiceLocator::class)
             ->addTag('container.service_locator')
             ->setArguments(array(array(
-                'AppBundle\FooCommand' => new Reference('app.command_handler.foo'),
-                'AppBundle\BarCommand' => new Reference('app.command_handler.bar'),
+                'App\FooCommand' => new Reference('app.command_handler.foo'),
+                'App\BarCommand' => new Reference('app.command_handler.bar'),
             )))
         ;
 
@@ -150,9 +150,9 @@ Now you can use the service locator injecting it in any other service:
 
     .. code-block:: yaml
 
-        // app/config/services.yml
+        // app/config/services.yaml
         services:
-            AppBundle\CommandBus:
+            App\CommandBus:
                 arguments: ['@app.command_handler_locator']
 
     .. code-block:: xml
@@ -165,7 +165,7 @@ Now you can use the service locator injecting it in any other service:
 
             <services>
 
-                <service id="AppBundle\CommandBus">
+                <service id="App\CommandBus">
                     <argument type="service" id="app.command_handler_locator" />
                 </service>
 
@@ -175,7 +175,7 @@ Now you can use the service locator injecting it in any other service:
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\CommandBus;
+        use App\CommandBus;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container

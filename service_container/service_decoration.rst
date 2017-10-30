@@ -13,12 +13,12 @@ the original service is lost:
 
         services:
             app.mailer:
-                class: AppBundle\Mailer
+                class: App\Mailer
 
             # this replaces the old app.mailer definition with the new one, the
             # old definition is lost
             app.mailer:
-                class: AppBundle\DecoratingMailer
+                class: App\DecoratingMailer
 
     .. code-block:: xml
 
@@ -28,18 +28,18 @@ the original service is lost:
             xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer" />
+                <service id="app.mailer" class="App\Mailer" />
 
                 <!-- this replaces the old app.mailer definition with the new
                      one, the old definition is lost -->
-                <service id="app.mailer" class="AppBundle\DecoratingMailer" />
+                <service id="app.mailer" class="App\DecoratingMailer" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Mailer;
-        use AppBundle\DecoratingMailer;
+        use App\Mailer;
+        use App\DecoratingMailer;
 
         $container->register('app.mailer', Mailer::class);
 
@@ -57,10 +57,10 @@ that you can reference it:
 
         services:
             app.mailer:
-                class: AppBundle\Mailer
+                class: App\Mailer
 
             app.decorating_mailer:
-                class:     AppBundle\DecoratingMailer
+                class:     App\DecoratingMailer
                 # overrides the app.mailer service
                 # but that service is still available as app.decorating_mailer.inner
                 decorates: app.mailer
@@ -79,10 +79,10 @@ that you can reference it:
             xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer" />
+                <service id="app.mailer" class="App\Mailer" />
 
                 <service id="app.decorating_mailer"
-                    class="AppBundle\DecoratingMailer"
+                    class="App\DecoratingMailer"
                     decorates="app.mailer"
                     public="false"
                 >
@@ -94,8 +94,8 @@ that you can reference it:
 
     .. code-block:: php
 
-        use AppBundle\DecoratingMailer;
-        use AppBundle\Mailer;
+        use App\DecoratingMailer;
+        use App\Mailer;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('app.mailer', Mailer::class);
@@ -145,7 +145,7 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 
                     <service
                         id="app.decorating_mailer"
-                        class="AppBundle\DecoratingMailer"
+                        class="App\DecoratingMailer"
                         decorates="app.mailer"
                         decoration-inner-name="app.decorating_mailer.wooz"
                         public="false"
@@ -158,7 +158,7 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 
         .. code-block:: php
 
-            use AppBundle\DecoratingMailer;
+            use App\DecoratingMailer;
             use Symfony\Component\DependencyInjection\Reference;
 
             $container->register('app.decorating_mailer', DecoratingMailer::class)

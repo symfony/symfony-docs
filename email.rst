@@ -108,7 +108,7 @@ an email is pretty straightforward::
             ->setTo('recipient@example.com')
             ->setBody(
                 $this->renderView(
-                    // app/Resources/views/Emails/registration.html.twig
+                    // templates/Emails/registration.html.twig
                     'Emails/registration.html.twig',
                     array('name' => $name)
                 ),
@@ -140,7 +140,7 @@ template might look something like this:
 
 .. code-block:: html+jinja
 
-    {# app/Resources/views/Emails/registration.html.twig #}
+    {# templates/Emails/registration.html.twig #}
     <h3>You did it! You registered!</h3>
 
     Hi {{ name }}! You're successfully registered.
