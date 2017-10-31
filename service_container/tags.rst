@@ -14,7 +14,7 @@ to be used for a specific purpose. Take the following example:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             App\Twig\AppExtension:
                 public: false
@@ -22,7 +22,7 @@ to be used for a specific purpose. Take the following example:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -38,7 +38,7 @@ to be used for a specific purpose. Take the following example:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Twig\AppExtension;
 
         $container->register('app.twig_extension', AppExtension::class)
@@ -424,7 +424,7 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             App\Handler\One:
                 tags: [app.handler]
@@ -438,7 +438,7 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -463,7 +463,7 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
         $container->register(App\Handler\One::class)
@@ -499,7 +499,7 @@ application handlers.
 
         .. code-block:: yaml
 
-            # app/config/services.yaml
+            # config/services.yaml
             services:
                 App\Handler\One:
                     tags:
@@ -507,7 +507,7 @@ application handlers.
 
         .. code-block:: xml
 
-            <!-- app/config/services.xml -->
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -523,7 +523,7 @@ application handlers.
 
         .. code-block:: php
 
-            // app/config/services.php
+            // config/services.php
             $container->register(App\Handler\One::class)
                 ->addTag('app.handler', array('priority' => 20));
 

@@ -125,7 +125,7 @@ all the classes are already loaded as services. All you need to do is specify th
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -143,7 +143,7 @@ all the classes are already loaded as services. All you need to do is specify th
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -165,7 +165,7 @@ all the classes are already loaded as services. All you need to do is specify th
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Mail\GreetingCardManager;
         use App\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Definition;

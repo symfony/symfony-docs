@@ -20,7 +20,7 @@ This can be done by "importing" directories into the routing configuration:
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -33,7 +33,7 @@ This can be done by "importing" directories into the routing configuration:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
@@ -70,7 +70,7 @@ in that directory are parsed and put into the routing.
 
         .. code-block:: xml
 
-            <!-- app/config/routing.xml -->
+            <!-- config/routes.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <routes xmlns="http://symfony.com/schema/routing"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -82,7 +82,7 @@ in that directory are parsed and put into the routing.
 
         .. code-block:: php
 
-            // app/config/routing.php
+            // config/routes.php
             use Symfony\Component\Routing\RouteCollection;
 
             $collection = new RouteCollection();
@@ -111,7 +111,7 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -126,7 +126,7 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
 
         $app = $loader->import('@AppBundle/Controller/', 'annotation');

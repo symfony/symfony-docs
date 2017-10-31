@@ -105,7 +105,7 @@ manually and tag it with ``form.type``:
 
     .. code-block:: yaml
 
-        # src/Resources/config/services.yaml
+        # config/services.yaml
         services:
             App\Form\TaskType:
                 arguments: ['@doctrine.orm.entity_manager']
@@ -113,7 +113,7 @@ manually and tag it with ``form.type``:
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -130,7 +130,7 @@ manually and tag it with ``form.type``:
 
     .. code-block:: php
 
-        // src/Resources/config/services.php
+        // config/services.php
         use App\Form\TaskType;
         use Symfony\Component\DependencyInjection\Reference;
 

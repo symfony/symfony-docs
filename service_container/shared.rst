@@ -16,7 +16,7 @@ in your service definition:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             App\SomeNonSharedService:
                 shared: false
@@ -24,14 +24,14 @@ in your service definition:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <services>
             <service id="App\SomeNonSharedService" shared="false" />
         </services>
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\SomeNonSharedService;
 
         $container->register(SomeNonSharedService::class)

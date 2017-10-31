@@ -91,7 +91,7 @@ option to include as many services as needed to it and add the
 
     .. code-block:: yaml
 
-        // app/config/services.yaml
+        // config/services.yaml
         services:
             app.command_handler_locator:
                 class: Symfony\Component\DependencyInjection\ServiceLocator
@@ -103,7 +103,7 @@ option to include as many services as needed to it and add the
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -124,7 +124,7 @@ option to include as many services as needed to it and add the
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use Symfony\Component\DependencyInjection\ServiceLocator;
         use Symfony\Component\DependencyInjection\Reference;
 
@@ -150,14 +150,14 @@ Now you can use the service locator injecting it in any other service:
 
     .. code-block:: yaml
 
-        // app/config/services.yaml
+        // config/services.yaml
         services:
             App\CommandBus:
                 arguments: ['@app.command_handler_locator']
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -174,7 +174,7 @@ Now you can use the service locator injecting it in any other service:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\CommandBus;
         use Symfony\Component\DependencyInjection\Reference;
 

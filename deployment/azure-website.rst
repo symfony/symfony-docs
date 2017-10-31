@@ -294,7 +294,7 @@ below:
 
 The code of the Symfony application has now been deployed to the Azure Website
 which you can browse from the file explorer of the Kudu application. You should
-see the ``app/``, ``src/`` and ``public/`` directories under your ``site/wwwroot``
+see the ``config/``, ``src/`` and ``public/`` directories under your ``site/wwwroot``
 directory on the Azure Website filesystem.
 
 Configure the Symfony Application

@@ -34,7 +34,7 @@ Symfony Standard Edition:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # default configuration for services in *this* file
             _defaults:
@@ -67,7 +67,7 @@ Symfony Standard Edition:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -89,7 +89,7 @@ Symfony Standard Edition:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         // To use as default template
@@ -132,7 +132,7 @@ thanks to the following config:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -146,7 +146,7 @@ thanks to the following config:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -162,7 +162,7 @@ thanks to the following config:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         // To use as default template
@@ -223,7 +223,7 @@ service as an argument to another with the following config:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             app.invoice_generator:
                 class: App\Service\InvoiceGenerator
@@ -235,7 +235,7 @@ service as an argument to another with the following config:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -256,7 +256,7 @@ service as an argument to another with the following config:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Service\InvoiceGenerator;
         use App\Service\InvoiceMailer;
         use Symfony\Component\DependencyInjection\Reference;
@@ -340,7 +340,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -352,7 +352,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -370,7 +370,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
 
         // ...
 
@@ -484,7 +484,7 @@ inherited from an abstract definition:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -495,7 +495,7 @@ inherited from an abstract definition:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -513,7 +513,7 @@ inherited from an abstract definition:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Domain\LoaderInterface;
 
         // ...
@@ -546,7 +546,7 @@ Ready to upgrade your existing project? Great! Suppose you have the following co
 
 .. code-block:: yaml
 
-    # app/config/services.yaml
+    # config/services.yaml
     services:
         app.github_notifier:
             class: App\Service\GitHubNotifier
@@ -576,7 +576,7 @@ Start by adding a ``_defaults`` section with ``autowire`` and ``autoconfigure``.
 
 .. code-block:: diff
 
-    # app/config/services.yaml
+    # config/services.yaml
     services:
     +     _defaults:
     +         autowire: true
@@ -601,7 +601,7 @@ Start by updating the service ids to class names:
 
 .. code-block:: diff
 
-    # app/config/services.yaml
+    # config/services.yaml
     services:
         # ...
 
@@ -650,7 +650,7 @@ Then import this at the top of ``services.yaml``:
 
 .. code-block:: diff
 
-    # app/config/services.yaml
+    # config/services.yaml
     + imports:
     +     - { resource: legacy_aliases.yml }
 
@@ -666,7 +666,7 @@ Now you're ready to default all services to be private:
 
 .. code-block:: diff
 
-    # app/config/services.yaml
+    # config/services.yaml
     # ...
 
     services:
@@ -684,7 +684,7 @@ instances of the same class), you may need to make those public:
 
 .. code-block:: diff
 
-    # app/config/services.yaml
+    # config/services.yaml
     # ...
 
     services:
@@ -713,7 +713,7 @@ You're now ready to automatically register all services in ``src/``
 
 .. code-block:: diff
 
-    # app/config/services.yaml
+    # config/services.yaml
 
     services:
         _defaults:
@@ -738,7 +738,7 @@ same class:
 
 .. code-block:: diff
 
-    # app/config/services.yaml
+    # config/services.yaml
 
     services:
         # ...
@@ -785,7 +785,7 @@ these directly from the container, you can remove the ``public: true`` flag:
 
 .. code-block:: diff
 
-    # app/config/services.yaml
+    # config/services.yaml
     services:
         # ...
 

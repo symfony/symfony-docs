@@ -320,7 +320,7 @@ the :ref:`user password encoding <security-encoding-user-password>` article.
 
         .. code-block:: xml
 
-            <!-- app/config/routing.xml -->
+            <!-- config/routes.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <routes xmlns="http://symfony.com/schema/routing"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -333,7 +333,7 @@ the :ref:`user password encoding <security-encoding-user-password>` article.
 
         .. code-block:: php
 
-            // app/config/routing.php
+            // config/routes.php
             use Symfony\Component\Routing\RouteCollection;
             use Symfony\Component\Routing\Route;
 

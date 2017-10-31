@@ -28,8 +28,8 @@ Start with an easy controller action that sends an email::
 In your functional test, use the ``swiftmailer`` collector on the profiler
 to get information about the messages sent on the previous request::
 
-    // tests/AppBundle/Controller/MailControllerTest.php
-    namespace Tests\App\Controller;
+    // tests/Controller/MailControllerTest.php
+    namespace App\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

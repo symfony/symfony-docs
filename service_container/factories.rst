@@ -35,7 +35,7 @@ configure the service container to use the
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -45,7 +45,7 @@ configure the service container to use the
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -63,7 +63,7 @@ configure the service container to use the
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
 
         use App\Email\NewsletterManager;
         use App\NumberGenerator;
@@ -93,7 +93,7 @@ Configuration of the service container then looks like this:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
 
         services:
             # ...
@@ -106,7 +106,7 @@ Configuration of the service container then looks like this:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -128,7 +128,7 @@ Configuration of the service container then looks like this:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
 
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
@@ -150,7 +150,7 @@ Configuration of the service container then looks like this:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
 
         app.newsletter_manager:
             class: App\Email\NewsletterManager 
@@ -177,7 +177,7 @@ example takes the ``templating`` service as an argument:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
 
         services:
             # ...
@@ -188,7 +188,7 @@ example takes the ``templating`` service as an argument:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -208,7 +208,7 @@ example takes the ``templating`` service as an argument:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
 
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;

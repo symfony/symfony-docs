@@ -65,8 +65,8 @@ called ``Calculator`` in the ``Util/`` directory of the app bundle::
 To test this, create a ``CalculatorTest`` file in the ``tests/AppBundle/Util`` directory
 of your application::
 
-    // tests/AppBundle/Util/CalculatorTest.php
-    namespace Tests\App\Util;
+    // tests/Util/CalculatorTest.php
+    namespace App\Tests\Util;
 
     use App\Util\Calculator;
     use PHPUnit\Framework\TestCase;
@@ -136,8 +136,8 @@ file that extends a special ``WebTestCase`` class.
 
 As an example, a test could look like this::
 
-    // tests/AppBundle/Controller/PostControllerTest.php
-    namespace Tests\App\Controller;
+    // tests/Controller/PostControllerTest.php
+    namespace App\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

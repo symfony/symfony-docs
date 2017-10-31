@@ -15,7 +15,7 @@ if the service does not exist:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -33,7 +33,7 @@ if the service does not exist:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -64,7 +64,7 @@ call if the service exists and remove the method call if it does not:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             app.newsletter_manager:
                 class: App\Newsletter\NewsletterManager
@@ -73,7 +73,7 @@ call if the service exists and remove the method call if it does not:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -95,7 +95,7 @@ call if the service exists and remove the method call if it does not:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;

@@ -88,7 +88,7 @@ changes to ``index.php`` to add caching to the ``dev`` environment::
     use Symfony\Component\HttpFoundation\Request;
 
     // ...
-    $kernel = new Kernel('prod', false);
+    $kernel = new AppKernel('prod', false);
     $kernel->loadClassCache();
 
     // add (or uncomment) this new line!

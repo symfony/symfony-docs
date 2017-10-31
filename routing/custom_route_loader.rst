@@ -143,7 +143,7 @@ Now define a service for the ``ExtraLoader``:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -209,7 +209,7 @@ What remains to do is adding a few lines to the routing configuration:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();

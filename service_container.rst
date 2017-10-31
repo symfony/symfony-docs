@@ -180,7 +180,7 @@ each time you ask for it.
 
         .. code-block:: yaml
 
-            # app/config/services.yaml
+            # config/services.yaml
             services:
                 # default configuration for services in *this* file
                 _defaults:
@@ -197,7 +197,7 @@ each time you ask for it.
 
         .. code-block:: xml
 
-            <!-- app/config/services.xml -->
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -215,7 +215,7 @@ each time you ask for it.
 
         .. code-block:: php
 
-            // app/config/services.php
+            // config/services.php
             use Symfony\Component\DependencyInjection\Definition;
 
             // To use as default template
@@ -447,7 +447,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -463,7 +463,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -485,7 +485,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Updates\SiteUpdateManager;
         use Symfony\Component\DependencyInjection\Definition;
 
@@ -530,7 +530,7 @@ and reference it with the ``%parameter_name%`` syntax:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         parameters:
             admin_email: manager@example.com
 
@@ -543,7 +543,7 @@ and reference it with the ``%parameter_name%`` syntax:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -565,7 +565,7 @@ and reference it with the ``%parameter_name%`` syntax:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Updates\SiteUpdateManager;
         $container->setParameter('admin_email', 'manager@example.com');
 
@@ -641,7 +641,7 @@ But, you can control this and pass in a different logger:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ... same code as before
 
@@ -652,7 +652,7 @@ But, you can control this and pass in a different logger:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -672,7 +672,7 @@ But, you can control this and pass in a different logger:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Service\MessageGenerator;
         use Symfony\Component\DependencyInjection\Reference;
 
@@ -723,7 +723,7 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -732,7 +732,7 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -750,7 +750,7 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Twig\MyTwigExtension;
 
         $container->autowire(MyTwigExtension::class)
@@ -778,7 +778,7 @@ this file is ``public: false`` by default:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # default configuration for services in *this* file
             _defaults:
@@ -787,7 +787,7 @@ this file is ``public: false`` by default:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -820,7 +820,7 @@ need to make your service public, just override this setting:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ... same code as before
 
@@ -830,7 +830,7 @@ need to make your service public, just override this setting:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -857,7 +857,7 @@ key. For example, the default Symfony configuration contains this:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -877,7 +877,7 @@ key. For example, the default Symfony configuration contains this:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -897,7 +897,7 @@ key. For example, the default Symfony configuration contains this:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use Symfony\Component\DependencyInjection\Definition;
 
         // To use as default template
@@ -965,7 +965,7 @@ admin email. In this case, each needs to have a unique service id:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -994,7 +994,7 @@ admin email. In this case, each needs to have a unique service id:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1022,7 +1022,7 @@ admin email. In this case, each needs to have a unique service id:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Updates\SiteUpdateManager;
         use App\Service\MessageGenerator;
         use Symfony\Component\DependencyInjection\Reference;
@@ -1067,5 +1067,5 @@ Learn more
     /service_container/*
 
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture
-.. _`Symfony Standard Edition (version 3.3) services.yaml`: https://github.com/symfony/symfony-standard/blob/3.3/app/config/services.yaml
+.. _`Symfony Standard Edition (version 3.3) services.yaml`: https://github.com/symfony/symfony-standard/blob/3.3/app/config/services.yml
 .. _`glob pattern`: https://en.wikipedia.org/wiki/Glob_(programming)

@@ -227,7 +227,7 @@ to specify a tag that contains the template:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             App\DataCollector\RequestCollector:
                 tags:
@@ -242,7 +242,7 @@ to specify a tag that contains the template:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -262,7 +262,7 @@ to specify a tag that contains the template:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\DataCollector\RequestCollector;
 
         $container

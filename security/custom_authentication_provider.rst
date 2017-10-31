@@ -401,7 +401,7 @@ to service ids that may not exist yet: ``AppBundle\Security\Authentication\Provi
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -416,7 +416,7 @@ to service ids that may not exist yet: ``AppBundle\Security\Authentication\Provi
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -440,7 +440,7 @@ to service ids that may not exist yet: ``AppBundle\Security\Authentication\Provi
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Security\Authentication\Provider\WsseProvider;
         use App\Security\Firewall\WsseListener;
         use Symfony\Component\DependencyInjection\Reference;
@@ -457,24 +457,23 @@ to service ids that may not exist yet: ``AppBundle\Security\Authentication\Provi
             ->setPublic(false);
 
 Now that your services are defined, tell your security context about your
-factory in your bundle class::
+factory in the kernel::
 
-    // src/AppBundle.php
-    namespace AppBundle;
+    // src/Kernel.php
+    namespace App;
 
     use App\DependencyInjection\Security\Factory\WsseFactory;
-    use Symfony\Component\HttpKernel\Bundle\Bundle;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    // ...
 
-    class AppBundle extends Bundle
+    class Kernel extends BaseKernel
     {
         public function build(ContainerBuilder $container)
         {
-            parent::build($container);
-
             $extension = $container->getExtension('security');
             $extension->addSecurityListenerFactory(new WsseFactory());
         }
+
+        // ...
     }
 
 You are finished! You can now define parts of your app as under WSSE protection.

@@ -51,7 +51,7 @@ syntax:
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -66,7 +66,7 @@ syntax:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         $collection->add('hello', new Route('/hello', array(
             '_controller' => 'app.hello_controller:indexAction',
         )));

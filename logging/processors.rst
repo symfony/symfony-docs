@@ -55,7 +55,7 @@ information:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             monolog.formatter.session_request:
                 class: Monolog\Formatter\LineFormatter
@@ -69,7 +69,7 @@ information:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -94,7 +94,7 @@ information:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Logger\SessionRequestProcessor;
         use Monolog\Formatter\LineFormatter;
 

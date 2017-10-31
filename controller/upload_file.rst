@@ -256,7 +256,7 @@ Then, define a service for this class:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             # ...
 
@@ -266,7 +266,7 @@ Then, define a service for this class:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -281,7 +281,7 @@ Then, define a service for this class:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\Service\FileUploader;
 
         $container->autowire(FileUploader::class)
@@ -372,7 +372,7 @@ Now, register this class as a Doctrine listener:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             _defaults:
                 # ... be sure autowiring is enabled
@@ -405,7 +405,7 @@ Now, register this class as a Doctrine listener:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use App\EventListener\BrochureUploaderListener;
 
         $container->autowire(BrochureUploaderListener::class)

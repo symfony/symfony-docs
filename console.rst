@@ -226,8 +226,8 @@ useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::
 
-    // tests/AppBundle/Command/CreateUserCommandTest.php
-    namespace Tests\App\Command;
+    // tests/Command/CreateUserCommandTest.php
+    namespace App\Tests\Command;
 
     use App\Command\CreateUserCommand;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
