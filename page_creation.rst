@@ -201,7 +201,7 @@ If you're returning HTML from your controller, you'll probably want to render
 a template. Fortunately, Symfony comes with `Twig`_: a templating language that's
 easy, powerful and actually quite fun.
 
-First, install Twig::
+First, install Twig:
 
 .. code-block:: terminal
 
