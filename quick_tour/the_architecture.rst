@@ -29,7 +29,7 @@ recommended structure is as follows:
     The web root directory.
 
 The ``public/`` Directory
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The web root directory is the home of all public and static files like images,
 stylesheets and JavaScript files. It is also where each front controller (the

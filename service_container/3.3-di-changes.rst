@@ -25,7 +25,7 @@ need to actually change your configuration files to use them.
 .. _`service-33-default_definition`:
 
 The new Default services.yaml File
----------------------------------
+----------------------------------
 
 To understand the changes, look at the new default ``services.yaml`` file in the
 Symfony Standard Edition:

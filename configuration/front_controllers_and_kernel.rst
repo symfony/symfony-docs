@@ -160,7 +160,7 @@ way of loading your configuration.
 
 .. _front controller: https://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _Symfony Standard Edition: https://github.com/symfony/symfony-standard
-.. _app.php: https://github.com/symfony/symfony-standard/blob/master/web/app.php
+.. _index.php: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/public/index.php
 .. _app_dev.php: https://github.com/symfony/symfony-standard/blob/master/web/app_dev.php
 .. _bin/console: https://github.com/symfony/symfony-standard/blob/master/bin/console
 .. _AppKernel: https://github.com/symfony/symfony-standard/blob/master/app/AppKernel.php
