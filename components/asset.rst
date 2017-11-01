@@ -168,7 +168,7 @@ that path over and over again::
 
     $package = new PathPackage('/static/images', new StaticVersionStrategy('v1'));
 
-    echo $package->getUrl('/logo.png');
+    echo $package->getUrl('logo.png');
     // result: /static/images/logo.png?v1
 
 Request Context Aware Assets
