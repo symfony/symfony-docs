@@ -273,106 +273,6 @@ Full Default Configuration
             </doctrine:config>
         </container>
 
-Configuration Overview
-----------------------
-
-This following configuration example shows all the configuration defaults
-that the ORM resolves to:
-
-.. code-block:: yaml
-
-    doctrine:
-        orm:
-            auto_mapping: true
-            # the standard distribution overrides this to be true in debug, false otherwise
-            auto_generate_proxy_classes: false
-            proxy_namespace: Proxies
-            proxy_dir: '%kernel.cache_dir%/doctrine/orm/Proxies'
-            default_entity_manager: default
-            metadata_cache_driver: array
-            query_cache_driver: array
-            result_cache_driver: array
-
-There are lots of other configuration options that you can use to overwrite
-certain classes, but those are for very advanced use-cases only.
-
-Caching Drivers
-~~~~~~~~~~~~~~~
-
-For the caching drivers you can specify the values ``array``, ``apc``, ``apcu``,
-``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata``, ``xcache``
-or ``service``.
-
-The following example shows an overview of the caching configurations:
-
-.. code-block:: yaml
-
-    doctrine:
-        orm:
-            auto_mapping: true
-            metadata_cache_driver: apc
-            query_cache_driver:
-                type: service
-                id: my_doctrine_common_cache_service
-            result_cache_driver:
-                type: memcache
-                host: localhost
-                port: 11211
-                instance_class: Memcache
-
-Mapping Configuration
-~~~~~~~~~~~~~~~~~~~~~
-
-Explicit definition of all the mapped entities is the only necessary
-configuration for the ORM and there are several configuration options that
-you can control. The following configuration options exist for a mapping:
-
-type
-....
-
-One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``. This
-specifies which type of metadata type your mapping uses.
-
-dir
-...
-
-Path to the mapping or entity files (depending on the driver). If this path
-is relative it is assumed to be relative to the bundle root. This only works
-if the name of your mapping is a bundle name. If you want to use this option
-to specify absolute paths you should prefix the path with the kernel parameters
-that exist in the DIC (for example ``%kernel.root_dir%``).
-
-prefix
-......
-
-A common namespace prefix that all entities of this mapping share. This
-prefix should never conflict with prefixes of other defined mappings otherwise
-some of your entities cannot be found by Doctrine. This option defaults
-to the bundle namespace + ``Entity``, for example for an application bundle
-called AcmeHelloBundle prefix would be ``Acme\HelloBundle\Entity``.
-
-alias
-.....
-
-Doctrine offers a way to alias entity namespaces to simpler, shorter names
-to be used in DQL queries or for Repository access. When using a bundle
-the alias defaults to the bundle name.
-
-is_bundle
-.........
-
-This option is a derived value from ``dir`` and by default is set to ``true``
-if dir is relative proved by a ``file_exists()`` check that returns ``false``.
-It is ``false`` if the existence check returns ``true``. In this case an
-absolute path was specified and the metadata files are most likely in a
-directory outside of a bundle.
-
-.. index::
-    single: Configuration; Doctrine DBAL
-    single: Doctrine; DBAL configuration
-
-.. _`reference-dbal-configuration`:
-
 Doctrine DBAL Configuration
 ---------------------------
 
@@ -493,8 +393,31 @@ service where ``[name]`` is the name of the connection.
 
 .. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html
 
+Doctrine ORM Configuration
+--------------------------
+
+This following configuration example shows all the configuration defaults
+that the ORM resolves to:
+
+.. code-block:: yaml
+
+    doctrine:
+        orm:
+            auto_mapping: true
+            # the standard distribution overrides this to be true in debug, false otherwise
+            auto_generate_proxy_classes: false
+            proxy_namespace: Proxies
+            proxy_dir: '%kernel.cache_dir%/doctrine/orm/Proxies'
+            default_entity_manager: default
+            metadata_cache_driver: array
+            query_cache_driver: array
+            result_cache_driver: array
+
+There are lots of other configuration options that you can use to overwrite
+certain classes, but those are for very advanced use-cases only.
+
 Shortened Configuration Syntax
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you are only using one entity manager, all config options available
 can be placed directly under ``doctrine.orm`` config level.
@@ -526,8 +449,85 @@ can be placed directly under ``doctrine.orm`` config level.
 This shortened version is commonly used in other documentation sections.
 Keep in mind that you can't use both syntaxes at the same time.
 
+Caching Drivers
+~~~~~~~~~~~~~~~
+
+For the caching drivers you can specify the values ``array``, ``apc``, ``apcu``,
+``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata``, ``xcache``
+or ``service``.
+
+The following example shows an overview of the caching configurations:
+
+.. code-block:: yaml
+
+    doctrine:
+        orm:
+            auto_mapping: true
+            metadata_cache_driver: apc
+            query_cache_driver:
+                type: service
+                id: my_doctrine_common_cache_service
+            result_cache_driver:
+                type: memcache
+                host: localhost
+                port: 11211
+                instance_class: Memcache
+
+Mapping Configuration
+~~~~~~~~~~~~~~~~~~~~~
+
+Explicit definition of all the mapped entities is the only necessary
+configuration for the ORM and there are several configuration options that
+you can control. The following configuration options exist for a mapping:
+
+type
+....
+
+One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``. This
+specifies which type of metadata type your mapping uses.
+
+dir
+...
+
+Path to the mapping or entity files (depending on the driver). If this path
+is relative it is assumed to be relative to the bundle root. This only works
+if the name of your mapping is a bundle name. If you want to use this option
+to specify absolute paths you should prefix the path with the kernel parameters
+that exist in the DIC (for example ``%kernel.root_dir%``).
+
+prefix
+......
+
+A common namespace prefix that all entities of this mapping share. This
+prefix should never conflict with prefixes of other defined mappings otherwise
+some of your entities cannot be found by Doctrine. This option defaults
+to the bundle namespace + ``Entity``, for example for an application bundle
+called AcmeHelloBundle prefix would be ``Acme\HelloBundle\Entity``.
+
+alias
+.....
+
+Doctrine offers a way to alias entity namespaces to simpler, shorter names
+to be used in DQL queries or for Repository access. When using a bundle
+the alias defaults to the bundle name.
+
+is_bundle
+.........
+
+This option is a derived value from ``dir`` and by default is set to ``true``
+if dir is relative proved by a ``file_exists()`` check that returns ``false``.
+It is ``false`` if the existence check returns ``true``. In this case an
+absolute path was specified and the metadata files are most likely in a
+directory outside of a bundle.
+
+.. index::
+    single: Configuration; Doctrine DBAL
+    single: Doctrine; DBAL configuration
+
+.. _`reference-dbal-configuration`:
+
 Custom Mapping Entities in a Bundle
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Doctrine's ``auto_mapping`` feature loads annotation configuration from
 the ``Entity/`` directory of each bundle *and* looks for other formats (e.g.
@@ -585,7 +585,7 @@ directory instead:
         ));
 
 Mapping Entities Outside of a Bundle
-------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also create new mappings, for example outside of the Symfony folder.
 
@@ -647,7 +647,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
         ));
 
 Detecting a Mapping Configuration Format
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+........................................
 
 If the ``type`` on the bundle configuration isn't set, the DoctrineBundle
 will try to detect the correct mapping configuration format for the bundle.
@@ -666,7 +666,7 @@ root directory. If the folder exist, Doctrine will fall back to using an
 annotation driver.
 
 Default Value of Dir
-~~~~~~~~~~~~~~~~~~~~
+....................
 
 If ``dir`` is not specified, then its default value depends on which configuration
 driver is being used. For drivers that rely on the PHP files (annotation,
