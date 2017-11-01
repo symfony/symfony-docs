@@ -191,6 +191,10 @@ In the above example all email messages will be redirected to ``dev@example.com`
 and messages sent to the ``admin@mydomain.com`` address or to any email address
 belonging to the domain ``specialdomain.com`` will also be delivered as normal.
 
+.. caution::
+
+    The ``delivery_whitelist`` option is ignored unless the ``delivery_addresses`` option is defined.
+
 Viewing from the Web Debug Toolbar
 ----------------------------------
 
