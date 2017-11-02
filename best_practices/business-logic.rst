@@ -10,48 +10,20 @@ your app that's not specific to the framework (e.g. routing and controllers).
 Domain classes, Doctrine entities and regular PHP classes that are used as
 services are good examples of business logic.
 
-For most projects, you should store everything inside the AppBundle.
+For most projects, you should store all your code inside the ``src/`` directory.
 Inside here, you can create whatever directories you want to organize things:
 
 .. code-block:: text
 
     symfony-project/
-    ├─ app/
+    ├─ config/
+    ├─ public/
     ├─ src/
-    │  └─ AppBundle/
-    │     └─ Utils/
-    │        └─ MyClass.php
+    │  └─ Utils/
+    │     └─ MyClass.php
     ├─ tests/
     ├─ var/
-    ├─ vendor/
-    └─ web/
-
-Storing Classes Outside of the Bundle?
---------------------------------------
-
-But there's no technical reason for putting business logic inside of a bundle.
-If you like, you can create your own namespace inside the ``src/`` directory
-and put things there:
-
-.. code-block:: text
-
-    symfony-project/
-    ├─ app/
-    ├─ src/
-    │  ├─ Acme/
-    │  │   └─ Utils/
-    │  │      └─ MyClass.php
-    │  └─ AppBundle/
-    ├─ tests/
-    ├─ var/
-    ├─ vendor/
-    └─ web/
-
-.. tip::
-
-    The recommended approach of using the ``AppBundle/`` directory is for
-    simplicity. If you're advanced enough to know what needs to live in
-    a bundle and what can live outside of one, then feel free to do that.
+    └─ vendor/
 
 Services: Naming and Format
 ---------------------------
@@ -60,13 +32,13 @@ The blog application needs a utility that can transform a post title (e.g.
 "Hello World") into a slug (e.g. "hello-world"). The slug will be used as
 part of the post URL.
 
-Let's create a new ``Slugger`` class inside ``src/AppBundle/Utils/`` and
+Let's create a new ``Slugger`` class inside ``src/Utils/`` and
 add the following ``slugify()`` method:
 
 .. code-block:: php
 
-    // src/AppBundle/Utils/Slugger.php
-    namespace AppBundle\Utils;
+    // src/Utils/Slugger.php
+    namespace App\Utils;
 
     class Slugger
     {
@@ -82,12 +54,12 @@ Next, define a new service for that class.
 
 .. code-block:: yaml
 
-    # app/config/services.yml
+    # config/services.yaml
     services:
         # ...
 
         # use the fully-qualified class name as the service id
-        AppBundle\Utils\Slugger:
+        App\Utils\Slugger:
             public: false
 
 .. note::
@@ -110,7 +82,7 @@ Now you can use the custom slugger in any controller class, such as the
 
 .. code-block:: php
 
-    use AppBundle\Utils\Slugger;
+    use App\Utils\Slugger;
 
     public function createAction(Request $request, Slugger $slugger)
     {
@@ -118,7 +90,7 @@ Now you can use the custom slugger in any controller class, such as the
 
         // you can also fetch a public service like this
         // but fetching services in this way is not considered a best practice
-        // $slugger = $this->get('app.slugger');
+        // $slugger = $this->get(Slugger::class);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slugify($post->getTitle());
@@ -129,7 +101,7 @@ Now you can use the custom slugger in any controller class, such as the
     }
 
 Services can also be :ref:`public or private <container-public>`. If you use the
-:ref:`default services.yml configuration <service-container-services-load-example>`,
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
 all services are private by default.
 
 .. best-practice::
@@ -163,11 +135,11 @@ the class namespace as a parameter:
 
 .. code-block:: yaml
 
-    # app/config/services.yml
+    # config/services.yaml
 
     # service definition with class namespace as parameter
     parameters:
-        slugger.class: AppBundle\Utils\Slugger
+        slugger.class: App\Utils\Slugger
 
     services:
         app.slugger:
@@ -205,16 +177,10 @@ The three entities defined by our sample blog application are a good example:
     symfony-project/
     ├─ ...
     └─ src/
-       └─ AppBundle/
-          └─ Entity/
-             ├─ Comment.php
-             ├─ Post.php
-             └─ User.php
-
-.. tip::
-
-    If you're more advanced, you can of course store them under your own
-    namespace in ``src/``.
+       └─ Entity/
+          ├─ Comment.php
+          ├─ Post.php
+          └─ User.php
 
 Doctrine Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -233,7 +199,7 @@ looking for mapping information:
 
 .. code-block:: php
 
-    namespace AppBundle\Entity;
+    namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Doctrine\Common\Collections\ArrayCollection;
@@ -309,31 +275,17 @@ the following command to install the Doctrine fixtures bundle:
 
     $ composer require "doctrine/doctrine-fixtures-bundle"
 
-Then, enable the bundle in ``AppKernel.php``, but only for the ``dev`` and
+Then, this bundle is enabled automatically, but only for the ``dev`` and
 ``test`` environments:
 
 .. code-block:: php
 
-    use Symfony\Component\HttpKernel\Kernel;
+    // config/bundles.php
 
-    class AppKernel extends Kernel
-    {
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-            );
-
-            if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-                // ...
-                $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
-            }
-
-            return $bundles;
-        }
-
+    return [
         // ...
-    }
+        Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+    ];
 
 We recommend creating just *one* `fixture class`_ for simplicity, though
 you're welcome to have more if that class gets quite large.
@@ -348,7 +300,7 @@ command:
 
     Careful, database will be purged. Do you want to continue Y/N ? Y
       > purging database
-      > loading AppBundle\DataFixtures\ORM\LoadFixtures
+      > loading App\DataFixtures\ORM\LoadFixtures
 
 Coding Standards
 ----------------
