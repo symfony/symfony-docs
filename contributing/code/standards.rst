@@ -186,7 +186,7 @@ Naming Conventions
 * Use camelCase, not underscores, for variable, function and method
   names, arguments;
 
-* Use underscores for option names and parameter names;
+* Use underscores for configuration options and parameters;
 
 * Use namespaces for all classes;
 
@@ -225,7 +225,8 @@ Service Naming Conventions
 Documentation
 -------------
 
-* Add PHPDoc blocks for all classes, methods, and functions;
+* Add PHPDoc blocks for all classes, methods, and functions (though you may
+  be asked to remove PHPDoc that do not add value);
 
 * Group annotations together so that annotations of the same type immediately
   follow each other, and annotations of a different type are separated by a

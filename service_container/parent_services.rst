@@ -7,7 +7,7 @@ How to Manage Common Dependencies with Parent Services
 As you add more functionality to your application, you may well start to
 have related classes that share some of the same dependencies. For example,
 you may have multiple repository classes which need the
-``doctrine.entity_manager`` service and an optional ``logger`` service::
+``doctrine.orm.entity_manager`` service and an optional ``logger`` service::
 
     // src/AppBundle/Repository/BaseDoctrineRepository.php
     namespace AppBundle\Repository;
@@ -31,6 +31,30 @@ you may have multiple repository classes which need the
         // ...
     }
 
+Your child service classes may look like this::
+
+    // src/AppBundle/Repository/DoctrineUserRepository.php
+    namespace AppBundle\Repository;
+
+    use AppBundle\Repository\BaseDoctrineRepository
+
+    // ...
+    class DoctrineUserRepository extends BaseDoctrineRepository
+    {
+        // ...
+    }
+
+    // src/AppBundle/Repository/DoctrinePostRepository.php
+    namespace AppBundle\Repository;
+
+    use AppBundle\Repository\BaseDoctrineRepository
+
+    // ...
+    class DoctrinePostRepository extends BaseDoctrineRepository
+    {
+        // ...
+    }
+
 Just as you use PHP inheritance to avoid duplication in your PHP code, the
 service container allows you to extend parent services in order to avoid
 duplicated service definitions:
@@ -43,7 +67,7 @@ duplicated service definitions:
             app.base_doctrine_repository:
                 # as no class is configured, the parent service MUST be abstract
                 abstract:  true
-                arguments: ['@doctrine.entity_manager']
+                arguments: ['@doctrine.orm.entity_manager']
                 calls:
                     - [setLogger, ['@logger']]
 
@@ -63,12 +87,13 @@ duplicated service definitions:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <!-- as no class is configured, the parent service MUST be abstract -->
-                <service id="app.base_doctrine_repository" abstract="true"> 
-                    <argument type="service" id="doctrine.entity_manager" />
+                <service id="app.base_doctrine_repository" abstract="true">
+                    <argument type="service" id="doctrine.orm.entity_manager" />
 
                     <call method="setLogger">
                         <argument type="service" id="logger" />
@@ -99,7 +124,7 @@ duplicated service definitions:
 
         // as no class is configured, the parent service MUST be abstract
         $container->register('app.base_doctrine_repository')
-            ->addArgument(new Reference('doctrine.entity_manager'))
+            ->addArgument(new Reference('doctrine.orm.entity_manager'))
             ->addMethodCall('setLogger', array(new Reference('logger')))
         ;
 
@@ -169,7 +194,8 @@ in the child class:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <!-- ... -->

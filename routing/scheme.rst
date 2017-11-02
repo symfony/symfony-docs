@@ -10,6 +10,25 @@ the URI scheme via schemes:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/AppBundle/Controller/MainController.php
+        namespace AppBundle\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        class MainController extends Controller
+        {
+            /**
+             * @Route("/secure", name="secure", schemes={"https"})
+             */
+            public function secureAction()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
@@ -48,17 +67,18 @@ the URI scheme via schemes:
 The above configuration forces the ``secure`` route to always use HTTPS.
 
 When generating the ``secure`` URL, and if the current scheme is HTTP, Symfony
-will automatically generate an absolute URL with HTTPS as the scheme:
+will automatically generate an absolute URL with HTTPS as the scheme, even when
+using the ``path()`` function:
 
 .. code-block:: twig
 
     {# If the current scheme is HTTPS #}
     {{ path('secure') }}
-    {# generates /secure #}
+    {# generates a relative URL: /secure #}
 
     {# If the current scheme is HTTP #}
     {{ path('secure') }}
-    {# generates https://example.com/secure #}
+    {# generates an absolute URL: https://example.com/secure #}
 
 The requirement is also enforced for incoming requests. If you try to access
 the ``/secure`` path with HTTP, you will automatically be redirected to the

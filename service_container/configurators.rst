@@ -116,7 +116,7 @@ You can configure the service configurator using the ``configurator`` option:
         # app/config/services.yml
         services:
             app.email_formatter_manager:
-                class: EmailFormatterManager
+                class: AppBundle\Mail\EmailFormatterManager
                 # ...
 
             app.email_configurator:
@@ -140,7 +140,8 @@ You can configure the service configurator using the ``configurator`` option:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.email_formatter_manager" class="AppBundle\Mail\EmailFormatterManager">
@@ -158,7 +159,7 @@ You can configure the service configurator using the ``configurator`` option:
                     <configurator service="app.email_configurator" method="configure" />
                 </service>
 
-                <service id="greeting_card_manager" class="GreetingCardManager">
+                <service id="greeting_card_manager" class="AppBundle\Mail\GreetingCardManager">
                     <argument type="service" id="mailer" />
 
                     <configurator service="app.email_configurator" method="configure" />

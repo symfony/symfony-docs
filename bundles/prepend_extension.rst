@@ -12,7 +12,7 @@ users to choose to remove functionality they are not using. Creating multiple
 bundles has the drawback that configuration becomes more tedious and settings
 often need to be repeated for various bundles.
 
-It is possible to remove the disadvantage of the multiple bundle approach 
+It is possible to remove the disadvantage of the multiple bundle approach
 by enabling a single Extension to prepend the settings for any bundle.
 It can use the settings defined in the ``app/config/config.yml``
 to prepend settings just as if they had been written explicitly by
@@ -116,11 +116,21 @@ The above would be the equivalent of writing the following into the
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <acme-something:config use-acme-goodbye="false">
-            <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>
-        </acme-something:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:acme-something="http://example.org/schema/dic/acme_something"
+            xmlns:acme-other="http://example.org/schema/dic/acme_other"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-        <acme-other:config use-acme-goodbye="false" />
+            <acme-something:config use-acme-goodbye="false">
+                <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>
+            </acme-something:config>
+
+            <acme-other:config use-acme-goodbye="false" />
+
+        </container>
 
     .. code-block:: php
 

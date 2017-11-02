@@ -156,8 +156,8 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
     For example, if the translations property is actually an associative
     array of objects, each with a name property, then you could do this::
 
-        $builder->add('gender', 'entity', array(
-           'class' => 'MyBundle:Gender',
+        $builder->add('genre', 'entity', array(
+           'class' => 'MyBundle:Genre',
            'choice_label' => 'translations[en].name',
         ));
 
@@ -181,13 +181,13 @@ instead of the ``default`` entity manager.
 query_builder
 ~~~~~~~~~~~~~
 
-**type**: ``Doctrine\ORM\QueryBuilder`` or a Closure **default**: ``null``
+**type**: ``Doctrine\ORM\QueryBuilder`` or a ``callable`` **default**: ``null``
 
 Allows you to create a custom query for your choices. See
 :ref:`ref-form-entity-query-builder` for an example.
 
-The value of this option can either be a ``QueryBuilder`` object, a Closure or
-``null`` (which will load all entities). When using a Closure, you will be
+The value of this option can either be a ``QueryBuilder`` object, a callable or
+``null`` (which will load all entities). When using a callable, you will be
 passed the ``EntityRepository`` of the entity as the only argument and should
 return a ``QueryBuilder``.
 

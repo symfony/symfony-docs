@@ -28,8 +28,8 @@ to store session data. This is because of the following configuration:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
             <framework:config>
                 <!-- handler-id set to null will use default session handler from php.ini -->
                 <framework:session handler-id="null" />
@@ -71,8 +71,8 @@ means that when you clear the cache, any current sessions will also be deleted:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
             <framework:config>
                 <framework:session />
             </framework:config>
@@ -121,8 +121,8 @@ session directory to ``app/sessions``:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
             <framework:config>
                 <framework:session handler-id="session.handler.native_file"
                     save-path="%kernel.root_dir%/sessions"
@@ -139,4 +139,3 @@ session directory to ``app/sessions``:
                 'save_path'  => '%kernel.root_dir%/sessions',
             ),
         ));
-

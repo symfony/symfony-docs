@@ -15,7 +15,7 @@ a very special object called the **service container**. If you have the service 
 then you can fetch a service by using that service's id::
 
     $logger = $container->get('logger');
-    $entityManager = $container->get('doctrine.entity_manager');
+    $entityManager = $container->get('doctrine.orm.entity_manager');
 
 The container is the *heart* of Symfony: it allows you to standardize and centralize
 the way objects are constructed. It makes your life easier, is super fast, and emphasizes
@@ -401,6 +401,20 @@ and reference it with the ``%parameter_name%`` syntax:
 Actually, once you define a parameter, it can be referenced via the ``%parameter_name%``
 syntax in *any* other service configuration file - like ``config.yml``. Many parameters
 are defined in a :ref:`parameters.yml file <config-parameters-yml>`.
+
+You can then fetch the parameter in the service::
+
+    class SiteUpdateManager
+    {
+        // ...
+
+        private $adminEmail;
+
+        public function __construct($adminEmail)
+        {
+            $this->adminEmail = $adminEmail;
+        }
+    }
 
 You can also fetch parameters directly from the container::
 

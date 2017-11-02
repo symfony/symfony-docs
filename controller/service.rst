@@ -23,17 +23,19 @@ These are the main **advantages** of defining controllers as services:
   service container configuration. This is useful when developing reusable bundles;
 * Your controllers are more "sandboxed". By looking at the constructor arguments,
   it's easy to see what types of things this controller may or may not do;
+* If you're not passing some required dependencies or if you are injecting some
+  non-existent services, you'll get errors during the container compilation
+  instead of during runtime execution;
 * Since dependencies must be injected manually, it's more obvious when your
   controller is becoming too big (i.e. if you have many constructor arguments).
 
 These are the main **drawbacks** of defining controllers as services:
 
-* It takes more work to create the controllers because they don't have
-  automatic access to the services or to the base controller shortcuts;
+* It takes more work to create the controllers and they become more verbose
+  because they don't have automatic access to the services and the base
+  controller shortcuts;
 * The constructor of the controllers can rapidly become too complex because you
-  must inject every single dependency needed by them;
-* The code of the controllers is more verbose because you can't use the shortcuts
-  of the base controller and you must replace them with some lines of code.
+  must inject every single dependency needed by them.
 
 The recommendation from the :doc:`best practices </best_practices/controllers>`
 is also valid for controllers defined as services: avoid putting your business
@@ -72,9 +74,17 @@ Then you can define it as a service as follows:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="app.hello_controller" class="AppBundle\Controller\HelloController" />
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.hello_controller" class="AppBundle\Controller\HelloController" />
+            </services>
+
+        </container>
 
     .. code-block:: php
 
@@ -112,9 +122,17 @@ the route ``_controller`` value:
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" path="/hello">
-            <default key="_controller">app.hello_controller:indexAction</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="hello" path="/hello">
+                <default key="_controller">app.hello_controller:indexAction</default>
+            </route>
+
+        </routes>
 
     .. code-block:: php
 
@@ -161,7 +179,7 @@ Symfony's base controller::
         public function indexAction($name)
         {
             return $this->render(
-                'AppBundle:Hello:index.html.twig',
+                'hello/index.html.twig',
                 array('name' => $name)
             );
         }
@@ -197,7 +215,7 @@ service and use it directly::
         public function indexAction($name)
         {
             return $this->templating->renderResponse(
-                'AppBundle:Hello:index.html.twig',
+                'hello/index.html.twig',
                 array('name' => $name)
             );
         }
@@ -219,11 +237,19 @@ argument:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="app.hello_controller" class="AppBundle\Controller\HelloController">
-                <argument type="service" id="templating"/>
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.hello_controller" class="AppBundle\Controller\HelloController">
+                    <argument type="service" id="templating"/>
+                </service>
+            </services>
+
+        </container>
 
     .. code-block:: php
 

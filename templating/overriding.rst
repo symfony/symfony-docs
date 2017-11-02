@@ -21,13 +21,13 @@ following::
         $blogs = ...;
 
         $this->render(
-            'AcmeBlogBundle:Blog:index.html.twig',
+            '@AcmeBlog/Blog/index.html.twig',
             array('blogs' => $blogs)
         );
     }
 
-When the ``AcmeBlogBundle:Blog:index.html.twig`` is rendered, Symfony actually
-looks in two different locations for the template:
+When ``@AcmeBlog/Blog/index.html.twig`` is rendered, Symfony actually looks in
+two different locations for the template:
 
 #. ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
 #. ``src/Acme/BlogBundle/Resources/views/Blog/index.html.twig``
@@ -44,7 +44,7 @@ to create it). You're now free to customize the template.
 
 This logic also applies to base bundle templates. Suppose also that each
 template in AcmeBlogBundle inherits from a base template called
-``AcmeBlogBundle::layout.html.twig``. Just as before, Symfony will look in
+``@AcmeBlog/layout.html.twig``. Just as before, Symfony will look in
 the following two places for the template:
 
 #. ``app/Resources/AcmeBlogBundle/views/layout.html.twig``

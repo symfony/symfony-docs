@@ -267,7 +267,8 @@ Full Default Configuration
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <swiftmailer:config
@@ -319,8 +320,8 @@ key (the default mailer is identified by the ``default_mailer`` option):
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/swiftmailer
-                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+
             <swiftmailer:config default-mailer="second_mailer">
                 <swiftmailer:mailer name="first_mailer"/>
                 <swiftmailer:mailer name="second_mailer"/>

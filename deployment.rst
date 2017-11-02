@@ -52,9 +52,10 @@ Using Source Control
 ~~~~~~~~~~~~~~~~~~~~
 
 If you're using source control (e.g. Git or SVN), you can simplify by having
-your live installation also be a copy of your repository. When you're ready
-to upgrade it is as simple as fetching the latest updates from your source
-control system.
+your live installation also be a copy of your repository. When you're ready to
+upgrade it is as simple as fetching the latest updates from your source control
+system. When using Git, a common approach is to create a tag for each release
+and check out the appropriate tag on deployment (see `Git Tagging`_).
 
 This makes updating your files *easier*, but you still need to worry about
 manually taking other steps (see `Common Post-Deployment Tasks`_).
@@ -120,11 +121,20 @@ Check if your server meets the requirements by running:
 
     $ php app/check.php
 
-B) Configure your ``app/config/parameters.yml`` File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _b-configure-your-app-config-parameters-yml-file:
 
-This file should *not* be deployed, but managed through the automatic utilities
-provided by Symfony.
+B) Configure your Parameters File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Most Symfony applications define configuration parameters in a file called
+``app/config/parameters.yml``. This file should *not* be deployed, because
+Symfony generates it automatically using the ``app/config/parameters.yml.dist``
+file as a template (that's why ``parameters.yml.dist`` must be committed and
+deployed).
+
+If your application uses environment variables instead of these parameters, you
+must define those env vars in your production server using the tools provided by
+your hosting service.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -197,7 +207,8 @@ Don't forget that deploying your application also involves updating any dependen
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
-.. _`Capifony`: http://capifony.org/
+.. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
+.. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: http://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
 .. _`Fabric`: http://www.fabfile.org/

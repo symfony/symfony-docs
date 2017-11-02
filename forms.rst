@@ -93,7 +93,7 @@ from inside a controller::
             $form = $this->createFormBuilder($task)
                 ->add('task', 'text')
                 ->add('dueDate', 'date')
-                ->add('save', 'submit', array('label' => 'Create Post'))
+                ->add('save', 'submit', array('label' => 'Create Task'))
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(
@@ -568,10 +568,10 @@ the correct values of a number of field options.
     field ``nullable``). This is very useful, as your client-side validation will
     automatically match your validation rules.
 
-``max_length``
-    If the field is some sort of text field, then the ``max_length`` option can be
-    guessed from the validation constraints (if ``Length`` or ``Range`` is used) or
-    from the Doctrine metadata (via the field's length).
+``maxlength``
+    If the field is some sort of text field, then the ``maxlength`` option attribute
+    can be guessed from the validation constraints (if ``Length`` or ``Range`` is used)
+    or from the Doctrine metadata (via the field's length).
 
 .. caution::
 
@@ -659,6 +659,7 @@ the choice is ultimately up to you.
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
+        // src/AppBundle/Form/TaskType.php
         use AppBundle\Entity\Task;
         use Symfony\Component\OptionsResolver\OptionsResolver;
 

@@ -24,7 +24,7 @@ Full Default Configuration
                         commented:            true
                 # If defined, all the tables whose names match this regular expression are ignored
                 # by the schema tool (in this example, any table name starting with `wp_`)
-                #schema_filter:               "/^wp_/"
+                #schema_filter:               '/^(?!wp_)/'
 
                 connections:
                     # A collection of different named connections (e.g. default, conn2, etc)
@@ -107,9 +107,6 @@ Full Default Configuration
 
                                 # True to use a pooled server with the oci8 driver
                                 pooled:               ~
-
-                                # the version of your database engine
-                                server_version:       ~
 
                                 # Configuring MultipleActiveResultSets for the pdo_sqlsrv driver
                                 MultipleActiveResultSets:  ~
@@ -321,8 +318,7 @@ The following block shows all possible configuration keys:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/doctrine
-                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
             <doctrine:config>
                 <doctrine:dbal
@@ -452,9 +448,10 @@ Keep in mind that you can't use both syntaxes at the same time.
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
-For the caching drivers you can specify the values ``array``, ``apc``, ``apcu``,
-``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata``, ``xcache``
-or ``service``.
+The built-in types of caching drivers are: ``array``, ``apc``, ``apcu``,
+``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata`` and ``xcache``.
+There is a special type called ``service`` which lets you define the ID of your
+own caching service.
 
 The following example shows an overview of the caching configurations:
 
@@ -463,15 +460,17 @@ The following example shows an overview of the caching configurations:
     doctrine:
         orm:
             auto_mapping: true
+            # each caching driver type defines its own config options
             metadata_cache_driver: apc
-            query_cache_driver:
-                type: service
-                id: my_doctrine_common_cache_service
             result_cache_driver:
                 type: memcache
                 host: localhost
                 port: 11211
                 instance_class: Memcache
+            # the 'service' type requires to define the 'id' option too
+            query_cache_driver:
+                type: service
+                id: my_doctrine_common_cache_service
 
 Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
@@ -564,7 +563,10 @@ directory instead:
 
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <doctrine:config>
                 <doctrine:orm auto-mapping="true">
@@ -614,7 +616,10 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <doctrine:config>
                 <doctrine:orm>

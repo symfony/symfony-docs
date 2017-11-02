@@ -535,6 +535,12 @@ and method: ``AppBundle\Controller\BlogController::showAction``. But if you
 follow some simple conventions, the logical name is more concise and allows
 more flexibility.
 
+.. tip::
+
+   To refer to an action that is implemented as the ``__invoke()`` method of a controller class,
+   you do not have to pass the method name, but can just use the fully qualified class name (e.g.
+   ``AppBundle\Controller\BlogController``).
+
 .. note::
 
    In addition to using the logical name or the fully-qualified class name,
@@ -710,6 +716,15 @@ route::
     // or, in Twig
     // {{ path('blog_show', {'slug': 'slug-value'}) }}
 
+Translating Routes
+------------------
+
+Symfony doesn't support defining routes with different contents depending on the
+user language. In those cases, you can define multiple routes per controller,
+one for each supported language; or use any of the bundles created by the
+community to implement this feature, such as `JMSI18nRoutingBundle`_ and
+`BeSimpleI18nRoutingBundle`_.
+
 Summary
 -------
 
@@ -737,3 +752,6 @@ Learn more about Routing
     :glob:
 
     routing/*
+
+.. _`JMSI18nRoutingBundle`: https://github.com/schmittjoh/JMSI18nRoutingBundle
+.. _`BeSimpleI18nRoutingBundle`: https://github.com/BeSimple/BeSimpleI18nRoutingBundle

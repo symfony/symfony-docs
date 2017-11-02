@@ -2,7 +2,7 @@ How to Configure Symfony to Work behind a Load Balancer or a Reverse Proxy
 ==========================================================================
 
 When you deploy your application, you may be behind a load balancer (e.g.
-an AWS Elastic Load Balancer) or a reverse proxy (e.g. Varnish for
+an AWS Elastic Load Balancing) or a reverse proxy (e.g. Varnish for
 :doc:`caching</http_cache>`).
 
 For the most part, this doesn't cause any problems with Symfony. But, when
@@ -42,8 +42,9 @@ and which reverse proxy IP addresses will be doing this type of thing:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8">
                 <!-- ... -->
@@ -73,7 +74,7 @@ using HTTPS.
 But what if the IP of my Reverse Proxy Changes Constantly!
 ----------------------------------------------------------
 
-Some reverse proxies (like Amazon's Elastic Load Balancers) don't have a
+Some reverse proxies (like AWS Elastic Load Balancing) don't have a
 static IP address or even a range that you can target with the CIDR notation.
 In this case, you'll need to - *very carefully* - trust *all* proxies.
 
@@ -86,13 +87,13 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 
    .. code-block:: diff
 
-	  // web/app.php
+        // web/app.php
 
-	  // ...
-	  $request = Request::createFromGlobals();
-	  + Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR')));
+        // ...
+        $request = Request::createFromGlobals();
+        + Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR')));
 
-	  // ...
+        // ...
 
 #. Ensure that the trusted_proxies setting in your ``app/config/config.yml``
    is not set or it will overwrite the ``setTrustedProxies()`` call above.

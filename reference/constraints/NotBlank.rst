@@ -1,9 +1,14 @@
 NotBlank
 ========
 
-Validates that a value is not blank, defined as not strictly ``false``,
-not equal to a blank string and also not equal to ``null``. To force that
-a value is simply not equal to ``null``, see the
+Validates that a value is not blank - meaning not equal to a blank string,
+a blank array or ``null``::
+
+    if (false === $value || (empty($value) && '0' != $value)) {
+        // validation will fail
+    }
+
+To force that a value is simply not equal to ``null``, see the
 :doc:`/reference/constraints/NotNull` constraint.
 
 +----------------+------------------------------------------------------------------------+

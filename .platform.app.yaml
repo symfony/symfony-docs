@@ -57,4 +57,5 @@ hooks:
       export PIP_USER=
       pip install pip==9.0.1 wheel==0.29.0
       pip install -r _build/.requirements.txt
+      find .virtualenv -type f -name "*.rst" -delete
       make -C _build html

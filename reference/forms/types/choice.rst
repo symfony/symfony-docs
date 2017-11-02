@@ -255,9 +255,9 @@ to the user.
 
 * Before 2.7 (and deprecated now)::
 
-    $builder->add('gender', 'choice', array(
-        // Shows "Male" to the user, returns "m" when selected
-        'choices'  => array('m' => 'Male', 'f' => 'Female'),
+    $builder->add('genre', 'choice', array(
+        // Shows "Fiction" to the user, returns "f" when selected
+        'choices'  => array('f' => 'Fiction', 'n' => 'Non-fiction'),
         // before 2.7, this option didn't actually exist, but the
         // behavior was equivalent to setting this to false in 2.7.
         'choices_as_values' => false,
@@ -265,9 +265,9 @@ to the user.
 
 * Since 2.7::
 
-    $builder->add('gender', 'choice', array(
-        // Shows "Male" to the user, returns "m" when selected
-        'choices' => array('Male' => 'm', 'Female' => 'f'),
+    $builder->add('genre', 'choice', array(
+        // Shows "Fiction" to the user, returns "f" when selected
+        'choices' => array('Fiction' => 'f', 'Non-fiction' => 'n'),
         'choices_as_values' => true,
     ));
 
@@ -276,8 +276,8 @@ type behaves as if it were set to true:
 
 * Default for 3.0::
 
-    $builder->add('gender', 'choice', array(
-        'choices' => array('Male' => 'm', 'Female' => 'f'),
+    $builder->add('genre', 'choice', array(
+        'choices' => array('Fiction' => 'f', 'Non-fiction' => 'n'),
     ));
 
 .. include:: /reference/forms/types/options/expanded.rst.inc

@@ -1,50 +1,42 @@
 .. index::
-   single: Security; Customizing form login
+   single: Security; Customizing form login redirect
 
-How to Customize your Form Login
-================================
+How to Customize Redirect After Form Login
+==========================================
 
-Using a :doc:`form login </security/form_login_setup>` for authentication
-is a common, and flexible, method for handling authentication in Symfony.
-Pretty much every aspect of the form login can be customized. The full, default
-configuration is shown in the next section.
-
-Form Login Configuration Reference
-----------------------------------
-
-To see the full form login configuration reference, see
-:doc:`/reference/configuration/security`. Some of the more interesting options
-are explained below.
+Using a :doc:`form login </security/form_login_setup>` for authentication is a
+common, and flexible, method for handling authentication in Symfony. This
+article explains how to customize the URL which the user is redirected to after
+a successful or failed login. Check out the full
+:doc:`form login configuration reference </reference/configuration/security>` to
+learn of the possible customization options.
 
 Redirecting after Success
 -------------------------
 
-You can change where the login form redirects after a successful login using
-the various config options. By default the form will redirect to the URL the
-user requested (i.e. the URL which triggered the login form being shown).
-For example, if the user requested ``http://www.example.com/admin/post/18/edit``,
-then after they successfully log in, they will eventually be sent back to
-``http://www.example.com/admin/post/18/edit``.
-This is done by storing the requested URL in the session.
-If no URL is present in the session (perhaps the user went
-directly to the login page), then the user is redirected to the default page,
-which is  ``/`` (i.e. the homepage) by default. You can change this behavior
-in several ways.
+By default, the form will redirect to the URL the user requested (i.e. the URL
+which triggered the login form being shown). For example, if the user requested
+``http://www.example.com/admin/post/18/edit``, then after they have successfully
+logged in, they will be sent back to ``http://www.example.com/admin/post/18/edit``.
+
+This is done by storing the requested URL in the session. If no URL is present
+in the session (perhaps the user went directly to the login page), then the user
+is redirected to ``/`` (i.e. the homepage). You can change this behavior in
+several ways.
 
 .. note::
 
-    As mentioned, by default the user is redirected back to the page originally
-    requested. Sometimes, this can cause problems, like if a background Ajax
-    request "appears" to be the last visited URL, causing the user to be
-    redirected there. For information on controlling this behavior, see
-    :doc:`/security/target_path`.
+    Sometimes, redirecting to the originally requested page can cause problems,
+    like if a background Ajax request "appears" to be the last visited URL,
+    causing the user to be redirected there. For information on controlling this
+    behavior, see :doc:`/security/target_path`.
 
 Changing the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, the default page can be set (i.e. the page the user is redirected to
-if no previous page was stored in the session). To set it to the
-``default_security_target`` route use the following config:
+Define the ``default_security_target`` option to change the page where the user
+is redirected to if no previous page was stored in the session. The value can be
+a relative/absolute URL or a Symfony route name:
 
 .. configuration-block::
 
@@ -58,7 +50,7 @@ if no previous page was stored in the session). To set it to the
                 main:
                     form_login:
                         # ...
-                        default_target_path: default_security_target
+                        default_target_path: after_login_route_name
 
     .. code-block:: xml
 
@@ -74,7 +66,7 @@ if no previous page was stored in the session). To set it to the
                 <!-- ... -->
 
                 <firewall name="main">
-                    <form-login default-target-path="default_security_target" />
+                    <form-login default-target-path="after_login_route_name" />
                 </firewall>
             </config>
         </srv:container>
@@ -91,21 +83,17 @@ if no previous page was stored in the session). To set it to the
 
                     'form_login' => array(
                         // ...
-                        'default_target_path' => 'default_security_target',
+                        'default_target_path' => 'after_login_route_name',
                     ),
                 ),
             ),
         ));
 
-Now, when no URL is set in the session, users will be sent to the
-``default_security_target`` route.
-
 Always Redirect to the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can make it so that users are always redirected to the default page regardless
-of what URL they had requested previously by setting the
-``always_use_default_target_path`` option to true:
+Define the ``always_use_default_target_path`` boolean option to ignore the
+previously requested URL and always redirect to the default page:
 
 .. configuration-block::
 
@@ -159,12 +147,52 @@ of what URL they had requested previously by setting the
             ),
         ));
 
+.. _control-the-redirect-url-from-inside-the-form:
+
+Control the Redirect Using Request Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The URL to redirect after the login can be defined using the ``_target_path``
+parameter of GET and POST requests. Its value must be a relative or absolute
+URL, not a Symfony route name.
+
+Defining the redirect URL via GET using a query string parameter:
+
+.. code-block:: text
+
+    http://example.com/some/path?_target_path=/dashboard
+
+Defining the redirect URL via POST using a hidden form field:
+
+.. configuration-block::
+
+    .. code-block:: html+twig
+
+        {# app/Resources/views/security/login.html.twig #}
+        <form action="{{ path('login') }}" method="post">
+            {# ... #}
+
+            <input type="hidden" name="_target_path" value="{{ path('account') }}" />
+            <input type="submit" name="login" />
+        </form>
+
+    .. code-block:: html+php
+
+        <!-- app/Resources/views/security/login.html.php -->
+        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+            // ...
+
+            <input type="hidden" name="_target_path" value="<?php echo $view['router']->generate('account') ?>" />
+            <input type="submit" name="login" />
+        </form>
+
 Using the Referring URL
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In case no previous URL was stored in the session, you may wish to try using
-the ``HTTP_REFERER`` instead, as this will often be the same. You can do
-this by setting ``use_referer`` to true (it defaults to false):
+In case no previous URL was stored in the session and no ``_target_path``
+parameter is included in the request, you may use the value of the
+``HTTP_REFERER`` header instead, as this will often be the same. Define the
+``use_referer`` boolean option to enable this behavior:
 
 .. configuration-block::
 
@@ -218,12 +246,19 @@ this by setting ``use_referer`` to true (it defaults to false):
             ),
         ));
 
-Redirecting on Login Failure
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. note::
+
+    The referrer URL is only used when it is different from the URL generated by
+    the ``login_path`` route to avoid a redirection loop.
+
+.. _redirecting-on-login-failure:
+
+Redirecting after Failure
+-------------------------
 
 After a failed login (e.g. an invalid username or password was submitted), the
 user is redirected back to the login form itself. Use the ``failure_path``
-option to define the route or URL the user is redirected to:
+option to define a new target via a relative/absolute URL or a Symfony route name:
 
 .. configuration-block::
 
@@ -238,7 +273,7 @@ option to define the route or URL the user is redirected to:
                     # ...
                     form_login:
                         # ...
-                        failure_path: login_failure
+                        failure_path: login_failure_route_name
 
     .. code-block:: xml
 
@@ -255,7 +290,7 @@ option to define the route or URL the user is redirected to:
 
                 <firewall name="main">
                     <!-- ... -->
-                    <form-login failure-path="login_failure" />
+                    <form-login failure-path="login_failure_route_name" />
                 </firewall>
             </config>
         </srv:container>
@@ -271,65 +306,46 @@ option to define the route or URL the user is redirected to:
                     // ...
                     'form_login' => array(
                         // ...
-                        'failure_path' => 'login_failure',
+                        'failure_path' => 'login_failure_route_name',
                     ),
                 ),
             ),
         ));
 
-Control the Redirect URL from inside the Form
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This option can also be set via the ``_failure_path`` request parameter:
 
-You can also override where the user is redirected to via the form itself by
-including a hidden field with the name ``_target_path`` for successful logins
-and ``_failure_path`` for login errors:
+.. code-block:: text
+
+    http://example.com/some/path?_failure_path=/forgot-password
 
 .. configuration-block::
 
     .. code-block:: html+twig
 
-        {# src/AppBundle/Resources/views/Security/login.html.twig #}
-        {% if error %}
-            <div>{{ error.message }}</div>
-        {% endif %}
-
+        {# app/Resources/views/security/login.html.twig #}
         <form action="{{ path('login') }}" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            {# ... #}
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password" />
-
-            <input type="hidden" name="_target_path" value="account" />
-            <input type="hidden" name="_failure_path" value="login" />
-
+            <input type="hidden" name="_failure_path" value="{{ path('forgot_password') }}" />
             <input type="submit" name="login" />
         </form>
 
     .. code-block:: html+php
 
-        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
-        <?php if ($error): ?>
-            <div><?php echo $error->getMessage() ?></div>
-        <?php endif ?>
-
+        <!-- app/Resources/views/security/login.html.php -->
         <form action="<?php echo $view['router']->generate('login') ?>" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
+            <!-- ... -->
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password" />
-
-            <input type="hidden" name="_target_path" value="account" />
-            <input type="hidden" name="_failure_path" value="login" />
-
+            <input type="hidden" name="_failure_path" value="<?php echo $view['router']->generate('forgot_password') ?>" />
             <input type="submit" name="login" />
         </form>
 
-Now, the user will be redirected to the value of the hidden form field. The
-value attribute can be a relative path, absolute URL, or a route name. 
-The name of the hidden fields in the login form is also configurable using the
-``target_path_parameter`` and ``failure_path_parameter`` options of the firewall.
+Customizing the Target and Failure Request Parameters
+-----------------------------------------------------
+
+The name of the request attributes used to define the success and failure login
+redirects can be customized using the  ``target_path_parameter`` and
+``failure_path_parameter`` options of the firewall that defines the login form.
 
 .. configuration-block::
 
@@ -343,8 +359,8 @@ The name of the hidden fields in the login form is also configurable using the
                 main:
                     # ...
                     form_login:
-                        target_path_parameter: login_success
-                        failure_path_parameter: login_fail
+                        target_path_parameter: go_to
+                        failure_path_parameter: back_to
 
     .. code-block:: xml
 
@@ -361,8 +377,8 @@ The name of the hidden fields in the login form is also configurable using the
 
                 <firewall name="main">
                     <!-- ... -->
-                    <form-login target-path-parameter="login_success" />
-                    <form-login failure-path-parameter="login_fail" />
+                    <form-login target-path-parameter="go_to" />
+                    <form-login failure-path-parameter="back_to" />
                 </firewall>
             </config>
         </srv:container>
@@ -377,9 +393,40 @@ The name of the hidden fields in the login form is also configurable using the
                 'main' => array(
                     // ...
                     'form_login' => array(
-                        'target_path_parameter' => 'login_success',
-                        'failure_path_parameter' => 'login_fail',
+                        'target_path_parameter' => 'go_to',
+                        'failure_path_parameter' => 'back_to',
                     ),
                 ),
             ),
         ));
+
+Using the above configuration, the query string parameters and hidden form fields
+are now fully customized:
+
+.. code-block:: text
+
+    http://example.com/some/path?go_to=/dashboard&back_to=/forgot-password
+
+.. configuration-block::
+
+    .. code-block:: html+twig
+
+        {# app/Resources/views/security/login.html.twig #}
+        <form action="{{ path('login') }}" method="post">
+            {# ... #}
+
+            <input type="hidden" name="go_to" value="{{ path('dashboard') }}" />
+            <input type="hidden" name="back_to" value="{{ path('forgot_password') }}" />
+            <input type="submit" name="login" />
+        </form>
+
+    .. code-block:: html+php
+
+        <!-- app/Resources/views/security/login.html.php -->
+        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+            <!-- ... -->
+
+            <input type="hidden" name="go_to" value="<?php echo $view['router']->generate('dashboard') ?>" />
+            <input type="hidden" name="back_to" value="<?php echo $view['router']->generate('forgot_password') ?>" />
+            <input type="submit" name="login" />
+        </form>

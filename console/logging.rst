@@ -95,8 +95,9 @@ First configure a listener for console exception events in the service container
         <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.listener.command_exception" class="AppBundle\EventListener\ConsoleExceptionListener">
@@ -104,6 +105,7 @@ First configure a listener for console exception events in the service container
                     <tag name="kernel.event_listener" event="console.exception" />
                 </service>
             </services>
+
         </container>
 
     .. code-block:: php
@@ -189,8 +191,9 @@ First configure a listener for console terminate events in the service container
         <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.listener.command_error" class="AppBundle\EventListener\ErrorLoggerListener">
@@ -198,6 +201,7 @@ First configure a listener for console terminate events in the service container
                     <tag name="kernel.event_listener" event="console.terminate" />
                 </service>
             </services>
+
         </container>
 
     .. code-block:: php

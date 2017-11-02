@@ -56,10 +56,10 @@ Now, examine the results to see this closely:
             <my-bundle:config logging="true" />
             <!-- true, as expected -->
 
-             <my-bundle:config logging="%kernel.debug%" />
-             <!-- true/false (depends on 2nd parameter of AppKernel),
-                  as expected, because %kernel.debug% inside configuration
-                  gets evaluated before being passed to the extension -->
+            <my-bundle:config logging="%kernel.debug%" />
+            <!-- true/false (depends on 2nd parameter of AppKernel),
+                 as expected, because %kernel.debug% inside configuration
+                 gets evaluated before being passed to the extension -->
 
             <my-bundle:config />
             <!-- passes the string "%kernel.debug%".

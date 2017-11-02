@@ -348,7 +348,14 @@ use_referer
 **type**: ``boolean`` **default**: ``false``
 
 If ``true``, the user is redirected to the value stored in the ``HTTP_REFERER``
-header when no previous URL was stored in the session.
+header when no previous URL was stored in the session. If the referrer URL is
+the same as the one generated with the ``login_path`` route, the user is
+redirected to the ``default_target_path`` to avoid a redirection loop.
+
+.. note::
+
+    For historical reasons, and to match the misspelling of the HTTP standard,
+    the option is called ``use_referer`` instead of ``use_referrer``.
 
 .. _reference-security-pbkdf2:
 
@@ -410,14 +417,22 @@ Using the BCrypt Password Encoder
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <config>
-            <!-- ... -->
-            <encoder
-                class="Symfony\Component\Security\Core\User\User"
-                algorithm="bcrypt"
-                cost="15"
-            />
-        </config>
+        <?xml version="1.0" charset="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+                <encoder
+                    class="Symfony\Component\Security\Core\User\User"
+                    algorithm="bcrypt"
+                    cost="15"
+                />
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -492,14 +507,22 @@ multiple firewalls, the "context" could actually be shared:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <security:config>
-            <security:firewall name="somename" context="my_context">
-                <!-- ... -->
-            </security:firewall>
-            <security:firewall name="othername" context="my_context">
-                <!-- ... -->
-            </security:firewall>
-        </security:config>
+        <?xml version="1.0" charset="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <firewall name="somename" context="my_context">
+                    <!-- ... -->
+                </firewall>
+                <firewall name="othername" context="my_context">
+                    <!-- ... -->
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
@@ -544,11 +567,19 @@ To use HTTP-Digest authentication you need to provide a realm and a key:
     .. code-block:: xml
 
         <!-- app/config/security.xml -->
-        <security:config>
-            <security:firewall name="somename">
-                <security:http-digest key="a_random_string" realm="secure-api" />
-            </security:firewall>
-        </security:config>
+        <?xml version="1.0" charset="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <firewall name="somename">
+                    <http-digest key="a_random_string" realm="secure-api" />
+                </firewall>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 

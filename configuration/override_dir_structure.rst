@@ -115,6 +115,7 @@ define your own templates directory (or directories):
             <twig:config>
                 <twig:path>%kernel.root_dir%/../templates</twig:path>
             </twig:config>
+
         </container>
 
     .. code-block:: php
@@ -192,6 +193,7 @@ file:
 
                 <!-- ... -->
                 <assetic:config read-from="%kernel.root_dir%/../../public_html" />
+
             </container>
 
         .. code-block:: php

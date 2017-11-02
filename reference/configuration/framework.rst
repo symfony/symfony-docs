@@ -4,18 +4,23 @@
 FrameworkBundle Configuration ("framework")
 ===========================================
 
-The FrameworkBundle contains most of the "base" framework functionality
-and can be configured under the ``framework`` key in your application
-configuration. When using XML, you must use the
-``http://symfony.com/schema/dic/symfony`` namespace.
+The FrameworkBundle defines the main framework configuration, from sessions and
+translations to forms, validation, routing and more. All these options are
+configured under the ``framework`` key in your application configuration.
 
-This includes settings related to sessions, translation, forms, validation,
-routing and more.
+.. code-block:: terminal
 
-.. tip::
+    # displays the default config values defined by Symfony
+    $ php bin/console config:dump framework
 
-   The XSD schema is available at
-   ``http://symfony.com/schema/dic/symfony/symfony-1.0.xsd``.
+    # displays the actual config values used by your application
+    $ php bin/console debug:config framework
+
+.. note::
+
+    When using XML, you must use the ``http://symfony.com/schema/dic/symfony``
+    namespace and the related XSD schema is available at:
+    ``http://symfony.com/schema/dic/symfony/symfony-1.0.xsd``
 
 Configuration
 -------------
@@ -50,6 +55,8 @@ Configuration
         * `ip`_
         * :ref:`path <reference-profiler-matcher-path>`
         * `service`_
+* `request`_:
+    * `formats`_
 * `router`_
     * `resource`_
     * `type`_
@@ -68,7 +75,9 @@ Configuration
     * `gc_divisor`_
     * `gc_probability`_
     * `gc_maxlifetime`_
+    * `use_strict_mode`_
     * `save_path`_
+    * `metadata_update_threshold`_
 * `assets`_
     * `base_path`_
     * `base_urls`_
@@ -176,7 +185,7 @@ trusted_proxies
 **type**: ``array``
 
 Configures the IP addresses that should be trusted as proxies. For more
-details, see :doc:`/request/load_balancer_reverse_proxy`.
+details, see :doc:`/deployment/proxies`.
 
 .. versionadded:: 2.3
     CIDR notation support was introduced in Symfony 2.3, so you can whitelist
@@ -197,7 +206,8 @@ details, see :doc:`/request/load_balancer_reverse_proxy`.
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config trusted-proxies="192.0.0.1, 10.0.0.0/8" />
@@ -249,7 +259,8 @@ you use PHPstorm on the Mac OS platform, you will do something like:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config ide="phpstorm://open?file=%%f&line=%%l" />
@@ -345,7 +356,8 @@ respond and the user will receive a 500 response.
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -472,7 +484,8 @@ You can also set ``esi`` to ``true`` to enable it:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -641,6 +654,69 @@ service
 
 This setting contains the service id of a custom matcher.
 
+request
+~~~~~~~
+
+formats
+.......
+
+**type**: ``array`` **default**: ``[]``
+
+This setting is used to associate additional request formats (e.g. ``html``)
+to one or more mime types (e.g. ``text/html``), which will allow you to use the
+format & mime types to call
+:method:`Request::getFormat($mimeType) <Symfony\\Component\\HttpFoundation\\Request::getFormat>` or
+:method:`Request::getMimeType($format) <Symfony\\Component\\HttpFoundation\\Request::getMimeType>`.
+
+In practice, this is important because Symfony uses it to automatically set the
+``Content-Type`` header on the ``Response`` (if you don't explicitly set one).
+If you pass an array of mime types, the first will be used for the header.
+
+To configure a ``jsonp`` format:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            request:
+                formats:
+                    jsonp: 'application/javascript'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:request>
+                    <framework:format name="jsonp">
+                        <framework:mime-type>application/javascript</framework:mime-type>
+                    </framework:format>
+                </framework:request>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'request' => array(
+                'formats' => array(
+                    'jsonp' => 'application/javascript',
+                ),
+            ),
+        ));
+
 router
 ~~~~~~
 
@@ -805,6 +881,17 @@ This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session
 start and depends on `gc_divisor`_ and `gc_probability`_.
 
+use_strict_mode
+...............
+
+**type**: ``boolean`` **default**: ``false``
+
+This specifies whether the session module will use the strict session id mode.
+If this mode is enabled, the module does not accept uninitialized session IDs.
+If an uninitialized session ID is sent from browser, a new session ID is sent
+to browser. Applications are protected from session fixation via session
+adoption with strict mode.
+
 save_path
 .........
 
@@ -833,7 +920,8 @@ setting the value to ``null``:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -849,6 +937,19 @@ setting the value to ``null``:
                 'save_path' => null,
             ),
         ));
+
+metadata_update_threshold
+.........................
+
+**type**: ``integer`` **default**: ``0``
+
+This is how many seconds to wait between two session metadata updates. It will
+also prevent the session handler to write if the session has not changed.
+
+.. seealso::
+
+    You can see an example of the usage of this in
+    :doc:`/session/limit_metadata_writes`.
 
 assets
 ~~~~~~
@@ -879,7 +980,8 @@ This option allows you to define a base path to be used for assets:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -927,7 +1029,8 @@ collection each time it generates an asset's path:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -969,7 +1072,8 @@ You can group assets into packages, to specify different base URLs for them:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -1059,7 +1163,8 @@ Now, activate the ``version`` option:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
@@ -1180,7 +1285,8 @@ Assume you have custom global form themes in
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>

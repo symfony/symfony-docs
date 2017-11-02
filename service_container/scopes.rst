@@ -141,13 +141,20 @@ argument is the ``ClientConfiguration`` object:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="my_mailer"
-                    class="AppBundle\Mail\Mailer"
-                    scope="client">
-                    <argument type="service" id="client_configuration" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="my_mailer"
+                        class="AppBundle\Mail\Mailer"
+                        scope="client">
+                        <argument type="service" id="client_configuration" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -212,11 +219,18 @@ The service configuration for this class would look something like this:
     .. code-block:: xml
 
         <!-- app/config/services.xml -->
-        <services>
-            <service id="my_mailer" class="AppBundle\Mail\Mailer">
-                 <argument type="service" id="service_container" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="my_mailer" class="AppBundle\Mail\Mailer">
+                     <argument type="service" id="service_container" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

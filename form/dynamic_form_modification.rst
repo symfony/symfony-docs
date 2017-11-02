@@ -269,7 +269,7 @@ Customizing the Form Type
 Now that you have all the basics in place you can take advantage of the ``TokenStorageInterface``
 and fill in the listener logic::
 
-    // src/AppBundle/FormType/FriendMessageFormType.php
+    // src/AppBundle/Form/Type/FriendMessageFormType.php
 
     use AppBundle\Entity\User;
     use Doctrine\ORM\EntityRepository;
@@ -390,12 +390,19 @@ it with :ref:`dic-tags-form-type`.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <services>
-            <service id="app.form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
-                <argument type="service" id="security.token_storage" />
-                <tag name="form.type" alias="app_friend_message" />
-            </service>
-        </services>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
+                    <argument type="service" id="security.token_storage" />
+                    <tag name="form.type" alias="app_friend_message" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 
@@ -483,9 +490,10 @@ sport like this::
                     $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                     $form->add('position', 'entity', array(
-                        'class'       => 'AppBundle:Position',
+                        'class' => 'AppBundle:Position',
                         'placeholder' => '',
-                        'choices'     => $positions,
+                        'choices' => $positions,
+                        'choices_as_values' => true,
                     ));
                 }
             );
@@ -546,9 +554,10 @@ The type would now look like::
                 $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                 $form->add('position', 'entity', array(
-                    'class'       => 'AppBundle:Position',
+                    'class' => 'AppBundle:Position',
                     'placeholder' => '',
-                    'choices'     => $positions,
+                    'choices' => $positions,
+                    'choices_as_values' => true,
                 ));
             };
 
@@ -609,7 +618,7 @@ your application. Assume that you have a sport meetup creation controller::
             }
 
             return $this->render(
-                'AppBundle:Meetup:create.html.twig',
+                'meetup/create.html.twig',
                 array('form' => $form->createView())
             );
         }
@@ -624,7 +633,7 @@ field according to the current selection in the ``sport`` field:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/Meetup/create.html.twig #}
+        {# app/Resources/views/meetup/create.html.twig #}
         {{ form_start(form) }}
             {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
             {{ form_row(form.position) }} {# <select id="meetup_position" ... #}

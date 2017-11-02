@@ -75,12 +75,21 @@ Then register the listener:
 
     .. code-block:: xml
 
-        <service id="app.locale_listener"
-            class="AppBundle\EventListener\LocaleListener">
-            <argument>%kernel.default_locale%</argument>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <tag name="kernel.event_subscriber" />
-        </service>
+            <services>
+                <service id="app.locale_listener"
+                    class="AppBundle\EventListener\LocaleListener">
+                    <argument>%kernel.default_locale%</argument>
+
+                    <tag name="kernel.event_subscriber" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

@@ -25,16 +25,14 @@ the original service is lost:
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-            <services>
+            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+            <services>
                 <service id="app.mailer" class="AppBundle\Mailer" />
 
                 <!-- this replaces the old app.mailer definition with the new
                      one, the old definition is lost -->
                 <service id="app.mailer" class="AppBundle\DecoratingMailer" />
-
             </services>
         </container>
 
@@ -63,18 +61,18 @@ a reference of the old one  as ``app.decorating_mailer.inner``:
             # ...
 
             app.decorating_mailer:
-              class:     AppBundle\DecoratingMailer
-              decorates: app.mailer
-              arguments: ['@app.decorating_mailer.inner']
-              public:    false
+                class:     AppBundle\DecoratingMailer
+                decorates: app.mailer
+                arguments: ['@app.decorating_mailer.inner']
+                public:    false
 
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
+            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
             <services>
                 <!-- ... -->
 
@@ -130,7 +128,7 @@ convention, the old ``app.mailer`` service is renamed to
         .. code-block:: yaml
 
             services:
-                app.mailer:
+                app.decorating_mailer:
                     # ...
                     decoration_inner_name: app.decorating_mailer.wooz
                     arguments: ['@app.decorating_mailer.wooz']
@@ -140,13 +138,17 @@ convention, the old ``app.mailer`` service is renamed to
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-                xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd"
-            >
+                xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
                 <services>
                     <!-- ... -->
 
                     <service
+                        id="app.decorating_mailer"
+                        class="AppBundle\DecoratingMailer"
+                        decorates="app.mailer"
                         decoration-inner-name="app.decorating_mailer.wooz"
+                        public="false"
                     >
                         <argument type="service" id="app.decorating_mailer.wooz" />
                     </service>
@@ -160,7 +162,7 @@ convention, the old ``app.mailer`` service is renamed to
             use Symfony\Component\DependencyInjection\Reference;
 
             $container->register('app.decorating_mailer', DecoratingMailer::class)
-                ->setDecoratedService('foo', 'app.decorating_mailer.wooz')
+                ->setDecoratedService('app.mailer', 'app.decorating_mailer.wooz')
                 ->addArgument(new Reference('app.decorating_mailer.wooz'))
                 // ...
             ;

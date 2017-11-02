@@ -103,17 +103,26 @@ You can now reference these parameters wherever you need them.
 
     .. code-block:: xml
 
-        <!-- xmlns:doctrine="http://symfony.com/schema/dic/doctrine" -->
-        <!-- xsi:schemaLocation="http://symfony.com/schema/dic/doctrine http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"> -->
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
 
-        <doctrine:config>
-            <doctrine:dbal
-                driver="pdo_mysql"
-                dbname="symfony_project"
-                user="%database.user%"
-                password="%database.password%"
-            />
-        </doctrine:config>
+            <doctrine:config>
+                <doctrine:dbal
+                    driver="pdo_mysql"
+                    dbname="symfony_project"
+                    user="%database.user%"
+                    password="%database.password%"
+                />
+            </doctrine:config>
+
+        </container>
 
     .. code-block:: php
 
@@ -150,9 +159,17 @@ in the container. The following imports a file named ``parameters.php``.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <imports>
-            <import resource="parameters.php" />
-        </imports>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <imports>
+                <import resource="parameters.php" />
+            </imports>
+
+        </container>
 
     .. code-block:: php
 

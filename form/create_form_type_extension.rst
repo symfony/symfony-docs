@@ -5,7 +5,7 @@ How to Create a Form Type Extension
 ===================================
 
 :doc:`Custom form field types <create_custom_field_type>` are great when
-you need field types with a specific purpose, such as a gender selector,
+you need field types with a specific purpose, such as a shipping type selector,
 or a VAT number input.
 
 But sometimes, you don't really need to add new field types - you want
@@ -108,11 +108,20 @@ tag:
 
     .. code-block:: xml
 
-        <service id="app.image_type_extension"
-            class="AppBundle\Form\Extension\ImageTypeExtension"
-        >
-            <tag name="form.type_extension" alias="file" />
-        </service>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="app.image_type_extension"
+                    class="AppBundle\Form\Extension\ImageTypeExtension"
+                >
+                    <tag name="form.type_extension" alias="file" />
+                </service>
+            </services>
+        </container>
 
     .. code-block:: php
 

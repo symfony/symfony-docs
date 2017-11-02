@@ -321,6 +321,51 @@ see `Enable other Features`_.
 
     var_dump($person->getWouter()); // array(...)
 
+Writing to Array Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``PropertyAccessor`` class allows to update the content of arrays stored in
+properties through *adder* and *remover* methods.
+
+.. code-block:: php
+
+    // ...
+    class Person
+    {
+        /**
+         * @var string[]
+         */
+        private $children = array();
+
+        public function getChildren(): array
+        {
+            return $this->children;
+        }
+
+        public function addChild(string $name): void
+        {
+            $this->children[$name] = $name;
+        }
+
+        public function removeChild(string $name): void
+        {
+            unset($this->children[$name]);
+        }
+    }
+
+    $person = new Person();
+    $accessor->setValue($person, 'children', array('kevin', 'wouter'));
+
+    var_dump($person->getChildren()); // array('kevin', 'wouter')
+
+The PropertyAccess component checks for methods called ``add<SingularOfThePropertyName>()``
+and ``remove<SingularOfThePropertyName>()``. Both methods must be defined.
+For instance, in the previous example, the component looks for the ``addChild()``
+and ``removeChild()`` methods to access to the ``children`` property.
+`The Inflector component`_ is used to find the singular of a property name.
+
+If available, *adder* and *remover* methods have priority over a *setter* method.
+
 Checking Property Paths
 -----------------------
 
@@ -414,3 +459,4 @@ Or you can pass parameters directly to the constructor (not the recommended way)
 
 
 .. _Packagist: https://packagist.org/packages/symfony/property-access
+.. _The Inflector component: https://github.com/symfony/inflector

@@ -243,7 +243,7 @@ logic to a separate service::
         {
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
-            $file->move($this->targetDir, $fileName);
+            $file->move($this->getTargetDir(), $fileName);
 
             return $fileName;
         }
@@ -274,13 +274,13 @@ Then, define a service for this class:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
             <service id="app.brochure_uploader" class="AppBundle\FileUploader">
                 <argument>%brochures_directory%</argument>
             </service>
+
         </container>
 
     .. code-block:: php
@@ -362,12 +362,10 @@ automatically upload the file when persisting the entity::
             $file = $entity->getBrochure();
 
             // only upload new files
-            if (!$file instanceof UploadedFile) {
-                return;
+            if ($file instanceof UploadedFile) {
+                $fileName = $this->uploader->upload($file);
+                $entity->setBrochure($fileName);
             }
-
-            $fileName = $this->uploader->upload($file);
-            $entity->setBrochure($fileName);
         }
     }
 
@@ -394,8 +392,7 @@ Now, register this class as a Doctrine listener:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
             <service id="app.doctrine_brochure_listener"
@@ -406,6 +403,7 @@ Now, register this class as a Doctrine listener:
                 <tag name="doctrine.event_listener" event="prePersist"/>
                 <tag name="doctrine.event_listener" event="preUpdate"/>
             </service>
+
         </container>
 
     .. code-block:: php
@@ -416,7 +414,7 @@ Now, register this class as a Doctrine listener:
 
         // ...
         $container->register('app.doctrine_brochure_listener', BrochureUploaderListener::class)
-            ->addArgument(new Reference('brochures_directory'))
+            ->addArgument(new Reference('app.brochure_uploader'))
             ->addTag('doctrine.event_listener', array(
                 'event' => 'prePersist',
             ))

@@ -130,12 +130,12 @@ set for the package and the URL path. More information in
 :ref:`templating-assets`. For asset versioning, see
 :ref:`reference-framework-assets-version`.
 
-assets_version
+asset_version
 ~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
-    {{ assets_version(packageName = null) }}
+    {{ asset_version(packageName = null) }}
 
 ``packageName`` *(optional)*
     **type**: ``string`` | ``null`` **default**: ``null``
@@ -595,14 +595,14 @@ file_excerpt
 
 .. code-block:: twig
 
-    {{ file|file_excerpt(line = null) }}
+    {{ file|file_excerpt(line) }}
 
 ``file``
     **type**: ``string``
-``line`` *(optional)*
+``line``
     **type**: ``integer``
 
-Generates an excerpt of seven lines around the given ``line``.
+Generates an excerpt of a code file around the given ``line`` number.
 
 format_file
 ~~~~~~~~~~~
@@ -639,12 +639,14 @@ file_link
 
 .. code-block:: twig
 
-    {{ file|file_link(line = null) }}
+    {{ file|file_link(line) }}
 
-``line`` *(optional)*
+``file``
+    **type**: ``string``
+``line``
     **type**: ``integer``
 
-Generates a link to the provided file (and optionally line number) using
+Generates a link to the provided file and line number using
 a preconfigured scheme.
 
 .. _reference-twig-tags:
@@ -779,7 +781,7 @@ Those bundles can have other Twig extensions:
 
 * **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and
   ``{% image %}`` tags. You can read more about them in
-  :doc:`the Assetic Documentation </assetic/asset_management>`.
+  :doc:`the Assetic Documentation </frontend/assetic/asset_management>`.
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
 .. _`Twig Extensions repository`: https://github.com/twigphp/Twig-extensions

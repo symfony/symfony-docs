@@ -408,7 +408,7 @@ is created from the form factory.
                     ->add('dueDate', 'date')
                     ->getForm();
 
-                return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
+                return $this->render('@AcmeTask/Default/new.html.twig', array(
                     'form' => $form->createView(),
                 ));
             }

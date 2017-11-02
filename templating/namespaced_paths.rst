@@ -4,31 +4,26 @@
 How to Use and Register Namespaced Twig Paths
 =============================================
 
-Usually, when you refer to a template, you'll use the ``MyBundle:Subdir:filename.html.twig``
-format (see :ref:`template-naming-locations`).
-
-Twig also natively offers a feature called "namespaced paths", and support
-is built-in automatically for all of your bundles.
-
-Take the following paths as an example:
-
-.. code-block:: twig
-
-    {% extends "AppBundle::layout.html.twig" %}
-    {{ include('AppBundle:Foo:bar.html.twig') }}
-
-With namespaced paths, the following works as well:
+Usually, when you refer to a template, you'll use the Twig namespaced paths, which
+are automatically registered for your bundles:
 
 .. code-block:: twig
 
     {% extends "@App/layout.html.twig" %}
     {{ include('@App/Foo/bar.html.twig') }}
 
-Both paths are valid and functional by default in Symfony.
+.. note::
 
-.. tip::
+    In the past, Symfony used a different syntax to refer to templates. This
+    format, which uses colons (``:``) to separate each template path section, is
+    less consistent and has worse performance than the Twig syntax. For reference
+    purposes, this is the equivalent notation of the previous example:
 
-    As an added bonus, the namespaced syntax is faster.
+    .. code-block:: twig
+
+        {# the following template syntax is no longer recommended #}
+        {% extends "AppBundle::layout.html.twig" %}
+        {{ include('AppBundle:Foo:bar.html.twig') }}
 
 Registering your own Namespaces
 -------------------------------
@@ -51,11 +46,12 @@ directory:
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xmlns:twig="http://symfony.com/schema/dic/twig"
-        >
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%">
                 <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
@@ -110,10 +106,12 @@ specific template doesn't exist.
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:twig="http://symfony.com/schema/dic/twig"
-        >
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%">
                 <twig:path namespace="theme">%kernel.root_dir%/../vendor/acme/themes/theme1</twig:path>

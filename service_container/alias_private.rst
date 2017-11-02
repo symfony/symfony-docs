@@ -72,7 +72,7 @@ However, if a service has been marked as private, you can still alias it
 .. note::
 
     Services are by default public, but it's considered a good practice to mark
-    as much services private as possible.
+    as many services private as possible.
 
 Aliasing
 --------
@@ -97,7 +97,8 @@ services.
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
                 <service id="app.phpmailer" class="AppBundle\Mail\PhpMailer" />

@@ -31,8 +31,8 @@ uses MySQL as the storage for the profiler with a lifetime of one hour:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
             <framework:config>
                 <framework:profiler
                     dsn="mysql:host=localhost;dbname=%database_name%"
@@ -50,7 +50,7 @@ uses MySQL as the storage for the profiler with a lifetime of one hour:
         // ...
         $container->loadFromExtension('framework', array(
             'profiler' => array(
-                'dsn'      => 'mysql:host=localhost;dbname=%database_name%',
+                'dsn' => 'mysql:host=localhost;dbname=%database_name%',
                 'username' => '%database_user',
                 'password' => '%database_password%',
                 'lifetime' => 3600,

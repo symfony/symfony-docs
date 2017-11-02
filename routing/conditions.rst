@@ -4,9 +4,9 @@
 How to Restrict Route Matching through Conditions
 =================================================
 
-As you've seen, a route can be made to match only certain routing wildcards
-(via regular expressions), HTTP methods, or host names. But the routing system
-can be extended to have an almost infinite flexibility using ``conditions``:
+A route can be made to match only certain routing placeholders (via regular
+expressions), HTTP methods, or host names. If you need more flexibility to
+define arbitrary matching logic, use the ``conditions`` routing option:
 
 .. configuration-block::
 
