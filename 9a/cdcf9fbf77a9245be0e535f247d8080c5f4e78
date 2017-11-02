@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2017-10-31T10:49:36Z
+
+Thanks a lot for your detailed review @yceruto ! I've now fixed everything or reverted the change as they have to be done in another PR (to not make this too big and hard to merge).
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-10-31T21:44:26Z
+
+Applied the comment and also fixed the build
