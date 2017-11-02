@@ -10,7 +10,7 @@ is not a new Symfony version, but a tool that replaces and improves the
 Symfony Flex **automates the most common tasks of Symfony applications**, such
 as installing and removing bundles and other Composer dependencies. Symfony
 Flex works for Symfony 3.3 and newer versions. Starting from Symfony 4.0, Flex
-should be used by default, but it is optional to use.
+should be used by default, but it is still optional.
 
 How Does Flex Work
 ------------------
@@ -48,8 +48,8 @@ In the above example, Symfony Flex asks about the ``mailer`` package and the
 Symfony Flex server detects that ``mailer`` is in fact an alias for
 SwiftmailerBundle and returns the "recipe" for it.
 
-Flex keeps tracks of which recipes it installed in a ``symfony.lock`` file that
-must be committed in your code repository.
+Flex keeps tracks of the recipes it installed in a ``symfony.lock`` file, which
+must be committed to your code repository.
 
 Symfony Flex Recipes
 ~~~~~~~~~~~~~~~~~~~~
@@ -76,7 +76,7 @@ SwiftmailerBundle:
 The ``aliases`` option allows Flex to install packages using short and easy to
 remember names (``composer require mailer`` vs ``composer require
 symfony/swiftmailer-bundle``). The ``bundles`` option tells Flex in which
-environments should this bundle be enabled automatically (``all`` in this
+environments this bundle should be enabled automatically (``all`` in this
 case). The ``env`` option makes Flex to add new environment variables to the
 application. Finally, the ``copy-from-recipe`` option allows the recipe to copy
 files and directories into your application.
@@ -111,8 +111,8 @@ Using Symfony Flex in New Applications
 
 Symfony has published a new "skeleton" project, which is a minimal Symfony
 project recommended to create new applications. This "skeleton" already
-includes Symfony Flex as a dependency, so you can create a new Flex-enabled
-Symfony application executing the following command:
+includes Symfony Flex as a dependency. This means you can create a new Flex-enabled
+Symfony application by executing the following command:
 
 .. code-block:: terminal
 
