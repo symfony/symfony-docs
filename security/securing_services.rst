@@ -27,8 +27,8 @@ have a ``NewsletterManager`` class that sends out emails and you want to
 restrict its use to only users who have some ``ROLE_NEWSLETTER_ADMIN`` role.
 Before you add security, the class looks something like this::
 
-    // src/AppBundle/Newsletter/NewsletterManager.php
-    namespace AppBundle\Newsletter;
+    // src/Newsletter/NewsletterManager.php
+    namespace App\Newsletter;
 
     class NewsletterManager
     {
@@ -44,7 +44,7 @@ Your goal is to check the user's role when the ``sendNewsletter()`` method is
 called. The first step towards this is to inject the ``security.authorization_checker``
 service into the object::
 
-    // src/AppBundle/Newsletter/NewsletterManager.php
+    // src/Newsletter/NewsletterManager.php
 
     // ...
     use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -71,7 +71,7 @@ service into the object::
         // ...
     }
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically pass the ``security.authorization_checker`` to your service
 thanks to autowiring and the ``AuthorizationCheckerInterface`` type-hint.
 

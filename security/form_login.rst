@@ -168,7 +168,7 @@ Defining the redirect URL via POST using a hidden form field:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/security/login.html.twig #}
+        {# templates/security/login.html.twig #}
         <form action="{{ path('login') }}" method="post">
             {# ... #}
 
@@ -178,7 +178,7 @@ Defining the redirect URL via POST using a hidden form field:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/security/login.html.php -->
+        <!-- templates/security/login.html.php -->
         <form action="<?php echo $view['router']->path('login') ?>" method="post">
             // ...
 
@@ -322,7 +322,7 @@ This option can also be set via the ``_failure_path`` request parameter:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/security/login.html.twig #}
+        {# templates/security/login.html.twig #}
         <form action="{{ path('login') }}" method="post">
             {# ... #}
 
@@ -332,7 +332,7 @@ This option can also be set via the ``_failure_path`` request parameter:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/security/login.html.php -->
+        <!-- templates/security/login.html.php -->
         <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <!-- ... -->
 
@@ -411,7 +411,7 @@ are now fully customized:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/security/login.html.twig #}
+        {# templates/security/login.html.twig #}
         <form action="{{ path('login') }}" method="post">
             {# ... #}
 
@@ -422,7 +422,7 @@ are now fully customized:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/security/login.html.php -->
+        <!-- templates/security/login.html.php -->
         <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <!-- ... -->
 

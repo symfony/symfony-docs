@@ -60,7 +60,7 @@ table fields.
     $ php bin/console doctrine:mapping:import --force AppBundle xml
 
 This command line tool asks Doctrine to introspect the database and generate
-the XML metadata files under the ``src/AppBundle/Resources/config/doctrine``
+the XML metadata files under the ``src/Resources/config/doctrine``
 folder of your bundle. This generates two files: ``BlogPost.orm.xml`` and
 ``BlogComment.orm.xml``.
 
@@ -75,7 +75,7 @@ The generated ``BlogPost.orm.xml`` metadata file looks as follows:
 
     <?xml version="1.0" encoding="utf-8"?>
     <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-      <entity name="AppBundle\Entity\BlogPost" table="blog_post">
+      <entity name="App\Entity\BlogPost" table="blog_post">
         <id name="id" type="bigint" column="id">
           <generator strategy="IDENTITY"/>
         </id>
@@ -101,8 +101,8 @@ entity classes by executing the following command.
 
 For example, the newly created ``BlogComment`` entity class looks as follow::
 
-    // src/AppBundle/Entity/BlogComment.php
-    namespace AppBundle\Entity;
+    // src/Entity/BlogComment.php
+    namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
 

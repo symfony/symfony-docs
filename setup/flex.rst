@@ -160,9 +160,9 @@ these manual steps:
    new ``config/services.yaml`` and ``.env`` files depending on your needs.
 #. Move the original source code from ``src/{App,...}Bundle/`` to ``src/`` and
    update the namespaces of every PHP file (advanced IDEs can do this automatically).
-#. Move the original templates from ``app/Resources/views/`` to ``templates/``
+#. Move the original templates from ``templates/`` to ``templates/``
 #. Make any other change needed by your application. For example, if your original
-   ``web/app_*.php`` front controllers were customized, add those changes to the
+   ``public/app_*.php`` front controllers were customized, add those changes to the
    new ``public/index.php`` controller.
 
 .. _`Symfony Flex`: https://github.com/symfony/flex

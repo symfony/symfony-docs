@@ -59,7 +59,7 @@ by the routing system using the special ``_locale`` parameter:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         contact:
             path:     /{_locale}/contact
             defaults: { _controller: AppBundle:Contact:index }
@@ -68,7 +68,7 @@ by the routing system using the special ``_locale`` parameter:
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -83,7 +83,7 @@ by the routing system using the special ``_locale`` parameter:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 

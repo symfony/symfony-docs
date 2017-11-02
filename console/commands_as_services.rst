@@ -4,7 +4,7 @@
 How to Define Commands as Services
 ==================================
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 your command classes are already registered as services. Great! This is the
 recommended setup.
 
@@ -26,7 +26,7 @@ using normal :ref:`dependency injection <services-constructor-injection>`.
 
 For example, suppose you want to log something from within your command::
 
-    namespace AppBundle\Command;
+    namespace App\Command;
 
     use Psr\Log\LoggerInterface;
     use Symfony\Component\Console\Command\Command;
@@ -59,7 +59,7 @@ For example, suppose you want to log something from within your command::
         }
     }
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 the command class will automatically be registered as a service and passed the ``$logger``
 argument (thanks to autowiring). In other words, *just* by creating this class, everything
 works! You can call the ``app:sunshine`` command and start logging.
@@ -96,7 +96,7 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
 
         services:
 
-            AppBundle\Command\SunshineCommand:
+            App\Command\SunshineCommand:
                 tags:
                     - { name: 'console.command', command: 'app:sunshine' }
                 # ...
@@ -110,7 +110,7 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
 
             <services>
 
-                <service id="AppBundle\Command\SunshineCommand">
+                <service id="App\Command\SunshineCommand">
                      <tag name="console.command" command="app:sunshine" />
                 </service>
 
@@ -119,7 +119,7 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
 
     .. code-block:: php
 
-        use AppBundle\Command\SunshineCommand;
+        use App\Command\SunshineCommand;
 
         //...
 

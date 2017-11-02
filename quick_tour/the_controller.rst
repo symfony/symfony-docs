@@ -19,8 +19,8 @@ controller shortcut method to return a rendered template as result. In case
 you need it, you can also create a raw ``Response`` object to return any
 text content::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
@@ -51,11 +51,11 @@ is assigned a unique name that can be used later in the controller to retrieve
 each value.
 
 Let's create a new action with route variables to show this feature in action.
-Open the ``src/AppBundle/Controller/DefaultController.php`` file and add
+Open the ``src/Controller/DefaultController.php`` file and add
 a new method called ``helloAction()`` with the following content::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Routing\Annotation\Route;
@@ -81,12 +81,12 @@ result, you'll see an error page. As you probably guessed, the cause of
 this error is that we're trying to render a template
 (``default/hello.html.twig``) that doesn't exist yet.
 
-Create the new ``app/Resources/views/default/hello.html.twig`` template
+Create the new ``templates/default/hello.html.twig`` template
 with the following content:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/default/hello.html.twig #}
+    {# templates/default/hello.html.twig #}
     {% extends 'base.html.twig' %}
 
     {% block body %}
@@ -113,7 +113,7 @@ which stores the format requested by the user.
 Tweak the ``hello`` route by adding a new ``_format`` variable with ``html``
 as its default value::
 
-    // src/AppBundle/Controller/DefaultController.php
+    // src/Controller/DefaultController.php
     use Symfony\Component\Routing\Annotation\Route;
 
     // ...
@@ -134,7 +134,7 @@ a new ``hello.xml.twig`` template:
 
 .. code-block:: xml+php
 
-    <!-- app/Resources/views/default/hello.xml.twig -->
+    <!-- templates/default/hello.xml.twig -->
     <hello>
         <name>{{ name }}</name>
     </hello>
@@ -151,7 +151,7 @@ automatically choose the best ``Content-Type`` header for the response.
 To restrict the formats supported by a given action, use the ``requirements``
 option of the ``@Route()`` annotation::
 
-    // src/AppBundle/Controller/DefaultController.php
+    // src/Controller/DefaultController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     use Symfony\Component\Routing\Annotation\Route;
 
@@ -184,7 +184,7 @@ Redirecting
 If you want to redirect the user to another page, use the ``redirectToRoute()``
 method::
 
-    // src/AppBundle/Controller/DefaultController.php
+    // src/Controller/DefaultController.php
     class DefaultController extends Controller
     {
         /**
@@ -207,7 +207,7 @@ Errors will inevitably happen during the execution of every web application.
 In the case of ``404`` errors, Symfony includes a handy shortcut that you
 can use in your controllers::
 
-    // src/AppBundle/Controller/DefaultController.php
+    // src/Controller/DefaultController.php
     // ...
 
     class DefaultController extends Controller
@@ -225,7 +225,7 @@ can use in your controllers::
 For ``500`` errors, just throw a regular PHP exception inside the controller
 and Symfony will transform it into a proper ``500`` error page::
 
-    // src/AppBundle/Controller/DefaultController.php
+    // src/Controller/DefaultController.php
     // ...
 
     class DefaultController extends Controller
@@ -250,8 +250,8 @@ parameters. To get access to this information, add a new argument of type
 but it must be preceded by the ``Request`` type in order to work (don't
 forget to add the new ``use`` statement that imports this ``Request`` class)::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;

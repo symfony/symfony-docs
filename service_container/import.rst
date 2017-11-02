@@ -32,7 +32,7 @@ methods.
 Importing Configuration with ``imports``
 ----------------------------------------
 
-By default, service configuration lives in ``app/config/services.yml``. But if that
+By default, service configuration lives in ``config/services.yaml``. But if that
 file becomes large, you're free to organize into multiple files. For suppose you
 decided to move some configuration to a new file:
 
@@ -78,13 +78,13 @@ To import this file, use the ``imports`` key from a file that *is* loaded:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         imports:
             - { resource: services/mailer.yml }
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -98,7 +98,7 @@ To import this file, use the ``imports`` key from a file that *is* loaded:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         $loader->import('services/mailer.php');
 
 The ``resource`` location, for files, is either a relative path from the

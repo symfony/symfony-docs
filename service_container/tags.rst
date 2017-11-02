@@ -14,15 +14,15 @@ to be used for a specific purpose. Take the following example:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
-            AppBundle\Twig\AppExtension:
+            App\Twig\AppExtension:
                 public: false
                 tags: [twig.extension]
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -30,7 +30,7 @@ to be used for a specific purpose. Take the following example:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Twig\AppExtension" public="false">
+                <service id="App\Twig\AppExtension" public="false">
                     <tag name="twig.extension" />
                 </service>
             </services>
@@ -38,8 +38,8 @@ to be used for a specific purpose. Take the following example:
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\Twig\AppExtension;
+        // config/services.php
+        use App\Twig\AppExtension;
 
         $container->register('app.twig_extension', AppExtension::class)
             ->setPublic(false)
@@ -76,8 +76,8 @@ that it implements ``Twig_ExtensionInterface``) and adds the tag for you.
     interface, call the :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration`
     method in an :doc:`extension </bundles/extension>` or from your kernel::
 
-        // app/AppKernel.php
-        class AppKernel extends Kernel
+        // src/Kernel.php
+        class Kernel extends Kernel
         {
             // ...
 
@@ -105,8 +105,8 @@ ways of transporting the message until one succeeds.
 
 To begin with, define the ``TransportChain`` class::
 
-    // src/AppBundle/Mail/TransportChain.php
-    namespace AppBundle\Mail;
+    // src/Mail/TransportChain.php
+    namespace App\Mail;
 
     class TransportChain
     {
@@ -130,7 +130,7 @@ Then, define the chain as a service:
     .. code-block:: yaml
 
         services:
-            AppBundle\Mail\TransportChain: ~
+            App\Mail\TransportChain: ~
 
     .. code-block:: xml
 
@@ -141,13 +141,13 @@ Then, define the chain as a service:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Mail\TransportChain" />
+                <service id="App\Mail\TransportChain" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Mail\TransportChain;
+        use App\Mail\TransportChain;
 
         $container->autowire(TransportChain::class);
 
@@ -212,13 +212,13 @@ Create a Compiler Pass
 You can now use a :ref:`compiler pass <components-di-separate-compiler-passes>` to ask the
 container for any services with the ``app.mail_transport`` tag::
 
-    // src/AppBundle/DependencyInjection/Compiler/MailTransportPass.php
-    namespace AppBundle\DependencyInjection\Compiler;
+    // src/DependencyInjection/Compiler/MailTransportPass.php
+    namespace App\DependencyInjection\Compiler;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\Reference;
-    use AppBundle\Mail\TransportChain;
+    use App\Mail\TransportChain;
 
     class MailTransportPass implements CompilerPassInterface
     {
@@ -248,11 +248,11 @@ In order to run the compiler pass when the container is compiled, you have to
 add the compiler pass to the container in the ``build()`` method of your
 bundle::
 
-    // src/AppBundle/AppBundle.php
+    // src/AppBundle.php
 
     // ...
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use AppBundle\DependencyInjection\Compiler\MailTransportPass;
+    use App\DependencyInjection\Compiler\MailTransportPass;
 
     class AppBundle extends Bundle
     {
@@ -424,21 +424,21 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
-            AppBundle\Handler\One:
+            App\Handler\One:
                 tags: [app.handler]
 
-            AppBundle\Handler\Two:
+            App\Handler\Two:
                 tags: [app.handler]
 
-            AppBundle\HandlerCollection:
+            App\HandlerCollection:
                 # inject all services tagged with app.handler as first argument
                 arguments: [!tagged app.handler]
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -446,15 +446,15 @@ first  constructor argument to the ``App\HandlerCollection`` service:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Handler\One">
+                <service id="App\Handler\One">
                     <tag name="app.handler" />
                 </service>
 
-                <service id="AppBundle\Handler\Two">
+                <service id="App\Handler\Two">
                     <tag name="app.handler" />
                 </service>
 
-                <service id="AppBundle\HandlerCollection">
+                <service id="App\HandlerCollection">
                     <!-- inject all services tagged with app.handler as first argument -->
                     <argument type="tagged" tag="app.handler" />
                 </service>
@@ -463,16 +463,16 @@ first  constructor argument to the ``App\HandlerCollection`` service:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-        $container->register(AppBundle\Handler\One::class)
+        $container->register(App\Handler\One::class)
             ->addTag('app.handler');
 
-        $container->register(AppBundle\Handler\Two::class)
+        $container->register(App\Handler\Two::class)
             ->addTag('app.handler');
 
-        $container->register(AppBundle\HandlerCollection::class)
+        $container->register(App\HandlerCollection::class)
             // inject all services tagged with app.handler as first argument
             ->addArgument(new TaggedIteratorArgument('app.handler'));
 
@@ -481,7 +481,7 @@ application handlers.
 
 .. code-block:: php
 
-    // src/AppBundle/HandlerCollection.php
+    // src/HandlerCollection.php
     namespace AppBundle;
 
     class HandlerCollection
@@ -499,15 +499,15 @@ application handlers.
 
         .. code-block:: yaml
 
-            # app/config/services.yml
+            # config/services.yaml
             services:
-                AppBundle\Handler\One:
+                App\Handler\One:
                     tags:
                         - { name: app.handler, priority: 20 }
 
         .. code-block:: xml
 
-            <!-- app/config/services.xml -->
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -515,7 +515,7 @@ application handlers.
                     http://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <services>
-                    <service id="AppBundle\Handler\One">
+                    <service id="App\Handler\One">
                         <tag name="app.handler" priority="20" />
                     </service>
                 </services>
@@ -523,8 +523,8 @@ application handlers.
 
         .. code-block:: php
 
-            // app/config/services.php
-            $container->register(AppBundle\Handler\One::class)
+            // config/services.php
+            $container->register(App\Handler\One::class)
                 ->addTag('app.handler', array('priority' => 20));
 
     Note that any other custom attributes will be ignored by this feature.

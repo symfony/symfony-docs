@@ -541,10 +541,10 @@ solve these problems.
 Instead of re-solving common problems, you can let Symfony take care of
 them for you. Here's the same sample application, now built in Symfony::
 
-    // src/AppBundle/Controller/BlogController.php
-    namespace AppBundle\Controller;
+    // src/Controller/BlogController.php
+    namespace App\Controller;
 
-    use AppBundle\Entity\Post;
+    use App\Entity\Post;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class BlogController extends Controller
@@ -585,7 +585,7 @@ database and the Templating component to render a template and return a
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/Blog/list.html.php -->
+    <!-- templates/Blog/list.html.php -->
     <?php $view->extend('layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'List of Posts') ?>
@@ -608,7 +608,7 @@ The ``layout.php`` file is nearly identical:
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/layout.html.php -->
+    <!-- templates/layout.html.php -->
     <!DOCTYPE html>
     <html>
         <head>
@@ -629,12 +629,12 @@ The ``layout.php`` file is nearly identical:
 
 When Symfony's engine (called the Kernel) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
-A routing configuration map - ``app/config/routing.yml`` - provides this information
+A routing configuration map - ``config/routes.yaml`` - provides this information
 in a readable format:
 
 .. code-block:: yaml
 
-    # app/config/routing.yml
+    # config/routes.yaml
     blog_list:
         path:     /blog
         defaults: { _controller: AppBundle:Blog:list }
@@ -644,16 +644,16 @@ in a readable format:
         defaults: { _controller: AppBundle:Blog:show }
 
 Now that Symfony is handling all the mundane tasks, the front controller
-``web/app.php`` is dead simple. And since it does so little, you'll never
+``public/index.php`` is dead simple. And since it does so little, you'll never
 have to touch it::
 
-    // web/app.php
+    // public/index.php
     require_once __DIR__.'/../app/bootstrap.php';
-    require_once __DIR__.'/../app/AppKernel.php';
+    require_once __DIR__.'/../src/Kernel.php';
 
     use Symfony\Component\HttpFoundation\Request;
 
-    $kernel = new AppKernel('prod', false);
+    $kernel = new Kernel('prod', false);
     $kernel->handle(Request::createFromGlobals())->send();
 
 The front controller's only job is to initialize Symfony's engine (called the
@@ -682,7 +682,7 @@ this:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/blog/list.html.twig #}
+    {# templates/blog/list.html.twig #}
     {% extends "layout.html.twig" %}
 
     {% block title %}List of Posts{% endblock %}
@@ -704,7 +704,7 @@ And rewriting ``layout.html.php`` template in Twig would look like this:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/layout.html.twig #}
+    {# templates/layout.html.twig #}
     <!DOCTYPE html>
     <html>
         <head>

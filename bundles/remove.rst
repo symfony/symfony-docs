@@ -42,8 +42,8 @@ that refers to the bundle.
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *Some* bundles require you to import routing configuration. Check for references
-to the bundle in ``app/config/routing.yml`` and ``app/config/routing_dev.yml``.
-If you find any references, remove them completely.
+to the bundle in the routing configuration (inside ``config/routes/``).  If you
+find any references, remove them completely.
 
 2.2 Remove Bundle Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,8 +74,8 @@ directory, and any parent directories that are now empty (e.g. ``src/Acme/``).
 3.1 Remove Bundle Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Remove the assets of the bundle in the web/ directory (e.g.
-``web/bundles/acmedemo`` for the AcmeDemoBundle).
+Remove the assets of the bundle in the public/ directory (e.g.
+``public/bundles/acmedemo`` for the AcmeDemoBundle).
 
 4. Remove Integration in other Bundles
 --------------------------------------

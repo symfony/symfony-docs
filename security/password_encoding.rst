@@ -20,7 +20,7 @@ in the following way from a controller::
     public function registerAction(UserPasswordEncoderInterface $encoder)
     {
         // whatever *your* User object is
-        $user = new AppBundle\Entity\User();
+        $user = new App\Entity\User();
         $plainPassword = 'ryanpass';
         $encoded = $encoder->encodePassword($user, $plainPassword);
 

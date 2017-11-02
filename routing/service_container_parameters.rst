@@ -18,7 +18,7 @@ inside your routing configuration:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         contact:
             path:     /{_locale}/contact
             defaults: { _controller: AppBundle:Main:contact }
@@ -27,7 +27,7 @@ inside your routing configuration:
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -42,7 +42,7 @@ inside your routing configuration:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -92,14 +92,14 @@ path):
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         some_route:
             path:     /%app.route_prefix%/contact
             defaults: { _controller: AppBundle:Main:contact }
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -113,7 +113,7 @@ path):
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 

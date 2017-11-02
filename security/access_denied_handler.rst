@@ -13,7 +13,7 @@ This interface defines one method called ``handle()`` where you can implement wh
 logic that should execute when access is denied for the current user (e.g. send a
 mail, log a message, or generally return a custom response)::
 
-    namespace AppBundle\Security;
+    namespace App\Security;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +30,7 @@ mail, log a message, or generally return a custom response)::
         }
     }
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you're done! Symfony will automatically know about your new service. You can then
 configure it under your firewall:
 
@@ -44,20 +44,20 @@ configure it under your firewall:
 
             main:
                 # ...
-                access_denied_handler: AppBundle\Security\AccessDeniedHandler
+                access_denied_handler: App\Security\AccessDeniedHandler
 
     .. code-block:: xml
 
         <config>
             <firewall name="main">
-                <access_denied_handler>AppBundle\Security\AccessDeniedHandler</access_denied_handler>
+                <access_denied_handler>App\Security\AccessDeniedHandler</access_denied_handler>
             </firewall>
         </config>
 
     .. code-block:: php
 
         // app/config/security.php
-        use AppBundle\Security\AccessDeniedHandler;
+        use App\Security\AccessDeniedHandler;
 
         $container->loadFromExtension('security', array(
             'firewalls' => array(

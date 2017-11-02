@@ -5,7 +5,7 @@ How to Define Controllers as Services
 =====================================
 
 In Symfony, a controller does *not* need to be registered as a service. But if you're
-using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 your controllers *are* already registered as services. This means you can use dependency
 injection like any other normal service.
 
@@ -26,7 +26,7 @@ syntax:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/HelloController.php
+        // src/Controller/HelloController.php
 
         // You need to use Sensio's annotation to specify a service id
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -44,14 +44,14 @@ syntax:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         hello:
             path:     /hello
             defaults: { _controller: app.hello_controller:indexAction }
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -66,7 +66,7 @@ syntax:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         $collection->add('hello', new Route('/hello', array(
             '_controller' => 'app.hello_controller:indexAction',
         )));
@@ -100,8 +100,8 @@ template and return a Response. But, you can also do this directly:
 In a controller that's defined as a service, you can instead inject the ``templating``
 service and use it directly::
 
-    // src/AppBundle/Controller/HelloController.php
-    namespace AppBundle\Controller;
+    // src/Controller/HelloController.php
+    namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
 

@@ -147,7 +147,7 @@ this:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/security/login.html.twig #}
+        {# templates/security/login.html.twig #}
         {% if error %}
             <div>{{ error.message }}</div>
         {% endif %}
@@ -167,7 +167,7 @@ this:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/security/login.html.php -->
+        <!-- templates/security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>

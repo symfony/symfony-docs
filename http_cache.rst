@@ -82,9 +82,9 @@ that wraps the default one (``AppKernel``). The caching Kernel *is* the reverse
 proxy.
 
 To enable caching, modify the code of your front controller. You can also make these
-changes to ``app_dev.php`` to add caching to the ``dev`` environment::
+changes to ``index.php`` to add caching to the ``dev`` environment::
 
-    // web/app.php
+    // public/index.php
     use Symfony\Component\HttpFoundation\Request;
 
     // ...
@@ -92,7 +92,7 @@ changes to ``app_dev.php`` to add caching to the ``dev`` environment::
     $kernel->loadClassCache();
 
     // add (or uncomment) this new line!
-    // wrap the default AppKernel with the AppCache one
+    // wrap the default Kernel with the AppCache one
     $kernel = new AppCache($kernel);
 
     $request = Request::createFromGlobals();
@@ -138,7 +138,7 @@ For a full list of the options and their meaning, see the
 :method:`HttpCache::__construct() documentation <Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache::__construct>`.
 
 When you're in debug mode (either because your booting a ``debug`` kernel, like
-in ``app_dev.php`` *or* you manually set the ``debug`` option to true), Symfony
+in ``index.php`` *or* you manually set the ``debug`` option to true), Symfony
 automatically adds an ``X-Symfony-Cache`` header to the response. Use this to get
 information about cache hits and misses.
 
@@ -210,7 +210,7 @@ Expiration Caching
 
 The *easiest* way to cache a response is by caching it for a specific amount of time::
 
-    // src/AppBundle/Controller/BlogController.php
+    // src/Controller/BlogController.php
     use Symfony\Component\HttpFoundation\Response;
     // ...
 

@@ -28,7 +28,7 @@ do this, create a new template file that will store the new markup:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/form/fields.html.twig #}
+        {# templates/form/fields.html.twig #}
         {% block form_row %}
         {% spaceless %}
             <div class="form_row">
@@ -41,7 +41,7 @@ do this, create a new template file that will store the new markup:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/form/form_row.html.php -->
+        <!-- templates/form/form_row.html.php -->
         <div class="form_row">
             <?php echo $view['form']->label($form, $label) ?>
             <?php echo $view['form']->errors($form) ?>
@@ -57,7 +57,7 @@ renders the form:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/default/new.html.twig #}
+        {# templates/default/new.html.twig #}
         {% form_theme form 'form/fields.html.twig' %}
 
         {# or if you want to use multiple themes #}
@@ -67,7 +67,7 @@ renders the form:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/default/new.html.php -->
+        <!-- templates/default/new.html.php -->
         <?php $view['form']->setTheme($form, array('form')) ?>
 
         <!-- or if you want to use multiple themes -->
@@ -272,7 +272,7 @@ to define form output.
 PHP
 ...
 
-To automatically include the customized templates from the ``app/Resources/views/form``
+To automatically include the customized templates from the ``templates/form``
 directory created earlier in *all* templates, modify your application configuration
 file:
 
@@ -323,7 +323,7 @@ file:
             // ...
         ));
 
-Any fragments inside the ``app/Resources/views/form`` directory are now used
+Any fragments inside the ``templates/form`` directory are now used
 globally to define form output.
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

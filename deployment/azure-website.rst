@@ -263,9 +263,9 @@ directory with at least the following contents:
     /vendor/
     /bin/
     /composer.phar
-    /web/app_dev.php
-    /web/bundles/
-    /web/config.php
+    /public/index.php
+    /public/bundles/
+    /public/config.php
 
 The ``.gitignore`` file asks Git not to track any of the files and directories
 that match these patterns. This means these files won't be deployed to the Azure
@@ -294,7 +294,7 @@ below:
 
 The code of the Symfony application has now been deployed to the Azure Website
 which you can browse from the file explorer of the Kudu application. You should
-see the ``app/``, ``src/`` and ``web/`` directories under your ``site/wwwroot``
+see the ``config/``, ``src/`` and ``public/`` directories under your ``site/wwwroot``
 directory on the Azure Website filesystem.
 
 Configure the Symfony Application
@@ -377,12 +377,12 @@ This command builds the tables and indexes for your MySQL database. If your
 Symfony application is more complex than a basic Symfony Standard Edition, you
 may have additional commands to execute for setup (see :doc:`/deployment`).
 
-Make sure that your application is running by browsing the ``app.php`` front
+Make sure that your application is running by browsing the ``index.php`` front
 controller with your web browser and the following URL:
 
 .. code-block:: terminal
 
-    http://<your-website-name>.azurewebsites.net/web/app.php
+    http://<your-website-name>.azurewebsites.net/public/index.php
 
 If Symfony is correctly installed, you should see the front page of your Symfony
 application showing.
@@ -412,7 +412,7 @@ application, configure it with the following content:
             <rule name="BlockAccessToPublic" patternSyntax="Wildcard" stopProcessing="true">
               <match url="*" />
               <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
-                <add input="{URL}" pattern="/web/*" />
+                <add input="{URL}" pattern="/public/*" />
               </conditions>
               <action type="CustomResponse" statusCode="403" statusReason="Forbidden: Access is denied." statusDescription="You do not have permission to view this directory or page using the credentials that you supplied." />
             </rule>
@@ -420,13 +420,13 @@ application, configure it with the following content:
               <match url="^(.*)(\.css|\.js|\.jpg|\.png|\.gif|\.ico)$" />
               <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
               </conditions>
-              <action type="Rewrite" url="web/{R:0}" />
+              <action type="Rewrite" url="public/{R:0}" />
             </rule>
             <rule name="RewriteRequestsToPublic" stopProcessing="true">
               <match url="^(.*)$" />
               <conditions logicalGrouping="MatchAll" trackAllCaptures="false">
               </conditions>
-              <action type="Rewrite" url="web/app.php/{R:0}" />
+              <action type="Rewrite" url="public/index.php/{R:0}" />
             </rule>
           </rules>
         </rewrite>
@@ -434,14 +434,14 @@ application, configure it with the following content:
     </configuration>
 
 As you can see, the latest rule ``RewriteRequestsToPublic`` is responsible for
-rewriting any URLs to the ``web/app.php`` front controller which allows you to
-skip the ``web/`` folder in the URL. The first rule called ``BlockAccessToPublic``
-matches all URL patterns that contain the ``web/`` folder and serves a
+rewriting any URLs to the ``public/index.php`` front controller which allows you to
+skip the ``public/`` folder in the URL. The first rule called ``BlockAccessToPublic``
+matches all URL patterns that contain the ``public/`` folder and serves a
 ``403 Forbidden`` HTTP response instead. This example is based on Benjamin
 Eberlei's sample you can find on GitHub in the `SymfonyAzureEdition`_ bundle.
 
 Deploy this file under the ``site/wwwroot`` directory of the Azure Website and
-browse to your application without the ``web/app.php`` segment in the URL.
+browse to your application without the ``public/index.php`` segment in the URL.
 
 Conclusion
 ----------

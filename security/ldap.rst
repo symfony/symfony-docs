@@ -56,7 +56,7 @@ An LDAP client can be simply configured using the built-in
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             Symfony\Component\Ldap\Ldap:
                 arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
@@ -71,7 +71,7 @@ An LDAP client can be simply configured using the built-in
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -97,7 +97,7 @@ An LDAP client can be simply configured using the built-in
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
         use Symfony\Component\DependencyInjection\Definition;

@@ -249,8 +249,8 @@ Without even thinking about Doctrine or databases, you already know that
 you need a ``Product`` object to represent those products. Create this class
 inside the ``Entity`` directory of your AppBundle::
 
-    // src/AppBundle/Entity/Product.php
-    namespace AppBundle\Entity;
+    // src/Entity/Product.php
+    namespace App\Entity;
 
     class Product
     {
@@ -303,8 +303,8 @@ directly inside the ``Product`` class via DocBlock annotations:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Product.php
-        namespace AppBundle\Entity;
+        // src/Entity/Product.php
+        namespace App\Entity;
 
         use Doctrine\ORM\Mapping as ORM;
 
@@ -339,8 +339,8 @@ directly inside the ``Product`` class via DocBlock annotations:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/doctrine/Product.orm.yml
-        AppBundle\Entity\Product:
+        # src/Resources/config/doctrine/Product.orm.yml
+        App\Entity\Product:
             type: entity
             table: product
             id:
@@ -359,14 +359,14 @@ directly inside the ``Product`` class via DocBlock annotations:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/doctrine/Product.orm.xml -->
+        <!-- src/Resources/config/doctrine/Product.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-            <entity name="AppBundle\Entity\Product" table="product">
+            <entity name="App\Entity\Product" table="product">
                 <id name="id" type="integer">
                     <generator strategy="AUTO" />
                 </id>
@@ -495,10 +495,10 @@ a controller, this is pretty easy. Add the following method to the
 ``DefaultController`` of the bundle::
 
 
-    // src/AppBundle/Controller/DefaultController.php
+    // src/Controller/DefaultController.php
 
     // ...
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
     use Doctrine\ORM\EntityManagerInterface;
 
@@ -680,7 +680,7 @@ Updating an Object
 Once you've fetched an object from Doctrine, updating it is easy. Suppose
 you have a route that maps a product id to an update action in a controller::
 
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
     // ...
 
     public function updateAction($productId)

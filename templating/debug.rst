@@ -12,8 +12,8 @@ When using PHP, you can use the
 if you need to quickly find the value of a variable passed. This is useful,
 for example, inside your controller::
 
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
 
     // ...
 
@@ -37,7 +37,7 @@ The same mechanism can be used in Twig templates thanks to ``dump()`` function:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/article/recent_list.html.twig #}
+    {# templates/article/recent_list.html.twig #}
     {{ dump(articles) }}
 
     {% for article in articles %}

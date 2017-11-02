@@ -19,7 +19,7 @@ The most common way to inject dependencies is via a class's constructor.
 To do this you need to add an argument to the constructor signature to accept
 the dependency::
 
-    namespace AppBundle\Mail;
+    namespace App\Mail;
 
     // ...
     class NewsletterManager
@@ -44,7 +44,7 @@ service container configuration:
        services:
             # ...
 
-            AppBundle\Mail\NewsletterManager:
+            App\Mail\NewsletterManager:
                 arguments: ['@mailer']
 
     .. code-block:: xml
@@ -58,7 +58,7 @@ service container configuration:
             <services>
                 <!-- ... -->
 
-                <service id="app.newsletter_manager" class="AppBundle\Mail\NewsletterManager">
+                <service id="app.newsletter_manager" class="App\Mail\NewsletterManager">
                     <argument type="service" id="mailer"/>
                 </service>
             </services>
@@ -66,7 +66,7 @@ service container configuration:
 
     .. code-block:: php
 
-        use AppBundle\Mail\NewsletterManager;
+        use App\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
@@ -124,7 +124,7 @@ that accepts the dependency::
             # ...
 
             app.newsletter_manager:
-                class: AppBundle\Mail\NewsletterManager
+                class: App\Mail\NewsletterManager
                 calls:
                     - [setMailer, ['@mailer']]
 
@@ -139,7 +139,7 @@ that accepts the dependency::
             <services>
                 <!-- ... -->
 
-                <service id="app.newsletter_manager" class="AppBundle\Mail\NewsletterManager">
+                <service id="app.newsletter_manager" class="App\Mail\NewsletterManager">
                     <call method="setMailer">
                         <argument type="service" id="mailer" />
                     </call>
@@ -149,7 +149,7 @@ that accepts the dependency::
 
     .. code-block:: php
 
-        use AppBundle\Mail\NewsletterManager;
+        use App\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
@@ -196,7 +196,7 @@ Another possibility is just setting public fields of the class directly::
             # ...
 
             app.newsletter_manager:
-                class: AppBundle\Mail\NewsletterManager
+                class: App\Mail\NewsletterManager
                 properties:
                     mailer: '@mailer'
 
@@ -211,7 +211,7 @@ Another possibility is just setting public fields of the class directly::
             <services>
                 <!-- ... -->
 
-                <service id="app.newsletter_manager" class="AppBundle\Mail\NewsletterManager">
+                <service id="app.newsletter_manager" class="App\Mail\NewsletterManager">
                     <property name="mailer" type="service" id="mailer" />
                 </service>
             </services>
@@ -219,7 +219,7 @@ Another possibility is just setting public fields of the class directly::
 
     .. code-block:: php
 
-        use AppBundle\Mail\NewsletterManager;
+        use App\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...

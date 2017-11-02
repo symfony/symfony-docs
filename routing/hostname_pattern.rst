@@ -10,8 +10,8 @@ You can also match on the HTTP *host* of the incoming request.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
-        namespace AppBundle\Controller;
+        // src/Controller/MainController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Routing\Annotation\Route;
@@ -92,8 +92,8 @@ you can use placeholders in your hostname:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
-        namespace AppBundle\Controller;
+        // src/Controller/MainController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Routing\Annotation\Route;
@@ -169,8 +169,8 @@ instance, if you want to match both ``m.example.com`` and
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
-        namespace AppBundle\Controller;
+        // src/Controller/MainController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Routing\Annotation\Route;
@@ -262,8 +262,8 @@ instance, if you want to match both ``m.example.com`` and
 
         .. code-block:: php-annotations
 
-            // src/AppBundle/Controller/MainController.php
-            namespace AppBundle\Controller;
+            // src/Controller/MainController.php
+            namespace App\Controller;
 
             use Symfony\Bundle\FrameworkBundle\Controller\Controller;
             use Symfony\Component\Routing\Annotation\Route;
@@ -363,8 +363,8 @@ You can also set the host option on imported routes:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
-        namespace AppBundle\Controller;
+        // src/Controller/MainController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Routing\Annotation\Route;

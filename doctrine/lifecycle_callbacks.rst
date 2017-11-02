@@ -32,7 +32,7 @@ the current date, only when the entity is first persisted (i.e. inserted):
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Product.php
+        // src/Entity/Product.php
 
         /**
          * @ORM\PrePersist
@@ -44,8 +44,8 @@ the current date, only when the entity is first persisted (i.e. inserted):
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/doctrine/Product.orm.yml
-        AppBundle\Entity\Product:
+        # src/Resources/config/doctrine/Product.orm.yml
+        App\Entity\Product:
             type: entity
             # ...
             lifecycleCallbacks:
@@ -53,14 +53,14 @@ the current date, only when the entity is first persisted (i.e. inserted):
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/doctrine/Product.orm.xml -->
+        <!-- src/Resources/config/doctrine/Product.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-            <entity name="AppBundle\Entity\Product">
+            <entity name="App\Entity\Product">
                 <!-- ... -->
                 <lifecycle-callbacks>
                     <lifecycle-callback type="prePersist" method="setCreatedAtValue" />

@@ -88,8 +88,8 @@ Suppose that the profiler must be enabled whenever a user with a
 ``ROLE_SUPER_ADMIN`` is logged in. This is the only code needed for that custom
 matcher::
 
-    // src/AppBundle/Profiler/SuperAdminMatcher.php
-    namespace AppBundle\Profiler;
+    // src/Profiler/SuperAdminMatcher.php
+    namespace App\Profiler;
 
     use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
     use Symfony\Component\HttpFoundation\Request;
@@ -111,7 +111,7 @@ matcher::
     }
 
 Then, you'll need to make sure your class is defined as as service. If you're using
-the :ref:`default services.yml configuration <service-container-services-load-example>`,
+the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you don't need to do anything!
 
 Once the service is registered, the only thing left to do is configure the
@@ -126,7 +126,7 @@ profiler to use this service as the matcher:
             # ...
             profiler:
                 matcher:
-                    service: AppBundle\Profiler\SuperAdminMatcher
+                    service: App\Profiler\SuperAdminMatcher
 
     .. code-block:: xml
 
@@ -143,7 +143,7 @@ profiler to use this service as the matcher:
             <framework:config>
                 <!-- ... -->
                 <framework:profiler>
-                    <framework:matcher service="AppBundle\Profiler\SuperAdminMatcher" />
+                    <framework:matcher service="App\Profiler\SuperAdminMatcher" />
                 </framework:profiler>
             </framework:config>
         </container>
@@ -151,7 +151,7 @@ profiler to use this service as the matcher:
     .. code-block:: php
 
         // app/config/config.php
-        use AppBundle\Profiler\SuperAdminMatcher;
+        use App\Profiler\SuperAdminMatcher;
 
         $container->loadFromExtension('framework', array(
             // ...

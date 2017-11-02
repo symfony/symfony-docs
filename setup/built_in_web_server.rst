@@ -31,8 +31,8 @@ First, execute this command:
 
 Then, enable the bundle in the kernel of the application::
 
-    // app/AppKernel.php
-    class AppKernel extends Kernel
+    // src/Kernel.php
+    class Kernel extends Kernel
     {
         public function registerBundles()
         {

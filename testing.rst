@@ -51,8 +51,8 @@ Writing Symfony unit tests is no different from writing standard PHPUnit
 unit tests. Suppose, for example, that you have an *incredibly* simple class
 called ``Calculator`` in the ``Util/`` directory of the app bundle::
 
-    // src/AppBundle/Util/Calculator.php
-    namespace AppBundle\Util;
+    // src/Util/Calculator.php
+    namespace App\Util;
 
     class Calculator
     {
@@ -65,10 +65,10 @@ called ``Calculator`` in the ``Util/`` directory of the app bundle::
 To test this, create a ``CalculatorTest`` file in the ``tests/AppBundle/Util`` directory
 of your application::
 
-    // tests/AppBundle/Util/CalculatorTest.php
-    namespace Tests\AppBundle\Util;
+    // tests/Util/CalculatorTest.php
+    namespace App\Tests\Util;
 
-    use AppBundle\Util\Calculator;
+    use App\Util\Calculator;
     use PHPUnit\Framework\TestCase;
 
     class CalculatorTest extends TestCase
@@ -87,7 +87,7 @@ of your application::
 
     By convention, the ``tests/AppBundle`` directory should replicate the directory
     of your bundle for unit tests. So, if you're testing a class in the
-    ``src/AppBundle/Util/`` directory, put the test in the ``tests/AppBundle/Util/``
+    ``src/Util/`` directory, put the test in the ``tests/AppBundle/Util/``
     directory.
 
 Just like in your real application - autoloading is automatically enabled
@@ -136,8 +136,8 @@ file that extends a special ``WebTestCase`` class.
 
 As an example, a test could look like this::
 
-    // tests/AppBundle/Controller/PostControllerTest.php
-    namespace Tests\AppBundle\Controller;
+    // tests/Controller/PostControllerTest.php
+    namespace App\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

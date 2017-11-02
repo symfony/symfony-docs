@@ -36,8 +36,8 @@ And the contents displayed in the browser are usually rendered using
 **templates**.
 
 When you go to ``http://localhost:8000/app/example``, Symfony will execute
-the controller in ``src/AppBundle/Controller/DefaultController.php`` and
-render the ``app/Resources/views/default/index.html.twig`` template.
+the controller in ``src/Controller/DefaultController.php`` and
+render the ``templates/default/index.html.twig`` template.
 
 In the following sections you'll learn in detail the inner workings of Symfony
 controllers, routes and templates.
@@ -45,11 +45,11 @@ controllers, routes and templates.
 Actions and Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Open the ``src/AppBundle/Controller/DefaultController.php`` file and you'll
+Open the ``src/Controller/DefaultController.php`` file and you'll
 see the following code (for now, don't look at the ``@Route`` configuration
 because that will be explained in the next section)::
 
-    namespace AppBundle\Controller;
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Routing\Annotation\Route;
@@ -89,11 +89,11 @@ Routing
 
 Symfony routes each request to the action that handles it by matching the
 requested URL against the paths configured by the application. Open again
-the ``src/AppBundle/Controller/DefaultController.php`` file and take a look
+the ``src/Controller/DefaultController.php`` file and take a look
 at the three lines of code above the ``indexAction()`` method::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Routing\Annotation\Route;
@@ -149,14 +149,14 @@ Symfony provides some useful shortcuts to any controller extending from
 the base Symfony :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
 class.
 
-By default, application templates are stored in the ``app/Resources/views/``
+By default, application templates are stored in the ``templates/``
 directory. Therefore, the ``default/index.html.twig`` template corresponds
-to the ``app/Resources/views/default/index.html.twig``. Open that file and
+to the ``templates/default/index.html.twig``. Open that file and
 you'll see the following code:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/default/index.html.twig #}
+    {# templates/default/index.html.twig #}
     {% extends 'base.html.twig' %}
 
     {% block body %}
@@ -212,9 +212,9 @@ executing the application on production).
 
 When you visit the ``http://localhost:8000`` URL in your browser, you're
 executing your Symfony application in the ``dev`` environment. To visit
-your application in the ``prod`` environment, visit the ``http://localhost:8000/app.php``
+your application in the ``prod`` environment, visit the ``http://localhost:8000/index.php``
 URL instead. If you prefer to always show the ``dev`` environment in the
-URL, you can visit ``http://localhost:8000/app_dev.php`` URL.
+URL, you can visit ``http://localhost:8000/index.php`` URL.
 
 The main difference between environments is that ``dev`` is optimized to
 provide lots of information to the developer, which means worse application

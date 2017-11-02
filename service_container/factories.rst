@@ -35,17 +35,17 @@ configure the service container to use the
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             # ...
 
-            AppBundle\Email\NewsletterManager:
+            App\Email\NewsletterManager:
                 # call the static method
-                factory: ['AppBundle\Email\NewsletterManagerStaticFactory', createNewsletterManager]
+                factory: ['App\Email\NewsletterManagerStaticFactory', createNewsletterManager]
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -54,20 +54,20 @@ configure the service container to use the
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Email\NewsletterManager">
+                <service id="App\Email\NewsletterManager">
                     <!-- call the static method -->
-                    <factory class="AppBundle\Email\NewsletterManagerStaticFactory" method="createNewsletterManager" />
+                    <factory class="App\Email\NewsletterManagerStaticFactory" method="createNewsletterManager" />
                 </service>
             </services>
         </container>
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
 
-        use AppBundle\Email\NewsletterManager;
-        use AppBundle\NumberGenerator;
-        use AppBundle\Email\NewsletterManagerStaticFactory;
+        use App\Email\NewsletterManager;
+        use App\NumberGenerator;
+        use App\Email\NewsletterManagerStaticFactory;
         // ...
 
         $container->register(NumberGenerator::class)
@@ -93,20 +93,20 @@ Configuration of the service container then looks like this:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
 
         services:
             # ...
 
-            AppBundle\Email\NewsletterManagerFactory: ~
+            App\Email\NewsletterManagerFactory: ~
 
-            AppBundle\Email\NewsletterManager:
+            App\Email\NewsletterManager:
                 # call a method on the specified factory service
-                factory: 'AppBundle\Email\NewsletterManagerFactory:createNewsletterManager'
+                factory: 'App\Email\NewsletterManagerFactory:createNewsletterManager'
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -115,11 +115,11 @@ Configuration of the service container then looks like this:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Email\NewsletterManagerFactory" />
+                <service id="App\Email\NewsletterManagerFactory" />
 
-                <service id="AppBundle\Email\NewsletterManager">
+                <service id="App\Email\NewsletterManager">
                     <!-- call a method on the specified factory service -->
-                    <factory service="AppBundle\Email\NewsletterManagerFactory"
+                    <factory service="App\Email\NewsletterManagerFactory"
                         method="createNewsletterManager"
                     />
                 </service>
@@ -128,10 +128,10 @@ Configuration of the service container then looks like this:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
 
-        use AppBundle\Email\NewsletterManager;
-        use AppBundle\Email\NewsletterManagerFactory;
+        use App\Email\NewsletterManager;
+        use App\Email\NewsletterManagerFactory;
         // ...
 
         $container->register(NewsletterManagerFactory::class);
@@ -150,14 +150,14 @@ Configuration of the service container then looks like this:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
 
         app.newsletter_manager:
-            class: AppBundle\Email\NewsletterManager 
+            class: App\Email\NewsletterManager 
             # new syntax
-            factory: 'AppBundle\Email\NewsletterManagerFactory:createNewsletterManager'
+            factory: 'App\Email\NewsletterManagerFactory:createNewsletterManager'
             # old syntax
-            factory: ['@AppBundle\Email\NewsletterManagerFactory', createNewsletterManager]
+            factory: ['@App\Email\NewsletterManagerFactory', createNewsletterManager]
 
 .. _factories-passing-arguments-factory-method:
 
@@ -177,18 +177,18 @@ example takes the ``templating`` service as an argument:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
 
         services:
             # ...
 
-            AppBundle\Email\NewsletterManager:
-                factory:   'AppBundle\Email\NewsletterManagerFactory:createNewsletterManager'
+            App\Email\NewsletterManager:
+                factory:   'App\Email\NewsletterManagerFactory:createNewsletterManager'
                 arguments: ['@templating']
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -199,8 +199,8 @@ example takes the ``templating`` service as an argument:
             <services>
                 <!-- ... -->
 
-                <service id="AppBundle\Email\NewsletterManager">
-                    <factory service="AppBundle\Email\NewsletterManagerFactory" method="createNewsletterManager"/>
+                <service id="App\Email\NewsletterManager">
+                    <factory service="App\Email\NewsletterManagerFactory" method="createNewsletterManager"/>
                     <argument type="service" id="templating"/>
                 </service>
             </services>
@@ -208,10 +208,10 @@ example takes the ``templating`` service as an argument:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
 
-        use AppBundle\Email\NewsletterManager;
-        use AppBundle\Email\NewsletterManagerFactory;
+        use App\Email\NewsletterManager;
+        use App\Email\NewsletterManagerFactory;
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...

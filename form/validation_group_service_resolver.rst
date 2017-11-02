@@ -8,8 +8,8 @@ parameter.
 
 .. code-block:: php
 
-    // src/AppBundle/Validation/ValidationGroupResolver.php
-    namespace AppBundle\Validation;
+    // src/Validation/ValidationGroupResolver.php
+    namespace App\Validation;
 
     use Symfony\Component\Form\FormInterface;
 
@@ -43,10 +43,10 @@ Then in your form, inject the resolver and set it as the ``validation_groups``.
 
 .. code-block:: php
 
-    // src/AppBundle/Form/MyClassType.php;
-    namespace AppBundle\Form;
+    // src/Form/MyClassType.php;
+    namespace App\Form;
 
-    use AppBundle\Validator\ValidationGroupResolver;
+    use App\Validator\ValidationGroupResolver;
     use Symfony\Component\Form\AbstractType
     use Symfony\Component\OptionsResolver\OptionsResolver;
 

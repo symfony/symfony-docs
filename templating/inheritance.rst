@@ -8,7 +8,7 @@ One common way to use inheritance is to use a three-level approach. This
 method works perfectly with the three different types of templates that were just
 covered:
 
-* Create an ``app/Resources/views/base.html.twig`` file that contains the main
+* Create an ``templates/base.html.twig`` file that contains the main
   layout for your application (like in the previous example). Internally, this
   template is called ``base.html.twig``;
 
@@ -18,7 +18,7 @@ covered:
 
   .. code-block:: html+twig
 
-      {# app/Resources/views/blog/layout.html.twig #}
+      {# templates/blog/layout.html.twig #}
       {% extends 'base.html.twig' %}
 
       {% block body %}
@@ -33,7 +33,7 @@ covered:
 
   .. code-block:: html+twig
 
-      {# app/Resources/views/blog/index.html.twig #}
+      {# templates/blog/index.html.twig #}
       {% extends 'blog/layout.html.twig' %}
 
       {% block content %}

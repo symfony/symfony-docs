@@ -86,7 +86,7 @@ below:
 
 By default, Heroku will launch an Apache web server together with PHP to serve
 applications. However, a special circumstance apply to Symfony applications:
-the document root is in the ``web/`` directory and not in the root directory
+the document root is in the ``public/`` directory and not in the root directory
 of the application.
 
 Create a new file called ``Procfile`` (without any extension) at the root
@@ -94,7 +94,7 @@ directory of the application and add just the following content:
 
 .. code-block:: text
 
-    web: vendor/bin/heroku-php-apache2 web/
+    web: vendor/bin/heroku-php-apache2 public/
 
 .. note::
 
@@ -104,14 +104,14 @@ directory of the application and add just the following content:
 
     .. code-block:: text
 
-        web: vendor/bin/heroku-php-nginx -C nginx_app.conf web/
+        web: vendor/bin/heroku-php-nginx -C nginx_app.conf public/
 
 If you prefer working on the command console, execute the following commands to
 create the ``Procfile`` file and to add it to the repository:
 
 .. code-block:: terminal
 
-    $ echo "web: vendor/bin/heroku-php-apache2 web/" > Procfile
+    $ echo "web: vendor/bin/heroku-php-apache2 public/" > Procfile
     $ git add .
     $ git commit -m "Procfile for Apache and PHP"
     [master 35075db] Procfile for Apache and PHP
@@ -199,9 +199,9 @@ Then, deploy your application executing this command:
            Creating the "app/config/parameters.yml" file
            Clearing the cache for the dev environment with debug true
            Installing assets using the hard copy option
-           Installing assets for Symfony\Bundle\FrameworkBundle into web/bundles/framework
-           Installing assets for Acme\DemoBundle into web/bundles/acmedemo
-           Installing assets for Sensio\Bundle\DistributionBundle into web/bundles/sensiodistribution
+           Installing assets for Symfony\Bundle\FrameworkBundle into public/bundles/framework
+           Installing assets for Acme\DemoBundle into public/bundles/acmedemo
+           Installing assets for Sensio\Bundle\DistributionBundle into public/bundles/sensiodistribution
 
     -----> Building runtime environment...
 
@@ -241,7 +241,7 @@ Custom Compile Steps
 If you wish to execute additional custom commands during a build, you can leverage
 Heroku's `custom compile steps`_. Imagine you want to remove the ``dev`` front controller
 from your production environment on Heroku in order to avoid a potential vulnerability.
-Adding a command to remove ``web/app_dev.php`` to Composer's `post-install-commands`_ would
+Adding a command to remove ``public/index.php`` to Composer's `post-install-commands`_ would
 work, but it also removes the controller in your local development environment on each
 ``composer install`` or ``composer update`` respectively. Instead, you can add a
 `custom Composer command`_ named ``compile`` (this key name is a Heroku convention) to the
@@ -253,7 +253,7 @@ process:
     {
         "scripts": {
             "compile": [
-                "rm web/app_dev.php"
+                "rm public/index.php"
             ]
         }
     }

@@ -110,8 +110,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         doctrine:
             dbal:
                 types:
-                    custom_first:  AppBundle\Type\CustomFirst
-                    custom_second: AppBundle\Type\CustomSecond
+                    custom_first:  App\Type\CustomFirst
+                    custom_second: App\Type\CustomSecond
 
     .. code-block:: xml
 
@@ -126,8 +126,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
 
             <doctrine:config>
                 <doctrine:dbal>
-                    <doctrine:type name="custom_first" class="AppBundle\Type\CustomFirst" />
-                    <doctrine:type name="custom_second" class="AppBundle\Type\CustomSecond" />
+                    <doctrine:type name="custom_first" class="App\Type\CustomFirst" />
+                    <doctrine:type name="custom_second" class="App\Type\CustomSecond" />
                 </doctrine:dbal>
             </doctrine:config>
         </container>
@@ -135,8 +135,8 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
     .. code-block:: php
 
         // app/config/config.php
-        use AppBundle\Type\CustomFirst;
-        use AppBundle\Type\CustomSecond;
+        use App\Type\CustomFirst;
+        use App\Type\CustomSecond;
 
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(

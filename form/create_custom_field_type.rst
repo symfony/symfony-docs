@@ -19,8 +19,8 @@ will be called ``ShippingType`` and the file will be stored in the default locat
 for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
 
-    // src/AppBundle/Form/Type/ShippingType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/ShippingType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -120,7 +120,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/form/fields.html.twig #}
+        {# templates/form/fields.html.twig #}
         {% block shipping_widget %}
             {% spaceless %}
                 {% if expanded %}
@@ -141,7 +141,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/form/shipping_widget.html.php -->
+        <!-- templates/form/shipping_widget.html.php -->
         <?php if ($expanded) : ?>
             <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
             <?php foreach ($form as $child) : ?>
@@ -251,12 +251,12 @@ Using the Field Type
 You can now use your custom field type immediately, simply by creating a
 new instance of the type in one of your forms::
 
-    // src/AppBundle/Form/Type/OrderType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/OrderType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use AppBundle\Form\Type\ShippingType;
+    use App\Form\Type\ShippingType;
 
     class OrderType extends AbstractType
     {
@@ -281,8 +281,8 @@ Accessing Services and Config
 If you need to access :doc:`services </service_container>` from your form class,
 add a ``__construct()`` method like normal::
 
-    // src/AppBundle/Form/Type/ShippingType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/ShippingType.php
+    namespace App\Form\Type;
 
     // ...
     use Doctrine\ORM\EntityManagerInterface;
@@ -299,7 +299,7 @@ add a ``__construct()`` method like normal::
         // use $this->em down anywhere you want ...
     }
 
-If you're using the default ``services.yml`` configuration (i.e. services from the
+If you're using the default ``services.yaml`` configuration (i.e. services from the
 ``Form/`` are loaded and ``autoconfigure`` is enabled), this will already work!
 See :ref:`service-container-creating-service` for more details.
 

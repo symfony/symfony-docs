@@ -99,7 +99,7 @@ independent of the rest of the page.
 
 .. code-block:: php
 
-    // src/AppBundle/Controller/DefaultController.php
+    // src/Controller/DefaultController.php
 
     // ...
     class DefaultController extends Controller
@@ -126,7 +126,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: twig
 
-        {# app/Resources/views/static/about.html.twig #}
+        {# templates/static/about.html.twig #}
 
         {# you can use a controller reference #}
         {{ render_esi(controller('AppBundle:News:latest', { 'maxPerPage': 5 })) }}
@@ -136,7 +136,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/static/about.html.php -->
+        <!-- templates/static/about.html.php -->
 
         <!-- you can use a controller reference -->
         <?php echo $view['actions']->render(
@@ -189,8 +189,8 @@ of the master page.
 
 .. code-block:: php
 
-    // src/AppBundle/Controller/NewsController.php
-    namespace AppBundle\Controller;
+    // src/Controller/NewsController.php
+    namespace App\Controller;
 
     // ...
     class NewsController extends Controller

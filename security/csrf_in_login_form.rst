@@ -132,7 +132,7 @@ using the login form:
 
     .. code-block:: html+twig
 
-        {# src/AppBundle/Resources/views/Security/login.html.twig #}
+        {# templates/security/login.html.twig #}
 
         {# ... #}
         <form action="{{ path('login') }}" method="post">
@@ -147,7 +147,7 @@ using the login form:
 
     .. code-block:: html+php
 
-        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
+        <!-- templates/security/login.html.php -->
 
         <!-- ... -->
         <form action="<?php echo $view['router']->path('login') ?>" method="post">

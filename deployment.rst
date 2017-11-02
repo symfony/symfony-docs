@@ -30,7 +30,7 @@ A deployment may also include other tasks, such as:
   repository;
 * Creating a temporary staging area to build your updated setup "offline";
 * Running any tests available to ensure code and/or server stability;
-* Removal of any unnecessary files from the ``web/`` directory to keep your
+* Removal of any unnecessary files from the ``public/`` directory to keep your
   production environment clean;
 * Clearing of external cache systems (like `Memcached`_ or `Redis`_).
 

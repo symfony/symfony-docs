@@ -8,8 +8,8 @@ The ``inherit_data`` form field option can be very useful when you have some
 duplicated fields in different entities. For example, imagine you have two
 entities, a ``Company`` and a ``Customer``::
 
-    // src/AppBundle/Entity/Company.php
-    namespace AppBundle\Entity;
+    // src/Entity/Company.php
+    namespace App\Entity;
 
     class Company
     {
@@ -24,8 +24,8 @@ entities, a ``Company`` and a ``Customer``::
 
 .. code-block:: php
 
-    // src/AppBundle/Entity/Customer.php
-    namespace AppBundle\Entity;
+    // src/Entity/Customer.php
+    namespace App\Entity;
 
     class Customer
     {
@@ -43,8 +43,8 @@ As you can see, each entity shares a few of the same fields: ``address``,
 
 Start with building two forms for these entities, ``CompanyType`` and ``CustomerType``::
 
-    // src/AppBundle/Form/Type/CompanyType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/CompanyType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -62,8 +62,8 @@ Start with building two forms for these entities, ``CompanyType`` and ``Customer
 
 .. code-block:: php
 
-    // src/AppBundle/Form/Type/CustomerType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/CustomerType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\AbstractType;
@@ -83,8 +83,8 @@ Instead of including the duplicated fields ``address``, ``zipcode``, ``city``
 and ``country`` in both of these forms, create a third form called ``LocationType``
 for that::
 
-    // src/AppBundle/Form/Type/LocationType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/LocationType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -125,8 +125,8 @@ access the properties of the ``Customer`` instance instead. Easy, eh?
 
 Finally, make this work by adding the location form to your two original forms::
 
-    // src/AppBundle/Form/Type/CompanyType.php
-    use AppBundle\Entity\Company;
+    // src/Form/Type/CompanyType.php
+    use App\Entity\Company;
     // ...
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -140,8 +140,8 @@ Finally, make this work by adding the location form to your two original forms::
 
 .. code-block:: php
 
-    // src/AppBundle/Form/Type/CustomerType.php
-    use AppBundle\Entity\Customer;
+    // src/Form/Type/CustomerType.php
+    use App\Entity\Customer;
     // ...
 
     public function buildForm(FormBuilderInterface $builder, array $options)

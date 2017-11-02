@@ -32,7 +32,7 @@ like this:
                         arguments:
                             - 'currentPlace'
                     supports:
-                        - AppBundle\Entity\BlogPost
+                        - App\Entity\BlogPost
                     places:
                         - draft
                         - review
@@ -66,7 +66,7 @@ like this:
                       <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
 
-                    <framework:support>AppBundle\Entity\BlogPost</framework:support>
+                    <framework:support>App\Entity\BlogPost</framework:support>
 
                     <framework:place>draft</framework:place>
                     <framework:place>review</framework:place>
@@ -109,7 +109,7 @@ like this:
                         'type' => 'multiple_state', // or 'single_state'
                         'arguments' => array('currentPlace')
                     ),
-                    'supports' => array('AppBundle\Entity\BlogPost'),
+                    'supports' => array('App\Entity\BlogPost'),
                     'places' => array(
                         'draft',
                         'review',
@@ -159,7 +159,7 @@ like this:
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions are allowed on a blog post::
 
-    $post = new \AppBundle\Entity\BlogPost();
+    $post = new \App\Entity\BlogPost();
 
     $workflow = $this->container->get('workflow.blog_publishing');
     $workflow->can($post, 'publish'); // False
@@ -306,7 +306,7 @@ See example to make sure no blog post without title is moved to "review"::
     {
         public function guardReview(GuardEvent $event)
         {
-            /** @var \AppBundle\Entity\BlogPost $post */
+            /** @var \App\Entity\BlogPost $post */
             $post = $event->getSubject();
             $title = $post->title;
 

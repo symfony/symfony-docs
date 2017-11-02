@@ -40,15 +40,15 @@ For this entry, suppose that you already have a ``User`` entity inside an
 ``AppBundle`` with the following fields: ``id``, ``username``, ``password``,
 ``email`` and ``isActive``::
 
-    // src/AppBundle/Entity/User.php
-    namespace AppBundle\Entity;
+    // src/Entity/User.php
+    namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\UserInterface;
 
     /**
      * @ORM\Table(name="app_users")
-     * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+     * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
      */
     class User implements UserInterface, \Serializable
     {
@@ -202,7 +202,7 @@ the username and then check the password (more on passwords in a moment):
         # app/config/security.yml
         security:
             encoders:
-                AppBundle\Entity\User:
+                App\Entity\User:
                     algorithm: bcrypt
 
             # ...
@@ -234,7 +234,7 @@ the username and then check the password (more on passwords in a moment):
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <encoder class="AppBundle\Entity\User" algorithm="bcrypt" />
+                <encoder class="App\Entity\User" algorithm="bcrypt" />
 
                 <!-- ... -->
 
@@ -255,7 +255,7 @@ the username and then check the password (more on passwords in a moment):
     .. code-block:: php
 
         // app/config/security.php
-        use AppBundle\Entity\User;
+        use App\Entity\User;
 
         $container->loadFromExtension('security', array(
             'encoders' => array(
@@ -337,7 +337,7 @@ To exclude inactive users, change your ``User`` class to implement
 This extends :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`,
 so you only need the new interface::
 
-    // src/AppBundle/Entity/User.php
+    // src/Entity/User.php
 
     use Symfony\Component\Security\Core\User\AdvancedUserInterface;
     // ...
@@ -427,8 +427,8 @@ To do this, make your ``UserRepository`` implement a special
 :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`. This
 interface only requires one method: ``loadUserByUsername($username)``::
 
-    // src/AppBundle/Repository/UserRepository.php
-    namespace AppBundle\Repository;
+    // src/Repository/UserRepository.php
+    namespace App\Repository;
 
     use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
     use Doctrine\ORM\EntityRepository;

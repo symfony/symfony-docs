@@ -42,8 +42,8 @@ populate the ``$this->data`` property (it takes care of serializing the
 ``$this->data`` property). Imagine you create a new data collector that
 collects the method and accepted content types from the request::
 
-    // src/AppBundle/DataCollector/RequestCollector.php
-    namespace AppBundle\DataCollector;
+    // src/DataCollector/RequestCollector.php
+    namespace App\DataCollector;
 
     use Symfony\Component\HttpKernel\DataCollector\DataCollector;
     use Symfony\Component\HttpFoundation\Request;
@@ -95,7 +95,7 @@ The getters are added to give the template access to the collected information.
 Enabling Custom Data Collectors
 -------------------------------
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
 with ``autoconfigure``, then Symfony will automatically see your new data collector!
 Your ``collect()`` method should be called next time your refresh.
 
@@ -227,9 +227,9 @@ to specify a tag that contains the template:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
-            AppBundle\DataCollector\RequestCollector:
+            App\DataCollector\RequestCollector:
                 tags:
                     -
                         name:     data_collector
@@ -242,7 +242,7 @@ to specify a tag that contains the template:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -250,7 +250,7 @@ to specify a tag that contains the template:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\DataCollector\RequestCollector" public="false">
+                <service id="App\DataCollector\RequestCollector" public="false">
                     <!-- priority="300" -->
                     <tag name="data_collector"
                         template="data_collector/template.html.twig"
@@ -262,8 +262,8 @@ to specify a tag that contains the template:
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\DataCollector\RequestCollector;
+        // config/services.php
+        use App\DataCollector\RequestCollector;
 
         $container
             ->autowire(RequestCollector::class)

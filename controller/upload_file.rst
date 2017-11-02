@@ -15,8 +15,8 @@ Imagine that you have a ``Product`` entity in your application and you want to
 add a PDF brochure for each product. To do so, add a new property called ``brochure``
 in the ``Product`` entity::
 
-    // src/AppBundle/Entity/Product.php
-    namespace AppBundle\Entity;
+    // src/Entity/Product.php
+    namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -51,10 +51,10 @@ or ``blob`` because it just stores the PDF file name instead of the file content
 
 Then, add a new ``brochure`` field to the form that manages the ``Product`` entity::
 
-    // src/AppBundle/Form/ProductType.php
-    namespace AppBundle\Form;
+    // src/Form/ProductType.php
+    namespace App\Form;
 
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -87,7 +87,7 @@ to :doc:`customize form rendering </form/form_customization>`):
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/product/new.html.twig #}
+        {# templates/product/new.html.twig #}
         <h1>Adding a new product</h1>
 
         {{ form_start(form) }}
@@ -98,7 +98,7 @@ to :doc:`customize form rendering </form/form_customization>`):
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/product/new.html.twig -->
+        <!-- templates/product/new.html.twig -->
         <h1>Adding a new product</h1>
 
         <?php echo $view['form']->start($form) ?>
@@ -107,14 +107,14 @@ to :doc:`customize form rendering </form/form_customization>`):
 
 Finally, you need to update the code of the controller that handles the form::
 
-    // src/AppBundle/Controller/ProductController.php
-    namespace AppBundle\ProductController;
+    // src/Controller/ProductController.php
+    namespace App\ProductController;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
-    use AppBundle\Entity\Product;
-    use AppBundle\Form\ProductType;
+    use App\Entity\Product;
+    use App\Form\ProductType;
 
     class ProductController extends Controller
     {
@@ -165,7 +165,7 @@ controller to specify the directory in which the brochures should be stored:
 
     # ...
     parameters:
-        brochures_directory: '%kernel.project_dir%/web/uploads/brochures'
+        brochures_directory: '%kernel.project_dir%/public/uploads/brochures'
 
 There are some important things to consider in the code of the above controller:
 
@@ -221,8 +221,8 @@ Creating an Uploader Service
 To avoid logic in controllers, making them big, you can extract the upload
 logic to a separate service::
 
-    // src/AppBundle/Service/FileUploader.php
-    namespace AppBundle\Service;
+    // src/Service/FileUploader.php
+    namespace App\Service;
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -256,17 +256,17 @@ Then, define a service for this class:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             # ...
 
-            AppBundle\Service\FileUploader:
+            App\Service\FileUploader:
                 arguments:
                     $targetDir: '%brochures_directory%'
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -274,24 +274,24 @@ Then, define a service for this class:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
-            <service id="AppBundle\FileUploader">
+            <service id="App\FileUploader">
                 <argument>%brochures_directory%</argument>
             </service>
         </container>
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\Service\FileUploader;
+        // config/services.php
+        use App\Service\FileUploader;
 
         $container->autowire(FileUploader::class)
             ->setArgument('$targetDir', '%brochures_directory%');
 
 Now you're ready to use this service in the controller::
 
-    // src/AppBundle/Controller/ProductController.php
+    // src/Controller/ProductController.php
     use Symfony\Component\HttpFoundation\Request;
-    use AppBundle\Service\FileUploader;
+    use App\Service\FileUploader;
 
     // ...
     public function newAction(Request $request, FileUploader $fileUploader)
@@ -317,14 +317,14 @@ If you are using Doctrine to store the Product entity, you can create a
 :doc:`Doctrine listener </doctrine/event_listeners_subscribers>` to
 automatically upload the file when persisting the entity::
 
-    // src/AppBundle/EventListener/BrochureUploadListener.php
-    namespace AppBundle\EventListener;
+    // src/EventListener/BrochureUploadListener.php
+    namespace App\EventListener;
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Doctrine\ORM\Event\LifecycleEventArgs;
     use Doctrine\ORM\Event\PreUpdateEventArgs;
-    use AppBundle\Entity\Product;
-    use AppBundle\Service\FileUploader;
+    use App\Entity\Product;
+    use App\Service\FileUploader;
 
     class BrochureUploadListener
     {
@@ -372,14 +372,14 @@ Now, register this class as a Doctrine listener:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             _defaults:
                 # ... be sure autowiring is enabled
                 autowire: true
             # ...
 
-            AppBundle\EventListener\BrochureUploadListener:
+            App\EventListener\BrochureUploadListener:
                 tags:
                     - { name: doctrine.event_listener, event: prePersist }
                     - { name: doctrine.event_listener, event: preUpdate }
@@ -397,7 +397,7 @@ Now, register this class as a Doctrine listener:
             <defaults autowire="true" />
             <!-- ... -->
 
-            <service id="AppBundle\EventListener\BrochureUploaderListener">
+            <service id="App\EventListener\BrochureUploaderListener">
                 <tag name="doctrine.event_listener" event="prePersist"/>
                 <tag name="doctrine.event_listener" event="preUpdate"/>
             </service>
@@ -405,8 +405,8 @@ Now, register this class as a Doctrine listener:
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\EventListener\BrochureUploaderListener;
+        // config/services.php
+        use App\EventListener\BrochureUploaderListener;
 
         $container->autowire(BrochureUploaderListener::class)
             ->addTag('doctrine.event_listener', array(

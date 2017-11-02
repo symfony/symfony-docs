@@ -35,13 +35,13 @@ managers that use this connection.
         services:
             # ...
 
-            AppBundle\EventListener\SearchIndexer:
+            App\EventListener\SearchIndexer:
                 tags:
                     - { name: doctrine.event_listener, event: postPersist }
-            AppBundle\EventListener\SearchIndexer2:
+            App\EventListener\SearchIndexer2:
                 tags:
                     - { name: doctrine.event_listener, event: postPersist, connection: default }
-            AppBundle\EventListener\SearchIndexerSubscriber:
+            App\EventListener\SearchIndexerSubscriber:
                 tags:
                     - { name: doctrine.event_subscriber, connection: default }
 
@@ -53,13 +53,13 @@ managers that use this connection.
             <services>
                 <!-- ... -->
 
-                <service id="AppBundle\EventListener\SearchIndexer">
+                <service id="App\EventListener\SearchIndexer">
                     <tag name="doctrine.event_listener" event="postPersist" />
                 </service>
-                <service id="AppBundle\EventListener\SearchIndexer2">
+                <service id="App\EventListener\SearchIndexer2">
                     <tag name="doctrine.event_listener" event="postPersist" connection="default" />
                 </service>
-                <service id="AppBundle\EventListener\SearchIndexerSubscriber">
+                <service id="App\EventListener\SearchIndexerSubscriber">
                     <tag name="doctrine.event_subscriber" connection="default" />
                 </service>
             </services>
@@ -67,9 +67,9 @@ managers that use this connection.
 
     .. code-block:: php
 
-        use AppBundle\EventListener\SearchIndexer;
-        use AppBundle\EventListener\SearchIndexer2;
-        use AppBundle\EventListener\SearchIndexerSubscriber;
+        use App\EventListener\SearchIndexer;
+        use App\EventListener\SearchIndexer2;
+        use App\EventListener\SearchIndexerSubscriber;
 
         $container->autowire(SearchIndexer::class)
             ->addTag('doctrine.event_listener', array('event' => 'postPersist'))
@@ -91,11 +91,11 @@ In the previous example, a ``SearchIndexer`` service was configured as a Doctrin
 listener on the event ``postPersist``. The class behind that service must have
 a ``postPersist()`` method, which will be called when the event is dispatched::
 
-    // src/AppBundle/EventListener/SearchIndexer.php
-    namespace AppBundle\EventListener;
+    // src/EventListener/SearchIndexer.php
+    namespace App\EventListener;
 
     use Doctrine\ORM\Event\LifecycleEventArgs;
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
 
     class SearchIndexer
     {
@@ -135,13 +135,13 @@ Creating the Subscriber Class
 A Doctrine event subscriber must implement the ``Doctrine\Common\EventSubscriber``
 interface and have an event method for each event it subscribes to::
 
-    // src/AppBundle/EventListener/SearchIndexerSubscriber.php
-    namespace AppBundle\EventListener;
+    // src/EventListener/SearchIndexerSubscriber.php
+    namespace App\EventListener;
 
     use Doctrine\Common\EventSubscriber;
     // for Doctrine < 2.4: use Doctrine\ORM\Event\LifecycleEventArgs;
     use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
 
     class SearchIndexerSubscriber implements EventSubscriber
     {
@@ -207,7 +207,7 @@ to the tag like so:
 
         services:
             my.listener:
-                class: AppBundle\EventListener\SearchIndexer
+                class: App\EventListener\SearchIndexer
                 tags:
                     - { name: doctrine.event_listener, event: postPersist, lazy: true }
 
@@ -218,7 +218,7 @@ to the tag like so:
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
 
             <services>
-                <service id="my.listener" class="AppBundle\EventListener\SearchIndexer">
+                <service id="my.listener" class="App\EventListener\SearchIndexer">
                     <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
                 </service>
             </services>
@@ -226,7 +226,7 @@ to the tag like so:
 
     .. code-block:: php
 
-        use AppBundle\EventListener\SearchIndexer;
+        use App\EventListener\SearchIndexer;
 
         $container
             ->register('my.listener', SearchIndexer::class)

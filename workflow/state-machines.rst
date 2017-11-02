@@ -34,7 +34,7 @@ Below is the configuration for the pull request state machine.
                 pull_request:
                     type: 'state_machine'
                     supports:
-                        - AppBundle\Entity\PullRequest
+                        - App\Entity\PullRequest
                     places:
                         - start
                         - coding
@@ -80,7 +80,7 @@ Below is the configuration for the pull request state machine.
                 <framework:workflow name="pull_request" type="state_machine">
                     <framework:marking-store type="single_state"/>
 
-                    <framework:support>AppBundle\Entity\PullRequest</framework:support>
+                    <framework:support>App\Entity\PullRequest</framework:support>
 
                     <framework:place>start</framework:place>
                     <framework:place>coding</framework:place>
@@ -147,7 +147,7 @@ Below is the configuration for the pull request state machine.
             'workflows' => array(
                 'pull_request' => array(
                   'type' => 'state_machine',
-                  'supports' => array('AppBundle\Entity\PullRequest'),
+                  'supports' => array('App\Entity\PullRequest'),
                   'places' => array(
                     'start',
                     'coding',

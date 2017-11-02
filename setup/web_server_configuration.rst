@@ -19,15 +19,15 @@ to use PHP :ref:`with Nginx <web-server-nginx>`.
 
     The web directory is the home of all of your application's public and
     static files, including images, stylesheets and JavaScript files. It is
-    also where the front controllers (``app.php`` and ``app_dev.php``) live.
+    also where the front controllers (``index.php`` and ``index.php``) live.
 
     The web directory serves as the document root when configuring your
-    web server. In the examples below, the ``web/`` directory will be the
-    document root. This directory is ``/var/www/project/web/``.
+    web server. In the examples below, the ``public/`` directory will be the
+    document root. This directory is ``/var/www/project/public/``.
 
-    If your hosting provider requires you to change the ``web/`` directory to
+    If your hosting provider requires you to change the ``public/`` directory to
     another location (e.g. ``public_html/``) make sure you
-    :ref:`override the location of the web/ directory <override-web-dir>`.
+    :ref:`override the location of the public/ directory <override-web-dir>`.
 
 .. _web-server-apache-mod-php:
 
@@ -83,7 +83,7 @@ and increase web server performance:
                 Options -MultiViews
                 RewriteEngine On
                 RewriteCond %{REQUEST_FILENAME} !-f
-                RewriteRule ^(.*)$ app.php [QSA,L]
+                RewriteRule ^(.*)$ index.php [QSA,L]
             </IfModule>
         </Directory>
 
@@ -96,7 +96,7 @@ and increase web server performance:
         # optionally disable the RewriteEngine for the asset directories
         # which will allow apache to simply reply with a 404 when files are
         # not found instead of passing the request into the full symfony stack
-        <Directory /var/www/project/web/bundles>
+        <Directory /var/www/project/public/bundles>
             <IfModule mod_rewrite.c>
                 RewriteEngine Off
             </IfModule>
@@ -187,11 +187,11 @@ use the ``SetHandler`` directive to pass requests for PHP files to PHP FPM:
         </FilesMatch>
 
         # If you use Apache version below 2.4.9 you must consider update or use this instead
-        # ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
+        # ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/public/$1
 
         # If you run your Symfony application on a subpath of your document root, the
         # regular expression must be changed accordingly:
-        # ProxyPassMatch ^/path-to-app/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
+        # ProxyPassMatch ^/path-to-app/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/public/$1
 
         DocumentRoot /var/www/project/web
         <Directory /var/www/project/web>
@@ -267,12 +267,12 @@ The **minimum configuration** to get your application running under Nginx is:
         root /var/www/project/web;
 
         location / {
-            # try to serve file directly, fallback to app.php
-            try_files $uri /app.php$is_args$args;
+            # try to serve file directly, fallback to index.php
+            try_files $uri /index.php$is_args$args;
         }
         # DEV
         # This rule should only be placed on your development environment
-        # In production, don't include this and don't deploy app_dev.php or config.php
+        # In production, don't include this and don't deploy index.php or config.php
         location ~ ^/(app_dev|config)\.php(/|$) {
             fastcgi_pass unix:/var/run/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
@@ -302,7 +302,7 @@ The **minimum configuration** to get your application running under Nginx is:
             fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
             fastcgi_param DOCUMENT_ROOT $realpath_root;
             # Prevents URIs that include the front controller. This will 404:
-            # http://domain.tld/app.php/some-path
+            # http://domain.tld/index.php/some-path
             # Remove the internal directive to allow URIs like this
             internal;
         }
@@ -324,7 +324,7 @@ The **minimum configuration** to get your application running under Nginx is:
 
 .. tip::
 
-    This executes **only** ``app.php``, ``app_dev.php`` and ``config.php`` in
+    This executes **only** ``index.php``, ``index.php`` and ``config.php`` in
     the web directory. All other files ending in ".php" will be denied.
 
     If you have other PHP files in your web directory that need to be executed,
@@ -332,8 +332,8 @@ The **minimum configuration** to get your application running under Nginx is:
 
 .. caution::
 
-    After you deploy to production, make sure that you **cannot** access the ``app_dev.php``
-    or ``config.php`` scripts (i.e. ``http://example.com/app_dev.php`` and ``http://example.com/config.php``).
+    After you deploy to production, make sure that you **cannot** access the ``index.php``
+    or ``config.php`` scripts (i.e. ``http://example.com/index.php`` and ``http://example.com/config.php``).
     If you *can* access these, be sure to remove the ``DEV`` section from the above configuration.
 
 .. note::

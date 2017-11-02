@@ -119,8 +119,8 @@ Creating an ACL and Adding an ACE
 
 .. code-block:: php
 
-    // src/AppBundle/Controller/BlogController.php
-    namespace AppBundle\Controller;
+    // src/Controller/BlogController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -187,7 +187,7 @@ Checking Access
 
 .. code-block:: php
 
-    // src/AppBundle/Controller/BlogController.php
+    // src/Controller/BlogController.php
 
     // ...
 
@@ -245,7 +245,7 @@ added above:
 
 .. code-block:: php
 
-    $identity = new UserSecurityIdentity('johannes', 'AppBundle\Entity\User');
+    $identity = new UserSecurityIdentity('johannes', 'App\Entity\User');
     $acl->insertObjectAce($identity, $mask);
 
 The user is now allowed to view, edit, delete, and un-delete objects.

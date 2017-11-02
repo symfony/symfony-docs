@@ -64,7 +64,7 @@ You can now render a PHP template instead of a Twig one simply by using the
 ``.php`` extension in the template name instead of ``.twig``. The controller
 below renders the ``index.html.php`` template::
 
-    // src/AppBundle/Controller/HelloController.php
+    // src/Controller/HelloController.php
 
     // ...
     public function indexAction($name)
@@ -78,7 +78,7 @@ below renders the ``index.html.php`` template::
 You can also use the `@Template`_ shortcut to render the default
 ``AppBundle:Hello:index.html.php`` template::
 
-    // src/AppBundle/Controller/HelloController.php
+    // src/Controller/HelloController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
     // ...
@@ -134,7 +134,7 @@ the ``extend()`` call:
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/Hello/index.html.php -->
+    <!-- templates/Hello/index.html.php -->
     <?php $view->extend('AppBundle::layout.html.php') ?>
 
     Hello <?php echo $name ?>!
@@ -148,7 +148,7 @@ Now, have a look at the ``layout.html.php`` file:
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/layout.html.php -->
+    <!-- templates/layout.html.php -->
     <?php $view->extend('::base.html.php') ?>
 
     <h1>Hello Application</h1>
@@ -158,12 +158,12 @@ Now, have a look at the ``layout.html.php`` file:
 The layout is itself decorated by another one (``::base.html.php``). Symfony
 supports multiple decoration levels: a layout can itself be decorated by
 another one. When the bundle part of the template name is empty, views are
-looked for in the ``app/Resources/views/`` directory. This directory stores
+looked for in the ``templates/`` directory. This directory stores
 global views for your entire project:
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/base.html.php -->
+    <!-- templates/base.html.php -->
     <!DOCTYPE html>
     <html>
         <head>
@@ -196,7 +196,7 @@ decorating the template. In the ``index.html.php`` template, define a
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/Hello/index.html.php -->
+    <!-- templates/Hello/index.html.php -->
     <?php $view->extend('AppBundle::layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
@@ -207,7 +207,7 @@ The base layout already has the code to output the title in the header:
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/base.html.php -->
+    <!-- templates/base.html.php -->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
@@ -238,14 +238,14 @@ Create a ``hello.html.php`` template:
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/Hello/hello.html.php -->
+    <!-- templates/Hello/hello.html.php -->
     Hello <?php echo $name ?>!
 
 And change the ``index.html.php`` template to include it:
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/Hello/index.html.php -->
+    <!-- templates/Hello/index.html.php -->
     <?php $view->extend('AppBundle::layout.html.php') ?>
 
     <?php echo $view->render('AppBundle:Hello:hello.html.php', array('name' => $name)) ?>
@@ -268,7 +268,7 @@ If you create a ``fancy`` action, and want to include it into the
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/Hello/index.html.php -->
+    <!-- templates/Hello/index.html.php -->
     <?php echo $view['actions']->render(
         new \Symfony\Component\HttpKernel\Controller\ControllerReference('AppBundle:Hello:fancy', array(
             'name'  => $name,
@@ -279,7 +279,7 @@ If you create a ``fancy`` action, and want to include it into the
 Here, the ``AppBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 ``Hello`` controller::
 
-    // src/AppBundle/Controller/HelloController.php
+    // src/Controller/HelloController.php
 
     class HelloController extends Controller
     {
@@ -332,7 +332,7 @@ pattern:
 
 .. code-block:: yaml
 
-    # src/AppBundle/Resources/config/routing.yml
+    # src/Resources/config/routing.yml
     hello: # The route name
         path:     /hello/{name}
         defaults: { _controller: AppBundle:Hello:index }

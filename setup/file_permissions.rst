@@ -70,7 +70,7 @@ If none of the previous methods work for you, change the umask so that the
 cache and log directories are group-writable or world-writable (depending
 if the web server user and the command line user are in the same group or not).
 To achieve this, put the following line at the beginning of the ``bin/console``,
-``web/app.php`` and ``web/app_dev.php`` files::
+``public/index.php`` and ``public/index.php`` files::
 
     umask(0002); // This will let the permissions be 0775
 

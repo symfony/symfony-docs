@@ -36,8 +36,8 @@ The route is simple:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
-        namespace AppBundle\Controller;
+        // src/Controller/BlogController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Routing\Annotation\Route;
@@ -70,7 +70,7 @@ The route is simple:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog_list:
             path:     /blog
             defaults: { _controller: AppBundle:Blog:list }
@@ -81,7 +81,7 @@ The route is simple:
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -99,7 +99,7 @@ The route is simple:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -142,7 +142,7 @@ Later, you'll use it to generate URLs.
     :ref:`logical name <controller-string-syntax>`. It follows a pattern that
     points to a specific PHP class and method, in this case the
     ``AppBundle\Controller\BlogController::listAction`` and
-    ``AppBundle\Controller\BlogController::showAction`` methods.
+    ``App\Controller\BlogController::showAction`` methods.
 
 This is the goal of the Symfony router: to map the URL of a request to a
 controller. Along the way, you'll learn all sorts of tricks that make mapping
@@ -170,8 +170,8 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
-        namespace AppBundle\Controller;
+        // src/Controller/BlogController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Routing\Annotation\Route;
@@ -197,7 +197,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog_list:
             path:      /blog/{page}
             defaults:  { _controller: AppBundle:Blog:list }
@@ -209,7 +209,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -226,7 +226,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -268,8 +268,8 @@ So how can you make ``blog_list`` once again match when the user visits
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
-        namespace AppBundle\Controller;
+        // src/Controller/BlogController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Routing\Annotation\Route;
@@ -287,7 +287,7 @@ So how can you make ``blog_list`` once again match when the user visits
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog_list:
             path:      /blog/{page}
             defaults:  { _controller: AppBundle:Blog:list, page: 1 }
@@ -299,7 +299,7 @@ So how can you make ``blog_list`` once again match when the user visits
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -318,7 +318,7 @@ So how can you make ``blog_list`` once again match when the user visits
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -356,7 +356,7 @@ With all of this in mind, check out this advanced example:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/ArticleController.php
+        // src/Controller/ArticleController.php
 
         // ...
         class ArticleController extends Controller
@@ -379,7 +379,7 @@ With all of this in mind, check out this advanced example:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         article_show:
           path:     /articles/{_locale}/{year}/{slug}.{_format}
           defaults: { _controller: AppBundle:Article:show, _format: html }
@@ -390,7 +390,7 @@ With all of this in mind, check out this advanced example:
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -411,7 +411,7 @@ With all of this in mind, check out this advanced example:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
@@ -521,8 +521,8 @@ Bundle         Controller Class    Method Name
 
 The controller might look like this::
 
-    // src/AppBundle/Controller/BlogController.php
-    namespace AppBundle\Controller;
+    // src/Controller/BlogController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -564,7 +564,7 @@ Loading Routes
 --------------
 
 Symfony loads all the routes for your application from a *single* routing configuration
-file: ``app/config/routing.yml``. But from inside of this file, you can load any
+file: ``config/routes.yaml``. But from inside of this file, you can load any
 *other* routing files you want. In fact, by default, Symfony loads annotation route
 configuration from your AppBundle's ``Controller/`` directory, which is how Symfony
 sees our annotation routes:
@@ -573,14 +573,14 @@ sees our annotation routes:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         app:
             resource: "@AppBundle/Controller/"
             type:     annotation
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -593,7 +593,7 @@ sees our annotation routes:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();

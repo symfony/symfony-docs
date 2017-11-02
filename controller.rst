@@ -13,8 +13,8 @@ else you can dream up. The controller executes whatever arbitrary logic
 See how simple this is by looking at a Symfony controller in action.
 This renders a page that prints a lucky (random) number::
 
-    // src/AppBundle/Controller/LuckyController.php
-    namespace AppBundle\Controller;
+    // src/Controller/LuckyController.php
+    namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
@@ -55,8 +55,8 @@ While a controller can be any PHP callable (a function, method on an object,
 or a ``Closure``), a controller is usually a method inside a controller
 class::
 
-    // src/AppBundle/Controller/LuckyController.php
-    namespace AppBundle\Controller;
+    // src/Controller/LuckyController.php
+    namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
@@ -129,8 +129,8 @@ classes. You can extend either to get access to a number of `helper methods`_.
 Add the ``use`` statement atop the ``Controller`` class and then modify
 ``LuckyController`` to extend it::
 
-    // src/AppBundle/Controller/LuckyController.php
-    namespace AppBundle\Controller;
+    // src/Controller/LuckyController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -221,13 +221,13 @@ If you're serving HTML, you'll want to render a template. The ``render()``
 method renders a template **and** puts that content into a ``Response``
 object for you::
 
-    // renders app/Resources/views/lucky/number.html.twig
+    // renders templates/lucky/number.html.twig
     return $this->render('lucky/number.html.twig', array('name' => $name));
 
 Templates can also live in deeper sub-directories. Just try to avoid
 creating unnecessarily deep structures::
 
-    // renders app/Resources/views/lottery/lucky/number.html.twig
+    // renders templates/lottery/lucky/number.html.twig
     return $this->render('lottery/lucky/number.html.twig', array(
         'name' => $name,
     ));
@@ -282,12 +282,12 @@ controller's service config:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             # ...
 
             # explicitly configure the service
-            AppBundle\Controller\LuckyController:
+            App\Controller\LuckyController:
                 public: true
                 tags:
                     # add multiple tags to control multiple args
@@ -299,7 +299,7 @@ controller's service config:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -310,7 +310,7 @@ controller's service config:
                 <!-- ... -->
 
                 <!-- Explicitly configure the service -->
-                <service id="AppBundle\Controller\LuckyController" public="true">
+                <service id="App\Controller\LuckyController" public="true">
                     <tag
                         name="controller.service_arguments"
                         action="numberAction"
@@ -323,8 +323,8 @@ controller's service config:
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\Controller\LuckyController;
+        // config/services.php
+        use App\Controller\LuckyController;
 
         $container->register(LuckyController::class)
             ->setPublic(true)
@@ -354,7 +354,7 @@ For more information about services, see the :doc:`/service_container` article.
     is :ref:`autoconfigured <services-autoconfigure>` and extends either
     :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` or
     :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. If
-    you use the :ref:`services.yml configuration from the Symfony Standard Edition <service-container-services-load-example>`,
+    you use the :ref:`services.yaml configuration from the Symfony Standard Edition <service-container-services-load-example>`,
     then your controllers are already registered as services and autoconfigured.
 
     If you're not using the default configuration, you can tag your service manually
@@ -424,7 +424,7 @@ Symfony will automatically return a 500 HTTP response code.
     throw new \Exception('Something went wrong!');
 
 In every case, an error page is shown to the end user and a full debug
-error page is shown to the developer (i.e. when you're using the ``app_dev.php``
+error page is shown to the developer (i.e. when you're using the ``index.php``
 front controller - see :ref:`page-creation-environments`).
 
 You'll want to customize the error page your user sees. To do that, see
@@ -536,7 +536,7 @@ read any flash messages from the session using ``app.flashes()``:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/base.html.twig #}
+        {# templates/base.html.twig #}
 
         {# you can read and display just one flash message type... #}
         {% for message in app.flashes('notice') %}
@@ -556,7 +556,7 @@ read any flash messages from the session using ``app.flashes()``:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/base.html.php -->
+        <!-- templates/base.html.php -->
 
         // you can read and display just one flash message type...
         <?php foreach ($view['session']->getFlashBag()->get('notice') as $message): ?>

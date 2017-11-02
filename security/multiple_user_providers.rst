@@ -22,7 +22,7 @@ a new provider that chains the two together:
                         users:
                             foo: { password: test }
                 user_db:
-                    entity: { class: AppBundle\Entity\User, property: username }
+                    entity: { class: App\Entity\User, property: username }
 
     .. code-block:: xml
 
@@ -49,7 +49,7 @@ a new provider that chains the two together:
                 </provider>
 
                 <provider name="user_db">
-                    <entity class="AppBundle\Entity\User" property="username" />
+                    <entity class="App\Entity\User" property="username" />
                 </provider>
             </config>
         </srv:container>
@@ -57,7 +57,7 @@ a new provider that chains the two together:
     .. code-block:: php
 
         // app/config/security.php
-        use AppBundle\Entity\User;
+        use App\Entity\User;
 
         $container->loadFromExtension('security', array(
             'providers' => array(

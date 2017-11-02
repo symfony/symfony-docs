@@ -15,13 +15,13 @@ To do this, add the repository class name to your entity's mapping definition:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Product.php
-        namespace AppBundle\Entity;
+        // src/Entity/Product.php
+        namespace App\Entity;
 
         use Doctrine\ORM\Mapping as ORM;
 
         /**
-         * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
+         * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
          */
         class Product
         {
@@ -30,15 +30,15 @@ To do this, add the repository class name to your entity's mapping definition:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/doctrine/Product.orm.yml
-        AppBundle\Entity\Product:
+        # src/Resources/config/doctrine/Product.orm.yml
+        App\Entity\Product:
             type: entity
-            repositoryClass: AppBundle\Repository\ProductRepository
+            repositoryClass: App\Repository\ProductRepository
             # ...
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/doctrine/Product.orm.xml -->
+        <!-- src/Resources/config/doctrine/Product.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -46,14 +46,14 @@ To do this, add the repository class name to your entity's mapping definition:
                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
             <entity
-                name="AppBundle\Entity\Product"
-                repository-class="AppBundle\Repository\ProductRepository">
+                name="App\Entity\Product"
+                repository-class="App\Repository\ProductRepository">
 
                 <!-- ... -->
             </entity>
         </doctrine-mapping>
 
-Then, create an empty ``AppBundle\Repository\ProductRepository`` class extending
+Then, create an empty ``App\Repository\ProductRepository`` class extending
 from ``Doctrine\ORM\EntityRepository``.
 
 Next, add a new method - ``findAllOrderedByName()`` - to the newly-generated
@@ -62,8 +62,8 @@ entities, ordered alphabetically by name.
 
 .. code-block:: php
 
-    // src/AppBundle/Repository/ProductRepository.php
-    namespace AppBundle\Repository;
+    // src/Repository/ProductRepository.php
+    namespace App\Repository;
 
     use Doctrine\ORM\EntityRepository;
 
@@ -86,7 +86,7 @@ entities, ordered alphabetically by name.
 
 You can use this new method just like the default finder methods of the repository::
 
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
     // ...
 
     public function listAction()

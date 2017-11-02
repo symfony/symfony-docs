@@ -306,7 +306,7 @@ can now re-use the form customization across many templates:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/form/fields.html.twig #}
+    {# templates/form/fields.html.twig #}
     {% block integer_widget %}
         <div class="integer_widget">
             {% set type = type|default('number') %}
@@ -373,7 +373,7 @@ file in order to customize the ``integer_widget`` fragment.
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/form/integer_widget.html.php -->
+    <!-- templates/form/integer_widget.html.php -->
     <div class="integer_widget">
         <?php echo $view['form']->block(
             $form,
@@ -450,7 +450,7 @@ the base block by using the ``parent()`` Twig function:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/form/fields.html.twig #}
+    {# templates/form/fields.html.twig #}
     {% extends 'form_div_layout.html.twig' %}
 
     {% block integer_widget %}
@@ -575,7 +575,7 @@ PHP
 ~~~
 
 By using the following configuration, any customized form fragments inside the
-``app/Resources/views/Form`` folder will be used globally when a
+``templates/Form`` folder will be used globally when a
 form is rendered.
 
 .. configuration-block::
@@ -722,7 +722,7 @@ customize the ``name`` field only:
 
         <?php echo $view['form']->widget($form['name']); ?>
 
-        <!-- app/Resources/views/form/_product_name_widget.html.php -->
+        <!-- templates/form/_product_name_widget.html.php -->
         <div class="text_widget">
             <?php echo $view['form']->block('form_widget_simple') ?>
         </div>
@@ -780,7 +780,7 @@ You can also override the markup for an entire field row using the same method:
 
         <?php echo $view['form']->row($form['name']); ?>
 
-        <!-- app/Resources/views/form/_product_name_row.html.php -->
+        <!-- templates/form/_product_name_row.html.php -->
         <div class="name_row">
             <?php echo $view['form']->label($form) ?>
             <?php echo $view['form']->errors($form) ?>
@@ -812,7 +812,7 @@ will be able to change the widget for each task as follows:
 
     .. code-block:: html+php
 
-        <!-- src/AppBundle/Resources/views/Form/_tasks_entry_widget.html.php -->
+        <!-- src/Resources/views/Form/_tasks_entry_widget.html.php -->
         <tr>
             <td><?php echo $view['form']->widget($form->task) ?></td>
             <td><?php echo $view['form']->widget($form->dueDate) ?></td>

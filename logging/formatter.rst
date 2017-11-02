@@ -14,7 +14,7 @@ configure your handler to use it:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             # ...
 
@@ -30,7 +30,7 @@ configure your handler to use it:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -60,7 +60,7 @@ configure your handler to use it:
         // app/config/config.php
         use Monolog\Formatter\JsonFormatter;
 
-        // app/config/services.php
+        // config/services.php
         $container->register(JsonFormatter::class);
 
         // app/config/config_prod.php (or config_dev.php)

@@ -30,9 +30,9 @@ This is how your security configuration can look in action:
                     anonymous: ~
                     guard:
                         authenticators:
-                            - AppBundle\Security\LoginFormAuthenticator
-                            - AppBundle\Security\FacebookConnectAuthenticator
-                        entry_point: AppBundle\Security\LoginFormAuthenticator
+                            - App\Security\LoginFormAuthenticator
+                            - App\Security\FacebookConnectAuthenticator
+                        entry_point: App\Security\LoginFormAuthenticator
 
     .. code-block:: xml
 
@@ -48,9 +48,9 @@ This is how your security configuration can look in action:
                 <!-- ... -->
                 <firewall name="default">
                     <anonymous />
-                    <guard entry-point="AppBundle\Security\LoginFormAuthenticator">
-                        <authenticator>AppBundle\Security\LoginFormAuthenticator</authenticator>
-                        <authenticator>AppBundle\Security\FacebookConnectAuthenticator</authenticator>
+                    <guard entry-point="App\Security\LoginFormAuthenticator">
+                        <authenticator>App\Security\LoginFormAuthenticator</authenticator>
+                        <authenticator>App\Security\FacebookConnectAuthenticator</authenticator>
                     </guard>
                 </firewall>
             </config>
@@ -59,8 +59,8 @@ This is how your security configuration can look in action:
     .. code-block:: php
 
         // app/config/security.php
-        use AppBundle\Security\LoginFormAuthenticator;
-        use AppBundle\Security\FacebookConnectAuthenticator;
+        use App\Security\LoginFormAuthenticator;
+        use App\Security\FacebookConnectAuthenticator;
 
         $container->loadFromExtension('security', array(
             // ...
@@ -101,12 +101,12 @@ the solution is to split the configuration into two separate firewalls:
                     pattern: ^/api/
                     guard:
                         authenticators:
-                            - AppBundle\Security\ApiTokenAuthenticator
+                            - App\Security\ApiTokenAuthenticator
                 default:
                     anonymous: ~
                     guard:
                         authenticators:
-                            - AppBundle\Security\LoginFormAuthenticator
+                            - App\Security\LoginFormAuthenticator
             access_control:
                 - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
                 - { path: ^/api, roles: ROLE_API_USER }
@@ -126,13 +126,13 @@ the solution is to split the configuration into two separate firewalls:
                 <!-- ... -->
                 <firewall name="api" pattern="^/api/">
                     <guard>
-                        <authenticator>AppBundle\Security\ApiTokenAuthenticator</authenticator>
+                        <authenticator>App\Security\ApiTokenAuthenticator</authenticator>
                     </guard>
                 </firewall>
                 <firewall name="default">
                     <anonymous />
                     <guard>
-                        <authenticator>AppBundle\Security\LoginFormAuthenticator</authenticator>
+                        <authenticator>App\Security\LoginFormAuthenticator</authenticator>
                     </guard>
                 </firewall>
                 <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -144,8 +144,8 @@ the solution is to split the configuration into two separate firewalls:
     .. code-block:: php
 
         // app/config/security.php
-        use AppBundle\Security\ApiTokenAuthenticator;
-        use AppBundle\Security\LoginFormAuthenticator;
+        use App\Security\ApiTokenAuthenticator;
+        use App\Security\LoginFormAuthenticator;
 
         $container->loadFromExtension('security', array(
             // ...

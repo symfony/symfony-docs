@@ -151,14 +151,14 @@ of the most common elements of a bundle:
     necessary).
 
 ``Resources/config/``
-    Houses configuration, including routing configuration (e.g. ``routing.yml``).
+    Houses configuration, including routing configuration (e.g. ``routes.yaml``).
 
 ``Resources/views/``
     Holds templates organized by controller name (e.g. ``Random/index.html.twig``).
 
 ``Resources/public/``
     Contains web assets (images, stylesheets, etc) and is copied or symbolically
-    linked into the project ``web/`` directory via the ``assets:install`` console
+    linked into the project ``public/`` directory via the ``assets:install`` console
     command.
 
 ``Tests/``

@@ -17,8 +17,8 @@ Create and a :ref:`new event subscriber <events-subscriber>`. Typically, ``_loca
 is used as a routing parameter to signify the locale, though you can determine the
 correct locale however you want::
 
-    // src/AppBundle/EventSubscriber/LocaleSubscriber.php
-    namespace AppBundle\EventSubscriber;
+    // src/EventSubscriber/LocaleSubscriber.php
+    namespace App\EventSubscriber;
 
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\HttpKernel\KernelEvents;
@@ -58,7 +58,7 @@ correct locale however you want::
         }
     }
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you're done! Symfony will automatically know about the event subscriber and call
 the ``onKernelRequest`` method on each request.
 
@@ -76,7 +76,7 @@ via some "Change Locale" route & controller), or create a route with a the :ref:
             services:
                 # ...
 
-                AppBundle\EventSubscriber\LocaleSubscriber:
+                App\EventSubscriber\LocaleSubscriber:
                     arguments: ['%kernel.default_locale%']
                     # redundant if you're using autoconfigure
                     tags: [kernel.event_subscriber]
@@ -90,7 +90,7 @@ via some "Change Locale" route & controller), or create a route with a the :ref:
                     http://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <services>
-                    <service id="AppBundle\EventSubscriber\LocaleSubscriber">
+                    <service id="App\EventSubscriber\LocaleSubscriber">
                         <argument>%kernel.default_locale%</argument>
 
                         <tag name="kernel.event_subscriber" />
@@ -100,7 +100,7 @@ via some "Change Locale" route & controller), or create a route with a the :ref:
 
         .. code-block:: php
 
-            use AppBundle\EventSubscriber\LocaleSubscriber;
+            use App\EventSubscriber\LocaleSubscriber;
 
             $container->register(LocaleSubscriber::class)
                 ->addArgument('%kernel.default_locale%')
@@ -139,8 +139,8 @@ event:
 
 .. code-block:: php
 
-    // src/AppBundle/EventSubscriber/UserLocaleSubscriber.php
-    namespace AppBundle\EventSubscriber;
+    // src/EventSubscriber/UserLocaleSubscriber.php
+    namespace App\EventSubscriber;
 
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -172,7 +172,7 @@ event:
         }
     }
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you're done! Symfony will automatically know about the event subscriber will pass
 your the ``session`` service. Now, when you login, the user's locale will be set
 into the session.

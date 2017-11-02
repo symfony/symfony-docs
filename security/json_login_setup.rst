@@ -66,7 +66,7 @@ path:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/SecurityController.php
+        // src/Controller/SecurityController.php
 
         // ...
         use Symfony\Component\HttpFoundation\Request;
@@ -84,14 +84,14 @@ path:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         login:
             path:     /login
             defaults: { _controller: AppBundle:Security:login }
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -105,7 +105,7 @@ path:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 

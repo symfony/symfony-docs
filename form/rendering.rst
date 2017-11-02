@@ -11,7 +11,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/default/new.html.twig #}
+        {# templates/default/new.html.twig #}
         {{ form_start(form) }}
             {{ form_errors(form) }}
 
@@ -21,7 +21,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/default/newAction.html.php -->
+        <!-- templates/default/newAction.html.php -->
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->errors($form) ?>
 
