@@ -62,7 +62,7 @@ called ``Calculator`` in the ``Util/`` directory of the app bundle::
         }
     }
 
-To test this, create a ``CalculatorTest`` file in the ``tests/AppBundle/Util`` directory
+To test this, create a ``CalculatorTest`` file in the ``tests/Util`` directory
 of your application::
 
     // tests/Util/CalculatorTest.php
@@ -85,9 +85,9 @@ of your application::
 
 .. note::
 
-    By convention, the ``tests/AppBundle`` directory should replicate the directory
+    By convention, the ``tests/`` directory should replicate the directory
     of your bundle for unit tests. So, if you're testing a class in the
-    ``src/Util/`` directory, put the test in the ``tests/AppBundle/Util/``
+    ``src/Util/`` directory, put the test in the ``tests/Util/``
     directory.
 
 Just like in your real application - autoloading is automatically enabled
@@ -102,13 +102,13 @@ Running tests for a given file or directory is also very easy:
     $ phpunit
 
     # run all tests in the Util directory
-    $ phpunit tests/AppBundle/Util
+    $ phpunit tests/Util
 
     # run tests for the Calculator class
-    $ phpunit tests/AppBundle/Util/CalculatorTest.php
+    $ phpunit tests/Util/CalculatorTest.php
 
     # run all tests for the entire Bundle
-    $ phpunit tests/AppBundle/
+    $ phpunit tests/
 
 .. index::
    single: Tests; Functional tests
@@ -129,7 +129,7 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 Your First Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functional tests are simple PHP files that typically live in the ``tests/AppBundle/Controller``
+Functional tests are simple PHP files that typically live in the ``tests/Controller``
 directory for your bundle. If you want to test the pages handled by your
 ``PostController`` class, start by creating a new ``PostControllerTest.php``
 file that extends a special ``WebTestCase`` class.
@@ -757,7 +757,7 @@ Testing Configuration
 ---------------------
 
 The Client used by functional tests creates a Kernel that runs in a special
-``test`` environment. Since Symfony loads the ``app/config/config_test.yml``
+``test`` environment. Since Symfony loads the ``config/packages/test/*.yaml``
 in the ``test`` environment, you can tweak any of your application's settings
 specifically for testing.
 
@@ -769,7 +769,7 @@ configuration option:
 
     .. code-block:: yaml
 
-        # app/config/config_test.yml
+        # config/packages/test/swiftmailer.yaml
 
         # ...
         swiftmailer:
@@ -777,7 +777,7 @@ configuration option:
 
     .. code-block:: xml
 
-        <!-- app/config/config_test.xml -->
+        <!-- config/packages/test/swiftmailer.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -793,7 +793,7 @@ configuration option:
 
     .. code-block:: php
 
-        // app/config/config_test.php
+        // config/packages/test/swiftmailer.php
 
         // ...
         $container->loadFromExtension('swiftmailer', array(
@@ -847,7 +847,7 @@ only.
     Store the ``phpunit.xml.dist`` file in your code repository and ignore
     the ``phpunit.xml`` file.
 
-By default, only the tests stored in ``/tests`` are run via the ``phpunit`` command,
+By default, only the tests stored in ``tests/`` are run via the ``phpunit`` command,
 as configured in the ``phpunit.xml.dist`` file:
 
 .. code-block:: xml

@@ -28,8 +28,8 @@ functional tests, you can quickly spot any big errors before you deploy them:
 
 A functional test can be as easy as this::
 
-    // tests/AppBundle/ApplicationAvailabilityFunctionalTest.php
-    namespace Tests\AppBundle;
+    // tests/ApplicationAvailabilityFunctionalTest.php
+    namespace App\Tests;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
