@@ -166,6 +166,14 @@ To get a list of *all* of the routes in your system, use the ``debug:router`` co
 
     $ php bin/console debug:router
 
+You should see your *one* route so far:
+
+    ------------------ -------- -------- ------ --------------- 
+     Name               Method   Scheme   Host   Path           
+    ------------------ -------- -------- ------ --------------- 
+     app_lucky_number   ANY      ANY      ANY    /lucky/number  
+    ------------------ -------- -------- ------ --------------- 
+
 You'll learn about many more commands as you continue!
 
 The Web Debug Toolbar: Debugging Dream
@@ -203,15 +211,17 @@ First, install Twig:
     $ composer require twig
 
 Second, make sure that ``LuckyController`` extends Symfony's base
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class::
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class:
+
+.. code-block:: diff
 
     // src/Controller/LuckyController.php
 
     // ...
-    // --> add this new use statement
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    + use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    class LuckyController extends Controller
+    - class LuckyController
+    + class LuckyController extends Controller
     {
         // ...
     }
@@ -268,7 +278,7 @@ project:
 ``src/``
     All your PHP code lives here.
 
-99% of the time, you'll be working in ``src/`` (PHP files) or ``config/`` (everything
+Most of the time, you'll be working in ``src/`` (PHP files) or ``config/`` (everything
 else). As you keep reading, you'll learn what can be done inside each of these.
 
 So what about the other directories in the project?

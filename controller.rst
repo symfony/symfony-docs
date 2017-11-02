@@ -4,41 +4,11 @@
 Controller
 ==========
 
-A controller is a PHP function you create that reads information from the Symfony's
+A controller is a PHP function you create that reads information from the
 ``Request`` object and creates and returns a ``Response`` object. The response could
 be an HTML page, JSON, XML, a file download, a redirect, a 404 error or anything
 else you can dream up. The controller executes whatever arbitrary logic
 *your application* needs to render the content of a page.
-
-See how simple this is by looking at a Symfony controller in action.
-This renders a page that prints a lucky (random) number::
-
-    // src/Controller/LuckyController.php
-    namespace App\Controller;
-
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
-
-    class LuckyController
-    {
-        /**
-         * @Route("/lucky/number")
-         */
-        public function numberAction()
-        {
-            $number = mt_rand(0, 100);
-
-            return new Response(
-                '<html><body>Lucky number: '.$number.'</body></html>'
-            );
-        }
-    }
-
-But in the real world, your controller will probably do a lot of work in order to
-create the response. It might read information from the request, load data from a
-database (or API), send an email or set information on the user's session.
-But in all cases, the controller will eventually return the ``Response`` object
-that will be delivered back to the client.
 
 .. tip::
 
@@ -64,7 +34,7 @@ class::
     class LuckyController
     {
         /**
-         * @Route("/lucky/number/{max}")
+         * @Route("/lucky/number/{max}", name="app_lucky_number")
          */
         public function number($max)
         {
@@ -126,14 +96,17 @@ To make life nicer, Symfony comes with two optional base
 You can extend either to get access to some `helper methods`_.
 
 Add the ``use`` statement atop your controller class and then modify
-``LuckyController`` to extend it::
+``LuckyController`` to extend it:
+
+.. code-block:: diff
 
     // src/Controller/LuckyController.php
     namespace App\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    + use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    class LuckyController extends Controller
+    - class LuckyController
+    + class LuckyController extends Controller
     {
         // ...
     }
@@ -161,7 +134,7 @@ Generating URLs
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl`
 method is just a helper method that generates the URL for a given route::
 
-    $url = $this->generateUrl('blog_show', array('slug' => 'slug-value'));
+    $url = $this->generateUrl('app_lucky_number', array('max' => 10));
 
 Redirecting
 ~~~~~~~~~~~
@@ -184,18 +157,16 @@ and ``redirect()`` methods::
         return $this->redirectToRoute('homepage', array(), 301);
 
         // redirect to a route with parameters
-        return $this->redirectToRoute('blog_show', array('slug' => 'my-page'));
+        return $this->redirectToRoute('app_lucky_number', array('max' => 10));
 
         // redirect externally
         return $this->redirect('http://symfony.com/doc');
     }
 
-For more information, see the :doc:`Routing article </routing>`.
-
 .. caution::
 
     The ``redirect()`` method does not check its destination in any way. If you
-    redirect to some URL provided byend-users, your application may be open
+    redirect to a URL provided by end-users, your application may be open
     to the `unvalidated redirects security vulnerability`_.
 
 .. index::
