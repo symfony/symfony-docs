@@ -1001,13 +1001,10 @@ look like::
 
     public function indexAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // This is the recommended way but type-hinting the 
-        // UserInterface as a method argument also works
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->getUser();
+        // or you can also type-hint a method argument with UserInterface: e.g. "UserInterface $user"
     }
 
 .. tip::
@@ -1016,10 +1013,8 @@ look like::
     your :ref:`user provider <security-user-providers>`.
 
 .. versionadded:: 3.2
-    The functionality to get the user via the method signature was introduced in
-    Symfony 3.2. You can still retrieve it by calling ``$this->getUser()`` if you
-    extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
-    class.
+    The ability to get the user by type-hinting an argument with UserInterface
+    was introduced in Symfony 3.2.
 
 Now you can call whatever methods are on *your* User object. For example,
 if your User object has a ``getFirstName()`` method, you could use that::
