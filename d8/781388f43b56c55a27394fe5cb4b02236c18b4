@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-02T00:51:13Z
+
+@javiereguiluz It was tricky when I talked about bind for the controller args... as I could have shown a bind on *just* that one service (a bit more clear... but kinda less useful) or apply a bind to `_defaults`, which is *awesome*, but might be a little less clear. I'm not sure what the right thing is.
+
+But, we will of course talk about that a lot more in the `service_container.rst` chapter... which I hope we will turn into a "getting started" guide ;)
