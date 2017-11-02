@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by ogizanagi at 2016-11-29T17:20:05Z
+
+I actually like having the full configuration reference. It gives a big picture of the available features, its options and defaults, without having to boot a symfony app and using the `config:dump-reference` command (which sometimes may not work because you made a mistake in this very same configuration).
+
+But that's only my opinion. I kind of understand the "It's hard to maintain it updated" argument, because we don't think to update it often enough and it shouldn't be updated manually, but it actually only requires pasting the result of the `config:dump-reference` command.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-01-02T08:57:19Z
+
+I've reverted the most controversial changes in this PR, so now it just proposes to reword the intro and mention the `debug:config` and the `config:dump-reference` commands.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-29T11:31:11Z
+
+I made all the asked changes. Ready to merge it. Thanks.
