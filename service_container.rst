@@ -690,6 +690,13 @@ service whose id is ``monolog.logger.request``.
     the *service* whose id is ``monolog.logger.request``, and not just the *string*
     ``monolog.logger.request``.
 
+.. _services-binding:
+
+Binding Arguments by Name or Type
+---------------------------------
+
+You can also use the ``bind`` keyword to bind specific arguments by name or type.
+
 .. _services-autowire:
 
 The autowire Option
