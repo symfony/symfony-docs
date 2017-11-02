@@ -7,7 +7,7 @@ stored these assets in the ``Resources/public/`` directory of each bundle.
 
 .. best-practice::
 
-    Store your assets in the ``web/`` directory.
+    Store your assets in the ``public/`` directory.
 
 Scattering your web assets across tens of different bundles makes it more
 difficult to manage them. Your designers' lives will be much easier if all
@@ -28,7 +28,7 @@ much more concise:
 
 .. note::
 
-    Keep in mind that ``web/`` is a public directory and that anything stored
+    Keep in mind that ``public/`` is a public directory and that anything stored
     here will be publicly accessible, including all the original asset files
     (e.g. Sass, LESS and CoffeeScript files).
 

@@ -9,7 +9,7 @@ want and to load user information from any source. This is a complex topic, but
 the :doc:`Security guide</security>` has a lot of information about
 this.
 
-Regardless of your needs, authentication is configured in ``security.yml``,
+Regardless of your needs, authentication is configured in ``security.yaml``,
 primarily under the ``firewalls`` key.
 
 .. best-practice::
@@ -43,14 +43,14 @@ which uses a login form to load users from the database:
 
 .. code-block:: yaml
 
-    # app/config/security.yml
+    # config/packages/security.yaml
     security:
         encoders:
-            AppBundle\Entity\User: bcrypt
+            App\Entity\User: bcrypt
 
         providers:
             database_users:
-                entity: { class: AppBundle:User, property: username }
+                entity: { class: App:User, property: username }
 
         firewalls:
             secured_area:
@@ -74,7 +74,7 @@ Authorization (i.e. Denying Access)
 -----------------------------------
 
 Symfony gives you several ways to enforce authorization, including the ``access_control``
-configuration in :doc:`security.yml </reference/configuration/security>`, the
+configuration in :doc:`security.yaml </reference/configuration/security>`, the
 :ref:`@Security annotation <best-practices-security-annotation>` and using
 :ref:`isGranted <best-practices-directly-isGranted>` on the ``security.authorization_checker``
 service directly.
@@ -134,7 +134,7 @@ method on the ``Post`` object:
 
 .. code-block:: php
 
-    use AppBundle\Entity\Post;
+    use App\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
     use Symfony\Component\Routing\Annotation\Route;
 
@@ -167,7 +167,7 @@ to the ``Post`` entity that checks if a given user is its author:
 
 .. code-block:: php
 
-    // src/AppBundle/Entity/Post.php
+    // src/Entity/Post.php
     // ...
 
     class Post
@@ -189,7 +189,7 @@ Now you can reuse this method both in the template and in the security expressio
 
 .. code-block:: php
 
-    use AppBundle\Entity\Post;
+    use App\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
     use Symfony\Component\Routing\Annotation\Route;
 
@@ -263,13 +263,13 @@ the same ``getAuthorEmail()`` logic you used above:
 
 .. code-block:: php
 
-    namespace AppBundle\Security;
+    namespace App\Security;
 
+    use App\Entity\Post;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\Voter;
     use Symfony\Component\Security\Core\User\UserInterface;
-    use AppBundle\Entity\Post;
 
     class PostVoter extends Voter
     {
@@ -330,7 +330,7 @@ the same ``getAuthorEmail()`` logic you used above:
         }
     }
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 your application will :ref:`autoconfigure <services-autoconfigure>` your security
 voter and inject an ``AccessDecisionManagerInterface`` instance into it thanks to
 :doc:`autowiring </service_container/autowiring>`.
