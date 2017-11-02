@@ -1016,7 +1016,7 @@ In both cases, you'll still deny access using methods similar to what was
 shown above.
 
 3) Retrieving the User Object
---------------------------
+-----------------------------
 
 .. versionadded:: 2.6
      The ``security.token_storage`` service was introduced in Symfony 2.6. Prior
