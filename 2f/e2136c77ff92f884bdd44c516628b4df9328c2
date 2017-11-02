@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-30T10:40:43Z
+
+I've discussed this issue privately with some community members. It's true that `.dev` is problematic because it belongs to Google and Chrome does undesirable things with it ... but `.test` doesn't feel 100% right.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-10-30T15:04:23Z
+
+This used to be `.dev` as, at the time of writing this docs, the official Homestead docs used `.dev` as well.
+
+Meanwhile, the TLD used in the official docs was changed a couple time (e.g. `.app`, `.localhost` https://github.com/laravel/homestead/pull/674 and `.test` https://github.com/laravel/homestead/pull/697 ).
+
+According to [RFC 2606](https://tools.ietf.org/html/rfc2606#page-2), these TLDs are reserved:
+
+>     To safely satisfy these needs, four domain names are reserved as
+>     listed and described below.
+>
+>                    .test
+>                 .example
+>                 .invalid
+>               .localhost
+>
+>       ".test" is recommended for use in testing of current or new DNS
+>       related code.
+>
+>       ".example" is recommended for use in documentation or as examples.
+>
+>       ".invalid" is intended for use in online construction of domain
+>       names that are sure to be invalid and which it is obvious at a
+>       glance are invalid.
+>
+>       The ".localhost" TLD has traditionally been statically defined in
+>       host DNS implementations as having an A record pointing to the
+>       loop back IP address and is reserved for such use.  Any other use
+>       would conflict with widely deployed code which assumes this use.
+
+As MacOS does the loopback to `127.0.0.1` as described in the final paragraph, it is unusable for Homestead. `.example` and `.invalid` don't seem to be correct for these cases, as it's focused on documentation purposes.
+
+**To make a long story short: Big :+1: for using `.test`, which is also in sync with the current official Homestead docs.**
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-30T15:09:34Z
+
+It's "funny" that the right one (`.localhost`) doesn't work as expected ... and the one which works (`.test`) is "the wrong one" because it's intended for DNS testing :astonished:
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-10-30T15:12:19Z
+
+Well, `.localhost` is only good for localhost running sites. In this case, it's not a localhost but a virtual Homestead host running your site, so `.localhost` isn't the good one. Actually, there is no real good TLD for this purpose...
