@@ -75,31 +75,6 @@ twig                            ``Twig_Environment``
 validator                       ``Symfony\Component\Validator\Validator\ValidatorInterface``
 =============================== =======================================================================
 
-You can also use the unique "Service ID" to access a service directly::
-
-    // src/AppBundle/Controller/ProductController.php
-    namespace AppBundle\Controller;
-
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\Routing\Annotation\Route;
-
-    class ProductController extends Controller
-    {
-        /**
-         * @Route("/products")
-         */
-        public function listAction()
-        {
-            $logger = $this->container->get('logger');
-            $logger->info('Look! I just used a service');
-
-            // ...
-        }
-    }
-
-:ref:`Fetching a service directly from the container <controller-access-services-directly>`
-like this only works if you extend the ``Controller`` class.
-
 Throughout the docs, you'll see how to use the many different services that live
 in the container.
 
