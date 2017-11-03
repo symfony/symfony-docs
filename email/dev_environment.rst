@@ -192,7 +192,7 @@ belonging to the domain ``specialdomain.com`` will also be delivered as normal.
 
 .. caution::
 
-    The ``delivery_whitelist`` option can only be used in conjuction with the ``delivery_addresses`` option.
+    The delivery_whitelist option is ignored unless the delivery_addresses option is defined.
 
 Viewing from the Web Debug Toolbar
 ----------------------------------
