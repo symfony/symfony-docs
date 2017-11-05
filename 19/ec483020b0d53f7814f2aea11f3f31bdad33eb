@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by pathmissing at 2017-10-23T21:16:49Z
+
+References #8535
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-10-25T20:30:44Z
+
+That’s correct! My vote is to only show the ->getUser() way, with a note (maybe inline comment in code?) that says you can also type-hint a UserInterface arg.
+
+---------------------------------------------------------------------------
+
+by pathmissing at 2017-10-26T09:43:57Z
+
+Changed that. Any particular reason not to use type-hinting in this case? Or is it just because of the better style?
+
+---------------------------------------------------------------------------
+
+by pathmissing at 2017-11-02T12:09:32Z
+
+@weaverryan Thank you for proposing these changes, I implemented them in my latest commit. Creating a base class which returns your custom User for autocompletion is actually a really nice idea, which I am going to implement myself. Thanks for that :)
