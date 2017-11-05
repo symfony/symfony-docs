@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by tomhv at 2017-11-03T20:31:13Z
+
+I need to squash these commits into a single commit, right?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-11-04T09:41:37Z
+
+@tomhv there's no need because we use a tool that squashes everything automatically. Cheers!
