@@ -68,7 +68,7 @@ The ``recent_list`` template is perfectly straightforward:
     you'll learn how to do this correctly.
 
 To include the controller, you'll need to refer to it using the standard
-string syntax for controllers (i.e. **bundle**:**controller**:**action**):
+string syntax for controllers (i.e. **controllerPath**::**action**):
 
 .. configuration-block::
 
@@ -79,7 +79,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
         {# ... #}
         <div id="sidebar">
             {{ render(controller(
-                'AppBundle:Article:recentArticles',
+                'App\\Controller\\ArticleController::recentArticles',
                 { 'max': 3 }
             )) }}
         </div>
@@ -92,7 +92,7 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
         <div id="sidebar">
             <?php echo $view['actions']->render(
                 new \Symfony\Component\HttpKernel\Controller\ControllerReference(
-                    'AppBundle:Article:recentArticles',
+                    'App\\Controller\\ArticleController::recentArticles',
                     array('max' => 3)
                 )
             ) ?>
