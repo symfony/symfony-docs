@@ -17,9 +17,9 @@ code. This is perfectly fine if you don't need to reuse the form somewhere else.
 But for organization and reuse, we recommend that you define each
 form in its own PHP class::
 
-    namespace AppBundle\Form;
+    namespace App\Form;
 
-    use AppBundle\Entity\Post;
+    use App\Entity\Post;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -50,13 +50,13 @@ form in its own PHP class::
 
 .. best-practice::
 
-    Put the form type classes in the ``AppBundle\Form`` namespace, unless you
+    Put the form type classes in the ``App\Form`` namespace, unless you
     use other custom form classes like data transformers.
 
 To use the class, use ``createForm()`` and pass the fully qualified class name::
 
     // ...
-    use AppBundle\Form\PostType;
+    use App\Form\PostType;
 
     // ...
     public function newAction(Request $request)
@@ -109,13 +109,13 @@ This form *may* have been designed for creating posts, but if you wanted
 to reuse it for editing posts, the button label would be wrong. Instead,
 some developers configure form buttons in the controller::
 
-    namespace AppBundle\Controller\Admin;
+    namespace App\Controller\Admin;
 
+    use App\Entity\Post;
+    use App\Form\PostType;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-    use AppBundle\Entity\Post;
-    use AppBundle\Form\PostType;
 
     class PostController extends Controller
     {
@@ -127,7 +127,7 @@ some developers configure form buttons in the controller::
             $form = $this->createForm(PostType::class, $post);
             $form->add('submit', SubmitType::class, array(
                 'label' => 'Create',
-                'attr'  => array('class' => 'btn btn-default pull-right')
+                'attr' => array('class' => 'btn btn-default pull-right'),
             ));
 
             // ...

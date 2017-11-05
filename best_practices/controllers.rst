@@ -41,32 +41,30 @@ configuration to the main routing configuration file:
 
 .. code-block:: yaml
 
-    # app/config/routing.yml
-    app:
-        resource: '@AppBundle/Controller/'
+    # config/routes.yaml
+    controllers:
+        resource: '../src/Controller/'
         type:     annotation
 
 This configuration will load annotations from any controller stored inside the
-``src/AppBundle/Controller/`` directory and even from its subdirectories.
-So if your application defines lots of controllers, it's perfectly ok to
-reorganize them into subdirectories:
+``src/Controller/`` directory and even from its subdirectories. So if your application
+defines lots of controllers, it's perfectly ok to reorganize them into subdirectories:
 
 .. code-block:: text
 
     <your-project>/
     ├─ ...
     └─ src/
-       └─ AppBundle/
+       ├─ ...
+       └─ Controller/
+          ├─ DefaultController.php
           ├─ ...
-          └─ Controller/
-             ├─ DefaultController.php
+          ├─ Api/
+          │  ├─ ...
+          │  └─ ...
+          └─ Backend/
              ├─ ...
-             ├─ Api/
-             │  ├─ ...
-             │  └─ ...
-             └─ Backend/
-                ├─ ...
-                └─ ...
+             └─ ...
 
 Template Configuration
 ----------------------
@@ -93,9 +91,9 @@ for the homepage of our app:
 
 .. code-block:: php
 
-    namespace AppBundle\Controller;
+    namespace App\Controller;
 
-    use AppBundle\Entity\Post;
+    use App\Entity\Post;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Routing\Annotation\Route;
 
@@ -111,7 +109,7 @@ for the homepage of our app:
                 ->findLatest();
 
             return $this->render('default/index.html.twig', array(
-                'posts' => $posts
+                'posts' => $posts,
             ));
         }
     }
@@ -149,7 +147,7 @@ For example:
 
 .. code-block:: php
 
-    use AppBundle\Entity\Post;
+    use App\Entity\Post;
     use Symfony\Component\Routing\Annotation\Route;
 
     /**
@@ -160,7 +158,7 @@ For example:
         $deleteForm = $this->createDeleteForm($post);
 
         return $this->render('admin/post/show.html.twig', array(
-            'post'        => $post,
+            'post' => $post,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -202,7 +200,7 @@ flexible:
 
 .. code-block:: php
 
-    use AppBundle\Entity\Post;
+    use App\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
