@@ -95,7 +95,7 @@ following:
                         fields:
                             personal_email: Email
                             short_bio:
-                                - NotBlank
+                                - NotBlank: ~
                                 - Length:
                                     max:   100
                                     maxMessage: Your short bio is too long!
@@ -223,7 +223,7 @@ you can do the following:
                     - Collection:
                         fields:
                             personal_email:
-                                - Required
+                                - Required:
                                     - NotBlank: ~
                                     - Email: ~
                             alternate_email:
