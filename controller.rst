@@ -191,9 +191,10 @@ Templating and Twig are explained more in the
    single: Controller; Accessing services
 
 .. _controller-accessing-services:
+.. _accessing-other-services:
 
-Fetching Services as Controller Arguments
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fetching Services
+~~~~~~~~~~~~~~~~~
 
 Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
@@ -289,26 +290,12 @@ in your controllers.
 
 For more information about services, see the :doc:`/service_container` article.
 
-.. _controller-service-arguments-tag:
-
-.. note::
-    If this isn't working, make sure your controller is registered as a service,
-    is :ref:`autoconfigured <services-autoconfigure>` and extends either
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` or
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. If
-    you use the :ref:`services.yaml configuration from the Symfony Standard Edition <service-container-services-load-example>`,
-    then your controllers are already registered as services and autoconfigured.
-
-    If you're not using the default configuration, you can tag your service manually
-    with ``controller.service_arguments``.
-
-.. _accessing-other-services:
 .. _controller-access-services-directly:
 
 Accessing the Container Directly
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you extend the base ``Controller`` class, you can access any Symfony service
+If you extend the base ``Controller`` class, you can access :ref:`public services <container-public>`
 via the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::get`
 method. Here are several common services you might need::
 
@@ -337,40 +324,44 @@ and that it's :ref:`public <container-public>`.
 Managing Errors and 404 Pages
 -----------------------------
 
-When things are not found, you should play well with the HTTP protocol and
-return a 404 response. To do this, you'll throw a special type of exception.
-If you're extending the base ``Controller`` or the base ``AbstractController``
-class, do the following::
+When things are not found, you should return a 404 response. To do this, throw a
+special type of exception::
 
+    use Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException;
+
+    // ...
     public function indexAction()
     {
         // retrieve the object from database
         $product = ...;
         if (!$product) {
             throw $this->createNotFoundException('The product does not exist');
+
+            // the above is just a shortcut for:
+            // throw new NotFoundHttpException('The product does not exist');
         }
 
         return $this->render(...);
     }
 
-The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createNotFoundException`
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerTrait::createNotFoundException`
 method is just a shortcut to create a special
 :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`
 object, which ultimately triggers a 404 HTTP response inside Symfony.
 
-Of course, you're free to throw any ``Exception`` class in your controller -
-Symfony will automatically return a 500 HTTP response code.
+Of course, you can throw any ``Exception`` class in your controller: Symfony will
+automatically return a 500 HTTP response code.
 
 .. code-block:: php
 
     throw new \Exception('Something went wrong!');
 
 In every case, an error page is shown to the end user and a full debug
-error page is shown to the developer (i.e. when you're using the ``index.php``
-front controller - see :ref:`page-creation-environments`).
+error page is shown to the developer (i.e. when you're in "Debug" mode - see
+:ref:`page-creation-environments`).
 
-You'll want to customize the error page your user sees. To do that, see
-the :doc:`/controller/error_pages` article.
+To customize the error page that's shown to the user, see the
+:doc:`/controller/error_pages` article.
 
 .. _controller-request-argument:
 
@@ -403,54 +394,28 @@ Request object.
 Managing the Session
 --------------------
 
-Symfony provides a nice session object that you can use to store information
-about the user between requests. By default, Symfony stores the token in a
-cookie and writes the attributes to a file by using native PHP sessions.
+Symfony provides a session service that you can use to store information
+about the user between requests. Session storage and other configuration can
+be controlled under the :ref:`framework.session configuration <config-framework-session>`.
 
-First, enable sessions in your configuration:
+First, activate the session by uncommenting the ``session`` key in ``config/packages/framework.yaml``:
 
-.. configuration-block::
+.. code-block:: diff
 
-    .. code-block:: yaml
+    # config/packages/framework.yaml
+    framework:
+        # ...
 
-        # config/packages/framework.yaml
-        framework:
-            # ...
+    -     #session:
+    -     #    # The native PHP session handler will be used
+    -     #    handler_id: ~
+    +     session:
+    +         # The native PHP session handler will be used
+    +         handler_id: ~
+        # ...
 
-            session:
-                # With this config, PHP's native session handling is used
-                handler_id: ~
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- ... -->
-                <framework:session handler-id="null" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'session' => array(
-                // ...
-                'handler_id' => null,
-            ),
-        ));
-
-To retrieve the session, add the :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`
-type-hint to your argument and Symfony will provide you with a session::
+To get the session, add an argument and type-hint it with
+:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`::
 
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -466,12 +431,16 @@ type-hint to your argument and Symfony will provide you with a session::
         $filters = $session->get('filters', array());
     }
 
+.. versionadded:: 3.3
+    The ability to request a ``Session`` instance in controllers was introduced
+    in Symfony 3.3.
+
 Stored attributes remain in the session for the remainder of that user's session.
 
 .. tip::
 
     Every ``SessionInterface`` implementation is supported. If you have your
-    own implementation, type-hint this in the arguments instead.
+    own implementation, type-hint this in the argument instead.
 
 For more info, see :doc:`/session`.
 
@@ -558,11 +527,9 @@ read any flash messages from the session using ``app.flashes()``:
             <?php endforeach ?>
         <?php endforeach ?>
 
-.. note::
-
-    It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
-    different types of flash messages, but you can use any key that fits your
-    needs.
+It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
+different types of flash messages, but you can use any key that fits your
+needs.
 
 .. tip::
 
@@ -578,7 +545,7 @@ read any flash messages from the session using ``app.flashes()``:
 The Request and Response Object
 -------------------------------
 
-As mentioned :ref:`earlier <controller-request-argument>`, the framework will
+As mentioned :ref:`earlier <controller-request-argument>`, Symfony will
 pass the ``Request`` object to any controller argument that is type-hinted with
 the ``Request`` class::
 
@@ -617,10 +584,7 @@ some nice methods for getting and setting response headers. The header names are
 normalized so that using ``Content-Type`` is equivalent to ``content-type`` or even
 ``content_type``.
 
-The only requirement for a controller is to return a ``Response`` object.
-The :class:`Symfony\\Component\\HttpFoundation\\Response` class is an
-abstraction around the HTTP response - the text-based message filled with
-headers and content that's sent back to the client::
+The only requirement for a controller is to return a ``Response`` object::
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -631,26 +595,15 @@ headers and content that's sent back to the client::
     $response = new Response('<style> ... </style>');
     $response->headers->set('Content-Type', 'text/css');
 
-There are special classes that make certain kinds of responses easier:
+There are special classes that make certain kinds of responses easier. Some of these
+are mentioned below. To learn more about the ``Request`` and ``Response`` (and special
+``Response`` classes), see the :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
 
-* For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
-  See :ref:`component-http-foundation-serving-files`.
+Returning JSON Response
+~~~~~~~~~~~~~~~~~~~~~~~
 
-* For streamed responses, there is
-  :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
-  See :ref:`streaming-response`.
-
-.. seealso::
-
-    Now that you know the basics you can continue your research on Symfony
-    ``Request`` and ``Response`` object in the
-    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
-
-JSON Helper
-~~~~~~~~~~~
-
-To return JSON from a controller, use the ``json()`` helper method on the base controller.
-This returns a special ``JsonResponse`` object that encodes the data automatically::
+To return JSON from a controller, use the ``json()`` helper method. This returns a
+special ``JsonResponse`` object that encodes the data automatically::
 
     // ...
     public function indexAction()
@@ -663,11 +616,11 @@ This returns a special ``JsonResponse`` object that encodes the data automatical
     }
 
 If the :doc:`serializer service </serializer>` is enabled in your
-application, contents passed to ``json()`` are encoded with it. Otherwise,
+application, it will be used to serialize the data to JSON. Otherwise,
 the :phpfunction:`json_encode` function is used.
 
-File helper
-~~~~~~~~~~~
+Streaming File Responses
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
 helper to serve a file from inside a controller::
