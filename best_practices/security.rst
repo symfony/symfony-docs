@@ -50,7 +50,7 @@ which uses a login form to load users from the database:
 
         providers:
             database_users:
-                entity: { class: App:User, property: username }
+                entity: { class: App\Entity\User, property: username }
 
         firewalls:
             secured_area:
