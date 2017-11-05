@@ -7,15 +7,15 @@ Using Symfony Flex to Manage Symfony Applications
 is not a new Symfony version, but a tool that replaces and improves the
 `Symfony Installer`_ and the `Symfony Standard Edition`_.
 
-Symfony Flex **automates the most common tasks of Symfony applications**, such
-as installing and removing bundles and other Composer dependencies. Symfony
-Flex works for Symfony 3.3 and newer versions. Starting from Symfony 4.0, Flex
+Symfony Flex **automates the most common tasks of Symfony applications**, like
+installing and removing bundles and other Composer dependencies. Symfony
+Flex works for Symfony 3.3 and higher. Starting from Symfony 4.0, Flex
 should be used by default, but it is still optional.
 
 How Does Flex Work
 ------------------
 
-Internally, Symfony Flex is a Composer plugin that modifies the behavior of the
+Symfony Flex is a Composer plugin that modifies the behavior of the
 ``require``, ``update``, and ``remove`` commands. When installing or removing
 dependencies in a Flex-enabled application, Symfony can perform tasks before
 and after the execution of Composer tasks.
@@ -34,14 +34,14 @@ up installing and enabling the SwiftmailerBundle, which is the best way to
 integrate Swiftmailer, the official mailer for Symfony applications.
 
 When Symfony Flex is installed in the application and you execute ``composer
-require``, the application makes a request to Symfony Flex servers before
-trying to install the package with Composer:
+require``, the application makes a request to the Symfony Flex server before
+trying to install the package with Composer.
 
-* If there's no information about that package, Flex server returns nothing and
+* If there's no information about that package, the Flex server returns nothing and
   the package installation follows the usual procedure based on Composer;
 
 * If there's special information about that package, Flex returns it in a file
-  called "recipe" and the application uses it to decide which package to
+  called a "recipe" and the application uses it to decide which package to
   install and which automated tasks to run after the installation.
 
 In the above example, Symfony Flex asks about the ``mailer`` package and the
@@ -121,7 +121,7 @@ Symfony application by executing the following command:
 .. note::
 
     The use of the Symfony Installer to create new applications is no longer
-    recommended since Symfony 3.3. Use Composer ``create-project`` command
+    recommended since Symfony 3.3. Use the Composer ``create-project`` command
     instead.
 
 Upgrading Existing Applications to Flex
@@ -176,10 +176,12 @@ manual steps:
    the new ``config/services.yaml`` and ``.env`` files depending on your needs.
 
 #. Move the original source code from ``src/{App,...}Bundle/`` to ``src/`` and
-   update the namespaces of every PHP file (advanced IDEs can do this
-   automatically).
+   update the namespaces of every PHP file to be ``App\...`` (advanced IDEs can do
+   this automatically).
 
 #. Move the original templates from ``app/Resources/views/`` to ``templates/``
+   and ``app/Resources/translations`` to ``translations/``. There may be a few
+   other files you need to move into a new location.
 
 #. Make any other change needed by your application. For example, if your
    original ``web/app_*.php`` front controllers were customized, add those changes
