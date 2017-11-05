@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-02T01:30:36Z
+
+Wow, this is great! Yea, it's a mess. I don't think anyone ever really thought about the article holistically. So yes, let's fix it! I have a few other thoughts:
+
+1) See #7201. It's outside of the scope of this PR a bit... but honestly, I would *love* to  mention the commands (`config:dump` & `debug:config`) to the top of *every* reference article.
+
+2) I'm thinking more about the "Full Default Configuration". I'm trying to decide if it is an "annoying" big code block that should be moved to the bottom, or if it is the BEST thing ever, and we should try to include as *much* documentation in here (as comments) and minimize the amount of docs that are needed after this. I'm *leaning* towards the second: keep the "Full Default Configuration" on top, and, going forward, try to make it *really* great, by adding comments and even examples. @javiereguiluz what do you think about this
+
+3) There is a conflict on this PR somehow - can you check into that? :)
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by marcverney at 2017-11-02T09:48:33Z
+
+Fixed the conflict. As for the other two points you mention, I'm not sure they must be adressed in this PR (if this is what you suggested). I'm +1 for "keep the Full Default Configuration on top, and [...] try to make it really great", FWIW.
