@@ -419,6 +419,39 @@ that the ORM resolves to:
 There are lots of other configuration options that you can use to overwrite
 certain classes, but those are for very advanced use-cases only.
 
+Shortened Configuration Syntax
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you are only using one entity manager, all config options available
+can be placed directly under ``doctrine.orm`` config level.
+
+.. code-block:: yaml
+
+    doctrine:
+        orm:
+            # ...
+            query_cache_driver:
+               # ...
+            metadata_cache_driver:
+                # ...
+            result_cache_driver:
+                # ...
+            connection: ~
+            class_metadata_factory_name:  Doctrine\ORM\Mapping\ClassMetadataFactory
+            default_repository_class:  Doctrine\ORM\EntityRepository
+            auto_mapping: false
+            hydrators:
+                # ...
+            mappings:
+                # ...
+            dql:
+                # ...
+            filters:
+                # ...
+
+This shortened version is commonly used in other documentation sections.
+Keep in mind that you can't use both syntaxes at the same time.
+
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
