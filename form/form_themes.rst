@@ -199,7 +199,7 @@ file:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             form_themes:
                 - 'form/fields.html.twig'
@@ -207,7 +207,7 @@ file:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -224,7 +224,7 @@ file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 'form/fields.html.twig',
@@ -280,7 +280,7 @@ file:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             templating:
                 form:
@@ -290,7 +290,7 @@ file:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -311,7 +311,7 @@ file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'templating' => array(
                 'form' => array(

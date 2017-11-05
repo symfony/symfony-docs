@@ -392,7 +392,7 @@ sport like this::
         {
             $builder
                 ->add('sport', EntityType::class, array(
-                    'class'       => 'AppBundle:Sport',
+                    'class'       => 'App:Sport',
                     'placeholder' => '',
                 ))
             ;
@@ -409,7 +409,7 @@ sport like this::
                     $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                     $form->add('position', EntityType::class, array(
-                        'class' => 'AppBundle:Position',
+                        'class' => 'App:Position',
                         'placeholder' => '',
                         'choices' => $positions,
                     ));
@@ -445,10 +445,10 @@ The type would now look like::
     // src/Form/Type/SportMeetupType.php
     namespace App\Form\Type;
 
-    // ...
+    use App\Entity\Sport;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-    use App\Entity\Sport;
+    // ...
 
     class SportMeetupType extends AbstractType
     {
@@ -456,7 +456,7 @@ The type would now look like::
         {
             $builder
                 ->add('sport', EntityType::class, array(
-                    'class'       => 'AppBundle:Sport',
+                    'class'       => 'App:Sport',
                     'placeholder' => '',
                 ));
             ;
@@ -465,7 +465,7 @@ The type would now look like::
                 $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                 $form->add('position', EntityType::class, array(
-                    'class' => 'AppBundle:Position',
+                    'class' => 'App:Position',
                     'placeholder' => '',
                     'choices' => $positions,
                 ));

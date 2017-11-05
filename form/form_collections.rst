@@ -488,7 +488,7 @@ you will learn about next!).
     Doctrine:
 
         A new entity was found through the relationship
-        ``AppBundle\Entity\Task#tags`` that was not configured to
+        ``App\Entity\Task#tags`` that was not configured to
         cascade persist operations for entity...
 
     To fix this, you may choose to "cascade" the persist operation automatically

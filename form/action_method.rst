@@ -15,7 +15,7 @@ form, you can use ``setAction()`` and ``setMethod()``:
 
     .. code-block:: php-symfony
 
-        // AppBundle/Controller/DefaultController.php
+        // src/Controller/DefaultController.php
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -75,11 +75,11 @@ options:
 
     .. code-block:: php-symfony
 
-        // AppBundle/Controller/DefaultController.php
+        // src/Controller/DefaultController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use App\Form\TaskType;
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
         class DefaultController extends Controller
         {
@@ -98,8 +98,8 @@ options:
 
     .. code-block:: php-standalone
 
-        use Symfony\Component\Form\Forms;
         use App\Form\TaskType;
+        use Symfony\Component\Form\Forms;
 
         $formFactoryBuilder = Forms::createFormFactoryBuilder();
 

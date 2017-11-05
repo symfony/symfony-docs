@@ -483,7 +483,7 @@ rendered.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             form_themes:
                 - 'form/fields.html.twig'
@@ -491,7 +491,7 @@ rendered.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -509,7 +509,7 @@ rendered.
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 'form/fields.html.twig',
@@ -526,7 +526,7 @@ resource to use such a layout:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             form_themes:
                 - 'form_table_layout.html.twig'
@@ -534,7 +534,7 @@ resource to use such a layout:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -552,7 +552,7 @@ resource to use such a layout:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 'form_table_layout.html.twig',
@@ -575,24 +575,24 @@ PHP
 ~~~
 
 By using the following configuration, any customized form fragments inside the
-``templates/Form`` folder will be used globally when a
+``templates/form`` folder will be used globally when a
 form is rendered.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             templating:
                 form:
                     resources:
-                        - 'AppBundle:Form'
+                        - 'App:Form'
             # ...
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -605,7 +605,7 @@ form is rendered.
             <framework:config>
                 <framework:templating>
                     <framework:form>
-                        <framework:resource>AppBundle:Form</framework:resource>
+                        <framework:resource>App:Form</framework:resource>
                     </framework:form>
                 </framework:templating>
                 <!-- ... -->
@@ -614,13 +614,13 @@ form is rendered.
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         // PHP
         $container->loadFromExtension('framework', array(
             'templating' => array(
                 'form' => array(
                     'resources' => array(
-                        'AppBundle:Form',
+                        'App:Form',
                     ),
                 ),
              ),
@@ -636,7 +636,7 @@ resource to use such a layout:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             templating:
                 form:
@@ -645,7 +645,7 @@ resource to use such a layout:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -667,7 +667,7 @@ resource to use such a layout:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'templating' => array(
                 'form' => array(

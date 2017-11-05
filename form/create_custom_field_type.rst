@@ -104,7 +104,7 @@ the class name of your type. For more information, see :ref:`form-customization-
 
     When the name of your form class matches any of the built-in field types,
     your form might not be rendered correctly. A form type named
-    ``AppBundle\Form\PasswordType`` will have the same block name as the
+    ``App\Form\PasswordType`` will have the same block name as the
     built-in ``PasswordType`` and won't be rendered correctly. Override the
     ``getBlockPrefix()`` method to return a unique block prefix (e.g.
     ``app_password``) to avoid collisions.
@@ -169,14 +169,14 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/packages/twig.yaml
             twig:
                 form_themes:
                     - 'form/fields.html.twig'
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- config/packages/twig.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -193,7 +193,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: php
 
-            // app/config/config.php
+            // config/packages/twig.php
             $container->loadFromExtension('twig', array(
                 'form_themes' => array(
                     'form/fields.html.twig',
@@ -206,7 +206,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/packages/framework.yaml
             framework:
                 templating:
                     form:
@@ -215,7 +215,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- config/packages/framework.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -234,7 +234,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: php
 
-            // app/config/config.php
+            // config/packages/framework.php
             $container->loadFromExtension('framework', array(
                 'templating' => array(
                     'form' => array(
