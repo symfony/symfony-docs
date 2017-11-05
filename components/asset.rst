@@ -63,8 +63,13 @@ any versioning::
 
     $package = new Package(new EmptyVersionStrategy());
 
+    // Absolute path
     echo $package->getUrl('/image.png');
     // result: /image.png
+    
+    // Relative path
+    echo $package->getUrl('image.png');
+    // result: image.png
 
 Packages implement :class:`Symfony\\Component\\Asset\\PackageInterface`,
 which defines the following two methods:
@@ -105,8 +110,13 @@ suffix to any asset path::
 
     $package = new Package(new StaticVersionStrategy('v1'));
 
+    // Absolute path
     echo $package->getUrl('/image.png');
     // result: /image.png?v1
+    
+    // Relative path
+    echo $package->getUrl('image.png');
+    // result: image.png?v1
 
 In case you want to modify the version format, pass a sprintf-compatible format
 string as the second argument of the ``StaticVersionStrategy`` constructor::
@@ -122,6 +132,9 @@ string as the second argument of the ``StaticVersionStrategy`` constructor::
 
     echo $package->getUrl('/image.png');
     // result: /v1/image.png
+    
+    echo $package->getUrl('image.png');
+    // result: v1/image.png
 
 Custom Version Strategies
 .........................
@@ -170,6 +183,10 @@ that path over and over again::
 
     echo $package->getUrl('logo.png');
     // result: /static/images/logo.png?v1
+    
+    // Base path is ignored when using absolute paths
+    echo $package->getUrl('/logo.png');
+    // result: /logo.png?v1
 
 Request Context Aware Assets
 ............................
