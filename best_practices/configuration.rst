@@ -109,8 +109,8 @@ option for a value that you are never going to configure just isn't necessary.
 Our recommendation is to define these values as constants in your application.
 You could, for example, define a ``NUM_ITEMS`` constant in the ``Post`` entity::
 
-    // src/AppBundle/Entity/Post.php
-    namespace AppBundle\Entity;
+    // src/Entity/Post.php
+    namespace App\Entity;
 
     class Post
     {
@@ -137,10 +137,10 @@ whereas they cannot access the container parameters:
 
 .. code-block:: php
 
-    namespace AppBundle\Repository;
+    namespace App\Repository;
 
+    use App\Entity\Post;
     use Doctrine\ORM\EntityRepository;
-    use AppBundle\Entity\Post;
 
     class PostRepository extends EntityRepository
     {

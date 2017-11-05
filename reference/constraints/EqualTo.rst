@@ -33,8 +33,8 @@ and that the ``age`` is ``20``, you could do the following:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Person.php
-        namespace AppBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -55,8 +55,8 @@ and that the ``age`` is ``20``, you could do the following:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Person:
+        # src/Resources/config/validation.yml
+        App\Entity\Person:
             properties:
                 firstName:
                     - EqualTo: Mary
@@ -66,13 +66,13 @@ and that the ``age`` is ``20``, you could do the following:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- src/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Person">
+            <class name="App\Entity\Person">
                 <property name="firstName">
                     <constraint name="EqualTo">
                         <value>Mary</value>
@@ -88,8 +88,8 @@ and that the ``age`` is ``20``, you could do the following:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Person.php
-        namespace AppBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

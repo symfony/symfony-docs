@@ -247,7 +247,7 @@ Creating an Entity Class
 Suppose you're building an application where products need to be displayed.
 Without even thinking about Doctrine or databases, you already know that
 you need a ``Product`` object to represent those products. Create this class
-inside the ``Entity`` directory of your AppBundle::
+inside the ``Entity`` directory of your ``src``::
 
     // src/Entity/Product.php
     namespace App\Entity;
@@ -617,8 +617,8 @@ repository object for an entity class via::
 
 .. note::
 
-    You can also use ``AppBundle:Product`` syntax. This string is a shortcut you can use anywhere
-    in Doctrine instead of the full class name of the entity (i.e. ``AppBundle\Entity\Product``).
+    You can also use ``App:Product`` syntax. This string is a shortcut you can use anywhere
+    in Doctrine instead of the full class name of the entity (i.e. ``App\Entity\Product``).
     As long as your entity lives under the ``Entity`` namespace of your bundle,
     this will work.
 
@@ -754,7 +754,7 @@ SQL-like language, to construct a query for this scenario::
 
     $query = $em->createQuery(
         'SELECT p
-        FROM AppBundle:Product p
+        FROM App:Product p
         WHERE p.price > :price
         ORDER BY p.price ASC'
     )->setParameter('price', 19.99);
@@ -764,8 +764,8 @@ SQL-like language, to construct a query for this scenario::
 If you're comfortable with SQL, then DQL should feel very natural. The biggest
 difference is that you need to think in terms of selecting PHP objects,
 instead of rows in a database. For this reason, you select *from* the
-``AppBundle:Product`` *entity* (an optional shortcut for the
-``AppBundle\Entity\Product`` class) and then alias it as ``p``.
+``App:Product`` *entity* (an optional shortcut for the
+``App\Entity\Product`` class) and then alias it as ``p``.
 
 .. tip::
 
@@ -794,7 +794,7 @@ DQL as you start to concatenate strings::
     $repository = $this->getDoctrine()
         ->getRepository(Product::class);
 
-    // createQueryBuilder() automatically selects FROM AppBundle:Product
+    // createQueryBuilder() automatically selects FROM App:Product
     // and aliases it to "p"
     $query = $repository->createQueryBuilder('p')
         ->where('p.price > :price')

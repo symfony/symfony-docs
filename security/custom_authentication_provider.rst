@@ -394,8 +394,8 @@ Configuration
 It's time to see your authentication provider in action. You will need to
 do a few things in order to make this work. The first thing is to add the
 services above to the DI container. Your factory class above makes reference
-to service ids that may not exist yet: ``AppBundle\Security\Authentication\Provider\WsseProvider`` and
-``AppBundle\Security\Firewall\WsseListener``. It's time to define those services.
+to service ids that may not exist yet: ``App\Security\Authentication\Provider\WsseProvider`` and
+``App\Security\Firewall\WsseListener``. It's time to define those services.
 
 .. configuration-block::
 
@@ -482,7 +482,7 @@ You are finished! You can now define parts of your app as under WSSE protection.
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -494,7 +494,7 @@ You are finished! You can now define parts of your app as under WSSE protection.
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -516,7 +516,7 @@ You are finished! You can now define parts of your app as under WSSE protection.
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -602,7 +602,7 @@ set to any desirable value per firewall.
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -614,7 +614,7 @@ set to any desirable value per firewall.
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -633,7 +633,7 @@ set to any desirable value per firewall.
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 

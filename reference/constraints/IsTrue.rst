@@ -26,8 +26,8 @@ on a registration model) or to a "getter" method. It's most powerful in
 the latter case, where you can assert that a method returns a true value.
 For example, suppose you have the following method::
 
-    // src/AppBundle/Entity/Author.php
-    namespace AppBundle\Entity;
+    // src/Entity/Author.php
+    namespace App\Entity;
 
     class Author
     {
@@ -45,8 +45,8 @@ Then you can constrain this method with ``IsTrue``.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -65,8 +65,8 @@ Then you can constrain this method with ``IsTrue``.
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # src/Resources/config/validation.yml
+        App\Entity\Author:
             getters:
                 tokenValid:
                     - 'IsTrue':
@@ -80,7 +80,7 @@ Then you can constrain this method with ``IsTrue``.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <getter property="tokenValid">
                     <constraint name="IsTrue">
                         <option name="message">The token is invalid.</option>
@@ -91,8 +91,8 @@ Then you can constrain this method with ``IsTrue``.
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\IsTrue;

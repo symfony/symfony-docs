@@ -81,8 +81,8 @@ This field has a *lot* of options and most control how the field is displayed. I
 this example, the underlying data is some ``Category`` object that has a ``getName()``
 method::
 
+    use App\Entity\Category;
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    use AppBundle\Entity\Category;
     // ...
 
     $builder->add('category', ChoiceType::class, [

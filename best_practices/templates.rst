@@ -75,7 +75,7 @@ Then, create a new ``Markdown`` class that will be used later by the Twig
 extension. It just needs to define one single method to transform
 Markdown content into HTML::
 
-    namespace AppBundle\Utils;
+    namespace App\Utils;
 
     class Markdown
     {
@@ -100,9 +100,9 @@ class in the constructor of the Twig extension:
 
 .. code-block:: php
 
-    namespace AppBundle\Twig;
+    namespace App\Twig;
 
-    use AppBundle\Utils\Markdown;
+    use App\Utils\Markdown;
 
     class AppExtension extends \Twig_Extension
     {
