@@ -9,7 +9,7 @@ languages - like `Twig`_ - were created to make templating even better.
 
     Use Twig templating format for your templates.
 
-Generally speaking, PHP templates are much more verbose than Twig templates because
+Generally speaking, PHP templates are more verbose than Twig templates because
 they lack native support for lots of modern features needed by templates,
 like inheritance, automatic escaping and named arguments for filters and
 functions.
@@ -17,10 +17,6 @@ functions.
 Twig is the default templating format in Symfony and has the largest community
 support of all non-PHP template engines (it's used in high profile projects
 such as Drupal 8).
-
-In addition, Twig is the only template format with guaranteed support in Symfony
-3.0. As a matter of fact, PHP may be removed from the officially supported
-template engines.
 
 Template Locations
 ------------------
@@ -58,7 +54,7 @@ Twig Extensions
 
 .. best-practice::
 
-    Define your Twig extensions in the ``AppBundle/Twig/`` directory. Your
+    Define your Twig extensions in the ``src/Twig/`` directory. Your
     application will automatically detect them and configure them.
 
 Our application needs a custom ``md2html`` Twig filter so that we can transform
@@ -95,16 +91,18 @@ Markdown content into HTML::
     }
 
 Next, create a new Twig extension and define a new filter called ``md2html``
-using the ``Twig_SimpleFilter`` class. Inject the newly defined ``Markdown``
-class in the constructor of the Twig extension:
+using the ``TwigFilter`` class. Inject the newly defined ``Markdown`` class in
+the constructor of the Twig extension:
 
 .. code-block:: php
 
     namespace App\Twig;
 
     use App\Utils\Markdown;
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
 
-    class AppExtension extends \Twig_Extension
+    class AppExtension extends AbstractExtension
     {
         private $parser;
 
@@ -115,29 +113,23 @@ class in the constructor of the Twig extension:
 
         public function getFilters()
         {
-            return array(
-                new \Twig_SimpleFilter(
-                    'md2html',
-                    array($this, 'markdownToHtml'),
-                    array('is_safe' => array('html'), 'pre_escape' => 'html')
-                ),
-            );
+            return [
+                new TwigFilter('md2html', [$this, 'markdownToHtml'], [
+                    'is_safe' => ['html'],
+                    'pre_escape' => 'html',
+                ]),
+            ];
         }
 
         public function markdownToHtml($content)
         {
             return $this->parser->toHtml($content);
         }
-
-        public function getName()
-        {
-            return 'app_extension';
-        }
     }
 
 And that's it!
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you're done! Symfony will automatically know about your new service and tag it to
 be used as a Twig extension.
 

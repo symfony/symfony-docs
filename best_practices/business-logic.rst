@@ -32,8 +32,8 @@ The blog application needs a utility that can transform a post title (e.g.
 "Hello World") into a slug (e.g. "hello-world"). The slug will be used as
 part of the post URL.
 
-Let's create a new ``Slugger`` class inside ``src/Utils/`` and
-add the following ``slugify()`` method:
+Let's create a new ``Slugger`` class inside ``src/Utils/`` and add the following
+``slugify()`` method:
 
 .. code-block:: php
 
@@ -50,22 +50,9 @@ add the following ``slugify()`` method:
         }
     }
 
-Next, define a new service for that class.
-
-.. code-block:: yaml
-
-    # config/services.yaml
-    services:
-        # ...
-
-        # use the fully-qualified class name as the service id
-        App\Utils\Slugger:
-            public: false
-
-.. note::
-
-    If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
-    the class is auto-registered as a service.
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+this class is auto-registered as a service whose ID is ``App\Utils\Slugger`` (or
+simply ``Slugger::class`` if the class is already imported in your code).
 
 Traditionally, the naming convention for a service was a short, but unique
 snake case key - e.g. ``app.utils.slugger``. But for most services, you should now
@@ -77,8 +64,8 @@ use the class name.
     except when you have multiple services configured for the same class (in that
     case, use a snake case id).
 
-Now you can use the custom slugger in any controller class, such as the
-``AdminController``:
+Now you can use the custom slugger in any other service or controller class,
+such as the ``AdminController``:
 
 .. code-block:: php
 
@@ -126,36 +113,6 @@ personal taste.
 
 We recommend YAML because it's friendly to newcomers and concise. You can
 of course use whatever format you like.
-
-Service: No Class Parameter
----------------------------
-
-You may have noticed that the previous service definition doesn't configure
-the class namespace as a parameter:
-
-.. code-block:: yaml
-
-    # config/services.yaml
-
-    # service definition with class namespace as parameter
-    parameters:
-        slugger.class: App\Utils\Slugger
-
-    services:
-        app.slugger:
-            class: '%slugger.class%'
-
-This practice is cumbersome and completely unnecessary for your own services.
-
-.. best-practice::
-
-    Don't define parameters for the classes of your services.
-
-This practice was wrongly adopted from third-party bundles. When Symfony
-introduced its service container, some developers used this technique to easily
-allow overriding services. However, overriding a service by just changing its
-class name is a very rare use case because, frequently, the new service has
-different constructor arguments.
 
 Using a Persistence Layer
 -------------------------
