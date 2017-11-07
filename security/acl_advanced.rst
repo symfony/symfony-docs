@@ -178,7 +178,7 @@ After invocation providers also allow to modify, or filter the domain object
 before it is returned.
 
 Due to current limitations of the PHP language, there are no
-post-authorization capabilities build into the core Security component.
+post-authorization capabilities built into the core Security component.
 However, there is an experimental JMSSecurityExtraBundle_ which adds these
 capabilities. See its documentation for further information on how this is
 accomplished.
