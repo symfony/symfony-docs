@@ -4,18 +4,23 @@
 FrameworkBundle Configuration ("framework")
 ===========================================
 
-The FrameworkBundle contains most of the "base" framework functionality
-and can be configured under the ``framework`` key in your application
-configuration. When using XML, you must use the
-``http://symfony.com/schema/dic/symfony`` namespace.
+The FrameworkBundle defines the main framework configuration, from sessions and
+translations to forms, validation, routing and more. All these options are
+configured under the ``framework`` key in your application configuration.
 
-This includes settings related to sessions, translation, forms, validation,
-routing and more.
+.. code-block:: terminal
 
-.. tip::
+    # displays the default config values defined by Symfony
+    $ php bin/console config:dump framework
 
-   The XSD schema is available at
-   ``http://symfony.com/schema/dic/symfony/symfony-1.0.xsd``.
+    # displays the actual config values used by your application
+    $ php bin/console debug:config framework
+
+.. note::
+
+    When using XML, you must use the ``http://symfony.com/schema/dic/symfony``
+    namespace and the related XSD schema is available at:
+    ``http://symfony.com/schema/dic/symfony/symfony-1.0.xsd``
 
 Configuration
 -------------
@@ -50,6 +55,8 @@ Configuration
         * `ip`_
         * :ref:`path <reference-profiler-matcher-path>`
         * `service`_
+* `request`_:
+    * `formats`_
 * `router`_
     * `resource`_
     * `type`_
@@ -178,7 +185,7 @@ trusted_proxies
 **type**: ``array``
 
 Configures the IP addresses that should be trusted as proxies. For more
-details, see :doc:`/request/load_balancer_reverse_proxy`.
+details, see :doc:`/deployment/proxies`.
 
 .. versionadded:: 2.3
     CIDR notation support was introduced in Symfony 2.3, so you can whitelist
@@ -646,6 +653,69 @@ service
 **type**: ``string``
 
 This setting contains the service id of a custom matcher.
+
+request
+~~~~~~~
+
+formats
+.......
+
+**type**: ``array`` **default**: ``[]``
+
+This setting is used to associate additional request formats (e.g. ``html``)
+to one or more mime types (e.g. ``text/html``), which will allow you to use the
+format & mime types to call
+:method:`Request::getFormat($mimeType) <Symfony\\Component\\HttpFoundation\\Request::getFormat>` or
+:method:`Request::getMimeType($format) <Symfony\\Component\\HttpFoundation\\Request::getMimeType>`.
+
+In practice, this is important because Symfony uses it to automatically set the
+``Content-Type`` header on the ``Response`` (if you don't explicitly set one).
+If you pass an array of mime types, the first will be used for the header.
+
+To configure a ``jsonp`` format:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            request:
+                formats:
+                    jsonp: 'application/javascript'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:request>
+                    <framework:format name="jsonp">
+                        <framework:mime-type>application/javascript</framework:mime-type>
+                    </framework:format>
+                </framework:request>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'request' => array(
+                'formats' => array(
+                    'jsonp' => 'application/javascript',
+                ),
+            ),
+        ));
 
 router
 ~~~~~~

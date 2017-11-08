@@ -13,7 +13,7 @@ Installation
 
 You can install the component in 2 different ways:
 
-* :doc:`Install it via Composer </components/using_components>` (`symfony/psr-http-message-bridge on Packagist <https://packagist.org/packages/symfony/psr-http-message-bridge>`_);
+* :doc:`Install it via Composer </components/using_components>` (`symfony/psr-http-message-bridge on Packagist`_);
 * Use the official Git repository (https://github.com/symfony/psr-http-message-bridge).
 
 The bridge also needs a PSR-7 implementation to allow converting HttpFoundation
@@ -87,3 +87,4 @@ to a :class:`Symfony\\Component\\HttpFoundation\\Response` instance::
 
 .. _`PSR-7`: http://www.php-fig.org/psr/psr-7/
 .. _`Zend Diactoros`: https://github.com/zendframework/zend-diactoros
+.. _`symfony/psr-http-message-bridge on Packagist`: https://packagist.org/packages/symfony/psr-http-message-bridge

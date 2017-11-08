@@ -332,7 +332,6 @@ automatically upload the file when persisting the entity::
     class BrochureUploadListener
     {
         private $uploader;
-        private $fileName;
 
         public function __construct(FileUploader $uploader)
         {
@@ -365,9 +364,8 @@ automatically upload the file when persisting the entity::
             // only upload new files
             if ($file instanceof UploadedFile) {
                 $fileName = $this->uploader->upload($file);
+                $entity->setBrochure($fileName);
             }
-
-            $entity->setBrochure($fileName);
         }
     }
 

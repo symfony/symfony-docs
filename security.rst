@@ -988,7 +988,7 @@ You can also use expressions inside your templates:
             <a href="...">Delete</a>
         <?php endif; ?>
 
-For more details on expressions and security, see :ref:`expressions-security`.
+For more details on expressions and security, see :doc:`/security/expressions`.
 
 .. _security-secure-objects:
 
@@ -1015,8 +1015,8 @@ To accomplish this you have 2 options:
 In both cases, you'll still deny access using methods similar to what was
 shown above.
 
-Retrieving the User Object
---------------------------
+3) Retrieving the User Object
+-----------------------------
 
 .. versionadded:: 2.6
      The ``security.token_storage`` service was introduced in Symfony 2.6. Prior

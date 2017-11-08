@@ -140,6 +140,23 @@ that group are valid, the second group, ``Strict``, will be validated.
     sequence, which will contain the ``Default`` group which references the
     same group sequence, ...).
 
+You can also define a group sequence in the ``validation_groups`` form option::
+
+    use Symfony\Component\Validator\Constraints\GroupSequence;
+    use Symfony\Component\Form\AbstractType;
+    // ...
+    
+    class MyType extends AbstractType
+    {
+        // ...
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefaults([
+                'validation_groups' => new GroupSequence(['First', 'Second']),
+            ]);
+        }
+    }
+
 Group Sequence Providers
 ------------------------
 
