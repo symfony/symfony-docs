@@ -794,7 +794,7 @@ advantage of Symfony's template inheritance.
     and JavaScript assets in Symfony. Symfony is also compatible with another
     library, called Assetic, which follows this philosophy but allows you to do
     much more interesting things with those assets. For more information on
-    using Assetic see :doc:`/assetic/asset_management`.
+    using Assetic see :doc:`/frontend/assetic/asset_management`.
 
 Start by adding two blocks to your base template that will hold your assets:
 one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
@@ -881,7 +881,7 @@ block of the base template.
 You can also include assets located in your bundles' ``Resources/public`` folder.
 You will need to run the ``php bin/console assets:install target [--symlink]``
 command, which copies (or symlinks) files into the correct location. (target
-is by default "web").
+is by default the "web/" directory of your application).
 
 .. code-block:: html+twig
 

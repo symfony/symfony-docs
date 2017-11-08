@@ -99,8 +99,9 @@ If you're returning HTML from your controller, you'll probably want to render
 a template. Fortunately, Symfony comes with `Twig`_: a templating language that's
 easy, powerful and actually quite fun.
 
-First, make sure that ``LuckyController`` extends Symfony's base
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class::
+First, import the base :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
+class as shown on line 5 below. Then, let your ``LuckyController`` class
+extend the base class::
 
     // src/AppBundle/Controller/LuckyController.php
 

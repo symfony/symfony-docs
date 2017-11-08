@@ -8,7 +8,7 @@ How to Minify JavaScripts and Stylesheets with YUI Compressor
 
     The YUI Compressor is `no longer maintained by Yahoo`_. That's why you are
     **strongly advised to avoid using YUI utilities** unless strictly necessary.
-    Read :doc:`/assetic/uglifyjs` for a modern and up-to-date alternative.
+    Read :doc:`/frontend/assetic/uglifyjs` for a modern and up-to-date alternative.
 
 .. include:: /assetic/_standard_edition_warning.rst.inc
 

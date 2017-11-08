@@ -81,7 +81,7 @@ Assetic is a pure PHP library that helps to process & optimize your assets (simi
 to Encore). Even though we recommend using Encore, Assetic still works great. For
 a comparison, see :doc:`/frontend/encore/versus-assetic`.
 
-For more about Assetic, see :doc:`/assetic`.
+For more about Assetic, see :doc:`/frontend/assetic`.
 
 Other Front-End Articles
 ------------------------

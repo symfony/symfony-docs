@@ -489,9 +489,9 @@ inherited from an abstract definition:
             # ...
 
             _instanceof:
-                class: AppBundle\Domain\LoaderInterface
-                public: true
-                tags: ['app.domain_loader']
+                AppBundle\Domain\LoaderInterface:
+                    public: true
+                    tags: ['app.domain_loader']
 
     .. code-block:: xml
 

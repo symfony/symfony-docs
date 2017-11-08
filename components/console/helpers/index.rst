@@ -14,7 +14,6 @@ The Console Helpers
     progresshelper
     questionhelper
     table
-    tablehelper
     debug_formatter
 
 The Console component comes with some useful helpers. These helpers contain

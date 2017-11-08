@@ -27,6 +27,7 @@ value and then a User object is created::
     // src/AppBundle/Security/ApiKeyAuthenticator.php
     namespace AppBundle\Security;
 
+    use AppBundle\Security\ApiKeyUserProvider;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

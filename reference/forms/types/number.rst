@@ -46,7 +46,7 @@ Field Options
 rounding_mode
 ~~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: ``NumberToLocalizedStringTransformer::ROUND_HALFUP``
+**type**: ``integer`` **default**: ``NumberToLocalizedStringTransformer::ROUND_HALF_UP``
 
 If a submitted number needs to be rounded (based on the `scale`_
 option), you have several configurable options for that rounding. Each

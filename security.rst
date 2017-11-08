@@ -963,7 +963,7 @@ You can also use expressions inside your templates:
             <a href="...">Delete</a>
         <?php endif; ?>
 
-For more details on expressions and security, see :ref:`expressions-security`.
+For more details on expressions and security, see :doc:`/security/expressions`.
 
 .. _security-secure-objects:
 
@@ -990,8 +990,8 @@ To accomplish this you have 2 options:
 In both cases, you'll still deny access using methods similar to what was
 shown above.
 
-Retrieving the User Object
---------------------------
+3) Retrieving the User Object
+-----------------------------
 
 After authentication, the ``User`` object of the current user can be accessed
 via the ``security.token_storage`` service. From inside a controller, this will
@@ -999,14 +999,12 @@ look like::
 
     use Symfony\Component\Security\Core\User\UserInterface;
 
-    public function indexAction(UserInterface $user)
+    public function indexAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // the above is a shortcut for this
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->getUser();
+        // or you can also type-hint a method argument with UserInterface: e.g. "UserInterface $user"
     }
 
 .. tip::
@@ -1015,10 +1013,8 @@ look like::
     your :ref:`user provider <security-user-providers>`.
 
 .. versionadded:: 3.2
-    The functionality to get the user via the method signature was introduced in
-    Symfony 3.2. You can still retrieve it by calling ``$this->getUser()`` if you
-    extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
-    class.
+    The ability to get the user by type-hinting an argument with UserInterface
+    was introduced in Symfony 3.2.
 
 Now you can call whatever methods are on *your* User object. For example,
 if your User object has a ``getFirstName()`` method, you could use that::

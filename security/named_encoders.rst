@@ -124,3 +124,51 @@ the name of the encoder to use::
             return null; // use the default encoder
         }
     }
+
+If you created your own password encoder implementing the
+:class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`,
+you must register a service for it in order to use it as a named encoder:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+            encoders:
+                app_encoder:
+                    id: 'app.password_encoder_service'
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+
+            <config>
+                <!-- ... -->
+                <encoder class="app_encoder"
+                    id="app.password_encoder_service" />
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        $container->loadFromExtension('security', array(
+            // ...
+            'encoders' => array(
+                'app_encoder' => array(
+                    'id' => 'app.password_encoder_service'
+                ),
+            ),
+        ));
+
+This creates an encoder named ``app_encoder`` from a service named
+``app.password_encoder_service``.

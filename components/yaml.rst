@@ -104,12 +104,6 @@ string and converts it to a PHP array:
 
     $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
 
-.. caution::
-
-    Because it is currently possible to pass a filename to this method, you
-    must validate the input first. Passing a filename is deprecated in
-    Symfony 2.2, and was removed in Symfony 3.0.
-
 If an error occurs during parsing, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\ParseException` exception
 indicating the error type and the line in the original YAML string where the

@@ -63,7 +63,7 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 #. Once you've guaranteed that traffic will only come from your trusted reverse
    proxies, configure Symfony to *always* trust incoming request:
 
-   .. code-block:: diff
+   .. code-block:: php
 
        // web/app.php
 
