@@ -35,10 +35,11 @@ Services: Naming and Configuration
     Use autowiring to automate the configuration of application services.
 
 :doc:`Service autowiring </service_container/autowiring>` is a feature provided
-by Symfony's Service Container to manage services with minimal configuration.
-It reads the type-hints on your constructor (or other methods) and automatically
-passes you the correct services. It can also add :doc:`service tags </service_container/tags>`
-to the services needed them, such as Twig extensions, event subscribers, etc.
+by Symfony's Service Container to manage services with minimal configuration. It
+reads the type-hints on your constructor (or other methods) and automatically
+passes the correct services to each method. It can also add
+:doc:`service tags </service_container/tags>` to the services needed them, such
+as Twig extensions, event subscribers, etc.
 
 The blog application needs a utility that can transform a post title (e.g.
 "Hello World") into a slug (e.g. "hello-world") to include it as part of the
@@ -60,10 +61,6 @@ post URL. Let's create a new ``Slugger`` class inside ``src/Utils/``:
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this class is auto-registered as a service whose ID is ``App\Utils\Slugger`` (or
 simply ``Slugger::class`` if the class is already imported in your code).
-
-Traditionally, the naming convention for a service was a short, but unique
-snake case key - e.g. ``app.utils.slugger``. But for most services, you should now
-use the class name.
 
 .. best-practice::
 
