@@ -8,16 +8,16 @@ cache before running those tests.
 
 To do this, first add the following file::
 
-    // app/tests.bootstrap.php
+    // tests.bootstrap.php
     if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {
         passthru(sprintf(
-            'php "%s/console" cache:clear --env=%s --no-warmup',
+            'php "%s/bin/console" cache:clear --env=%s --no-warmup',
             __DIR__,
             $_ENV['BOOTSTRAP_CLEAR_CACHE_ENV']
         ));
     }
 
-    require __DIR__.'/autoload.php';
+    require __DIR__ . '/vendor/autoload.php';
 
 Replace the test bootstrap file ``autoload.php`` in ``phpunit.xml.dist``
 with ``tests.bootstrap.php``:
@@ -38,7 +38,7 @@ cache to be cleared:
 
     <!-- phpunit.xml.dist -->
     <php>
-        <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test"/>
+        <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test" />
     </php>
 
 This now becomes an environment variable (i.e. ``$_ENV``) that's available
