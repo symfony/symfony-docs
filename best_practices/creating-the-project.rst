@@ -6,9 +6,18 @@ Installing Symfony
 
 .. best-practice::
 
-    Use the `Symfony Skeleton`_ and `Composer`_ to create new Symfony-based projects.
+    Use Composer and Symfony Flex to create and manage Symfony applications.
 
-The **Symfony Skeleton** is a minimal and empty Symfony project which you can
+`Composer`_ is the package manager used by modern PHP application to manage their
+dependencies. `Symfony Flex`_ is a Composer plugin designed to automatize some
+of the most common tasks performed in Symfony applications. Using Flex is optional
+but recommended because it improves your productivity significantly.
+
+.. best-practice::
+
+    Use the Symfony Skeleton to create new Symfony-based projects.
+
+The `Symfony Skeleton`_ is a minimal and empty Symfony project which you can
 base your new projects on. Unlike past Symfony versions, this skeleton installs
 the absolute bare minimum amount of dependencies to make a fully working Symfony
 project. Read the :doc:`/setup` article to learn more about installing Symfony.

@@ -23,31 +23,21 @@ Template Locations
 
 .. best-practice::
 
-    Store all your application's templates in ``app/Resources/views/`` directory.
+    Store the application templates in the ``templates/`` directory at the root
+    of your project.
 
-Traditionally, Symfony developers stored the application templates in the
-``Resources/views/`` directory of each bundle. Then they used the Twig namespaced
-path to refer to them (e.g. ``@AcmeDemo/Default/index.html.twig``).
-
-But for the templates used in your application, it's much more convenient
-to store them in the ``app/Resources/views/`` directory. For starters, this
-drastically simplifies their logical names:
-
-============================================  ==================================
-Templates Stored inside Bundles               Templates Stored in ``app/``
-============================================  ==================================
-``@AcmeDemo/index.html.twig``                 ``index.html.twig``
-``@AcmeDemo/Default/index.html.twig``         ``default/index.html.twig``
-``@AcmeDemo/Default/subdir/index.html.twig``  ``default/subdir/index.html.twig``
-============================================  ==================================
-
-Another advantage is that centralizing your templates simplifies the work
-of your designers. They don't need to look for templates in lots of directories
-scattered through lots of bundles.
+Centralizing your templates in a single location simplifies the work of your
+designers. In addition, using this directory simplifies the notation used when
+referring to templates (e.g. ``$this->render('admin/post/show.html.twig')``
+instead of ``$this->render('@SomeTwigNamespace/Admin/Posts/show.html.twig')``).
 
 .. best-practice::
 
     Use lowercased snake_case for directory and template names.
+
+This recommendation aligns with Twig best practices, where variables and template
+names use lowercased snake_case too (e.g. ``user_profile`` instead of ``userProfile``
+and ``edit_form.html.twig`` instead of ``EditForm.html.twig``).
 
 Twig Extensions
 ---------------
@@ -58,41 +48,25 @@ Twig Extensions
     application will automatically detect them and configure them.
 
 Our application needs a custom ``md2html`` Twig filter so that we can transform
-the Markdown contents of each post into HTML.
-
-To do this, first, install the excellent `Parsedown`_ Markdown parser as
-a new dependency of the project:
-
-.. code-block:: terminal
-
-    $ composer require erusev/parsedown
-
-Then, create a new ``Markdown`` class that will be used later by the Twig
-extension. It just needs to define one single method to transform
-Markdown content into HTML::
+the Markdown contents of each post into HTML. To do this, create a new
+``Markdown`` class that will be used later by the Twig extension. It just needs
+to define one single method to transform Markdown content into HTML::
 
     namespace App\Utils;
 
     class Markdown
     {
-        private $parser;
+        // ...
 
-        public function __construct()
+        public function toHtml(string $text): string
         {
-            $this->parser = new \Parsedown();
-        }
-
-        public function toHtml($text)
-        {
-            $html = $this->parser->text($text);
-
-            return $html;
+            return $this->parser->text($text);
         }
     }
 
-Next, create a new Twig extension and define a new filter called ``md2html``
-using the ``TwigFilter`` class. Inject the newly defined ``Markdown`` class in
-the constructor of the Twig extension:
+Next, create a new Twig extension and define a filter called ``md2html`` using
+the ``TwigFilter`` class. Inject the newly defined ``Markdown`` class in the
+constructor of the Twig extension:
 
 .. code-block:: php
 

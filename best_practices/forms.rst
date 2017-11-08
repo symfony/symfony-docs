@@ -42,9 +42,9 @@ PHP class::
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'data_class' => Post::class,
-            ));
+            ]);
         }
     }
 
@@ -59,7 +59,7 @@ To use the class, use ``createForm()`` and pass the fully qualified class name::
     use App\Form\PostType;
 
     // ...
-    public function newAction(Request $request)
+    public function new(Request $request)
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -113,14 +113,14 @@ some developers configure form buttons in the controller::
     {
         // ...
 
-        public function newAction(Request $request)
+        public function new(Request $request)
         {
             $post = new Post();
             $form = $this->createForm(PostType::class, $post);
-            $form->add('submit', SubmitType::class, array(
+            $form->add('submit', SubmitType::class, [
                 'label' => 'Create',
                 'attr' => ['class' => 'btn btn-default pull-right'],
-            ));
+            ]);
 
             // ...
         }
@@ -168,7 +168,7 @@ Handling a form submit usually follows a similar template:
 
 .. code-block:: php
 
-    public function newAction(Request $request)
+    public function new(Request $request)
     {
         // build the form ...
 
@@ -179,17 +179,16 @@ Handling a form submit usually follows a similar template:
             $em->persist($post);
             $em->flush();
 
-            return $this->redirect($this->generateUrl(
-                'admin_post_show',
-                array('id' => $post->getId())
-            ));
+            return $this->redirectToRoute('admin_post_show', [
+                'id' => $post->getId()
+            ]);
         }
 
         // render the template
     }
 
 We recommend that you use a single action for both rendering the form and
-handling the form submit. For example, you *could* have a ``newAction()`` that
-*only* renders the form and a ``createAction()`` that *only* processes the form
+handling the form submit. For example, you *could* have a ``new()`` action that
+*only* renders the form and a ``create()`` action that *only* processes the form
 submit. Both those actions will be almost identical. So it's much simpler to let
-``newAction()`` handle everything.
+``new()`` handle everything.

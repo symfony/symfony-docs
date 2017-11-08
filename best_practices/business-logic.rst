@@ -25,15 +25,24 @@ Inside here, you can create whatever directories you want to organize things:
     ├─ var/
     └─ vendor/
 
-Services: Naming and Format
----------------------------
+.. _services-naming-and-format:
+
+Services: Naming and Configuration
+----------------------------------
+
+.. best-practice::
+
+    Use autowiring to automate the configuration of application services.
+
+:doc:`Service autowiring </service_container/autowiring>` is a feature provided
+by Symfony's Service Container to manage services with minimal configuration.
+It reads the type-hints on your constructor (or other methods) and automatically
+passes you the correct services. It can also add :doc:`service tags </service_container/tags>`
+to the services needed them, such as Twig extensions, event subscribers, etc.
 
 The blog application needs a utility that can transform a post title (e.g.
-"Hello World") into a slug (e.g. "hello-world"). The slug will be used as
-part of the post URL.
-
-Let's create a new ``Slugger`` class inside ``src/Utils/`` and add the following
-``slugify()`` method:
+"Hello World") into a slug (e.g. "hello-world") to include it as part of the
+post URL. Let's create a new ``Slugger`` class inside ``src/Utils/``:
 
 .. code-block:: php
 
@@ -42,11 +51,9 @@ Let's create a new ``Slugger`` class inside ``src/Utils/`` and add the following
 
     class Slugger
     {
-        public function slugify($string)
+        public function slugify(string $value): string
         {
-            return preg_replace(
-                '/[^a-z0-9]/', '-', strtolower(trim(strip_tags($string)))
-            );
+            // ...
         }
     }
 
@@ -71,13 +78,9 @@ such as the ``AdminController``:
 
     use App\Utils\Slugger;
 
-    public function createAction(Request $request, Slugger $slugger)
+    public function create(Request $request, Slugger $slugger)
     {
         // ...
-
-        // you can also fetch a public service like this
-        // but fetching services in this way is not considered a best practice
-        // $slugger = $this->get(Slugger::class);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slugify($post->getTitle());

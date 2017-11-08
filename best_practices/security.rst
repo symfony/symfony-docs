@@ -116,7 +116,7 @@ Using ``@Security``, this looks like:
      * @Route("/new", name="admin_post_new")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function newAction()
+    public function new()
     {
         // ...
     }
@@ -139,7 +139,7 @@ method on the ``Post`` object:
      * @Route("/{id}/edit", name="admin_post_edit")
      * @Security("user.getEmail() == post.getAuthorEmail()")
      */
-    public function editAction(Post $post)
+    public function edit(Post $post)
     {
         // ...
     }
@@ -194,7 +194,7 @@ Now you can reuse this method both in the template and in the security expressio
      * @Route("/{id}/edit", name="admin_post_edit")
      * @Security("post.isAuthor(user)")
      */
-    public function editAction(Post $post)
+    public function edit(Post $post)
     {
         // ...
     }
@@ -222,7 +222,7 @@ more advanced use-case, you can always do the same security check in PHP:
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
-    public function editAction($id)
+    public function edit($id)
     {
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
@@ -282,7 +282,7 @@ the same ``getAuthorEmail()`` logic you used above:
 
         protected function supports($attribute, $subject)
         {
-            if (!in_array($attribute, array(self::CREATE, self::EDIT))) {
+            if (!in_array($attribute, [self::CREATE, self::EDIT])) {
                 return false;
             }
 
@@ -306,7 +306,7 @@ the same ``getAuthorEmail()`` logic you used above:
             switch ($attribute) {
                 // if the user is an admin, allow them to create new posts
                 case self::CREATE:
-                    if ($this->decisionManager->decide($token, array('ROLE_ADMIN'))) {
+                    if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
                         return true;
                     }
 
@@ -338,7 +338,7 @@ Now, you can use the voter with the ``@Security`` annotation:
      * @Route("/{id}/edit", name="admin_post_edit")
      * @Security("is_granted('edit', post)")
      */
-    public function editAction(Post $post)
+    public function edit(Post $post)
     {
         // ...
     }
@@ -351,7 +351,7 @@ via the even easier shortcut in a controller:
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
-    public function editAction($id)
+    public function edit($id)
     {
         $post = ...; // query for the post
 

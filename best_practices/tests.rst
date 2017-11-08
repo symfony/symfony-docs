@@ -54,7 +54,7 @@ A functional test can be as easy as this::
             yield ['/post/fixture-post-1'];
             yield ['/blog/category/fixture-category'];
             yield ['/archives'];
-            yield [.];
+            // ...
         }
     }
 
