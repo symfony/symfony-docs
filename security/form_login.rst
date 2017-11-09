@@ -34,7 +34,7 @@ several ways.
 Changing the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Define the ``default_security_target`` option to change the page where the user
+Define the ``default_target_path`` option to change the page where the user
 is redirected to if no previous page was stored in the session. The value can be
 a relative/absolute URL or a Symfony route name:
 
