@@ -1,32 +1,39 @@
 .. index::
    single: Bundle; Installation
 
-How to Install 3rd Party Bundles
-================================
+.. _how-to-install-3rd-party-bundles:
+
+How to Install Third Party Bundles
+==================================
 
 Most bundles provide their own installation instructions. However, the
 basic steps for installing a bundle are the same:
 
-* `A) Add Composer Dependencies`_
+* `A) Install the Bundle`_
 * `B) Enable the Bundle`_
 * `C) Configure the Bundle`_
 
-A) Add Composer Dependencies
-----------------------------
+.. _a-add-composer-dependencies:
 
-Dependencies are managed with Composer, so if Composer is new to you, learn
-some basics in `their documentation`_. This involves two steps:
+A) Install the Bundle
+---------------------
 
-1) Find out the Name of the Bundle on Packagist
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In Symfony applications, dependencies like bundles are managed with `Composer`_,
+the package manager used in modern PHP applications. Make sure to have Composer
+installed and working on your computer. Then, follow these steps:
 
-The README for a bundle (e.g. `FOSUserBundle`_) usually tells you its name
-(e.g. ``friendsofsymfony/user-bundle``). If it doesn't, you can search for
-the bundle on the `Packagist.org`_ site.
+.. _find-out-the-name-of-the-bundle-on-packagist:
+
+1) Find out the Name of the Bundle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The README file for a bundle usually tells you its name (e.g. ``friendsofsymfony
+/user-bundle`` for `FOSUserBundle`_). If it doesn't, you can search for the
+bundle on `Packagist.org`_, the official repository of Composer packages.
 
 .. tip::
 
-    Looking for bundles? Try searching for `symfony-bundle topic on GitHub`_.
+    Looking for Symfony bundles? Try searching for `symfony-bundle topic on GitHub`_.
 
 2) Install the Bundle via Composer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,89 +55,56 @@ version, include it as the second argument of the `composer require`_ command:
 B) Enable the Bundle
 --------------------
 
-At this point, the bundle is installed in your Symfony project (e.g. 
-``vendor/friendsofsymfony/``) and the autoloader recognizes its classes.
-The only thing you need to do now is register the bundle in ``AppKernel``::
+If your application uses :doc:`Symfony Flex </setup/flex>`, bundles are enabled
+automatically, so you can skip this step entirely.
 
-    // app/AppKernel.php
+At this point, the bundle is installed in your Symfony project (e.g.
+``vendor/friendsofsymfony/``) and the autoloader recognizes its classes. The
+only thing you need to do now is register the bundle for some or all
+:doc:`Symfony environments </configuration/environments>` using the
+``config/bundles.php`` file::
 
-    // ...
-    class AppKernel extends Kernel
-    {
+    // config/bundles.php
+    return [
         // ...
 
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-                new FOS\UserBundle\FOSUserBundle(),
-            );
+        // enable the bundle for any Symfony environment:
+        FOS\UserBundle\FOSUserBundle::class => ['all' => true],
 
-            // ...
-        }
-    }
+        // enable the bundle only for 'dev' and 'test' environment (not 'prod'):
+        FOS\UserBundle\FOSUserBundle::class => ['dev' => true, 'test' => true],
 
-In a few rare cases, you may want a bundle to be *only* enabled in the development
-:doc:`environment </configuration/environments>`. For example,
-the DoctrineFixturesBundle helps to load dummy data - something you probably
-only want to do while developing. To only load this bundle in the ``dev``
-and ``test`` environments, register the bundle in this way::
-
-    // app/AppKernel.php
-
-    // ...
-    class AppKernel extends Kernel
-    {
-        // ...
-
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-            );
-
-            if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-                $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
-            }
-
-            // ...
-        }
-    }
+        // enable the bundle only for 'prod' environment (not 'dev', 'test', etc.):
+        FOS\UserBundle\FOSUserBundle::class => ['prod' => true],
+    ];
 
 C) Configure the Bundle
 -----------------------
 
-It's pretty common for a bundle to need some additional setup or configuration
-in ``app/config/config.yml``. The bundle's documentation will tell you about
-the configuration, but you can also get a reference of the bundle's configuration
-via the ``config:dump-reference`` command:
+If your application uses :doc:`Symfony Flex </setup/flex>` and the bundle
+defines a `Symfony Flex recipe`_, the initial bundle configuration is created
+automatically in the ``config/packages/`` directory, so you just need to review
+its default values.
+
+Otherwise, you need the create those configuration files manually following the
+bundle's documentation. In case you need it, you can also get a reference of the
+bundle's configuration via the ``config:dump-reference`` command:
 
 .. code-block:: terminal
 
-    $ bin/console config:dump-reference AsseticBundle
+    $ bin/console config:dump-reference WebProfilerBundle
 
-Instead of the full bundle name, you can also pass the short name used as the root
-of the bundle's configuration:
-
-.. code-block:: terminal
-
-    $ bin/console config:dump-reference assetic
+    # you can also pass the bundle alias used in its config files:
+    # bin/console config:dump-reference web_profiler
 
 The output will look like this:
 
 .. code-block:: yaml
 
-    assetic:
-        debug:                '%kernel.debug%'
-        use_controller:
-            enabled:              '%kernel.debug%'
-            profiler:             false
-        read_from:            '%kernel.project_dir%/web'
-        write_to:             '%assetic.read_from%'
-        java:                 /usr/bin/java
-        node:                 /usr/local/bin/node
-        node_paths:           []
-        # ...
+    web_profiler:
+        toolbar:              false
+        intercept_redirects:  false
+        excluded_ajax_paths:  '^/(app(_[\w]+)?\.php/)?_wdt'
 
 .. tip::
 
@@ -140,21 +114,23 @@ The output will look like this:
 
     .. code-block:: terminal
 
-        $ bin/console config:dump-reference AsseticBundle use_controller
+        $ bin/console config:dump-reference TwigBundle date
 
-        # Default configuration for "AsseticBundle" at path "use_controller"
-        use_controller:
-            enabled:              '%kernel.debug%'
-            profiler:             false
+        # Default configuration for "TwigBundle" at path "date"
+        date:
+            format:               'F j, Y H:i'
+            interval_format:      '%d days'
+            timezone:             null
 
 Other Setup
 -----------
 
-At this point, check the ``README`` file of your brand new bundle to see
-what to do next. Have fun!
+At this point, check the ``README`` file of the bundle to see if it requires
+further steps to complete its integration with your Symfony application.
 
-.. _their documentation: https://getcomposer.org/doc/00-intro.md
-.. _Packagist.org:       https://packagist.org
-.. _FOSUserBundle:       https://github.com/FriendsOfSymfony/FOSUserBundle
-.. _`composer require`:  https://getcomposer.org/doc/03-cli.md#require
+.. _`Composer`: https://getcomposer.org/
+.. _`Packagist.org`: https://packagist.org
+.. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
+.. _`composer require`: https://getcomposer.org/doc/03-cli.md#require
 .. _`symfony-bundle topic on GitHub`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories
+.. `Symfony Flex recipe`: https://github.com/symfony/recipes
