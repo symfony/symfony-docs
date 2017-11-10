@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2017-09-19T11:38:59Z
+
+:+1: Agreed! Except that we no longer maintain the 3.0, 3.1 and 3.2 versions of the documention, so we should merge this into 3.3. We can easily switch that during the merge, so you won't have to do anything :)
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by afurculita at 2017-09-19T12:29:38Z
+
+@wouterj I know that 3.0 is no longer maintained, but the problem is that SensioLabs offers certification for Symfony 3.0 and when you study for it you need to use the documentation for 3.0. Thus I think 3.0 should still be maintained.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-09-19T14:41:07Z
+
+If I understand correctly, SensioLabs offers Symfony 3 certificates. These are about Symfony 3.x, not about 3.0 specifically (some questions can be outdated though). If that's not the case, we should indeed rethink our support process.
+
+(@javiereguiluz please confirm)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-09-19T14:45:56Z
+
+I'm going to ask internally about this and I'll come back to comment.
+
+---------------------------------------------------------------------------
+
+by hhamon at 2017-09-19T17:12:37Z
+
+Hi guys,
+
+The certification is on Symfony **3.0** only!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-10-29T02:28:45Z
+
+Just merged #8402  :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-11-02T14:17:43Z
+
+@weaverryan But then we should merge this one too, right?
