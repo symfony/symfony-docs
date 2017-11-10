@@ -346,13 +346,12 @@ path to reference these templates, e.g. ``@AcmeFormExtra/form/fields.html.twig``
 Disabling usage of globally defined themes
 ..........................................
 
-Sometimes it is useful to disable usage of globally defined form themes in order
+Sometimes you may want to disable the use of the globally defined form themes in order
 to have more control over rendering of a form. You might want this, for example,
-when creating admin interface for a bundle which can be installed on a wide range
-of Symfony apps and you can't control what themes are defined globally.
+when creating an admin interface for a bundle which can be installed on a wide range
+of Symfony apps (and so you can't control what themes are defined globally).
 
-You can do this by including the ``only`` keyword after the list of used form
-themes:
+You can do this by including the ``only`` keyword after the list form themes:
 
 .. code-block:: html+twig
 
@@ -364,9 +363,9 @@ themes:
 
     When using the ``only`` keyword, none of Symfony's built-in form themes
     (``form_div_layout.html.twig``, etc.) will be applied. In order to render
-    your forms correctly, you need to either provide a full-featured form theme
+    your forms correctly, you need to either provide a fully-featured form theme
     yourself, or extend one of the built-in form themes with Twig's ``use``
-    keyword instead of ``extends`` to reuse the original theme contents.
+    keyword instead of ``extends`` to re-use the original theme contents.
 
     .. code-block:: html+twig
 
