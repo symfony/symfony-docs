@@ -1,3 +1,5 @@
+:orphan:
+
 Bundles
 =======
 
@@ -5,10 +7,10 @@ Bundles
     :maxdepth: 2
 
     installation
-    best_practices
-    inheritance
-    override
     remove
-    extension
+    override
+    inheritance
+    best_practices
     configuration
+    extension
     prepend_extension
