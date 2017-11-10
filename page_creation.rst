@@ -183,7 +183,7 @@ To use the web debug toolbar, just install it:
 
 .. code-block:: terminal
 
-    $ composer require profiler
+    $ composer require --dev profiler
 
 As soon as this finishes, refresh your page. You should see a black bar along the
 bottom of the page. You'll learn more about all the information it holds along the
