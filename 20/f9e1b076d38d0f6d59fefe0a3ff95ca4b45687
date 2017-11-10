@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-02T01:32:32Z
+
+Hey @takman1!
+
+If I understand it correctly, both `/` and without `/` would have the same result? So why do you want to suggest this change? In general, we suggest *not* including the opening `/` when you pass paths to the component.
+
+---------------------------------------------------------------------------
+
+by takman1 at 2017-11-02T06:36:54Z
+
+Hello Ryan,
+With /... in input the base path is ignored.
+But without /, it prefixes with base path.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-05T20:52:13Z
+
+Ah, of course! You're right, and this is an important point. But there are many other times in this article when we use `/logo.png`. We should update all of these to `logo.png`. We should maybe also show at least one example of what would happen if you *did* use `/logo.png`, so that it's clear the importance of the opening `/`.
+
+@takman1 could you make those changes?
+
+---------------------------------------------------------------------------
+
+by takman1 at 2017-11-05T21:43:22Z
+
+Hi @weaverryan,
+I'll check all examples in this pages and suggest modifications to show the importance of the opneing `/`.
