@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-10-24T13:03:44Z
+
+@javiereguiluz when we merge this, will the guide link automatically disappear on symfony.com (for 4.0 only)? Or does more work need to be done for that?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-10-25T22:06:17Z
+
+#7071 😢
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-10-29T01:47:12Z
+
+@wouterj Oh no!!! I completely ran over your work :/. I'm sorry. My vote is still to merge this PR... because (as nice as your article is), it doesn't contain a *lot* of content (I like the details on `dump()`, but we should show that elsewhere, and I also have seen that almost everyone knows about this function... somehow).
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-10-29T01:50:50Z
+
+@javiereguiluz if you still agree with this proposal, could you remove the Debugging entry from symfony.com? Thanks for removing the other sections on my other PR :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-02T00:47:49Z
+
+ping @javiereguiluz!
+
+This is not super important, but I'd love to finish it :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-11-02T07:34:29Z
+
+I've removed the link to "Debug" ... it will be online after the next deploy. Thanks!
