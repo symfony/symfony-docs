@@ -12,7 +12,12 @@ Then, install Encore into your project with Yarn:
 .. note::
 
     If you want to use `npm`_ instead of `yarn`_, replace ``yarn add xxx --dev`` by
-    ``npm install xxx --save-dev``.
+    ``npm install xxx --save-dev``. 
+
+    Encore includes a file that locks dependency versions when `yarn` is used (the `yarn.lock` file).
+    It's highly encouraged to use `yarn` to avoid any issues and to maintain consistency across machines.
+    
+    If you already in trouble remove `node_modules` and use `yarn` to install dependencies.
 
 .. tip::
 
