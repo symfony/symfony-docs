@@ -10,9 +10,9 @@ triggered. Your application can listen to these notifications and respond to
 them by executing any piece of code.
 
 Symfony triggers several :doc:`events related to the kernel </reference/events>`
-while processing an HTTP Request, third-party bundles and libraries also trigger
-lots of events and your own application can trigger :doc:`custom events
-</components/event_dispatcher>`.
+while processing the HTTP Request. Third-party bundles may also dispatch events, and
+you can even dispatch :doc:`custom events </components/event_dispatcher>` from your
+own code.
 
 All the examples shown in this article use the same ``KernelEvents::EXCEPTION``
 event for consistency purposes. In your own application, you can use any event
