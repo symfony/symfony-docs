@@ -5,11 +5,12 @@
 How to Create Friendly Configuration for a Bundle
 =================================================
 
-If you open your application configuration file (usually ``app/config/config.yml``),
-you'll see a number of different configuration sections, such as ``framework``,
-``twig`` and ``doctrine``. Each of these configures a specific bundle, allowing
-you to define options at a high level and then let the bundle make all the
-low-level, complex changes based on your settings.
+If you open your main application configuration directory (usually
+``config/packages/``), you'll see a number of different files, such as
+``framework.yaml``, ``twig.yaml`` and ``doctrine.yaml``. Each of these
+configures a specific bundle, allowing you to define options at a high level and
+then let the bundle make all the low-level, complex changes based on your
+settings.
 
 For example, the following configuration tells the FrameworkBundle to enable the
 form integration, which involves the definition of quite a few services as well
@@ -46,13 +47,13 @@ as integration of other related components:
 .. sidebar:: Using Parameters to Configure your Bundle
 
     If you don't have plans to share your bundle between projects, it doesn't
-    make sense to use this more advanced way of configuration. Since you use
-    the bundle only in one project, you can just change the service
-    configuration each time.
+    make sense to use this more advanced way of configuration. Since you use the
+    bundle only in one project, you can just change the service configuration
+    each time.
 
     If you *do* want to be able to configure something from within
-    ``config.yml``, you can always create a parameter there and use that
-    parameter somewhere else.
+    ``config/services.yaml``, you can always create a parameter there and use
+    that parameter somewhere else.
 
 Using the Bundle Extension
 --------------------------
@@ -71,7 +72,7 @@ bundle configuration would look like:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/acme_social.yaml
         acme_social:
             twitter:
                 client_id: 123
@@ -79,7 +80,7 @@ bundle configuration would look like:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/acme_social.xml -->
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -96,7 +97,7 @@ bundle configuration would look like:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/acme_social.php
         $container->loadFromExtension('acme_social', array(
             'client_id'     => 123,
             'client_secret' => 'your_secret',
@@ -145,20 +146,20 @@ For the configuration example in the previous section, the array passed to your
     )
 
 Notice that this is an *array of arrays*, not just a single flat array of the
-configuration values. This is intentional, as it allows Symfony to parse
-several configuration resources. For example, if ``acme_social`` appears in
-another configuration file - say ``config_dev.yml`` - with different values
-beneath it, the incoming array might look like this::
+configuration values. This is intentional, as it allows Symfony to parse several
+configuration resources. For example, if ``acme_social`` appears in another
+configuration file - say ``config/packages/dev/acme_social.yaml`` - with
+different values beneath it, the incoming array might look like this::
 
     array(
-        // values from config.yml
+        // values from config/packages/acme_social.yaml
         array(
             'twitter' => array(
                 'client_id' => 123,
                 'client_secret' => 'your_secret',
             ),
         ),
-        // values from config_dev.yml
+        // values from config/packages/dev/acme_social.yaml
         array(
             'twitter' => array(
                 'client_id' => 456,
@@ -219,7 +220,6 @@ force validation (e.g. if an additional option was passed, an exception will be
 thrown)::
 
     // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
-
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -324,12 +324,10 @@ In your extension, you can load this and dynamically set its arguments::
 Modifying the Configuration of Another Bundle
 ---------------------------------------------
 
-If you have multiple bundles that depend on each other, it may be useful
-to allow one ``Extension`` class to modify the configuration passed to another
-bundle's ``Extension`` class, as if the end-developer has actually placed that
-configuration in their ``app/config/config.yml`` file. This can be achieved
-using a prepend extension. For more details, see
-:doc:`/bundles/prepend_extension`.
+If you have multiple bundles that depend on each other, it may be useful to
+allow one ``Extension`` class to modify the configuration passed to another
+bundle's ``Extension`` class. This can be achieved using a prepend extension.
+For more details, see :doc:`/bundles/prepend_extension`.
 
 Dump the Configuration
 ----------------------
@@ -401,7 +399,7 @@ namespace is then replaced with the XSD validation base path returned from
 method. This namespace is then followed by the rest of the path from the base
 path to the file itself.
 
-By convention, the XSD file lives in the ``Resources/config/schema``, but you
+By convention, the XSD file lives in the ``Resources/config/schema/``, but you
 can place it anywhere you like. You should return this path as the base path::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
@@ -422,7 +420,7 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
 
 .. code-block:: xml
 
-    <!-- app/config/config.xml -->
+    <!-- config/packages/acme_hello.xml -->
     <?xml version="1.0" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
