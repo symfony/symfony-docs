@@ -204,9 +204,13 @@ class can take into account the context of the current request::
         new StaticVersionStrategy('v1'),
         new RequestStackContext($requestStack)
     );
-
-    echo $package->getUrl('/logo.png');
+    
+    echo $package->getUrl('logo.png');
     // result: /somewhere/static/images/logo.png?v1
+    
+    // Both "base path" and "base url" are ignored when using absolute path for asset
+    echo $package->getUrl('/logo.png');
+    // result: /logo.png?v1
 
 Now that the request context is set, the ``PathPackage`` will prepend the
 current request base URL. So, for example, if your entire site is hosted under
