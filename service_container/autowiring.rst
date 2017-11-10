@@ -4,11 +4,11 @@
 Defining Services Dependencies Automatically (Autowiring)
 =========================================================
 
-Autowiring allows you to manage services in the container with minimal configuration.
-It reads the type-hints on your constructor (or other methods) and automatically
-passes you the correct services. Symfony's autowiring is designed to be predictable:
-if it is not absolutely clear which dependency should be passed, you'll see an
-actionable exception.
+Autowiring allows you to manage services in the container with minimal
+configuration. It reads the type-hints on your constructor (or other methods)
+and automatically passes the correct services to each method. Symfony's
+autowiring is designed to be predictable: if it is not absolutely clear which
+dependency should be passed, you'll see an actionable exception.
 
 .. tip::
 
