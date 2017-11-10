@@ -141,7 +141,7 @@ Later, you'll use it to generate URLs.
     The ``_controller`` string is called the
     :ref:`logical name <controller-string-syntax>`. It follows a pattern that
     points to a specific PHP class and method, in this case the
-    ``AppBundle\Controller\BlogController::listAction`` and
+    ``App\Controller\BlogController::listAction`` and
     ``App\Controller\BlogController::showAction`` methods.
 
 This is the goal of the Symfony router: to map the URL of a request to a
@@ -538,7 +538,7 @@ Notice that Symfony adds the string ``Controller`` to the class name (``Blog``
 => ``BlogController``) and ``Action`` to the method name (``show`` => ``showAction()``).
 
 You could also refer to this controller using its fully-qualified class name
-and method: ``AppBundle\Controller\BlogController::showAction``. But if you
+and method: ``App\Controller\BlogController::showAction``. But if you
 follow some simple conventions, the logical name is more concise and allows
 more flexibility.
 
@@ -546,7 +546,7 @@ more flexibility.
 
    To refer to an action that is implemented as the ``__invoke()`` method of a controller class,
    you do not have to pass the method name, but can just use the fully qualified class name (e.g.
-   ``AppBundle\Controller\BlogController``).
+   ``App\Controller\BlogController``).
 
 .. note::
 
@@ -696,7 +696,7 @@ Troubleshooting
 
 Here are some common errors you might see while working with routing:
 
-    Controller "AppBundle\Controller\BlogController::showAction()" requires that you
+    Controller "App\Controller\BlogController::showAction()" requires that you
     provide a value for the "$slug" argument.
 
 This happens when your controller method has an argument (e.g. ``$slug``)::

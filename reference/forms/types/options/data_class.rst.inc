@@ -8,8 +8,8 @@ form, so you can use it for any form field type which requires an object.
 
 .. code-block:: php
 
-    use AppBundle\Entity\Media;
-    use AppBundle\Form\MediaType;
+    use App\Entity\Media;
+    use App\Form\MediaType;
     // ...
 
     $builder->add('media', MediaType::class, array(

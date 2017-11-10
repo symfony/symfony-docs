@@ -30,8 +30,8 @@ The following constraints ensure that:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Person.php
-        namespace AppBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -52,8 +52,8 @@ The following constraints ensure that:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Person:
+        # src/Resources/config/validation.yml
+        App\Entity\Person:
             properties:
                 siblings:
                     - GreaterThanOrEqual: 5
@@ -63,13 +63,13 @@ The following constraints ensure that:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- src/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Person">
+            <class name="App\Entity\Person">
                 <property name="siblings">
                     <constraint name="GreaterThanOrEqual">
                         <value>5</value>
@@ -85,8 +85,8 @@ The following constraints ensure that:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Person.php
-        namespace AppBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -114,8 +114,8 @@ that a date must at least be the current day:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -129,21 +129,21 @@ that a date must at least be the current day:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Order:
+        # src/Resources/config/validation.yml
+        App\Entity\Order:
             properties:
                 deliveryDate:
                     - GreaterThanOrEqual: today
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- src/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Order">
+            <class name="App\Entity\Order">
                 <property name="deliveryDate">
                     <constraint name="GreaterThanOrEqual">today</constraint>
                 </property>
@@ -152,8 +152,8 @@ that a date must at least be the current day:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -173,8 +173,8 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -188,21 +188,21 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Order:
+        # src/Resources/config/validation.yml
+        App\Entity\Order:
             properties:
                 deliveryDate:
                     - GreaterThanOrEqual: today UTC
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- src/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Order">
+            <class name="App\Entity\Order">
                 <property name="deliveryDate">
                     <constraint name="GreaterThanOrEqual">today UTC</constraint>
                 </property>
@@ -211,8 +211,8 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -233,8 +233,8 @@ current time:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -248,21 +248,21 @@ current time:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Order:
+        # src/Resources/config/validation.yml
+        App\Entity\Order:
             properties:
                 deliveryDate:
                     - GreaterThanOrEqual: +5 hours
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- src/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Order">
+            <class name="App\Entity\Order">
                 <property name="deliveryDate">
                     <constraint name="GreaterThanOrEqual">+5 hours</constraint>
                 </property>
@@ -271,8 +271,8 @@ current time:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

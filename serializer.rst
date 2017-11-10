@@ -22,7 +22,7 @@ it in your configuration:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             serializer: { enable_annotations: true }
@@ -31,7 +31,7 @@ it in your configuration:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -52,7 +52,7 @@ it in your configuration:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(
@@ -68,8 +68,8 @@ Using the Serializer Service
 Once enabled, the ``serializer`` service can be injected in any service where
 you need it or it can be used in a controller::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Serializer\SerializerInterface;
@@ -105,7 +105,7 @@ Here is an example on how to load the
 
     .. code-block:: yaml
 
-        # config/services.yml
+        # config/services.yaml
         services:
             get_set_method_normalizer:
                 class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
@@ -150,7 +150,7 @@ with the following configuration:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             serializer:
@@ -158,7 +158,7 @@ with the following configuration:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -176,7 +176,7 @@ with the following configuration:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(
@@ -216,7 +216,7 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
 
     .. code-block:: yaml
 
-        # app/config/config_prod.yml
+        # config/packages/prod/framework.yaml
         framework:
             # ...
             serializer:
@@ -224,7 +224,7 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
 
     .. code-block:: xml
 
-        <!-- app/config/config_prod.xml -->
+        <!-- config/packages/prod/framework.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -242,7 +242,7 @@ A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
 
     .. code-block:: php
 
-        // app/config/config_prod.php
+        // config/packages/prod/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(
@@ -265,7 +265,7 @@ value:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             serializer:
@@ -273,7 +273,7 @@ value:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <framework:config>
             <!-- ... -->
             <framework:serializer name-converter="serializer.name_converter.camel_case_to_snake_case" />
@@ -281,7 +281,7 @@ value:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(

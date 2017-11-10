@@ -201,5 +201,5 @@ all the classes are already loaded as services. All you need to do is specify th
             configurator: ['@App\Mail\EmailConfigurator', configure]
 
 That's it! When requesting the ``App\Mail\NewsletterManager`` or
-``AppBundle\Mail\GreetingCardManager`` service, the created instance will first be
+``App\Mail\GreetingCardManager`` service, the created instance will first be
 passed to the ``EmailConfigurator::configure()`` method.

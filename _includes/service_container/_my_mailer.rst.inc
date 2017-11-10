@@ -2,10 +2,10 @@
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             app.mailer:
-                class:        AppBundle\Mailer
+                class:        App\Mailer
                 arguments:    [sendmail]
 
     .. code-block:: xml
@@ -18,7 +18,7 @@
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer">
+                <service id="app.mailer" class="App\Mailer">
                     <argument>sendmail</argument>
                 </service>
             </services>
@@ -26,8 +26,8 @@
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\Mailer;
+        // config/services.php
+        use App\Mailer;
 
         $container->register('app.mailer', Mailer::class)
             ->addArgument('sendmail');

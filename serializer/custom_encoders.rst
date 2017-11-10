@@ -19,7 +19,7 @@ Imagine you want to serialize and deserialize Yaml. For that you'll have to
 create your own encoder that uses the
 :doc:`Yaml Component </components/yaml>`::
 
-    namespace AppBundle\Serializer;
+    namespace App\Serializer;
 
     use Symfony\Component\Serializer\Encoder\DecoderInterface;
     use Symfony\Component\Serializer\Encoder\EncoderInterface;

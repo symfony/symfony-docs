@@ -269,8 +269,8 @@ However, this only works if you make your service :ref:`public <container-public
 
 .. caution::
 
-    Service ids are case-insensitive (e.g. ``AppBundle\Service\MessageGenerator``
-    and ``appbundle\service\messagegenerator`` refer to the same service). But this
+    Service ids are case-insensitive (e.g. ``App\Service\MessageGenerator``
+    and ``App\service\messagegenerator`` refer to the same service). But this
     was deprecated in Symfony 3.3. Starting in 4.0, service ids will be case sensitive.
 
 .. _services-constructor-injection:
@@ -437,7 +437,7 @@ example, suppose you want to make the admin email configurable:
 
 If you make this change and refresh, you'll see an error:
 
-    Cannot autowire service "AppBundle\Updates\SiteUpdateManager": argument "$adminEmail"
+    Cannot autowire service "App\Updates\SiteUpdateManager": argument "$adminEmail"
     of method "__construct()" must have a type-hint or be given a value explicitly.
 
 That makes sense! There is no way that the container knows what value you want to
