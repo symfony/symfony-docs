@@ -440,9 +440,8 @@ The ``composer.json`` file should include at least the following metadata:
     a string (or array of strings) with a `valid license identifier`_, such as ``MIT``.
 
 ``autoload``
-    This information is used by Symfony to load the classes of the bundle. The
-    `PSR-4`_ autoload standard is recommended for modern bundles, but `PSR-0`_
-    standard is also supported.
+    This information is used by Symfony to load the classes of the bundle. It's
+    recommended to use the `PSR-4`_ autoload standard.
 
 In order to make it easier for developers to find your bundle, register it on
 `Packagist`_, the official repository for Composer packages.
