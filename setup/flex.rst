@@ -151,7 +151,7 @@ following directory structure, which is the same used by default in Symfony 4:
     └── vendor/
 
 This means that installing the ``symfony/flex`` dependency in your application
-is not enough. You must also upgrade the directory structure to the one showed
+is not enough. You must also upgrade the directory structure to the one shown
 above. There's no automatic tool to make this upgrade, so you must follow these
 manual steps:
 
