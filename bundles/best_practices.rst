@@ -4,21 +4,10 @@
 Best Practices for Reusable Bundles
 ===================================
 
-There are two types of bundles:
-
-* Application-specific bundles: only used to build your application;
-* Reusable bundles: meant to be shared across many projects.
-
 This article is all about how to structure your **reusable bundles** so that
-they're easy to configure and extend. Many of these recommendations do not
-apply to application bundles because you'll want to keep those as simple
-as possible. For application bundles, just follow the practices shown throughout
-the guides.
-
-.. seealso::
-
-    The best practices for application-specific bundles are discussed in
-    :doc:`/best_practices/introduction`.
+they're easy to configure and extend. Reusable bundles are those meant to be
+shared privately across many company projects or publicly so any Symfony project
+can install them.
 
 .. index::
    pair: Bundle; Naming conventions
@@ -28,10 +17,10 @@ the guides.
 Bundle Name
 -----------
 
-A bundle is also a PHP namespace. The namespace must follow the `PSR-0`_ or
-`PSR-4`_ interoperability standards for PHP namespaces and class names: it starts
-with a vendor segment, followed by zero or more category segments, and it ends
-with the namespace short name, which must end with ``Bundle``.
+A bundle is also a PHP namespace. The namespace must follow the `PSR-4`_
+interoperability standard for PHP namespaces and class names: it starts with a
+vendor segment, followed by zero or more category segments, and it ends with the
+namespace short name, which must end with ``Bundle``.
 
 A namespace becomes a bundle as soon as you add a bundle class to it. The
 bundle class name must follow these simple rules:
@@ -116,21 +105,21 @@ The following classes and files have specific emplacements (some are mandatory
 and others are just conventions followed by most developers):
 
 ===================================================  ========================================
-Type                                                 Directory                               
+Type                                                 Directory
 ===================================================  ========================================
-Commands                                             ``Command/``                            
-Controllers                                          ``Controller/``                         
-Service Container Extensions                         ``DependencyInjection/``                
+Commands                                             ``Command/``
+Controllers                                          ``Controller/``
+Service Container Extensions                         ``DependencyInjection/``
 Doctrine ORM entities (when not using annotations)   ``Entity/``
 Doctrine ODM documents (when not using annotations)  ``Document/``
-Event Listeners                                      ``EventListener/``                      
-Configuration                                        ``Resources/config/``                   
-Web Resources (CSS, JS, images)                      ``Resources/public/``                   
-Translation files                                    ``Resources/translations/``     
+Event Listeners                                      ``EventListener/``
+Configuration (routes, services, etc.)               ``Resources/config/``
+Web Assets (CSS, JS, images)                         ``Resources/public/``
+Translation files                                    ``Resources/translations/``
 Validation (when not using annotations)              ``Resources/config/validation/``
 Serialization (when not using annotations)           ``Resources/config/serialization/``
-Templates                                            ``Resources/views/``                    
-Unit and Functional Tests                            ``Tests/``                              
+Templates                                            ``Resources/views/``
+Unit and Functional Tests                            ``Tests/``
 ===================================================  ========================================
 
 Classes
@@ -177,16 +166,23 @@ the ``Tests/`` directory. Tests should follow the following principles:
    A test suite must not contain ``AllTests.php`` scripts, but must rely on the
    existence of a ``phpunit.xml.dist`` file.
 
+Installation
+------------
+
+Bundles must define a `Symfony Flex recipe`_ to automate their integration
+in Symfony applications. If some initial configuration is needed to execute
+the bundle, including some environment variables, provide them in the recipe.
+
 Documentation
 -------------
 
 All classes and functions must come with full PHPDoc.
 
-Extensive documentation should also be provided in the ``Resources/doc/`` 
+Extensive documentation should also be provided in the ``Resources/doc/``
 directory.
-The index file (for example ``Resources/doc/index.rst`` or 
-``Resources/doc/index.md``) is the only mandatory file and must be the entry 
-point for the documentation. The 
+The index file (for example ``Resources/doc/index.rst`` or
+``Resources/doc/index.md``) is the only mandatory file and must be the entry
+point for the documentation. The
 :doc:`reStructuredText (rST) </contributing/documentation/format>` is the format
 used to render the documentation on symfony.com.
 
@@ -203,8 +199,19 @@ following standardized instructions in your ``README.md`` file.
         Installation
         ============
 
-        Step 1: Download the Bundle
-        ---------------------------
+        Applications that use Symfony Flex
+        ----------------------------------
+
+        Open a command console, enter your project directory and execute:
+
+        ```console
+        $ composer require <package-name>
+        ```
+
+        Applications that don't use Symfony Flex
+        ----------------------------------------
+
+        ### Step 1: Download the Bundle
 
         Open a command console, enter your project directory and execute the
         following command to download the latest stable version of this bundle:
@@ -217,8 +224,7 @@ following standardized instructions in your ``README.md`` file.
         in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
         of the Composer documentation.
 
-        Step 2: Enable the Bundle
-        -------------------------
+        ### Step 2: Enable the Bundle
 
         Then, enable the bundle by adding it to the list of registered bundles
         in the `app/AppKernel.php` file of your project:
@@ -249,8 +255,20 @@ following standardized instructions in your ``README.md`` file.
         Installation
         ============
 
+        Applications that use Symfony Flex
+        ----------------------------------
+
+        Open a command console, enter your project directory and execute:
+
+        .. code-block:: terminal
+
+            $ composer require <package-name>
+
+        Applications that don't use Symfony Flex
+        ----------------------------------------
+
         Step 1: Download the Bundle
-        ---------------------------
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         Open a command console, enter your project directory and execute the
         following command to download the latest stable version of this bundle:
@@ -263,7 +281,7 @@ following standardized instructions in your ``README.md`` file.
         in the `installation chapter`_ of the Composer documentation.
 
         Step 2: Enable the Bundle
-        -------------------------
+        ~~~~~~~~~~~~~~~~~~~~~~~~~
 
         Then, enable the bundle by adding it to the list of registered bundles
         in the ``app/AppKernel.php`` file of your project:
@@ -450,8 +468,8 @@ Learn more
 * :doc:`/bundles/extension`
 * :doc:`/bundles/configuration`
 
-.. _`PSR-0`: http://www.php-fig.org/psr/psr-0/
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
+.. _`Symfony Flex recipe`: https://github.com/symfony/recipes
 .. _`Semantic Versioning Standard`: http://semver.org/
 .. _`Packagist`: https://packagist.org/
 .. _`choose any license`: http://choosealicense.com/
