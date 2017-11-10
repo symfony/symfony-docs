@@ -233,4 +233,4 @@ Learn more
 * :doc:`/components/dom_crawler`
 
 .. _`Packagist`: https://packagist.org/packages/symfony/browser-kit
-.. _`Goutte`: https://github.com/fabpot/Goutte
+.. _`Goutte`: https://github.com/FriendsOfPHP/Goutte
