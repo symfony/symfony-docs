@@ -197,6 +197,26 @@ Handling a form submit usually follows a similar template:
         // render the template
     }
 
+.. versionadded:: 4.1
+   The ``ControllerTrait::isFormValid()`` method was added in Symfony 4.1.
+
+
+It's also possible to use a short-cut if the ``ControllerTrait`` is imported:
+
+
+.. code-block:: php
+
+    public function newAction(Request $request)
+    {
+        // build the form ...
+
+        if ($this->isFormValid($form)) {
+            // process the form data
+        }
+
+        // render the template
+    }
+
 There are really only two notable things here. First, we recommend that you
 use a single action for both rendering the form and handling the form submit.
 For example, you *could* have a ``newAction()`` that *only* renders the form
