@@ -133,4 +133,4 @@ further steps to complete its integration with your Symfony application.
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`composer require`: https://getcomposer.org/doc/03-cli.md#require
 .. _`symfony-bundle topic on GitHub`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories
-.. `Symfony Flex recipe`: https://github.com/symfony/recipes
+.. _`Symfony Flex recipe`: https://github.com/symfony/recipes
