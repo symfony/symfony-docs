@@ -83,19 +83,16 @@ C/C++ standard.::
         }
     });
 
-The ``ConsoleEvents::EXCEPTION`` Event
---------------------------------------
-
-.. versionadded:: 3.3
-    The ``ConsoleEvents::EXCEPTION`` event was deprecated in Symfony 3.3. Use
-    the ``ConsoleEvents::ERROR`` event instead.
+The ``ConsoleEvents::ERROR`` Event
+----------------------------------
 
 **Typical Purposes**: Handle exceptions thrown during the execution of a
 command.
 
-Whenever an exception is thrown by a command, the ``ConsoleEvents::EXCEPTION``
-event is dispatched. A listener can wrap or change the exception or do
-anything useful before the exception is thrown by the application.
+Whenever an exception is thrown by a command, including those triggered from
+event listeners, the ``ConsoleEvents::ERROR`` event is dispatched. A listener
+can wrap or change the exception or do anything useful before the exception is
+thrown by the application.
 
 Listeners receive a
 :class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` event::
@@ -103,7 +100,7 @@ Listeners receive a
     use Symfony\Component\Console\Event\ConsoleExceptionEvent;
     use Symfony\Component\Console\ConsoleEvents;
 
-    $dispatcher->addListener(ConsoleEvents::EXCEPTION, function (ConsoleExceptionEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::ERROR, function (ConsoleExceptionEvent $event) {
         $output = $event->getOutput();
 
         $command = $event->getCommand();
@@ -116,19 +113,6 @@ Listeners receive a
         // change the exception to another one
         $event->setException(new \LogicException('Caught exception', $exitCode, $event->getException()));
     });
-
-The ``ConsoleEvents::ERROR`` Event
-----------------------------------
-
-.. versionadded:: 3.3
-    The ``ConsoleEvents::ERROR`` event was introduced in Symfony 3.3.
-
-**Typical Purposes**: Handle exceptions thrown during the execution of a
-command.
-
-This event is an improved version of the ``ConsoleEvents::EXCEPTION`` event,
-because it can handle every exception thrown during the execution of a command,
-including those triggered from event listeners.
 
 The ``ConsoleEvents::TERMINATE`` Event
 --------------------------------------

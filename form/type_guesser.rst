@@ -216,10 +216,6 @@ and tag it with ``form.type_guesser``:
             ->addTag('form.type_guesser')
         ;
 
-.. versionadded:: 3.3
-    Prior to Symfony 3.3, you needed to define type guesser services as ``public``.
-    Starting from Symfony 3.3, you can also define them as ``private``.
-
 .. sidebar:: Registering a Type Guesser in the Component
 
     If you're using the Form component standalone in your PHP project, use

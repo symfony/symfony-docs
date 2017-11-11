@@ -211,9 +211,6 @@ support symbolic links, a third boolean argument is available::
 readlink
 ~~~~~~~~
 
-.. versionadded:: 3.2
-    The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method was introduced in Symfony 3.2.
-
 :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` read links targets.
 
 PHP's ``readlink()`` function returns the target of a symbolic link. However, its behavior
@@ -296,10 +293,6 @@ The ``file.txt`` file contains ``Hello World`` now.
 
 appendToFile
 ~~~~~~~~~~~~
-
-.. versionadded:: 3.3
-    The :method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile`
-    method was introduced in Symfony 3.3.
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile` adds new
 contents at the end of some file::

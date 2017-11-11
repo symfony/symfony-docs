@@ -141,12 +141,6 @@ TwigBundle Configuration ("twig")
             'default_path' => '%kernel.project_dir%/templates',
         ));
 
-.. caution::
-
-    The ``twig.form`` (``<twig:form />`` tag for xml) configuration key
-    has been deprecated and will be removed in 3.0. Instead, use the ``twig.form_themes``
-    option.
-
 Configuration
 -------------
 
@@ -345,9 +339,6 @@ default_path
 ~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``'%kernel.project_dir%/templates'``
-
-.. versionadded:: 3.4
-    The ``default_path`` option was introduced in Symfony 3.4.
 
 The default directory where Symfony will look for Twig templates.
 

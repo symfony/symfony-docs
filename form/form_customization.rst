@@ -121,9 +121,6 @@ fragment needed to render every part of a form:
   with the appropriate CSS classes to apply the default `Foundation CSS framework`_
   styles.
 
-.. versionadded:: 3.4
-    The Bootstrap 4 form themes were introduced in Symfony 3.4.
-
 .. caution::
 
     When you use the Bootstrap form themes and render the fields manually,

@@ -53,39 +53,8 @@ generation of cache files. If you have an application with multiple kernels,
 the easiest way to make each have a unique name is to duplicate the ``app``
 directory and rename it to something else (e.g. ``foo``).
 
-Root Directory
-~~~~~~~~~~~~~~
-
-.. versionadded:: 3.3
-    The ``getRootDir()`` method is deprecated since Symfony 3.3. Use the new
-    ``getProjectDir()`` method instead.
-
-**type**: ``string`` **default**: the directory of ``AppKernel``
-
-This returns the root directory of your kernel. If you use the Symfony Standard
-edition, the root directory refers to the ``app`` directory.
-
-To change this setting, override the
-:method:`Symfony\\Component\\HttpKernel\\Kernel::getRootDir` method::
-
-    // app/AppKernel.php
-
-    // ...
-    class AppKernel extends Kernel
-    {
-        // ...
-
-        public function getRootDir()
-        {
-            return realpath(parent::getRootDir().'/../');
-        }
-    }
-
 Project Directory
 ~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.3
-    The ``getProjectDir()`` method was introduced in Symfony 3.3.
 
 **type**: ``string`` **default**: the directory of the project ``composer.json``
 

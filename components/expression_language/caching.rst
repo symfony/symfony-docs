@@ -37,12 +37,6 @@ ones and injecting this using the constructor::
     $cache = new RedisAdapter(...);
     $language = new ExpressionLanguage($cache);
 
-.. versionadded:: 3.2
-    PSR-6 caching support was introduced in Symfony 3.2. Prior to version 3.2,
-    a
-    :class:`Symfony\\Component\\ExpressionLanguage\\ParserCache\\ParserCacheInterface`
-    instance had to be injected.
-
 .. seealso::
 
     See the :doc:`/components/cache` documentation for more information about

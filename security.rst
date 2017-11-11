@@ -969,29 +969,17 @@ For more details on expressions and security, see :doc:`/security/expressions`.
 Access Control Lists (ACLs): Securing individual Database Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 3.4
-    ACL support was deprecated in Symfony 3.4 and will be removed in 4.0. Install
-    the `Symfony ACL bundle`_ if you want to keep using ACL.
-
 Imagine you are designing a blog where users can comment on your posts. You
 also want a user to be able to edit their own comments, but not those of
 other users. Also, as the admin user, you yourself want to be able to edit
 *all* comments.
 
-To accomplish this you have 2 options:
+:doc:`Voters </security/voters>` allow you to write own business logic (e.g. the
+user can edit this post because they were the creator) to determine access.
+That's why voters are officially recommended by Symfony to create ACL-like
+security systems.
 
-* :doc:`Voters </security/voters>` allow you to write own business logic
-  (e.g. the user can edit this post because they were the creator) to determine
-  access. You'll probably want this option - it's flexible enough to solve the
-  above situation.
-
-* :doc:`ACLs </security/acl>` allow you to create a database structure
-  where you can assign *any* arbitrary user *any* access (e.g. EDIT, VIEW)
-  to *any* object in your system. Use this if you need an admin user to be
-  able to grant customized access across your system via some admin interface.
-
-In both cases, you'll still deny access using methods similar to what was
-shown above.
+If you still prefer to use traditional ACLs, refer to the `Symfony ACL bundle`_.
 
 3) Retrieving the User Object
 -----------------------------
@@ -1014,10 +1002,6 @@ look like::
 
     The user will be an object and the class of that object will depend on
     your :ref:`user provider <security-user-providers>`.
-
-.. versionadded:: 3.2
-    The ability to get the user by type-hinting an argument with UserInterface
-    was introduced in Symfony 3.2.
 
 Now you can call whatever methods are on *your* User object. For example,
 if your User object has a ``getFirstName()`` method, you could use that::
