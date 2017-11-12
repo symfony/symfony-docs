@@ -53,6 +53,15 @@ scattered through lots of bundles.
 
     Use lowercased snake_case for directory and template names.
 
+.. best-practice::
+
+    Use a prefixed underscore for partial templates in template names.
+
+You often want to reuse template code using the ``include`` function to avoid
+redundant code. To determine those partials easily in the filesystem you should
+prefix partials and any other template without HTML body or ``extends`` tag
+with a single underscore.
+
 Twig Extensions
 ---------------
 
