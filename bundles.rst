@@ -10,8 +10,7 @@ The Bundle System
 
     In Symfony versions prior to 4.0, it was recommended to organize your own
     application code using bundles. This is no longer recommended and bundles
-    should only be used as third-party plugins that add features in your
-    applications.
+    should only be used to share code and features between multiple applications.
 
 A bundle is similar to a plugin in other software, but even better. The core
 features of Symfony framework are implemented with bundles (FrameworkBundle,
@@ -45,10 +44,8 @@ file::
 Learn more
 ----------
 
-* :doc:`/bundles/installation`
 * :doc:`/bundles/remove`
 * :doc:`/bundles/override`
-* :doc:`/bundles/inheritance`
 * :doc:`/bundles/best_practices`
 * :doc:`/bundles/configuration`
 * :doc:`/bundles/extension`
