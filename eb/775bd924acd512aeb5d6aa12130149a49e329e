@@ -1,0 +1,61 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-11-08T09:34:39Z
+
+This is now ready for review. Here is the list of added/removed/changed best practices:
+
+### Added
+
+* Use the Symfony Skeleton to create new Symfony-based projects.
+* Use autowiring to automate the configuration of application services.
+* Don't add the ``Action`` suffix to the methods of the controller actions.
+
+### Removed
+
+* Don't define parameters for the classes of your services.
+* Create only one bundle called AppBundle for your application logic.
+
+### Changed
+
+```diff
+-Use the Symfony Installer to create new Symfony-based projects.
++Use Composer and Symfony Flex to create and manage Symfony applications.
+```
+
+```diff
+-Make your controller extend the FrameworkBundle base controller...
++Make your controller extend the ``AbstractController`` base controller...
+```
+
+```diff
+-Store the translation files in the ``app/Resources/translations/`` directory.
++Store the translation files in the ``translations/`` directory at the root of your project.
+```
+
+```diff
+-Store all your application's templates in ``app/Resources/views/`` directory.
++Store the application templates in the ``templates/`` directory at the root of your project.
+```
+
+```diff
+-Define your Twig extensions in the ``AppBundle/Twig/`` directory.
++Define your Twig extensions in the ``src/Twig/`` directory.
+```
+
+```diff
+-Store your assets in the ``public/`` directory.
++Store your assets in the ``assets/`` directory at the root of your project.
+```
+
+```diff
+-Use Assetic to compile, combine and minimize web assets, unless you're
+-comfortable with frontend tools like GruntJS.
++Use `Webpack Encore`_ to compile, combine and minimize web assets.
+```
+
+```diff
+-For fine-grained restrictions, define a custom security voter;
+-For restricting access to *any* object by *any* user via an admin
+-interface, use the Symfony ACL.
++Define a custom security voter to implement fine-grained restrictions.
+```
