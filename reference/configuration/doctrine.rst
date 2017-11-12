@@ -22,9 +22,7 @@ Full Default Configuration
                     some_custom_type:
                         class:                Acme\HelloBundle\MyCustomType
                         commented:            true
-                # If defined, all the tables whose names match this regular expression are ignored
-                # by the schema tool (in this example, any table name starting with `wp_`)
-                #schema_filter:               '/^(?!wp_)/'
+                
 
                 connections:
                     # A collection of different named connections (e.g. default, conn2, etc)
@@ -77,6 +75,11 @@ Full Default Configuration
                         mapping_types:
                             # an array of mapping types
                             name:                 []
+                            
+                        # If defined, only the tables whose names match this regular expression are managed
+                        # by the schema tool (in this example, any table name not starting with `wp_`)
+                        #schema_filter:               '/^(?!wp_)/'
+                        
                         slaves:
 
                             # a collection of named slave connections (e.g. slave1, slave2)
