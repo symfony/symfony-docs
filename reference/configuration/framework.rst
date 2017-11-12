@@ -533,11 +533,10 @@ collect
 
 **type**: ``boolean`` **default**: ``true``
 
-This option configures the way the profiler behaves when it is enabled.
-If set to ``true``, the profiler collects data for all requests (unless
-you configure otherwise, like a custom `matcher`_). If you want to only
-collect information on-demand, you can set the ``collect`` flag to ``false``
-and activate the data collectors manually::
+This option configures the way the profiler behaves when it is enabled. If set
+to ``true``, the profiler collects data for all requests. If you want to only
+collect information on-demand, you can set the ``collect`` flag to ``false`` and
+activate the data collectors manually::
 
     $profiler->enable();
 
@@ -1930,12 +1929,6 @@ Full Default Configuration
                 only_exceptions:      false
                 only_master_requests: false
                 dsn:                  file:%kernel.cache_dir%/profiler
-                matcher:
-                    ip:                   ~
-
-                    # use the urldecoded format
-                    path:                 ~ # Example: ^/path to resource/
-                    service:              ~
 
             # router configuration
             router:
