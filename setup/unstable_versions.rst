@@ -31,7 +31,7 @@ an existing application to test that your project works with it.
 
 First, open the ``composer.json`` file located in the root directory of your
 project. Then, edit the value of all of the ``symfony/*`` libraries to the
-new version and change your `minimum-stability` to `beta`.
+new version and change your ``minimum-stability`` to ``beta``:
 
 .. code-block:: diff
 
