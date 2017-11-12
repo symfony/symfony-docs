@@ -4,91 +4,53 @@
 How to Remove a Bundle
 ======================
 
-1. Unregister the Bundle in the ``AppKernel``
----------------------------------------------
+.. _unregister-the-bundle-in-the-appkernel:
+.. _remove-bundle-configuration:
+.. _remove-bundle-routing:
+.. _remove-the-bundle-from-the-filesystem:
 
-To disconnect the bundle from the framework, you should remove the bundle from
-the ``AppKernel::registerBundles()`` method. The bundle will likely be found in
-the ``$bundles`` array declaration or added to it in a later statement if the
-bundle is only registered in the development environment::
+1. Uninstall the Bundle
+-----------------------
 
-    // app/AppKernel.php
+Execute this command to remove the Composer package associated with the bundle:
 
-    // ...
-    class AppKernel extends Kernel
-    {
-        public function registerBundles()
-        {
-            $bundles = array(
-                new Acme\DemoBundle\AcmeDemoBundle(),
-            );
+.. code-block:: terminal
 
-            if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-                // comment or remove this line:
-                // $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
-                // ...
-            }
-        }
-    }
+    $ composer remove <package-name>
 
-2. Remove Bundle Configuration
-------------------------------
+    # the package name is the same used when you installed it. Example:
+    # composer remove friendsofsymfony/user-bundle
 
-Now that Symfony doesn't know about the bundle, you need to remove any
-configuration and routing configuration inside the ``app/config`` directory
-that refers to the bundle.
+If your application uses :doc:`Symfony Flex </setup/flex>`, this command will
+also unregister the bundle from the application and remove its configuration
+files, environment variables defined by the bundle, etc. Otherwise, you need to
+remove all that manually:
 
-2.1 Remove Bundle Routing
-~~~~~~~~~~~~~~~~~~~~~~~~~
+* Unregister the bundle in the application removing it from the
+  ``config/bundles.php`` file;
+* Remove any configuration file related to the bundle from the ``config/packages/``
+  directories (the files will be called like the bundle; e.g. ``fos_user.yaml``
+  for FOSUserBundle);
+* Remove any routes file related to the bundle from the ``config/routes/``
+  directories (the file names will also match the bundle name; e.g.
+  ``config/routes/fos_js_routing.yaml`` for FOSJsRoutingBundle).
 
-*Some* bundles require you to import routing configuration. Check for references
-to the bundle in the routing configuration (inside ``config/routes/``).  If you
-find any references, remove them completely.
+2. Remove Bundle Assets
+-----------------------
 
-2.2 Remove Bundle Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If the bundle included web assets, remove them from the ``public/bundles/``
+directory (e.g. ``public/bundles/nelmioapidoc/`` for the NelmioApiDocBundle).
 
-Some bundles contain configuration in one of the ``app/config/config*.yml``
-files. Be sure to remove the related configuration from these files. You can
-quickly spot bundle configuration by looking for an ``acme_demo`` (or whatever
-the name of the bundle is, e.g. ``fos_user`` for the FOSUserBundle) string in
-the configuration files.
-
-3. Remove the Bundle from the Filesystem
-----------------------------------------
-
-Now you have removed every reference to the bundle in your application, you
-should remove the bundle from the filesystem. The bundle will be located in
-`src/` for example the ``src/Acme/DemoBundle`` directory. You should remove this
-directory, and any parent directories that are now empty (e.g. ``src/Acme/``).
-
-.. tip::
-
-    If you don't know the location of a bundle, you can use the
-    :method:`Symfony\\Component\\HttpKernel\\Bundle\\BundleInterface::getPath` method
-    to get the path of the bundle::
-
-        dump($this->container->get('kernel')->getBundle('AcmeDemoBundle')->getPath());
-        die();
-
-3.1 Remove Bundle Assets
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-Remove the assets of the bundle in the public/ directory (e.g.
-``public/bundles/acmedemo`` for the AcmeDemoBundle).
-
-4. Remove Integration in other Bundles
+3. Remove Integration in other Bundles
 --------------------------------------
 
-Some bundles rely on other bundles, if you remove one of the two, the other
-will probably not work. Be sure that no other bundles, third party or self-made,
-rely on the bundle you are about to remove.
+Some bundles rely on other bundles; if you remove one of the two, the other will
+probably not work. In most cases, when one bundle relies on another, it means
+that it uses some services from it.
 
-.. tip::
-
-    If one bundle relies on another, in most cases it means that it uses
-    some services from the bundle. Searching for the bundle alias string may
-    help you spot them (e.g. ``acme_demo`` for bundles depending on AcmeDemoBundle).
+Look for the bundle alias or PHP namespace (e.g. ``sonata.admin`` or
+``Sonata\AdminBundle\`` for bundles depending on SonataAdminBundle) to find the
+dependent bundles.
 
 .. tip::
 
