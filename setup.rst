@@ -90,7 +90,7 @@ The ``req-checker`` utility adds two PHP scripts to your application:
 
 .. code-block:: terminal
 
-    php bin/check.php
+    php vendor/bin/requirements-checker
 
 This will check your CLI environment. Run the second one from a browser (e.g.
 ``http://localhost:8000/check.php``) to check your web server environment.
