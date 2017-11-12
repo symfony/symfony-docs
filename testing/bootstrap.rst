@@ -6,30 +6,32 @@ running those tests. For example, if you're running a functional test and
 have introduced a new translation resource, then you will need to clear your
 cache before running those tests.
 
-To do this, first add the following file::
+To do this, first add a file that executes your bootstrap work::
 
-    // tests.bootstrap.php
+    // tests/bootstrap.php
     if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {
+        // executes the "php bin/console cache:clear" command
         passthru(sprintf(
-            'php "%s/bin/console" cache:clear --env=%s --no-warmup',
+            'php "%s/../bin/console" cache:clear --env=%s --no-warmup',
             __DIR__,
             $_ENV['BOOTSTRAP_CLEAR_CACHE_ENV']
         ));
     }
 
-    require __DIR__ . '/vendor/autoload.php';
+    require __DIR__.'/../vendor/autoload.php';
 
-Replace the test bootstrap file ``autoload.php`` in ``phpunit.xml.dist``
-with ``tests.bootstrap.php``:
+Then, configure ``phpunit.xml.dist`` to execute this ``bootstra.php`` file
+before running the tests:
 
 .. code-block:: xml
 
     <!-- phpunit.xml.dist -->
-
-    <!-- ... -->
+    <?xml version="1.0" encoding="UTF-8"?>
     <phpunit
-        bootstrap = "tests.bootstrap.php"
+        bootstrap="tests/bootstrap.php"
     >
+        <!-- ... -->
+    </phpunit>
 
 Now, you can define in your ``phpunit.xml.dist`` file which environment you want the
 cache to be cleared:
@@ -37,9 +39,14 @@ cache to be cleared:
 .. code-block:: xml
 
     <!-- phpunit.xml.dist -->
-    <php>
-        <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test" />
-    </php>
+    <?xml version="1.0" encoding="UTF-8"?>
+    <phpunit>
+        <!-- ... -->
+
+        <php>
+            <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test" />
+        </php>
+    </phpunit>
 
 This now becomes an environment variable (i.e. ``$_ENV``) that's available
 in the custom bootstrap file (``tests.bootstrap.php``).
