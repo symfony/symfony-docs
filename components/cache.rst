@@ -13,9 +13,6 @@ The Cache Component
     It is designed to have a low overhead and it ships with ready to use adapters
     for the most common caching backends.
 
-.. versionadded:: 3.3
-    The PSR-16 "Simple Cache" implementation was introduced in Symfony 3.3.
-
 Installation
 ------------
 
@@ -78,7 +75,7 @@ Now you can create, retrieve, update and delete items using this object::
 
     // remove the cache key
     $cache->delete('stats.num_products');
-    
+
     // clear *all* cache keys
     $cache->clear();
 

@@ -148,7 +148,7 @@ Getting and Setting Container Parameters in PHP
 Working with container parameters is straightforward using the container's
 accessor methods for parameters::
 
-    // check if a parameter is defined
+    // check if a parameter is defined (parameter names are case-sensitive)
     $container->hasParameter('mailer.transport');
 
     // get value of a parameter
@@ -169,11 +169,6 @@ accessor methods for parameters::
     You can only set a parameter before the container is compiled: not at run-time.
     To learn more about compiling the container see
     :doc:`/components/dependency_injection/compilation`.
-
-.. versionadded:: 3.4
-    Container parameters are case sensitive starting from Symfony 3.4. In
-    previous Symfony versions, parameters were case insensitive, meaning that
-    ``mailer.transport`` and ``Mailer.Transport`` were considered the same parameter.
 
 .. _component-di-parameters-array:
 

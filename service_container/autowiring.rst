@@ -180,9 +180,8 @@ If there are **0** services in the container that have the type, then:
 .. _autowiring-single-matching-service:
 
 If there is exactly **1** service in the container that has the type, then:
-    (deprecated) This service is used for the argument. In Symfony 4.0, this
-    will be removed. The proper solution is to create an :ref:`alias <service-autowiring-alias>`
-    from the type to the service id so that normal autowiring works.
+    Create an :ref:`alias <service-autowiring-alias>` from the type to the
+    service id so that normal autowiring works.
 
 If there are **2 or more** services in the container that have the type, then:
     A clear exception is thrown. You need to *choose* which service should
@@ -434,10 +433,6 @@ Thanks to the ``App\Util\TransformerInterface`` alias, any argument type-hinted
 with this interface will be passed the ``App\Util\Rot13Transformer`` service.
 But, you can also manually wire the *other* service by specifying the argument
 under the arguments key.
-
-.. versionadded:: 3.3
-    Using FQCN aliases to fix autowiring ambiguities was introduced in Symfony
-    3.3. Prior to version 3.3, you needed to use the ``autowiring_types`` key.
 
 Fixing Non-Autowireable Arguments
 ---------------------------------

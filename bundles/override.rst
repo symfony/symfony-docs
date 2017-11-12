@@ -4,9 +4,9 @@
 How to Override any Part of a Bundle
 ====================================
 
-This document is a quick reference for how to override different parts of
-third-party bundles without using :doc:`/bundles/inheritance`, which is
-deprecated since Symfony 3.4.
+When using a third-party bundle, you might want to customize or override some of
+its features. This document describes ways of overriding the most common
+features of a bundle.
 
 .. tip::
 

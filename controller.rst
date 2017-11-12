@@ -152,9 +152,6 @@ and many others that you'll learn about next.
     more robust code to access services. But if you *do* need direct access to the
     container, using ``Controller`` is fine.
 
-.. versionadded:: 3.3
-    The ``AbstractController`` class was added in Symfony 3.3.
-
 .. index::
    single: Controller; Redirecting
 
@@ -242,10 +239,6 @@ The Symfony templating system and Twig are explained more in the
 
 Fetching Services as Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.3
-    The ability to type-hint a controller argument in order to receive a service
-    was added in Symfony 3.3.
 
 Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
@@ -457,10 +450,6 @@ Symfony provides a nice session object that you can use to store information
 about the user between requests. By default, Symfony stores the token in a
 cookie and writes the attributes to a file by using native PHP sessions.
 
-.. versionadded:: 3.3
-    The ability to request a ``Session`` instance in controllers was introduced
-    in Symfony 3.3.
-
 To retrieve the session, add the :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`
 type-hint to your argument and Symfony will provide you with a session::
 
@@ -567,10 +556,6 @@ read any flash messages from the session using ``app.flashes()``:
                 </div>
             <?php endforeach ?>
         <?php endforeach ?>
-
-.. versionadded:: 3.3
-    The ``app.flashes()`` Twig function was introduced in Symfony 3.3. Prior,
-    you had to use ``app.session.flashBag()``.
 
 .. note::
 
@@ -682,9 +667,6 @@ the :phpfunction:`json_encode` function is used.
 
 File helper
 ~~~~~~~~~~~
-
-.. versionadded:: 3.2
-    The ``file()`` helper was introduced in Symfony 3.2.
 
 You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
 helper to serve a file from inside a controller::

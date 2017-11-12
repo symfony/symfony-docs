@@ -201,12 +201,6 @@ hold the kernel. Now it looks like this::
         }
     }
 
-
-.. versionadded:: 3.4
-    Support for annotation routing without an external bundle was added in
-    Symfony 3.4. Prior to version 3.4, you needed to install the
-    SensioFrameworkExtraBundle.
-
 Unlike the previous kernel, this loads an external ``app/config/config.yml`` file,
 because the configuration started to get bigger:
 

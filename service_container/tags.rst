@@ -371,10 +371,6 @@ To answer this, change the service declaration:
                 tags:
                     - { name: app.mail_transport }
 
-    .. versionadded:: 3.3
-        Support for the compact tag notation in the YAML format was introduced
-        in Symfony 3.3.
-
 Notice that you've added a generic ``alias`` key to the tag. To actually
 use this, update the compiler::
 
@@ -408,10 +404,6 @@ tags set for the current service and gives you the attributes.
 
 Reference Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.4
-    Support for the tagged service notation in YAML, XML and PHP was introduced
-    in Symfony 3.4.
 
 Symfony provides a shortcut to inject all services tagged with a specific tag,
 which is a common need in some applications, so you don't have to write a

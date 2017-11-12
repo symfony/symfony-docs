@@ -382,9 +382,6 @@ Note you can create a
 :class:`Symfony\\Component\\HttpFoundation\\Cookie` object from a raw header
 value using :method:`Symfony\\Component\\HttpFoundation\\Cookie::fromString`.
 
-.. versionadded:: 3.3
-    The ``Cookie::fromString()`` method was introduced in Symfony 3.3.
-
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -530,9 +527,6 @@ It is possible to delete the file after the request is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
 
-.. versionadded:: 3.3
-    The ``Stream`` class was introduced in Symfony 3.3.
-
 If the size of the served file is unknown (e.g. because it's being generated on the fly,
 or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``
 instance to ``BinaryFileResponse``. This will disable ``Range`` and ``Content-Length``
@@ -583,10 +577,6 @@ class, which can make this even easier::
 
     // if the data to send is already encoded in JSON
     $response = JsonResponse::fromJsonString('{ "data": 123 }');
-
-.. versionadded:: 3.2
-    The :method:`Symfony\\Component\\HttpFoundation\\JsonResponse::fromJsonString`
-    method was added in Symfony 3.2.
 
 The ``JsonResponse`` class sets the ``Content-Type`` header to
 ``application/json`` and encodes your data to JSON when needed.

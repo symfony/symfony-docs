@@ -161,14 +161,9 @@ Path     Parameters
 
 .. note::
 
-    Since Symfony 3.2, you can enable UTF-8 route matching by setting the ``utf8``
-    option when declaring or importing routes. This will make e.g. a ``.`` in
-    requirements match any UTF-8 characters instead of just a single byte.
-    The option is automatically enabled whenever a route or a requirement uses any
-    non-ASCII UTF-8 characters or a `PCRE Unicode property`_ (``\p{xx}``,
-    ``\P{xx}`` or ``\X``). Note that this behavior is deprecated and a
-    ``LogicException`` will be thrown instead in 4.0 unless you explicitly turn
-    on the ``utf8`` option.
+    You can enable UTF-8 route matching by setting the ``utf8`` option when
+    declaring or importing routes. This will make e.g. a ``.`` in requirements
+    match any UTF-8 characters instead of just a single byte.
 
 .. tip::
 

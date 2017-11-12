@@ -15,10 +15,8 @@ Configuration
 -------------
 
 * `toolbar`_
-* `position`_
 * `intercept_redirects`_
 * `excluded_ajax_paths`_
-* `verbose`_
 
 toolbar
 ~~~~~~~
@@ -28,14 +26,6 @@ toolbar
 It enables and disables the toolbar entirely. Usually you set this to ``true``
 in the ``dev`` and ``test`` environments and to ``false`` in the ``prod``
 environment.
-
-position
-~~~~~~~~
-
-**type**: ``string`` **default**: ``bottom``
-
-It defines the location of the browser window where the toolbar is displayed.
-the only allowed values are ``bottom`` and ``top``.
 
 intercept_redirects
 ~~~~~~~~~~~~~~~~~~~
@@ -61,14 +51,6 @@ expression. If the URL matches, the request is not displayed in the toolbar. Thi
 is useful when the application makes lots of Ajax requests or they are heavy and
 you want to exclude some of them.
 
-verbose
-~~~~~~~
-
-**type**: ``boolean`` **default**: ``true``
-
-This option is **deprecated** and has no effect on the toolbar or the profiler,
-so you can safely remove it from your configuration.
-
 Full Default Configuration
 --------------------------
 
@@ -79,12 +61,8 @@ Full Default Configuration
         # app/config/config.yml
         web_profiler:
             toolbar:              false
-            position:             bottom
             intercept_redirects:  false
             excluded_ajax_paths:  ^/bundles|^/_wdt
-
-            # DEPRECATED, it can be removed safely from your configuration
-            verbose:              true
 
     .. code-block:: xml
 
@@ -100,7 +78,6 @@ Full Default Configuration
 
             <web-profiler:config
                 toolbar="false"
-                verbose="true"
                 intercept-redirects="false"
                 excluded-ajax-paths="^/bundles|^/_wdt"
             />

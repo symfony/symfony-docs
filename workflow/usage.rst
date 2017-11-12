@@ -233,7 +233,7 @@ order:
 ``workflow.entered``
 
     Similar to ``workflow.enter``, except the marking store is updated before this
-    event (making it a good place to flush data in Doctrine). 
+    event (making it a good place to flush data in Doctrine).
 
     The three events being dispatched are:
 
@@ -343,9 +343,6 @@ This means that each event has access to the following information:
 :method:`Symfony\\Component\\Workflow\\Event\\Event::getWorkflowName`
     Returns a string with the name of the workflow that triggered the event.
 
-    .. versionadded:: 3.3
-        The ``getWorkflowName()`` method was introduced in Symfony 3.3.
-
 For Guard Events, there is an extended class :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent`.
 This class has two more methods:
 
@@ -372,10 +369,6 @@ of domain logic in your templates:
 
 ``workflow_has_marked_place()``
     Returns ``true`` if the marking of the given object has the given state.
-
-.. versionadded:: 3.3
-    The ``workflow_marked_places()`` and ``workflow_has_marked_place()``
-    functions were introduced in Symfony 3.3.
 
 The following example shows these functions in action:
 

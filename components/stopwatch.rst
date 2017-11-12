@@ -49,9 +49,6 @@ while it is still running.
 
         $stopwatch = new Stopwatch(true);
 
-    .. versionadded:: 3.4
-        Full precision support was introduced in Symfony 3.4.
-
 The stopwatch can be reset to its original state at any given time with the
 :method:`Symfony\\Component\\Stopwatch\\Stopwatch::reset` method, which deletes
 all the data measured so far.

@@ -129,16 +129,9 @@ read more about it, see the ":doc:`/bundles/configuration`" article.
 Adding Classes to Compile
 -------------------------
 
-.. versionadded:: 3.3
-    This technique is discouraged and the ``addClassesToCompile()`` method was
-    deprecated in Symfony 3.3 because modern PHP versions make it unnecessary.
-
 Symfony creates a big ``classes.php`` file in the cache directory to aggregate
 the contents of the PHP classes that are used in every request. This reduces the
 I/O operations and increases the application performance.
-
-.. versionadded:: 3.2
-   The ``addAnnotatedClassesToCompile()`` method was added in Symfony 3.2.
 
 Your bundles can also add their own classes into this file thanks to the
 ``addClassesToCompile()`` and ``addAnnotatedClassesToCompile()`` methods (both
@@ -172,9 +165,6 @@ class names::
 
     If some class extends from other classes, all its parents are automatically
     included in the list of classes to compile.
-
-.. versionadded:: 3.2
-   The option to add classes to compile using patterns was introduced in Symfony 3.2.
 
 The classes to compile can also be added using file path patterns::
 

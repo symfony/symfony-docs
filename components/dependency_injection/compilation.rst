@@ -423,9 +423,6 @@ been run, use::
         PassConfig::TYPE_AFTER_REMOVING
     );
 
-.. versionadded:: 3.2
-    The option to prioritize compiler passes was added in Symfony 3.2.
-
 You can also control the order in which compiler passes are run for each
 compilation phase. Use the optional third argument of ``addCompilerPass()`` to
 set the priority as an integer number. The default priority is ``0`` and the higher

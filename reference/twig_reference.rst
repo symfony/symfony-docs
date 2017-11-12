@@ -293,11 +293,6 @@ Returns ``true`` if the current user has the required role. Optionally,
 an object can be pasted to be used by the voter. More information can be
 found in :ref:`security-template`.
 
-.. note::
-
-    You can also pass in the field to use ACE for a specific field. Read
-    more about this in :ref:`security-acl-field_scope`.
-
 logout_path
 ~~~~~~~~~~~
 
