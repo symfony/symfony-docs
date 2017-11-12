@@ -44,17 +44,6 @@ as integration of other related components:
             'form' => true,
         ));
 
-.. sidebar:: Using Parameters to Configure your Bundle
-
-    If you don't have plans to share your bundle between projects, it doesn't
-    make sense to use this more advanced way of configuration. Since you use the
-    bundle only in one project, you can just change the service configuration
-    each time.
-
-    If you *do* want to be able to configure something from within
-    ``config/services.yaml``, you can always create a parameter there and use
-    that parameter somewhere else.
-
 Using the Bundle Extension
 --------------------------
 
