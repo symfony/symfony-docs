@@ -39,6 +39,15 @@ This recommendation aligns with Twig best practices, where variables and templat
 names use lowercased snake_case too (e.g. ``user_profile`` instead of ``userProfile``
 and ``edit_form.html.twig`` instead of ``EditForm.html.twig``).
 
+.. best-practice::
+
+    Use a prefixed underscore for partial templates in template names.
+
+You often want to reuse template code using the ``include`` function to avoid
+redundant code. To determine those partials easily in the filesystem you should
+prefix partials and any other template without HTML body or ``extends`` tag
+with a single underscore.
+
 Twig Extensions
 ---------------
 
