@@ -13,7 +13,7 @@ Configuration
 
 * `Charset`_
 * `Kernel Name`_
-* `Root Directory`_
+* `Project Directory`_
 * `Cache Directory`_
 * `Log Directory`_
 
