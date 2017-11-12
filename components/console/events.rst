@@ -97,10 +97,10 @@ thrown by the application.
 Listeners receive a
 :class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` event::
 
-    use Symfony\Component\Console\Event\ConsoleExceptionEvent;
+    use Symfony\Component\Console\Event\ConsoleErrorEvent;
     use Symfony\Component\Console\ConsoleEvents;
 
-    $dispatcher->addListener(ConsoleEvents::ERROR, function (ConsoleExceptionEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::ERROR, function (ConsoleErrorEvent $event) {
         $output = $event->getOutput();
 
         $command = $event->getCommand();
@@ -111,7 +111,7 @@ Listeners receive a
         $exitCode = $event->getExitCode();
 
         // change the exception to another one
-        $event->setException(new \LogicException('Caught exception', $exitCode, $event->getException()));
+        $event->setException(new \LogicException('Caught exception', $exitCode, $event->getError()));
     });
 
 The ``ConsoleEvents::TERMINATE`` Event
