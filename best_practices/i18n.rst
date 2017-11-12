@@ -3,20 +3,18 @@ Internationalization
 
 Internationalization and localization adapt the applications and their contents
 to the specific region or language of the users. In Symfony this is an opt-in
-feature that needs to be enabled before using it. To do this, uncomment the
-following ``translator`` configuration option and set your application locale:
+feature that needs to be installed before using it (``composer require translation``).
 
-.. code-block:: yaml
+Translation Source File Location
+--------------------------------
 
-    # app/config/config.yml
-    framework:
-        # ...
-        translator: { fallbacks: ['%locale%'] }
+.. best-practice::
 
-    # app/config/parameters.yml
-    parameters:
-        # ...
-        locale:     en
+    Store the translation files in the ``translations/`` directory at the root
+    of your project.
+
+Your translators' lives will be much easier if all the application translations
+are in one central location.
 
 Translation Source File Format
 ------------------------------
@@ -42,21 +40,6 @@ XLIFF notes allow you to define that context.
     viewing and editing these translation files. It also has advanced extractors
     that can read your project and automatically update the XLIFF files.
 
-Translation Source File Location
---------------------------------
-
-.. best-practice::
-
-    Store the translation files in the ``app/Resources/translations/``
-    directory.
-
-Traditionally, Symfony developers have created these files in the
-``Resources/translations/`` directory of each bundle. But since the
-``app/Resources/`` directory is considered the global location for the
-application's resources, storing translations in ``app/Resources/translations/``
-centralizes them *and* gives them priority over any other translation file.
-This let's you override translations defined in third-party bundles.
-
 Translation Keys
 ----------------
 
@@ -64,8 +47,8 @@ Translation Keys
 
     Always use keys for translations instead of content strings.
 
-Using keys simplifies the management of the translation files because you
-can change the original contents without having to update all of the translation
+Using keys simplifies the management of the translation files because you can
+change the original contents without having to update all of the translation
 files.
 
 Keys should always describe their *purpose* and *not* their location. For
@@ -80,7 +63,7 @@ English in the application would be:
 
 .. code-block:: xml
 
-    <!-- app/Resources/translations/messages.en.xlf -->
+    <!-- translations/messages.en.xlf -->
     <?xml version="1.0"?>
     <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
         <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">

@@ -8,11 +8,6 @@ If you're using the :ref:`default services.yaml configuration <service-container
 your command classes are already registered as services. Great! This is the
 recommended setup.
 
-Symfony also looks in the ``Command/`` directory of each bundle for commands
-non registered as a service and automatically registers those classes as
-commands. However this auto-registration was deprecated in Symfony 3.4. In
-Symfony 4.0, commands won't be auto-registered anymore.
-
 .. note::
 
     You can also manually register your command as a service by configuring the service
@@ -75,9 +70,6 @@ works! You can call the ``app:sunshine`` command and start logging.
 
 Lazy Loading
 ------------
-
-.. versionadded:: 3.4
-    Support for command lazy loading was introduced in Symfony 3.4.
 
 To make your command lazily loaded, either define its ``$defaultName`` static property::
 

@@ -21,9 +21,8 @@ the middle. This way, Encoders will only deal with turning specific
 **formats** into **arrays** and vice versa. The same way, Normalizers
 will deal with turning specific **objects** into **arrays** and vice versa.
 
-Serialization is a complicated topic, and while this component may not work
-in all cases, it can be a useful tool while developing tools to serialize
-and deserialize your objects.
+Serialization is a complex topic. This component may not cover all your use cases out of the box, 
+but it can be useful for developing tools to serialize and deserialize your objects.
 
 Installation
 ------------
@@ -151,10 +150,6 @@ needs three parameters:
 #. The information to be decoded
 #. The name of the class this information will be decoded to
 #. The encoder used to convert that information into an array
-
-.. versionadded:: 3.3
-    Support for the ``allow_extra_attributes`` key in the context was introduced
-    in Symfony 3.3.
 
 By default, additional attributes that are not mapped to the denormalized
 object will be ignored by the Serializer component. Set the ``allow_extra_attributes``
@@ -555,10 +550,6 @@ There are several types of normalizers available:
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
     By default it uses the RFC3339_ format.
 
-    .. versionadded:: 3.2
-        Support for specifying datetime format during denormalization was
-        introduced in the ``DateTimeNormalizer`` in Symfony 3.2.
-
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
     string (``data:...``) such that files can be embedded into serialized data.
@@ -566,9 +557,6 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
     This normalizer converts :phpclass:`DateInterval` objects into strings.
     By default it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
-
-    .. versionadded:: 3.4
-        The ``DateIntervalNormalizer`` normalizer was added in Symfony 3.4.
 
 Encoders
 --------
@@ -590,9 +578,6 @@ The Serializer component supports many formats out of the box:
 
 All these encoders are enabled by default when using the Symfony Standard Edition
 with the serializer enabled.
-
-.. versionadded:: 3.2
-    The ``YamlEncoder`` and ``CsvEncoder`` encoders were introduced in Symfony 3.2
 
 .. _component-serializer-handling-circular-references:
 

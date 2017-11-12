@@ -184,11 +184,6 @@ all the classes are already loaded as services. All you need to do is specify th
         $container->getDefinition(GreetingCardManager::class)
             ->setConfigurator(array(new Reference(EmailConfigurator::class), 'configure'));
 
-
-.. versionadded:: 3.2
-    The ``service_id:method_name`` syntax for the YAML configuration format
-    was introduced in Symfony 3.2.
-
     The traditional configurator syntax in YAML files used an array to define
     the service id and the method name:
 
@@ -201,5 +196,5 @@ all the classes are already loaded as services. All you need to do is specify th
             configurator: ['@App\Mail\EmailConfigurator', configure]
 
 That's it! When requesting the ``App\Mail\NewsletterManager`` or
-``AppBundle\Mail\GreetingCardManager`` service, the created instance will first be
+``App\Mail\GreetingCardManager`` service, the created instance will first be
 passed to the ``EmailConfigurator::configure()`` method.

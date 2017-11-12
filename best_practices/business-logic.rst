@@ -25,15 +25,25 @@ Inside here, you can create whatever directories you want to organize things:
     ├─ var/
     └─ vendor/
 
-Services: Naming and Format
----------------------------
+.. _services-naming-and-format:
+
+Services: Naming and Configuration
+----------------------------------
+
+.. best-practice::
+
+    Use autowiring to automate the configuration of application services.
+
+:doc:`Service autowiring </service_container/autowiring>` is a feature provided
+by Symfony's Service Container to manage services with minimal configuration. It
+reads the type-hints on your constructor (or other methods) and automatically
+passes the correct services to each method. It can also add
+:doc:`service tags </service_container/tags>` to the services needed them, such
+as Twig extensions, event subscribers, etc.
 
 The blog application needs a utility that can transform a post title (e.g.
-"Hello World") into a slug (e.g. "hello-world"). The slug will be used as
-part of the post URL.
-
-Let's create a new ``Slugger`` class inside ``src/Utils/`` and
-add the following ``slugify()`` method:
+"Hello World") into a slug (e.g. "hello-world") to include it as part of the
+post URL. Let's create a new ``Slugger`` class inside ``src/Utils/``:
 
 .. code-block:: php
 
@@ -42,34 +52,15 @@ add the following ``slugify()`` method:
 
     class Slugger
     {
-        public function slugify($string)
+        public function slugify(string $value): string
         {
-            return preg_replace(
-                '/[^a-z0-9]/', '-', strtolower(trim(strip_tags($string)))
-            );
+            // ...
         }
     }
 
-Next, define a new service for that class.
-
-.. code-block:: yaml
-
-    # config/services.yaml
-    services:
-        # ...
-
-        # use the fully-qualified class name as the service id
-        App\Utils\Slugger:
-            public: false
-
-.. note::
-
-    If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
-    the class is auto-registered as a service.
-
-Traditionally, the naming convention for a service was a short, but unique
-snake case key - e.g. ``app.utils.slugger``. But for most services, you should now
-use the class name.
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+this class is auto-registered as a service whose ID is ``App\Utils\Slugger`` (or
+simply ``Slugger::class`` if the class is already imported in your code).
 
 .. best-practice::
 
@@ -77,20 +68,16 @@ use the class name.
     except when you have multiple services configured for the same class (in that
     case, use a snake case id).
 
-Now you can use the custom slugger in any controller class, such as the
-``AdminController``:
+Now you can use the custom slugger in any other service or controller class,
+such as the ``AdminController``:
 
 .. code-block:: php
 
     use App\Utils\Slugger;
 
-    public function createAction(Request $request, Slugger $slugger)
+    public function create(Request $request, Slugger $slugger)
     {
         // ...
-
-        // you can also fetch a public service like this
-        // but fetching services in this way is not considered a best practice
-        // $slugger = $this->get(Slugger::class);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slugify($post->getTitle());
@@ -126,36 +113,6 @@ personal taste.
 
 We recommend YAML because it's friendly to newcomers and concise. You can
 of course use whatever format you like.
-
-Service: No Class Parameter
----------------------------
-
-You may have noticed that the previous service definition doesn't configure
-the class namespace as a parameter:
-
-.. code-block:: yaml
-
-    # config/services.yaml
-
-    # service definition with class namespace as parameter
-    parameters:
-        slugger.class: App\Utils\Slugger
-
-    services:
-        app.slugger:
-            class: '%slugger.class%'
-
-This practice is cumbersome and completely unnecessary for your own services.
-
-.. best-practice::
-
-    Don't define parameters for the classes of your services.
-
-This practice was wrongly adopted from third-party bundles. When Symfony
-introduced its service container, some developers used this technique to easily
-allow overriding services. However, overriding a service by just changing its
-class name is a very rare use case because, frequently, the new service has
-different constructor arguments.
 
 Using a Persistence Layer
 -------------------------

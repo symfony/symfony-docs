@@ -19,7 +19,6 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `choice_name`_                                                             |
 |             | - `choice_translation_domain`_                                               |
 |             | - `choice_value`_                                                            |
-|             | - `choices_as_values`_ (deprecated)                                          |
 |             | - `expanded`_                                                                |
 |             | - `group_by`_                                                                |
 |             | - `multiple`_                                                                |
@@ -81,8 +80,8 @@ This field has a *lot* of options and most control how the field is displayed. I
 this example, the underlying data is some ``Category`` object that has a ``getName()``
 method::
 
+    use App\Entity\Category;
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-    use AppBundle\Entity\Category;
     // ...
 
     $builder->add('category', ChoiceType::class, [
@@ -184,11 +183,7 @@ The ``choice_loader`` can be used to only partially load the choices in cases wh
 a fully-loaded list is not necessary. This is only needed in advanced cases and
 would replace the ``choices`` option.
 
-.. versionadded:: 3.2
-    The :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader`
-    was introduced in Symfony 3.2.
-
-You can use an instance of :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader` 
+You can use an instance of :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader`
 if you want to take advantage of lazy loading::
 
     use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
@@ -210,12 +205,6 @@ the choice options would need to be resolved thus triggering the callback.
 .. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/choice_value.rst.inc
-
-choices_as_values
-~~~~~~~~~~~~~~~~~
-
-This option is deprecated and you should remove it from your 3.x projects (removing
-it will have *no* effect). For its purpose in 2.x, see the 2.7 documentation.
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 

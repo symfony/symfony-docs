@@ -39,8 +39,8 @@ If your valid choice list is simple, you can pass them in directly via the
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -59,8 +59,8 @@ If your valid choice list is simple, you can pass them in directly via the
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # src/Resources/config/validation.yml
+        App\Entity\Author:
             properties:
                 city:
                     - Choice: [New York, Berlin, Tokyo]
@@ -71,13 +71,13 @@ If your valid choice list is simple, you can pass them in directly via the
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- src/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="city">
                     <constraint name="Choice">
                         <value>New York</value>
@@ -99,8 +99,8 @@ If your valid choice list is simple, you can pass them in directly via the
 
     .. code-block:: php
 
-        // src/AppBundle/EntityAuthor.php
-        namespace AppBundle\Entity;
+        // src/EntityAuthor.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -133,8 +133,8 @@ form element.
 
 .. code-block:: php
 
-    // src/AppBundle/Entity/Author.php
-    namespace AppBundle\Entity;
+    // src/Entity/Author.php
+    namespace App\Entity;
 
     class Author
     {
@@ -144,9 +144,6 @@ form element.
         }
     }
 
-.. versionadded:: 3.2
-    As of Symfony 3.2 the callback no longer needs to be static.
-
 You can pass the name of this method to the `callback`_ option of the ``Choice``
 constraint.
 
@@ -154,8 +151,8 @@ constraint.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -169,21 +166,21 @@ constraint.
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # src/Resources/config/validation.yml
+        App\Entity\Author:
             properties:
                 genre:
                     - Choice: { callback: getGenres }
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- src/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="genre">
                     <constraint name="Choice">
                         <option name="callback">getGenres</option>
@@ -194,8 +191,8 @@ constraint.
 
     .. code-block:: php
 
-        // src/AppBundle/EntityAuthor.php
-        namespace AppBundle\Entity;
+        // src/EntityAuthor.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -219,8 +216,8 @@ you can pass the class name and the method as an array.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -234,21 +231,21 @@ you can pass the class name and the method as an array.
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # src/Resources/config/validation.yml
+        App\Entity\Author:
             properties:
                 genre:
                     - Choice: { callback: [Util, getGenres] }
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- src/Resources/config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="genre">
                     <constraint name="Choice">
                         <option name="callback">
@@ -262,8 +259,8 @@ you can pass the class name and the method as an array.
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -373,10 +370,5 @@ strict
 The validator will also check the type of the input value. Specifically,
 this value is passed to as the third argument to the PHP :phpfunction:`in_array`
 method when checking to see if a value is in the valid choices array.
-
-.. caution::
-
-    Setting the strict option of the Choice Constraint to ``false`` has been
-    deprecated as of Symfony 3.2 and the option will be changed to ``true`` as of 4.0.
 
 .. include:: /reference/constraints/_payload-option.rst.inc

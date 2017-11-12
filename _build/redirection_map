@@ -127,7 +127,8 @@
 /cookbook/controller/index /controller
 /cookbook/controller/service /controller/service
 /cookbook/controller/upload_file /controller/upload_file
-/cookbook/debugging /debug/debugging
+/cookbook/debugging /
+/debug/debugging /
 /cookbook/deployment/azure-website /cookbook/azure-website
 /cookbook/deployment/fortrabbit /deployment/fortrabbit
 /cookbook/deployment/heroku /deployment/heroku
@@ -290,6 +291,7 @@
 /components/config/introduction /components/config
 /components/config/index /components/config
 /components/console/helpers/tablehelper /components/console/helpers/table
+/components/console/helpers/progresshelper /components/console/helpers/progressbar
 /components/console/introduction /components/console
 /components/console/index /components/console
 /components/debug/class_loader /components/debug

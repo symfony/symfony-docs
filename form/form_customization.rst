@@ -121,9 +121,6 @@ fragment needed to render every part of a form:
   with the appropriate CSS classes to apply the default `Foundation CSS framework`_
   styles.
 
-.. versionadded:: 3.4
-    The Bootstrap 4 form themes were introduced in Symfony 3.4.
-
 .. caution::
 
     When you use the Bootstrap form themes and render the fields manually,
@@ -342,6 +339,37 @@ name of all the templates as an array using the ``with`` keyword:
 
 The templates can also be located in different bundles, use the Twig namespaced
 path to reference these templates, e.g. ``@AcmeFormExtra/form/fields.html.twig``.
+
+Disabling usage of globally defined themes
+..........................................
+
+Sometimes you may want to disable the use of the globally defined form themes in order
+to have more control over rendering of a form. You might want this, for example,
+when creating an admin interface for a bundle which can be installed on a wide range
+of Symfony apps (and so you can't control what themes are defined globally).
+
+You can do this by including the ``only`` keyword after the list form themes:
+
+.. code-block:: html+twig
+
+    {% form_theme form with ['common.html.twig', 'form/fields.html.twig'] only %}
+
+    {# ... #}
+
+.. caution::
+
+    When using the ``only`` keyword, none of Symfony's built-in form themes
+    (``form_div_layout.html.twig``, etc.) will be applied. In order to render
+    your forms correctly, you need to either provide a fully-featured form theme
+    yourself, or extend one of the built-in form themes with Twig's ``use``
+    keyword instead of ``extends`` to re-use the original theme contents.
+
+    .. code-block:: html+twig
+
+        {# app/Resources/views/common.html.twig #}
+        {% use "form_div_layout.html.twig" %}
+
+        {# ... #}
 
 Child Forms
 ...........

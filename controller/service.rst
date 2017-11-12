@@ -83,7 +83,7 @@ Invokable Controllers
 
 If your controller implements the ``__invoke()`` method - popular with the
 Action-Domain-Response (ADR) pattern, you can simply refer to the service id
-(``AppBundle\Controller\HelloController`` or ``app.hello_controller`` for example).
+(``App\Controller\HelloController`` or ``app.hello_controller`` for example).
 
 Alternatives to base Controller Methods
 ---------------------------------------

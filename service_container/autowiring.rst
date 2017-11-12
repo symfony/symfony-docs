@@ -4,11 +4,11 @@
 Defining Services Dependencies Automatically (Autowiring)
 =========================================================
 
-Autowiring allows you to manage services in the container with minimal configuration.
-It reads the type-hints on your constructor (or other methods) and automatically
-passes you the correct services. Symfony's autowiring is designed to be predictable:
-if it is not absolutely clear which dependency should be passed, you'll see an
-actionable exception.
+Autowiring allows you to manage services in the container with minimal
+configuration. It reads the type-hints on your constructor (or other methods)
+and automatically passes the correct services to each method. Symfony's
+autowiring is designed to be predictable: if it is not absolutely clear which
+dependency should be passed, you'll see an actionable exception.
 
 .. tip::
 
@@ -165,7 +165,7 @@ Autowiring works by reading the ``Rot13Transformer`` *type-hint* in ``TwitterCli
     }
 
 The autowiring system **looks for a service whose id exactly matches the type-hint**:
-so ``AppBundle\Util\Rot13Transformer``. In this case, that exists! When you configured
+so ``App\Util\Rot13Transformer``. In this case, that exists! When you configured
 the ``Rot13Transformer`` service, you used its fully-qualified class name as its
 id. Autowiring isn't magic: it simply looks for a service whose id matches the type-hint.
 If you :ref:`load services automatically <service-container-services-load-example>`,
@@ -180,9 +180,8 @@ If there are **0** services in the container that have the type, then:
 .. _autowiring-single-matching-service:
 
 If there is exactly **1** service in the container that has the type, then:
-    (deprecated) This service is used for the argument. In Symfony 4.0, this
-    will be removed. The proper solution is to create an :ref:`alias <service-autowiring-alias>`
-    from the type to the service id so that normal autowiring works.
+    Create an :ref:`alias <service-autowiring-alias>` from the type to the
+    service id so that normal autowiring works.
 
 If there are **2 or more** services in the container that have the type, then:
     A clear exception is thrown. You need to *choose* which service should
@@ -198,12 +197,12 @@ Using Aliases to Enable Autowiring
 ----------------------------------
 
 The main way to configure autowiring is to create a service whose id exactly matches
-its class. In the previous example, the service's id is ``AppBundle\Util\Rot13Transformer``,
+its class. In the previous example, the service's id is ``App\Util\Rot13Transformer``,
 which allows us to autowire this type automatically.
 
 This can also be accomplished using an :ref:`alias <services-alias>`. Suppose that
 for some reason, the id of the service was instead ``app.rot13.transformer``. In
-this case, any arguments type-hinted with the class name (``AppBundle\Util\Rot13Transformer``)
+this case, any arguments type-hinted with the class name (``App\Util\Rot13Transformer``)
 can no longer be autowired (actually, it :ref:`will work now, but not in Symfony 4.0 <autowiring-single-matching-service>`).
 
 No problem! To fix this, you can *create* a service whose id matches the class by
@@ -301,7 +300,7 @@ Now that you have an interface, you should use this as your type-hint::
     }
 
 But now, the type-hint (``App\Util\TransformerInterface``) no longer matches
-the id of the service (``AppBundle\Util\Rot13Transformer``). This means that the
+the id of the service (``App\Util\Rot13Transformer``). This means that the
 argument can no longer be autowired (actually, it
 :ref:`will work now, but not in Symfony 4.0 <autowiring-single-matching-service>`).
 
@@ -345,7 +344,7 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
         $container->setAlias(TransformerInterface::class, Rot13Transformer::class);
 
 Thanks to the ``App\Util\TransformerInterface`` alias, the autowiring subsystem
-knows that the ``AppBundle\Util\Rot13Transformer`` service should be injected when
+knows that the ``App\Util\Rot13Transformer`` service should be injected when
 dealing with the ``TransformerInterface``.
 
 Dealing with Multiple Implementations of the Same Type
@@ -365,7 +364,7 @@ Suppose you create a second class - ``UppercaseTransformer`` that implements
     }
 
 If you register this as a service, you now have *two* services that implement the
-``AppBundle\Util\TransformerInterface`` type. Symfony doesn't know which one should
+``App\Util\TransformerInterface`` type. Symfony doesn't know which one should
 be used for autowiring, so you need to choose one by creating an alias from the type
 to the correct service id (see :ref:`autowiring-interface-alias`).
 
@@ -431,13 +430,9 @@ that alias:
         ;
 
 Thanks to the ``App\Util\TransformerInterface`` alias, any argument type-hinted
-with this interface will be passed the ``AppBundle\Util\Rot13Transformer`` service.
+with this interface will be passed the ``App\Util\Rot13Transformer`` service.
 But, you can also manually wire the *other* service by specifying the argument
 under the arguments key.
-
-.. versionadded:: 3.3
-    Using FQCN aliases to fix autowiring ambiguities was introduced in Symfony
-    3.3. Prior to version 3.3, you needed to use the ``autowiring_types`` key.
 
 Fixing Non-Autowireable Arguments
 ---------------------------------

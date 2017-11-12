@@ -1,9 +1,6 @@
 How to Make Commands Lazily Loaded
 ==================================
 
-.. versionadded:: 3.4
-    Support for command lazy loading was introduced in Symfony 3.4.
-
 .. note::
 
     If you are using the Symfony full-stack framework, you are probably looking for

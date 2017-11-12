@@ -1,11 +1,10 @@
 How to Use multiple User Providers
 ==================================
 
-Each authentication mechanism (e.g. HTTP Authentication, form login, etc)
-uses exactly one user provider, and will use the first declared user provider
-by default. But what if you want to specify a few users via configuration
-and the rest of your users in the database? This is possible by creating
-a new provider that chains the two together:
+Each authentication mechanism (e.g. HTTP Authentication, form login, etc.) uses
+exactly one user provider. But what if you want to specify a few users via
+configuration and the rest of your users in the database? This is possible by
+creating a new provider that chains the two together:
 
 .. configuration-block::
 
@@ -82,20 +81,12 @@ a new provider that chains the two together:
             ),
         ));
 
-Now, all firewalls that explicitly define ``chain_provider`` as their user
-provider will, in turn, try to load the user from both the ``in_memory`` and
-``user_db`` providers.
-
-.. versionadded:: 3.4
-    In previous Symfony versions, firewalls that didn't define their user provider
-    explicitly, used the first existing provider (``chain_provider`` in this
-    example). However, auto-selecting the first user provider has been deprecated
-    in Symfony 3.4 and will throw an exception in 4.0. Always define the provider
-    used by the firewall when there are multiple providers.
+Now, all firewalls that define ``chain_provider`` as their user provider will,
+in turn, try to load the user from both the ``in_memory`` and ``user_db``
+providers.
 
 You can also configure the firewall or individual authentication mechanisms
-to use a specific provider. Again, unless a provider is specified explicitly,
-the first provider is always used:
+to use a specific provider:
 
 .. configuration-block::
 
@@ -151,10 +142,10 @@ the first provider is always used:
             ),
         ));
 
-In this example, if a user tries to log in via HTTP authentication, the authentication
-system will use the ``in_memory`` user provider. But if the user tries to
-log in via the form login, the ``user_db`` provider will be used (since it's
-the default for the firewall as a whole).
+In this example, if a user tries to log in via HTTP authentication, the
+authentication system will use the ``in_memory`` user provider. But if the user
+tries to log in via the form login, the ``user_db`` provider will be used (since
+it's the default for the firewall as a whole).
 
 For more information about user provider and firewall configuration, see
 the :doc:`/reference/configuration/security`.

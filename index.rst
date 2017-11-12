@@ -40,7 +40,6 @@ Topics
     bundles
     console
     doctrine
-    debug
     deployment
     email
     event_dispatcher

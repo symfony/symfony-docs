@@ -249,10 +249,6 @@ This requires you to implement several methods::
         }
     }
 
-.. versionadded:: 3.4
-    ``AuthenticatorInterface`` was introduced in Symfony 3.4. In previous Symfony
-    versions, authenticators needed to implement ``GuardAuthenticatorInterface``.
-
 Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods<guard-auth-methods>`.
 
 Step 2) Configure the Authenticator
@@ -369,11 +365,6 @@ Each authenticator needs the following methods:
     This will be called on *every* request and your job is to decide if the
     authenticator should be used for this request (return ``true``) or if it
     should be skipped (return ``false``).
-
-    .. versionadded:: 3.4
-        The ``supports()`` method was introduced in Symfony 3.4. In previous Symfony
-        versions, the authenticator could be skipped returning ``null`` in the
-        ``getCredentials()`` method.
 
 **getCredentials(Request $request)**
     This will be called on *every* request and your job is to read the token (or
@@ -508,7 +499,7 @@ and add the following logic::
 
     use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
     use Symfony\Component\Security\Csrf\CsrfToken;
-    use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenExceptionl
+    use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
     class ExampleFormAuthenticator extends AbstractFormLoginAuthenticator
     {

@@ -109,8 +109,8 @@ option for a value that you are never going to configure just isn't necessary.
 Our recommendation is to define these values as constants in your application.
 You could, for example, define a ``NUM_ITEMS`` constant in the ``Post`` entity::
 
-    // src/AppBundle/Entity/Post.php
-    namespace AppBundle\Entity;
+    // src/Entity/Post.php
+    namespace App\Entity;
 
     class Post
     {
@@ -137,10 +137,10 @@ whereas they cannot access the container parameters:
 
 .. code-block:: php
 
-    namespace AppBundle\Repository;
+    namespace App\Repository;
 
+    use App\Entity\Post;
     use Doctrine\ORM\EntityRepository;
-    use AppBundle\Entity\Post;
 
     class PostRepository extends EntityRepository
     {
@@ -209,11 +209,6 @@ through environment variables:
         dbal:
             # ...
             password: "%env(DB_PASSWORD)%"
-
-.. versionadded:: 3.2
-    Support for runtime environment variables via the ``%env(...)%`` syntax
-    was added in Symfony 3.2. Prior to version 3.2, you needed to use the
-    :doc:`special SYMFONY__ variables </configuration/external_parameters>`.
 
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html

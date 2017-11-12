@@ -46,10 +46,6 @@ Configuration
     * `only_exceptions`_
     * `only_master_requests`_
     * `dsn`_
-    * `matcher`_
-        * `ip`_
-        * :ref:`path <reference-profiler-matcher-path>`
-        * `service`_
 * `request`_:
     * `formats`_
 * `router`_
@@ -276,9 +272,6 @@ need to escape the percent signs (``%``) by doubling them.
         // as /path/to/host/.../file on the host
         // and /foo/.../file as /bar/.../file also
         'myide://%f:%l&/path/to/guest/>/path/to/host/&/foo/>/bar/&...'
-
-    .. versionadded:: 3.2
-        Guest to host mappings were introduced in Symfony 3.2.
 
 .. _reference-framework-test:
 
@@ -540,11 +533,10 @@ collect
 
 **type**: ``boolean`` **default**: ``true``
 
-This option configures the way the profiler behaves when it is enabled.
-If set to ``true``, the profiler collects data for all requests (unless
-you configure otherwise, like a custom `matcher`_). If you want to only
-collect information on-demand, you can set the ``collect`` flag to ``false``
-and activate the data collectors manually::
+This option configures the way the profiler behaves when it is enabled. If set
+to ``true``, the profiler collects data for all requests. If you want to only
+collect information on-demand, you can set the ``collect`` flag to ``false`` and
+activate the data collectors manually::
 
     $profiler->enable();
 
@@ -575,44 +567,6 @@ The DSN where to store the profiling information.
 
     See :doc:`/profiler/storage` for more information about the
     profiler storage.
-
-matcher
-.......
-
-.. caution::
-
-    This option is deprecated since Symfony 3.4 and will be removed in 4.0.
-
-Matcher options are configured to dynamically enable the profiler. For
-instance, based on the `ip`_ or :ref:`path <reference-profiler-matcher-path>`.
-
-.. seealso::
-
-    See :doc:`/profiler/matchers` for more information about using
-    matchers to enable/disable the profiler.
-
-ip
-""
-
-**type**: ``string``
-
-If set, the profiler will only be enabled when the current IP address matches.
-
-.. _reference-profiler-matcher-path:
-
-path
-""""
-
-**type**: ``string``
-
-If set, the profiler will only be enabled when the current path matches.
-
-service
-"""""""
-
-**type**: ``string``
-
-This setting contains the service id of a custom matcher.
 
 request
 ~~~~~~~
@@ -1300,10 +1254,6 @@ json_manifest_path
 
 **type**: ``string`` **default**: ``null``
 
-.. versionadded:: 3.3
-
-    The ``json_manifest_path`` option was introduced in Symfony 3.3.
-
 The file path to a ``manifest.json`` file containing an associative array of asset
 names and their respective compiled names. A common cache-busting technique using
 a "manifest" file works by writing out assets with a "hash" appended to their
@@ -1772,18 +1722,12 @@ php_errors
 log
 ...
 
-.. versionadded:: 3.2
-    The ``log`` option was introduced in Symfony 3.2.
-
 **type**: ``boolean`` **default**: ``false``
 
 Use the application logger instead of the PHP logger for logging PHP errors.
 
 throw
 .....
-
-.. versionadded:: 3.2
-    The ``throw`` option was introduced in Symfony 3.2.
 
 **type**: ``boolean`` **default**: ``%kernel.debug%``
 
@@ -1853,9 +1797,6 @@ service.
 
 default_memcached_provider
 ..........................
-
-.. versionadded:: 3.3
-    The ``default_memcached_provider`` option was introduced in Symfony 3.3.
 
 **type**: ``string`` **default**: ``memcached://localhost``
 
@@ -1988,12 +1929,6 @@ Full Default Configuration
                 only_exceptions:      false
                 only_master_requests: false
                 dsn:                  file:%kernel.cache_dir%/profiler
-                matcher:
-                    ip:                   ~
-
-                    # use the urldecoded format
-                    path:                 ~ # Example: ^/path to resource/
-                    service:              ~
 
             # router configuration
             router:

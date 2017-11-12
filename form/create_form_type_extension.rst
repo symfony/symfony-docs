@@ -109,20 +109,13 @@ the ``getExtendedType()`` method. As *soon* as you do this, any method that you'
 overridden (e.g. ``buildForm()``) will be called whenever *any* field of the given
 type (``FileType``) is built. Let's see an example next.
 
-.. versionadded:: 3.3
-    Prior to Symfony 3.3, you needed to define type extension services as ``public``.
-    Starting from Symfony 3.3, you can also define them as ``private``.
-
 .. tip::
 
-    There is an optional tag attribute called ``priority``, which 
-    defaults to ``0`` and controls the order in which the form  
-    type extensions are loaded (the higher the priority, the earlier 
-    an extension is loaded). This is useful when you need to guarantee 
+    There is an optional tag attribute called ``priority``, which
+    defaults to ``0`` and controls the order in which the form
+    type extensions are loaded (the higher the priority, the earlier
+    an extension is loaded). This is useful when you need to guarantee
     that one extension is loaded before or after another extension.
-
-    .. versionadded:: 3.2
-        The ``priority`` attribute was introduced in Symfony 3.2.
 
 Adding the extension Business Logic
 -----------------------------------

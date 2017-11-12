@@ -10,12 +10,12 @@ How to Inject Values Based on Complex Expressions
 The service container also supports an "expression" that allows you to inject
 very specific values into a service.
 
-For example, suppose you have a service (not shown here), called ``AppBundle\Mail\MailerConfiguration``,
+For example, suppose you have a service (not shown here), called ``App\Mail\MailerConfiguration``,
 which has a ``getMailerMethod()`` method on it. This returns a string - like ``sendmail``
 based on some configuration.
 
 Suppose that you want to pass the result of this method as a constructor argument
-to another service: ``AppBundle\Mailer``. One way to do this is with an expression:
+to another service: ``App\Mailer``. One way to do this is with an expression:
 
 .. configuration-block::
 

@@ -24,9 +24,6 @@ To see a list of all of the available types that can be used for autowiring, run
 
     $ php bin/console debug:autowiring
 
-.. versionadded:: 3.4
-   The ``debug:autowiring`` command was introduced in Symfony 3.3.
-
 Detailed Info about a Single Service
 ------------------------------------
 
@@ -39,6 +36,3 @@ its id:
 
     # to show the service arguments:
     $ php bin/console debug:container 'App\Service\Mailer' --show-arguments
-
-.. versionadded:: 3.3
-   The ``--show-arguments`` option was introduced in Symfony 3.3.

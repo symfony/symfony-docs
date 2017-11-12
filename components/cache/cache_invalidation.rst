@@ -20,9 +20,6 @@ The Symfony Cache component provides two mechanisms to help solving this problem
 Using Cache Tags
 ----------------
 
-.. versionadded:: 3.2
-    Tags based invalidation was introduced in Symfony 3.2.
-
 To benefit from tags based invalidation, you need to attach the proper tags to
 each cached item. Each tag is a plain string identifier that you can use at any
 time to trigger the removal of all items associated with this tag.

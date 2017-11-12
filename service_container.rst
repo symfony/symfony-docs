@@ -43,11 +43,6 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
         // ...
     }
 
-.. versionadded:: 3.3
-    The ability to type-hint a service in order to receive it was added in Symfony 3.3.
-    See the :ref:`controller chapter <controller-service-arguments-tag>` for more
-    details.
-
 .. _container-debug-container:
 
 What other services are available? Find out by running:
@@ -242,10 +237,6 @@ each time you ask for it.
     If you'd prefer to manually wire your service, that's totally possible: see
     :ref:`services-explicitly-configure-wire-services`.
 
-    .. versionadded:: 3.3
-        The ``_defaults`` key *and* ability to load services from a directory were added
-        in Symfony 3.3.
-
 You can also fetch a service directly from the container via its "id", which will
 be its class name in this case::
 
@@ -266,12 +257,6 @@ be its class name in this case::
     }
 
 However, this only works if you make your service :ref:`public <container-public>`.
-
-.. caution::
-
-    Service ids are case-insensitive (e.g. ``AppBundle\Service\MessageGenerator``
-    and ``appbundle\service\messagegenerator`` refer to the same service). But this
-    was deprecated in Symfony 3.3. Starting in 4.0, service ids will be case sensitive.
 
 .. _services-constructor-injection:
 
@@ -437,7 +422,7 @@ example, suppose you want to make the admin email configurable:
 
 If you make this change and refresh, you'll see an error:
 
-    Cannot autowire service "AppBundle\Updates\SiteUpdateManager": argument "$adminEmail"
+    Cannot autowire service "App\Updates\SiteUpdateManager": argument "$adminEmail"
     of method "__construct()" must have a type-hint or be given a value explicitly.
 
 That makes sense! There is no way that the container knows what value you want to
@@ -503,11 +488,6 @@ pass here. No problem! In your configuration, you can explicitly set this argume
         // Explicitly configure the service
         $container->getDefinition(SiteUpdateManager::class)
             ->setArgument('$adminEmail', 'manager@example.com');
-
-.. versionadded:: 3.3
-    The ability to configure an argument by its name (``$adminEmail``) was added
-    in Symfony 3.3. Previously, you could configure it only by its index (``2`` in
-    this case) or by using empty quotes for the other arguments.
 
 Thanks to this, the container will pass ``manager@example.com`` as the third argument
 to ``__construct`` when creating the ``SiteUpdateManager`` service. The other arguments
@@ -714,9 +694,6 @@ For more details about autowiring, check out :doc:`/service_container/autowiring
 
 The autoconfigure Option
 ------------------------
-
-.. versionadded:: 3.3
-    The ``autoconfigure`` option was added in Symfony 3.3.
 
 Above, the ``services.yaml`` file has ``autoconfigure: true`` in the ``_defaults``
 section so that it applies to all services defined in that file. With this setting,

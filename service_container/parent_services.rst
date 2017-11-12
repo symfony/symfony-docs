@@ -137,7 +137,7 @@ duplicated service definitions:
 In this context, having a ``parent`` service implies that the arguments
 and method calls of the parent service should be used for the child services.
 Specifically, the ``EntityManager`` will be injected and ``setLogger()`` will
-be called when ``AppBundle\Repository\DoctrineUserRepository`` is instantiated.
+be called when ``App\Repository\DoctrineUserRepository`` is instantiated.
 
 All attributes on the parent service are shared with the child **except** for
 ``shared``, ``abstract`` and ``tags``. These are *not* inherited from the parent.

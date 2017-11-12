@@ -78,9 +78,6 @@ for new output before going to the next iteration::
             echo $data."\n";
         }
 
-    .. versionadded:: 3.2
-        The ``getIterator()`` method was introduced in Symfony 3.2.
-
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
 a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
 if the process couldn't be executed successfully (i.e. the process exited
@@ -409,10 +406,6 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
 
     However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
     methods to handle process output in a streaming fashion.
-
-    .. versionadded:: 3.1
-        The ability to pass a callback to these methods when output is disabled
-        was added in Symfony 3.1.
 
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992

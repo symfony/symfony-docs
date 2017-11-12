@@ -325,9 +325,7 @@ was designed with that in mind. Specifically:
 
 * The container determines *which* service to pass in an explicit way: it looks for
   a service whose id matches the type-hint exactly. It does *not* scan all services
-  looking for objects that have that class/interface (actually, it *does* do this
-  in Symfony 3.3, but has been deprecated. If you rely on this, you will see a clear
-  deprecation warning).
+  looking for objects that have that class/interface.
 
 Autowiring aims to *automate* configuration without magic.
 
