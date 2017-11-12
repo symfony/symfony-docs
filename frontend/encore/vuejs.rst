@@ -54,7 +54,7 @@ This file's gonna call the component Hello from the components folder, once the 
 
 Now, let's build the Hello component : 
 
-.. code-block:: vue
+.. code-block:: javascript
     
     <!-- assets/components/Hello.vue -->
     <template>
