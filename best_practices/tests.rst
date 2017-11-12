@@ -1,10 +1,11 @@
 Tests
 =====
 
-Roughly speaking, there are two types of test. Unit testing allows you to
-test the input and output of specific functions. Functional testing allows
-you to command a "browser" where you browse to pages on your site, click
-links, fill out forms and assert that you see certain things on the page.
+Of all the different types of test available, these best practices focus solely
+on unit and functional tests. Unit testing allows you to test the input and
+output of specific functions. Functional testing allows you to command a
+"browser" where you browse to pages on your site, click links, fill out forms
+and assert that you see certain things on the page.
 
 Unit Tests
 ----------
@@ -48,14 +49,12 @@ A functional test can be as easy as this::
 
         public function urlProvider()
         {
-            return array(
-                array('/'),
-                array('/posts'),
-                array('/post/fixture-post-1'),
-                array('/blog/category/fixture-category'),
-                array('/archives'),
-                // ...
-            );
+            yield ['/'];
+            yield ['/posts'];
+            yield ['/post/fixture-post-1'];
+            yield ['/blog/category/fixture-category'];
+            yield ['/archives'];
+            // ...
         }
     }
 
@@ -84,10 +83,13 @@ generate the URL of the tested page:
 
 .. code-block:: php
 
+    // ...
+    private $router; // consider that this holds the Symfony router service
+
     public function testBlogArchives()
     {
         $client = self::createClient();
-        $url = $client->getContainer()->get('router')->generate('blog_archives');
+        $url = $this->router->generate('blog_archives');
         $client->request('GET', $url);
 
         // ...
@@ -105,7 +107,7 @@ The built-in functional testing client is great, but it can't be used to
 test any JavaScript behavior on your pages. If you need to test this, consider
 using the `Mink`_ library from within PHPUnit.
 
-Of course, if you have a heavy JavaScript frontend, you should consider using
+Of course, if you have a heavy JavaScript front-end, you should consider using
 pure JavaScript-based testing tools.
 
 Learn More about Functional Tests

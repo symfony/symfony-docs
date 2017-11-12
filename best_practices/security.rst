@@ -6,8 +6,7 @@ Authentication and Firewalls (i.e. Getting the User's Credentials)
 
 You can configure Symfony to authenticate your users using any method you
 want and to load user information from any source. This is a complex topic, but
-the :doc:`Security guide</security>` has a lot of information about
-this.
+the :doc:`Security guide </security>` has a lot of information about this.
 
 Regardless of your needs, authentication is configured in ``security.yaml``,
 primarily under the ``firewalls`` key.
@@ -30,9 +29,9 @@ site (or maybe nearly *all* sections), use the ``access_control`` area.
 
 .. best-practice::
 
-    Use the ``bcrypt`` encoder for encoding your users' passwords.
+    Use the ``bcrypt`` encoder for hashing your users' passwords.
 
-If your users have a password, then we recommend encoding it using the ``bcrypt``
+If your users have a password, then we recommend hashing it using the ``bcrypt``
 encoder, instead of the traditional SHA-512 hashing encoder. The main advantages
 of ``bcrypt`` are the inclusion of a *salt* value to protect against rainbow
 table attacks, and its adaptive nature, which allows to make it slower to
@@ -83,17 +82,15 @@ service directly.
 
     * For protecting broad URL patterns, use ``access_control``;
     * Whenever possible, use the ``@Security`` annotation;
-    * Check security directly on the ``security.authorization_checker`` service whenever
-      you have a more complex situation.
+    * Check security directly on the ``security.authorization_checker`` service
+      whenever you have a more complex situation.
 
 There are also different ways to centralize your authorization logic, like
-with a custom security voter or with ACL.
+with a custom security voter:
 
 .. best-practice::
 
-    * For fine-grained restrictions, define a custom security voter;
-    * For restricting access to *any* object by *any* user via an admin
-      interface, use the Symfony ACL.
+    Define a custom security voter to implement fine-grained restrictions.
 
 .. _best-practices-security-annotation:
 
@@ -119,7 +116,7 @@ Using ``@Security``, this looks like:
      * @Route("/new", name="admin_post_new")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function newAction()
+    public function new()
     {
         // ...
     }
@@ -142,7 +139,7 @@ method on the ``Post`` object:
      * @Route("/{id}/edit", name="admin_post_edit")
      * @Security("user.getEmail() == post.getAuthorEmail()")
      */
-    public function editAction(Post $post)
+    public function edit(Post $post)
     {
         // ...
     }
@@ -197,7 +194,7 @@ Now you can reuse this method both in the template and in the security expressio
      * @Route("/{id}/edit", name="admin_post_edit")
      * @Security("post.isAuthor(user)")
      */
-    public function editAction(Post $post)
+    public function edit(Post $post)
     {
         // ...
     }
@@ -225,7 +222,7 @@ more advanced use-case, you can always do the same security check in PHP:
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
-    public function editAction($id)
+    public function edit($id)
     {
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
@@ -253,10 +250,10 @@ more advanced use-case, you can always do the same security check in PHP:
 Security Voters
 ---------------
 
-If your security logic is complex and can't be centralized into a method
-like ``isAuthor()``, you should leverage custom voters. These are an order
-of magnitude easier than :doc:`ACLs </security/acl>` and will give
-you the flexibility you need in almost all cases.
+If your security logic is complex and can't be centralized into a method like
+``isAuthor()``, you should leverage custom voters. These are much easier than
+:doc:`ACLs </security/acl>` and will give you the flexibility you need in almost
+all cases.
 
 First, create a voter class. The following example shows a voter that implements
 the same ``getAuthorEmail()`` logic you used above:
@@ -276,9 +273,6 @@ the same ``getAuthorEmail()`` logic you used above:
         const CREATE = 'create';
         const EDIT   = 'edit';
 
-        /**
-         * @var AccessDecisionManagerInterface
-         */
         private $decisionManager;
 
         public function __construct(AccessDecisionManagerInterface $decisionManager)
@@ -288,7 +282,7 @@ the same ``getAuthorEmail()`` logic you used above:
 
         protected function supports($attribute, $subject)
         {
-            if (!in_array($attribute, array(self::CREATE, self::EDIT))) {
+            if (!in_array($attribute, [self::CREATE, self::EDIT])) {
                 return false;
             }
 
@@ -310,15 +304,16 @@ the same ``getAuthorEmail()`` logic you used above:
             }
 
             switch ($attribute) {
+                // if the user is an admin, allow them to create new posts
                 case self::CREATE:
-                    // if the user is an admin, allow them to create new posts
-                    if ($this->decisionManager->decide($token, array('ROLE_ADMIN'))) {
+                    if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
                         return true;
                     }
 
                     break;
+
+                // if the user is the author of the post, allow them to edit the posts
                 case self::EDIT:
-                    // if the user is the author of the post, allow them to edit the posts
                     if ($user->getEmail() === $post->getAuthorEmail()) {
                         return true;
                     }
@@ -343,7 +338,7 @@ Now, you can use the voter with the ``@Security`` annotation:
      * @Route("/{id}/edit", name="admin_post_edit")
      * @Security("is_granted('edit', post)")
      */
-    public function editAction(Post $post)
+    public function edit(Post $post)
     {
         // ...
     }
@@ -356,7 +351,7 @@ via the even easier shortcut in a controller:
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
-    public function editAction($id)
+    public function edit($id)
     {
         $post = ...; // query for the post
 
