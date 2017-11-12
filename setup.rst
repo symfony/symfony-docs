@@ -86,7 +86,8 @@ directory and install it:
     $ composer require req-checker
 
 The ``req-checker`` utility adds two PHP scripts to your application:
-``bin/check.php`` and ``public/check.php``. Run the first one from your terminal:
+``vendor/bin/requirements-checker`` and ``public/check.php``. Run the first one
+from your terminal:
 
 .. code-block:: terminal
 
