@@ -59,7 +59,7 @@ following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # config/validator/validation.yaml
         App\Entity\Author:
             properties:
                 name:
@@ -67,7 +67,7 @@ following:
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -214,13 +214,13 @@ file:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             validation: { enabled: true }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -236,7 +236,7 @@ file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'validation' => array(
                 'enabled' => true,
@@ -250,13 +250,13 @@ previous configuration by the following:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yml
         framework:
             validation: { enable_annotations: true }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -272,7 +272,7 @@ previous configuration by the following:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'validation' => array(
                 'enable_annotations' => true,
@@ -346,7 +346,7 @@ literature genre mostly associated with the author, which can be set to either
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # config/validator/validation.yaml
         App\Entity\Author:
             properties:
                 genre:
@@ -355,7 +355,7 @@ literature genre mostly associated with the author, which can be set to either
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -430,7 +430,7 @@ options can be specified in this way.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # config/validator/validation.yml
         App\Entity\Author:
             properties:
                 genre:
@@ -439,7 +439,7 @@ options can be specified in this way.
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -559,7 +559,7 @@ class to have at least 3 characters.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # config/validator/validation.yaml
         App\Entity\Author:
             properties:
                 firstName:
@@ -569,7 +569,7 @@ class to have at least 3 characters.
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -647,7 +647,7 @@ this method must return ``true``:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # config/validator/validation.yaml
         App\Entity\Author:
             getters:
                 passwordLegal:
@@ -655,7 +655,7 @@ this method must return ``true``:
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
