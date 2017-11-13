@@ -43,7 +43,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 firstName:

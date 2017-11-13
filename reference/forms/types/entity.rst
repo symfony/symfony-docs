@@ -173,7 +173,7 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
         // ...
 
         $builder->add('genre', EntityType::class, array(
-           'class' => 'MyBundle:Genre',
+           'class' => 'App\Entity\Genre',
            'choice_label' => 'translations[en].name',
         ));
 

@@ -54,7 +54,7 @@ Configuration
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             constraints:
                 - Callback: validate
@@ -177,7 +177,7 @@ You can then use the following configuration to invoke this validator:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             constraints:
                 - Callback: [Acme\Validator, validate]

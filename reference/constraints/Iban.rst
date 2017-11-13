@@ -44,7 +44,7 @@ will contain an International Bank Account Number.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Transaction:
             properties:
                 bankAccountNumber:

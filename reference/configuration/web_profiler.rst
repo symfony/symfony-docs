@@ -58,7 +58,7 @@ Full Default Configuration
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/dev/web_profiler.yaml
         web_profiler:
             toolbar:              false
             intercept_redirects:  false
@@ -66,7 +66,7 @@ Full Default Configuration
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/dev/web_profiler.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

@@ -48,7 +48,7 @@ you might add the following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Participant:
             properties:
                 height:
@@ -129,7 +129,7 @@ date must lie within the current year like this:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Event:
             properties:
                 startDate:
@@ -199,7 +199,7 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Event:
             properties:
                 startDate:
@@ -269,7 +269,7 @@ can check that a delivery date starts within the next five hours like this:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Order:
             properties:
                 deliveryDate:

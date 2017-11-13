@@ -47,7 +47,7 @@ on an object that will contain an ISBN.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Book:
             properties:
                 isbn:

@@ -87,7 +87,7 @@ following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 profileData:
@@ -212,7 +212,7 @@ you can do the following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 profile_data:

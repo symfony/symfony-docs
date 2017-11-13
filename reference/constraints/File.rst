@@ -92,7 +92,7 @@ below a certain file size and a valid PDF, add the following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 bioFile:

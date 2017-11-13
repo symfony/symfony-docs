@@ -45,7 +45,7 @@ on an object that will contain a credit card number.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Transaction:
             properties:
                 cardNumber:

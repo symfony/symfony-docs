@@ -41,7 +41,7 @@ will contain a Business Identifier Code (BIC).
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Transaction:
             properties:
                 businessIdentifierCode:

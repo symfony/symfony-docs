@@ -39,7 +39,7 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 bioUrl:
@@ -107,7 +107,7 @@ This message is shown if the URL is invalid.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 bioUrl:
@@ -179,7 +179,7 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 bioUrl:
@@ -256,7 +256,7 @@ option to ``true``:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 bioUrl:
@@ -329,7 +329,7 @@ DNS check failed.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 bioUrl:

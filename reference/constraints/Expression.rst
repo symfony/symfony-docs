@@ -62,7 +62,7 @@ One way to accomplish this is with the Expression constraint:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Model\BlogPost:
             constraints:
                 - Expression:
@@ -143,7 +143,7 @@ more about the expression language syntax, see
 
         .. code-block:: yaml
 
-            # src/Resources/config/validation.yml
+            # src/Resources/config/validation.yaml
             App\Model\BlogPost:
                 properties:
                     isTechnicalPost:
