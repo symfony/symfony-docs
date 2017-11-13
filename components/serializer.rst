@@ -21,9 +21,8 @@ the middle. This way, Encoders will only deal with turning specific
 **formats** into **arrays** and vice versa. The same way, Normalizers
 will deal with turning specific **objects** into **arrays** and vice versa.
 
-Serialization is a complicated topic, and while this component may not work
-in all cases, it can be a useful tool while developing tools to serialize
-and deserialize your objects.
+Serialization is a complex topic. This component may not cover all your use cases out of the box, 
+but it can be useful for developing tools to serialize and deserialize your objects.
 
 Installation
 ------------
@@ -405,7 +404,7 @@ class extending :class:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNorm
 including :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
 and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
-    use Symfony\Component\Serializer\Encoder\JsonEncoder
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
@@ -418,9 +417,9 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
     $obj->name = 'Acme Inc.';
     $obj->address = '123 Main Street, Big City';
 
-    $json = $serializer->serialize($obj);
+    $json = $serializer->serialize($obj, 'json');
     // {"org_name": "Acme Inc.", "org_address": "123 Main Street, Big City"}
-    $objCopy = $serializer->deserialize($json);
+    $objCopy = $serializer->deserialize($json, Company::class, 'json');
     // Same data as $obj
 
 .. _using-camelized-method-names-for-underscored-attributes:

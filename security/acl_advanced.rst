@@ -174,7 +174,7 @@ After invocation providers also allow to modify, or filter the domain object
 before it is returned.
 
 Due to current limitations of the PHP language, there are no
-post-authorization capabilities build into the core Security component.
+post-authorization capabilities built into the core Security component.
 However, there is an experimental JMSSecurityExtraBundle_ which adds these
 capabilities. See its documentation for further information on how this is
 accomplished.
@@ -190,7 +190,7 @@ this request to an implementation of
 This allows you to replace the way access decisions are reached without actually
 modifying the ACL class itself.
 
-The ``PermissionGrantingStrategy`` first checks all your object-scope ACEs. If none
+The ``PermissionGrantingStrategy`` first checks all your object-scope ACEs. If one
 is applicable, the class-scope ACEs will be checked. If none is applicable,
 then the process will be repeated with the ACEs of the parent ACL. If no
 parent ACL exists, an exception will be thrown.

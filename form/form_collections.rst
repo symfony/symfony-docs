@@ -130,7 +130,8 @@ Notice that you embed a collection of ``TagType`` forms using the
             $builder->add('description');
 
             $builder->add('tags', CollectionType::class, array(
-                'entry_type' => TagType::class
+                'entry_type' => TagType::class,
+                'entry_options' => array('label' => false),
             ));
         }
 
@@ -177,7 +178,7 @@ In your controller, you'll create a new form from the ``TaskType``::
                 // ... maybe do some form processing, like saving the Task and Tag objects
             }
 
-            return $this->render('AppBundle:Task:new.html.twig', array(
+            return $this->render('task/new.html.twig', array(
                 'form' => $form->createView(),
             ));
         }
@@ -193,7 +194,7 @@ zero tags when first created).
 
     .. code-block:: html+twig
 
-        {# src/AppBundle/Resources/views/Task/new.html.twig #}
+        {# app/Resources/views/task/new.html.twig #}
 
         {# ... #}
 
@@ -285,8 +286,9 @@ add the ``allow_add`` option to your collection field::
         $builder->add('description');
 
         $builder->add('tags', CollectionType::class, array(
-            'entry_type'   => TagType::class,
-            'allow_add'    => true,
+            'entry_type' => TagType::class,
+            'entry_options' => array('label' => false),
+            'allow_add' => true,
         ));
     }
 
@@ -392,9 +394,15 @@ one example:
         // get the new index
         var index = $collectionHolder.data('index');
 
+        var newForm = prototype;
+        // You need this only if you didn't set 'label' => false in your tags field in TaskType
+        // Replace '__name__label__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        // newForm = newForm.replace(/__name__label__/g, index);
+        
         // Replace '__name__' in the prototype's HTML to
         // instead be a number based on how many items we have
-        var newForm = prototype.replace(/__name__/g, index);
+        newForm = newForm.replace(/__name__/g, index);
 
         // increase the index with one for the next item
         $collectionHolder.data('index', index + 1);
@@ -678,13 +686,14 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
         // src/AppBundle/Controller/TaskController.php
 
+        use AppBundle\Entity\Task;
         use Doctrine\Common\Collections\ArrayCollection;
-        use Doctrine\ORM\EntityManagerInterface;
 
         // ...
-        public function editAction($id, Request $request, EntityManagerInterface $e,)
+        public function editAction($id, Request $request)
         {
-            $task = $em->getRepository('AppBundle:Task')->find($id);
+            $em = $this->getDoctrine()->getManager();
+            $task = $em->getRepository(Task::class)->find($id);
 
             if (!$task) {
                 throw $this->createNotFoundException('No task found for id '.$id);

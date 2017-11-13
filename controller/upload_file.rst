@@ -239,7 +239,7 @@ logic to a separate service::
         {
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
-            $file->move($this->targetDir, $fileName);
+            $file->move($this->getTargetDir(), $fileName);
 
             return $fileName;
         }
@@ -359,12 +359,10 @@ automatically upload the file when persisting the entity::
             $file = $entity->getBrochure();
 
             // only upload new files
-            if (!$file instanceof UploadedFile) {
-                return;
+            if ($file instanceof UploadedFile) {
+                $fileName = $this->uploader->upload($file);
+                $entity->setBrochure($fileName);
             }
-
-            $fileName = $this->uploader->upload($file);
-            $entity->setBrochure($fileName);
         }
     }
 
@@ -400,8 +398,6 @@ Now, register this class as a Doctrine listener:
             <!-- ... -->
 
             <service id="AppBundle\EventListener\BrochureUploaderListener">
-                <argument type="service" id="app.brochure_uploader"/>
-
                 <tag name="doctrine.event_listener" event="prePersist"/>
                 <tag name="doctrine.event_listener" event="preUpdate"/>
             </service>

@@ -198,7 +198,7 @@ if you want to take advantage of lazy loading::
     $builder->add('constants', ChoiceType::class, array(
         'choice_loader' => new CallbackChoiceLoader(function() {
             return StaticClass::getConstants();
-        },
+        }),
     ));
 
 This will cause the call of ``StaticClass::getConstants()`` to not happen if the

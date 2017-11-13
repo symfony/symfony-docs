@@ -190,9 +190,10 @@ Naming Conventions
 
 * Use namespaces for all classes;
 
-* Prefix abstract classes with ``Abstract``. Please note some early Symfony classes
-  do not follow this convention and have not been renamed for backward compatibility
-  reasons. However all new abstract classes must follow this naming convention;
+* Prefix all abstract classes with ``Abstract`` except PHPUnit ``*TestCase``.
+  Please note some early Symfony classes do not follow this convention and
+  have not been renamed for backward compatibility reasons. However all new
+  abstract classes must follow this naming convention;
 
 * Suffix interfaces with ``Interface``;
 
@@ -226,7 +227,8 @@ Service Naming Conventions
 Documentation
 -------------
 
-* Add PHPDoc blocks for all classes, methods, and functions;
+* Add PHPDoc blocks for all classes, methods, and functions (though you may
+  be asked to remove PHPDoc that do not add value);
 
 * Group annotations together so that annotations of the same type immediately
   follow each other, and annotations of a different type are separated by a

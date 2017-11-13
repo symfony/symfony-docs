@@ -48,7 +48,7 @@ configuration:
 
     # ...
     sites:
-        - map: symfony-demo.dev
+        - map: symfony-demo.test
           to: /home/vagrant/code/symfony_demo/public
           type: symfony4
 
@@ -56,13 +56,13 @@ The ``type`` option tells Homestead to use the Symfony nginx configuration.
 Homestead now supports a Symfony2 front controller layout of app.php and app_dev.php when
 using type: symfony2 and an index.php layout when using type: symfony4.
 
-At last, edit the hosts file on your local machine to map ``symfony-demo.dev``
+At last, edit the hosts file on your local machine to map ``symfony-demo.test``
 to ``192.168.10.10`` (which is the IP used by Homestead)::
 
     # /etc/hosts (unix) or C:\Windows\System32\drivers\etc\hosts (Windows)
-    192.168.10.10 symfony-demo.dev
+    192.168.10.10 symfony-demo.test
 
-Now, navigate to ``http://symfony-demo.dev`` in your web browser and enjoy
+Now, navigate to ``http://symfony-demo.test`` in your web browser and enjoy
 developing your Symfony application!
 
 .. seealso::

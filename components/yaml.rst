@@ -104,12 +104,6 @@ string and converts it to a PHP array:
 
     $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
 
-.. caution::
-
-    Because it is currently possible to pass a filename to this method, you
-    must validate the input first. Passing a filename is deprecated in
-    Symfony 2.2, and was removed in Symfony 3.0.
-
 If an error occurs during parsing, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\ParseException` exception
 indicating the error type and the line in the original YAML string where the
@@ -367,6 +361,12 @@ Add the ``--format`` option to get the output in JSON format:
 .. code-block:: terminal
 
     $ php lint.php path/to/file.yml --format json
+
+.. tip::
+
+    The linting command will also report any deprecations in the checked
+    YAML files. This may for example be useful for recognizing deprecations of
+    contents of YAML files during automated tests.
 
 Learn More
 ----------

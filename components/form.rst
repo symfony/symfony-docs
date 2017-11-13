@@ -418,7 +418,7 @@ is created from the form factory.
                     ->add('dueDate', DateType::class)
                     ->getForm();
 
-                return $this->render('AcmeTaskBundle:Default:new.html.twig', array(
+                return $this->render('@AcmeTask/Default/new.html.twig', array(
                     'form' => $form->createView(),
                 ));
             }
@@ -476,8 +476,8 @@ builder:
                 );
 
                 $form = $this->createFormBuilder($defaults)
-		    ->add('task', TextType::class)
-		    ->add('dueDate', DateType::class)
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
                     ->getForm();
 
                 // ...
@@ -616,8 +616,8 @@ method:
             public function newAction(Request $request)
             {
                 $form = $this->createFormBuilder()
-		    ->add('task', TextType::class)
-		    ->add('dueDate', DateType::class)
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
                     ->getForm();
 
                 $form->handleRequest($request);
@@ -694,10 +694,10 @@ option when building each field:
             public function newAction(Request $request)
             {
                 $form = $this->createFormBuilder()
-		    ->add('task', TextType::class, array(
+                    ->add('task', TextType::class, array(
                         'constraints' => new NotBlank(),
                     ))
-		    ->add('dueDate', DateType::class, array(
+                    ->add('dueDate', DateType::class, array(
                         'constraints' => array(
                             new NotBlank(),
                             new Type(\DateTime::class),

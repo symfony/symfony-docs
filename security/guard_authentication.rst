@@ -190,7 +190,6 @@ This requires you to implement seven methods::
                 return;
             }
 
-            // if null, authentication will fail
             // if a User object, checkCredentials() is called
             return $userProvider->loadUserByUsername($apiKey);
         }
@@ -489,7 +488,7 @@ and add the following logic::
 
     use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
     use Symfony\Component\Security\Csrf\CsrfToken;
-    use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenExceptionl
+    use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
     class ExampleFormAuthenticator extends AbstractFormLoginAuthenticator
     {

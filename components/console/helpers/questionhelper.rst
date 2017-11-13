@@ -169,6 +169,8 @@ will be autocompleted as the user types::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
+        $helper = $this->getHelper('question');
+        
         $bundles = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
         $question = new Question('Please enter the name of a bundle', 'FooBundle');
         $question->setAutocompleterValues($bundles);
@@ -188,6 +190,8 @@ convenient for passwords::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
+        $helper = $this->getHelper('question');
+        
         $question = new Question('What is the database password?');
         $question->setHidden(true);
         $question->setHiddenFallback(false);
@@ -212,6 +216,7 @@ convenient for passwords::
     On Windows systems, this ``stty`` command may generate gibberish output and
     mangle the input text. If that's your case, disable it with this command::
 
+        use Symfony\Component\Console\Helper\QuestionHelper;
         use Symfony\Component\Console\Question\ChoiceQuestion;
 
         // ...
@@ -219,7 +224,7 @@ convenient for passwords::
         {
             // ...
             $helper = $this->getHelper('question');
-            $helper->disableStty();
+            QuestionHelper::disableStty();
 
             // ...
         }
@@ -243,6 +248,8 @@ method::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
+        $helper = $this->getHelper('question');
+        
         $question = new Question('Please enter the name of the bundle', 'AppBundle');
         $question->setNormalizer(function ($value) {
             // $value can be null here
@@ -274,6 +281,8 @@ method::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
+        $helper = $this->getHelper('question');
+
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
         $question->setValidator(function ($answer) {
             if (!is_string($answer) || 'Bundle' !== substr($answer, -6)) {

@@ -36,6 +36,20 @@ Then, Enable the loader in Encore!
     ;
 
 That's it! The ``postcss-loader`` will now be used for all CSS, Sass, etc files.
+You can also pass options to the `postcss-loader`_ by passing a callback:
+
+.. code-block:: diff
+
+    // webpack.config.js
+
+    Encore
+        // ...
+    +     .enablePostCssLoader((options) => {
+    +         options.config = {
+    +             path: 'app/config/postcss.config.js'
+    +         };
+    +     })
+    ;
 
 Adding browserslist to package.json
 -----------------------------------
@@ -63,3 +77,4 @@ See `browserslist`_ for more details on the syntax.
 .. _`linting`: https://stylelint.io/
 .. _`browserslist`: https://github.com/ai/browserslist
 .. _`babel-preset-env`: https://github.com/babel/babel-preset-env
+.. _`postcss-loader`: https://github.com/postcss/postcss-loader

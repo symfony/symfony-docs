@@ -14,7 +14,7 @@ project. And while you're really happy with everything, you want to override
 the template for a blog list page. Inside the bundle, the template you want to
 override lives at ``Resources/views/Blog/index.html.twig``.
 
-To override the bundle template, just copy ``index.html.twig`` template
+To override the bundle template, just copy the ``index.html.twig`` template
 from the bundle to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
 (the ``app/Resources/AcmeBlogBundle`` directory won't exist, so you'll need
 to create it). You're now free to customize the template.

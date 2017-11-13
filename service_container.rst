@@ -215,17 +215,28 @@ each time you ask for it.
         .. code-block:: php
 
             // app/config/services.php
-            // _defaults and loading entire directories is not possible with PHP configuration
-            // you need to define your services one-by-one
-            use AppBundle\Service\MessageGenerator;
+            use Symfony\Component\DependencyInjection\Definition;
 
-            $container->autowire(MessageGenerator::class)
+            // To use as default template
+            $definition = new Definition();
+
+            $definition
+                ->setAutowired(true)
                 ->setAutoconfigured(true)
-                ->setPublic(false);
+                ->setPublic(false)
+            ;
+
+            // $this is a reference to the current loader
+            $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+
+    .. tip::
+
+        The value of the ``resource`` and ``exclude`` options can be any valid
+        `glob pattern`_.
 
     Thanks to this configuration, you can automatically use any classes from the
     ``src/AppBundle`` directory as a service, without needing to manually configure
-    it. Later, you'll learn more about this later in :ref:`service-psr4-loader`.
+    it. Later, you'll learn more about this in :ref:`service-psr4-loader`.
 
     If you'd prefer to manually wire your service, that's totally possible: see
     :ref:`services-explicitly-configure-wire-services`.
@@ -361,7 +372,7 @@ made. To do that, you create a new class::
                 );
             $this->mailer->send($message);
 
-            return $message;
+            return $happyMessage;
         }
     }
 
@@ -475,12 +486,21 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
         // app/config/services.php
         use AppBundle\Updates\SiteUpdateManager;
+        use Symfony\Component\DependencyInjection\Definition;
 
-        // _defaults and importing directories does not work in PHP
-        // but registering a service explicitly does
-        $container->autowire(SiteUpdateManager::class)
+        // Same as before
+        $definition = new Definition();
+
+        $definition
+            ->setAutowired(true)
             ->setAutoconfigured(true)
             ->setPublic(false)
+        ;
+
+        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+
+        // Explicitly configure the service
+        $container->getDefinition(SiteUpdateManager::class)
             ->setArgument('$adminEmail', 'manager@example.com');
 
 .. versionadded:: 3.3
@@ -555,6 +575,20 @@ and reference it with the ``%parameter_name%`` syntax:
 Actually, once you define a parameter, it can be referenced via the ``%parameter_name%``
 syntax in *any* other service configuration file - like ``config.yml``. Many parameters
 are defined in a :ref:`parameters.yml file <config-parameters-yml>`.
+
+You can then fetch the parameter in the service::
+
+    class SiteUpdateManager
+    {
+        // ...
+
+        private $adminEmail;
+
+        public function __construct($adminEmail)
+        {
+            $this->adminEmail = $adminEmail;
+        }
+    }
 
 You can also fetch parameters directly from the container::
 
@@ -828,9 +862,9 @@ key. For example, the default Symfony configuration contains this:
 
             # the namespace prefix for classes (must end in \)
             AppBundle\:
-                # accepts a glob pattern
+                # create services for all the classes found in this directory...
                 resource: '../../src/AppBundle/*'
-                # exclude some paths
+                # ...except for the classes located in these directories
                 exclude: '../../src/AppBundle/{Entity,Repository}'
 
             # these were imported above, but we want to add some extra config
@@ -859,6 +893,36 @@ key. For example, the default Symfony configuration contains this:
                 </prototype>
             </services>
         </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use Symfony\Component\DependencyInjection\Definition;
+
+        // To use as default template
+        $definition = new Definition();
+
+        $definition
+            ->setAutowired(true)
+            ->setAutoconfigured(true)
+            ->setPublic(false)
+        ;
+
+        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
+
+        // Changes default config
+        $definition
+            ->setPublic(true)
+            ->addTag('controller.service_arguments')
+        ;
+
+        // $this is a reference to the current loader
+        $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
+
+.. tip::
+
+    The value of the ``resource`` and ``exclude`` options can be any valid
+    `glob pattern`_.
 
 This can be used to quickly make many classes available as services and apply some
 default configuration. The ``id`` of each service is its fully-qualified class name.
@@ -951,7 +1015,7 @@ admin email. In this case, each needs to have a unique service id:
                     <argument>contact@example.com</argument>
                 </service>
 
-                <alias id="AppBundle\Updates\SiteUpdateManager" service="site_update_manager.superadmin">
+                <alias id="AppBundle\Updates\SiteUpdateManager" service="site_update_manager.superadmin" />
             </services>
         </container>
 
@@ -963,7 +1027,7 @@ admin email. In this case, each needs to have a unique service id:
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('site_update_manager.superadmin', SiteUpdateManager::class)
-            ->setAutowire(false)
+            ->setAutowired(false)
             ->setArguments(array(
                 new Reference(MessageGenerator::class),
                 new Reference('mailer'),
@@ -971,7 +1035,7 @@ admin email. In this case, each needs to have a unique service id:
             ));
 
         $container->register('site_update_manager.normal_users', SiteUpdateManager::class)
-            ->setAutowire(false)
+            ->setAutowired(false)
             ->setArguments(array(
                 new Reference(MessageGenerator::class),
                 new Reference('mailer'),
@@ -1003,3 +1067,4 @@ Learn more
 
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture
 .. _`Symfony Standard Edition (version 3.3) services.yml`: https://github.com/symfony/symfony-standard/blob/3.3/app/config/services.yml
+.. _`glob pattern`: https://en.wikipedia.org/wiki/Glob_(programming)

@@ -2,9 +2,10 @@
    single: Doctrine; Event listeners and subscribers
 
 .. _doctrine-event-config:
+.. _how-to-register-event-listeners-and-subscribers:
 
-How to Register Event Listeners and Subscribers
-===============================================
+Doctrine Event Listeners and Subscribers
+========================================
 
 Doctrine packages have a rich event system that fires events when almost anything
 happens inside the system. For you, this means that you can create arbitrary
@@ -101,14 +102,14 @@ a ``postPersist()`` method, which will be called when the event is dispatched::
     {
         public function postPersist(LifecycleEventArgs $args)
         {
-            $entity = $args->getEntity();
+            $object = $args->getObject();
 
             // only act on some "Product" entity
-            if (!$entity instanceof Product) {
+            if (!$object instanceof Product) {
                 return;
             }
 
-            $entityManager = $args->getEntityManager();
+            $objectManager = $args->getObjectManager();
             // ... do something with the Product
         }
     }
@@ -139,8 +140,8 @@ interface and have an event method for each event it subscribes to::
     namespace AppBundle\EventListener;
 
     use Doctrine\Common\EventSubscriber;
-    use Doctrine\ORM\Event\LifecycleEventArgs;
-    // for Doctrine 2.4: Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+    // for Doctrine < 2.4: use Doctrine\ORM\Event\LifecycleEventArgs;
+    use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
     use AppBundle\Entity\Product;
 
     class SearchIndexerSubscriber implements EventSubscriber
@@ -165,7 +166,7 @@ interface and have an event method for each event it subscribes to::
 
         public function index(LifecycleEventArgs $args)
         {
-            $entity = $args->getEntity();
+            $entity = $args->getObject();
 
             // perhaps you only want to act on some "Product" entity
             if ($entity instanceof Product) {
@@ -184,6 +185,59 @@ interface and have an event method for each event it subscribes to::
     with the same name as each subscribed event, just as when using an event listener.
 
 For a full reference, see chapter `The Event System`_ in the Doctrine documentation.
+
+Lazy loading for Event Listeners
+--------------------------------
+
+One subtle difference between listeners and subscribers is that Symfony can load
+entity listeners lazily. This means that your listener class will only be fetched
+from the service container (and thus be instantiated) once the event it is linked
+to actually fires.
+
+Lazy loading might give you a slight performance improvement when your listener
+runs for events that rarely fire. Also, it can help you when you run into
+*circular dependency issues* that may occur when your listener service in turn
+depends on the DBAL connection.
+
+To mark a listener service as lazily loaded, just add the ``lazy`` attribute
+to the tag like so:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my.listener:
+                class: AppBundle\EventListener\SearchIndexer
+                tags:
+                    - { name: doctrine.event_listener, event: postPersist, lazy: true }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
+
+            <services>
+                <service id="my.listener" class="AppBundle\EventListener\SearchIndexer">
+                    <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use AppBundle\EventListener\SearchIndexer;
+
+        $container
+            ->register('my.listener', SearchIndexer::class)
+            ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'lazy' => 'true'))
+        ;
+
+.. note::
+
+    Marking an event listener as ``lazy`` has nothing to do with lazy service
+    definitions which are described :doc:`in their own section </service_container/lazy_services>`
 
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
 .. _`the Doctrine Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#entity-listeners

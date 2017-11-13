@@ -68,12 +68,7 @@ random) number and prints it. To do that, create a "Controller class" and a
 Before diving into this, test it out! If you are using PHP's internal web server
 go to:
 
-    http://localhost:8000/app_dev.php/lucky/number
-
-.. tip::
-
-    If you're using the built-in PHP web-server, you can omit the ``app_dev.php``
-    part of the URL.
+    http://localhost:8000/lucky/number
 
 If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works. Remember the two steps
@@ -104,8 +99,9 @@ If you're returning HTML from your controller, you'll probably want to render
 a template. Fortunately, Symfony comes with `Twig`_: a templating language that's
 easy, powerful and actually quite fun.
 
-First, make sure that ``LuckyController`` extends Symfony's base
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class::
+First, import the base :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
+class as shown on line 5 below. Then, let your ``LuckyController`` class
+extend the base class::
 
     // src/AppBundle/Controller/LuckyController.php
 

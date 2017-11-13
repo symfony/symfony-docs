@@ -143,6 +143,44 @@ then passes them onto the nested handler in one go, but only if the records are
 unique over a given period of time (60 seconds by default). If the records are
 duplicates they are simply discarded. Adding this handler reduces the amount of
 notifications to a manageable level, specially in critical failure scenarios.
+You can adjust the time period using the ``time`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config_prod.yml
+        monolog:
+            handlers:
+                # ...
+                deduplicated:
+                    type: deduplication
+                    # the time in seconds during which duplicate entries are discarded (default: 60)
+                    time: 10
+                    handler: swift
+
+    .. code-block:: xml
+
+        <!-- app/config/config_prod.xml -->
+
+        <!-- time: the time in seconds during which duplicate entries are discarded (default: 60) -->
+        <monolog:handler name="deduplicated"
+            type="deduplication"
+            time="10"
+            handler="swift" />
+
+    .. code-block:: php
+
+        // app/config/config_prod.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                // ...
+                'deduplicated' => array(
+                    'type'    => 'deduplication',
+                    // the time in seconds during which duplicate entries are discarded (default: 60)
+                    'time' => 10,
+                    'handler' => 'swift',
+                 )
 
 The messages are then passed to the ``swift`` handler. This is the handler that
 actually deals with emailing you the error. The settings for this are

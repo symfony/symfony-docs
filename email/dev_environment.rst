@@ -28,7 +28,7 @@ will not be sent when you run tests, but will continue to be sent in the
 
         # app/config/config_test.yml
         swiftmailer:
-            disable_delivery:  true
+            disable_delivery: true
 
     .. code-block:: xml
 
@@ -48,7 +48,7 @@ will not be sent when you run tests, but will continue to be sent in the
 
         // app/config/config_test.php
         $container->loadFromExtension('swiftmailer', array(
-            'disable_delivery'  => "true",
+            'disable_delivery' => "true",
         ));
 
 If you'd also like to disable deliver in the ``dev`` environment, simply
@@ -80,7 +80,8 @@ via the ``delivery_addresses`` option:
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+                http://symfony.com/schema/dic/swiftmailer
+                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <swiftmailer:config>
                 <swiftmailer:delivery-address>dev@example.com</swiftmailer:delivery-address>
@@ -100,7 +101,7 @@ Now, suppose you're sending an email to ``recipient@example.com``.
 
     public function indexAction($name, \Swift_Mailer $mailer)
     {
-        $message = new \Swift_Message('Hello Email')
+        $message = (new \Swift_Message('Hello Email'))
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
             ->setBody(
@@ -154,15 +155,14 @@ by adding the ``delivery_whitelist`` option:
     .. code-block:: xml
 
         <!-- app/config/config_dev.xml -->
-
-        <?xml version="1.0" charset="UTF-8" ?>
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+                http://symfony.com/schema/dic/swiftmailer
+                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
             <swiftmailer:config>
                 <!-- all email addresses matching these regexes will be delivered
@@ -177,7 +177,7 @@ by adding the ``delivery_whitelist`` option:
 
         // app/config/config_dev.php
         $container->loadFromExtension('swiftmailer', array(
-            'delivery_addresses'  => array("dev@example.com"),
+            'delivery_addresses' => array("dev@example.com"),
             'delivery_whitelist' => array(
                 // all email addresses matching these regexes will be delivered
                 // like normal, as well as being sent to dev@example.com
@@ -189,6 +189,10 @@ by adding the ``delivery_whitelist`` option:
 In the above example all email messages will be redirected to ``dev@example.com``
 and messages sent to the ``admin@mydomain.com`` address or to any email address
 belonging to the domain ``specialdomain.com`` will also be delivered as normal.
+
+.. caution::
+
+    The ``delivery_whitelist`` option is ignored unless the ``delivery_addresses`` option is defined.
 
 Viewing from the Web Debug Toolbar
 ----------------------------------

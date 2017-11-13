@@ -15,6 +15,42 @@ a full-featured web server such as
     The built-in web server is meant to be run in a controlled environment.
     It is not designed to be used on public networks.
 
+Symfony provides a web server built on top of this PHP server to simplify your
+local setup. This server is distributed as a bundle, so you must first install
+and enable the server bundle.
+
+Installing the Web Server Bundle
+--------------------------------
+
+First, execute this command:
+
+.. code-block:: terminal
+
+    $ cd your-project/
+    $ composer require symfony/web-server-bundle
+
+Then, enable the bundle in the kernel of the application::
+
+    // app/AppKernel.php
+    class AppKernel extends Kernel
+    {
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
+            );
+
+            if ('dev' === $this->getEnvironment()) {
+                // ...
+                $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
+            }
+
+            // ...
+        }
+
+        // ...
+    }
+
 Starting the Web Server
 -----------------------
 
@@ -79,13 +115,12 @@ Command Options
 
 The built-in web server expects a "router" script (read about the "router"
 script on `php.net`_) as an argument. Symfony already passes such a router
-script when the command is executed in the ``prod`` or in the ``dev`` environment.
-Use the ``--router`` option in any other environment or to use another router
-script:
+script when the command is executed in the ``prod`` or ``dev`` environment.
+Use the ``--router`` option to use your own router script:
 
 .. code-block:: terminal
 
-    $ php bin/console server:start --env=test --router=app/config/router_test.php
+    $ php bin/console server:start --router=app/config/my_router.php
 
 If your application's document root differs from the standard directory layout,
 you have to pass the correct location using the ``--docroot`` option:

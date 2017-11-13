@@ -70,9 +70,14 @@ To build the assets, use the ``encore`` executable:
     # compile assets, but also minify & optimize them
     $ ./node_modules/.bin/encore production
 
+    # shorter version of the above 3 commands
+    $ yarn run encore dev
+    $ yarn run encore dev --watch
+    $ yarn run encore production
+
 .. note::
 
-    Restart ``encore`` each time you update your ``webpack.config.js`` file.
+    Re-run ``encore`` each time you update your ``webpack.config.js`` file.
 
 Actually, to use ``enableSassLoader()``, you'll need to install a few
 more packages. But Encore will tell you *exactly* what you need.

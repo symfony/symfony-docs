@@ -117,7 +117,7 @@ block and set the value of two variables called ``icon`` and ``text``:
 
 .. code-block:: html+twig
 
-    {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+    {% extends '@WebProfiler/Profiler/layout.html.twig' %}
 
     {% block toolbar %}
         {% set icon %}
@@ -161,7 +161,7 @@ block and set the value of two variables called ``icon`` and ``text``:
 
     .. code-block:: twig
 
-        {{ include('@App/data_collector/icon.svg') }}
+        {{ include('data_collector/icon.svg') }}
 
     You are encouraged to use the latter technique for your own toolbar panels.
 

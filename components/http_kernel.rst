@@ -595,7 +595,12 @@ below for more details).
        use the ``setHeaders()`` method on exceptions derived from the
        :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException` class.
 
-    3) A controller is executed and passed the flattened exception. The exact
+    3) If the original exception implements
+       :class:`Symfony\\Component\\HttpKernel\\Exception\\RequestExceptionInterface`,
+       then the status code of the ``FlattenException`` object is populated with
+       ``400`` and no other headers are modified.
+
+    4) A controller is executed and passed the flattened exception. The exact
        controller to render is passed as a constructor argument to this listener.
        This controller will return the final ``Response`` for this error page.
 
@@ -741,6 +746,32 @@ look like this::
 
         // ...
     }
+
+.. _http-kernel-resource-locator:
+
+Locating Resources
+------------------
+
+The HttpKernel component is responsible of the bundle mechanism used in Symfony
+applications. The key feature of the bundles is that they allow to override any
+resource used by the application (config files, templates, controllers,
+translation files, etc.)
+
+This overriding mechanism works because resources are referenced not by their
+physical path but by their logical path. For example, the ``services.xml`` file
+stored in the ``Resources/config/`` directory of a bundle called AppBundle is
+referenced as ``@AppBundle/Resources/config/services.xml``. This logical path
+will work when the application overrides that file and even if you change the
+directory of AppBundle.
+
+The HttpKernel component provides a method called :method:`Symfony\\Component\\HttpKernel\\Kernel::locateResource`
+which can be used to transform logical paths into physical paths::
+
+    use Symfony\Component\HttpKernel\HttpKernel;
+
+    // ...
+    $kernel = new HttpKernel($dispatcher, $resolver);
+    $path = $kernel->locateResource('@AppBundle/Resources/config/services.xml');
 
 Learn more
 ----------

@@ -22,7 +22,21 @@ And enable it in ``webpack.config.js``:
         .enableSassLoader()
     ;
 
-That's it! All files ending in ``.sass`` or ``.scss`` will be pre-processed.
+That's it! All files ending in ``.sass`` or ``.scss`` will be pre-processed. You
+can also pass options to ``sass-loader``:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+        .enableSassLoader(function(sassOptions) {
+            // https://github.com/sass/node-sass#options
+            // options.includePaths = [...]
+        });
+    ;
 
 Using LESS
 ----------
@@ -45,4 +59,19 @@ And enable it in ``webpack.config.js``:
         .enableLessLoader()
     ;
 
-That's it! All files ending in ``.less`` will be pre-processed.
+That's it! All files ending in ``.less`` will be pre-processed. You can also pass
+options to ``less-loader``:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+        .enableLessLoader(function(options) {
+            // https://github.com/webpack-contrib/less-loader#examples
+            // http://lesscss.org/usage/#command-line-usage-options
+            // options.relativeUrls = false;
+        });
+    ;

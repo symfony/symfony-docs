@@ -4,18 +4,23 @@
 FrameworkBundle Configuration ("framework")
 ===========================================
 
-The FrameworkBundle contains most of the "base" framework functionality
-and can be configured under the ``framework`` key in your application
-configuration. When using XML, you must use the
-``http://symfony.com/schema/dic/symfony`` namespace.
+The FrameworkBundle defines the main framework configuration, from sessions and
+translations to forms, validation, routing and more. All these options are
+configured under the ``framework`` key in your application configuration.
 
-This includes settings related to sessions, translation, forms, validation,
-routing and more.
+.. code-block:: terminal
 
-.. tip::
+    # displays the default config values defined by Symfony
+    $ php bin/console config:dump framework
 
-   The XSD schema is available at
-   ``http://symfony.com/schema/dic/symfony/symfony-1.0.xsd``.
+    # displays the actual config values used by your application
+    $ php bin/console debug:config framework
+
+.. note::
+
+    When using XML, you must use the ``http://symfony.com/schema/dic/symfony``
+    namespace and the related XSD schema is available at:
+    ``http://symfony.com/schema/dic/symfony/symfony-1.0.xsd``
 
 Configuration
 -------------
@@ -45,6 +50,8 @@ Configuration
         * `ip`_
         * :ref:`path <reference-profiler-matcher-path>`
         * `service`_
+* `request`_:
+    * `formats`_
 * `router`_
     * `resource`_
     * `type`_
@@ -63,7 +70,9 @@ Configuration
     * `gc_divisor`_
     * `gc_probability`_
     * `gc_maxlifetime`_
+    * `use_strict_mode`_
     * `save_path`_
+    * `metadata_update_threshold`_
 * `assets`_
     * `base_path`_
     * `base_urls`_
@@ -71,6 +80,7 @@ Configuration
     * `version_strategy`_
     * `version`_
     * `version_format`_
+    * `json_manifest_path`_
 * `templating`_
     * `hinclude_default_template`_
     * :ref:`form <reference-templating-form>`
@@ -114,6 +124,7 @@ Configuration
     * `default_doctrine_provider`_
     * `default_psr6_provider`_
     * `default_redis_provider`_
+    * `default_memcached_provider`_
     * `pools`_
         * :ref:`name <reference-cache-pools-name>`
             * `adapter`_
@@ -187,7 +198,7 @@ named ``kernel.http_method_override``.
 trusted_proxies
 ~~~~~~~~~~~~~~~
 
-The ``trusted_proxies`` option was removed in Symfony 3.3. See :doc:`/request/load_balancer_reverse_proxy`.
+The ``trusted_proxies`` option was removed in Symfony 3.3. See :doc:`/deployment/proxies`.
 
 ide
 ~~~
@@ -247,7 +258,7 @@ need to escape the percent signs (``%``) by doubling them.
 .. note::
 
     If both ``framework.ide`` and ``xdebug.file_link_format`` are defined,
-    Symfony uses the value of the ``framework.ide`` option.
+    Symfony uses the value of the ``xdebug.file_link_format`` option.
 
 .. tip::
 
@@ -599,6 +610,69 @@ service
 
 This setting contains the service id of a custom matcher.
 
+request
+~~~~~~~
+
+formats
+.......
+
+**type**: ``array`` **default**: ``[]``
+
+This setting is used to associate additional request formats (e.g. ``html``)
+to one or more mime types (e.g. ``text/html``), which will allow you to use the
+format & mime types to call
+:method:`Request::getFormat($mimeType) <Symfony\\Component\\HttpFoundation\\Request::getFormat>` or
+:method:`Request::getMimeType($format) <Symfony\\Component\\HttpFoundation\\Request::getMimeType>`.
+
+In practice, this is important because Symfony uses it to automatically set the
+``Content-Type`` header on the ``Response`` (if you don't explicitly set one).
+If you pass an array of mime types, the first will be used for the header.
+
+To configure a ``jsonp`` format:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        framework:
+            request:
+                formats:
+                    jsonp: 'application/javascript'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:request>
+                    <framework:format name="jsonp">
+                        <framework:mime-type>application/javascript</framework:mime-type>
+                    </framework:format>
+                </framework:request>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'request' => array(
+                'formats' => array(
+                    'jsonp' => 'application/javascript',
+                ),
+            ),
+        ));
+
 router
 ~~~~~~
 
@@ -765,6 +839,17 @@ This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session
 start and depends on `gc_divisor`_ and `gc_probability`_.
 
+use_strict_mode
+...............
+
+**type**: ``boolean`` **default**: ``false``
+
+This specifies whether the session module will use the strict session id mode.
+If this mode is enabled, the module does not accept uninitialized session IDs.
+If an uninitialized session ID is sent from browser, a new session ID is sent
+to browser. Applications are protected from session fixation via session
+adoption with strict mode.
+
 save_path
 .........
 
@@ -810,6 +895,19 @@ setting the value to ``null``:
                 'save_path' => null,
             ),
         ));
+
+metadata_update_threshold
+.........................
+
+**type**: ``integer`` **default**: ``0``
+
+This is how many seconds to wait between two session metadata updates. It will
+also prevent the session handler to write if the session has not changed.
+
+.. seealso::
+
+    You can see an example of the usage of this in
+    :doc:`/session/limit_metadata_writes`.
 
 assets
 ~~~~~~
@@ -980,6 +1078,7 @@ Each package can configure the following options:
 * :ref:`version_strategy <reference-assets-version-strategy>`
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
+* :ref:`json_manifest_path <reference-assets-json-manifest-path>`
 
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
@@ -1054,7 +1153,7 @@ option.
 
 .. note::
 
-    This parameter cannot be set at the same time as ``version_strategy``.
+    This parameter cannot be set at the same time as ``version_strategy`` or ``json_manifest_path``.
 
 .. tip::
 
@@ -1187,7 +1286,107 @@ individually for each asset package:
 
 .. note::
 
-    This parameter cannot be set at the same time as ``version``.
+    This parameter cannot be set at the same time as ``version`` or ``json_manifest_path``.
+
+.. _reference-assets-json-manifest-path:
+.. _reference-templating-json-manifest-path:
+
+json_manifest_path
+..................
+
+**type**: ``string`` **default**: ``null``
+
+.. versionadded:: 3.3
+
+    The ``json_manifest_path`` option was introduced in Symfony 3.3.
+
+The file path to a ``manifest.json`` file containing an associative array of asset
+names and their respective compiled names. A common cache-busting technique using
+a "manifest" file works by writing out assets with a "hash" appended to their
+file names (e.g. ``main.ae433f1cb.css``) during a front-end compilation routine.
+
+.. tip::
+
+    Symfony's :ref:`Webpack Encore <frontend-webpack-encore>` supports
+    :ref:`outputting hashed assets <encore-long-term-caching>`. Moreover, this
+    can be incorporated into many other workflows, including Webpack and
+    Gulp using `webpack-manifest-plugin`_ and `gulp-rev`_, respectively.
+
+This option can be set globally for all assets and individually for each asset
+package:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+       framework:
+            assets:
+                # this manifest is applied to every asset (including packages)
+                json_manifest_path: "%kernel.project_dir%/web/assets/manifest.json"
+                packages:
+                    foo_package:
+                        # this package uses its own manifest (the default file is ignored)
+                        json_manifest_path: "%kernel.project_dir%/web/assets/a_different_manifest.json"
+                    bar_package:
+                        # this package uses the global manifest (the default file is used)
+                        base_path: '/images'
+
+    .. code-block:: xml
+
+        <!-- app/config/config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- this manifest is applied to every asset (including packages) -->
+                <framework:assets json-manifest-path="%kernel.project_dir%/web/assets/manifest.json">
+                    <!-- this package uses its own manifest (the default file is ignored) -->
+                    <framework:package
+                        name="foo_package"
+                        json-manifest-path="%kernel.project_dir%/web/assets/a_different_manifest.json" />
+                    <!-- this package uses the global manifest (the default file is used) -->
+                    <framework:package
+                        name="bar_package"
+                        base-path="/images" />
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config.php
+        $container->loadFromExtension('framework', array(
+            'assets' => array(
+                // this manifest is applied to every asset (including packages)
+                'json_manifest_path' => '%kernel.project_dir%/web/assets/manifest.json',
+                'packages' => array(
+                    'foo_package' => array(
+                        // this package uses its own manifest (the default file is ignored)
+                        'json_manifest_path' => '%kernel.project_dir%/web/assets/a_different_manifest.json',
+                    ),
+                    'bar_package' => array(
+                        // this package uses the global manifest (the default file is used)
+                        'base_path' => '/images',
+                    ),
+                ),
+            ),
+        ));
+
+.. note::
+
+    This parameter cannot be set at the same time as ``version`` or ``version_strategy``.
+    Additionally, this option cannot be nullified at the package scope if a global manifest
+    file is specified.
+
+.. tip::
+
+    If you request an asset that is *not found* in the ``manifest.json`` file, the original -
+    *unmodified* - asset path will be returned.
 
 templating
 ~~~~~~~~~~
@@ -1601,7 +1800,7 @@ app
 
 The cache adapter used by the ``cache.app`` service. The FrameworkBundle
 ships with multiple adapters: ``apcu``, ``doctrine``, ``system``, ``filesystem``,
-``psr6`` and ``redis``.
+``psr6``, ``redis`` and ``memcached``.
 
 .. tip::
 
@@ -1646,6 +1845,17 @@ default_redis_provider
 **type**: ``string`` **default**: ``redis://localhost``
 
 The DSN to use by the Redis provider. The provider is available as the ``cache.redis``
+service.
+
+default_memcached_provider
+..........................
+
+.. versionadded:: 3.3
+    The ``default_memcached_provider`` option was introduced in Symfony 3.3.
+
+**type**: ``string`` **default**: ``memcached://localhost``
+
+The DSN to use by the Memcached provider. The provider is available as the ``cache.memcached``
 service.
 
 pools
@@ -1885,6 +2095,7 @@ Full Default Configuration
                 default_doctrine_provider: ~
                 default_psr6_provider: ~
                 default_redis_provider: 'redis://localhost'
+                default_memcached_provider: 'memcached://localhost'
                 pools:
                     # Prototype
                     name:
@@ -1901,3 +2112,5 @@ Full Default Configuration
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
 .. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
 .. _`blue/green deployment`: http://martinfowler.com/bliki/BlueGreenDeployment.html
+.. _`gulp-rev`: https://www.npmjs.com/package/gulp-rev
+.. _`webpack-manifest-plugin`: https://www.npmjs.com/package/webpack-manifest-plugin

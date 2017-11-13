@@ -157,7 +157,7 @@ Below is the configuration for the pull request state machine.
                     'closed',
                   ),
                   'transitions' => array(
-                    'start'=> array(
+                    'submit'=> array(
                       'from' => 'start',
                       'to' => 'travis',
                     ),
@@ -165,7 +165,7 @@ Below is the configuration for the pull request state machine.
                       'from' => array('coding','travis','review'),
                       'to' => 'travis',
                     ),
-                    'wait_for_reivew'=> array(
+                    'wait_for_review'=> array(
                       'from' => 'travis',
                       'to' => 'review',
                     ),

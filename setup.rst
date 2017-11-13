@@ -27,19 +27,22 @@ executable that needs to be installed on your system only once:
     $ sudo chmod a+x /usr/local/bin/symfony
 
     # Windows systems
-    c:\> php -r "readfile('https://symfony.com/installer');" > symfony
+    c:\> php -r "file_put_contents('symfony', file_get_contents('https://symfony.com/installer'));"
 
 .. note::
 
     In Linux and macOS, a global ``symfony`` command is created. In Windows,
     move the ``symfony`` file to a directory that's included in the ``PATH``
-    environment variable to create the global command or move it to any other
-    directory convenient for you:
+    environment variable and create a ``symfony.bat`` file to create the global
+    command or move it to any other directory convenient for you:
 
     .. code-block:: terminal
 
         # for example, if WAMP is used ...
         c:\> move symfony c:\wamp\bin\php
+        # create symfony.bat in the same folder
+        c:\> cd c:\wamp\bin\php
+        c:\> (echo @ECHO OFF & echo php "%~dp0symfony" %*) > symfony.bat
         # ... then, execute the command as:
         c:\> symfony
 
@@ -155,16 +158,20 @@ the ``create-project`` command:
 Running the Symfony Application
 -------------------------------
 
-Symfony leverages the internal PHP web server (available since PHP 5.4) to run
-applications while developing them. Therefore, running a Symfony application is
-a matter of browsing to the project directory and executing this command:
+On production servers, Symfony applications use web servers such as Apache or
+Nginx (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
+However, on your local development machine you can also use the web server
+provided by Symfony, which in turn uses the built-in web server provided by PHP.
+
+First, :doc:`install the Symfony Web Server </setup/built_in_web_server>` and
+then, execute this command:
 
 .. code-block:: terminal
 
     $ cd my_project_name/
     $ php bin/console server:run
 
-Then, open your browser and access the ``http://localhost:8000/`` URL to see the
+Open your browser and access the ``http://localhost:8000/`` URL to see the
 Welcome Page of Symfony:
 
 .. image:: /_images/quick_tour/welcome.png
@@ -181,7 +188,7 @@ pressing ``Ctrl+C`` from the terminal or command console.
 
 .. tip::
 
-    PHP's internal web server is great for developing, but should **not** be
+    Symfony's web server is great for developing, but should **not** be
     used on production. Instead, use Apache or Nginx.
     See :doc:`/setup/web_server_configuration`.
 

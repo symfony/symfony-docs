@@ -14,8 +14,7 @@ PNG image of the workflow defined above::
 
 .. code-block:: terminal
 
-    $ php dump-graph.php > out.dot
-    $ dot -Tpng out.dot -o graph.png
+    $ php dump-graph.php | dot -Tpng -o graph.png
 
 The result will look like this:
 
@@ -26,8 +25,7 @@ with the ``WorkflowDumpCommand``:
 
 .. code-block:: terminal
 
-    $ php bin/console workflow:dump name > out.dot
-    $ dot -Tpng out.dot -o graph.png
+    $ php bin/console workflow:dump name | dot -Tpng -o graph.png
 
 .. note::
 

@@ -338,6 +338,13 @@ controller's service config:
 You can of course also use normal :ref:`constructor injection <services-constructor-injection>`
 in your controllers.
 
+.. caution::
+
+    You can *only* pass *services* to your controller arguments in this way. It's
+    not possible, for example, to pass a service parameter as a controller argument.
+    If you need a parameter, use the ``$this->getParameter('kernel.debug')`` shortcut
+    or pass the value through your controller's ``__construct()`` method.
+
 For more information about services, see the :doc:`/service_container` article.
 
 .. _controller-service-arguments-tag:
@@ -372,7 +379,7 @@ method. Here are several common services you might need::
     // you can also fetch parameters
     $someParameter = $this->getParameter('some_parameter');
 
-If you receive an eror like:
+If you receive an error like:
 
 .. code-block:: text
 
@@ -453,8 +460,8 @@ Managing the Session
 --------------------
 
 Symfony provides a nice session object that you can use to store information
-about the user between requests. By default, Symfony stores the attributes in a
-cookie by using native PHP sessions.
+about the user between requests. By default, Symfony stores the token in a
+cookie and writes the attributes to a file by using native PHP sessions.
 
 .. versionadded:: 3.3
     The ability to request a ``Session`` instance in controllers was introduced

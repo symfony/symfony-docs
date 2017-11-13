@@ -189,11 +189,8 @@ own a collection of its related ``Product`` objects.
     namespace as the targetEntity.
 
 Now that you've added new properties to both the ``Product`` and ``Category``
-classes, tell Doctrine to generate the missing getter and setter methods for you:
-
-.. code-block:: terminal
-
-    $ php bin/console doctrine:generate:entities AppBundle
+classes, you must generate the missing getter and setter methods manually or
+using your own IDE.
 
 Ignore the Doctrine metadata for a moment. You now have two classes - ``Product``
 and ``Category``, with a natural many-to-one relationship. The ``Product``
@@ -236,11 +233,10 @@ Now you can see this new code in action! Imagine you're inside a controller::
     use AppBundle\Entity\Category;
     use AppBundle\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
-    use Doctrine\ORM\EntityManagerInterface;
 
     class DefaultController extends Controller
     {
-        public function createProductAction(EntityManagerInterface $em)
+        public function createProductAction()
         {
             $category = new Category();
             $category->setName('Computer Peripherals');
@@ -253,6 +249,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
             // relate this product to the category
             $product->setCategory($category);
 
+            $em = $this->getDoctrine()->getManager();
             $em->persist($category);
             $em->persist($product);
             $em->flush();
@@ -276,11 +273,13 @@ When you need to fetch associated objects, your workflow looks just like it
 did before. First, fetch a ``$product`` object and then access its related
 ``Category`` object::
 
-    use Doctrine\ORM\EntityManagerInterface;
+    use AppBundle\Entity\Product;
+    // ...
 
-    public function showAction($productId, EntityManagerInterface $em)
+    public function showAction($productId)
     {
-        $product = $em->getRepository('AppBundle:Product')
+        $product = $this->getDoctrine()
+            ->getRepository(Product::class)
             ->find($productId);
 
         $categoryName = $product->getCategory()->getName();
@@ -304,11 +303,10 @@ the category (i.e. it's "lazily loaded").
 
 You can also query in the other direction::
 
-    use Doctrine\ORM\EntityManagerInterface;
-
-    public function showProductsAction($categoryId, EntityManagerInterface $em)
+    public function showProductsAction($categoryId)
     {
-        $category = $em->getRepository('AppBundle:Category')
+        $category = $this->getDoctrine()
+            ->getRepository(Category::class)
             ->find($categoryId);
 
         $products = $category->getProducts();
@@ -328,7 +326,8 @@ to the given ``Category`` object via their ``category_id`` value.
     a "proxy" object in place of the true object. Look again at the above
     example::
 
-        $product = $em->getRepository('AppBundle:Product')
+        $product = $this->getDoctrine()
+            ->getRepository(Product::class)
             ->find($productId);
 
         $category = $product->getCategory();
@@ -367,11 +366,10 @@ can avoid the second query by issuing a join in the original query. Add the
 following method to the ``ProductRepository`` class::
 
     // src/AppBundle/Repository/ProductRepository.php
-    use Doctrine\ORM\EntityManagerInterface;
-
     public function findOneByIdJoinedToCategory($productId)
     {
-        $query = $em->createQuery(
+        $query = $this->getEntityManager()
+            ->createQuery(
             'SELECT p, c FROM AppBundle:Product p
             JOIN p.category c
             WHERE p.id = :id'
@@ -387,11 +385,10 @@ following method to the ``ProductRepository`` class::
 Now, you can use this method in your controller to query for a ``Product``
 object and its related ``Category`` with just one query::
 
-    use Doctrine\ORM\EntityManagerInterface;
-
-    public function showAction($productId, EntityManagerInterface $em)
+    public function showAction($productId)
     {
-        $product = $em->getRepository('AppBundle:Product')
+        $product = $this->getDoctrine()
+            ->getRepository(Product::class)
             ->findOneByIdJoinedToCategory($productId);
 
         $category = $product->getCategory();

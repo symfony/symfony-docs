@@ -72,7 +72,7 @@ that it implements ``Twig_ExtensionInterface``) and adds the tag for you.
 
 .. tip::
 
-    To apply a tag to all your autoconfigured services extending a class or an
+    To apply a tag to all your autoconfigured services extending a class or implementing an
     interface, call the :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration`
     method in an :doc:`extension </bundles/extension>` or from your kernel::
 

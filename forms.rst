@@ -96,7 +96,7 @@ from inside a controller::
             $form = $this->createFormBuilder($task)
                 ->add('task', TextType::class)
                 ->add('dueDate', DateType::class)
-                ->add('save', SubmitType::class, array('label' => 'Create Post'))
+                ->add('save', SubmitType::class, array('label' => 'Create Task'))
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(
@@ -221,7 +221,7 @@ your controller::
     // ...
     use Symfony\Component\HttpFoundation\Request;
 
-    public function newAction(Request $request, EntityManagerInterface $em)
+    public function newAction(Request $request)
     {
         // just setup a fresh $task object (remove the dummy data)
         $task = new Task();
@@ -241,6 +241,7 @@ your controller::
 
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
+            // $em = $this->getDoctrine()->getManager();
             // $em->persist($task);
             // $em->flush();
 
@@ -561,10 +562,10 @@ the correct values of a number of field options.
     field ``nullable``). This is very useful, as your client-side validation will
     automatically match your validation rules.
 
-``max_length``
-    If the field is some sort of text field, then the ``max_length`` option can be
-    guessed from the validation constraints (if ``Length`` or ``Range`` is used) or
-    from the Doctrine metadata (via the field's length).
+``maxlength``
+    If the field is some sort of text field, then the ``maxlength`` option attribute
+    can be guessed from the validation constraints (if ``Length`` or ``Range`` is used)
+    or from the Doctrine metadata (via the field's length).
 
 .. caution::
 
@@ -638,6 +639,7 @@ the choice is ultimately up to you.
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
+        // src/AppBundle/Form/TaskType.php
         use AppBundle\Entity\Task;
         use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -694,12 +696,6 @@ There's a lot more to learn and a lot of *powerful* tricks in the form system.
 
 Learn more
 ----------
-
-.. toctree::
-    :hidden:
-
-    form/use_virtuals_forms
-
 .. toctree::
     :maxdepth: 1
     :glob:

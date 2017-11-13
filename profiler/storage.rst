@@ -45,7 +45,7 @@ directory. If you want to use another location to store the profiles, define the
         // ...
         $container->loadFromExtension('framework', array(
             'profiler' => array(
-                'dsn'      => 'file:/tmp/symfony/profiler',
+                'dsn' => 'file:/tmp/symfony/profiler',
             ),
         ));
 

@@ -4,31 +4,26 @@
 How to Use and Register Namespaced Twig Paths
 =============================================
 
-Usually, when you refer to a template, you'll use the ``MyBundle:Subdir:filename.html.twig``
-format (see :ref:`template-naming-locations`).
-
-Twig also natively offers a feature called "namespaced paths", and support
-is built-in automatically for all of your bundles.
-
-Take the following paths as an example:
-
-.. code-block:: twig
-
-    {% extends "AppBundle::layout.html.twig" %}
-    {{ include('AppBundle:Foo:bar.html.twig') }}
-
-With namespaced paths, the following works as well:
+Usually, when you refer to a template, you'll use the Twig namespaced paths, which
+are automatically registered for your bundles:
 
 .. code-block:: twig
 
     {% extends "@App/layout.html.twig" %}
     {{ include('@App/Foo/bar.html.twig') }}
 
-Both paths are valid and functional by default in Symfony.
+.. note::
 
-.. tip::
+    In the past, Symfony used a different syntax to refer to templates. This
+    format, which uses colons (``:``) to separate each template path section, is
+    less consistent and has worse performance than the Twig syntax. For reference
+    purposes, this is the equivalent notation of the previous example:
 
-    As an added bonus, the namespaced syntax is faster.
+    .. code-block:: twig
+
+        {# the following template syntax is no longer recommended #}
+        {% extends "AppBundle::layout.html.twig" %}
+        {{ include('AppBundle:Foo:bar.html.twig') }}
 
 Registering your own Namespaces
 -------------------------------

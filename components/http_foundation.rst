@@ -153,7 +153,7 @@ exist::
     // returns 'baz'
 
 When PHP imports the request query, it handles request parameters like
-``foo[bar]=bar`` in a special way as it creates an array. So you can get the
+``foo[bar]=baz`` in a special way as it creates an array. So you can get the
 ``foo`` parameter and you will get back an array with a ``bar`` element::
 
     // the query string is '?foo[bar]=baz'
@@ -349,9 +349,9 @@ UTF-8.
 Sending the Response
 ~~~~~~~~~~~~~~~~~~~~
 
-Before sending the Response, you can ensure that it is compliant with the HTTP
-specification by calling the
-:method:`Symfony\\Component\\HttpFoundation\\Response::prepare` method::
+Before sending the Response, you can optionally call the
+:method:`Symfony\\Component\\HttpFoundation\\Response::prepare` method to fix any
+incompatibility with the HTTP specification (e.g. a wrong ``Content-Type`` header)::
 
     $response->prepare($request);
 
@@ -468,8 +468,12 @@ represented by a PHP callable instead of a string::
     you must call ``ob_flush()`` before ``flush()``.
 
     Additionally, PHP isn't the only layer that can buffer output. Your web
-    server might also buffer based on its configuration. What's more, if you
-    use FastCGI, buffering can't be disabled at all.
+    server might also buffer based on its configuration. Some servers, such as
+    Nginx, let you disable buffering at config level or adding a special HTTP
+    header in the response::
+
+        // disables FastCGI buffering in Nginx only for this response
+        $response->headers->set('X-Accel-Buffering', 'no')
 
 .. _component-http-foundation-serving-files:
 
@@ -628,7 +632,6 @@ Learn More
     /components/http_foundation/*
     /controller
     /controller/*
-    /request/*
     /session/*
     /http_cache/*
 

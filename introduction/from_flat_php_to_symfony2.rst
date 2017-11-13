@@ -544,24 +544,25 @@ them for you. Here's the same sample application, now built in Symfony::
     // src/AppBundle/Controller/BlogController.php
     namespace AppBundle\Controller;
 
+    use AppBundle\Entity\Post;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Doctrine\ORM\EntityManagerInterface;
 
     class BlogController extends Controller
     {
-        public function listAction(EntityManagerInterface $em)
+        public function listAction()
         {
-            $posts = $em
+            $posts = $this->getDoctrine()
+                ->getManager()
                 ->createQuery('SELECT p FROM AppBundle:Post p')
                 ->execute();
 
             return $this->render('Blog/list.html.php', array('posts' => $posts));
         }
 
-        public function showAction(EntityManagerInterface $em)
+        public function showAction($id)
         {
-            $post = $em
-                ->getRepository('AppBundle:Post')
+            $post = $this->getDoctrine()
+                ->getRepository(Post::class)
                 ->find($id);
 
             if (!$post) {

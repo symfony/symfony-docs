@@ -7,7 +7,7 @@ How to Manage Common Dependencies with Parent Services
 As you add more functionality to your application, you may well start to
 have related classes that share some of the same dependencies. For example,
 you may have multiple repository classes which need the
-``doctrine.entity_manager`` service and an optional ``logger`` service::
+``doctrine.orm.entity_manager`` service and an optional ``logger`` service::
 
     // src/AppBundle/Repository/BaseDoctrineRepository.php
     namespace AppBundle\Repository;
@@ -31,6 +31,30 @@ you may have multiple repository classes which need the
         // ...
     }
 
+Your child service classes may look like this::
+
+    // src/AppBundle/Repository/DoctrineUserRepository.php
+    namespace AppBundle\Repository;
+
+    use AppBundle\Repository\BaseDoctrineRepository
+
+    // ...
+    class DoctrineUserRepository extends BaseDoctrineRepository
+    {
+        // ...
+    }
+
+    // src/AppBundle/Repository/DoctrinePostRepository.php
+    namespace AppBundle\Repository;
+
+    use AppBundle\Repository\BaseDoctrineRepository
+
+    // ...
+    class DoctrinePostRepository extends BaseDoctrineRepository
+    {
+        // ...
+    }
+
 Just as you use PHP inheritance to avoid duplication in your PHP code, the
 service container allows you to extend parent services in order to avoid
 duplicated service definitions:
@@ -42,7 +66,7 @@ duplicated service definitions:
         services:
             AppBundle\Repository\BaseDoctrineRepository:
                 abstract:  true
-                arguments: ['@doctrine.entity_manager']
+                arguments: ['@doctrine.orm.entity_manager']
                 calls:
                     - [setLogger, ['@logger']]
 
@@ -65,7 +89,7 @@ duplicated service definitions:
 
             <services>
                 <service id="AppBundle\Repository\BaseDoctrineRepository" abstract="true">
-                    <argument type="service" id="doctrine.entity_manager" />
+                    <argument type="service" id="doctrine.orm.entity_manager" />
 
                     <call method="setLogger">
                         <argument type="service" id="logger" />
@@ -95,7 +119,7 @@ duplicated service definitions:
 
         $container->register(BaseDoctrineRepository::class)
             ->setAbstract(true)
-            ->addArgument(new Reference('doctrine.entity_manager'))
+            ->addArgument(new Reference('doctrine.orm.entity_manager'))
             ->addMethodCall('setLogger', array(new Reference('logger')))
         ;
 

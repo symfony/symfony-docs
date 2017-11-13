@@ -111,7 +111,7 @@ example, in ``config_dev.yml``:
 
 Now, log messages will be shown on the console based on the log levels and verbosity.
 By default (normal verbosity level), warnings and higher will be shown. But in
-:doc:`full verbostiy mode </console/verbosity>`, all messages will be shown.
+:doc:`full verbosity mode </console/verbosity>`, all messages will be shown.
 
 .. _ConsoleHandler: https://github.com/symfony/MonologBridge/blob/master/Handler/ConsoleHandler.php
 .. _MonologBridge: https://github.com/symfony/MonologBridge

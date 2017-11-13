@@ -9,7 +9,7 @@ The Console component comes with a standalone logger complying with the
 be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance passed as a parameter to the constructor.
 
-The logger does not have any external dependency except ``php-fig/log``.
+The logger does not have any external dependency except ``psr/log``.
 This is useful for console applications and commands needing a lightweight
 PSR-3 compliant logger::
 

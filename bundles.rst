@@ -181,4 +181,4 @@ Learn more
 
     bundles/*
 
-_`third-party bundles`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories
+.. _`third-party bundles`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories

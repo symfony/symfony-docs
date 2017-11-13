@@ -10,11 +10,17 @@ applications by adding a version identifier to the URL of the static assets
 identifier is also modified to force the browser to download it again instead of
 reusing the cached asset.
 
-Symfony supports asset versioning thanks to the :ref:`version <reference-framework-assets-version>`
-and :ref:`version_format <reference-assets-version-format>` configuration
-options. If your application requires a more advanced versioning, such as
-generating the version dynamically based on some external information, you can
-create your own version strategy.
+If your application requires advanced versioning, such as generating the
+version dynamically based on some external information, you can create your
+own version strategy.
+
+.. note::
+
+    Symfony provides various cache busting implementations via the
+    :ref:`version <reference-framework-assets-version>`,
+    :ref:`version_format <reference-assets-version-format>`, and
+    :ref:`json_manifest_path <reference-assets-json-manifest-path>`
+    configuration options.
 
 Creating your Own Asset Version Strategy
 ----------------------------------------

@@ -6,6 +6,8 @@ working with CSS and JavaScript a joy. You can use it, use something else, or ju
 create static CSS and JS files in your ``web/`` directory and include them in your
 templates.
 
+.. _frontend-webpack-encore:
+
 Webpack Encore
 --------------
 
@@ -38,8 +40,10 @@ Adding more Features
 * :doc:`CSS Preprocessors: Sass, LESS, etc </frontend/encore/css-preprocessors>`
 * :doc:`PostCSS and autoprefixing </frontend/encore/postcss>`
 * :doc:`Enabling React.js </frontend/encore/reactjs>`
+* :doc:`Enabling Vue.js (vue-loader) </frontend/encore/vuejs>`
 * :doc:`Configuring Babel </frontend/encore/babel>`
 * :doc:`Source maps </frontend/encore/sourcemaps>`
+* :doc:`Enabling TypeScript (ts-loader) </frontend/encore/typescript>`
 
 Optimizing
 ..........
@@ -56,14 +60,31 @@ Guides
 * :doc:`jQuery and Legacy Applications </frontend/encore/legacy-apps>`
 * :doc:`Passing Information from Twig to JavaScript </frontend/encore/server-data>`
 * :doc:`webpack-dev-server and Hot Module Replacement (HMR) </frontend/encore/dev-server>`
+* :doc:`Adding custom loaders & plugins </frontend/encore/custom-loaders-plugins>`
+* :doc:`Advanced Webpack Configuration </frontend/encore/advanced-config>`
+
+Issues & Questions
+..................
+
+* :doc:`FAQ & Common Issues </frontend/encore/faq>`
+* :doc:`/frontend/encore/versus-assetic`
 
 Full API
 ........
 
 * `Full API`_: https://github.com/symfony/webpack-encore/blob/master/index.js
 
+Assetic
+-------
+
+Assetic is a pure PHP library that helps to process & optimize your assets (similar
+to Encore). Even though we recommend using Encore, Assetic still works great. For
+a comparison, see :doc:`/frontend/encore/versus-assetic`.
+
+For more about Assetic, see :doc:`/frontend/assetic`.
+
 Other Front-End Articles
-........................
+------------------------
 
 .. toctree::
     :hidden:

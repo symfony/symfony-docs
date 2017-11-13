@@ -78,8 +78,7 @@ and hidden with the service definition:
 
     .. code-block:: php
 
-        use AppBundle\Service\Mailer;
-        use Symfony\Component\DependencyInjection\Reference;
+        use AppBundle\Mailer;
 
         $container->setParameter('mailer.transport', 'sendmail');
 
@@ -242,9 +241,7 @@ See :doc:`/configuration/external_parameters`.
 Constants as Parameters
 -----------------------
 
-Setting PHP constants as parameters is also supported.
-To take advantage of this feature, map the name of your constant to a parameter
-key and define the type as ``constant``.
+Setting PHP constants as parameters is also supported:
 
 .. configuration-block::
 

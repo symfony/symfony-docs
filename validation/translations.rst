@@ -84,7 +84,7 @@ property is not empty, add the following:
             }
         }
 
-Now, create a ``valdiators`` catalog file in the ``app/Resources/translations`` directory:
+Now, create a ``validators`` catalog file in the ``app/Resources/translations`` directory:
 
 .. configuration-block::
 

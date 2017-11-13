@@ -166,20 +166,22 @@ all the classes are already loaded as services. All you need to do is specify th
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Mail\EmailConfigurator;
-        use AppBundle\Mail\EmailFormatterManager;
         use AppBundle\Mail\GreetingCardManager;
         use AppBundle\Mail\NewsletterManager;
+        use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
-        $container->autowire(EmailFormatterManager::class);
-        $container->autowire(EmailConfigurator::class);
+        // Same as before
+        $definition = new Definition();
 
-        $container->autowire(NewsletterManager::class)
+        $definition->setAutowired(true);
+
+        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*');
+
+        $container->getDefinition(NewsletterManager::class)
             ->setConfigurator(array(new Reference(EmailConfigurator::class), 'configure'));
 
-        $container->autowire(GreetingCardManager::class)
+        $container->getDefinition(GreetingCardManager::class)
             ->setConfigurator(array(new Reference(EmailConfigurator::class), 'configure'));
 
 

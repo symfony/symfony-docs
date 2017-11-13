@@ -32,7 +32,6 @@ in your service definition:
     .. code-block:: php
 
         // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
         use AppBundle\SomeNonSharedService;
 
         $container->register(SomeNonSharedService::class)

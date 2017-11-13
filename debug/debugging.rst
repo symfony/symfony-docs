@@ -61,6 +61,11 @@ cache files, or you can change the extension used by Symfony for these files::
 
     $kernel->loadClassCache('classes', '.php.cache');
 
+.. versionadded:: 3.3
+    The ``loadClassCache()`` was deprecated in Symfony 3.3 and removed in
+    Symfony 4.0. No alternative is provided because this feature is useless
+    when using PHP 7 or higher.
+
 Useful Debugging Commands
 -------------------------
 
@@ -68,12 +73,19 @@ When developing a large application, it can be hard to keep track of all the
 different services, routes and translations. Luckily, Symfony has some commands
 that can help you visualize and find the information.
 
+``about``
+    Shows information about the current project, such as the Symfony version,
+    the Kernel and PHP.
+
 ``debug:container``
     Displays information about the contents of the Symfony container for all public
     services. To find only those matching a name, append the name as an argument.
 
 ``debug:config``
     Shows all configured bundles, their class and their alias.
+
+``debug:event-dispatcher``
+    Displays information about all the registered listeners in the event dispatcher.
 
 ``debug:router``
     Displays information about all configured routes in the application as a

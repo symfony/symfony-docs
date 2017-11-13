@@ -135,10 +135,10 @@ For advanced Apache configuration options, read the official `Apache documentati
 Apache with PHP-FPM
 -------------------
 
-To make use of PHP5-FPM with Apache, you first have to ensure that you have
+To make use of PHP-FPM with Apache, you first have to ensure that you have
 the FastCGI process manager ``php-fpm`` binary and Apache's FastCGI module
 installed (for example, on a Debian based system you have to install the
-``libapache2-mod-fastcgi`` and ``php5-fpm`` packages).
+``libapache2-mod-fastcgi`` and ``php7.1-fpm`` packages).
 
 PHP-FPM uses so-called *pools* to handle incoming FastCGI requests. You can
 configure an arbitrary number of pools in the FPM configuration. In a pool
@@ -153,7 +153,7 @@ listen on. Each pool can also be run under a different UID and GID:
     group = www-data
 
     ; use a unix domain socket
-    listen = /var/run/php5-fpm.sock
+    listen = /var/run/php7.1-fpm.sock
 
     ; or listen on a TCP socket
     listen = 127.0.0.1:9000
@@ -223,10 +223,10 @@ should look something like this:
         ServerName domain.tld
         ServerAlias www.domain.tld
 
-        AddHandler php5-fcgi .php
-        Action php5-fcgi /php5-fcgi
-        Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi
-        FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
+        AddHandler php7-fcgi .php
+        Action php7-fcgi /php7-fcgi
+        Alias /php7-fcgi /usr/lib/cgi-bin/php7-fcgi
+        FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -host 127.0.0.1:9000 -pass-header Authorization
 
         DocumentRoot /var/www/project/web
         <Directory /var/www/project/web>
@@ -251,7 +251,7 @@ instead:
 
 .. code-block:: apache
 
-    FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization
+    FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -socket /var/run/php7.1-fpm.sock -pass-header Authorization
 
 .. _web-server-nginx:
 
@@ -274,7 +274,7 @@ The **minimum configuration** to get your application running under Nginx is:
         # This rule should only be placed on your development environment
         # In production, don't include this and don't deploy app_dev.php or config.php
         location ~ ^/(app_dev|config)\.php(/|$) {
-            fastcgi_pass unix:/var/run/php5-fpm.sock;
+            fastcgi_pass unix:/var/run/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             # When you are using symlinks to link the document root to the
@@ -289,7 +289,7 @@ The **minimum configuration** to get your application running under Nginx is:
         }
         # PROD
         location ~ ^/app\.php(/|$) {
-            fastcgi_pass unix:/var/run/php5-fpm.sock;
+            fastcgi_pass unix:/var/run/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             # When you are using symlinks to link the document root to the

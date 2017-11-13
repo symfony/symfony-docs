@@ -226,14 +226,13 @@ into the database::
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-    use Doctrine\ORM\EntityManagerInterface;
 
     class RegistrationController extends Controller
     {
         /**
          * @Route("/register", name="user_registration")
          */
-        public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
+        public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
         {
             // 1) build the form
             $user = new User();
@@ -248,6 +247,7 @@ into the database::
                 $user->setPassword($password);
 
                 // 4) save the User!
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
 

@@ -24,8 +24,31 @@ by the normal `webpack-dev-server`_. For example:
 
 This will start a server at ``https://localhost:9000``.
 
-.. note::
+Using dev-server inside a VM
+----------------------------
 
-    Hot module replacement is not currently supported.
+If you're using ``dev-server`` from inside a virtual machine, then you'll need
+to bind to all IP addresses and allow any host to access the server:
+
+.. code-block:: terminal
+
+    $ ./node_modules/.bin/encore dev-server --host 0.0.0.0 --disable-host-check
+
+You can now access the dev-server using the IP address to your virtual machine on
+port 8080 - e.g. http://192.168.1.1:8080.
+
+Hot Module Replacement HMR
+--------------------------
+
+Encore *does* support `HMR`_, but only in some areas. To activate it, pass the ``--hot``
+option:
+
+.. code-block:: terminal
+
+    $ ./node_modules/.bin/encore dev-server --hot
+
+HMR currently works for :doc:`Vue.js </frontend/encore/vuejs>`, but does *not* work
+for styles anywhere at this time.
 
 .. _`webpack-dev-server`: https://webpack.js.org/configuration/dev-server/
+.. _`HMR`: https://webpack.js.org/concepts/hot-module-replacement/

@@ -121,7 +121,7 @@ Now you can use the custom slugger in any controller class, such as the
         // $slugger = $this->get('app.slugger');
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $slug = $this->get('app.slugger')->slugify($post->getTitle());
+            $slug = $slugger->slugify($post->getTitle());
             $post->setSlug($slug);
 
             // ...

@@ -56,10 +56,16 @@ to register a new `test listener`_ called ``SymfonyTestsListener``:
 Usage
 -----
 
-Once the component is installed, it automatically registers a
-`PHPUnit event listener`_ which in turn registers a `PHP error handler`_
-called :class:`Symfony\\Bridge\\PhpUnit\\DeprecationErrorHandler`. After
-running your PHPUnit tests, you will get a report similar to this one:
+Once the component is installed, a ``simple-phpunit`` script is created in the
+``vendor/`` directory to run tests. This script wraps the original PHPUnit binary
+to provide more features:
+
+.. code-block:: terminal
+
+    $ cd my-project/
+    $ ./vendor/bin/simple-phpunit
+
+After running your PHPUnit tests, you will get a report similar to this one:
 
 .. image:: /_images/components/phpunit_bridge/report.png
 
@@ -75,6 +81,21 @@ The summary includes:
 **Remaining/Other**
     Deprecation notices are all other (non-legacy) notices, grouped by message,
     test class and method.
+
+.. note::
+
+    If you don't want to use the ``simple-phpunit`` script, register the following
+    `PHPUnit event listener`_ in your PHPUnit configuration file to get the same
+    report about deprecations (which is created by a `PHP error handler`_
+    called :class:`Symfony\\Bridge\\PhpUnit\\DeprecationErrorHandler`):
+
+    .. code-block:: xml
+
+        <!-- phpunit.xml.dist -->
+        <!-- ... -->
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        </listeners>
 
 Trigger Deprecation Notices
 ---------------------------
@@ -203,14 +224,14 @@ If you have this kind of time-related tests::
             sleep(10);
             $duration = $stopwatch->stop('event_name')->getDuration();
 
-            $this->assertEquals(10, $duration);
+            $this->assertEquals(10000, $duration);
         }
     }
 
 You used the :doc:`Symfony Stopwatch Component </components/stopwatch>` to
 calculate the duration time of your process, here 10 seconds. However, depending
 on the load of the server or the processes running on your local machine, the
-``$duration`` could for example be `10.000023s` instead of `10s`.
+``$duration`` could for example be ``10.000023s`` instead of ``10s``.
 
 This kind of tests are called transient tests: they are failing randomly
 depending on spurious and external circumstances. They are often cause trouble
