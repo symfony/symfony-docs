@@ -55,7 +55,6 @@ TwigBundle Configuration ("twig")
             paths:
                 '%kernel.project_dir%/vendor/acme/foo-bar/templates': foo_bar
 
-            # The following were added in Symfony 2.7.
             date:
                 format: d.m.Y, H:i:s
                 interval_format: '%%d days'
@@ -91,7 +90,7 @@ TwigBundle Configuration ("twig")
 
                 <twig:global key="foo" id="bar" type="service" />
                 <twig:global key="pi">3.14</twig:global>
-                
+
                 <twig:date format="d.m.Y, H:i:s" interval-format="%d days" timezone="Asia/Tokyo" />
                 <twig:number-format decimals="2" decimal-point="," thousands-separator="." />
 
