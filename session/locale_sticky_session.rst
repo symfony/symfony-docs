@@ -144,6 +144,7 @@ event:
 
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+    use Symfony\Component\Security\Http\SecurityEvents;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
     /**
@@ -169,6 +170,13 @@ event:
             if (null !== $user->getLocale()) {
                 $this->session->set('_locale', $user->getLocale());
             }
+        }
+
+        public static function getSubscribedEvents()
+        {
+            return array(
+                SecurityEvents::INTERACTIVE_LOGIN => array(array('onInteractiveLogin', 15)),
+            );
         }
     }
 
