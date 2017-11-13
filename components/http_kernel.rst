@@ -220,8 +220,8 @@ and is one of the constructor arguments to ``HttpKernel``.
    :align: center
 
 Your job is to create a class that implements the interface and fill in its
-two methods: ``getController()`` and ``getArguments()``. In fact, one default
-implementation already exists, which you can use directly or learn from:
+method: ``getController()``. In fact, one default implementation already
+exists, which you can use directly or learn from:
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`.
 This implementation is explained more in the sidebar below::
 
@@ -232,29 +232,14 @@ This implementation is explained more in the sidebar below::
     interface ControllerResolverInterface
     {
         public function getController(Request $request);
-
-        public function getArguments(Request $request, $controller);
     }
 
-.. caution::
-
-    The ``getArguments()`` method in the
-    :class:`Symfony\\Component\\Httpkernel\\Controller\\ControllerResolver` and
-    respective interface
-    :class:`Symfony\\Component\\Httpkernel\\Controller\\ControllerResolverInterface`
-    are deprecated as of 3.1 and will be removed in 4.0. You can use the
-    :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolver` which
-    uses the :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolverInterface`
-    instead.
 
 Internally, the ``HttpKernel::handle()`` method first calls
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getController`
 on the controller resolver. This method is passed the ``Request`` and is responsible
 for somehow determining and returning a PHP callable (the controller) based
 on the request's information.
-
-The second method, :method:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolverInterface::getArguments`,
-will be called after another event - ``kernel.controller`` - is dispatched.
 
 .. sidebar:: Resolving the Controller in the Symfony Framework
 
