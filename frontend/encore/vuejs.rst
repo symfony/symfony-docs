@@ -1,7 +1,6 @@
 Enabling Vue.js (vue-loader)
 ============================
 
-
 Want to use `Vue.js`_? No problem! First, install Vue and some dependencies:
 
 .. code-block:: terminal
@@ -38,10 +37,14 @@ also configure the `vue-loader options`_ via a callback:
 Building your first component
 -----------------------------
 
-Once Vue is installed and webpack.config.js has been updated, let's build our first component and display a simple ``Hello World from Vue !``, in order to ease the process, we gonna use the ``.vue`` files, let's start by adding a ``main.js`` file inside the assets folder : 
+Once Vue is installed and ``webpack.config.js`` has been updated, 
+let's build our first component and display a simple ``Hello World from Vue !``, 
+in order to ease the process, the usage of ``.vue`` files is recommended, 
+let's start by adding a ``main.js`` file inside the assets folder: 
 
 .. code-block:: javascript
 
+    <!-- assets/main.js -->
     import Vue from 'vue'
     import Hello from './components/Hello.vue'
 
@@ -50,7 +53,8 @@ Once Vue is installed and webpack.config.js has been updated, let's build our fi
         render: h => h(Hello)
     });
     
-This file's gonna call the component Hello from the components folder, once the component is found, Vue gonna instantiate a new Root component and attach your component to the HTML element who contain the app identifier.
+This file's gonna call the component Hello from the components folder, once the component is found, 
+Vue gonna instantiate a new Root component and attach your component to the HTML element who contain the app identifier.
 
 Now, let's build the Hello component : 
 
@@ -74,15 +78,20 @@ Now, let's build the Hello component :
         }
     </script>
 
-This component is pretty simple at this stage but once you're aware about Vue and his internal logic, you can easily integrate it into your own Twig views and logic.
+This component is pretty simple at this stage but once you're aware about Vue and his internal logic, 
+you can easily integrate it into your own Twig views and logic.
 
-Now that our component is ready and that our Vue instance is configured, let's use Encore to build everything and call Vue inside our views, in order to ease the process, let's use the watcher : 
+Now that our component is ready and that our Vue instance is configured, 
+let's use Encore to build everything and call Vue inside our views, 
+in order to ease the process, let's use the watcher : 
 
 .. code-block:: terminal
 
   $ ./node_modules/.bin/encore dev --watch
 
-If everything goes right, Encore should compile ``main.js`` and produce a new ``main.js`` file inside the ``public/build`` directory, once the file is packed into the folder, let's call it inside our Twig views : 
+If everything goes right, Encore should compile ``main.js`` and produce a new ``main.js`` file 
+inside the ``public/build`` directory, once the file is packed into the folder, 
+let's call it inside our Twig views : 
 
 .. code-block:: twig
 
