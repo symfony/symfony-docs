@@ -27,16 +27,16 @@ three parts that work together:
 The Front Controller
 --------------------
 
-The `front controller`_ is a well-known design pattern; it is a section of
-code that *all* requests served by an application run through.
+The `front controller`_ is a design pattern; it is a section of code that *all*
+requests served by an application run through.
 
-In the `Symfony Standard Edition`_, this role is taken by the `index.php`_ file
-in the ``public/`` directory. This is the very first PHP script executed when a
+In the Symfony Skeleton, this role is taken by the `index.php`_ file in the
+``public/`` directory. This is the very first PHP script executed when a
 request is processed.
 
 The main purpose of the front controller is to create an instance of the
-``AppKernel`` (more on that in a second), make it handle the request
-and return the resulting response to the browser.
+``Kernel`` (more on that in a second), make it handle the request and return
+the resulting response to the browser.
 
 Because every request is routed through it, the front controller can be
 used to perform global initialization prior to setting up the kernel or
@@ -47,32 +47,22 @@ to `decorate`_ the kernel with additional features. Examples include:
   :ref:`AppCache <symfony-gateway-cache>`;
 * Enabling the :doc:`Debug Component </components/debug>`.
 
-The front controller can be chosen by requesting URLs like:
+You can choose the front controller that's used by adding it in the URL, like:
 
 .. code-block:: text
 
-     http://localhost/app_dev.php/some/path/...
+     http://localhost/index.php/some/path/...
 
 As you can see, this URL contains the PHP script to be used as the front
-controller. You can use that to easily switch the front controller or use
-a custom one by placing it in the ``web/`` directory (e.g. ``app_cache.php``).
+controller. You can use that to easily switch to a custom made front controller
+that is located in the ``public/`` directory or e.g. access the ``check.php``
+file.
 
-When using Apache and the `RewriteRule shipped with the Symfony Standard Edition`_,
-you can omit the filename from the URL and the RewriteRule will use ``app.php``
-as the default one.
+.. seealso::
 
-.. note::
-
-    Pretty much every other web server should be able to achieve a
-    behavior similar to that of the RewriteRule described above.
-    Check your server documentation for details or see
+    You almost never want to show the front controller in the URL. This is
+    achieved by configuring the web server, as shown in
     :doc:`/setup/web_server_configuration`.
-
-.. note::
-
-    Make sure you appropriately secure your front controllers against unauthorized
-    access. For example, you don't want to make a debugging environment
-    available to arbitrary users in your production environment.
 
 Technically, the `bin/console`_ script used when running Symfony on the command
 line is also a front controller, only that is not used for web, but for command
@@ -164,5 +154,4 @@ way of loading your configuration.
 .. _bin/console: https://github.com/symfony/symfony-standard/blob/master/bin/console
 .. _AppKernel: https://github.com/symfony/symfony-standard/blob/master/app/AppKernel.php
 .. _decorate: https://en.wikipedia.org/wiki/Decorator_pattern
-.. _RewriteRule shipped with the Symfony Standard Edition: https://github.com/symfony/symfony-standard/blob/master/web/.htaccess
 .. _template methods: https://en.wikipedia.org/wiki/Template_method_pattern
