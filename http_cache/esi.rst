@@ -129,7 +129,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
         {# templates/static/about.html.twig #}
 
         {# you can use a controller reference #}
-        {{ render_esi(controller('AppBundle:News:latest', { 'maxPerPage': 5 })) }}
+        {{ render_esi(controller('App\Controller\NewsController::latest', { 'maxPerPage': 5 })) }}
 
         {# ... or a URL #}
         {{ render_esi(url('latest_news', { 'maxPerPage': 5 })) }}

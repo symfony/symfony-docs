@@ -73,7 +73,7 @@ entities, ordered alphabetically by name.
         {
             return $this->getEntityManager()
                 ->createQuery(
-                    'SELECT p FROM AppBundle:Product p ORDER BY p.name ASC'
+                    'SELECT p FROM App:Product p ORDER BY p.name ASC'
                 )
                 ->getResult();
         }

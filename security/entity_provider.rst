@@ -199,7 +199,7 @@ the username and then check the password (more on passwords in a moment):
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             encoders:
                 App\Entity\User:
@@ -210,7 +210,7 @@ the username and then check the password (more on passwords in a moment):
             providers:
                 our_db_provider:
                     entity:
-                        class: AppBundle:User
+                        class: App\Entity\User
                         property: username
                         # if you're using multiple entity managers
                         # manager_name: customer
@@ -225,7 +225,7 @@ the username and then check the password (more on passwords in a moment):
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -241,7 +241,7 @@ the username and then check the password (more on passwords in a moment):
                 <provider name="our_db_provider">
                     <!-- if you're using multiple entity managers, add:
                          manager-name="customer" -->
-                    <entity class="AppBundle:User" property="username" />
+                    <entity class="App\Entity\User" property="username" />
                 </provider>
 
                 <firewall name="main" pattern="^/" provider="our_db_provider">
@@ -254,7 +254,7 @@ the username and then check the password (more on passwords in a moment):
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use App\Entity\User;
 
         $container->loadFromExtension('security', array(
@@ -269,7 +269,7 @@ the username and then check the password (more on passwords in a moment):
             'providers' => array(
                 'our_db_provider' => array(
                     'entity' => array(
-                        'class'    => 'AppBundle:User',
+                        'class'    => User::class,
                         'property' => 'username',
                     ),
                 ),
@@ -288,7 +288,7 @@ the username and then check the password (more on passwords in a moment):
 First, the ``encoders`` section tells Symfony to expect that the passwords
 in the database will be encoded using ``bcrypt``. Second, the ``providers``
 section creates a "user provider" called ``our_db_provider`` that knows to
-query from your ``AppBundle:User`` entity by the ``username`` property. The
+query from your ``App\Entity\User`` entity by the ``username`` property. The
 name ``our_db_provider`` isn't important: it just needs to match the value
 of the ``provider`` key under your firewall. Or, if you don't set the ``provider``
 key under your firewall, the first "user provider" is automatically used.
@@ -458,18 +458,18 @@ To finish this, just remove the ``property`` key from the user provider in
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
             providers:
                 our_db_provider:
                     entity:
-                        class: AppBundle:User
+                        class: App\Entity\User
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -481,21 +481,23 @@ To finish this, just remove the ``property`` key from the user provider in
                 <!-- ... -->
 
                 <provider name="our_db_provider">
-                    <entity class="AppBundle:User" />
+                    <entity class="App\Entity\User" />
                 </provider>
             </config>
         </srv:container>
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
+        use App\Entity\User;
+
         $container->loadFromExtension('security', array(
             // ...
 
             'providers' => array(
                 'our_db_provider' => array(
                     'entity' => array(
-                        'class' => 'AppBundle:User',
+                        'class' => User::class,
                     ),
                 ),
             ),

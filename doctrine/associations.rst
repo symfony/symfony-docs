@@ -15,7 +15,7 @@ the class for you.
 .. code-block:: terminal
 
     $ php bin/console doctrine:generate:entity --no-interaction \
-        --entity="AppBundle:Category" \
+        --entity="App:Category" \
         --fields="name:string(255)"
 
 This command generates the ``Category`` entity for you, with an ``id`` field,
@@ -332,7 +332,7 @@ to the given ``Category`` object via their ``category_id`` value.
 
         $category = $product->getCategory();
 
-        // prints "Proxies\AppBundleEntityCategoryProxy"
+        // prints "Proxies\AppEntityCategoryProxy"
         dump(get_class($category));
         die();
 
@@ -370,7 +370,7 @@ following method to the ``ProductRepository`` class::
     {
         $query = $this->getEntityManager()
             ->createQuery(
-            'SELECT p, c FROM AppBundle:Product p
+            'SELECT p, c FROM App:Product p
             JOIN p.category c
             WHERE p.id = :id'
         )->setParameter('id', $productId);
