@@ -130,13 +130,13 @@ the framework:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/translation.yaml
         framework:
             default_locale: en
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/translation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -151,7 +151,7 @@ the framework:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/translation.php
         $container->loadFromExtension('framework', array(
             'default_locale' => 'en',
         ));

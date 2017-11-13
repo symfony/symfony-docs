@@ -88,6 +88,7 @@ Configuration
     * :ref:`enabled <reference-translator-enabled>`
     * `fallbacks`_
     * `logging`_
+    * `default_path`_
     * :ref:`paths <reference-translator-paths>`
 * `property_access`_
     * `magic_call`_
@@ -1506,6 +1507,16 @@ for a given key. The logs are made to the ``translation`` channel and at the
 ``debug`` for level for keys where there is a translation in the fallback
 locale and the ``warning`` level if there is no translation to use at all.
 
+.. _reference-translator-default_path:
+
+default_path
+............
+
+**type**: ``string`` **default**: ``'%kernel.project_dir%/config/translations'``
+
+This option defines the default path where the component will look for translation
+files.
+
 .. _reference-translator-paths:
 
 paths
@@ -2004,6 +2015,7 @@ Full Default Configuration
                 enabled:              false
                 fallbacks:            [en]
                 logging:              "%kernel.debug%"
+                default_path:         '%kernel.project_dir%/translations'
                 paths:                []
 
             # validation configuration
