@@ -67,7 +67,7 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: xml
 
-        <!-- # config/packages/workflow.xml -->
+        <!-- config/packages/workflow.xml -->
         <?xml version="1.0" encoding="utf-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
