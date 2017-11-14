@@ -19,7 +19,7 @@ follow these conventions (but later you'll learn how to skip them if needed):
 * It has to live in the ``DependencyInjection`` namespace of the bundle;
 
 * It has to implement the :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`,
-  which is usually achieve by extending the
+  which is usually achieved by extending the
   :class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension` class;
 
 * The name is equal to the bundle name with the ``Bundle`` suffix replaced by
