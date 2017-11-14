@@ -129,11 +129,13 @@ Then, define the chain as a service:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             App\Mail\TransportChain: ~
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -147,6 +149,7 @@ Then, define the chain as a service:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Mail\TransportChain;
 
         $container->autowire(TransportChain::class);
@@ -162,6 +165,7 @@ For example, you may add the following transports as services:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             Swift_SmtpTransport:
                 arguments: ['%mailer_host%']
@@ -172,6 +176,7 @@ For example, you may add the following transports as services:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -193,6 +198,7 @@ For example, you may add the following transports as services:
 
     .. code-block:: php
 
+        // config/services.php
         $container->register(\Swift_SmtpTransport::class)
             ->addArgument('%mailer_host%')
             ->addTag('app.mail_transport');
@@ -245,18 +251,18 @@ Register the Pass with the Container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to run the compiler pass when the container is compiled, you have to
-add the compiler pass to the container in the ``build()`` method of your
-bundle::
+add the compiler pass to the container in a :doc:`bundle extension </bundles/extension>`
+or from your kernel::
 
-    // src/AppBundle.php
-
-    // ...
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    // src/Kernel.php
     use App\DependencyInjection\Compiler\MailTransportPass;
+    // ...
 
-    class AppBundle extends Bundle
+    class Kernel extends Kernel
     {
-        public function build(ContainerBuilder $container)
+        // ...
+
+        protected function build(ContainerBuilder $container)
         {
             $container->addCompilerPass(new MailTransportPass());
         }
@@ -310,6 +316,7 @@ To answer this, change the service declaration:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             Swift_SmtpTransport:
                 arguments: ['%mailer_host%']
@@ -322,6 +329,7 @@ To answer this, change the service declaration:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -343,6 +351,7 @@ To answer this, change the service declaration:
 
     .. code-block:: php
 
+        // config/services.php
         $container->register(\Swift_SmtpTransport::class)
             ->addArgument('%mailer_host%')
             ->addTag('app.mail_transport', array('alias' => 'foo'));
@@ -358,8 +367,8 @@ To answer this, change the service declaration:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
-
             # Compact syntax
             Swift_SendmailTransport:
                 class: \Swift_SendmailTransport
