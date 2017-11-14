@@ -1,8 +1,15 @@
 .. index::
     single: Workflow; Usage
 
-How to Use the Workflow
-=======================
+How to Create and Use Workflows
+===============================
+
+Before creating your first workflow, execute this command to install the
+:doc:`Workflow component </components/workflow>` in your application:
+
+.. code-block:: terminal
+
+    $ composer require workflow
 
 A workflow is a process or a lifecycle that your objects go through. Each
 step or stage in the process is called a *place*. You do also define *transitions*
@@ -14,15 +21,15 @@ A set of places and transitions creates a **definition**. A workflow needs
 a ``Definition`` and a way to write the states to the objects (i.e. an
 instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`.)
 
-Consider the following example for a blog post. A post can have places:
-'draft', 'review', 'rejected', 'published'. You can define the workflow
+Consider the following example for a blog post that can have these places:
+``draft``, ``review``, ``rejected``, ``published``. You can define the workflow
 like this:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/workflow.yaml
         framework:
             workflows:
                 blog_publishing:
@@ -51,7 +58,7 @@ like this:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/workflow.xml -->
         <?xml version="1.0" encoding="utf-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -98,7 +105,7 @@ like this:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/workflow.php
 
         $container->loadFromExtension('framework', array(
             // ...
@@ -152,28 +159,43 @@ like this:
 
 .. tip::
 
-    The ``type`` (default value ``single_state``) and ``arguments`` (default value ``marking``)
-    attributes of the ``marking_store`` option are optional. If omitted, their default values
-    will be used.
+    The ``type`` (default value ``single_state``) and ``arguments`` (default
+    value ``marking``) attributes of the ``marking_store`` option are optional.
+    If omitted, their default values will be used.
 
-With this workflow named ``blog_publishing``, you can get help to decide
-what actions are allowed on a blog post::
+With this workflow named ``blog_publishing``, you can now decide what actions
+are allowed on a blog post. For example, inside a controller of an application
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+you can get the workflow by injecting the Workflow registry service::
 
-    $post = new \App\Entity\BlogPost();
+    // ...
+    use Symfony\Component\Workflow\Registry;
 
-    $workflow = $this->container->get('workflow.blog_publishing');
-    $workflow->can($post, 'publish'); // False
-    $workflow->can($post, 'to_review'); // True
+    class BlogController
+    {
+        public function edit(Registry $workflows)
+        {
+            $post = new \App\Entity\BlogPost();
+            $workflow = $workflows->get($post);
 
-    // Update the currentState on the post
-    try {
-        $workflow->apply($post, 'to_review');
-    } catch (LogicException $e) {
-        // ...
+            // if there are multiple workflows for the same class,
+            // pass the workflow name as the second argument
+            // $workflow = $workflows->get($post, 'blog_publishing');
+
+            $workflow->can($post, 'publish'); // False
+            $workflow->can($post, 'to_review'); // True
+
+            // Update the currentState on the post
+            try {
+                $workflow->apply($post, 'to_review');
+            } catch (LogicException $e) {
+                // ...
+            }
+
+            // See all the available transition for the post in the current state
+            $transitions = $workflow->getEnabledTransitions($post);
+        }
     }
-
-    // See all the available transition for the post in the current state
-    $transitions = $workflow->getEnabledTransitions($post);
 
 Using Events
 ------------
@@ -250,7 +272,8 @@ order:
     * ``workflow.[workflow name].announce``
     * ``workflow.[workflow name].announce.[transition name]``
 
-Here is an example how to enable logging for every time a the "blog_publishing" workflow leaves a place::
+Here is an example how to enable logging for every time the ``blog_publishing``
+workflow leaves a place::
 
     use Psr\Log\LoggerInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;

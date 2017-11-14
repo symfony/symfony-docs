@@ -28,7 +28,7 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/workflow.yaml
         framework:
             workflows:
                 pull_request:
@@ -67,7 +67,7 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- # config/packages/workflow.xml -->
         <?xml version="1.0" encoding="utf-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -140,8 +140,7 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: php
 
-        // app/config/config.php
-
+        // # config/packages/workflow.php
         $container->loadFromExtension('framework', array(
             // ...
             'workflows' => array(
@@ -190,8 +189,23 @@ Below is the configuration for the pull request state machine.
             ),
         ));
 
-You can now use this state machine by getting the ``state_machine.pull_request`` service::
+In a Symfony application using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+you can get this state machine by injecting the Workflow registry service::
 
-    $stateMachine = $this->container->get('state_machine.pull_request');
+    // ...
+    use Symfony\Component\Workflow\Registry;
+
+    class SomeService
+    {
+        private $stateMachine;
+
+        public function __constructor(Registry $workflows)
+        {
+            $this->stateMachine = $workflows->get('pull_request');
+        }
+
+        // ...
+    }
 
 .. _Petri net: https://en.wikipedia.org/wiki/Petri_net
