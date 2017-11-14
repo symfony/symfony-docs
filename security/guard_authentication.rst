@@ -83,21 +83,21 @@ Next, make sure you've configured a "user provider" for the user:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
             providers:
                 your_db_provider:
                     entity:
-                        class: AppBundle:User
+                        class: App\Entity\User
                         property: apiKey
 
             # ...
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -109,7 +109,7 @@ Next, make sure you've configured a "user provider" for the user:
                 <!-- ... -->
 
                 <provider name="your_db_provider">
-                    <entity class="AppBundle:User" />
+                    <entity class="App\Entity\User" />
                 </provider>
 
                 <!-- ... -->
@@ -118,14 +118,16 @@ Next, make sure you've configured a "user provider" for the user:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
+        use App\Entity\User;
+
         $container->loadFromExtension('security', array(
             // ...
 
             'providers' => array(
                 'your_db_provider' => array(
                     'entity' => array(
-                        'class' => 'AppBundle:User',
+                        'class' => User::class,
                     ),
                 ),
             ),

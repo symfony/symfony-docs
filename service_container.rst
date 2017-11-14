@@ -183,7 +183,7 @@ each time you ask for it.
                     autoconfigure: true
                     public: false
 
-                # makes classes in src/AppBundle available to be used as services
+                # makes classes in src/ available to be used as services
                 App\:
                     resource: '../../src/*'
                     # you can exclude directories or files
@@ -231,7 +231,7 @@ each time you ask for it.
         `glob pattern`_.
 
     Thanks to this configuration, you can automatically use any classes from the
-    ``src/AppBundle`` directory as a service, without needing to manually configure
+    ``src/`` directory as a service, without needing to manually configure
     it. Later, you'll learn more about this in :ref:`service-psr4-loader`.
 
     If you'd prefer to manually wire your service, that's totally possible: see
@@ -363,7 +363,7 @@ made. To do that, you create a new class::
     }
 
 This uses the ``MessageGenerator`` *and* the ``Swift_Mailer`` service. As long as
-you're :ref:`loading all services from src/AppBundle <service-container-services-load-example>`,
+you're :ref:`loading all services from src/ <service-container-services-load-example>`,
 you can use the service immediately::
 
     use App\Updates\SiteUpdateManager;
@@ -922,11 +922,11 @@ them will not cause the container to be rebuilt.
 
 .. note::
 
-    Wait, does this mean that *every* class in ``src/AppBundle`` is registered as
+    Wait, does this mean that *every* class in ``src/`` is registered as
     a service? Even model or entity classes? Actually, no. As long as you have
     ``public: false`` under your ``_defaults`` key (or you can add it under the
     specific import), all the imported services are *private*. Thanks to this, all
-    classes in ``src/AppBundle`` that are *not* explicitly used as services are
+    classes in ``src/`` that are *not* explicitly used as services are
     automatically removed from the final container. In reality, the import simply
     means that all classes are "available to be *used* as services" without needing
     to be manually configured.
@@ -1036,7 +1036,7 @@ If you want to pass the second, you'll need to :ref:`manually wire the service <
 
 .. caution::
 
-    If you do *not* create the alias and are :ref:`loading all services from src/AppBundle <service-container-services-load-example>`,
+    If you do *not* create the alias and are :ref:`loading all services from src/ <service-container-services-load-example>`,
     then *three* services have been created (the automatic service + your two services)
     and the automatically loaded service will be passed - by default - when you type-hint
     ``SiteUpdateManager``. That's why creating the alias is a good idea.

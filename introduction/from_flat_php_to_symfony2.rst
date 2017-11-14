@@ -553,7 +553,7 @@ them for you. Here's the same sample application, now built in Symfony::
         {
             $posts = $this->getDoctrine()
                 ->getManager()
-                ->createQuery('SELECT p FROM AppBundle:Post p')
+                ->createQuery('SELECT p FROM App:Post p')
                 ->execute();
 
             return $this->render('Blog/list.html.php', array('posts' => $posts));
