@@ -77,6 +77,7 @@
 /book/configuration /configuration
 /book/propel /propel/propel
 /book/performance /performance
+/bundles/installation /bundles
 /cookbook/assetic/apply_to_option /frontend/assetic/apply_to_option
 /cookbook/assetic/asset_management /frontend/assetic/asset_management
 /cookbook/assetic/index /frontend/assetic
