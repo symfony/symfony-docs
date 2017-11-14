@@ -41,7 +41,7 @@ early to stop the handling of the request.
 Execute this command to know the listeners registered to this event and their
 priorities:
 
-.. terminal::
+.. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.request
 
@@ -72,7 +72,7 @@ entirely::
 Execute this command to know the listeners registered to this event and their
 priorities:
 
-.. terminal::
+.. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.controller
 
@@ -106,7 +106,7 @@ HTML contents) into the ``Response`` object needed by Symfony::
 Execute this command to know the listeners registered to this event and their
 priorities:
 
-.. terminal::
+.. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.view
 
@@ -133,7 +133,7 @@ before sending it back (e.g. add/modify HTTP headers, add cookies, etc.)::
 Execute this command to know the listeners registered to this event and their
 priorities:
 
-.. terminal::
+.. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.response
 
@@ -160,7 +160,7 @@ the parent request)::
 Execute this command to know the listeners registered to this event and their
 priorities:
 
-.. terminal::
+.. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.finish_request
 
@@ -181,7 +181,7 @@ send the response (e.g. sending emails).
 Execute this command to know the listeners registered to this event and their
 priorities:
 
-.. terminal::
+.. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.terminate
 
@@ -241,7 +241,7 @@ sent as response::
 Execute this command to know the listeners registered to this event and their
 priorities:
 
-.. terminal::
+.. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.exception
 
