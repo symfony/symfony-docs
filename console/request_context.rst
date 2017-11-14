@@ -36,6 +36,7 @@ will override the defaults.
             router.request_context.host: example.org
             router.request_context.scheme: https
             router.request_context.base_url: my/path
+            asset.request_context.base_path: %router.request_context.base_url%
 
     .. code-block:: xml
 
@@ -48,6 +49,7 @@ will override the defaults.
                 <parameter key="router.request_context.host">example.org</parameter>
                 <parameter key="router.request_context.scheme">https</parameter>
                 <parameter key="router.request_context.base_url">my/path</parameter>
+                <parameter key="asset.request_context.base_path">%router.request_context.base_url%</parameter>
             </parameters>
 
         </container>
@@ -58,6 +60,7 @@ will override the defaults.
         $container->setParameter('router.request_context.host', 'example.org');
         $container->setParameter('router.request_context.scheme', 'https');
         $container->setParameter('router.request_context.base_url', 'my/path');
+        $container->setParameter('asset.request_context.base_path', $container->getParameter('router.request_context.base_url'));
 
 Configuring the Request Context per Command
 -------------------------------------------
