@@ -203,5 +203,9 @@ that you store them outside the Symfony project and make them available
 through environment variables. Learn how to do it in the following article:
 :doc:`/configuration/external_parameters`.
 
+----
+
+Next: :doc:`/best_practices/business-logic`
+
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html
