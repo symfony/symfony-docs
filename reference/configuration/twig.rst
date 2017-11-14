@@ -55,7 +55,6 @@ TwigBundle Configuration ("twig")
             paths:
                 '%kernel.project_dir%/vendor/acme/foo-bar/templates': foo_bar
 
-            # The following were added in Symfony 2.7.
             date:
                 format: d.m.Y, H:i:s
                 interval_format: '%%d days'
