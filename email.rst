@@ -45,7 +45,7 @@ required to connect to the mail server. Those parameters are defined in the
     # use this to configure a traditional SMTP server
     MAILER_URL=smtp://localhost:25?encryption=ssl&auth_mode=login&username=&password=
 
-Refer to the :doc:`SwiftMailer configuration reference </reference/configuration/swiftmailer.yml>`
+Refer to the :doc:`SwiftMailer configuration reference </reference/configuration/swiftmailer>`
 for the detailed explanation of all the available config options.
 
 Sending Emails
