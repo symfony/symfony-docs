@@ -96,7 +96,7 @@
 /cookbook/bundles/extension /bundles/extension
 /cookbook/bundles/index /bundles
 /cookbook/bundles/inheritance /bundles/inheritance
-/cookbook/bundles/installation /bundles/installation
+/cookbook/bundles/installation /bundles
 /cookbook/bundles/override /bundles/override
 /cookbook/bundles/prepend_extension /bundles/prepend_extension
 /cookbook/bundles/remove /bundles/remove
