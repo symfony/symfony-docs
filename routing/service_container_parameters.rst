@@ -21,7 +21,7 @@ inside your routing configuration:
         # config/routes.yaml
         contact:
             path:     /{_locale}/contact
-            defaults: { _controller: AppBundle:Main:contact }
+            defaults: { _controller: App\Controller\MainController::contact }
             requirements:
                 _locale: '%app.locales%'
 
@@ -35,7 +35,7 @@ inside your routing configuration:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" path="/{_locale}/contact">
-                <default key="_controller">AppBundle:Main:contact</default>
+                <default key="_controller">App\Controller\MainController::contact</default>
                 <requirement key="_locale">%app.locales%</requirement>
             </route>
         </routes>
@@ -48,7 +48,7 @@ inside your routing configuration:
 
         $collection = new RouteCollection();
         $collection->add('contact', new Route('/{_locale}/contact', array(
-            '_controller' => 'AppBundle:Main:contact',
+            '_controller' => 'App\Controller\MainController::contact',
         ), array(
             '_locale' => '%app.locales%',
         )));
@@ -62,13 +62,13 @@ in your container:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/services.yaml
         parameters:
             app.locales: en|es
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -82,7 +82,7 @@ in your container:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/services.php
         $container->setParameter('app.locales', 'en|es');
 
 You can also use a parameter to define your route path (or part of your
@@ -95,7 +95,7 @@ path):
         # config/routes.yaml
         some_route:
             path:     /%app.route_prefix%/contact
-            defaults: { _controller: AppBundle:Main:contact }
+            defaults: { _controller: App\Controller\MainController::contact }
 
     .. code-block:: xml
 
@@ -107,7 +107,7 @@ path):
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="some_route" path="/%app.route_prefix%/contact">
-                <default key="_controller">AppBundle:Main:contact</default>
+                <default key="_controller">App\Controller\MainController::contact</default>
             </route>
         </routes>
 
@@ -119,7 +119,7 @@ path):
 
         $collection = new RouteCollection();
         $collection->add('some_route', new Route('/%app.route_prefix%/contact', array(
-            '_controller' => 'AppBundle:Main:contact',
+            '_controller' => 'App\Controller\MainController::contact',
         )));
 
         return $collection;

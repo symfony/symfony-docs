@@ -17,7 +17,7 @@ to your controller, and as attributes of the ``Request`` object:
         blog:
             path:      /blog/{page}
             defaults:
-                _controller: AppBundle:Blog:index
+                _controller: App\Controller\BlogController::index
                 page:        1
                 title:       "Hello world!"
 
@@ -31,7 +31,7 @@ to your controller, and as attributes of the ``Request`` object:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog/{page}">
-                <default key="_controller">AppBundle:Blog:index</default>
+                <default key="_controller">App\Controller\BlogController::index</default>
                 <default key="page">1</default>
                 <default key="title">Hello world!</default>
             </route>
@@ -45,7 +45,7 @@ to your controller, and as attributes of the ``Request`` object:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AppBundle:Blog:index',
+            '_controller' => 'App\Controller\BlogController::index',
             'page'        => 1,
             'title'       => 'Hello world!',
         )));
@@ -55,7 +55,7 @@ to your controller, and as attributes of the ``Request`` object:
 Now, you can access this extra parameter in your controller, as an argument
 to the controller method::
 
-    public function indexAction($page, $title)
+    public function index($page, $title)
     {
         // ...
     }
@@ -63,8 +63,8 @@ to the controller method::
 Alternatively, the title could be accessed through the ``Request`` object::
 
     use Symfony\Component\HttpFoundation\Request;
-    
-    public function indexAction(Request $request, $page)
+
+    public function index(Request $request, $page)
     {
         $title = $request->attributes->get('title');
 

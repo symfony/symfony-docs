@@ -12,13 +12,15 @@ define arbitrary matching logic, use the ``conditions`` routing option:
 
     .. code-block:: yaml
 
+        # config/routes.yaml
         contact:
             path:     /contact
-            defaults: { _controller: AcmeDemoBundle:Main:contact }
+            defaults: { _controller: 'App\Controller\DefaultController::contact' }
             condition: "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
 
     .. code-block:: xml
 
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -26,20 +28,21 @@ define arbitrary matching logic, use the ``conditions`` routing option:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" path="/contact">
-                <default key="_controller">AcmeDemoBundle:Main:contact</default>
+                <default key="_controller">App\Controller\DefaultController::contact</default>
                 <condition>context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'</condition>
             </route>
         </routes>
 
     .. code-block:: php
 
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('contact', new Route(
             '/contact', array(
-                '_controller' => 'AcmeDemoBundle:Main:contact',
+                '_controller' => 'App\Controller\DefaultController::contact',
             ),
             array(),
             array(),

@@ -21,7 +21,7 @@ the available blog posts for this imaginary blog application:
             /**
              * @Route("/blog")
              */
-            public function indexAction()
+            public function index()
             {
                 // ...
             }
@@ -32,7 +32,7 @@ the available blog posts for this imaginary blog application:
         # config/routes.yaml
         blog:
             path:      /blog
-            defaults:  { _controller: AppBundle:Blog:index }
+            defaults:  { _controller: App\Controller\BlogController::index }
 
     .. code-block:: xml
 
@@ -44,7 +44,7 @@ the available blog posts for this imaginary blog application:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog">
-                <default key="_controller">AppBundle:Blog:index</default>
+                <default key="_controller">App\Controller\BlogController::index</default>
             </route>
         </routes>
 
@@ -56,7 +56,7 @@ the available blog posts for this imaginary blog application:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog', array(
-            '_controller' => 'AppBundle:Blog:index',
+            '_controller' => 'App\Controller\BlogController::index',
         )));
 
         return $collection;
@@ -77,7 +77,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
         /**
          * @Route("/blog/{page}")
          */
-        public function indexAction($page)
+        public function index($page)
         {
             // ...
         }
@@ -87,7 +87,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
         # config/routes.yaml
         blog:
             path:      /blog/{page}
-            defaults:  { _controller: AppBundle:Blog:index }
+            defaults:  { _controller: App\Controller\BlogController::index }
 
     .. code-block:: xml
 
@@ -99,7 +99,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog/{page}">
-                <default key="_controller">AppBundle:Blog:index</default>
+                <default key="_controller">App\Controller\BlogController::index</default>
             </route>
         </routes>
 
@@ -111,7 +111,7 @@ entries? Update the route to have a new ``{page}`` placeholder:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AppBundle:Blog:index',
+            '_controller' => 'App\Controller\BlogController::index',
         )));
 
         return $collection;
@@ -137,7 +137,7 @@ This is done by including it in the ``defaults`` collection:
         /**
          * @Route("/blog/{page}", defaults={"page" = 1})
          */
-        public function indexAction($page)
+        public function index($page)
         {
             // ...
         }
@@ -147,7 +147,7 @@ This is done by including it in the ``defaults`` collection:
         # config/routes.yaml
         blog:
             path:      /blog/{page}
-            defaults:  { _controller: AppBundle:Blog:index, page: 1 }
+            defaults:  { _controller: App\Controller\BlogController::index, page: 1 }
 
     .. code-block:: xml
 
@@ -159,7 +159,7 @@ This is done by including it in the ``defaults`` collection:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog/{page}">
-                <default key="_controller">AppBundle:Blog:index</default>
+                <default key="_controller">App\Controller\BlogController::index</default>
                 <default key="page">1</default>
             </route>
         </routes>
@@ -172,7 +172,7 @@ This is done by including it in the ``defaults`` collection:
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AppBundle:Blog:index',
+            '_controller' => 'App\Controller\BlogController::index',
             'page'        => 1,
         )));
 
