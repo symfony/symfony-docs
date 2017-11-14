@@ -125,7 +125,7 @@ library or strategy you want for this.
 In practice, many Symfony applications rely on the independent
 `Doctrine project`_ to define their model using entities and repositories.
 Just like with business logic, we recommend storing Doctrine entities in the
-AppBundle.
+``src/`` directory.
 
 The three entities defined by our sample blog application are a good example:
 
