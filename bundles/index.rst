@@ -6,7 +6,6 @@ Bundles
 .. toctree::
     :maxdepth: 2
 
-    installation
     remove
     override
     inheritance
