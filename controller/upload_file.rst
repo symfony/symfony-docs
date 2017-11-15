@@ -108,7 +108,7 @@ to :doc:`customize form rendering </form/form_customization>`):
 Finally, you need to update the code of the controller that handles the form::
 
     // src/Controller/ProductController.php
-    namespace App\ProductController;
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
@@ -121,7 +121,7 @@ Finally, you need to update the code of the controller that handles the form::
         /**
          * @Route("/product/new", name="app_product_new")
          */
-        public function newAction(Request $request)
+        public function new(Request $request)
         {
             $product = new Product();
             $form = $this->createForm(ProductType::class, $product);
@@ -161,7 +161,7 @@ controller to specify the directory in which the brochures should be stored:
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/services.yaml
 
     # ...
     parameters:
@@ -294,7 +294,7 @@ Now you're ready to use this service in the controller::
     use App\Service\FileUploader;
 
     // ...
-    public function newAction(Request $request, FileUploader $fileUploader)
+    public function new(Request $request, FileUploader $fileUploader)
     {
         // ...
 
@@ -393,14 +393,16 @@ Now, register this class as a Doctrine listener:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            <!-- ... be sure autowiring is enabled -->
-            <defaults autowire="true" />
-            <!-- ... -->
+            <services>
+                <!-- ... be sure autowiring is enabled -->
+                <defaults autowire="true" />
+                <!-- ... -->
 
-            <service id="App\EventListener\BrochureUploaderListener">
-                <tag name="doctrine.event_listener" event="prePersist"/>
-                <tag name="doctrine.event_listener" event="preUpdate"/>
-            </service>
+                <service id="App\EventListener\BrochureUploaderListener">
+                    <tag name="doctrine.event_listener" event="prePersist"/>
+                    <tag name="doctrine.event_listener" event="preUpdate"/>
+                </service>
+            </services>
         </container>
 
     .. code-block:: php
