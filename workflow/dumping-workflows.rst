@@ -20,8 +20,8 @@ The result will look like this:
 
 .. image:: /_images/components/workflow/blogpost.png
 
-Inside a Symfony application with both Workflow and Console support, you can
-dump the dot file with the ``workflow:dump`` command:
+Inside a Symfony application, you can dump the dot file with the
+``workflow:dump`` command:
 
 .. code-block:: terminal
 
