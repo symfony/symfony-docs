@@ -102,11 +102,6 @@ defined above with the id ``app.hello_controller``::
 
     $this->forward('app.hello_controller:indexAction', array('name' => $name));
 
-.. note::
-
-    You cannot drop the ``Action`` part of the method name when using this
-    syntax.
-
 You can also route to the service by using the same notation when defining
 the route ``_controller`` value:
 
