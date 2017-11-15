@@ -184,8 +184,8 @@ can automatically generate an empty ``test_project`` database for you:
                 'dbal' => array(
                     'charset' => 'utf8mb4',
                     'default_table_options' => array(
-                        'charset' => 'utf8mb4'
-                        'collate' => 'utf8mb4_unicode_ci'
+                        'charset' => 'utf8mb4',
+                        'collate' => 'utf8mb4_unicode_ci',
                     )
                 ),
             ));
