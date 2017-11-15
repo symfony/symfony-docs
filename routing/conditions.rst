@@ -14,9 +14,9 @@ define arbitrary matching logic, use the ``conditions`` routing option:
 
         # config/routes.yaml
         contact:
-            path:     /contact
-            defaults: { _controller: 'App\Controller\DefaultController::contact' }
-            condition: "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
+            path:       /contact
+            controller: 'App\Controller\DefaultController::contact'
+            condition:  "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
 
     .. code-block:: xml
 

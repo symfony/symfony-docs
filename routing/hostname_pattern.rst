@@ -39,13 +39,13 @@ You can also match on the HTTP *host* of the incoming request.
 
         # config/routes.yaml
         mobile_homepage:
-            path:     /
-            host:     m.example.com
-            defaults: { _controller: App\Controller\MainController::mobileHomepage }
+            path:       /
+            host:       m.example.com
+            controller: App\Controller\MainController::mobileHomepage
 
         homepage:
-            path:     /
-            defaults: { _controller: App\Controller\MainController::homepage }
+            path:       /
+            controller: App\Controller\MainController::homepage
 
     .. code-block:: xml
 
@@ -124,13 +124,13 @@ you can use placeholders in your hostname:
 
         # config/routes.yaml
         projects_homepage:
-            path:     /
-            host:     "{project_name}.example.com"
-            defaults: { _controller: App\Controller\MainController::projectsHomepage }
+            path:       /
+            host:       "{project_name}.example.com"
+            controller: App\Controller\MainController::projectsHomepage
 
         homepage:
-            path:     /
-            defaults: { _controller: App\Controller\MainController::homepage }
+            path:       /
+            controller: App\Controller\MainController::homepage
 
     .. code-block:: xml
 
@@ -210,17 +210,17 @@ instance, if you want to match both ``m.example.com`` and
 
         # config/routes.yaml
         mobile_homepage:
-            path:     /
-            host:     "{subdomain}.example.com"
+            path:       /
+            host:       "{subdomain}.example.com"
+            controller: App\Controller\MainController::mobileHomepage
             defaults:
-                _controller: App\Controller\MainController::mobileHomepage
                 subdomain: m
             requirements:
                 subdomain: m|mobile
 
         homepage:
-            path:     /
-            defaults: { _controller: App\Controller\MainController::homepage }
+            path:       /
+            controller: App\Controller\MainController::homepage
 
     .. code-block:: xml
 
@@ -306,17 +306,17 @@ instance, if you want to match both ``m.example.com`` and
 
             # config/routes.yaml
             mobile_homepage:
-                path:     /
-                host:     "m.{domain}"
+                path:       /
+                host:       "m.{domain}"
+                controller: App\Controller\MainController::mobileHomepage
                 defaults:
-                    _controller: App\Controller\MainController::mobileHomepage
                     domain: '%domain%'
                 requirements:
                     domain: '%domain%'
 
             homepage:
-                path:  /
-                defaults: { _controller: App\Controller\MainController::homepage }
+                path:       /
+                controller: App\Controller\MainController::homepage
 
         .. code-block:: xml
 

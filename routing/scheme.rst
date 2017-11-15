@@ -33,9 +33,9 @@ the URI scheme via schemes:
 
         # config/routes.yaml
         secure:
-            path:     /secure
-            defaults: { _controller: App\Controller\MainController::secure }
-            schemes:  [https]
+            path:       /secure
+            controller: App\Controller\MainController::secure
+            schemes:    [https]
 
     .. code-block:: xml
 

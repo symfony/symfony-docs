@@ -20,8 +20,8 @@ inside your routing configuration:
 
         # config/routes.yaml
         contact:
-            path:     /{_locale}/contact
-            defaults: { _controller: App\Controller\MainController::contact }
+            path:       /{_locale}/contact
+            controller: App\Controller\MainController::contact
             requirements:
                 _locale: '%app.locales%'
 
@@ -94,8 +94,8 @@ path):
 
         # config/routes.yaml
         some_route:
-            path:     /%app.route_prefix%/contact
-            defaults: { _controller: App\Controller\MainController::contact }
+            path:       /%app.route_prefix%/contact
+            controller: App\Controller\MainController::contact
 
     .. code-block:: xml
 

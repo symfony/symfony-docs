@@ -43,8 +43,8 @@ a more permissive regular expression for it:
 
         # config/routes.yaml
         share:
-            path:     /share/{token}
-            defaults: { _controller: App\Controller\DefaultController::share }
+            path:       /share/{token}
+            controller: App\Controller\DefaultController::share
             requirements:
                 token: .+
 

@@ -34,7 +34,7 @@ a routing ``{wildcard}`` to only match some regular expression:
         # config/routes.yaml
         blog_list:
             path:      /blog/{page}
-            defaults:  { _controller: App\Controller\BlogController::list }
+            controller: App\Controller\BlogController::list
             requirements:
                 page: '\d+'
 
@@ -110,8 +110,9 @@ URL:
 
         # config/routes.yaml
         homepage:
-            path:      /{_locale}
-            defaults:  { _controller: App\Controller\MainController::homepage, _locale: en }
+            path:       /{_locale}
+            controller: App\Controller\MainController::homepage
+            defaults:   { _locale: en }
             requirements:
                 _locale:  en|fr
 
@@ -218,14 +219,14 @@ accomplished with the following route configuration:
 
         # config/routes.yaml
         api_post_show:
-            path:     /api/posts/{id}
-            defaults: { _controller: App\Controller\BlogApiController::show }
-            methods:  [GET, HEAD]
+            path:       /api/posts/{id}
+            controller: App\Controller\BlogApiController::show
+            methods:    [GET, HEAD]
 
         api_post_edit:
-            path:     /api/posts/{id}
-            defaults: { _controller: App\Controller\BlogApiController::edit }
-            methods:  [PUT]
+            path:       /api/posts/{id}
+            controller: App\Controller\BlogApiController::edit
+            methods:    [PUT]
 
     .. code-block:: xml
 

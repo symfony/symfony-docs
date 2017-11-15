@@ -35,8 +35,8 @@ action to redirect to this new url:
         # redirecting the homepage
         homepage:
             path: /
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
             defaults:
-                _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
                 path: /app
                 permanent: true
 
@@ -110,8 +110,8 @@ action:
 
         admin:
             path: /wp-admin
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
             defaults:
-                _controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
                 route: sonata_admin_dashboard
                 permanent: true
 

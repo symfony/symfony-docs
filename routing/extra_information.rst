@@ -15,11 +15,11 @@ to your controller, and as attributes of the ``Request`` object:
 
         # config/routes.yaml
         blog:
-            path:      /blog/{page}
+            path:       /blog/{page}
+            controller: App\Controller\BlogController::index
             defaults:
-                _controller: App\Controller\BlogController::index
-                page:        1
-                title:       "Hello world!"
+                page: 1
+                title: "Hello world!"
 
     .. code-block:: xml
 

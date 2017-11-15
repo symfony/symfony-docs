@@ -63,7 +63,7 @@ system, as explained below:
         # config/routes.yaml
         remove_trailing_slash:
             path: /{url}
-            defaults: { _controller: App\Controller\RedirectingController::removeTrailingSlash }
+            controller: App\Controller\RedirectingController::removeTrailingSlash
             requirements:
                 url: .*/$
             methods: [GET]

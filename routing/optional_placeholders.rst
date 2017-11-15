@@ -31,8 +31,8 @@ the available blog posts for this imaginary blog application:
 
         # config/routes.yaml
         blog:
-            path:      /blog
-            defaults:  { _controller: App\Controller\BlogController::index }
+            path:       /blog
+            controller: App\Controller\BlogController::index
 
     .. code-block:: xml
 
@@ -86,8 +86,8 @@ entries? Update the route to have a new ``{page}`` placeholder:
 
         # config/routes.yaml
         blog:
-            path:      /blog/{page}
-            defaults:  { _controller: App\Controller\BlogController::index }
+            path:       /blog/{page}
+            controller: App\Controller\BlogController::index
 
     .. code-block:: xml
 
@@ -146,8 +146,9 @@ This is done by including it in the ``defaults`` collection:
 
         # config/routes.yaml
         blog:
-            path:      /blog/{page}
-            defaults:  { _controller: App\Controller\BlogController::index, page: 1 }
+            path:       /blog/{page}
+            controller: App\Controller\BlogController::index
+            defaults:   { page: 1 }
 
     .. code-block:: xml
 
