@@ -116,12 +116,12 @@ After this one-time setup, you can now add your route directly *above* the contr
 
     // ...
     + use Symfony\Component\Routing\Annotation\Route;
-
-    + /**
-    +  * @Route("/lucky/number")
-    +  */
+    
     class LuckyController
     {
+        + /**
+        +  * @Route("/lucky/number")
+        +  */
         public function number()
         {
             // this looks exactly the same
