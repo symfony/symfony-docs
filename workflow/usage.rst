@@ -170,12 +170,13 @@ you can get the workflow by injecting the Workflow registry service::
 
     // ...
     use Symfony\Component\Workflow\Registry;
+    use App\Entity\BlogPost;
 
     class BlogController
     {
         public function edit(Registry $workflows)
         {
-            $post = new \App\Entity\BlogPost();
+            $post = new BlogPost();
             $workflow = $workflows->get($post);
 
             // if there are multiple workflows for the same class,
@@ -192,7 +193,7 @@ you can get the workflow by injecting the Workflow registry service::
                 // ...
             }
 
-            // See all the available transition for the post in the current state
+            // See all the available transitions for the post in the current state
             $transitions = $workflow->getEnabledTransitions($post);
         }
     }
@@ -272,7 +273,7 @@ order:
     * ``workflow.[workflow name].announce``
     * ``workflow.[workflow name].announce.[transition name]``
 
-Here is an example how to enable logging for every time the ``blog_publishing``
+Here is an example of how to enable logging for every time the ``blog_publishing``
 workflow leaves a place::
 
     use Psr\Log\LoggerInterface;

@@ -198,11 +198,17 @@ you can get this state machine by injecting the Workflow registry service::
 
     class SomeService
     {
-        private $stateMachine;
+        private $workflows;
 
         public function __constructor(Registry $workflows)
         {
-            $this->stateMachine = $workflows->get('pull_request');
+            $this->workflows = $workflows;
+        }
+
+        public function someMethod()
+        {
+            $stateMachine = $this->workflows->get('pull_request');
+            // ...
         }
 
         // ...
