@@ -10,9 +10,9 @@ SwiftmailerBundle, which leverages the power of the `Swift Mailer`_ library.
 To functionally test that an email was sent, and even assert the email subject,
 content or any other headers, you can use :doc:`the Symfony Profiler </profiler>`.
 
-Start with an easy controller action that sends an email::
+Start with a simple controller action that sends an email::
 
-    public function sendEmailAction($name, \Swift_Mailer $mailer)
+    public function sendEmail($name, \Swift_Mailer $mailer)
     {
         $message = (new \Swift_Message('Hello Email'))
             ->setFrom('send@example.com')
