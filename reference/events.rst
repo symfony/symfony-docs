@@ -38,8 +38,8 @@ early to stop the handling of the request.
 
     Read more on the :ref:`kernel.request event <component-http-kernel-kernel-request>`.
 
-Execute this command to know the listeners registered to this event and their
-priorities:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
 .. code-block:: terminal
 
@@ -69,8 +69,8 @@ entirely::
 
     Read more on the :ref:`kernel.controller event <component-http-kernel-kernel-controller>`.
 
-Execute this command to know the listeners registered to this event and their
-priorities:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
 .. code-block:: terminal
 
@@ -103,8 +103,8 @@ HTML contents) into the ``Response`` object needed by Symfony::
 
     Read more on the :ref:`kernel.view event <component-http-kernel-kernel-view>`.
 
-Execute this command to know the listeners registered to this event and their
-priorities:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
 .. code-block:: terminal
 
@@ -130,8 +130,8 @@ before sending it back (e.g. add/modify HTTP headers, add cookies, etc.)::
 
     Read more on the :ref:`kernel.response event <component-http-kernel-kernel-response>`.
 
-Execute this command to know the listeners registered to this event and their
-priorities:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
 .. code-block:: terminal
 
@@ -157,8 +157,8 @@ the parent request)::
         $this->setLocale($parentRequest);
     }
 
-Execute this command to know the listeners registered to this event and their
-priorities:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
 .. code-block:: terminal
 
@@ -178,8 +178,8 @@ send the response (e.g. sending emails).
 
     Read more on the :ref:`kernel.terminate event <component-http-kernel-kernel-terminate>`.
 
-Execute this command to know the listeners registered to this event and their
-priorities:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
 .. code-block:: terminal
 
@@ -238,8 +238,8 @@ sent as response::
 
     Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
 
-Execute this command to know the listeners registered to this event and their
-priorities:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
 .. code-block:: terminal
 
