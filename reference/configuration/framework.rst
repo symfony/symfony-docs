@@ -1709,7 +1709,7 @@ paths
 **type**: ``array`` **default**: ``[]``
 
 This option allows to define an array of paths with files or directories where
-the component will look for additional validation files.
+the component will look for additional serialization files.
 
 php_errors
 ~~~~~~~~~~
