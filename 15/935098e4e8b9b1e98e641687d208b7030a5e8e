@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-07-22T03:28:42Z
+
+I've been thinking about this too - and I think something doe need to be done :).
+
+I also think there are 2 different use-cases, but mine are different:
+
+A) you have a single page application (or a small app) and so need just one app.css and app.js for the entire site
+
+B) you have a more traditional multi-page site where you have some global CSS and JS, but also have page-specific js and CSS
+
+Situation (A) is simple, and I agree we should probably start with it. But your implementation is not how I would do it. I would have a single entry - 'app'. And inside, I would require my main CSS file. This one entry would dump an app.js file and an app.css file. addStyleEntry() is kind of a hack: you're supposed to create js entries... and require any necessary .js from there.
+
+So that how I would explain it. Is then fairly quickly talk about multiple page apps. In this situation, you would still have the same app entry that's included on every page . But suddenly when your checkout page needs its own custom js and CSS, you add a checkout entry. If you need any CSS, you require that from your checkout js file. The end result is a checkout.js file and a checkout.css file (assuming you required some css) that you should include on the checkout page only.
+
+I'm not 100% sure this is the best setup - as webpack often assumes you have a SPA, but I've thought a lot about this, and it seems like a very good way to organize things.
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-07-23T20:06:50Z
+
+Thanks for your comment. As you know, I'm fairly new to this way of working with assets in modern JavaScript apps, so I'm still trying to learn the best strategy. So I'm going to propose a better reword based on your comment. Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-08-07T08:52:38Z
+
+@weaverryan I've reworded the article according to your comments. I think it's much better now. Thanks!
