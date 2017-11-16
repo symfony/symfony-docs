@@ -42,8 +42,8 @@ The **minimum configuration** to get your application running under Apache is:
         ServerName domain.tld
         ServerAlias www.domain.tld
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             AllowOverride All
             Order Allow,Deny
             Allow from All
@@ -73,8 +73,8 @@ and increase web server performance:
         ServerName domain.tld
         ServerAlias www.domain.tld
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             AllowOverride None
             Order Allow,Deny
             Allow from All
@@ -123,7 +123,7 @@ Hence, you need to modify your ``Directory`` permission settings as follows:
 
 .. code-block:: apache
 
-    <Directory /var/www/project/web>
+    <Directory /var/www/project/public>
         Require all granted
         # ...
     </Directory>
@@ -193,8 +193,8 @@ use the ``SetHandler`` directive to pass requests for PHP files to PHP FPM:
         # regular expression must be changed accordingly:
         # ProxyPassMatch ^/path-to-app/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/public/$1
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             # enable the .htaccess rewrites
             AllowOverride All
             Require all granted
@@ -228,8 +228,8 @@ should look something like this:
         Alias /php7-fcgi /usr/lib/cgi-bin/php7-fcgi
         FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -host 127.0.0.1:9000 -pass-header Authorization
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             # enable the .htaccess rewrites
             AllowOverride All
             Order Allow,Deny
@@ -264,7 +264,7 @@ The **minimum configuration** to get your application running under Nginx is:
 
     server {
         server_name domain.tld www.domain.tld;
-        root /var/www/project/web;
+        root /var/www/project/public;
 
         location / {
             # try to serve file directly, fallback to index.php
