@@ -7,8 +7,8 @@ an ``assets/`` directory:
 * ``assets/js/app.js``
 * ``assets/css/app.scss``
 
-Let's consider that the project follows the recommended practice of importing
-the CSS files for their associated JavaScript files:
+With Encore, you should think of CSS as a *dependency* of your JavaScript. This means,
+you will *require* whatever CSS you need from inside JavaScript:
 
 .. code-block:: javascript
 
@@ -38,9 +38,6 @@ Inside, use Encore to help generate your Webpack configuration.
         // the public path used by the web server to access the previous directory
         .setPublicPath('/build')
 
-        // empty the outputPath dir before each build
-        .cleanupOutputBeforeBuild()
-
         // will create web/build/app.js and web/build/app.css
         .addEntry('app', './assets/js/app.js')
 
@@ -51,6 +48,12 @@ Inside, use Encore to help generate your Webpack configuration.
         .autoProvidejQuery()
 
         .enableSourceMaps(!Encore.isProduction())
+
+        // empty the outputPath dir before each build
+        .cleanupOutputBeforeBuild()
+
+        // show OS notifications when builds finish/fail
+        .enableBuildNotifications()
 
         // create hashed filenames (e.g. app.abc123.css)
         // .enableVersioning()
@@ -146,15 +149,16 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
 
 That's it! When you build your assets, jQuery and ``greet.js`` will automatically
 be added to the output file (``app.js``). For common libraries like jQuery, you
-may want also to :doc:`create a shared entry </frontend/encore/shared-entry>` for better performance.
+may want to :doc:`create a shared entry </frontend/encore/shared-entry>` for better
+performance.
 
 Multiple JavaScript Entries
 ---------------------------
 
 The previous example is the best way to deal with SPA (Single Page Applications)
-and very simple applications. However, as your application grows, you'll need to
-define more entries with the JavaScript and CSS code of some specific sections
-(homepage, blog, store, etc.)
+and very simple applications. However, as your app grows, you may want to have
+page-specific JavaScript or CSS (e.g. homepage, blog, store, etc.). To handel this,
+add a new "entry" for each page that needs custom JavaScript or CSS:
 
 .. code-block:: javascript
 
@@ -166,5 +170,10 @@ define more entries with the JavaScript and CSS code of some specific sections
     ;
 
 If those entries include CSS/Sass files (e.g. ``homepage.js`` requires
-``assets/css/homepage.scss``), two files will be generated for each of them
+``assets/css/homepage.scss``), two files will be generated for each:
 (e.g. ``build/homepage.js`` and ``build/homepage.css``).
+
+Keep Going!
+-----------
+
+Go back to the :ref:`Encore Top List <encore-toc>` to learn more and add new features.
