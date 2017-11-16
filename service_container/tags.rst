@@ -255,10 +255,13 @@ add the compiler pass to the container in a :doc:`bundle extension </bundles/ext
 or from your kernel::
 
     // src/Kernel.php
+    namespace App;
+
     use App\DependencyInjection\Compiler\MailTransportPass;
+    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
     // ...
 
-    class Kernel extends Kernel
+    class Kernel extends BaseKernel
     {
         // ...
 
