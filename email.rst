@@ -4,12 +4,10 @@
 How to Send an Email
 ====================
 
-Sending emails is a common task for any web application and one that has
-special complications and potential pitfalls. Symfony provides a mailer feature
-based on the popular `Swift Mailer`_ library via the `SwiftMailerBundle`_.
-
-The Symfony mailer supports sending messages with your own mail servers as well
-as using popular email providers like `Mandrill`_, `SendGrid`_, and `Amazon SES`_.
+Symfony provides a mailer feature based on the popular `Swift Mailer`_ library
+via the `SwiftMailerBundle`_. This mailer supports sending messages with your
+own mail servers as well as using popular email providers like `Mandrill`_,
+`SendGrid`_, and `Amazon SES`_.
 
 Installation
 ------------
@@ -22,21 +20,21 @@ install and enable the mailer:
     $ composer require mailer
 
 If your application doesn't use Symfony Flex, follow the installation
-instructions of the `SwiftMailerBundle`_.
+instructions on `SwiftMailerBundle`_.
 
 .. _swift-mailer-configuration:
 
 Configuration
 -------------
 
-The ``config/packages/swiftmailer.yaml`` file created when installing the mailer
-provides all the initial config needed to make it work, except the parameters
-required to connect to the mail server. Those parameters are defined in the
-``MAILER_URL`` environment variable in the ``.env`` file:
+The ``config/packages/swiftmailer.yaml`` file that's created when installing the
+mailer provides all the initial config needed to send emails, except your mail
+server connection details. Those parameters are defined in the ``MAILER_URL``
+environment variable in the ``.env`` file:
 
 .. code-block:: bash
 
-    # use this to disable the email delivery
+    # use this to disable email delivery
     MAILER_URL=null://localhost
 
     # use this to send emails via Gmail (don't use this in production)
