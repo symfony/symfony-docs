@@ -19,11 +19,14 @@ Then, install Encore into your project with Yarn:
 
 .. tip::
 
-    If you are using Flex for your project, you can install Encore via:
+    If you are using Flex for your project, you can initialize your project for Encore via:
 
     .. code-block:: terminal
 
         $ composer require encore
+
+    This will create a ``webpack.config.js`` file, add the ``assets/`` directory, and add ``node_modules/`` to
+    ``.gitignore``.
 
 This command creates (or modifies) a ``package.json`` file and downloads dependencies
 into a ``node_modules/`` directory. When using Yarn, a file called ``yarn.lock``
