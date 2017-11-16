@@ -5,12 +5,6 @@
 How to Work with Service Tags
 =============================
 
-Some container services require to be registered or used in some special way.
-Consider for example the :doc:`Twig extensions </templating/twig_extension>`:
-they are PHP classes that must be added to the main Twig object before using
-them. If you define those exensions as regular Symfony services, Twig will
-ignore them and an exception will be thrown when using them in templates.
-
 **Service tags** are a way to tell Symfony or other third-party bundles that
 your service should be registered in some special way. Take the following
 example:
@@ -57,14 +51,12 @@ example:
             ->addTag('twig.extension');
 
 Services tagged with the ``twig.extension`` tag are collected during the
-initialization of TwigBundle to enable them as Twig extensions. In this example,
-that's why Symfony knows that the ``app.twig_extension`` service should be
-registered as a Twig extension.
+initialization of TwigBundle and added to Twig as extensions.
 
-For a list of all the tags available in the core Symfony Framework, check
-out :doc:`/reference/dic_tags`. Each of these has a different effect on your
-service and many tags require additional arguments (beyond just the ``name``
-parameter).
+Other tags are used to integrate your services into other systems. For a list of
+all the tags available in the core Symfony Framework, check out
+:doc:`/reference/dic_tags`. Each of these has a different effect on your service
+and many tags require additional arguments (beyond just the ``name`` parameter).
 
 Creating custom Tags
 --------------------
