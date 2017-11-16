@@ -169,9 +169,12 @@ the ``Tests/`` directory. Tests should follow the following principles:
 Installation
 ------------
 
-Bundles must define a `Symfony Flex recipe`_ to automate their integration
-in Symfony applications. If some initial configuration is needed to execute
-the bundle, including some environment variables, provide them in the recipe.
+Bundles should set ``"type": "symfony-bundle"`` in their ``composer.json`` file.
+With this, :doc:`Symfony Flex </setup/flex>` will be able to automatically
+enable your bundle when it's installed.
+
+If your bundle requires any setup (e.g. configuration, new files, changes to
+`.gitignore`, etc), then you should create a `Symfony Flex recipe`_.
 
 Documentation
 -------------
@@ -260,7 +263,7 @@ following standardized instructions in your ``README.md`` file.
 
         Open a command console, enter your project directory and execute:
 
-        .. code-block:: terminal
+        .. code-block:: bash
 
             $ composer require <package-name>
 
