@@ -188,6 +188,16 @@ the ``vendors`` directory will make the test suite fail, while deprecations
 triggered from a library inside it will not, giving you the best of both
 worlds.
 
+When working on a project, you might be more interested in the
+``allow_outdated_vendors``, which is a bit more strict. Let's say you
+want to fix deprecations as soon as they appear. A problem many people
+experience is that some dependencies they have tend to lag behind their
+own dependencies, meaning they do not fix deprecations as soon as
+possible, which means there is nothing you can do to fix that (apart
+from a pull request on the outdated vendor). This mode allows you to
+ignore those deprecations, allowing you to notice when *your code* is
+using deprecated APIs, and to keep up with the changes.
+
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
