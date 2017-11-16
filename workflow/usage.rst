@@ -171,8 +171,9 @@ you can get the workflow by injecting the Workflow registry service::
     // ...
     use Symfony\Component\Workflow\Registry;
     use App\Entity\BlogPost;
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    class BlogController
+    class BlogController extends Controller
     {
         public function edit(Registry $workflows)
         {
@@ -190,7 +191,7 @@ you can get the workflow by injecting the Workflow registry service::
             try {
                 $workflow->apply($post, 'to_review');
             } catch (LogicException $e) {
-                // ...
+                // ... if the transition is not allowed
             }
 
             // See all the available transitions for the post in the current state
