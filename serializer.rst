@@ -4,19 +4,23 @@
 How to Use the Serializer
 =========================
 
-Serializing and deserializing to and from objects and different formats (e.g.
-JSON or XML) is a very complex topic. Symfony comes with a
-:doc:`Serializer Component </components/serializer>`, which gives you some
-tools that you can leverage for your solution.
+Symfony provides a serializer to serialize/deserialize to and from objects and
+different formats (e.g. JSON or XML). Before using it, read the
+:doc:`Serializer component docs </components/serializer>` to get familiar with
+its philosophy and the normalizers and encoders terminology.
 
-In fact, before you start, get familiar with the serializer, normalizers
-and encoders by reading the :doc:`Serializer Component </components/serializer>`.
+.. _activating_the_serializer:
 
-Activating the Serializer
+Installing the Serializer
 -------------------------
 
-The ``serializer`` service is not available by default. To turn it on, activate
-it in your configuration:
+Before using the serializer, run this command to install it in your application:
+
+.. code-block:: terminal
+
+    $ composer require serializer
+
+Then, enable the serializer in the framework config:
 
 .. configuration-block::
 
@@ -65,7 +69,7 @@ it in your configuration:
 Using the Serializer Service
 ----------------------------
 
-Once enabled, the ``serializer`` service can be injected in any service where
+Once enabled, the serializer service can be injected in any service where
 you need it or it can be used in a controller::
 
     // src/Controller/DefaultController.php
@@ -85,7 +89,7 @@ you need it or it can be used in a controller::
 Adding Normalizers and Encoders
 -------------------------------
 
-Once enabled, the ``serializer`` service will be available in the container
+Once enabled, the serializer service will be available in the container
 and will be loaded with four :ref:`encoders <component-serializer-encoders>`
 (:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`,
 :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`,
@@ -193,12 +197,12 @@ to your class and choose which groups to use when serializing::
     );
 
 In addition to the ``@Groups`` annotation, the Serializer component also
-supports Yaml or XML files. These files are automatically loaded when being
+supports YAML or XML files. These files are automatically loaded when being
 stored in one of the following locations:
 
-* The ``serialization.yml`` or ``serialization.xml`` file in
+* The ``serialization.yaml`` or ``serialization.xml`` file in
   the ``Resources/config/`` directory of a bundle;
-* All ``*.yml`` and ``*.xml`` files in the ``Resources/config/serialization/``
+* All ``*.yaml`` and ``*.xml`` files in the ``Resources/config/serialization/``
   directory of a bundle.
 
 .. _serializer-enabling-metadata-cache:
@@ -302,9 +306,9 @@ take a look at how this bundle works.
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
-    serializer/*
+    serializer/encoders
+    serializer/custom_encoder
 
 .. _`APCu`: https://github.com/krakjoe/apcu
 .. _`ApiPlatform`: https://github.com/api-platform/core
