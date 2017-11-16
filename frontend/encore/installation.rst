@@ -11,8 +11,11 @@ Then, install Encore into your project with Yarn:
 
 .. note::
 
-    If you want to use `npm`_ instead of `yarn`_, replace ``yarn add xxx --dev`` by
-    ``npm install xxx --save-dev``.
+    If you want to use `npm`_ instead of `yarn`_:
+    
+    .. code-block:: terminal
+
+        $ npm install @symfony/webpack-encore --save-dev
 
 .. tip::
 
