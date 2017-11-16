@@ -40,7 +40,7 @@ property is not empty, add the following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # config/validator/validation.yaml
         App\Entity\Author:
             properties:
                 name:
@@ -48,7 +48,7 @@ property is not empty, add the following:
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -84,13 +84,13 @@ property is not empty, add the following:
             }
         }
 
-Now, create a ``validators`` catalog file in the ``app/Resources/translations`` directory:
+Now, create a ``validators`` catalog file in the ``config/translations/`` directory:
 
 .. configuration-block::
 
     .. code-block:: xml
 
-        <!-- app/Resources/translations/validators.en.xlf -->
+        <!-- config/translations/validators.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -105,12 +105,12 @@ Now, create a ``validators`` catalog file in the ``app/Resources/translations`` 
 
     .. code-block:: yaml
 
-        # app/Resources/translations/validators.en.yml
+        # config/translations/validators.en.yaml
         author.name.not_blank: Please enter an author name.
 
     .. code-block:: php
 
-        // app/Resources/translations/validators.en.php
+        // config/translations/validators.en.php
         return array(
             'author.name.not_blank' => 'Please enter an author name.',
         );
