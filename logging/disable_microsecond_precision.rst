@@ -11,18 +11,14 @@ log generation. This is recommended for systems that generate a large number of 
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/monolog.yaml
         monolog:
             use_microseconds: false
-            handlers:
-                applog:
-                    type: stream
-                    path: /var/log/symfony.log
-                    level: error
+            # ...
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -33,25 +29,14 @@ log generation. This is recommended for systems that generate a large number of 
                 http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <monolog:config use-microseconds="false">
-                <monolog:handler
-                    name="applog"
-                    type="stream"
-                    path="/var/log/symfony.log"
-                    level="error"
-                />
+                <!-- ... -->
             </monolog:config>
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/monolog.php
         $container->loadFromExtension('monolog', array(
             'use_microseconds' => false,
-            'handlers' => array(
-                'applog' => array(
-                    'type'  => 'stream',
-                    'path'  => '/var/log/symfony.log',
-                    'level' => 'error',
-                ),
-            ),
+            // ...
         ));

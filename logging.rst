@@ -7,19 +7,16 @@ logs that can be stored in a variety of different places.
 Logging a Message
 -----------------
 
-To log a message, fetch the ``logger`` service from the container in
-your controller::
+If the application uses the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+you can get the logger service injecting the ``LoggerInterface`` class::
 
     use Psr\Log\LoggerInterface;
 
-    public function indexAction(LoggerInterface $logger)
+    public function index(LoggerInterface $logger)
     {
-        // alternative way of getting the logger
-        // $logger = $this->get('logger');
-
         $logger->info('I just got the logger');
         $logger->error('An error occurred');
-        
+
         $logger->critical('I left the oven on!', array(
             // include extra "context" info in your logs
             'cause' => 'in_hurry',
@@ -28,7 +25,7 @@ your controller::
         // ...
     }
 
-The ``logger`` service has different methods for different logging levels/priorities.
+The logger service has different methods for different logging levels/priorities.
 You can configure the logger to do different things based on the *level* of a message
 (e.g. :doc:`send an email when an error occurs </logging/monolog_email>`).
 
@@ -36,10 +33,6 @@ See LoggerInterface_ for a list of all of the methods on the logger.
 
 Where Logs are Stored
 ---------------------
-
-The configuration for *where* logs are stored lives in the specific
-:doc:`environment </configuration/environments>` configuration files: ``config_dev.yml``
-and ``config_prod.yml``.
 
 By default, log entries are written to the ``var/log/dev.log`` file when you're in
 the ``dev`` environment. In the ``prod`` environment, logs are written to ``var/log/prod.log``,
@@ -61,8 +54,8 @@ to different locations (e.g. files, database, Slack, etc).
     channel can have its *own* handlers, which means you can store different log
     messages in different places. See :doc:`/logging/channels_handlers`.
 
-Symfony pre-configures some basic handlers in the ``config_dev.yml`` and ``config_prod.yml``
-files. Check these out for some real-world examples.
+Symfony pre-configures some basic handlers in the default ``monolog.yaml``
+config files. Check these out for some real-world examples.
 
 This example uses *two* handlers: ``stream`` (to write to a file) and ``syslog``
 to write logs using the :phpfunction:`syslog` function:
@@ -71,7 +64,7 @@ to write logs using the :phpfunction:`syslog` function:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packcages/monolog.yaml
         monolog:
             handlers:
                 # this "file_log" key could be anything
@@ -89,7 +82,7 @@ to write logs using the :phpfunction:`syslog` function:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packcages/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -116,7 +109,7 @@ to write logs using the :phpfunction:`syslog` function:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packcages/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'file_log' => array(
@@ -147,7 +140,7 @@ one of the messages reaches an ``action_level``. Take this example:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packcages/monolog.yaml
         monolog:
             handlers:
                 filter_for_errors:
@@ -168,7 +161,7 @@ one of the messages reaches an ``action_level``. Take this example:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packcages/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -201,7 +194,7 @@ one of the messages reaches an ``action_level``. Take this example:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packcages/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'filter_for_errors' => array(
@@ -261,7 +254,7 @@ option of your handler to ``rotating_file``:
 
     .. code-block:: yaml
 
-        # app/config/config_dev.yml
+        # config/packcages/dev/monolog.yaml
         monolog:
             handlers:
                 main:
@@ -274,7 +267,7 @@ option of your handler to ``rotating_file``:
 
     .. code-block:: xml
 
-        <!-- app/config/config_dev.xml -->
+        <!-- config/packcages/dev/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -298,7 +291,7 @@ option of your handler to ``rotating_file``:
 
     .. code-block:: php
 
-        // app/config/config_dev.php
+        // config/packcages/dev/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'main' => array(
@@ -315,8 +308,7 @@ option of your handler to ``rotating_file``:
 Using a Logger inside a Service
 -------------------------------
 
-To use a logger in your own services, add the ``@logger`` service as an argument
-of those services. If you want to use a pre-configured logger which uses a
+If you want to use in your own services a pre-configured logger which uses a
 specific channel (``app`` by default), use the ``monolog.logger`` tag  with the
 ``channel`` property as explained in the
 :ref:`Dependency Injection reference <dic_tags-monolog>`.
@@ -334,9 +326,14 @@ Learn more
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
-    logging/*
+    logging/monolog_regex_based_excludes
+    logging/monolog_email
+    logging/channels_handlers
+    logging/monolog_console
+    logging/disable_microsecond_precision
+    logging/formatter
+    logging/processors
 
 .. _Monolog: https://github.com/Seldaek/monolog
 .. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php
