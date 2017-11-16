@@ -1,16 +1,13 @@
-The Dependency Injection Tags
+Built-in Symfony Service Tags
 =============================
 
-Dependency Injection Tags are little strings that can be applied to a service
-to "flag" it to be used in some special way. For example, if you have a
-service that you would like to register as a listener to one of Symfony's
-core events, you can flag it with the ``kernel.event_listener`` tag.
+:doc:`Service tags </service_container/tags>` are the mechanism used by the
+:doc:`DependencyInjection component </components/dependency_injection>` to flag
+services which require a special processing, such as console commands or Twig
+extensions.
 
-You can learn a little bit more about "tags" by reading the ":doc:`/service_container/tags`"
-article.
-
-Below is information about all of the tags available inside Symfony. There
-may also be tags in other bundles you use that aren't listed here.
+These are the most common tags provided by Symfony components, but in your
+application there could be more tags available provided by third-party bundles:
 
 ========================================  ========================================================================
 Tag Name                                  Usage
