@@ -112,7 +112,7 @@ to :doc:`customize form rendering </form/form_customization>`):
 Finally, you need to update the code of the controller that handles the form::
 
     // src/AppBundle/Controller/ProductController.php
-    namespace AppBundle\ProductController;
+    namespace AppBundle\Controller;
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -395,15 +395,16 @@ Now, register this class as a Doctrine listener:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
-            <service id="app.doctrine_brochure_listener"
-                class="AppBundle\EventListener\BrochureUploaderListener"
-            >
-                <argument type="service" id="app.brochure_uploader"/>
+            <services>
+                <service id="app.doctrine_brochure_listener"
+                    class="AppBundle\EventListener\BrochureUploaderListener"
+                >
+                    <argument type="service" id="app.brochure_uploader"/>
 
-                <tag name="doctrine.event_listener" event="prePersist"/>
-                <tag name="doctrine.event_listener" event="preUpdate"/>
-            </service>
-
+                    <tag name="doctrine.event_listener" event="prePersist"/>
+                    <tag name="doctrine.event_listener" event="preUpdate"/>
+                </service>
+            </services>
         </container>
 
     .. code-block:: php
