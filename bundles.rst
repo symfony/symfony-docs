@@ -44,7 +44,6 @@ file::
 Learn more
 ----------
 
-* :doc:`/bundles/remove`
 * :doc:`/bundles/override`
 * :doc:`/bundles/best_practices`
 * :doc:`/bundles/configuration`
