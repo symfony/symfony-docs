@@ -100,7 +100,7 @@ that define your bundles, your services and your routes:
     This is the same ``registerBundles()`` that you see in a normal kernel.
 
 **configureContainer(ContainerBuilder $c, LoaderInterface $loader)**
-    This methods builds and configures the container. In practice, you will use
+    This method builds and configures the container. In practice, you will use
     ``loadFromExtension`` to configure different bundles (this is the equivalent
     of what you see in a normal ``config.yml`` file). You can also register services
     directly in PHP or load external configuration files (shown below).
