@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-11-15T15:18:03Z
+
+I would reword the note a bit. Its initial goal was to say that you cannot drop the `Action` suffix in the configuration when it is part of your method name (which is different from what we have when using the triple syntax). I think we should write something like that you must give the full method name and that no `Action` will be suffixed automatically.
+
+---------------------------------------------------------------------------
+
+by chalasr at 2017-11-15T15:23:15Z
+
+Agree with @xabbuh
