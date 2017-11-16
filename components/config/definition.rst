@@ -210,6 +210,9 @@ Before defining the children of an array node, you can provide options like:
     If called (with ``false``), keys with dashes are *not* normalized to underscores.
     It is recommended to use this with prototype nodes where the user will define
     a key-value map, to avoid an unnecessary transformation.
+``ignoreExtraKeys()``
+    Allows extra config keys to be specified under an array without
+    throwing an exception.
 
 A basic prototyped array configuration can be defined as follows::
 
