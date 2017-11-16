@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-10-06T11:01:28Z
+
+Didn't we just remove deprecated options in the past?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-09T10:23:17Z
+
+I don't know ... but I guess we need to document deprecated versions and remove them in the first Symfony version which doesn't include them (master/4.0 in this case).
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-16T12:52:56Z
+
+@xabbuh that *does* sound a little bit familiar. But adding the option as deprecated and removing it in 4.0 (like we do with other things) makes sense to me.
