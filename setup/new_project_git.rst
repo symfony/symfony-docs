@@ -66,12 +66,6 @@ changes to your Git repository.
 You can continue to follow along with the :doc:`/page_creation` article
 to learn more about how to configure and develop inside your application.
 
-.. tip::
-
-    The Symfony Standard Edition comes with some example functionality. To
-    remove the sample code, follow the instructions in the
-    ":doc:`/bundles/remove`" article.
-
 .. include:: _vendor_deps.rst.inc
 
 Storing your Project on a remote Server
