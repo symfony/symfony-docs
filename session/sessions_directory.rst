@@ -11,7 +11,7 @@ this path, update the ``framework.session.save_path`` configuration key:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             session:
                 handler_id: session.handler.native_file
@@ -19,7 +19,7 @@ this path, update the ``framework.session.save_path`` configuration key:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -36,7 +36,7 @@ this path, update the ``framework.session.save_path`` configuration key:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'session' => array(
                 'handler_id' => 'session.handler.native_file',

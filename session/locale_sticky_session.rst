@@ -73,16 +73,18 @@ via some "Change Locale" route & controller), or create a route with a the :ref:
 
         .. code-block:: yaml
 
+            # config/services.yaml
             services:
                 # ...
 
                 App\EventSubscriber\LocaleSubscriber:
                     arguments: ['%kernel.default_locale%']
-                    # redundant if you're using autoconfigure
-                    tags: [kernel.event_subscriber]
+                    # uncomment the next line if you are not using autoconfigure
+                    # tags: [kernel.event_subscriber]
 
         .. code-block:: xml
 
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -93,18 +95,21 @@ via some "Change Locale" route & controller), or create a route with a the :ref:
                     <service id="App\EventSubscriber\LocaleSubscriber">
                         <argument>%kernel.default_locale%</argument>
 
-                        <tag name="kernel.event_subscriber" />
+                        <!-- uncomment the next line if you are not using autoconfigure -->
+                        <!-- <tag name="kernel.event_subscriber" /> -->
                     </service>
                 </services>
             </container>
 
         .. code-block:: php
 
+            // config/services.php
             use App\EventSubscriber\LocaleSubscriber;
 
             $container->register(LocaleSubscriber::class)
                 ->addArgument('%kernel.default_locale%')
-                ->addTag('kernel.event_subscriber');
+                // uncomment the next line if you are not using autoconfigure
+                // ->addTag('kernel.event_subscriber');
 
 That's it! Now celebrate by changing the user's locale and seeing that it's
 sticky throughout the request.
@@ -115,7 +120,7 @@ method::
     // from a controller...
     use Symfony\Component\HttpFoundation\Request;
 
-    public function indexAction(Request $request)
+    public function index(Request $request)
     {
         $locale = $request->getLocale();
     }
@@ -159,9 +164,6 @@ event:
             $this->session = $session;
         }
 
-        /**
-         * @param InteractiveLoginEvent $event
-         */
         public function onInteractiveLogin(InteractiveLoginEvent $event)
         {
             $user = $event->getAuthenticationToken()->getUser();
