@@ -308,7 +308,7 @@ take a look at how this bundle works.
     :maxdepth: 1
 
     serializer/encoders
-    serializer/custom_encoder
+    serializer/custom_encoders
 
 .. _`APCu`: https://github.com/krakjoe/apcu
 .. _`ApiPlatform`: https://github.com/api-platform/core
