@@ -5,7 +5,7 @@ Making the Locale "Sticky" during a User's Session
 ==================================================
 
 Symfony stores the locale setting in the Request, which means that this setting
-is not automtically saved ("sticky") across requests. But, you *can* store the locale
+is not automatically saved ("sticky") across requests. But, you *can* store the locale
 in the session, so that it's used on subsequent requests.
 
 .. _creating-a-LocaleSubscriber:
