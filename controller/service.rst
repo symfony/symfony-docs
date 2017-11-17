@@ -15,12 +15,12 @@ Referencing your Service from Routing
 Registering your controller as a service is great, but you also need to make sure
 that your routing references the service properly, so that Symfony knows to use it.
 
-If the service id is the fully-qualified class name (FQCN) of your controller, you're
-done! You can use the normal ``AppBundle:Hello:index`` syntax in your routing and
-it will find your service.
+If the service id is the fully-qualified class name (FQCN) of your controller,
+you're done! You can use the normal ``App\Controller\HelloController::index``
+syntax in your routing and it will find your service.
 
-But, if your service has a different id, you can use a special ``SERVICEID:METHOD``
-syntax:
+But, if your service has a different id, you can use a special
+``service_id:method_name`` syntax:
 
 .. configuration-block::
 
@@ -31,8 +31,6 @@ syntax:
         // You need to use Sensio's annotation to specify a service id
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
         // ...
-        
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
         /**
          * @Route(service="app.hello_controller")
@@ -73,8 +71,8 @@ syntax:
 
 .. note::
 
-    You cannot drop the ``Action`` part of the method name when using the
-    single colon notation.
+    When using the ``service_id:method_name`` syntax, the method name must
+    end with the ``Action`` suffix.
 
 .. _controller-service-invoke:
 
@@ -114,7 +112,7 @@ service and use it directly::
             $this->twig = $twig;
         }
 
-        public function indexAction($name)
+        public function index($name)
         {
             $content = $this->twig->render(
                 'hello/index.html.twig',
