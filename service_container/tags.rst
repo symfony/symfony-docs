@@ -5,10 +5,9 @@
 How to Work with Service Tags
 =============================
 
-In the same way that a blog post on the web might be tagged with things such
-as "Symfony" or "PHP", services configured in your container can also be
-tagged. In the service container, a tag implies that the service is meant
-to be used for a specific purpose. Take the following example:
+**Service tags** are a way to tell Symfony or other third-party bundles that
+your service should be registered in some special way. Take the following
+example:
 
 .. configuration-block::
 
@@ -51,19 +50,13 @@ to be used for a specific purpose. Take the following example:
             ->setPublic(false)
             ->addTag('twig.extension');
 
-The ``twig.extension`` tag is a special tag that the TwigBundle uses
-during configuration. By giving the service this ``twig.extension`` tag,
-the bundle knows that the ``app.twig_extension`` service should be registered
-as a Twig extension with Twig. In other words, Twig finds all services tagged
-with ``twig.extension`` and automatically registers them as extensions.
+Services tagged with the ``twig.extension`` tag are collected during the
+initialization of TwigBundle and added to Twig as extensions.
 
-Tags, then, are a way to tell Symfony or other third-party bundles that
-your service should be registered or used in some special way by the bundle.
-
-For a list of all the tags available in the core Symfony Framework, check
-out :doc:`/reference/dic_tags`. Each of these has a different effect on your
-service and many tags require additional arguments (beyond just the ``name``
-parameter).
+Other tags are used to integrate your services into other systems. For a list of
+all the tags available in the core Symfony Framework, check out
+:doc:`/reference/dic_tags`. Each of these has a different effect on your service
+and many tags require additional arguments (beyond just the ``name`` parameter).
 
 Creating custom Tags
 --------------------
