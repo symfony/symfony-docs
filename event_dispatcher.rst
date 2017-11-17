@@ -258,6 +258,6 @@ Learn more
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
-    event_dispatcher/*
+    event_dispatcher/before_after_filters
+    event_dispatcher/method_behavior

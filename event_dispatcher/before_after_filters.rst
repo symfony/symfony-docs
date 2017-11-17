@@ -33,14 +33,13 @@ token.
 Before Filters with the ``kernel.controller`` Event
 ---------------------------------------------------
 
-First, store some basic token configuration using ``config.yml`` and the
-parameters key:
+First, define some token configuration as parameters:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/services.yaml
         parameters:
             tokens:
                 client1: pass1
@@ -48,7 +47,7 @@ parameters key:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -65,7 +64,7 @@ parameters key:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/services.php
         $container->setParameter('tokens', array(
             'client1' => 'pass1',
             'client2' => 'pass2',
@@ -98,7 +97,7 @@ A controller that implements this interface simply looks like this::
     class FooController extends Controller implements TokenAuthenticatedController
     {
         // An action that needs authentication
-        public function barAction()
+        public function bar()
         {
             // ...
         }
