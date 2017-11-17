@@ -157,7 +157,7 @@ Multiple JavaScript Entries
 
 The previous example is the best way to deal with SPA (Single Page Applications)
 and very simple applications. However, as your app grows, you may want to have
-page-specific JavaScript or CSS (e.g. homepage, blog, store, etc.). To handel this,
+page-specific JavaScript or CSS (e.g. homepage, blog, store, etc.). To handle this,
 add a new "entry" for each page that needs custom JavaScript or CSS:
 
 .. code-block:: javascript
