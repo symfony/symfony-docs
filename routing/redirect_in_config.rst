@@ -27,16 +27,16 @@ action to redirect to this new url:
         # config/routes.yaml
 
         # load some routes - one should ultimately have the path "/app"
-        AppBundle:
-            resource: '@AppBundle/Controller/'
+        controllers:
+            resource: ../src/Controller/
             type:     annotation
             prefix:   /app
 
-        # redirecting the root
-        root:
+        # redirecting the homepage
+        homepage:
             path: /
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
             defaults:
-                _controller: FrameworkBundle:Redirect:urlRedirect
                 path: /app
                 permanent: true
 
@@ -50,14 +50,14 @@ action to redirect to this new url:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- load some routes - one should ultimately have the path "/app" -->
-            <import resource="@AppBundle/Controller/"
+            <import resource="../src/Controller/"
                 type="annotation"
                 prefix="/app"
             />
 
-            <!-- redirecting the root -->
-            <route id="root" path="/">
-                <default key="_controller">FrameworkBundle:Redirect:urlRedirect</default>
+            <!-- redirecting the homepage -->
+            <route id="homepage" path="/">
+                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction</default>
                 <default key="path">/app</default>
                 <default key="permanent">true</default>
             </route>
@@ -72,14 +72,14 @@ action to redirect to this new url:
         $collection = new RouteCollection();
 
         // load some routes - one should ultimately have the path "/app"
-        $appRoutes = $loader->import("@AppBundle/Controller/", "annotation");
+        $appRoutes = $loader->import("../src/Controller/", "annotation");
         $appRoutes->setPrefix('/app');
 
         $collection->addCollection($appRoutes);
 
-        // redirecting the root
-        $collection->add('root', new Route('/', array(
-            '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+        // redirecting the homepage
+        $collection->add('homepage', new Route('/', array(
+            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
             'path'        => '/app',
             'permanent'   => true,
         )));
@@ -108,11 +108,10 @@ action:
 
         # ...
 
-        # redirecting the admin home
-        root:
+        admin:
             path: /wp-admin
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
             defaults:
-                _controller: FrameworkBundle:Redirect:redirect
                 route: sonata_admin_dashboard
                 permanent: true
 
@@ -127,9 +126,8 @@ action:
 
             <!-- ... -->
 
-            <!-- redirecting the admin home -->
-            <route id="root" path="/wp-admin">
-                <default key="_controller">FrameworkBundle:Redirect:redirect</default>
+            <route id="admin" path="/wp-admin">
+                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction</default>
                 <default key="route">sonata_admin_dashboard</default>
                 <default key="permanent">true</default>
             </route>
@@ -144,9 +142,8 @@ action:
         $collection = new RouteCollection();
         // ...
 
-        // redirecting the root
-        $collection->add('root', new Route('/wp-admin', array(
-            '_controller' => 'FrameworkBundle:Redirect:redirect',
+        $collection->add('admin', new Route('/wp-admin', array(
+            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction',
             'route'       => 'sonata_admin_dashboard',
             'permanent'   => true,
         )));

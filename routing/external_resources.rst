@@ -14,9 +14,9 @@ This can be done by "importing" directories into the routing configuration:
     .. code-block:: yaml
 
         # config/routes.yaml
-        app:
-            resource: '@AppBundle/Controller/'
-            type:     annotation # required to enable the Annotation reader for this resource
+        controllers:
+            resource: ../src/Controller/
+            type: annotation
 
     .. code-block:: xml
 
@@ -27,8 +27,7 @@ This can be done by "importing" directories into the routing configuration:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <!-- the type is required to enable the annotation reader for this resource -->
-            <import resource="@AppBundle/Controller/" type="annotation"/>
+            <import resource="../src/Controller/" type="annotation"/>
         </routes>
 
     .. code-block:: php
@@ -38,27 +37,23 @@ This can be done by "importing" directories into the routing configuration:
 
         $collection = new RouteCollection();
         $collection->addCollection(
-            // second argument is the type, which is required to enable
-            // the annotation reader for this resource
-            $loader->import("@AppBundle/Controller/", "annotation")
+            $loader->import("../src/Controller/", "annotation")
         );
 
         return $collection;
 
 .. note::
 
-   When importing resources from YAML, the key (e.g. ``app``) is meaningless.
+   When importing resources from YAML, the key (e.g. ``controllers``) is meaningless.
    Just be sure that it's unique so no other lines override it.
 
 The ``resource`` key loads the given routing resource. In this example the
-resource is a directory, where the ``@AppBundle`` shortcut syntax resolves
-to the full path of the AppBundle. When pointing to a directory, all files
-in that directory are parsed and put into the routing.
+resource is a directory and all files in that directory are parsed and put into
+the routing.
 
 .. note::
 
-    You can also include other routing configuration files, this is often
-    used to import the routing of third party bundles:
+    You can also include other routing configuration files:
 
     .. configuration-block::
 
@@ -66,7 +61,7 @@ in that directory are parsed and put into the routing.
 
             # config/routes.yaml
             app:
-                resource: '@AcmeOtherBundle/Resources/config/routing.yml'
+                resource: '@ThirdPartyBundle/Resources/config/routing.yaml'
 
         .. code-block:: xml
 
@@ -77,7 +72,7 @@ in that directory are parsed and put into the routing.
                 xsi:schemaLocation="http://symfony.com/schema/routing
                     http://symfony.com/schema/routing/routing-1.0.xsd">
 
-                <import resource="@AcmeOtherBundle/Resources/config/routing.xml" />
+                <import resource="@ThirdPartyBundle/Resources/config/routing.xml" />
             </routes>
 
         .. code-block:: php
@@ -87,7 +82,7 @@ in that directory are parsed and put into the routing.
 
             $collection = new RouteCollection();
             $collection->addCollection(
-                $loader->import("@AcmeOtherBundle/Resources/config/routing.php")
+                $loader->import("@ThirdPartyBundle/Resources/config/routing.php")
             );
 
             return $collection;
@@ -96,7 +91,7 @@ Prefixing Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also choose to provide a "prefix" for the imported routes. For example,
-suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
+suppose you want to prefix all application routes with ``/site`` (e.g.
 ``/site/blog/{slug}`` instead of ``/blog/{slug}``):
 
 .. configuration-block::
@@ -104,8 +99,8 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
     .. code-block:: yaml
 
         # config/routes.yaml
-        app:
-            resource: '@AppBundle/Controller/'
+        controllers:
+            resource: '../src/Controller/'
             type:     annotation
             prefix:   /site
 
@@ -119,7 +114,7 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <import
-                resource="@AppBundle/Controller/"
+                resource="../src/Controller/"
                 type="annotation"
                 prefix="/site" />
         </routes>
@@ -129,7 +124,7 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
         // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $app = $loader->import('@AppBundle/Controller/', 'annotation');
+        $app = $loader->import('../src/Controller/', 'annotation');
         $app->addPrefix('/site');
 
         $collection = new RouteCollection();
