@@ -148,6 +148,7 @@ following directory structure, which is the same used by default in Symfony 4:
     │   ├── ...
     │   └── Kernel.php
     ├── templates/
+    ├── translations/
     └── vendor/
 
 This means that installing the ``symfony/flex`` dependency in your application
