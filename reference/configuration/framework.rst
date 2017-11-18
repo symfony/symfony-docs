@@ -173,17 +173,17 @@ named ``kernel.http_method_override``.
 
 .. caution::
 
-    If you're using the :ref:`AppCache Reverse Proxy <symfony2-reverse-proxy>`
+    If you're using the :ref:`HttpCache Reverse Proxy <symfony2-reverse-proxy>`
     with this option, the kernel will ignore the ``_method`` parameter,
     which could lead to errors.
 
     To fix this, invoke the ``enableHttpMethodParameterOverride()`` method
     before creating the ``Request`` object::
 
-        // web/app.php
+        // public/index.php
 
         // ...
-        $kernel = new AppCache($kernel);
+        $kernel = new CacheKernel($kernel);
 
         Request::enableHttpMethodParameterOverride(); // <-- add this line
         $request = Request::createFromGlobals();

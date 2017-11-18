@@ -44,7 +44,7 @@ to `decorate`_ the kernel with additional features. Examples include:
 
 * Configuring the autoloader or adding additional autoloading mechanisms;
 * Adding HTTP level caching by wrapping the kernel with an instance of
-  :ref:`AppCache <symfony-gateway-cache>`;
+  :ref:`HttpCache <symfony-gateway-cache>`;
 * Enabling the :doc:`Debug Component </components/debug>`.
 
 The front controller can be chosen by requesting URLs like:
