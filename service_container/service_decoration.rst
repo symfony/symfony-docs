@@ -18,7 +18,7 @@ the original service is lost:
             # this replaces the old app.mailer definition with the new one, the
             # old definition is lost
             app.mailer:
-                class AppBundle\DecoratingMailer
+                class: AppBundle\DecoratingMailer
 
     .. code-block:: xml
 
