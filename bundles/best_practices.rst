@@ -166,6 +166,69 @@ the ``Tests/`` directory. Tests should follow the following principles:
     A test suite must not contain ``AllTests.php`` scripts, but must rely on the
     existence of a ``phpunit.xml.dist`` file.
 
+Travis
+------
+
+A popular way to test open source bundles is by using `Travis CI`_. A good practice
+is to support at least the two latest LTS versions of symfony. One should also test
+test latest beta release. Here is a recommended configuration file (``.travis.yml``).
+
+.. code-block:: yaml
+
+    language: php
+    sudo: false
+    cache:
+        directories:
+            - $HOME/.composer/cache/files
+    env:
+        global:
+            - TEST_COMMAND="phpunit"
+
+    matrix:
+        fast_finish: true
+        include:
+              # Minimum supported PHP and Symfony version
+            - php: 5.5
+              env: DEPENDENCIES="minimum" COVERAGE=true TEST_COMMAND="phpunit --coverage-text"
+
+              # Test the latest stable release
+            - php: 5.5
+            - php: 5.6
+            - php: 7.0
+            - php: 7.1
+            - php: 7.2
+
+              # Test LTS versions
+            - php: 7.2
+              env: DEPENDENCIES="symfony/lts:v2"
+            - php: 7.2
+              env: DEPENDENCIES="symfony/lts:v3"
+
+              # Latest beta release
+            - php: 7.2
+              env: DEPENDENCIES="beta"
+
+        allow_failures:
+              # Latest beta is allowed to fail.
+            - php: 7.2
+              env: DEPENDENCIES="beta"
+
+    before_install:
+        - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+        - if [ "$DEPENDENCIES" = "minimum" ]; then COMPOSER_FLAGS="--prefer-stable --prefer-lowest"; fi;
+        - if [ "$DEPENDENCIES" = "beta" ]; then composer config minimum-stability beta; fi;
+        - if [[ $DEPENDENCIES == *"/"* ]]; then composer require --no-update $DEPENDENCIES; fi;
+
+    install:
+        # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
+        - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
+        - travis_retry composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
+
+    script:
+        - $TEST_COMMAND
+
+
+
 Installation
 ------------
 
@@ -476,3 +539,4 @@ Learn more
 .. _`Packagist`: https://packagist.org/
 .. _`choose any license`: http://choosealicense.com/
 .. _`valid license identifier`: https://spdx.org/licenses/
+.. _`Travis-CI`: travis-ci.org
