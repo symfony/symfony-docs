@@ -539,4 +539,4 @@ Learn more
 .. _`Packagist`: https://packagist.org/
 .. _`choose any license`: http://choosealicense.com/
 .. _`valid license identifier`: https://spdx.org/licenses/
-.. _`Travis-CI`: travis-ci.org
+.. _`Travis CI`: travis-ci.org
