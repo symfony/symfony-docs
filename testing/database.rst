@@ -112,33 +112,16 @@ Most of the time you want to use a dedicated database connection to make sure
 not to overwrite data you entered when developing the application and also
 to be able to clear the database before every test.
 
-To do this, you can specify a database configuration which overwrites the default
-configuration just in the ``test`` environment:
+To do this, you can override the value of the ``DATABASE_URL`` env var in the
+``phpunit.xml.dist`` to use a diferent database for your tests:
 
-.. configuration-block::
+.. code-block:: xml
 
-    .. code-block:: yaml
-
-        # config/packages/test/doctrine.yaml
-        doctrine:
-            # ...
-            dbal:
-                url: 'mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME?charset=utf8mb4&serverVersion=5.7'
-
-    .. code-block:: xml
-
-        <!-- config/packages/test/doctrine.xml -->
-        <doctrine:config>
-            <doctrine:dbal
-                url="mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME?charset=utf8mb4&serverVersion=5.7"
-            />
-        </doctrine:config>
-
-    .. code-block:: php
-
-        // config/packages/test/doctrine.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-                'url' => 'mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME?charset=utf8mb4&serverVersion=5.7',
-            ),
-        ));
+    <?xml version="1.0" charset="utf-8" ?>
+    <phpunit>
+        <php>
+            <!-- the value is the Doctrine connection string in DSN format -->
+            <env name="DATABASE_URL" value="mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME?charset=utf8mb4&serverVersion=5.7" />
+        </php>
+        <!-- ... -->
+    </phpunit>

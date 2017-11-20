@@ -161,7 +161,7 @@ As an example, a test could look like this::
     To run your functional tests, the ``WebTestCase`` class needs to know which
     is the application kernel to bootstrap it. The kernel class is usually
     defined in the ``KERNEL_CLASS`` environment variable (included in the
-    default ``phpunit .xml-dist`` file provided by Symfony):
+    default ``phpunit.xml.dist`` file provided by Symfony):
 
     .. code-block:: xml
 
@@ -169,7 +169,7 @@ As an example, a test could look like this::
         <phpunit>
             <php>
                 <!-- the value is the FQCN of the application kernel -->
-                <server name="KERNEL_CLASS" value="App\Kernel" />
+                <env name="KERNEL_CLASS" value="App\Kernel" />
             </php>
             <!-- ... -->
         </phpunit>
