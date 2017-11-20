@@ -90,7 +90,7 @@ the example below:
     override this. Instead set ``handler_id: ~``. Note that a save handler
     cannot be changed once the session has been started. If the application
     starts the session before Symfony is initialized, the save handler will
-    have already been  set. In this case, you will need ``handler_id: ~``.
+    have already been set. In this case, you will need ``handler_id: ~``.
     Only override the save handler if you are sure the legacy application
     can use the Symfony save handler without side effects and that the session
     has not been started before Symfony is initialized.
