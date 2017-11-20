@@ -113,44 +113,32 @@ not to overwrite data you entered when developing the application and also
 to be able to clear the database before every test.
 
 To do this, you can specify a database configuration which overwrites the default
-configuration:
+configuration just in the ``test`` environment:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config_test.yml
+        # config/packages/test/doctrine.yaml
         doctrine:
             # ...
             dbal:
-                host:     localhost
-                dbname:   testdb
-                user:     testdb
-                password: testdb
+                url: 'mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME?charset=utf8mb4&serverVersion=5.7'
 
     .. code-block:: xml
 
-        <!-- app/config/config_test.xml -->
+        <!-- config/packages/test/doctrine.xml -->
         <doctrine:config>
             <doctrine:dbal
-                host="localhost"
-                dbname="testdb"
-                user="testdb"
-                password="testdb"
+                url="mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME?charset=utf8mb4&serverVersion=5.7"
             />
         </doctrine:config>
 
     .. code-block:: php
 
-        // app/config/config_test.php
+        // config/packages/test/doctrine.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
-                'host'     => 'localhost',
-                'dbname'   => 'testdb',
-                'user'     => 'testdb',
-                'password' => 'testdb',
+                'url' => 'mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME?charset=utf8mb4&serverVersion=5.7',
             ),
         ));
-
-Make sure that your database runs on localhost and has the defined database and
-user credentials set up.
