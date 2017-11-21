@@ -4,15 +4,16 @@
 Configuring Symfony (and Environments)
 ======================================
 
-Every Symfony application consists of a collection of bundles that add useful tools
-(:doc:`services </service_container>`) to your project. Each bundle can be customized
-via configuration files that live - by default - in the ``config/`` directory.
+Symfony applications can install third-party packages (bundles, libraries, etc.)
+to bring in new features (:doc:`services </service_container>`) to your project.
+Each package can be customized via configuration files that live - by default -
+in the ``config/`` directory.
 
 Configuration: config/packages/
 -------------------------------
 
 The configuration for each package can be found in ``config/packages/``. For
-instance, the framework package is configured in ``config/packages/framework.yaml``:
+instance, the framework bundle is configured in ``config/packages/framework.yaml``:
 
 .. configuration-block::
 
@@ -91,8 +92,8 @@ There are *two* ways to know *what* keys you can configure:
 #. Use the :doc:`Reference Section </reference/index>`;
 #. Use the ``config:dump-reference`` command.
 
-For example, if you want to configure something in Framework, you can see an example
-dump of all available configuration options by running:
+For example, if you want to configure something related to the framework bundle,
+you can see an example dump of all available configuration options by running:
 
 .. code-block:: terminal
 
@@ -192,8 +193,8 @@ This parameter is then referenced in the framework config in
         ));
 
 You can define whatever parameter names you want under the ``parameters`` key of
-any configuration file. To reference a parameter, surround its name with two percent
-signs - e.g. ``%locale%``.
+any configuration file. To reference a parameter, surround its name with two
+percent signs - e.g. ``%locale%``.
 
 .. seealso::
 
@@ -209,9 +210,9 @@ a controller - see :ref:`service-container-parameters`.
 The .env File
 ~~~~~~~~~~~~~
 
-There is also a ``.env`` file which is loaded. Its contents become environment variables
-in the dev environment, making it easier to reference environment variables in your
-code.
+There is also a ``.env`` file which is loaded. Its contents become environment
+variables in the dev environment, making it easier to reference environment
+variables in your code.
 
 The ``.env`` file is special, because it defines the values that usually change
 on each server. For example, the database credentials on your local development
@@ -229,19 +230,20 @@ in sync.
 Environments & the Other Config Files
 -------------------------------------
 
-You have just *one* app, but whether you realize it or not, you need it to behave
-*differently* at different times:
+You have just *one* app, but whether you realize it or not, you need it to
+behave *differently* at different times:
 
-* While **developing**, you want your app to log everything and expose nice debugging
-  tools;
+* While **developing**, you want your app to log everything and expose nice
+  debugging tools;
 
-* After deploying to **production**, you want that *same* app to be optimized for
-  speed and only log errors.
+* After deploying to **production**, you want that *same* app to be optimized
+  for speed and only log errors.
 
-How can you make *one* application behave in two different ways? With *environments*.
+How can you make *one* application behave in two different ways? With
+*environments*.
 
-You've probably already been using the ``dev`` environment without even knowing it.
-After you deploy, you'll use the ``prod`` environment.
+You've probably already been using the ``dev`` environment without even knowing
+it. After you deploy, you'll use the ``prod`` environment.
 
 To learn more about *how* to execute and control each environment, see
 :doc:`/configuration/environments`.
