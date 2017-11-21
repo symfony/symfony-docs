@@ -177,6 +177,10 @@ In addition, Symfony3 uses a slightly different directory structure:
 The changes are pretty superficial, but for now, we recommend that you use
 the Symfony directory structure.
 
+----
+
+Next: :doc:`/best_practices/configuration`
+
 .. _`Composer`: https://getcomposer.org/
 .. _`Phar extension`: http://php.net/manual/en/intro.phar.php
 .. _`public checksums repository`: https://github.com/sensiolabs/checksums
