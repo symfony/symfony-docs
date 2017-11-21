@@ -104,6 +104,9 @@ information. By convention, this information is usually configured in an
                     'password' => '%database_password%',
                 ),
             ));
+          
+          Configuration can be done in the .env file or .env.dist
+          DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?charset=utf8mb4&serverVersion=5.7"
 
     By separating the database information into a separate file, you can
     easily keep different versions of the file on each server. You can also
