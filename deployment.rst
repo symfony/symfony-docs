@@ -237,6 +237,14 @@ kernel and return your project's root directory::
         }
     }
 
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+
+    deployment/proxies
+
 .. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: http://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
