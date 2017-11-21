@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-11-16T10:19:47Z
+
+We can apply this to the `2.7` branch too, right?
+
+---------------------------------------------------------------------------
+
+by jordanlev at 2017-11-17T02:41:30Z
+
+A quick look through the history of the ArrayNodeDefinition.php file seems to show that this goes all the way back to 2.0 (at least):
+https://github.com/symfony/symfony/blob/ec36ae7eda54d5407ecba77d57692df2a85b0fa6/src/Symfony/Component/Config/Definition/Builder/ArrayNodeDefinition.php#L234
