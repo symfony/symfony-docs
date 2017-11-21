@@ -207,3 +207,7 @@ handle everything.
 Second, is it required to call ``$form->isSubmitted()`` in the ``if`` statement
 before calling ``isValid()``. Calling ``isValid()`` with an unsubmitted form
 is deprecated since version 3.2 and will throw an exception in 4.0.
+
+----
+
+Next: :doc:`/best_practices/i18n`

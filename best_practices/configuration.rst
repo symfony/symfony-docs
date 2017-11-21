@@ -215,5 +215,9 @@ through environment variables:
     was added in Symfony 3.2. Prior to version 3.2, you needed to use the
     :doc:`special SYMFONY__ variables </configuration/external_parameters>`.
 
+----
+
+Next: :doc:`/best_practices/business-logic`
+
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html

@@ -98,5 +98,9 @@ practices**. The reasons for not doing it are various:
 * The amount of work spent on this could be better dedicated to improving
   your tests or adding features that provide real value to the end users.
 
+----
+
+Next: :doc:`/best_practices/creating-the-project`
+
 .. _`Fabien Potencier`: https://connect.sensiolabs.com/profile/fabpot
 .. _`download and install`: https://symfony.com/download

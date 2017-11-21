@@ -168,6 +168,10 @@ structure of Symfony, you can
 :doc:`override the location of the main directories </configuration/override_dir_structure>`:
 ``cache/``, ``logs/`` and ``web/``.
 
+----
+
+Next: :doc:`/best_practices/configuration`
+
 .. _`Composer`: https://getcomposer.org/
 .. _`Phar extension`: http://php.net/manual/en/intro.phar.php
 .. _`public checksums repository`: https://github.com/sensiolabs/checksums
