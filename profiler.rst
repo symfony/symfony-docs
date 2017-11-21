@@ -3,6 +3,8 @@ Profiler
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
-    profiler/*
+    profiler/data_collector
+    profiler/profiling_data
+    profiler/matchers
+    profiler/storage

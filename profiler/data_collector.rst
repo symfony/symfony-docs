@@ -122,8 +122,8 @@ block and set the value of two variables called ``icon`` and ``text``:
     {% block toolbar %}
         {% set icon %}
             {# this is the content displayed as a panel in the toolbar #}
-            <span class="icon"><img src="..." alt=""/></span>
-            <span class="sf-toolbar-status">Request</span>
+            <svg xmlns="http://www.w3.org/2000/svg"> ... </svg>
+            <span class="sf-toolbar-value">Request</span>
         {% endset %}
 
         {% set text %}
@@ -147,23 +147,15 @@ block and set the value of two variables called ``icon`` and ``text``:
 
 .. tip::
 
-    Built-in collector templates define all their images as embedded base64-encoded
-    images. This makes them work everywhere without having to mess with web assets
-    links:
-
-    .. code-block:: html
-
-        <img src="data:image/png;base64,..." />
-
-    Another solution is to define the images as SVG files. In addition to being
-    resolution-independent, these images can be easily embedded in the Twig
-    template or included from an external file to reuse them in several templates:
+    Built-in collector templates define all their images as embedded SVG files.
+    This makes them work everywhere without having to mess with web assets links:
 
     .. code-block:: twig
 
-        {{ include('data_collector/icon.svg') }}
-
-    You are encouraged to use the latter technique for your own toolbar panels.
+        {% set icon %}
+            {{ include('data_collector/icon.svg') }}
+            {# ... #}
+        {% endset %}
 
 If the toolbar panel includes extended web profiler information, the Twig template
 must also define additional blocks:
@@ -174,8 +166,7 @@ must also define additional blocks:
 
     {% block toolbar %}
         {% set icon %}
-            <span class="icon"><img src="..." alt=""/></span>
-            <span class="sf-toolbar-status">Request</span>
+            {# ... #}
         {% endset %}
 
         {% set text %}
@@ -275,6 +266,5 @@ to specify a tag that contains the template:
             ))
         ;
 
-The position of each panel in the toolbar is determined by the priority defined
-by each collector. Most built-in collectors use ``255`` as their priority. If you
-want your collector to be displayed before them, use a higher value (like 300).
+The position of each panel in the toolbar is determined by the collector priority
+(the higher the priority, the earlier the panel is displayed in the toolbar).
