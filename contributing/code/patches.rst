@@ -157,6 +157,22 @@ Then create a new branch off the ``2.7`` branch to work on the bugfix:
 The above checkout commands automatically switch the code to the newly created
 branch (check the branch you are working on with ``git branch``).
 
+Use your Branch in an Existing Project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to test your code in an existing project that uses ``symfony/symfony``
+or Symfony components, you can use the ``link`` utility provided in the Git repository
+you cloned previously.
+This tool scans the ``vendor/`` directory of your project, finds Symfony packages it
+uses, and replaces them by symbolic links to the ones in the Git repository.
+
+.. code-block:: terminal
+
+    $ php link /path/to/your/project
+
+Before running the ``link`` command, be sure that the dependencies of the project you
+want to debug are installed by running ``composer install`` inside it.
+
 Work on your Patch
 ~~~~~~~~~~~~~~~~~~
 
