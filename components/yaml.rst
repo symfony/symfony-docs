@@ -250,7 +250,7 @@ You can dump objects by using the ``DUMP_OBJECT`` flag::
     $object->foo = 'bar';
 
     $dumped = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT);
-    // !php/object O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}
+    // !php/object 'O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}'
 
 And parse them by using the ``PARSE_OBJECT`` flag::
 
@@ -276,7 +276,7 @@ By default the parser will encode invalid types as ``null``. You can make the
 parser throw exceptions by using the ``PARSE_EXCEPTION_ON_INVALID_TYPE``
 flag::
 
-    $yaml = '!php/object O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}';
+    $yaml = '!php/object \'O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}\'';
     Yaml::parse($yaml, Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE); // throws an exception
 
 Similarly you can use ``DUMP_EXCEPTION_ON_INVALID_TYPE`` when dumping::
