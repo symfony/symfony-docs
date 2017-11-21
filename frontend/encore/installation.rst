@@ -24,6 +24,7 @@ Then, install Encore into your project with Yarn:
     .. code-block:: terminal
 
         $ composer require encore
+        $ yarn install
 
     This will create a ``webpack.config.js`` file, add the ``assets/`` directory, and add ``node_modules/`` to
     ``.gitignore``.
