@@ -462,7 +462,7 @@ dn_string
 **type**: ``string`` **default**: ``{username}``
 
 This is the string which will be used as the bind DN. The ``{username}``
-placeholder will be replaced with the user-provided value (his login).
+placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you may need to override
 this value.
 

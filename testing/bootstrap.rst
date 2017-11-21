@@ -49,4 +49,4 @@ cache to be cleared:
     </phpunit>
 
 This now becomes an environment variable (i.e. ``$_ENV``) that's available
-in the custom bootstrap file (``tests.bootstrap.php``).
+in the custom bootstrap file (``tests/bootstrap.php``).

@@ -569,7 +569,7 @@ tree with ``append()``::
             ->isRequired()
             ->requiresAtLeastOneElement()
             ->useAttributeAsKey('name')
-            ->arrayPrototype
+            ->arrayPrototype()
                 ->children()
                     ->scalarNode('value')->isRequired()->end()
                 ->end()

@@ -113,16 +113,10 @@ finish. It's easy to achieve if you embed the token in the error message::
         )
     );
 
-.. caution::
-
-     The profiler store can be different depending on the environment
-     (especially if you use the SQLite store, which is the default configured
-     one).
-
 .. note::
 
-    The profiler information is available even if you insulate the client or
-    if you use an HTTP layer for your tests.
+    The profiler information is available even if you :doc:`insulate the client </testing/insulating_clients>`
+    or if you use an HTTP layer for your tests.
 
 .. tip::
 

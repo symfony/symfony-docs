@@ -5,7 +5,7 @@ Making the Locale "Sticky" during a User's Session
 ==================================================
 
 Symfony stores the locale setting in the Request, which means that this setting
-is not automtically saved ("sticky") across requests. But, you *can* store the locale
+is not automatically saved ("sticky") across requests. But, you *can* store the locale
 in the session, so that it's used on subsequent requests.
 
 .. _creating-a-LocaleSubscriber:
@@ -142,9 +142,10 @@ event:
     // src/EventSubscriber/UserLocaleSubscriber.php
     namespace App\EventSubscriber;
 
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Security\Http\SecurityEvents;
 
     /**
      * Stores the locale of the user in the session after the
@@ -169,6 +170,13 @@ event:
             if (null !== $user->getLocale()) {
                 $this->session->set('_locale', $user->getLocale());
             }
+        }
+
+        public static function getSubscribedEvents()
+        {
+            return array(
+                SecurityEvents::INTERACTIVE_LOGIN => array(array('onInteractiveLogin', 15)),
+            );
         }
     }
 
