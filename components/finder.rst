@@ -122,7 +122,7 @@ And it also works with user-defined streams::
     $s3->registerStreamWrapper('s3');
 
     $finder = new Finder();
-    $finder->name('photos*')->size('< 100K')->date('since 1 hour ago');
+    $finder->name('photos*')->size('< 100K')->dateModified('since 1 hour ago');
     foreach ($finder->in('s3://bucket-name') as $file) {
         // ... do something with the file
     }
@@ -255,19 +255,53 @@ The target value may use magnitudes of kilobytes (``k``, ``ki``), megabytes
 (``m``, ``mi``), or gigabytes (``g``, ``gi``). Those suffixed with an ``i`` use
 the appropriate ``2**n`` version in accordance with the `IEC standard`_.
 
-File Date
-~~~~~~~~~
+File Date Accessed
+~~~~~~~~~~~~~~~~~~
 
-Restrict files by last modified dates with the
-:method:`Symfony\\Component\\Finder\\Finder::date` method::
+Restrict files by last accessed dates with the
+:method:`Symfony\\Component\\Finder\\Finder::dateAccessed` method::
 
-    $finder->date('since yesterday');
+    $finder->dateAccessed('since yesterday');
 
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
 ``==``. You can also use ``since`` or ``after`` as an alias for ``>``, and
 ``until`` or ``before`` as an alias for ``<``.
 
 The target value can be any date supported by the `strtotime`_ function.
+
+Accessed date is the last time the file was read, contents written, file permissions changed or file was moved or renamed.
+
+File Date Changed
+~~~~~~~~~~~~~~~~~~
+
+Restrict files by last changed dates with the
+:method:`Symfony\\Component\\Finder\\Finder::dateChanged` method::
+
+    $finder->dateChanged('since yesterday');
+
+The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
+``==``. You can also use ``since`` or ``after`` as an alias for ``>``, and
+``until`` or ``before`` as an alias for ``<``.
+
+The target value can be any date supported by the `strtotime`_ function.
+
+Changed date is the last time the file was contents written, file permissions changed or file was moved or renamed.
+
+File Date Modified
+~~~~~~~~~~~~~~~~~~
+
+Restrict files by last modified dates with the
+:method:`Symfony\\Component\\Finder\\Finder::dateModified` method::
+
+    $finder->dateModified('since yesterday');
+
+The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
+``==``. You can also use ``since`` or ``after`` as an alias for ``>``, and
+``until`` or ``before`` as an alias for ``<``.
+
+The target value can be any date supported by the `strtotime`_ function.
+
+Modified file is the last time the file contents was written.
 
 Directory Depth
 ~~~~~~~~~~~~~~~
