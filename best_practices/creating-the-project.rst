@@ -91,6 +91,10 @@ Symfony applications can still use third-party bundles (installed in ``vendor/``
 to add features, but you should use PHP namespaces instead of bundles to organize
 your own code.
 
+----
+
+Next: :doc:`/best_practices/configuration`
+
 .. _`Composer`: https://getcomposer.org/
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`Symfony Skeleton`: https://github.com/symfony/skeleton

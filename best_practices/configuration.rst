@@ -210,5 +210,9 @@ through environment variables:
             # ...
             password: "%env(DB_PASSWORD)%"
 
+----
+
+Next: :doc:`/best_practices/business-logic`
+
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html
