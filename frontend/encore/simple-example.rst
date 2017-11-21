@@ -96,7 +96,6 @@ In Symfony, use the ``asset()`` helper:
             <link rel="stylesheet" href="{{ asset('build/global.css') }}">
         </head>
         <body>
-            <h1></h1>
             <!-- ... -->
             <script src="{{ asset('build/app.js') }}"></script>
         </body>
@@ -135,7 +134,7 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
     var greet = require('./greet');
 
     $(document).ready(function() {
-        $('h1').html(greet('john'));
+        $('body').prepend('<h1>'+greet('john')+'</h1>');
     });
 
 That's it! When you build your assets, jQuery and ``greet.js`` will automatically
