@@ -221,3 +221,4 @@ other potential things like pushing assets to a CDN (see `Common Post-Deployment
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: http://deployer.org/
+.. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle
