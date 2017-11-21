@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by michaelperrin at 2017-11-18T11:21:32Z
+
+It's not really part of the server configuration, but we should also update the http://symfony.com/doc/master/configuration/override_dir_structure.html article (which deals with the `web` dir as well).
