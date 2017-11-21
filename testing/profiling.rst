@@ -59,12 +59,6 @@ finish. It's easy to achieve if you embed the token in the error message::
         )
     );
 
-.. caution::
-
-     The profiler store can be different depending on the environment
-     (especially if you use the SQLite store, which is the default configured
-     one).
-
 .. note::
 
     The profiler information is available even if you insulate the client or
