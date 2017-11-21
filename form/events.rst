@@ -295,7 +295,7 @@ Creating and binding an event listener to the form is very easy::
                 return;
             }
 
-            // Check whether the user has chosen to display his email or not.
+            // Check whether the user has chosen to display their email or not.
             // If the data was submitted previously, the additional value that is
             // included in the request variables needs to be removed.
             if (true === $user['show_email']) {
@@ -376,7 +376,7 @@ Event subscribers have different uses:
             $form = $event->getForm();
 
             // Check whether the user from the initial data has chosen to
-            // display his email or not.
+            // display their email or not.
             if (true === $user->isShowEmail()) {
                 $form->add('email', EmailType::class);
             }
@@ -391,7 +391,7 @@ Event subscribers have different uses:
                 return;
             }
 
-            // Check whether the user has chosen to display his email or not.
+            // Check whether the user has chosen to display their email or not.
             // If the data was submitted previously, the additional value that
             // is included in the request variables needs to be removed.
             if (true === $user['show_email']) {

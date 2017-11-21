@@ -104,8 +104,9 @@ defined above with the id ``app.hello_controller``::
 
 .. note::
 
-    You cannot drop the ``Action`` part of the method name when using this
-    syntax.
+    Make sure the method name in your route (e.g. ``indexAction``) matches the
+    method name exactly. Unlike the traditional ``Bundle:Controller:method``
+    notation, the ``Action`` suffix is not automatically added for you.
 
 You can also route to the service by using the same notation when defining
 the route ``_controller`` value:
