@@ -408,6 +408,8 @@ In general, the new best practice is to use normal constructor dependency inject
 (or "action" injection in controllers) instead of fetching public services via
 ``$this->get()`` (though that does still work).
 
+.. _service_autoconfigure:
+
 4) Auto-tagging with autoconfigure
 ----------------------------------
 
