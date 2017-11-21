@@ -61,8 +61,8 @@ finish. It's easy to achieve if you embed the token in the error message::
 
 .. note::
 
-    The profiler information is available even if you insulate the client or
-    if you use an HTTP layer for your tests.
+    The profiler information is available even if you :doc:`insulate the client </testing/insulating_clients>`
+    or if you use an HTTP layer for your tests.
 
 .. tip::
 

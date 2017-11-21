@@ -142,9 +142,10 @@ event:
     // src/AppBundle/EventSubscriber/UserLocaleSubscriber.php
     namespace AppBundle\EventSubscriber;
 
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Security\Http\SecurityEvents;
 
     /**
      * Stores the locale of the user in the session after the
@@ -169,6 +170,13 @@ event:
             if (null !== $user->getLocale()) {
                 $this->session->set('_locale', $user->getLocale());
             }
+        }
+
+        public static function getSubscribedEvents()
+        {
+            return array(
+                SecurityEvents::INTERACTIVE_LOGIN => array(array('onInteractiveLogin', 15)),
+            );
         }
     }
 
