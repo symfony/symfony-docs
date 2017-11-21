@@ -63,14 +63,16 @@ manually taking other steps (see `Common Post-Deployment Tasks`_).
 Using Platforms as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The specific deployment steps vary greatly from one service provider to another,
-so check out the dedicated article for the service of your choose:
+Using a Platform as a Service (PAAS) can be a great way to deploy your Symfony app
+quickly and easily. There are many PAAS - below are a few that work well with Symfony:
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
-    deployment/*
+    deployment/heroku
+    deployment/platformsh
+    deployment/azure-website
+    deployment/fortrabbit
 
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -123,18 +125,16 @@ Check if your server meets the requirements by running:
 
 .. _b-configure-your-app-config-parameters-yml-file:
 
-B) Configure your Parameters File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+B) Configure your Environment Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Most Symfony applications define configuration parameters in a file called
-``app/config/parameters.yml``. This file should *not* be deployed, because
-Symfony generates it automatically using the ``app/config/parameters.yml.dist``
-file as a template (that's why ``parameters.yml.dist`` must be committed and
-deployed).
+Most Symfony applications read their configuration from environment variables.
+While developing locally, you'll usually store these in a ``.env`` file. But on
+production, instead of creating this file, you should set *real* environment variables.
 
-If your application uses environment variables instead of these parameters, you
-must define those env vars in your production server using the tools provided by
-your hosting service.
+How you set environment variables, depends on your setup: they can be set at the
+command line, in your Nginx configuration, or via other methods provided by your
+hosting service.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
