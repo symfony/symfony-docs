@@ -20,52 +20,6 @@ Before using the serializer, run this command to install it in your application:
 
     $ composer require serializer
 
-Then, enable the serializer in the framework config:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            # ...
-            serializer: { enable_annotations: true }
-            # Alternatively, if you don't want to use annotations
-            #serializer: { enabled: true }
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-            <framework:config>
-                <!-- ... -->
-                <framework:serializer enable-annotations="true" />
-                <!--
-                Alternatively, if you don't want to use annotations
-                <framework:serializer enabled="true" />
-                -->
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'serializer' => array(
-                'enable_annotations' => true,
-                // Alternatively, if you don't want to use annotations
-                //'enabled' => true,
-            ),
-        ));
-
 Using the Serializer Service
 ----------------------------
 
@@ -147,46 +101,11 @@ Here is an example on how to load the
 Using Serialization Groups Annotations
 --------------------------------------
 
-Enable :ref:`serialization groups annotation <component-serializer-attributes-groups>`
-with the following configuration:
+To use annotations, first install the annotations package:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            # ...
-            serializer:
-                enable_annotations: true
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- ... -->
-                <framework:serializer enable-annotations="true" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'serializer' => array(
-                'enable_annotations' => true,
-            ),
-        ));
+    $ composer require annotations
 
 Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
 to your class and choose which groups to use when serializing::
@@ -207,52 +126,11 @@ stored in one of the following locations:
 
 .. _serializer-enabling-metadata-cache:
 
-Enabling the Metadata Cache
----------------------------
+Configruing the Metadata Cache
+------------------------------
 
-Metadata used by the Serializer component such as groups can be cached to
-enhance application performance. Any service implementing the ``Doctrine\Common\Cache\Cache``
-interface can be used.
-
-A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/prod/framework.yaml
-        framework:
-            # ...
-            serializer:
-                cache: serializer.mapping.cache.apc
-
-    .. code-block:: xml
-
-        <!-- config/packages/prod/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- ... -->
-                <framework:serializer cache="serializer.mapping.cache.apc" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/prod/framework.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'serializer' => array(
-                'cache' => 'serializer.mapping.cache.apc',
-            ),
-        ));
+The metadata for the serializer is automatically cached. To configure the cache,
+configure the ``framework.cache.pools`` key in ``config/packages/framework.yaml``.
 
 Enabling a Name Converter
 -------------------------

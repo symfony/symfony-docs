@@ -106,7 +106,6 @@ Configuration
     * `debug`_
 * `serializer`_
     * :ref:`enabled <reference-serializer-enabled>`
-    * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
     * :ref:`name_converter <reference-serializer-name_converter>`
     * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
@@ -1655,20 +1654,6 @@ enabled
 **type**: ``boolean`` **default**: ``false``
 
 Whether to enable the ``serializer`` service or not in the service container.
-
-.. _reference-serializer-cache:
-
-cache
-.....
-
-**type**: ``string``
-
-The service that is used to persist class metadata in a cache. The service
-has to implement the ``Doctrine\Common\Cache\Cache`` interface.
-
-.. seealso::
-
-    For more information, see :ref:`serializer-enabling-metadata-cache`.
 
 .. _reference-serializer-enable_annotations:
 
