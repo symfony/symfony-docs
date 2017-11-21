@@ -207,3 +207,7 @@ Second, we recommend using ``$form->isSubmitted()`` in the ``if`` statement
 for clarity. This isn't technically needed, since ``isValid()`` first calls
 ``isSubmitted()``. But without this, the flow doesn't read well as it *looks*
 like the form is *always* processed (even on the GET request).
+
+----
+
+Next: :doc:`/best_practices/i18n`
