@@ -283,7 +283,8 @@
 /cookbook/workflow/homestead /setup/homestead
 /cookbook/workflow/index /setup
 /cookbook/workflow/new_project_git /setup/new_project_git
-/cookbook/workflow/new_project_svn /setup/new_project_svn
+/cookbook/workflow/new_project_svn /setup/new_project_git
+/setup/new_project_svn /setup/new_project_git
 /components/asset/index /components/asset
 /components/asset/introduction /components/asset
 /components/browser_kit/index /components/browser_kit
