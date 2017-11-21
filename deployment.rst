@@ -78,13 +78,15 @@ Using Build Scripts and other Tools
 There are also tools to help ease the pain of deployment. Some of them have been
 specifically tailored to the requirements of Symfony.
 
-`Capistrano`_ with `Symfony plugin`_
-    `Capistrano`_ is a remote server automation and deployment tool written in Ruby.
-    `Symfony plugin`_ is a plugin to ease Symfony related tasks, inspired by `Capifony`_
-    (which works only with Capistrano 2).
+`EasyDeployBundle`_
+    A Symfony bundle that adds easy deploy tools to your application.
 
-`sf2debpkg`_
-    Helps you build a native Debian package for your Symfony project.
+`Deployer`_
+    This is another native PHP rewrite of Capistrano, with some ready recipes for
+    Symfony.
+
+`Ansistrano`_
+    An Ansible role that allows you to configure a powerful deploy via YAML files.
 
 `Magallanes`_
     This Capistrano-like deployment tool is built in PHP, and may be easier
@@ -94,13 +96,14 @@ specifically tailored to the requirements of Symfony.
     This Python-based library provides a basic suite of operations for executing
     local or remote shell commands and uploading/downloading files.
 
-`Deployer`_
-    This is another native PHP rewrite of Capistrano, with some ready recipes for
-    Symfony.
+`Capistrano`_ with `Symfony plugin`_
+    `Capistrano`_ is a remote server automation and deployment tool written in Ruby.
+    `Symfony plugin`_ is a plugin to ease Symfony related tasks, inspired by `Capifony`_
+    (which works only with Capistrano 2).
 
-Bundles
-    There are some `bundles that add deployment features`_ directly into your
-    Symfony console.
+`sf2debpkg`_
+    Helps you build a native Debian package for your Symfony project.
+
 
 Basic scripting
     You can of course use shell, `Ant`_ or any other build tool to script
@@ -214,7 +217,6 @@ other potential things like pushing assets to a CDN (see `Common Post-Deployment
 .. _`Fabric`: http://www.fabfile.org/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
 .. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
-.. _`bundles that add deployment features`: https://github.com/search?utf8=✓&q=topic%3Asymfony-bundle+topic%3Adeploy&type=Repositories&ref=searchresults
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
