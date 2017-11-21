@@ -71,7 +71,7 @@ is defined by creating a **route** in the ``config/routes.yaml`` file:
     # the "app_lucky_number" route name is not important yet
     app_lucky_number:
         path: /lucky/number
-        controller: App\Controller\LuckyController::number
+        defaults: { _controller: App\Controller\LuckyController::number }
 
 That's it! If you are using Symfony web server, try it out by going to:
 
