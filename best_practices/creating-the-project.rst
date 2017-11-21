@@ -8,7 +8,7 @@ Installing Symfony
 
     Use Composer and Symfony Flex to create and manage Symfony applications.
 
-`Composer`_ is the package manager used by modern PHP application to manage
+`Composer`_ is the package manager used by modern PHP applications to manage
 their dependencies. `Symfony Flex`_ is a Composer plugin designed to automate
 some of the most common tasks performed in Symfony applications. Using Flex is
 optional but recommended because it improves your productivity significantly.
