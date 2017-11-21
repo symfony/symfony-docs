@@ -4,112 +4,41 @@
 Databases and the Doctrine ORM
 ==============================
 
-One of the most common and challenging tasks for any application
-involves persisting and reading information to and from a database. Although
-the Symfony Framework doesn't integrate any component to work with databases,
-it provides tight integration with a third-party library called `Doctrine`_.
-Doctrine's sole goal is to give you powerful tools to make database interactions
-easy and flexible.
-
-In this chapter, you'll learn how to start leveraging Doctrine in your Symfony projects
-to give you rich database interactions.
+Symfony doesn't provide a component to work with the database, but it *does* provide
+tight integration with a third-party library called `Doctrine`_.
 
 .. note::
 
-    Doctrine is totally decoupled from Symfony and using it is optional.
-    This chapter is all about the Doctrine ORM, which aims to let you map
-    objects to a relational database (such as *MySQL*, *PostgreSQL* or
-    *Microsoft SQL*). If you prefer to use raw database queries, this is
-    easy, and explained in the ":doc:`/doctrine/dbal`" article.
+    This article is all about using the Doctrine ORM. If you prefer to use raw
+    database queries, see the ":doc:`/doctrine/dbal`" article instead.
 
-    You can also persist data to `MongoDB`_ using Doctrine ODM library. For
-    more information, read the "`DoctrineMongoDBBundle`_"
-    documentation.
+    You can also persist data to `MongoDB`_ using Doctrine ODM library. See the
+    "`DoctrineMongoDBBundle`_" documentation.
 
-A Simple Example: A Product
----------------------------
+Installing Doctrine
+-------------------
 
-The easiest way to understand how Doctrine works is to see it in action.
-In this section, you'll configure your database, create a ``Product`` object,
-persist it to the database and fetch it back out.
+First, install Doctrine, as well as the MakerBundle, which will help generate some
+code:
+
+.. code-block:: terminal
+
+    composer require orm maker
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before you really begin, you'll need to configure your database connection
-information. By convention, this information is usually configured in an
-``app/config/parameters.yml`` file:
+The database connection information is stored as an environment variable called
+``DATABASE_URL``. For development, you can find and customize this inside ``.env``:
 
-.. code-block:: yaml
+.. code-block:: text
 
-    # app/config/parameters.yml
-    parameters:
-        database_host:     localhost
-        database_name:     test_project
-        database_user:     root
-        database_password: password
+    # .env
 
-    # ...
+    # customize this line!
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?charset=utf8mb4&serverVersion=5.7"
 
-.. note::
-
-    Defining the configuration via ``parameters.yml`` is just a convention.
-    The parameters defined in that file are referenced by the main configuration
-    file when setting up Doctrine:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # app/config/config.yml
-            doctrine:
-                dbal:
-                    driver:   pdo_mysql
-                    host:     '%database_host%'
-                    dbname:   '%database_name%'
-                    user:     '%database_user%'
-                    password: '%database_password%'
-
-        .. code-block:: xml
-
-            <!-- app/config/config.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    http://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/doctrine
-                    http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
-                <doctrine:config>
-                    <doctrine:dbal
-                        driver="pdo_mysql"
-                        host="%database_host%"
-                        dbname="%database_name%"
-                        user="%database_user%"
-                        password="%database_password%" />
-                </doctrine:config>
-            </container>
-
-        .. code-block:: php
-
-            // app/config/config.php
-            $container->loadFromExtension('doctrine', array(
-                'dbal' => array(
-                    'driver'   => 'pdo_mysql',
-                    'host'     => '%database_host%',
-                    'dbname'   => '%database_name%',
-                    'user'     => '%database_user%',
-                    'password' => '%database_password%',
-                ),
-            ));
-
-    By separating the database information into a separate file, you can
-    easily keep different versions of the file on each server. You can also
-    easily store database configuration (or any sensitive information) outside
-    of your project, like inside your Apache configuration, for example. For
-    more information, see :doc:`/configuration/external_parameters`.
+----> HERE
 
 Now that Doctrine can connect to your database, the following command
 can automatically generate an empty ``test_project`` database for you:
@@ -242,7 +171,7 @@ can automatically generate an empty ``test_project`` database for you:
             ));
 
 Creating an Entity Class
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 Suppose you're building an application where products need to be displayed.
 Without even thinking about Doctrine or databases, you already know that
@@ -280,7 +209,7 @@ just a simple PHP class.
 .. _doctrine-adding-mapping:
 
 Add Mapping Information
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 Doctrine allows you to work with databases in a much more interesting way
 than just fetching rows of scalar data into an array. Instead, Doctrine
@@ -439,7 +368,7 @@ see the :ref:`doctrine-field-types` section.
 .. _doctrine-generating-getters-and-setters:
 
 Generating Getters and Setters
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 Even though Doctrine now knows how to persist a ``Product`` object to the
 database, the class itself isn't really useful yet. Since ``Product`` is just
@@ -451,7 +380,7 @@ methods manually or with your own IDE.
 .. _doctrine-creating-the-database-tables-schema:
 
 Creating the Database Tables/Schema
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 You now have a usable ``Product`` class with mapping information so that
 Doctrine knows exactly how to persist it. Of course, you don't yet have the
@@ -487,7 +416,7 @@ Your database now has a fully-functional ``product`` table with columns that
 match the metadata you've specified.
 
 Persisting Objects to the Database
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 Now that you have mapped the ``Product`` entity to its corresponding ``product``
 table, you're ready to persist ``Product`` objects to the database. From inside
@@ -580,7 +509,7 @@ issue an ``UPDATE`` query if the entity already exists in the database.
     the "`DoctrineFixturesBundle`_" documentation.
 
 Fetching Objects from the Database
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------
 
 Fetching an object back out of the database is even easier. For example,
 suppose you've configured a route to display a specific ``Product`` based
@@ -675,7 +604,7 @@ to easily fetch objects based on multiple conditions::
     Symfony Profiler and see the exact queries that were executed.
 
 Updating an Object
-~~~~~~~~~~~~~~~~~~
+------------------
 
 Once you've fetched an object from Doctrine, updating it is easy. Suppose
 you have a route that maps a product id to an update action in a controller::
@@ -712,7 +641,7 @@ In this case, since you fetched the ``$product`` object from Doctrine, it's
 already managed.
 
 Deleting an Object
-~~~~~~~~~~~~~~~~~~
+------------------
 
 Deleting an object is very similar, but requires a call to the ``remove()``
 method of the entity manager::
