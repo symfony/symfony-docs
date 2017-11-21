@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-04T10:58:41Z
+
+I don't understand this proposal. Why is that empty tag needed?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-30T11:03:47Z
+
+Closing because this doesn't look necessary and we don't have more information. Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-11-18T15:05:29Z
+
+I'm reopening this because it's really needed. I just stumbled upon this issue when trying to solve this problem: https://github.com/symfony/webpack-encore/issues/210
+
+@ArlingtonHouse I'm really sorry that I closed your pull request and I apologize for that!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-21T13:14:30Z
+
+I just tweaked the PR to fix the legitimate issue in a different way.
