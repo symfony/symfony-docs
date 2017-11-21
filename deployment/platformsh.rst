@@ -1,3 +1,5 @@
+:orphan:
+
 .. index::
    single: Deployment; Deploying to Platform.sh
 

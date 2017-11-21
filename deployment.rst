@@ -63,16 +63,13 @@ manually taking other steps (see `Common Post-Deployment Tasks`_).
 Using Platforms as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using a Platform as a Service (PAAS) can be a great way to deploy your Symfony app
-quickly and easily. There are many PAAS - below are a few that work well with Symfony:
+Using a Platform as a Service (PaaS) can be a great way to deploy your Symfony app
+quickly and easily. There are many PaaS - below are a few that work well with Symfony:
 
-.. toctree::
-    :maxdepth: 1
-
-    deployment/heroku
-    deployment/platformsh
-    deployment/azure-website
-    deployment/fortrabbit
+* `Heroku`_
+* `Platform.sh`_
+* `Azure`_
+* `fortrabbit`_
 
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -257,3 +254,7 @@ Learn More
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: http://deployer.org/
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
+.. _`Heroku`: https://devcenter.heroku.com/articles/getting-started-with-symfony
+.. _`platform.sh`: https://docs.platform.sh/frameworks/symfony.html
+.. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
+.. _`fortrabbit`: https://help.fortrabbit.com/install-symfony-3-uni
