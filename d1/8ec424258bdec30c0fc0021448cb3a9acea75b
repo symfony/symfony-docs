@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-11-21T09:10:01Z
+
+3.4 is correct, the old example won't work with Symfony 4, but the tag with colon is already deprecated in 3.4
+
+---------------------------------------------------------------------------
+
+by jeromemacias at 2017-11-21T09:16:50Z
+
+@xabbuh Changes done
