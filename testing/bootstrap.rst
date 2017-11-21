@@ -20,7 +20,7 @@ To do this, first add a file that executes your bootstrap work::
 
     require __DIR__.'/../vendor/autoload.php';
 
-Then, configure ``phpunit.xml.dist`` to execute this ``bootstra.php`` file
+Then, configure ``phpunit.xml.dist`` to execute this ``bootstrap.php`` file
 before running the tests:
 
 .. code-block:: xml
@@ -49,4 +49,4 @@ cache to be cleared:
     </phpunit>
 
 This now becomes an environment variable (i.e. ``$_ENV``) that's available
-in the custom bootstrap file (``tests.bootstrap.php``).
+in the custom bootstrap file (``tests/bootstrap.php``).

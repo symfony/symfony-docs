@@ -877,7 +877,7 @@ configuration adds tests from a custom ``lib/tests`` directory:
                 <directory>lib/tests</directory>
             </testsuite>
         </testsuites>
-        <!-- ... --->
+        <!-- ... -->
     </phpunit>
 
 To include other directories in the code coverage, also edit the ``<filter>``
@@ -898,7 +898,7 @@ section:
                 </exclude>
             </whitelist>
         </filter>
-        <!-- ... --->
+        <!-- ... -->
     </phpunit>
 
 Learn more

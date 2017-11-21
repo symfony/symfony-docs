@@ -172,7 +172,7 @@ what actions are allowed on a blog post::
         // ...
     }
 
-    // See all the available transition for the post in the current state
+    // See all the available transitions for the post in the current state
     $transitions = $workflow->getEnabledTransitions($post);
 
 Using Events
@@ -250,7 +250,8 @@ order:
     * ``workflow.[workflow name].announce``
     * ``workflow.[workflow name].announce.[transition name]``
 
-Here is an example how to enable logging for every time a the "blog_publishing" workflow leaves a place::
+Here is an example of how to enable logging for every time a the "blog_publishing"
+workflow leaves a place::
 
     use Psr\Log\LoggerInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
