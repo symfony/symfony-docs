@@ -395,12 +395,6 @@ Take a look at the previous example in more detail:
 Whether you're creating or updating objects, the workflow is always the same: Doctrine
 is smart enough to know if it should INSERT of UPDATE your entity.
 
-.. tip::
-
-    Doctrine provides a library that allows you to programmatically load testing
-    data into your project (i.e. "fixture data"). For information, see
-    the "`DoctrineFixturesBundle`_" documentation.
-
 Fetching Objects from the Database
 ----------------------------------
 
@@ -663,6 +657,13 @@ Doctrine provides all the functionality you need to manage database relationship
 relationships.
 
 For info, see :doc:`/doctrine/associations`.
+
+Dummy Data Fixtures
+-------------------
+
+Doctrine provides a library that allows you to programmatically load testing
+data into your project (i.e. "fixture data"). For information, see
+the "`DoctrineFixturesBundle`_" documentation.
 
 Learn more
 ----------
