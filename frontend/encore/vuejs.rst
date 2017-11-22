@@ -38,9 +38,10 @@ Building a simple component
 ---------------------------
 
 Once Vue is installed and ``webpack.config.js`` has been updated,
-let's build our first component and display a simple ``Hello World from Vue !``,
-in order to ease the process, the usage of ``.vue`` files is recommended,
-let's start by adding a ``main.js`` file inside the assets folder:
+let's build our first component and display a simple ``Hello World from Vue !``.
+
+In order to ease the process, the usage of ``.vue`` files is recommended,
+start by adding a ``main.js`` file inside the assets folder:
 
 .. code-block:: javascript
 
