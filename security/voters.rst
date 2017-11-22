@@ -197,7 +197,7 @@ To recap, here's what's expected from the two abstract methods:
     object). Your job is to determine if your voter should vote on the attribute/subject
     combination. If you return true, ``voteOnAttribute()`` will be called. Otherwise,
     your voter is done: some other voter should process this. In this example, you
-    return ``true`` if the attribue is ``view`` or ``edit`` and if the object is
+    return ``true`` if the attribute is ``view`` or ``edit`` and if the object is
     a ``Post`` instance.
 
 ``voteOnAttribute($attribute, $subject, TokenInterface $token)``
