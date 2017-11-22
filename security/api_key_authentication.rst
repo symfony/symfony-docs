@@ -292,7 +292,7 @@ and ``provider`` keys:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -364,7 +364,7 @@ If you have defined ``access_control``, make sure to add a new entry:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -423,7 +423,7 @@ configuration or set it to ``false``:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 

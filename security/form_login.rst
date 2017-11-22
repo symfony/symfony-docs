@@ -42,7 +42,7 @@ a relative/absolute URL or a Symfony route name:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -99,7 +99,7 @@ previously requested URL and always redirect to the default page:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -198,7 +198,7 @@ parameter is included in the request, you may use the value of the
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -264,7 +264,7 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -351,7 +351,7 @@ redirects can be customized using the  ``target_path_parameter`` and
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 

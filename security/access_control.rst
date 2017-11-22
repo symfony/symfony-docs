@@ -33,7 +33,7 @@ Take the following ``access_control`` entries as an example:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:
@@ -171,7 +171,7 @@ pattern so that it is only accessible by requests from the local server itself:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:
@@ -252,7 +252,7 @@ key:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:
@@ -300,7 +300,7 @@ the user will be redirected to ``https``:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:

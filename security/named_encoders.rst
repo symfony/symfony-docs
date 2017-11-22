@@ -11,7 +11,7 @@ to apply to all instances of a specific class:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             encoders:
@@ -61,7 +61,7 @@ named encoders:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             encoders:
@@ -133,7 +133,7 @@ you must register a service for it in order to use it as a named encoder:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             encoders:

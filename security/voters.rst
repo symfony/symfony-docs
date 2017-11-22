@@ -289,7 +289,7 @@ security configuration:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             access_decision_manager:
                 strategy: unanimous

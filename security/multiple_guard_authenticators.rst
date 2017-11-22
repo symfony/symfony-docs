@@ -22,7 +22,7 @@ This is how your security configuration can look in action:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
              # ...
             firewalls:
@@ -93,7 +93,7 @@ the solution is to split the configuration into two separate firewalls:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             firewalls:

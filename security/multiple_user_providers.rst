@@ -10,7 +10,7 @@ creating a new provider that chains the two together:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             providers:
                 chain_provider:
@@ -92,7 +92,7 @@ to use a specific provider:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             firewalls:
                 secured_area:

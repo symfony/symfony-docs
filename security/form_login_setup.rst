@@ -18,7 +18,7 @@ First, enable form login under your firewall:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -300,7 +300,7 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
 
         # ...
         access_control:
@@ -338,7 +338,7 @@ fixes the problem:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
 
         # ...
         access_control:

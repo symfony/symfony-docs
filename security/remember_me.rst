@@ -14,7 +14,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 

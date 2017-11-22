@@ -153,7 +153,7 @@ using the ``simple_form`` key:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 

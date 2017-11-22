@@ -59,7 +59,7 @@ use the default provider available in the security component:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -171,7 +171,7 @@ After this, you have protected your login form against CSRF attacks.
 
         .. code-block:: yaml
 
-            # app/config/security.yml
+            # config/packages/security.yaml
             security:
                 # ...
 

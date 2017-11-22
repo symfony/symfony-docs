@@ -69,7 +69,7 @@ is the service id of your user checker:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
 
         # ...
         security:

@@ -260,7 +260,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 

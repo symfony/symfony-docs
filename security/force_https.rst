@@ -13,7 +13,7 @@ to use HTTPS then you could use the following configuration:
 
         .. code-block:: yaml
 
-            # app/config/security.yml
+            # config/packages/security.yaml
             security:
                 # ...
 
@@ -61,7 +61,7 @@ role:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 

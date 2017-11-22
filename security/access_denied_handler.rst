@@ -38,7 +38,7 @@ configure it under your firewall:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         firewalls:
             # ...
 

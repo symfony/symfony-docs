@@ -32,7 +32,7 @@ Enable the x509 authentication for a particular firewall in the security configu
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -111,7 +111,7 @@ corresponding firewall in your security configuration:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             firewalls:
                 secured_area:
