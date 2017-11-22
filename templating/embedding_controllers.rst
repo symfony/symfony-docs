@@ -26,7 +26,7 @@ articles::
 
     class ArticleController extends Controller
     {
-        public function recentArticlesAction($max = 3)
+        public function recentArticles($max = 3)
         {
             // make a database call or other logic
             // to get the "$max" most recent articles
@@ -68,7 +68,7 @@ The ``recent_list`` template is perfectly straightforward:
     you'll learn how to do this correctly.
 
 To include the controller, you'll need to refer to it using the standard
-string syntax for controllers (i.e. **controllerPath**::**action**):
+string syntax for controllers (i.e. **controllerNamespace**::**action**):
 
 .. configuration-block::
 
@@ -98,4 +98,4 @@ string syntax for controllers (i.e. **controllerPath**::**action**):
             ) ?>
         </div>
 
-The result of an embedded controler can also be :doc:`cached </http_cache/esi>`
+The result of an embedded controller can also be :doc:`cached </http_cache/esi>`
