@@ -25,7 +25,7 @@ creating a new provider that chains the two together:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -106,7 +106,7 @@ to use a specific provider:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

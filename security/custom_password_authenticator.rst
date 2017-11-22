@@ -131,10 +131,10 @@ inside of it.
 
 Inside this method, the password encoder is needed to check the password's validity::
 
-        $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
+    $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
 
 This is a service that is already available in Symfony and it uses the password algorithm
-that is configured in the security configuration (e.g. ``security.yml``) under
+that is configured in the security configuration (e.g. ``security.yaml``) under
 the ``encoders`` key. Below, you'll see how to inject that into the ``TimeAuthenticator``.
 
 .. _security-password-authenticator-config:
@@ -168,7 +168,7 @@ using the ``simple_form`` key:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

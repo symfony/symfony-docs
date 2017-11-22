@@ -174,11 +174,11 @@ Now you make the user provider available as a service. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this happens automatically.
 
-Modify ``security.yml``
------------------------
+Modify ``security.yaml``
+------------------------
 
 Everything comes together in your security configuration. Add the user provider
-to the list of providers in the "security" section. Choose a name for the user provider
+to the list of providers in the "security" config. Choose a name for the user provider
 (e.g. "webservice") and mention the ``id`` of the service you just defined.
 
 .. configuration-block::
@@ -195,7 +195,7 @@ to the list of providers in the "security" section. Choose a name for the user p
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -242,7 +242,7 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -282,7 +282,7 @@ is compared to the hashed password returned by your ``getPassword()`` method.
     Symfony uses a specific method to combine the salt and encode the password
     before comparing it to your encoded password. If ``getSalt()`` returns
     nothing, then the submitted password is simply encoded using the algorithm
-    you specify in ``security.yml``. If a salt *is* specified, then the following
+    you specify in ``security.yaml``. If a salt *is* specified, then the following
     value is created and *then* hashed via the algorithm::
 
         $password.'{'.$salt.'}'
@@ -312,7 +312,7 @@ is compared to the hashed password returned by your ``getPassword()`` method.
 
         .. code-block:: xml
 
-            <!-- app/config/security.xml -->
+            <!-- config/packages/security.xml -->
             <?xml version="1.0" encoding="UTF-8"?>
             <srv:container xmlns="http://symfony.com/schema/dic/security"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

@@ -48,6 +48,7 @@ configure it under your firewall:
 
     .. code-block:: xml
 
+        <!-- config/packages/security.xml -->
         <config>
             <firewall name="main">
                 <access_denied_handler>App\Security\AccessDeniedHandler</access_denied_handler>

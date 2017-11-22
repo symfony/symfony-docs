@@ -23,14 +23,14 @@ file:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
-            csrf_protection: ~
+            csrf_protection: { enabled: true }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -47,7 +47,7 @@ file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'csrf_protection' => null,
         ));
@@ -72,7 +72,7 @@ use the default provider available in the security component:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -185,7 +185,7 @@ After this, you have protected your login form against CSRF attacks.
 
         .. code-block:: xml
 
-            <!-- app/config/security.xml -->
+            <!-- config/packages/security.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <srv:container xmlns="http://symfony.com/schema/dic/security"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

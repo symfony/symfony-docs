@@ -32,7 +32,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="utf-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -244,7 +244,7 @@ In the following example, the action is only allowed if the user has the
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     // ...
-    public function editAction()
+    public function edit()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -261,7 +261,7 @@ your controller using annotations:
     /**
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
-    public function editAction($name)
+    public function edit($name)
     {
         // ...
     }
@@ -278,12 +278,12 @@ your controller using annotations:
     * Once the user has entered their username and password, assuming the
       user receives the ``ROLE_USER`` role per your configuration, the user
       will have the ``IS_AUTHENTICATED_FULLY`` role and be able to access
-      any page in the account section, including the ``editAction()`` controller.
+      any page in the account section, including the ``edit()`` controller.
 
     * If the user's session ends, when the user returns to the site, they will
       be able to access every account page - except for the edit page - without
       being forced to re-authenticate. However, when they try to access the
-      ``editAction()`` controller, they will be forced to re-authenticate, since
+      ``edit()`` controller, they will be forced to re-authenticate, since
       they are not, yet, fully authenticated.
 
 For more information on securing services or methods in this way,

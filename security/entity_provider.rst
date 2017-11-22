@@ -189,7 +189,7 @@ Want to know more? See :ref:`security-serialize-equatable`.
 ----------------------------------------------
 
 Now that you have a ``User`` entity that implements ``UserInterface``, you
-just need to tell Symfony's security system about it in ``security.yml``.
+just need to tell Symfony's security system about it in ``security.yaml``.
 
 In this example, the user will enter their username and password via HTTP
 basic authentication. Symfony will query for a ``User`` entity matching
@@ -452,7 +452,7 @@ interface only requires one method: ``loadUserByUsername($username)``::
     :doc:`mapping definition of your entity </doctrine/repository>`.
 
 To finish this, just remove the ``property`` key from the user provider in
-``security.yml``:
+``security.yaml``:
 
 .. configuration-block::
 

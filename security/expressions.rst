@@ -15,7 +15,7 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
     use Symfony\Component\ExpressionLanguage\Expression;
     // ...
 
-    public function indexAction()
+    public function index()
     {
         $this->denyAccessUnlessGranted(new Expression(
             '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
@@ -70,17 +70,20 @@ Additionally, you have access to a number of functions inside the expression:
     The ``is_remember_me()`` and ``is_authenticated_fully()`` functions are *similar*
     to using ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``
     with the ``isGranted()`` function - but they are **not** the same. The
-    following shows the difference::
+    following controller snippet shows the difference::
 
         use Symfony\Component\ExpressionLanguage\Expression;
+        use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
         // ...
 
-        $ac = $this->get('security.authorization_checker');
-        $access1 = $ac->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        public function index(AuthorizationCheckerInterface $auth)
+        {
+            $access1 = $auth->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
-        $access2 = $ac->isGranted(new Expression(
-            'is_remember_me() or is_fully_authenticated()'
-        ));
+            $access2 = $auth->isGranted(new Expression(
+                'is_remember_me() or is_fully_authenticated()'
+            ));
+        }
 
     Here, ``$access1`` and ``$access2`` will be the same value. Unlike the
     behavior of ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``,

@@ -143,7 +143,7 @@ use the ``ldap`` user provider.
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -167,6 +167,7 @@ use the ``ldap`` user provider.
 
     .. code-block:: php
 
+        // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
         $container->loadFromExtension('security', array(
@@ -340,7 +341,7 @@ Configuration example for form login
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -359,6 +360,7 @@ Configuration example for form login
 
     .. code-block:: php
 
+        // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
         $container->loadFromExtension('security', array(
@@ -394,7 +396,7 @@ Configuration example for HTTP Basic
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -411,6 +413,7 @@ Configuration example for HTTP Basic
 
     .. code-block:: php
 
+        // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
         $container->loadFromExtension('security', array(
@@ -448,7 +451,7 @@ Configuration example for form login and query_string
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

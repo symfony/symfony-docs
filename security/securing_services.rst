@@ -7,20 +7,23 @@ How to Secure any Service or Method in your Application
 
 In the security article, you can see how to
 :ref:`secure a controller <security-securing-controller>` by requesting
-the ``security.authorization_checker`` service from the Service Container and
-checking the current user's role::
+the ``Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface``
+service from the Service Container and checking the current user's role::
 
     // ...
+    use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-    public function helloAction($name)
+    public function hello(AuthorizationCheckerInterface $authChecker)
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        if (!$authChecker->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
 
         // ...
     }
 
-You can also secure *any* service by injecting the ``security.authorization_checker``
+You can also secure *any* service by injecting the authorization checker
 service into it. For a general introduction to injecting dependencies into
 services see the :doc:`/service_container` article. For example, suppose you
 have a ``NewsletterManager`` class that sends out emails and you want to
@@ -41,7 +44,8 @@ Before you add security, the class looks something like this::
     }
 
 Your goal is to check the user's role when the ``sendNewsletter()`` method is
-called. The first step towards this is to inject the ``security.authorization_checker``
+called. The first step towards this is to inject the
+``Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface``
 service into the object::
 
     // src/Newsletter/NewsletterManager.php
@@ -52,16 +56,16 @@ service into the object::
 
     class NewsletterManager
     {
-        protected $authorizationChecker;
+        protected $authChecker;
 
-        public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+        public function __construct(AuthorizationCheckerInterface $authChecker)
         {
-            $this->authorizationChecker = $authorizationChecker;
+            $this->authChecker = $authChecker;
         }
 
         public function sendNewsletter()
         {
-            if (!$this->authorizationChecker->isGranted('ROLE_NEWSLETTER_ADMIN')) {
+            if (!$this->authChecker->isGranted('ROLE_NEWSLETTER_ADMIN')) {
                 throw new AccessDeniedException();
             }
 
@@ -72,7 +76,7 @@ service into the object::
     }
 
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-Symfony will automatically pass the ``security.authorization_checker`` to your service
+Symfony will automatically pass the authorization checker to your service
 thanks to autowiring and the ``AuthorizationCheckerInterface`` type-hint.
 
 If the current user does not have the ``ROLE_NEWSLETTER_ADMIN``, they will
