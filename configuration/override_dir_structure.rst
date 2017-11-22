@@ -104,7 +104,7 @@ define your own templates directory (or directories):
         # app/config/config.yml
         twig:
             # ...
-            paths: ["%kernel.root_dir%/../templates"]
+            paths: ["%kernel.project_dir%/templates"]
 
     .. code-block:: xml
 
@@ -119,7 +119,7 @@ define your own templates directory (or directories):
                 http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:path>%kernel.root_dir%/../templates</twig:path>
+                <twig:path>%kernel.project_dir%/templates</twig:path>
             </twig:config>
 
         </container>
@@ -129,7 +129,7 @@ define your own templates directory (or directories):
         // app/config/config.php
         $container->loadFromExtension('twig', array(
             'paths' => array(
-                '%kernel.root_dir%/../templates',
+                '%kernel.project_dir%/templates',
             ),
         ));
 
@@ -197,7 +197,7 @@ You also need to change the ``extra.symfony-web-dir`` option in the
                     http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
                 <!-- ... -->
-                <assetic:config read-from="%kernel.root_dir%/../../public_html" />
+                <assetic:config read-from="%kernel.project_dir%/../public_html" />
 
             </container>
 
