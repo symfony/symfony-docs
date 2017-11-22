@@ -168,5 +168,9 @@ name is irrelevant because you never use it in your own code):
             tags:
                 - { name: twig.extension }
 
+----
+
+Next: :doc:`/best_practices/forms`
+
 .. _`Twig`: http://twig.sensiolabs.org/
 .. _`Parsedown`: http://parsedown.org/

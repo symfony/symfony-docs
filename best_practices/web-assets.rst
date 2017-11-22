@@ -93,4 +93,8 @@ with Assetic to reduce their size before serving them to the user. Check out
 the `official Assetic documentation`_ to learn more about all the available
 features.
 
+----
+
+Next: :doc:`/best_practices/tests`
+
 .. _`official Assetic documentation`: https://github.com/kriswallsmith/assetic

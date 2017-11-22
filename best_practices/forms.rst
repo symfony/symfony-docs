@@ -231,3 +231,7 @@ any of the types defined by the third-party bundles installed in your applicatio
 
 Add the ``app_`` prefix to your custom form field types to avoid name collisions
 that can lead to hard to debug errors.
+
+----
+
+Next: :doc:`/best_practices/i18n`
