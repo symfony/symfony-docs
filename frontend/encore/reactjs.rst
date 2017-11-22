@@ -27,27 +27,9 @@ That's it! Your ``.js`` and ``.jsx`` files will now be transformed through
 Building a component
 --------------------
 
-Now that Encore can manage any React instance, let's build a simple component
-which display ``Hello World from React !``.
+Now that Encore can manage any React instance, time to build a "Hello World" React component!
 
-In order to do this, let's add a new ``react.js`` file inside the ``assets`` folder:
-
-.. code-block:: javascript
-
-    // assets/react.js
-    import React from "react";
-    import ReactDOM from "react-dom";
-
-    import { App } from './components/App.jsx';
-
-    ReactDOM.render(
-        <App name="Hello World from React !"/>,
-        document.getElementById("react")
-    );
-
-Here's, React is called along with ReactDOM for the rendering part,
-once the import is done, React need to display a component, here,
-that comes with the App component:
+Start by creating a ``App.jsx`` file into the ``assets/components`` folder: 
 
 .. code-block:: javascript
 
@@ -64,13 +46,29 @@ that comes with the App component:
             );
         }
     }
-
+    
 In this component, React allow us to call props, this way,
-passing data from the ``react.js`` file is as simple as a
+passing data from the ``hello.js`` file is as simple as a
 property call, by default, if the component need to receive dynamic data,
 it's best to do an Ajax request or to :ref:`pass data from Twig to JavaScript <twig-data>`.
 
-Once the component is created, time to alert Encore about compiling this files :
+Now it's time to render it! First, add a new ``hello.js`` file inside the ``assets/`` folder:
+
+.. code-block:: javascript
+
+    // assets/react.js
+    import React from "react";
+    import ReactDOM from "react-dom";
+
+    import { App } from './components/App.jsx';
+
+    ReactDOM.render(
+        <App name="Hello World from React !"/>,
+        document.getElementById("hello-app")
+    );
+
+In order to render the component, React is called along with ReactDOM,
+once the import is done, time to tell Encore about compiling this files :
 
 let Encore = require('@symfony/webpack-encore');
 
@@ -80,13 +78,13 @@ let Encore = require('@symfony/webpack-encore');
         .setOutputPath('public/build/')
         .setPublicPath('/build')
         .enableReactPreset()
-        .addEntry('react', './assets/react.js')
+        .addEntry('hello', './assets/hello.js')
     ;
 
     module.exports = Encore.getWebpackConfig();
 
-Here, Encore gonna find the ``react.js`` file and compile it into a ``react.js``
-into the ``public/build`` folder.
+Here, Encore gonna find the ``hello.js`` file and compile it into a ``hello.js``
+into the ``public/build/`` folder.
 In order to tell Twig to load the file, here's the modifications needed:
 
 .. code-block:: twig
@@ -94,11 +92,11 @@ In order to tell Twig to load the file, here's the modifications needed:
     {% extends 'base.html.twig' %}
 
     {% block body %}
-        <div id="react"></div>
+        <div id="hello-app"></div>
     {% endblock %}
 
     {% block javascript %}
-        <script src="{{ asset('build/react.js') }}"></script>
+        <script src="{{ asset('build/hello.js') }}"></script>
     {% endblock %}
 
 If the webpack command for developement is launched, reload the webpage
