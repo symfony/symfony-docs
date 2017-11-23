@@ -27,7 +27,7 @@ The Front Controller
 The `front controller`_ is a design pattern; it is a section of code that *all*
 requests served by an application run through.
 
-In the Symfony Skeleton, this role is taken by the `index.php`_ file in the
+In the Symfony Skeleton, this role is taken by the ``index.php`` file in the
 ``public/`` directory. This is the very first PHP script executed when a
 request is processed.
 
@@ -60,7 +60,7 @@ that is located in the ``public/`` directory.
     achieved by configuring the web server, as shown in
     :doc:`/setup/web_server_configuration`.
 
-Technically, the `bin/console`_ script used when running Symfony on the command
+Technically, the ``bin/console`` script used when running Symfony on the command
 line is also a front controller, only that is not used for web, but for command
 line requests.
 
@@ -143,5 +143,4 @@ this method differently if you need a more sophisticated way of loading your
 configuration.
 
 .. _front controller: https://en.wikipedia.org/wiki/Front_Controller_pattern
-.. _bin/console: https://github.com/symfony/symfony-standard/blob/master/bin/console
 .. _decorate: https://en.wikipedia.org/wiki/Decorator_pattern
