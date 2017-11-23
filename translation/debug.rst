@@ -44,16 +44,17 @@ It will also detect the following translator usages in PHP templates:
         {% set message = 'Symfony is great' %}
         {{ message|trans }}
 
-Suppose your application's default_locale is ``fr`` and you have configured
+Suppose your application's ``default_locale`` is ``fr`` and you have configured
 ``en`` as the fallback locale (see :ref:`translation-configuration` and
 :ref:`translation-fallback` for how to configure these). And suppose
-you've already setup some translations for the ``fr`` locale inside an AcmeDemoBundle:
+you've already setup some translations for the ``fr`` locale inside
+``translations/`` directory:
 
 .. configuration-block::
 
     .. code-block:: xml
 
-        <!-- src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.xliff -->
+        <!-- translations/messages.fr.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -69,12 +70,12 @@ you've already setup some translations for the ``fr`` locale inside an AcmeDemoB
 
     .. code-block:: yaml
 
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.yml
+        # translations/messages.fr.yaml
         Symfony is great: J'aime Symfony
 
     .. code-block:: php
 
-        // src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.php
+        // translations/messages.fr.php
         return array(
             'Symfony is great' => 'J\'aime Symfony',
         );
@@ -85,7 +86,7 @@ and for the ``en`` locale:
 
     .. code-block:: xml
 
-        <!-- src/Acme/AcmeDemoBundle/Resources/translations/messages.en.xliff -->
+        <!-- translations/messages.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -100,21 +101,21 @@ and for the ``en`` locale:
 
     .. code-block:: yaml
 
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.en.yml
+        # translations/messages.en.yml
         Symfony is great: Symfony is great
 
     .. code-block:: php
 
-        // src/Acme/AcmeDemoBundle/Resources/translations/messages.en.php
+        // translations/messages.en.php
         return array(
             'Symfony is great' => 'Symfony is great',
         );
 
-To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
+To inspect all messages in the ``fr`` locale, run:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:translation fr AcmeDemoBundle
+    $ php bin/console debug:translation fr
 
 You will get this output:
 
@@ -164,7 +165,7 @@ domain:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:translation en AcmeDemoBundle --domain=messages
+    $ php bin/console debug:translation en --domain=messages
 
 When bundles have a lot of messages, it is useful to display only the unused
 or only the missing messages, by using the ``--only-unused`` or ``--only-missing``
@@ -172,5 +173,5 @@ switches:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:translation en AcmeDemoBundle --only-unused
-    $ php bin/console debug:translation en AcmeDemoBundle --only-missing
+    $ php bin/console debug:translation en --only-unused
+    $ php bin/console debug:translation en --only-missing

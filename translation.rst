@@ -59,13 +59,13 @@ locale to lookup and return translated messages. Before using it, enable the
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/translation.yaml
         framework:
             translator: { fallbacks: [en] }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/translation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -84,7 +84,7 @@ locale to lookup and return translated messages. Before using it, enable the
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/translation.php
         $container->loadFromExtension('framework', array(
             'translator' => array('fallbacks' => array('en')),
         ));
@@ -336,10 +336,8 @@ Translation Resource/File Names and Locations
 
 Symfony looks for message files (i.e. translations) in the following default locations:
 
-* the ``app/Resources/translations`` directory;
-
-* the ``app/Resources/<bundle name>/translations`` directory;
-
+* the ``translations/`` directory;
+* the ``translations/<bundle name>/`` directory;
 * the ``Resources/translations/`` directory inside of any bundle.
 
 The locations are listed here with the highest priority first. That is, you can
@@ -381,7 +379,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/packages/translation.yaml
             framework:
                 translator:
                     paths:
@@ -389,7 +387,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- config/packages/translation.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:framework="http://symfony.com/schema/dic/symfony"
@@ -409,7 +407,7 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
         .. code-block:: php
 
-            // app/config/config.php
+            // config/packages/translation.php
             $container->loadFromExtension('framework', array(
                 'translator' => array(
                     'paths' => array(
