@@ -60,7 +60,7 @@ Find out by running:
 
 .. code-block:: terminal
 
-     $ php bin/console debug:container
+     $ php app/console debug:container
 
 This is just a *small* sample of the output:
 
@@ -222,7 +222,7 @@ and set it on a ``$logger`` property::
 
     The ``LoggerInterface`` type-hint in the ``__construct()`` method is optional,
     but a good idea. You can find the correct type-hint by reading the docs for the
-    service or by using the ``php bin/console debug:container`` console command.
+    service or by using the ``php app/console debug:container`` console command.
 
 Next, tell the container the service has a constructor argument:
 
