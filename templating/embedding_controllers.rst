@@ -98,4 +98,4 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
             ) ?>
         </div>
 
-The result of an embedded controler can also be :doc:`cached </http_cache/esi>`
+The result of an embedded controller can also be :doc:`cached </http_cache/esi>`
