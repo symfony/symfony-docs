@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-21T20:51:22Z
+
+This is great! I've just added one other change - to add `yarn install` after installing via Flex.
+
+I'm actually not sure if having two commands inside a `code-block:: terminal` is legal... but I think it is :)
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-21T20:53:57Z
+
+Yep, the multi-line terminal block is ok. This is ready!
