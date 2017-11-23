@@ -14,6 +14,8 @@ is both flexible and (hopefully) fun to work with.
 Since there's a lot to talk about, this article is organized into a few big
 sections:
 
+#. Installing security support;
+
 #. Initial ``security.yml`` setup (*authentication*);
 
 #. Denying access to your app (*authorization*);
@@ -23,6 +25,16 @@ sections:
 These are followed by a number of small (but still captivating) sections,
 like :ref:`logging out <security-logging-out>` and
 :doc:`encoding user passwords </security/password_encoding>`.
+
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the security feature before using it:
+
+.. code-block:: terminal
+
+    $ composer require security
 
 .. _security-firewalls:
 .. _firewalls-authentication:

@@ -9,6 +9,16 @@ a web developer. Symfony integrates a Form component that makes dealing with
 forms easy. In this article, you'll build a complex form from the ground up,
 learning the most important features of the form library along the way.
 
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the form feature before using it:
+
+.. code-block:: terminal
+
+    $ composer require form
+
 .. note::
 
    The Symfony Form component is a standalone library that can be used outside

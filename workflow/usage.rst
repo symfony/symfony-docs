@@ -4,12 +4,18 @@
 How to Create and Use Workflows
 ===============================
 
-Before creating your first workflow, execute this command to install the
-:doc:`Workflow component </components/workflow>` in your application:
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the workflow feature before using it:
 
 .. code-block:: terminal
 
     $ composer require workflow
+
+Creating a Workflow
+-------------------
 
 A workflow is a process or a lifecycle that your objects go through. Each
 step or stage in the process is called a *place*. You do also define *transitions*
@@ -163,9 +169,12 @@ like this:
     value ``marking``) attributes of the ``marking_store`` option are optional.
     If omitted, their default values will be used.
 
-With this workflow named ``blog_publishing``, you can now decide what actions
-are allowed on a blog post. For example, inside a controller of an application
-using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+Using a Workflow
+----------------
+
+Once the ``blog_publishing`` workflow has been created, you can now use it to
+decide what actions are allowed on a blog post. For example, inside a controller
+of an application using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you can get the workflow by injecting the Workflow registry service::
 
     // ...
