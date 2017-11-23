@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-21T19:20:12Z
+
+@javiereguiluz Since https://github.com/symfony/recipes/pull/253 was merged, this is valid, correct?
+
+I'm not sure if it should be included, but it seems a *little* bit safer to show *more* directories here than less (so we can answer the question: "Hey, where do my translations go?")
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-11-21T19:23:40Z
+
+Yes, this is correct. Should we add the remaining missing dirs?
+
+```
+assets/
+bin/
+  console
+tests/
+var/
+```
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-21T19:56:07Z
+
+Good idea! I just added the other dirs
