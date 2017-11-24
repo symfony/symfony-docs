@@ -447,11 +447,6 @@ interface only requires one method: ``loadUserByUsername($username)``::
         }
     }
 
-.. tip::
-
-    Don't forget to add the repository class to the
-    :doc:`mapping definition of your entity </doctrine/repository>`.
-
 To finish this, just remove the ``property`` key from the user provider in
 ``security.yml``:
 

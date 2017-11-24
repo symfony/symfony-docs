@@ -636,7 +636,7 @@ write custom queries. Now, you can call this method on the repository::
 
     // ...
 
-If you're in a :ref:`services-constructor-injection`_, you can type-hint the
+If you're in a :ref:`services-constructor-injection`, you can type-hint the
 ``ProductRepository`` class and inject it like normal.
 
 For more details, see the `Query Builder`_ Documentation from Doctrine.
@@ -730,7 +730,7 @@ Learn more
 
 .. _`Doctrine`: http://www.doctrine-project.org/
 .. _`MongoDB`: https://www.mongodb.org/
-.. _`Basic Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html
+.. _`Doctrine's Mapping Types documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html
 .. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html
 .. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html
 .. _`Mapping Types Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping
