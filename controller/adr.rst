@@ -13,7 +13,7 @@ Update the configuration
 
 The first step is to update the default services.yaml file, here's the new content: 
 
-.. code-block:: yml
+.. code-block:: yaml
 
     parameters:
         locale: 'en'
@@ -122,7 +122,7 @@ Creating a Responder
 
 As you can see in the __invoke call, this action require a ``HelloResponder`` class in order to build the response which is returned to the browser, first, update the services.yaml according to this need: 
 
-.. code-block:: yml
+.. code-block:: yaml
 
     parameters:
         locale: 'en'
@@ -137,7 +137,6 @@ As you can see in the __invoke call, this action require a ``HelloResponder`` cl
             resource: '../src/Actions'
             tags: 
                 - 'controller.service_arguments'
-                
                 
         App\Responders\:
             resource: '../src/Responders'
@@ -179,7 +178,9 @@ Accessing the request
 
 In many case, your classes can ask for any data passed via a form or via an API call, 
 as you can imagine, as the logic evolve, your class is capable of accessing the request 
-from a simple method injection like this ::
+from a simple method injection like this:
+
+.. code-block:: php
 
     <?php
 
