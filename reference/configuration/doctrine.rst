@@ -492,42 +492,35 @@ you can control. The following configuration options exist for a mapping:
 type
 ....
 
-One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``. This
-specifies which type of metadata type your mapping uses.
+One of ``annotation`` (the default value), ``xml``, ``yml``, ``php`` or
+``staticphp``. This specifies which type of metadata type your mapping uses.
 
 dir
 ...
 
-Path to the mapping or entity files (depending on the driver). If this path
-is relative it is assumed to be relative to the bundle root. This only works
-if the name of your mapping is a bundle name. If you want to use this option
-to specify absolute paths you should prefix the path with the kernel parameters
-that exist in the DIC (for example ``%kernel.project_dir%``).
+Absolute path to the mapping or entity files (depending on the driver). The
+default value is ``%kernel.project_dir%/src/Entity/``.
 
 prefix
 ......
 
-A common namespace prefix that all entities of this mapping share. This
-prefix should never conflict with prefixes of other defined mappings otherwise
-some of your entities cannot be found by Doctrine. This option defaults
-to the bundle namespace + ``Entity``, for example for an application bundle
-called AcmeHelloBundle prefix would be ``Acme\HelloBundle\Entity``.
+A common namespace prefix that all entities of this mapping share. This prefix
+should never conflict with prefixes of other defined mappings otherwise some of
+your entities cannot be found by Doctrine. This option defaults to
+``App\Entity`` because it's recommended to store the entities in ``src/Entity/``.
 
 alias
 .....
 
 Doctrine offers a way to alias entity namespaces to simpler, shorter names
-to be used in DQL queries or for Repository access. When using a bundle
-the alias defaults to the bundle name.
+to be used in DQL queries or for Repository access. It's default value is ``App``.
 
 is_bundle
 .........
 
-This option is a derived value from ``dir`` and by default is set to ``true``
-if dir is relative proved by a ``file_exists()`` check that returns ``false``.
-It is ``false`` if the existence check returns ``true``. In this case an
-absolute path was specified and the metadata files are most likely in a
-directory outside of a bundle.
+This option is ``false`` by default and it's considered a legacy option. It was
+only useful in previous Symfony versions, when it was recommended to use bundles
+to organize the application code.
 
 Custom Mapping Entities in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -593,9 +586,7 @@ directory instead:
 Mapping Entities Outside of a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also create new mappings, for example outside of the Symfony folder.
-
-For example, the following looks for entity classes in the ``App\Entity``
+For example, the following looks for entity classes in the ``Entity``
 namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 (so you can say things like ``App:Post``):
 
