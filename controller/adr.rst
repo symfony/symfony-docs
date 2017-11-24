@@ -6,7 +6,7 @@ How to implement the ADR pattern
 
 In Symfony, you're used to implement the MVC pattern and extending the default :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
 class.
-Since the 3.3 update, Symfony is capable of using natively the ADR approach.
+Since the 3.3 update, Symfony is capable of using natively the `ADR`_ approach.
 
 Update the configuration
 ------------------------
@@ -202,3 +202,5 @@ Keep in mind that this approach can be completely different from what you're use
 keep your code clean and easy to maintain, we recommend to use this approach only if your code is
 decoupled from the internal framework logic (like with Clean Architecture approach) or if you start a new
 project and need to keep the logic linked to your business rules.
+
+.. _`ADR`: https://github.com/pmjones/adr
