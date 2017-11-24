@@ -14,7 +14,7 @@ machine.
 Example of a State Machine
 --------------------------
 
-A pull request starts in an intial "start" state, a state for e.g. running
+A pull request starts in an initial "start" state, a state for e.g. running
 tests on Travis. When this is finished, the pull request is in the "review"
 state, where contributors can require changes, reject or accept the
 pull request. At any time, you can also "update" the pull request, which
