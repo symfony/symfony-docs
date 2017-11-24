@@ -137,6 +137,9 @@ following directory structure, which is the same used by default in Symfony 4:
 .. code-block:: text
 
     your-project/
+    ├── assets/
+    ├── bin/
+    │   └── console
     ├── config/
     │   ├── bundles.php
     │   ├── packages/
@@ -148,6 +151,9 @@ following directory structure, which is the same used by default in Symfony 4:
     │   ├── ...
     │   └── Kernel.php
     ├── templates/
+    ├── tests/
+    ├── translations/
+    ├── var/
     └── vendor/
 
 This means that installing the ``symfony/flex`` dependency in your application
@@ -163,7 +169,7 @@ manual steps:
    new project (don't copy the ``symfony/symfony`` dependency, but add the
    relevant components you are effectively using in your project).
 
-#. Install the dependencies in the new project executing ``composer install``.
+#. Install the dependencies in the new project executing ``composer update``.
    This will make Symfony Flex generate all the configuration files in
    ``config/packages/``
 

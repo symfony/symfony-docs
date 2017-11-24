@@ -46,22 +46,24 @@ Services & Configuration
 If you want to modify service definitions of another bundle, you can use a compiler
 pass to change the class of the service or to modify method calls. In the following
 example, the implementing class for the ``original-service-id`` is changed to
-``Acme\DemoBundle\YourService``::
+``App\YourService``:
 
-    // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
-    namespace Acme\DemoBundle\DependencyInjection\Compiler;
+.. code-block:: diff
 
-    use Acme\DemoBundle\YourService;
-    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    // src/Kernel.php
+    namespace App;
 
-    class OverrideServiceCompilerPass implements CompilerPassInterface
+    // ...
+    + use App\Service\YourService;
+    + use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+    class Kernel extends BaseKernel
     {
-        public function process(ContainerBuilder $container)
-        {
-            $definition = $container->getDefinition('original-service-id');
-            $definition->setClass(YourService::class);
-        }
+    +     public function process(ContainerBuilder $container)
+    +     {
+    +         $definition = $container->findDefinition('original-service-id');
+    +         $definition->setClass(YourService::class);
+    +     }
     }
 
 For more information on compiler passes, see :doc:`/service_container/compiler_passes`.

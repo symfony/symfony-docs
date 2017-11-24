@@ -11,33 +11,33 @@ three parts.
 Infrastructure-Related Configuration
 ------------------------------------
 
+These are the options that change from one machine to another (e.g. from your
+development machine to the production server) but which don't change the
+application behavior.
+
 .. best-practice::
 
-    Define the infrastructure-related configuration options in the
-    ``app/config/parameters.yml`` file.
+    Define the infrastructure-related configuration options as environment
+    variables. During development, use the ``.env`` file at the root of your
+    project to set these.
 
-The default ``parameters.yml`` file follows this recommendation and defines the
-options related to the database and mail server infrastructure:
+By default, Symfony adds these types of options to the ``.env`` file when
+installing new dependencies in the app:
 
-.. code-block:: yaml
+.. code-block:: bash
 
-    # app/config/parameters.yml
-    parameters:
-        database_driver:   pdo_mysql
-        database_host:     127.0.0.1
-        database_port:     ~
-        database_name:     symfony
-        database_user:     root
-        database_password: ~
+    # .env
+    ###> doctrine/doctrine-bundle ###
+    DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/blog.sqlite
+    ###< doctrine/doctrine-bundle ###
 
-        mailer_transport:  smtp
-        mailer_host:       127.0.0.1
-        mailer_user:       ~
-        mailer_password:   ~
+    ###> symfony/swiftmailer-bundle ###
+    MAILER_URL=smtp://localhost?encryption=ssl&auth_mode=login&username=&password=
+    ###< symfony/swiftmailer-bundle ###
 
-        # ...
+    # ...
 
-These options aren't defined inside the ``app/config/config.yml`` file because
+These options aren't defined inside the ``config/services.yaml`` file because
 they have nothing to do with the application's behavior. In other words, your
 application doesn't care about the location of your database or the credentials
 to access to it, as long as the database is correctly configured.
@@ -49,19 +49,14 @@ Canonical Parameters
 
 .. best-practice::
 
-    Define all your application's parameters in the
-    ``app/config/parameters.yml.dist`` file.
+    Define all your application's env vars in the ``.env.dist`` file.
 
-Symfony includes a configuration file called ``parameters.yml.dist``, which
-stores the canonical list of configuration parameters for the application.
+Symfony includes a configuration file called ``.env.dist`` at the project root,
+which stores the canonical list of environment variables for the application.
 
-Whenever a new configuration parameter is defined for the application, you
-should also add it to this file and submit the changes to your version control
-system. Then, whenever a developer updates the project or deploys it to a server,
-Symfony will check if there is any difference between the canonical
-``parameters.yml.dist`` file and your local ``parameters.yml`` file. If there
-is a difference, Symfony will ask you to provide a value for the new parameter
-and it will add it to your local ``parameters.yml`` file.
+Whenever a new env var is defined for the application, you should also add it to
+this file and submit the changes to your version control system so your
+workmates can update their ``.env`` files.
 
 Application-Related Configuration
 ---------------------------------
@@ -69,17 +64,17 @@ Application-Related Configuration
 .. best-practice::
 
     Define the application behavior related configuration options in the
-    ``app/config/config.yml`` file.
+    ``config/services.yaml`` file.
 
-The ``config.yml`` file contains the options used by the application to modify
-its behavior, such as the sender of email notifications, or the enabled
-`feature toggles`_. Defining these values in ``parameters.yml`` file would
-add an extra layer of configuration that's not needed because you don't need
-or want these configuration values to change on each server.
+The ``services.yaml`` file contains the options used by the application to
+modify its behavior, such as the sender of email notifications, or the enabled
+`feature toggles`_. Defining these values in ``.env`` file would add an extra
+layer of configuration that's not needed because you don't need or want these
+configuration values to change on each server.
 
-The configuration options defined in the ``config.yml`` file usually vary from
-one :doc:`environment </configuration/environments>` to another. That's
-why Symfony already includes ``app/config/config_dev.yml`` and ``app/config/config_prod.yml``
+The configuration options defined in the ``services.yaml`` may vary from one
+:doc:`environment </configuration/environments>` to another. That's why Symfony
+supports defining ``config/services_dev.yaml`` and ``config/services_prod.yaml``
 files so that you can override specific values for each environment.
 
 Constants vs Configuration Options
@@ -99,7 +94,7 @@ to control the number of posts to display on the blog homepage:
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/services.yaml
     parameters:
         homepage.num_items: 10
 
@@ -167,7 +162,7 @@ just one or two words to describe the purpose of the parameter:
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/services.yaml
     parameters:
         # don't do this: 'dir' is too generic and it doesn't convey any meaning
         app.dir: '...'
@@ -177,38 +172,6 @@ just one or two words to describe the purpose of the parameter:
         # be consistent and use the same format for all the parameters
         app.dir.contents: '...'
         app.contents-dir: '...'
-
-Semantic Configuration: Don't Do It
------------------------------------
-
-.. best-practice::
-
-    Don't define a semantic dependency injection configuration for your bundles.
-
-As explained in :doc:`/bundles/extension` article, Symfony bundles
-have two choices on how to handle configuration: normal service configuration
-through the ``services.yml`` file and semantic configuration through a special
-``*Extension`` class.
-
-Although semantic configuration is much more powerful and provides nice features
-such as configuration validation, the amount of work needed to define that
-configuration isn't worth it for bundles that aren't meant to be shared as
-third-party bundles.
-
-Moving Sensitive Options Outside of Symfony Entirely
-----------------------------------------------------
-
-When dealing with sensitive options, like database credentials, we also recommend
-that you store them outside the Symfony project and make them available
-through environment variables:
-
-.. code-block:: yaml
-
-    # app/config/config.yml
-    doctrine:
-        dbal:
-            # ...
-            password: "%env(DB_PASSWORD)%"
 
 ----
 

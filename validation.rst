@@ -8,9 +8,18 @@ Validation is a very common task in web applications. Data entered in forms
 needs to be validated. Data also needs to be validated before it is written
 into a database or passed to a web service.
 
-Symfony ships with a `Validator`_ component that makes this task easy and
-transparent. This component is based on the
-`JSR303 Bean Validation specification`_.
+Symfony provides a `Validator`_ component that makes this task easy and
+transparent. This component is based on the `JSR303 Bean Validation specification`_.
+
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the validator before using it:
+
+.. code-block:: terminal
+
+    $ composer require validator
 
 .. index::
    single: Validation; The basics
