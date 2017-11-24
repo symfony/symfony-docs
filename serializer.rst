@@ -11,10 +11,11 @@ its philosophy and the normalizers and encoders terminology.
 
 .. _activating_the_serializer:
 
-Installing the Serializer
--------------------------
+Installation
+------------
 
-Before using the serializer, run this command to install it in your application:
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the serializer before using it:
 
 .. code-block:: terminal
 
