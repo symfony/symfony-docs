@@ -104,6 +104,8 @@ The ``$message`` object supports many more options, such as including attachment
 adding HTML content, and much more. Refer to the `Creating Messages`_ section
 of the Swift Mailer documentation for more details.
 
+.. _email-using-gmail:
+
 Using Gmail to Send Emails
 --------------------------
 
