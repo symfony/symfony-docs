@@ -18,9 +18,10 @@ application behavior.
 .. best-practice::
 
     Define the infrastructure-related configuration options as environment
-    variables in the ``.env`` file at the root of the project.
+    variables. During development, use the ``.env`` file at the root of your
+    project to set these.
 
-By default, Symfony adds this kind of options to the ``.env`` file when
+By default, Symfony adds these types of options to the ``.env`` file when
 installing new dependencies in the app:
 
 .. code-block:: bash
