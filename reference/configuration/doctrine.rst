@@ -20,7 +20,7 @@ Full Default Configuration
                     # A collection of custom types
                     # Example
                     some_custom_type:
-                        class:                App\Bridge\Doctrine\DBAL\MyCustomType
+                        class:                App\DBAL\MyCustomType
                         commented:            true
 
 
@@ -163,17 +163,17 @@ Full Default Configuration
                             # a collection of string functions
                             string_functions:
                                 # example
-                                # test_string: App\Bridge\Doctrine\DQL\StringFunction
+                                # test_string: App\DQL\StringFunction
 
                             # a collection of numeric functions
                             numeric_functions:
                                 # example
-                                # test_numeric: App\Bridge\Doctrine\DQL\NumericFunction
+                                # test_numeric: App\DQL\NumericFunction
 
                             # a collection of datetime functions
                             datetime_functions:
                                 # example
-                                # test_datetime: App\Bridge\Doctrine\DQL\DatetimeFunction
+                                # test_datetime: App\DQL\DatetimeFunction
 
                         # Register SQL Filters in the entity manager
                         filters:
@@ -204,14 +204,14 @@ Full Default Configuration
                         user="user"
                         password="secret"
                         driver="pdo_mysql"
-                        driver-class="App\Bridge\Doctrine\DBAL\MyDatabaseDriver"
+                        driver-class="App\DBAL\MyDatabaseDriver"
                         path="%kernel.project_dir%/var/data/data.sqlite"
                         memory="true"
                         unix-socket="/tmp/mysql.sock"
-                        wrapper-class="App\Bridge\Doctrine\DBAL\MyConnectionWrapper"
+                        wrapper-class="App\DBAL\MyConnectionWrapper"
                         charset="UTF8"
                         logging="%kernel.debug%"
-                        platform-service="App\Bridge\Doctrine\DBAL\MyDatabasePlatformService"
+                        platform-service="App\DBAL\MyDatabasePlatformService"
                         server-version="5.6"
                         keep-slave="false"
                     >
@@ -219,7 +219,7 @@ Full Default Configuration
                         <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
                     </doctrine:connection>
                     <doctrine:connection name="conn1" />
-                    <doctrine:type name="custom">App\Bridge\Doctrine\DBAL\MyCustomType</doctrine:type>
+                    <doctrine:type name="custom">App\DBAL\MyCustomType</doctrine:type>
                 </doctrine:dbal>
 
                 <doctrine:orm
@@ -247,15 +247,15 @@ Full Default Configuration
 
                         <doctrine:dql>
                             <doctrine:string-function name="test_string">
-                                App\Bridge\Doctrine\DQL\StringFunction
+                                App\DQL\StringFunction
                             </doctrine:string-function>
 
                             <doctrine:numeric-function name="test_numeric">
-                                App\Bridge\Doctrine\DQL\NumericFunction
+                                App\DQL\NumericFunction
                             </doctrine:numeric-function>
 
                             <doctrine:datetime-function name="test_datetime">
-                                App\Bridge\Doctrine\DQL\DatetimeFunction
+                                App\DQL\DatetimeFunction
                             </doctrine:datetime-function>
                         </doctrine:dql>
                     </doctrine:entity-manager>
@@ -301,7 +301,7 @@ The following block shows all possible configuration keys:
                 password:             secret
                 driver:               pdo_mysql
                 # the DBAL driverClass option
-                driver_class:         App\Bridge\Doctrine\DBAL\MyDatabaseDriver
+                driver_class:         App\DBAL\MyDatabaseDriver
                 # the DBAL driverOptions option
                 options:
                     foo: bar
@@ -309,15 +309,15 @@ The following block shows all possible configuration keys:
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
                 # the DBAL wrapperClass option
-                wrapper_class:        App\Bridge\Doctrine\DBAL\MyConnectionWrapper
+                wrapper_class:        App\DBAL\MyConnectionWrapper
                 charset:              UTF8
                 logging:              '%kernel.debug%'
-                platform_service:     App\Bridge\Doctrine\DBAL\MyDatabasePlatformService
+                platform_service:     App\DBAL\MyDatabasePlatformService
                 server_version:       5.6
                 mapping_types:
                     enum: string
                 types:
-                    custom: App\Bridge\Doctrine\DBAL\MyCustomType
+                    custom: App\DBAL\MyCustomType
 
     .. code-block:: xml
 
@@ -339,19 +339,19 @@ The following block shows all possible configuration keys:
                     user="user"
                     password="secret"
                     driver="pdo_mysql"
-                    driver-class="App\Bridge\Doctrine\DBAL\MyDatabaseDriver"
+                    driver-class="App\DBAL\MyDatabaseDriver"
                     path="%kernel.project_dir%/var/data/data.sqlite"
                     memory="true"
                     unix-socket="/tmp/mysql.sock"
-                    wrapper-class="App\Bridge\Doctrine\DBAL\MyConnectionWrapper"
+                    wrapper-class="App\DBAL\MyConnectionWrapper"
                     charset="UTF8"
                     logging="%kernel.debug%"
-                    platform-service="App\Bridge\Doctrine\DBAL\MyDatabasePlatformService"
+                    platform-service="App\DBAL\MyDatabasePlatformService"
                     server-version="5.6">
 
                     <doctrine:option key="foo">bar</doctrine:option>
                     <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
-                    <doctrine:type name="custom">App\Bridge\Doctrine\DBAL\MyCustomType</doctrine:type>
+                    <doctrine:type name="custom">App\DBAL\MyCustomType</doctrine:type>
                 </doctrine:dbal>
             </doctrine:config>
         </container>
@@ -480,7 +480,7 @@ The following example shows an overview of the caching configurations:
             # the 'service' type requires to define the 'id' option too
             query_cache_driver:
                 type: service
-                id: App\Bridge\Doctrine\ORM\MyCacheService
+                id: App\ORM\MyCacheService
 
 Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
