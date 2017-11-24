@@ -11,39 +11,35 @@ directory structure is:
 .. code-block:: text
 
     your-project/
-    ├─ app/
-    │  ├─ config/
-    │  ├─ Resources/
-    │  │  └─ views/
-    │  └─ ...
+    ├─ assets/
     ├─ bin/
-    │  └─ ...
+    │  └─ console
+    ├─ config/
+    ├─ public/
+    │  └─ index.php
     ├─ src/
     │  └─ ...
+    ├─ templates/
     ├─ tests/
-    │  └─ ...
+    ├─ translations/
     ├─ var/
     │  ├─ cache/
-    │  ├─ logs/
+    │  ├─ log/
     │  └─ ...
-    ├─ vendor/
-    │  └─ ...
-    └─ web/
-       ├─ app.php
-       └─ ...
+    └─ vendor/
 
 .. _override-cache-dir:
 
 Override the ``cache`` Directory
 --------------------------------
 
-You can change the default cache directory by overriding the ``getCacheDir()`` method
-in the ``AppKernel`` class of your application::
+You can change the default cache directory by overriding the ``getCacheDir()``
+method in the ``Kernel`` class of your application::
 
-    // app/AppKernel.php
+    // src/Kernel.php
 
     // ...
-    class AppKernel extends Kernel
+    class AppKernel extends BaseKernel
     {
         // ...
 
@@ -73,7 +69,7 @@ Overriding the ``logs`` directory is the same as overriding the ``cache``
 directory. The only difference is that you need to override the ``getLogDir()``
 method::
 
-    // app/AppKernel.php
+    // src/Kernel.php
 
     // ...
     class AppKernel extends Kernel
@@ -93,22 +89,22 @@ Here you have changed the location of the directory to ``var/{environment}/log``
 Override the Templates Directory
 --------------------------------
 
-If your templates are not stored in the default ``app/Resources/views/``
-directory, use the :ref:`twig.paths <config-twig-paths>` configuration option to
-define your own templates directory (or directories):
+If your templates are not stored in the default ``templates/`` directory, use
+the :ref:`twig.paths <config-twig-paths>` configuration option to define your
+own templates directory (or directories):
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             # ...
-            paths: ["%kernel.root_dir%/../templates"]
+            paths: ["%kernel.project_dir%/resources/views"]
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -119,34 +115,35 @@ define your own templates directory (or directories):
                 http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:path>%kernel.root_dir%/../templates</twig:path>
+                <twig:path>%kernel.project_dir%/resources/views</twig:path>
             </twig:config>
 
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'paths' => array(
-                '%kernel.root_dir%/../templates',
+                '%kernel.project_dir%/resources/views',
             ),
         ));
 
 .. _override-web-dir:
+.. _override-the-web-directory:
 
-Override the ``web`` Directory
-------------------------------
+Override the ``public`` Directory
+---------------------------------
 
-If you need to rename or move your ``web`` directory, the only thing you
-need to guarantee is that the path to the ``var`` directory is still correct
-in your ``app.php`` and ``app_dev.php`` front controllers. If you simply
-renamed the directory, you're fine. But if you moved it in some way, you
-may need to modify these paths inside those files::
+If you need to rename or move your ``public`` directory, the only thing you need
+to guarantee is that the path to the ``var`` directory is still correct in your
+``index.php`` front controller. If you simply renamed the directory, you're
+fine. But if you moved it in some way, you may need to modify these paths inside
+those files::
 
-    require_once __DIR__.'/../path/to/app/autoload.php';
+    require_once __DIR__.'/../path/to/vendor/autoload.php';
 
-You also need to change the ``extra.symfony-web-dir`` option in the
+You also need to change the ``extra.symfony-public-dir`` option in the
 ``composer.json`` file:
 
 .. code-block:: json
@@ -155,77 +152,24 @@ You also need to change the ``extra.symfony-web-dir`` option in the
         "...": "...",
         "extra": {
             "...": "...",
-            "symfony-web-dir": "my_new_web_dir"
+            "symfony-public-dir": "my_new_public_dir"
         }
     }
 
 .. tip::
 
     Some shared hosts have a ``public_html`` web directory root. Renaming
-    your web directory from ``web`` to ``public_html`` is one way to make
+    your web directory from ``public`` to ``public_html`` is one way to make
     your Symfony project work on your shared host. Another way is to deploy
     your application to a directory outside of your web root, delete your
     ``public_html`` directory, and then replace it with a symbolic link to
-    the ``web`` in your project.
-
-.. note::
-
-    If you use the AsseticBundle, you need to configure the ``read_from`` option
-    to point to the correct ``web`` directory:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # app/config/config.yml
-
-            # ...
-            assetic:
-                # ...
-                read_from: '%kernel.project_dir%/../public_html'
-
-        .. code-block:: xml
-
-            <!-- app/config/config.xml -->
-            <?xml version="1.0" encoding="UTF-8"?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:assetic="http://symfony.com/schema/dic/assetic"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    http://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/assetic
-                    http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
-
-                <!-- ... -->
-                <assetic:config read-from="%kernel.root_dir%/../../public_html" />
-
-            </container>
-
-        .. code-block:: php
-
-            // app/config/config.php
-
-            // ...
-            $container->loadFromExtension('assetic', array(
-                // ...
-                'read_from' => '%kernel.project_dir%/../public_html',
-            ));
-
-    Now you just need to clear the cache and dump the assets again and your
-    application should work:
-
-    .. code-block:: terminal
-
-        $ php bin/console cache:clear --no-warmup --env=prod
-        $ php bin/console assetic:dump --env=prod --no-debug
+    the ``public`` dir in your project.
 
 Override the ``vendor`` Directory
 ---------------------------------
 
-To override the ``vendor`` directory, you need to introduce changes in the
-``app/autoload.php`` and ``composer.json`` files.
-
-The change in the ``composer.json`` will look like this:
+To override the ``vendor`` directory, you need to define the ``vendor-dir``
+option in your ``composer.json`` file like this:
 
 .. code-block:: json
 
@@ -235,13 +179,6 @@ The change in the ``composer.json`` will look like this:
             "vendor-dir": "/some/dir/vendor"
         },
     }
-
-Then, update the path to the ``autoload.php`` file in ``app/autoload.php``::
-
-    // app/autoload.php
-
-    // ...
-    $loader = require '/some/dir/vendor/autoload.php';
 
 .. tip::
 

@@ -1,8 +1,18 @@
 Logging with Monolog
 ====================
 
-Symfony comes with an outside library - called Monolog_ - that allows you to create
-logs that can be stored in a variety of different places.
+Symfony integrates seamlessly with `Monolog`_, the most popular PHP logging
+library, to create and store log messages in a variety of different places.
+
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the Monolog based logger before using it:
+
+.. code-block:: terminal
+
+    $ composer require logger
 
 Logging a Message
 -----------------
@@ -19,7 +29,7 @@ your controller::
 
         $logger->info('I just got the logger');
         $logger->error('An error occurred');
-        
+
         $logger->critical('I left the oven on!', array(
             // include extra "context" info in your logs
             'cause' => 'in_hurry',

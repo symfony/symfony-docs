@@ -93,22 +93,13 @@ Annotation Routes
 -----------------
 
 Instead of defining your route in YAML, Symfony also allows you to use *annotation*
-routes. First, install the annotations package:
+routes. To do this, install the annotations package:
 
 .. code-block:: terminal
 
     $ composer require annotations
 
-Then, in ``config/routes.yaml``, remove the route you just created and uncomment
-the annotation route import at the bottom:
-
-.. code-block:: yaml
-
-    controllers:
-        resource: ../src/Controller/
-        type: annotation
-
-After this one-time setup, you can now add your route directly *above* the controller:
+You can now add your route directly *above* the controller:
 
 .. code-block:: diff
 

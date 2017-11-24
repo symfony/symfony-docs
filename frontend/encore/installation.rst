@@ -11,16 +11,23 @@ Then, install Encore into your project with Yarn:
 
 .. note::
 
-    If you want to use `npm`_ instead of `yarn`_, replace ``yarn add xxx --dev`` by
-    ``npm install xxx --save-dev``.
+    If you want to use `npm`_ instead of `yarn`_:
+
+    .. code-block:: terminal
+
+        $ npm install @symfony/webpack-encore --save-dev
 
 .. tip::
 
-    If you are using Flex for your project, you can install Encore via:
+    If you are using Flex for your project, you can initialize your project for Encore via:
 
     .. code-block:: terminal
 
         $ composer require encore
+        $ yarn install
+
+    This will create a ``webpack.config.js`` file, add the ``assets/`` directory, and add ``node_modules/`` to
+    ``.gitignore``.
 
 This command creates (or modifies) a ``package.json`` file and downloads dependencies
 into a ``node_modules/`` directory. When using Yarn, a file called ``yarn.lock``
