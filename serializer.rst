@@ -126,7 +126,7 @@ stored in one of the following locations:
 
 .. _serializer-enabling-metadata-cache:
 
-Configruing the Metadata Cache
+Configuring the Metadata Cache
 ------------------------------
 
 The metadata for the serializer is automatically cached. To configure the cache,
