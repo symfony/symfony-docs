@@ -207,8 +207,7 @@ to the tag like so:
     .. code-block:: yaml
 
         services:
-            my.listener:
-                class: App\EventListener\SearchIndexer
+            App\EventListener\SearchIndexer:
                 tags:
                     - { name: doctrine.event_listener, event: postPersist, lazy: true }
 
@@ -219,7 +218,7 @@ to the tag like so:
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
 
             <services>
-                <service id="my.listener" class="App\EventListener\SearchIndexer">
+                <service id="App\EventListener\SearchIndexer" autowire="true">
                     <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
                 </service>
             </services>
@@ -230,7 +229,7 @@ to the tag like so:
         use App\EventListener\SearchIndexer;
 
         $container
-            ->register('my.listener', SearchIndexer::class)
+            ->autowire(SearchIndexer::class)
             ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'lazy' => 'true'))
         ;
 

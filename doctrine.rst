@@ -23,7 +23,7 @@ code:
 
 .. code-block:: terminal
 
-    composer require orm maker
+    composer require doctrine maker
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,7 +36,7 @@ The database connection information is stored as an environment variable called
     # .env
 
     # customize this line!
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?charset=utf8mb4&serverVersion=5.7"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 
     # to use sqlite:
     # DATABASE_URL="sqlite://%kernel.project_dir%/var/app.db"
@@ -48,6 +48,9 @@ database for you:
 
     $ php bin/console doctrine:database:create
 
+There are more optiosn in ``config/packages/doctrine.yaml`` that you can configure,
+including your ``server_version`` (e.g. 5.7 if you're using MySQL 5.7), which may
+affect how Doctrine functions.
 
 .. tip::
 
@@ -75,7 +78,6 @@ You now have a new ``src/Entity/Product.php`` file::
 
     /**
      * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
-     * @ORM\Table()
      */
     class Product
     {
@@ -140,7 +142,7 @@ in the database. This is usually done with annotations:
 
     .. code-block:: yaml
 
-        # src/Resources/config/doctrine/Product.orm.yml
+        # config/doctrine/Product.orm.yml
         App\Entity\Product:
             type: entity
             id:
@@ -159,7 +161,7 @@ in the database. This is usually done with annotations:
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/doctrine/Product.orm.xml -->
+        <!-- config/doctrine/Product.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -177,14 +179,16 @@ in the database. This is usually done with annotations:
 
 Doctrine supports a wide variety of different field types, each with their own options.
 To see a full list of types and options, see `Doctrine's Mapping Types documentation`_.
+If you want to use ``xml`` instead of annotations, you'll need to configure this in your
+``config/packages/doctrine.yaml`` file.
 
 .. caution::
 
     Be careful not to use reserved SQL keywords as your table or column names
     (e.g. ``GROUP`` or ``USER``). See Doctrine's `Reserved SQL keywords documentation`_
     for details on how to escape these. Or, configure the table name with
-    ``@ORM\Table(name="groups")`` or the column name with the ``name="group_name"``
-    option.
+    ``@ORM\Table(name="groups")`` above the class or configure the column name with
+    the ``name="group_name"`` option.
 
 .. _doctrine-creating-the-database-tables-schema:
 
@@ -423,7 +427,7 @@ be able to go to ``/product/1`` to see your new product::
 
         // or render a template
         // in the template, print things with {{ product.name }}
-        // $this->render('product/show.html.twig', ['product' => $product]);
+        // return $this->render('product/show.html.twig', ['product' => $product]);
     }
 
 Try it out!
@@ -472,7 +476,40 @@ the :ref:`doctrine-queries` section.
 
     If the number of database queries is too high, the icon will turn yellow to
     indicate that something may not be correct. Click on the icon to open the
-    Symfony Profiler and see the exact queries that were executed.
+    Symfony Profiler and see the exact queries that were executed. If you don't
+    see the web debug toolbar, try running ``composer require profiler`` to install
+    it.
+
+Automatically Fetching Objects (ParamConverter)
+-----------------------------------------------
+
+In many cases, you can use the `SensioFrameworkExtraBundle`_ to do the query
+for you automatically! First, install the bundle in case you don't have it:
+
+.. code-block:: terminal
+
+    $ composer require annotations
+
+Now, simplify your controller::
+
+    // src/Controller/ProductController.php
+
+    use App\Entity\Product;
+    // ...
+
+    /**
+     * @Route("/product/{id}", name="product_show")
+     */
+    public function showAction(Product $product)
+    {
+        // use the Product!
+        // ...
+    }
+
+That's it! The bundle uses the ``{id}`` from the route to query for the ``Product``
+by the ``id`` column. If it's not found, a 404 page is generated.
+
+There are many more options you can use. Read more about the `ParamConverter`_.
 
 Updating an Object
 ------------------
@@ -692,14 +729,11 @@ Learn more
 .. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html
 .. _`Doctrine Query Language`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html
 .. _`Mapping Types Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping
-.. _`Property Mapping`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping
 .. _`Reserved SQL keywords documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
-.. _`Creating Classes for the Database`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#creating-classes-for-the-database
 .. _`DoctrineMongoDBBundle`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
-.. _`migrations`: https://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html
 .. _`DoctrineFixturesBundle`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
-.. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`newer utf8mb4 character set`: https://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html
 .. _`Transactions and Concurrency`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/transactions-and-concurrency.html
 .. _`DoctrineMigrationsBundle`: https://github.com/doctrine/DoctrineMigrationsBundle
 .. _`NativeQuery`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/native-sql.html
+.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html

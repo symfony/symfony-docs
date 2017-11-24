@@ -144,7 +144,8 @@ Next, make sure to :ref:`create the database table <doctrine-creating-the-databa
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:schema:update --force
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
 
 What's this UserInterface?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
