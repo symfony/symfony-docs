@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by dzuelke at 2017-11-21T19:14:28Z
+
+`s/PAAS/PaaS/`
+
+---------------------------------------------------------------------------
+
+by dzuelke at 2017-11-21T19:23:19Z
+
+I think this change makes sense. Maybe drop the "` Cloud`" suffixes from the headings (for Azure and Heroku). Also, maybe just inline the links to the official docs? Otherwise it just takes people to a one-line article that only has an external link. Or is that for keeping existing URLs intact?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-21T20:17:27Z
+
+Great feedback - thanks guys :)
+
+---------------------------------------------------------------------------
+
+by ostark at 2017-11-22T09:28:35Z
+
+Agree, duplicated content makes not much sense.
+We are updating our Symfony guides right now for 3.4 / 4.0.
