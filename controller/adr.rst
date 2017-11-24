@@ -8,29 +8,56 @@ In Symfony, you're used to implement the MVC pattern and extending the default :
 class.
 Since the 3.3 update, Symfony is capable of using natively the ADR approach.
 
+Update the configuration
+------------------------
+
+The first step is to update the default services.yaml file, here's the new content: 
+
+.. code-block:: yml
+
+    parameters:
+        locale: 'en'
+
+    services:
+        _defaults:
+            autowire: true
+            autoconfigure: true
+            public: false
+
+        App\Actions\:
+            resource: '../src/Actions'
+            tags: 
+                - 'controller.service_arguments'
+
+Now that the container knows about our actions, time to build a simple Action !
+
 Updating your classes
 ---------------------
 
-As the framework evolve, you must update your classes, first, delete your Controller folder and create an Action one then a new class using the ADR principles, i.e::
+As the framework evolve, you must update your classes, first, delete your Controller folder and create an Actions one then a new class using the ADR principles, for this example, call it ``HelloAction.php``: 
+
+.. code-block:: php
 
     <?php
 
-    namespace AppBundle\Action;
+    namespace App\Action;
 
-    use Twig\Environment;
+    use App\Responders\HelloResponder;
     use Symfony\Component\HttpFoundation\Response;
 
     final class HelloAction
     {
-        public function __invoke(Environment $twig): Response
-        {
-            return new Response($twig->render('default/index.html.twig'));
+        public function __invoke(HelloResponder $responder): Response
+        { 
+            return $responder([
+                'text' => 'Hello World'
+            ]);
         }
     }
 
 .. tip::
 
-    As described in the DependencyInjection doc, you can still use the __construct() injection
+    As described in the DependencyInjection component documentation, you can still use the __construct() injection
     approach.
 
 By default, we define the class with the final keyword because this class shouldn't be extended,
@@ -90,11 +117,69 @@ Once this is done, you can define the routes like before using multiples approac
             '_controller' => HelloAction::class,
         )));
 
+Creating a Responder
+--------------------
+
+As you can see in the __invoke call, this action require a ``HelloResponder`` class in order to build the response which is returned to the browser, first, update the services.yaml according to this need: 
+
+.. code-block:: yml
+
+    parameters:
+        locale: 'en'
+
+    services:
+        _defaults:
+            autowire: true
+            autoconfigure: true
+            public: false
+
+        App\Actions\:
+            resource: '../src/Actions'
+            tags: 
+                - 'controller.service_arguments'
+                
+                
+        App\Responders\:
+            resource: '../src/Responders'
+            
+Here, the container only need to know about the existence of the classes, nothing difficult to understand as the fact that our Responders are responsable of returning the actual Response to the browser, no need to add the 'controller.service_arguments' tags as the Responders need to be called using the __invoke method in order to receive data from the Action. 
+
+Now that the logic behind is clear, time to create the ``HelloResponder.php`` file: 
+                
+.. code-block:: php
+
+    <?php
+    
+    namespace App\Responders;
+
+    use Twig\Environment;
+    use Symfony\Component\HttpFoundation\Response;
+
+    final class HomeResponder
+    {
+        private $twig;
+        
+        public function __construct(Environment $twig)
+        {
+            $this->twig = $twig;
+        }
+
+        public function __invoke(array $data)
+        {
+            return new Response(
+                $this->twig->render('index.html.twig', $data)
+            );
+        }
+    }
+
+If the routing is clearly define, the browser should display the traditional "Hello World" using the ADR approach, congrats !
+
 Accessing the request
 ---------------------
 
-As you can imagine, as the logic evolve, your class is capable of accessing
-the request from simple method injection like this ::
+In many case, your classes can ask for any data passed via a form or via an API call, 
+as you can imagine, as the logic evolve, your class is capable of accessing the request 
+from a simple method injection like this ::
 
     <?php
 
