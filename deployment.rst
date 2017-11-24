@@ -257,4 +257,4 @@ Learn More
 .. _`Heroku`: https://devcenter.heroku.com/articles/getting-started-with-symfony
 .. _`platform.sh`: https://docs.platform.sh/frameworks/symfony.html
 .. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
-.. _`fortrabbit`: https://help.fortrabbit.com/install-symfony-3-uni
+.. _`fortrabbit`: https://help.fortrabbit.com/install-symfony
