@@ -1371,8 +1371,8 @@ A list of all resources for form theming in PHP. This setting is not required
 if you're using the Twig format for your templates, in that case refer to
 :ref:`the form article <forms-theming-twig>`.
 
-Assume you have custom global form themes in
-``src/Resources/views/Form``, you can configure this like:
+Assume you have custom global form themes in ``templates/form_themes/``, you can
+configure this like:
 
 .. configuration-block::
 
@@ -1383,7 +1383,7 @@ Assume you have custom global form themes in
             templating:
                 form:
                     resources:
-                        - 'WebsiteBundle:Form'
+                        - 'form_themes'
 
     .. code-block:: xml
 
@@ -1397,17 +1397,11 @@ Assume you have custom global form themes in
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-
                 <framework:templating>
-
                     <framework:form>
-
-                        <framework:resource>WebsiteBundle:Form</framework:resource>
-
+                        <framework:resource>form_themes</framework:resource>
                     </framework:form>
-
                 </framework:templating>
-
             </framework:config>
         </container>
 
@@ -1418,7 +1412,7 @@ Assume you have custom global form themes in
             'templating' => array(
                 'form' => array(
                     'resources' => array(
-                        'WebsiteBundle:Form'
+                        'form_themes'
                     ),
                 ),
             ),
