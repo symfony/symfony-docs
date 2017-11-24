@@ -130,12 +130,12 @@ in the database. This is usually done with annotations:
             private $id;
 
             /**
-             * @ORM\Column(type="string", length=100, nullable=false)
+             * @ORM\Column(type="string", length=100)
              */
             private $name;
 
             /**
-             * @ORM\Column(type="decimal", scale=2, nullable=false)
+             * @ORM\Column(type="decimal", scale=2, nullable=true)
              */
             private $price;
         }
@@ -153,11 +153,10 @@ in the database. This is usually done with annotations:
                 name:
                     type: string
                     length: 100
-                    nullable: false
                 price:
                     type: decimal
                     scale: 2
-                    nullable: false
+                    nullable: true
 
     .. code-block:: xml
 
@@ -172,8 +171,8 @@ in the database. This is usually done with annotations:
                 <id name="id" type="integer">
                     <generator strategy="AUTO" />
                 </id>
-                <field name="name" type="string" length="100" nullable="false" />
-                <field name="price" type="decimal" scale="2" nullable="false" />
+                <field name="name" type="string" length="100" />
+                <field name="price" type="decimal" scale="2" nullable="true" />
             </entity>
         </doctrine-mapping>
 
@@ -455,8 +454,8 @@ Once you have a repository object, you have many helper methods::
 
     // query for multiple Product objects matching the name, ordered by price
     $products = $repository->findBy(
-        array('name' => 'Keyboard'),
-        array('price' => 'ASC')
+        ['name' => 'Keyboard'],
+        ['price' => 'ASC']
     );
 
     // find *all* Product objects
@@ -584,6 +583,10 @@ But what if you need a more complex query? When you generated your entity with
 
     class ProductRepository extends ServiceEntityRepository
     {
+        public function __construct(RegistryInterface $registry)
+        {
+            parent::__construct($registry, Product::class);
+        }
     }
 
 When you fetch your repository (i.e. ``->getRepository(Product::class)``, it is
@@ -598,6 +601,8 @@ a new method for this to your repository::
     // ...
     class ProductRepository extends ServiceEntityRepository
     {
+        // ...
+
         /**
          * @param $price
          * @return Product[]
@@ -672,7 +677,7 @@ Or directly with SQL if you need to::
             ORDER BY p.price ASC
             ';
         $stmt = $conn->prepare($sql);
-        $stmt->execute(array('price' => 10));
+        $stmt->execute(['price' => 10]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetchAll();
