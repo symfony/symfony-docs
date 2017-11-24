@@ -10,6 +10,8 @@ credentials outside of your project code. Database configuration is one such
 example. The flexibility of the Symfony service container allows you to easily
 do this.
 
+.. _config-env-vars:
+
 Environment Variables
 ---------------------
 

@@ -72,7 +72,7 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
         ]);
 
 The top-level key (here ``framework``) references configuration for a specific
-bundle (``FrameworkBundle`` in this case).
+bundle (:doc:`FrameworkBundle </reference/configuration/framework>` in this case).
 
 .. sidebar:: Configuration Formats
 
@@ -207,12 +207,30 @@ a controller - see :ref:`service-container-parameters`.
 .. _config-dot-env:
 .. _config-parameters-yml:
 
-The .env File
-~~~~~~~~~~~~~
+The .env File & Environment Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There is also a ``.env`` file which is loaded. Its contents become environment
 variables in the dev environment, making it easier to reference environment
-variables in your code.
+variables in your code. When you install packages, more environment variables are
+added to this file. But you can also add your own variables.
+
+Environment variables can be referenced in any other configuration files by using
+a special syntax. For example, if you install the ``doctrine`` package, then you
+will have an environment variable called ``DATABASE_URL`` in your ``.env`` file.
+This is referenced inside ``config/packages/doctrine.yaml``:
+
+.. code-block:: yaml
+
+    # config/packages/doctrine.yaml
+    doctrine:
+        dbal:
+            url: '%env(DATABASE_URL)%'
+
+            # the resolve: prefix will resolve parameters *inside* the env variable
+            # url: '%env(resolve:DATABASE_URL)%'
+
+For more details about environment variables, see :ref:`config-env-vars`.
 
 The ``.env`` file is special, because it defines the values that usually change
 on each server. For example, the database credentials on your local development
