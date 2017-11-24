@@ -24,7 +24,7 @@ Introduction
 Loading users via a Doctrine entity has 2 basic steps:
 
 #. :ref:`Create your User entity <security-crete-user-entity>`
-#. :ref:`Configure security.yml to load from your entity <security-config-entity-provider>`
+#. :ref:`Configure security.yaml to load from your entity <security-config-entity-provider>`
 
 Afterwards, you can learn more about :ref:`forbidding inactive users <security-advanced-user-interface>`,
 :ref:`using a custom query <authenticating-someone-with-a-custom-entity-provider>`

@@ -231,7 +231,7 @@ Finally, create the template:
 The form can look like anything, but it usually follows some conventions:
 
 * The ``<form>`` element sends a ``POST`` request to the ``login`` route, since
-  that's what you configured under the ``form_login`` key in ``security.yml``;
+  that's what you configured under the ``form_login`` key in ``security.yaml``;
 * The username field has the name ``_username`` and the password field has the
   name ``_password``.
 
