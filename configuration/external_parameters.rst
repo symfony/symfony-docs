@@ -24,7 +24,7 @@ put in a ``DATABASE_URL`` environment variable:
 .. code-block:: bash
 
     # .env
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?charset=utf8mb4&serverVersion=5.7"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 
 This variable is referenced in the service container configuration using
 ``%env(DATABASE_HOST)%``:
@@ -114,21 +114,12 @@ the following:
         <VirtualHost *:80>
             # ...
 
-            SetEnv DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name?charset=utf8mb4&serverVersion=5.7"
+            SetEnv DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name"
         </VirtualHost>
 
     .. code-block:: nginx
 
-        fastcgi_param DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name?charset=utf8mb4&serverVersion=5.7";
-
-.. tip::
-
-    You can also define the default value of any existing parameters using
-    special environment variables named after their corresponding parameter
-    prefixed with ``SYMFONY__`` after replacing dots by double underscores
-    (e.g. ``SYMFONY__KERNEL__CHARSET`` to set the default value of the
-    ``kernel.charset`` parameter). These default values are resolved when
-    compiling the service container and won't change at runtime once dumped.
+        fastcgi_param DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name";
 
 Constants
 ---------
