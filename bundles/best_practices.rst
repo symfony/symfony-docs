@@ -182,18 +182,16 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
             - $HOME/.composer/cache/files
     env:
         global:
-            - TEST_COMMAND="phpunit"
+            - TEST_COMMAND="./vendor/bin/simple-phpunit"
 
     matrix:
         fast_finish: true
         include:
               # Minimum supported PHP and Symfony version
-            - php: 5.5
-              env: DEPENDENCIES="minimum" COVERAGE=true TEST_COMMAND="phpunit --coverage-text"
+            - php: 7.2
+              env: DEPENDENCIES="minimum" COVERAGE=true TEST_COMMAND="phpunit --coverage-text" SYMFONY_DEPRECATIONS_HELPER="weak"
 
               # Test the latest stable release
-            - php: 5.5
-            - php: 5.6
             - php: 7.0
             - php: 7.1
             - php: 7.2
@@ -204,30 +202,33 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
             - php: 7.2
               env: DEPENDENCIES="symfony/lts:v3"
 
-              # Latest beta release
+              # Latest commit to master
             - php: 7.2
-              env: DEPENDENCIES="beta"
+              env: DEPENDENCIES="dev"
 
         allow_failures:
               # Latest beta is allowed to fail.
             - php: 7.2
-              env: DEPENDENCIES="beta"
+              env: DEPENDENCIES="dev"
 
     before_install:
+        - composer require --no-update "symfony/phpunit-bridge:^3.3 || ^4"
         - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
         - if [ "$DEPENDENCIES" = "minimum" ]; then COMPOSER_FLAGS="--prefer-stable --prefer-lowest"; fi;
-        - if [ "$DEPENDENCIES" = "beta" ]; then composer config minimum-stability beta; fi;
+        - if [ "$DEPENDENCIES" = "dev" ]; then composer config minimum-stability dev; fi;
         - if [[ $DEPENDENCIES == *"/"* ]]; then composer require --no-update $DEPENDENCIES; fi;
 
     install:
         # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
-        - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
-        - travis_retry composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
+        - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
+        - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
 
     script:
+        - composer validate --strict --no-check-lock
         - $TEST_COMMAND
 
-
+When configuring travis you should also enable `Travis cron`_ to make sure your
+project is build even if there is no new pull requests or commits.
 
 Installation
 ------------
@@ -539,4 +540,5 @@ Learn more
 .. _`Packagist`: https://packagist.org/
 .. _`choose any license`: http://choosealicense.com/
 .. _`valid license identifier`: https://spdx.org/licenses/
-.. _`Travis CI`: travis-ci.org
+.. _`Travis CI`: https://travis-ci.org/
+.. _`Travis Cron`: https://docs.travis-ci.com/user/cron-jobs/
