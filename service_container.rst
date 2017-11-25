@@ -10,15 +10,10 @@ send emails while another object might help you save things to the database.
 Almost *everything* that your app "does" is actually done by one of these objects.
 And each time you install a new bundle, you get access to even more!
 
-In Symfony, these useful objects are called **services** and each service lives inside
-a very special object called the **service container**. If you have the service container,
-then you can fetch a service by using that service's id::
-
-    $logger = $container->get('logger');
-    $entityManager = $container->get('doctrine.orm.entity_manager');
-
-The container allows you to centralize the way objects are constructed. It makes
-your life easier, promotes a strong architecture and is super fast!
+In Symfony, these useful objects are called **services** and each service lives
+inside a very special object called the **service container**. The container
+allows you to centralize the way objects are constructed. It makes your life
+easier, promotes a strong architecture and is super fast!
 
 Fetching and using Services
 ---------------------------
@@ -36,7 +31,7 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
     /**
      * @Route("/products")
      */
-    public function listAction(LoggerInterface $logger)
+    public function list(LoggerInterface $logger)
     {
         $logger->info('Look! I just used a service');
 
@@ -83,7 +78,7 @@ You can also use the unique "Service ID" to access a service directly::
         /**
          * @Route("/products")
          */
-        public function listAction()
+        public function list()
         {
             $logger = $this->container->get('logger');
             $logger->info('Look! I just used a service');
@@ -146,7 +141,7 @@ inside your controller::
 
     use App\Service\MessageGenerator;
 
-    public function newAction(MessageGenerator $messageGenerator)
+    public function new(MessageGenerator $messageGenerator)
     {
         // thanks to the type-hint, the container will instantiate a
         // new MessageGenerator and pass it to you!
@@ -167,9 +162,7 @@ each time you ask for it.
 
 .. sidebar:: Automatic Service Loading in services.yaml
 
-    The documentation assumes you're using
-    `Symfony Standard Edition (version 3.3) services.yaml`_ configuration. The most
-    important part is this:
+    The documentation assumes you're using the following service configuration:
 
     .. configuration-block::
 
@@ -185,10 +178,10 @@ each time you ask for it.
 
                 # makes classes in src/ available to be used as services
                 App\:
-                    resource: '../../src/*'
+                    resource: '../src/*'
                     # you can exclude directories or files
                     # but if a service is unused, it's removed anyway
-                    exclude: '../../src/{Entity,Repository}'
+                    exclude: '../src/{Entity,Repository}'
 
         .. code-block:: xml
 
@@ -204,7 +197,7 @@ each time you ask for it.
                     <defaults autowire="true" autoconfigure="true" public="false" />
 
                     <!-- Load services from whatever directories you want (you can update this!) -->
-                    <prototype namespace="App\" resource="../../src/*" exclude="../../src/{Entity,Repository}" />
+                    <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Repository}" />
                 </services>
             </container>
 
@@ -223,7 +216,7 @@ each time you ask for it.
             ;
 
             // $this is a reference to the current loader
-            $this->registerClasses($definition, 'App\\', '../../src/*', '../../src/{Entity,Repository}');
+            $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Repository}');
 
     .. tip::
 
@@ -237,15 +230,16 @@ each time you ask for it.
     If you'd prefer to manually wire your service, that's totally possible: see
     :ref:`services-explicitly-configure-wire-services`.
 
-You can also fetch a service directly from the container via its "id", which will
-be its class name in this case::
+If the :ref:`service is public <container-public>`, you can also fetch it
+directly from the container via its "id". However, this practice is discouraged
+and you should instead inject services via constructors::
 
     use App\Service\MessageGenerator;
 
     // accessing services like this only works if you extend Controller
     class ProductController extends Controller
     {
-        public function newAction()
+        public function new()
         {
             // only works if your service is public
             $messageGenerator = $this->get(MessageGenerator::class);
@@ -255,8 +249,6 @@ be its class name in this case::
             // ...
         }
     }
-
-However, this only works if you make your service :ref:`public <container-public>`.
 
 .. _services-constructor-injection:
 
@@ -368,7 +360,7 @@ you can use the service immediately::
 
     use App\Updates\SiteUpdateManager;
 
-    public function newAction(SiteUpdateManager $siteUpdateManager)
+    public function new(SiteUpdateManager $siteUpdateManager)
     {
         // ...
 
@@ -438,8 +430,8 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
             # same as before
             App\:
-                resource: '../../src/*'
-                exclude: '../../src/{Entity,Repository}'
+                resource: '../src/*'
+                exclude: '../src/{Entity,Repository}'
 
             # explicitly configure the service
             App\Updates\SiteUpdateManager:
@@ -459,7 +451,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 <!-- ... -->
 
                 <!-- Same as before -->
-                <prototype namespace="App\" resource="../../src/*" exclude="../../src/{Entity,Repository}" />
+                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Repository}" />
 
                 <!-- Explicitly configure the service -->
                 <service id="App\Updates\SiteUpdateManager">
@@ -483,7 +475,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
             ->setPublic(false)
         ;
 
-        $this->registerClasses($definition, 'App\\', '../../src/*', '../../src/{Entity,Repository}');
+        $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Repository}');
 
         // Explicitly configure the service
         $container->getDefinition(SiteUpdateManager::class)
@@ -553,9 +545,9 @@ and reference it with the ``%parameter_name%`` syntax:
             // ...
             ->setArgument('$adminEmail', '%admin_email%');
 
-Actually, once you define a parameter, it can be referenced via the ``%parameter_name%``
-syntax in *any* other service configuration file - like ``config.yml``. Many parameters
-are defined in a :ref:`parameters.yml file <config-parameters-yml>`.
+Actually, once you define a parameter, it can be referenced via the
+``%parameter_name%`` syntax in *any* other configuration file. Many parameters
+are defined in the ``config/services.yaml`` file.
 
 You can then fetch the parameter in the service::
 
@@ -573,11 +565,11 @@ You can then fetch the parameter in the service::
 
 You can also fetch parameters directly from the container::
 
-    public function newAction()
+    public function new()
     {
         // ...
 
-        // this ONLY works if you extend Controller
+        // this ONLY works if you extend the base Controller
         $adminEmail = $this->container->getParameter('admin_email');
 
         // or a shorter way!
@@ -741,7 +733,7 @@ as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension`
             ->addTag('twig.extension');
 
 But, with ``autoconfigure: true``, you don't need the tag. In fact, if you're using
-the :ref:`Symfony Standard Edition services.yaml config <service-container-services-load-example>`,
+the :ref:`default services.yaml config <service-container-services-load-example>`,
 you don't need to do *anything*: the service will be automatically loaded. Then,
 ``autoconfigure`` will add the ``twig.extension`` tag *for* you, because your class
 implements ``Twig_ExtensionInterface``. And thanks to ``autowire``, you can even add
@@ -789,7 +781,7 @@ from the container::
 
     use App\Service\MessageGenerator;
 
-    public function newAction(MessageGenerator $messageGenerator)
+    public function new(MessageGenerator $messageGenerator)
     {
         // type-hinting it as an argument DOES work
 
@@ -797,7 +789,7 @@ from the container::
         $this->container->get(MessageGenerator::class);
     }
 
-Usually, this is ok: there are better ways to access a service. But, if you *do*
+Usually, this is OK: there are better ways to access a service. But, if you *do*
 need to make your service public, just override this setting:
 
 .. configuration-block::
@@ -848,13 +840,13 @@ key. For example, the default Symfony configuration contains this:
             # the namespace prefix for classes (must end in \)
             App\:
                 # create services for all the classes found in this directory...
-                resource: '../../src/*'
+                resource: '../src/*'
                 # ...except for the classes located in these directories
-                exclude: '../../src/{Entity,Repository}'
+                exclude: '../src/{Entity,Repository}'
 
             # these were imported above, but we want to add some extra config
             App\Controller\:
-                resource: '../../src/Controller'
+                resource: '../src/Controller'
                 # apply some configuration to these services
                 public: true
                 tags: ['controller.service_arguments']
@@ -871,9 +863,9 @@ key. For example, the default Symfony configuration contains this:
             <services>
                 <!-- ... -->
 
-                <prototype namespace="App\" resource="../../src/*" exclude="../../src/{Entity,Repository}" />
+                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Repository}" />
 
-                <prototype namespace="App\Controller\" resource="../../src/Controller" public="true">
+                <prototype namespace="App\Controller\" resource="../src/Controller" public="true">
                     <tag name="controller.service_arguments" />
                 </prototype>
             </services>
@@ -893,7 +885,7 @@ key. For example, the default Symfony configuration contains this:
             ->setPublic(false)
         ;
 
-        $this->registerClasses($definition, 'App\\', '../../src/*', '../../src/{Entity,Repository}');
+        $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Repository}');
 
         // Changes default config
         $definition
@@ -902,7 +894,7 @@ key. For example, the default Symfony configuration contains this:
         ;
 
         // $this is a reference to the current loader
-        $this->registerClasses($definition, 'App\\Controller\\', '../../src/Controller/*');
+        $this->registerClasses($definition, 'App\\Controller\\', '../src/Controller/*');
 
 .. tip::
 

@@ -78,12 +78,14 @@ via a ``container`` variable. Here's another example:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             App\Mailer:
                 arguments: ["@=container.hasParameter('some_param') ? parameter('some_param') : 'default_value'"]
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -99,6 +101,7 @@ via a ``container`` variable. Here's another example:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Mailer;
         use Symfony\Component\ExpressionLanguage\Expression;
 

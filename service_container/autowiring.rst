@@ -69,6 +69,7 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             _defaults:
                 autowire: true
@@ -87,6 +88,7 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -104,6 +106,7 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
 
     .. code-block:: php
 
+        // config/services.php
         use App\Service\TwitterClient;
         use App\Util\Rot13Transformer;
 
@@ -130,7 +133,7 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
         /**
          * @Route("/tweet")
          */
-        public function tweetAction()
+        public function tweet()
         {
             // fetch $user, $key, $status from the POST'ed data
 
@@ -203,7 +206,7 @@ which allows us to autowire this type automatically.
 This can also be accomplished using an :ref:`alias <services-alias>`. Suppose that
 for some reason, the id of the service was instead ``app.rot13.transformer``. In
 this case, any arguments type-hinted with the class name (``App\Util\Rot13Transformer``)
-can no longer be autowired (actually, it :ref:`will work now, but not in Symfony 4.0 <autowiring-single-matching-service>`).
+can no longer be autowired.
 
 No problem! To fix this, you can *create* a service whose id matches the class by
 adding a service alias:
@@ -212,6 +215,7 @@ adding a service alias:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -227,6 +231,7 @@ adding a service alias:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -242,6 +247,7 @@ adding a service alias:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Util\Rot13Transformer;
 
         // ...
@@ -301,8 +307,7 @@ Now that you have an interface, you should use this as your type-hint::
 
 But now, the type-hint (``App\Util\TransformerInterface``) no longer matches
 the id of the service (``App\Util\Rot13Transformer``). This means that the
-argument can no longer be autowired (actually, it
-:ref:`will work now, but not in Symfony 4.0 <autowiring-single-matching-service>`).
+argument can no longer be autowired.
 
 To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
@@ -310,6 +315,7 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -321,6 +327,7 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -336,6 +343,7 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Util\Rot13Transformer;
         use App\Util\TransformerInterface;
 
@@ -375,6 +383,7 @@ that alias:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -396,6 +405,7 @@ that alias:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -416,6 +426,7 @@ that alias:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Util\Rot13Transformer;
         use App\Util\UppercaseTransformer;
         use App\Util\TransformerInterface;
