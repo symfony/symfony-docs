@@ -40,11 +40,11 @@ created in your ``outputPath`` directory:
 
 In your app, you need to read this file to dynamically render the correct paths
 in your ``script`` and ``link`` tags. If you're using Symfony, just activate the
-``json_manifest_file`` versioning strategy in ``config.yml``:
+``json_manifest_file`` versioning strategy:
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/packages/framework.yaml
     framework:
         # ...
         assets:

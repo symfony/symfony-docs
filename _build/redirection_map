@@ -355,6 +355,12 @@
 /event_dispatcher/class_extension /event_dispatcher
 /form /forms
 /form/use_virtual_forms /form/inherit_data_option
+/frontend/assetic/apply_to_option /frontend/assetic
+/frontend/assetic/asset_management /frontend/assetic
+/frontend/assetic/jpeg_optimize /frontend/assetic
+/frontend/assetic/php /frontend/assetic
+/frontend/assetic/uglifyjs /frontend/assetic
+/frontend/assetic/yuicompressor /frontend/assetic
 /security/target_path /security
 /service_container/third_party /service_container
 /templating/templating_service /templates
