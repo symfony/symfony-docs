@@ -198,9 +198,9 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
 
               # Test LTS versions
             - php: 7.2
-              env: DEPENDENCIES="symfony/lts:v2"
+              env: DEPENDENCIES="symfony/lts:^2"
             - php: 7.2
-              env: DEPENDENCIES="symfony/lts:v3"
+              env: DEPENDENCIES="symfony/lts:^3"
 
               # Latest commit to master
             - php: 7.2
