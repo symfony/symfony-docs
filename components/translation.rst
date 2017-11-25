@@ -128,7 +128,7 @@ file as the second argument, instead of an array::
 
     // ...
     $translator->addLoader('yaml', new YamlFileLoader());
-    $translator->addResource('yaml', 'path/to/messages.fr.yml', 'fr_FR');
+    $translator->addResource('yaml', 'path/to/messages.fr.yaml', 'fr_FR');
 
 The Translation Process
 -----------------------
