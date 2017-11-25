@@ -19,7 +19,7 @@ files. This can be done with the :class:`Symfony\\Component\\Config\\FileLocator
 
     use Symfony\Component\Config\FileLocator;
 
-    $configDirectories = array(__DIR__.'/app/config');
+    $configDirectories = array(__DIR__.'/config');
 
     $locator = new FileLocator($configDirectories);
     $yamlUserFiles = $locator->locate('users.yaml', null, false);
