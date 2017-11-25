@@ -361,6 +361,7 @@
 /frontend/assetic/php /frontend/assetic
 /frontend/assetic/uglifyjs /frontend/assetic
 /frontend/assetic/yuicompressor /frontend/assetic
+/reference/configuration/assetic /frontend/assetic
 /security/target_path /security
 /service_container/third_party /service_container
 /templating/templating_service /templates
