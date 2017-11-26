@@ -344,7 +344,7 @@ In a controller, create the form like normal::
 
     class FriendMessageController extends Controller
     {
-        public function newAction(Request $request)
+        public function new(Request $request)
         {
             $form = $this->createForm(FriendMessageFormType::class);
 
@@ -392,7 +392,7 @@ sport like this::
         {
             $builder
                 ->add('sport', EntityType::class, array(
-                    'class'       => 'App:Sport',
+                    'class'       => 'App\Entity\Sport',
                     'placeholder' => '',
                 ))
             ;
@@ -409,7 +409,7 @@ sport like this::
                     $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                     $form->add('position', EntityType::class, array(
-                        'class' => 'App:Position',
+                        'class' => 'App\Entity\Position',
                         'placeholder' => '',
                         'choices' => $positions,
                     ));
@@ -456,7 +456,7 @@ The type would now look like::
         {
             $builder
                 ->add('sport', EntityType::class, array(
-                    'class'       => 'App:Sport',
+                    'class'       => 'App\Entity\Sport',
                     'placeholder' => '',
                 ));
             ;
@@ -465,7 +465,7 @@ The type would now look like::
                 $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                 $form->add('position', EntityType::class, array(
-                    'class' => 'App:Position',
+                    'class' => 'App\Entity\Position',
                     'placeholder' => '',
                     'choices' => $positions,
                 ));
@@ -518,7 +518,7 @@ your application. Assume that you have a sport meetup creation controller::
 
     class MeetupController extends Controller
     {
-        public function createAction(Request $request)
+        public function create(Request $request)
         {
             $meetup = new SportMeetup();
             $form = $this->createForm(SportMeetupType::class, $meetup);
@@ -578,7 +578,7 @@ field according to the current selection in the ``sport`` field:
 
     .. code-block:: html+php
 
-        <!-- templates/Meetup/create.html.php -->
+        <!-- templates/meetup/create.html.php -->
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->row($form['sport']) ?>    <!-- <select id="meetup_sport" ... -->
             <?php echo $view['form']->row($form['position']) ?> <!-- <select id="meetup_position" ... -->

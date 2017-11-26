@@ -86,7 +86,7 @@ from inside a controller::
 
     class DefaultController extends Controller
     {
-        public function newAction(Request $request)
+        public function new(Request $request)
         {
             // create a task and give it some dummy data for this example
             $task = new Task();
@@ -221,7 +221,7 @@ your controller::
     // ...
     use Symfony\Component\HttpFoundation\Request;
 
-    public function newAction(Request $request)
+    public function new(Request $request)
     {
         // just setup a fresh $task object (remove the dummy data)
         $task = new Task();
@@ -338,7 +338,7 @@ object.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Task:
             properties:
                 task:
@@ -516,7 +516,7 @@ the type of your field and set it up for you. In this example, Symfony can
 guess from the validation rules that both the ``task`` field is a normal
 ``TextType`` field and the ``dueDate`` field is a ``DateType`` field::
 
-    public function newAction()
+    public function new()
     {
         $task = new Task();
 
@@ -615,7 +615,7 @@ be used to quickly build a form object in the controller::
     // src/Controller/DefaultController.php
     use App\Form\TaskType;
 
-    public function newAction()
+    public function new()
     {
         $task = ...;
         $form = $this->createForm(TaskType::class, $task);
@@ -708,4 +708,3 @@ Learn more
 
 .. _`Symfony Form component`: https://github.com/symfony/form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php
-.. _`2.8 UPGRADE Log`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-2.8.md#form

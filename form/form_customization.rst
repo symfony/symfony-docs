@@ -366,7 +366,7 @@ You can do this by including the ``only`` keyword after the list form themes:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/common.html.twig #}
+        {# templates/form/common.html.twig #}
         {% use "form_div_layout.html.twig" %}
 
         {# ... #}
@@ -433,7 +433,7 @@ method:
 
     The ``:form`` syntax is based on the functional names for templates:
     ``Bundle:Directory``. As the form directory lives in the
-    ``app/Resources/views`` directory, the ``Bundle`` part is empty, resulting
+    ``templates/`` directory, the ``Bundle`` part is empty, resulting
     in ``:form``.
 
 Referencing base Form Blocks (Twig specific)
