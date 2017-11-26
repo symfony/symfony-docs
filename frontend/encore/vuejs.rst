@@ -34,11 +34,11 @@ also configure the `vue-loader options`_ via a callback:
         };
     });
 
-Building a simple component
+Building a simple Component
 ---------------------------
 
 Once Vue is installed and ``webpack.config.js`` has been updated,
-let's build our first component and display a simple ``Hello World from Vue !``.
+you can build your first component and display a simple ``Hello World from Vue !``.
 
 In order to ease the process, the usage of ``.vue`` files is recommended,
 start by adding a ``main.js`` file inside the assets folder:
@@ -59,7 +59,7 @@ Vue gonna instantiate a new Root component and attach your component to the HTML
 
 Now, let's build the Hello component :
 
-.. code-block:: javascript
+.. code-block:: html
 
     <!-- assets/components/Hello.vue -->
     <template>
@@ -82,8 +82,8 @@ Now, let's build the Hello component :
 This component is pretty simple at this stage but once you're aware about Vue and his internal logic,
 you can easily integrate it into your own Twig views and logic.
 
-Now that our component is ready and that our Vue instance is configured,
-let's use Encore to build everything and call Vue inside our views,
+Now that your component is ready and that your Vue instance is configured,
+let's use Encore to build everything and call Vue inside your views,
 in order to ease the process, let's use the watcher :
 
 .. code-block:: terminal
@@ -92,7 +92,7 @@ in order to ease the process, let's use the watcher :
 
 If everything goes right, Encore should compile ``main.js`` and produce a new ``main.js`` file
 inside the ``public/build`` directory, once the file is packed into the folder,
-let's call it inside our Twig views :
+let's call it inside your Twig views :
 
 .. code-block:: twig
 
