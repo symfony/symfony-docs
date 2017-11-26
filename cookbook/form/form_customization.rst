@@ -160,7 +160,7 @@ As you can see, this fragment itself renders another fragment - ``form_widget_si
 
     .. code-block:: html+jinja
 
-        {# form_div_layout.html.twig #}
+        {# form_widget_simple.html.twig #}
         {% block form_widget_simple %}
             {% set type = type|default('text') %}
             <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
