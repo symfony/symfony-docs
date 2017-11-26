@@ -222,20 +222,9 @@ also delete all the cookies::
     $client = new Client();
     $client->request('GET', 'http://symfony.com');
 
-    // delete history
+    // reinitializes the browser state (history and cookies are deleted)
     $client->restart();
-
-You can also delete the client's history with the ``clear()`` method of client's ``History`` attribute::
-
-    use Acme\Client;
-
-    // make a real request to an external site
-    $client = new Client();
-    $client->request('GET', 'http://symfony.com');
-    
-    //delete history
-    $client->getHistory()
-        ->clear();
+    // which internally calls history->clear() and cookieJar->clear()
 
 Learn more
 ----------
