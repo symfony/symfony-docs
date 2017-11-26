@@ -132,7 +132,7 @@ returned. Take this simple example from inside a controller::
     use App\Entity\Author;
 
     // ...
-    public function authorAction()
+    public function author()
     {
         $author = new Author();
 

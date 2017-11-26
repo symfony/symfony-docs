@@ -107,7 +107,7 @@ Using custom validators is very easy, just as the ones provided by Symfony itsel
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # config/validator/validation.yaml
         App\Entity\AcmeEntity:
             properties:
                 name:
@@ -116,7 +116,7 @@ Using custom validators is very easy, just as the ones provided by Symfony itsel
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -202,14 +202,14 @@ not to the property:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # config/validator/validation.yaml
         App\Entity\AcmeEntity:
             constraints:
                 - App\Validator\Constraints\ContainsAlphanumeric: ~
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <class name="App\Entity\AcmeEntity">
             <constraint name="App\Validator\Constraints\ContainsAlphanumeric" />
         </class>
