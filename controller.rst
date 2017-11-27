@@ -417,10 +417,6 @@ front controller - see :ref:`page-creation-environments`).
 You'll want to customize the error page your user sees. To do that, see
 the :doc:`/controller/error_pages` article.
 
-.. index::
-   single: Controller; The session
-   single: Session
-
 .. _controller-request-argument:
 
 The Request object as a Controller Argument
@@ -443,12 +439,60 @@ object. To get it in your controller, just add it as an argument and
 :ref:`Keep reading <request-object-info>` for more information about using the
 Request object.
 
+.. index::
+   single: Controller; The session
+   single: Session
+
+.. _session-intro:
+
 Managing the Session
 --------------------
 
 Symfony provides a nice session object that you can use to store information
 about the user between requests. By default, Symfony stores the token in a
 cookie and writes the attributes to a file by using native PHP sessions.
+
+First, enable sessions in your configuration:
+
+.. configuration-block::
+
+    .. code-block:: diff
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+
+        +     session:
+        +         # With this config, PHP's native session handling is used
+        +         handler_id: ~
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- ... -->
+                <framework:session handler-id="null" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', array(
+            'session' => array(
+                // ...
+                'handler_id' => null,
+            ),
+        ));
 
 To retrieve the session, add the :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`
 type-hint to your argument and Symfony will provide you with a session::
@@ -473,6 +517,8 @@ Stored attributes remain in the session for the remainder of that user's session
 
     Every ``SessionInterface`` implementation is supported. If you have your
     own implementation, type-hint this in the arguments instead.
+
+For more info, see :doc:`/session`.
 
 .. index::
    single: Session; Flash messages
