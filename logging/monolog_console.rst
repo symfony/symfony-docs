@@ -38,19 +38,23 @@ The example above could then be rewritten as::
     use Psr\Log\LoggerInterface;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
-
-    private $logger;
-
-    public function __constructor(LoggerInterface $logger)
+    // ...
+    
+    class YourCommand extends Command
     {
-        $this->logger = $logger;
-    }
+        private $logger;
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->logger->debug('Some info');
-        // ...
-        $this->logger->notice('Some more info');
+        public function __constructor(LoggerInterface $logger)
+        {
+            $this->logger = $logger;
+        }
+
+        protected function execute(InputInterface $input, OutputInterface $output)
+        {
+            $this->logger->debug('Some info');
+            // ...
+            $this->logger->notice('Some more info');
+        }
     }
 
 Depending on the verbosity level that the command is run in and the user's

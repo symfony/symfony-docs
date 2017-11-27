@@ -337,13 +337,13 @@ Learn more
 .. toctree::
     :maxdepth: 1
 
-    logging/monolog_regex_based_excludes
     logging/monolog_email
     logging/channels_handlers
-    logging/monolog_console
-    logging/disable_microsecond_precision
     logging/formatter
     logging/processors
+    logging/monolog_regex_based_excludes
+    logging/monolog_console
+    logging/disable_microsecond_precision
 
 .. _Monolog: https://github.com/Seldaek/monolog
 .. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php
