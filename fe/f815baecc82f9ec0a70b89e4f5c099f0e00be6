@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-16T14:04:53Z
+
+1) I actually don't love the `Bridge` part. It doesn't have much "meaning", and it would be harder to find `Doctrine` stuff. Do you have a counter-argument?
+
+2) ... the form theming stuff... I guess that's still supported? So we should keep it for now. I *think* this is still accurate as-is. Except for:
+
+`src/Resources/views/Form` -> `templates/form_themes`
+`'WebsiteBundle:Form'` -> `form_themes`
+
+But I'm not 100% if that's accurate. But I think we should just try it.
+
+3) Hmm. Emphasis should definitely be given to the mapping configuration that we use for Flex (e.g. https://github.com/symfony/recipes/blob/db32040b48e9cf15299e7702a75a49e76999ff3f/doctrine/doctrine-bundle/1.6/config/packages/doctrine.yaml#L9-L15). Should we continue to show `is_bundle: true`? Hmm, maybe just mention it. But I think we should show `is_bundle: false`-based configuration.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-21T12:31:12Z
+
+Status: Needs work
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-11-24T15:14:16Z
+
+I've made all requested changes. Later we can further reword the part about bundles/non-bundles to reduce the bundles section to a note/tip ... but for now this could be good enough. Thanks.
