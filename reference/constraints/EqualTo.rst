@@ -55,7 +55,7 @@ and that the ``age`` is ``20``, you could do the following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Person:
             properties:
                 firstName:

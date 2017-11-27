@@ -59,7 +59,7 @@ If your valid choice list is simple, you can pass them in directly via the
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 city:
@@ -166,7 +166,7 @@ constraint.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 genre:
@@ -231,7 +231,7 @@ you can pass the class name and the method as an array.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 genre:

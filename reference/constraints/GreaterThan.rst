@@ -54,7 +54,7 @@ The following constraints ensure that:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Person:
             properties:
                 siblings:
@@ -131,7 +131,7 @@ that a date must at least be the next day:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Order:
             properties:
                 deliveryDate:
@@ -190,7 +190,7 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Order:
             properties:
                 deliveryDate:
@@ -250,7 +250,7 @@ current time:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Order:
             properties:
                 deliveryDate:

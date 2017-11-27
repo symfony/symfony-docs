@@ -17,7 +17,7 @@ Each part will be explained in the next section.
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             access_denied_url:    ~ # Example: /foo/error403
 
@@ -33,15 +33,15 @@ Each part will be explained in the next section.
 
             encoders:
                 # Examples:
-                Acme\DemoBundle\Entity\User1: sha512
-                Acme\DemoBundle\Entity\User2:
+                App\Entity\User1: sha512
+                App\Entity\User2:
                     algorithm:           sha512
                     encode_as_base64:    true
                     iterations:          5000
 
                 # PBKDF2 encoder
                 # see the note about PBKDF2 below for details on security and speed
-                Acme\Your\Class\Name:
+                App\Entity\User3:
                     algorithm:            pbkdf2
                     hash_algorithm:       sha512
                     encode_as_base64:     true
@@ -49,18 +49,18 @@ Each part will be explained in the next section.
                     key_length:           40
 
                 # Example options/values for what a custom encoder might look like
-                Acme\DemoBundle\Entity\User3:
-                    id:                   my.encoder.id
+                App\Entity\User4:
+                    id:                   App\Security\MyPasswordEncoder
 
                 # BCrypt encoder
                 # see the note about bcrypt below for details on specific dependencies
-                Acme\DemoBundle\Entity\User4:
+                App\Entity\User5:
                     algorithm:            bcrypt
                     cost:                 13
 
                 # Plaintext encoder
                 # it does not do any encoding
-                Acme\DemoBundle\Entity\User5:
+                App\Entity\User6:
                     algorithm:            plaintext
                     ignore_case:          false
 
@@ -78,7 +78,7 @@ Each part will be explained in the next section.
 
                 my_entity_provider:
                     entity:
-                        class:              SecurityBundle:User
+                        class:              App\Entity\User7
                         property:           username
                         # name of a non-default entity manager
                         manager_name:       ~
@@ -489,7 +489,7 @@ providers (``form_login_ldap`` or ``http_basic_ldap``).
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -529,7 +529,7 @@ Using the BCrypt Password Encoder
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -616,7 +616,7 @@ multiple firewalls, the "context" could actually be shared:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -630,7 +630,7 @@ multiple firewalls, the "context" could actually be shared:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -650,7 +650,7 @@ multiple firewalls, the "context" could actually be shared:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'somename' => array(

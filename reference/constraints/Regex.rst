@@ -44,7 +44,7 @@ more word characters at the beginning of your string:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 description:
@@ -113,7 +113,7 @@ it a custom message:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 firstName:
@@ -213,7 +213,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 name:

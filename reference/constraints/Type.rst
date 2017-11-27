@@ -50,7 +50,7 @@ This will check if ``firstName`` is of type ``string`` and that ``age`` is an
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 firstName:
