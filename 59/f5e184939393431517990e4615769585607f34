@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-17T12:01:59Z
+
+Hmmmm.
+
+Two things:
+
+1) One big difference is that, in Flex, you will need to *create* the "cache" kernel file, because you do not have it by default (like in the SE). @javiereguiluz have you made changes to the docs to reflect this? I admittedly only did a quick scan, but I didn't see it. It's out-of-scope, but perhaps we need a `make:` command to create this for you (and at least *suggest* the changes you also need in `index.php`).
+
+2) What to call this class? I think `CacheKernel` - it's your kernel, but a `Cache` version if it :).
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-21T12:31:04Z
+
+Status: Needs work
