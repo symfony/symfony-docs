@@ -77,23 +77,27 @@ but is a great way to start.
 
     For details on setting up Varnish, see :doc:`/http_cache/varnish`.
 
-Enabling the proxy is easy: each application comes with a caching kernel (``AppCache``)
-that wraps the default one (``AppKernel``). The caching Kernel *is* the reverse
-proxy.
+To enable the proxy, first create a caching kernel::
 
-To enable caching, modify the code of your front controller. You can also make these
-changes to ``index.php`` to add caching to the ``dev`` environment::
+    // src/CacheKernel.php
+    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+
+    class CacheKernel extends HttpCache
+    {
+    }
+
+Modify the code of your front controller to wrap the default kernel into the
+caching kernel:
+
+.. code-block:: diff
 
     // public/index.php
-    use Symfony\Component\HttpFoundation\Request;
 
     // ...
-    $kernel = new AppKernel('prod', false);
-    $kernel->loadClassCache();
+    $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev')));
 
-    // add (or uncomment) this new line!
-    // wrap the default Kernel with the AppCache one
-    $kernel = new AppCache($kernel);
+    + // Wrap the default Kernel with the CacheKernel one
+    + $kernel = new CacheKernel($kernel);
 
     $request = Request::createFromGlobals();
     // ...
@@ -115,15 +119,15 @@ from your application and returning them to the client.
 
         error_log($kernel->getLog());
 
-The ``AppCache`` object has a sensible default configuration, but it can be
+The ``CacheKernel`` object has a sensible default configuration, but it can be
 finely tuned via a set of options you can set by overriding the
 :method:`Symfony\\Bundle\\FrameworkBundle\\HttpCache\\HttpCache::getOptions`
 method::
 
-    // app/AppCache.php
+    // src/CacheKernel.php
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
-    class AppCache extends HttpCache
+    class CacheKernel extends HttpCache
     {
         protected function getOptions()
         {
@@ -150,7 +154,7 @@ information about cache hits and misses.
     website or when you deploy your website to a shared host where you cannot
     install anything beyond PHP code. But being written in PHP, it cannot
     be as fast as a proxy written in C.
-    
+
     Fortunately, since all reverse proxies are effectively the same, you should
     be able to switch to something more robust - like Varnish - without any problems.
     See :doc:`How to use Varnish </http_cache/varnish>`
@@ -192,7 +196,7 @@ These four headers are used to help cache your responses via *two* different mod
 
     All of the HTTP headers you'll read about are *not* invented by Symfony! They're
     part of an HTTP specification that's used by sites all over the web. To dig deeper
-    into HTTP Caching, check out the documents `RFC 7234 - Caching`_ and 
+    into HTTP Caching, check out the documents `RFC 7234 - Caching`_ and
     `RFC 7232 - Conditional Requests`_.
 
     As a web developer, you are strongly urged to read the specification. Its
