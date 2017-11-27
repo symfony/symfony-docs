@@ -21,7 +21,7 @@ Symfony to use your session handler instead of the default one:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             session:
                 # ...
@@ -29,7 +29,7 @@ Symfony to use your session handler instead of the default one:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -44,7 +44,7 @@ Symfony to use your session handler instead of the default one:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         use App\Session\CustomSessionHandler;
         $container->loadFromExtension('framework', array(
             // ...
