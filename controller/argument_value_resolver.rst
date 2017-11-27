@@ -42,11 +42,6 @@ Symfony ships with five value resolvers in the HttpKernel component:
     argument list. When the action is called, the last (variadic) argument will
     contain all the values of this array.
 
-.. note::
-
-    Prior to Symfony 3.1, this logic was resolved within the ``ControllerResolver``.
-    The old functionality is rewritten to the aforementioned value resolvers.
-
 Adding a Custom Value Resolver
 ------------------------------
 
@@ -62,7 +57,7 @@ controller::
 
     class UserController
     {
-        public function indexAction(User $user)
+        public function index(User $user)
         {
             return new Response('Hello '.$user->getUsername().'!');
         }

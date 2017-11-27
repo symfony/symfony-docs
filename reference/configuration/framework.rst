@@ -98,7 +98,7 @@ Configuration
     * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
-    * `mapping`_
+    * :ref:`mapping <reference-validation-mapping>`
         * :ref:`paths <reference-validation-mapping-paths>`
 * `annotations`_
     * :ref:`cache <reference-annotations-cache>`
@@ -106,10 +106,11 @@ Configuration
     * `debug`_
 * `serializer`_
     * :ref:`enabled <reference-serializer-enabled>`
-    * :ref:`cache <reference-serializer-cache>`
     * :ref:`enable_annotations <reference-serializer-enable_annotations>`
     * :ref:`name_converter <reference-serializer-name_converter>`
     * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
+    * :ref:`mapping <reference-serializer-mapping>`
+        * :ref:`paths <reference-serializer-mapping-paths>`
 * `php_errors`_
     * `log`_
     * `throw`_
@@ -173,17 +174,17 @@ named ``kernel.http_method_override``.
 
 .. caution::
 
-    If you're using the :ref:`AppCache Reverse Proxy <symfony2-reverse-proxy>`
+    If you're using the :ref:`HttpCache Reverse Proxy <symfony2-reverse-proxy>`
     with this option, the kernel will ignore the ``_method`` parameter,
     which could lead to errors.
 
     To fix this, invoke the ``enableHttpMethodParameterOverride()`` method
     before creating the ``Request`` object::
 
-        // web/app.php
+        // public/index.php
 
         // ...
-        $kernel = new AppCache($kernel);
+        $kernel = new CacheKernel($kernel);
 
         Request::enableHttpMethodParameterOverride(); // <-- add this line
         $request = Request::createFromGlobals();
@@ -1591,6 +1592,8 @@ If this option is enabled, the `egulias/email-validator`_ library will be
 used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
 the validator uses a simple regular expression to validate email addresses.
 
+.. _reference-validation-mapping:
+
 mapping
 .......
 
@@ -1656,20 +1659,6 @@ enabled
 
 Whether to enable the ``serializer`` service or not in the service container.
 
-.. _reference-serializer-cache:
-
-cache
-.....
-
-**type**: ``string``
-
-The service that is used to persist class metadata in a cache. The service
-has to implement the ``Doctrine\Common\Cache\Cache`` interface.
-
-.. seealso::
-
-    For more information, see :ref:`serializer-enabling-metadata-cache`.
-
 .. _reference-serializer-enable_annotations:
 
 enable_annotations
@@ -1715,6 +1704,21 @@ method.
 
     For more information, see
     :ref:`component-serializer-handling-circular-references`.
+
+.. _reference-serializer-mapping:
+
+mapping
+.......
+
+.. _reference-serializer-mapping-paths:
+
+paths
+"""""
+
+**type**: ``array`` **default**: ``[]``
+
+This option allows to define an array of paths with files or directories where
+the component will look for additional serialization files.
 
 php_errors
 ~~~~~~~~~~

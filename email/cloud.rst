@@ -18,86 +18,18 @@ This article shows how easy it is to integrate
 .. note::
 
     You can use the same technique for other mail services, as most of the
-    time there is nothing more to it than configuring an SMTP endpoint for
-    Swift Mailer.
+    time there is nothing more to it than configuring an SMTP endpoint.
 
-In the Symfony configuration, change the Swift Mailer settings ``transport``,
-``host``, ``port`` and ``encryption`` according to the information provided in
-the `SES console`_. Create your individual SMTP credentials in the SES console
-and complete the configuration with the provided ``username`` and ``password``:
+Symfony's mailer uses the ``MAILER_URL`` environment variable to store the
+SMTP connection parameters, including the security credentials. Get those
+parameters from the `SES console`_ and update the value of ``MAILER_URL`` in
+the ``.env`` file:
 
-.. configuration-block::
+.. code-block:: bash
 
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        swiftmailer:
-            transport:  smtp
-            host:       email-smtp.us-east-1.amazonaws.com
-            port:       587 # different ports are available, see SES console
-            encryption: tls # TLS encryption is required
-            username:   AWS_SES_SMTP_USERNAME  # to be created in the SES console
-            password:   AWS_SES_SMTP_PASSWORD  # to be created in the SES console
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/swiftmailer
-                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
-
-            <!-- ... -->
-            <swiftmailer:config
-                transport="smtp"
-                host="email-smtp.us-east-1.amazonaws.com"
-                port="587"
-                encryption="tls"
-                username="AWS_SES_SMTP_USERNAME"
-                password="AWS_SES_SMTP_PASSWORD"
-            />
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('swiftmailer', array(
-            'transport'  => 'smtp',
-            'host'       => 'email-smtp.us-east-1.amazonaws.com',
-            'port'       => 587,
-            'encryption' => 'tls',
-            'username'   => 'AWS_SES_SMTP_USERNAME',
-            'password'   => 'AWS_SES_SMTP_PASSWORD',
-        ));
-
-The ``port`` and ``encryption`` keys are not present in the Symfony Standard
-Edition configuration by default, but you can simply add them as needed.
+    MAILER_URL=smtp://email-smtp.us-east-1.amazonaws.com:587?encryption=tls&username=YOUR_SES_USERNAME&password=YOUR_SES_PASSWORD
 
 And that's it, you're ready to start sending emails through the cloud!
-
-.. tip::
-
-    If you are using the Symfony Standard Edition, configure the parameters in
-    ``parameters.yml`` and use them in your configuration files. This allows
-    for different Swift Mailer configurations for each installation of your
-    application. For instance, use Gmail during development and the cloud in
-    production.
-
-    .. code-block:: yaml
-
-        # app/config/parameters.yml
-        parameters:
-            # ...
-            mailer_transport:  smtp
-            mailer_host:       email-smtp.us-east-1.amazonaws.com
-            mailer_port:       587 # different ports are available, see SES console
-            mailer_encryption: tls # TLS encryption is required
-            mailer_user:       AWS_SES_SMTP_USERNAME # to be created in the SES console
-            mailer_password:   AWS_SES_SMTP_PASSWORD # to be created in the SES console
 
 .. note::
 

@@ -17,14 +17,19 @@ templates with PHP more powerful.
 Rendering PHP Templates
 -----------------------
 
-If you want to use the PHP templating engine, first, make sure to enable it in
-your application configuration file:
+If you want to use the PHP templating engine, first install the templating component:
+
+.. code-block:: terminal
+
+    $ composer require templating
+
+Next, enable the php engine:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             templating:
@@ -32,7 +37,7 @@ your application configuration file:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -53,6 +58,7 @@ your application configuration file:
 
     .. code-block:: php
 
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'templating' => array(
@@ -67,28 +73,12 @@ below renders the ``index.html.php`` template::
     // src/Controller/HelloController.php
 
     // ...
-    public function indexAction($name)
+    public function index($name)
     {
-        return $this->render(
-            'AppBundle:Hello:index.html.php',
-            array('name' => $name)
-        );
-    }
-
-You can also use the `@Template`_ shortcut to render the default
-``AppBundle:Hello:index.html.php`` template::
-
-    // src/Controller/HelloController.php
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-    // ...
-
-    /**
-     * @Template(engine="php")
-     */
-    public function indexAction($name)
-    {
-        return array('name' => $name);
+        // template is stored in src/Resources/views/hello/index.html.php
+        return $this->render('hello/index.html.php', array(
+            'name' => $name
+        ));
     }
 
 .. caution::
@@ -98,24 +88,24 @@ You can also use the `@Template`_ shortcut to render the default
     the ``@`` notation for Twig namespaces will no longer be supported for the
     ``render()`` method::
 
-        public function indexAction()
+        public function index()
         {
             // ...
 
             // namespaced templates will no longer work in controllers
-            $this->render('@App/Default/index.html.twig');
+            $this->render('@SomeNamespace/hello/index.html.twig');
 
             // you must use the traditional template notation
-            $this->render('AppBundle:Default:index.html.twig');
+            $this->render('hello/index.html.twig');
         }
 
     .. code-block:: twig
 
         {# inside a Twig template, namespaced templates work as expected #}
-        {{ include('@App/Default/index.html.twig') }}
+        {{ include('@SomeNamespace/hello/index.html.twig') }}
 
         {# traditional template notation will also work #}
-        {{ include('AppBundle:Default:index.html.twig') }}
+        {{ include('hello/index.html.twig') }}
 
 
 .. index::
@@ -134,36 +124,29 @@ the ``extend()`` call:
 
 .. code-block:: html+php
 
-    <!-- templates/Hello/index.html.php -->
-    <?php $view->extend('AppBundle::layout.html.php') ?>
+    <!-- src/Resources/views/hello/index.html.php -->
+    <?php $view->extend('layout.html.php') ?>
 
     Hello <?php echo $name ?>!
-
-The ``AppBundle::layout.html.php`` notation sounds familiar, doesn't it? It
-is the same notation used to reference a template. The ``::`` part simply
-means that the controller element is empty, so the corresponding file is
-directly stored under ``views/``.
 
 Now, have a look at the ``layout.html.php`` file:
 
 .. code-block:: html+php
 
-    <!-- templates/layout.html.php -->
-    <?php $view->extend('::base.html.php') ?>
+    <!-- src/Resources/views/layout.html.php -->
+    <?php $view->extend('base.html.php') ?>
 
     <h1>Hello Application</h1>
 
     <?php $view['slots']->output('_content') ?>
 
-The layout is itself decorated by another one (``::base.html.php``). Symfony
+The layout is itself decorated by another one (``base.html.php``). Symfony
 supports multiple decoration levels: a layout can itself be decorated by
-another one. When the bundle part of the template name is empty, views are
-looked for in the ``templates/`` directory. This directory stores
-global views for your entire project:
+another one:
 
 .. code-block:: html+php
 
-    <!-- templates/base.html.php -->
+    <!-- src/Resources/views/base.html.php -->
     <!DOCTYPE html>
     <html>
         <head>
@@ -196,8 +179,8 @@ decorating the template. In the ``index.html.php`` template, define a
 
 .. code-block:: html+php
 
-    <!-- templates/Hello/index.html.php -->
-    <?php $view->extend('AppBundle::layout.html.php') ?>
+    <!-- src/Resources/views/hello/index.html.php -->
+    <?php $view->extend('layout.html.php') ?>
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
 
@@ -207,7 +190,7 @@ The base layout already has the code to output the title in the header:
 
 .. code-block:: html+php
 
-    <!-- templates/base.html.php -->
+    <!-- src/Resources/views/base.html.php -->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php $view['slots']->output('title', 'Hello Application') ?></title>
@@ -238,17 +221,17 @@ Create a ``hello.html.php`` template:
 
 .. code-block:: html+php
 
-    <!-- templates/Hello/hello.html.php -->
+    <!-- src/Resources/views/hello/hello.html.php -->
     Hello <?php echo $name ?>!
 
 And change the ``index.html.php`` template to include it:
 
 .. code-block:: html+php
 
-    <!-- templates/Hello/index.html.php -->
-    <?php $view->extend('AppBundle::layout.html.php') ?>
+    <!-- src/Resources/views/hello/index.html.php -->
+    <?php $view->extend('layout.html.php') ?>
 
-    <?php echo $view->render('AppBundle:Hello:hello.html.php', array('name' => $name)) ?>
+    <?php echo $view->render('hello/hello.html.php', array('name' => $name)) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
@@ -268,34 +251,16 @@ If you create a ``fancy`` action, and want to include it into the
 
 .. code-block:: html+php
 
-    <!-- templates/Hello/index.html.php -->
+    <!-- src/Resources/views/hello/index.html.php -->
     <?php echo $view['actions']->render(
-        new \Symfony\Component\HttpKernel\Controller\ControllerReference('AppBundle:Hello:fancy', array(
-            'name'  => $name,
-            'color' => 'green',
-        ))
+        new \Symfony\Component\HttpKernel\Controller\ControllerReference(
+            'App\Controller\HelloController::fancy',
+            array(
+                'name'  => $name,
+                'color' => 'green',
+            )
+        )
     ) ?>
-
-Here, the ``AppBundle:Hello:fancy`` string refers to the ``fancy`` action of the
-``Hello`` controller::
-
-    // src/Controller/HelloController.php
-
-    class HelloController extends Controller
-    {
-        public function fancyAction($name, $color)
-        {
-            // create some object, based on the $color variable
-            $object = ...;
-
-            return $this->render('AppBundle:Hello:fancy.html.php', array(
-                'name'   => $name,
-                'object' => $object
-            ));
-        }
-
-        // ...
-    }
 
 But where is the ``$view['actions']`` array element defined? Like
 ``$view['slots']``, it's called a template helper, and the next section tells
@@ -332,10 +297,10 @@ pattern:
 
 .. code-block:: yaml
 
-    # src/Resources/config/routing.yml
-    hello: # The route name
-        path:     /hello/{name}
-        defaults: { _controller: AppBundle:Hello:index }
+    # config/routes.yaml
+    hello:
+        path:       /hello/{name}
+        controller: App\Controller\HelloController::index
 
 Using Assets: Images, JavaScripts and Stylesheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

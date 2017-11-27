@@ -4,11 +4,13 @@
 How to Set external Parameters in the Service Container
 =======================================================
 
-In the article :doc:`/configuration`, you learned how to manage your application
+In :doc:`/configuration`, you learned how to manage your application
 configuration. At times, it may benefit your application to store certain
 credentials outside of your project code. Database configuration is one such
 example. The flexibility of the Symfony service container allows you to easily
 do this.
+
+.. _config-env-vars:
 
 Environment Variables
 ---------------------
@@ -18,22 +20,30 @@ the variables you want to use enclosed between ``env()``. Their actual values
 will be resolved at runtime (once per request), so that dumped containers can be
 reconfigured dynamically even after being compiled.
 
-For example, if you want to use the value of the ``DATABASE_HOST`` environment
-variable in your service container configuration, you can reference it using
-``%env(DATABASE_HOST)%`` in your configuration files:
+For example, when installing the ``doctrine`` recipe, database configuration is
+put in a ``DATABASE_URL`` environment variable:
+
+.. code-block:: bash
+
+    # .env
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
+
+This variable is referenced in the service container configuration using
+``%env(DATABASE_HOST)%``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/doctrine.yaml
         doctrine:
             dbal:
-                host: '%env(DATABASE_HOST)%'
+                url: '%env(DATABASE_URL)%'
+            # ...
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/doctrine.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -45,7 +55,7 @@ variable in your service container configuration, you can reference it using
 
             <doctrine:config>
                 <doctrine:dbal
-                    host="%env(DATABASE_HOST)%"
+                    url="%env(DATABASE_URL)%"
                 />
             </doctrine:config>
 
@@ -53,10 +63,10 @@ variable in your service container configuration, you can reference it using
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/doctrine.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
-                'host' => '%env(DATABASE_HOST)%',
+                'url' => '%env(DATABASE_URL)%',
             )
         ));
 
@@ -67,34 +77,37 @@ will be used whenever the corresponding environment variable is *not* found:
 
     .. code-block:: yaml
 
-        # app/config/parameters.yml
+        # config/services.yaml
         parameters:
-            database_host: '%env(DATABASE_HOST)%'
             env(DATABASE_HOST): localhost
 
     .. code-block:: xml
 
-        <!-- app/config/parameters.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <parameters>
-                <parameter key="database_host">%env(DATABASE_HOST)%</parameter>
                 <parameter key="env(DATABASE_HOST)">localhost</parameter>
             </parameters>
          </container>
 
     .. code-block:: php
 
-        // app/config/parameters.php
-        $container->setParameter('database_host', '%env(DATABASE_HOST)%');
+        // config/services.php
         $container->setParameter('env(DATABASE_HOST)', 'localhost');
 
-Setting environment variables is generally done at the web server level or in the
-terminal. If you're using Apache, Nginx or just the console, you can use e.g. one
-of the following:
+.. _configuration-env-var-in-prod:
+
+Configuring Environment Variables in Production
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+During development, you'll use the ``.env`` file to configure your environment
+variables. On your production server, it is recommended to configure these at
+the web server level. If you're using Apache or Nginx, you can use e.g. one of
+the following:
 
 .. configuration-block::
 
@@ -103,28 +116,12 @@ of the following:
         <VirtualHost *:80>
             # ...
 
-            SetEnv DATABASE_USER user
-            SetEnv DATABASE_PASSWORD secret
+            SetEnv DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name"
         </VirtualHost>
 
     .. code-block:: nginx
 
-        fastcgi_param DATABASE_USER user;
-        fastcgi_param DATABASE_PASSWORD secret;
-
-    .. code-block:: terminal
-
-        $ export DATABASE_USER=user
-        $ export DATABASE_PASSWORD=secret
-
-.. tip::
-
-    You can also define the default value of any existing parameters using
-    special environment variables named after their corresponding parameter
-    prefixed with ``SYMFONY__`` after replacing dots by double underscores
-    (e.g. ``SYMFONY__KERNEL__CHARSET`` to set the default value of the
-    ``kernel.charset`` parameter). These default values are resolved when
-    compiling the service container and won't change at runtime once dumped.
+        fastcgi_param DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name";
 
 Constants
 ---------
@@ -135,53 +132,19 @@ See :ref:`component-di-parameters-constants` for more details.
 Miscellaneous Configuration
 ---------------------------
 
-The ``imports`` directive can be used to pull in parameters stored elsewhere.
-Importing a PHP file gives you the flexibility to add whatever is needed
-in the container. The following imports a file named ``parameters.php``.
+You can mix whatever configuration format you like (YAML, XML and PHP) in
+``config/packages/``.  Importing a PHP file gives you the flexibility to add
+whatever is needed in the container. For instance, you can create a
+``drupal.php`` file in which you set a database URL based on Drupal's database
+configuration::
 
-.. configuration-block::
+    // config/packages/drupal.php
 
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        imports:
-            - { resource: parameters.php }
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <imports>
-                <import resource="parameters.php" />
-            </imports>
-
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $loader->import('parameters.php');
-
-.. note::
-
-    A resource file can be one of many types. PHP, XML, YAML, INI, and
-    closure resources are all supported by the ``imports`` directive.
-
-In ``parameters.php``, tell the service container the parameters that you wish
-to set. This is useful when important configuration is in a non-standard
-format. The example below includes a Drupal database configuration in
-the Symfony service container.
-
-.. code-block:: php
-
-    // app/config/parameters.php
+    // import Drupal's configuration
     include_once('/path/to/drupal/sites/default/settings.php');
-    $container->setParameter('drupal.database.url', $db_url);
+
+    // set a app.database_url parameter
+    $container->setParameter('app.database_url', $db_url);
 
 .. _`SetEnv`: http://httpd.apache.org/docs/current/env.html
 .. _`fastcgi_param`: http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_param

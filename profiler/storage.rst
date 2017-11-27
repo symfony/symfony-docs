@@ -4,11 +4,7 @@
 Switching the Profiler Storage
 ==============================
 
-In Symfony versions prior to 3.0, profiles could be stored in files, databases,
-services like Redis and Memcache, etc. Starting from Symfony 3.0, the only storage
-mechanism with built-in support is the filesystem.
-
-By default the profile stores the collected data in the ``%kernel.cache_dir%/profiler/``
+The profiler stores the collected data in the ``%kernel.cache_dir%/profiler/``
 directory. If you want to use another location to store the profiles, define the
 ``dsn`` option of the ``framework.profiler``:
 
@@ -16,14 +12,14 @@ directory. If you want to use another location to store the profiles, define the
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/dev/web_profiler.yaml
         framework:
             profiler:
                 dsn: 'file:/tmp/symfony/profiler'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/dev/web_profiler.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -40,7 +36,7 @@ directory. If you want to use another location to store the profiles, define the
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/dev/web_profiler.php
 
         // ...
         $container->loadFromExtension('framework', array(

@@ -25,6 +25,8 @@ to solve the most common Webpack use cases.
     Encore is made by `Symfony`_ and works *beautifully* in Symfony applications.
     But it can easily be used in any application... in any language!
 
+.. _encore-toc:
+
 Encore Documentation
 --------------------
 

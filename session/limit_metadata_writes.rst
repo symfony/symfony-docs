@@ -23,12 +23,14 @@ than zero:
 
     .. code-block:: yaml
 
+        # config/packages/framework.yaml
         framework:
             session:
                 metadata_update_threshold: 120
 
     .. code-block:: xml
 
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
@@ -45,6 +47,7 @@ than zero:
 
     .. code-block:: php
 
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'session' => array(
                 'metadata_update_threshold' => 120,

@@ -18,7 +18,7 @@ How Symfony Uses Voters
 
 In order to use voters, you have to understand how Symfony works with them.
 All voters are called each time you use the ``isGranted()`` method on Symfony's
-authorization checker or call ``denyAccessUnlessGranted`` in a controller (which
+authorization checker or call ``denyAccessUnlessGranted()`` in a controller (which
 uses the authorization checker).
 
 Ultimately, Symfony takes the responses from all voters and makes the final
@@ -61,7 +61,7 @@ code like this::
         /**
          * @Route("/posts/{id}", name="post_show")
          */
-        public function showAction($id)
+        public function show($id)
         {
             // get a Post object - e.g. query for it
             $post = ...;
@@ -75,7 +75,7 @@ code like this::
         /**
          * @Route("/posts/{id}/edit", name="post_edit")
          */
-        public function editAction($id)
+        public function edit($id)
         {
             // get a Post object - e.g. query for it
             $post = ...;
@@ -183,7 +183,7 @@ To recap, here's what's expected from the two abstract methods:
     object). Your job is to determine if your voter should vote on the attribute/subject
     combination. If you return true, ``voteOnAttribute()`` will be called. Otherwise,
     your voter is done: some other voter should process this. In this example, you
-    return ``true`` if the attribue is ``view`` or ``edit`` and if the object is
+    return ``true`` if the attribute is ``view`` or ``edit`` and if the object is
     a ``Post`` instance.
 
 ``voteOnAttribute($attribute, $subject, TokenInterface $token)``
@@ -289,14 +289,14 @@ security configuration:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             access_decision_manager:
                 strategy: unanimous
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"

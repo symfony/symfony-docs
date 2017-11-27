@@ -23,7 +23,7 @@ the URI scheme via schemes:
             /**
              * @Route("/secure", name="secure", schemes={"https"})
              */
-            public function secureAction()
+            public function secure()
             {
                 // ...
             }
@@ -33,9 +33,9 @@ the URI scheme via schemes:
 
         # config/routes.yaml
         secure:
-            path:     /secure
-            defaults: { _controller: AppBundle:Main:secure }
-            schemes:  [https]
+            path:       /secure
+            controller: App\Controller\MainController::secure
+            schemes:    [https]
 
     .. code-block:: xml
 
@@ -47,7 +47,7 @@ the URI scheme via schemes:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="secure" path="/secure" schemes="https">
-                <default key="_controller">AppBundle:Main:secure</default>
+                <default key="_controller">App\Controller\MainController::secure</default>
             </route>
         </routes>
 
@@ -59,7 +59,7 @@ the URI scheme via schemes:
 
         $collection = new RouteCollection();
         $collection->add('secure', new Route('/secure', array(
-            '_controller' => 'AppBundle:Main:secure',
+            '_controller' => 'App\Controller\MainController::secure',
         ), array(), array(), '', array('https')));
 
         return $collection;

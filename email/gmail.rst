@@ -5,102 +5,15 @@ How to Use Gmail to Send Emails
 ===============================
 
 During development, instead of using a regular SMTP server to send emails, you
-might find using Gmail easier and more practical. The SwiftmailerBundle makes
+might find using Gmail easier and more practical. The Symfony mailer makes
 it really easy.
 
-In the development configuration file, change the ``transport`` setting to
-``gmail`` and set the ``username`` and ``password`` to the Google credentials:
+In the ``.env`` file used in your development machine, change the ``MAILER_URL``
+environment variable to this:
 
-.. configuration-block::
+.. code-block:: bash
 
-    .. code-block:: yaml
-
-        # app/config/config_dev.yml
-        swiftmailer:
-            transport: gmail
-            username:  your_gmail_username
-            password:  your_gmail_password
-
-    .. code-block:: xml
-
-        <!-- app/config/config_dev.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/swiftmailer
-                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
-
-            <!-- ... -->
-            <swiftmailer:config
-                transport="gmail"
-                username="your_gmail_username"
-                password="your_gmail_password"
-            />
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config_dev.php
-        $container->loadFromExtension('swiftmailer', array(
-            'transport' => 'gmail',
-            'username'  => 'your_gmail_username',
-            'password'  => 'your_gmail_password',
-        ));
-
-.. tip::
-
-    It's more convenient to configure these options in the ``parameters.yml``
-    file:
-
-    .. code-block:: yaml
-
-        # app/config/parameters.yml
-        parameters:
-            # ...
-            mailer_user:     your_gmail_username
-            mailer_password: your_gmail_password
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # app/config/config_dev.yml
-            swiftmailer:
-                transport: gmail
-                username:  '%mailer_user%'
-                password:  '%mailer_password%'
-
-        .. code-block:: xml
-
-            <!-- app/config/config_dev.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    http://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/swiftmailer
-                    http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
-
-                <!-- ... -->
-                <swiftmailer:config
-                    transport="gmail"
-                    username="%mailer_user%"
-                    password="%mailer_password%"
-                />
-            </container>
-
-        .. code-block:: php
-
-            // app/config/config_dev.php
-            $container->loadFromExtension('swiftmailer', array(
-                'transport' => 'gmail',
-                'username'  => '%mailer_user%',
-                'password'  => '%mailer_password%',
-            ));
+    MAILER_URL=gmail://YOUR_GMAIL_USERNAME:YOUR_GMAIL_PASSWORD@localhost
 
 Redefining the Default Configuration Parameters
 -----------------------------------------------

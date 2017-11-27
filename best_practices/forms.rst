@@ -192,3 +192,5 @@ handling the form submit. For example, you *could* have a ``new()`` action that
 *only* renders the form and a ``create()`` action that *only* processes the form
 submit. Both those actions will be almost identical. So it's much simpler to let
 ``new()`` handle everything.
+
+Next: :doc:`/best_practices/i18n`

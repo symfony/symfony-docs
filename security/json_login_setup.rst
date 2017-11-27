@@ -11,7 +11,7 @@ First, enable the JSON login under your firewall:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -23,7 +23,7 @@ First, enable the JSON login under your firewall:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -77,7 +77,7 @@ path:
             /**
              * @Route("/login", name="login")
              */
-            public function loginAction(Request $request)
+            public function login(Request $request)
             {
             }
         }
@@ -86,8 +86,8 @@ path:
 
         # config/routes.yaml
         login:
-            path:     /login
-            defaults: { _controller: AppBundle:Security:login }
+            path:       /login
+            controller: App\Controller\SecurityController::login
 
     .. code-block:: xml
 
@@ -99,7 +99,7 @@ path:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="login" path="/login">
-                <default key="_controller">AppBundle:Security:login</default>
+                <default key="_controller">App\Controller\SecurityController::login</default>
             </route>
         </routes>
 
@@ -111,7 +111,7 @@ path:
 
         $collection = new RouteCollection();
         $collection->add('login', new Route('/login', array(
-            '_controller' => 'AppBundle:Security:login',
+            '_controller' => 'App\Controller\SecurityController::login',
         )));
 
         return $collection;
@@ -151,7 +151,7 @@ The security configuration should be:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -165,7 +165,7 @@ The security configuration should be:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"

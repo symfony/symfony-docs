@@ -8,7 +8,7 @@ Installing Symfony
 
     Use Composer and Symfony Flex to create and manage Symfony applications.
 
-`Composer`_ is the package manager used by modern PHP application to manage
+`Composer`_ is the package manager used by modern PHP applications to manage
 their dependencies. `Symfony Flex`_ is a Composer plugin designed to automate
 some of the most common tasks performed in Symfony applications. Using Flex is
 optional but recommended because it improves your productivity significantly.
@@ -90,6 +90,10 @@ ProductBundle, then there's no advantage to having two separate bundles.
 Symfony applications can still use third-party bundles (installed in ``vendor/``)
 to add features, but you should use PHP namespaces instead of bundles to organize
 your own code.
+
+----
+
+Next: :doc:`/best_practices/configuration`
 
 .. _`Composer`: https://getcomposer.org/
 .. _`Symfony Flex`: https://github.com/symfony/flex

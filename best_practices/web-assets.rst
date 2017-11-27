@@ -25,6 +25,11 @@ the JavaScript-based tools used in modern web applications. Check out the
 `official Webpack Encore documentation`_ to learn more about all the available
 features.
 
+----
+
+Next: :doc:`/best_practices/tests`
+
+.. _`official Assetic documentation`: https://github.com/kriswallsmith/assetic
 .. _`Webpack Encore`: https://github.com/symfony/webpack-encore
 .. _`Webpack`: https://webpack.js.org/
 .. _`official Webpack Encore documentation`: https://symfony.com/doc/current/frontend.html

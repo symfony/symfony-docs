@@ -15,6 +15,7 @@ for the ``handler_id``:
 
     .. code-block:: yaml
 
+        # config/packages/framework.yaml
         framework:
             session:
                 storage_id: session.storage.php_bridge
@@ -22,6 +23,7 @@ for the ``handler_id``:
 
     .. code-block:: xml
 
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -38,6 +40,7 @@ for the ``handler_id``:
 
     .. code-block:: php
 
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'session' => array(
                 'storage_id' => 'session.storage.php_bridge',
@@ -54,6 +57,7 @@ the example below:
 
     .. code-block:: yaml
 
+        # config/packages/framework.yaml
         framework:
             session:
                 storage_id: session.storage.php_bridge
@@ -61,6 +65,7 @@ the example below:
 
     .. code-block:: xml
 
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -77,6 +82,7 @@ the example below:
 
     .. code-block:: php
 
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'session' => array(
                 'storage_id' => 'session.storage.php_bridge',
@@ -90,7 +96,7 @@ the example below:
     override this. Instead set ``handler_id: ~``. Note that a save handler
     cannot be changed once the session has been started. If the application
     starts the session before Symfony is initialized, the save handler will
-    have already been  set. In this case, you will need ``handler_id: ~``.
+    have already been set. In this case, you will need ``handler_id: ~``.
     Only override the save handler if you are sure the legacy application
     can use the Symfony save handler without side effects and that the session
     has not been started before Symfony is initialized.

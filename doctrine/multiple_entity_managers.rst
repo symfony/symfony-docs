@@ -22,6 +22,7 @@ The following configuration code shows how you can configure two entity managers
 
     .. code-block:: yaml
 
+        # config/packages/doctrine.yaml
         doctrine:
             dbal:
                 default_connection: default
@@ -58,6 +59,7 @@ The following configuration code shows how you can configure two entity managers
 
     .. code-block:: xml
 
+        <!-- config/packages/doctrine.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -105,6 +107,7 @@ The following configuration code shows how you can configure two entity managers
 
     .. code-block:: php
 
+        // config/packages/doctrine.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'default_connection' => 'default',
@@ -172,15 +175,17 @@ When working with multiple connections to create your databases:
     # Play only with "customer" connection
     $ php bin/console doctrine:database:create --connection=customer
 
-When working with multiple entity managers to update your schema:
+When working with multiple entity managers to generate migrations:
 
 .. code-block:: terminal
 
     # Play only with "default" mappings
-    $ php bin/console doctrine:schema:update --force
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
 
     # Play only with "customer" mappings
-    $ php bin/console doctrine:schema:update --force --em=customer
+    $ php bin/console doctrine:migrations:diff --em=customer
+    $ php bin/console doctrine:migrations:migrate --em=customer
 
 If you *do* omit the entity manager's name when asking for it,
 the default entity manager (i.e. ``default``) is returned::

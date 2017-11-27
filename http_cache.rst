@@ -77,20 +77,27 @@ but is a great way to start.
 
     For details on setting up Varnish, see :doc:`/http_cache/varnish`.
 
-Enabling the proxy is easy: each application comes with a caching kernel (``AppCache``)
-that wraps the default one (``AppKernel``). The caching Kernel *is* the reverse
-proxy.
+To enable the proxy, first create a caching kernel::
 
-To enable caching, modify the code of your ``index.php`` front controller::
+    // src/CacheKernel.php
+    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+
+    class CacheKernel extends HttpCache
+    {
+    }
+
+Modify the code of your front controller to wrap the default kernel into the
+caching kernel:
+
+.. code-block:: diff
 
     // public/index.php
-    use Symfony\Component\HttpFoundation\Request;
 
     // ...
-    $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? false);
+    $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev')));
 
-    // add (or uncomment) this line to wrap the default Kernel with the AppCache one
-    $kernel = new AppCache($kernel);
+    + // Wrap the default Kernel with the CacheKernel one
+    + $kernel = new CacheKernel($kernel);
 
     $request = Request::createFromGlobals();
     // ...
@@ -112,17 +119,17 @@ from your application and returning them to the client.
 
         error_log($kernel->getLog());
 
-The ``AppCache`` object has a sensible default configuration, but it can be
+The ``CacheKernel`` object has a sensible default configuration, but it can be
 finely tuned via a set of options you can set by overriding the
 :method:`Symfony\\Bundle\\FrameworkBundle\\HttpCache\\HttpCache::getOptions`
 method::
 
-    // src/AppCache.php
+    // src/CacheKernel.php
     namespace App;
 
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
-    class AppCache extends HttpCache
+    class CacheKernel extends HttpCache
     {
         protected function getOptions()
         {

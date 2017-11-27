@@ -161,32 +161,34 @@ Getting Services from the Service Container
 -------------------------------------------
 
 To actually create a new user, the command has to access to some
-:doc:`services </service_container>`. This can be done by making the command
-extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`
-instead::
+:doc:`services </service_container>`. Since your command is already registered
+as a service, you can use normal dependency injection. Imagine you have a
+``AppBundle\Service\UserManager`` service that you want to access::
 
     // ...
-    use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+    use Symfony\Component\Console\Command\Command;
+    use AppBundle\Service\UserManager;
 
-    class CreateUserCommand extends ContainerAwareCommand
+    class CreateUserCommand extends Command
     {
+        private $userManager;
+
+        public function __construct(UserManager $userManager)
+        {
+            $this->userManager = $userManager;
+        }
+
         // ...
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             // ...
 
-            // access the container using getContainer()
-            $userManager = $this->getContainer()->get('app.user_manager');
-            $userManager->create($input->getArgument('username'));
+            $this->userManager->create($input->getArgument('username'));
 
             $output->writeln('User successfully generated!');
         }
     }
-
-Now, once you have created the required services and logic, the command will execute
-the ``create()`` method of the ``app.user_manager`` service and the user will
-be created.
 
 Command Lifecycle
 -----------------

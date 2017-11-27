@@ -54,7 +54,7 @@ the :ref:`default services configuration <service-container-services-load-exampl
 you don't need to do anything!
 
 Finally, below is an example of a controller that is capable of handling a SOAP
-request. Because ``indexAction()`` is accessible via ``/soap``, the WSDL document
+request. Because ``index()`` is accessible via ``/soap``, the WSDL document
 can be retrieved via ``/soap?wsdl``::
 
     namespace App\Controller;
@@ -69,7 +69,7 @@ can be retrieved via ``/soap?wsdl``::
         /**
          * @Route("/soap")
          */
-        public function indexAction(HelloService $helloService)
+        public function index(HelloService $helloService)
         {
             $server = new \SoapServer('/path/to/hello.wsdl');
             $server->setObject($helloService);
@@ -96,8 +96,8 @@ into the content of the Response and clear the output buffer. Finally, you're
 ready to return the ``Response``.
 
 Below is an example calling the service using a `NuSOAP`_ client. This example
-assumes that the ``indexAction()`` in the controller above is accessible via the
-route ``/soap``::
+assumes that the ``index()`` method in the controller above is accessible via
+the route ``/soap``::
 
     $client = new \Soapclient('http://example.com/index.php/soap?wsdl');
 

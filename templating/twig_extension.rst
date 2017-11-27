@@ -21,17 +21,21 @@ money:
     {# pass in the 3 optional arguments #}
     {{ product.price|price(2, ',', '.') }}
 
-Create a class that extends ``\Twig_Extension`` and fill in the logic::
+Create a class that extends the ``AbstractExtension`` class defined by Twig and
+fill in the logic::
 
     // src/Twig/AppExtension.php
     namespace App\Twig;
 
-    class AppExtension extends \Twig_Extension
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
+
+    class AppExtension extends AbstractExtension
     {
         public function getFilters()
         {
             return array(
-                new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
+                new TwigFilter('price', array($this, 'priceFilter')),
             );
         }
 
@@ -43,14 +47,6 @@ Create a class that extends ``\Twig_Extension`` and fill in the logic::
             return $price;
         }
     }
-
-.. note::
-
-    Prior to Twig 1.26, your extension had to define an additional ``getName()``
-    method that returned a string with the extension's internal name (e.g.
-    ``app.my_extension``). When your extension needs to be compatible with Twig
-    versions before 1.26, include this method which is omitted in the example
-    above.
 
 .. tip::
 

@@ -47,13 +47,18 @@ to a post record thanks to a foreign key constraint.
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 Before diving into the recipe, be sure your database connection parameters are
-correctly setup in the ``app/config/parameters.yml`` file (or wherever your
-database configuration is kept).
+correctly setup in the ``.env`` file.
 
 The first step towards building entity classes from an existing database
 is to ask Doctrine to introspect the database and generate the corresponding
 metadata files. Metadata files describe the entity class to generate based on
 table fields.
+
+.. caution::
+
+    If your application has *no* bundles, then this command will currently fail!
+    The workaround, is to temporarily create a bundle. See `doctrine/doctrine#729`_
+    for details.
 
 .. code-block:: terminal
 
@@ -167,3 +172,4 @@ entity in the ``BlogComment`` entity class.
 The generated entities are now ready to be used. Have fun!
 
 .. _`Doctrine tools documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/tools.html#reverse-engineering
+.. _`doctrine/doctrine#729`: https://github.com/doctrine/DoctrineBundle/issues/729

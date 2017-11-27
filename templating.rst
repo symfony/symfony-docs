@@ -575,7 +575,7 @@ configuration:
             /**
              * @Route("/", name="welcome")
              */
-            public function indexAction()
+            public function index()
             {
                 // ...
             }
@@ -586,11 +586,11 @@ configuration:
         # config/routes.yaml
         welcome:
             path:     /
-            defaults: { _controller: AppBundle:Welcome:index }
+            controller: App\Controller\WelcomeController::index
 
     .. code-block:: xml
 
-        <!-- config/routes.yaml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -598,7 +598,7 @@ configuration:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="welcome" path="/">
-                <default key="_controller">AppBundle:Welcome:index</default>
+                <default key="_controller">App\Controller\WelcomeController::index</default>
             </route>
         </routes>
 
@@ -610,7 +610,7 @@ configuration:
 
         $collection = new RouteCollection();
         $collection->add('welcome', new Route('/', array(
-            '_controller' => 'AppBundle:Welcome:index',
+            '_controller' => 'App\Controller\WelcomeController::index',
         )));
 
         return $collection;
@@ -644,7 +644,7 @@ route:
             /**
              * @Route("/article/{slug}", name="article_show")
              */
-            public function showAction($slug)
+            public function show($slug)
             {
                 // ...
             }
@@ -654,8 +654,8 @@ route:
 
         # config/routes.yaml
         article_show:
-            path:     /article/{slug}
-            defaults: { _controller: AppBundle:Article:show }
+            path:       /article/{slug}
+            controller: App\Controller\ArticleController::show
 
     .. code-block:: xml
 
@@ -667,7 +667,7 @@ route:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="article_show" path="/article/{slug}">
-                <default key="_controller">AppBundle:Article:show</default>
+                <default key="_controller">App\Controller\ArticleController::show</default>
             </route>
         </routes>
 
@@ -679,7 +679,7 @@ route:
 
         $collection = new RouteCollection();
         $collection->add('article_show', new Route('/article/{slug}', array(
-            '_controller' => 'AppBundle:Article:show',
+            '_controller' => 'App\Controller\ArticleController::show',
         )));
 
         return $collection;
@@ -791,10 +791,10 @@ advantage of Symfony's template inheritance.
 .. tip::
 
     This section will teach you the philosophy behind including stylesheet
-    and JavaScript assets in Symfony. Symfony is also compatible with another
-    library, called Assetic, which follows this philosophy but allows you to do
-    much more interesting things with those assets. For more information on
-    using Assetic see :doc:`/frontend/assetic/asset_management`.
+    and JavaScript assets in Symfony. If you are interested in compiling and
+    creating those assets, check out the :doc:`Webpack Encore documentation </frontend>`
+    a tool that seamlessly integrates Webpack and other modern JavaScript tools
+    into Symfony applications.
 
 Start by adding two blocks to your base template that will hold your assets:
 one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
@@ -878,7 +878,7 @@ to add to the parent block's content (and not actually *replace* it), you
 should use the ``parent()`` Twig function to include everything from the ``stylesheets``
 block of the base template.
 
-You can also include assets located in your bundles' ``Resources/public`` folder.
+You can also include assets located in your bundles' ``Resources/public/`` folder.
 You will need to run the ``php bin/console assets:install target [--symlink]``
 command, which copies (or symlinks) files into the correct location. (target
 is by default the "web/" directory of your application).

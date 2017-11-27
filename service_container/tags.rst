@@ -5,10 +5,9 @@
 How to Work with Service Tags
 =============================
 
-In the same way that a blog post on the web might be tagged with things such
-as "Symfony" or "PHP", services configured in your container can also be
-tagged. In the service container, a tag implies that the service is meant
-to be used for a specific purpose. Take the following example:
+**Service tags** are a way to tell Symfony or other third-party bundles that
+your service should be registered in some special way. Take the following
+example:
 
 .. configuration-block::
 
@@ -41,23 +40,17 @@ to be used for a specific purpose. Take the following example:
         // config/services.php
         use App\Twig\AppExtension;
 
-        $container->register('app.twig_extension', AppExtension::class)
+        $container->register(AppExtension::class)
             ->setPublic(false)
             ->addTag('twig.extension');
 
-The ``twig.extension`` tag is a special tag that the TwigBundle uses
-during configuration. By giving the service this ``twig.extension`` tag,
-the bundle knows that the ``AppExtension::class`` service should be registered
-as a Twig extension with Twig. In other words, Twig finds all services tagged
-with ``twig.extension`` and automatically registers them as extensions.
+Services tagged with the ``twig.extension`` tag are collected during the
+initialization of TwigBundle and added to Twig as extensions.
 
-Tags, then, are a way to tell Symfony or other third-party bundles that
-your service should be registered or used in some special way by the bundle.
-
-For a list of all the tags available in the core Symfony Framework, check
-out :doc:`/reference/dic_tags`. Each of these has a different effect on your
-service and many tags require additional arguments (beyond just the ``name``
-parameter).
+Other tags are used to integrate your services into other systems. For a list of
+all the tags available in the core Symfony Framework, check out
+:doc:`/reference/dic_tags`. Each of these has a different effect on your service
+and many tags require additional arguments (beyond just the ``name`` parameter).
 
 **For most users, this is all you need to know**. If you want to go further and
 learn how to create your own custom tags, keep reading.
@@ -129,11 +122,13 @@ Then, define the chain as a service:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             App\Mail\TransportChain: ~
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -147,6 +142,7 @@ Then, define the chain as a service:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Mail\TransportChain;
 
         $container->autowire(TransportChain::class);
@@ -162,6 +158,7 @@ For example, you may add the following transports as services:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             Swift_SmtpTransport:
                 arguments: ['%mailer_host%']
@@ -172,6 +169,7 @@ For example, you may add the following transports as services:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -193,6 +191,7 @@ For example, you may add the following transports as services:
 
     .. code-block:: php
 
+        // config/services.php
         $container->register(\Swift_SmtpTransport::class)
             ->addArgument('%mailer_host%')
             ->addTag('app.mail_transport');
@@ -245,18 +244,21 @@ Register the Pass with the Container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to run the compiler pass when the container is compiled, you have to
-add the compiler pass to the container in the ``build()`` method of your
-bundle::
+add the compiler pass to the container in a :doc:`bundle extension </bundles/extension>`
+or from your kernel::
 
-    // src/AppBundle.php
+    // src/Kernel.php
+    namespace App;
 
-    // ...
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
     use App\DependencyInjection\Compiler\MailTransportPass;
+    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+    // ...
 
-    class AppBundle extends Bundle
+    class Kernel extends BaseKernel
     {
-        public function build(ContainerBuilder $container)
+        // ...
+
+        protected function build(ContainerBuilder $container)
         {
             $container->addCompilerPass(new MailTransportPass());
         }
@@ -310,6 +312,7 @@ To answer this, change the service declaration:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             Swift_SmtpTransport:
                 arguments: ['%mailer_host%']
@@ -322,6 +325,7 @@ To answer this, change the service declaration:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -343,6 +347,7 @@ To answer this, change the service declaration:
 
     .. code-block:: php
 
+        // config/services.php
         $container->register(\Swift_SmtpTransport::class)
             ->addArgument('%mailer_host%')
             ->addTag('app.mail_transport', array('alias' => 'foo'));
@@ -358,8 +363,8 @@ To answer this, change the service declaration:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
-
             # Compact syntax
             Swift_SendmailTransport:
                 class: \Swift_SendmailTransport

@@ -112,45 +112,16 @@ Most of the time you want to use a dedicated database connection to make sure
 not to overwrite data you entered when developing the application and also
 to be able to clear the database before every test.
 
-To do this, you can specify a database configuration which overwrites the default
-configuration:
+To do this, you can override the value of the ``DATABASE_URL`` env var in the
+``phpunit.xml.dist`` to use a diferent database for your tests:
 
-.. configuration-block::
+.. code-block:: xml
 
-    .. code-block:: yaml
-
-        # app/config/config_test.yml
-        doctrine:
-            # ...
-            dbal:
-                host:     localhost
-                dbname:   testdb
-                user:     testdb
-                password: testdb
-
-    .. code-block:: xml
-
-        <!-- app/config/config_test.xml -->
-        <doctrine:config>
-            <doctrine:dbal
-                host="localhost"
-                dbname="testdb"
-                user="testdb"
-                password="testdb"
-            />
-        </doctrine:config>
-
-    .. code-block:: php
-
-        // app/config/config_test.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-                'host'     => 'localhost',
-                'dbname'   => 'testdb',
-                'user'     => 'testdb',
-                'password' => 'testdb',
-            ),
-        ));
-
-Make sure that your database runs on localhost and has the defined database and
-user credentials set up.
+    <?xml version="1.0" charset="utf-8" ?>
+    <phpunit>
+        <php>
+            <!-- the value is the Doctrine connection string in DSN format -->
+            <env name="DATABASE_URL" value="mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME?charset=utf8mb4&serverVersion=5.7" />
+        </php>
+        <!-- ... -->
+    </phpunit>

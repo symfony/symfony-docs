@@ -4,68 +4,27 @@
 How to Use the Serializer
 =========================
 
-Serializing and deserializing to and from objects and different formats (e.g.
-JSON or XML) is a very complex topic. Symfony comes with a
-:doc:`Serializer Component </components/serializer>`, which gives you some
-tools that you can leverage for your solution.
+Symfony provides a serializer to serialize/deserialize to and from objects and
+different formats (e.g. JSON or XML). Before using it, read the
+:doc:`Serializer component docs </components/serializer>` to get familiar with
+its philosophy and the normalizers and encoders terminology.
 
-In fact, before you start, get familiar with the serializer, normalizers
-and encoders by reading the :doc:`Serializer Component </components/serializer>`.
+.. _activating_the_serializer:
 
-Activating the Serializer
--------------------------
+Installation
+------------
 
-The ``serializer`` service is not available by default. To turn it on, activate
-it in your configuration:
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the serializer before using it:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            # ...
-            serializer: { enable_annotations: true }
-            # Alternatively, if you don't want to use annotations
-            #serializer: { enabled: true }
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-            <framework:config>
-                <!-- ... -->
-                <framework:serializer enable-annotations="true" />
-                <!--
-                Alternatively, if you don't want to use annotations
-                <framework:serializer enabled="true" />
-                -->
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'serializer' => array(
-                'enable_annotations' => true,
-                // Alternatively, if you don't want to use annotations
-                //'enabled' => true,
-            ),
-        ));
+    $ composer require serializer
 
 Using the Serializer Service
 ----------------------------
 
-Once enabled, the ``serializer`` service can be injected in any service where
+Once enabled, the serializer service can be injected in any service where
 you need it or it can be used in a controller::
 
     // src/Controller/DefaultController.php
@@ -85,7 +44,7 @@ you need it or it can be used in a controller::
 Adding Normalizers and Encoders
 -------------------------------
 
-Once enabled, the ``serializer`` service will be available in the container
+Once enabled, the serializer service will be available in the container
 and will be loaded with four :ref:`encoders <component-serializer-encoders>`
 (:class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`,
 :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`,
@@ -143,46 +102,11 @@ Here is an example on how to load the
 Using Serialization Groups Annotations
 --------------------------------------
 
-Enable :ref:`serialization groups annotation <component-serializer-attributes-groups>`
-with the following configuration:
+To use annotations, first install the annotations package:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            # ...
-            serializer:
-                enable_annotations: true
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- ... -->
-                <framework:serializer enable-annotations="true" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'serializer' => array(
-                'enable_annotations' => true,
-            ),
-        ));
+    $ composer require annotations
 
 Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
 to your class and choose which groups to use when serializing::
@@ -193,62 +117,21 @@ to your class and choose which groups to use when serializing::
     );
 
 In addition to the ``@Groups`` annotation, the Serializer component also
-supports Yaml or XML files. These files are automatically loaded when being
+supports YAML or XML files. These files are automatically loaded when being
 stored in one of the following locations:
 
-* The ``serialization.yml`` or ``serialization.xml`` file in
+* The ``serialization.yaml`` or ``serialization.xml`` file in
   the ``Resources/config/`` directory of a bundle;
-* All ``*.yml`` and ``*.xml`` files in the ``Resources/config/serialization/``
+* All ``*.yaml`` and ``*.xml`` files in the ``Resources/config/serialization/``
   directory of a bundle.
 
 .. _serializer-enabling-metadata-cache:
 
-Enabling the Metadata Cache
----------------------------
+Configuring the Metadata Cache
+------------------------------
 
-Metadata used by the Serializer component such as groups can be cached to
-enhance application performance. Any service implementing the ``Doctrine\Common\Cache\Cache``
-interface can be used.
-
-A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/prod/framework.yaml
-        framework:
-            # ...
-            serializer:
-                cache: serializer.mapping.cache.apc
-
-    .. code-block:: xml
-
-        <!-- config/packages/prod/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- ... -->
-                <framework:serializer cache="serializer.mapping.cache.apc" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/prod/framework.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'serializer' => array(
-                'cache' => 'serializer.mapping.cache.apc',
-            ),
-        ));
+The metadata for the serializer is automatically cached. To configure the cache,
+configure the ``framework.cache.pools`` key in ``config/packages/framework.yaml``.
 
 Enabling a Name Converter
 -------------------------
@@ -302,9 +185,9 @@ take a look at how this bundle works.
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
-    serializer/*
+    serializer/encoders
+    serializer/custom_encoders
 
 .. _`APCu`: https://github.com/krakjoe/apcu
 .. _`ApiPlatform`: https://github.com/api-platform/core

@@ -158,21 +158,25 @@ As an example, a test could look like this::
 
 .. tip::
 
-    To run your functional tests, the ``WebTestCase`` class bootstraps the
-    kernel of your application. In most cases, this happens automatically.
-    However, if your kernel is in a non-standard directory, you'll need
-    to modify your ``phpunit.xml.dist`` file to set the ``KERNEL_DIR``
-    environment variable to the directory of your kernel:
+    To run your functional tests, the ``WebTestCase`` class needs to know which
+    is the application kernel to bootstrap it. The kernel class is usually
+    defined in the ``KERNEL_CLASS`` environment variable (included in the
+    default ``phpunit.xml.dist`` file provided by Symfony):
 
     .. code-block:: xml
 
         <?xml version="1.0" charset="utf-8" ?>
         <phpunit>
             <php>
-                <server name="KERNEL_DIR" value="/path/to/your/app/" />
+                <!-- the value is the FQCN of the application kernel -->
+                <env name="KERNEL_CLASS" value="App\Kernel" />
             </php>
             <!-- ... -->
         </phpunit>
+
+    If your use case is more complex, you can also override the
+    ``createKernel()`` or ``getKernelClass()`` methods of your functional test,
+    which take precedence over the ``KERNEL_CLASS`` env var.
 
 The ``createClient()`` method returns a client, which is like a browser that
 you'll use to crawl your site::
@@ -877,7 +881,7 @@ configuration adds tests from a custom ``lib/tests`` directory:
                 <directory>lib/tests</directory>
             </testsuite>
         </testsuites>
-        <!-- ... --->
+        <!-- ... -->
     </phpunit>
 
 To include other directories in the code coverage, also edit the ``<filter>``
@@ -898,7 +902,7 @@ section:
                 </exclude>
             </whitelist>
         </filter>
-        <!-- ... --->
+        <!-- ... -->
     </phpunit>
 
 Learn more

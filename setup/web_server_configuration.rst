@@ -15,13 +15,13 @@ When using Apache, you can configure PHP as an
 :ref:`PHP FPM <web-server-apache-fpm>`. FastCGI also is the preferred way
 to use PHP :ref:`with Nginx <web-server-nginx>`.
 
-.. sidebar:: The Web Directory
+.. sidebar:: The public directory
 
-    The web directory is the home of all of your application's public and
+    The public directory is the home of all of your application's public and
     static files, including images, stylesheets and JavaScript files. It is
-    also where the front controllers (``index.php`` and ``index.php``) live.
+    also where the front controller (``index.php``) lives.
 
-    The web directory serves as the document root when configuring your
+    The public directory serves as the document root when configuring your
     web server. In the examples below, the ``public/`` directory will be the
     document root. This directory is ``/var/www/project/public/``.
 
@@ -42,8 +42,8 @@ The **minimum configuration** to get your application running under Apache is:
         ServerName domain.tld
         ServerAlias www.domain.tld
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             AllowOverride All
             Order Allow,Deny
             Allow from All
@@ -73,8 +73,8 @@ and increase web server performance:
         ServerName domain.tld
         ServerAlias www.domain.tld
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             AllowOverride None
             Order Allow,Deny
             Allow from All
@@ -123,7 +123,7 @@ Hence, you need to modify your ``Directory`` permission settings as follows:
 
 .. code-block:: apache
 
-    <Directory /var/www/project/web>
+    <Directory /var/www/project/public>
         Require all granted
         # ...
     </Directory>
@@ -193,8 +193,8 @@ use the ``SetHandler`` directive to pass requests for PHP files to PHP FPM:
         # regular expression must be changed accordingly:
         # ProxyPassMatch ^/path-to-app/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/public/$1
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             # enable the .htaccess rewrites
             AllowOverride All
             Require all granted
@@ -228,8 +228,8 @@ should look something like this:
         Alias /php7-fcgi /usr/lib/cgi-bin/php7-fcgi
         FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -host 127.0.0.1:9000 -pass-header Authorization
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             # enable the .htaccess rewrites
             AllowOverride All
             Order Allow,Deny
@@ -264,31 +264,14 @@ The **minimum configuration** to get your application running under Nginx is:
 
     server {
         server_name domain.tld www.domain.tld;
-        root /var/www/project/web;
+        root /var/www/project/public;
 
         location / {
             # try to serve file directly, fallback to index.php
             try_files $uri /index.php$is_args$args;
         }
-        # DEV
-        # This rule should only be placed on your development environment
-        # In production, don't include this and don't deploy index.php or config.php
-        location ~ ^/(app_dev|config)\.php(/|$) {
-            fastcgi_pass unix:/var/run/php7.1-fpm.sock;
-            fastcgi_split_path_info ^(.+\.php)(/.*)$;
-            include fastcgi_params;
-            # When you are using symlinks to link the document root to the
-            # current version of your application, you should pass the real
-            # application path instead of the path to the symlink to PHP
-            # FPM.
-            # Otherwise, PHP's OPcache may not properly detect changes to
-            # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
-            # for more information).
-            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-            fastcgi_param DOCUMENT_ROOT $realpath_root;
-        }
-        # PROD
-        location ~ ^/app\.php(/|$) {
+
+        location ~ ^/index\.php(/|$) {
             fastcgi_pass unix:/var/run/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
@@ -324,17 +307,16 @@ The **minimum configuration** to get your application running under Nginx is:
 
 .. tip::
 
-    This executes **only** ``index.php``, ``index.php`` and ``config.php`` in
-    the web directory. All other files ending in ".php" will be denied.
+    This executes **only** ``index.php`` in the public directory. All other files
+    ending in ".php" will be denied.
 
-    If you have other PHP files in your web directory that need to be executed,
+    If you have other PHP files in your public directory that need to be executed,
     be sure to include them in the ``location`` block above.
 
 .. caution::
 
     After you deploy to production, make sure that you **cannot** access the ``index.php``
-    or ``config.php`` scripts (i.e. ``http://example.com/index.php`` and ``http://example.com/config.php``).
-    If you *can* access these, be sure to remove the ``DEV`` section from the above configuration.
+    script (i.e. ``http://example.com/index.php``).
 
 .. note::
 
