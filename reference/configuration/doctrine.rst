@@ -498,22 +498,20 @@ One of ``annotation`` (the default value), ``xml``, ``yml``, ``php`` or
 dir
 ...
 
-Absolute path to the mapping or entity files (depending on the driver). The
-default value is ``%kernel.project_dir%/src/Entity/``.
+Absolute path to the mapping or entity files (depending on the driver.
 
 prefix
 ......
 
 A common namespace prefix that all entities of this mapping share. This prefix
 should never conflict with prefixes of other defined mappings otherwise some of
-your entities cannot be found by Doctrine. This option defaults to
-``App\Entity`` because it's recommended to store the entities in ``src/Entity/``.
+your entities cannot be found by Doctrine.
 
 alias
 .....
 
 Doctrine offers a way to alias entity namespaces to simpler, shorter names
-to be used in DQL queries or for Repository access. It's default value is ``App``.
+to be used in DQL queries or for Repository access.
 
 is_bundle
 .........
