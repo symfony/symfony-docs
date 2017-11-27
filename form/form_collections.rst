@@ -510,7 +510,7 @@ you will learn about next!).
 
         .. code-block:: yaml
 
-            # src/Resources/config/doctrine/Task.orm.yaml
+            # src/Resources/config/doctrine/Task.orm.yml
             App\Entity\Task:
                 type: entity
                 # ...

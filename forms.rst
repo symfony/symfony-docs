@@ -338,7 +338,7 @@ object.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yaml
+        # config/validation.yaml
         App\Entity\Task:
             properties:
                 task:
@@ -349,7 +349,7 @@ object.
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/validation.xml -->
+        <!-- config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

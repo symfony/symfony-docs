@@ -236,7 +236,7 @@ Specifically, you need to override the ``file_widget`` block:
 
     .. code-block:: html+php
 
-        <!-- templates/form/file_widget.html.php -->
+        <!-- src/Resources/file_widget.html.php -->
         <?php echo $view['form']->widget($form) ?>
         <?php if (null !== $image_url): ?>
             <img src="<?php echo $view['assets']->getUrl($image_url) ?>"/>
