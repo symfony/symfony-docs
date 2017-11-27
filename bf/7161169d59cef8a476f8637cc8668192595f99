@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-11-18T13:52:32Z
+
+I guess this is duplicated of #8682 ... these days we're updating all docs, so please check the open PR and create an issue saying that you are going to work on some files. Thanks!
+
+---------------------------------------------------------------------------
+
+by michaelperrin at 2017-11-18T13:55:52Z
+
+Thanks @javiereguiluz . That's too bad because I checked but didn't see your PR, my bad.
+
+The cool thing is that @weaverryan proposes the same name for the caching kernel, so it seems its quite a natural one :)
+
+You can close this PR then if you wish!
+
+---------------------------------------------------------------------------
+
+by michaelperrin at 2017-11-22T15:48:27Z
+
+@weaverryan I made the changes you requested :)
