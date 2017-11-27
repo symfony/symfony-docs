@@ -62,7 +62,7 @@ Configuration
 
 The previous command creates an initial config file where you can define the
 default locale of the app and the :ref:`fallback locales <translation-fallback>`
- that will be used if Symfony can't find some translation:
+that will be used if Symfony can't find some translation:
 
 .. configuration-block::
 
