@@ -144,7 +144,8 @@ Next, make sure to :ref:`create the database table <doctrine-creating-the-databa
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:schema:update --force
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
 
 What's this UserInterface?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -445,11 +446,6 @@ interface only requires one method: ``loadUserByUsername($username)``::
                 ->getOneOrNullResult();
         }
     }
-
-.. tip::
-
-    Don't forget to add the repository class to the
-    :doc:`mapping definition of your entity </doctrine/repository>`.
 
 To finish this, just remove the ``property`` key from the user provider in
 ``security.yml``:

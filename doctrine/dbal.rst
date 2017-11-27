@@ -21,67 +21,21 @@ makes it easy to execute queries and perform other database actions.
     Read the official Doctrine `DBAL Documentation`_ to learn all the details
     and capabilities of Doctrine's DBAL library.
 
-To get started, configure the database connection parameters:
+To get started, configure the ``DATABASE_URL`` environment variable in ``.env``:
 
-.. configuration-block::
+.. code-block:: text
 
-    .. code-block:: yaml
+    # .env
 
-        # app/config/config.yml
-        doctrine:
-            dbal:
-                driver:   pdo_mysql
-                dbname:   Symfony
-                user:     root
-                password: null
-                charset:  UTF8
-                server_version: 5.6
+    # customize this line!
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 
-    .. code-block:: xml
+Further things can be configured in ``config/packages/doctrine.yaml``. For the full
+DBAL configuration options, or to learn how to configure multiple connections,
+see :ref:`reference-dbal-configuration`.
 
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine
-                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
-            <doctrine:config>
-                <doctrine:dbal
-                    name="default"
-                    dbname="Symfony"
-                    user="root"
-                    password="null"
-                    charset="UTF8"
-                    server-version="5.6"
-                    driver="pdo_mysql"
-                />
-            </doctrine:config>
-
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-                'driver'    => 'pdo_mysql',
-                'dbname'    => 'Symfony',
-                'user'      => 'root',
-                'password'  => null,
-                'charset'   => 'UTF8',
-                'server_version' => '5.6',
-            ),
-        ));
-
-For full DBAL configuration options, or to learn how to configure multiple
-connections, see :ref:`reference-dbal-configuration`.
-
-You can then access the Doctrine DBAL connection by accessing the
-``database_connection`` service::
+You can then access the Doctrine DBAL connection by autowiring the ``Connection``
+object::
 
     use Doctrine\DBAL\Driver\Connection;
 
@@ -95,6 +49,8 @@ You can then access the Doctrine DBAL connection by accessing the
         }
     }
 
+This will pass you the ``database_connection`` service.
+
 Registering custom Mapping Types
 --------------------------------
 
@@ -106,7 +62,7 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/doctrine.yaml
         doctrine:
             dbal:
                 types:
@@ -115,7 +71,7 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/doctrine.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
@@ -134,7 +90,7 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/doctrine.php
         use App\Type\CustomFirst;
         use App\Type\CustomSecond;
 
@@ -161,7 +117,7 @@ mapping type:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/doctrine.yml
         doctrine:
             dbal:
                mapping_types:
@@ -169,7 +125,7 @@ mapping type:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/doctrine.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
@@ -187,7 +143,7 @@ mapping type:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/doctrine.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                'mapping_types' => array(

@@ -44,7 +44,7 @@ the current date, only when the entity is first persisted (i.e. inserted):
 
     .. code-block:: yaml
 
-        # src/Resources/config/doctrine/Product.orm.yml
+        # config/doctrine/Product.orm.yml
         App\Entity\Product:
             type: entity
             # ...
@@ -53,7 +53,7 @@ the current date, only when the entity is first persisted (i.e. inserted):
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/doctrine/Product.orm.xml -->
+        <!-- config/doctrine/Product.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
