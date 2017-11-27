@@ -254,13 +254,13 @@ To finish this, make sure your authenticator is registered as a service. If you'
 using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that happens automatically.
 
-Finally, configure your ``firewalls`` key in ``security.yml`` to use this authenticator:
+Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authenticator:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -283,7 +283,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -487,8 +487,8 @@ protection, no problem!
 First, :ref:`add the _csrf_token to your login template <csrf-login-template>`.
 
 Then, type-hint ``CsrfTokenManagerInterface`` in your ``__construct()`` method
-(or manually configure the ``security.csrf.token_manager`` service to be passed)
-and add the following logic::
+(or manually configure the ``Symfony\Component\Security\Csrf\CsrfTokenManagerInterface``
+service to be passed) and add the following logic::
 
     // src/Security/ExampleFormAuthenticator.php
     // ...
