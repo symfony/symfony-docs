@@ -215,6 +215,7 @@ other potential things like pushing assets to a CDN (see `Common Post-Deployment
 .. _`Capistrano`: http://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
 .. _`Fabric`: http://www.fabfile.org/
+.. _`Ansistrano`: https://ansistrano.com/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
 .. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
 .. _`Memcached`: http://memcached.org/
