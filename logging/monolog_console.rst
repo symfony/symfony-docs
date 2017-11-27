@@ -35,16 +35,22 @@ current log level and the console verbosity.
 
 The example above could then be rewritten as::
 
+    use Psr\Log\LoggerInterface;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
+    private $logger;
+
+    public function __constructor(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // assuming the Command extends ContainerAwareCommand...
-        $logger = $this->getContainer()->get('logger');
-        $logger->debug('Some info');
-
-        $logger->notice('Some more info');
+        $this->logger->debug('Some info');
+        // ...
+        $this->logger->notice('Some more info');
     }
 
 Depending on the verbosity level that the command is run in and the user's
@@ -53,14 +59,13 @@ the console. If they are displayed, they are timestamped and colored appropriate
 Additionally, error logs are written to the error output (php://stderr).
 There is no need to conditionally handle the verbosity settings anymore.
 
-The Monolog console handler is enabled by default in the Symfony Framework. For
-example, in ``config_dev.yml``:
+The Monolog console handler is enabled by default:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config_dev.yml
+        # config/packages/dev/monolog.yaml
         monolog:
             handlers:
                 # ...
@@ -75,7 +80,7 @@ example, in ``config_dev.yml``:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/dev/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -98,7 +103,7 @@ example, in ``config_dev.yml``:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/dev/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'console' => array(
