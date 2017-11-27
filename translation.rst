@@ -51,8 +51,7 @@ to learn even more. Overall, the process has several steps:
 Installation
 ------------
 
-In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
-install the translator before using it:
+First, run this command to install the translator before using it:
 
 .. code-block:: terminal
 
@@ -61,9 +60,9 @@ install the translator before using it:
 Configuration
 -------------
 
-The previous creates an initial config file where you can define the default
-locale of the app and the :ref:`fallback locales <translation-fallback>` used
-when Symfony can't find some translation:
+The previous command creates an initial config file where you can define the
+default locale of the app and the :ref:`fallback locales <translation-fallback>`
+ that will be used if Symfony can't find some translation:
 
 .. configuration-block::
 
