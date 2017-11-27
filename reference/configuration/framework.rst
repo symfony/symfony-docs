@@ -70,7 +70,6 @@ Configuration
     * `gc_divisor`_
     * `gc_probability`_
     * `gc_maxlifetime`_
-    * `use_strict_mode`_
     * `save_path`_
     * `metadata_update_threshold`_
 * `assets`_
@@ -845,17 +844,6 @@ This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session
 start and depends on `gc_divisor`_ and `gc_probability`_.
 
-use_strict_mode
-...............
-
-**type**: ``boolean`` **default**: ``false``
-
-This specifies whether the session module will use the strict session id mode.
-If this mode is enabled, the module does not accept uninitialized session IDs.
-If an uninitialized session ID is sent from browser, a new session ID is sent
-to browser. Applications are protected from session fixation via session
-adoption with strict mode.
-
 save_path
 .........
 
@@ -902,18 +890,19 @@ setting the value to ``null``:
             ),
         ));
 
+.. _reference-session-metadata-update-threshold:
+
 metadata_update_threshold
 .........................
 
 **type**: ``integer`` **default**: ``0``
 
-This is how many seconds to wait between two session metadata updates. It will
-also prevent the session handler to write if the session has not changed.
+This is how many seconds to wait between updating/writing the session metadata. This
+can be useful if, for some reason, you want to limit the frequency at which the
+session persists.
 
-.. seealso::
-
-    You can see an example of the usage of this in
-    :doc:`/session/limit_metadata_writes`.
+Starting in Symfony 3.4, session data is *only* written when the session data has
+changed. Previously, you needed to set this option to avoid that behavior.
 
 assets
 ~~~~~~
