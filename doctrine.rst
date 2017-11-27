@@ -48,14 +48,14 @@ database for you:
 
     $ php bin/console doctrine:database:create
 
-There are more optiosn in ``config/packages/doctrine.yaml`` that you can configure,
+There are more options in ``config/packages/doctrine.yaml`` that you can configure,
 including your ``server_version`` (e.g. 5.7 if you're using MySQL 5.7), which may
 affect how Doctrine functions.
 
 .. tip::
 
-    There are many other Doctrine commands. To see a full list, run
-    ``php bin/console list doctrine``.
+    There are many other Doctrine commands. Run ``php bin/console list doctrine``
+    to see a full list.
 
 Creating an Entity Class
 ------------------------
@@ -178,7 +178,8 @@ in the database. This is usually done with annotations:
 
 Doctrine supports a wide variety of different field types, each with their own options.
 To see a full list of types and options, see `Doctrine's Mapping Types documentation`_.
-If you want to use ``xml`` instead of annotations, you'll need to configure this in your
+If you want to use XML instead of annotations, add ``type: xml`` and
+``dir: '%kernel.project_dir%/config/doctrine`` to the entity mappings in your
 ``config/packages/doctrine.yaml`` file.
 
 .. caution::
@@ -363,7 +364,7 @@ Try it out!
 
     http://localhost:8000/product
 
-Congratulations! You just created your first row the ``product`` table. To prove it,
+Congratulations! You just created your first row in the ``product`` table. To prove it,
 you can query the database directly:
 
 .. code-block:: terminal
@@ -589,7 +590,7 @@ But what if you need a more complex query? When you generated your entity with
         }
     }
 
-When you fetch your repository (i.e. ``->getRepository(Product::class)``, it is
+When you fetch your repository (i.e. ``->getRepository(Product::class)``), it is
 *actually* an instance of *this* object! This is because of the ``repositoryClass``
 config that was generated at the top of your ``Product`` entity class.
 
@@ -601,7 +602,10 @@ a new method for this to your repository::
     // ...
     class ProductRepository extends ServiceEntityRepository
     {
-        // ...
+        public function __construct(RegistryInterface $registry)
+        {
+            parent::__construct($registry, Product::class);
+        }
 
         /**
          * @param $price

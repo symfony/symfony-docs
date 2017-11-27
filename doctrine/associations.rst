@@ -335,7 +335,7 @@ What's important is the fact that you have easy access to the product's related
 category, but the category data isn't actually retrieved until you ask for
 the category (i.e. it's "lazily loaded").
 
-Because we mapped the optiona ``OneToMany`` side, you can also query in the other
+Because we mapped the optional ``OneToMany`` side, you can also query in the other
 direction::
 
     public function showProductsAction($id)
