@@ -200,7 +200,7 @@
 /cookbook/psr7 /components/psr7
 /cookbook/request/index /request
 /cookbook/request/load_balancer_reverse_proxy /deployment/proxies
-/cookbook/request/mime_type /reference/configuration/framework#formats
+/cookbook/request/mime_type /reference/configuration/framework
 /cookbook/routing/conditions /routing/conditions
 /cookbook/routing/custom_route_loader /routing/custom_route_loader
 /cookbook/routing/debug /routing/debug
@@ -250,7 +250,8 @@
 /cookbook/service_container/shared /service_container/shared
 /cookbook/session/avoid_session_start /session/avoid_session_start
 /cookbook/session/index /session
-/cookbook/session/limit_metadata_writes /session/limit_metadata_writes
+/cookbook/session/limit_metadata_writes /reference/configuration/framework
+/session/limit_metadata_writes /reference/configuration/framework
 /cookbook/session/locale_sticky_session /session/locale_sticky_session
 /cookbook/session/php_bridge /session/php_bridge
 /cookbook/session/proxy_examples /session/proxy_examples
