@@ -17,8 +17,13 @@ templates with PHP more powerful.
 Rendering PHP Templates
 -----------------------
 
-If you want to use the PHP templating engine, first, make sure to enable it in
-your application configuration file:
+If you want to use the PHP templating engine, first install the templating component:
+
+.. code-block:: terminal
+
+    $ composer require templating
+
+Next, enable the php engine:
 
 .. configuration-block::
 
