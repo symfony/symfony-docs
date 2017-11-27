@@ -261,10 +261,6 @@ Symfony provides the ``asset()`` function to deal with them easily:
     <img src="{{ asset('images/logo.png') }}" />
 
 The ``asset()`` function looks for the web assets inside the ``public/`` directory.
-If you store them in another directory, read
-:doc:`this article </frontend/assetic/asset_management>`
-to learn how to manage web assets.
-
 Using the ``asset()`` function, your application is more portable. The reason
 is that you can move the application root directory anywhere under your
 web root directory without changing anything in your template's code.

@@ -7,7 +7,6 @@ Reference Documents
     configuration/framework
     configuration/doctrine
     configuration/security
-    configuration/assetic
     configuration/swiftmailer
     configuration/twig
     configuration/monolog
