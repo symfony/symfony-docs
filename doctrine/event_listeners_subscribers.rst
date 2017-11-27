@@ -102,14 +102,14 @@ a ``postPersist()`` method, which will be called when the event is dispatched::
     {
         public function postPersist(LifecycleEventArgs $args)
         {
-            $object = $args->getObject();
+            $entity = $args->getEntity();
 
             // only act on some "Product" entity
-            if (!$object instanceof Product) {
+            if (!$entity instanceof Product) {
                 return;
             }
 
-            $objectManager = $args->getObjectManager();
+            $entityManager = $args->getEntityManager();
             // ... do something with the Product
         }
     }
@@ -166,7 +166,7 @@ interface and have an event method for each event it subscribes to::
 
         public function index(LifecycleEventArgs $args)
         {
-            $entity = $args->getObject();
+            $entity = $args->getEntity();
 
             // perhaps you only want to act on some "Product" entity
             if ($entity instanceof Product) {
@@ -207,8 +207,7 @@ to the tag like so:
     .. code-block:: yaml
 
         services:
-            my.listener:
-                class: App\EventListener\SearchIndexer
+            App\EventListener\SearchIndexer:
                 tags:
                     - { name: doctrine.event_listener, event: postPersist, lazy: true }
 
@@ -219,7 +218,7 @@ to the tag like so:
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
 
             <services>
-                <service id="my.listener" class="App\EventListener\SearchIndexer">
+                <service id="App\EventListener\SearchIndexer" autowire="true">
                     <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
                 </service>
             </services>
@@ -230,7 +229,7 @@ to the tag like so:
         use App\EventListener\SearchIndexer;
 
         $container
-            ->register('my.listener', SearchIndexer::class)
+            ->autowire(SearchIndexer::class)
             ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'lazy' => 'true'))
         ;
 

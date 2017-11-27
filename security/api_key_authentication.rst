@@ -211,7 +211,7 @@ The ``$userProvider`` might look something like this::
 Next, make sure this class is registered as a service. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that happens automatically. A little later, you'll reference this service in
-your :ref:`security.yml configuration <security-api-key-config>`.
+your :ref:`security.yaml configuration <security-api-key-config>`.
 
 .. note::
 
@@ -292,7 +292,7 @@ and ``provider`` keys:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -310,7 +310,7 @@ and ``provider`` keys:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -364,7 +364,7 @@ If you have defined ``access_control``, make sure to add a new entry:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -373,7 +373,7 @@ If you have defined ``access_control``, make sure to add a new entry:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -423,7 +423,7 @@ configuration or set it to ``false``:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -435,7 +435,7 @@ configuration or set it to ``false``:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

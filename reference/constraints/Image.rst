@@ -100,7 +100,7 @@ that it is between a certain size, add the following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 headshot:
@@ -180,7 +180,7 @@ following code:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 headshot:

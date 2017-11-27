@@ -66,7 +66,6 @@ Configuration
     * `gc_divisor`_
     * `gc_probability`_
     * `gc_maxlifetime`_
-    * `use_strict_mode`_
     * `save_path`_
     * `metadata_update_threshold`_
 * `assets`_
@@ -174,17 +173,17 @@ named ``kernel.http_method_override``.
 
 .. caution::
 
-    If you're using the :ref:`AppCache Reverse Proxy <symfony2-reverse-proxy>`
+    If you're using the :ref:`HttpCache Reverse Proxy <symfony2-reverse-proxy>`
     with this option, the kernel will ignore the ``_method`` parameter,
     which could lead to errors.
 
     To fix this, invoke the ``enableHttpMethodParameterOverride()`` method
     before creating the ``Request`` object::
 
-        // web/app.php
+        // public/index.php
 
         // ...
-        $kernel = new AppCache($kernel);
+        $kernel = new CacheKernel($kernel);
 
         Request::enableHttpMethodParameterOverride(); // <-- add this line
         $request = Request::createFromGlobals();
@@ -221,13 +220,13 @@ doubling them to prevent Symfony from interpreting them as container parameters)
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             ide: 'myide://open?url=file://%%f&line=%%l'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -241,7 +240,7 @@ doubling them to prevent Symfony from interpreting them as container parameters)
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'ide' => 'myide://open?url=file://%%f&line=%%l',
         ));
@@ -284,7 +283,7 @@ test
 If this configuration setting is present (and not ``false``), then the services
 related to testing your application (e.g. ``test.client``) are loaded. This
 setting should be present in your ``test`` environment (usually via
-``app/config/config_test.yml``).
+``config/packages/test/framework.yaml``).
 
 .. seealso::
 
@@ -335,13 +334,13 @@ respond and the user will receive a 400 response.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             trusted_hosts:  ['example.com', 'example.org']
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -359,7 +358,7 @@ respond and the user will receive a 400 response.
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'trusted_hosts' => array('example.com', 'example.org'),
         ));
@@ -370,7 +369,7 @@ which make it easier to respond to any subdomain.
 In addition, you can also set the trusted hosts in the front controller
 using the ``Request::setTrustedHosts()`` method::
 
-    // web/app.php
+    // public/index.php
     Request::setTrustedHosts(array('^(.+\.)?example.com$', '^(.+\.)?example.org$'));
 
 The default value for this option is an empty array, meaning that the application
@@ -451,13 +450,13 @@ You can also set ``esi`` to ``true`` to enable it:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             esi: true
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -473,7 +472,7 @@ You can also set ``esi`` to ``true`` to enable it:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'esi' => true,
         ));
@@ -593,7 +592,7 @@ To configure a ``jsonp`` format:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             request:
                 formats:
@@ -601,7 +600,7 @@ To configure a ``jsonp`` format:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -623,7 +622,7 @@ To configure a ``jsonp`` format:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'request' => array(
                 'formats' => array(
@@ -798,17 +797,6 @@ This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session
 start and depends on `gc_divisor`_ and `gc_probability`_.
 
-use_strict_mode
-...............
-
-**type**: ``boolean`` **default**: ``false``
-
-This specifies whether the session module will use the strict session id mode.
-If this mode is enabled, the module does not accept uninitialized session IDs.
-If an uninitialized session ID is sent from browser, a new session ID is sent
-to browser. Applications are protected from session fixation via session
-adoption with strict mode.
-
 save_path
 .........
 
@@ -825,14 +813,14 @@ setting the value to ``null``:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             session:
                 save_path: ~
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -848,25 +836,26 @@ setting the value to ``null``:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'session' => array(
                 'save_path' => null,
             ),
         ));
 
+.. _reference-session-metadata-update-threshold:
+
 metadata_update_threshold
 .........................
 
 **type**: ``integer`` **default**: ``0``
 
-This is how many seconds to wait between two session metadata updates. It will
-also prevent the session handler to write if the session has not changed.
+This is how many seconds to wait between updating/writing the session metadata. This
+can be useful if, for some reason, you want to limit the frequency at which the
+session persists.
 
-.. seealso::
-
-    You can see an example of the usage of this in
-    :doc:`/session/limit_metadata_writes`.
+Starting in Symfony 3.4, session data is *only* written when the session data has
+changed. Previously, you needed to set this option to avoid that behavior.
 
 assets
 ~~~~~~
@@ -884,7 +873,7 @@ This option allows you to define a base path to be used for assets:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             assets:
@@ -892,7 +881,7 @@ This option allows you to define a base path to be used for assets:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -908,7 +897,7 @@ This option allows you to define a base path to be used for assets:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'assets' => array(
@@ -932,7 +921,7 @@ collection each time it generates an asset's path:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             assets:
@@ -941,7 +930,7 @@ collection each time it generates an asset's path:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -957,7 +946,7 @@ collection each time it generates an asset's path:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'assets' => array(
@@ -976,7 +965,7 @@ You can group assets into packages, to specify different base URLs for them:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             assets:
@@ -986,7 +975,7 @@ You can group assets into packages, to specify different base URLs for them:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1006,7 +995,7 @@ You can group assets into packages, to specify different base URLs for them:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'assets' => array(
@@ -1071,7 +1060,7 @@ Now, activate the ``version`` option:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             assets:
@@ -1079,7 +1068,7 @@ Now, activate the ``version`` option:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1095,7 +1084,7 @@ Now, activate the ``version`` option:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'assets' => array(
@@ -1176,7 +1165,7 @@ individually for each asset package:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
        framework:
             assets:
                 # this strategy is applied to every asset (including packages)
@@ -1194,7 +1183,7 @@ individually for each asset package:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1222,7 +1211,7 @@ individually for each asset package:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'assets' => array(
                 'version_strategy' => 'app.asset.my_versioning_strategy',
@@ -1274,7 +1263,7 @@ package:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
        framework:
             assets:
                 # this manifest is applied to every asset (including packages)
@@ -1289,7 +1278,7 @@ package:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1314,7 +1303,7 @@ package:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'assets' => array(
                 // this manifest is applied to every asset (including packages)
@@ -1372,23 +1361,23 @@ A list of all resources for form theming in PHP. This setting is not required
 if you're using the Twig format for your templates, in that case refer to
 :ref:`the form article <forms-theming-twig>`.
 
-Assume you have custom global form themes in
-``src/WebsiteBundle/Resources/views/Form``, you can configure this like:
+Assume you have custom global form themes in ``templates/form_themes/``, you can
+configure this like:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             templating:
                 form:
                     resources:
-                        - 'WebsiteBundle:Form'
+                        - 'form_themes'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1398,28 +1387,22 @@ Assume you have custom global form themes in
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-
                 <framework:templating>
-
                     <framework:form>
-
-                        <framework:resource>WebsiteBundle:Form</framework:resource>
-
+                        <framework:resource>form_themes</framework:resource>
                     </framework:form>
-
                 </framework:templating>
-
             </framework:config>
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'templating' => array(
                 'form' => array(
                     'resources' => array(
-                        'WebsiteBundle:Form'
+                        'form_themes'
                     ),
                 ),
             ),

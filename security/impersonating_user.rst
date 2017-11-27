@@ -23,7 +23,7 @@ firewall listener:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -34,7 +34,7 @@ firewall listener:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -105,16 +105,29 @@ In some cases you may need to get the object that represents the impersonator
 user rather than the impersonated user. Use the following snippet to iterate
 over the user's roles until you find one that a ``SwitchUserRole`` object::
 
+    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
     use Symfony\Component\Security\Core\Role\SwitchUserRole;
 
-    $authChecker = $this->get('security.authorization_checker');
-    $tokenStorage = $this->get('security.token_storage');
+    private $authChecker;
+    private $tokenStorage;
 
-    if ($authChecker->isGranted('ROLE_PREVIOUS_ADMIN')) {
-        foreach ($tokenStorage->getToken()->getRoles() as $role) {
-            if ($role instanceof SwitchUserRole) {
-                $impersonatorUser = $role->getSource()->getUser();
-                break;
+    public function __construct(AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage)
+    {
+        $this->authChecker = $authChecker;
+        $this->tokenStorage = $tokenStorage;
+    }
+
+    public function someMethod()
+    {
+        // ...
+
+        if ($authChecker->isGranted('ROLE_PREVIOUS_ADMIN')) {
+            foreach ($tokenStorage->getToken()->getRoles() as $role) {
+                if ($role instanceof SwitchUserRole) {
+                    $impersonatorUser = $role->getSource()->getUser();
+                    break;
+                }
             }
         }
     }
@@ -129,7 +142,7 @@ setting:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -140,7 +153,7 @@ setting:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

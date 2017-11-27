@@ -13,7 +13,7 @@ In Symfony, you can register your custom DQL functions as follows:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/doctrine.yaml
         doctrine:
             orm:
                 # ...
@@ -28,7 +28,7 @@ In Symfony, you can register your custom DQL functions as follows:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/doctrine.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
@@ -52,7 +52,7 @@ In Symfony, you can register your custom DQL functions as follows:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/doctrine.php
         use App\DQL\StringFunction;
         use App\DQL\SecondStringFunction;
         use App\DQL\NumericFunction;

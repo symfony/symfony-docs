@@ -64,13 +64,13 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/debug.yaml
         debug:
            dump_destination: php://stderr
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/debug.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/debug"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -84,7 +84,7 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/debug.php
         $container->loadFromExtension('debug', array(
            'dump_destination' => 'php://stderr',
         ));

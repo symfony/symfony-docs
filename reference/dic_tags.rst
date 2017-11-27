@@ -509,7 +509,7 @@ is generated dynamically.
 To register your own cache warmer, first create a service that implements
 the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` interface::
 
-    // src/Acme/MainBundle/Cache/MyCustomWarmer.php
+    // src/Cache/MyCustomWarmer.php
     namespace App\Cache;
 
     use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;

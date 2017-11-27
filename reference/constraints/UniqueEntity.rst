@@ -25,10 +25,9 @@ using an email address that already exists in the system.
 Basic Usage
 -----------
 
-Suppose you have an AppBundle bundle with a ``User`` entity that has
-an ``email`` field. You can use the ``UniqueEntity`` constraint to guarantee
-that the ``email`` field remains unique between all of the constraints in
-your user table:
+Suppose you have a ``User`` entity that has an ``email`` field. You can use the
+``UniqueEntity`` constraint to guarantee that the ``email`` field remains unique
+between all of the constraints in your user table:
 
 .. configuration-block::
 
@@ -62,7 +61,7 @@ your user table:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             constraints:
                 - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
@@ -216,7 +215,7 @@ Consider this example:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Service:
             constraints:
                 - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:

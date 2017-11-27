@@ -16,4 +16,4 @@ console command:
     $ php bin/console lint:twig templates/article/recent_list.html.twig
 
     # or by directory:
-    $ php bin/console lint:twig app/Resources/views
+    $ php bin/console lint:twig templates/

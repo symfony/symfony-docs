@@ -18,7 +18,7 @@ First, enable form login under your firewall:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -31,7 +31,7 @@ First, enable form login under your firewall:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -99,7 +99,7 @@ configuration (``login``):
             /**
              * @Route("/login", name="login")
              */
-            public function loginAction(Request $request)
+            public function login(Request $request)
             {
             }
         }
@@ -108,8 +108,8 @@ configuration (``login``):
 
         # config/routes.yaml
         login:
-            path:     /login
-            defaults: { _controller: AppBundle:Security:login }
+            path:       /login
+            controller: App\Controller\SecurityController::login
 
     .. code-block:: xml
 
@@ -121,29 +121,30 @@ configuration (``login``):
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="login" path="/login">
-                <default key="_controller">AppBundle:Security:login</default>
+                <default key="_controller">App\Controller\SecurityController::login</default>
             </route>
         </routes>
 
     ..  code-block:: php
 
         // config/routes.php
+        use App\Controller\SecurityController;
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('login', new Route('/login', array(
-            '_controller' => 'AppBundle:Security:login',
+            '_controller' => array(SecurityController::class, 'login'),
         )));
 
         return $collection;
 
-Great! Next, add the logic to ``loginAction()`` that displays the login form::
+Great! Next, add the logic to ``login()`` that displays the login form::
 
     // src/Controller/SecurityController.php
     use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-    public function loginAction(Request $request, AuthenticationUtils $authUtils)
+    public function login(Request $request, AuthenticationUtils $authUtils)
     {
         // get the login error if there is one
         $error = $authUtils->getLastAuthenticationError();
@@ -230,7 +231,7 @@ Finally, create the template:
 The form can look like anything, but it usually follows some conventions:
 
 * The ``<form>`` element sends a ``POST`` request to the ``login`` route, since
-  that's what you configured under the ``form_login`` key in ``security.yml``;
+  that's what you configured under the ``form_login`` key in ``security.yaml``;
 * The username field has the name ``_username`` and the password field has the
   name ``_password``.
 
@@ -300,7 +301,7 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
 
         # ...
         access_control:
@@ -308,7 +309,7 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -338,7 +339,7 @@ fixes the problem:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
 
         # ...
         access_control:
@@ -347,7 +348,7 @@ fixes the problem:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

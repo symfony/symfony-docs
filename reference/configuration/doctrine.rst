@@ -12,7 +12,7 @@ Full Default Configuration
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/doctrine.yaml
         doctrine:
             dbal:
                 default_connection:   default
@@ -20,9 +20,9 @@ Full Default Configuration
                     # A collection of custom types
                     # Example
                     some_custom_type:
-                        class:                Acme\HelloBundle\MyCustomType
+                        class:                App\DBAL\MyCustomType
                         commented:            true
-                
+
 
                 connections:
                     # A collection of different named connections (e.g. default, conn2, etc)
@@ -75,11 +75,11 @@ Full Default Configuration
                         mapping_types:
                             # an array of mapping types
                             name:                 []
-                            
+
                         # If defined, only the tables whose names match this regular expression are managed
                         # by the schema tool (in this example, any table name not starting with `wp_`)
                         #schema_filter:               '/^(?!wp_)/'
-                        
+
                         slaves:
 
                             # a collection of named slave connections (e.g. slave1, slave2)
@@ -163,17 +163,17 @@ Full Default Configuration
                             # a collection of string functions
                             string_functions:
                                 # example
-                                # test_string: Acme\HelloBundle\DQL\StringFunction
+                                # test_string: App\DQL\StringFunction
 
                             # a collection of numeric functions
                             numeric_functions:
                                 # example
-                                # test_numeric: Acme\HelloBundle\DQL\NumericFunction
+                                # test_numeric: App\DQL\NumericFunction
 
                             # a collection of datetime functions
                             datetime_functions:
                                 # example
-                                # test_datetime: Acme\HelloBundle\DQL\DatetimeFunction
+                                # test_datetime: App\DQL\DatetimeFunction
 
                         # Register SQL Filters in the entity manager
                         filters:
@@ -184,7 +184,7 @@ Full Default Configuration
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/doctrine.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -204,14 +204,14 @@ Full Default Configuration
                         user="user"
                         password="secret"
                         driver="pdo_mysql"
-                        driver-class="MyNamespace\MyDriverImpl"
+                        driver-class="App\DBAL\MyDatabaseDriver"
                         path="%kernel.project_dir%/var/data/data.sqlite"
                         memory="true"
                         unix-socket="/tmp/mysql.sock"
-                        wrapper-class="MyDoctrineDbalConnectionWrapper"
+                        wrapper-class="App\DBAL\MyConnectionWrapper"
                         charset="UTF8"
                         logging="%kernel.debug%"
-                        platform-service="MyOwnDatabasePlatformService"
+                        platform-service="App\DBAL\MyDatabasePlatformService"
                         server-version="5.6"
                         keep-slave="false"
                     >
@@ -219,7 +219,7 @@ Full Default Configuration
                         <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
                     </doctrine:connection>
                     <doctrine:connection name="conn1" />
-                    <doctrine:type name="custom">Acme\HelloBundle\MyCustomType</doctrine:type>
+                    <doctrine:type name="custom">App\DBAL\MyCustomType</doctrine:type>
                 </doctrine:dbal>
 
                 <doctrine:orm
@@ -247,15 +247,15 @@ Full Default Configuration
 
                         <doctrine:dql>
                             <doctrine:string-function name="test_string">
-                                Acme\HelloBundle\DQL\StringFunction
+                                App\DQL\StringFunction
                             </doctrine:string-function>
 
                             <doctrine:numeric-function name="test_numeric">
-                                Acme\HelloBundle\DQL\NumericFunction
+                                App\DQL\NumericFunction
                             </doctrine:numeric-function>
 
                             <doctrine:datetime-function name="test_datetime">
-                                Acme\HelloBundle\DQL\DatetimeFunction
+                                App\DQL\DatetimeFunction
                             </doctrine:datetime-function>
                         </doctrine:dql>
                     </doctrine:entity-manager>
@@ -301,7 +301,7 @@ The following block shows all possible configuration keys:
                 password:             secret
                 driver:               pdo_mysql
                 # the DBAL driverClass option
-                driver_class:         MyNamespace\MyDriverImpl
+                driver_class:         App\DBAL\MyDatabaseDriver
                 # the DBAL driverOptions option
                 options:
                     foo: bar
@@ -309,15 +309,15 @@ The following block shows all possible configuration keys:
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
                 # the DBAL wrapperClass option
-                wrapper_class:        MyDoctrineDbalConnectionWrapper
+                wrapper_class:        App\DBAL\MyConnectionWrapper
                 charset:              UTF8
                 logging:              '%kernel.debug%'
-                platform_service:     MyOwnDatabasePlatformService
+                platform_service:     App\DBAL\MyDatabasePlatformService
                 server_version:       5.6
                 mapping_types:
                     enum: string
                 types:
-                    custom: Acme\HelloBundle\MyCustomType
+                    custom: App\DBAL\MyCustomType
 
     .. code-block:: xml
 
@@ -339,19 +339,19 @@ The following block shows all possible configuration keys:
                     user="user"
                     password="secret"
                     driver="pdo_mysql"
-                    driver-class="MyNamespace\MyDriverImpl"
+                    driver-class="App\DBAL\MyDatabaseDriver"
                     path="%kernel.project_dir%/var/data/data.sqlite"
                     memory="true"
                     unix-socket="/tmp/mysql.sock"
-                    wrapper-class="MyDoctrineDbalConnectionWrapper"
+                    wrapper-class="App\DBAL\MyConnectionWrapper"
                     charset="UTF8"
                     logging="%kernel.debug%"
-                    platform-service="MyOwnDatabasePlatformService"
+                    platform-service="App\DBAL\MyDatabasePlatformService"
                     server-version="5.6">
 
                     <doctrine:option key="foo">bar</doctrine:option>
                     <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
-                    <doctrine:type name="custom">Acme\HelloBundle\MyCustomType</doctrine:type>
+                    <doctrine:type name="custom">App\DBAL\MyCustomType</doctrine:type>
                 </doctrine:dbal>
             </doctrine:config>
         </container>
@@ -480,7 +480,7 @@ The following example shows an overview of the caching configurations:
             # the 'service' type requires to define the 'id' option too
             query_cache_driver:
                 type: service
-                id: my_doctrine_common_cache_service
+                id: App\ORM\MyCacheService
 
 Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
@@ -492,42 +492,33 @@ you can control. The following configuration options exist for a mapping:
 type
 ....
 
-One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``. This
-specifies which type of metadata type your mapping uses.
+One of ``annotation`` (the default value), ``xml``, ``yml``, ``php`` or
+``staticphp``. This specifies which type of metadata type your mapping uses.
 
 dir
 ...
 
-Path to the mapping or entity files (depending on the driver). If this path
-is relative it is assumed to be relative to the bundle root. This only works
-if the name of your mapping is a bundle name. If you want to use this option
-to specify absolute paths you should prefix the path with the kernel parameters
-that exist in the DIC (for example ``%kernel.project_dir%``).
+Absolute path to the mapping or entity files (depending on the driver.
 
 prefix
 ......
 
-A common namespace prefix that all entities of this mapping share. This
-prefix should never conflict with prefixes of other defined mappings otherwise
-some of your entities cannot be found by Doctrine. This option defaults
-to the bundle namespace + ``Entity``, for example for an application bundle
-called AcmeHelloBundle prefix would be ``Acme\HelloBundle\Entity``.
+A common namespace prefix that all entities of this mapping share. This prefix
+should never conflict with prefixes of other defined mappings otherwise some of
+your entities cannot be found by Doctrine.
 
 alias
 .....
 
 Doctrine offers a way to alias entity namespaces to simpler, shorter names
-to be used in DQL queries or for Repository access. When using a bundle
-the alias defaults to the bundle name.
+to be used in DQL queries or for Repository access.
 
 is_bundle
 .........
 
-This option is a derived value from ``dir`` and by default is set to ``true``
-if dir is relative proved by a ``file_exists()`` check that returns ``false``.
-It is ``false`` if the existence check returns ``true``. In this case an
-absolute path was specified and the metadata files are most likely in a
-directory outside of a bundle.
+This option is ``false`` by default and it's considered a legacy option. It was
+only useful in previous Symfony versions, when it was recommended to use bundles
+to organize the application code.
 
 Custom Mapping Entities in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -593,9 +584,7 @@ directory instead:
 Mapping Entities Outside of a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also create new mappings, for example outside of the Symfony folder.
-
-For example, the following looks for entity classes in the ``App\Entity``
+For example, the following looks for entity classes in the ``Entity``
 namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 (so you can say things like ``App:Post``):
 
@@ -662,7 +651,7 @@ If the ``type`` on the bundle configuration isn't set, the DoctrineBundle
 will try to detect the correct mapping configuration format for the bundle.
 
 DoctrineBundle will look for files matching ``*.orm.[FORMAT]`` (e.g.
-``Post.orm.yml``) in the configured ``dir`` of your mapping (if you're mapping
+``Post.orm.yaml``) in the configured ``dir`` of your mapping (if you're mapping
 a bundle, then ``dir`` is relative to the bundle's directory).
 
 The bundle looks for (in this order) XML, YAML and PHP files.

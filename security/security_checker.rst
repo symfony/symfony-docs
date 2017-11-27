@@ -5,9 +5,17 @@ How to Check for Known Security Vulnerabilities in Your Dependencies
 ====================================================================
 
 When using lots of dependencies in your Symfony projects, some of them may
-contain security vulnerabilities. That's why Symfony includes a command called
+contain security vulnerabilities. That's why Symfony provides a command called
 ``security:check`` that checks your ``composer.lock`` file to find any known
-security vulnerability in your installed dependencies:
+security vulnerability in your installed dependencies.
+
+First, install the security checker in your project:
+
+.. code-block:: terminal
+
+    $ composer require security-checker
+
+Then run this command:
 
 .. code-block:: terminal
 
@@ -24,10 +32,4 @@ FriendsOfPHP organization.
     any of your dependencies is affected by a known security vulnerability.
     Therefore, you can easily integrate it in your build process.
 
-.. note::
-
-    To enable the ``security:check`` command, make sure the
-    `SensioDistributionBundle`_ is installed and enabled in your application.
-
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
-.. _`SensioDistributionBundle`: https://github.com/sensiolabs/SensioDistributionBundle

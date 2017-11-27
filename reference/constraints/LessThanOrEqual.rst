@@ -52,7 +52,7 @@ The following constraints ensure that:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Person:
             properties:
                 siblings:
@@ -129,7 +129,7 @@ that a date must be today or in the past like this:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Person:
             properties:
                 age:
@@ -188,7 +188,7 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Person:
             properties:
                 age:
@@ -247,7 +247,7 @@ can check that a person must be at least 18 years old like this:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Person:
             properties:
                 age:
