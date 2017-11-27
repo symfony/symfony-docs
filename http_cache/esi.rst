@@ -62,14 +62,14 @@ First, to use ESI, be sure to enable it in your application configuration:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             esi: { enabled: true }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/symfony"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -87,7 +87,7 @@ First, to use ESI, be sure to enable it in your application configuration:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'esi' => array('enabled' => true),
@@ -104,7 +104,7 @@ independent of the rest of the page.
     // ...
     class DefaultController extends Controller
     {
-        public function aboutAction()
+        public function about()
         {
             $response = $this->render('static/about.html.twig');
             // set the shared max age - which also marks the response as public
@@ -195,7 +195,7 @@ of the master page.
     // ...
     class NewsController extends Controller
     {
-        public function latestAction($maxPerPage)
+        public function latest($maxPerPage)
         {
             // ...
             $response->setSharedMaxAge(60);
@@ -220,14 +220,14 @@ that must be enabled in your configuration:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             fragments: { path: /_fragment }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -245,7 +245,7 @@ that must be enabled in your configuration:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'fragments' => array('path' => '/_fragment'),

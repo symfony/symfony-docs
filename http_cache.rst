@@ -125,6 +125,8 @@ finely tuned via a set of options you can set by overriding the
 method::
 
     // src/CacheKernel.php
+    namespace App;
+
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
     class CacheKernel extends HttpCache
@@ -141,10 +143,9 @@ method::
 For a full list of the options and their meaning, see the
 :method:`HttpCache::__construct() documentation <Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache::__construct>`.
 
-When you're in debug mode (either because your booting a ``debug`` kernel, like
-in ``index.php`` *or* you manually set the ``debug`` option to true), Symfony
-automatically adds an ``X-Symfony-Cache`` header to the response. Use this to get
-information about cache hits and misses.
+When you're in debug mode (the second argument of ``Kernel`` constructor in the
+front controller is ``true``), Symfony automatically adds an ``X-Symfony-Cache``
+header to the response. Use this to get information about cache hits and misses.
 
 .. _http-cache-symfony-versus-varnish:
 
@@ -218,7 +219,7 @@ The *easiest* way to cache a response is by caching it for a specific amount of 
     use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    public function indexAction()
+    public function index()
     {
         // somehow create a Response object, like by rendering a template
         $response = $this->render('blog/index.html.twig', []);
