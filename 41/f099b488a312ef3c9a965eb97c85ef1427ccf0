@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-21T20:40:29Z
+
+That's a great idea! Both methods do the same thing, but this is indeed more expressive to me.
+
+Further up, we also use `getObjectManager()`. Could you change that `getEntityManager()`?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-21T20:40:34Z
+
+Status: Needs work
+
+---------------------------------------------------------------------------
+
+by hamzahanafi11 at 2017-11-22T00:43:09Z
+
+@weaverryan changes done, I also edited the one inside the function named `index()`
+I think these changes must be done for all symfony versions not only `symfony:3.3`
