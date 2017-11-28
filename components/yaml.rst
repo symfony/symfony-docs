@@ -128,7 +128,7 @@ contents of the given file path and converts them to a PHP value::
 
     use Symfony\Component\Yaml\Yaml;
 
-    $value = Yaml::parseFile('/path/to/file.yml');
+    $value = Yaml::parseFile('/path/to/file.yaml');
 
 If an error occurs during parsing, the parser throws a ``ParseException`` exception.
 
@@ -151,7 +151,7 @@ array to its YAML representation:
 
     $yaml = Yaml::dump($array);
 
-    file_put_contents('/path/to/file.yml', $yaml);
+    file_put_contents('/path/to/file.yaml', $yaml);
 
 If an error occurs during the dump, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\DumpException` exception.
@@ -356,20 +356,20 @@ Then, execute the script for validating contents:
 .. code-block:: terminal
 
     # validates a single file
-    $ php lint.php path/to/file.yml
+    $ php lint.php path/to/file.yaml
 
     # or all the files in a directory
     $ php lint.php path/to/directory
 
     # or contents passed to STDIN
-    $ cat path/to/file.yml | php lint.php
+    $ cat path/to/file.yaml | php lint.php
 
 The result is written to STDOUT and uses a plain text format by default.
 Add the ``--format`` option to get the output in JSON format:
 
 .. code-block:: terminal
 
-    $ php lint.php path/to/file.yml --format json
+    $ php lint.php path/to/file.yaml --format json
 
 .. tip::
 

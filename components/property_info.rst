@@ -355,7 +355,7 @@ It can also provide return and scalar types for PHP 7+.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             property_info:
                 enabled: true

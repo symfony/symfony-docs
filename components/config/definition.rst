@@ -804,10 +804,10 @@ Otherwise the result is a clean array of configuration values::
     use Acme\DatabaseConfiguration;
 
     $config1 = Yaml::parse(
-        file_get_contents(__DIR__.'/src/Matthias/config/config.yml')
+        file_get_contents(__DIR__.'/src/Matthias/config/config.yaml')
     );
     $config2 = Yaml::parse(
-        file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yml')
+        file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yaml')
     );
 
     $configs = array($config1, $config2);

@@ -314,14 +314,5 @@ Whenever something wrong happens, an exception implementing
     An :class:`Symfony\\Component\\Filesystem\\Exception\\IOException` is
     thrown if directory creation fails.
 
-Learn More
-----------
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    filesystem/*
-
 .. _`Packagist`: https://packagist.org/packages/symfony/filesystem
 .. _`umask`: https://en.wikipedia.org/wiki/Umask
