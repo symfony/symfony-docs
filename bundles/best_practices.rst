@@ -180,14 +180,17 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
     cache:
         directories:
             - $HOME/.composer/cache/files
+            - $HOME/symfony-bridge/.phpunit
+
     env:
         global:
             - TEST_COMMAND="./vendor/bin/simple-phpunit"
+            - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
 
     matrix:
         fast_finish: true
         include:
-              # Minimum supported PHP and Symfony version
+              # Minimum supported Symfony version
             - php: 7.2
               env: DEPENDENCIES="minimum" COVERAGE=true TEST_COMMAND="phpunit --coverage-text" SYMFONY_DEPRECATIONS_HELPER="weak"
 
@@ -196,7 +199,8 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
             - php: 7.1
             - php: 7.2
 
-              # Test LTS versions
+              # Test LTS versions. This makes sure we do not use symfony packages with version greater
+              # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
             - php: 7.2
               env: DEPENDENCIES="symfony/lts:^2"
             - php: 7.2
@@ -222,6 +226,7 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
         # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
         - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
         - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
+        - vendor/bin/simple-phpunit install
 
     script:
         - composer validate --strict --no-check-lock
