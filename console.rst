@@ -163,11 +163,11 @@ Getting Services from the Service Container
 To actually create a new user, the command has to access to some
 :doc:`services </service_container>`. Since your command is already registered
 as a service, you can use normal dependency injection. Imagine you have a
-``AppBundle\Service\UserManager`` service that you want to access::
+``App\Service\UserManager`` service that you want to access::
 
     // ...
     use Symfony\Component\Console\Command\Command;
-    use AppBundle\Service\UserManager;
+    use App\Service\UserManager;
 
     class CreateUserCommand extends Command
     {

@@ -86,8 +86,8 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
-
             App\Command\SunshineCommand:
                 tags:
                     - { name: 'console.command', command: 'app:sunshine' }
@@ -95,24 +95,23 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-
                 <service id="App\Command\SunshineCommand">
                      <tag name="console.command" command="app:sunshine" />
                 </service>
-
             </services>
         </container>
 
     .. code-block:: php
 
+        // config/services.php
         use App\Command\SunshineCommand;
-
         //...
 
         $container
