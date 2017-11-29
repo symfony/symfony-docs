@@ -108,10 +108,22 @@ following:
             }
         }
 
-.. tip::
+Protected and private properties can also be validated, as well as "getter"
+methods (see :ref:`validator-constraint-targets`).
 
-    Protected and private properties can also be validated, as well as "getter"
-    methods (see :ref:`validator-constraint-targets`).
+.. note::
+
+    If you want to store validation config as YAML or XML, you'll need to configure
+    the path:
+
+    .. code-block:: diff
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            validation:
+                mapping:
+                    paths: ['%kernel.project_dir%/config/validator']
 
 .. index::
    single: Validation; Using the validator
