@@ -81,7 +81,7 @@ Active Core Members
     components and the SecurityBundle_;
 
   * **Maxime Steinhausser** (`ogizanagi`_) can merge into Config_, Console_,
-    Form_, Serializer_, DependencyInjection_, and HttpKernel_ components.
+    Form_, Serializer_, DependencyInjection_, and HttpKernel_ components;
 
   * **Tobias Nyholm** (`Nyholm`) manages the official and contrib recipes
     repositories.
