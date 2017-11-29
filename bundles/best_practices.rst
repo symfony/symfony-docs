@@ -224,7 +224,7 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
         # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
         - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
         - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
-        - vendor/bin/simple-phpunit install
+        - ./vendor/bin/simple-phpunit install
 
     script:
         - composer validate --strict --no-check-lock
