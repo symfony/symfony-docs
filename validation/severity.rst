@@ -52,7 +52,7 @@ Use the ``payload`` option to configure the error level for each constraint:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # config/validator/validation.yaml
         App\Entity\User:
             properties:
                 username:
@@ -70,7 +70,7 @@ Use the ``payload`` option to configure the error level for each constraint:
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

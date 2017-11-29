@@ -14,7 +14,7 @@ looks like this::
     use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     // ...
-    public function addEmailAction($email, ValidatorInterface $validator)
+    public function addEmail($email, ValidatorInterface $validator)
     {
         $emailConstraint = new Assert\Email();
         // all constraint "options" can be set this way

@@ -84,13 +84,13 @@ property is not empty, add the following:
             }
         }
 
-Now, create a ``validators`` catalog file in the ``config/translations/`` directory:
+Now, create a ``validators`` catalog file in the ``translations/`` directory:
 
 .. configuration-block::
 
     .. code-block:: xml
 
-        <!-- config/translations/validators.en.xlf -->
+        <!-- translations/validators.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -105,12 +105,12 @@ Now, create a ``validators`` catalog file in the ``config/translations/`` direct
 
     .. code-block:: yaml
 
-        # config/translations/validators.en.yaml
+        # translations/validators.en.yaml
         author.name.not_blank: Please enter an author name.
 
     .. code-block:: php
 
-        // config/translations/validators.en.php
+        // translations/validators.en.php
         return array(
             'author.name.not_blank' => 'Please enter an author name.',
         );
