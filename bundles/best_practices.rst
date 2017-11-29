@@ -191,12 +191,13 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
         fast_finish: true
         include:
               # Minimum supported Symfony version with the latest PHP version
-            - env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" COVERAGE=true TEST_COMMAND="./vendor/bin/simple-phpunit --coverage-text" SYMFONY_DEPRECATIONS_HELPER="weak"
+            - env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
 
               # Test the latest stable release
             - php: 7.0
             - php: 7.1
             - php: 7.2
+              env: COVERAGE=true TEST_COMMAND="./vendor/bin/simple-phpunit --coverage-text"
 
               # Test LTS versions. This makes sure we do not use Symfony packages with version greater
               # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
