@@ -206,13 +206,11 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
               env: DEPENDENCIES="symfony/lts:^3"
 
               # Latest commit to master
-            - php: 7.2
-              env: STABILITY="dev"
+            - env: STABILITY="dev"
 
         allow_failures:
-              # Latest beta is allowed to fail.
-            - php: 7.2
-              env: STABILITY="dev"
+              # Dev-master is allowed to fail.
+            - env: STABILITY="dev"
 
     before_install:
         - composer require --no-update "symfony/phpunit-bridge:^3.3 || ^4"
