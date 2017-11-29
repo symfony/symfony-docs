@@ -55,7 +55,7 @@ and "50", you might add the following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Participant:
             properties:
                 firstName:

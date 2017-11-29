@@ -34,7 +34,7 @@ for more details.
 Application-level Configuration
 -------------------------------
 
-Application level config is loaded from the ``app/config`` directory. Multiple
+Application level config is loaded from the ``config`` directory. Multiple
 files are loaded which are then merged when the extensions are processed.
 This allows for different configuration for different environments e.g.
 dev, prod.

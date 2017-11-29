@@ -50,7 +50,7 @@ the user's current password:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Form\Model\ChangePassword:
             properties:
                 oldPassword:

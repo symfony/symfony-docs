@@ -39,7 +39,7 @@ a valid currency, you could do the following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Order:
             properties:
                 currency:

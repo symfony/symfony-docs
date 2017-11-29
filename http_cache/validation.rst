@@ -66,7 +66,7 @@ To see a simple implementation, generate the ETag as the md5 of the content::
 
     class DefaultController extends Controller
     {
-        public function homepageAction(Request $request)
+        public function homepage(Request $request)
         {
             $response = $this->render('static/homepage.html.twig');
             $response->setEtag(md5($response->getContent()));
@@ -131,7 +131,7 @@ header value::
 
     class ArticleController extends Controller
     {
-        public function showAction(Article $article, Request $request)
+        public function show(Article $article, Request $request)
         {
             $author = $article->getAuthor();
 
@@ -190,7 +190,7 @@ exposing a simple and efficient pattern::
 
     class ArticleController extends Controller
     {
-        public function showAction($articleSlug, Request $request)
+        public function show($articleSlug, Request $request)
         {
             // Get the minimum information to compute
             // the ETag or the Last-Modified value

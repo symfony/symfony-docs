@@ -398,17 +398,17 @@ is created from the form factory.
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/TaskController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-        class DefaultController extends Controller
+        class TaskController extends Controller
         {
-            public function newAction(Request $request)
+            public function new(Request $request)
             {
                 // createFormBuilder is a shortcut to get the "form factory"
                 // and then call "createBuilder()" on it
@@ -418,7 +418,7 @@ is created from the form factory.
                     ->add('dueDate', DateType::class)
                     ->getForm();
 
-                return $this->render('@AcmeTask/Default/new.html.twig', array(
+                return $this->render('task/new.html.twig', array(
                     'form' => $form->createView(),
                 ));
             }
@@ -604,16 +604,16 @@ method:
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/TaskController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-        class DefaultController extends Controller
+        class TaskController extends Controller
         {
-            public function newAction(Request $request)
+            public function new(Request $request)
             {
                 $form = $this->createFormBuilder()
                     ->add('task', TextType::class)

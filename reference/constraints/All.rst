@@ -43,7 +43,7 @@ entry in that array:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\User:
             properties:
                 favoriteColors:

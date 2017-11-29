@@ -19,8 +19,8 @@ You can install the component in 2 different ways:
 
 .. note::
 
-    If using it inside a Symfony application, make sure that the
-    DebugBundle is enabled in your ``app/AppKernel.php`` file.
+    If using it inside a Symfony application, make sure that the DebugBundle has
+    been installed (or run ``composer required debug`` to install it).
 
 .. _components-var-dumper-dump:
 

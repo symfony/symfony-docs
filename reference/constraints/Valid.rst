@@ -92,7 +92,7 @@ stores an ``Address`` instance in the ``$address`` property.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Address:
             properties:
                 street:
@@ -208,7 +208,7 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 address:

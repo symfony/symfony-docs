@@ -24,7 +24,7 @@ Introduction
 Loading users via a Doctrine entity has 2 basic steps:
 
 #. :ref:`Create your User entity <security-crete-user-entity>`
-#. :ref:`Configure security.yml to load from your entity <security-config-entity-provider>`
+#. :ref:`Configure security.yaml to load from your entity <security-config-entity-provider>`
 
 Afterwards, you can learn more about :ref:`forbidding inactive users <security-advanced-user-interface>`,
 :ref:`using a custom query <authenticating-someone-with-a-custom-entity-provider>`
@@ -144,7 +144,8 @@ Next, make sure to :ref:`create the database table <doctrine-creating-the-databa
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:schema:update --force
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
 
 What's this UserInterface?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,7 +190,7 @@ Want to know more? See :ref:`security-serialize-equatable`.
 ----------------------------------------------
 
 Now that you have a ``User`` entity that implements ``UserInterface``, you
-just need to tell Symfony's security system about it in ``security.yml``.
+just need to tell Symfony's security system about it in ``security.yaml``.
 
 In this example, the user will enter their username and password via HTTP
 basic authentication. Symfony will query for a ``User`` entity matching
@@ -446,13 +447,8 @@ interface only requires one method: ``loadUserByUsername($username)``::
         }
     }
 
-.. tip::
-
-    Don't forget to add the repository class to the
-    :doc:`mapping definition of your entity </doctrine/repository>`.
-
 To finish this, just remove the ``property`` key from the user provider in
-``security.yml``:
+``security.yaml``:
 
 .. configuration-block::
 

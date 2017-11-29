@@ -41,7 +41,7 @@ of the day when the event starts:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Event:
             properties:
                 startsAt:

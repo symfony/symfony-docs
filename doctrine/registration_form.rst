@@ -10,6 +10,12 @@ Creating a registration form is pretty easy - it *really* means just creating
 a form that will update some ``User`` model object (a Doctrine entity in this
 example) and then save it.
 
+First, make sure you have all the dependencies you need installed:
+
+.. code-block:: terminal
+
+    $ composer require doctrine form security
+
 .. tip::
 
     The popular `FOSUserBundle`_ provides a registration form, reset password
@@ -271,14 +277,14 @@ encoder in the security configuration:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yml
         security:
             encoders:
                 App\Entity\User: bcrypt
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -292,7 +298,7 @@ encoder in the security configuration:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use App\Entity\User;
 
         $container->loadFromExtension('security', array(
@@ -304,76 +310,20 @@ encoder in the security configuration:
 In this case the recommended ``bcrypt`` algorithm is used. If needed, check out
 the :ref:`user password encoding <security-encoding-user-password>` article.
 
-.. note::
-
-    If you decide to NOT use annotation routing (shown above), then you'll
-    need to create a route to this controller:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/routes.yaml
-            user_registration:
-                path:     /register
-                defaults: { _controller: AppBundle:Registration:register }
-
-        .. code-block:: xml
-
-            <!-- config/routes.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <routes xmlns="http://symfony.com/schema/routing"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-
-                <route id="user_registration" path="/register">
-                    <default key="_controller">AppBundle:Registration:register</default>
-                </route>
-            </routes>
-
-        .. code-block:: php
-
-            // config/routes.php
-            use Symfony\Component\Routing\RouteCollection;
-            use Symfony\Component\Routing\Route;
-
-            $collection = new RouteCollection();
-            $collection->add('user_registration', new Route('/register', array(
-                '_controller' => 'AppBundle:Registration:register',
-            )));
-
-            return $collection;
-
 Next, create the template:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# templates/registration/register.html.twig #}
 
-        {# templates/registration/register.html.twig #}
+    {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
 
-        {{ form_start(form) }}
-            {{ form_row(form.username) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.plainPassword.first) }}
-            {{ form_row(form.plainPassword.second) }}
-
-            <button type="submit">Register!</button>
-        {{ form_end(form) }}
-
-    .. code-block:: html+php
-
-        <!-- templates/registration/register.html.php -->
-
-        <?php echo $view['form']->start($form) ?>
-            <?php echo $view['form']->row($form['username']) ?>
-            <?php echo $view['form']->row($form['email']) ?>
-
-            <?php echo $view['form']->row($form['plainPassword']['first']) ?>
-            <?php echo $view['form']->row($form['plainPassword']['second']) ?>
-
-            <button type="submit">Register!</button>
-        <?php echo $view['form']->end($form) ?>
+        <button type="submit">Register!</button>
+    {{ form_end(form) }}
 
 See :doc:`/form/form_customization` for more details.
 
@@ -385,7 +335,8 @@ your database schema using this command:
 
 .. code-block:: terminal
 
-   $ php bin/console doctrine:schema:update --force
+   $ php bin/console doctrine:migrations:diff
+   $ php bin/console doctrine:migrations:migrate
 
 That's it! Head to ``/register`` to try things out!
 

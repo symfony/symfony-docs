@@ -134,7 +134,7 @@ message, enclosed with ``/``. For example, with:
         <!-- ... -->
 
         <php>
-            <server name="KERNEL_DIR" value="app/" />
+            <server name="KERNEL_CLASS" value="App\Kernel" />
             <env name="SYMFONY_DEPRECATIONS_HELPER" value="/foobar/" />
         </php>
     </phpunit>

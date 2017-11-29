@@ -50,7 +50,7 @@ of an ``Author`` class were blank, you could do the following:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yml
+        # src/Resources/config/validation.yaml
         App\Entity\Author:
             properties:
                 firstName:

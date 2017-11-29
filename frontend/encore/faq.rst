@@ -26,7 +26,7 @@ to install Node.js on your production server.
 **2) Only Deploy the Built Assets**
 
 The *only* files that need to be deployed to your production servers are the
-final, built assets (e.g. the ``web/build`` directory). You do *not* need to install
+final, built assets (e.g. the ``public/build`` directory). You do *not* need to install
 Node.js, deploy ``webpack.config.js``, the ``node_modules`` directory or even your source
 asset files, **unless** you plan on running ``encore production`` on your production
 machine. Once your assets are built, these are the *only* thing that need to live
@@ -48,7 +48,7 @@ and the built files. Your ``.gitignore`` file should include:
 
     /node_modules/
     # whatever path you're passing to Encore.setOutputPath()
-    /web/build
+    /public/build
 
 You *should* commit all of your source asset files, ``package.json`` and ``yarn.lock``.
 
@@ -64,7 +64,7 @@ like ``/myAppSubdir``), you just need to configure that when calling ``Encore.se
     Encore
         // ...
 
-        .setOutputPath('web/build/')
+        .setOutputPath('public/build/')
 
     -     .setPublicPath('/build')
     +     // this is your *true* public path
@@ -117,7 +117,7 @@ But, instead of working, you see an error:
 
     This dependency was not found:
 
-    * respond.js in ./app/Resources/assets/js/app.js
+    * respond.js in ./assets/js/app.js
 
 Typically, a package will "advertise" its "main" file by adding a ``main`` key to
 its ``package.json``. But sometimes, old libraries won't have this. Instead, you'll

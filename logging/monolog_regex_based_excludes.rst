@@ -16,7 +16,7 @@ configuration:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 main:
@@ -28,7 +28,7 @@ configuration:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -47,7 +47,7 @@ configuration:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'main' => array(

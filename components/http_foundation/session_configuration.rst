@@ -147,7 +147,7 @@ configuration:
 
 .. code-block:: yaml
 
-    # config.yml
+    # config/packages/framework.yaml
     framework:
         session:
             gc_probability: null

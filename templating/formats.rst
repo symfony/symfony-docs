@@ -30,7 +30,7 @@ pattern is to do the following::
         /**
          * @Route("/{slug}")
          */
-        public function showAction(Request $request, $slug)
+        public function show(Request $request, $slug)
         {
             // retrieve the article based on $slug
             $article = ...;
@@ -53,7 +53,7 @@ special ``_format`` placeholder in your route definition::
     /**
      * @Route("/{slug}.{_format}", defaults={"_format": "html"})
      */
-    public function showAction(Request $request, $slug)
+    public function show(Request $request, $slug)
     {
         // ...
     }
