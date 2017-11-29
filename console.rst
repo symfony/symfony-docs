@@ -9,6 +9,16 @@ The Symfony framework provides lots of commands through the ``bin/console`` scri
 created with the :doc:`Console component </components/console>`. You can also
 use it to create your own commands.
 
+The Console: APP_ENV & APP_DEBUG
+---------------------------------
+
+Console commands run in the :ref:`environment <config-dot-env>` defined in the ``APP_ENV``
+variable of the ``.env`` file, which is ``dev`` by default. It also reads the ``APP_DEBUG``
+value to turn "debug" mode on or off (it defaults to ``1``, which is on).
+
+To run the command in another environment or debug mode, edit the value of ``APP_ENV``
+and ``APP_DEBUG``.
+
 Creating a Command
 ------------------
 
