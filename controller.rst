@@ -456,7 +456,7 @@ First, enable sessions in your configuration:
 
 .. configuration-block::
 
-    .. code-block:: yml
+    .. code-block:: yaml
 
         # config/packages/framework.yaml
         framework:
