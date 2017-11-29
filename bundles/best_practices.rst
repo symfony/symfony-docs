@@ -170,7 +170,7 @@ Travis
 ------
 
 A popular way to test open source bundles is by using `Travis CI`_. A good practice
-is to support at least the two latest LTS versions of symfony. One should also test
+is to support at least the two latest LTS versions of Symfony. One should also test
 test latest beta release. Here is a recommended configuration file (``.travis.yml``).
 
 .. code-block:: yaml
@@ -190,16 +190,15 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
     matrix:
         fast_finish: true
         include:
-              # Minimum supported Symfony version
-            - php: 7.2
-              env: DEPENDENCIES="minimum" COVERAGE=true TEST_COMMAND="phpunit --coverage-text" SYMFONY_DEPRECATIONS_HELPER="weak"
+              # Minimum supported Symfony version with the latest PHP version
+            - env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" COVERAGE=true TEST_COMMAND="./vendor/bin/simple-phpunit --coverage-text" SYMFONY_DEPRECATIONS_HELPER="weak"
 
               # Test the latest stable release
             - php: 7.0
             - php: 7.1
             - php: 7.2
 
-              # Test LTS versions. This makes sure we do not use symfony packages with version greater
+              # Test LTS versions. This makes sure we do not use Symfony packages with version greater
               # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
             - php: 7.2
               env: DEPENDENCIES="symfony/lts:^2"
@@ -208,19 +207,18 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
 
               # Latest commit to master
             - php: 7.2
-              env: DEPENDENCIES="dev"
+              env: STABILITY="dev"
 
         allow_failures:
               # Latest beta is allowed to fail.
             - php: 7.2
-              env: DEPENDENCIES="dev"
+              env: STABILITY="dev"
 
     before_install:
         - composer require --no-update "symfony/phpunit-bridge:^3.3 || ^4"
         - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
-        - if [ "$DEPENDENCIES" = "minimum" ]; then COMPOSER_FLAGS="--prefer-stable --prefer-lowest"; fi;
-        - if [ "$DEPENDENCIES" = "dev" ]; then composer config minimum-stability dev; fi;
-        - if [[ $DEPENDENCIES == *"/"* ]]; then composer require --no-update $DEPENDENCIES; fi;
+        - if [[ -v $STABILITY ]]; then composer config minimum-stability $STABILITY; fi;
+        - if [[ -v $DEPENDENCIES ]]; then composer require --no-update $DEPENDENCIES; fi;
 
     install:
         # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
