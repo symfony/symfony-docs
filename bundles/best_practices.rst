@@ -184,7 +184,7 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
 
     env:
         global:
-            - TEST_COMMAND="./vendor/bin/simple-phpunit"
+            - PHPUNIT_FLAGS="-v"
             - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
 
     matrix:
@@ -198,7 +198,7 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
             - php: 7.0
             - php: 7.1
             - php: 7.2
-              env: COVERAGE=true TEST_COMMAND="./vendor/bin/simple-phpunit --coverage-text"
+              env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
 
               # Test LTS versions. This makes sure we do not use Symfony packages with version greater
               # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
@@ -228,7 +228,7 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
 
     script:
         - composer validate --strict --no-check-lock
-        - $TEST_COMMAND
+        - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
 
 When configuring travis you should also enable `Travis cron`_ to make sure your
 project is build even if there is no new pull requests or commits.
