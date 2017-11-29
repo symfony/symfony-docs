@@ -74,6 +74,9 @@ Full Default Configuration
                         id:                   ~ # Required (when the email_prototype is used)
                         method:               ~
                     formatter:            ~
+            # Set to false to use seconds (instead of microseconds) in
+            # the logs (gives a small performance boost).
+            use_microseconds:             true
 
     .. code-block:: xml
 
@@ -86,7 +89,7 @@ Full Default Configuration
                 http://symfony.com/schema/dic/monolog
                 http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
-            <monolog:config>
+            <monolog:config use-microseconds="true">
                 <monolog:handler
                     name="syslog"
                     type="stream"
