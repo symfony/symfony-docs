@@ -242,6 +242,7 @@ can *override* that config.
             strict_requirements: ~
 
 .. code-block:: yaml
+
     # config/packages/dev/routing.yaml
     framework:
         router:
