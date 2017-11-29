@@ -32,6 +32,7 @@ You can also control the ``public`` option on a service-by-service basis:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -40,6 +41,7 @@ You can also control the ``public`` option on a service-by-service basis:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -52,6 +54,7 @@ You can also control the ``public`` option on a service-by-service basis:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Service\Foo;
 
         $container->register(Foo::class)
@@ -80,11 +83,6 @@ to access it directly from your code.
 However, if a service has been marked as private, you can still alias it
 (see below) to access this service (via the alias).
 
-.. note::
-
-    Services are by default public, but it's considered a good practice to mark
-    as many services private as possible.
-
 .. _services-alias:
 
 Aliasing
@@ -98,6 +96,7 @@ services.
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
             App\Mail\PhpMailer:
@@ -109,6 +108,7 @@ services.
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -124,6 +124,7 @@ services.
 
     .. code-block:: php
 
+        // config/services.php
         use App\Mail\PhpMailer;
 
         $container->register(PhpMailer::class)
@@ -142,6 +143,7 @@ This means that when using the container directly, you can access the
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
             app.mailer: '@App\Mail\PhpMailer'
@@ -156,11 +158,13 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
     .. code-block:: yaml
 
-       App\Service\OldService:
-           deprecated: The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.
+        # config/services.yaml
+        App\Service\OldService:
+            deprecated: The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
@@ -175,6 +179,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Service\OldService;
 
         $container

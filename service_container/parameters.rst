@@ -17,11 +17,13 @@ Use the ``parameters`` section of a config file to set parameters:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
             mailer.transport: sendmail
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -35,6 +37,7 @@ Use the ``parameters`` section of a config file to set parameters:
 
     .. code-block:: php
 
+        // config/services.php
         $container->setParameter('mailer.transport', 'sendmail');
 
 You can refer to parameters elsewhere in any config file by surrounding them
@@ -50,6 +53,7 @@ and hidden with the service definition:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
             mailer.transport: sendmail
 
@@ -59,6 +63,7 @@ and hidden with the service definition:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -78,6 +83,7 @@ and hidden with the service definition:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Mailer;
 
         $container->setParameter('mailer.transport', 'sendmail');
@@ -116,7 +122,7 @@ and hidden with the service definition:
 
         .. code-block:: yaml
 
-            # app/config/parameters.yml
+            # config/parameters.yml
             parameters:
                 # This will be parsed as string '@securepass'
                 mailer_password: '@@securepass'
@@ -126,6 +132,7 @@ and hidden with the service definition:
 
         .. code-block:: xml
 
+            <!-- config/services.xml -->
             <parameters>
                 <!-- the @ symbol does NOT need to be escaped in XML -->
                 <parameter key="mailer_password">@securepass</parameter>
@@ -136,6 +143,7 @@ and hidden with the service definition:
 
         .. code-block:: php
 
+            // config/services.php
             // the @ symbol does NOT need to be escaped in XML
             $container->setParameter('mailer_password', '@securepass');
 
@@ -183,6 +191,7 @@ for all parameters that are arrays.
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
             my_mailer.gateways: [mail1, mail2, mail3]
 
@@ -196,6 +205,7 @@ for all parameters that are arrays.
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -225,6 +235,7 @@ for all parameters that are arrays.
 
     .. code-block:: php
 
+        // config/services.php
         $container->setParameter('my_mailer.gateways', array('mail1', 'mail2', 'mail3'));
         $container->setParameter('my_multilang.language_fallback', array(
             'en' => array('en', 'fr'),
@@ -247,12 +258,14 @@ Setting PHP constants as parameters is also supported:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
             global.constant.value: !php/const:GLOBAL_CONSTANT
             my_class.constant.value: !php/const:My_Class::CONSTANT_NAME
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -267,6 +280,7 @@ Setting PHP constants as parameters is also supported:
 
     .. code-block:: php
 
+        // config/services.php
         $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
         $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
 

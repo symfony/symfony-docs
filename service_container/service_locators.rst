@@ -15,7 +15,7 @@ using a CommandBus to map command handlers by Command class names and use them
 to handle their respective command when it is asked for::
 
     // src/CommandBus.php
-    namespace AppBundle;
+    namespace App;
 
     // ...
     class CommandBus
@@ -91,7 +91,7 @@ option to include as many services as needed to it and add the
 
     .. code-block:: yaml
 
-        // config/services.yaml
+        # config/services.yaml
         services:
             app.command_handler_locator:
                 class: Symfony\Component\DependencyInjection\ServiceLocator
@@ -150,7 +150,7 @@ Now you can use the service locator injecting it in any other service:
 
     .. code-block:: yaml
 
-        // config/services.yaml
+        # config/services.yaml
         services:
             App\CommandBus:
                 arguments: ['@app.command_handler_locator']

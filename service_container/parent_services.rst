@@ -63,6 +63,7 @@ duplicated service definitions:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             App\Repository\BaseDoctrineRepository:
                 abstract:  true
@@ -81,6 +82,7 @@ duplicated service definitions:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -111,6 +113,7 @@ duplicated service definitions:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Repository\DoctrineUserRepository;
         use App\Repository\DoctrinePostRepository;
         use App\Repository\BaseDoctrineRepository;
@@ -166,6 +169,7 @@ in the child class:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -188,6 +192,7 @@ in the child class:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -220,6 +225,7 @@ in the child class:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Repository\DoctrineUserRepository;
         use App\Repository\DoctrinePostRepository;
         use App\Repository\BaseDoctrineRepository;

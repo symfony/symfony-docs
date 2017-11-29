@@ -46,7 +46,6 @@ configure the service container to use the
     .. code-block:: xml
 
         <!-- config/services.xml -->
-
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -64,7 +63,6 @@ configure the service container to use the
     .. code-block:: php
 
         // config/services.php
-
         use App\Email\NewsletterManager;
         use App\NumberGenerator;
         use App\Email\NewsletterManagerStaticFactory;
@@ -94,7 +92,6 @@ Configuration of the service container then looks like this:
     .. code-block:: yaml
 
         # config/services.yaml
-
         services:
             # ...
 
@@ -107,7 +104,6 @@ Configuration of the service container then looks like this:
     .. code-block:: xml
 
         <!-- config/services.xml -->
-
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -129,7 +125,6 @@ Configuration of the service container then looks like this:
     .. code-block:: php
 
         // config/services.php
-
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
         // ...
@@ -151,9 +146,8 @@ Configuration of the service container then looks like this:
     .. code-block:: yaml
 
         # config/services.yaml
-
         app.newsletter_manager:
-            class: App\Email\NewsletterManager 
+            class: App\Email\NewsletterManager
             # new syntax
             factory: 'App\Email\NewsletterManagerFactory:createNewsletterManager'
             # old syntax
@@ -178,7 +172,6 @@ example takes the ``templating`` service as an argument:
     .. code-block:: yaml
 
         # config/services.yaml
-
         services:
             # ...
 
@@ -189,7 +182,6 @@ example takes the ``templating`` service as an argument:
     .. code-block:: xml
 
         <!-- config/services.xml -->
-
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -209,7 +201,6 @@ example takes the ``templating`` service as an argument:
     .. code-block:: php
 
         // config/services.php
-
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
         use Symfony\Component\DependencyInjection\Reference;
