@@ -183,7 +183,6 @@ Go Deeper with Setup
     :glob:
 
     setup/homestead
-    setup/new_project_git
     setup/built_in_web_server
     setup/web_server_configuration
     setup/composer
