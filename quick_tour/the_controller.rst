@@ -31,7 +31,7 @@ text content::
         /**
          * @Route("/", name="homepage")
          */
-        public function indexAction()
+        public function index()
         {
             return new Response('Welcome to Symfony!');
         }
@@ -338,7 +338,5 @@ Final Thoughts
 --------------
 
 That's all there is to it and I'm not even sure you have spent the full
-10 minutes. You were briefly introduced to bundles in the first part and
-all the features you've learned about so far are part of the core FrameworkBundle.
-But thanks to bundles, everything in Symfony can be extended or replaced.
-That's the topic of the :doc:`next part of this tutorial <the_architecture>`.
+10 minutes. Let's move onto something *very* interesting: the fact that everything
+in Symfony can be extended or replaced. That's the topic of the :doc:`next part of this tutorial <the_architecture>`.
