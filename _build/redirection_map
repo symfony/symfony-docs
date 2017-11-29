@@ -153,10 +153,10 @@
 /cookbook/doctrine/reverse_engineering /doctrine/reverse_engineering
 /doctrine/repository /doctrine
 /doctrine/console /doctrine
-/cookbook/email/cloud /email/cloud
+/cookbook/email/cloud /email
 /cookbook/email/dev_environment /email/dev_environment
 /cookbook/email/email /email
-/cookbook/email/gmail /email/gmail
+/cookbook/email/gmail /email
 /cookbook/email/index /email
 /cookbook/email/spool /email/spool
 /cookbook/email/testing /email/testing
@@ -361,6 +361,8 @@
 /console/logging /console
 /deployment/tools /deployment
 /install/bundles /setup/bundles
+/email/gmail /email
+/email/cloud /email
 /event_dispatcher/class_extension /event_dispatcher
 /form /forms
 /form/use_virtual_forms /form/inherit_data_option
