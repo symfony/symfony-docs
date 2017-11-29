@@ -122,6 +122,8 @@ You can now add your route directly *above* the controller:
 That's it! The page - ``http://localhost:8000/lucky/number`` will work exactly
 like before! Annotations are the recommended way to configure routes.
 
+.. _flex-quick-intro:
+
 Auto-Installing Recipes with Symfony Flex
 -----------------------------------------
 
