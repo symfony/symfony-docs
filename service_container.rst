@@ -38,67 +38,37 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
         // ...
     }
 
-.. _container-debug-container:
-
 What other services are available? Find out by running:
 
 .. code-block:: terminal
 
-     $ php bin/console debug:container
+     $ php bin/console debug:autowiring
 
-This is just a *small* sample of the output:
+=============================================================== =====================================
+Class/Interface Type                                            Alias Service ID
+=============================================================== =====================================
+``Psr\Cache\CacheItemPoolInterface``                            alias for "cache.app.recorder"
+``Psr\Log\LoggerInterface``                                     alias for "monolog.logger"
+``Symfony\Component\EventDispatcher\EventDispatcherInterface``  alias for "debug.event_dispatcher"
+``Symfony\Component\HttpFoundation\RequestStack``               alias for "request_stack"
+``Symfony\Component\HttpFoundation\Session\SessionInterface``   alias for "session"
+``Symfony\Component\Routing\RouterInterface``                   alias for "router.default"
+=============================================================== =====================================
 
-=============================== =======================================================================
-Service ID                      Class name
-=============================== =======================================================================
-doctrine                        ``Doctrine\Bundle\DoctrineBundle\Registry``
-filesystem                      ``Symfony\Component\Filesystem\Filesystem``
-form.factory                    ``Symfony\Component\Form\FormFactory``
-logger                          ``Symfony\Bridge\Monolog\Logger``
-request_stack                   ``Symfony\Component\HttpFoundation\RequestStack``
-router                          ``Symfony\Bundle\FrameworkBundle\Routing\Router``
-security.authorization_checker  ``Symfony\Component\Security\Core\Authorization\AuthorizationChecker``
-security.password_encoder       ``Symfony\Component\Security\Core\Encoder\UserPasswordEncoder``
-session                         ``Symfony\Component\HttpFoundation\Session\Session``
-translator                      ``Symfony\Component\Translation\DataCollectorTranslator``
-twig                            ``Twig_Environment``
-validator                       ``Symfony\Component\Validator\Validator\ValidatorInterface``
-=============================== =======================================================================
-
-You can also use the unique "Service ID" to access a service directly::
-
-    // src/Controller/ProductController.php
-    namespace App\Controller;
-
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\Routing\Annotation\Route;
-
-    class ProductController extends Controller
-    {
-        /**
-         * @Route("/products")
-         */
-        public function list()
-        {
-            $logger = $this->container->get('logger');
-            $logger->info('Look! I just used a service');
-
-            // ...
-        }
-    }
-
-:ref:`Fetching a service directly from the container <controller-access-services-directly>`
-like this only works if you extend the ``Controller`` class.
+When you use these type-hints in your controller methods or inside your
+:ref:`own services <service-container-creating-service>`, Symfony will automatically
+pass you the service object matching that type.
 
 Throughout the docs, you'll see how to use the many different services that live
 in the container.
 
-.. sidebar:: Container: Lazy-loaded for speed
+.. tip::
 
-    Wait! Are all the services (objects) instantiated on *every* request? No! The
-    container is lazy: it doesn't instantiate a service until (and unless) you ask
-    for it. For example, if you never use the ``validator`` service during a request,
-    the container will never instantiate it.
+    There are actually *many* more services in the container, and each service has
+    a unique id in the container, like ``session`` or ``router.default``. For a full
+    list, you can run ``php bin/console debug:container``. But most of the time,
+    you won't need to worry about this. See :ref:`services-wire-specific-service`.
+    See :doc:`/service_container/debug`.
 
 .. index::
    single: Service Container; Configuring services
@@ -107,11 +77,6 @@ in the container.
 
 Creating/Configuring Services in the Container
 ----------------------------------------------
-
-.. tip::
-
-    The recommended way of configuring services changed in Symfony 3.3. For a deep
-    explanation, see :doc:`/service_container/3.3-di-changes`.
 
 You can also organize your *own* code into services. For example, suppose you need
 to show your users a random, happy message. If you put this code in your controller,
@@ -162,7 +127,8 @@ each time you ask for it.
 
 .. sidebar:: Automatic Service Loading in services.yaml
 
-    The documentation assumes you're using the following service configuration:
+    The documentation assumes you're using the following service configuration,
+    which is the default config for a new project:
 
     .. configuration-block::
 
@@ -172,16 +138,19 @@ each time you ask for it.
             services:
                 # default configuration for services in *this* file
                 _defaults:
-                    autowire: true
-                    autoconfigure: true
-                    public: false
+                    autowire: true      # Automatically injects dependencies in your services.
+                    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+                    public: false       # Allows optimizing the container by removing unused services; this also means
+                                        # fetching services directly from the container via $container->get() won't work.
+                                        # The best practice is to be explicit about your dependencies anyway.
 
                 # makes classes in src/ available to be used as services
+                # this creates a service per class whose id is the fully-qualified class name
                 App\:
                     resource: '../src/*'
-                    # you can exclude directories or files
-                    # but if a service is unused, it's removed anyway
-                    exclude: '../src/{Entity,Repository}'
+                    exclude: '../src/{Entity,Migrations,Tests}'
+
+                # ...
 
         .. code-block:: xml
 
@@ -196,8 +165,7 @@ each time you ask for it.
                     <!-- Default configuration for services in *this* file -->
                     <defaults autowire="true" autoconfigure="true" public="false" />
 
-                    <!-- Load services from whatever directories you want (you can update this!) -->
-                    <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Repository}" />
+                    <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}" />
                 </services>
             </container>
 
@@ -216,7 +184,7 @@ each time you ask for it.
             ;
 
             // $this is a reference to the current loader
-            $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Repository}');
+            $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Migrations,Tests}');
 
     .. tip::
 
@@ -230,37 +198,14 @@ each time you ask for it.
     If you'd prefer to manually wire your service, that's totally possible: see
     :ref:`services-explicitly-configure-wire-services`.
 
-If the :ref:`service is public <container-public>`, you can also fetch it
-directly from the container via its "id". However, this practice is discouraged
-and you should instead inject services via constructors::
-
-    use App\Service\MessageGenerator;
-
-    // accessing services like this only works if you extend Controller
-    class ProductController extends Controller
-    {
-        public function new()
-        {
-            // only works if your service is public
-            $messageGenerator = $this->get(MessageGenerator::class);
-
-            $message = $messageGenerator->getHappyMessage();
-            $this->addFlash('success', $message);
-            // ...
-        }
-    }
-
 .. _services-constructor-injection:
 
 Injecting Services/Config into a Service
 ----------------------------------------
 
 What if you need to access the ``logger`` service from within ``MessageGenerator``?
-Your service does *not* have access to the container directly, so you can't fetch
-it via ``$this->container->get()``.
-
-No problem! Instead, create a ``__construct()`` method with a ``$logger`` argument
-that has the ``LoggerInterface`` type-hint. Set this on a new ``$logger`` property
+No problem! Create a ``__construct()`` method with a ``$logger`` argument that has
+the ``LoggerInterface`` type-hint. Set this on a new ``$logger`` property
 and use it later::
 
     // src/Service/MessageGenerator.php
@@ -292,6 +237,9 @@ type-hint in your ``__construct()`` method and the ``autowire: true`` config in
 find the matching service. If it can't, you'll see a clear exception with a helpful
 suggestion.
 
+By the way, this method of adding dependencies to your ``__construct()`` method is
+called *dependency injection*. It's a scary term for a simple concept.
+
 .. _services-debug-container-types:
 
 How should you know to use ``LoggerInterface`` for the type-hint? You can either
@@ -302,10 +250,10 @@ type-hints by running:
 
     $ php bin/console debug:autowiring
 
-This is just a small subset of the output:
+This command is your best friend.  This is a small subset of the output:
 
 =============================================================== =====================================
-Service ID                                                      Class name
+Class/Interface Type                                            Alias Service ID
 =============================================================== =====================================
 ``Psr\Cache\CacheItemPoolInterface``                            alias for "cache.app.recorder"
 ``Psr\Log\LoggerInterface``                                     alias for "monolog.logger"
@@ -354,10 +302,13 @@ made. To do that, you create a new class::
         }
     }
 
-This uses the ``MessageGenerator`` *and* the ``Swift_Mailer`` service. As long as
-you're :ref:`loading all services from src/ <service-container-services-load-example>`,
-you can use the service immediately::
+This needs the ``MessageGenerator`` *and* the ``Swift_Mailer`` service. That's no
+problem! In fact, this new service is ready to be used. In a controller, for example,
+you can type-hint the new ``SiteUpdateManager`` class and use it::
 
+    // src/Controller/SiteController.php
+
+    // ...
     use App\Updates\SiteUpdateManager;
 
     public function new(SiteUpdateManager $siteUpdateManager)
@@ -431,7 +382,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
             # same as before
             App\:
                 resource: '../src/*'
-                exclude: '../src/{Entity,Repository}'
+                exclude: '../src/{Entity,Migrations,Tests}'
 
             # explicitly configure the service
             App\Updates\SiteUpdateManager:
@@ -451,7 +402,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 <!-- ... -->
 
                 <!-- Same as before -->
-                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Repository}" />
+                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}" />
 
                 <!-- Explicitly configure the service -->
                 <service id="App\Updates\SiteUpdateManager">
@@ -475,15 +426,15 @@ pass here. No problem! In your configuration, you can explicitly set this argume
             ->setPublic(false)
         ;
 
-        $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Repository}');
+        $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Migrations,Tests}');
 
         // Explicitly configure the service
         $container->getDefinition(SiteUpdateManager::class)
             ->setArgument('$adminEmail', 'manager@example.com');
 
-Thanks to this, the container will pass ``manager@example.com`` as the third argument
-to ``__construct`` when creating the ``SiteUpdateManager`` service. The other arguments
-will still be autowired.
+Thanks to this, the container will pass ``manager@example.com`` to the ``$adminEmail``
+argument of ``__construct`` when creating the ``SiteUpdateManager`` service. The
+other arguments will still be autowired.
 
 But, isn't this fragile? Fortunately, no! If you rename the ``$adminEmail`` argument
 to something else - e.g. ``$mainEmail`` - you will get a clear exception when you
@@ -656,6 +607,14 @@ But, you can control this and pass in a different logger:
 This tells the container that the ``$logger`` argument to ``__construct`` should use
 service whose id is ``monolog.logger.request``.
 
+.. _container-debug-container:
+
+For a full list of *all* possible services in the container, run:
+
+.. code-block:: terminal
+
+    php bin/console debug:container --show-private
+
 .. tip::
 
     The ``@`` symbol is important: that's what tells the container you want to pass
@@ -667,7 +626,69 @@ service whose id is ``monolog.logger.request``.
 Binding Arguments by Name or Type
 ---------------------------------
 
-You can also use the ``bind`` keyword to bind specific arguments by name or type.
+You can also use the ``bind`` keyword to bind specific arguments by name or type:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            _defaults:
+                bind:
+                    # pass this value to any $adminEmail argument for any service
+                    # that's defined in this file (including controller arguments)
+                    $adminEmail: 'manager@example.com'
+
+                    # pass this service for any LoggerInterface type-hint for any
+                    # service that's defined in this file
+                    Psr\Log\LoggerInterface: '@monolog.logger.request'
+
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <defaults autowire="true" autoconfigure="true" public="false">
+                    <bind key="$adminEmail">manager@example.com</bind>
+                    <bind key="$logger"
+                        type="service"
+                        id="monolog.logger.request"
+                    />
+                </defaults>
+
+                <!-- ... -->
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use App\Controller\LuckyController;
+        use Symfony\Component\DependencyInjection\Reference;
+        use Psr\Log\LoggerInterface;
+
+        $container->register(LuckyController::class)
+            ->setPublic(true)
+            ->setBindings(array(
+                '$adminEmail' => 'manager@example.com',
+                LoggerInterface::class => new Reference('monolog.logger.request'),
+            ))
+        ;
+
+By putting the ``bind`` key under ``_defaults``, you can specify the value of *any*
+argument for *any* service defined in this file! You can bind arguments by name
+(e.g. ``$adminEmail``) or by type (e.g. ``Psr\Log\LoggerInterface``).
+
+The ``bind`` config can be also be applied to specific services or when loading many
+services at once (i.e. :ref:`service-psr4-loader`).
 
 .. _services-autowire:
 
@@ -692,45 +713,8 @@ section so that it applies to all services defined in that file. With this setti
 the container will automatically apply certain configuration to your services, based
 on your service's *class*. This is mostly used to *auto-tag* your services.
 
-For example, to create a Twig Extension, you need to create a class, register it
-as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # ...
-
-            App\Twig\MyTwigExtension:
-                tags: [twig.extension]
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Twig\MyTwigExtension">
-                    <tag name="twig.extension" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        use App\Twig\MyTwigExtension;
-
-        $container->autowire(MyTwigExtension::class)
-            ->addTag('twig.extension');
+For example, to create a Twig extension, you need to create a class, register it
+as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension``.
 
 But, with ``autoconfigure: true``, you don't need the tag. In fact, if you're using
 the :ref:`default services.yaml config <service-container-services-load-example>`,
@@ -739,58 +723,35 @@ you don't need to do *anything*: the service will be automatically loaded. Then,
 implements ``Twig_ExtensionInterface``. And thanks to ``autowire``, you can even add
 constructor arguments without any configuration.
 
-Of course, you can still :ref:`manually configure the service <services-manually-wire-args>`
-if you need to.
-
 .. _container-public:
 
 Public Versus Private Services
 ------------------------------
 
 Thanks to the ``_defaults`` section in ``services.yaml``, every service defined in
-this file is ``public: false`` by default:
+this file is ``public: false`` by default.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # default configuration for services in *this* file
-            _defaults:
-                # ...
-                public: false
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- Default configuration for services in *this* file -->
-                <defaults autowire="true" autoconfigure="true" public="false" />
-            </services>
-        </container>
-
-What does this mean? When a service is **not** public, you cannot access it directly
-from the container::
+What does this mean? When a service **is** public, you can access it directly
+from the container object, which is accessible from any controller that extends
+``Controller``::
 
     use App\Service\MessageGenerator;
 
-    public function new(MessageGenerator $messageGenerator)
+    // ...
+    public function new()
     {
-        // type-hinting it as an argument DOES work
+        // there IS a public "logger" service in the container
+        $logger = $this->container->get('logger');
 
-        // but accessing it directly from the container does NOT Work
-        $this->container->get(MessageGenerator::class);
+        // this will NOT work: MessageGenerator is a private service
+        $generator = $this->container->get(MessageGenerator::class);
     }
 
-Usually, this is OK: there are better ways to access a service. But, if you *do*
-need to make your service public, just override this setting:
+As a best practice, you should only create *private* services, which will happen
+automatically. And also, you should *not* use the ``$container->get()`` method to
+fetch public services.
+
+But, if you *do* need to make a service public, just override the ``public`` setting:
 
 .. configuration-block::
 
@@ -837,19 +798,11 @@ key. For example, the default Symfony configuration contains this:
         services:
             # ...
 
-            # the namespace prefix for classes (must end in \)
+            # makes classes in src/ available to be used as services
+            # this creates a service per class whose id is the fully-qualified class name
             App\:
-                # create services for all the classes found in this directory...
                 resource: '../src/*'
-                # ...except for the classes located in these directories
-                exclude: '../src/{Entity,Repository}'
-
-            # these were imported above, but we want to add some extra config
-            App\Controller\:
-                resource: '../src/Controller'
-                # apply some configuration to these services
-                public: true
-                tags: ['controller.service_arguments']
+                exclude: '../src/{Entity,Migrations,Tests}'
 
     .. code-block:: xml
 
@@ -863,11 +816,7 @@ key. For example, the default Symfony configuration contains this:
             <services>
                 <!-- ... -->
 
-                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Repository}" />
-
-                <prototype namespace="App\Controller\" resource="../src/Controller" public="true">
-                    <tag name="controller.service_arguments" />
-                </prototype>
+                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}" />
             </services>
         </container>
 
@@ -885,16 +834,7 @@ key. For example, the default Symfony configuration contains this:
             ->setPublic(false)
         ;
 
-        $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Repository}');
-
-        // Changes default config
-        $definition
-            ->setPublic(true)
-            ->addTag('controller.service_arguments')
-        ;
-
-        // $this is a reference to the current loader
-        $this->registerClasses($definition, 'App\\Controller\\', '../src/Controller/*');
+        $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Migrations,Tests}');
 
 .. tip::
 
@@ -915,11 +855,11 @@ them will not cause the container to be rebuilt.
 .. note::
 
     Wait, does this mean that *every* class in ``src/`` is registered as
-    a service? Even model or entity classes? Actually, no. As long as you have
+    a service? Even model classes? Actually, no. As long as you have
     ``public: false`` under your ``_defaults`` key (or you can add it under the
     specific import), all the imported services are *private*. Thanks to this, all
     classes in ``src/`` that are *not* explicitly used as services are
-    automatically removed from the final container. In reality, the import simply
+    automatically removed from the final container. In reality, the import
     means that all classes are "available to be *used* as services" without needing
     to be manually configured.
 
@@ -1039,8 +979,6 @@ Learn more
 .. toctree::
     :maxdepth: 1
     :glob:
-
-    /service_container/*
 
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture
 .. _`Symfony Standard Edition (version 3.3) services.yaml`: https://github.com/symfony/symfony-standard/blob/3.3/app/config/services.yml

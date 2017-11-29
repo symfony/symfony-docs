@@ -172,24 +172,10 @@ so ``App\Util\Rot13Transformer``. In this case, that exists! When you configured
 the ``Rot13Transformer`` service, you used its fully-qualified class name as its
 id. Autowiring isn't magic: it simply looks for a service whose id matches the type-hint.
 If you :ref:`load services automatically <service-container-services-load-example>`,
-each service's id is its class name. This is the main way to control autowiring.
+each service's id is its class name.
 
-If there is *not* a service whose id exactly matches the type, then:
-
-If there are **0** services in the container that have the type, then:
-    If the type is a concrete class, then a new, private, autowired service is
-    auto-registered in the container and used for the argument.
-
-.. _autowiring-single-matching-service:
-
-If there is exactly **1** service in the container that has the type, then:
-    Create an :ref:`alias <service-autowiring-alias>` from the type to the
-    service id so that normal autowiring works.
-
-If there are **2 or more** services in the container that have the type, then:
-    A clear exception is thrown. You need to *choose* which service should
-    be used by creating an :ref:`alias <service-autowiring-alias>` or
-    :ref:`configuring the argument explicitly <services-wire-specific-service>`.
+If there is *not* a service whose id exactly matches the type, a clear exception
+will be thrown.
 
 Autowiring is a great way to automate configuration, and Symfony tries to be as
 *predictable* and clear as possible.
