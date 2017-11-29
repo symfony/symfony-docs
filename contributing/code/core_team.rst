@@ -83,6 +83,9 @@ Active Core Members
   * **Maxime Steinhausser** (`ogizanagi`_) can merge into Config_, Console_,
     Form_, Serializer_, DependencyInjection_, and HttpKernel_ components.
 
+  * **Tobias Niholm** (`Nyholm`) manages the official and contrib recipes
+    repositories.
+
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
@@ -223,4 +226,4 @@ discretion of the **Project Leader**.
 .. _`lyrixx`: https://github.com/lyrixx/
 .. _`chalasr`: https://github.com/chalasr/
 .. _`ogizanagi`: https://github.com/ogizanagi/
-.. _`csarrazi`: https://github.com/csarrazi/
+.. _`Nyholm`: https://github.com/Nyholm
