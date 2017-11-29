@@ -218,7 +218,7 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
     before_install:
         - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
         - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
-        - if ! [ -v $DEPENDENCIES ]; then composer require --no-update ${DEPENDENCIES}; fi;
+        - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
 
     install:
         # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
