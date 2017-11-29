@@ -191,7 +191,8 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
         fast_finish: true
         include:
               # Minimum supported Symfony version with the latest PHP version
-            - env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
+            - php: 7.2
+              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
 
               # Test the latest stable release
             - php: 7.0
@@ -207,14 +208,14 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
               env: DEPENDENCIES="symfony/lts:^3"
 
               # Latest commit to master
-            - env: STABILITY="dev"
+            - php: 7.2
+              env: STABILITY="dev"
 
         allow_failures:
               # Dev-master is allowed to fail.
             - env: STABILITY="dev"
 
     before_install:
-        - composer require --no-update "symfony/phpunit-bridge:^3.3 || ^4"
         - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
         - if [[ -v $STABILITY ]]; then composer config minimum-stability $STABILITY; fi;
         - if [[ -v $DEPENDENCIES ]]; then composer require --no-update $DEPENDENCIES; fi;
