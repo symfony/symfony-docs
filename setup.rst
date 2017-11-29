@@ -73,6 +73,22 @@ by pressing ``Ctrl+C`` from your terminal.
     You should **NEVER** listen to all interfaces on a computer that is
     directly accessible from the Internet.
 
+Storing your Project in git
+---------------------------
+
+Storing your project in git is easy! Just initialize you repository, add everything
+and commit:
+
+.. code-block:: terminal
+
+    $ git init
+    $ git add .
+    $ git commit -m "Initial commit"
+
+Your project already has a sensible ``.gitignore`` file. And as you install more
+packages, a system called :ref:`Flex <flex-quick-intro>` will add more lines to that
+file when needed.
+
 Troubleshooting: The Requirements Checker
 -----------------------------------------
 
