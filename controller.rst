@@ -456,15 +456,15 @@ First, enable sessions in your configuration:
 
 .. configuration-block::
 
-    .. code-block:: diff
+    .. code-block:: yml
 
         # config/packages/framework.yaml
         framework:
             # ...
 
-        +     session:
-        +         # With this config, PHP's native session handling is used
-        +         handler_id: ~
+            session:
+                # With this config, PHP's native session handling is used
+                handler_id: ~
 
     .. code-block:: xml
 
