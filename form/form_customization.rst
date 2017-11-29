@@ -366,7 +366,7 @@ You can do this by including the ``only`` keyword after the list form themes:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/common.html.twig #}
+        {# templates/form/common.html.twig #}
         {% use "form_div_layout.html.twig" %}
 
         {# ... #}
@@ -401,7 +401,7 @@ file in order to customize the ``integer_widget`` fragment.
 
 .. code-block:: html+php
 
-    <!-- templates/form/integer_widget.html.php -->
+    <!-- src/Resources/integer_widget.html.php -->
     <div class="integer_widget">
         <?php echo $view['form']->block(
             $form,
@@ -433,7 +433,7 @@ method:
 
     The ``:form`` syntax is based on the functional names for templates:
     ``Bundle:Directory``. As the form directory lives in the
-    ``app/Resources/views`` directory, the ``Bundle`` part is empty, resulting
+    ``templates/`` directory, the ``Bundle`` part is empty, resulting
     in ``:form``.
 
 Referencing base Form Blocks (Twig specific)
@@ -750,7 +750,7 @@ customize the ``name`` field only:
 
         <?php echo $view['form']->widget($form['name']); ?>
 
-        <!-- templates/form/_product_name_widget.html.php -->
+        <!-- src/Resources/_product_name_widget.html.php -->
         <div class="text_widget">
             <?php echo $view['form']->block('form_widget_simple') ?>
         </div>
@@ -808,7 +808,7 @@ You can also override the markup for an entire field row using the same method:
 
         <?php echo $view['form']->row($form['name']); ?>
 
-        <!-- templates/form/_product_name_row.html.php -->
+        <!-- src/Resources/_product_name_row.html.php -->
         <div class="name_row">
             <?php echo $view['form']->label($form) ?>
             <?php echo $view['form']->errors($form) ?>

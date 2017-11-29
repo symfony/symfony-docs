@@ -71,6 +71,7 @@ your class as a service and using the  ``form.type_extension`` tag:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -80,6 +81,7 @@ your class as a service and using the  ``form.type_extension`` tag:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -95,6 +97,7 @@ your class as a service and using the  ``form.type_extension`` tag:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Form\Extension\ImageTypeExtension;
         use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -217,7 +220,7 @@ Specifically, you need to override the ``file_widget`` block:
 
     .. code-block:: html+twig
 
-        {# app/Resources/fields.html.twig #}
+        {# templates/form/fields.html.twig #}
         {% extends 'form_div_layout.html.twig' %}
 
         {% block file_widget %}
@@ -233,7 +236,7 @@ Specifically, you need to override the ``file_widget`` block:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/file_widget.html.php -->
+        <!-- src/Resources/file_widget.html.php -->
         <?php echo $view['form']->widget($form) ?>
         <?php if (null !== $image_url): ?>
             <img src="<?php echo $view['assets']->getUrl($image_url) ?>"/>

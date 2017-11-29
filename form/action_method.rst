@@ -25,7 +25,7 @@ form, you can use ``setAction()`` and ``setMethod()``:
 
         class DefaultController extends Controller
         {
-            public function newAction()
+            public function new()
             {
                 $form = $this->createFormBuilder($task)
                     ->setAction($this->generateUrl('target_route'))
@@ -83,7 +83,7 @@ options:
 
         class DefaultController extends Controller
         {
-            public function newAction()
+            public function new()
             {
                 // ...
 
