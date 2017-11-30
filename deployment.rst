@@ -225,9 +225,9 @@ If your deployment method doesn't use Composer, you may have removed the
 The solution is to override the ``getProjectDir()`` method in the application
 kernel and return your project's root directory::
 
-    // app/AppKernel.php
+    // src/Kernel.php
     // ...
-    class AppKernel extends Kernel
+    class Kernel extends BaseKernel
     {
         // ...
 

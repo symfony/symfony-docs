@@ -39,7 +39,7 @@ method in the ``Kernel`` class of your application::
     // src/Kernel.php
 
     // ...
-    class AppKernel extends BaseKernel
+    class Kernel extends BaseKernel
     {
         // ...
 
@@ -72,7 +72,7 @@ method::
     // src/Kernel.php
 
     // ...
-    class AppKernel extends Kernel
+    class Kernel extends Kernel
     {
         // ...
 

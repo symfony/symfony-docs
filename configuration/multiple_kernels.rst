@@ -77,9 +77,9 @@ Now you need to define the ``ApiKernel`` class used by the new front controller.
 The easiest way to do this is by duplicating the existing  ``src/Kernel.php``
 file and make the needed changes.
 
-In this example, the ``ApiKernel`` will load less bundles than AppKernel. Be
-sure to also change the location of the cache, logs and configuration files so
-they don't collide with the files from ``AppKernel``::
+In this example, the ``ApiKernel`` will load less bundles than the default
+Kernel. Be sure to also change the location of the cache, logs and configuration
+files so they don't collide with the files from ``src/Kernel.php``::
 
     // src/ApiKernel.php
     use Symfony\Component\HttpKernel\Kernel;

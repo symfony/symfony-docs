@@ -57,7 +57,7 @@ Now, examine the results to see this closely:
             <!-- true, as expected -->
 
             <my-bundle:config logging="%kernel.debug%" />
-            <!-- true/false (depends on 2nd parameter of AppKernel),
+            <!-- true/false (depends on 2nd parameter of Kernel),
                  as expected, because %kernel.debug% inside configuration
                  gets evaluated before being passed to the extension -->
 
@@ -78,7 +78,7 @@ Now, examine the results to see this closely:
 
         $container->loadFromExtension('my_bundle', array(
                 'logging' => "%kernel.debug%",
-                // true/false (depends on 2nd parameter of AppKernel),
+                // true/false (depends on 2nd parameter of Kernel),
                 // as expected, because %kernel.debug% inside configuration
                 // gets evaluated before being passed to the extension
             )

@@ -14,7 +14,7 @@
   * :doc:`web_profiler </reference/configuration/web_profiler>`
   * :doc:`debug </reference/configuration/debug>`
 
-* :doc:`Configuring the Kernel (e.g. AppKernel) </reference/configuration/kernel>`
+* :doc:`Configuring the Kernel </reference/configuration/kernel>`
 
 * **Forms and Validation**
 
