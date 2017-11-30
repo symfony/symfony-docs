@@ -363,13 +363,13 @@ The end user can provide values in any configuration file:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/services.yaml
         parameters:
             acme_blog.author.email: 'fabien@example.com'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -384,7 +384,7 @@ The end user can provide values in any configuration file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/services.php
         $container->setParameter('acme_blog.author.email', 'fabien@example.com');
 
 Retrieve the configuration parameters in your code from the container::

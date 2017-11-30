@@ -157,7 +157,7 @@ different formats, XLIFF being the recommended format:
 
     .. code-block:: yaml
 
-        # translations/messages.fr.yml
+        # translations/messages.fr.yaml
         Symfony is great: J'aime Symfony
 
     .. code-block:: php

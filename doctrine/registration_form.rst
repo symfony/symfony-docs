@@ -147,7 +147,7 @@ With some validation added, your class may look something like this::
     }
 
 The :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` requires
-a few other methods and your ``security.yml`` file needs to be configured
+a few other methods and your ``security.yaml`` file needs to be configured
 properly to work with the ``User`` entity. For a more complete example, see
 the :ref:`Entity Provider <security-crete-user-entity>` article.
 
@@ -277,7 +277,7 @@ encoder in the security configuration:
 
     .. code-block:: yaml
 
-        # config/packages/security.yml
+        # config/packages/security.yaml
         security:
             encoders:
                 App\Entity\User: bcrypt
@@ -364,7 +364,7 @@ return the ``email`` property::
         // ...
     }
 
-Next, just update the ``providers`` section of your ``security.yml`` file
+Next, just update the ``providers`` section of your ``security.yaml`` file
 so that Symfony knows how to load your users via the ``email`` property on
 login. See :ref:`authenticating-someone-with-a-custom-entity-provider`.
 

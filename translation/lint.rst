@@ -15,7 +15,7 @@ translation file using the ``lint:yaml`` and ``lint:xliff`` commands:
 .. code-block:: terminal
 
     # lint a single file
-    $ ./bin/console lint:yaml translations/messages.en.yml
+    $ ./bin/console lint:yaml translations/messages.en.yaml
     $ ./bin/console lint:xliff translations/messages.en.xlf
 
     # lint a whole directory

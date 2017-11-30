@@ -393,7 +393,7 @@ You can also set the host option on imported routes:
 
         # config/routes.yaml
         app_hello:
-            resource: '@ThirdPartyBundle/Resources/config/routing.yml'
+            resource: '@ThirdPartyBundle/Resources/config/routing.yaml'
             host:     "hello.example.com"
 
     .. code-block:: xml

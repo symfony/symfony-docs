@@ -86,7 +86,7 @@ In Symfony, you can register your custom DQL functions as follows:
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/packages/doctrine.yaml
             doctrine:
                 orm:
                     # ...
@@ -99,7 +99,7 @@ In Symfony, you can register your custom DQL functions as follows:
 
         .. code-block:: xml
 
-            # app/config/config.xml
+            <!-- config/packages/doctrine.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -127,7 +127,7 @@ In Symfony, you can register your custom DQL functions as follows:
 
         .. code-block:: php
 
-            // app/config/config.php
+            // config/packages/doctrine.php
             use App\DQL\DatetimeFunction;
 
             $container->loadFromExtension('doctrine', array(

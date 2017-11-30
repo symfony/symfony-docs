@@ -649,7 +649,7 @@ type
 
 The type of the resource to hint the loaders about the format. This isn't
 needed when you use the default routers with the expected file extensions
-(``.xml``, ``.yml`` / ``.yaml``, ``.php``).
+(``.xml``, ``.yml`` or ``.yaml``, ``.php``).
 
 http_port
 .........
