@@ -1267,11 +1267,11 @@ package:
        framework:
             assets:
                 # this manifest is applied to every asset (including packages)
-                json_manifest_path: "%kernel.project_dir%/web/assets/manifest.json"
+                json_manifest_path: "%kernel.project_dir%/public/build/manifest.json"
                 packages:
                     foo_package:
                         # this package uses its own manifest (the default file is ignored)
-                        json_manifest_path: "%kernel.project_dir%/web/assets/a_different_manifest.json"
+                        json_manifest_path: "%kernel.project_dir%/public/build/a_different_manifest.json"
                     bar_package:
                         # this package uses the global manifest (the default file is used)
                         base_path: '/images'
@@ -1288,11 +1288,11 @@ package:
 
             <framework:config>
                 <!-- this manifest is applied to every asset (including packages) -->
-                <framework:assets json-manifest-path="%kernel.project_dir%/web/assets/manifest.json">
+                <framework:assets json-manifest-path="%kernel.project_dir%/public/build/manifest.json">
                     <!-- this package uses its own manifest (the default file is ignored) -->
                     <framework:package
                         name="foo_package"
-                        json-manifest-path="%kernel.project_dir%/web/assets/a_different_manifest.json" />
+                        json-manifest-path="%kernel.project_dir%/public/build/a_different_manifest.json" />
                     <!-- this package uses the global manifest (the default file is used) -->
                     <framework:package
                         name="bar_package"
@@ -1307,11 +1307,11 @@ package:
         $container->loadFromExtension('framework', array(
             'assets' => array(
                 // this manifest is applied to every asset (including packages)
-                'json_manifest_path' => '%kernel.project_dir%/web/assets/manifest.json',
+                'json_manifest_path' => '%kernel.project_dir%/public/build/manifest.json',
                 'packages' => array(
                     'foo_package' => array(
                         // this package uses its own manifest (the default file is ignored)
-                        'json_manifest_path' => '%kernel.project_dir%/web/assets/a_different_manifest.json',
+                        'json_manifest_path' => '%kernel.project_dir%/public/build/a_different_manifest.json',
                     ),
                     'bar_package' => array(
                         // this package uses the global manifest (the default file is used)
