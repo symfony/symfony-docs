@@ -122,7 +122,7 @@ and hidden with the service definition:
 
         .. code-block:: yaml
 
-            # config/parameters.yml
+            # config/services.yaml
             parameters:
                 # This will be parsed as string '@securepass'
                 mailer_password: '@@securepass'
