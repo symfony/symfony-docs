@@ -59,7 +59,7 @@ because that will be explained in the next section)::
         /**
          * @Route("/", name="homepage")
          */
-        public function indexAction()
+        public function index()
         {
             return $this->render('default/index.html.twig', [
                 // ...
@@ -69,12 +69,12 @@ because that will be explained in the next section)::
 
 In Symfony applications, **controllers** are usually PHP classes whose names
 are suffixed with the ``Controller`` word. In this example, the controller
-is called ``Default`` and the PHP class is called ``DefaultController``.
+is called ``DefaultController``.
 
 The methods defined in a controller are called **actions**, they are usually
 associated with one URL of the application and their names are suffixed
-with ``Action``. In this example, the ``Default`` controller has only one
-action called ``index`` and defined in the ``indexAction()`` method.
+with ``Action``. In this example, the ``DefaultController`` has only one
+action called ``index()``.
 
 Actions are usually very short - around 10-15 lines of code - because they
 just call other parts of the application to get or generate the needed
@@ -90,7 +90,7 @@ Routing
 Symfony routes each request to the action that handles it by matching the
 requested URL against the paths configured by the application. Open again
 the ``src/Controller/DefaultController.php`` file and take a look
-at the three lines of code above the ``indexAction()`` method::
+at the three lines of code above the ``index()`` method::
 
     // src/Controller/DefaultController.php
     namespace App\Controller;
@@ -103,7 +103,7 @@ at the three lines of code above the ``indexAction()`` method::
         /**
          * @Route("/", name="homepage")
          */
-        public function indexAction()
+        public function index()
         {
             return $this->render('default/index.html.twig', [
                 // ...
@@ -126,7 +126,7 @@ but later it'll be useful for linking pages.
 
 Considering all this, the ``@Route("/", name="homepage")`` annotation creates a
 new route called ``homepage`` which makes Symfony execute the ``index`` action
-of the ``Default`` controller when the user browses the ``/`` path of the application.
+of the ``DefaultController`` when the user browses the ``/`` path of the application.
 
 .. tip::
 
@@ -175,9 +175,9 @@ Working with Environments
 -------------------------
 
 Now that you have a better understanding of how Symfony works, take a closer
-look at the bottom of any Symfony rendered page. You should notice a small
-bar with the Symfony logo. This is the "web debug toolbar" and it is a Symfony
-developer's best friend!
+look at the bottom of any Symfony rendered page. If you've installed the profiler
+with ``composer require profiler``, you should notice a small bar with the Symfony
+logo. This is the "web debug toolbar" and it is a Symfony developer's best friend!
 
 .. image:: /_images/quick_tour/web_debug_toolbar.png
    :align: center
@@ -210,11 +210,12 @@ application. Symfony defines two environments by default: ``dev`` (suited for
 when developing the application locally) and ``prod`` (optimized for when
 executing the application on production).
 
-When you visit the ``http://localhost:8000`` URL in your browser, you're
-executing your Symfony application in the ``dev`` environment. To visit
-your application in the ``prod`` environment, visit the ``http://localhost:8000/index.php``
-URL instead. If you prefer to always show the ``dev`` environment in the
-URL, you can visit ``http://localhost:8000/index.php`` URL.
+The environment is determined by the ``APP_ENV`` environment variable, which is
+set in the ``.env`` file while developing. By default, this value is set to ``dev``.
+This means that, right now, hen you visit the ``http://localhost:8000`` URL in your
+browser, you're executing your Symfony application in the ``dev`` environment. To
+visit your application in the ``prod`` environment, open your ``.env`` file and
+set ``APP_ENV`` to ``prod`` and ``APP_DEBUG`` to ``0``.
 
 The main difference between environments is that ``dev`` is optimized to
 provide lots of information to the developer, which means worse application
@@ -224,26 +225,31 @@ toolbar.
 
 The other difference between environments is the configuration options used
 to execute the application. When you access the ``dev`` environment, Symfony
-loads the ``app/config/config_dev.yml`` configuration file. When you access
-the ``prod`` environment, Symfony loads ``app/config/config_prod.yml`` file.
+loads any configuration files from the ``config/packages/dev`` directory. When you
+access the ``prod`` environment, Symfony loads files from the ``config/packages/prod``
+directory.
 
 Typically, the environments share a large amount of configuration options.
-For that reason, you put your common configuration in ``config.yml`` and
-override the specific configuration file for each environment where necessary:
+For that reason, any configuration files stored directly in ``config/packages``
+are loaded in *all* environments. Then, configuration files in the ``dev/`` sub-directory
+can *override* that config.
 
 .. code-block:: yaml
 
-    # app/config/config_dev.yml
-    imports:
-        - { resource: config.yml }
+    # config/packages/routing.yaml
+    framework:
+        router:
+            strict_requirements: ~
 
-    web_profiler:
-        toolbar: true
-        intercept_redirects: false
+.. code-block:: yaml
 
-In this example, the ``config_dev.yml`` configuration file imports the common
-``config.yml`` file and then overrides any existing web debug toolbar configuration
-with its own options.
+    # config/packages/dev/routing.yaml
+    framework:
+        router:
+            strict_requirements: true
+
+In this example, the ``strict_requirements`` is overridden and set to ``true``
+*only* in the ``dev`` environment.
 
 For more details on environments, see
 :ref:`the "Environments" section <page-creation-environments>` of the
