@@ -62,7 +62,7 @@ One way to accomplish this is with the Expression constraint:
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yaml
+        # config/validator/validation.yaml
         App\Model\BlogPost:
             constraints:
                 - Expression:
@@ -89,7 +89,7 @@ One way to accomplish this is with the Expression constraint:
 
     .. code-block:: xml
 
-        <!-- src/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -143,7 +143,7 @@ more about the expression language syntax, see
 
         .. code-block:: yaml
 
-            # src/Resources/config/validation.yaml
+            # config/validator/validation.yaml
             App\Model\BlogPost:
                 properties:
                     isTechnicalPost:
@@ -175,7 +175,7 @@ more about the expression language syntax, see
 
         .. code-block:: xml
 
-            <!-- src/Resources/config/validation.xml -->
+            <!-- config/validator/validation.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

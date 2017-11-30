@@ -65,7 +65,7 @@ Then you can constrain this method with ``IsTrue``.
 
     .. code-block:: yaml
 
-        # src/Resources/config/validation.yaml
+        # config/validator/validation.yaml
         App\Entity\Author:
             getters:
                 tokenValid:
