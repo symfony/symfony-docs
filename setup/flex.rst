@@ -124,6 +124,8 @@ Symfony application by executing the following command:
     recommended since Symfony 3.3. Use the Composer ``create-project`` command
     instead.
 
+.. _upgrade-to-flex:
+
 Upgrading Existing Applications to Flex
 ---------------------------------------
 
