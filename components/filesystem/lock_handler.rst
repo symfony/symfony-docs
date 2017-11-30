@@ -5,5 +5,5 @@ LockHandler
 
 .. caution::
 
-    The ``LockHandler`` utility is deprecated since Symfony 3.4. Use the new
-    Symfony Lock component instead.
+    The ``LockHandler`` utility was removed in Symfony 4.0. Use the new Symfony
+    Lock component instead.

@@ -1860,9 +1860,6 @@ The cache clearer used to clear your PSR-6 cache.
 prefix_seed
 ...........
 
-.. versionadded:: 3.2
-    The ``prefix_seed`` option was introduced in Symfony 3.2.
-
 **type**: ``string`` **default**: ``null``
 
 If defined, this value is used as part of the "namespace" generated for the
