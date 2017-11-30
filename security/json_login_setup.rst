@@ -41,7 +41,7 @@ First, enable the JSON login under your firewall:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array(
@@ -185,7 +185,7 @@ The security configuration should be:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array(

@@ -100,7 +100,7 @@ is the service id of your user checker:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         use App\Security\UserChecker;

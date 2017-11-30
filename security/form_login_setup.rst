@@ -49,7 +49,7 @@ First, enable form login under your firewall:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array(
@@ -325,7 +325,7 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         'access_control' => array(
@@ -365,7 +365,7 @@ fixes the problem:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         'access_control' => array(

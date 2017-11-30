@@ -366,7 +366,7 @@ By default, templates can live in two different locations:
 ``vendor/path/to/CoolBundle/Resources/views/``
     Each third party bundle houses its templates in its ``Resources/views/``
     directory (and subdirectories). When you plan to share your bundle, you should
-    put the templates in the bundle instead of the ``app/`` directory.
+    put the templates in the bundle instead of the ``templates/`` directory.
 
 Most of the templates you'll use live in the ``templates/``
 directory. The path you'll use will be relative to this directory. For example,
@@ -407,7 +407,7 @@ for several types of templates, each which lives in a specific location:
 
 In the :doc:`/templating/overriding` section, you'll find out how each
 template living inside the AcmeBlogBundle, for example, can be overridden
-by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
+by placing a template of the same name in the ``templates/bundles/AcmeBlogBundle/``
 directory. This gives the power to override templates from any vendor bundle.
 
 Template Suffix
@@ -516,7 +516,7 @@ Including this template from any other template is simple:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/article/list.html.php -->
+        <!-- templates/article/list.html.php -->
         <?php $view->extend('layout.html.php') ?>
 
         <?php $view['slots']->start('body') ?>

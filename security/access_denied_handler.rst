@@ -57,7 +57,7 @@ configure it under your firewall:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use App\Security\AccessDeniedHandler;
 
         $container->loadFromExtension('security', array(

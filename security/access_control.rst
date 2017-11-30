@@ -63,7 +63,7 @@ Take the following ``access_control`` entries as an example:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
             'access_control' => array(
@@ -202,7 +202,7 @@ pattern so that it is only accessible by requests from the local server itself:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
             'access_control' => array(
@@ -324,7 +324,7 @@ the user will be redirected to ``https``:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'access_control' => array(
                 array(

@@ -471,7 +471,7 @@ Configuration example for form login and query_string
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
         $container->loadFromExtension('security', array(

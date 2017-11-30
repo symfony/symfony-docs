@@ -63,7 +63,7 @@ Enable the x509 authentication for a particular firewall in the security configu
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -135,7 +135,7 @@ corresponding firewall in your security configuration:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(

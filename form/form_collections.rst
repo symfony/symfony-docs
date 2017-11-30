@@ -257,7 +257,7 @@ great, your user can't actually add any new tags yet.
     rendering the form in the template if you render the whole form at
     once (e.g ``form_widget(form)``). To fix this you can set this directive
     to a higher value (either via a ``php.ini`` file or via :phpfunction:`ini_set`,
-    for example in ``app/autoload.php``) or render each form field by hand
+    for example in ``public/index.php``) or render each form field by hand
     using ``form_row()``.
 
 .. _form-collections-new-prototype:
