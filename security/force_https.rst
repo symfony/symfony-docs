@@ -39,7 +39,7 @@ to use HTTPS then you could use the following configuration:
 
         .. code-block:: php
 
-            // app/config/security.php
+            // config/packages/security.php
             $container->loadFromExtension('security', array(
                 // ...
 
@@ -90,7 +90,7 @@ role:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 

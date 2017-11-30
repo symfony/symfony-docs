@@ -37,7 +37,7 @@ to apply to all instances of a specific class:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use Symfony\Component\Security\Core\User\User;
 
         $container->loadFromExtension('security', array(
@@ -90,7 +90,7 @@ named encoders:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
             'encoders' => array(
@@ -160,7 +160,7 @@ you must register a service for it in order to use it as a named encoder:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         // ...
         use App\Security\Encoder\MyCustomPasswordEncoder;
 

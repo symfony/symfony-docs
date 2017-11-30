@@ -124,7 +124,7 @@ Use the ``--router`` option to use your own router script:
 
 .. code-block:: terminal
 
-    $ php bin/console server:start --router=app/config/my_router.php
+    $ php bin/console server:start --router=config/my_router.php
 
 If your application's document root differs from the standard directory layout,
 you have to pass the correct location using the ``--docroot`` option:

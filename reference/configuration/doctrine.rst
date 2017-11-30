@@ -305,7 +305,7 @@ The following block shows all possible configuration keys:
                 # the DBAL driverOptions option
                 options:
                     foo: bar
-                path:                 '%kernel.project_dir%/app/data/data.sqlite'
+                path:                 '%kernel.project_dir%/var/data/data.sqlite'
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
                 # the DBAL wrapperClass option

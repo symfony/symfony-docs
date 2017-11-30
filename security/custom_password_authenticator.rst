@@ -192,7 +192,7 @@ using the ``simple_form`` key:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         use App\Security\TimeAuthenticator;

@@ -132,7 +132,7 @@ Files and Directories
 ---------------------
 
 * When referencing directories, always add a trailing slash to avoid confusions
-  with regular files (e.g. "execute the ``console`` script located at the ``app/``
+  with regular files (e.g. "execute the ``console`` script located at the ``bin/``
   directory").
 * When referencing file extensions explicitly, you should include a leading dot
   for every extension (e.g. "XML files use the ``.xml`` extension").

@@ -92,7 +92,7 @@ use the default provider available in the security component:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -207,7 +207,7 @@ After this, you have protected your login form against CSRF attacks.
 
         .. code-block:: php
 
-            // app/config/security.php
+            // config/packages/security.php
             $container->loadFromExtension('security', array(
                 // ...
 

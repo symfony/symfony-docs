@@ -54,7 +54,7 @@ firewall listener:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -172,7 +172,7 @@ setting:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 

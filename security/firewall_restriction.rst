@@ -52,7 +52,7 @@ matches the configured ``pattern``.
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         $container->loadFromExtension('security', array(
@@ -109,7 +109,7 @@ only initialize if the host from the request matches against the configuration.
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         $container->loadFromExtension('security', array(
@@ -167,7 +167,7 @@ the provided HTTP methods.
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         $container->loadFromExtension('security', array(

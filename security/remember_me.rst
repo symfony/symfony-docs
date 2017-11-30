@@ -60,7 +60,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 

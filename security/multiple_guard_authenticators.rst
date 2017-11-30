@@ -58,7 +58,7 @@ This is how your security configuration can look in action:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use App\Security\LoginFormAuthenticator;
         use App\Security\FacebookConnectAuthenticator;
 
@@ -143,7 +143,7 @@ the solution is to split the configuration into two separate firewalls:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use App\Security\ApiTokenAuthenticator;
         use App\Security\LoginFormAuthenticator;
 

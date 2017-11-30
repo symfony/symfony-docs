@@ -870,8 +870,7 @@ The ``alias`` option is required and very important: it defines the file
 "suffix" that will be used for the resource files that use this loader.
 For example, suppose you have some custom ``bin`` format that you need to
 load. If you have a ``bin`` file that contains French translations for
-the ``messages`` domain, then you might have a file
-``app/Resources/translations/messages.fr.bin``.
+the ``messages`` domain, then you might have a file ``translations/messages.fr.bin``.
 
 When Symfony tries to load the ``bin`` file, it passes the path to your
 custom loader as the ``$resource`` argument. You can then perform any logic
