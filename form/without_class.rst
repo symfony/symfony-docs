@@ -63,7 +63,7 @@ an array.
 Adding Validation
 ~~~~~~~~~~~~~~~~~
 
-The only missing piece is validation. Usually, when you call ``$form->isValid()``,
+The only missing piece is validation. Usually, when you call ``$form->handleRequest($request)``,
 the object is validated by reading the constraints that you applied to that
 class. If your form is mapped to an object (i.e. you're using the ``data_class``
 option or passing an object to your form), this is almost always the approach
