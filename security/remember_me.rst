@@ -84,7 +84,7 @@ The ``remember_me`` firewall defines the following configuration options:
 
 ``secret`` (**required**)
     The value used to encrypt the cookie's content. It's common to use the
-    ``secret`` value defined in the ``app/config/parameters.yml`` file.
+    ``secret`` value defined in the ``APP_SECRET`` environment variable.
 
 ``name`` (default value: ``REMEMBERME``)
     The name of the cookie used to keep the user logged in. If you enable the
