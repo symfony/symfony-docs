@@ -129,9 +129,9 @@ page.
 Creating Symfony Applications with Composer
 -------------------------------------------
 
-If you still use PHP 5.3 or can't use the Symfony installer for any reason, you
-can create Symfony applications with `Composer`_, the dependency manager used by
-modern PHP applications.
+If you can't use the Symfony installer for any reason, you can create Symfony
+applications with `Composer`_, the dependency manager used by modern PHP
+applications.
 
 If you don't have Composer installed in your computer, start by
 :doc:`installing Composer globally </setup/composer>`. Then, execute the
