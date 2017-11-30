@@ -228,8 +228,9 @@ charset
 
 **type**: ``string`` **default**: ``'%kernel.charset%'``
 
-The charset used by the template files. In the Symfony Standard edition this
-defaults to the ``UTF-8`` charset.
+The charset used by the template files. By default it's the same as the value of
+the ``kernel.charset`` container parameter, which is ``UTF-8`` by default in
+Symfony applications.
 
 date
 ~~~~
