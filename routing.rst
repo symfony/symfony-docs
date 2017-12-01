@@ -15,6 +15,8 @@ the change is simple.
 .. index::
    single: Routing; Basics
 
+.. _routing-creating-routes:
+
 Creating Routes
 ---------------
 

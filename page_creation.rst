@@ -168,11 +168,11 @@ To get a list of *all* of the routes in your system, use the ``debug:router`` co
 
 You should see your *one* route so far:
 
-    ------------------ -------- -------- ------ --------------- 
-     Name               Method   Scheme   Host   Path           
-    ------------------ -------- -------- ------ --------------- 
-     app_lucky_number   ANY      ANY      ANY    /lucky/number  
-    ------------------ -------- -------- ------ --------------- 
+================== ======== ======== ====== ===============
+ Name               Method   Scheme   Host   Path
+================== ======== ======== ====== ===============
+ app_lucky_number   ANY      ANY      ANY    /lucky/number
+================== ======== ======== ====== ===============
 
 You'll learn about many more commands as you continue!
 
