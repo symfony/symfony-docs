@@ -479,7 +479,7 @@ application handlers.
 .. code-block:: php
 
     // src/HandlerCollection.php
-    namespace AppBundle;
+    namespace App;
 
     class HandlerCollection
     {

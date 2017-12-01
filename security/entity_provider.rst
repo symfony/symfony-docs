@@ -36,8 +36,8 @@ and :ref:`user serialization to the session <security-serialize-equatable>`
 1) Create your User Entity
 --------------------------
 
-For this entry, suppose that you already have a ``User`` entity inside an
-``AppBundle`` with the following fields: ``id``, ``username``, ``password``,
+For this entry, suppose that you already have a ``User`` entity
+with the following fields: ``id``, ``username``, ``password``,
 ``email`` and ``isActive``::
 
     // src/Entity/User.php

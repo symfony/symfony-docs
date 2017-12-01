@@ -50,12 +50,21 @@ The following configuration code shows how you can configure two entity managers
                     default:
                         connection: default
                         mappings:
-                            AppBundle:  ~
-                            AcmeStoreBundle: ~
+                            App:
+                                is_bundle: false
+                                type: annotation
+                                dir: '%kernel.project_dir%/src/Entity'
+                                prefix: 'App\Entity'
+                                alias: App
                     customer:
                         connection: customer
                         mappings:
-                            AcmeCustomerBundle: ~
+                            AppCustomer:
+                                is_bundle: false
+                                type: annotation
+                                dir: '%kernel.project_dir%/src/CustomerEntity'
+                                prefix: 'App\Customer\Entity'
+                                alias: AppCustomer
 
     .. code-block:: xml
 
@@ -94,12 +103,25 @@ The following configuration code shows how you can configure two entity managers
 
                 <doctrine:orm default-entity-manager="default">
                     <doctrine:entity-manager name="default" connection="default">
-                        <doctrine:mapping name="AppBundle" />
-                        <doctrine:mapping name="AcmeStoreBundle" />
+                        <doctrine:mapping
+                            name="App"
+                            is_bundle="false"
+                            type="annotation"
+                            dir="%kernel.project_dir%/src/Entity"
+                            prefix="App\Entity"
+                            alias="App"
+                        />
                     </doctrine:entity-manager>
 
                     <doctrine:entity-manager name="customer" connection="customer">
-                        <doctrine:mapping name="AcmeCustomerBundle" />
+                        <doctrine:mapping
+                            name="AppCustomer"
+                            is_bundle="false"
+                            type="annotation"
+                            dir="%kernel.project_dir%/src/CustomerEntity"
+                            prefix="App\CustomerEntity"
+                            alias="AppCustomer"
+                        />
                     </doctrine:entity-manager>
                 </doctrine:orm>
             </doctrine:config>
@@ -139,14 +161,25 @@ The following configuration code shows how you can configure two entity managers
                     'default' => array(
                         'connection' => 'default',
                         'mappings'   => array(
-                            'AppBundle'  => null,
-                            'AcmeStoreBundle' => null,
+                            'App'  => array(
+                                is_bundle => false,
+                                type => 'annotation',
+                                dir => '%kernel.project_dir%/src/Entity',
+                                prefix => 'App\Entity',
+                                alias => 'App',
+                            )
                         ),
                     ),
                     'customer' => array(
                         'connection' => 'customer',
                         'mappings'   => array(
-                            'AcmeCustomerBundle' => null,
+                            'AppCustomer'  => array(
+                                is_bundle => false,
+                                type => 'annotation',
+                                dir => '%kernel.project_dir%/src/CustomerEntity',
+                                prefix => 'App\CustomerEntity',
+                                alias => 'AppCustomer',
+                            )
                         ),
                     ),
                 ),
@@ -155,8 +188,8 @@ The following configuration code shows how you can configure two entity managers
 
 In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
-AppBundle and AcmeStoreBundle, while the ``customer`` entity manager manages
-entities in the AcmeCustomerBundle. You've also defined two connections, one
+``src/Entity`` directory, while the ``customer`` entity manager manages
+entities in ``src/CustomerEntity``. You've also defined two connections, one
 for each entity manager.
 
 .. note::
