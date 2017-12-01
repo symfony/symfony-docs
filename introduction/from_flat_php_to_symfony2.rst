@@ -620,7 +620,7 @@ The ``layout.php`` file is nearly identical:
 
 .. note::
 
-    The show ``show.html.twig`` template is left as an exercise: updating it should be
+    The ``show.html.twig`` template is left as an exercise: updating it should be
     really similar to updating the ``list.html.twig`` template.
 
 When Symfony's engine (called the Kernel) boots up, it needs a map so
