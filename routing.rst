@@ -8,7 +8,7 @@ Beautiful URLs are a must for any serious web application. This means leaving be
 ugly URLs like ``index.php?article_id=57`` in favor of something like ``/read/intro-to-symfony``.
 
 Having flexibility is even more important. What if you need to change the
-URL of a page from ``/blog`` to ``/news``? How many links woud you need to
+URL of a page from ``/blog`` to ``/news``? How many links would you need to
 hunt down and update to make the change? If you're using Symfony's router,
 the change is simple.
 
@@ -126,7 +126,7 @@ use them later to :ref:`generate URLs <routing-generate>`.
 
     The ``@Route`` above each method is called an *annotation*. If you'd rather
     configure your routes in YAML, XML or PHP, that's no problem! Just create a
-    new routing file (e.g. ``routing.xml``) and Symfony will automatically use it.
+    new routing file (e.g. ``routes.xml``) and Symfony will automatically use it.
 
 .. _routing-requirements:
 

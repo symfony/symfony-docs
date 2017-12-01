@@ -118,7 +118,7 @@ and many others that you'll learn about next.
 
 .. tip::
 
-    What's the difference between ``Controller`` or ``AbstractController``. Not much:
+    What's the difference between ``Controller`` or ``AbstractController``? Not much:
     both are identical, except that ``AbstractController`` is more restrictive: it
     does not allow you to access services directly via ``$this->get()`` or
     ``$this->container->get()``. This forces you to write more robust code to access

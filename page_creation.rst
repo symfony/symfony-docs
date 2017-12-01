@@ -278,8 +278,8 @@ project:
 ``src/``
     All your PHP code lives here.
 
-Most of the time, you'll be working in ``src/`` (PHP files) or ``config/`` (everything
-else). As you keep reading, you'll learn what can be done inside each of these.
+Most of the time, you'll be working in ``src/`` (PHP files) or ``config/`` As you
+keep reading, you'll learn what can be done inside each of these.
 
 So what about the other directories in the project?
 
@@ -298,6 +298,9 @@ So what about the other directories in the project?
 ``public/``
     This is the document root for your project: you put any publicly accessible files
     here.
+
+And when you install new packages, new directories will be created automatically
+when needed.
 
 What's Next?
 ------------
