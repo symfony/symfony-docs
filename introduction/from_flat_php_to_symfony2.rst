@@ -431,7 +431,7 @@ content:
 
     {
         "require": {
-            "symfony/symfony": "3.1.*"
+            "symfony/http-foundation": "^4.0"
         },
         "autoload": {
             "files": ["model.php","controllers.php"]
@@ -534,9 +534,8 @@ a simple application. Along the way, you've made a simple routing
 system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
 templates. If, for some reason, you needed to continue building this "framework"
 from scratch, you could at least use Symfony's standalone
-:doc:`Routing </components/routing>` and
-:doc:`Templating </components/templating>` components, which already
-solve these problems.
+:doc:`Routing </components/routing>` and component and :doc:`Twig </templating>`,
+which already solve these problems.
 
 Instead of re-solving common problems, you can let Symfony take care of
 them for you. Here's the same sample application, now built in Symfony::
@@ -549,17 +548,16 @@ them for you. Here's the same sample application, now built in Symfony::
 
     class BlogController extends Controller
     {
-        public function listAction()
+        public function list()
         {
             $posts = $this->getDoctrine()
-                ->getManager()
-                ->createQuery('SELECT p FROM App:Post p')
-                ->execute();
+                ->getRepository(Post::class)
+                ->findAll()
 
-            return $this->render('Blog/list.html.php', array('posts' => $posts));
+            return $this->render('blog/list.html.twig', ['posts' => $posts]);
         }
 
-        public function showAction($id)
+        public function show($id)
         {
             $post = $this->getDoctrine()
                 ->getRepository(Post::class)
@@ -570,7 +568,7 @@ them for you. Here's the same sample application, now built in Symfony::
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('Blog/show.html.php', array('post' => $post));
+            return $this->render('blog/show.html.php', ['post' => $post]);
         }
     }
 
@@ -581,51 +579,49 @@ nice way to group related pages. The controller functions are also sometimes cal
 The two controllers (or actions) are still lightweight. Each uses the
 :doc:`Doctrine ORM library </doctrine>` to retrieve objects from the
 database and the Templating component to render a template and return a
-``Response`` object. The list ``list.php`` template is now quite a bit simpler:
+``Response`` object. The list ``list.html.twig`` template is now quite a bit simpler,
+and uses Twig:
 
-.. code-block:: html+php
+.. code-block:: html+twig
 
-    <!-- templates/Blog/list.html.php -->
-    <?php $view->extend('layout.html.php') ?>
+    <!-- templates/blog/list.html.twig -->
+    {% extends 'base.html.twig' %}
 
-    <?php $view['slots']->set('title', 'List of Posts') ?>
+    {% block title %}List of Posts{% endblock %}
 
     <h1>List of Posts</h1>
     <ul>
-        <?php foreach ($posts as $post): ?>
+        {% for post in posts %}
         <li>
-            <a href="<?php echo $view['router']->path(
-                'blog_show',
-                array('id' => $post->getId())
-            ) ?>">
-                <?= $post->getTitle() ?>
+            <a href="{{ path('blog_show', { id: post.id }) }}">
+                {{ post.title }}
             </a>
         </li>
-        <?php endforeach ?>
+        {% endfor %}
     </ul>
 
 The ``layout.php`` file is nearly identical:
 
-.. code-block:: html+php
+.. code-block:: html+twig
 
-    <!-- templates/layout.html.php -->
+    <!-- templates/base.html.twig -->
     <!DOCTYPE html>
     <html>
         <head>
-            <title><?= $view['slots']->output(
-                'title',
-                'Default title'
-            ) ?></title>
+            <meta charset="UTF-8">
+            <title>{% block title %}Welcome!{% endblock %}</title>
+            {% block stylesheets %}{% endblock %}
         </head>
         <body>
-            <?= $view['slots']->output('_content') ?>
+            {% block body %}{% endblock %}
+            {% block javascripts %}{% endblock %}
         </body>
     </html>
 
 .. note::
 
-    The show ``show.php`` template is left as an exercise: updating it should be
-    really similar to updating the ``list.php`` template.
+    The show ``show.html.twig`` template is left as an exercise: updating it should be
+    really similar to updating the ``list.html.twig`` template.
 
 When Symfony's engine (called the Kernel) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
@@ -637,11 +633,11 @@ in a readable format:
     # config/routes.yaml
     blog_list:
         path:     /blog
-        defaults: { _controller: AppBundle:Blog:list }
+        controller: App\Controller\BlogController::list
 
     blog_show:
         path:     /blog/show/{id}
-        defaults: { _controller: AppBundle:Blog:show }
+        controller: App\Controller\BlogController::show
 
 Now that Symfony is handling all the mundane tasks, the front controller
 ``public/index.php`` is dead simple. And since it does so little, you'll never
@@ -670,54 +666,6 @@ It's a beautiful thing.
 .. figure:: /_images/http/request-flow.png
    :align: center
    :alt: Symfony request flow
-
-Better Templates
-~~~~~~~~~~~~~~~~
-
-If you choose to use it, Symfony comes standard with a templating engine
-called `Twig`_ that makes templates faster to write and easier to read.
-It means that the sample application could contain even less code! Take,
-for example, rewriting ``list.html.php`` template in Twig would look like
-this:
-
-.. code-block:: html+twig
-
-    {# templates/blog/list.html.twig #}
-    {% extends "layout.html.twig" %}
-
-    {% block title %}List of Posts{% endblock %}
-
-    {% block body %}
-        <h1>List of Posts</h1>
-        <ul>
-            {% for post in posts %}
-            <li>
-                <a href="{{ path('blog_show', {'id': post.id}) }}">
-                    {{ post.title }}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-    {% endblock %}
-
-And rewriting ``layout.html.php`` template in Twig would look like this:
-
-.. code-block:: html+twig
-
-    {# templates/layout.html.twig #}
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>{% block title %}Default title{% endblock %}</title>
-        </head>
-        <body>
-            {% block body %}{% endblock %}
-        </body>
-    </html>
-
-Twig is well-supported in Symfony. And while PHP templates will always
-be supported in Symfony, the many advantages of Twig will continue to
-be discussed. For more information, see the :doc:`templating article </templating>`.
 
 Where Symfony Delivers
 ----------------------
