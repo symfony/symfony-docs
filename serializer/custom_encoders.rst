@@ -52,7 +52,7 @@ Registering it in your app
 --------------------------
 
 If you use the Symfony Framework. then you probably want to register this encoder
-as a service in your app. If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+as a service in your app. If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that's done automatically!
 
 .. tip::

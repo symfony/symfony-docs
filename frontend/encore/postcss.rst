@@ -46,7 +46,7 @@ You can also pass options to the `postcss-loader`_ by passing a callback:
         // ...
     +     .enablePostCssLoader((options) => {
     +         options.config = {
-    +             path: 'app/config/postcss.config.js'
+    +             path: 'config/postcss.config.js'
     +         };
     +     })
     ;

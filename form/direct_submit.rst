@@ -10,7 +10,7 @@ submissions::
     use Symfony\Component\HttpFoundation\Request;
     // ...
 
-    public function newAction(Request $request)
+    public function new(Request $request)
     {
         $form = $this->createFormBuilder()
             // ...
@@ -47,7 +47,7 @@ method, pass the submitted data directly to
     use Symfony\Component\HttpFoundation\Request;
     // ...
 
-    public function newAction(Request $request)
+    public function new(Request $request)
     {
         $form = $this->createFormBuilder()
             // ...

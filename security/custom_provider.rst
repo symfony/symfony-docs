@@ -212,7 +212,7 @@ to the list of providers in the "security" config. Choose a name for the user pr
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use App\Security\User\WebserviceUserProvider;
 
         $container->loadFromExtension('security', array(
@@ -260,7 +260,7 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use App\Security\User\WebserviceUser;
 
         $container->loadFromExtension('security', array(
@@ -331,7 +331,7 @@ is compared to the hashed password returned by your ``getPassword()`` method.
 
         .. code-block:: php
 
-            // app/config/security.php
+            // config/packages/security.php
             use App\Security\User\WebserviceUser;
 
             $container->loadFromExtension('security', array(

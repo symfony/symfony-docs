@@ -73,7 +73,7 @@ a relative/absolute URL or a Symfony route name:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -131,7 +131,7 @@ previously requested URL and always redirect to the default page:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -231,7 +231,7 @@ parameter is included in the request, you may use the value of the
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -297,7 +297,7 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -385,7 +385,7 @@ redirects can be customized using the  ``target_path_parameter`` and
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 

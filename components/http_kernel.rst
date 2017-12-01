@@ -256,11 +256,11 @@ on the request's information.
     information is typically placed on the ``Request`` via the ``RouterListener``).
     This string is then transformed into a PHP callable by doing the following:
 
-    a) The ``AcmeDemoBundle:Default:index`` format of the ``_controller`` key
-       is changed to another string that contains the full class and method
-       name of the controller by following the convention used in Symfony - e.g.
-       ``Acme\DemoBundle\Controller\DefaultController::indexAction``. This transformation
-       is specific to the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
+    a) If the ``_controller`` key doesn't follow the recommended PHP namespace
+       format (e.g. ``App\Controller\DefaultController::index``) its format is
+       transformed into it. For example, the legacy ``AppBundle:Default:index``
+       format would be changed to ``Acme\AppBundle\Controller\DefaultController::indexAction``.
+       This transformation is specific to the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
        sub-class used by the Symfony Framework.
 
     b) A new instance of your controller class is instantiated with no
@@ -300,11 +300,10 @@ on the event object that's passed to listeners on this event.
     the Symfony Framework, and many deal with collecting profiler data when
     the profiler is enabled.
 
-    One interesting listener comes from the `SensioFrameworkExtraBundle`_,
-    which is packaged with the Symfony Standard Edition. This listener's
-    `@ParamConverter`_ functionality allows you to pass a full object (e.g. a
-    ``Post`` object) to your controller instead of a scalar value (e.g. an
-    ``id`` parameter that was on your route). The listener -
+    One interesting listener comes from the `SensioFrameworkExtraBundle`_. This
+    listener's `@ParamConverter`_ functionality allows you to pass a full object
+    (e.g. a ``Post`` object) to your controller instead of a scalar value (e.g.
+    an ``id`` parameter that was on your route). The listener -
     ``ParamConverterListener`` - uses reflection to look at each of the
     arguments of the controller and tries to use different methods to convert
     those to objects, which are then stored in the ``attributes`` property of
@@ -423,12 +422,11 @@ return a ``Response``.
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
     There is no default listener inside the Symfony Framework for the ``kernel.view``
-    event. However, one core bundle - `SensioFrameworkExtraBundle`_ - *does*
-    add a listener to this event. If your controller returns an array,
-    and you place the `@Template`_ annotation above the controller, then this
-    listener renders a template, passes the array you returned from your
-    controller to that template, and creates a ``Response`` containing the
-    returned content from that template.
+    event. However, `SensioFrameworkExtraBundle`_ *does* add a listener to this
+    event. If your controller returns an array, and you place the `@Template`_
+    annotation above the controller, then this listener renders a template,
+    passes the array you returned from your controller to that template, and
+    creates a ``Response`` containing the returned content from that template.
 
     Additionally, a popular community bundle `FOSRestBundle`_ implements
     a listener on this event which aims to give you a robust view layer
@@ -514,9 +512,9 @@ as possible to the client (e.g. sending emails).
 
 .. sidebar:: ``kernel.terminate`` in the Symfony Framework
 
-    If you use the SwiftmailerBundle with Symfony and use ``memory`` spooling,
-    then the `EmailSenderListener`_ is activated, which actually delivers
-    any emails that you scheduled to send during the request.
+    If you use the :ref:`memory spooling <email-spool-memory>` option of the
+    default Symfony mailer, then the `EmailSenderListener`_ is activated, which
+    actually delivers any emails that you scheduled to send during the request.
 
 .. _component-http-kernel-kernel-exception:
 

@@ -58,7 +58,7 @@ transport
 The exact transport method to use to deliver emails. Valid values are:
 
 * smtp
-* gmail (see :doc:`/email/gmail`)
+* gmail (see :ref:`email-using-gmail`)
 * mail (deprecated in SwiftMailer since version 5.4.5)
 * sendmail
 * null (same as setting `disable_delivery`_ to ``true``)

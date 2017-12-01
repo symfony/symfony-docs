@@ -11,6 +11,7 @@ the original service is lost:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             app.mailer:
                 class: App\Mailer
@@ -22,6 +23,7 @@ the original service is lost:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
@@ -38,6 +40,7 @@ the original service is lost:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Mailer;
         use App\DecoratingMailer;
 
@@ -55,6 +58,7 @@ that you can reference it:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             app.mailer:
                 class: App\Mailer
@@ -73,6 +77,7 @@ that you can reference it:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
@@ -94,6 +99,7 @@ that you can reference it:
 
     .. code-block:: php
 
+        // config/services.php
         use App\DecoratingMailer;
         use App\Mailer;
         use Symfony\Component\DependencyInjection\Reference;
@@ -127,6 +133,7 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 
         .. code-block:: yaml
 
+            # config/services.yaml
             services:
                 app.decorating_mailer:
                     # ...
@@ -135,6 +142,7 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 
         .. code-block:: xml
 
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
@@ -158,6 +166,7 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 
         .. code-block:: php
 
+            // config/services.php
             use App\DecoratingMailer;
             use Symfony\Component\DependencyInjection\Reference;
 
@@ -178,6 +187,7 @@ order by configuring the priority of decoration, this can be any integer number
 
     .. code-block:: yaml
 
+        # config/services.yaml
         foo:
             class: Foo
 
@@ -197,6 +207,7 @@ order by configuring the priority of decoration, this can be any integer number
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -218,6 +229,7 @@ order by configuring the priority of decoration, this can be any integer number
 
     .. code-block:: php
 
+        // config/services.php
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('foo', 'Foo')

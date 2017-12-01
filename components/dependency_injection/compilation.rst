@@ -121,7 +121,7 @@ are loaded::
     $container->registerExtension(new AcmeDemoExtension);
 
     $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
-    $loader->load('config.yml');
+    $loader->load('config.yaml');
 
     // ...
     $container->compile();

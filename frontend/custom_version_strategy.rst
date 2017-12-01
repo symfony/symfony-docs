@@ -165,7 +165,7 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             assets:
@@ -173,7 +173,7 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -188,7 +188,7 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         use App\Asset\VersionStrategy\GulpBusterVersionStrategy;
 
         $container->loadFromExtension('framework', array(

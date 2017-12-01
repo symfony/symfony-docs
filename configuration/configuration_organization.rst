@@ -78,7 +78,7 @@ Mix and Match Configuration Formats
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configuration files can import files defined with any other built-in configuration
-format (``.yml``, ``.xml``, ``.php``, ``.ini``):
+format (``.yaml`` or ``.yml``, ``.xml``, ``.php``, ``.ini``):
 
 .. configuration-block::
 

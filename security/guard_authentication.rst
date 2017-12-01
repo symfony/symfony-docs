@@ -310,7 +310,7 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ..
         use App\Security\TokenAuthenticator;

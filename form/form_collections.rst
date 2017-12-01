@@ -156,7 +156,7 @@ In your controller, you'll create a new form from the ``TaskType``::
 
     class TaskController extends Controller
     {
-        public function newAction(Request $request)
+        public function new(Request $request)
         {
             $task = new Task();
 
@@ -215,7 +215,7 @@ zero tags when first created).
 
     .. code-block:: html+php
 
-        <!-- src/Resources/views/Task/new.html.php -->
+        <!-- templates/task/new.html.php -->
 
         <!-- ... -->
 
@@ -257,7 +257,7 @@ great, your user can't actually add any new tags yet.
     rendering the form in the template if you render the whole form at
     once (e.g ``form_widget(form)``). To fix this you can set this directive
     to a higher value (either via a ``php.ini`` file or via :phpfunction:`ini_set`,
-    for example in ``app/autoload.php``) or render each form field by hand
+    for example in ``public/index.php``) or render each form field by hand
     using ``form_row()``.
 
 .. _form-collections-new-prototype:
@@ -399,7 +399,7 @@ one example:
         // Replace '__name__label__' in the prototype's HTML to
         // instead be a number based on how many items we have
         // newForm = newForm.replace(/__name__label__/g, index);
-        
+
         // Replace '__name__' in the prototype's HTML to
         // instead be a number based on how many items we have
         newForm = newForm.replace(/__name__/g, index);
@@ -681,7 +681,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     you'll need to do more work for the removed tags to persist correctly.
 
     In this case, you can modify the controller to remove the relationship
-    on the removed tag. This assumes that you have some ``editAction()`` which
+    on the removed tag. This assumes that you have some ``edit()`` action which
     is handling the "update" of your Task::
 
         // src/Controller/TaskController.php
@@ -690,7 +690,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
         use Doctrine\Common\Collections\ArrayCollection;
 
         // ...
-        public function editAction($id, Request $request)
+        public function edit($id, Request $request)
         {
             $em = $this->getDoctrine()->getManager();
             $task = $em->getRepository(Task::class)->find($id);

@@ -69,6 +69,7 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             _defaults:
                 autowire: true
@@ -87,6 +88,7 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -104,6 +106,7 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
 
     .. code-block:: php
 
+        // config/services.php
         use App\Service\TwitterClient;
         use App\Util\Rot13Transformer;
 
@@ -130,7 +133,7 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
         /**
          * @Route("/tweet")
          */
-        public function tweetAction()
+        public function tweet()
         {
             // fetch $user, $key, $status from the POST'ed data
 
@@ -169,24 +172,10 @@ so ``App\Util\Rot13Transformer``. In this case, that exists! When you configured
 the ``Rot13Transformer`` service, you used its fully-qualified class name as its
 id. Autowiring isn't magic: it simply looks for a service whose id matches the type-hint.
 If you :ref:`load services automatically <service-container-services-load-example>`,
-each service's id is its class name. This is the main way to control autowiring.
+each service's id is its class name.
 
-If there is *not* a service whose id exactly matches the type, then:
-
-If there are **0** services in the container that have the type, then:
-    If the type is a concrete class, then a new, private, autowired service is
-    auto-registered in the container and used for the argument.
-
-.. _autowiring-single-matching-service:
-
-If there is exactly **1** service in the container that has the type, then:
-    Create an :ref:`alias <service-autowiring-alias>` from the type to the
-    service id so that normal autowiring works.
-
-If there are **2 or more** services in the container that have the type, then:
-    A clear exception is thrown. You need to *choose* which service should
-    be used by creating an :ref:`alias <service-autowiring-alias>` or
-    :ref:`configuring the argument explicitly <services-wire-specific-service>`.
+If there is *not* a service whose id exactly matches the type, a clear exception
+will be thrown.
 
 Autowiring is a great way to automate configuration, and Symfony tries to be as
 *predictable* and clear as possible.
@@ -203,7 +192,7 @@ which allows us to autowire this type automatically.
 This can also be accomplished using an :ref:`alias <services-alias>`. Suppose that
 for some reason, the id of the service was instead ``app.rot13.transformer``. In
 this case, any arguments type-hinted with the class name (``App\Util\Rot13Transformer``)
-can no longer be autowired (actually, it :ref:`will work now, but not in Symfony 4.0 <autowiring-single-matching-service>`).
+can no longer be autowired.
 
 No problem! To fix this, you can *create* a service whose id matches the class by
 adding a service alias:
@@ -212,6 +201,7 @@ adding a service alias:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -227,6 +217,7 @@ adding a service alias:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -242,6 +233,7 @@ adding a service alias:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Util\Rot13Transformer;
 
         // ...
@@ -301,8 +293,7 @@ Now that you have an interface, you should use this as your type-hint::
 
 But now, the type-hint (``App\Util\TransformerInterface``) no longer matches
 the id of the service (``App\Util\Rot13Transformer``). This means that the
-argument can no longer be autowired (actually, it
-:ref:`will work now, but not in Symfony 4.0 <autowiring-single-matching-service>`).
+argument can no longer be autowired.
 
 To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
@@ -310,6 +301,7 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -321,6 +313,7 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -336,6 +329,7 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Util\Rot13Transformer;
         use App\Util\TransformerInterface;
 
@@ -375,6 +369,7 @@ that alias:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
@@ -396,6 +391,7 @@ that alias:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -416,6 +412,7 @@ that alias:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Util\Rot13Transformer;
         use App\Util\UppercaseTransformer;
         use App\Util\TransformerInterface;

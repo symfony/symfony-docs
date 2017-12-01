@@ -196,7 +196,7 @@ And what if you want to embed the result of another controller in a template?
 That's very useful when working with Ajax, or when the embedded template
 needs some variable not available in the main template.
 
-Suppose you've created a ``topArticlesAction()`` controller method to display
+Suppose you've created a ``topArticles()`` controller method to display
 the most popular articles of your website. If you want to "render" the result
 of that method (usually some HTML content) inside the ``index`` template,
 use the ``render()`` function:
@@ -204,17 +204,16 @@ use the ``render()`` function:
 .. code-block:: twig
 
     {# templates/index.html.twig #}
-    {{ render(controller('AppBundle:Default:topArticles')) }}
+    {{ render(controller('App\\DefaultController::topArticles')) }}
 
 Here, the ``render()`` and ``controller()`` functions use the special
-``AppBundle:Default:topArticles`` syntax to refer to the ``topArticlesAction()``
-action of the ``Default`` controller (the ``AppBundle`` part will be explained
-later)::
+``App\\DefaultController::topArticles`` syntax to refer to the ``topArticles()``
+action of the ``Defaultcontroller``::
 
     // src/Controller/DefaultController.php
     class DefaultController extends Controller
     {
-        public function topArticlesAction()
+        public function topArticles()
         {
             // look for the most popular articles in the database
             $articles = ...;
@@ -261,10 +260,6 @@ Symfony provides the ``asset()`` function to deal with them easily:
     <img src="{{ asset('images/logo.png') }}" />
 
 The ``asset()`` function looks for the web assets inside the ``public/`` directory.
-If you store them in another directory, read
-:doc:`this article </frontend/assetic/asset_management>`
-to learn how to manage web assets.
-
 Using the ``asset()`` function, your application is more portable. The reason
 is that you can move the application root directory anywhere under your
 web root directory without changing anything in your template's code.

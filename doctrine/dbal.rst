@@ -117,7 +117,7 @@ mapping type:
 
     .. code-block:: yaml
 
-        # config/packages/doctrine.yml
+        # config/packages/doctrine.yaml
         doctrine:
             dbal:
                mapping_types:

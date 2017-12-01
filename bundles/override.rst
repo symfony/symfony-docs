@@ -26,7 +26,7 @@ Routing
 
 Routing is never automatically imported in Symfony. If you want to include
 the routes from any bundle, then they must be manually imported from somewhere
-in your application (e.g. ``config/routes.yml``).
+in your application (e.g. ``config/routes.yaml``).
 
 The easiest way to "override" a bundle's routing is to never import it at
 all. Instead of importing a third-party bundle's routing, simply copy
@@ -101,7 +101,7 @@ to a new validation group:
 
     .. code-block:: yaml
 
-        # src/Acme/UserBundle/Resources/config/validation.yml
+        # src/Acme/UserBundle/Resources/config/validation.yaml
         FOS\UserBundle\Model\User:
             properties:
                 plainPassword:

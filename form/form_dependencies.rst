@@ -34,7 +34,7 @@ create your form::
     use App\Form\TaskType;
 
     // ...
-    public function newAction()
+    public function new()
     {
         $em = $this->getDoctrine()->getManager();
 

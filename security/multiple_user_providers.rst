@@ -55,7 +55,7 @@ creating a new provider that chains the two together:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use App\Entity\User;
 
         $container->loadFromExtension('security', array(
@@ -125,7 +125,7 @@ to use a specific provider:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(

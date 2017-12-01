@@ -27,8 +27,8 @@ need to actually change your configuration files to use them.
 The new Default services.yaml File
 ----------------------------------
 
-To understand the changes, look at the new default ``services.yaml`` file in the
-Symfony Standard Edition:
+To understand the changes, look at the new default ``services.yaml`` file (this is
+what the file looks like in Symfony 4):
 
 .. configuration-block::
 
@@ -38,32 +38,26 @@ Symfony Standard Edition:
         services:
             # default configuration for services in *this* file
             _defaults:
-                # automatically injects dependencies in your services
-                autowire: true
-                # automatically registers your services as commands, event subscribers, etc.
-                autoconfigure: true
-                # this means you cannot fetch services directly from the container via $container->get()
-                # if you need to do this, you can override this setting on individual services
-                public: false
+                autowire: true      # Automatically injects dependencies in your services.
+                autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+                public: false       # Allows optimizing the container by removing unused services; this also means
+                                    # fetching services directly from the container via $container->get() won't work.
+                                    # The best practice is to be explicit about your dependencies anyway.
 
             # makes classes in src/ available to be used as services
             # this creates a service per class whose id is the fully-qualified class name
             App\:
-                resource: '../../src/*'
-                # you can exclude directories or files
-                # but if a service is unused, it's removed anyway
-                exclude: '../../src/{Entity,Repository}'
+                resource: '../src/*'
+                exclude: '../src/{Entity,Migrations,Tests}'
 
-            # controllers are imported separately to make sure they're public
-            # and have a tag that allows actions to type-hint services
+            # controllers are imported separately to make sure services can be injected
+            # as action arguments even if you don't extend any base controller class
             App\Controller\:
-                resource: '../../src/Controller'
+                resource: '../src/Controller'
                 tags: ['controller.service_arguments']
 
-            # add more services, or override services that need manual wiring
-            # App\Service\ExampleService:
-            #     arguments:
-            #         $someArgument: 'some_value'
+            # add more service definitions when explicit configuration is needed
+            # please note that last definitions always *replace* previous ones
 
     .. code-block:: xml
 
@@ -77,9 +71,9 @@ Symfony Standard Edition:
             <services>
                 <defaults autowire="true" autoconfigure="true" public="false" />
 
-                <prototype namespace="App\" resource="../../src/*" exclude="../../src/{Entity,Repository}" />
+                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}" />
 
-                <prototype namespace="App\Controller\" resource="../../src/Controller">
+                <prototype namespace="App\Controller\" resource="../src/Controller">
                     <tag name="controller.service_arguments" />
                 </prototype>
 
@@ -101,7 +95,7 @@ Symfony Standard Edition:
             ->setPublic(false)
         ;
 
-        $this->registerClasses($definition, 'App\\', '../../src/*', '../../src/{Entity,Repository}');
+        $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Migrations,Tests}');
 
         // Changes default config
         $definition
@@ -109,7 +103,7 @@ Symfony Standard Edition:
         ;
 
         // $this is a reference to the current loader
-        $this->registerClasses($definition, 'App\\Controller\\', '../../src/Controller/*');
+        $this->registerClasses($definition, 'App\\Controller\\', '../src/Controller/*');
 
         // add more services, or override services that need manual wiring
 
@@ -139,10 +133,8 @@ thanks to the following config:
             # makes classes in src/ available to be used as services
             # this creates a service per class whose id is the fully-qualified class name
             App\:
-                resource: '../../src/*'
-                # you can exclude directories or files
-                # but if a service is unused, it's removed anyway
-                exclude: '../../src/{Entity,Repository}'
+                resource: '../src/*'
+                exclude: '../src/{Entity,Migrations,Tests}'
 
     .. code-block:: xml
 
@@ -156,7 +148,7 @@ thanks to the following config:
             <services>
                 <!-- ... -->
 
-                <prototype namespace="App\" resource="../../src/*" exclude="../../src/{Entity,Repository}" />
+                <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}" />
             </services>
         </container>
 
@@ -174,7 +166,7 @@ thanks to the following config:
             ->setPublic(false)
         ;
 
-        $this->registerClasses($definition, 'App\\', '../../src/*', '../../src/{Entity,Repository}');
+        $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Migrations,Tests}');
 
 This means that every class in ``src/`` is *available* to be used as a
 service. And thanks to the ``_defaults`` section at the top of the file, all of
@@ -345,7 +337,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
             # controllers are imported separately to make sure they're public
             # and have a tag that allows actions to type-hint services
             App\Controller\:
-                resource: '../../src/Controller'
+                resource: '../src/Controller'
                 tags: ['controller.service_arguments']
 
     .. code-block:: xml
@@ -360,7 +352,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
             <services>
                 <!-- ... -->
 
-                <prototype namespace="App\Controller\" resource="../../src/Controller">
+                <prototype namespace="App\Controller\" resource="../src/Controller">
                     <tag name="controller.service_arguments" />
                 </prototype>
             </services>
@@ -372,7 +364,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
 
         // ...
 
-        $this->registerClasses($definition, 'App\\Controller\\', '../../src/Controller/*');
+        $this->registerClasses($definition, 'App\\Controller\\', '../src/Controller/*');
 
 But, you might not even notice this. First, your controllers *can* still extend
 the same base ``Controller`` class or a new :ref:`AbstractController <controller-abstract-versus-controller>`.
@@ -720,11 +712,11 @@ You're now ready to automatically register all services in ``src/``
             # ...
 
     +     App\:
-    +         resource: '../../src/*'
-    +         exclude: '../../src/{Entity,Repository}'
+    +         resource: '../src/*'
+    +         exclude: '../src/{Entity,Migrations,Tests}'
     +
     +     App\Controller\:
-    +         resource: '../../src/Controller'
+    +         resource: '../src/Controller'
     +         tags: ['controller.service_arguments']
 
         # ...
@@ -809,11 +801,11 @@ can be autowired. The final configuration looks like this:
             public: false
 
         App\:
-            resource: '../../src/*'
-            exclude: '../../src/{Entity,Repository}'
+            resource: '../src/*'
+            exclude: '../src/{Entity,Migrations,Tests}'
 
         App\Controller\:
-            resource: '../../src/Controller'
+            resource: '../src/Controller'
             tags: ['controller.service_arguments']
 
         App\Service\GitHubNotifier:

@@ -33,12 +33,12 @@ Inside, use Encore to help generate your Webpack configuration.
 
     Encore
         // the project directory where all compiled assets will be stored
-        .setOutputPath('web/build/')
+        .setOutputPath('public/build/')
 
         // the public path used by the web server to access the previous directory
         .setPublicPath('/build')
 
-        // will create web/build/app.js and web/build/app.css
+        // will create public/build/app.js and public/build/app.css
         .addEntry('app', './assets/js/app.js')
 
         // allow sass/scss files to be processed

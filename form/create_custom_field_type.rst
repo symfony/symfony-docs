@@ -141,7 +141,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
     .. code-block:: html+php
 
-        <!-- templates/form/shipping_widget.html.php -->
+        <!-- src/Resources/shipping_widget.html.php -->
         <?php if ($expanded) : ?>
             <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
             <?php foreach ($form as $child) : ?>

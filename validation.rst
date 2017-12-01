@@ -132,7 +132,7 @@ returned. Take this simple example from inside a controller::
     use App\Entity\Author;
 
     // ...
-    public function authorAction()
+    public function author()
     {
         $author = new Author();
 
@@ -259,7 +259,7 @@ previous configuration by the following:
 
     .. code-block:: yaml
 
-        # config/packages/framework.yml
+        # config/packages/framework.yaml
         framework:
             validation: { enable_annotations: true }
 
@@ -439,7 +439,7 @@ options can be specified in this way.
 
     .. code-block:: yaml
 
-        # config/validator/validation.yml
+        # config/validator/validation.yaml
         App\Entity\Author:
             properties:
                 genre:

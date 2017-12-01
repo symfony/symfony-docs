@@ -41,7 +41,7 @@ do this, create a new template file that will store the new markup:
 
     .. code-block:: html+php
 
-        <!-- templates/form/form_row.html.php -->
+        <!-- src/Resources/form_row.html.php -->
         <div class="form_row">
             <?php echo $view['form']->label($form, $label) ?>
             <?php echo $view['form']->errors($form) ?>

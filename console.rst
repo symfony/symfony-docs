@@ -9,6 +9,16 @@ The Symfony framework provides lots of commands through the ``bin/console`` scri
 created with the :doc:`Console component </components/console>`. You can also
 use it to create your own commands.
 
+The Console: APP_ENV & APP_DEBUG
+---------------------------------
+
+Console commands run in the :ref:`environment <config-dot-env>` defined in the ``APP_ENV``
+variable of the ``.env`` file, which is ``dev`` by default. It also reads the ``APP_DEBUG``
+value to turn "debug" mode on or off (it defaults to ``1``, which is on).
+
+To run the command in another environment or debug mode, edit the value of ``APP_ENV``
+and ``APP_DEBUG``.
+
 Creating a Command
 ------------------
 
@@ -163,11 +173,11 @@ Getting Services from the Service Container
 To actually create a new user, the command has to access to some
 :doc:`services </service_container>`. Since your command is already registered
 as a service, you can use normal dependency injection. Imagine you have a
-``AppBundle\Service\UserManager`` service that you want to access::
+``App\Service\UserManager`` service that you want to access::
 
     // ...
     use Symfony\Component\Console\Command\Command;
-    use AppBundle\Service\UserManager;
+    use App\Service\UserManager;
 
     class CreateUserCommand extends Command
     {

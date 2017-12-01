@@ -25,7 +25,7 @@ form, you can use ``setAction()`` and ``setMethod()``:
 
         class DefaultController extends Controller
         {
-            public function newAction()
+            public function new()
             {
                 $form = $this->createFormBuilder($task)
                     ->setAction($this->generateUrl('target_route'))
@@ -83,7 +83,7 @@ options:
 
         class DefaultController extends Controller
         {
-            public function newAction()
+            public function new()
             {
                 // ...
 
@@ -126,8 +126,6 @@ to the ``form()`` or the ``form_start()`` helper functions:
 
         <!-- templates/default/new.html.php -->
         <?php echo $view['form']->start($form, array(
-            // The path() method was introduced in Symfony 2.8. Prior to 2.8,
-            // you had to use generate().
             'action' => $view['router']->path('target_route'),
             'method' => 'GET',
         )) ?>

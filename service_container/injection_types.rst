@@ -41,7 +41,8 @@ service container configuration:
 
     .. code-block:: yaml
 
-       services:
+        # config/services.yaml
+        services:
             # ...
 
             App\Mail\NewsletterManager:
@@ -49,6 +50,7 @@ service container configuration:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -66,6 +68,7 @@ service container configuration:
 
     .. code-block:: php
 
+        // config/services.php
         use App\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
 
@@ -120,6 +123,7 @@ that accepts the dependency::
 
     .. code-block:: yaml
 
+        # config/services.yaml
        services:
             # ...
 
@@ -130,6 +134,7 @@ that accepts the dependency::
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -149,6 +154,7 @@ that accepts the dependency::
 
     .. code-block:: php
 
+        // config/services.php
         use App\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
 
@@ -192,6 +198,7 @@ Another possibility is just setting public fields of the class directly::
 
     .. code-block:: yaml
 
+        # config/services.yaml
        services:
             # ...
 
@@ -202,6 +209,7 @@ Another possibility is just setting public fields of the class directly::
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -219,6 +227,7 @@ Another possibility is just setting public fields of the class directly::
 
     .. code-block:: php
 
+        // config/services.php
         use App\Mail\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
 

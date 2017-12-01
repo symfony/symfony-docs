@@ -246,7 +246,7 @@ If you're using the ``YamlFileLoader``, then route definitions look like this:
 
 .. code-block:: yaml
 
-    # routes.yml
+    # routes.yaml
     route1:
         path:     /foo
         defaults: { _controller: 'MyController::fooAction' }
@@ -256,7 +256,7 @@ If you're using the ``YamlFileLoader``, then route definitions look like this:
         defaults: { _controller: 'MyController::foobarAction' }
 
 To load this file, you can use the following code. This assumes that your
-``routes.yml`` file is in the same directory as the below code::
+``routes.yaml`` file is in the same directory as the below code::
 
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\Routing\Loader\YamlFileLoader;
@@ -264,7 +264,7 @@ To load this file, you can use the following code. This assumes that your
     // look inside *this* directory
     $locator = new FileLocator(array(__DIR__));
     $loader = new YamlFileLoader($locator);
-    $collection = $loader->load('routes.yml');
+    $collection = $loader->load('routes.yaml');
 
 Besides :class:`Symfony\\Component\\Routing\\Loader\\YamlFileLoader` there are two
 other loaders that work the same way:
@@ -337,7 +337,7 @@ automatically in the background if you want to use it. A basic example of the
 
     $router = new Router(
         new YamlFileLoader($locator),
-        'routes.yml',
+        'routes.yaml',
         array('cache_dir' => __DIR__.'/cache'),
         $requestContext
     );

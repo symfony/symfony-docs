@@ -131,7 +131,7 @@ all the classes are already loaded as services. All you need to do is specify th
 
             # Registers all 4 classes as services, including App\Mail\EmailConfigurator
             App\:
-                resource: '../../src/*'
+                resource: '../src/*'
                 # ...
 
             # override the services to set the configurator
@@ -151,7 +151,7 @@ all the classes are already loaded as services. All you need to do is specify th
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <prototype namespace="App\" resource="../../src/*" />
+                <prototype namespace="App\" resource="../src/*" />
 
                 <service id="App\Mail\NewsletterManager">
                     <configurator service="App\Mail\EmailConfigurator" method="configure" />
@@ -176,7 +176,7 @@ all the classes are already loaded as services. All you need to do is specify th
 
         $definition->setAutowired(true);
 
-        $this->registerClasses($definition, 'App\\', '../../src/*');
+        $this->registerClasses($definition, 'App\\', '../src/*');
 
         $container->getDefinition(NewsletterManager::class)
             ->setConfigurator(array(new Reference(EmailConfigurator::class), 'configure'));

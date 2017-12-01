@@ -334,7 +334,7 @@ and ``provider`` keys:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         use App\Security\ApiKeyAuthenticator;
@@ -387,7 +387,7 @@ If you have defined ``access_control``, make sure to add a new entry:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'access_control' => array(
                 array(
@@ -455,7 +455,7 @@ configuration or set it to ``false``:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ..
         $container->loadFromExtension('security', array(

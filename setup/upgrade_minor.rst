@@ -1,7 +1,7 @@
 .. index::
     single: Upgrading; Minor Version
 
-Upgrading a Minor Version (e.g. 2.5.3 to 2.6.1)
+Upgrading a Minor Version (e.g. 3.3.3 to 3.4.0)
 ===============================================
 
 If you're upgrading a minor version (where the middle number changes), then
@@ -30,7 +30,7 @@ to use the new version:
         "...": "...",
 
         "require": {
-            "symfony/symfony": "2.6.*",
+            "symfony/symfony": "3.4.*",
         },
         "...": "...",
     }
@@ -55,7 +55,7 @@ to your code to get everything working. Additionally, some features you're
 using might still work, but might now be deprecated. While that's just fine,
 if you know about these deprecations, you can start to fix them over time.
 
-Every version of Symfony comes with an UPGRADE file (e.g. `UPGRADE-2.7.md`_)
+Every version of Symfony comes with an UPGRADE file (e.g. `UPGRADE-3.4.md`_)
 included in the Symfony directory that describes these changes. If you follow
 the instructions in the document and update your code accordingly, it should be
 safe to update in the future.
@@ -63,4 +63,4 @@ safe to update in the future.
 These documents can also be found in the `Symfony Repository`_.
 
 .. _`Symfony Repository`: https://github.com/symfony/symfony
-.. _`UPGRADE-2.7.md`: https://github.com/symfony/symfony/blob/2.7/UPGRADE-2.7.md
+.. _`UPGRADE-3.4.md`: https://github.com/symfony/symfony/blob/3.4/UPGRADE-3.4.md
