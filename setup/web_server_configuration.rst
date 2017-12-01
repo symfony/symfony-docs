@@ -31,6 +31,16 @@ to use PHP :ref:`with Nginx <web-server-nginx>`.
 
 .. _web-server-apache-mod-php:
 
+Using Symfony Flex in Apache
+----------------------------
+
+The recommended way is to install the apache recipe by executing the following command:
+
+.. code-block:: terminal
+
+    $ cd my-project/
+    $ composer require symfony/apache-pack
+
 Apache with mod_php/PHP-CGI
 ---------------------------
 
