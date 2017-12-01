@@ -92,7 +92,7 @@ By default, cached paths are only stored for ``120`` seconds by default, conside
    
 .. tip::
 
-    Since PHP 7.2, the default value for ``realpath_cache_size``has been set to 4096K, feel free to delete this trick in your     ``php.ini`` file.
+    Since PHP 7.2, the default value for ``realpath_cache_size`` has been set to 4096K, feel free to delete this trick in your     ``php.ini`` file.
 
 Use Composer's Class Map Functionality
 --------------------------------------
