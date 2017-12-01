@@ -15,4 +15,5 @@ was writable. But that is no longer true! In Symfony 4, everything works automat
 
     If you decide to store log files on disk, you *will* need to make sure your
     logs directory (e.g. ``var/logs``) is writable by your web server user and
-    terminal user.
+    terminal user. One way this can be done is by using ``chmod 777 -R var/logs``.
+    Just be aware that your logs are readable by any user on your production system.
