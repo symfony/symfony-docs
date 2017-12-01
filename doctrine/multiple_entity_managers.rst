@@ -50,21 +50,21 @@ The following configuration code shows how you can configure two entity managers
                     default:
                         connection: default
                         mappings:
-                            App:
+                            Main:
                                 is_bundle: false
                                 type: annotation
-                                dir: '%kernel.project_dir%/src/Entity'
-                                prefix: 'App\Entity'
-                                alias: App
+                                dir: '%kernel.project_dir%/src/Entity/Main'
+                                prefix: 'App\Entity\Main'
+                                alias: Main
                     customer:
                         connection: customer
                         mappings:
-                            AppCustomer:
+                            Customer:
                                 is_bundle: false
                                 type: annotation
-                                dir: '%kernel.project_dir%/src/CustomerEntity'
-                                prefix: 'App\Customer\Entity'
-                                alias: AppCustomer
+                                dir: '%kernel.project_dir%/src/Entity/Customer'
+                                prefix: 'App\Entity\Customer'
+                                alias: Customer
 
     .. code-block:: xml
 
@@ -104,23 +104,23 @@ The following configuration code shows how you can configure two entity managers
                 <doctrine:orm default-entity-manager="default">
                     <doctrine:entity-manager name="default" connection="default">
                         <doctrine:mapping
-                            name="App"
+                            name="Main"
                             is_bundle="false"
                             type="annotation"
-                            dir="%kernel.project_dir%/src/Entity"
-                            prefix="App\Entity"
-                            alias="App"
+                            dir="%kernel.project_dir%/src/Entity/Main"
+                            prefix="App\Entity\Main"
+                            alias="Main"
                         />
                     </doctrine:entity-manager>
 
                     <doctrine:entity-manager name="customer" connection="customer">
                         <doctrine:mapping
-                            name="AppCustomer"
+                            name="Customer"
                             is_bundle="false"
                             type="annotation"
-                            dir="%kernel.project_dir%/src/CustomerEntity"
-                            prefix="App\CustomerEntity"
-                            alias="AppCustomer"
+                            dir="%kernel.project_dir%/src/Entity/Customer"
+                            prefix="App\Entity\Customer"
+                            alias="Customer"
                         />
                     </doctrine:entity-manager>
                 </doctrine:orm>
@@ -161,24 +161,24 @@ The following configuration code shows how you can configure two entity managers
                     'default' => array(
                         'connection' => 'default',
                         'mappings'   => array(
-                            'App'  => array(
+                            'Main'  => array(
                                 is_bundle => false,
                                 type => 'annotation',
-                                dir => '%kernel.project_dir%/src/Entity',
-                                prefix => 'App\Entity',
-                                alias => 'App',
+                                dir => '%kernel.project_dir%/src/Entity/Main',
+                                prefix => 'App\Entity\Main',
+                                alias => 'Main',
                             )
                         ),
                     ),
                     'customer' => array(
                         'connection' => 'customer',
                         'mappings'   => array(
-                            'AppCustomer'  => array(
+                            'Customer'  => array(
                                 is_bundle => false,
                                 type => 'annotation',
-                                dir => '%kernel.project_dir%/src/CustomerEntity',
-                                prefix => 'App\CustomerEntity',
-                                alias => 'AppCustomer',
+                                dir => '%kernel.project_dir%/src/Entity/Customer',
+                                prefix => 'App\Entity\Customer',
+                                alias => 'Customer',
                             )
                         ),
                     ),
@@ -188,8 +188,8 @@ The following configuration code shows how you can configure two entity managers
 
 In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
-``src/Entity`` directory, while the ``customer`` entity manager manages
-entities in ``src/CustomerEntity``. You've also defined two connections, one
+``src/Entity/Main`` directory, while the ``customer`` entity manager manages
+entities in ``src/Entity/Customer``. You've also defined two connections, one
 for each entity manager.
 
 .. note::
