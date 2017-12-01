@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-28T14:38:31Z
+
+Hmm, I don't think we can remove it completely: most users (at least for awhile) won't be using PHP 7.2. So, we should probably use the old text, but with some caveat that no change is needed on PHP 7.2.
+
+@Guikingone wdyt?
+
+---------------------------------------------------------------------------
+
+by Guikingone at 2017-11-28T15:15:42Z
+
+@weaverryan Yes, good idea, I'm gonna update the file with a small block with the information.
+
+---------------------------------------------------------------------------
+
+by Guikingone at 2017-11-30T10:35:57Z
+
+@weaverryan I've added a tip block for the PHP 7.2 improvement.
+
+---------------------------------------------------------------------------
+
+by Guikingone at 2017-12-01T12:52:11Z
+
+@OskarStark Corrected :)
