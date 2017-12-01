@@ -260,8 +260,8 @@ Setting PHP constants as parameters is also supported:
 
         # config/services.yaml
         parameters:
-            global.constant.value: !php/const:GLOBAL_CONSTANT
-            my_class.constant.value: !php/const:My_Class::CONSTANT_NAME
+            global.constant.value: !php/const GLOBAL_CONSTANT
+            my_class.constant.value: !php/const My_Class::CONSTANT_NAME
 
     .. code-block:: xml
 

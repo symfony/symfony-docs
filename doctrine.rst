@@ -39,7 +39,7 @@ The database connection information is stored as an environment variable called
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 
     # to use sqlite:
-    # DATABASE_URL="sqlite://%kernel.project_dir%/var/app.db"
+    # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
 
 Now that your connection parameters are setup, Doctrine can create the ``db_name``
 database for you:
