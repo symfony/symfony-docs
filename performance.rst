@@ -79,20 +79,17 @@ real and absolute file system paths. This increases the performance for
 applications like Symfony that open many PHP files, especially on Windows
 systems.
 
-By default, cached paths are only stored for ``120`` seconds by default, consider updating this value using the ``realpath_cache_ttl`` option:
+Consider increasing the ``realpath_cache_size`` and ``realpath_cache_ttl``:
 
 .. code-block:: ini
 
     ; php.ini
+    ; 4096k is the default value in PHP 7.2
     realpath_cache_size=4096K
     realpath_cache_ttl=600
 
 .. index::
    single: Performance; Autoloader
-   
-.. tip::
-
-    Since PHP 7.2, the default value for ``realpath_cache_size`` has been set to 4096K, feel free to delete this trick in your     ``php.ini`` file.
 
 Use Composer's Class Map Functionality
 --------------------------------------
