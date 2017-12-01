@@ -109,12 +109,12 @@ You can now add your route directly *above* the controller:
 
     // ...
     + use Symfony\Component\Routing\Annotation\Route;
-    
+
     class LuckyController
     {
-        + /**
-        +  * @Route("/lucky/number")
-        +  */
+    +     /**
+    +      * @Route("/lucky/number")
+    +      */
         public function number()
         {
             // this looks exactly the same
@@ -248,7 +248,7 @@ variable so you can use it in Twig::
     }
 
 Template files live in the ``templates/`` directory, which was created for you automatically
-when you installed Twig. Create a new ``templates/lucky`` directory with a new 
+when you installed Twig. Create a new ``templates/lucky`` directory with a new
 ``number.html.twig`` file inside:
 
 .. code-block:: twig

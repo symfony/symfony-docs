@@ -258,8 +258,8 @@ on the request's information.
 
     a) If the ``_controller`` key doesn't follow the recommended PHP namespace
        format (e.g. ``App\Controller\DefaultController::index``) its format is
-       transformed into it. For example, the legacy ``AppBundle:Default:index``
-       format would be changed to ``Acme\AppBundle\Controller\DefaultController::indexAction``.
+       transformed into it. For example, the legacy ``FooBundle:Default:index``
+       format would be changed to ``Acme\FooBundle\Controller\DefaultController::indexAction``.
        This transformation is specific to the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
        sub-class used by the Symfony Framework.
 
@@ -742,10 +742,10 @@ translation files, etc.)
 
 This overriding mechanism works because resources are referenced not by their
 physical path but by their logical path. For example, the ``services.xml`` file
-stored in the ``Resources/config/`` directory of a bundle called AppBundle is
-referenced as ``@AppBundle/Resources/config/services.xml``. This logical path
+stored in the ``Resources/config/`` directory of a bundle called FooBundle is
+referenced as ``@FooBundle/Resources/config/services.xml``. This logical path
 will work when the application overrides that file and even if you change the
-directory of AppBundle.
+directory of FooBundle.
 
 The HttpKernel component provides a method called :method:`Symfony\\Component\\HttpKernel\\Kernel::locateResource`
 which can be used to transform logical paths into physical paths::
@@ -754,7 +754,7 @@ which can be used to transform logical paths into physical paths::
 
     // ...
     $kernel = new HttpKernel($dispatcher, $resolver);
-    $path = $kernel->locateResource('@AppBundle/Resources/config/services.xml');
+    $path = $kernel->locateResource('@FooBundle/Resources/config/services.xml');
 
 Learn more
 ----------

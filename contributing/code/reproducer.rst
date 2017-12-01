@@ -33,20 +33,22 @@ Reproducing Complex Bugs
 ------------------------
 
 If the bug is related to the Symfony Framework or if it's too complex to create
-a PHP script, it's better to reproduce the bug by forking the Symfony Standard
-edition. To do so:
+a PHP script, it's better to reproduce the bug by creating a new project. To do so:
 
-#. Go to https://github.com/symfony/symfony-standard and click on the **Fork**
-   button to make a fork of that repository or go to your already forked copy.
-#. Clone the forked repository into your computer:
-   ``git clone git://github.com/YOUR-GITHUB-USERNAME/symfony-standard.git``
-#. Browse the project and create a new branch (e.g. ``issue_23567``,
-   ``reproduce_23657``, etc.)
-#. Now you must add the minimum amount of code to reproduce the bug. This is the
+1. Create a new project:
+
+.. code-block:: terminal
+
+    $ composer require symfony/skeleton bug_app
+
+2. Now you must add the minimum amount of code to reproduce the bug. This is the
    trickiest part and it's explained a bit more later.
-#. Add, commit and push all your changes.
-#. Add a comment in your original issue report to share the URL of your forked
-   project (e.g. ``https://github.com/YOUR-GITHUB-USERNAME/symfony-standard/tree/issue_23567``)
+3. Add and commit your changes.
+4. Create a `new repository`_ on GitHub (give it any name).
+5. Follow the instructions on GitHub to add the ``origin`` remote to your local project
+   and push it.
+6. Add a comment in your original issue report to share the URL of your forked
+   project (e.g. ``https://github.com/YOUR-GITHUB-USERNAME/symfony_issue_23567``)
    and, if necessary, explain the steps to reproduce (e.g. "browse this URL",
    "fill in this data in the form and submit it", etc.)
 
@@ -55,23 +57,24 @@ Adding the Minimum Amount of Code Possible
 
 The key to create a bug reproducer is to solely focus on the feature that you
 suspect is failing. For example, imagine that you suspect that the bug is related
-to a route definition. Then, after forking the Symfony Standard Edition:
+to a route definition. Then, after creating your project:
 
 #. Don't edit any of the default Symfony configuration options.
 #. Don't copy your original application code and don't use the same structure
-   of bundles, controllers, actions, etc. as in your original application.
-#. Open the default controller class of the AppBundle and add your routing
-   definition using annotations.
+   of controllers, actions, etc. as in your original application.
+#. Create a simple controller and add your routing definition that shows the bug.
 #. Don't create or modify any other file.
-#. Execute the ``server:run`` command and browse the previously defined route
-   to see if the bug appears or not.
+#. Execute ``composer require server`` and use the ``server:run`` command to browse
+   to the new route and see if the bug appears or not.
 #. If you can see the bug, you're done and you can already share the code with us.
 #. If you can't see the bug, you must keep making small changes. For example, if
    your original route was defined using XML, forget about the previous route
-   annotation and define the route using XML instead. Or maybe your application
-   uses bundle inheritance and that's where the real bug is. Then, forget about
-   AppBundle and quickly generate a new AppParentBundle, make AppBundle inherit
-   from it and test if the route is working.
+   and define the route using XML instead. Or maybe your application
+   registers some event listeners and that's where the real bug is. In that case,
+   add an event listener that's similar to your real app to see if you can find
+   the bug.
 
-In short, the idea is to keep adding small and incremental changes to the default
-Symfony Standard edition until you can reproduce the bug.
+In short, the idea is to keep adding small and incremental changes to a new project
+until you can reproduce the bug.
+
+.. _`new repository`: https://github.com/new

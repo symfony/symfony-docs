@@ -12,7 +12,7 @@ features of a bundle.
 
     The bundle overriding mechanism means that you cannot use physical paths to
     refer to bundle's resources (e.g. ``__DIR__/config/services.xml``). Always
-    use logical paths in your bundles (e.g. ``@AppBundle/Resources/config/services.xml``)
+    use logical paths in your bundles (e.g. ``@FooBundle/Resources/config/services.xml``)
     and call the :ref:`locateResource() method <http-kernel-resource-locator>`
     to turn them into physical paths when needed.
 
