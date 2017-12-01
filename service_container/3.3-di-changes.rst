@@ -364,6 +364,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
 
         // ...
 
+        $definition->addTag('controller.service_arguments');
         $this->registerClasses($definition, 'App\\Controller\\', '../src/Controller/*');
 
 But, you might not even notice this. First, your controllers *can* still extend

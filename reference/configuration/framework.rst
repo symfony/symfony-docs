@@ -688,6 +688,8 @@ The value can be one of:
 ``true`` is recommended in the development environment, while ``false``
 or ``null`` might be preferred in production.
 
+.. _config-framework-session:
+
 session
 ~~~~~~~
 
