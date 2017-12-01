@@ -738,7 +738,15 @@ Linking to Assets
 
 Templates also commonly refer to images, JavaScript, stylesheets and other
 assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
-but Symfony provides a more dynamic option via the ``asset()`` Twig function:
+but Symfony provides a more dynamic option via the ``asset()`` Twig function.
+
+To use this function, install the *asset* package:
+
+.. code-block:: terminal
+
+    $ composer require asset
+
+You can now use the ``asset()`` function:
 
 .. configuration-block::
 
