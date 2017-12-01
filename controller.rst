@@ -4,41 +4,11 @@
 Controller
 ==========
 
-A controller is a PHP function you create that reads information from the Symfony's
+A controller is a PHP function you create that reads information from the
 ``Request`` object and creates and returns a ``Response`` object. The response could
 be an HTML page, JSON, XML, a file download, a redirect, a 404 error or anything
 else you can dream up. The controller executes whatever arbitrary logic
 *your application* needs to render the content of a page.
-
-See how simple this is by looking at a Symfony controller in action.
-This renders a page that prints a lucky (random) number::
-
-    // src/Controller/LuckyController.php
-    namespace App\Controller;
-
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
-
-    class LuckyController
-    {
-        /**
-         * @Route("/lucky/number")
-         */
-        public function numberAction()
-        {
-            $number = mt_rand(0, 100);
-
-            return new Response(
-                '<html><body>Lucky number: '.$number.'</body></html>'
-            );
-        }
-    }
-
-But in the real world, your controller will probably do a lot of work in order to
-create the response. It might read information from the request, load a database
-resource, send an email or set information on the user's session.
-But in all cases, the controller will eventually return the ``Response`` object
-that will be delivered back to the client.
 
 .. tip::
 
@@ -64,9 +34,9 @@ class::
     class LuckyController
     {
         /**
-         * @Route("/lucky/number/{max}")
+         * @Route("/lucky/number/{max}", name="app_lucky_number")
          */
-        public function numberAction($max)
+        public function number($max)
         {
             $number = mt_rand(0, $max);
 
@@ -76,7 +46,7 @@ class::
         }
     }
 
-The controller is the ``numberAction()`` method, which lives inside a
+The controller is the ``number()`` method, which lives inside a
 controller class ``LuckyController``.
 
 This controller is pretty straightforward:
@@ -89,12 +59,10 @@ This controller is pretty straightforward:
   must return.
 
 * *line 7*: The class can technically be called anything - but should end in the
-  word ``Controller`` (this isn't *required*, but some shortcuts rely on this).
+  word ``Controller``
 
-* *line 12*: Each action method in a controller class is suffixed with ``Action``
-  (again, this isn't *required*, but some shortcuts rely on this). This method
-  is allowed to have a ``$max`` argument thanks to the ``{max}``
-  :doc:`wildcard in the route </routing>`.
+* *line 12*: The action method is allowed to have a ``$max`` argument thanks to the
+  ``{max}`` :doc:`wildcard in the route </routing>`.
 
 * *line 16*: The controller creates and returns a ``Response`` object.
 
@@ -105,7 +73,8 @@ Mapping a URL to a Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to *view* the result of this controller, you need to map a URL to it via
-a route. This was done above with the ``@Route("/lucky/number/{max}")`` annotation.
+a route. This was done above with the ``@Route("/lucky/number/{max}")``
+:ref:`route annotation <annotation-routes>`.
 
 To see your page, go to this URL in your browser:
 
@@ -121,20 +90,23 @@ For more information on routing, see :doc:`/routing`.
 The Base Controller Classes & Services
 --------------------------------------
 
-For convenience, Symfony comes with two optional base
+To make life nicer, Symfony comes with two optional base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` and
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`
-classes. You can extend either to get access to a number of `helper methods`_.
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`.
+You can extend either to get access to some `helper methods`_.
 
-Add the ``use`` statement atop the ``Controller`` class and then modify
-``LuckyController`` to extend it::
+Add the ``use`` statement atop your controller class and then modify
+``LuckyController`` to extend it:
+
+.. code-block:: diff
 
     // src/Controller/LuckyController.php
     namespace App\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    + use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    class LuckyController extends Controller
+    - class LuckyController
+    + class LuckyController extends Controller
     {
         // ...
     }
@@ -146,11 +118,12 @@ and many others that you'll learn about next.
 
 .. tip::
 
-    You can extend either ``Controller`` or ``AbstractController``. The difference
-    is that when you extend ``AbstractController``, you can't access services directly
-    via ``$this->get()`` or ``$this->container->get()``. This forces you to write
-    more robust code to access services. But if you *do* need direct access to the
-    container, using ``Controller`` is fine.
+    What's the difference between ``Controller`` or ``AbstractController``? Not much:
+    both are identical, except that ``AbstractController`` is more restrictive: it
+    does not allow you to access services directly via ``$this->get()`` or
+    ``$this->container->get()``. This forces you to write more robust code to access
+    services. But if you *do* need direct access to the container, using ``Controller``
+    is fine.
 
 .. index::
    single: Controller; Redirecting
@@ -161,7 +134,7 @@ Generating URLs
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl`
 method is just a helper method that generates the URL for a given route::
 
-    $url = $this->generateUrl('blog_show', array('slug' => 'slug-value'));
+    $url = $this->generateUrl('app_lucky_number', array('max' => 10));
 
 Redirecting
 ~~~~~~~~~~~
@@ -169,42 +142,32 @@ Redirecting
 If you want to redirect the user to another page, use the ``redirectToRoute()``
 and ``redirect()`` methods::
 
+    use Symfony\Component\HttpFoundation\RedirectResponse;
+
+    // ...
     public function indexAction()
     {
         // redirect to the "homepage" route
         return $this->redirectToRoute('homepage');
 
+        // redirectToRoute is a shortcut for:
+        // return new RedirectResponse($this->generateUrl('homepage'));
+
         // do a permanent - 301 redirect
         return $this->redirectToRoute('homepage', array(), 301);
 
         // redirect to a route with parameters
-        return $this->redirectToRoute('blog_show', array('slug' => 'my-page'));
+        return $this->redirectToRoute('app_lucky_number', array('max' => 10));
 
         // redirect externally
         return $this->redirect('http://symfony.com/doc');
     }
 
-For more information, see the :doc:`Routing article </routing>`.
-
 .. caution::
 
     The ``redirect()`` method does not check its destination in any way. If you
-    redirect to some URL provided by the end-users, your application may be open
+    redirect to a URL provided by end-users, your application may be open
     to the `unvalidated redirects security vulnerability`_.
-
-
-.. tip::
-
-    The ``redirectToRoute()`` method is simply a shortcut that creates a
-    ``Response`` object that specializes in redirecting the user. It's
-    equivalent to::
-
-        use Symfony\Component\HttpFoundation\RedirectResponse;
-
-        public function indexAction()
-        {
-            return new RedirectResponse($this->generateUrl('homepage'));
-        }
 
 .. index::
    single: Controller; Rendering templates
@@ -221,24 +184,17 @@ object for you::
     // renders templates/lucky/number.html.twig
     return $this->render('lucky/number.html.twig', array('name' => $name));
 
-Templates can also live in deeper sub-directories. Just try to avoid
-creating unnecessarily deep structures::
-
-    // renders templates/lottery/lucky/number.html.twig
-    return $this->render('lottery/lucky/number.html.twig', array(
-        'name' => $name,
-    ));
-
-The Symfony templating system and Twig are explained more in the
+Templating and Twig are explained more in the
 :doc:`Creating and Using Templates article </templating>`.
 
 .. index::
    single: Controller; Accessing services
 
 .. _controller-accessing-services:
+.. _accessing-other-services:
 
-Fetching Services as Controller Arguments
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Fetching Services
+~~~~~~~~~~~~~~~~~
 
 Symfony comes *packed* with a lot of useful objects, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
@@ -334,26 +290,12 @@ in your controllers.
 
 For more information about services, see the :doc:`/service_container` article.
 
-.. _controller-service-arguments-tag:
-
-.. note::
-    If this isn't working, make sure your controller is registered as a service,
-    is :ref:`autoconfigured <services-autoconfigure>` and extends either
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` or
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`. If
-    you use the :ref:`services.yaml configuration from the Symfony Standard Edition <service-container-services-load-example>`,
-    then your controllers are already registered as services and autoconfigured.
-
-    If you're not using the default configuration, you can tag your service manually
-    with ``controller.service_arguments``.
-
-.. _accessing-other-services:
 .. _controller-access-services-directly:
 
 Accessing the Container Directly
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you extend the base ``Controller`` class, you can access any Symfony service
+If you extend the base ``Controller`` class, you can access :ref:`public services <container-public>`
 via the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::get`
 method. Here are several common services you might need::
 
@@ -382,40 +324,44 @@ and that it's :ref:`public <container-public>`.
 Managing Errors and 404 Pages
 -----------------------------
 
-When things are not found, you should play well with the HTTP protocol and
-return a 404 response. To do this, you'll throw a special type of exception.
-If you're extending the base ``Controller`` or the base ``AbstractController``
-class, do the following::
+When things are not found, you should return a 404 response. To do this, throw a
+special type of exception::
 
+    use Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException;
+
+    // ...
     public function indexAction()
     {
         // retrieve the object from database
         $product = ...;
         if (!$product) {
             throw $this->createNotFoundException('The product does not exist');
+
+            // the above is just a shortcut for:
+            // throw new NotFoundHttpException('The product does not exist');
         }
 
         return $this->render(...);
     }
 
-The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::createNotFoundException`
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerTrait::createNotFoundException`
 method is just a shortcut to create a special
 :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`
 object, which ultimately triggers a 404 HTTP response inside Symfony.
 
-Of course, you're free to throw any ``Exception`` class in your controller -
-Symfony will automatically return a 500 HTTP response code.
+Of course, you can throw any ``Exception`` class in your controller: Symfony will
+automatically return a 500 HTTP response code.
 
 .. code-block:: php
 
     throw new \Exception('Something went wrong!');
 
 In every case, an error page is shown to the end user and a full debug
-error page is shown to the developer (i.e. when you're using the ``index.php``
-front controller - see :ref:`page-creation-environments`).
+error page is shown to the developer (i.e. when you're in "Debug" mode - see
+:ref:`page-creation-environments`).
 
-You'll want to customize the error page your user sees. To do that, see
-the :doc:`/controller/error_pages` article.
+To customize the error page that's shown to the user, see the
+:doc:`/controller/error_pages` article.
 
 .. _controller-request-argument:
 
@@ -448,54 +394,28 @@ Request object.
 Managing the Session
 --------------------
 
-Symfony provides a nice session object that you can use to store information
-about the user between requests. By default, Symfony stores the token in a
-cookie and writes the attributes to a file by using native PHP sessions.
+Symfony provides a session service that you can use to store information
+about the user between requests. Session storage and other configuration can
+be controlled under the :ref:`framework.session configuration <config-framework-session>`.
 
-First, enable sessions in your configuration:
+First, activate the session by uncommenting the ``session`` key in ``config/packages/framework.yaml``:
 
-.. configuration-block::
+.. code-block:: diff
 
-    .. code-block:: yaml
+    # config/packages/framework.yaml
+    framework:
+        # ...
 
-        # config/packages/framework.yaml
-        framework:
-            # ...
+    -     #session:
+    -     #    # The native PHP session handler will be used
+    -     #    handler_id: ~
+    +     session:
+    +         # The native PHP session handler will be used
+    +         handler_id: ~
+        # ...
 
-            session:
-                # With this config, PHP's native session handling is used
-                handler_id: ~
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- ... -->
-                <framework:session handler-id="null" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'session' => array(
-                // ...
-                'handler_id' => null,
-            ),
-        ));
-
-To retrieve the session, add the :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`
-type-hint to your argument and Symfony will provide you with a session::
+To get the session, add an argument and type-hint it with
+:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`::
 
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -511,12 +431,16 @@ type-hint to your argument and Symfony will provide you with a session::
         $filters = $session->get('filters', array());
     }
 
+.. versionadded:: 3.3
+    The ability to request a ``Session`` instance in controllers was introduced
+    in Symfony 3.3.
+
 Stored attributes remain in the session for the remainder of that user's session.
 
 .. tip::
 
     Every ``SessionInterface`` implementation is supported. If you have your
-    own implementation, type-hint this in the arguments instead.
+    own implementation, type-hint this in the argument instead.
 
 For more info, see :doc:`/session`.
 
@@ -603,11 +527,9 @@ read any flash messages from the session using ``app.flashes()``:
             <?php endforeach ?>
         <?php endforeach ?>
 
-.. note::
-
-    It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
-    different types of flash messages, but you can use any key that fits your
-    needs.
+It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
+different types of flash messages, but you can use any key that fits your
+needs.
 
 .. tip::
 
@@ -623,7 +545,7 @@ read any flash messages from the session using ``app.flashes()``:
 The Request and Response Object
 -------------------------------
 
-As mentioned :ref:`earlier <controller-request-argument>`, the framework will
+As mentioned :ref:`earlier <controller-request-argument>`, Symfony will
 pass the ``Request`` object to any controller argument that is type-hinted with
 the ``Request`` class::
 
@@ -662,10 +584,7 @@ some nice methods for getting and setting response headers. The header names are
 normalized so that using ``Content-Type`` is equivalent to ``content-type`` or even
 ``content_type``.
 
-The only requirement for a controller is to return a ``Response`` object.
-The :class:`Symfony\\Component\\HttpFoundation\\Response` class is an
-abstraction around the HTTP response - the text-based message filled with
-headers and content that's sent back to the client::
+The only requirement for a controller is to return a ``Response`` object::
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -676,26 +595,15 @@ headers and content that's sent back to the client::
     $response = new Response('<style> ... </style>');
     $response->headers->set('Content-Type', 'text/css');
 
-There are special classes that make certain kinds of responses easier:
+There are special classes that make certain kinds of responses easier. Some of these
+are mentioned below. To learn more about the ``Request`` and ``Response`` (and special
+``Response`` classes), see the :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
 
-* For files, there is :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`.
-  See :ref:`component-http-foundation-serving-files`.
+Returning JSON Response
+~~~~~~~~~~~~~~~~~~~~~~~
 
-* For streamed responses, there is
-  :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`.
-  See :ref:`streaming-response`.
-
-.. seealso::
-
-    Now that you know the basics you can continue your research on Symfony
-    ``Request`` and ``Response`` object in the
-    :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
-
-JSON Helper
-~~~~~~~~~~~
-
-To return JSON from a controller, use the ``json()`` helper method on the base controller.
-This returns a special ``JsonResponse`` object that encodes the data automatically::
+To return JSON from a controller, use the ``json()`` helper method. This returns a
+special ``JsonResponse`` object that encodes the data automatically::
 
     // ...
     public function indexAction()
@@ -708,11 +616,11 @@ This returns a special ``JsonResponse`` object that encodes the data automatical
     }
 
 If the :doc:`serializer service </serializer>` is enabled in your
-application, contents passed to ``json()`` are encoded with it. Otherwise,
+application, it will be used to serialize the data to JSON. Otherwise,
 the :phpfunction:`json_encode` function is used.
 
-File helper
-~~~~~~~~~~~
+Streaming File Responses
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
 helper to serve a file from inside a controller::
