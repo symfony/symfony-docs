@@ -31,15 +31,21 @@ to use PHP :ref:`with Nginx <web-server-nginx>`.
 
 .. _web-server-apache-mod-php:
 
-Using Symfony Flex in Apache
-----------------------------
+Adding Rewrite Rules
+--------------------
 
-The recommended way is to install the apache recipe by executing the following command:
+The easiest way is to install the apache recipe by executing the following command:
 
 .. code-block:: terminal
 
-    $ cd my-project/
     $ composer require symfony/apache-pack
+
+This recipe will install the ``.htaccess` file in the ``public/`` directory.
+
+.. tip::
+
+    A performance improvement can be achieved by putting the rewrite rules in your
+    VirtualHost block and changing ``AllowOverride All`` to ``AllowOverride None``.
 
 Apache with mod_php/PHP-CGI
 ---------------------------
