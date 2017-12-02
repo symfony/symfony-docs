@@ -40,7 +40,7 @@ The easiest way is to install the apache recipe by executing the following comma
 
     $ composer require symfony/apache-pack
 
-This recipe will install the ``.htaccess` file in the ``public/`` directory.
+This recipe will install the ``.htaccess`` file in the ``public/`` directory.
 
 .. tip::
 
