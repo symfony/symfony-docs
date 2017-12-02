@@ -40,12 +40,13 @@ The easiest way is to install the apache recipe by executing the following comma
 
     $ composer require symfony/apache-pack
 
-This recipe will install the ``.htaccess`` file in the ``public/`` directory.
+This recipe will install a ``.htaccess`` file containing the rewrite rules in the ``public/`` directory.
 
 .. tip::
 
-    A performance improvement can be achieved by putting the rewrite rules in your
-    VirtualHost block and changing ``AllowOverride All`` to ``AllowOverride None``.
+    A performance improvement can be achieved by putting the rewrite rules from the ``.htaccess``
+    file to the VirtualHost block of your Apache configuration and disallowing ``.htaccess`` from
+    override by changing ``AllowOverride All`` to ``AllowOverride None`` in your VirtualHost block.
 
 Apache with mod_php/PHP-CGI
 ---------------------------
