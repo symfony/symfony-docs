@@ -65,7 +65,7 @@ stores an ``Address`` instance in the ``$address`` property.
 
             /**
              * @Assert\NotBlank
-             * @Assert\Length(max = 5)
+             * @Assert\Length(max=5)
              */
             protected $zipCode;
         }
@@ -79,7 +79,7 @@ stores an ``Address`` instance in the ``$address`` property.
         {
             /**
              * @Assert\NotBlank
-             * @Assert\Length(min = 4)
+             * @Assert\Length(min=4)
              */
             protected $firstName;
 
