@@ -74,10 +74,8 @@ Full Default Configuration
                         id:                   ~ # Required (when the email_prototype is used)
                         method:               ~
                     formatter:            ~
-            # Setting this parameter to false forces the logger to reduce
-            # the precision in the datetime field of the log messages from
-            # microsecond to second. Avoiding a call to the microtime(true)
-            # function and the subsequent parsing.
+            # Set to false to use seconds (instead of microseconds) in
+            # the logs (gives a small performance boost).
             use_microseconds:             true
 
     .. code-block:: xml
@@ -91,12 +89,6 @@ Full Default Configuration
                 http://symfony.com/schema/dic/monolog
                 http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
-            <!-- By default, use-microseconds is set to true
-                 including 'use-microseconds="false' forces
-                 the logger to reduce the precision in the
-                 datetime field of the log messages from
-                 microsecond to second. Avoiding a call to the
-                 microtime(true) function and the subsequent parsing. -->
             <monolog:config use-microseconds="true">
                 <monolog:handler
                     name="syslog"
