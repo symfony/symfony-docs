@@ -68,7 +68,7 @@ Take the framework package, installed by default, as an example:
 * In the **prod** environment, nothing extra will be set as there is no
   ``config/packages/prod/`` directory;
 * The same applies to **dev**, as there is no
-  ``config/packages/framework.yaml``. There are however other packages (e.g.
+  ``config/packages/dev/framework.yaml``. There are however other packages (e.g.
   ``routing.yaml``) with special dev settings;
 * At last, during the **test** environment, the framework's test features are
   enabled in ``config/packages/test/framework.yaml``.
