@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-12-01T18:59:32Z
+
+@yceruto @ricknox You guys were right - the example wasn't correct... and also wasn't a very good example. Can you look again? I put the entities for each EM into subdirectories, because I think if we use `src/Entity` for one EM and `src/Entity/Customer` for the second EM, the first EM will *also* map the entities in `src/Entity/Customer`, which we obviously do not want :)
