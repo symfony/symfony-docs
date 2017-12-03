@@ -54,8 +54,6 @@ Code Examples
 * The code examples should look real for a web application context. Avoid abstract
   or trivial examples (``foo``, ``bar``, ``demo``, etc.);
 * The code should follow the :doc:`Symfony Best Practices </best_practices/introduction>`.
-  Unless the example requires a custom bundle, make sure to always use the
-  ``AppBundle`` bundle to store your code;
 * Use ``Acme`` when the code requires a vendor name;
 * Use ``example.com`` as the domain of sample URLs and ``example.org`` and
   ``example.net`` when additional domains are required. All of these domains are

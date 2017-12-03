@@ -247,7 +247,7 @@ method::
         // ...
         $helper = $this->getHelper('question');
 
-        $question = new Question('Please enter the name of the bundle', 'AppBundle');
+        $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
         $question->setNormalizer(function ($value) {
             // $value can be null here
             return $value ? trim($value) : '';
