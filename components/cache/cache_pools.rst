@@ -49,7 +49,7 @@ value but an empty object which implements the :class:`Symfony\\Component\\Cache
 class.
 
 If you need to fetch several cache items simultaneously, use instead the
-``getItems(array($key1, $key2, ...))`` method::
+  ``getItems(array($key1, $key2, ...))`` method which returns a PHP generator::
 
     // ...
     $stocks = $cache->getItems(array('AAPL', 'FB', 'GOOGL', 'MSFT'));
