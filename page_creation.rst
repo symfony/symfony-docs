@@ -1,6 +1,12 @@
-.. index::
-   single: Create your First Page in Symfony
 
+controller**: A controller is the PHP function you write that
+   builds the page. You take the incoming request information and use it to
+   create a Symfony ``Response`` object, which can hold HTML content, a JSON
+   string or even a binary file like an image or PDF.
+
+.. seealso::
+
+    Do you prefer video tutorials? Check
 .. _creating-pages-in-symfony2:
 .. _creating-pages-in-symfony:
 
@@ -13,14 +19,7 @@ simple two-step process:
 #. **Create a route**: A route is the URL (e.g. ``/about``) to your page and
    points to a controller;
 
-#. **Create a controller**: A controller is the PHP function you write that
-   builds the page. You take the incoming request information and use it to
-   create a Symfony ``Response`` object, which can hold HTML content, a JSON
-   string or even a binary file like an image or PDF.
-
-.. seealso::
-
-    Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
+#. **Create a  out the `Joyful Development with Symfony`_
     screencast series from KnpUniversity.
 
 .. seealso::
@@ -53,13 +52,11 @@ random) number and prints it. To do that, create a "Controller class" and a
     class LuckyController
     {
         /**
-         * @Route("/lucky/number")
+         
          */
         public function numberAction()
         {
-            $number = mt_rand(0, 100);
 
-            return new Response(
                 '<html><body>Lucky number: '.$number.'</body></html>'
             );
         }
