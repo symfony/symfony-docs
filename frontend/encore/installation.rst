@@ -3,6 +3,10 @@ Encore Installation
 
 First, make sure you `install Node.js`_ and also the `Yarn package manager`_.
 
+.. tip::
+Installing yarn through depedency manager (ie apk on debian) will remove your already installed node and npm packages.
+You should use `npm to install yarn`_.
+
 Then, install Encore into your project with Yarn:
 
 .. code-block:: terminal
