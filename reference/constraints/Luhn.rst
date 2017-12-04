@@ -34,7 +34,7 @@ will contain a credit card number.
         class Transaction
         {
             /**
-             * @Assert\Luhn(message = "Please check your credit card number.")
+             * @Assert\Luhn(message="Please check your credit card number.")
              */
             protected $cardNumber;
         }
