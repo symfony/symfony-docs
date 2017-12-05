@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by ricknox at 2017-11-29T12:10:41Z
+
+Build failure is unrelated to this PR. This has been fixed in #8772.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-11-30T11:36:27Z
+
+This looks good. Can you also add an entry to the redirection map?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-30T20:32:49Z
+
+Yea, I agree. We just need to add `use_microseconds` to the "Full Default configuration" with maybe one line of `# comments` above it to give a short description. That would actually be AWESOME
+
+---------------------------------------------------------------------------
+
+by ricknox at 2017-12-01T19:36:33Z
+
+I am unsure about the comments. They are long right now, and that is the incorrect way according to the feedback @weaverryan gave in https://github.com/symfony/symfony-docs/pull/8770#issuecomment-348312420. See commit https://github.com/symfony/symfony-docs/pull/8770/commits/4b3ed43060414955021a8ba80b4802326fb67cd4 about the changes.
+
+I'd love to get better comment texts to include instead of these long lines cluttering the article since this is such a small change.
+
+---------------------------------------------------------------------------
+
+by ricknox at 2017-12-04T10:02:45Z
+
+@javiereguiluz No problem. It is good that we all pay attention so that the quality of the documentation remains high.
