@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by ricknox at 2017-12-01T20:04:22Z
+
+I'm against the following question, but it might be useful to add a tip adding the file yourself with the content of `.htaccess` without using a recipe?
+
+---------------------------------------------------------------------------
+
+by ricknox at 2017-12-02T11:46:40Z
+
+Thanks @weaverryan for the feedback (I am sorry that sometimes I send bad English phrases but fortunately there are reviews! 🤓).
+
+Changes are in d71d22a770d9037cd219f26ee0e8ef6715e5f97e. Ready for re-review.
+
+---------------------------------------------------------------------------
+
+by ricknox at 2017-12-02T17:03:55Z
+
+Thank you @greg0ire for the suggestions. They look more natural now. Fixed in 07abdb887ea30424f3cb54551fe895de94695f3e.
