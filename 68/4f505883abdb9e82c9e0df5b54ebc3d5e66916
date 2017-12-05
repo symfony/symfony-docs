@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-12-05T14:28:36Z
+
+We could IMO merge this into the `3.3` branch as this option was pretty useless in Symfony 3.
+
+---------------------------------------------------------------------------
+
+by jcrombez at 2017-12-05T14:30:00Z
+
+Yes, this might be a good idea.
