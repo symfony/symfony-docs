@@ -161,7 +161,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{page}", name="blog_list", requirements={"page": "\d+"})
+             * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
              */
             public function list($page)
             {
@@ -260,7 +260,7 @@ So how can you make ``blog_list`` once again match when the user visits
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{page}", name="blog_list", requirements={"page": "\d+"})
+             * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
              */
             public function list($page = 1)
             {

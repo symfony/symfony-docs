@@ -206,7 +206,7 @@ looking for mapping information:
          *      mappedBy="post",
          *      orphanRemoval=true
          * )
-         * @ORM\OrderBy({"publishedAt" = "ASC"})
+         * @ORM\OrderBy({"publishedAt"="ASC"})
          */
         private $comments;
 

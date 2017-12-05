@@ -192,7 +192,7 @@ the entity manually. In our application, we have this situation in
 .. code-block:: php
 
     /**
-     * @Route("/comment/{postSlug}/new", name = "comment_new")
+     * @Route("/comment/{postSlug}/new", name="comment_new")
      */
     public function new(Request $request, $postSlug)
     {
@@ -218,8 +218,8 @@ flexible:
     use Symfony\Component\Routing\Annotation\Route;
 
     /**
-     * @Route("/comment/{postSlug}/new", name = "comment_new")
-     * @ParamConverter("post", options={"mapping": {"postSlug": "slug"}})
+     * @Route("/comment/{postSlug}/new", name="comment_new")
+     * @ParamConverter("post", options={"mapping"={"postSlug"="slug"}})
      */
     public function new(Request $request, Post $post)
     {
