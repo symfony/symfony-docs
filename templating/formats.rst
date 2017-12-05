@@ -51,7 +51,7 @@ be configured so that ``/about-us`` sets the request format to ``html`` while
 special ``_format`` placeholder in your route definition::
 
     /**
-     * @Route("/{slug}.{_format}", defaults={"_format": "html"})
+     * @Route("/{slug}.{_format}", defaults={"_format"="html"})
      */
     public function showAction(Request $request, $slug)
     {
