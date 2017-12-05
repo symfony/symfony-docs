@@ -31,6 +31,23 @@ to use PHP :ref:`with Nginx <web-server-nginx>`.
 
 .. _web-server-apache-mod-php:
 
+Adding Rewrite Rules
+--------------------
+
+The easiest way is to install the Apache recipe by executing the following command:
+
+.. code-block:: terminal
+
+    $ composer require symfony/apache-pack
+
+This recipe installs a ``.htaccess`` file containing the rewrite rules in the ``public/`` directory.
+
+.. tip::
+
+    A performance improvement can be achieved by putting the rewrite rules from the ``.htaccess``
+    file to the VirtualHost block of your Apache configuration and disallowing ``.htaccess`` from
+    override by changing ``AllowOverride All`` to ``AllowOverride None`` in your VirtualHost block.
+
 Apache with mod_php/PHP-CGI
 ---------------------------
 
