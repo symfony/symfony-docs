@@ -63,7 +63,7 @@ be listed inside the choice field::
 
     $builder->add('users', EntityType::class, array(
         // query choices from this entity
-        'class' => User:class,
+        'class' => User::class,
 
         // use the User.username property as the visible option string
         'choice_label' => 'username',
