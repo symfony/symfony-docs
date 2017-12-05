@@ -50,7 +50,7 @@ First, move into your new project and install the server:
 .. code-block:: terminal
 
     cd my-project
-    composer require server
+    composer require server --dev
 
 To start the server, run:
 
