@@ -182,7 +182,7 @@ manually. In our application, we have this situation in ``CommentController``:
 .. code-block:: php
 
     /**
-     * @Route("/comment/{postSlug}/new", name = "comment_new")
+     * @Route("/comment/{postSlug}/new", name="comment_new")
      */
     public function newAction(Request $request, $postSlug)
     {
@@ -208,8 +208,8 @@ flexible:
     use Symfony\Component\HttpFoundation\Request;
 
     /**
-     * @Route("/comment/{postSlug}/new", name = "comment_new")
-     * @ParamConverter("post", options={"mapping": {"postSlug": "slug"}})
+     * @Route("/comment/{postSlug}/new", name="comment_new")
+     * @ParamConverter("post", options={"mapping"={"postSlug"="slug"}})
      */
     public function newAction(Request $request, Post $post)
     {
