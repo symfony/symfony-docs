@@ -22,7 +22,7 @@ Creating Routes
 
 A *route* is a map from a URL path to a controller. Suppose you want one route that
 matches ``/blog`` exactly and another more dynamic route that can match *any* URL
-like ``/blog/my-post`` or ``/blog/all-about-symfony``::
+like ``/blog/my-post`` or ``/blog/all-about-symfony``:
 
 .. configuration-block::
 
@@ -161,7 +161,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{page}", name="blog_list", requirements={"page": "\d+"})
+             * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
              */
             public function list($page)
             {
@@ -260,7 +260,7 @@ So how can you make ``blog_list`` once again match when the user visits
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{page}", name="blog_list", requirements={"page": "\d+"})
+             * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
              */
             public function list($page = 1)
             {

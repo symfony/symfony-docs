@@ -42,8 +42,8 @@ Before you begin, first make sure you install the Security component:
 
     $ composer require security
     
-For this entry, suppose that you already have a ``User`` entity inside an
-``AppBundle`` with the following fields: ``id``, ``username``, ``password``,
+For this entry, suppose that you already have a ``User`` entity
+with the following fields: ``id``, ``username``, ``password``,
 ``email`` and ``isActive``::
 
     // src/Entity/User.php

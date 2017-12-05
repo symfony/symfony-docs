@@ -33,7 +33,7 @@ property is not empty, add the following:
         class Author
         {
             /**
-             * @Assert\NotBlank(message = "author.name.not_blank")
+             * @Assert\NotBlank(message="author.name.not_blank")
              */
             public $name;
         }
