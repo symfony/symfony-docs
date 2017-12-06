@@ -366,12 +366,12 @@ It is also possible to serialize only a set of specific attributes::
     $serializer = new Serializer(array(new ObjectNormalizer()));
 
     $data = $serializer->normalize($user, null, array('attributes' => array('familyName', 'company' => ['name'])));
-    // $data = array('familyName' => 'Dunglas', 'company' => ['name' => 'Les-Tilleuls.coop']);
+    // $data = array('familyName' => 'Dunglas', 'company' => array('name' => 'Les-Tilleuls.coop'));
 
 Only attributes that are not ignored (see below) are available.
 If some serialization groups are set, only attributes allowed by those groups can be used.
 
-As for groups, attributes can be applied during both the serialization and deserialization.
+As for groups, attributes can be applied during both the serialization and deserialization process.
 
 Ignoring Attributes
 -------------------
