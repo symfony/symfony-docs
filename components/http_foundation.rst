@@ -304,7 +304,7 @@ PHP callable that is able to create an instance of your ``Request`` class::
         array $server = array(),
         $content = null
     ) {
-        return SpecialRequest::create(
+        return new SpecialRequest(
             $query,
             $request,
             $attributes,
