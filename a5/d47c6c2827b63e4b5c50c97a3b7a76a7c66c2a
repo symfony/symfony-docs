@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by jderusse at 2017-05-31T09:31:29Z
+
+Component re-added (https://github.com/symfony/symfony/pull/22597)
+Time to re-merge this PR?
+
+I'll create a separate PR to fix issue related to issues
+
+---------------------------------------------------------------------------
+
+by jderusse at 2017-08-18T09:36:26Z
+
+Can we move forward with the Lock documentation ?
+
+I wish to improve the documentation to fix https://github.com/symfony/symfony/issues/22452
+and prefere to do it in a separated PR instead of updating this one (because it has already been merged once).
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-08-31T13:22:46Z
+
+Ok for me. @xabbuh?
+
+---------------------------------------------------------------------------
+
+by Nek- at 2017-12-07T10:12:28Z
+
+Hello guys. As Symfony 3.4 is released with the lock component... It could be a great idea to merge this PR. The link toward the doc is already available here but is broken: https://github.com/symfony/lock#resources
