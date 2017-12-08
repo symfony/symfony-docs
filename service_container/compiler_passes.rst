@@ -21,7 +21,7 @@ Compiler passes are registered in the ``build()`` method of the application kern
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
-    class Kernel extends BaseKernel implements CompilerPassInterface
+    class Kernel extends BaseKernel
     {
         use MicroKernelTrait;
 
