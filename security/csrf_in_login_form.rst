@@ -16,11 +16,12 @@ for CSRF. In this article you'll learn how you can use it in your login form.
 Configuring CSRF Protection
 ---------------------------
 
-First, install the Security component in your project:
+First, install the CSRF support in your project (which in turn requires installing
+the Symfony Form component):
 
 .. code-block:: terminal
 
-    $ composer require security
+    $ composer require security-csrf form
 
 Then, enable the CSRF protection in the framework configuration file:
 
