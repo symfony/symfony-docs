@@ -65,7 +65,7 @@ by pressing ``Ctrl+C`` from your terminal.
 .. tip::
 
     If you're having any problems running Symfony, your system may be missing
-    some technical requirements. Use the :doc:`Symfony Requirements Checker <//reference/requirements>`
+    some technical requirements. Use the :doc:`Symfony Requirements Checker </reference/requirements>`
     tool to make sure your system is set up.
 
 .. tip::
