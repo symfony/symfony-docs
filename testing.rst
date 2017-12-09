@@ -155,7 +155,11 @@ As an example, a test could look like this::
             );
         }
     }
-
+    
+.. tip::
+    
+    Do not forget to require the ``Browser-Kit`` via ``composer require browser-kit`` if you want to use the ``WebTestCase`` class.
+    
 .. tip::
 
     To run your functional tests, the ``WebTestCase`` class needs to know which
