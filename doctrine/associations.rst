@@ -18,7 +18,7 @@ There are **two** main relationship/association types:
     classes, and each class has many students).
 
 First, you need to determine which relationship to use. If both sides of the relation
-will contain many of the oter side (e.g. "students" and "classes"), you need a
+will contain many of the other side (e.g. "students" and "classes"), you need a
 ``ManyToMany`` relation. Otherwise, you likely need a ``ManyToOne``.
 
 .. tip::
