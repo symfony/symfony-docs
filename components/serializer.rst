@@ -11,9 +11,6 @@ The Serializer Component
 In order to do so, the Serializer component follows the following
 simple schema.
 
-.. _component-serializer-encoders:
-.. _component-serializer-normalizers:
-
 .. image:: /_images/components/serializer/serializer_workflow.png
 
 As you can see in the picture above, an array is used as a man in
@@ -21,7 +18,7 @@ the middle. This way, Encoders will only deal with turning specific
 **formats** into **arrays** and vice versa. The same way, Normalizers
 will deal with turning specific **objects** into **arrays** and vice versa.
 
-Serialization is a complex topic. This component may not cover all your use cases out of the box, 
+Serialization is a complex topic. This component may not cover all your use cases out of the box,
 but it can be useful for developing tools to serialize and deserialize your objects.
 
 Installation
@@ -503,6 +500,8 @@ When serializing, you can set a callback to format a specific object property::
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
 
+.. _component-serializer-normalizers:
+
 Normalizers
 -----------
 
@@ -561,6 +560,8 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
     string (``data:...``) such that files can be embedded into serialized data.
+
+.. _component-serializer-encoders:
 
 Encoders
 --------
