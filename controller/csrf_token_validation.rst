@@ -11,6 +11,8 @@ method to check the validity of a CSRF token::
 
     public function deleteAction()
     {
+        // get the value of the $submittedToken from the request...
+
         if ($this->isCsrfTokenValid('token_id', $submittedToken)) {
             // ... do something, like deleting an object
         }
