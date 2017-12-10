@@ -21,7 +21,7 @@ a routing ``{wildcard}`` to only match some regular expression:
         class BlogController extends Controller
         {
             /**
-             * @Route("/blog/{page}", name="blog_list", requirements={"page": "\d+"})
+             * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
              */
             public function listAction($page)
             {
@@ -97,8 +97,8 @@ URL:
         class MainController extends Controller
         {
             /**
-             * @Route("/{_locale}", defaults={"_locale": "en"}, requirements={
-             *     "_locale": "en|fr"
+             * @Route("/{_locale}", defaults={"_locale"="en"}, requirements={
+             *     "_locale"="en|fr"
              * })
              */
             public function homepageAction($_locale)

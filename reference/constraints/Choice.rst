@@ -52,7 +52,7 @@ If your valid choice list is simple, you can pass them in directly via the
             protected $city;
 
             /**
-             * @Assert\Choice(choices = {"fiction", "non-fiction"}, message = "Choose a valid genre.")
+             * @Assert\Choice(choices={"fiction", "non-fiction"}, message="Choose a valid genre.")
              */
             protected $genre;
         }
@@ -162,7 +162,7 @@ constraint.
         class Author
         {
             /**
-             * @Assert\Choice(callback = "getGenres")
+             * @Assert\Choice(callback="getGenres")
              */
             protected $genre;
         }
@@ -227,7 +227,7 @@ you can pass the class name and the method as an array.
         class Author
         {
             /**
-             * @Assert\Choice(callback = {"Util", "getGenres"})
+             * @Assert\Choice(callback={"Util", "getGenres"})
              */
             protected $genre;
         }

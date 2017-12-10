@@ -108,7 +108,7 @@ to :doc:`customize form rendering </form/form_customization>`):
 Finally, you need to update the code of the controller that handles the form::
 
     // src/AppBundle/Controller/ProductController.php
-    namespace AppBundle\ProductController;
+    namespace AppBundle\Controller;
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;

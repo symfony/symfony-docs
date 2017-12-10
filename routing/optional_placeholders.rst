@@ -135,7 +135,7 @@ This is done by including it in the ``defaults`` collection:
         // ...
 
         /**
-         * @Route("/blog/{page}", defaults={"page" = 1})
+         * @Route("/blog/{page}", defaults={"page"=1})
          */
         public function indexAction($page)
         {

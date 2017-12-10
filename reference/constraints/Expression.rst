@@ -60,15 +60,6 @@ One way to accomplish this is with the Expression constraint:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Model\BlogPost:
-            constraints:
-                - Expression:
-                    expression: "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()"
-                    message: "If this is a tech post, the category should be either php or symfony!"
-
     .. code-block:: php-annotations
 
         // src/AppBundle/Model/BlogPost.php
@@ -86,6 +77,15 @@ One way to accomplish this is with the Expression constraint:
         {
             // ...
         }
+
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Model\BlogPost:
+            constraints:
+                - Expression:
+                    expression: "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()"
+                    message: "If this is a tech post, the category should be either php or symfony!"
 
     .. code-block:: xml
 
@@ -141,16 +141,6 @@ more about the expression language syntax, see
 
     .. configuration-block::
 
-        .. code-block:: yaml
-
-            # src/AppBundle/Resources/config/validation.yml
-            AppBundle\Model\BlogPost:
-                properties:
-                    isTechnicalPost:
-                        - Expression:
-                            expression: "this.getCategory() in ['php', 'symfony'] or value == false"
-                            message: "If this is a tech post, the category should be either php or symfony!"
-
         .. code-block:: php-annotations
 
             // src/AppBundle/Model/BlogPost.php
@@ -172,6 +162,16 @@ more about the expression language syntax, see
 
                 // ...
             }
+
+        .. code-block:: yaml
+
+            # src/AppBundle/Resources/config/validation.yml
+            AppBundle\Model\BlogPost:
+                properties:
+                    isTechnicalPost:
+                        - Expression:
+                            expression: "this.getCategory() in ['php', 'symfony'] or value == false"
+                            message: "If this is a tech post, the category should be either php or symfony!"
 
         .. code-block:: xml
 

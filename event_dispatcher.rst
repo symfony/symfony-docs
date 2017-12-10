@@ -64,8 +64,8 @@ The most common way to listen to an event is to register an **event listener**::
 
     Each event receives a slightly different type of ``$event`` object. For
     the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`.
-    To see what type of object each event listener receives, see :class:`Symfony\\Component\\HttpKernel\\KernelEvents`
-    or the documentation about the specific event you're listening to.
+    Check out the :doc:`Symfony events reference </reference/events>` to see
+    what type of object each event provides.
 
 Now that the class is created, you just need to register it as a service and
 notify Symfony that it is a "listener" on the ``kernel.exception`` event by

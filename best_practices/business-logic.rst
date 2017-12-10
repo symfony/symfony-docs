@@ -283,7 +283,7 @@ looking for mapping information:
          *      mappedBy="post",
          *      orphanRemoval=true
          * )
-         * @ORM\OrderBy({"publishedAt" = "ASC"})
+         * @ORM\OrderBy({"publishedAt"="ASC"})
          */
         private $comments;
 
@@ -358,6 +358,10 @@ were defined by the PHP community. You can learn more about
 :doc:`the Symfony Coding standards </contributing/code/standards>` and even
 use the `PHP-CS-Fixer`_, which is a command-line utility that can fix the
 coding standards of an entire codebase in a matter of seconds.
+
+----
+
+Next: :doc:`/best_practices/controllers`
 
 .. _`full definition`: https://en.wikipedia.org/wiki/Business_logic
 .. _`Doctrine project`: http://www.doctrine-project.org/

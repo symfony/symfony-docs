@@ -150,5 +150,9 @@ If you're using the :ref:`default services.yml configuration <service-container-
 you're done! Symfony will automatically know about your new service and tag it to
 be used as a Twig extension.
 
+----
+
+Next: :doc:`/best_practices/forms`
+
 .. _`Twig`: http://twig.sensiolabs.org/
 .. _`Parsedown`: http://parsedown.org/

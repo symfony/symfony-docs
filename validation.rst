@@ -637,7 +637,7 @@ this method must return ``true``:
         class Author
         {
             /**
-             * @Assert\IsTrue(message = "The password cannot match your first name")
+             * @Assert\IsTrue(message="The password cannot match your first name")
              */
             public function isPasswordLegal()
             {
