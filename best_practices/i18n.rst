@@ -36,12 +36,6 @@ Symfony supports notes in XLIFF files, making them more user-friendly for
 translators. At the end, good translations are all about context, and these
 XLIFF notes allow you to define that context.
 
-.. tip::
-
-    The Apache-licensed `JMSTranslationBundle`_ offers you a web interface for
-    viewing and editing these translation files. It also has advanced extractors
-    that can read your project and automatically update the XLIFF files.
-
 Translation Source File Location
 --------------------------------
 
@@ -96,5 +90,3 @@ English in the application would be:
 ----
 
 Next: :doc:`/best_practices/security`
-
-.. _`JMSTranslationBundle`: https://github.com/schmittjoh/JMSTranslationBundle
