@@ -38,9 +38,8 @@ XLIFF notes allow you to define that context.
 
 .. tip::
 
-    The Apache-licensed `JMSTranslationBundle`_ offers you a web interface for
-    viewing and editing these translation files. It also has advanced extractors
-    that can read your project and automatically update the XLIFF files.
+    The `PHP Translation Bundle`_ includes advanced extractors that can read
+    your project and automatically update the XLIFF files.
 
 Translation Source File Location
 --------------------------------
@@ -97,4 +96,4 @@ English in the application would be:
 
 Next: :doc:`/best_practices/security`
 
-.. _`JMSTranslationBundle`: https://github.com/schmittjoh/JMSTranslationBundle
+.. _`PHP Translation Bundle`: https://github.com/php-translation/symfony-bundle
