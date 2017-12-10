@@ -129,7 +129,7 @@ Symfony application by executing the following command:
 Upgrading Existing Applications to Flex
 ---------------------------------------
 
-Using Symfony Flex is optional, even in Symfony 4, where Flex will be used by
+Using Symfony Flex is optional, even in Symfony 4, where Flex is used by
 default. However, Flex is so convenient and improves your productivity so much
 that it's strongly recommended to upgrade your existing applications to it.
 
@@ -163,37 +163,87 @@ is not enough. You must also upgrade the directory structure to the one shown
 above. There's no automatic tool to make this upgrade, so you must follow these
 manual steps:
 
-#. Create a new empty Symfony application (``composer create-project
-   symfony/skeleton my-project-flex``)
+#. Install Flex as a dependency of your project:
 
-#. Merge the ``require`` and ``require-dev`` dependencies defined in your
-   original project's ``composer.json`` file to the ``composer.json`` file of the
-   new project (don't copy the ``symfony/symfony`` dependency, but add the
-   relevant components you are effectively using in your project).
+   .. code-block:: terminal
 
-#. Install the dependencies in the new project executing ``composer update``.
-   This will make Symfony Flex generate all the configuration files in
-   ``config/packages/``
+       $ composer require symfony/flex
 
-#. Review the generated ``config/packages/*.yaml`` files and make any needed
-   changes according to the configuration defined in the
-   ``app/config/config_*.yml`` file of your original project. Beware that this is
-   the most time-consuming and error-prone step of the upgrade process.
+#. If the project's ``composer.json`` file contains ``symfony/symfony`` dependency,
+   it still depends on the Symfony Standard edition, which is no longer available
+   in Symfony 4. First, remove this dependency:
 
-#. Move the original parameters defined in ``app/config/parameters.*.yml`` to
-   the new ``config/services.yaml`` and ``.env`` files depending on your needs.
+   .. code-block:: terminal
 
-#. Move the original source code from ``src/{App,...}Bundle/`` to ``src/`` and
-   update the namespaces of every PHP file to be ``App\...`` (advanced IDEs can do
-   this automatically).
+       $ composer remove symfony/symfony
 
-#. Move the original templates from ``app/Resources/views/`` to ``templates/``
-   and ``app/Resources/translations`` to ``translations/``. There may be a few
-   other files you need to move into a new location.
+   Now you must add in ``composer.json`` all the Symfony dependencies required
+   by your project. A quick way to do that is to add all the components that
+   were included in the previous ``symfony/symfony`` dependency and later you
+   can remove anything you don't really need:
 
-#. Make any other change needed by your application. For example, if your
-   original ``web/app_*.php`` front controllers were customized, add those changes
-   to the new ``public/index.php`` controller.
+   .. code-block:: terminal
+
+       $ composer require annotations assets doctrine twig profiler \
+         logger mailer form fixtures security translation validator
+
+#. If the project's ``composer.json`` file doesn't contain ``symfony/symfony``
+   dependency, it already defines its dependencies explicitly, as required by
+   Flex. You just need to reinstall all dependencies to force Flex generate the
+   config files in ``config/``, which is the most tedious part of the upgrade
+   process:
+
+   .. code-block:: terminal
+
+       $ rm -fr /vendor/*
+       $ composer install
+
+#. No matter which of the previous steps you followed. At this point, you'll have
+   lots of new config files in ``config/``. They contain the default config
+   defined by Symfony, so you must check your original files in ``app/config/``
+   and make the needed changes in the new files. Flex config doesn't use suffixes
+   in config files, so the old ``app/config/config_dev.yml`` goes to
+   ``config/packages/dev/*.yaml``, etc.
+
+#. The most important config file is ``app/config/services.yml``, which now is
+   located at ``config/services.yaml``. Copy the contents of the
+   `default services.yaml file`_ and then add your own service configuration.
+   Later you can revisit this file because thanks to Symfony's
+   :doc:`autowiring feature </service_container/3.3-di-changes>` you can remove
+   most of the service configuration.
+
+#. Move the rest of the ``app/`` contents as follows (and after that, remove the
+   ``app/`` directory):
+
+   * ``app/Resources/views/`` -> ``templates/``
+   * ``app/Resources/translations/`` -> ``translations/``
+   * ``app/Resources/<BundleName>/views/`` -> ``templates/<BundleName>/``
+   * rest of ``app/Resources/`` files -> ``src/Resources/``
+
+#. Move the original PHP source code from ``src/AppBundle/*`` to ``src/``. In
+   addition to moving the files, update the ``autoload`` and ``autoload-dev``
+   values of the ``composer.json`` file as `shown in this example`_ to use
+   ``App\`` and ``App\Tests\`` as the application namespaces (advanced IDEs can
+   do this automatically).
+
+   If you used multiple bundles to organize your code, you must reorganize your
+   code into ``src/``. For example, if you had ``src/UserBundle/Controller/DefaultController.php``
+   and ``src/ProductBundle/Controller/DefaultController.php``, you could move
+   them to ``src/Controller/UserController.php`` and ``src/Controller/ProductController.php``.
+
+#. Move the public assets, such as images or compiled CSS/JS files, from
+   ``src/AppBundle/Resources/public/`` to ``public/`` (e.g. ``public/images/``).
+
+  Move the source of the assets (e.g. the SCSS files) to ``assets/`` and use
+  :doc:`Webpack Encore </frontend>` to manage and compile them.
+
+#. Create the new ``public/index.php`` front controller
+   `copying Symfony's index.php source`_ and, if you made any customization in
+   your ``web/app.php`` and ``web/app_dev.php`` files, copy those changes into
+   the new file. You can now remove the old ``web/`` dir.
+
+#. Update the ``bin/console`` script `copying Symfony's bin/console source`_
+   and changing anything according to your original console script.
 
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`Symfony Installer`: https://github.com/symfony/symfony-installer
@@ -201,3 +251,7 @@ manual steps:
 .. _`Main recipe repository`: https://github.com/symfony/recipes
 .. _`Contrib recipe repository`: https://github.com/symfony/recipes-contrib
 .. _`Symfony Recipes documentation`: https://github.com/symfony/recipes/blob/master/README.rst
+.. _`default services.yaml file`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/config/services.yaml
+.. _`shown in this example`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L24-L33
+.. _`copying Symfony's index.php source`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/public/index.php
+.. _`copying Symfony's bin/console source`: https://github.com/symfony/recipes/tree/master/symfony/console/3.3
