@@ -54,7 +54,7 @@ Then enable it by calling:
 
     Encore
         // ...
-        enableForkedTypeScriptTypesChecking()
+        .enableForkedTypeScriptTypesChecking()
     ;
 
 This plugin requires that you have a `tsconfig.json`_ file that is setup correctly.
