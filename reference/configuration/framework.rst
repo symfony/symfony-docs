@@ -411,7 +411,7 @@ csrf_protection
 
 .. seealso::
 
-    For more information about CSRF protection in forms, see :doc:`/form/csrf_protection`.
+    For more information about CSRF protection, see :doc:`/security/csrf`.
 
 .. _reference-csrf_protection-enabled:
 
@@ -422,7 +422,7 @@ enabled
 otherwise
 
 This option can be used to disable CSRF protection on *all* forms. But you
-can also :ref:`disable CSRF protection on individual forms <form-disable-csrf>`.
+can also :ref:`disable CSRF protection on individual forms <form-csrf-customization>`.
 
 If you're using forms, but want to avoid starting your session (e.g. using
 forms in an API-only website), ``csrf_protection`` will need to be set to

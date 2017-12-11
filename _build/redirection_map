@@ -124,7 +124,7 @@
 /cookbook/console/style /console/style
 /cookbook/console/usage /console
 /console/usage /console
-/cookbook/controller/csrf_token_validation /controller/csrf_token_validation
+/cookbook/controller/csrf_token_validation /security/csrf
 /cookbook/controller/error_pages /controller/error_pages
 /cookbook/controller/forwarding /controller/forwarding
 /cookbook/controller/index /controller
@@ -221,7 +221,7 @@
 /cookbook/security/acl /security/acl
 /cookbook/security/acl_advanced /security/acl_advanced
 /cookbook/security/api_key_authentication /security/api_key_authentication
-/cookbook/security/csrf_in_login_form /security/csrf_in_login_form
+/cookbook/security/csrf_in_login_form /security/csrf
 /cookbook/security/custom_authentication_provider /security/custom_authentication_provider
 /cookbook/security/custom_password_authenticator /security/custom_password_authenticator
 /cookbook/security/custom_provider /security/custom_provider
@@ -361,7 +361,9 @@
 /components/yaml/introduction /components/yaml
 /components/yaml/index /components/yaml
 /console/logging /console
+/controller/csrf_token_validation /security/csrf
 /deployment/tools /deployment
+/form/csrf_protection /security/csrf
 /install/bundles /setup/bundles
 /email/gmail /email
 /email/cloud /email
@@ -376,6 +378,7 @@
 /frontend/assetic/yuicompressor /frontend/assetic
 /reference/configuration/assetic /frontend/assetic
 /security/target_path /security
+/security/csrf_in_login_form /security/csrf
 /service_container/third_party /service_container
 /templating/templating_service /templates
 /testing/simulating_authentication /testing/http_authentication
