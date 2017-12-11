@@ -36,6 +36,11 @@ Symfony supports notes in XLIFF files, making them more user-friendly for
 translators. At the end, good translations are all about context, and these
 XLIFF notes allow you to define that context.
 
+.. tip::
+
+    The `PHP Translation Bundle`_ includes advanced extractors that can read
+    your project and automatically update the XLIFF files.
+
 Translation Source File Location
 --------------------------------
 
@@ -90,3 +95,5 @@ English in the application would be:
 ----
 
 Next: :doc:`/best_practices/security`
+
+.. _`PHP Translation Bundle`: https://github.com/php-translation/symfony-bundle
