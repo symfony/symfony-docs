@@ -189,7 +189,7 @@ That's it! Just three lines are needed to render the complete form:
     Renders the end tag of the form and any fields that have not
     yet been rendered, in case you rendered each field yourself. This is useful
     for rendering hidden fields and taking advantage of the automatic
-    :doc:`CSRF Protection </form/csrf_protection>`.
+    :doc:`CSRF Protection </security/csrf>`.
 
 .. seealso::
 
