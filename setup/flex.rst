@@ -232,7 +232,7 @@ manual steps:
    them to ``src/Controller/UserController.php`` and ``src/Controller/ProductController.php``.
 
 #. Move the public assets, such as images or compiled CSS/JS files, from
-  ``src/AppBundle/Resources/public/`` to ``public/`` (e.g. ``public/images/``).
+   ``src/AppBundle/Resources/public/`` to ``public/`` (e.g. ``public/images/``).
 
   Move the source of the assets (e.g. the SCSS files) to ``assets/`` and use
   :doc:`Webpack Encore </frontend>` to manage and compile them.
