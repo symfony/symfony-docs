@@ -162,6 +162,15 @@ using the login form:
 
 After this, you have protected your login form against CSRF attacks.
 
+.. caution::
+
+    In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+    install the form feature before using it:
+
+    .. code-block:: terminal
+
+        $ composer require form
+
 .. tip::
 
     You can change the name of the field by setting ``csrf_parameter`` and change
