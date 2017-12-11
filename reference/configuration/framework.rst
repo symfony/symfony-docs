@@ -1742,8 +1742,7 @@ lock
 **type**: ``string``
 
 The default lock adapter. If not defined the value is set to ``semaphore`` when
-availabale, or to ``flock` otherwise. Store's DSN are also allowed.
-
+available, or to ``flock`` otherwise. Store's DSN are also allowed.
 
 Full Default Configuration
 --------------------------
