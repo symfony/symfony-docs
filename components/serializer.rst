@@ -333,6 +333,46 @@ You are now able to serialize only attributes in the groups you want::
 
 .. _ignoring-attributes-when-serializing:
 
+Selecting Specific Attributes
+-----------------------------
+
+It is also possible to serialize only a set of specific attributes::
+
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+    class User
+    {
+        public $familyName;
+        public $givenName;
+        public $company;
+    }
+
+    class Company
+    {
+        public $name;
+        public $address;
+    }
+
+    $company = new Company();
+    $company->name = 'Les-Tilleuls.coop';
+    $company->address = 'Lille, France';
+
+    $user = new User();
+    $user->familyName = 'Dunglas';
+    $user->givenName = 'Kévin';
+    $user->company = $company;
+
+    $serializer = new Serializer(array(new ObjectNormalizer()));
+
+    $data = $serializer->normalize($user, null, array('attributes' => array('familyName', 'company' => ['name'])));
+    // $data = array('familyName' => 'Dunglas', 'company' => array('name' => 'Les-Tilleuls.coop'));
+
+Only attributes that are not ignored (see below) are available.
+If some serialization groups are set, only attributes allowed by those groups can be used.
+
+As for groups, attributes can be selected during both the serialization and deserialization process.
+
 Ignoring Attributes
 -------------------
 
