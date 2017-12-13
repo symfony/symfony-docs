@@ -186,6 +186,8 @@ as a service, you can use normal dependency injection. Imagine you have a
         public function __construct(UserManager $userManager)
         {
             $this->userManager = $userManager;
+            
+            parent::__construct();
         }
 
         // ...
