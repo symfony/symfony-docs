@@ -11,9 +11,6 @@ The Serializer Component
 In order to do so, the Serializer component follows the following
 simple schema.
 
-.. _component-serializer-encoders:
-.. _component-serializer-normalizers:
-
 .. image:: /_images/components/serializer/serializer_workflow.png
 
 As you can see in the picture above, an array is used as a man in
@@ -21,7 +18,7 @@ the middle. This way, Encoders will only deal with turning specific
 **formats** into **arrays** and vice versa. The same way, Normalizers
 will deal with turning specific **objects** into **arrays** and vice versa.
 
-Serialization is a complex topic. This component may not cover all your use cases out of the box, 
+Serialization is a complex topic. This component may not cover all your use cases out of the box,
 but it can be useful for developing tools to serialize and deserialize your objects.
 
 Installation
@@ -333,6 +330,46 @@ You are now able to serialize only attributes in the groups you want::
 
 .. _ignoring-attributes-when-serializing:
 
+Selecting Specific Attributes
+-----------------------------
+
+It is also possible to serialize only a set of specific attributes::
+
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+    class User
+    {
+        public $familyName;
+        public $givenName;
+        public $company;
+    }
+
+    class Company
+    {
+        public $name;
+        public $address;
+    }
+
+    $company = new Company();
+    $company->name = 'Les-Tilleuls.coop';
+    $company->address = 'Lille, France';
+
+    $user = new User();
+    $user->familyName = 'Dunglas';
+    $user->givenName = 'Kévin';
+    $user->company = $company;
+
+    $serializer = new Serializer(array(new ObjectNormalizer()));
+
+    $data = $serializer->normalize($user, null, array('attributes' => array('familyName', 'company' => ['name'])));
+    // $data = array('familyName' => 'Dunglas', 'company' => array('name' => 'Les-Tilleuls.coop'));
+
+Only attributes that are not ignored (see below) are available.
+If some serialization groups are set, only attributes allowed by those groups can be used.
+
+As for groups, attributes can be selected during both the serialization and deserialization process.
+
 Ignoring Attributes
 -------------------
 
@@ -503,6 +540,8 @@ When serializing, you can set a callback to format a specific object property::
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
 
+.. _component-serializer-normalizers:
+
 Normalizers
 -----------
 
@@ -568,6 +607,8 @@ There are several types of normalizers available:
 
     .. versionadded:: 3.4
         The ``DateIntervalNormalizer`` normalizer was added in Symfony 3.4.
+
+.. _component-serializer-encoders:
 
 Encoders
 --------
