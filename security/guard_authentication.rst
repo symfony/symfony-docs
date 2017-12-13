@@ -171,7 +171,7 @@ This requires you to implement several methods::
          */
         public function supports(Request $request)
         {
-            return $request->headers->has('X-AUTH-TOKEN')
+            return $request->headers->has('X-AUTH-TOKEN');
         }
 
         /**
