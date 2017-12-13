@@ -120,9 +120,9 @@ for example, that you're translating a simple message from inside a controller::
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Translation\Translator;
+    use Symfony\Component\Translation\TranslatorInterface;
 
-    public function index(Translator $translator)
+    public function index(TranslatorInterface $translator)
     {
         $translated = $translator->trans('Symfony is great');
 
@@ -199,9 +199,9 @@ Message Placeholders
 Sometimes, a message containing a variable needs to be translated::
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Translation\Translator;
+    use Symfony\Component\Translation\TranslatorInterface;
 
-    public function index(Translator $translator, $name)
+    public function index(TranslatorInterface $translator, $name)
     {
         $translated = $translator->trans('Hello '.$name);
 
