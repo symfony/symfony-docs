@@ -32,7 +32,7 @@ can also pass options to ``sass-loader``:
 
     Encore
         // ...
-        .enableSassLoader(function(sassOptions) {
+        .enableSassLoader(function(options) {
             // https://github.com/sass/node-sass#options
             // options.includePaths = [...]
         });

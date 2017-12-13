@@ -18,7 +18,7 @@ There are **two** main relationship/association types:
     classes, and each class has many students).
 
 First, you need to determine which relationship to use. If both sides of the relation
-will contain many of the oter side (e.g. "students" and "classes"), you need a
+will contain many of the other side (e.g. "students" and "classes"), you need a
 ``ManyToMany`` relation. Otherwise, you likely need a ``ManyToOne``.
 
 .. tip::
@@ -445,7 +445,7 @@ it *is* possible, by writing clever methods. First, instead of a ``setProducts()
 method, create a ``addProduct()`` method::
 
     // src/Entity/Category.php
-    
+
     // ...
     class Category
     {
@@ -470,7 +470,7 @@ What about *removing* a ``Product`` from a ``Category``? Add a ``removeProduct()
 method::
 
     // src/Entity/Category.php
-    
+
     // ...
     class Category
     {
@@ -495,12 +495,12 @@ To make this work, you *now* need to allow ``null`` to be passed to ``Product::s
     {
         // ...
 
-        - public function getCategory(): Category
-        + public function getCategory(): ?Category
+    -     public function getCategory(): Category
+    +     public function getCategory(): ?Category
         // ...
 
-        - public function setCategory(Category $category)
-        + public function setCategory(Category $category = null)
+    -     public function setCategory(Category $category)
+    +     public function setCategory(Category $category = null)
         {
             $this->category = $category;
         }
@@ -514,7 +514,7 @@ to be *deleted* if it becomes "orphaned" (i.e. without a ``Category``)? To choos
 that behavior, use the `orphanRemoval`_ option inside ``Category``::
 
     // src/Entity/Category.php
-    
+
     // ...
 
     /**

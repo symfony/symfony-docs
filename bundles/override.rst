@@ -101,7 +101,7 @@ to a new validation group:
 
     .. code-block:: yaml
 
-        # src/Acme/UserBundle/Resources/config/validation.yaml
+        # config/validator/validation.yaml
         FOS\UserBundle\Model\User:
             properties:
                 plainPassword:
@@ -114,7 +114,7 @@ to a new validation group:
 
     .. code-block:: xml
 
-        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

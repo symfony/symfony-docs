@@ -13,8 +13,12 @@ Understanding the Directory Structure
 The directory structure of a Symfony application is rather flexible, but the
 recommended structure is as follows:
 
-``app/``
-    The application configuration, templates and translations.
+``config/``
+    The application configuration
+``templates/``
+    The application's views
+``translations/``
+    The home of translation files
 ``bin/``
     Executable files (e.g. ``bin/console``).
 ``src/``
