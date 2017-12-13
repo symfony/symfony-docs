@@ -129,6 +129,12 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 Your First Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+First, install the BrowserKit component in your project:
+
+.. code-block:: terminal
+
+    $ composer require --dev browser-kit
+
 Functional tests are simple PHP files that typically live in the ``tests/Controller``
 directory for your bundle. If you want to test the pages handled by your
 ``PostController`` class, start by creating a new ``PostControllerTest.php``
@@ -155,11 +161,7 @@ As an example, a test could look like this::
             );
         }
     }
-    
-.. tip::
-    
-    Do not forget to require the ``browser-kit`` component via ``composer require browser-kit``, if you want to use the ``WebTestCase`` class.
-    
+
 .. tip::
 
     To run your functional tests, the ``WebTestCase`` class needs to know which
