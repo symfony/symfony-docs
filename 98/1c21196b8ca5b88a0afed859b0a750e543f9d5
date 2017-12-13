@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-12-08T08:14:09Z
+
+~I think we should merge this PR into the `2.7` branch. Calling the parent constructor should happen there too.~
+
+Looks like we only added the example constructor in 3.4 docs.
