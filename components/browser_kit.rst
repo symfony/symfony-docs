@@ -8,6 +8,12 @@ The BrowserKit Component
     The BrowserKit component simulates the behavior of a web browser, allowing
     you to make requests, click on links and submit forms programmatically.
 
+.. note::
+
+    The BrowserKit component can only make internal requests to your application.
+    If you need to make requests to external sites and applications, consider
+    using `Goutte`_, a simple web scraper based on Symfony Components.
+
 Installation
 ------------
 
@@ -60,7 +66,7 @@ URL::
     use Acme\Client;
 
     $client = new Client();
-    $crawler = $client->request('GET', 'http://symfony.com');
+    $crawler = $client->request('GET', '/');
 
 The value returned by the ``request()`` method is an instance of the
 :class:`Symfony\\Component\\DomCrawler\\Crawler` class, provided by the
@@ -78,7 +84,7 @@ performs the needed HTTP GET request to simulate the link click::
     use Acme\Client;
 
     $client = new Client();
-    $crawler = $client->request('GET', 'http://symfony.com');
+    $crawler = $client->request('GET', '/product/123');
     $link = $crawler->selectLink('Go elsewhere...')->link();
     $client->click($link);
 
@@ -120,7 +126,7 @@ retrieve any cookie while making requests with the client::
 
     // Make a request
     $client = new Client();
-    $crawler = $client->request('GET', 'http://symfony.com');
+    $crawler = $client->request('GET', '/');
 
     // Get the cookie Jar
     $cookieJar = $client->getCookieJar();
@@ -152,7 +158,7 @@ Looping Through Cookies
 
     // Make a request
     $client = new Client();
-    $crawler = $client->request('GET', 'http://symfony.com');
+    $crawler = $client->request('GET', '/');
 
     // Get the cookie Jar
     $cookieJar = $client->getCookieJar();
@@ -198,9 +204,8 @@ history::
 
     use Acme\Client;
 
-    // make a real request to an external site
     $client = new Client();
-    $client->request('GET', 'http://symfony.com');
+    $client->request('GET', '/');
 
     // select and click on a link
     $link = $crawler->selectLink('Documentation')->link();
@@ -217,9 +222,8 @@ also delete all the cookies::
 
     use Acme\Client;
 
-    // make a real request to an external site
     $client = new Client();
-    $client->request('GET', 'http://symfony.com');
+    $client->request('GET', '/');
 
     // delete history
     $client->restart();
