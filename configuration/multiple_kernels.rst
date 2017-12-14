@@ -6,7 +6,7 @@ How To Create Symfony Applications with Multiple Kernels
 
 .. caution::
 
-    Creating aplications with multiple kernels is no longer recommended by
+    Creating applications with multiple kernels is no longer recommended by
     Symfony. Consider creating multiple small applications instead.
 
 In most Symfony applications, incoming requests are processed by the
