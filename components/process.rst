@@ -258,38 +258,6 @@ instead::
     );
     $process->run();
 
-To make your code work better on all platforms, you might want to use the
-:class:`Symfony\\Component\\Process\\ProcessBuilder` class instead::
-
-    use Symfony\Component\Process\ProcessBuilder;
-
-    $builder = new ProcessBuilder(array('ls', '-lsa'));
-    $builder->getProcess()->run();
-
-In case you are building a binary driver, you can use the
-:method:`Symfony\\Component\\Process\\ProcessBuilder::setPrefix` method to prefix all
-the generated process commands.
-
-The following example will generate two process commands for a tar binary
-adapter::
-
-    use Symfony\Component\Process\ProcessBuilder;
-
-    $builder = new ProcessBuilder();
-    $builder->setPrefix('/usr/bin/tar');
-
-    // '/usr/bin/tar' '--list' '--file=archive.tar.gz'
-    echo $builder
-        ->setArguments(array('--list', '--file=archive.tar.gz'))
-        ->getProcess()
-        ->getCommandLine();
-
-    // '/usr/bin/tar' '-xzf' 'archive.tar.gz'
-    echo $builder
-        ->setArguments(array('-xzf', 'archive.tar.gz'))
-        ->getProcess()
-        ->getCommandLine();
-
 Process Timeout
 ---------------
 
