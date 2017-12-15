@@ -29,7 +29,7 @@ put in a ``DATABASE_URL`` environment variable:
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 
 This variable is referenced in the service container configuration using
-``%env(DATABASE_HOST)%``:
+``%env(DATABASE_URL)%``:
 
 .. configuration-block::
 
