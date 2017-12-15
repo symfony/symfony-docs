@@ -381,3 +381,4 @@
 /testing/simulating_authentication /testing/http_authentication
 /validation/group_service_resolver /form/validation_group_service_resolver
 /request/load_balancer_reverse_proxy /deployment/proxies
+/reference/configuration/web_profiler /reference/configuration/profiler

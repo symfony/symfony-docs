@@ -40,12 +40,6 @@ Configuration
 * `fragments`_
     * :ref:`enabled <reference-fragments-enabled>`
     * :ref:`path <reference-fragments-path>`
-* `profiler`_
-    * :ref:`enabled <reference-profiler-enabled>`
-    * `collect`_
-    * `only_exceptions`_
-    * `only_master_requests`_
-    * `dsn`_
 * `request`_:
     * `formats`_
 * `router`_
@@ -507,66 +501,6 @@ path
 
 The path prefix for fragments. The fragment listener will only be executed
 when the request starts with this path.
-
-profiler
-~~~~~~~~
-
-.. _reference-profiler-enabled:
-
-enabled
-.......
-
-**type**: ``boolean`` **default**: ``false``
-
-The profiler can be enabled by setting this option to ``true``. When you
-are using the Symfony Standard Edition, the profiler is enabled in the ``dev``
-and ``test`` environments.
-
-.. note::
-
-    The profiler works independently from the Web Developer Toolbar, see
-    the :doc:`WebProfilerBundle configuration </reference/configuration/web_profiler>`
-    on how to disable/enable the toolbar.
-
-collect
-.......
-
-**type**: ``boolean`` **default**: ``true``
-
-This option configures the way the profiler behaves when it is enabled. If set
-to ``true``, the profiler collects data for all requests. If you want to only
-collect information on-demand, you can set the ``collect`` flag to ``false`` and
-activate the data collectors manually::
-
-    $profiler->enable();
-
-only_exceptions
-...............
-
-**type**: ``boolean`` **default**: ``false``
-
-When this is set to ``true``, the profiler will only be enabled when an
-exception is thrown during the handling of the request.
-
-only_master_requests
-....................
-
-**type**: ``boolean`` **default**: ``false``
-
-When this is set to ``true``, the profiler will only be enabled on the master
-requests (and not on the subrequests).
-
-dsn
-...
-
-**type**: ``string`` **default**: ``'file:%kernel.cache_dir%/profiler'``
-
-The DSN where to store the profiling information.
-
-.. seealso::
-
-    See :doc:`/profiler/storage` for more information about the
-    profiler storage.
 
 request
 ~~~~~~~
@@ -1907,14 +1841,6 @@ Full Default Configuration
             fragments:
                 enabled:              false
                 path:                 /_fragment
-
-            # profiler configuration
-            profiler:
-                enabled:              false
-                collect:              true
-                only_exceptions:      false
-                only_master_requests: false
-                dsn:                  file:%kernel.cache_dir%/profiler
 
             # router configuration
             router:
