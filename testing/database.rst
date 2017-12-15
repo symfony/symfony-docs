@@ -6,7 +6,7 @@ How to Test Code that Interacts with the Database
 
 If your code interacts with the database, e.g. reads data from or stores data
 into it, you need to adjust your tests to take this into account. There are
-many ways how to deal with this. In a unit test, you can create a mock for
+many ways to deal with this. In a unit test, you can create a mock for
 a ``Repository`` and use it to return expected objects. In a functional test,
 you may need to prepare a test database with predefined values to ensure that
 your test always has the same data to work with.
