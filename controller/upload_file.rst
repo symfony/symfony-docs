@@ -121,7 +121,7 @@ Finally, you need to update the code of the controller that handles the form::
         /**
          * @Route("/product/new", name="app_product_new")
          */
-        public function new(Request $request)
+        public function newAction(Request $request)
         {
             $product = new Product();
             $form = $this->createForm(ProductType::class, $product);
