@@ -15,10 +15,11 @@ Symfony integrates with an independent library - called PHPUnit - to give
 you a rich testing framework. This article won't cover PHPUnit itself, but
 it has its own excellent `documentation`_.
 
-.. note::
+First, install PHPUnit support in your Symfony application running this command:
 
-    It's recommended to use the latest stable PHPUnit version, `installed as
-    PHAR`_.
+.. code-block:: terminal
+
+    $ composer require --dev phpunit
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the ``tests/`` directory of your application. If you follow
@@ -27,7 +28,7 @@ command:
 
 .. code-block:: terminal
 
-    $ phpunit
+    $ ./bin/phpunit
 
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
@@ -99,16 +100,13 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: terminal
 
     # run all tests of the application
-    $ phpunit
+    $ ./bin/phpunit
 
-    # run all tests in the Util directory
-    $ phpunit tests/Util
+    # run all tests in the Util/ directory
+    $ ./bin/phpunit tests/Util
 
     # run tests for the Calculator class
-    $ phpunit tests/Util/CalculatorTest.php
-
-    # run all tests for the entire Bundle
-    $ phpunit tests/
+    $ ./bin/phpunit tests/Util/CalculatorTest.php
 
 .. index::
    single: Tests; Functional tests
@@ -920,4 +918,3 @@ Learn more
 
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
 .. _`documentation`: https://phpunit.de/manual/current/en/
-.. _`installed as PHAR`: https://phpunit.de/manual/current/en/installation.html#installation.phar
