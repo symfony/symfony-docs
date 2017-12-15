@@ -253,7 +253,7 @@ For example::
 This would print out ``Arthur Dent``.
 
 Collection Operators
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 * ``in`` (contain)
 * ``not in`` (does not contain)
