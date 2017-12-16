@@ -222,9 +222,8 @@ also delete all the cookies::
     $client = new Client();
     $client->request('GET', 'http://symfony.com');
 
-    // reinitializes the browser state (history and cookies are deleted)
+    // reset the client (history and cookies are cleared too)
     $client->restart();
-    // which internally calls history->clear() and cookieJar->clear()
 
 Learn more
 ----------
