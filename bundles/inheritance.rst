@@ -99,9 +99,9 @@ The same goes for routing files and some other resources.
 
 .. caution::
 
-   Translation and validation files do not work in the same way as described
-   above. Read ":ref:`override-translations`" if you want to learn how to
-   override translations and see ":ref:`override-validation`" for tricks to
-   override the validation.
+    Translation and validation files do not work in the same way as described
+    above. Read ":ref:`override-translations`" if you want to learn how to
+    override translations and see ":ref:`override-validation`" for tricks to
+    override the validation.
 
 .. _`FOSUserBundle`: https://github.com/friendsofsymfony/fosuserbundle

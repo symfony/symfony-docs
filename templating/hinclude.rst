@@ -30,7 +30,7 @@ tags:
 
 .. note::
 
-   hinclude.js_ needs to be included in your page to work.
+    hinclude.js_ needs to be included in your page to work.
 
 .. note::
 
