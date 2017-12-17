@@ -6,7 +6,7 @@ most important concepts and start building a real project!
 
 If you've used a web framework before, you should feel right at home with
 Symfony. If not, welcome to a whole new way of developing web applications. Symfony
-*embraces* best practices, keeps backwards compatbility (Yes! Upgrading is always
+*embraces* best practices, keeps backwards compatibility (Yes! Upgrading is always
 safe & easy!) and offers long-term support.
 
 .. _installing-symfony2:
@@ -22,13 +22,12 @@ Ready? In a terminal, run:
 
     $ composer create-project symfony/skeleton quick_tour
 
-This creates a new ``quick_tour/`` directory with, at first, just *one* file:
-``composer.json``. But when the command finishes, you'll find a small, but
-powerful Symfony application:
+This creates a new ``quick_tour/`` directory with a small, but powerful new
+Symfony application:
 
 .. code-block:: text
 
-    symfony-project/
+    quick_tour/
     ├─ .env
     ├─ .env.dist
     ├─ bin/console
@@ -41,13 +40,10 @@ powerful Symfony application:
     ├─ var/
     └─ vendor/
 
-Where did these files come from? They came from recipes installed by Symfony Flex.
-But don't worry about that yet: we'll talk about it soon.
-
 Can we already load the project in a browser? Of course! You can setup
-:doc:`Nginx or Apache <setup/web_server_configuration>` and configure their document
+:doc:`Nginx or Apache </setup/web_server_configuration>` and configure their document
 root to be the ``public/`` directory. But, for development, Symfony has its own server.
-Install it with:
+Install and run it with:
 
 .. code-block:: terminal
 
@@ -179,4 +175,6 @@ in ``DefaultController``::
 Routing can do *even* more, but we'll save that for another time! Right now, our
 app needs more features! Like a template engine, logging, debugging tools and more.
 
-Keep reading with :doc:`/quick_tour/flex_architecture`.
+Keep reading with :doc:`/quick_tour/flex_recipes`.
+
+.. _`Composer`: https://getcomposer.org/

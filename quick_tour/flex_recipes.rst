@@ -4,7 +4,7 @@ Flex: Compose your Application
 After reading the first part of this tutorial, you have decided that Symfony was
 worth another 10 minutes. Great choice! In this second part, you'll learn about
 Symfony Flex: the amazing tool that makes adding new features as simple as running
-one command. It's also the reason why Symfony is perfect for a small micro-service
+one command. It's also the reason why Symfony is ideal for a small micro-service
 or a huge application. Curious? Perfect!
 
 Symfony: Start Micro!
@@ -53,17 +53,16 @@ It's a way for a library to automatically configure itself by adding and modifyi
 files. Thanks to recipes, adding features is seamless and automated: install a package
 and you're done!
 
-You an find a full list of recipes and aliases by going to `https://symfony.sh`_.
+You can find a full list of recipes and aliases by going to `https://symfony.sh`_.
 
-What did this recipe do? In addition to automatically enabling the bundle in
+What did this recipe do? In addition to automatically enabling the feature in
 ``config/bundles.php``, it added 3 things:
 
 ``config/packages/twig.yaml``
     A configuration file that sets up Twig with sensible defaults.
 
 ``config/routes/dev/twig.yaml``
-    A route that helps you debug your error pages: it's added only in the ``dev``
-    environment.
+    A route that helps you debug your error pages.
 
 ``templates/``
     This is the directory where template files will live. The recipe also added
@@ -130,7 +129,7 @@ One of the *coolest* features of Symfony isn't even installed yet! Let's fix tha
     $ composer require profiler
 
 Yes! This is another alias! And Flex *also* installs another recipe, which automates
-the configuration of Symfony's WebProfilerBundle. What's the result? Refresh!
+the configuration of Symfony's Profiler. What's the result? Refresh!
 
 See that black bar on the bottom? That's the web debug toolbar, and it's your new
 best friend. By hovering over each icon, you can get information about what controller
@@ -237,8 +236,8 @@ Not convinced yet? No problem: remove the library:
 Flex will *uninstall* the recipes: removing files and un-doing changes to put your
 app back in its original state. Experiment without worry.
 
-More Feature, Architecture and Speed
-------------------------------------
+More Features, Architecture and Speed
+-------------------------------------
 
 I hope you're as excited about Flex as I am! But we still have *one* more chapter,
 and it's the most important yet. I want to show you how Symfony empowers you to quickly
@@ -247,3 +246,4 @@ the service container, and it's Symfony's super power.
 
 .. _`https://symfony.sh`: https://symfony.sh
 .. _`Api Platform`: https://api-platform.com/
+.. _`Twig`: https://twig.symfony.com/
