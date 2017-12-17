@@ -205,16 +205,16 @@ Add fortrabbit as a (additional) Git remote and add your configuration changes:
 
 .. code-block:: terminal
 
-   $ git remote add fortrabbit git@deploy.eu2.frbit.com:<your-app>.git
-   $ git add composer.json composer.lock
-   $ git add app/config/config_prod_secrets.php
+    $ git remote add fortrabbit git@deploy.eu2.frbit.com:<your-app>.git
+    $ git add composer.json composer.lock
+    $ git add app/config/config_prod_secrets.php
 
 Commit and push
 
 .. code-block:: terminal
 
-   $ git commit -m 'fortrabbit config'
-   $ git push fortrabbit master -u
+    $ git commit -m 'fortrabbit config'
+    $ git push fortrabbit master -u
 
 .. note::
 

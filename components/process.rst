@@ -267,12 +267,12 @@ Process Idle Timeout
 In contrast to the timeout of the previous paragraph, the idle timeout only
 considers the time since the last output was produced by the process::
 
-   use Symfony\Component\Process\Process;
+    use Symfony\Component\Process\Process;
 
-   $process = new Process('something-with-variable-runtime');
-   $process->setTimeout(3600);
-   $process->setIdleTimeout(60);
-   $process->run();
+    $process = new Process('something-with-variable-runtime');
+    $process->setTimeout(3600);
+    $process->setIdleTimeout(60);
+    $process->run();
 
 In the case above, a process is considered timed out, when either the total runtime
 exceeds 3600 seconds, or the process does not produce any output for 60 seconds.

@@ -129,8 +129,8 @@ it should look like this:
 
 .. note::
 
-   The procedure above should be done each time you add/change a route if you
-   want to take full advantage of this setup.
+    The procedure above should be done each time you add/change a route if you
+    want to take full advantage of this setup.
 
 That's it!
 You're now all set to use Apache routes.

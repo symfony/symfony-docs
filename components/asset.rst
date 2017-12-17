@@ -5,8 +5,8 @@
 The Asset Component
 ===================
 
-   The Asset component manages URL generation and versioning of web assets such
-   as CSS stylesheets, JavaScript files and image files.
+    The Asset component manages URL generation and versioning of web assets such
+    as CSS stylesheets, JavaScript files and image files.
 
 .. versionadded:: 2.7
     The Asset component was introduced in Symfony 2.7.

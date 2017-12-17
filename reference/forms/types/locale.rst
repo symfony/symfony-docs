@@ -15,7 +15,7 @@ for French/France).
 
 .. note::
 
-   The locale of your user is guessed using :phpmethod:`Locale::getDefault`
+    The locale of your user is guessed using :phpmethod:`Locale::getDefault`
 
 Unlike the ``choice`` type, you don't need to specify a ``choices`` or
 ``choice_list`` option as the field type automatically uses a large list
