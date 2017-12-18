@@ -31,7 +31,7 @@ use the logger in a controller, add a new argument type-hinted with ``LoggerInte
         // ...
     }
 
-That's it! The new log message be written to ``var/log/dev.log``. Of course, this
+That's it! The new log message will be written to ``var/log/dev.log``. Of course, this
 can be configured by updating one of the config files added by the recipe.
 
 Services & Autowiring
@@ -43,7 +43,7 @@ This is called *autowiring*.
 
 Every bit of work that's done in a Symfony app is done by an *object*: the Logger
 object logs things and the Twig object renders templates. These objects are called
-*services* and they are the *tools* that make you dangerous.
+*services* and they are *tools* that help you build rich features.
 
 To make life awesome, you can ask Symfony to pass you a service by using a type-hint.
 What other possible classes or interfaces could you use? Find out by running:
