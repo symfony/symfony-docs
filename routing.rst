@@ -537,16 +537,16 @@ more flexibility.
 
 .. tip::
 
-   To refer to an action that is implemented as the ``__invoke()`` method of a controller class,
-   you do not have to pass the method name, but can just use the fully qualified class name (e.g.
-   ``AppBundle\Controller\BlogController``).
+    To refer to an action that is implemented as the ``__invoke()`` method of a
+    controller class, you do not have to pass the method name, but can just use
+    the fully qualified class name (e.g. ``AppBundle\Controller\BlogController``).
 
 .. note::
 
-   In addition to using the logical name or the fully-qualified class name,
-   Symfony supports a third way of referring to a controller. This method
-   uses just one colon separator (e.g. ``service_name:indexAction``) and
-   refers to the controller as a service (see :doc:`/controller/service`).
+    In addition to using the logical name or the fully-qualified class name,
+    Symfony supports a third way of referring to a controller. This method
+    uses just one colon separator (e.g. ``service_name:indexAction``) and
+    refers to the controller as a service (see :doc:`/controller/service`).
 
 .. index::
    single: Routing; Creating routes

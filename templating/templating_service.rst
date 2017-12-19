@@ -70,5 +70,5 @@ Several configuration options are available and are covered in the
 
 .. note::
 
-   The ``twig`` engine is mandatory to use the webprofiler (as well as many
-   third-party bundles).
+    The ``twig`` engine is mandatory to use the webprofiler (as well as many
+    third-party bundles).

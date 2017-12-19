@@ -11,10 +11,9 @@ learning the most important features of the form library along the way.
 
 .. note::
 
-   The Symfony Form component is a standalone library that can be used outside
-   of Symfony projects. For more information, see the
-   :doc:`Form component documentation </components/form>` on
-   GitHub.
+    The Symfony Form component is a standalone library that can be used outside
+    of Symfony projects. For more information, see the
+    :doc:`Form component documentation </components/form>` on GitHub.
 
 .. index::
    single: Forms; Create a simple form
@@ -109,10 +108,10 @@ from inside a controller::
 
 .. tip::
 
-   This example shows you how to build your form directly in the controller.
-   Later, in the ":ref:`form-creating-form-classes`" section, you'll learn
-   how to build your form in a standalone class, which is recommended as
-   your form becomes reusable.
+    This example shows you how to build your form directly in the controller.
+    Later, in the ":ref:`form-creating-form-classes`" section, you'll learn
+    how to build your form in a standalone class, which is recommended as
+    your form becomes reusable.
 
 Creating a form requires relatively little code because Symfony form objects
 are built with a "form builder". The form builder's purpose is to allow you
@@ -207,13 +206,13 @@ it into a format that's suitable for being rendered in an HTML form.
 
 .. tip::
 
-   The form system is smart enough to access the value of the protected
-   ``task`` property via the ``getTask()`` and ``setTask()`` methods on the
-   ``Task`` class. Unless a property is public, it *must* have a "getter" and
-   "setter" method so that the Form component can get and put data onto the
-   property. For a boolean property, you can use an "isser" or "hasser" method
-   (e.g. ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
-   ``getPublished()`` or ``getReminder()``).
+    The form system is smart enough to access the value of the protected
+    ``task`` property via the ``getTask()`` and ``setTask()`` methods on the
+    ``Task`` class. Unless a property is public, it *must* have a "getter" and
+    "setter" method so that the Form component can get and put data onto the
+    property. For a boolean property, you can use an "isser" or "hasser" method
+    (e.g. ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
+    ``getPublished()`` or ``getReminder()``).
 
 .. index::
   single: Forms; Handling form submissions
@@ -419,33 +418,33 @@ Validation is a very powerful feature of Symfony and has its own
 
 .. sidebar:: HTML5 Validation
 
-   Thanks to HTML5, many browsers can natively enforce certain validation constraints
-   on the client side. The most common validation is activated by rendering
-   a ``required`` attribute on fields that are required. For browsers that
-   support HTML5, this will result in a native browser message being displayed
-   if the user tries to submit the form with that field blank.
+    Thanks to HTML5, many browsers can natively enforce certain validation constraints
+    on the client side. The most common validation is activated by rendering
+    a ``required`` attribute on fields that are required. For browsers that
+    support HTML5, this will result in a native browser message being displayed
+    if the user tries to submit the form with that field blank.
 
-   Generated forms take full advantage of this new feature by adding sensible
-   HTML attributes that trigger the validation. The client-side validation,
-   however, can be disabled by adding the ``novalidate`` attribute to the
-   ``form`` tag or ``formnovalidate`` to the submit tag. This is especially
-   useful when you want to test your server-side validation constraints,
-   but are being prevented by your browser from, for example, submitting
-   blank fields.
+    Generated forms take full advantage of this new feature by adding sensible
+    HTML attributes that trigger the validation. The client-side validation,
+    however, can be disabled by adding the ``novalidate`` attribute to the
+    ``form`` tag or ``formnovalidate`` to the submit tag. This is especially
+    useful when you want to test your server-side validation constraints,
+    but are being prevented by your browser from, for example, submitting
+    blank fields.
 
-   .. configuration-block::
+    .. configuration-block::
 
-       .. code-block:: html+twig
+        .. code-block:: html+twig
 
-           {# app/Resources/views/default/new.html.twig #}
-           {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {# app/Resources/views/default/new.html.twig #}
+            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-       .. code-block:: html+php
+        .. code-block:: html+php
 
-           <!-- app/Resources/views/default/new.html.php -->
-           <?php echo $view['form']->form($form, array(
-               'attr' => array('novalidate' => 'novalidate'),
-           )) ?>
+            <!-- app/Resources/views/default/new.html.php -->
+            <?php echo $view['form']->form($form, array(
+                'attr' => array('novalidate' => 'novalidate'),
+            )) ?>
 
 .. index::
    single: Forms; Built-in field types

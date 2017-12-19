@@ -12,7 +12,7 @@ The "value" for each country is the two-letter country code.
 
 .. note::
 
-   The locale of your user is guessed using :phpmethod:`Locale::getDefault`
+    The locale of your user is guessed using :phpmethod:`Locale::getDefault`
 
 Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
 field type automatically uses all of the countries of the world. You *can* specify
