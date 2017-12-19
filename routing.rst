@@ -327,6 +327,24 @@ So how can you make ``blog_list`` once again match when the user visits
 Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 ``$page`` will default to a value of ``1``.
 
+Listing all of your Routes
+--------------------------
+
+As your app grows, you'll eventually have a *lot* of routes! To see them all, run:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:router
+
+.. code-block:: text
+
+    ------------------------------ -------- -------------------------------------
+     Name                           Method   Path                                 
+    ------------------------------ -------- -------------------------------------
+     app_lucky_number              ANY    /lucky/number/{max}
+     ...
+    ------------------------------ -------- -------------------------------------
+
 .. index::
    single: Routing; Advanced example
    single: Routing; _format parameter
@@ -334,7 +352,7 @@ Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 .. _advanced-routing-example:
 
 Advanced Routing Example
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 With all of this in mind, check out this advanced example:
 
@@ -486,9 +504,9 @@ If your controller is registered as a service, you can also use just one colon s
 
 .. tip::
 
-   To refer to an action that is implemented as the ``__invoke()`` method of a controller class,
-   you do not have to pass the method name, but can just use the fully qualified class name (e.g.
-   ``App\Controller\BlogController``).
+    To refer to an action that is implemented as the ``__invoke()`` method of a controller class,
+    you do not have to pass the method name, but can just use the fully qualified class name (e.g.
+    ``App\Controller\BlogController``).
 
 .. index::
    single: Routing; Generating URLs

@@ -100,8 +100,8 @@ your application in the configured environment.
 
 .. note::
 
-   The given URLs assume that your web server is configured to use the ``public/``
-   directory of the application as its root. Read more in :doc:`Installing Symfony </setup>`.
+    The given URLs assume that your web server is configured to use the ``public/``
+    directory of the application as its root. Read more in :doc:`Installing Symfony </setup>`.
 
 If you open the file you just visited (``public/index.php``), you'll see that
 the environment variable is passed to the kernel::
@@ -119,8 +119,8 @@ always run the application in the dev environment, independent of the
 
 .. note::
 
-   The ``test`` environment is used when writing functional tests and is
-   usually not accessed in the browser directly via a front controller.
+    The ``test`` environment is used when writing functional tests and is
+    usually not accessed in the browser directly via a front controller.
 
 .. index::
    single: Configuration; Debug mode

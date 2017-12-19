@@ -335,8 +335,8 @@ your database schema using this command:
 
 .. code-block:: terminal
 
-   $ php bin/console doctrine:migrations:diff
-   $ php bin/console doctrine:migrations:migrate
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
 
 That's it! Head to ``/register`` to try things out!
 

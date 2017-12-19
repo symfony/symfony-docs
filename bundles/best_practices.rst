@@ -163,8 +163,8 @@ the ``Tests/`` directory. Tests should follow the following principles:
 
 .. note::
 
-   A test suite must not contain ``AllTests.php`` scripts, but must rely on the
-   existence of a ``phpunit.xml.dist`` file.
+    A test suite must not contain ``AllTests.php`` scripts, but must rely on the
+    existence of a ``phpunit.xml.dist`` file.
 
 Installation
 ------------
