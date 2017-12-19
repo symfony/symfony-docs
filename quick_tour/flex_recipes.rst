@@ -71,7 +71,9 @@ What did this recipe do? In addition to automatically enabling the feature in
 Twig: Rendering a Template
 --------------------------
 
-Thanks to Flex, after one command, you can start using Twig immediately::
+Thanks to Flex, after one command, you can start using Twig immediately:
+
+.. code-block:: diff
 
     // src/Controller/DefaultController.php
     // ...
@@ -242,7 +244,7 @@ More Features, Architecture and Speed
 I hope you're as excited about Flex as I am! But we still have *one* more chapter,
 and it's the most important yet. I want to show you how Symfony empowers you to quickly
 build features *without* sacrificing code quality or performance. It's all about
-the service container, and it's Symfony's super power.
+the service container, and it's Symfony's super power. Read on: about :doc:`/quick_tour/the_architecture`.
 
 .. _`https://symfony.sh`: https://symfony.sh
 .. _`Api Platform`: https://api-platform.com/
