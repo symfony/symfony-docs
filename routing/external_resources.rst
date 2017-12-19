@@ -44,8 +44,8 @@ This can be done by "importing" directories into the routing configuration:
 
 .. note::
 
-   When importing resources from YAML, the key (e.g. ``controllers``) is meaningless.
-   Just be sure that it's unique so no other lines override it.
+    When importing resources from YAML, the key (e.g. ``controllers``) is meaningless.
+    Just be sure that it's unique so no other lines override it.
 
 The ``resource`` key loads the given routing resource. In this example the
 resource is a directory and all files in that directory are parsed and put into

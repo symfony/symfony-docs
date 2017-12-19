@@ -504,9 +504,9 @@ If your controller is registered as a service, you can also use just one colon s
 
 .. tip::
 
-   To refer to an action that is implemented as the ``__invoke()`` method of a controller class,
-   you do not have to pass the method name, but can just use the fully qualified class name (e.g.
-   ``App\Controller\BlogController``).
+    To refer to an action that is implemented as the ``__invoke()`` method of a controller class,
+    you do not have to pass the method name, but can just use the fully qualified class name (e.g.
+    ``App\Controller\BlogController``).
 
 .. index::
    single: Routing; Generating URLs
