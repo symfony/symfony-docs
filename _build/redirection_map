@@ -381,3 +381,5 @@
 /testing/simulating_authentication /testing/http_authentication
 /validation/group_service_resolver /form/validation_group_service_resolver
 /request/load_balancer_reverse_proxy /deployment/proxies
+/quick_tour/the_controller /quick_tour/the_big_picture
+/quick_tour/the_view /quick_tour/flex_recipes
