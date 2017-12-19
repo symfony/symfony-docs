@@ -5,8 +5,8 @@
 The Routing Component
 =====================
 
-   The Routing component maps an HTTP request to a set of configuration
-   variables.
+    The Routing component maps an HTTP request to a set of configuration
+    variables.
 
 Installation
 ------------
@@ -100,28 +100,28 @@ A full route definition can contain up to seven parts:
 
 Take the following route, which combines several of these ideas::
 
-   $route = new Route(
-       '/archive/{month}', // path
-       array('_controller' => 'showArchive'), // default values
-       array('month' => '[0-9]{4}-[0-9]{2}', 'subdomain' => 'www|m'), // requirements
-       array(), // options
-       '{subdomain}.example.com', // host
-       array(), // schemes
-       array() // methods
-   );
+    $route = new Route(
+        '/archive/{month}', // path
+        array('_controller' => 'showArchive'), // default values
+        array('month' => '[0-9]{4}-[0-9]{2}', 'subdomain' => 'www|m'), // requirements
+        array(), // options
+        '{subdomain}.example.com', // host
+        array(), // schemes
+        array() // methods
+    );
 
-   // ...
+    // ...
 
-   $parameters = $matcher->match('/archive/2012-01');
-   // array(
-   //     '_controller' => 'showArchive',
-   //     'month' => '2012-01',
-   //     'subdomain' => 'www',
-   //     '_route' => ...
-   //  )
+    $parameters = $matcher->match('/archive/2012-01');
+    // array(
+    //     '_controller' => 'showArchive',
+    //     'month' => '2012-01',
+    //     'subdomain' => 'www',
+    //     '_route' => ...
+    //  )
 
-   $parameters = $matcher->match('/archive/foo');
-   // throws ResourceNotFoundException
+    $parameters = $matcher->match('/archive/foo');
+    // throws ResourceNotFoundException
 
 In this case, the route is matched by ``/archive/2012-01``, because the ``{month}``
 wildcard matches the regular expression wildcard given. However, ``/archive/foo``

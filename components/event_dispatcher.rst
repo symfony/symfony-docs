@@ -402,14 +402,14 @@ the dispatcher to stop all propagation of the event to future listeners
 inside a listener via the
 :method:`Symfony\\Component\\EventDispatcher\\Event::stopPropagation` method::
 
-   use Acme\Store\Event\OrderPlacedEvent;
+    use Acme\Store\Event\OrderPlacedEvent;
 
-   public function onStoreOrder(OrderPlacedEvent $event)
-   {
-       // ...
+    public function onStoreOrder(OrderPlacedEvent $event)
+    {
+        // ...
 
-       $event->stopPropagation();
-   }
+        $event->stopPropagation();
+    }
 
 Now, any listeners to ``order.placed`` that have not yet been called will
 *not* be called.
