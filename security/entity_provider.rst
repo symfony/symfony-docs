@@ -156,7 +156,7 @@ But you can generate these manually or with your own IDE.
      * @ORM\Table(name="app_users")
      * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
      */
-    class User implements UserInterface, \Serializable
+    class User implements UserInterface, EquatableInterface, \Serializable
     {
         // ...
         
