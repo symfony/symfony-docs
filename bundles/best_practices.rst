@@ -116,21 +116,21 @@ The following classes and files have specific emplacements (some are mandatory
 and others are just conventions followed by most developers):
 
 ===================================================  ========================================
-Type                                                 Directory                               
+Type                                                 Directory
 ===================================================  ========================================
-Commands                                             ``Command/``                            
-Controllers                                          ``Controller/``                         
-Service Container Extensions                         ``DependencyInjection/``                
+Commands                                             ``Command/``
+Controllers                                          ``Controller/``
+Service Container Extensions                         ``DependencyInjection/``
 Doctrine ORM entities (when not using annotations)   ``Entity/``
 Doctrine ODM documents (when not using annotations)  ``Document/``
-Event Listeners                                      ``EventListener/``                      
-Configuration                                        ``Resources/config/``                   
-Web Resources (CSS, JS, images)                      ``Resources/public/``                   
-Translation files                                    ``Resources/translations/``     
+Event Listeners                                      ``EventListener/``
+Configuration                                        ``Resources/config/``
+Web Resources (CSS, JS, images)                      ``Resources/public/``
+Translation files                                    ``Resources/translations/``
 Validation (when not using annotations)              ``Resources/config/validation/``
 Serialization (when not using annotations)           ``Resources/config/serialization/``
-Templates                                            ``Resources/views/``                    
-Unit and Functional Tests                            ``Tests/``                              
+Templates                                            ``Resources/views/``
+Unit and Functional Tests                            ``Tests/``
 ===================================================  ========================================
 
 Classes
@@ -174,19 +174,19 @@ the ``Tests/`` directory. Tests should follow the following principles:
 
 .. note::
 
-   A test suite must not contain ``AllTests.php`` scripts, but must rely on the
-   existence of a ``phpunit.xml.dist`` file.
+    A test suite must not contain ``AllTests.php`` scripts, but must rely on the
+    existence of a ``phpunit.xml.dist`` file.
 
 Documentation
 -------------
 
 All classes and functions must come with full PHPDoc.
 
-Extensive documentation should also be provided in the ``Resources/doc/`` 
+Extensive documentation should also be provided in the ``Resources/doc/``
 directory.
-The index file (for example ``Resources/doc/index.rst`` or 
-``Resources/doc/index.md``) is the only mandatory file and must be the entry 
-point for the documentation. The 
+The index file (for example ``Resources/doc/index.rst`` or
+``Resources/doc/index.md``) is the only mandatory file and must be the entry
+point for the documentation. The
 :doc:`reStructuredText (rST) </contributing/documentation/format>` is the format
 used to render the documentation on symfony.com.
 

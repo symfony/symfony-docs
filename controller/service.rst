@@ -266,14 +266,14 @@ inject *only* the exact service(s) that you need directly into the controller.
 
 .. note::
 
-   This does not mean that you cannot extend these controllers from your own
-   base controller. The move away from the standard base controller is because
-   its helper methods rely on having the container available which is not
-   the case for controllers that are defined as services. It may be a good
-   idea to extract common code into a service that's injected rather than
-   place that code into a base controller that you extend. Both approaches
-   are valid, exactly how you want to organize your reusable code is up to
-   you.
+    This does not mean that you cannot extend these controllers from your own
+    base controller. The move away from the standard base controller is because
+    its helper methods rely on having the container available which is not
+    the case for controllers that are defined as services. It may be a good
+    idea to extract common code into a service that's injected rather than
+    place that code into a base controller that you extend. Both approaches
+    are valid, exactly how you want to organize your reusable code is up to
+    you.
 
 Base Controller Methods and Their Service Replacements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

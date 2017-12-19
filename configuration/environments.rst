@@ -166,9 +166,9 @@ Either way: *one of these two files is always executed*.
 
 .. note::
 
-   The given URLs assume that your web server is configured to use the ``web/``
-   directory of the application as its root. Read more in
-   :doc:`Installing Symfony </setup>`.
+    The given URLs assume that your web server is configured to use the ``web/``
+    directory of the application as its root. Read more in
+    :doc:`Installing Symfony </setup>`.
 
 If you open up one of these files, you'll quickly see that the environment
 used by each is explicitly set::
@@ -186,10 +186,10 @@ this code and changing the environment string.
 
 .. note::
 
-   The ``test`` environment is used when writing functional tests and is
-   not accessible in the browser directly via a front controller. In other
-   words, unlike the other environments, there is no ``app_test.php`` front
-   controller file.
+    The ``test`` environment is used when writing functional tests and is
+    not accessible in the browser directly via a front controller. In other
+    words, unlike the other environments, there is no ``app_test.php`` front
+    controller file.
 
 .. index::
    single: Configuration; Debug mode
