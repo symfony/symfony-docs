@@ -79,8 +79,8 @@ current PHP SAPI:
 DebugBundle and Twig Integration
 --------------------------------
 
-The DebugBundle allows greater integration of the component into the Symfony
-full-stack framework. 
+The DebugBundle allows greater integration of this component into Symfony
+applications. 
 
 Since generating (even debug) output in the controller or in the model
 of your application may just break it by e.g. sending HTTP headers or
