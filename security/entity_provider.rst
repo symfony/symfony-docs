@@ -141,9 +141,9 @@ To make things shorter, some of the getter and setter methods aren't shown.
 But you can generate these manually or with your own IDE.
 
 .. tip::
-    Since Symfony 3.4, the User class should implements the `EquatableInterface``in order to allow 
+    Since Symfony 3.4, the User class should implements the ``EquatableInterface``in order to allow 
     the security to check if the User stored in the Session is the one who's been authenticated, in 
-    order to allow this check, just implement the `isEqualTo`` method::
+    order to allow this check, just implement the ``isEqualTo`` method::
     
     // src/AppBundle/Entity/User.php
     namespace AppBundle\Entity;
