@@ -270,6 +270,7 @@ the ``PasswordDigest`` header value matches with the user's password::
             $expected = base64_encode(sha1(base64_decode($nonce).$created.$secret, true));
 
             return hash_equals($expected, $digest);
+            # this won't return TRUE ever
         }
 
         public function supports(TokenInterface $token)
