@@ -14,7 +14,7 @@ First, make sure you have all the dependencies you need installed:
 
 .. code-block:: terminal
 
-    $ composer require doctrine form security
+    $ composer require doctrine form security validator
 
 .. tip::
 
