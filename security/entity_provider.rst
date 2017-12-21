@@ -162,11 +162,7 @@ But you can generate these manually or with your own IDE.
         
         public function isEqualTo(UserInterface $user) 
         {
-            if ($this->username !== $user->getUsername() {
-                return false;
-            }
-            
-            return true;
+            return $this->username === $user->getUsername();
         }
     }
     
