@@ -9,7 +9,7 @@ user attempts to make your legitimate users unknowingly submit data that
 they don't intend to submit.
 
 CSRF protection works by adding a hidden field to your form that contains a
-value that only you and your user knows. This ensures that the user - not some
+value that only you and your user know. This ensures that the user - not some
 other entity - is submitting the given data.
 
 Before enabling the CSRF protection, install the CSRF support in your project
