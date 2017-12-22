@@ -116,7 +116,7 @@ services.
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service class="AppBundle\Mail\PhpMailer" public="false" />
+                <service id="AppBundle\Mail\PhpMailer" public="false" />
 
                 <service id="app.mailer" alias="AppBundle\Mail\PhpMailer" />
             </services>
