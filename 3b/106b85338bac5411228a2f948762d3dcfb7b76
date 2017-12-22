@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-12-11T09:13:04Z
+
+I see one problem here: This article is not only for Ubuntu users. How do other distributions handle this nowadays? Wouldn't it be better to add a comment instead?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-12-13T02:17:19Z
+
+Since Ubuntu is the most common distribution, and I can't think of a better way to help people, I think we should follow Ubuntu.
+
+But, there is one other (at least) mention of this path - up under an Apache section too. We need to also update that!
+
+This should be merged into 2.7.
