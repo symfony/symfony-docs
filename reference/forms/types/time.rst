@@ -120,6 +120,7 @@ on your underlying object. Valid values are:
 
 * ``string`` (e.g. ``12:17:26``)
 * ``datetime`` (a ``DateTime`` object)
+* ``datetime_immutable`` (a ``DateTimeImmutable`` object)
 * ``array`` (e.g. ``array('hour' => 12, 'minute' => 17, 'second' => 26)``)
 * ``timestamp`` (e.g. ``1307232000``)
 

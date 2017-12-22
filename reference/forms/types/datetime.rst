@@ -83,7 +83,7 @@ as a series of ``select`` boxes. When the placeholder value is a string,
 it will be used as the **blank value** of all select boxes::
 
     use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-    
+
     $builder->add('startDateTime', DateTimeType::class, array(
         'placeholder' => 'Select a value',
     ));
@@ -92,7 +92,7 @@ Alternatively, you can use an array that configures different placeholder
 values for the year, month, day, hour, minute and second fields::
 
     use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-    
+
     $builder->add('startDateTime', DateTimeType::class, array(
         'placeholder' => array(
             'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
@@ -125,6 +125,7 @@ on your underlying object. Valid values are:
 
 * ``string`` (e.g. ``2011-06-05 12:15:00``)
 * ``datetime`` (a ``DateTime`` object)
+* ``datetime_immutable`` (a ``DateTimeImmutable`` object)
 * ``array`` (e.g. ``array(2011, 06, 05, 12, 15, 0)``)
 * ``timestamp`` (e.g. ``1307276100``)
 
