@@ -20,6 +20,12 @@ the change is simple.
 Creating Routes
 ---------------
 
+First, install the annotations package:
+
+.. code-block:: terminal
+
+    $ composer require annotations
+
 A *route* is a map from a URL path to a controller. Suppose you want one route that
 matches ``/blog`` exactly and another more dynamic route that can match *any* URL
 like ``/blog/my-post`` or ``/blog/all-about-symfony``:
