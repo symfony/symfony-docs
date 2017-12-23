@@ -58,8 +58,8 @@ are used by your application (including the core Symfony bundles).
 
 .. tip::
 
-   A bundle can live *anywhere* as long as it can be autoloaded (via the
-   autoloader configured at ``app/autoload.php``).
+    A bundle can live *anywhere* as long as it can be autoloaded (via the
+    autoloader configured at ``app/autoload.php``).
 
 Creating a Bundle
 -----------------
@@ -90,10 +90,10 @@ called ``AcmeTestBundle.php``::
 
 .. tip::
 
-   The name AcmeTestBundle follows the standard
-   :ref:`Bundle naming conventions <bundles-naming-conventions>`. You could
-   also choose to shorten the name of the bundle to simply TestBundle by naming
-   this class TestBundle (and naming the file ``TestBundle.php``).
+    The name AcmeTestBundle follows the standard
+    :ref:`Bundle naming conventions <bundles-naming-conventions>`. You could
+    also choose to shorten the name of the bundle to simply TestBundle by naming
+    this class TestBundle (and naming the file ``TestBundle.php``).
 
 This empty class is the only piece you need to create the new bundle. Though
 commonly empty, this class is powerful and can be used to customize the behavior
@@ -130,9 +130,9 @@ tools later.
 
 .. tip::
 
-   Whenever creating a new bundle or using a third-party bundle, always make
-   sure the bundle has been enabled in ``registerBundles()``. When using
-   the ``generate:bundle`` command, this is done for you.
+    Whenever creating a new bundle or using a third-party bundle, always make
+    sure the bundle has been enabled in ``registerBundles()``. When using
+    the ``generate:bundle`` command, this is done for you.
 
 Bundle Directory Structure
 --------------------------

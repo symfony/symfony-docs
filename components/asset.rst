@@ -5,8 +5,8 @@
 The Asset Component
 ===================
 
-   The Asset component manages URL generation and versioning of web assets such
-   as CSS stylesheets, JavaScript files and image files.
+    The Asset component manages URL generation and versioning of web assets such
+    as CSS stylesheets, JavaScript files and image files.
 
 In the past, it was common for web applications to hardcode URLs of web assets.
 For example:
