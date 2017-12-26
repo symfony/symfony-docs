@@ -80,12 +80,12 @@ like ``/blog/my-post`` or ``/blog/all-about-symfony``:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog">
-                <controller>App\Controller\BlogController::list</controller>
+            <route id="blog_list" controller="App\Controller\BlogController::list" path="/blog" >
+                <!-- settings -->
             </route>
 
-            <route id="blog_show" path="/blog/{slug}">
-                <controller>App\Controller\BlogController::show</controller>
+            <route id="blog_show" controller="App\Controller\BlogController::show" path="/blog/{slug}">
+                <!-- settings -->
             </route>
         </routes>
 
