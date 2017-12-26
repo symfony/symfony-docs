@@ -129,16 +129,16 @@ returned. Take this simple example from inside a controller::
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Validator\Validator\ValidatorInterface;
     use App\Entity\Author;
 
     // ...
-    public function author()
+    public function author(ValidatorInterface $validator)
     {
         $author = new Author();
 
         // ... do something to the $author object
 
-        $validator = $this->get('validator');
         $errors = $validator->validate($author);
 
         if (count($errors) > 0) {
