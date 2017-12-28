@@ -1291,7 +1291,7 @@ Authentication (Identifying/Logging in the User)
     security/api_key_authentication
     security/custom_authentication_provider
     security/pre_authenticated
-    security/csrf_in_login_form
+    security/csrf
     security/named_encoders
     security/multiple_user_providers
     security/multiple_guard_authenticators
