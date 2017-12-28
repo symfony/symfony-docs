@@ -262,6 +262,20 @@ to get your *new* lucky number!
 
     http://localhost:8000/lucky/number
 
+Now you may wonder where the Web Debug Toolbar has gone: that's because we don't write
+a ``body`` element using the current template. If we incorporate the default
+``base.html.twig``, which contains all default elements, including ``body``, you'll see
+that the Toolbar re-appears:
+
+.. code-block:: diff
+
+    {# templates/lucky/number.html.twig #}
+    + {% extends 'base.html.twig' %}
+
+    + {% block body %}
+    <h1>Your lucky number is {{ number }}</h1>
+    + {% endblock %}
+
 In the :doc:`/templating` article, you'll learn all about Twig: how to loop, render
 other templates and leverage its powerful layout inheritance system.
 
