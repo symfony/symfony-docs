@@ -519,6 +519,11 @@ service to be passed) and add the following logic::
 
         // ...
     }
+    
+.. tip::
+
+    Don't forget to enable `csrf_protection` in the `config/framework.yml` file that 
+    CsrfTokenManagerInterface can get autowired.
 
 Frequently Asked Questions
 --------------------------
