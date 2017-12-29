@@ -12,13 +12,13 @@ URL of a page from ``/blog`` to ``/news``? How many links would you need to
 hunt down and update to make the change? If you're using Symfony's router,
 the change is simple.
 
-Before using the annotations, be sure that you installed the annotations support :
+If you want to use the annotations, be sure that you have installed the ``annotations`` recipe :
 
 .. code-block:: terminal
 
     $ composer require annotations
 
-Now, comment-out the YAML route by adding the ``#`` character:
+ To turn on the routing based on annotations, un-comment the following lines of your config/routes.yaml file by adding the ``#`` character :
 
 .. code-block:: yaml
 
