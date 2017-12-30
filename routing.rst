@@ -204,8 +204,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page}">
-                <controller>App\Controller\BlogController::list</controller>
+            <route id="blog_list" path="/blog/{page}" controller="App\Controller\BlogController::list">
                 <requirement key="page">\d+</requirement>
             </route>
 
@@ -297,8 +296,7 @@ So how can you make ``blog_list`` once again match when the user visits
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page}">
-                <controller>App\Controller\BlogController::list</controller>
+            <route id="blog_list" path="/blog/{page}" controller="App\Controller\BlogController::list">
                 <default key="page">1</default>
 
                 <requirement key="page">\d+</requirement>
@@ -410,9 +408,9 @@ With all of this in mind, check out this advanced example:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="article_show"
-                path="/articles/{_locale}/{year}/{slug}.{_format}">
+                path="/articles/{_locale}/{year}/{slug}.{_format}"
+                controller="App\Controller\ArticleController::show">
 
-                <controller>App\Controller\ArticleController::show</controller>
                 <default key="_format">html</default>
                 <requirement key="_locale">en|fr</requirement>
                 <requirement key="_format">html|rss</requirement>
