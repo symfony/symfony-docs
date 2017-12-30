@@ -243,8 +243,7 @@ The form can look like anything, but it usually follows some conventions:
 .. caution::
 
     This login form is currently not protected against CSRF attacks. Read
-    :doc:`/security/csrf_in_login_form` on how to protect your login
-    form.
+    :doc:`/security/csrf` on how to protect your login form.
 
 And that's it! When you submit the form, the security system will automatically
 check the user's credentials and either authenticate the user or send the

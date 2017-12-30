@@ -62,7 +62,7 @@ If you know for sure that the backend never uses sessions or basic
 authentication, have Varnish remove the corresponding header from requests to
 prevent clients from bypassing the cache. In practice, you will need sessions
 at least for some parts of the site, e.g. when using forms with
-:doc:`CSRF Protection </form/csrf_protection>`. In this situation, make sure to
+:doc:`CSRF Protection </security/csrf>`. In this situation, make sure to
 :doc:`only start a session when actually needed </session/avoid_session_start>`
 and clear the session when it is no longer needed. Alternatively, you can look
 into :doc:`/http_cache/form_csrf_caching`.

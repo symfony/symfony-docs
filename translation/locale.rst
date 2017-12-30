@@ -86,7 +86,7 @@ by the routing system using the special ``_locale`` parameter:
         // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
-        use App\Controller\ContactContorller;
+        use App\Controller\ContactController;
 
         $collection = new RouteCollection();
         $collection->add('contact', new Route(

@@ -17,14 +17,43 @@ Creating a custom data collector is as simple as implementing the
     interface DataCollectorInterface
     {
         function collect(Request $request, Response $response, \Exception $exception = null);
+        public function reset();
         function getName();
     }
 
-The
-:method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::getName`
-method returns the name of the data collector and must be unique in the
-application. This value is also used to access the information later on (see
-:doc:`/testing/profiling` for instance).
+The :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::getName`
+method returns the collector identifier, which must be unique in the
+application. You can choose any arbitrary name, but it's recommended to return
+a string which is short, lowercased and without white spaces, because this value
+is used later to access the collector information (see :doc:`/testing/profiling`
+for instance).
+
+The :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::reset`
+method is called between requests to reset the state of the profiler. Use it to
+remove all the information collected with the ``collect()`` method::
+
+    // src/DataCollector/RequestCollector.php
+    namespace App\DataCollector;
+
+    use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class RequestCollector extends DataCollector
+    {
+        public function collect(Request $request, Response $response, \Exception $exception = null)
+        {
+            // this method saves some information in $this->data
+            // ...
+        }
+
+        public function reset()
+        {
+            // if the data collector is more complex, here you can call other
+            // services to reset their states or data
+            $this->data = array();
+        }
+    }
 
 The
 :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::collect`

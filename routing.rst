@@ -20,6 +20,12 @@ the change is simple.
 Creating Routes
 ---------------
 
+First, install the annotations package:
+
+.. code-block:: terminal
+
+    $ composer require annotations
+
 A *route* is a map from a URL path to a controller. Suppose you want one route that
 matches ``/blog`` exactly and another more dynamic route that can match *any* URL
 like ``/blog/my-post`` or ``/blog/all-about-symfony``:
@@ -80,12 +86,12 @@ like ``/blog/my-post`` or ``/blog/all-about-symfony``:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog">
-                <controller>App\Controller\BlogController::list</controller>
+            <route id="blog_list" controller="App\Controller\BlogController::list" path="/blog" >
+                <!-- settings -->
             </route>
 
-            <route id="blog_show" path="/blog/{slug}">
-                <controller>App\Controller\BlogController::show</controller>
+            <route id="blog_show" controller="App\Controller\BlogController::show" path="/blog/{slug}">
+                <!-- settings -->
             </route>
         </routes>
 
@@ -198,8 +204,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page}">
-                <controller>App\Controller\BlogController::list</controller>
+            <route id="blog_list" path="/blog/{page}" controller="App\Controller\BlogController::list">
                 <requirement key="page">\d+</requirement>
             </route>
 
@@ -291,8 +296,7 @@ So how can you make ``blog_list`` once again match when the user visits
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_list" path="/blog/{page}">
-                <controller>App\Controller\BlogController::list</controller>
+            <route id="blog_list" path="/blog/{page}" controller="App\Controller\BlogController::list">
                 <default key="page">1</default>
 
                 <requirement key="page">\d+</requirement>
@@ -404,9 +408,9 @@ With all of this in mind, check out this advanced example:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="article_show"
-                path="/articles/{_locale}/{year}/{slug}.{_format}">
+                path="/articles/{_locale}/{year}/{slug}.{_format}"
+                controller="App\Controller\ArticleController::show">
 
-                <controller>App\Controller\ArticleController::show</controller>
                 <default key="_format">html</default>
                 <requirement key="_locale">en|fr</requirement>
                 <requirement key="_format">html|rss</requirement>
