@@ -25,15 +25,15 @@ In other words, your new app is ready!
 
 .. tip::
 
-    You can also download a specific version of Symfony:
+    You can also specify which major version of Symfony will be downloaded:
 
     .. code-block:: terminal
 
-        # use the most recent version in any Symfony branch
-        $ composer create-project symfony/skeleton my-project "3.3.*"
+        # use the most recent Symfony 3.* version
+        $ composer create-project symfony/skeleton my-project "3.*"
 
         # use a beta or RC version (useful for testing new Symfony versions)
-        $ composer create-project symfony/skeleton my-project 3.3.0-BETA1
+        $ composer create-project symfony/skeleton my-project "^4@beta"
 
     Some version are long-term support (LTS) versions. Read the :doc:`Symfony Release process </contributing/community/releases>`
     to learn more.
