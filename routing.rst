@@ -17,6 +17,7 @@ If you want to use the annotations, be sure that you have installed the ``annota
 .. code-block:: terminal
 
     $ composer require annotations
+..
 
  To turn on the routing based on annotations, un-comment the following lines of your config/routes.yaml file by adding the ``#`` character :
 
