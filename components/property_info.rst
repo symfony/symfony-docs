@@ -382,7 +382,7 @@ PhpDocExtractor
 
 .. note::
 
-    This extractor depends on the `phpdocumentor/reflection`_ library.
+    This extractor depends on the `phpdocumentor/reflection-docblock`_ library.
 
 Using `phpDocumentor Reflection`_ to parse property and method annotations,
 the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpDocExtractor`
@@ -484,8 +484,8 @@ service by defining it as a service with one or more of the following
 * ``property_info.access_extractor`` if it provides access information.
 
 .. _Packagist: https://packagist.org/packages/symfony/property-info
-.. _`phpDocumentor Reflection`: https://github.com/phpDocumentor/Reflection
-.. _`phpdocumentor/reflection`: https://packagist.org/packages/phpdocumentor/reflection
+.. _`phpDocumentor Reflection`: https://github.com/phpDocumentor/ReflectionDocBlock
+.. _`phpdocumentor/reflection-docblock`: https://packagist.org/packages/phpdocumentor/reflection-docblock
 .. _`Doctrine ORM`: http://www.doctrine-project.org/projects/orm.html
 .. _`symfony/serializer`: https://packagist.org/packages/symfony/serializer
 .. _`symfony/doctrine-bridge`: https://packagist.org/packages/symfony/doctrine-bridge
