@@ -30,10 +30,10 @@ In other words, your new app is ready!
     .. code-block:: terminal
 
         # use the most recent version in any Symfony branch
-        $ composer create-project symfony/skeleton my-project "3.3.*"
+        $ composer create-project symfony/skeleton my-project "4.0.*"
 
         # use a beta or RC version (useful for testing new Symfony versions)
-        $ composer create-project symfony/skeleton my-project 3.3.0-BETA1
+        $ composer create-project symfony/skeleton my-project 4.0.0-BETA1
 
     Some version are long-term support (LTS) versions. Read the :doc:`Symfony Release process </contributing/community/releases>`
     to learn more.
