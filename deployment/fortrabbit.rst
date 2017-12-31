@@ -268,7 +268,6 @@ Commit and push
 
    Build & release done in 1625ms, now queued for final distribution.
 
-
 .. note::
 
    The first ``git push`` takes much longer as all composer dependencies get

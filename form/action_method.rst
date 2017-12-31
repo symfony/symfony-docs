@@ -89,7 +89,6 @@ options:
             }
         }
 
-
     .. code-block:: php-standalone
 
         use Symfony\Component\Form\Forms;

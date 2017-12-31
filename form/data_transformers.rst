@@ -385,7 +385,6 @@ it's recognized as a custom field type:
                 tags:
                     - { name: form.type, alias: issue_selector }
 
-
     .. code-block:: xml
 
         <!-- app/config/services.xml -->

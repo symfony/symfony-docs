@@ -23,7 +23,6 @@ Full Default Configuration
                         class:                Acme\HelloBundle\MyCustomType
                         commented:            true
 
-
                 connections:
                     # A collection of different named connections (e.g. default, conn2, etc)
                     default:

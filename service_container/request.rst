@@ -86,7 +86,6 @@ Now, just inject the ``request_stack``, which behaves like any normal service:
     exception. That's because the ``request`` can **change** during the life-time
     of a container (when a sub-request is created for instance).
 
-
 .. tip::
 
     If you define a controller as a service then you can get the ``Request``
