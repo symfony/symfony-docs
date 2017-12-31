@@ -233,7 +233,7 @@ order:
 ``workflow.entered``
 
     Similar to ``workflow.enter``, except the marking store is updated before this
-    event (making it a good place to flush data in Doctrine). 
+    event (making it a good place to flush data in Doctrine).
 
     The three events being dispatched are:
 
@@ -324,7 +324,6 @@ See example to make sure no blog post without title is moved to "review"::
             );
         }
     }
-
 
 Event Methods
 ~~~~~~~~~~~~~

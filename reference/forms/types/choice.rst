@@ -188,7 +188,7 @@ would replace the ``choices`` option.
     The :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader`
     was introduced in Symfony 3.2.
 
-You can use an instance of :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader` 
+You can use an instance of :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\CallbackChoiceLoader`
 if you want to take advantage of lazy loading::
 
     use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;

@@ -669,7 +669,6 @@ But, you can control this and pass in a different logger:
             </services>
         </container>
 
-
     .. code-block:: php
 
         // app/config/services.php
