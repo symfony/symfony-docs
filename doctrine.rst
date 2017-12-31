@@ -328,7 +328,6 @@ and save it!
 .. code-block:: php
 
     // src/Controller/ProductController.php
-
     namespace App\Controller;
 
     // ...

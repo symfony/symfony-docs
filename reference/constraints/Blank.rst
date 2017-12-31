@@ -10,7 +10,6 @@ Validates that a value is blank - meaning equal to an empty string or ``null``::
 To force that a value strictly be equal to ``null``, see the
 :doc:`/reference/constraints/IsNull` constraint.
 
-
 To force that a value is *not* blank, see :doc:`/reference/constraints/NotBlank`.
 But be careful as ``NotBlank`` is *not* strictly the opposite of ``Blank``.
 

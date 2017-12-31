@@ -78,7 +78,6 @@ Basic Usage
             }
         }
 
-
 Options
 -------
 
