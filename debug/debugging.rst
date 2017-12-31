@@ -83,7 +83,7 @@ that can help you visualize and find the information.
 
 ``debug:config``
     Shows all configured bundles, their class and their alias.
-    
+
 ``debug:form``
     Displays information about form types and their options.
 

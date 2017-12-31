@@ -497,7 +497,6 @@ Consider the following example::
         }
     }
 
-
 The ``FooTest::test`` method executes every single line of code of both ``Foo``
 and ``Bar`` classes, but ``Bar`` is not truly tested. The ``CoverageListener``
 aims to fix this behavior by adding the appropriate `@covers`_ annotation on

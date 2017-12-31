@@ -146,7 +146,6 @@ Locks are created and managed in ``Stores``, which are classes that implement
 :class:`Symfony\\Component\\Lock\\StoreInterface`. The component includes the
 following built-in store types:
 
-
 ============================================  ======  ========  ========
 Store                                         Scope   Blocking  Expiring
 ============================================  ======  ========  ========
