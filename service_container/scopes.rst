@@ -8,7 +8,7 @@ How to Work with Scopes
 
     The "container scopes" concept explained in this article has been deprecated
     in Symfony 2.8 and it will be removed in Symfony 3.0.
-    
+
     Use the ``request_stack`` service (introduced in Symfony 2.4) instead of
     the ``request`` service/scope and use the ``shared`` setting (introduced in
     Symfony 2.8) instead of the ``prototype`` scope
