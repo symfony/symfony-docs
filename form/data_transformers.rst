@@ -432,7 +432,6 @@ it's recognized as a custom field type:
                 tags:
                     - { name: form.type }
 
-
     .. code-block:: xml
 
         <!-- app/config/services.xml -->

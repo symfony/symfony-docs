@@ -104,7 +104,6 @@ creating that particular field is delegated to an event listener::
         // ...
     }
 
-
 The goal is to create a ``name`` field *only* if the underlying ``Product``
 object is new (e.g. hasn't been persisted to the database). Based on that,
 the event listener might look like the following::
@@ -190,7 +189,6 @@ class::
             }
         }
     }
-
 
 .. _form-events-user-data:
 

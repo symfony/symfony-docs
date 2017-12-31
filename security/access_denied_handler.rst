@@ -39,7 +39,6 @@ Each firewall context can define its own custom access denied handler:
             ),
         ));
 
-
 Your handler must implement the
 :class:`Symfony\\Component\\Security\\Http\\Authorization\\AccessDeniedHandlerInterface`.
 This interface defines one method called ``handle()`` that implements the logic to

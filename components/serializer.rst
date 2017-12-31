@@ -32,7 +32,6 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/serializer).
 
-
 .. include:: /components/require_autoload.rst.inc
 
 To use the ``ObjectNormalizer``, the :doc:`PropertyAccess component </components/property_access>`
