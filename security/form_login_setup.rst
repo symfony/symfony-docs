@@ -225,7 +225,6 @@ Finally, create the template:
             <button type="submit">login</button>
         </form>
 
-
 .. tip::
 
     The ``error`` variable passed into the template is an instance of

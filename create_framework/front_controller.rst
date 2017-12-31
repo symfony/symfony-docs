@@ -140,7 +140,7 @@ web root directory:
 
     example.com
     ├── composer.json
-    ├── composer.lock    
+    ├── composer.lock
     ├── src
     │   └── pages
     │       ├── hello.php

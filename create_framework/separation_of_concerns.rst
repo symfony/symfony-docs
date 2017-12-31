@@ -142,7 +142,7 @@ To sum up, here is the new file layout:
 
     example.com
     ├── composer.json
-    ├── composer.lock    
+    ├── composer.lock
     ├── src
     │   ├── app.php
     │   └── Simplex

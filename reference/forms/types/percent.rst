@@ -4,7 +4,6 @@
 percent Field Type
 ==================
 
-
 The ``percent`` type renders an input text field and specializes in handling
 percentage data. If your percentage data is stored as a decimal (e.g. ``.95``),
 you can use this field out-of-the-box. If you store your data as a number

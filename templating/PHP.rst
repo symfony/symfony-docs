@@ -117,7 +117,6 @@ You can also use the `@Template`_ shortcut to render the default
         {# traditional template notation will also work #}
         {{ include('AppBundle:Default:index.html.twig') }}
 
-
 .. index::
   single: Templating; Layout
   single: Layout
