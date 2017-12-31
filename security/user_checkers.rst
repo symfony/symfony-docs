@@ -146,7 +146,6 @@ is the service id of your user checker:
             ),
         ));
 
-
 Additional Configurations
 -------------------------
 
