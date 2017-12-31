@@ -130,7 +130,7 @@ when all items are successfully deleted)::
     .. code-block:: terminal
 
         $ php bin/console cache:pool:clear <cache-pool-name>
-        
+
         # clears the "cache.app" pool
         $ php bin/console cache:pool:clear cache.app
 

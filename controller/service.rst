@@ -28,7 +28,7 @@ syntax:
 
         // src/AppBundle/Controller/HelloController.php
         // ...
-        
+
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
         /**
