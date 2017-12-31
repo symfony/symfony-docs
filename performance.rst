@@ -133,7 +133,7 @@ If you're using the Standard Distribution, make the following changes::
 
     // app.php
     // ...
-    
+
     use Symfony\Component\ClassLoader\ApcClassLoader;
 
     // do not use $loader as a variable name here as it would

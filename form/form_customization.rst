@@ -211,7 +211,7 @@ this folder.
     In this example, the customized fragment name is ``integer_widget`` because
     you want to override the HTML ``widget`` for all ``integer`` field types. If
     you need to customize ``textarea`` fields, you would customize ``textarea_widget``.
-    
+
     The ``integer`` part comes from the class name: ``IntegerType`` becomes ``integer``,
     based on a standard.
 
