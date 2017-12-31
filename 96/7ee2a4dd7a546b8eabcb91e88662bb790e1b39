@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-12-26T21:00:05Z
+
+That's weird. The parameter should be set thanks to the recipe for the FrameworkBundle: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/config/packages/framework.yaml#L2
+
+---------------------------------------------------------------------------
+
+by pyrech at 2017-12-27T10:57:27Z
+
+I'm not sure I understand what you mean. The configuration you linked to only show the `secret` configuration of the framework bundle, that does not mean a `secret` parameter will be available in the DIC. Am I missing something?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-12-31T12:24:40Z
+
+I think this PR is correct. We should use `kernel.secret` or `%env(APP_SECRET)%`. Previously, instead of `.env`, we used `parameters.yml` with this `secret` parameter. Since Symfony Flex, this is now changed to the environment.
+
+I think `kernel.secret` would be the best option.
+
+:+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-12-31T17:53:43Z
+
+@pyrech Sorry, I confused myself. You are absolutely right with the proposed changes. 👍
