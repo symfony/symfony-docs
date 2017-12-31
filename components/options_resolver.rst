@@ -317,14 +317,27 @@ correctly. To validate the types of the options, call
         public function configureOptions(OptionsResolver $resolver)
         {
             // ...
+
+            // specify one allowed type
             $resolver->setAllowedTypes('host', 'string');
+
+            // specify multiple allowed types
             $resolver->setAllowedTypes('port', array('null', 'int'));
+
+            // check all items in an array recursively for a type
+            $resolver->setAllowedTypes('dates', 'DateTime[]');
+            $resolver->setAllowedtypes('ports', 'int[]');
         }
     }
 
-For each option, you can define either just one type or an array of acceptable
-types. You can pass any type for which an ``is_<type>()`` function is defined
-in PHP. Additionally, you may pass fully qualified class or interface names.
+You can pass any type for which an ``is_<type>()`` function is defined in PHP.
+You may also pass fully qualified class or interface names (which is checked
+using ``instanceof``). Additionally, you can validate all items in an array
+recursively by suffixing the type with ``[]``.
+
+.. versionadded:: 3.4
+    Validating types of array items recursively was introduced in Symfony 3.4.
+    Prior to Symfony 3.4, only scalar values could be validated.
 
 If you pass an invalid option now, an
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
@@ -339,43 +352,6 @@ is thrown::
 
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
 to add additional allowed types without erasing the ones already set.
-
-You can specify an array of a specific type as an allowed option. The expected type is
-validated in the same way as before (``is_<type>()`` or an ``instanceof`` check).
-Only for an array, this is done recursively. If you expect an option to be an array of
-``DateTime`` instances or a numeric array, you can specify this as follows::
-
-    // ...
-    class Mailer
-    {
-        // ...
-        public function configureOptions(OptionsResolver $resolver)
-        {
-            // ...
-            $resolver->setAllowedTypes('dates', 'DateTime[]');
-            $resolver->setAllowedTypes('ports', 'int[]');
-        }
-    }
-
-Because the OptionsResolver will validate typed arrays recursively, it is possible to
-resolve multi-dimensional arrays, too::
-
-    // ...
-    class Mailer
-    {
-        // ...
-        public function configureOptions(OptionsResolver $resolver)
-        {
-            // ...
-            //allowed type is a 2D array of string values
-            $resolver->setAllowedTypes('hosts', 'string[][]');
-        }
-    }
-
-.. versionadded:: 3.1
-    Before Symfony 3.1, the allowed types had to be scalar values, qualified classes
-    or interfaces. The only way to ensure the values of an array were of the right type
-    was to use a normalizer.
 
 Value Validation
 ~~~~~~~~~~~~~~~~
