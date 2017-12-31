@@ -319,7 +319,6 @@ libraries.
 This may take a while depending on the number of third-party dependencies
 you've configured in your ``composer.json`` file.
 
-
 At the end of the ``composer install`` command, you will be prompted to fill in
 the values of some Symfony settings like database credentials, locale, mailer
 credentials, CSRF token protection, etc. These parameters come from the
