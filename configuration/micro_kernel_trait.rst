@@ -102,7 +102,6 @@ that define your bundles, your services and your routes:
     ``RouteCollectionBuilder`` has methods that make adding routes in PHP more
     fun. You can also load external routing files (shown below).
 
-
 Advanced Example: Twig, Annotations and the Web Debug Toolbar
 -------------------------------------------------------------
 
