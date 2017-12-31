@@ -64,7 +64,7 @@ to add custom functions. To do so, you can create a new expression provider by
 creating a class that implements
 :class:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunctionProviderInterface`.
 
-This interface requires one method: 
+This interface requires one method:
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunctionProviderInterface::getFunctions`,
 which returns an array of expression functions (instances of
 :class:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction`) to

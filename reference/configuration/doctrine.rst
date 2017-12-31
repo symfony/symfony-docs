@@ -22,7 +22,7 @@ Full Default Configuration
                     some_custom_type:
                         class:                Acme\HelloBundle\MyCustomType
                         commented:            true
-                
+
 
                 connections:
                     # A collection of different named connections (e.g. default, conn2, etc)
@@ -75,11 +75,11 @@ Full Default Configuration
                         mapping_types:
                             # an array of mapping types
                             name:                 []
-                            
+
                         # If defined, only the tables whose names match this regular expression are managed
                         # by the schema tool (in this example, any table name not starting with `wp_`)
                         #schema_filter:               '/^(?!wp_)/'
-                        
+
                         slaves:
 
                             # a collection of named slave connections (e.g. slave1, slave2)
@@ -294,7 +294,7 @@ The following block shows all possible configuration keys:
                 password:             secret
                 driver:               pdo_mysql
                 # if the url option is specified, it will override the above config
-                url:                  mysql://db_user:db_password@127.0.0.1:3306/db_name 
+                url:                  mysql://db_user:db_password@127.0.0.1:3306/db_name
                 # the DBAL driverClass option
                 driver_class:         MyNamespace\MyDriverImpl
                 # the DBAL driverOptions option
