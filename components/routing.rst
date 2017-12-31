@@ -425,7 +425,6 @@ routes with UTF-8 characters:
 
         return $collection;
 
-
 In this route, the ``utf8`` option set to ``true`` makes Symfony consider the
 ``.`` requirement to match any UTF-8 characters instead of just a single
 byte character. This means that so the following URLs would match:
