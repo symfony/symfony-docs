@@ -400,7 +400,7 @@ Each authenticator needs the following methods:
     You will still need to active ``remember_me`` under your firewall for it to work.
     Since this is a stateless API, you do not want to support "remember me"
     functionality in this example.
-    
+
 **createAuthenticatedToken(UserInterface $user, string $providerKey)**
     If you are implementing the :class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`
     instead of extending the :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`
