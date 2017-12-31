@@ -52,7 +52,7 @@ to use the `IgnorePlugin`_ (see `moment/moment#2373`_):
 
     // webpack.config.js
     + var webpack = require('webpack');
-    
+
     Encore
         // ...
 
