@@ -52,7 +52,7 @@ rounding_mode
 If a submitted number needs to be rounded (based on the `scale`_
 option), you have several configurable options for that rounding. Each
 option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`:
-    
+
 * ``NumberToLocalizedStringTransformer::ROUND_DOWN`` Round towards zero.
 
 * ``NumberToLocalizedStringTransformer::ROUND_FLOOR`` Round towards negative

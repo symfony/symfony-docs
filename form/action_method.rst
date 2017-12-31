@@ -88,7 +88,6 @@ options:
                 // ...
             }
         }
-    
 
     .. code-block:: php-standalone
 

@@ -66,7 +66,6 @@ you've already setup some translations for the ``fr`` locale inside an AcmeDemoB
             </file>
         </xliff>
 
-
     .. code-block:: yaml
 
         # src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.yml
