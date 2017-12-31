@@ -324,7 +324,7 @@ controller's service config:
 
         // app/config/services.php
         use AppBundle\Controller\LuckyController;
-        
+
         $container->register(LuckyController::class)
             ->setPublic(true)
             ->addTag('controller.service_arguments', [

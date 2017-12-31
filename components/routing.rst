@@ -508,7 +508,7 @@ You can also include UTF-8 strings as routing requirements:
         // ...
 
         return $collection;
-    
+
 .. tip::
 
     In addition to UTF-8 characters, the Routing component also supports all
