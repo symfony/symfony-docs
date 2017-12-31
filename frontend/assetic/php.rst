@@ -35,7 +35,6 @@ directory and execute the following commands:
     $ composer require leafo/scssphp
     $ composer require patchwork/jsqueeze
 
-
 Organizing your Web Asset Files
 -------------------------------
 

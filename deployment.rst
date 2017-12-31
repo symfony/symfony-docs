@@ -104,7 +104,6 @@ specifically tailored to the requirements of Symfony.
 `sf2debpkg`_
     Helps you build a native Debian package for your Symfony project.
 
-
 Basic scripting
     You can of course use shell, `Ant`_ or any other build tool to script
     the deploying of your project.

@@ -55,7 +55,6 @@ on an object that will contain an ISBN.
                         type: isbn10
                         message: This value is not  valid.
 
-
     .. code-block:: xml
 
         <!-- src/AppBundle/Resources/config/validation.xml -->

@@ -101,7 +101,6 @@ the code that prepares the HTML "presentation"::
     // include the HTML presentation code
     require 'templates/list.php';
 
-
 The HTML code is now stored in a separate file ``templates/list.php``, which
 is primarily an HTML file that uses a template-like PHP syntax:
 

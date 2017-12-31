@@ -170,7 +170,7 @@ will be autocompleted as the user types::
     {
         // ...
         $helper = $this->getHelper('question');
-        
+
         $bundles = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
         $question = new Question('Please enter the name of a bundle', 'FooBundle');
         $question->setAutocompleterValues($bundles);
@@ -191,7 +191,7 @@ convenient for passwords::
     {
         // ...
         $helper = $this->getHelper('question');
-        
+
         $question = new Question('What is the database password?');
         $question->setHidden(true);
         $question->setHiddenFallback(false);
@@ -249,7 +249,7 @@ method::
     {
         // ...
         $helper = $this->getHelper('question');
-        
+
         $question = new Question('Please enter the name of the bundle', 'AppBundle');
         $question->setNormalizer(function ($value) {
             // $value can be null here
@@ -258,7 +258,6 @@ method::
 
         $name = $helper->ask($input, $output, $question);
     }
-
 
 .. caution::
 

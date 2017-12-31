@@ -168,7 +168,6 @@ These are parameters that you must configure:
 ``db_lifetime_col`` (default ``sess_lifetime``):
     The name of the lifetime column in your session table (INTEGER).
 
-
 Sharing your Database Connection Information
 --------------------------------------------
 

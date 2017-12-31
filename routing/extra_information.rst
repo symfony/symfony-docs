@@ -63,7 +63,7 @@ to the controller method::
 Alternatively, the title could be accessed through the ``Request`` object::
 
     use Symfony\Component\HttpFoundation\Request;
-    
+
     public function indexAction(Request $request, $page)
     {
         $title = $request->attributes->get('title');

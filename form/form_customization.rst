@@ -970,7 +970,6 @@ fields (e.g. a whole form), and not just an individual field.
             <?php endif ?>
         <?php endif ?>
 
-
 Customizing the "Form Row"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 

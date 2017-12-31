@@ -376,7 +376,6 @@ is thrown::
 For options with more complicated validation schemes, pass a closure which
 returns ``true`` for acceptable values and ``false`` for invalid values::
 
-
     // ...
     $resolver->setAllowedValues('transport', function ($value) {
         // return true or false
