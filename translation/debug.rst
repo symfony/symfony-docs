@@ -64,7 +64,6 @@ you've already setup some translations for the ``fr`` locale:
             </file>
         </xliff>
 
-
     .. code-block:: yaml
 
         # translations/messages.fr.yaml
