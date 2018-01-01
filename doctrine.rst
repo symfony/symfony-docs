@@ -612,7 +612,7 @@ a new method for this to your repository::
          */
         public function findAllGreaterThanPrice($price): array
         {
-            // automatically knows to selects Products
+            // automatically knows to select Products
             // the "p" is an alias you'll use in the rest of the query
             $qb = $this->createQueryBuilder('p')
                 ->andWhere('p.price > :price')
