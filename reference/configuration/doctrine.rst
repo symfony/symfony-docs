@@ -272,7 +272,6 @@ Full Default Configuration
             </doctrine:config>
         </container>
 
-
 .. index::
     single: Configuration; Doctrine DBAL
     single: Doctrine; DBAL configuration
