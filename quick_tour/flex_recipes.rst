@@ -79,7 +79,7 @@ Thanks to Flex, after one command, you can start using Twig immediately:
     // ...
 
     + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
- 
+
     -class DefaultController
     +class DefaultController extends AbstractController
      {
@@ -216,16 +216,16 @@ me? List your routes by running:
 
 .. code-block:: text
 
-    ------------------------------ -------- ------------------------------------- 
-     Name                           Method   Path                                 
-    ------------------------------ -------- ------------------------------------- 
-     api_products_get_collection    GET      /api/products.{_format}              
-     api_products_post_collection   POST     /api/products.{_format}              
-     api_products_get_item          GET      /api/products/{id}.{_format}         
-     api_products_put_item          PUT      /api/products/{id}.{_format}         
-     api_products_delete_item       DELETE   /api/products/{id}.{_format}         
+    ------------------------------ -------- -------------------------------------
+     Name                           Method   Path
+    ------------------------------ -------- -------------------------------------
+     api_products_get_collection    GET      /api/products.{_format}
+     api_products_post_collection   POST     /api/products.{_format}
+     api_products_get_item          GET      /api/products/{id}.{_format}
+     api_products_put_item          PUT      /api/products/{id}.{_format}
+     api_products_delete_item       DELETE   /api/products/{id}.{_format}
      ...
-    ------------------------------ -------- ------------------------------------- 
+    ------------------------------ -------- -------------------------------------
 
 Easily Remove Recipes
 ---------------------
