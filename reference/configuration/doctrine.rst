@@ -301,7 +301,7 @@ The following block shows all possible configuration keys:
                 password:             secret
                 driver:               pdo_mysql
                 # if the url option is specified, it will override the above config
-                url:                  mysql://db_user:db_password@127.0.0.1:3306/db_name 
+                url:                  mysql://db_user:db_password@127.0.0.1:3306/db_name
                 # the DBAL driverClass option
                 driver_class:         App\DBAL\MyDatabaseDriver
                 # the DBAL driverOptions option
