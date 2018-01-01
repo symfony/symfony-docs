@@ -21,5 +21,11 @@ these cases you can set the ``validation_groups`` option to ``false``::
 
 Note that when you do that, the form will still run basic integrity checks,
 for example whether an uploaded file was too large or whether non-existing
-fields were submitted. If you want to suppress validation, you can use the
-:ref:`POST_SUBMIT event <form-dynamic-form-modification-suppressing-form-validation>`.
+fields were submitted.
+
+Note that to disable the extra fields check, you can use the proper
+`form type option`_.
+One the other hand, the uploaded file limit should be handled via your php and
+web server configuration.
+
+.. _`form type option`: http://symfony.com/doc/current/reference/forms/types/form.html#allow-extra-fields
