@@ -84,7 +84,44 @@ protection, but you need to configure some options before using it.
     you'll need to validate the CSRF token manually inside of that class. See
     :ref:`guard-csrf-protection` for details.
 
-First, configure the CSRF token provider used by the form login in your security
+First, make sure that the CSRF protection is enabled in the framework configuration
+file:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yml
+        framework:
+            # ...
+            csrf_protection: ~
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:csrf-protection enabled="true" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', array(
+            'csrf_protection' => null,
+        ));
+
+
+Then configure the CSRF token provider used by the form login in your security
 configuration. You can set this to use the default provider available in the
 security component:
 
