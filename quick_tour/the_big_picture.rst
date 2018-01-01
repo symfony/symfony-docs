@@ -149,21 +149,21 @@ Instead, add the route *right above* the controller method:
 
     // src/Controller/DefaultController.php
     // ...
-    
+
     + use Symfony\Component\Routing\Annotation\Route;
-    
+
     + /**
     +  * @Route("/hello/{name}")
     +  */
     public function index($name)
-    
+
 This works just like before! But by using annotations, the route and controller
 live right next to each other. Need another page? Just add another route and method
 in ``DefaultController``::
 
     // src/Controller/DefaultController.php
     // ...
-    
+
     /**
      * @Route("/simplicity")
      */

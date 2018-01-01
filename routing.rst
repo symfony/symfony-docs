@@ -343,7 +343,7 @@ As your app grows, you'll eventually have a *lot* of routes! To see them all, ru
 .. code-block:: text
 
     ------------------------------ -------- -------------------------------------
-     Name                           Method   Path                                 
+     Name                           Method   Path
     ------------------------------ -------- -------------------------------------
      app_lucky_number              ANY    /lucky/number/{max}
      ...

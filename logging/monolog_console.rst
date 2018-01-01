@@ -39,7 +39,7 @@ The example above could then be rewritten as::
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
     // ...
-    
+
     class YourCommand extends Command
     {
         private $logger;

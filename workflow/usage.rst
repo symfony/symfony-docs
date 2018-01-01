@@ -359,7 +359,6 @@ See example to make sure no blog post without title is moved to "review"::
         }
     }
 
-
 Event Methods
 ~~~~~~~~~~~~~
 

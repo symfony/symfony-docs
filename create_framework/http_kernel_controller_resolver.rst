@@ -56,7 +56,6 @@ based on a Request object. All controller resolvers implement the following inte
         public function getController(Request $request);
     }
 
-
 The ``getController()`` method relies on the same convention as the one we
 have defined earlier: the ``_controller`` request attribute must contain the
 controller associated with the Request. Besides the built-in PHP callbacks,
@@ -99,7 +98,6 @@ following interface::
     {
         public function getArguments(Request $request, $controller);
     }
-
 
 The ``indexAction()`` method needs the Request object as an argument.
 ``getArguments()`` knows when to inject it properly if it is type-hinted

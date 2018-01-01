@@ -113,7 +113,7 @@ difference is that it's done in the constructor:
     class GreetingGenerator
     {
     +     private $logger;
-    + 
+    +
     +     public function __construct(LoggerInterface $logger)
     +     {
     +         $this->logger = $logger;
