@@ -166,7 +166,6 @@ an exception when additional attributes are passed::
         'allow_extra_attributes' => false,
     ));
 
-
 Deserializing in an Existing Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

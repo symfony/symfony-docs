@@ -16,7 +16,7 @@ execute the following command:
 
     # Download the latest beta version
     $ composer create-project symfony/skeleton my_project "4.0.*" -s beta
-    
+
     # Download the absolute latest commit
     $ composer create-project symfony/skeleton my_project "4.0.*" -s dev
 
