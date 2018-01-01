@@ -256,7 +256,6 @@ method::
         $name = $helper->ask($input, $output, $question);
     }
 
-
 .. caution::
 
     The normalizer is called first and the returned value is used as the input

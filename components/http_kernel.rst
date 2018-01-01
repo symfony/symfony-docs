@@ -234,7 +234,6 @@ This implementation is explained more in the sidebar below::
         public function getController(Request $request);
     }
 
-
 Internally, the ``HttpKernel::handle()`` method first calls
 :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getController`
 on the controller resolver. This method is passed the ``Request`` and is responsible

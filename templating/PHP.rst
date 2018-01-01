@@ -107,7 +107,6 @@ below renders the ``index.html.php`` template::
         {# traditional template notation will also work #}
         {{ include('hello/index.html.twig') }}
 
-
 .. index::
   single: Templating; Layout
   single: Layout

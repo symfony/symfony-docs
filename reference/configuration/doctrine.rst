@@ -23,7 +23,6 @@ Full Default Configuration
                         class:                App\DBAL\MyCustomType
                         commented:            true
 
-
                 connections:
                     # A collection of different named connections (e.g. default, conn2, etc)
                     default:
@@ -272,7 +271,6 @@ Full Default Configuration
                 </doctrine:orm>
             </doctrine:config>
         </container>
-
 
 .. index::
     single: Configuration; Doctrine DBAL

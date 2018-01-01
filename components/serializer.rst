@@ -29,7 +29,6 @@ You can install the component in 2 different ways:
 * :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/serializer).
 
-
 .. include:: /components/require_autoload.rst.inc
 
 To use the ``ObjectNormalizer``, the :doc:`PropertyAccess component </components/property_access>`
@@ -166,7 +165,6 @@ an exception when additional attributes are passed::
     $person = $serializer->deserialize($data, 'Acme\Person', 'xml', array(
         'allow_extra_attributes' => false,
     ));
-
 
 Deserializing in an Existing Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
