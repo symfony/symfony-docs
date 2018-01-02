@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by takman1 at 2017-11-20T14:35:55Z
+
+Hello @javiereguiluz and thanks for your reply.
+
+I get your point on over explaining things.
+The point is that ``restart()`` method does 2 things :
+ - Clearing the history
+ - Removing all cookies.
+
+IMHO I think we should have 2 examples 1 for each case (history and cookies). The reader gets whta's under the hood.
+But keeping ``restart()`` method is also fine as it keeps things simple.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-11-20T14:42:38Z
+
+I agree with you. We could document this `clear()` method and change the existing doc for `restart()`. Something like this:
+
+```php
+// -- Before --------------------------
+
+// delete history
+$client->restart();
+
+// -- After ---------------------------
+
+// reinitializes the browser state (history and cookies are deleted)
+$client->restart();
+```
