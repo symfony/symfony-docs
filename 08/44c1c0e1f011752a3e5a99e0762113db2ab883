@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-12-15T14:52:41Z
+
+I think we should merge this PR and #8879 into the `3.4` branch.
+
+---------------------------------------------------------------------------
+
+by TomasVotruba at 2017-12-17T22:52:52Z
+
+I've added Rector for this: https://github.com/rectorphp/rector/pull/188
+
+Could you confirm there I got it right? Also more cases would be great
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-02T14:25:54Z
+
+@xabbuh I'm sorry but I'm merging this into 4.0 because the related #8879 PR was merged into 4.0 too instead of 3.4.
