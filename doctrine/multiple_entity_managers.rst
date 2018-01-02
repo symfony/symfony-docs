@@ -16,6 +16,12 @@ entity manager that connects to another database might handle the rest.
     usually required. Be sure you actually need multiple entity managers before
     adding in this layer of complexity.
 
+.. caution::
+
+    Entities cannot define associations across different entity managers. If you
+    need that, there are `several alternatives <https://stackoverflow.com/a/11494543/2804294>`_
+    that require some custom setup.
+
 The following configuration code shows how you can configure two entity managers:
 
 .. configuration-block::
