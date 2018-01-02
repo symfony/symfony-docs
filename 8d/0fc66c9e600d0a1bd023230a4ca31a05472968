@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2017-08-27T15:27:48Z
+
+Hmm, this is a tricky one. When using Symfony 3.3 in the Flex edition, you're 100% correct ([ref](https://github.com/symfony/recipes/blob/master/symfony/console/3.3/bin/console#L24)). However, when using Symfony 3.3 with the Standard Edition (old way) it's still called `SYMFONY_ENV` ([ref](https://github.com/symfony/symfony-standard/blob/3.3/bin/console#L18)).
+
+Let's see what other people think about this. Maybe we should include both and indicate when to use which one (e.g. "run ``export SYMFONY_ENV=prod`` (or ``export APP_ENV=prod`` if you're using Symfony Flex) before running this command so that"). But I'm not sure if that doesn't make stuff too verbose.
+
+---------------------------------------------------------------------------
+
+by proArtex at 2017-08-28T13:06:37Z
+
+Maybe better fork documentation for Flex? I was confused for example when tried to override twig error templates with Flex (no Resources folder exists).
