@@ -75,7 +75,7 @@ Now, you can start fixing the notices:
 
 .. code-block:: text
 
-    # this command is available after running "composer require phpunit"
+    # this command is available after running "composer require symfony/phpunit-bridge"
     $ ./bin/phpunit
     ...
 

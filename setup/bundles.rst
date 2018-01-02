@@ -69,7 +69,7 @@ PHPUnit test report:
 
 .. code-block:: terminal
 
-    # this command is available after running "composer require phpunit"
+    # this command is available after running "composer require symfony/phpunit-bridge"
     $ ./bin/phpunit
 
     # ... PHPUnit output
