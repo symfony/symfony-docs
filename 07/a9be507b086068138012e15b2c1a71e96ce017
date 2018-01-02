@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2017-12-10T17:51:42Z
+
+How about mention PHP-translation bundle instead?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-12-10T20:49:49Z
+
+@Nyholm I don't know either of them, so I'm just asking: is PhpTranslationBundle equivalent to JMSTranslationBundle? Has it the same (or better) features and are interchangeable? Thanks!
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2017-12-11T07:40:11Z
+
+Yes, PHP-TranslationBundle is more feature rich that JMS. The config is pretty much the same. I just have to write a "How to migrate from JMSTranslationBundle" in our docs.
