@@ -24,7 +24,6 @@ for example whether an uploaded file was too large or whether non-existing
 fields were submitted.
 
 The submission of extra form fields can be controlled with the
-`allow_extra_fields config option`_ and the maximum upload file size should be
-handled via your PHP and web server configuration.
-
-.. _`allow_extra_fields config option`: https://symfony.com/doc/current/reference/forms/types/form.html#allow-extra-fields
+:ref:`allow_extra_fields config option <form-option-allow-extra-fields>` and
+the maximum upload file size should be handled via your PHP and web server
+configuration.
