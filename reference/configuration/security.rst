@@ -614,9 +614,9 @@ persisting the encoded password alone is enough.
 
 .. tip::
 
-    A simple technique to make your tests much faster when using BCrypt is to
-    set the cost to ``4``, which is minimum value allowed, but only in the
-    ``test`` environment.
+    A simple technique to make tests much faster when using BCrypt is to set
+    the cost to ``4``, which is the minimum value allowed, in the ``test``
+    environment configuration.
 
     .. _reference-security-firewall-context:
 
