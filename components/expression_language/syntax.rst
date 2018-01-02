@@ -252,8 +252,8 @@ For example::
 
 This would print out ``Arthur Dent``.
 
-Array Operators
-~~~~~~~~~~~~~~~
+Collection Operators
+~~~~~~~~~~~~~~~~~~~~
 
 * ``in`` (contain)
 * ``not in`` (does not contain)
