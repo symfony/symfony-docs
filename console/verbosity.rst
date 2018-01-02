@@ -1,7 +1,7 @@
 Verbosity Levels
 ================
 
-Console commands have five verbosity levels, which determine the messages
+Console commands have different verbosity levels, which determine the messages
 displayed in their output. By default, commands display only the most useful
 messages, but you can control their verbosity with the ``-q`` and ``-v`` options:
 
@@ -17,7 +17,7 @@ messages, but you can control their verbosity with the ``-q`` and ``-v`` options
     # increase verbosity of messages
     $ php bin/console some-command -v
 
-    # dispaly also the informative non essential messages
+    # display also the informative non essential messages
     $ php bin/console some-command -vv
 
     # display all messages (useful to debug errors)
