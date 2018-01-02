@@ -16,19 +16,18 @@ is passed when a command gets executed.
 
 When a lot of logging has to happen, it's cumbersome to print information
 depending on the verbosity settings (``-v``, ``-vv``, ``-vvv``) because the
-calls need to be wrapped in conditions. The code quickly gets verbose or dirty.
-For example::
+calls need to be wrapped in conditions. For example::
 
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_DEBUG) {
+        if ($output->isDebug()) {
             $output->writeln('Some info');
         }
 
-        if ($output->getVerbosity() >= OutputInterface::VERBOSITY_VERBOSE) {
+        if ($output->isVerbose()) {
             $output->writeln('Some more info');
         }
     }
