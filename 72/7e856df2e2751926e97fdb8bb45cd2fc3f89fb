@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-12-26T20:55:43Z
+
+I do not understand this change. Both URLs end with the same section being displayed for me.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-12-29T07:59:24Z
+
+@xabbuh in `components/dependency_injection/compilation.rst` you have this:
+
+```rst
+[...]
+
+.. _creating-a-compiler-pass:
+.. _components-di-compiler-pass:
+
+Execute Code During Compilation
+-------------------------------
+
+[...]
+
+.. _components-di-separate-compiler-passes:
+
+Creating Separate Compiler Passes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[...]
+```
+
+Both references are different ... and this PR changes the link from the first one to the second one. Is this correct?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-12-31T13:26:51Z
+
+Thanks for the clarification. I was actually confused by the links from the PR description.
