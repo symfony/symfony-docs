@@ -23,9 +23,8 @@ Note that when you do that, the form will still run basic integrity checks,
 for example whether an uploaded file was too large or whether non-existing
 fields were submitted.
 
-Note that to disable the extra fields check, you can use the proper
-`form type option`_.
-One the other hand, the uploaded file limit should be handled via your php and
-web server configuration.
+The submission of extra form fields can be controlled with the
+`allow_extra_fields config option`_ and the maximum upload file size should be
+handled via your PHP and web server configuration.
 
-.. _`form type option`: http://symfony.com/doc/current/reference/forms/types/form.html#allow-extra-fields
+.. _`allow_extra_fields config option`: https://symfony.com/doc/current/reference/forms/types/form.html#allow-extra-fields
