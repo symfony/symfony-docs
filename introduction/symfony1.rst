@@ -98,8 +98,8 @@ available, run the following command:
 
 .. note::
 
-   This command is the Symfony2 equivalent to the symfony1 ``plugin:publish-assets``
-   command.
+    This command is the Symfony2 equivalent to the symfony1 ``plugin:publish-assets``
+    command.
 
 Autoloading
 -----------

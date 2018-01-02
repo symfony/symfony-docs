@@ -18,9 +18,9 @@ software:
 
 .. caution::
 
-   Before Symfony 2.7, the minimal PHP version was 5.3.3. Please keep
-   this in mind, if you are working on a bug fix for earlier versions
-   of Symfony.
+    Before Symfony 2.7, the minimal PHP version was 5.3.3. Please keep
+    this in mind, if you are working on a bug fix for earlier versions
+    of Symfony.
 
 Configure Git
 ~~~~~~~~~~~~~

@@ -42,12 +42,12 @@ By preventing ``setTargetPath()`` from being called on the parent, the Security 
 won't retain the request URI. Add as much or as little logic here as required for your scenario!
 
 Next, create the ``ExceptionListenerPass`` to replace the definition of the default
-``ExceptionListener`` with the one you just created. Make sure to use the name of 
+``ExceptionListener`` with the one you just created. Make sure to use the name of
 the firewall in your security configuration::
 
     // src/AppBundle/DependencyInjection/Compiler/ExceptionListenerPass.php
     namespace AppBundle\DependencyInjection\Compiler;
-    
+
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use AppBundle\Security\Firewall\ExceptionListener;
@@ -66,11 +66,11 @@ Finally, add a compiler pass to tie it all together::
 
     // src/AppBundle/AppBundle.php
     namespace AppBundle;
-    
+
     use AppBundle\DependencyInjection\Compiler\ExceptionListenerPass;
 
     class AppBundle extends Bundle
-    {   
+    {
         public function build(ContainerBuilder $container)
         {
             $container->addCompilerPass(new ExceptionListenerPass());

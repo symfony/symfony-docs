@@ -449,7 +449,6 @@ table, you're ready to persist ``Product`` objects to the database. From inside
 a controller, this is pretty easy. Add the following method to the
 ``DefaultController`` of the bundle::
 
-
     // src/AppBundle/Controller/DefaultController.php
 
     // ...

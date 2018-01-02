@@ -173,7 +173,6 @@ set.
 Registering a Type Guesser
 --------------------------
 
-
 The last thing you need to do is registering your custom type guesser by
 creating a service and tagging it as ``form.type_guesser``:
 

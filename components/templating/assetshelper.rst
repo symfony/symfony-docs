@@ -9,9 +9,9 @@ generating asset paths:
 
 .. code-block:: html+php
 
-   <link href="<?php echo $view['assets']->getUrl('css/style.css') ?>" rel="stylesheet">
+    <link href="<?php echo $view['assets']->getUrl('css/style.css') ?>" rel="stylesheet">
 
-   <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>">
+    <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>">
 
 The assets helper can then be configured to render paths to a CDN or modify
 the paths in case your assets live in a sub-directory of your host (e.g. ``http://example.com/app``).
@@ -32,10 +32,10 @@ Now, if you use the helper, everything will be prefixed with ``/foo/bar``:
 
 .. code-block:: html+php
 
-   <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>">
-   <!-- renders as:
-   <img src="/foo/bar/images/logo.png">
-   -->
+    <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>">
+    <!-- renders as:
+    <img src="/foo/bar/images/logo.png">
+    -->
 
 Absolute Urls
 -------------
@@ -51,10 +51,10 @@ You can also use the third argument of the helper to force an absolute URL:
 
 .. code-block:: html+php
 
-   <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, true) ?>">
-   <!-- renders as:
-   <img src="http://yourwebsite.com/foo/bar/images/logo.png">
-   -->
+    <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, true) ?>">
+    <!-- renders as:
+    <img src="http://yourwebsite.com/foo/bar/images/logo.png">
+    -->
 
 .. note::
 
@@ -82,10 +82,10 @@ fourth argument of the helper:
 
 .. code-block:: html+php
 
-   <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, false, '3.0') ?>">
-   <!-- renders as:
-   <img src="/images/logo.png?v=3.0">
-   -->
+    <img src="<?php echo $view['assets']->getUrl('images/logo.png', null, false, '3.0') ?>">
+    <!-- renders as:
+    <img src="/images/logo.png?v=3.0">
+    -->
 
 Multiple Packages
 -----------------

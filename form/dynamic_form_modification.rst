@@ -109,7 +109,6 @@ creating that particular field is delegated to an event listener::
         // ...
     }
 
-
 The goal is to create a ``name`` field *only* if the underlying ``Product``
 object is new (e.g. hasn't been persisted to the database). Based on that,
 the event listener might look like the following::
@@ -194,7 +193,6 @@ class::
             }
         }
     }
-
 
 .. _form-events-user-data:
 
@@ -710,30 +708,5 @@ code from above to generate the submitted form can be reused.
 Suppressing Form Validation
 ---------------------------
 
-To suppress form validation you can use the ``POST_SUBMIT`` event and prevent
-the :class:`Symfony\\Component\\Form\\Extension\\Validator\\EventListener\\ValidationListener`
-from being called.
-
-The reason for needing to do this is that even if you set ``validation_groups``
-to ``false`` there  are still some integrity checks executed. For example
-an uploaded file will still be checked to see if it is too large and the form
-will still check to see if non-existing fields were submitted. To disable
-all of this, use a listener::
-
-    use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\Form\FormEvents;
-    use Symfony\Component\Form\FormEvent;
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
-            $event->stopPropagation();
-        }, 900); // Always set a higher priority than ValidationListener
-
-        // ...
-    }
-
-.. caution::
-
-    By doing this, you may accidentally disable something more than just form
-    validation, since the ``POST_SUBMIT`` event may have other listeners.
+To suppress form validation, set ``validation_groups`` to ``false`` or an empty
+array.

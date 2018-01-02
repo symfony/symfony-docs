@@ -65,18 +65,18 @@ Configuring the Request Context per Command
 To change it only in one command you can simply fetch the Request Context
 from the ``router`` service and override its settings::
 
-   // src/AppBundle/Command/DemoCommand.php
+    // src/AppBundle/Command/DemoCommand.php
 
-   // ...
-   class DemoCommand extends ContainerAwareCommand
-   {
-       protected function execute(InputInterface $input, OutputInterface $output)
-       {
-           $context = $this->getContainer()->get('router')->getContext();
-           $context->setHost('example.com');
-           $context->setScheme('https');
-           $context->setBaseUrl('my/path');
+    // ...
+    class DemoCommand extends ContainerAwareCommand
+    {
+        protected function execute(InputInterface $input, OutputInterface $output)
+        {
+            $context = $this->getContainer()->get('router')->getContext();
+            $context->setHost('example.com');
+            $context->setScheme('https');
+            $context->setBaseUrl('my/path');
 
-           // ... your code here
-       }
-   }
+            // ... your code here
+        }
+    }

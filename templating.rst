@@ -270,9 +270,9 @@ A child template might look like this:
 
 .. note::
 
-   The parent template is stored in ``app/Resources/views/``, so its path is
-   simply ``base.html.twig``. The template naming conventions are explained
-   fully in :ref:`template-naming-locations`.
+    The parent template is stored in ``app/Resources/views/``, so its path is
+    simply ``base.html.twig``. The template naming conventions are explained
+    fully in :ref:`template-naming-locations`.
 
 The key to template inheritance is the ``{% extends %}`` tag. This tells
 the templating engine to first evaluate the base template, which sets up
@@ -436,8 +436,8 @@ section.
 
 .. note::
 
-   The available "engines" can be configured and even new engines added.
-   See :ref:`Templating Configuration <template-configuration>` for more details.
+    The available "engines" can be configured and even new engines added.
+    See :ref:`Templating Configuration <template-configuration>` for more details.
 
 .. index::
    single: Templating; Tags and helpers

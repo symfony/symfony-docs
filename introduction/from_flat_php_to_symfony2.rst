@@ -101,7 +101,6 @@ the code that prepares the HTML "presentation"::
     // include the HTML presentation code
     require 'templates/list.php';
 
-
 The HTML code is now stored in a separate file ``templates/list.php``, which
 is primarily an HTML file that uses a template-like PHP syntax:
 
@@ -175,12 +174,12 @@ of the application are isolated in a new file called ``model.php``::
 
 .. tip::
 
-   The filename ``model.php`` is used because the logic and data access of
-   an application is traditionally known as the "model" layer. In a well-organized
-   application, the majority of the code representing your "business logic"
-   should live in the model (as opposed to living in a controller). And unlike
-   in this example, only a portion (or none) of the model is actually concerned
-   with accessing a database.
+    The filename ``model.php`` is used because the logic and data access of
+    an application is traditionally known as the "model" layer. In a well-organized
+    application, the majority of the code representing your "business logic"
+    should live in the model (as opposed to living in a controller). And unlike
+    in this example, only a portion (or none) of the model is actually concerned
+    with accessing a database.
 
 The controller (``index.php``) is now very simple::
 
@@ -398,10 +397,10 @@ have *many* controller functions: one for each page.
 
 .. tip::
 
-   Another advantage of a front controller is flexible URLs. Notice that
-   the URL to the blog post show page could be changed from ``/show`` to ``/read``
-   by changing code in only one location. Before, an entire file needed to
-   be renamed. In Symfony, URLs are even more flexible.
+    Another advantage of a front controller is flexible URLs. Notice that
+    the URL to the blog post show page could be changed from ``/show`` to ``/read``
+    by changing code in only one location. Before, an entire file needed to
+    be renamed. In Symfony, URLs are even more flexible.
 
 By now, the application has evolved from a single PHP file into a structure
 that is organized and allows for code reuse. You should be happier, but far

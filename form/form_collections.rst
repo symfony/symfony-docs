@@ -293,7 +293,7 @@ add the ``allow_add`` option to your collection field::
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('description');
-        
+
         $builder->add('tags', 'collection', array(
             'type'         => new TagType(),
             'options'      => array('label' => false),
@@ -408,7 +408,7 @@ one example:
         // Replace '__name__label__' in the prototype's HTML to
         // instead be a number based on how many items we have
         // newForm = newForm.replace(/__name__label__/g, index);
-        
+
         // Replace '__name__' in the prototype's HTML to
         // instead be a number based on how many items we have
         newForm = newForm.replace(/__name__/g, index);

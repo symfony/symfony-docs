@@ -5,8 +5,8 @@
 The Serializer Component
 ========================
 
-   The Serializer component is meant to be used to turn objects into a
-   specific format (XML, JSON, YAML, ...) and the other way around.
+    The Serializer component is meant to be used to turn objects into a
+    specific format (XML, JSON, YAML, ...) and the other way around.
 
 In order to do so, the Serializer component follows the following
 simple schema.
@@ -21,7 +21,7 @@ the middle. This way, Encoders will only deal with turning specific
 **formats** into **arrays** and vice versa. The same way, Normalizers
 will deal with turning specific **objects** into **arrays** and vice versa.
 
-Serialization is a complex topic. This component may not cover all your use cases out of the box, 
+Serialization is a complex topic. This component may not cover all your use cases out of the box,
 but it can be useful for developing tools to serialize and deserialize your objects.
 
 Installation
@@ -31,7 +31,6 @@ You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/serializer).
-
 
 .. include:: /components/require_autoload.rst.inc
 
