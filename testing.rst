@@ -19,7 +19,7 @@ First, install PHPUnit support in your Symfony application running this command:
 
 .. code-block:: terminal
 
-    $ composer require phpunit
+    $ composer require --dev phpunit
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the ``tests/`` directory of your application. If you follow
