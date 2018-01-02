@@ -113,8 +113,25 @@ in the **Unsilenced** section of the deprecation report.
 Mark Tests as Legacy
 --------------------
 
-Add the ``@group legacy`` annotation to a test class or method to mark it
-as legacy.
+There are three ways to mark a test as legacy:
+
+* (**Recommended**) Add the ``@group legacy`` annotation to its class or method;
+
+* Make its class name start with the ``Legacy`` prefix;
+
+* Make its method name start with ``testLegacy*()`` instead of ``test*()``.
+
+.. note::
+
+    If your data provider calls code that would usually trigger a deprecation,
+    you can prefix its name with ``provideLegacy`` or ``getLegacy`` to silent
+    these deprecations. If your data provider does not execute deprecated
+    code, it is not required to choose a special naming just because the
+    test being fed by the data provider is marked as legacy.
+
+    Also be aware that choosing one of the two legacy prefixes will not mark
+    tests as legacy that make use of this data provider. You still have to
+    mark them as legacy tests explicitly.
 
 Configuration
 -------------

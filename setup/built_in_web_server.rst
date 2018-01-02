@@ -27,7 +27,7 @@ First, execute this command:
 .. code-block:: terminal
 
     $ cd your-project/
-    $ composer require symfony/web-server-bundle
+    $ composer require --dev symfony/web-server-bundle
 
 Then, enable the bundle in the kernel of the application::
 

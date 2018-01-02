@@ -226,7 +226,7 @@ also delete all the cookies::
     $client = new Client();
     $client->request('GET', '/');
 
-    // delete history
+    // reset the client (history and cookies are cleared too)
     $client->restart();
 
 Learn more
