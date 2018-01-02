@@ -54,6 +54,8 @@ Field Options
 
 .. include:: /reference/forms/types/options/action.rst.inc
 
+.. _form-option-allow-extra-fields:
+
 allow_extra_fields
 ~~~~~~~~~~~~~~~~~~
 
