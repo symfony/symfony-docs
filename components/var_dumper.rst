@@ -50,6 +50,9 @@ For example::
 
     dump($someVar);
 
+    // dump() returns the passed value, so you can dump an object and keep using it
+    dump($someObject)->someMethod();
+
 By default, the output format and destination are selected based on your
 current PHP SAPI:
 
