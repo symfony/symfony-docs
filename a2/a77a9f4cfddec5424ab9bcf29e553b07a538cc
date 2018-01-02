@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by csarrazi at 2017-01-30T15:05:18Z
+
+@nietonfir I would advise you to make your pull request against the existing PR for the 3.1 version of the component: See #6982
+
+---------------------------------------------------------------------------
+
+by nietonfir at 2017-01-30T22:22:51Z
+
+@csarrazi @xabbuh Rebased from #6982 as well as current HEAD of the 3.1 branch and updated the PHP service definition.
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2017-07-09T20:34:01Z
+
+👍
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-09-15T10:59:22Z
+
+@nietonfir I am sorry that we did not merge your PR earlier. In the meantime, support was dropped for Symfony 3.1 and 3.2 and we did some other changes to the Ldap component docs. Could you rebase your PR onto the `3.3` branch?
+
+---------------------------------------------------------------------------
+
+by nietonfir at 2017-09-18T21:41:25Z
+
+Done.
