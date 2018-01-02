@@ -82,18 +82,18 @@ by pressing ``Ctrl+C`` from your terminal.
 Storing your Project in git
 ---------------------------
 
-Storing your project in git is easy! Just initialize you repository, add everything
-and commit:
+Storing your project in services like GitHub, GitLab and Bitbucket is easy! New
+Symfony projects include an empty Git repository, so you can add everything and
+commit:
 
 .. code-block:: terminal
 
-    $ git init
     $ git add .
     $ git commit -m "Initial commit"
 
 Your project already has a sensible ``.gitignore`` file. And as you install more
-packages, a system called :ref:`Flex <flex-quick-intro>` will add more lines to that
-file when needed.
+packages, a system called :ref:`Flex <flex-quick-intro>` will add more lines to
+that file when needed.
 
 .. _install-existing-app:
 
