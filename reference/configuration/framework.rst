@@ -406,6 +406,8 @@ settings is configured.
 
     For more details, see :doc:`/forms`.
 
+.. _reference-framework-csrf-protection:
+
 csrf_protection
 ~~~~~~~~~~~~~~~
 

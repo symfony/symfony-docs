@@ -146,8 +146,7 @@ Configuration of the service container then looks like this:
     .. code-block:: yaml
 
         # config/services.yaml
-        app.newsletter_manager:
-            class: App\Email\NewsletterManager
+        AppBundle\Email\NewsletterManager:
             # new syntax
             factory: 'App\Email\NewsletterManagerFactory:createNewsletterManager'
             # old syntax

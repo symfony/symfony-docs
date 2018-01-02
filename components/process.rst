@@ -20,8 +20,11 @@ You can install the component in 2 different ways:
 Usage
 -----
 
-The :class:`Symfony\\Component\\Process\\Process` class allows you to execute
-a command in a sub-process::
+The :class:`Symfony\\Component\\Process\\Process` class executes a command in a
+sub-process, taking care of the differences between operating system and
+escaping arguments to prevent security issues. It replaces PHP functions like
+:phpfunction:`exec`, :phpfunction:`passthru`, :phpfunction:`shell_exec` and
+:phpfunction:`system`::
 
     use Symfony\Component\Process\Process;
     use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -36,8 +39,18 @@ a command in a sub-process::
 
     echo $process->getOutput();
 
-The component takes care of the subtle differences between the different platforms
-when executing the command.
+.. tip::
+
+    In addition to passing the command binary and its arguments as a string, you
+    can also pass them as an array, which is useful when building a complex
+    command programmatically::
+
+        // traditional string based commands
+        $builder = new Process('ls -lsa');
+        // same example but using an array
+        $builder = new Process(array('ls', '-lsa'));
+        // the array can contain any number of arguments and options
+        $builder = new Process(array('ls', '-l', '-s', '-a'));
 
 The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error

@@ -595,6 +595,12 @@ persisting the encoded password alone is enough.
     All the encoded passwords are ``60`` characters long, so make sure to
     allocate enough space for them to be persisted.
 
+.. tip::
+
+    A simple technique to make tests much faster when using BCrypt is to set
+    the cost to ``4``, which is the minimum value allowed, in the ``test``
+    environment configuration.
+
     .. _reference-security-firewall-context:
 
 Firewall Context

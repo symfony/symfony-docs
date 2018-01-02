@@ -613,11 +613,3 @@ field according to the current selection in the ``sport`` field:
 The major benefit of submitting the whole form to just extract the updated
 ``position`` field is that no additional server-side code is needed; all the
 code from above to generate the submitted form can be reused.
-
-.. _form-dynamic-form-modification-suppressing-form-validation:
-
-Suppressing Form Validation
----------------------------
-
-To suppress form validation, set ``validation_groups`` to ``false`` or an empty
-array.

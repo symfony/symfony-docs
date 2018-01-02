@@ -8,7 +8,7 @@ How to Work with Compiler Passes
 Compiler passes give you an opportunity to manipulate other service
 definitions that have been registered with the service container. You
 can read about how to create them in the components section
-":ref:`components-di-compiler-pass`".
+":ref:`components-di-separate-compiler-passes`".
 
 Compiler passes are registered in the ``build()`` method of the application kernel::
 

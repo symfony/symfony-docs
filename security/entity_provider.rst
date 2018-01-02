@@ -418,7 +418,7 @@ template to customize them further).
     not be deserialized correctly from the session on each request.
 
 Congrats! Your database-loading security system is all setup! Next, add a
-true :doc:`login form </security/form_login>` instead of HTTP Basic
+true :doc:`login form </security/form_login_setup>` instead of HTTP Basic
 or keep reading for other topics.
 
 .. _authenticating-someone-with-a-custom-entity-provider:

@@ -612,7 +612,7 @@ a new method for this to your repository::
          */
         public function findAllGreaterThanPrice($price): array
         {
-            // automatically knows to selects Products
+            // automatically knows to select Products
             // the "p" is an alias you'll use in the rest of the query
             $qb = $this->createQueryBuilder('p')
                 ->andWhere('p.price > :price')
@@ -623,7 +623,7 @@ a new method for this to your repository::
             return $qb->execute();
 
             // to get just one result:
-            // $product = $query->setMaxResults(1)->getOneOrNullResult();
+            // $product = $qb->setMaxResults(1)->getOneOrNullResult();
         }
     }
 
@@ -654,6 +654,8 @@ In addition to the query builder, you can also query with `Doctrine Query Langua
 
     public function findAllGreaterThanPrice($price): array
     {
+        $em = $this->getEntityManager();
+        
         $query = $em->createQuery(
             'SELECT p
             FROM App\Entity\Product p
