@@ -202,9 +202,9 @@ method::
     Support for passing display options to the ``dump()`` method was introduced
     in Symfony 3.2.
 
-The output format of a dumper can be fine tuned by the two flags 
+The output format of a dumper can be fine tuned by the two flags
 ``DUMP_STRING_LENGTH`` and ``DUMP_LIGHT_ARRAY`` which are passed as a bitmap
-in the third constructor argument. They can also be set via environment 
+in the third constructor argument. They can also be set via environment
 variables when using
 :method:`assertDumpEquals($dump, $data, $message) <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpEquals>`
 during unit testing.

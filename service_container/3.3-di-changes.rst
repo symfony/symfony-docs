@@ -373,7 +373,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
         // app/config/services.php
 
         // ...
-        
+
         $definition->addTag('controller.service_arguments');
         $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
 

@@ -195,7 +195,6 @@ For more information, see the :doc:`Routing article </routing>`.
     redirect to some URL provided by the end-users, your application may be open
     to the `unvalidated redirects security vulnerability`_.
 
-
 .. tip::
 
     The ``redirectToRoute()`` method is simply a shortcut that creates a
@@ -325,7 +324,7 @@ controller's service config:
 
         // app/config/services.php
         use AppBundle\Controller\LuckyController;
-        
+
         $container->register(LuckyController::class)
             ->setPublic(true)
             ->addTag('controller.service_arguments', [

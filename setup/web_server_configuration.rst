@@ -274,7 +274,7 @@ The **minimum configuration** to get your application running under Nginx is:
         # This rule should only be placed on your development environment
         # In production, don't include this and don't deploy app_dev.php or config.php
         location ~ ^/(app_dev|config)\.php(/|$) {
-            fastcgi_pass unix:/var/run/php7.1-fpm.sock;
+            fastcgi_pass unix:/run/php/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             # When you are using symlinks to link the document root to the
@@ -289,7 +289,7 @@ The **minimum configuration** to get your application running under Nginx is:
         }
         # PROD
         location ~ ^/app\.php(/|$) {
-            fastcgi_pass unix:/var/run/php7.1-fpm.sock;
+            fastcgi_pass unix:/run/php/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             # When you are using symlinks to link the document root to the

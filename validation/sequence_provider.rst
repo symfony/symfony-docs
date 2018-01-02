@@ -145,7 +145,7 @@ You can also define a group sequence in the ``validation_groups`` form option::
     use Symfony\Component\Validator\Constraints\GroupSequence;
     use Symfony\Component\Form\AbstractType;
     // ...
-    
+
     class MyType extends AbstractType
     {
         // ...

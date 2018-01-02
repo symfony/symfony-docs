@@ -78,7 +78,7 @@ Now you can create, retrieve, update and delete items using this object::
 
     // remove the cache key
     $cache->delete('stats.num_products');
-    
+
     // clear *all* cache keys
     $cache->clear();
 

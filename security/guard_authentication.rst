@@ -400,7 +400,7 @@ Each authenticator needs the following methods:
     You will still need to active ``remember_me`` under your firewall for it to work.
     Since this is a stateless API, you do not want to support "remember me"
     functionality in this example.
-    
+
 **createAuthenticatedToken(UserInterface $user, string $providerKey)**
     If you are implementing the :class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`
     instead of extending the :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`
@@ -489,6 +489,7 @@ and add the following logic::
     use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
     use Symfony\Component\Security\Csrf\CsrfToken;
     use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
+    use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 
     class ExampleFormAuthenticator extends AbstractFormLoginAuthenticator
     {
@@ -502,11 +503,11 @@ and add the following logic::
         public function getCredentials(Request $request)
         {
             $csrfToken = $request->request->get('_csrf_token');
-            
+
             if (false === $this->csrfTokenManager->isTokenValid(new CsrfToken('authenticate', $csrfToken))) {
                 throw new InvalidCsrfTokenException('Invalid CSRF token.');
             }
-            
+
             // ... all your normal logic
         }
 

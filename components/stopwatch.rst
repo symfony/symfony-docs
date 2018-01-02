@@ -34,10 +34,10 @@ microtime by yourself. Instead, use the simple
     $event = $stopwatch->stop('eventName');
 
 The :class:`Symfony\\Component\\Stopwatch\\StopwatchEvent` object can be retrieved
-from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`, 
-:method:`Symfony\\Component\\Stopwatch\\Stopwatch::stop`, 
-:method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap` and 
-:method:`Symfony\\Component\\Stopwatch\\Stopwatch::getEvent` methods. 
+from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`,
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::stop`,
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap` and
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::getEvent` methods.
 The latter should be used when you need to retrieve the duration of an event
 while it is still running.
 

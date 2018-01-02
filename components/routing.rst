@@ -425,7 +425,6 @@ routes with UTF-8 characters:
 
         return $collection;
 
-
 In this route, the ``utf8`` option set to ``true`` makes Symfony consider the
 ``.`` requirement to match any UTF-8 characters instead of just a single
 byte character. This means that so the following URLs would match:
@@ -508,7 +507,7 @@ You can also include UTF-8 strings as routing requirements:
         // ...
 
         return $collection;
-    
+
 .. tip::
 
     In addition to UTF-8 characters, the Routing component also supports all
