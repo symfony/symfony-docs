@@ -6,7 +6,7 @@ How to Use Access Control Lists (ACLs)
 
 .. versionadded:: 3.4
     ACL support was deprecated in Symfony 3.4 and will be removed in 4.0. Install
-    the `Symfony ACL bundle`_ if you wan to keep using ACL.
+    the `Symfony ACL bundle`_ if you want to keep using ACL.
 
 In complex applications, you will often face the problem that access decisions
 cannot only be based on the person (``Token``) who is requesting access, but
