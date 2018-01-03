@@ -72,11 +72,13 @@ from the ``router`` service and override its settings::
     {
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            $context = $this->getContainer()->get('router')->getContext();
+            $router = $this->getContainer()->get('router');
+            $context = $router->getContext();
             $context->setHost('example.com');
             $context->setScheme('https');
             $context->setBaseUrl('my/path');
 
-            // ... your code here
+            $url = $router->generate('route-name', array('param-name' => 'param-value'));
+            // ...
         }
     }
