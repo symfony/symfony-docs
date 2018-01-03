@@ -6,7 +6,7 @@ How to Use advanced ACL Concepts
 
 .. versionadded:: 3.4
     ACL support was deprecated in Symfony 3.4 and will be removed in 4.0. Install
-    the `Symfony ACL bundle`_ if you wan to keep using ACL.
+    the `Symfony ACL bundle`_ if you want to keep using ACL.
 
 The aim of this article is to give a more in-depth view of the ACL system, and
 also explain some of the design decisions behind it.
