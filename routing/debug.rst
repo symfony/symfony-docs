@@ -18,12 +18,16 @@ your application:
 
 .. code-block:: text
 
-    homepage              ANY       /
-    contact               GET       /contact
-    contact_process       POST      /contact
-    article_show          ANY       /articles/{_locale}/{year}/{title}.{_format}
-    blog                  ANY       /blog/{page}
-    blog_show             ANY       /blog/{slug}
+    ------------------ -------- -------- ------ ----------------------------------------------
+     Name               Method   Scheme   Host   Path
+    ------------------ -------- -------- ------ ----------------------------------------------
+     homepage           ANY      ANY      ANY    /
+     contact            GET      ANY      ANY    /contact
+     contact_process    POST     ANY      ANY    /contact
+     article_show       ANY      ANY      ANY    /articles/{_locale}/{year}/{title}.{_format}
+     blog               ANY      ANY      ANY    /blog/{page}
+     blog_show          ANY      ANY      ANY    /blog/{slug}
+    ------------------ -------- -------- ------ ----------------------------------------------
 
 You can also get very specific information on a single route by including
 the route name after the command:
