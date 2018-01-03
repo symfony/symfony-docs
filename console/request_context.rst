@@ -85,6 +85,7 @@ router service and override its settings::
             $context->setScheme('https');
             $context->setBaseUrl('my/path');
 
-            // ... your code here
+            $url = $this->router->generate('route-name', array('param-name' => 'param-value'));
+            // ...
         }
     }

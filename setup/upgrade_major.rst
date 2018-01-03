@@ -75,7 +75,8 @@ Now, you can start fixing the notices:
 
 .. code-block:: text
 
-    $ phpunit
+    # this command is available after running "composer require --dev symfony/phpunit-bridge"
+    $ ./bin/phpunit
     ...
 
     OK (10 tests, 20 assertions)
