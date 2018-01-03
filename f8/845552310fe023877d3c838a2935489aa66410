@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------
+
+by Starojitski at 2017-12-06T10:03:35Z
+
+Thanks for such a quick action - having the `$router` variable makes what is going on much clearer!
+I have a feeling that generating url in console is often used when sending e-mails. There are two use cases here:
+- Those emails have links for various actions email recipients can perform by clicking on the links within the message body - such as confirm account creation, etc. Your example shows how to generate URL for a named route.
+- Adding images/attachments to the emails. Ideally the examples would also show how to generate url for assets as well. This is what i needed. But I have limited experience with Symfony and quite possible i am barking at the wrong tree here and the solution is very easy or must be found in some other place
