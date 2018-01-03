@@ -39,7 +39,7 @@ Inside, use Encore to help generate your Webpack configuration.
         .setPublicPath('/build')
 
         // will create public/build/app.js and public/build/app.css
-        .addEntry('app', './assets/js/app.js')
+        .addEntry('app', './public/assets/js/app.js')
 
         // allow sass/scss files to be processed
         .enableSassLoader()
