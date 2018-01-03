@@ -48,8 +48,8 @@ manually, but then you should just use the ``ChoiceType`` directly.
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
 +-------------+------------------------------------------------------------------------+
 
-Fields Options
---------------
+Field Options
+-------------
 
 input
 ~~~~~
