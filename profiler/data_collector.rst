@@ -4,43 +4,22 @@
 How to Create a custom Data Collector
 =====================================
 
-The :doc:`Symfony Profiler </profiler>` delegates data collection
-to some special classes called data collectors. Symfony comes bundled with a few
-of them, but you can easily create your own.
+The :doc:`Symfony Profiler </profiler>` obtains its profiling and debug
+information using some special classes called data collectors. Symfony comes
+bundled with a few of them, but you can also create your own.
 
 Creating a custom Data Collector
 --------------------------------
 
-Creating a custom data collector is as simple as implementing the
-:class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface`::
+A data collector is a PHP class that implements the
+:class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface`.
+For convenience, your data collectors can also extend from the
+:class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector` class, which
+implements the interface and provides some utilities and the ``$this->data``
+property to store the collected information.
 
-    interface DataCollectorInterface
-    {
-        function collect(Request $request, Response $response, \Exception $exception = null);
-        function getName();
-    }
-
-The
-:method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::getName`
-method returns the name of the data collector and must be unique in the
-application. This value is also used to access the information later on (see
-:doc:`/testing/profiling` for instance).
-
-The
-:method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::collect`
-method is responsible for storing the collected data in local properties.
-
-.. caution::
-
-    The ``collect()`` method is only called once. It is not used to "gather"
-    data but is there to "pick up" the data that has been stored by your
-    service.
-
-Most of the time, it is convenient to extend
-:class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector` and
-populate the ``$this->data`` property (it takes care of serializing the
-``$this->data`` property). Imagine you create a new data collector that
-collects the method and accepted content types from the request::
+The following example shows a custom collector that stores information about the
+request::
 
     // src/AppBundle/DataCollector/RequestCollector.php
     namespace AppBundle\DataCollector;
@@ -59,36 +38,47 @@ collects the method and accepted content types from the request::
             );
         }
 
-        public function getMethod()
+        public function reset()
         {
-            return $this->data['method'];
-        }
-
-        public function getAcceptableContentTypes()
-        {
-            return $this->data['acceptable_content_types'];
+            $this->data = array();
         }
 
         public function getName()
         {
             return 'app.request_collector';
         }
+
+        // ...
     }
 
-The getters are added to give the template access to the collected information.
+:method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::collect` method:
+    Stores the collected data in local properties (``$this->data`` if you extend
+    from :class:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollector`).
+    If the data to collect cannot be obtained through the request or response,
+    inject the needed services in the data collector.
 
-.. caution::
+    .. caution::
 
-    If the data that is not directly related to the request or response,
-    you need to make the data accessible to your DataCollector. This can
-    be achieved by injecting the service that holds the information you intend
-    to profile into your DataCollector.
+        The ``collect()`` method is only called once. It is not used to "gather"
+        data but is there to "pick up" the data that has been stored by your
+        service.
 
-.. caution::
+    .. caution::
 
-    As the profiler serializes data collector instances, you should not
-    store objects that cannot be serialized (like PDO objects) or you need
-    to provide your own ``serialize()`` method.
+        As the profiler serializes data collector instances, you should not
+        store objects that cannot be serialized (like PDO objects) or you need
+        to provide your own ``serialize()`` method.
+
+:method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::reset` method:
+    It's called between requests to reset the state of the profiler. Use it to
+    remove all the information collected with the collect() method.
+
+:method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::getName` method:
+    Returns the collector identifier, which must be unique in the application.
+    You can choose any arbitrary name, but it's recommended to return a string
+    which is short, lowercased and without white spaces, because this value is
+    used later to access the collector information (see
+    :doc:`/testing/profiling` for instance).
 
 .. _data_collector_tag:
 
@@ -99,10 +89,8 @@ If you're using the :ref:`default services.yml configuration <service-container-
 with ``autoconfigure``, then Symfony will automatically see your new data collector!
 Your ``collect()`` method should be called next time your refresh.
 
-.. note::
-
-    If you're not using ``autoconfigure``, you can also :ref:`manually wire your service <services-explicitly-configure-wire-services>`
-    and :doc:`tag </service_container/tags>` it with ``data_collector``.
+If you're not using ``autoconfigure``, you can also :ref:`manually wire your service <services-explicitly-configure-wire-services>`
+and :doc:`tag </service_container/tags>` it with ``data_collector``.
 
 Adding Web Profiler Templates
 -----------------------------
@@ -110,6 +98,29 @@ Adding Web Profiler Templates
 The information collected by your data collector can be displayed both in the
 web debug toolbar and in the web profiler. To do so, you need to create a Twig
 template that includes some specific blocks.
+
+However, first you must add some getters in the data collector class to give the
+template access to the collected information::
+
+    // src/AppBundle/DataCollector/RequestCollector.php
+    namespace AppBundle\DataCollector;
+
+    use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+
+    class RequestCollector extends DataCollector
+    {
+        // ...
+
+        public function getMethod()
+        {
+            return $this->data['method'];
+        }
+
+        public function getAcceptableContentTypes()
+        {
+            return $this->data['acceptable_content_types'];
+        }
+    }
 
 In the simplest case, you just want to display the information in the toolbar
 without providing a profiler panel. This requires to define the ``toolbar``
