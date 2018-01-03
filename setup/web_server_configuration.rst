@@ -121,6 +121,11 @@ and increase web server performance:
         </Directory>
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
+        
+        SetEnv APP_ENV prod
+        SetEnv APP_SECRET <app-secret-id>
+        SetEnv DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name"
+        
     </VirtualHost>
 
 .. tip::
