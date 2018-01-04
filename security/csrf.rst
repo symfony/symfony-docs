@@ -19,16 +19,50 @@ Before enabling the CSRF protection, install the CSRF support in your project
 
     $ composer require security-csrf form
 
+From there, an automatic protection is enabled/disabled with the ``csrf_protection`` in
+the ``config/packages/framework.yaml`` file. For more information, see the
+:ref:`form configuration reference <reference-framework-form>`.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yml
+        framework:
+            # ...
+            csrf_protection: ~
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:csrf-protection enabled="true" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', array(
+            'csrf_protection' => null,
+        ));
+
+
 CSRF Protection in Symfony Forms
 --------------------------------
 
 Forms created with the Symfony Form component include CSRF tokens by default
 and Symfony checks them automatically, so you don't have to anything to be
 protected against CSRF attacks.
-
-This automatic protection is enabled/disabled with the ``csrf_protection`` in
-the ``config/packages/framework.yaml`` file. For more information, see the
-:ref:`form configuration reference <reference-framework-form>`.
 
 .. _form-csrf-customization:
 
@@ -84,44 +118,7 @@ protection, but you need to configure some options before using it.
     you'll need to validate the CSRF token manually inside of that class. See
     :ref:`guard-csrf-protection` for details.
 
-First, make sure that the CSRF protection is enabled in the framework configuration
-file:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yml
-        framework:
-            # ...
-            csrf_protection: ~
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:csrf-protection enabled="true" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'csrf_protection' => null,
-        ));
-
-
-Then configure the CSRF token provider used by the form login in your security
+First, configure the CSRF token provider used by the form login in your security
 configuration. You can set this to use the default provider available in the
 security component:
 
