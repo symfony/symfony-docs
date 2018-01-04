@@ -389,7 +389,7 @@ form
 enabled
 .......
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
 Whether to enable the form services or not in the service container. If
 you don't use forms, setting this to ``false`` may increase your application's
@@ -420,8 +420,7 @@ csrf_protection
 enabled
 .......
 
-**type**: ``boolean`` **default**: ``true`` if form support is enabled, ``false``
-otherwise
+**type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
 This option can be used to disable CSRF protection on *all* forms. But you
 can also :ref:`disable CSRF protection on individual forms <form-csrf-customization>`.
@@ -1464,7 +1463,7 @@ translator
 enabled
 .......
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
 Whether or not to enable the ``translator`` service in the service container.
 
@@ -1532,8 +1531,7 @@ validation
 enabled
 .......
 
-**type**: ``boolean`` **default**: ``true`` if :ref:`form support is enabled <reference-form-enabled>`,
-``false`` otherwise
+**type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
 Whether or not to enable validation support.
 
@@ -1642,7 +1640,7 @@ serializer
 enabled
 .......
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
 Whether to enable the ``serializer`` service or not in the service container.
 
