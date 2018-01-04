@@ -71,14 +71,13 @@ request::
 
 :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::reset` method:
     It's called between requests to reset the state of the profiler. Use it to
-    remove all the information collected with the collect() method.
+    remove all the information collected with the ``collect()`` method.
 
 :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::getName` method:
     Returns the collector identifier, which must be unique in the application.
-    You can choose any arbitrary name, but it's recommended to return a string
-    which is short, lowercased and without white spaces, because this value is
-    used later to access the collector information (see
-    :doc:`/testing/profiling` for instance).
+    This value is used later to access the collector information (see
+    :doc:`/testing/profiling`) so it's recommended to return a string which is
+    short, lowercased and without white spaces.
 
 .. _data_collector_tag:
 
