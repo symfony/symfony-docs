@@ -234,8 +234,8 @@ manual steps:
 #. Move the public assets, such as images or compiled CSS/JS files, from
    ``src/AppBundle/Resources/public/`` to ``public/`` (e.g. ``public/images/``).
 
-  Move the source of the assets (e.g. the SCSS files) to ``assets/`` and use
-  :doc:`Webpack Encore </frontend>` to manage and compile them.
+#. Move the source of the assets (e.g. the SCSS files) to ``assets/`` and use
+   :doc:`Webpack Encore </frontend>` to manage and compile them.
 
 #. Create the new ``public/index.php`` front controller
    `copying Symfony's index.php source`_ and, if you made any customization in
