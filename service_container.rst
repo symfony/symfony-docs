@@ -365,7 +365,8 @@ made. To do that, you create a new class::
                 ->addPart(
                     'Someone just updated the site. We told them: '.$happyMessage
                 );
-            $this->mailer->send($message);
+            
+            return $this->mailer->send($message) > 0;
         }
     }
 
@@ -379,8 +380,10 @@ you can use the service immediately::
     {
         // ...
 
-        $siteUpdateManager->notifyOfSiteUpdate();
-        $this->addFlash('success', 'Notification mail was sent successfully.');
+        if ($siteUpdateManager->notifyOfSiteUpdate()) {
+            $this->addFlash('success', 'Notification mail was sent successfully.');
+        }
+        
         // ...
     }
 
