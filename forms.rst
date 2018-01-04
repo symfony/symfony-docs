@@ -322,6 +322,16 @@ see this in action, add validation constraints so that the ``task`` field cannot
 be empty and the ``dueDate`` field cannot be empty and must be a valid \DateTime
 object.
 
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the validator feature before using it:
+
+.. code-block:: terminal
+
+    $ composer require validator
+
 .. configuration-block::
 
     .. code-block:: php-annotations
