@@ -120,8 +120,8 @@ To do this, you can override the value of the ``DATABASE_URL`` env var in the
     <?xml version="1.0" charset="utf-8" ?>
     <phpunit>
         <php>
-            <!-- the value is the Doctrine connection string in DSN format -->
-            <env name="DATABASE_URL" value="mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME?charset=utf8mb4&serverVersion=5.7" />
+            <!-- the value is the Doctrine connection string in DSN format and should be escaped -->
+            <env name="DATABASE_URL" value="mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME?charset=utf8mb4&amp;serverVersion=5.7" />
         </php>
         <!-- ... -->
     </phpunit>
