@@ -25,7 +25,9 @@ In other words, your new app is ready!
 
 .. tip::
 
-    You can also download a specific version of Symfony:
+    New projects are based by default on the latest Symfony stable version, but
+    you can select other version if needed (read about the
+    :doc:`Symfony version release process </contributing/community/releases>`):
 
     .. code-block:: terminal
 
@@ -34,9 +36,6 @@ In other words, your new app is ready!
 
         # use a beta or RC version (useful for testing new Symfony versions)
         $ composer create-project symfony/skeleton my-project 4.0.0-BETA1
-
-    Some version are long-term support (LTS) versions. Read the :doc:`Symfony Release process </contributing/community/releases>`
-    to learn more.
 
 Running your Symfony Application
 --------------------------------
