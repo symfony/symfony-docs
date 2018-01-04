@@ -28,9 +28,10 @@ it::
 
 .. note::
 
-    Using a listener like this requires that it is called **before** 
-    LocaleListener attempts to access it. You will need to set your event listener
-    with a higher priority if you want this to work.
+    The custom listener must be called **before** ``LocaleListener``, which
+    initializes the locale based on the current request. To do so, set your
+    listener priority to a higher value than ``LocaleListener`` priority (which
+    you can obtain running the ``debug:event kernel.request`` command).
 
 Read :doc:`/session/locale_sticky_session` for more information on making
 the user's locale "sticky" to their session.
