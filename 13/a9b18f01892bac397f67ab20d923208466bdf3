@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-08-03T07:47:09Z
+
+@keradus and @julienfalque thanks for your reviews! I've made all the recommended changes.
+
+---------------------------------------------------------------------------
+
+by keradus at 2017-08-03T10:35:30Z
+
+Thanks for picking it up ;)
+sadly, https://github.com/symfony/symfony-docs/pull/8246#discussion_r131070764 is still valid. what do you think about it?
