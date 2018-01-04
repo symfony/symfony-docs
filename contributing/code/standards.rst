@@ -18,7 +18,7 @@ your contributed code matches the expected code syntax. First, install the
 .. code-block:: terminal
 
     $ cd your-project/
-    $ php php-cs-fixer.phar fix /path/to/modified/file.php
+    $ php php-cs-fixer.phar fix -v
 
 If you forget to run this command and make a pull request with any syntax issue,
 our automated tools will warn you about that and will provide the solution.
@@ -258,7 +258,7 @@ License
 * Symfony is released under the MIT license, and the license block has to be
   present at the top of every PHP file, before the namespace.
 
-.. _`PHP CS Fixer tool`: https://github.com/FriendsOfPHP/PHP-CS-Fixer
+.. _`PHP CS Fixer tool`: http://cs.sensiolabs.org/
 .. _`PSR-0`: http://www.php-fig.org/psr/psr-0/
 .. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
