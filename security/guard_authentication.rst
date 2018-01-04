@@ -484,7 +484,8 @@ Adding CSRF Protection
 If you're using a Guard authenticator to build a login form and want to add CSRF
 protection, no problem!
 
-First, :ref:`add the _csrf_token to your login template <csrf-login-template>`.
+First, check that :ref:`the csrf_protection option <reference-framework-csrf-protection>`
+is enabled and :ref:`add the _csrf_token field to your login form <csrf-login-template>`.
 
 Then, type-hint ``CsrfTokenManagerInterface`` in your ``__construct()`` method
 (or manually configure the ``Symfony\Component\Security\Csrf\CsrfTokenManagerInterface``
@@ -519,11 +520,6 @@ service to be passed) and add the following logic::
 
         // ...
     }
-    
-.. tip::
-
-    Don't forget to enable `csrf_protection` in the `config/framework.yml` file that 
-    CsrfTokenManagerInterface can get autowired.
 
 Frequently Asked Questions
 --------------------------
