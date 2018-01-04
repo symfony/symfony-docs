@@ -46,7 +46,7 @@ The same mechanism can be used in Twig templates thanks to ``dump()`` function:
         </a>
     {% endfor %}
 
-By design, the ``dump()`` function is only available if the ``dev`` and ``test``
+By design, the ``dump()`` function is only available in the ``dev`` and ``test``
 environments, to avoid leaking sensitive information in production. In fact,
 trying to use the ``dump()`` function in the ``prod`` environment will result in
-an application exception.
+a PHP error.
