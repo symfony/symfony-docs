@@ -981,47 +981,6 @@ When a ``PropertyTypeExtractor`` is available, the normalizer will also check th
 matches the type of the property (even for primitive types). For instance, if a ``string`` is provided, but
 the type of the property is ``int``, an :class:`Symfony\\Component\\Serializer\\Exception\\UnexpectedValueException`
 will be thrown.
-=======
-
-=======
-
->>>>>>> Minor rewords
-Context
-~~~~~~~
-
-The ``encode()`` method defines a third optional parameter called ``context``
-which defines the configuration options for the XmlEncoder an associative array::
-
-    $xmlEncoder->encode($array, 'xml', $context);
-
-These are the options available:
-<<<<<<< HEAD
-
-=======
-
->>>>>>> Minor rewords
-``xml_format_output``
-    If set to true, formats the generated XML with line breaks and indentation.
-
-``xml_version``
-    Sets the XML version attribute (default: ``1.1``).
-
-``xml_encoding``
-    Sets the XML encoding attribute (default: ``utf-8``).
-
-``xml_standalone``
-    Adds standalone attribute in the generated XML (default: ``true``).
-
-``xml_root_node_name``
-    Sets the root node name (default: ``response``).
-
-``remove_empty_tags``
-<<<<<<< HEAD
-    If set to true, remove all empty tags in the XML output.
->>>>>>> Minor syntax issues and some rewordings
-=======
-    If set to true, removes all empty tags in the generated XML.
->>>>>>> Minor rewords
 
 Learn more
 ----------
