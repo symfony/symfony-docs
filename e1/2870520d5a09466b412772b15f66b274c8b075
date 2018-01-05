@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-08-04T09:53:47Z
+
+I think I would change the channel in the config examples to `app` instead. What do you think?
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-08-05T07:25:30Z
+
+Hello @dubbs, good catch for this first contrib.
+
+I agree with @xabbuh, would you like to update your PR accordingly? Thanks!
+
+---------------------------------------------------------------------------
+
+by dubbs at 2017-08-07T18:21:51Z
+
+Sure, I'll change the example from `acme` to `app`.
