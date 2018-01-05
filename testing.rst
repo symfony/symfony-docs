@@ -151,12 +151,9 @@ As an example, a test could look like this::
         {
             $client = static::createClient();
 
-            $crawler = $client->request('GET', '/post/hello-world');
+            $client->request('GET', '/post/hello-world');
 
-            $this->assertGreaterThan(
-                0,
-                $crawler->filter('html:contains("Hello World")')->count()
-            );
+            $this->assertEquals(200, $client->getResponse()->getStatusCode());
         }
     }
 
@@ -182,6 +179,8 @@ As an example, a test could look like this::
     ``createKernel()`` or ``getKernelClass()`` methods of your functional test,
     which take precedence over the ``KERNEL_CLASS`` env var.
 
+In the above example, you validated that the HTTP response was successful. The
+next step is to validate that the page actually contains the expected content.
 The ``createClient()`` method returns a client, which is like a browser that
 you'll use to crawl your site::
 
@@ -197,8 +196,25 @@ be used to select elements in the response, click on links and submit forms.
     The ``Crawler`` only works when the response is an XML or an HTML document.
     To get the raw content response, call ``$client->getResponse()->getContent()``.
 
-Click on a link by first selecting it with the crawler using either an XPath
-expression or a CSS selector, then use the client to click on it. For example::
+The crawler integrates with the ``symfony/css-selector`` component to give you the
+power of CSS selectors to find content in a page. To install the CSS selector
+component, run:
+
+.. code-block:: terminal
+
+    $ composer require --dev css-selector
+
+Now you can use CSS selectors with the crawler. To assert that the phrase
+"Hello World" is on the page at least once, you can use this assertion::
+
+    $this->assertGreaterThan(
+        0,
+        $crawler->filter('html:contains("Hello World")')->count()
+    );
+
+The crawler can also be used to interact with the page. Click on a link by first
+selecting it with the crawler using either an XPath expression or a CSS selector,
+then use the client to click on it::
 
     $link = $crawler
         ->filter('a:contains("Greet")') // find all links with the text "Greet"
@@ -918,6 +934,7 @@ Learn more
 
     testing/*
 
+* :ref:`Testing a console command <console-testing-commands>`
 * :doc:`The chapter about tests in the Symfony Framework Best Practices </best_practices/tests>`
 * :doc:`/components/dom_crawler`
 * :doc:`/components/css_selector`

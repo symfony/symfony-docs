@@ -23,21 +23,6 @@ This will create a new ``my-project`` directory, download some dependencies into
 it and even generate the basic directories and files you'll need to get started.
 In other words, your new app is ready!
 
-.. tip::
-
-    You can also download a specific version of Symfony:
-
-    .. code-block:: terminal
-
-        # use the most recent version in any Symfony branch
-        $ composer create-project symfony/skeleton my-project "4.0.*"
-
-        # use a beta or RC version (useful for testing new Symfony versions)
-        $ composer create-project symfony/skeleton my-project 4.0.0-BETA1
-
-    Some version are long-term support (LTS) versions. Read the :doc:`Symfony Release process </contributing/community/releases>`
-    to learn more.
-
 Running your Symfony Application
 --------------------------------
 

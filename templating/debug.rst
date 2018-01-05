@@ -52,8 +52,7 @@ The same mechanism can be used in Twig templates thanks to ``dump()`` function:
         </a>
     {% endfor %}
 
-By design, the ``dump()`` function is only available if the ``kernel.debug``
-setting is ``true`` (which is usually set via the ``APP_DEBUG`` environment
-variable), to avoid leaking sensitive information in production. In fact, trying
-to use the ``dump()`` function when ``kernel.debug`` is ``false`` (for example
-in the ``prod`` environment) will result in an application error.
+By design, the ``dump()`` function is only available in the ``dev`` and ``test``
+environments, to avoid leaking sensitive information in production. In fact,
+trying to use the ``dump()`` function in the ``prod`` environment will result in
+a PHP error.

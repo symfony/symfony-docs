@@ -262,6 +262,10 @@ to get your *new* lucky number!
 
     http://localhost:8000/lucky/number
 
+Now you may wonder where the Web Debug Toolbar has gone: that's because there is
+no ``</body>`` tag in the current template. You can add the body element yourself,
+or extend ``base.html.twig``, which contains all default HTML elements.
+
 In the :doc:`/templating` article, you'll learn all about Twig: how to loop, render
 other templates and leverage its powerful layout inheritance system.
 

@@ -77,42 +77,15 @@ called ``AcmeTestBundle.php``::
 
 This empty class is the only piece you need to create the new bundle. Though
 commonly empty, this class is powerful and can be used to customize the behavior
-of the bundle.
+of the bundle. Now that you've created the bundle, enable it::
 
-Now that you've created the bundle, enable it via the ``AppKernel`` class::
-
-    // app/AppKernel.php
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
-
-            // register your bundle
-            new Acme\TestBundle\AcmeTestBundle(),
-        );
+    // config/bundles.php
+    return [
         // ...
-
-        return $bundles;
-    }
+        Acme\TestBundle\AcmeTestBundle::class => ['all' => true],
+    ];
 
 And while it doesn't do anything yet, AcmeTestBundle is now ready to be used.
-
-And as easy as this is, Symfony also provides a command-line interface for
-generating a basic bundle skeleton:
-
-.. code-block:: terminal
-
-    $ php bin/console generate:bundle --namespace=Acme/TestBundle
-
-The bundle skeleton generates a basic controller, template and routing
-resource that can be customized. You'll learn more about Symfony's command-line
-tools later.
-
-.. tip::
-
-    Whenever creating a new bundle or using a third-party bundle, always make
-    sure the bundle has been enabled in ``registerBundles()``. When using
-    the ``generate:bundle`` command, this is done for you.
 
 Bundle Directory Structure
 --------------------------
@@ -131,7 +104,7 @@ of the most common elements of a bundle:
     necessary).
 
 ``Resources/config/``
-    Houses configuration, including routing configuration (e.g. ``routing.yml``).
+    Houses configuration, including routing configuration (e.g. ``routing.yaml``).
 
 ``Resources/views/``
     Holds templates organized by controller name (e.g. ``Random/index.html.twig``).

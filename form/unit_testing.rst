@@ -49,7 +49,8 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 
             $form = $this->factory->create(TestedType::class);
 
-            $object = TestObject::fromArray($formData);
+            $object = new TestObject();
+            // ...populate $object properties with the data stored in $formData
 
             // submit the data to the form directly
             $form->submit($formData);
