@@ -6,6 +6,12 @@
 The Bundle System
 =================
 
+.. caution::
+
+    In Symfony versions prior to 3.4, it was recommended to organize your own
+    application code using bundles. This is no longer recommended and bundles
+    should only be used to share code and features between multiple applications.
+
 A bundle is similar to a plugin in other software, but even better. The key
 difference is that *everything* is a bundle in Symfony, including both the
 core framework functionality and the code written for your application.
