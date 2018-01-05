@@ -860,8 +860,6 @@ you indicate that you're expecting an array instead of a single object.
 The ``XmlEncoder``
 ------------------
 
-This encoder transforms arrays into XML and vice versa.
-
 This encoder transforms arrays into XML and vice versa. For example, take an
 object normalized as following::
 
@@ -888,34 +886,33 @@ The array keys beginning with ``@`` are considered XML attributes::
     //     <foo bar="value" />
     // </response>
 
-Contex
-~~~~~~
+Context
+~~~~~~~
 
-The context param is an array of additional options for the XmlEncoder.
-
-It must be defined while calling the XmlEncoder encode() method::
+The ``encode()`` method defines a third optional parameter called ``context``
+which defines the configuration options for the XmlEncoder an associative array::
 
     $xmlEncoder->encode($array, 'xml', $context);
 
-**Available params:**
+These are the options available:
 
 ``xml_format_output``
-    If set to true, format the output XML with line break and indentation
+    If set to true, formats the generated XML with line breaks and indentation.
 
 ``xml_version``
-    Change the XML version attribute
+    Sets the XML version attribute (default: ``1.1``).
 
 ``xml_encoding``
-    Change the XML encoding attribute
+    Sets the XML encoding attribute (default: ``utf-8``).
 
 ``xml_standalone``
-    Add standalone attribute in XML output
+    Adds standalone attribute in the generated XML (default: ``true``).
 
 ``xml_root_node_name``
-    Change the root node name (default: response)
+    Sets the root node name (default: ``response``).
 
 ``remove_empty_tags``
-    If set to true, remove all empty tags in the XML output
+    If set to true, removes all empty tags in the generated XML.
 
 Recursive Denormalization and Type Safety
 -----------------------------------------
