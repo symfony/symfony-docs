@@ -47,8 +47,8 @@ For this entry, suppose that you already have a ``User`` entity inside an
     use Symfony\Component\Security\Core\User\UserInterface;
 
     /**
+     * @ORM\Entity
      * @ORM\Table(name="app_users")
-     * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
      */
     class User implements UserInterface, \Serializable
     {
