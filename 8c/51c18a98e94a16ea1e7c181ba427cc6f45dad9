@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-06-28T09:54:27Z
+
+Hey @AdrianBorodziuk!
+
+Actually, the code is not meant for jQuery UI, but for Bootstrap's date picker. See #8047. But, obviously, it's confusing. Would you be willing to make the changes I mention in #8047 in this PR?
+
+Cheers!
