@@ -13,6 +13,10 @@ To create your new Symfony application, first make sure you're using PHP 7.1 or 
 and have `Composer`_ installed. If you don't, start by :doc:`installing Composer globally </setup/composer>`
 on your system. If you want to use a virtual machine (VM), check out :doc:`Homestead </setup/homestead>`.
 
+.. caution::
+
+    If the PHP version you're using is below 7.1 , Symfony 3.4.x will be installed instead.
+
 Create your new project by running:
 
 .. code-block:: terminal
