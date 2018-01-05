@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-12-29T07:29:55Z
+
+Even if this fix is correct, I'd love to fix this differently. The fact that the debug toolbar needs a `</body>` tag to be injected should be a very minor internal detail. Could we add a `<body>` tag to the original contents so the toolbar is always visible? Any other way to fix this?
+
+---------------------------------------------------------------------------
+
+by marcelkorpel at 2017-12-29T10:37:35Z
+
+In that case I'd simply copy the base template, so you at least create a valid HTML page. I don't know about another solution, but I'm also just learning Symfony.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-12-31T12:23:10Z
+
+Looks good! (except from the minor issue that we add line breaks after the first word crossing the 72th character, but we can fix it during the merge)
+
+:+1:  Thanks!
+
+status: reviewed
