@@ -299,9 +299,7 @@ If you extend the base ``Controller`` class, you can access :ref:`public service
 via the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::get`
 method. Here are several common services you might need::
 
-    $templating = $this->get('templating');
-
-    $router = $this->get('router');
+    $twig = $this->get('twig');
 
     $mailer = $this->get('mailer');
 
