@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-01-10T20:08:33Z
+
+@amoiraud Sorry for the delay here. Do you think you can address @stof's comments or should we take care of them when merging?
+
+Status: Needs work
+
+---------------------------------------------------------------------------
+
+by amoiraud at 2017-01-12T15:24:27Z
+
+Hi @xabbuh !
+
+If you can take care of them when merging that would be great, I'm not really fluent in english :/
+
+Thanks
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-10-11T14:14:55Z
+
+* I've done some minor rewords to make this mergeable.
+* I've created #8505 to document the context of the other formats in a separate PR
+* I don't have an opinion about moving this out of the main serializer article. I'll let the other doc managers to make the decision.
+
+Thanks!
