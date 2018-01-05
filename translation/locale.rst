@@ -26,6 +26,13 @@ it::
             $request->setLocale($locale);
         }
 
+.. note::
+
+    The custom listener must be called **before** ``LocaleListener``, which
+    initializes the locale based on the current request. To do so, set your
+    listener priority to a higher value than ``LocaleListener`` priority (which
+    you can obtain running the ``debug:event kernel.request`` command).
+
 Read :doc:`/session/locale_sticky_session` for more information on making
 the user's locale "sticky" to their session.
 
