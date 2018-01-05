@@ -470,7 +470,7 @@ channel when injecting the logger in a service.
             App\Log\CustomLogger:
                 arguments: ['@logger']
                 tags:
-                    - { name: monolog.logger, channel: acme }
+                    - { name: monolog.logger, channel: app }
 
     .. code-block:: xml
 
@@ -483,7 +483,7 @@ channel when injecting the logger in a service.
             <services>
                 <service id="App\Log\CustomLogger">
                     <argument type="service" id="logger" />
-                    <tag name="monolog.logger" channel="acme" />
+                    <tag name="monolog.logger" channel="app" />
                 </service>
             </services>
         </container>
@@ -495,7 +495,7 @@ channel when injecting the logger in a service.
 
         $container->register(CustomLogger::class)
             ->addArgument(new Reference('logger'))
-            ->addTag('monolog.logger', array('channel' => 'acme'));
+            ->addTag('monolog.logger', array('channel' => 'app'));
 
 .. tip::
 
