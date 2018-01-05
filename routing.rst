@@ -576,7 +576,7 @@ Generating URLs with Query Strings
 The ``generate()`` method takes an array of wildcard values to generate the URI.
 But if you pass extra ones, they will be added to the URI as a query string::
 
-    $this->get('router')->generate('blog', array(
+    $this->router->generate('blog', array(
         'page' => 2,
         'category' => 'Symfony'
     ));
