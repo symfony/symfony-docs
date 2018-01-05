@@ -864,6 +864,63 @@ you indicate that you're expecting an array instead of a single object.
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
 
+The ``XmlEncoder``
+------------------
+
+This encoder transforms arrays into XML and vice versa. For example, take an
+object normalized as following::
+
+    array('foo' => array(1, 2), 'bar' => true);
+
+The ``XmlEncoder`` encodes this object as follows:
+
+.. code-block:: xml
+
+    <?xml version="1.0"?>
+    <response>
+        <foo>1</foo>
+        <foo>2</foo>
+        <bar>1</bar>
+    </response>
+
+The array keys beginning with ``@`` are considered XML attributes::
+
+    array('foo' => array('@bar' => 'value'));
+
+    // is encoded as follows:
+    // <?xml version="1.0"?>
+    // <response>
+    //     <foo bar="value" />
+    // </response>
+
+Context
+~~~~~~~
+
+The ``encode()`` method defines a third optional parameter called ``context``
+which defines the configuration options for the XmlEncoder an associative array::
+
+    $xmlEncoder->encode($array, 'xml', $context);
+
+These are the options available:
+
+``xml_format_output``
+    If set to true, formats the generated XML with line breaks and indentation.
+
+``xml_version``
+    Sets the XML version attribute (default: ``1.1``).
+
+``xml_encoding``
+    Sets the XML encoding attribute (default: ``utf-8``).
+
+``xml_standalone``
+    Adds standalone attribute in the generated XML (default: ``true``).
+
+``xml_root_node_name``
+    Sets the root node name (default: ``response``).
+
+``remove_empty_tags``
+    If set to true, removes all empty tags in the generated XML.
+
 Recursive Denormalization and Type Safety
 -----------------------------------------
 
