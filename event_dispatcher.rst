@@ -77,7 +77,8 @@ using a special "tag":
 
         # app/config/services.yml
         services:
-            AppBundle\EventListener\ExceptionListener:
+            app.exception_listener:
+                class: AppBundle\EventListener\ExceptionListener:
                 tags:
                     - { name: kernel.event_listener, event: kernel.exception }
 
