@@ -651,7 +651,7 @@ monolog.logger
 **Purpose**: To use a custom logging channel with Monolog
 
 Monolog allows you to share its handlers between several logging channels.
-The logger service uses the channel ``acme`` but you can change the
+The logger service uses the channel ``app`` but you can change the
 channel when injecting the logger in a service.
 
 .. configuration-block::
@@ -662,7 +662,7 @@ channel when injecting the logger in a service.
             AppBundle\Log\CustomLogger:
                 arguments: ['@logger']
                 tags:
-                    - { name: monolog.logger, channel: acme }
+                    - { name: monolog.logger, channel: app }
 
     .. code-block:: xml
 
@@ -675,7 +675,7 @@ channel when injecting the logger in a service.
             <services>
                 <service id="AppBundle\Log\CustomLogger">
                     <argument type="service" id="logger" />
-                    <tag name="monolog.logger" channel="acme" />
+                    <tag name="monolog.logger" channel="app" />
                 </service>
             </services>
         </container>
@@ -687,7 +687,7 @@ channel when injecting the logger in a service.
 
         $container->register(CustomLogger::class)
             ->addArgument(new Reference('logger'))
-            ->addTag('monolog.logger', array('channel' => 'acme'));
+            ->addTag('monolog.logger', array('channel' => 'app'));
 
 .. tip::
 
