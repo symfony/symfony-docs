@@ -124,3 +124,25 @@ needs::
             $this->client->getCookieJar()->set($cookie);
         }
     }
+
+notice.
+
+If you have error:
+
+
+    RuntimeException: Failed to start the session because headers have already been sent by "/project/vendor/symfony/phpunit-bridge/bin/simple-phpunit" at line 1.
+
+    /home/tetiana/Projects/event-reminder/vendor/symfony/http-foundation/Session/Storage/NativeSessionStorage.php:138
+    /home/tetiana/Projects/event-reminder/vendor/symfony/http-foundation/Session/Storage/NativeSessionStorage.php:299
+    /home/tetiana/Projects/event-reminder/vendor/symfony/http-foundation/Session/Session.php:260
+    /home/tetiana/Projects/event-reminder/vendor/symfony/http-foundation/Session/Session.php:80
+    /home/tetiana/Projects/event-reminder/tests/Controller/AuthorizedUser/HomeControllerTest.php:35
+    /home/tetiana/Projects/event-reminder/tests/Controller/AuthorizedUser/HomeControllerTest.php:44
+
+
+then you can add
+
+
+  framework:
+      session:
+          storage_id: session.storage.mock_file
