@@ -71,6 +71,20 @@ The username and password can also be passed on a per request basis::
         'PHP_AUTH_PW'   => 'pa$$word',
     ));
 
+.. tip::
+
+    In Symfony 3.4 and 4.0 you have to change the session handler for PHPUnit tests otherwise you get an error 
+    ``PHPUnit Test header already send by...``.
+
+    .. code-block:: yaml
+
+        # config/packages/test/framework.yaml
+        framework:
+            test: ~
+            session:
+                storage_id: session.storage.mock_file
+
+
 Creating the Authentication Token
 ---------------------------------
 
