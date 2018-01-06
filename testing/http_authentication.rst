@@ -124,3 +124,19 @@ needs::
             $this->client->getCookieJar()->set($cookie);
         }
     }
+    
+    
+----------------------
+
+Notice
+If you have error 
+
+  RuntimeException: Failed to start the session because headers have already been sent by "/home/tetiana/Projects/event-reminder/vendor/symfony/phpunit-bridge/bin/simple-phpunit" at line 1.
+
+then you can fix it by:
+
+  framework:
+      session:
+          storage_id: session.storage.mock_file
+
+
