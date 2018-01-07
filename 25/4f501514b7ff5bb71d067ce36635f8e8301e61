@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by aweddleton at 2018-01-07T14:18:39Z
+
+Could this be updated to clarify that psr-1 does have the requirement for methods, just not for properties?  Reading this you might think there is no requirement for either.
