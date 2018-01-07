@@ -235,18 +235,10 @@ the default entity manager (i.e. ``default``) is returned::
 
     class UserController extends Controller
     {
-        protected $em;
-
-        public function __construct(EntityManagerInterface $em)
+        public function indexAction(EntityManagerInterface $em)
         {
-            $this->em = $em;
-        }
-
-        public function indexAction()
-        {
-            // All 4 return the "default" entity manager, though using
-            // dependency injection is a best practice
-            $em = $this->em;
+            // These methods also return the default entity manager, but it's preferred
+            // to get it by inyecting EntityManagerInterface in the action method
             $em = $this->getDoctrine()->getManager();
             $em = $this->getDoctrine()->getManager('default');
             $em = $this->get('doctrine.orm.default_entity_manager');
