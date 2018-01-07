@@ -334,7 +334,7 @@ type::
 entry_type
 ~~~~~~~~~~
 
-**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
+**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **default**: Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType
 
 This is the field type for each item in this collection (e.g. ``TextType``,
 ``ChoiceType``, etc). For example, if you have an array of email addresses,
