@@ -238,12 +238,20 @@ more advanced use-case, you can always do the same security check in PHP:
         // equivalent code without using the "denyAccessUnlessGranted()" shortcut:
         //
         // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+        // use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+        //
         // ...
         //
-        // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
+        // public function __construct(AuthorizationCheckerInterface $authorizationChecker) {
+        //      $this->authorizationChecker = $authorizationChecker;
+        // }
+        //
+        // ...
+        //
+        // if (!$this->authorizationChecker->isGranted('edit', $post)) {
         //    throw $this->createAccessDeniedException();
         // }
-
+        //
         // ...
     }
 
@@ -357,14 +365,22 @@ via the even easier shortcut in a controller:
 
         $this->denyAccessUnlessGranted('edit', $post);
 
-        // or without the shortcut:
-        //
         // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+        // use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+        //
         // ...
         //
-        // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
+        // public function __construct(AuthorizationCheckerInterface $authorizationChecker) {
+        //      $this->authorizationChecker = $authorizationChecker;
+        // }
+        //
+        // ...
+        //
+        // if (!$this->authorizationChecker->isGranted('edit', $post)) {
         //    throw $this->createAccessDeniedException();
         // }
+        //
+        // ...
     }
 
 Learn More
