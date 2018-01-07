@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-05T10:49:15Z
+
+Maybe it's time to remove the *Accessing the Container Directly* section entirely. @weaverryan what do you think?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-01-05T16:29:56Z
+
+Yea, I agree: we should remove this section entirely. Could you do that @TheDevilOnLine?
+
+---------------------------------------------------------------------------
+
+by TheDevilOnLine at 2018-01-05T18:27:45Z
+
+@weaverryan Done. Can you guys do the squashing when doing the merge?
+
+Want me to check the rest of the documentation for these kind of container usage as well?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-01-05T19:44:29Z
+
+@TheDevilOnLine Yep, no worries - we'll handle the squashing.
+
+> Want me to check the rest of the documentation for these kind of container usage as well?
+
+YES! I was literally *just* thinking this as I opened up your PR. There probably are a few legit cases still, but yea, we need to check all the docs to be sure.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by TheDevilOnLine at 2018-01-05T20:42:31Z
+
+I've went over the documentation and checked all instances containing `$this->get()` or `$this->container->get()` and added changes for the places where it makes sense. All remaining instances only show 'the old way', or explain about public/private services.
+
+The only thing I didn't know for sure (which might improve the documentation), is if there's a way to get a Doctrine EntityManager, other than the default one, through dependency injection. If this is possible, I think it's a good idea to add this information to multiple_entity_managers.rst as well
+
+I think the only other way is to inject the complete doctrine service, and call `getManager('customer')` on it, but I don't feel this is better than `$this->getDoctrine()->getManager('customer')`, do you? Also including documentation about defining it in the service,yml (like below, thanks @chasen for the example) seems like to much for this specific part in the documentation.
+
+```
+App\Service\SomeService:
+    arguments:
+        $doctrine: "@doctrine.orm.manager_name"
+```
