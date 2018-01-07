@@ -905,6 +905,7 @@ Learn more
 
     testing/*
 
+* :ref:`Testing a console command <console-testing-commands>`
 * :doc:`The chapter about tests in the Symfony Framework Best Practices </best_practices/tests>`
 * :doc:`/components/dom_crawler`
 * :doc:`/components/css_selector`

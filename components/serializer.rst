@@ -463,8 +463,9 @@ CamelCase to snake_case
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 In many formats, it's common to use underscores to separate words (also known
-as snake_case). However, PSR-1 specifies that the preferred style for PHP
-properties and methods is CamelCase.
+as snake_case). However, in Symfony applications is common to use CamelCase to
+name properties (even though the `PSR-1 standard`_ doesn't recommend any
+specific case for property names).
 
 Symfony provides a built-in name converter designed to transform between
 snake_case and CamelCased styles during serialization and deserialization
@@ -996,6 +997,7 @@ Learn more
     A popular alternative to the Symfony Serializer Component is the third-party
     library, `JMS serializer`_ (released under the Apache license, so incompatible with GPLv2 projects).
 
+.. _`PSR-1 standard`: http://www.php-fig.org/psr/psr-1/
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
 .. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8
