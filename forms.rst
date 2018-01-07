@@ -317,6 +317,12 @@ valid, but whether or not the ``$task`` object is valid after the form has
 applied the submitted data to it. Calling ``$form->isValid()`` is a shortcut
 that asks the ``$task`` object whether or not it has valid data.
 
+Before using validation, add support for it in your application:
+
+.. code-block:: terminal
+
+    $ composer require validator
+
 Validation is done by adding a set of rules (called constraints) to a class. To
 see this in action, add validation constraints so that the ``task`` field cannot
 be empty and the ``dueDate`` field cannot be empty and must be a valid \DateTime
