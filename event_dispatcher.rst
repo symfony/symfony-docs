@@ -91,9 +91,7 @@ using a special "tag":
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.exception_listener"
-                    class="AppBundle\EventListener\ExceptionListener">
-
+                <service id="AppBundle\EventListener\ExceptionListener">
                     <tag name="kernel.event_listener" event="kernel.exception" />
                 </service>
             </services>
@@ -105,7 +103,7 @@ using a special "tag":
         use AppBundle\EventListener\ExceptionListener;
 
         $container
-            ->register('app.exception_listener', ExceptionListener::class)
+            ->autowire(ExceptionListener::class)
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception'))
         ;
 
