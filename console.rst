@@ -299,7 +299,6 @@ you can extend your test from
             $kernel->boot();
 
             $application = new Application($kernel);
-            $application->add(new CreateUserCommand());
 
             $command = $application->find('app:create-user');
             $commandTester = new CommandTester($command);

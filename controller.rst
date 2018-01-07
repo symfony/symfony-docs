@@ -290,33 +290,6 @@ in your controllers.
 
 For more information about services, see the :doc:`/service_container` article.
 
-.. _controller-access-services-directly:
-
-Accessing the Container Directly
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you extend the base ``Controller`` class, you can access :ref:`public services <container-public>`
-via the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::get`
-method. Here are several common services you might need::
-
-    $templating = $this->get('templating');
-
-    $router = $this->get('router');
-
-    $mailer = $this->get('mailer');
-
-    // you can also fetch parameters
-    $someParameter = $this->getParameter('some_parameter');
-
-If you receive an error like:
-
-.. code-block:: text
-
-    You have requested a non-existent service "my_service_id"
-
-Check to make sure the service exists (use :ref:`debug:container <container-debug-container>`)
-and that it's :ref:`public <container-public>`.
-
 .. index::
    single: Controller; Managing errors
    single: Controller; 404 pages
