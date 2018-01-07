@@ -422,8 +422,8 @@ CamelCase to snake_case
 
 In many formats, it's common to use underscores to separate words (also known
 as snake_case). However, in Symfony applications is common to use CamelCase to
-name properties and methods (even though the `PSR-1 standard`_ doesn't recommend
-any specific style).
+name properties (even though the `PSR-1 standard`_ doesn't recommend any
+specific case).
 
 Symfony provides a built-in name converter designed to transform between
 snake_case and CamelCased styles during serialization and deserialization
