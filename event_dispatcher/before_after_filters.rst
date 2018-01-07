@@ -170,6 +170,22 @@ you want.
     you're :ref:`loading services <service-container-services-load-example>` from
     the ``EventSubscriber`` directory and have :ref:`autoconfigure <services-autoconfigure>`
     enabled. You can also manually add the ``kernel.event_subscriber`` tag.
+    
+Create RedirectResponse in KernelEvents::CONTROLLER
+---------------------------------------------------
+.. tip::
+  If you wnat to create a RedirectResponse in KernelEvents::CONTROLLER, then you can use:
+  
+  .. code-block:: php
+  
+        public function onKernelController(FilterControllerEvent $event)
+        {
+            // do something
+            $event->setController(function() use ($redirectUrl) {
+                return new RedirectResponse($redirectUrl);
+            });
+        }
+
 
 After Filters with the ``kernel.response`` Event
 ------------------------------------------------
