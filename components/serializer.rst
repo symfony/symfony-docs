@@ -981,26 +981,32 @@ will be thrown. The type enforcement of the properties can be disabled by settin
 the serializer context option ``ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT``
 to ``true``.
 
-Serializing interfaces and abstract classes
+Serializing Interfaces and Abstract Classes
 -------------------------------------------
 
-When dealing with objects that are fairly similar or share properties, you'd usually use
-intefaces or abstract classes. The Serializer component allows you to serialize and deserialize
-these objects using a "discrimator class mapping".
+When dealing with objects that are fairly similar or share properties, you may
+use interfaces or abstract classes. The Serializer component allows you to
+serialize and deserialize these objects using a *"discrimator class mapping"*.
 
-The discrimator is the field (in the serialized string) you are going to use to differentiate the
-different objects.
+The discriminator is the field (in the serialized string) used to differentiate
+between the possible objects. In practice, when using the Serializer component,
+pass the :class:`Symfony\\Component\\Serializer\\Mapping\\ClassDiscriminatorResolver`
+to the :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`.
 
-When using the Serializer component, you need to give the :class:`Symfony\\Component\\Serializer\\Mapping\\ClassDiscriminatorResolver` to the :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`,
-like in the following example::
+Consider an application that defines an abstract ``CodeRepository`` class
+extended by ``GitHubCodeRepository`` and ``BitBucketCodeRepository`` classes.
+This example shows how to serialize and deserialize those objects::
 
-    $discriminatorResolver = new ClassDiscriminatorResolver();
-    $discriminatorResolver->addClassMapping(CodeRepository::class, new ClassDiscriminatorMapping('type', [
+    $discriminator = new ClassDiscriminatorResolver();
+    $discriminator->addClassMapping(CodeRepository::class, new ClassDiscriminatorMapping('type', [
         'github' => GitHubCodeRepository::class,
         'bitbucket' => BitBucketCodeRepository::class,
     ]));
 
-    $serializer = new Serializer(array(new ObjectNormalizer(null, null, null, null, $discriminatorResolver)), array('json' => new JsonEncoder()));
+    $serializer = new Serializer(
+        array(new ObjectNormalizer(null, null, null, null, $discriminator)),
+        array('json' => new JsonEncoder())
+    );
 
     $serialized = $serializer->serialize(new GitHubCodeRepository());
     // {"type": "github"}
@@ -1008,8 +1014,9 @@ like in the following example::
     $repository = $serializer->unserialize($serialized, CodeRepository::class, 'json');
     // instanceof GitHubCodeRepository
 
-If you have enabled the class metadata factory as described in [Attributes Groups](#attributes-groups), you can
-simply use the following configuration:
+If the class metadata factory is enabled as explained in the
+:ref:`Attributes Groups section <component-serializer-attributes-groups>`, you
+can use this simpler configuration:
 
 .. configuration-block::
 
@@ -1054,7 +1061,6 @@ simply use the following configuration:
                 </discriminator-map>
             </class>
         </serializer>
-
 
 Learn more
 ----------
