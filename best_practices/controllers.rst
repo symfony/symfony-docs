@@ -146,7 +146,7 @@ By not fetching services directly from the container, you can make your services
 Using the ParamConverter
 ------------------------
 
-.. hits::
+.. tip::
   `ParamConverter` is not supported anymore in Symfony 4.0. 
   Please use the service.
 
