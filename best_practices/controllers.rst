@@ -146,6 +146,10 @@ By not fetching services directly from the container, you can make your services
 Using the ParamConverter
 ------------------------
 
+.. tip::
+  `ParamConverter` is not supported anymore in Symfony 4.0. 
+  Please use the service.
+
 If you're using Doctrine, then you can *optionally* use the `ParamConverter`_
 to automatically query for an entity and pass it as an argument to your controller.
 
