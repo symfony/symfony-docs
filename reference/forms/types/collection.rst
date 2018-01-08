@@ -357,7 +357,7 @@ not replaced with the same value.
 type
 ~~~~
 
-**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
+**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **default**: ``text``
 
 This is the field type for each item in this collection (e.g. ``text``,
 ``choice``, etc). For example, if you have an array of email addresses,
