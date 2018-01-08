@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-01-08T14:10:52Z
+
+see https://github.com/symfony/symfony/blob/2.7/src/Symfony/Component/Form/Extension/Core/Type/CollectionType.php#L89
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-01-08T14:29:45Z
+
+> To replace by the FQCN when merging in newer branches of course ;)
+
+That's already the case thanks to #8831 :)
