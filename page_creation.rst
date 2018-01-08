@@ -20,7 +20,7 @@ simple two-step process:
 
 .. seealso::
 
-    Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
+    Do you prefer video tutorials? Check out the `Stellar Development with Symfony`_
     screencast series from KnpUniversity.
 
 .. seealso::
@@ -341,5 +341,5 @@ Go Deeper with HTTP & Framework Fundamentals
 
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`Composer`: https://getcomposer.org
-.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony/first-page
+.. _`Stellar Development with Symfony`: https://knpuniversity.com/screencast/symfony/setup
 .. _`symfony.sh`: https://symfony.sh/
