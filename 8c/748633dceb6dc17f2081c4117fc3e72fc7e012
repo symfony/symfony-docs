@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-09T13:52:56Z
+
+@m4r3x this was indeed a very annoying thing about Symfony security and error pages ... but we fixed it a while ago (https://github.com/symfony/symfony/pull/15953) and we mentioned it here: https://symfony.com/blog/new-in-symfony-2-8-dx-improvements#allow-to-check-for-security-even-in-pages-not-covered-by-firewalls
+
+That's why I'm closing without merging, but if I overviewed something, please tell me and we'll reopen. Thanks!
+
+---------------------------------------------------------------------------
+
+by m4r3x at 2018-01-09T14:10:53Z
+
+@javiereguiluz Thank you for your reply. Yes - the exception won't be thrown, you are right.
+
+However, my point is - it's not possible to use `is_granted` on any error page because token building logic is not yet registered at that point, hence the documentation is displaying code that will NEVER work.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-09T14:16:18Z
+
+@m4r3x I see. Then you are right and I was wrong. Re-opening it!
