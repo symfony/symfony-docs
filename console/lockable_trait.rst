@@ -5,10 +5,10 @@ Prevent Multiple Executions of a Console Command
     The ``LockableTrait`` was introduced in Symfony 3.2.
 
 A simple but effective way to prevent multiple executions of the same command in
-a single server is to use **locks**. The Lock component provides a
-:ref:`SemaphoreStore <_lock-store-semaphore>` class and a
-:ref:`FlockStore <_lock-store-flock>` class that eases the creation and
-release of these locks.
+a single server is to use `locks`_. The :doc:`Lock component </components/lock>`
+provides multiple classes to create locks based on the filesystem (:ref:`FlockStore <_lock-store-flock>`),
+shared memory (:ref:`SemaphoreStore <_lock-store-semaphore>`) and even databases
+and Redis servers.
 
 In addition, the Console component provides a PHP trait called ``LockableTrait``
 that adds two convenient methods to lock and release commands::
@@ -40,3 +40,5 @@ that adds two convenient methods to lock and release commands::
             $this->release();
         }
     }
+
+.. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
