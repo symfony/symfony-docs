@@ -243,7 +243,7 @@ response:
         $response = new Response('No Content', 204);
         $event->setResponse($response);
 
-    The status code sent to the client in the above example will be ``204`. If
+    The status code sent to the client in the above example will be ``204``. If
     ``$event->allowSuccessfulResponse()`` is omitted, then the kernel will set
     an appropriate status code based on the type of exception thrown.
 
