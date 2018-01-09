@@ -298,6 +298,12 @@ The **minimum configuration** to get your application running under Nginx is:
             fastcgi_pass unix:/var/run/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
+
+            # optionally set the value of the environment variables used in the application
+            # fastcgi_param APP_ENV prod;
+            # fastcgi_param APP_SECRET <app-secret-id>;
+            # fastcgi_param DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name";
+
             # When you are using symlinks to link the document root to the
             # current version of your application, you should pass the real
             # application path instead of the path to the symlink to PHP
