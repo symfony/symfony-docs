@@ -39,7 +39,8 @@ using the following options:
     Your encryption mechanism (``ssl``, ``tls`` or ``none``)
 
 ``connection_string``
-    You may use this option instead of
+    You may use this option instead of ``host`` and ``port`` to connect to the
+    LDAP server
 
 ``optReferrals``
     Specifies whether to automatically follow referrals
@@ -96,11 +97,11 @@ array, you may use the
 
     // Do something with the results array
 
-Creating or updating entries
+Creating or Updating Entries
 ----------------------------
 
-Since version 3.1, The Ldap component provides means to create
-new LDAP entries, update or even delete existing ones::
+The Ldap component provides means to create new LDAP entries, update or even
+delete existing ones::
 
     use Symfony\Component\Ldap\Ldap;
     use Symfony\Component\Ldap\Entry;
