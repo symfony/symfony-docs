@@ -1,0 +1,75 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-11-06T09:46:04Z
+
+👍
+
+Status: Reviewed
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2016-11-06T09:54:22Z
+
+👍
+
+A minor change but I love it! Thanks @darrylhein
+
+---------------------------------------------------------------------------
+
+by wouterj at 2016-11-06T11:16:26Z
+
+Thanks for indentifying the inconsistency and fixing it @darrylhein!
+
+However, I'm 👎 on the change. Having the version constraint in here is _very_ important. So instead of updating the example, the note below it should be updated imo.
+
+In case you wonder why the version constraint is important imo, imagine this: The docs of bundle A show `composer require acme/bundle-a` as install instruction. It'll install 1.4 and everything is fine.
+Now, the bundle is completely refactored in 2.0. When someone follows the installation instructions in the 1.4 documentation, they'll get the 2.0 version of the bundle. That'll cause lots of confusion.
+
+---------------------------------------------------------------------------
+
+by darrylhein at 2016-11-08T23:28:10Z
+
+@wouterj I'm fine either way; just trying to make sure the docs are clear.
+
+But I would disagree slightly because composer will install the latest stable (with the caret) by default, thus keeping within the current major version (if my understanding is correct). The bundle creator should make it clear which version their docs are for. ....But we all know that doesn't always happen.
+
+If it's preferred, I can make the change or leave as is.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2016-11-22T20:04:53Z
+
+I tend to agree with @wouterj and IIRC that also was the reason why we did it this way initially.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-02-14T15:31:39Z
+
+I'd like you to consider again this proposal. I'm strongly in favor of it for several reasons:
+
+* First, the `~1` looks so weird that it looks like an error. If at least it was `~1.2` or `~1.8` or whatever.
+* Second, the scenario described by Wouter is real ... but not realistic/common. Documentation is clearly versioned on symfony.com, GitHub, etc.  so you don't read the old docs of a bundle unawarely and end up with the new version.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-02-17T08:39:16Z
+
+@javiereguiluz But this is the template we offer as a starting point to bundle authors. Thus, our own versioning policy does not necessarily (very likely) not apply there.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-02-17T08:45:19Z
+
+@xabbuh ask yourself: when what's the last time you provided the version number explicitly when installing a bundle? Personally I can't remember.
+
+I'd say that we can safely remove this ... and if you do too advanced things with your bundle, you already know what to do here (if you are that advanced, you won't read these instructions anyway).
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-03-05T13:58:12Z
+
+ > Documentation is clearly versioned on symfony.com, GitHub, etc. so you don't read the old docs of a bundle unawarely and end up with the new version.
+
+I can't see how this functions as an argument in favor/against this PR. The problem here is that documentation is versioned, but removing the version from install isn't: It'll always be the latest stable.
+
+So when reading the, clearly versioned, 1.0 documentation, `composer install acme/bar` will give you 2.0 without you even knowing it. Please note that people needing the `composer install` instructions probably aren't experts with Composer. Using the Composer output to identify 2.0 is installed isn't that obvious for people new to Composer.
