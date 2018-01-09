@@ -25,8 +25,8 @@ and query against an LDAP server.
 
 The ``Ldap`` class uses an :class:`Symfony\\Component\\Ldap\\Adapter\\AdapterInterface`
 to communicate with an LDAP server. The :class:`adapter <Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\Adapter>`
-for PHP's built-in LDAP extension, for example, can be configured
-using the following options:
+for PHP's built-in LDAP extension, for example, can be configured using the
+following options:
 
 ``host``
     IP or hostname of the LDAP server
@@ -38,31 +38,39 @@ using the following options:
     The version of the LDAP protocol to use
 
 ``encryption``
-    The encryption protocol : ``ssl``, ``tls`` or ``none`` (default)
+    The encryption protocol: ``ssl``, ``tls`` or ``none`` (default)
+
+``connection_string``
+    You may use this option instead of ``host`` and ``port`` to connect to the
+    LDAP server
+
+``optReferrals``
+    Specifies whether to automatically follow referrals returned by the LDAP server
 
 ``options``
-    LDAP server's options as defined in :class:`ConnectionOptions <Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\ConnectionOptions>`
+    LDAP server's options as defined in
+    :class:`ConnectionOptions <Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\ConnectionOptions>`
 
 For example, to connect to a start-TLS secured LDAP server::
 
-    use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
     use Symfony\Component\Ldap\Ldap;
 
-    $adapter = new Adapter(array(
+    $ldap = Ldap::create('ext_ldap', array(
         'host' => 'my-server',
-        'port' => 389,
-        'encryption' => 'tls',
-        'options' => array(
-            'protocol_version' => 3,
-            'referrals' => false,
-        ),
+        'encryption' => 'ssl',
     ));
-    $ldap = new Ldap($adapter);
+
+Or you could directly specify a connection string::
+
+    use Symfony\Component\Ldap\Ldap;
+
+    $ldap = Ldap::create('ext_ldap', array('connection_string' => 'ldaps://my-server:636'));
 
 The :method:`Symfony\\Component\\Ldap\\Ldap::bind` method
 authenticates a previously configured connection using both the
 distinguished name (DN) and the password of a user::
 
+    use Symfony\Component\Ldap\Ldap;
     // ...
 
     $ldap->bind($dn, $password);
@@ -71,6 +79,7 @@ Once bound (or if you enabled anonymous authentication on your
 LDAP server), you may query the LDAP server using the
 :method:`Symfony\\Component\\Ldap\\Ldap::query` method::
 
+    use Symfony\Component\Ldap\Ldap;
     // ...
 
     $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
@@ -85,6 +94,7 @@ all entries in a single call and do something with the results'
 array, you may use the
 :method:`Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\Collection::toArray` method::
 
+    use Symfony\Component\Ldap\Ldap;
     // ...
 
     $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
@@ -92,12 +102,13 @@ array, you may use the
 
     // Do something with the results array
 
-Creating or updating entries
+Creating or Updating Entries
 ----------------------------
 
-Since version 3.1, The Ldap component provides means to create
-new LDAP entries, update or even delete existing ones::
+The Ldap component provides means to create new LDAP entries, update or even
+delete existing ones::
 
+    use Symfony\Component\Ldap\Ldap;
     use Symfony\Component\Ldap\Entry;
     // ...
 
