@@ -60,9 +60,40 @@ separate PHP processes, simply change the storage engine to
 Disabling the Mock Session
 --------------------------
 
-If you want to use the normal session as defined in `php.ini`, just remove this line
-from your `config_test.yml`:
+When using the HttpFoundation component in a Symfony application, you can
+disable the mock session and use the normal PHP session defined in ``php.ini``
+commenting or removing these lines from the testing configuration:
 
-    framework:
-        session:
-            storage_id: session.storage.mock_file
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config_test.yml
+        framework:
+            session:
+                storage_id: session.storage.mock_file
+
+    .. code-block:: xml
+
+        <!-- app/config/config_test.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <framework:config>
+                <framework:session storage-id="session.storage.mock_file" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/config_test.php
+        $container->loadFromExtension('framework', array(
+            'session' => array(
+                'storage_id' => 'session.storage.mock_file',
+            ),
+        ));
+
