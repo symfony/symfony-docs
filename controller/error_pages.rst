@@ -97,11 +97,6 @@ To override the 404 error template for HTML pages, create a new
 
     {% block body %}
         <h1>Page not found</h1>
-
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            {# ... #}
-        {% endif %}
-
         <p>
             The requested page couldn't be located. Checkout for any URL
             misspelling or <a href="{{ path('homepage') }}">return to the homepage</a>.
