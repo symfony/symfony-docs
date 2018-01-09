@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by mipapo at 2016-09-22T07:35:50Z
+
+Just for your own reference:
+https://github.com/symfony/symfony/issues/19008#issuecomment-224937692
+
+Your answer there really helped me!
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2016-11-29T15:35:27Z
+
+ping .. right now the 3.1 docs still talk about ``LdapClient`` which is deprecated .. would be nice to get this up to date quickly ..
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2016-12-05T10:22:53Z
+
+Unfortunately, I won't have time before the end of the week as I am pretty busy currently. Should be fine next week, though! :)
+
+---------------------------------------------------------------------------
+
+by COil at 2017-03-09T14:31:44Z
+
+The doc is still outdated ? I have tested with the Ldad class (+factory) and it works well.
+
+---------------------------------------------------------------------------
+
+by csarrazi at 2017-03-10T20:38:34Z
+
+Yes, there are a few things still pending to get this PR merged. Unfortunately I am too busy to finalise this in the short term, but if someone wants, he can make a small PR against my fork, or create a new PR based on this one.
