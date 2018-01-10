@@ -69,7 +69,7 @@ by the routing system using the special ``_locale`` parameter:
         # config/routes.yaml
         contact:
             path:       /{_locale}/contact
-            controller: App\Controller\ContactContorller::index
+            controller: App\Controller\ContactController::index
             requirements:
                 _locale: en|fr|de
 

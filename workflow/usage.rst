@@ -275,6 +275,16 @@ order:
     * ``workflow.[workflow name].entered``
     * ``workflow.[workflow name].entered.[place name]``
 
+``workflow.completed``
+    The object has completed this transition.
+
+    The three events being dispatched are:
+
+    * ``workflow.transition``
+    * ``workflow.[workflow name].completed``
+    * ``workflow.[workflow name].completed.[transition name]``
+
+
 ``workflow.announce``
     Triggered for each transition that now is accessible for the object.
 
@@ -283,6 +293,11 @@ order:
     * ``workflow.announce``
     * ``workflow.[workflow name].announce``
     * ``workflow.[workflow name].announce.[transition name]``
+
+.. note::
+
+    The leaving and entering events are triggered even for transitions that stay
+    in same place.
 
 Here is an example of how to enable logging for every time the ``blog_publishing``
 workflow leaves a place::
