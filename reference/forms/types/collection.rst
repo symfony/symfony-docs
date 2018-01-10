@@ -156,65 +156,64 @@ Using jQuery, a simple example might look like this. If you're rendering
 your collection fields all at once (e.g. ``form_row(form.emails)``), then
 things are even easier because the ``data-prototype`` attribute is rendered
 automatically for you (with a slight difference - see note below) and all
-you need is the JavaScript:
+you need is this JavaScript code:
 
+.. code-block:: javascript
 
-.. configuration-block::
+    // add-collection-widget.js
+    jQuery(document).ready(function () {
+        jQuery('.add-another-collection-widget').click(function (e) {
+            e.preventDefault();
+            var list = jQuery(jQuery(this).attr('data-list'));
+            // Try to find the counter of the list
+            var counter = list.data('widget-counter') | list.children().length;
+            // If the counter does not exist, use the length of the list
+            if (!counter) { counter = list.children().length; }
 
-    .. code-block:: html+twig
+            // grab the prototype template
+            var newWidget = list.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, counter);
+            // Increase the counter
+            counter++;
+            // And store it, the length cannot be used if deleting widgets is allowed
+            list.data(' widget-counter', counter);
 
-        {{ form_start(form) }}
-            {# ... #}
-
-            {# store the prototype on the data-prototype attribute #}
-            <ul id="email-fields-list"
-                data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}"
-                data-widget-tags="{{ '<li></li>'|e }}">
-            {% for emailField in form.emails %}
-                <li>
-                    {{ form_errors(emailField) }}
-                    {{ form_widget(emailField) }}
-                </li>
-            {% endfor %}
-            </ul>
-
-            <a href="#" 
-                class="add-another-collection-widget"
-                data-list="#email-field-list>Add another email</a>
-
-            {# ... #}
-        {{ form_end(form) }}
-
-        <script src="add-collection-widget.js"></script>
-
-    .. code-block:: javascript
-
-        // add-collection-widget.js
-        jQuery(document).ready(function () {
-            jQuery('.add-another-collection-widget').click(function (e) {
-                e.preventDefault();
-                var list = jQuery(jQuery(this).attr('data-list'));
-                // Try to find the counter of the list
-                var counter = list.data('widget-counter');
-                // If the counter does not exist, use the length of the list
-                if (!counter) { counter = list.children().length; }
-
-                // grab the prototype template
-                var newWidget = list.attr('data-prototype');
-                // replace the "__name__" used in the id and name of the prototype
-                // with a number that's unique to your emails
-                // end name attribute looks like name="contact[emails][2]"
-                newWidget = newWidget.replace(/__name__/g, counter);
-                // Increase the counter
-                counter++;
-                // And store it, the length cannot be used if deleting widgets is allowed
-                list.data(' widget-counter', counter);
-
-                // create a new list element and add it to the list
-                var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-                newElem.appendTo(list);
-            });
+            // create a new list element and add it to the list
+            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+            newElem.appendTo(list);
         });
+    });
+
+And update the template as follows:
+
+.. code-block:: html+twig
+
+    {{ form_start(form) }}
+        {# ... #}
+
+        {# store the prototype on the data-prototype attribute #}
+        <ul id="email-fields-list"
+            data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}"
+            data-widget-tags="{{ '<li></li>'|e }}">
+        {% for emailField in form.emails %}
+            <li>
+                {{ form_errors(emailField) }}
+                {{ form_widget(emailField) }}
+            </li>
+        {% endfor %}
+        </ul>
+
+        <a href="#" 
+            class="add-another-collection-widget"
+            data-list="#email-field-list>Add another email</a>
+
+        {# ... #}
+    {{ form_end(form) }}
+
+    <script src="add-collection-widget.js"></script>
 
 .. tip::
 
