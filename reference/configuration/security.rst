@@ -624,8 +624,6 @@ persisting the encoded password alone is enough.
     the cost to ``4``, which is the minimum value allowed, in the ``test``
     environment configuration.
 
-    .. _reference-security-firewall-context:
-
 .. _reference-security-argon2i:
 
 Using the Argon2i Password Encoder
