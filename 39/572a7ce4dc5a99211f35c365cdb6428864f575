@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by technetium at 2017-08-11T08:38:28Z
+
+Let's see if it's help if I try to merge to 2.8
+The link for platform.sh still goes to a 404 page:
+No route found for pr-8205-mqerhba-6qmocelev2lwe.eu.platform.sh
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-09-03T16:28:10Z
+
+I think we shouldn't be using a configuration block here, but instead show the JS file in a seperate code block. I think it's important that the JS code is visible on the screen at first sight.
