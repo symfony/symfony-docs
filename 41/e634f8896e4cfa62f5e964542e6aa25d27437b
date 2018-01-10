@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by dbu at 2017-07-19T15:13:18Z
+
+actually i tested on symfony 3.3, but assume this is correct for 3.2 as well. was the `entered` event only added in 3.3? its only documented in the 3.3 doc.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-05T14:47:32Z
+
+I'm closing here because there's no feedback from the community and Jules wondered if we should document this at all. I don't use the Workflow component, so I can easily be wrong here. If that's the case, please tell me and we'll reopen this. Thanks!
+
+---------------------------------------------------------------------------
+
+by dbu at 2018-01-05T16:48:44Z
+
+i do feel its relevant - at least to me it was not obvious. the use case is that you listen to transitions and either are surprised you get events for same-state transitions, or that you would want to do something on those transitions but are not aware that they do an event. a typical same-state transition would be to add items to a shopping cart. the state stays the same (open) but you might have listeners that update the cart with information or such things.
+
+so i think it would not hurt to have it in, but its not a big deal either.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-05T16:52:00Z
+
+OK, let's reopen and let's ping @lyrixx, our biggest Workflow expert, what does he think about this. Thanks!
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2018-01-05T18:18:03Z
+
+This doc is valid and I think it worth mentioning it in the doc.
