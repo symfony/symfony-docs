@@ -37,6 +37,13 @@ of ``bcrypt`` are the inclusion of a *salt* value to protect against rainbow
 table attacks, and its adaptive nature, which allows to make it slower to
 remain resistant to brute-force search attacks.
 
+.. note::
+
+    :ref:`Argon2i <reference-security-argon2i>` is the hashing algorithm as
+    recommended by industry standards, but this won't be available to you unless
+    you are using PHP 7.2+ or have the `libsodium`_ extension installed.
+    ``bcrypt`` is sufficient for most applications.
+
 With this in mind, here is the authentication setup from our application,
 which uses a login form to load users from the database:
 
@@ -408,3 +415,4 @@ Next: :doc:`/best_practices/web-assets`
 .. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Security annotation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
+.. _`libsodium`: https://pecl.php.net/package/libsodium
