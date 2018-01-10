@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-01-09T14:42:30Z
+
+There are more virtual host config examples on this page. Should we update them all? And what about the Nginx example config?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-09T14:51:24Z
+
+I wouldn't add them in the other Apache examples ... but if someone knows nginx, please tell us which is the equivalent config to add. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-01-09T14:55:14Z
+
+```nginx
+# optionally set the value of the environment variables used in the application
+# fastcgi_param APP_ENV prod;
+# fastcgi_param APP_SECRET <app-secret-id>;
+# fastcgi_param DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name";
+```
+
+That should do the trick.
