@@ -6,12 +6,13 @@ checkbox Field Type
 
 Creates a single input checkbox. This should always be used for a field that
 has a Boolean value: if the box is checked, the field will be set to true,
-if the box is unchecked, the value will be set to false.
+if the box is unchecked, the value will be set to false. Optionally you can specify values that, when submitted, will be evaluated to false as well (this differs from what HTTP defines, but can be helpful if you want to handle strings '0' / '1' with the CheckBoxType).
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``checkbox`` field                                           |
 +-------------+------------------------------------------------------------------------+
 | Options     | - `value`_                                                             |
+| Options     | - `false_values`_                                                      |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `empty_data`_                                                        |
 | options     | - `compound`_                                                          |
