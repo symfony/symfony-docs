@@ -195,6 +195,7 @@ allows you to return a list of extensions to register::
             $validator
                 ->method('getMetadataFor')
                 ->will($this->returnValue(new ClassMetadata(Form::class)));
+
             return array(
                 new ValidatorExtension($validator),
             );
