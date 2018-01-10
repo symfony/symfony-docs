@@ -161,7 +161,8 @@ Adding Custom Extensions
 ------------------------
 
 It often happens that you use some options that are added by
-:doc:`form extensions </form/create_form_type_extension>`.
+:doc:`form extensions </form/create_form_type_extension>`. One of the
+cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
 The ``TypeTestCase`` only loads the core form extension, which means an
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
 will be raised if you try to test a class that depends on other extensions.
@@ -172,23 +173,30 @@ allows you to return a list of extensions to register::
     namespace AppBundle\Tests\Form\Type;
 
     use AppBundle\Form\Type\TestedType;
+    use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Form\Form;
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Form\FormBuilder;
     use Symfony\Component\Form\Test\TypeTestCase;
+    use Symfony\Component\Validator\ConstraintViolationList;
     use Symfony\Component\Validator\Mapping\ClassMetadata;
+    use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     class TestedTypeTest extends TypeTestCase
     {
         protected function getExtensions()
         {
+            $validator = $this->createMock(ValidatorInterface::class);
             // use getMock() on PHPUnit 5.3 or below
             // $validator = $this->getMock(ValidatorInterface::class);
+            $validator
+                ->method('validate')
+                ->will($this->returnValue(new ConstraintViolationList()));
             $validator
                 ->method('getMetadataFor')
                 ->will($this->returnValue(new ClassMetadata(Form::class)));
             return array(
-                new MyFormExtension(),
+                new ValidatorExtension($validator),
             );
         }
 
