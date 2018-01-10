@@ -1,0 +1,81 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-03-07T20:49:49Z
+
+Actually, after thinking about this again I am 👎 on merging the PR as is. We usually don't want to guarantee BC for classes that live inside the `Tests` namespace (that's why there is a `Test` namespace that contains classes that are meant to be used as base classes for userland code).
+
+---------------------------------------------------------------------------
+
+by pierredup at 2017-03-07T21:02:25Z
+
+What would you suggest needs to change? Should the class be moved to the `Test` namespace under a different name (Something like `ValidatorTestCase`)?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-03-07T21:06:18Z
+
+I am not completely settled on that yet. The main issue is: What if you need another extension? Which base class do you extended then (supposed there is a base class for the other extension as well)?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-03-07T21:06:44Z
+
+I think the best is to open an issue on the code repository and discuss the matter over there first.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-03-07T21:07:23Z
+
+While I like your suggestion, I don't think we should document classes that live in `*\Tests\*`. These classes aren't part of the BC promise and thus shouldn't be used by other packages.
+
+Instead, we should update our example to fix the code. This probably means finishing https://github.com/symfony/symfony-docs/pull/6463 .
+
+However, if it turns out to be a very nice addition to unit testing, the class might need to be moved to `Symfony\Component\Form\Test\ValidatorTypeTestCase` so it can be used by other packages. As I've seen this class used by quite a few packages, I suggest submitting a PR doing so against the code repository. Are you maybe willing to do that?
+
+---------------------------------------------------------------------------
+
+by pierredup at 2017-03-07T21:08:24Z
+
+Hence my original PR that added the validator to the main base class with an extension point to register custom extensions (and other core extensions can be added in the same place).
+I'll open another PR following that approach again and see what discussions come out of it
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-03-07T21:10:40Z
+
+Sorry if I duplicated something that's already done. I lost overview with all these referenced PRs. :innocent:
+
+---------------------------------------------------------------------------
+
+by pierredup at 2017-03-07T21:11:12Z
+
+I would suggest updating the standard base class to include the validator extension, and remove (deprecate?) the one under `Tests` so that there is one class to extend, both for userland and internal tests (also checking that the validator is installed before registering the extension).
+I'll open a PR on the code repository for this and wait for feedback
+
+---------------------------------------------------------------------------
+
+by wouterj at 2017-03-07T21:13:08Z
+
+ > I would suggest updating the standard base class to include the validator extension
+
+I don't think this will be accepted by the core team. The form component can be used standalone without the validator, so it should at least be optional. You may create a trait with a `getValidatorExtension()` method that can be easily called when extending the `TypeTestCase`?
+
+---------------------------------------------------------------------------
+
+by pierredup at 2017-03-07T21:15:28Z
+
+> also checking that the validator is installed before registering the extension
+
+This should cover the case where the form component is used in standalone mode and the validator is not installed.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-10T08:23:02Z
+
+What can we do to make this PR mergeable? Thanks!
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2018-01-10T08:45:29Z
+
+@javiereguiluz Revert everything excepted namespaces modifications like https://github.com/symfony/symfony-docs/pull/7587/files#diff-d9a34263773b4fe7719e18118a10e628R204.
