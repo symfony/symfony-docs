@@ -329,40 +329,29 @@ The translator service is accessible in PHP templates through the
 Extracting Translation Contents and Updating Catalogs Automatically
 -------------------------------------------------------------------
 
-The most time-consuming task when translating an application is to extract all
+The most time-consuming tasks when translating an application is to extract all
 the template contents to be translated and to keep all the translation files in
-sync. Symfony includes a command called ``translation:update`` that helps you in
-these tasks.
-
-The "safe mode" of this command uses the ``--dump-messages`` option to output
-in the command console the strings to be translated:
+sync. Symfony includes a command called ``translation:update`` that helps you
+with these tasks:
 
 .. code-block:: terminal
 
-    # shows the strings to be translated into French for app/Resources/ templates
-    $ ./app/console translation:update --dump-messages fr
+    # updates the French translation file with the missing strings found in app/Resources/ templates
+    $ ./app/console translation:update --dump-messages --force fr
 
-    # shows the strings to be translated into English for the AppBundle templates
-    $ ./app/console translation:update --dump-messages en AppBundle
+    # updates the English translation file with the missing strings found in AppBundle
+    $ ./app/console translation:update --dump-messages --force en AppBundle
 
-The "advanced mode" of this command uses the ``--force`` option to actually
-update the contents of the translation files to add the missing strings:
+.. note::
 
-.. code-block:: terminal
-
-    # updates the French translation file to add the missing strings
-    # found on app/Resources/ templates
-    $ ./app/console translation:update --force fr
-
-    # updates the English translation file to add the missing strings
-    # found on AppBundle templates
-    $ ./app/console translation:update --force en AppBundle
+    If you want to see the missing translation strings without actually updating
+    the translation files, remove the ``--force`` option from the command above.
 
 .. tip::
 
     If you need to extract translation strings from other sources, such as
     controllers, forms and flash messages, consider using the more advanced
-    `TranslationBundle`_ third-party bundle.
+    third-party `TranslationBundle`_.
 
 .. _translation-resource-locations:
 
