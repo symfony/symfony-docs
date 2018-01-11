@@ -1,0 +1,88 @@
+---------------------------------------------------------------------------
+
+by michaelperrin at 2017-09-23T08:03:35Z
+
+That's a sound idea, but maybe the promotion of FOSUserBundle should be replaced with articles about basic implementations of handy features that come with it:
+
+* Account confirmation with email link / token.
+* In the same way, how to implement a "Forgot my password" feature.
+
+Symfony Flex is all about recipes to make things easier for new comers, so I think there should be a counterpart on the documentation too. Some kind of "doc recipes" to implement such features then :)
+
+---------------------------------------------------------------------------
+
+by mysiar at 2017-09-23T08:18:18Z
+
+@michaelperrin totally agree, removing FOSUserBundle without showing how to do in in Symfony can cause "chaos"
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-09-23T08:36:03Z
+
+FOSUserBundle is massively popular because it provides features most projects need. Instead of removing FOSUserBundle, we should implement its most useful features in Symfony itself and do it in a modern way.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2017-09-23T09:03:21Z
+
+Which feature provided by FOSUser is missing? The doc can be improved but in term of code, it’s very easy to create a registration system and a password reset mechanism without FOSUser. It’s even easier if you use JWT under the hood.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2017-09-23T09:05:10Z
+
+On the other hand, using FOSUser for an API or anything different than a traditional website is a pain.
+
+---------------------------------------------------------------------------
+
+by Donjohn at 2017-09-23T09:28:28Z
+
+You talk like xped developers. We can do it in 30min/1H, i agree, it's useless for us because WE know.
+
+I teach SF at school. You don't want to explain the whole login process to kids, it's far too complicated when they start developping (event on request intercepting login_check route, ouchy for newbies ...) and try to explain the securityFactory ? lol... .
+
+And I don't want to rewrite everytime the registration process, the login process (including twig), the confirmation process with the email template, etc... It's a pain and if it's not fully integrated in Symfony, it should be kept in official documentation. You can craft the wheel again, but do you want ?
+
+Think about others, you will start a mess. SF community is not full of ppl like you. I totally disagree to remove it.
+
+tbh, FOSUSer should be integrated ad vitam in SF. A framework for website with no possiblity without writing code to store the user in database is weird imo.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2017-09-23T09:46:04Z
+
+I teach Symfony at university too, and explanning to students how to install FOSUser, how it works under the hood, how to customize it and how to override it to fit your needs is way harder than explaining how to implement the few interfaces provided by Symfony.
+
+I definitely not agree with you, on the contrary I think that it’s easy for experienced developers used to Symfony to customize FOSUser to add basic features like allowing to register users from a mobile app. But it’s almost impossible for newcomers.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-09-23T10:00:27Z
+
+I fully agree with @Donjohn. Symfony is dramatically lacking high-level features related to security and user management: "social login", "I forgot my password", password rehashing, login throttling, session locking (to only allow 1 login at a time for a given user), Two Factor Authentication, selective reauthentication (to ask password again before important actions, like GitHub and Twitter do), etc.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-09-23T11:02:54Z
+
+Wow, that’s a great list :).
+
+With Flex, not all of these need to be done in core: there just need to be very high quality bundles for each.
+
+About FosU, I’d just like to make it smaller, even split into multiple bundles. I don’t want it to give me a User object or touch security at all (the source of much confusion). A User object + login form (if you need one), could be generated easily in a new generator (and if it becomes obvious we lack some traits that could reduce generated code, we add that to core). Then, there could be a bundle for registration routes/controller and reset password routes/controller: the 2 most useful parts of the bundle.
+
+With Flex, there’s no overhead to having multiple bundles. I think that’s the solution: smaller bundles.
+
+---------------------------------------------------------------------------
+
+by ro0NL at 2017-11-18T13:32:08Z
+
+For what's it worth i've setup a symfony demo app at https://github.com/msgphp/symfony-demo-app, based on a  _smaller_ user bundle. Work in progress though.
+
+Opinionated? Probably. But to me it pays off as the application layer is separated from domain/infra :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-11T16:23:00Z
+
+Let's merge this because most people are in favor of not mentioning this bundle ... and let's hope that the Security Component and bundle get some love soon and implement some of these cool features.
