@@ -246,7 +246,7 @@ order:
     
     The three events being dispatched are:
 
-    * ``workflow.transition``
+    * ``workflow.completed``
     * ``workflow.[workflow name].completed``
     * ``workflow.[workflow name].completed.[transition name]``
 
