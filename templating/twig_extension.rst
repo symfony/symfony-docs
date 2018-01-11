@@ -8,6 +8,17 @@ If you need to create custom Twig functions, filters, tests or more, you'll need
 to create a Twig extension. You can read more about `Twig Extensions`_ in the Twig
 documentation.
 
+.. tip::
+
+    Before writing your own Twig extension, check if the filter/function that
+    you need is already implemented in the :doc:`Symfony Twig extensions </reference/twig_reference>`.
+    Check also the `official Twig extensions`_, which can be installed in your
+    application as follows:
+
+    .. code-block:: terminal
+
+        $ composer require twig/extensions
+
 Create the Extension Class
 --------------------------
 
@@ -62,6 +73,7 @@ you're done! Symfony will automatically know about your new service and add the 
 
 You can now start using your filter in any Twig template.
 
+.. _`official Twig extensions`: https://github.com/twigphp/Twig-extensions
 .. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
 .. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2
