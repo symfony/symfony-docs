@@ -265,7 +265,6 @@ order:
     * ``workflow.[workflow name].enter.[place name]``
 
 ``workflow.entered``
-
     Similar to ``workflow.enter``, except the marking store is updated before this
     event (making it a good place to flush data in Doctrine).
 
@@ -280,7 +279,7 @@ order:
 
     The three events being dispatched are:
 
-    * ``workflow.transition``
+    * ``workflow.completed``
     * ``workflow.[workflow name].completed``
     * ``workflow.[workflow name].completed.[transition name]``
 

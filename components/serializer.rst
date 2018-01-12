@@ -322,6 +322,8 @@ You are now able to serialize only attributes in the groups you want::
     );
     // $obj2 = MyObj(foo: 'foo', bar: 'bar')
 
+.. include:: /_includes/_rewrite_rule_tip.rst.inc
+
 .. _ignoring-attributes-when-serializing:
 
 Selecting Specific Attributes
