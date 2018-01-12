@@ -337,10 +337,10 @@ with these tasks:
 .. code-block:: terminal
 
     # updates the French translation file with the missing strings found in app/Resources/ templates
-    $ ./app/console translation:update --dump-messages --force fr
+    $ ./bin/console translation:update --dump-messages --force fr
 
     # updates the English translation file with the missing strings found in AppBundle
-    $ ./app/console translation:update --dump-messages --force en AppBundle
+    $ ./bin/console translation:update --dump-messages --force en AppBundle
 
 .. note::
 
