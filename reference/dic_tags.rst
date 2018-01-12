@@ -685,6 +685,11 @@ channel when injecting the logger in a service.
             ->addArgument(new Reference('logger'))
             ->addTag('monolog.logger', array('channel' => 'app'));
 
+.. warning::
+
+    If you use autowiring, you need to explicitly declare the logger in the
+    ``arguments``. If you don't, the channel is ignored.
+
 .. tip::
 
     You can also configure custom channels in the configuration and retrieve
