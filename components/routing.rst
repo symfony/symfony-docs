@@ -312,6 +312,8 @@ Last but not least there are
 route definitions from class annotations. The specific details are left
 out here.
 
+.. include:: /_includes/_rewrite_rule_tip.rst.inc
+
 The all-in-one Router
 ~~~~~~~~~~~~~~~~~~~~~
 
