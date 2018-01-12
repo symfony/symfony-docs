@@ -37,7 +37,7 @@ A namespace becomes a bundle as soon as you add a bundle class to it. The
 bundle class name must follow these simple rules:
 
 * Use only alphanumeric characters and underscores;
-* Use a CamelCased name;
+* Use a StudlyCaps name;
 * Use a descriptive and short name (no more than two words);
 * Prefix the name with the concatenation of the vendor (and optionally the
   category namespaces);
