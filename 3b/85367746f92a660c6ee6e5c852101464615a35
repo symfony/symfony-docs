@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2017-02-18T08:36:01Z
+
+I am not against adding such a tip. But I suggest that we check all other places where we document the use of annotations in the components section and write a generic tip that we could include everywhere.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-03-26T13:53:04Z
+
+Hello @wolfwolker, would you like to address @xabbuh's comment?
+
+---------------------------------------------------------------------------
+
+by wolfwolker at 2017-03-27T08:01:25Z
+
+Thanks for remember it to me @HeahDude. Yes I totally agree with @xabbuh, but I've been very busy these past weeks. I'm gonna try to add the tip also to other components sections in the following days.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-07-29T12:38:00Z
+
+ping @wolfwolker :) Are you still interested in finishing this PR?
+
+---------------------------------------------------------------------------
+
+by wolfwolker at 2017-07-30T12:04:02Z
+
+ups, totally forgot about it. I'll address it for this week. My apologies @HeahDude
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-07-30T12:07:35Z
+
+No worries :), thanks!
+
+---------------------------------------------------------------------------
+
+by wolfwolker at 2017-08-06T11:38:37Z
+
+well, It's done. I created a snippet file under _includes directory with the tips and included it in three places I found with annotations loader usage.
+
+But I'm not sure if it is working, how can I see these rst files with the symfony docs web look and feel?
+
+If you like the result I'll squash both commits into a single one
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-12-29T07:47:38Z
+
+@xabbuh I did all the changes you asked for. We should check if this note is still relevant for newer Symfony versions. Thanks!
