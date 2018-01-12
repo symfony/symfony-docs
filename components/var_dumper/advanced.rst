@@ -203,15 +203,6 @@ The ``$filter`` argument of ``assertDumpEquals()`` can be used to pass a
 bit field of ``Caster::EXCLUDE_*`` constants and influences the expected
 output produced by the different casters.
 
-.. versionadded:: 3.4
-    The ``$filter`` argument of ``assertDumpEquals()`` was introdcued in
-    Symfony 3.4.
-
-.. versionadded:: 3.1
-    The ``DUMP_STRING_LENGTH`` and ``DUMP_LIGHT_ARRAY`` flags were introduced
-    in Symfony 3.1.
-
->>>>>>> 3.4
 If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed
 next to its content:
 
