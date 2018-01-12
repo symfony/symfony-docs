@@ -335,7 +335,7 @@ document inside a template::
     echo $packages->getUrl('/logo.png', 'img');
     // result: http://img.example.com/logo.png?v1
 
-    echo $packages->getUrl('/resume.pdf', 'doc');
+    echo $packages->getUrl('resume.pdf', 'doc');
     // result: /somewhere/deep/for/documents/resume.pdf?v1
 
 Learn more
