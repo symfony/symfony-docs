@@ -33,8 +33,7 @@ for example, inside your controller::
     The output of the ``dump()`` function is then rendered in the web developer
     toolbar.
 
-In a Twig template, two constructs are available for dumping a variable.
-Choosing between both is mostly a matter of personal taste, still:
+In a Twig template, you can use the ``dump`` utility as a function or a tag:
 
 * ``{% dump foo.bar %}`` is the way to go when the original template output
   shall not be modified: variables are not dumped inline, but in the web
@@ -46,22 +45,13 @@ Choosing between both is mostly a matter of personal taste, still:
 .. code-block:: html+twig
 
     {# app/Resources/views/article/recent_list.html.twig #}
+    {# the contents of this variable are sent to the Web Debug Toolbar #}
     {% dump articles %}
 
     {% for article in articles %}
-        <a href="/article/{{ article.slug }}">
-            {{ article.title }}
-        </a>
-    {% endfor %}
-    
-or
+        {# the contents of this variable are display on the web page #}
+        {{ dump(article) }}
 
-.. code-block:: html+twig
-    
-    {# app/Resources/views/article/recent_list.html.twig #}
-    {{ dump(articles) }}
-
-    {% for article in articles %}
         <a href="/article/{{ article.slug }}">
             {{ article.title }}
         </a>
