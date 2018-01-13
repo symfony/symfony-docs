@@ -204,10 +204,10 @@ class can take into account the context of the current request::
         new StaticVersionStrategy('v1'),
         new RequestStackContext($requestStack)
     );
-    
+
     echo $package->getUrl('logo.png');
     // result: /somewhere/static/images/logo.png?v1
-    
+
     // Both "base path" and "base url" are ignored when using absolute path for asset
     echo $package->getUrl('/logo.png');
     // result: /logo.png?v1
