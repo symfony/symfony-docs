@@ -51,7 +51,7 @@ TwigBundle Configuration ("twig")
             cache:                     '%kernel.cache_dir%/twig'
             charset:                   '%kernel.charset%'
             debug:                     '%kernel.debug%'
-            strict_variables:          ~
+            strict_variables:          '%kernel.debug%'
             auto_reload:               ~
             optimizations:             ~
             default_path: '%kernel.project_dir%/templates'
