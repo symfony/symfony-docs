@@ -45,7 +45,7 @@ Creating a Bundle
 -----------------
 
 The Symfony Standard Edition comes with a handy task that creates a fully-functional
-bundle for you. Of course, creating a bundle by hand is pretty easy as well.
+bundle for you. LINK? Of course, creating a bundle by hand is pretty easy as well. 
 
 To show you how simple the bundle system is, create a new bundle called
 AcmeTestBundle and enable it.
