@@ -459,7 +459,7 @@ by Symfony. Besides, it simplifies how you refer to those templates:
 strict_variables
 ~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``'%kernel.debug%'``
+**type**: ``boolean`` **default**: ``false``
 
 If set to ``true``, Symfony shows an exception whenever a Twig variable,
 attribute or method doesn't exist. If set to ``false`` these errors are ignored
