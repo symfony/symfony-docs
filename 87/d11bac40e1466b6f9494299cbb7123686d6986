@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-13T10:46:21Z
+
+@rickwest thanks for fixing this. Before making more changes like this: yesterday I chatted in the Symfony Slack with @dylandelobel and he's going to fix all examples in the docs. We talked about coordinating ourselves because it's important to start in the lowest branch and then merge things quickly so he can go the next branch.
