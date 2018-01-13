@@ -166,6 +166,80 @@ the ``Tests/`` directory. Tests should follow the following principles:
     A test suite must not contain ``AllTests.php`` scripts, but must rely on the
     existence of a ``phpunit.xml.dist`` file.
 
+Continuous Integration
+----------------------
+
+Testing bundle code continuously, including all its commits and pull requests,
+is a good practice called Continuous Integration. There are several services
+providing this feature for free for open source projects. The most popular
+service for Symfony bundles is called `Travis CI`_.
+
+Here is the recommended configuration file (``.travis.yml``) for Symfony bundles,
+which test the two latest :doc:`LTS versions </contributing/community/releases>`
+of Symfony and the latest beta release:
+
+.. code-block:: yaml
+
+    language: php
+    sudo: false
+    cache:
+        directories:
+            - $HOME/.composer/cache/files
+            - $HOME/symfony-bridge/.phpunit
+
+    env:
+        global:
+            - PHPUNIT_FLAGS="-v"
+            - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
+
+    matrix:
+        fast_finish: true
+        include:
+              # Minimum supported dependencies with the latest and oldest PHP version
+            - php: 7.2
+              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
+            - php: 7.0
+              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
+
+              # Test the latest stable release
+            - php: 7.0
+            - php: 7.1
+            - php: 7.2
+              env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+
+              # Test LTS versions. This makes sure we do not use Symfony packages with version greater
+              # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
+            - php: 7.2
+              env: DEPENDENCIES="symfony/lts:^2"
+            - php: 7.2
+              env: DEPENDENCIES="symfony/lts:^3"
+
+              # Latest commit to master
+            - php: 7.2
+              env: STABILITY="dev"
+
+        allow_failures:
+              # Dev-master is allowed to fail.
+            - env: STABILITY="dev"
+
+    before_install:
+        - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+        - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
+        - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+
+    install:
+        # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
+        - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
+        - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
+        - ./vendor/bin/simple-phpunit install
+
+    script:
+        - composer validate --strict --no-check-lock
+        - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
+
+Consider using `Travis cron`_ too to make sure your project is built even if
+there are no new pull requests or commits.
+
 Installation
 ------------
 
@@ -476,3 +550,5 @@ Learn more
 .. _`Packagist`: https://packagist.org/
 .. _`choose any license`: http://choosealicense.com/
 .. _`valid license identifier`: https://spdx.org/licenses/
+.. _`Travis CI`: https://travis-ci.org/
+.. _`Travis Cron`: https://docs.travis-ci.com/user/cron-jobs/
