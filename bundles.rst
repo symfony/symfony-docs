@@ -64,17 +64,14 @@ are used by your application (including the core Symfony bundles).
 Creating a Bundle
 -----------------
 
-The Symfony Standard Edition comes with a handy task that creates a fully-functional
-bundle for you. Of course, creating a bundle by hand is pretty easy as well.
+`SensioGeneratorBundle`_ is an optional bundle that includes commands to create
+different elements of your application, such as bundles. If you create lots of
+bundles, consider using it. However, this section creates and enables a new
+bundle by hand to show how simple is to do it.
 
-To show you how simple the bundle system is, create a new bundle called
-AcmeTestBundle and enable it.
-
-.. tip::
-
-    The ``Acme`` portion is just a dummy name that should be replaced by
-    some "vendor" name that represents you or your organization (e.g.
-    ABCTestBundle for some company named ``ABC``).
+The new bundle is called AcmeTestBundle, where the ``Acme`` portion is just a
+dummy name that should be replaced by some "vendor" name that represents you or
+your organization (e.g. ABCTestBundle for some company named ``ABC``).
 
 Start by creating a ``src/Acme/TestBundle/`` directory and adding a new file
 called ``AcmeTestBundle.php``::
@@ -182,3 +179,4 @@ Learn more
     bundles/*
 
 .. _`third-party bundles`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories
+.. _`SensioGeneratorBundle`: https://github.com/sensiolabs/SensioGeneratorBundle
