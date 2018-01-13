@@ -190,8 +190,10 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
     matrix:
         fast_finish: true
         include:
-              # Minimum supported Symfony version with the latest PHP version
+              # Minimum supported dependencies with the latest and oldest PHP version
             - php: 7.2
+              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
+            - php: 7.0
               env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
 
               # Test the latest stable release
