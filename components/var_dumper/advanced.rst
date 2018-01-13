@@ -214,7 +214,7 @@ bit field of ``Caster::EXCLUDE_*`` constants and influences the expected
 output produced by the different casters.
 
 .. versionadded:: 3.4
-    The ``$filter`` argument of ``assertDumpEquals()`` was introdcued in
+    The ``$filter`` argument of ``assertDumpEquals()`` was introduced in
     Symfony 3.4.
 
 .. versionadded:: 3.1
