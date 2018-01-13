@@ -55,7 +55,7 @@ In a Twig template, you can use the ``dump`` utility as a function or a tag:
     {% dump articles %}
 
     {% for article in articles %}
-        {# the contents of this variable are display on the web page #}
+        {# the contents of this variable are displayed on the web page #}
         {{ dump(article) }}
 
         <a href="/article/{{ article.slug }}">

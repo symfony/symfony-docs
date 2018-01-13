@@ -578,7 +578,7 @@ But if you pass extra ones, they will be added to the URI as a query string::
 
     $this->router->generate('blog', array(
         'page' => 2,
-        'category' => 'Symfony'
+        'category' => 'Symfony',
     ));
     // /blog/2?category=Symfony
 
