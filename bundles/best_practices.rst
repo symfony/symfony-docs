@@ -166,12 +166,17 @@ the ``Tests/`` directory. Tests should follow the following principles:
     A test suite must not contain ``AllTests.php`` scripts, but must rely on the
     existence of a ``phpunit.xml.dist`` file.
 
-Travis
-------
+Continuous Integration
+----------------------
 
-A popular way to test open source bundles is by using `Travis CI`_. A good practice
-is to support at least the two latest LTS versions of Symfony. One should also test
-test latest beta release. Here is a recommended configuration file (``.travis.yml``).
+Testing bundle code continuously, including all its commits and pull requests,
+is a good practice called Continuous Integration. There are several services
+providing this feature for free for open source projects. The most popular
+service for Symfony bundles is called `Travis CI`_.
+
+Here is the recommended configuration file (``.travis.yml``) for Symfony bundles,
+which test the two latest :doc:`LTS versions </contributing/community/releases>`
+of Symfony and the latest beta release:
 
 .. code-block:: yaml
 
@@ -232,8 +237,8 @@ test latest beta release. Here is a recommended configuration file (``.travis.ym
         - composer validate --strict --no-check-lock
         - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
 
-When configuring travis you should also enable `Travis cron`_ to make sure your
-project is build even if there is no new pull requests or commits.
+Consider using `Travis cron`_ too to make sure your project is built even if
+there are no new pull requests or commits.
 
 Installation
 ------------
