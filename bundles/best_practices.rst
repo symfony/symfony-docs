@@ -197,9 +197,9 @@ of Symfony and the latest beta release:
         include:
               # Minimum supported dependencies with the latest and oldest PHP version
             - php: 7.2
-              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
+              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
             - php: 7.0
-              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak"
+              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
 
               # Test the latest stable release
             - php: 7.0
