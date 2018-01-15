@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------
+
+by stof at 2018-01-15T14:09:39Z
+
+indeed, much better. This mode was not available yet when I wrote the config files which served as inspiration to this recommendation, but it is indeed a better idea.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-15T15:24:53Z
+
+@greg0ire thanks for this. Two quick questions:
+
+* Is this ready on Symfony side or is it still "waiting for some code merge"?
+* Which is the first Symfony version that includes this feature? I guess 4.0 because of the branch of your PR, but let's double check.
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2018-01-15T15:29:25Z
+
+> Is this ready on Symfony side or is it still "waiting for some code merge"?
+
+This is ready on Symfony side, you may be confused by the upcoming `weak_lagging_vendors`, which is targetted at project, not libraries, although there is a small bug with the weak_vendors mode, see the fix here : https://github.com/symfony/symfony/pull/24864 (reviews are welcome, it's getting quite old :spider_web: )
+
+> Which is the first Symfony version that includes this feature? I guess 4.0 because of the branch of your PR, but let's double check.
+
+It is available since v3.3.0-BETA1 (see https://github.com/symfony/symfony/pull/21539)
+
+---------------------------------------------------------------------------
+
+by stof at 2018-01-15T15:34:00Z
+
+and note that this is related to the PHPUnit bridge version, which is decoupled from the Symfony version being tested (i.e. bundle should always use `^4.0` for the bridge in their bundle, not older versions, even if they want to support Symfony 2.x)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-15T15:37:34Z
+
+OK thanks. I'm still confused about which branch should I merge this in: 3.3 or 4.0?
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2018-01-15T15:40:26Z
+
+It changes a recently added paragraph by @Nyholm and others. It was added on 4.0. See https://twitter.com/dbu/status/952831321822388225
