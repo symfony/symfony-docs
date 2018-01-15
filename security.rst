@@ -994,27 +994,20 @@ shown above.
 -----------------------------
 
 After authentication, the ``User`` object of the current user can be accessed
-via the ``security.token_storage`` service. From inside a controller, this will
-look like::
-
-    use Symfony\Component\Security\Core\User\UserInterface;
+via the ``getUser()`` shortcut (which uses the ``security.token_storage``
+service). From inside a controller, this will look like::
 
     public function indexAction()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
-        // or you can also type-hint a method argument with UserInterface: e.g. "UserInterface $user"
     }
 
 .. tip::
 
     The user will be an object and the class of that object will depend on
     your :ref:`user provider <security-user-providers>`.
-
-.. versionadded:: 3.2
-    The ability to get the user by type-hinting an argument with UserInterface
-    was introduced in Symfony 3.2.
 
 Now you can call whatever methods are on *your* User object. For example,
 if your User object has a ``getFirstName()`` method, you could use that::
