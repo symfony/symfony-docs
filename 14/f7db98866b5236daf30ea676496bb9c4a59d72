@@ -1,0 +1,65 @@
+---------------------------------------------------------------------------
+
+by stof at 2017-11-21T15:06:39Z
+
+@javiereguiluz testing all PHP versions supported by your bundle is a must-have IMO (PHP is bad at following semver, so you cannot only test the low and high ones).
+
+Btw, this gives me another recommendation: **always** have a job for the lowest PHP minor version you support. If you cannot have CI for it, you must remove it from your composer.json instead (so that Composer installs an older tested release instead of thinking the new untested release is fine).
+
+---------------------------------------------------------------------------
+
+by stof at 2017-11-24T11:49:07Z
+
+@Nyholm can you finish this PR ?
+
+---------------------------------------------------------------------------
+
+by stof at 2017-11-24T11:49:29Z
+
+Status: needs work
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2017-11-24T12:31:53Z
+
+Yes. I will finish it this weekend. Thank you for all the feedback!
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2017-11-25T08:51:58Z
+
+Thank you for all the feedback. I've made some updates accordingly.
+
+I will test this travis.yaml file in a `php-http/client-common` to see the changes "in the wild"
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2017-11-29T10:01:39Z
+
+I've made some updates, I need to check if this works properly.
+
+Does it look good at least?
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2017-11-29T19:35:40Z
+
+Thank you for the reviews.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-11T16:08:27Z
+
+@Nyholm I'd love to merge this nice addition soon. I know the review process of this PR has been exhausting ... but we'd need a final effort to finish it. Thank you!
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-01-13T11:19:53Z
+
+@javiereguiluz and @weaverryan. Im done with this PR now (as I can tell from the reviews). I think it is ready to merge.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-01-13T16:24:08Z
+
+Thank you!
