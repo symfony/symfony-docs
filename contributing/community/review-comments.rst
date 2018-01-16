@@ -1,5 +1,5 @@
-Giving constructive criticism
-=============================
+Respectful Review Comments
+==========================
 
 :doc:`Reviewing issues and pull requests </contributing/community/reviews>`
 is a great way to get started with contributing to the Symfony community.
