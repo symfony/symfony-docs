@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-17T07:28:23Z
+
+Thanks for this! I'll merge this in 2.7 branch because that's the oldest maintained branch where the change is needed. See https://github.com/symfony/symfony/blob/3ed19dd040643485f568fafa1b100d086eb7701e/src/Symfony/Bundle/WebProfilerBundle/DependencyInjection/Configuration.php#L39
