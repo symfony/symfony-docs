@@ -195,7 +195,7 @@ manual steps:
 
    .. code-block:: terminal
 
-       $ rm -fr /vendor/*
+       $ rm -fr vendor/*
        $ composer install
 
 #. No matter which of the previous steps you followed. At this point, you'll have
