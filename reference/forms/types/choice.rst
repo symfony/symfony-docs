@@ -105,6 +105,10 @@ method::
         'choice_attr' => function($category, $key, $index) {
             return ['class' => 'category_'.strtolower($category->getName())];
         },
+        //Version 3.3 no funciona choice_attr.
+        //Lo correcto es 
+        //'attr' => array('class' => 'form-control')
+        
         'group_by' => function($category, $key, $index) {
             // randomly assign things into 2 groups
             return rand(0, 1) == 1 ? 'Group A' : 'Group B';
