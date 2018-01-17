@@ -281,9 +281,12 @@ project:
 
 ``src/``
     All your PHP code lives here.
+    
+``templates/``
+    All your Twig templates live here.
 
-Most of the time, you'll be working in ``src/`` (PHP files) or ``config/`` As you
-keep reading, you'll learn what can be done inside each of these.
+Most of the time, you'll be working in ``src/``, ``templates/`` or ``config/``.
+As you keep reading, you'll learn what can be done inside each of these.
 
 So what about the other directories in the project?
 

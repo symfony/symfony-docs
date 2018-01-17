@@ -53,7 +53,7 @@ Start by creating a ``src/Acme/TestBundle/`` directory and adding a new file
 called ``AcmeTestBundle.php``::
 
     // src/Acme/TestBundle/AcmeTestBundle.php
-    namespace Acme\TestBundle;
+    namespace App\Acme\TestBundle;
 
     use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -75,7 +75,7 @@ of the bundle. Now that you've created the bundle, enable it::
     // config/bundles.php
     return [
         // ...
-        Acme\TestBundle\AcmeTestBundle::class => ['all' => true],
+        App\Acme\TestBundle\AcmeTestBundle::class => ['all' => true],
     ];
 
 And while it doesn't do anything yet, AcmeTestBundle is now ready to be used.

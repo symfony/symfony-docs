@@ -580,6 +580,7 @@ But what if you need a more complex query? When you generated your entity with
 
     use App\Entity\Product;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+    use Symfony\Bridge\Doctrine\RegistryInterface;
 
     class ProductRepository extends ServiceEntityRepository
     {

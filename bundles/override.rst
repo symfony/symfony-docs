@@ -56,8 +56,9 @@ example, the implementing class for the ``original-service-id`` is changed to
     // ...
     + use App\Service\YourService;
     + use Symfony\Component\DependencyInjection\ContainerBuilder;
+    + use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
-    class Kernel extends BaseKernel
+    class Kernel extends BaseKernel implements CompilerPassInterface
     {
     +     public function process(ContainerBuilder $container)
     +     {
