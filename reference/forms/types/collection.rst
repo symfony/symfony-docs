@@ -213,7 +213,7 @@ And update the template as follows:
 
         <a href="#" 
             class="add-another-collection-widget"
-            data-list="#email-field-list>Add another email</a>
+            data-list="#email-field-list">Add another email</a>
 
         {# ... #}
     {{ form_end(form) }}
