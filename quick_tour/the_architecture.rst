@@ -207,7 +207,7 @@ great tools for this: the web debug toolbar displays at the bottom of the page, 
 are big, beautiful & explicit, and any configuration cache is automatically rebuilt
 whenever needed.
 
-But what about when you deploy to production? We will need to hide those tool and
+But what about when you deploy to production? We will need to hide those tools and
 optimize for speed!
 
 This is solved by Symfony's *environment* system and there are three: ``dev``, ``prod``
@@ -266,7 +266,7 @@ Platform as a Service (PaaS) deployment systems as well as Docker.
 But setting environment variables while developing can be a pain. That's why your
 app automatically loads a ``.env`` file, if the ``APP_ENV`` environment variable
 isn't set in the environment. The keys in this file then become environment variables
-are and read by your app:
+and are read by your app:
 
 .. code-block:: bash
 
@@ -278,7 +278,7 @@ are and read by your app:
 
 At first, the file doesn't contain much. But as your app grows, you'll add more
 configuration as you need it. But, actually, it gets much more interesting! Suppose
-your app needs database ORM. Let's install the Doctrine ORM:
+your app needs a database ORM. Let's install the Doctrine ORM:
 
 .. code-block:: terminal
 
