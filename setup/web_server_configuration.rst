@@ -41,7 +41,8 @@ The easiest way is to install the Apache recipe by executing the following comma
     $ composer require symfony/apache-pack
 
 This recipe installs a ``.htaccess`` file in the ``public/`` directory that contains
-the rewrite rules.
+the rewrite rules. Since this is a *contrib* recipe, make sure to enable the `allow-contrib`
+setting in your `composer.json` before installing it!
 
 .. tip::
 
