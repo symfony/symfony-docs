@@ -30,8 +30,9 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 | options     | - `empty_data`_                                                              |
 |             | - `error_bubbling`_                                                          |
 +-------------+------------------------------------------------------------------------------+
-| Inherited   | - `by_reference`_                                                            |
-| options     | - `data`_                                                                    |
+| Inherited   | - `attr`_                                                                    |
+| options     | - `by_reference`_                                                            |
+|             | - `data`_                                                                    |
 |             | - `disabled`_                                                                |
 |             | - `error_mapping`_                                                           |
 |             | - `inherit_data`_                                                            |
@@ -99,9 +100,6 @@ method::
         'choice_attr' => function($category, $key, $index) {
             return ['class' => 'category_'.strtolower($category->getName())];
         },
-        //Version 3.3 no funciona choice_attr.
-        //Lo correcto es 
-        //'attr' => array('class' => 'form-control')
         
         'group_by' => function($category, $key, $index) {
             // randomly assign things into 2 groups
@@ -266,6 +264,8 @@ Inherited Options
 -----------------
 
 These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+
+.. include:: /reference/forms/types/options/attr.rst.inc
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
