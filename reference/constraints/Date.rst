@@ -16,6 +16,11 @@ valid YYYY-MM-DD format.
 | Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\DateValidator` |
 +----------------+--------------------------------------------------------------------+
 
+.. caution::
+
+    The :class:`Symfony\\Component\\Validator\\Constraints\\Date` is deprecated since version 3.3
+    and will be removed in 4.0. Use :class:`Symfony\\Component\\Validator\\Constraints\\DateTime` instead.
+
 Basic Usage
 -----------
 
