@@ -71,11 +71,13 @@ like ``/blog/my-post`` or ``/blog/all-about-symfony``:
         # config/routes.yaml
         blog_list:
             path:     /blog
-            controller: App\Controller\BlogController::list
+            defaults:
+                _controller: App\Controller\BlogController::list
 
         blog_show:
             path:     /blog/{slug}
-            controller: App\Controller\BlogController::show
+            defaults:
+                _controller: App\Controller\BlogController::show
 
     .. code-block:: xml
 
