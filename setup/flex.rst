@@ -254,4 +254,4 @@ manual steps:
 .. _`default services.yaml file`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/config/services.yaml
 .. _`shown in this example`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L24-L33
 .. _`copying Symfony's index.php source`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/public/index.php
-.. _`copying Symfony's bin/console source`: https://github.com/symfony/recipes/tree/master/symfony/console/3.3
+.. _`copying Symfony's bin/console source`: https://github.com/symfony/recipes/blob/master/symfony/console/3.3/bin/console
