@@ -32,12 +32,12 @@ the docblock of the ``setOptions()`` method of each class. For instance, the one
 provided by the Memcached extension can be found on `php.net/memcached.setoption`_
 
 While native save handlers can be activated by directly using
-``ini_set('session.save_handler', $name);``, Symfony2 provides a convenient way to
+``ini_set('session.save_handler', $name);``, Symfony provides a convenient way to
 activate these in the same way as it does for custom handlers.
 
-Symfony2 provides drivers for the following native save handler as an example:
+Symfony provides drivers for the following native save handler as an example:
 
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeFileSessionHandler`
+* :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeFileSessionHandler`
 
 Example usage::
 
@@ -58,7 +58,7 @@ Example usage::
 
     Native save handlers provide a quick solution to session storage, however,
     in complex systems where you need more control, custom save handlers may
-    provide more freedom and flexibility. Symfony2 provides several implementations
+    provide more freedom and flexibility. Symfony provides several implementations
     which you may further customize as required.
 
 Custom Save Handlers
@@ -68,14 +68,13 @@ Custom handlers are those which completely replace PHP's built-in session save
 handlers by providing six callback functions which PHP calls internally at
 various points in the session workflow.
 
-Symfony2 HttpFoundation provides some by default and these can easily serve as
-examples if you wish to write your own.
+The Symfony HttpFoundation component provides some by default and these can
+easily serve as examples if you wish to write your own.
 
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcacheSessionHandler`
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MongoDbSessionHandler`
-  * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NullSessionHandler`
+* :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`
+* :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`
+* :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MongoDbSessionHandler`
+* :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NullSessionHandler`
 
 Example usage::
 
@@ -83,7 +82,8 @@ Example usage::
     use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-    $storage = new NativeSessionStorage(array(), new PdoSessionHandler());
+    $pdo = new \PDO(...);
+    $storage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
     $session = new Session($storage);
 
 Configuring PHP Sessions
@@ -138,6 +138,20 @@ the ``php.ini`` directive ``session.gc_maxlifetime``. The meaning in this contex
 that any stored session that was saved more than ``gc_maxlifetime`` ago should be
 deleted. This allows one to expire records based on idle time.
 
+However, some operating systems do their own session handling and set the
+``session.gc_probability`` variable to ``0`` to stop PHP doing garbage
+collection. That's why Symfony now overwrites this value to ``1``.
+
+If you wish to use the original value set in your ``php.ini``, add the following
+configuration:
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        session:
+            gc_probability: null
+
 You can configure these settings by passing ``gc_probability``, ``gc_divisor``
 and ``gc_maxlifetime`` in an array to the constructor of
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
@@ -147,7 +161,7 @@ method.
 Session Lifetime
 ~~~~~~~~~~~~~~~~
 
-When a new session is created, meaning Symfony2 issues a new session cookie
+When a new session is created, meaning Symfony issues a new session cookie
 to the client, the cookie will be stamped with an expiry time. This is
 calculated by adding the PHP runtime configuration value in
 ``session.cookie_lifetime`` with the current server time.
@@ -180,15 +194,45 @@ which runs reasonably frequently. The ``cookie_lifetime`` would be set to a
 relatively high value, and the garbage collection ``gc_maxlifetime`` would be set
 to destroy sessions at whatever the desired idle period is.
 
-The other option is to specifically checking if a session has expired after the
+The other option is specifically check if a session has expired after the
 session is started. The session can be destroyed as required. This method of
 processing can allow the expiry of sessions to be integrated into the user
 experience, for example, by displaying a message.
 
-Symfony2 records some basic metadata about each session to give you complete
+Symfony records some basic metadata about each session to give you complete
 freedom in this area.
 
-Session metadata
+Session Cache Limiting
+~~~~~~~~~~~~~~~~~~~~~~
+
+To avoid users seeing stale data, it's common for session-enabled resources to be
+sent with headers that disable caching. For this purpose PHP Sessions has the
+``sessions.cache_limiter`` option, which determines which headers, if any, will be
+sent with the response when the session in started.
+
+Upon construction,
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
+sets this global option to ``""`` (send no headers) in case the developer wishes to
+use a :class:`Symfony\\Component\\HttpFoundation\\Response` object to manage
+response headers.
+
+.. caution::
+
+    If you rely on PHP Sessions to manage HTTP caching, you *must* manually set the
+    ``cache_limiter`` option in
+    :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
+    to a non-empty value.
+
+    For example, you may set it to PHP's default value during construction:
+
+    Example usage::
+
+        use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
+        $options['cache_limiter'] = session_cache_limiter();
+        $storage = new NativeSessionStorage($options);
+
+Session Metadata
 ~~~~~~~~~~~~~~~~
 
 Sessions are decorated with some basic metadata to enable fine control over the
@@ -216,58 +260,6 @@ particular cookie by reading the ``getLifetime()`` method::
 
 The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
-
-PHP 5.4 compatibility
-~~~~~~~~~~~~~~~~~~~~~
-
-Since PHP 5.4.0, :phpclass:`SessionHandler` and :phpclass:`SessionHandlerInterface`
-are available. Symfony provides forward compatibility for the :phpclass:`SessionHandlerInterface`
-so it can be used under PHP 5.3. This greatly improves interoperability with other
-libraries.
-
-:phpclass:`SessionHandler` is a special PHP internal class which exposes native save
-handlers to PHP user-space.
-
-In order to provide a solution for those using PHP 5.4, Symfony2 has a special
-class called :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeSessionHandler`
-which under PHP 5.4, extends from ``\SessionHandler`` and under PHP 5.3 is just a
-empty base class. This provides some interesting opportunities to leverage
-PHP 5.4 functionality if it is available.
-
-Save Handler Proxy
-~~~~~~~~~~~~~~~~~~
-
-A Save Handler Proxy is basically a wrapper around a Save Handler that was
-introduced to support seamlessly the migration from PHP 5.3 to PHP 5.4+. It
-further creates an extension point from where custom logic can be added that
-works independently of which handler is being wrapped inside.
-
-There are two kinds of save handler class proxies which inherit from
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\AbstractProxy`:
-they are :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeProxy`
-and :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\SessionHandlerProxy`.
-
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
-automatically injects storage handlers into a save handler proxy unless already
-wrapped by one.
-
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NativeProxy`
-is used automatically under PHP 5.3 when internal PHP save handlers are specified
-using the ``Native*SessionHandler`` classes, while
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\SessionHandlerProxy`
-will be used to wrap any custom save handlers, that implement :phpclass:`SessionHandlerInterface`.
-
-From PHP 5.4 and above, all session handlers implement :phpclass:`SessionHandlerInterface`
-including ``Native*SessionHandler`` classes which inherit from :phpclass:`SessionHandler`.
-
-The proxy mechanism allows you to get more deeply involved in session save handler
-classes. A proxy for example could be used to encrypt any session transaction
-without knowledge of the specific save handler.
-
-.. note::
-
-    Before PHP 5.4, you can only proxy user-land save handlers but not
-    native PHP save handlers.
 
 .. _`php.net/session.customhandler`: http://php.net/session.customhandler
 .. _`php.net/session.configuration`: http://php.net/session.configuration

@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; money
+   single: Forms; Fields; MoneyType
 
-money Field Type
-================
+MoneyType Field
+===============
 
 Renders an input text field and specializes in handling submitted "money"
 data.
@@ -16,23 +16,26 @@ how the input and output of the data is handled.
 +-------------+---------------------------------------------------------------------+
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
-|             | - `precision`_                                                      |
 |             | - `grouping`_                                                       |
+|             | - `scale`_                                                          |
 +-------------+---------------------------------------------------------------------+
-| Inherited   | - `empty_data`_                                                     |
-| options     | - `required`_                                                       |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `data`_                                                           |
-|             | - `read_only`_                                                      |
-|             | - `disabled`_                                                       |
+| Overridden  | - `compound`_                                                       |
+| options     |                                                                     |
++-------------+---------------------------------------------------------------------+
+| Inherited   | - `data`_                                                           |
+| options     | - `disabled`_                                                       |
+|             | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
 |             | - `invalid_message`_                                                |
 |             | - `invalid_message_parameters`_                                     |
+|             | - `label`_                                                          |
+|             | - `label_attr`_                                                     |
+|             | - `label_format`_                                                   |
 |             | - `mapped`_                                                         |
+|             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                           |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                       |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
 +-------------+---------------------------------------------------------------------+
@@ -49,9 +52,9 @@ Specifies the currency that the money is being specified in. This determines
 the currency symbol that should be shown by the text box. Depending on
 the currency - the currency symbol may be shown before or after the input
 text field.
-    
-This can be any `3 letter ISO 4217 code`_. You can also set this to false to
-hide the currency symbol.
+
+This can be any `3 letter ISO 4217 code`_. You can also set this to false
+to hide the currency symbol.
 
 divisor
 ~~~~~~~
@@ -62,7 +65,10 @@ If, for some reason, you need to divide your starting value by a number
 before rendering it to the user, you can use the ``divisor`` option.
 For example::
 
-    $builder->add('price', 'money', array(
+    use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+    // ...
+
+    $builder->add('price', MoneyType::class, array(
         'divisor' => 100,
     ));
 
@@ -71,36 +77,39 @@ In this case, if the ``price`` field is set to ``9900``, then the value
 value ``99``, it will be multiplied by ``100`` and ``9900`` will ultimately
 be set back on your object.
 
-precision
-~~~~~~~~~
+.. include:: /reference/forms/types/options/grouping.rst.inc
+
+scale
+~~~~~
 
 **type**: ``integer`` **default**: ``2``
 
-For some reason, if you need some precision other than 2 decimal places,
+If, for some reason, you need some scale other than 2 decimal places,
 you can modify this value. You probably won't need to do this unless,
-for example, you want to round to the nearest dollar (set the precision
+for example, you want to round to the nearest dollar (set the scale
 to ``0``).
 
-.. include:: /reference/forms/types/options/grouping.rst.inc
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
 
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The default value is ``''`` (the empty string).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
@@ -110,15 +119,23 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc
 
 Form Variables
 --------------
 
-============= ========== ===============================================================
-Variable      Type       Usage                                       
-============= ========== ===============================================================
-money_pattern ``string`` The format to use to display the money, including the currency.
-============= ========== ===============================================================
+=============  ==========  ===============================================================
+Variable       Type        Usage
+=============  ==========  ===============================================================
+money_pattern  ``string``  The format to use to display the money, including the currency.
+=============  ==========  ===============================================================
 
-.. _`3 letter ISO 4217 code`: http://en.wikipedia.org/wiki/ISO_4217
+.. _`3 letter ISO 4217 code`: https://en.wikipedia.org/wiki/ISO_4217

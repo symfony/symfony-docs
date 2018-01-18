@@ -1,332 +1,317 @@
 The Architecture
 ================
 
-You are my hero! Who would have thought that you would still be here after the
-first three parts? Your efforts will be well rewarded soon. The first three
-parts didn't look too deeply at the architecture of the framework. Because it
-makes Symfony2 stand apart from the framework crowd, let's dive into the
-architecture now.
+You are my hero! Who would have thought that you would still be here after the first
+two parts? Your efforts will be well-rewarded soon. The first two parts didn't look
+too deeply at the architecture of the framework. Because it makes Symfony stand apart
+from the framework crowd, let's dive into the architecture now.
 
-Understanding the Directory Structure
--------------------------------------
+Add Logging
+-----------
 
-The directory structure of a Symfony2 :term:`application` is rather flexible,
-but the recommended structure is as follows:
+A new Symfony app is micro: it's basically just a routing & controller system. But
+thanks to Flex, installing more features is simple.
 
-* ``app/``:    the application configuration;
-* ``src/``:    the project's PHP code;
-* ``vendor/``: the third-party dependencies;
-* ``web/``:    the web root directory.
+Want a logging system? No problem:
 
-The ``web/`` Directory
-~~~~~~~~~~~~~~~~~~~~~~
+.. code-block:: terminal
 
-The web root directory is the home of all public and static files like images,
-stylesheets, and JavaScript files. It is also where each :term:`front controller`
-lives::
+    $ composer require logger
 
-    // web/app.php
-    require_once __DIR__.'/../app/bootstrap.php.cache';
-    require_once __DIR__.'/../app/AppKernel.php';
+This installs and configures (via a recipe) the powerful `Monolog`_ library. To
+use the logger in a controller, add a new argument type-hinted with ``LoggerInterface``::
 
-    use Symfony\Component\HttpFoundation\Request;
+    use Psr\Log\LoggerInterface;
+    // ...
 
-    $kernel = new AppKernel('prod', false);
-    $kernel->loadClassCache();
-    $kernel->handle(Request::createFromGlobals())->send();
-
-The controller first bootstraps the application using a kernel class (``AppKernel``
-in this case). Then, it creates the ``Request`` object using the PHP's global
-variables and passes it to the kernel. The last step is to send the response
-contents returned by the kernel back to the user.
-
-.. _the-app-dir:
-
-The ``app/`` Directory
-~~~~~~~~~~~~~~~~~~~~~~
-
-The ``AppKernel`` class is the main entry point of the application
-configuration and as such, it is stored in the ``app/`` directory.
-
-This class must implement two methods:
-
-* ``registerBundles()`` must return an array of all bundles needed to run the
-  application;
-
-* ``registerContainerConfiguration()`` loads the application configuration
-  (more on this later).
-
-Autoloading is handled automatically via `Composer`_, which means that you
-can use any PHP class without doing anything at all! All dependencies
-are stored under the ``vendor/`` directory, but this is just a convention.
-You can store them wherever you want, globally on your server or locally
-in your projects.
-
-Understanding the Bundle System
--------------------------------
-
-This section introduces one of the greatest and most powerful features of
-Symfony2, the :term:`bundle` system.
-
-A bundle is kind of like a plugin in other software. So why is it called a
-*bundle* and not a *plugin*? This is because *everything* is a bundle in
-Symfony2, from the core framework features to the code you write for your
-application.
-
-Bundles are first-class citizens in Symfony2. This gives you the flexibility
-to use pre-built features packaged in third-party bundles or to distribute your
-own bundles. It makes it easy to pick and choose which features to enable in
-your application and optimize them the way you want. And at the end of the day,
-your application code is just as *important* as the core framework itself.
-
-Registering a Bundle
-~~~~~~~~~~~~~~~~~~~~
-
-An application is made up of bundles as defined in the ``registerBundles()``
-method of the ``AppKernel`` class. Each bundle is a directory that contains
-a single ``Bundle`` class that describes it::
-
-    // app/AppKernel.php
-    public function registerBundles()
+    public function index($name, LoggerInterface $logger)
     {
-        $bundles = array(
-            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-            new Symfony\Bundle\TwigBundle\TwigBundle(),
-            new Symfony\Bundle\MonologBundle\MonologBundle(),
-            new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-            new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
-            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-        );
+        $logger->info("Saying hello to $name!");
 
-        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
-            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-            $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-            $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-        }
-
-        return $bundles;
+        // ...
     }
 
-In addition to the AcmeDemoBundle that was already talked about, notice
-that the kernel also enables other bundles such as the FrameworkBundle,
-DoctrineBundle, SwiftmailerBundle and AsseticBundle bundle. They are all part
-of the core framework.
+That's it! The new log message will be written to ``var/log/dev.log``. Of course, this
+can be configured by updating one of the config files added by the recipe.
 
-Configuring a Bundle
-~~~~~~~~~~~~~~~~~~~~
+Services & Autowiring
+---------------------
 
-Each bundle can be customized via configuration files written in YAML, XML, or
-PHP. Have a look at the default Symfony configuration:
+But wait! Something *very* cool just happened. Symfony read the ``LoggerInterface``
+type-hint and automatically figured out that it should pass us the Logger object!
+This is called *autowiring*.
 
-.. code-block:: yaml
+Every bit of work that's done in a Symfony app is done by an *object*: the Logger
+object logs things and the Twig object renders templates. These objects are called
+*services* and they are *tools* that help you build rich features.
 
-    # app/config/config.yml
-    imports:
-        - { resource: parameters.yml }
-        - { resource: security.yml }
+To make life awesome, you can ask Symfony to pass you a service by using a type-hint.
+What other possible classes or interfaces could you use? Find out by running:
 
-    framework:
-        #esi:             ~
-        #translator:      { fallback: "%locale%" }
-        secret:          "%secret%"
-        router:
-            resource: "%kernel.root_dir%/config/routing.yml"
-            strict_requirements: "%kernel.debug%"
-        form:            true
-        csrf_protection: true
-        validation:      { enable_annotations: true }
-        templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-        default_locale:  "%locale%"
-        trusted_proxies: ~
-        session:         ~
+.. code-block:: terminal
 
-    # Twig Configuration
-    twig:
-        debug:            "%kernel.debug%"
-        strict_variables: "%kernel.debug%"
+    $ php bin/console debug:autowiring
 
-    # Assetic Configuration
-    assetic:
-        debug:          "%kernel.debug%"
-        use_controller: false
-        bundles:        [ ]
-        #java: /usr/bin/java
-        filters:
-            cssrewrite: ~
-            #closure:
-            #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
-            #yui_css:
-            #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
+=============================================================== =====================================
+Class/Interface Type                                            Alias Service ID
+=============================================================== =====================================
+``Psr\Cache\CacheItemPoolInterface``                            alias for "cache.app.recorder"
+``Psr\Log\LoggerInterface``                                     alias for "monolog.logger"
+``Symfony\Component\EventDispatcher\EventDispatcherInterface``  alias for "debug.event_dispatcher"
+``Symfony\Component\HttpFoundation\RequestStack``               alias for "request_stack"
+``Symfony\Component\HttpFoundation\Session\SessionInterface``   alias for "session"
+``Symfony\Component\Routing\RouterInterface``                   alias for "router.default"
+=============================================================== =====================================
 
-    # Doctrine Configuration
-    doctrine:
-        dbal:
-            driver:   "%database_driver%"
-            host:     "%database_host%"
-            port:     "%database_port%"
-            dbname:   "%database_name%"
-            user:     "%database_user%"
-            password: "%database_password%"
-            charset:  UTF8
+This is just a short summary of the full list! And as you add more packages, this
+list of tools will grow!
 
-        orm:
-            auto_generate_proxy_classes: "%kernel.debug%"
-            auto_mapping: true
+Creating Services
+-----------------
 
-    # Swift Mailer Configuration
-    swiftmailer:
-        transport: "%mailer_transport%"
-        host:      "%mailer_host%"
-        username:  "%mailer_user%"
-        password:  "%mailer_password%"
-        spool:     { type: memory }
+To keep your code organized, you can even create your own services! Suppose you
+want to generate a random greeting (e.g. "Hello", "Yo", etc). Instead of putting
+this code directly in your controller, create a new class::
 
-Each first level entry like ``framework``, ``twig`` or ``doctrine`` defines the
-configuration for a specific bundle. For example, ``framework`` configures the
-FrameworkBundle while ``swiftmailer`` configures the SwiftmailerBundle.
+    // src/GreetingGenerator.php
+    namespace App;
 
-Each :term:`environment` can override the default configuration by providing a
-specific configuration file. For example, the ``dev`` environment loads the
-``config_dev.yml`` file, which loads the main configuration (i.e. ``config.yml``)
-and then modifies it to add some debugging tools:
+    class GreetingGenerator
+    {
+        public function getRandomGreeting()
+        {
+            $greetings = ['Hey', 'Yo', 'Aloha'];
+            $greeting = $greetings[array_rand($greetings)];
 
-.. code-block:: yaml
+            return $greeting;
+        }
+    }
 
-    # app/config/config_dev.yml
-    imports:
-        - { resource: config.yml }
+Great! You can use this immediately in your controller::
 
-    framework:
-        router:   { resource: "%kernel.root_dir%/config/routing_dev.yml" }
-        profiler: { only_exceptions: false }
+    use App\GreetingGenerator;
+    // ...
 
-    web_profiler:
-        toolbar: true
-        intercept_redirects: false
+    public function index($name, LoggerInterface $logger, GreetingGenerator $generator)
+    {
+        $greeting = $generator->getRandomGreeting();
 
-    monolog:
-        handlers:
-            main:
-                type:  stream
-                path:  "%kernel.logs_dir%/%kernel.environment%.log"
-                level: debug
-            firephp:
-                type:  firephp
-                level: info
+        $logger->info("Saying $greeting to $name!");
 
-    assetic:
-        use_controller: true
+        // ...
+    }
 
-Extending a Bundle
-~~~~~~~~~~~~~~~~~~
+That's it! Symfony will instantiate the ``GreetingGenerator`` automatically and
+pass it as an argument. But, could we *also* move the logger logic to ``GreetingGenerator``?
+Yes! You can use autowiring inside a service to access *other* services. The only
+difference is that it's done in the constructor:
 
-In addition to being a nice way to organize and configure your code, a bundle
-can extend another bundle. Bundle inheritance allows you to override any existing
-bundle in order to customize its controllers, templates, or any of its files.
-This is where the logical names (e.g. ``@AcmeDemoBundle/Controller/SecuredController.php``)
-come in handy: they abstract where the resource is actually stored.
+.. code-block:: diff
 
-Logical File Names
-..................
+    + use Psr\Log\LoggerInterface;
 
-When you want to reference a file from a bundle, use this notation:
-``@BUNDLE_NAME/path/to/file``; Symfony2 will resolve ``@BUNDLE_NAME``
-to the real path to the bundle. For instance, the logical path
-``@AcmeDemoBundle/Controller/DemoController.php`` would be converted to
-``src/Acme/DemoBundle/Controller/DemoController.php``, because Symfony knows
-the location of the AcmeDemoBundle.
+    class GreetingGenerator
+    {
+    +     private $logger;
+    +
+    +     public function __construct(LoggerInterface $logger)
+    +     {
+    +         $this->logger = $logger;
+    +     }
 
-Logical Controller Names
-........................
+        public function getRandomGreeting()
+        {
+            // ...
 
-For controllers, you need to reference method names using the format
-``BUNDLE_NAME:CONTROLLER_NAME:ACTION_NAME``. For instance,
-``AcmeDemoBundle:Welcome:index`` maps to the ``indexAction`` method from the
-``Acme\DemoBundle\Controller\WelcomeController`` class.
+     +        $this->logger->info('Using the greeting: '.$greeting);
 
-Logical Template Names
-......................
+             return $greeting;
+        }
+    }
 
-For templates, the logical name ``AcmeDemoBundle:Welcome:index.html.twig`` is
-converted to the file path ``src/Acme/DemoBundle/Resources/views/Welcome/index.html.twig``.
-Templates become even more interesting when you realize they don't need to be
-stored on the filesystem. You can easily store them in a database table for
-instance.
+Yes! This works too: no configuration, no time wasted. Keep coding!
 
-Extending Bundles
-.................
+Twig Extension & Autoconfiguration
+----------------------------------
 
-If you follow these conventions, then you can use :doc:`bundle inheritance</cookbook/bundles/inheritance>`
-to "override" files, controllers or templates. For example, you can create
-a bundle - AcmeNewBundle - and specify that it overrides AcmeDemoBundle.
-When Symfony loads the ``AcmeDemoBundle:Welcome:index`` controller, it will
-first look for the ``WelcomeController`` class in AcmeNewBundle and, if
-it doesn't exist, then look inside AcmeDemoBundle. This means that one bundle
-can override almost any part of another bundle!
+Thanks to Symfony's service handling, you can *extend* Symfony in many ways, like
+by creating an event subscriber or a security voter for complex authorization
+rules. Let's add a new filter to Twig called ``greet``. How? Just create a class
+that extends ``AbstractExtension``::
 
-Do you understand now why Symfony2 is so flexible? Share your bundles between
-applications, store them locally or globally, your choice.
+    // src/Twig/GreetExtension.php
+    namespace App\Twig;
 
-.. _using-vendors:
+    use App\GreetingGenerator;
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
 
-Using Vendors
--------------
+    class GreetExtension extends AbstractExtension
+    {
+        private $greetingGenerator;
 
-Odds are that your application will depend on third-party libraries. Those
-should be stored in the ``vendor/`` directory. This directory already contains
-the Symfony2 libraries, the SwiftMailer library, the Doctrine ORM, the Twig
-templating system, and some other third party libraries and bundles.
+        public function __construct(GreetingGenerator $greetingGenerator)
+        {
+            $this->greetingGenerator = $greetingGenerator;
+        }
 
-Understanding the Cache and Logs
---------------------------------
+        public function getFilters()
+        {
+            return [
+                new TwigFilter('greet', [$this, 'greetUser']),
+            ];
+        }
 
-Symfony2 is probably one of the fastest full-stack frameworks around. But how
-can it be so fast if it parses and interprets tens of YAML and XML files for
-each request? The speed is partly due to its cache system. The application
-configuration is only parsed for the very first request and then compiled down
-to plain PHP code stored in the ``app/cache/`` directory. In the development
-environment, Symfony2 is smart enough to flush the cache when you change a
-file. But in the production environment, to speed things up, it is your
-responsibility to clear the cache when you update your code or change its
-configuration.
+        public function greetUser($name)
+        {
+            $greeting =  $this->greetingGenerator->getRandomGreeting();
 
-When developing a web application, things can go wrong in many ways. The log
-files in the ``app/logs/`` directory tell you everything about the requests
-and help you fix the problem quickly.
+            return "$greeting $name!";
+        }
+    }
 
-Using the Command Line Interface
---------------------------------
+After creating just *one* file, you can use this immediately:
 
-Each application comes with a command line interface tool (``app/console``)
-that helps you maintain your application. It provides commands that boost your
-productivity by automating tedious and repetitive tasks.
+.. code-block:: twig
 
-Run it without any arguments to learn more about its capabilities:
+    {# Will print something like "Hey Symfony!" #}
+    <h1>{{ name|greet }}</h1>
+
+How does this work? Symfony notices that your class extends ``AbstractExtension``
+and so *automatically* registers it as a Twig extension. This is called autoconfiguration,
+and it works for *many* many things. Just create a class and then extend a base class
+(or implement an interface). Symfony takes care of the rest.
+
+Blazing Speed: The Cached Container
+-----------------------------------
+
+After seeing how much Symfony handles automatically, you might be wondering: "Doesn't
+this hurt performance?" Actually, no! Symfony is blazing fast.
+
+How is that possible? The service system is managed by a very important object called
+the "container". Most frameworks have a container, but Symfony's is unique because
+it's *cached*. When you loaded your first page, all of the service information was
+compiled and saved. This means that the autowiring and autoconfiguration features
+add *no* overhead! It also means that you get *great* errors: Symfony inspects and
+validates *everything* when the container is built.
+
+Now you might be wondering what happens when you update a file and the cache needs
+to rebuild? I like you're thinking! It's smart enough to rebuild on the next page
+load. But that's really the topic of the next section.
+
+Development Versus Production: Environments
+-------------------------------------------
+
+One of a framework's main jobs is to make debugging easy! And our app is *full* of
+great tools for this: the web debug toolbar displays at the bottom of the page, errors
+are big, beautiful & explicit, and any configuration cache is automatically rebuilt
+whenever needed.
+
+But what about when you deploy to production? We will need to hide those tool and
+optimize for speed!
+
+This is solved by Symfony's *environment* system and there are three: ``dev``, ``prod``
+and ``test``. Based on the environment, Symfony loads different files in the ``config/``
+directory:
+
+.. code-block:: text
+
+    config/
+    ├─ services.yaml
+    ├─ ...
+    └─ packages/
+        ├─ framework.yaml
+        ├─ ...
+        ├─ **dev/**
+            ├─ monolog.yaml
+            └─ ...
+        ├─ **prod/**
+            └─ monolog.yaml
+        └─ **test/**
+            ├─ framework.yaml
+            └─ ...
+    └─ routes/
+        ├─ annotations.yaml
+        └─ **dev/**
+            ├─ twig.yaml
+            └─ web_profiler.yaml
+
+This is a *powerful* idea: by changing one piece of configuration (the environment),
+your app is transformed from a debugging-friendly experience to one that's optimized
+for speed.
+
+Oh, how do you change the environment? Change the ``APP_ENV`` environment variable
+from ``dev`` to ``prod``:
+
+.. code-block:: diff
+
+    # .env
+    - APP_ENV=dev
+    + APP_ENV=prod
+
+But I want to talk more about environment variables next. Change the value back
+to ``dev``: debugging tools are great when you're working locally.
+
+Environment Variables
+---------------------
+
+Every app contains configuration that's different on each server - like database
+connection information or passwords. How should these be stored? In files? Or some
+other way?
+
+Symfony follows the industry best practice by storing server-based configuration
+as *environment* variables. This means that Symfony works *perfectly* with
+Platform as a Service (PaaS) deployment systems as well as Docker.
+
+But setting environment variables while developing can be a pain. That's why your
+app automatically loads a ``.env`` file, if the ``APP_ENV`` environment variable
+isn't set in the environment. The keys in this file then become environment variables
+are and read by your app:
 
 .. code-block:: bash
 
-    $ php app/console
+    # .env
+    ###> symfony/framework-bundle ###
+    APP_ENV=dev
+    APP_SECRET=cc86c7ca937636d5ddf1b754beb22a10
+    ###< symfony/framework-bundle ###
 
-The ``--help`` option helps you discover the usage of a command:
+At first, the file doesn't contain much. But as your app grows, you'll add more
+configuration as you need it. But, actually, it gets much more interesting! Suppose
+your app needs database ORM. Let's install the Doctrine ORM:
 
-.. code-block:: bash
+.. code-block:: terminal
 
-    $ php app/console router:debug --help
+    $ composer require doctrine
 
-Final Thoughts
---------------
+Thanks to a new recipe installed by Flex, look at the ``.env`` file again:
 
-Call me crazy, but after reading this part, you should be comfortable with
-moving things around and making Symfony2 work for you. Everything in Symfony2
-is designed to get out of your way. So, feel free to rename and move directories
-around as you see fit.
+.. code-block:: diff
 
-And that's all for the quick tour. From testing to sending emails, you still
-need to learn a lot to become a Symfony2 master. Ready to dig into these
-topics now? Look no further - go to the official :doc:`/book/index` and pick
-any topic you want.
+    ###> symfony/framework-bundle ###
+    APP_ENV=dev
+    APP_SECRET=cc86c7ca937636d5ddf1b754beb22a10
+    ###< symfony/framework-bundle ###
 
-.. _Composer:   http://getcomposer.org
+    + ###> doctrine/doctrine-bundle ###
+    + # ...
+    + DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
+    + ###< doctrine/doctrine-bundle ###
+
+The new ``DATBASE_URL`` environment variable was added *automatically* and is already
+referenced by the new ``doctrine.yaml`` configuration file. By combining environment
+variables and Flex, you're using industry best practices without any extra effort.
+
+Keep Going!
+-----------
+
+Call me crazy, but after reading this part, you should be comfortable with the most
+*important* parts of Symfony. Everything in Symfony is designed to get out of your
+way so you can keep coding and adding features, all with the speed and quality you
+demand.
+
+That's all for the quick tour. From authentication, to forms, to caching, there is
+so much more to discover. Ready to dig into these topics now? Look no further - go
+to the official :doc:`/index` and pick any guide you want.
+
+.. _`Monolog`: https://github.com/Seldaek/monolog

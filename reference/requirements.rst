@@ -1,58 +1,41 @@
 .. index::
    single: Requirements
 
-Requirements for Running Symfony2
-=================================
+.. _requirements-for-running-symfony2:
 
-To run Symfony2, your system needs to adhere to a list of requirements. You can
-easily see if your system passes all requirements by running the ``web/config.php``
-in your Symfony distribution. Since the CLI often uses a different ``php.ini``
-configuration file, it's also a good idea to check your requirements from
-the command line via:
+Requirements for Running Symfony
+================================
 
-.. code-block:: bash
+Symfony 4.0 requires **PHP 7.1.3** or higher to run, in addition to other minor
+requirements. To make things simple, Symfony provides a tool to quickly check if
+your system meets all those requirements. Run this command to install the tool:
 
-    $ php app/check.php
+.. code-block:: terminal
 
-Below is the list of required and optional requirements.
+    $ cd your-project/
+    $ composer require requirements-checker
 
-Required
---------
+Beware that PHP can define a different configuration for the command console and
+the web server, so you need to check requirements in both environments.
 
-* PHP needs to be a minimum version of PHP 5.3.3
-* JSON needs to be enabled
-* ctype needs to be enabled
-* Your ``php.ini`` needs to have the ``date.timezone`` setting
+Checking Requirements for the Web Server
+----------------------------------------
 
-.. caution::
+The requirements checker tool creates a file called ``check.php`` in the
+``public/`` directory of your project. Open that file with your browser to check
+the requirements.
 
-    Be aware that Symfony2 has some known limitations when using a PHP version
-    less than 5.3.8 or equal to 5.3.16. For more information see the
-    `Requirements section of the README`_.
+Once you've fixed all the reported issues, uninstall the requirements checker
+to avoid leaking internal information about your application to visitors:
 
-Optional
---------
+.. code-block:: terminal
 
-* You need to have the PHP-XML module installed
-* You need to have at least version 2.6.21 of libxml
-* PHP tokenizer needs to be enabled
-* mbstring functions need to be enabled
-* iconv needs to be enabled
-* POSIX needs to be enabled (only on \*nix)
-* Intl needs to be installed with ICU 4+
-* APC 3.0.17+ (or another opcode cache needs to be installed)
-* ``php.ini`` recommended settings
+    $ cd your-project/
+    $ composer remove requirements-checker
 
-  * ``short_open_tag = Off``
-  * ``magic_quotes_gpc = Off``
-  * ``register_globals = Off``
-  * ``session.auto_start = Off``
+Checking Requirements for the Command Console
+---------------------------------------------
 
-Doctrine
---------
-
-If you want to use Doctrine, you will need to have PDO installed. Additionally,
-you need to have the PDO driver installed for the database server you want
-to use.
-
-.. _`Requirements section of the README`: https://github.com/symfony/symfony#requirements
+The requirements checker tool adds a script to your Composer configuration to
+check the requirements automatically. There's no need to execute any command; if
+there is any issue, you'll see them in the console output.

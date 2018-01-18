@@ -1,10 +1,15 @@
 language: python
 
-python:
-    - "2.7"
+python: 2.7
 
-install: 
-    - "bash install.sh"
-    - "pip install -q -r requirements.txt --use-mirrors"
+sudo: false
+cache:
+  directories: [$HOME/.cache/pip]
 
-script: sphinx-build -nW -b html -d _build/doctrees . _build/html
+install: pip install -r _build/.requirements.txt
+
+script: make -C _build SPHINXOPTS=-nW html
+
+branches:
+  except:
+    - github-comments

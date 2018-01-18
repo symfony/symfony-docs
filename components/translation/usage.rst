@@ -4,7 +4,7 @@
 Using the Translator
 ====================
 
-Imagine you want to translate the string *"Symfony2 is great"* into French::
+Imagine you want to translate the string *"Symfony is great"* into French::
 
     use Symfony\Component\Translation\Translator;
     use Symfony\Component\Translation\Loader\ArrayLoader;
@@ -12,12 +12,12 @@ Imagine you want to translate the string *"Symfony2 is great"* into French::
     $translator = new Translator('fr_FR');
     $translator->addLoader('array', new ArrayLoader());
     $translator->addResource('array', array(
-        'Symfony2 is great!' => 'J\'aime Symfony2!',
+        'Symfony is great!' => 'J\'aime Symfony!',
     ), 'fr_FR');
 
-    echo $translator->trans('Symfony2 is great!');
+    var_dump($translator->trans('Symfony is great!'));
 
-In this example, the message *"Symfony2 is great!"* will be translated into
+In this example, the message *"Symfony is great!"* will be translated into
 the locale set in the constructor (``fr_FR``) if the message exists in one of
 the message catalogs.
 
@@ -31,7 +31,7 @@ Sometimes, a message containing a variable needs to be translated::
     // ...
     $translated = $translator->trans('Hello '.$name);
 
-    echo $translated;
+    var_dump($translated);
 
 However, creating a translation for this string is impossible since the translator
 will try to look up the exact message, including the variable portions
@@ -45,9 +45,9 @@ variable with a "placeholder"::
         array('%name%' => $name)
     );
 
-    echo $translated;
+    var_dump($translated);
 
-Symfony2 will now look for a translation of the raw message (``Hello %name%``)
+Symfony will now look for a translation of the raw message (``Hello %name%``)
 and *then* replace the placeholders with their values. Creating a translation
 is done just as before:
 
@@ -102,7 +102,7 @@ The act of creating translation files is an important part of "localization"
 id-translation pairs for the given domain and locale. The source is the identifier
 for the individual translation, and can be the message in the main locale (e.g.
 *"Symfony is great"*) of your application or a unique identifier (e.g.
-``symfony2.great`` - see the sidebar below).
+``symfony.great`` - see the sidebar below).
 
 Translation files can be created in several different formats, XLIFF being the
 recommended format. These files are parsed by one of the loader classes.
@@ -115,38 +115,40 @@ recommended format. These files are parsed by one of the loader classes.
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
-                    <trans-unit id="1">
-                        <source>Symfony2 is great</source>
-                        <target>J'aime Symfony2</target>
+                    <trans-unit id="symfony_is_great">
+                        <source>Symfony is great</source>
+                        <target>J'aime Symfony</target>
                     </trans-unit>
-                    <trans-unit id="2">
-                        <source>symfony2.great</source>
-                        <target>J'aime Symfony2</target>
+                    <trans-unit id="symfony.great">
+                        <source>symfony.great</source>
+                        <target>J'aime Symfony</target>
                     </trans-unit>
                 </body>
             </file>
         </xliff>
 
+    .. code-block:: yaml
+
+        Symfony is great: J'aime Symfony
+        symfony.great:    J'aime Symfony
+
     .. code-block:: php
 
         return array(
-            'Symfony2 is great' => 'J\'aime Symfony2',
-            'symfony2.great'    => 'J\'aime Symfony2',
+            'Symfony is great' => 'J\'aime Symfony',
+            'symfony.great'    => 'J\'aime Symfony',
         );
 
-    .. code-block:: yaml
-
-        Symfony2 is great: J'aime Symfony2
-        symfony2.great:    J'aime Symfony2
+.. _translation-real-vs-keyword-messages:
 
 .. sidebar:: Using Real or Keyword Messages
 
     This example illustrates the two different philosophies when creating
     messages to be translated::
 
-        $translator->trans('Symfony2 is great');
+        $translator->trans('Symfony is great');
 
-        $translator->trans('symfony2.great');
+        $translator->trans('symfony.great');
 
     In the first method, messages are written in the language of the default
     locale (English in this case). That message is then used as the "id"
@@ -155,11 +157,11 @@ recommended format. These files are parsed by one of the loader classes.
     In the second method, messages are actually "keywords" that convey the
     idea of the message. The keyword message is then used as the "id" for
     any translations. In this case, translations must be made for the default
-    locale (i.e. to translate ``symfony2.great`` to ``Symfony2 is great``).
+    locale (i.e. to translate ``symfony.great`` to ``Symfony is great``).
 
     The second method is handy because the message key won't need to be changed
     in every translation file if you decide that the message should actually
-    read "Symfony2 is really great" in the default locale.
+    read "Symfony is really great" in the default locale.
 
     The choice of which method to use is entirely up to you, but the "keyword"
     format is often recommended.
@@ -172,25 +174,25 @@ recommended format. These files are parsed by one of the loader classes.
 
         .. code-block:: yaml
 
-            symfony2:
+            symfony:
                 is:
-                    great: Symfony2 is great
-                    amazing: Symfony2 is amazing
+                    great: Symfony is great
+                    amazing: Symfony is amazing
                 has:
-                    bundles: Symfony2 has bundles
+                    bundles: Symfony has bundles
             user:
                 login: Login
 
         .. code-block:: php
 
             array(
-                'symfony2' => array(
+                'symfony' => array(
                     'is' => array(
-                        'great'   => 'Symfony2 is great',
-                        'amazing' => 'Symfony2 is amazing',
+                        'great'   => 'Symfony is great',
+                        'amazing' => 'Symfony is amazing',
                     ),
                     'has' => array(
-                        'bundles' => 'Symfony2 has bundles',
+                        'bundles' => 'Symfony has bundles',
                     ),
                 ),
                 'user' => array(
@@ -206,18 +208,18 @@ recommended format. These files are parsed by one of the loader classes.
 
         .. code-block:: yaml
 
-            symfony2.is.great: Symfony2 is great
-            symfony2.is.amazing: Symfony2 is amazing
-            symfony2.has.bundles: Symfony2 has bundles
+            symfony.is.great: Symfony is great
+            symfony.is.amazing: Symfony is amazing
+            symfony.has.bundles: Symfony has bundles
             user.login: Login
 
         .. code-block:: php
 
             return array(
-                'symfony2.is.great'    => 'Symfony2 is great',
-                'symfony2.is.amazing'  => 'Symfony2 is amazing',
-                'symfony2.has.bundles' => 'Symfony2 has bundles',
-                'user.login'           => 'Login',
+                'symfony.is.great'    => 'Symfony is great',
+                'symfony.is.amazing'  => 'Symfony is amazing',
+                'symfony.has.bundles' => 'Symfony has bundles',
+                'user.login'          => 'Login',
             );
 
 .. _component-translation-pluralization:
@@ -226,7 +228,7 @@ Pluralization
 -------------
 
 Message pluralization is a tough topic as the rules can be quite complex. For
-instance, here is the mathematic representation of the Russian pluralization
+instance, here is the mathematical representation of the Russian pluralization
 rules::
 
     (($number % 10 == 1) && ($number % 100 != 11))
@@ -251,10 +253,18 @@ all the forms as a string separated by a pipe (``|``)::
 To translate pluralized messages, use the
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method::
 
+    // the %count% placeholder is assigned to the second argument...
     $translator->transChoice(
         'There is one apple|There are %count% apples',
+        10
+    );
+
+    // ...but you can define more placeholders if needed
+    $translator->transChoice(
+        'Hurry up %name%! There is one apple left.|There are %count% apples left.',
         10,
-        array('%count%' => 10)
+        // no need to include %count% here; Symfony does that for you
+        array('%name%' => $user->getName())
     );
 
 The second argument (``10`` in this example) is the *number* of objects being
@@ -311,7 +321,7 @@ use explicit math intervals:
 
 .. code-block:: text
 
-    '{0} There are no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf] There are many apples'
+    '{0} There are no apples|{1} There is one apple|]1,19] There are %count% apples|[20,Inf[ There are many apples'
 
 The intervals follow the `ISO 31-11`_ notation. The above string specifies
 four different intervals: exactly ``0``, exactly ``1``, ``2-19``, and ``20``
@@ -323,7 +333,7 @@ effect after removing the explicit rules:
 
 .. code-block:: text
 
-    '{0} There are no apples|[20,Inf] There are many apples|There is one apple|a_few: There are %count% apples'
+    '{0} There are no apples|[20,Inf[ There are many apples|There is one apple|a_few: There are %count% apples'
 
 For example, for ``1`` apple, the standard rule ``There is one apple`` will
 be used. For ``2-19`` apples, the second standard rule ``There are %count%
@@ -355,7 +365,7 @@ When translating a message, the Translator uses the specified locale or the
 use for translation::
 
     $translator->trans(
-        'Symfony2 is great',
+        'Symfony is great',
         array(),
         'messages',
         'fr_FR'
@@ -364,10 +374,49 @@ use for translation::
     $translator->transChoice(
         '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
-        array('%count%' => 10),
+        array(),
         'messages',
         'fr_FR'
     );
 
-.. _`L10n`: http://en.wikipedia.org/wiki/Internationalization_and_localization
-.. _`ISO 31-11`: http://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
+.. note::
+
+    Starting from Symfony 3.2, the third argument of ``transChoice()`` is
+    optional when the only placeholder in use is ``%count%``. In previous
+    Symfony versions you needed to always define it::
+
+        $translator->transChoice(
+            '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
+            10,
+            array('%count%' => 10),
+            'messages',
+            'fr_FR'
+        );
+
+Retrieving the Message Catalogue
+--------------------------------
+
+In case you want to use the same translation catalogue outside your application
+(e.g. use translation on the client side), it's possible to fetch raw translation
+messages. Just specify the required locale::
+
+    $catalogue = $translator->getCatalogue('fr_FR');
+    $messages = $catalogue->all();
+    while ($catalogue = $catalogue->getFallbackCatalogue()) {
+        $messages = array_replace_recursive($catalogue->all(), $messages);
+    }
+
+The ``$messages`` variable will have the following structure::
+
+    array(
+        'messages' => array(
+            'Hello world' => 'Bonjour tout le monde',
+        ),
+        'validators' => array(
+            'Value should not be empty' => 'Valeur ne doit pas être vide',
+            'Value is too long' => 'Valeur est trop long',
+        ),
+    );
+
+.. _`L10n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
+.. _`ISO 31-11`: https://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals

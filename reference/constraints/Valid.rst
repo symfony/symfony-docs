@@ -2,16 +2,16 @@ Valid
 =====
 
 This constraint is used to enable validation on objects that are embedded
-as properties on an object being validated. This allows you to validate an
-object and all sub-objects associated with it.
+as properties on an object being validated. This allows you to validate
+an object and all sub-objects associated with it.
 
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
 | Options        | - `traverse`_                                                       |
-|                | - `message`_                                                        |
+|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Type`           |
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Valid`          |
 +----------------+---------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_error_bubbling_hint.rst.inc
@@ -20,13 +20,13 @@ Basic Usage
 -----------
 
 In the following example, create two classes ``Author`` and ``Address``
-that both have constraints on their properties. Furthermore, ``Author`` stores
-an ``Address`` instance in the ``$address`` property.
+that both have constraints on their properties. Furthermore, ``Author``
+stores an ``Address`` instance in the ``$address`` property.
 
 .. code-block:: php
 
-    // src/Acme/HelloBundle/Entity/Address.php
-    namespace Amce\HelloBundle\Entity;
+    // src/Entity/Address.php
+    namespace App\Entity;
 
     class Address
     {
@@ -36,8 +36,8 @@ an ``Address`` instance in the ``$address`` property.
 
 .. code-block:: php
 
-    // src/Acme/HelloBundle/Entity/Author.php
-    namespace Acme\HelloBundle\Entity;
+    // src/Entity/Author.php
+    namespace App\Entity;
 
     class Author
     {
@@ -48,31 +48,10 @@ an ``Address`` instance in the ``$address`` property.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/HelloBundle/Resources/config/validation.yml
-        Acme\HelloBundle\Entity\Address:
-            properties:
-                street:
-                    - NotBlank: ~
-                zipCode:
-                    - NotBlank: ~
-                    - Length:
-                        max: 5
-
-        Acme\HelloBundle\Entity\Author:
-            properties:
-                firstName:
-                    - NotBlank: ~
-                    - Length:
-                        min: 4
-                lastName:
-                    - NotBlank: ~
-
     .. code-block:: php-annotations
 
-        // src/Acme/HelloBundle/Entity/Address.php
-        namespace Acme\HelloBundle\Entity;
+        // src/Entity/Address.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -85,19 +64,21 @@ an ``Address`` instance in the ``$address`` property.
 
             /**
              * @Assert\NotBlank
-             * @Assert\Length(max = "5")
+             * @Assert\Length(max=5)
              */
             protected $zipCode;
         }
 
-        // src/Acme/HelloBundle/Entity/Author.php
-        namespace Acme\HelloBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
             /**
              * @Assert\NotBlank
-             * @Assert\Length(min = "4")
+             * @Assert\Length(min=4)
              */
             protected $firstName;
 
@@ -109,15 +90,36 @@ an ``Address`` instance in the ``$address`` property.
             protected $address;
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Address:
+            properties:
+                street:
+                    - NotBlank: ~
+                zipCode:
+                    - NotBlank: ~
+                    - Length:
+                        max: 5
+
+        App\Entity\Author:
+            properties:
+                firstName:
+                    - NotBlank: ~
+                    - Length:
+                        min: 4
+                lastName:
+                    - NotBlank: ~
+
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\HelloBundle\Entity\Address">
+            <class name="App\Entity\Address">
                 <property name="street">
                     <constraint name="NotBlank" />
                 </property>
@@ -129,7 +131,7 @@ an ``Address`` instance in the ``$address`` property.
                 </property>
             </class>
 
-            <class name="Acme\HelloBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="firstName">
                     <constraint name="NotBlank" />
                     <constraint name="Length">
@@ -144,8 +146,8 @@ an ``Address`` instance in the ``$address`` property.
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Entity/Address.php
-        namespace Acme\HelloBundle\Entity;
+        // src/Entity/Address.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -159,14 +161,12 @@ an ``Address`` instance in the ``$address`` property.
             {
                 $metadata->addPropertyConstraint('street', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('zipCode', new Assert\NotBlank());
-                $metadata->addPropertyConstraint(
-                    'zipCode',
-                    new Assert\Length(array("max" => 5)));
+                $metadata->addPropertyConstraint('zipCode', new Assert\Length(array("max" => 5)));
             }
         }
 
-        // src/Acme/HelloBundle/Entity/Author.php
-        namespace Acme\HelloBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -185,24 +185,16 @@ an ``Address`` instance in the ``$address`` property.
             }
         }
 
-With this mapping, it is possible to successfully validate an author with an
-invalid address. To prevent that, add the ``Valid`` constraint to the ``$address``
-property.
+With this mapping, it is possible to successfully validate an author with
+an invalid address. To prevent that, add the ``Valid`` constraint to the
+``$address`` property.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/HelloBundle/Resources/config/validation.yml
-        Acme\HelloBundle\Author:
-            properties:
-                address:
-                    - Valid: ~
-
     .. code-block:: php-annotations
 
-        // src/Acme/HelloBundle/Entity/Author.php
-        namespace Acme\HelloBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -214,15 +206,23 @@ property.
             protected $address;
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Author:
+            properties:
+                address:
+                    - Valid: ~
+
     .. code-block:: xml
 
-        <!-- src/Acme/HelloBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\HelloBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="address">
                     <constraint name="Valid" />
                 </property>
@@ -231,8 +231,8 @@ property.
 
     .. code-block:: php
 
-        // src/Acme/HelloBundle/Entity/Author.php
-        namespace Acme\HelloBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -247,12 +247,12 @@ property.
             }
         }
 
-If you validate an author with an invalid address now, you can see that the
-validation of the ``Address`` fields failed.
+If you validate an author with an invalid address now, you can see that
+the validation of the ``Address`` fields failed.
 
 .. code-block:: text
 
-    Acme\\HelloBundle\\Author.address.zipCode:
+    App\Entity\Author.address.zipCode:
         This value is too long. It should have 5 characters or less.
 
 Options
@@ -264,12 +264,7 @@ traverse
 **type**: ``boolean`` **default**: ``true``
 
 If this constraint is applied to a property that holds an array of objects,
-then each object in that array will be validated only if this option is set
-to ``true``.
+then each object in that array will be validated only if this option is
+set to ``true``.
 
-message
-~~~~~~~
-
-**type**: ``string`` **default**: ``This value should be true.``
-
-This is the message that will be shown if the value is false.
+.. include:: /reference/constraints/_payload-option.rst.inc

@@ -1,7 +1,7 @@
 multiple
 ~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If true, the user will be able to select multiple options (as opposed
 to choosing just one option). Depending on the value of the ``expanded``

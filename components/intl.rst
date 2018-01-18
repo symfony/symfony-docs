@@ -8,10 +8,6 @@ The Intl Component
     A PHP replacement layer for the C `intl extension`_ that also provides
     access to the localization data of the `ICU library`_.
 
-.. versionadded:: 2.3
-    The Intl component was introduced in Symfony 2.3. In earlier versions of Symfony,
-    you should use the Locale component instead.
-
 .. caution::
 
     The replacement layer is limited to the locale "en". If you want to use
@@ -22,8 +18,8 @@ Installation
 
 You can install the component in two different ways:
 
-* Using the official Git repository (https://github.com/symfony/Intl);
-* :doc:`Install it via Composer</components/using_components>` (``symfony/intl`` on `Packagist`_).
+* :doc:`Install it via Composer</components/using_components>` (``symfony/intl`` on `Packagist`_);
+* Using the official Git repository (https://github.com/symfony/intl).
 
 If you install the component via Composer, the following classes and functions
 of the intl extension will be automatically provided if the intl extension is
@@ -50,7 +46,7 @@ replace the intl classes:
 Composer automatically exposes these classes in the global namespace.
 
 If you don't use Composer but the
-:doc:`Symfony ClassLoader component </components/class_loader/introduction>`,
+:doc:`Symfony ClassLoader component </components/class_loader>`,
 you need to expose them manually by adding the following lines to your autoload
 code::
 
@@ -59,80 +55,6 @@ code::
 
         $loader->registerPrefixFallback('/path/to/Icu/Resources/stubs');
     }
-
-.. sidebar:: ICU and Deployment Problems
-
-    The intl extension internally uses the `ICU library`_ to obtain localization
-    data such as number formats in different languages, country names and more.
-    To make this data accessible to userland PHP libraries, Symfony2 ships a copy
-    in the `Icu component`_.
-
-    Depending on the ICU version compiled with your intl extension, a matching
-    version of that component needs to be installed. It sounds complicated,
-    but usually Composer does this for you automatically:
-
-    * 1.0.*: when the intl extension is not available
-    * 1.1.*: when intl is compiled with ICU 3.8 or higher
-    * 1.2.*: when intl is compiled with ICU 4.4 or higher
-
-    These versions are important when you deploy your application to a **server with
-    a lower ICU version** than your development machines, because deployment will
-    fail if:
-
-    * the development machines are compiled with ICU 4.4 or higher, but the
-      server is compiled with a lower ICU version than 4.4;
-    * the intl extension is available on the development machines but not on
-      the server.
-
-    For example, consider that your development machines ship ICU 4.8 and the server
-    ICU 4.2. When you run ``php composer.phar update`` on the development machine, version
-    1.2.* of the Icu component will be installed. But after deploying the
-    application, ``php composer.phar install`` will fail with the following error:
-
-    .. code-block:: bash
-
-        $ php composer.phar install
-        Loading composer repositories with package information
-        Installing dependencies from lock file
-        Your requirements could not be resolved to an installable set of packages.
-
-          Problem 1
-            - symfony/icu 1.2.x requires lib-icu >=4.4 -> the requested linked
-              library icu has the wrong version installed or is missing from your
-              system, make sure to have the extension providing it.
-
-    The error tells you that the requested version of the Icu component, version
-    1.2, is not compatible with PHP's ICU version 4.2.
-
-    One solution to this problem is to run ``php composer.phar update`` instead of
-    ``php composer.phar install``. It is highly recommended **not** to do this. The
-    ``update`` command will install the latest versions of each Composer dependency
-    to your production server and potentially break the application.
-
-    A better solution is to fix your composer.json to the version required by the
-    production server. First, determine the ICU version on the server:
-
-    .. code-block:: bash
-
-        $ php -i | grep ICU
-        ICU version => 4.2.1
-
-    Then fix the Icu component in your ``composer.json`` file to a matching version:
-
-    .. code-block:: json
-
-        "require: {
-            "symfony/icu": "1.1.*"
-        }
-
-    Set the version to
-
-    * "1.0.*" if the server does not have the intl extension installed;
-    * "1.1.*" if the server is compiled with ICU 4.2 or lower.
-
-    Finally, run ``php composer.phar update symfony/icu`` on your development machine, test
-    extensively and deploy again. The installation of the dependencies will now
-    succeed.
 
 Writing and Reading Resource Bundles
 ------------------------------------
@@ -212,7 +134,7 @@ This class currently only works with the `intl extension`_ installed::
     $reader = new BinaryBundleReader();
     $data = $reader->read('/path/to/bundle', 'en');
 
-    echo $data['Data']['entry1'];
+    var_dump($data['Data']['entry1']);
 
 PhpBundleReader
 ~~~~~~~~~~~~~~~
@@ -226,7 +148,7 @@ object::
     $reader = new PhpBundleReader();
     $data = $reader->read('/path/to/bundle', 'en');
 
-    echo $data['Data']['entry1'];
+    var_dump($data['Data']['entry1']);
 
 BufferedBundleReader
 ~~~~~~~~~~~~~~~~~~~~
@@ -267,10 +189,10 @@ returned::
     $data = $reader->read('/path/to/bundle', 'en');
 
     // Produces an error if the key "Data" does not exist
-    echo $data['Data']['entry1'];
+    var_dump($data['Data']['entry1']);
 
     // Returns null if the key "Data" does not exist
-    echo $reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1'));
+    var_dump($reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1')));
 
 Additionally, the
 :method:`Symfony\\Component\\Intl\\ResourceBundle\\Reader\\StructuredBundleReaderInterface::readEntry`
@@ -281,12 +203,12 @@ multi-valued entries (arrays), the values of the more specific and the fallback
 locale will be merged. In order to suppress this behavior, the last parameter
 ``$fallback`` can be set to ``false``::
 
-    echo $reader->readEntry(
+    var_dump($reader->readEntry(
         '/path/to/bundle',
         'en',
         array('Data', 'entry1'),
         false
-    );
+    ));
 
 Accessing ICU Data
 ------------------
@@ -410,6 +332,18 @@ to the current default locale::
     // => array('AFN' => 'Afghanische Afghani', ...)
 
 That's all you need to know for now. Have fun coding!
+
+Learn more
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /reference/forms/types/country
+    /reference/forms/types/currency
+    /reference/forms/types/language
+    /reference/forms/types/locale
 
 .. _Packagist: https://packagist.org/packages/symfony/intl
 .. _Icu component: https://packagist.org/packages/symfony/icu

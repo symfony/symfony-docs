@@ -7,8 +7,8 @@ Authorization
 When any of the authentication providers (see :ref:`authentication_providers`)
 has verified the still-unauthenticated token, an authenticated token will
 be returned. The authentication listener should set this token directly
-in the :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`
-using its :method:`Symfony\\Component\\Security\\Core\\SecurityContextInterface::setToken`
+in the :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface`
+using its :method:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface::setToken`
 method.
 
 From then on, the user is authenticated, i.e. identified. Now, other parts
@@ -40,13 +40,13 @@ itself depends on multiple voters, and makes a final verdict based on all
 the votes (either positive, negative or neutral) it has received. It
 recognizes several strategies:
 
-* ``affirmative`` (default)
-    grant access as soon as any voter returns an affirmative response;
+``affirmative`` (default)
+    grant access as soon as there is one voter granting access;
 
-* ``consensus``
+``consensus``
     grant access if there are more voters granting access than there are denying;
 
-* ``unanimous``
+``unanimous``
     only grant access if none of the voters has denied access;
 
 .. code-block:: php
@@ -85,14 +85,7 @@ of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterf
 which means they have to implement a few methods which allows the decision
 manager to use them:
 
-* ``supportsAttribute($attribute)``
-    will be used to check if the voter knows how to handle the given attribute;
-
-* ``supportsClass($class)``
-    will be used to check if the voter is able to grant or deny access for
-    an object of the given class;
-
-* ``vote(TokenInterface $token, $object, array $attributes)``
+``vote(TokenInterface $token, $object, array $attributes)``
     this method will do the actual voting and return a value equal to one
     of the class constants of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
     i.e. ``VoterInterface::ACCESS_GRANTED``, ``VoterInterface::ACCESS_DENIED``
@@ -113,9 +106,11 @@ on a "remember-me" cookie, or even authenticated anonymously?
 .. code-block:: php
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
+    use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+    use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 
-    $anonymousClass = 'Symfony\Component\Security\Core\Authentication\Token\AnonymousToken';
-    $rememberMeClass = 'Symfony\Component\Security\Core\Authentication\Token\RememberMeToken';
+    $anonymousClass = AnonymousToken::class;
+    $rememberMeClass = RememberMeToken::class;
 
     $trustResolver = new AuthenticationTrustResolver($anonymousClass, $rememberMeClass);
 
@@ -127,7 +122,7 @@ on a "remember-me" cookie, or even authenticated anonymously?
     // any object
     $object = ...;
 
-    $vote = $authenticatedVoter->vote($token, $object, array('IS_AUTHENTICATED_FULLY');
+    $vote = $authenticatedVoter->vote($token, $object, array('IS_AUTHENTICATED_FULLY'));
 
 RoleVoter
 ~~~~~~~~~
@@ -177,7 +172,7 @@ Roles
 
 Roles are objects that give expression to a certain right the user has.
 The only requirement is that they implement :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`,
-which means they should also have a :method:`Symfony\\Component\\Security\\Core\\Role\\Role\\RoleInterface::getRole`
+which means they should also have a :method:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface::getRole`
 method that returns a string representation of the role itself. The default
 :class:`Symfony\\Component\\Security\\Core\\Role\\Role` simply returns its
 first constructor argument::
@@ -186,8 +181,8 @@ first constructor argument::
 
     $role = new Role('ROLE_ADMIN');
 
-    // will echo 'ROLE_ADMIN'
-    echo $role->getRole();
+    // will show 'ROLE_ADMIN'
+    var_dump($role->getRole());
 
 .. note::
 
@@ -195,7 +190,7 @@ first constructor argument::
     which means that the roles given to its constructor will be
     automatically converted from strings to these simple ``Role`` objects.
 
-Using the decision manager
+Using the Decision Manager
 --------------------------
 
 The Access Listener
@@ -227,23 +222,25 @@ are required for the current user to get access to the application::
         $authenticationManager
     );
 
-Security context
-~~~~~~~~~~~~~~~~
+Authorization Checker
+~~~~~~~~~~~~~~~~~~~~~
 
 The access decision manager is also available to other parts of the application
-via the :method:`Symfony\\Component\\Security\\Core\\SecurityContext::isGranted`
-method of the :class:`Symfony\\Component\\Security\\Core\\SecurityContext`.
+via the :method:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationChecker::isGranted`
+method of the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationChecker`.
 A call to this method will directly delegate the question to the access
 decision manager::
 
-    use Symfony\Component\Security\SecurityContext;
+    use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-    $securityContext = new SecurityContext(
+    $authorizationChecker = new AuthorizationChecker(
+        $tokenStorage,
         $authenticationManager,
         $accessDecisionManager
     );
 
-    if (!$securityContext->isGranted('ROLE_ADMIN')) {
+    if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
     }
+

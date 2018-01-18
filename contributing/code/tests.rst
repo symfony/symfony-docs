@@ -1,114 +1,60 @@
-Running Symfony2 Tests
-======================
+.. _running-symfony2-tests:
 
-Before submitting a :doc:`patch <patches>` for inclusion, you need to run the
-Symfony2 test suite to check that you have not broken anything.
+Running Symfony Tests
+=====================
 
-PHPUnit
--------
+The Symfony project uses a third-party service which automatically runs tests
+for any submitted :doc:`patch <patches>`. If the new code breaks any test,
+the pull request will show an error message with a link to the full error details.
 
-To run the Symfony2 test suite, `install PHPUnit`_ 3.7 (or later) first.
+In any case, it's a good practice to run tests locally before submitting a
+:doc:`patch <patches>` for inclusion, to check that you have not broken anything.
 
-Dependencies (optional)
------------------------
+.. _phpunit:
+.. _dependencies_optional:
 
-To run the entire test suite, including tests that depend on external
-dependencies, Symfony2 needs to be able to autoload them. By default, they are
-autoloaded from ``vendor/`` under the main root directory (see
-``autoload.php.dist``).
+Before Running the Tests
+------------------------
 
-The test suite needs the following third-party libraries:
+To run the Symfony test suite, install the external dependencies used during the
+tests, such as Doctrine, Twig and Monolog. To do so,
+:doc:`install Composer </setup/composer>` and execute the following:
 
-* Doctrine
-* Swift Mailer
-* Twig
-* Monolog
+.. code-block:: terminal
 
-To install them all, use `Composer`_:
+    $ composer update
 
-Step 1: Get `Composer`_
+.. _running:
 
-.. code-block:: bash
+Running the Tests
+-----------------
 
-    $ curl -s http://getcomposer.org/installer | php
-
-Make sure you download ``composer.phar`` in the same folder where
-the ``composer.json`` file is located.
-
-Step 2: Install vendors
-
-.. code-block:: bash
-
-    $ php composer.phar --dev install
-
-.. note::
-
-    Note that the script takes some time to finish.
-
-.. note::
-
-    If you don't have ``curl`` installed, you can also just download the ``installer``
-    file manually at http://getcomposer.org/installer. Place this file into your
-    project and then run:
-
-    .. code-block:: bash
-
-        $ php installer
-        $ php composer.phar --dev install
-
-After installation, you can update the vendors to their latest version with
-the follow command:
-
-.. code-block:: bash
-
-    $ php composer.phar --dev update
-
-Running
--------
-
-First, update the vendors (see above).
-
-Then, run the test suite from the Symfony2 root directory with the following
+Then, run the test suite from the Symfony root directory with the following
 command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
-    $ phpunit
+    $ php ./phpunit symfony
 
-The output should display ``OK``. If not, you need to figure out what's going on
-and if the tests are broken because of your modifications.
-
-.. tip::
-
-    If you want to test a single component type its path after the ``phpunit``
-    command, e.g.:
-
-    .. code-block:: bash
-
-        $ phpunit src/Symfony/Component/Finder/
+The output should display ``OK``. If not, read the reported errors to figure out
+what's going on and if the tests are broken because of the new code.
 
 .. tip::
 
-    Run the test suite before applying your modifications to check that they
-    run fine on your configuration.
+    The entire Symfony suite can take up to several minutes to complete. If you
+    want to test a single component, type its path after the ``phpunit`` command,
+    e.g.:
 
-Code Coverage
--------------
+    .. code-block:: terminal
 
-If you add a new feature, you also need to check the code coverage by using
-the ``coverage-html`` option:
-
-.. code-block:: bash
-
-    $ phpunit --coverage-html=cov/
-
-Check the code coverage by opening the generated ``cov/index.html`` page in a
-browser.
+        $ php ./phpunit src/Symfony/Component/Finder/
 
 .. tip::
 
-    The code coverage only works if you have Xdebug enabled and all
-    dependencies installed.
+    On Windows, install the `Cmder`_, `ConEmu`_, `ANSICON`_ or `Mintty`_ free applications
+    to see colored test results.
 
-.. _install PHPUnit: http://www.phpunit.de/manual/current/en/installation.html
-.. _`Composer`: http://getcomposer.org/
+.. _Cmder: http://cmder.net/
+.. _ConEmu: https://conemu.github.io/
+.. _ANSICON: https://github.com/adoxa/ansicon/releases
+.. _Mintty: https://mintty.github.io/

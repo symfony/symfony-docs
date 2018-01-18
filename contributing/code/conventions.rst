@@ -1,7 +1,7 @@
 Conventions
 ===========
 
-The :doc:`standards` document describes the coding standards for the Symfony2
+The :doc:`standards` document describes the coding standards for the Symfony
 projects and the internal and third-party bundles. This document describes
 coding standards and conventions used in the core framework to make it more
 consistent and predictable. You are encouraged to follow them in your own
@@ -75,7 +75,7 @@ must be used instead (where ``XXX`` is the name of the related thing):
     While "setXXX" and "replaceXXX" are very similar, there is one notable
     difference: "setXXX" may replace, or add new elements to the relation.
     "replaceXXX", on the other hand, cannot add new elements. If an unrecognized
-    key as passed to "replaceXXX" it must throw an exception.
+    key is passed to "replaceXXX" it must throw an exception.
 
 .. _contributing-code-conventions-deprecations:
 
@@ -92,7 +92,7 @@ A feature is marked as deprecated by adding a ``@deprecated`` phpdoc to
 relevant classes, methods, properties, ...::
 
     /**
-     * @deprecated Deprecated since version 2.X, to be removed in 2.Y. Use XXX instead.
+     * @deprecated since version 2.8, to be removed in 3.0. Use XXX instead.
      */
 
 The deprecation message should indicate the version when the class/method was
@@ -103,7 +103,30 @@ A PHP ``E_USER_DEPRECATED`` error must also be triggered to help people with
 the migration starting one or two minor versions before the version where the
 feature will be removed (depending on the criticality of the removal)::
 
-    trigger_error(
-        'XXX() is deprecated since version 2.X and will be removed in 2.Y. Use XXX instead.',
-        E_USER_DEPRECATED
-    );
+    @trigger_error('XXX() is deprecated since version 2.8 and will be removed in 3.0. Use XXX instead.', E_USER_DEPRECATED);
+
+Without the `@-silencing operator`_, users would need to opt-out from deprecation
+notices. Silencing swaps this behavior and allows users to opt-in when they are
+ready to cope with them (by adding a custom error handler like the one used by
+the Web Debug Toolbar or by the PHPUnit bridge).
+
+.. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php
+
+When deprecating a whole class the ``trigger_error()`` call should be placed
+between the namespace and the use declarations, like in this example from
+`ArrayParserCache`_::
+
+    namespace Symfony\Component\ExpressionLanguage\ParserCache;
+
+    @trigger_error('The '.__NAMESPACE__.'\ArrayParserCache class is deprecated since version 3.2 and will be removed in 4.0. Use the Symfony\Component\Cache\Adapter\ArrayAdapter class instead.', E_USER_DEPRECATED);
+
+    use Symfony\Component\ExpressionLanguage\ParsedExpression;
+
+    /**
+     * @author Adrien Brault <adrien.brault@gmail.com>
+     *
+     * @deprecated ArrayParserCache class is deprecated since version 3.2 and will be removed in 4.0. Use the Symfony\Component\Cache\Adapter\ArrayAdapter class instead.
+     */
+    class ArrayParserCache implements ParserCacheInterface
+
+.. _`ArrayParserCache`: https://github.com/symfony/symfony/blob/3.2/src/Symfony/Component/ExpressionLanguage/ParserCache/ArrayParserCache.php

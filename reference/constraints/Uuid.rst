@@ -1,9 +1,6 @@
 Uuid
 ====
 
-.. versionadded:: 2.5
-    The Uuid constraint was introduced in Symfony 2.5.
-
 Validates that a value is a valid `Universally unique identifier (UUID)`_ per `RFC 4122`_.
 By default, this will validate the format according to the RFC's guidelines, but this can
 be relaxed to accept non-standard UUIDs that other systems (like PostgreSQL) accept.
@@ -15,6 +12,7 @@ UUID versions can also be restricted using a whitelist.
 | Options        | - `message`_                                                        |
 |                | - `strict`_                                                         |
 |                | - `versions`_                                                       |
+|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Uuid`           |
 +----------------+---------------------------------------------------------------------+
@@ -28,16 +26,16 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/UploadsBundle/Resources/config/validation.yml
-        Acme\UploadsBundle\Entity\File:
+        # config/validator/validation.yaml
+        App\Entity\File:
             properties:
                 identifier:
                     - Uuid: ~
 
     .. code-block:: php-annotations
 
-        // src/Acme/UploadsBundle/Entity/File.php
-        namespace Acme\UploadsBundle\Entity;
+        // src/Entity/File.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -51,13 +49,13 @@ Basic Usage
 
     .. code-block:: xml
 
-        <!-- src/Acme/UploadsBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\UploadsBundle\Entity\File">
+            <class name="App\Entity\File">
                 <property name="identifier">
                     <constraint name="Uuid" />
                 </property>
@@ -66,8 +64,8 @@ Basic Usage
 
     .. code-block:: php
 
-        // src/Acme/UploadsBundle/Entity/File.php
-        namespace Acme\UploadsBundle\Entity;
+        // src/Entity/File.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -79,7 +77,6 @@ Basic Usage
                 $metadata->addPropertyConstraint('identifier', new Assert\Uuid());
             }
         }
-
 
 Options
 -------
@@ -119,6 +116,8 @@ The following PHP constants can also be used:
 * ``Uuid::V5_SHA1``
 
 All five versions are allowed by default.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Universally unique identifier (UUID)`: http://en.wikipedia.org/wiki/Universally_unique_identifier
 .. _`RFC 4122`: http://tools.ietf.org/html/rfc4122

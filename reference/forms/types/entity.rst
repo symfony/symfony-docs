@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; choice
+   single: Forms; Fields; EntityType
 
-entity Field Type
-=================
+EntityType Field
+================
 
-A special ``choice`` field that's designed to load options from a Doctrine
+A special ``ChoiceType`` field that's designed to load options from a Doctrine
 entity. For example, if you have a ``Category`` entity, you could use this
 field to display a ``select`` field of all, or some, of the ``Category``
 objects from the database.
@@ -12,32 +12,41 @@ objects from the database.
 +-------------+------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)     |
 +-------------+------------------------------------------------------------------+
-| Options     | - `class`_                                                       |
-|             | - `data_class`_                                                  |
-|             | - `property`_                                                    |
-|             | - `group_by`_                                                    |
-|             | - `query_builder`_                                               |
+| Options     | - `choice_label`_                                                |
+|             | - `class`_                                                       |
 |             | - `em`_                                                          |
+|             | - `query_builder`_                                               |
 +-------------+------------------------------------------------------------------+
-| Overridden  | - `choices`_                                                     |
-| Options     | - `choice_list`_                                                 |
+| Overridden  | - `choice_name`_                                                 |
+| options     | - `choice_value`_                                                |
+|             | - `choices`_                                                     |
+|             | - `data_class`_                                                  |
 +-------------+------------------------------------------------------------------+
-| Inherited   | - `multiple`_                                                    |
-| options     | - `expanded`_                                                    |
+| Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`:      |
+| options     |                                                                  |
+|             | - `choice_attr`_                                                 |
+|             | - `choice_translation_domain`_                                   |
+|             | - `expanded`_                                                    |
+|             | - `group_by`_                                                    |
+|             | - `multiple`_                                                    |
+|             | - `placeholder`_                                                 |
 |             | - `preferred_choices`_                                           |
-|             | - `empty_value`_                                                 |
-|             | - `empty_data`_                                                  |
-|             | - `required`_                                                    |
-|             | - `label`_                                                       |
-|             | - `label_attr`_                                                  |
+|             | - `translation_domain`_                                          |
+|             |                                                                  |
+|             | from the :doc:`FormType </reference/forms/types/form>`:          |
+|             |                                                                  |
 |             | - `data`_                                                        |
-|             | - `read_only`_                                                   |
 |             | - `disabled`_                                                    |
+|             | - `empty_data`_                                                  |
 |             | - `error_bubbling`_                                              |
 |             | - `error_mapping`_                                               |
+|             | - `label`_                                                       |
+|             | - `label_attr`_                                                  |
+|             | - `label_format`_                                                |
 |             | - `mapped`_                                                      |
+|             | - `required`_                                                    |
 +-------------+------------------------------------------------------------------+
-| Parent type | :doc:`choice </reference/forms/types/choice>`                    |
+| Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                |
 +-------------+------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`       |
 +-------------+------------------------------------------------------------------+
@@ -48,33 +57,47 @@ Basic Usage
 The ``entity`` type has just one required option: the entity which should
 be listed inside the choice field::
 
-    $builder->add('users', 'entity', array(
-        'class' => 'AcmeHelloBundle:User',
-        'property' => 'username',
+    use App\Entity\User;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    // ...
+
+    $builder->add('users', EntityType::class, array(
+        // query choices from this entity
+        'class' => User::class,
+
+        // use the User.username property as the visible option string
+        'choice_label' => 'username',
+
+        // used to render a select box, check boxes or radios
+        // 'multiple' => true,
+        // 'expanded' => true,
     ));
 
-In this case, all ``User`` objects will be loaded from the database and rendered
-as either a ``select`` tag, a set or radio buttons or a series of checkboxes
-(this depends on the ``multiple`` and ``expanded`` values).
-If the entity object does not have a ``__toString()`` method the ``property`` option
-is needed.
+This will build a ``select`` drop-down containing *all* of the ``User`` objects
+in the database. To render radio buttons or checkboxes instead, change the
+`multiple`_ and `expanded`_ options.
+
+.. _ref-form-entity-query-builder:
 
 Using a Custom Query for the Entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you need to specify a custom query to use when fetching the entities (e.g.
-you only want to return some entities, or need to order them), use the ``query_builder``
-option. The easiest way to use the option is as follows::
+If you want to create a custom query to use when fetching the entities
+(e.g. you only want to return some entities, or need to order them), use
+the `query_builder`_ option::
 
+    use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
-    $builder->add('users', 'entity', array(
-        'class' => 'AcmeHelloBundle:User',
-        'query_builder' => function(EntityRepository $er) {
+    $builder->add('users', EntityType::class, array(
+        'class' => User::class,
+        'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },
+        'choice_label' => 'username',
     ));
 
 .. _reference-forms-entity-choices:
@@ -82,14 +105,19 @@ option. The easiest way to use the option is as follows::
 Using Choices
 ~~~~~~~~~~~~~
 
-If you already have the exact collection of entities that you want included
-in the choice element, you can simply pass them via the ``choices`` key.
+If you already have the exact collection of entities that you want to include
+in the choice element, just pass them via the ``choices`` key.
+
 For example, if you have a ``$group`` variable (passed into your form perhaps
-as a form option) and ``getUsers`` returns a collection of ``User`` entities,
+as a form option) and ``getUsers()`` returns a collection of ``User`` entities,
 then you can supply the ``choices`` option directly::
 
-    $builder->add('users', 'entity', array(
-        'class' => 'AcmeHelloBundle:User',
+    use App\Entity\User;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    // ...
+
+    $builder->add('users', EntityType::class, array(
+        'class' => User::class,
         'choices' => $group->getUsers(),
     ));
 
@@ -98,135 +126,189 @@ then you can supply the ``choices`` option directly::
 Field Options
 -------------
 
+choice_label
+~~~~~~~~~~~~
+
+**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath`
+
+This is the property that should be used for displaying the entities as text in
+the HTML element::
+
+    use App\Entity\Category;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    // ...
+
+    $builder->add('category', EntityType::class, array(
+        'class' => Category::class,
+        'choice_label' => 'displayName',
+    ));
+
+If left blank, the entity object will be cast to a string and so must have a ``__toString()``
+method. You can also pass a callback function for more control::
+
+    use App\Entity\Category;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    // ...
+
+    $builder->add('category', EntityType::class, array(
+        'class' => Category::class,
+        'choice_label' => function ($category) {
+            return $category->getDisplayName();
+        }
+    ));
+
+The method is called for each entity in the list and passed to the function. For
+more details, see the main :ref:`choice_label <reference-form-choice-label>` documentation.
+
+.. note::
+
+    When passing a string, the ``choice_label`` option is a property path. So you
+    can use anything supported by the
+    :doc:`PropertyAccessor component </components/property_access>`
+
+    For example, if the translations property is actually an associative
+    array of objects, each with a name property, then you could do this::
+
+        use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+        // ...
+
+        $builder->add('genre', EntityType::class, array(
+           'class' => 'App\Entity\Genre',
+           'choice_label' => 'translations[en].name',
+        ));
+
 class
 ~~~~~
 
 **type**: ``string`` **required**
 
-The class of your entity (e.g. ``AcmeStoreBundle:Category``). This can be
-a fully-qualified class name (e.g. ``Acme\StoreBundle\Entity\Category``)
+The class of your entity (e.g. ``App:Category``). This can be
+a fully-qualified class name (e.g. ``App\Entity\Category``)
 or the short alias name (as shown prior).
-
-.. include:: /reference/forms/types/options/data_class.rst.inc
-
-property
-~~~~~~~~
-
-**type**: ``string``
-
-This is the property that should be used for displaying the entities
-as text in the HTML element. If left blank, the entity object will be
-cast into a string and so must have a ``__toString()`` method.
-
-.. note::
-
-    The ``property`` option is the property path used to display the option. So you
-    can use anything supported by the
-    :doc:`PropertyAccessor component </components/property_access/introduction>`
-
-    For example, if the translations property is actually an associative array of
-    objects, each with a name property, then you could do this::
-
-        $builder->add('gender', 'entity', array(
-           'class' => 'MyBundle:Gender',
-           'property' => 'translations[en].name',
-        ));
-
-group_by
-~~~~~~~~
-
-**type**: ``string``
-
-This is a property path (e.g. ``author.name``) used to organize the
-available choices in groups. It only works when rendered as a select tag
-and does so by adding ``optgroup`` elements around options. Choices that do not
-return a value for this property path are rendered directly under the
-select tag, without a surrounding optgroup.
-
-query_builder
-~~~~~~~~~~~~~
-
-**type**: ``Doctrine\ORM\QueryBuilder`` or a Closure
-
-If specified, this is used to query the subset of options (and their
-order) that should be used for the field. The value of this option can
-either be a ``QueryBuilder`` object or a Closure. If using a Closure,
-it should take a single argument, which is the ``EntityRepository`` of
-the entity.
 
 em
 ~~
 
-**type**: ``string`` **default**: the default entity manager
+**type**: ``string`` | ``Doctrine\Common\Persistence\ObjectManager`` **default**: the default entity manager
 
-If specified, the specified entity manager will be used to load the choices
-instead of the default entity manager.
+If specified, this entity manager will be used to load the choices
+instead of the ``default`` entity manager.
 
+query_builder
+~~~~~~~~~~~~~
+
+**type**: ``Doctrine\ORM\QueryBuilder`` or a ``callable`` **default**: ``null``
+
+Allows you to create a custom query for your choices. See
+:ref:`ref-form-entity-query-builder` for an example.
+
+The value of this option can either be a ``QueryBuilder`` object, a callable or
+``null`` (which will load all entities). When using a callable, you will be
+passed the ``EntityRepository`` of the entity as the only argument and should
+return a ``QueryBuilder``. Returning ``null`` in the Closure will result in
+loading all entities.
+
+.. caution::
+
+    The entity used in the ``FROM`` clause of the `query_builder`_ option
+    will always be validated against the class which you have specified with
+    the form's `class`_ option. If you return another entity instead of the
+    one used in your ``FROM`` clause (for instance if you return an entity
+    from a joined table), it will break validation.
+    
 Overridden Options
 ------------------
+
+.. include:: /reference/forms/types/options/choice_name.rst.inc
+
+In the ``EntityType``, this defaults to the ``id`` of the entity, if it can
+be read. Otherwise, it falls back to using auto-incrementing integers.
+
+.. include:: /reference/forms/types/options/choice_value.rst.inc
+
+In the ``EntityType``, this is overridden to use the ``id`` by default. When the
+``id`` is used, Doctrine only queries for the objects for the ids that were actually
+submitted.
 
 choices
 ~~~~~~~
 
-**type**:  array || ``\Traversable`` **default**: ``null``
+**type**:  ``array`` | ``\Traversable`` **default**: ``null``
 
 Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.
 See :ref:`reference-forms-entity-choices`.
 
-choice_list
-~~~~~~~~~~~
+data_class
+~~~~~~~~~~
 
-**default**: :class:`Symfony\\Bridge\\Doctrine\\Form\\ChoiceList\\EntityChoiceList`
+**type**: ``string`` **default**: ``null``
 
-The purpose of the ``entity`` type is to create and configure this ``EntityChoiceList``
-for you, by using all of the above options. If you need to override this
-option, you may just consider using the :doc:`/reference/forms/types/choice`
-directly.
+This option is not used in favor of the ``class`` option which is required
+to query the entities.
 
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`choice </reference/forms/types/choice>` type:
+These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
+
+.. include:: /reference/forms/types/options/choice_attr.rst.inc
+
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+
+.. include:: /reference/forms/types/options/expanded.rst.inc
+
+.. include:: /reference/forms/types/options/group_by.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
 .. note::
 
-    If you are working with a collection of Doctrine entities, it will be helpful
-    to read the documentation for the :doc:`/reference/forms/types/collection`
-    as well. In addition, there is a complete example in the cookbook article
-    :doc:`/cookbook/form/form_collections`.
+    If you are working with a collection of Doctrine entities, it will be
+    helpful to read the documentation for the
+    :doc:`/reference/forms/types/collection` as well. In addition, there
+    is a complete example in the :doc:`/form/form_collections` article.
 
-.. include:: /reference/forms/types/options/expanded.rst.inc
+.. include:: /reference/forms/types/options/placeholder.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 .. note::
 
-    This option expects an array of entity objects, unlike the ``choice`` field
-    that requires an array of keys.
+    This option expects an array of entity objects (that's actually the same as with
+    the ``ChoiceType`` field, which requires an array of the preferred "values").
 
-.. include:: /reference/forms/types/options/empty_value.rst.inc
+.. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
+These options inherit from the :doc:`form </reference/forms/types/form>`
+type:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The actual default value of this option depends on other field options:
+
+* If ``multiple`` is ``false`` and ``expanded`` is ``false``, then ``''``
+  (empty string);
+* Otherwise ``array()`` (empty array).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc

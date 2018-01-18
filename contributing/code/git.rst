@@ -18,8 +18,8 @@ this pattern:
     merged branch USER_NAME/BRANCH_NAME (PR #1111)
 
 The PR reference allows you to have a look at the original pull request on
-Github: https://github.com/symfony/symfony/pull/1111. But all the information
-you can get on Github is also available from the repository itself.
+GitHub: https://github.com/symfony/symfony/pull/1111. But all the information
+you can get on GitHub is also available from the repository itself.
 
 The merge commit message contains the original message from the author of the
 changes. Often, this can help understand what the changes were about and the
@@ -34,9 +34,9 @@ your ``.git/config`` file:
 
     fetch = +refs/notes/*:refs/notes/*
 
-After a fetch, getting the Github discussion for a commit is then a matter of
+After a fetch, getting the GitHub discussion for a commit is then a matter of
 adding ``--show-notes=github-comments`` to the ``git show`` command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git show HEAD --show-notes=github-comments

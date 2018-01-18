@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; url
+   single: Forms; Fields; UrlType
 
-url Field Type
-==============
+UrlType Field
+=============
 
-The ``url`` field is a text field that prepends the submitted value with
+The ``UrlType`` field is a text field that prepends the submitted value with
 a given protocol (e.g. ``http://``) if the submitted value doesn't already
 have a protocol.
 
@@ -13,20 +13,19 @@ have a protocol.
 +-------------+-------------------------------------------------------------------+
 | Options     | - `default_protocol`_                                             |
 +-------------+-------------------------------------------------------------------+
-| Inherited   | - `max_length`_ (deprecated as of 2.5)                            |
-| options     | - `empty_data`_                                                   |
-|             | - `required`_                                                     |
-|             | - `label`_                                                        |
-|             | - `label_attr`_                                                   |
-|             | - `data`_                                                         |
-|             | - `trim`_                                                         |
-|             | - `read_only`_                                                    |
-|             | - `disabled`_                                                     |
+| Inherited   | - `data`_                                                         |
+| options     | - `disabled`_                                                     |
+|             | - `empty_data`_                                                   |
 |             | - `error_bubbling`_                                               |
 |             | - `error_mapping`_                                                |
+|             | - `label`_                                                        |
+|             | - `label_attr`_                                                   |
+|             | - `label_format`_                                                 |
 |             | - `mapped`_                                                       |
+|             | - `required`_                                                     |
+|             | - `trim`_                                                         |
 +-------------+-------------------------------------------------------------------+
-| Parent type | :doc:`text </reference/forms/types/text>`                         |
+| Parent type | :doc:`TextType </reference/forms/types/text>`                     |
 +-------------+-------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\UrlType` |
 +-------------+-------------------------------------------------------------------+
@@ -46,28 +45,32 @@ the data is submitted to the form.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
-
-.. include:: /reference/forms/types/options/max_length.rst.inc
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/trim.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :end-before: DEFAULT_PLACEHOLDER
+
+The default value is ``''`` (the empty string).
+
+.. include:: /reference/forms/types/options/empty_data.rst.inc
+    :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/trim.rst.inc

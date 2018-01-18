@@ -1,13 +1,14 @@
-The Symfony Standard Edition Bundles
-====================================
+:orphan:
+
+Bundles
+=======
 
 .. toctree::
-    :hidden:
+    :maxdepth: 2
 
-    SensioFrameworkExtraBundle/index
-    SensioGeneratorBundle/index
-    DoctrineFixturesBundle/index
-    DoctrineMigrationsBundle/index
-    DoctrineMongoDBBundle/index
-
-.. include:: /bundles/map.rst.inc
+    override
+    inheritance
+    best_practices
+    configuration
+    extension
+    prepend_extension

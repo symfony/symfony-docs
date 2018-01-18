@@ -1,47 +1,68 @@
-Symfony2 Documentation
-======================
+.. _symfony2-documentation:
 
-.. toctree::
-    :hidden:
-
-    changelog
+Symfony Documentation
+=====================
 
 Quick Tour
 ----------
 
-Get started fast with the Symfony2 :doc:`Quick Tour <quick_tour/index>`:
+Get started fast with the Symfony :doc:`Quick Tour <quick_tour/index>`:
 
 .. toctree::
     :hidden:
 
     quick_tour/index
 
-* :doc:`quick_tour/the_big_picture` >
-* :doc:`quick_tour/the_view` >
-* :doc:`quick_tour/the_controller` >
+* :doc:`quick_tour/the_big_picture`
+* :doc:`quick_tour/flex_recipes`
 * :doc:`quick_tour/the_architecture`
 
-Book
-----
+Getting Started
+---------------
 
-Dive into Symfony2 with the topical guides:
+.. toctree::
+    :maxdepth: 2
+
+    getting_started/index
+
+Topics
+------
+
+.. toctree::
+    :maxdepth: 1
+
+    bundles
+    console
+    doctrine
+    deployment
+    email
+    event_dispatcher
+    forms
+    frontend
+    http_cache
+    logging
+    performance
+    profiler
+    routing
+    security
+    session
+    setup
+    serializer
+    service_container
+    testing
+    translation
+    validation
+    workflow
+
+Best Practices
+--------------
 
 .. toctree::
     :hidden:
 
-    book/index
+    best_practices/index
 
-.. include:: /book/map.rst.inc
-
-Cookbook
---------
-
-.. toctree::
-    :hidden:
-
-    cookbook/index
-
-Read the :doc:`Cookbook </cookbook/index>`.
+Read the :doc:`Official Best Practices </best_practices/index>`.
 
 Components
 ----------
@@ -65,33 +86,10 @@ Get answers quickly with reference documents:
 
 .. include:: /reference/map.rst.inc
 
-Bundles
--------
-
-The Symfony Standard Edition comes with some bundles. Learn more about them:
-
-.. toctree::
-    :hidden:
-
-    bundles/index
-
-.. include:: /bundles/map.rst.inc
-
-CMF
----
-
-The Symfony CMF project makes it easier for developers to add CMS functionality
-to applications built with the Symfony2 PHP framework.
-
-.. toctree::
-    :hidden:
-
-    cmf/index
-
 Contributing
 ------------
 
-Contribute to Symfony2:
+Contribute to Symfony:
 
 .. toctree::
     :hidden:
@@ -99,3 +97,15 @@ Contribute to Symfony2:
     contributing/index
 
 .. include:: /contributing/map.rst.inc
+
+Create your Own Framework
+-------------------------
+
+Want to create your own framework based on Symfony?
+
+.. toctree::
+    :hidden:
+
+    create_framework/index
+
+.. include:: /create_framework/map.rst.inc

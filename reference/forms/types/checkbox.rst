@@ -1,33 +1,36 @@
 .. index::
-   single: Forms; Fields; checkbox
+   single: Forms; Fields; CheckboxType
 
-checkbox Field Type
-===================
+CheckboxType Field
+==================
 
-Creates a single input checkbox. This should always be used for a field that
-has a Boolean value: if the box is checked, the field will be set to true,
-if the box is unchecked, the value will be set to false. Optionally you can specify values that, when submitted, will be evaluated to false as well (this differs from what HTTP defines, but can be helpful if you want to handle strings '0' / '1' with the CheckBoxType).
+Creates a single input checkbox. This should always be used for a field
+that has a boolean value: if the box is checked, the field will be set to
+true, if the box is unchecked, the value will be set to false. Optionally
+you can specify an array of values that, if submitted, will be evaluated
+to "false" as well (this differs from what HTTP defines, but can be handy
+if you want to handle submitted values like "0" or "false").
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``checkbox`` field                                           |
 +-------------+------------------------------------------------------------------------+
 | Options     | - `value`_                                                             |
-| Options     | - `false_values`_                                                      |
+|             | - `false_values`_                                                      |
 +-------------+------------------------------------------------------------------------+
-| Overridden  | - `empty_data`_                                                        |
-| options     | - `compound`_                                                          |
+| Overridden  | - `compound`_                                                          |
+| options     | - `empty_data`_                                                        |
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `data`_                                                              |
-| options     | - `required`_                                                          |
-|             | - `label`_                                                             |
-|             | - `label_attr`_                                                        |
-|             | - `read_only`_                                                         |
-|             | - `disabled`_                                                          |
+| options     | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
+|             | - `label`_                                                             |
+|             | - `label_attr`_                                                        |
+|             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
+|             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                              |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |
 +-------------+------------------------------------------------------------------------+
@@ -37,9 +40,12 @@ Example Usage
 
 .. code-block:: php
 
-    $builder->add('public', 'checkbox', array(
-        'label'     => 'Show this entry publicly?',
-        'required'  => false,
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    // ...
+
+    $builder->add('public', CheckboxType::class, array(
+        'label'    => 'Show this entry publicly?',
+        'required' => false,
     ));
 
 Field Options
@@ -50,24 +56,16 @@ Field Options
 Overridden Options
 ------------------
 
-.. include:: /reference/forms/types/options/checkbox_empty_data.rst.inc
-
 .. include:: /reference/forms/types/options/checkbox_compound.rst.inc
+
+.. include:: /reference/forms/types/options/checkbox_empty_data.rst.inc
 
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
-
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
@@ -75,7 +73,15 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/label.rst.inc
+
+.. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/required.rst.inc
 
 Form Variables
 --------------

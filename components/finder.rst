@@ -5,8 +5,8 @@
 The Finder Component
 ====================
 
-   The Finder component finds files and directories via an intuitive fluent
-   interface.
+    The Finder component finds files and directories via an intuitive fluent
+    interface.
 
 Installation
 ------------
@@ -14,7 +14,9 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/finder`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Finder).
+* Use the official Git repository (https://github.com/symfony/finder).
+
+.. include:: /components/require_autoload.rst.inc
 
 Usage
 -----
@@ -28,18 +30,18 @@ directories::
     $finder->files()->in(__DIR__);
 
     foreach ($finder as $file) {
-        // Print the absolute path
-        print $file->getRealpath()."\n";
+        // Dump the absolute path
+        var_dump($file->getRealPath());
 
-        // Print the relative path to the file, omitting the filename
-        print $file->getRelativePath()."\n";
+        // Dump the relative path to the file, omitting the filename
+        var_dump($file->getRelativePath());
 
-        // Print the relative path to the file
-        print $file->getRelativePathname()."\n";
+        // Dump the relative path to the file
+        var_dump($file->getRelativePathname());
     }
 
 The ``$file`` is an instance of :class:`Symfony\\Component\\Finder\\SplFileInfo`
-which extends :phpclass:`SplFileInfo` to provide methods to work with relative
+which extends PHP's own :phpclass:`SplFileInfo` to provide methods to work with relative
 paths.
 
 The above code prints the names of all the files in the current directory
@@ -48,10 +50,16 @@ the Finder instance.
 
 .. tip::
 
-    A Finder instance is a PHP :phpclass:`Iterator`. So, instead of iterating over the
+    A Finder instance is a PHP :phpclass:`Iterator`. So, in addition to iterating over the
     Finder with ``foreach``, you can also convert it to an array with the
     :phpfunction:`iterator_to_array` method, or get the number of items with
     :phpfunction:`iterator_count`.
+
+.. caution::
+
+    The ``Finder`` object doesn't reset its internal state automatically.
+    This means that you need to create a new instance if you do not want
+    get mixed results.
 
 .. caution::
 
@@ -67,7 +75,9 @@ the Finder instance.
 Criteria
 --------
 
-There are lots of ways to filter and sort your results.
+There are lots of ways to filter and sort your results. You can also use the
+:method:`Symfony\\Component\\Finder\\Finder::hasResults` method to check if
+there's any file or directory matching the search criteria.
 
 Location
 ~~~~~~~~
@@ -80,7 +90,11 @@ directory to use for the search::
 Search in several locations by chaining calls to
 :method:`Symfony\\Component\\Finder\\Finder::in`::
 
-    $finder->files()->in(__DIR__)->in('/elsewhere');
+    // search inside *both* directories
+    $finder->in(array(__DIR__, '/elsewhere'));
+
+    // same as above
+    $finder->in(__DIR__)->in('/elsewhere');
 
 Use wildcard characters to search in the directories matching a pattern::
 
@@ -92,10 +106,6 @@ Exclude directories from matching with the
 :method:`Symfony\\Component\\Finder\\Finder::exclude` method::
 
     $finder->in(__DIR__)->exclude('ruby');
-
-.. versionadded:: 2.3
-   The :method:`Symfony\\Component\\Finder\\Finder::ignoreUnreadableDirs`
-   method was introduced in Symfony 2.3.
 
 It's also possible to ignore directories that you don't have permission to read::
 
@@ -111,14 +121,12 @@ And it also works with user-defined streams::
     use Symfony\Component\Finder\Finder;
 
     $s3 = new \Zend_Service_Amazon_S3($key, $secret);
-    $s3->registerStreamWrapper("s3");
+    $s3->registerStreamWrapper('s3');
 
     $finder = new Finder();
     $finder->name('photos*')->size('< 100K')->date('since 1 hour ago');
     foreach ($finder->in('s3://bucket-name') as $file) {
-        // ... do something
-
-        print $file->getFilename()."\n";
+        // ... do something with the file
     }
 
 .. note::
@@ -163,7 +171,7 @@ You can also define your own sorting algorithm with ``sort()`` method::
 
     $sort = function (\SplFileInfo $a, \SplFileInfo $b)
     {
-        return strcmp($a->getRealpath(), $b->getRealpath());
+        return strcmp($a->getRealPath(), $b->getRealPath());
     };
 
     $finder->sort($sort);
@@ -206,7 +214,10 @@ Path
 Restrict files and directories by path with the
 :method:`Symfony\\Component\\Finder\\Finder::path` method::
 
-    $finder->path('some/special/dir');
+    // matches files that contain "data" anywhere in their paths (files or directories)
+    $finder->path('data');
+    // for example this will match data/*.xml and data.xml if they exist
+    $finder->path('data')->name('*.xml');
 
 On all platforms slash (i.e. ``/``) should be used as the directory separator.
 
@@ -289,7 +300,7 @@ it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
 instance. The file is excluded from the result set if the Closure returns
 ``false``.
 
-Reading contents of returned files
+Reading Contents of Returned Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The contents of returned files can be read with
@@ -302,7 +313,8 @@ The contents of returned files can be read with
 
     foreach ($finder as $file) {
         $contents = $file->getContents();
-        ...
+
+        // ...
     }
 
 .. _strtotime:    http://www.php.net/manual/en/datetime.formats.php

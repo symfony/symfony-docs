@@ -12,7 +12,9 @@ Installation
 You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/filesystem`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Filesystem).
+* Use the official Git repository (https://github.com/symfony/filesystem).
+
+.. include:: /components/require_autoload.rst.inc
 
 Usage
 -----
@@ -26,14 +28,10 @@ endpoint for filesystem operations::
     $fs = new Filesystem();
 
     try {
-        $fs->mkdir('/tmp/random/dir/' . mt_rand());
+        $fs->mkdir('/tmp/random/dir/'.mt_rand());
     } catch (IOExceptionInterface $e) {
         echo "An error occurred while creating your directory at ".$e->getPath();
     }
-
-.. versionadded:: 2.4
-    The ``IOExceptionInterface`` and its ``getPath`` method were introduced in
-    Symfony 2.4. Prior to 2.4, you would catch the ``IOException`` class.
 
 .. note::
 
@@ -47,11 +45,11 @@ endpoint for filesystem operations::
     string, an array or any object implementing :phpclass:`Traversable` as
     the target argument.
 
-Mkdir
+mkdir
 ~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory.
-On posix filesystems, directories are created with a default mode value
+:method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory recursively.
+On POSIX filesystems, directories are created with a default mode value
 `0777`. You can use the second argument to set your own mode::
 
     $fs->mkdir('/tmp/photos', 0700);
@@ -61,16 +59,28 @@ On posix filesystems, directories are created with a default mode value
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Exists
+.. note::
+
+    This function ignores already existing directories.
+
+.. note::
+
+    The directory permissions are affected by the current `umask`_.
+    Set the umask for your webserver, use PHP's :phpfunction:`umask`
+    function or use the :phpfunction:`chmod` function after the
+    directory has been created.
+
+exists
 ~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::exists` checks for the
-presence of all files or directories and returns ``false`` if a file is missing::
+presence of one or more files or directories and returns ``false`` if any of
+them is missing::
 
     // this directory exists, return true
     $fs->exists('/tmp/photos');
 
-    // rabbit.jpg exists, bottle.png does not exists, return false
+    // rabbit.jpg exists, bottle.png does not exist, return false
     $fs->exists(array('rabbit.jpg', 'bottle.png'));
 
 .. note::
@@ -78,13 +88,14 @@ presence of all files or directories and returns ``false`` if a file is missing:
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Copy
+copy
 ~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::copy` is used to copy
-files. If the target already exists, the file is copied only if the source
-modification date is later than the target. This behavior can be overridden by
-the third boolean argument::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::copy` makes a copy of a
+single file (use :method:`Symfony\\Component\\Filesystem\\Filesystem::mirror` to
+copy directories). If the target already exists, the file is copied only if the
+source modification date is later than the target. This behavior can be overridden
+by the third boolean argument::
 
     // works only if image-ICC has been modified after image.jpg
     $fs->copy('image-ICC.jpg', 'image.jpg');
@@ -92,7 +103,7 @@ the third boolean argument::
     // image.jpg will be overridden
     $fs->copy('image-ICC.jpg', 'image.jpg', true);
 
-Touch
+touch
 ~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::touch` sets access and
@@ -111,11 +122,11 @@ your own with the second argument. The third argument is the access time::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Chown
+chown
 ~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::chown` is used to change
-the owner of a file. The third argument is a boolean recursive option::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::chown` changes the owner of
+a file. The third argument is a boolean recursive option::
 
     // set the owner of the lolcat video to www-data
     $fs->chown('lolcat.mp4', 'www-data');
@@ -127,11 +138,11 @@ the owner of a file. The third argument is a boolean recursive option::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Chgrp
+chgrp
 ~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` is used to change
-the group of a file. The third argument is a boolean recursive option::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` changes the group of
+a file. The third argument is a boolean recursive option::
 
     // set the group of the lolcat video to nginx
     $fs->chgrp('lolcat.mp4', 'nginx');
@@ -143,11 +154,11 @@ the group of a file. The third argument is a boolean recursive option::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Chmod
+chmod
 ~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::chmod` is used to change
-the mode of a file. The fourth argument is a boolean recursive option::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::chmod` changes the mode or
+permissions of a file. The fourth argument is a boolean recursive option::
 
     // set the mode of the video to 0600
     $fs->chmod('video.ogg', 0600);
@@ -159,11 +170,11 @@ the mode of a file. The fourth argument is a boolean recursive option::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Remove
+remove
 ~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::remove` is used to remove
-files, symlinks, directories easily::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::remove` deletes files,
+directories and symlinks::
 
     $fs->remove(array('symlink', '/path/to/directory', 'activity.log'));
 
@@ -172,11 +183,11 @@ files, symlinks, directories easily::
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
 
-Rename
+rename
 ~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::rename` is used to rename
-files and directories::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::rename` changes the name
+of a single file or directory::
 
     // rename a file
     $fs->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
@@ -196,25 +207,58 @@ support symbolic links, a third boolean argument is available::
     // does not support symbolic links
     $fs->symlink('/path/to/source', '/path/to/destination', true);
 
+readlink
+~~~~~~~~
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` read links targets.
+
+PHP's ``readlink()`` function returns the target of a symbolic link. However, its behavior
+is completely different under Windows and Unix. On Windows systems, ``readlink()``
+resolves recursively the children links of a link until a final target is found. On
+Unix-based systems ``readlink()`` only resolves the next link.
+
+The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method provided
+by the Filesystem component always behaves in the same way::
+
+    // returns the next direct target of the link without considering the existence of the target
+    $fs->readlink('/path/to/link');
+
+    // returns its absolute fully resolved final version of the target (if there are nested links, they are resolved)
+    $fs->readlink('/path/to/link', true);
+
+Its behavior is the following::
+
+    public function readlink($path, $canonicalize = false)
+
+* When ``$canonicalize`` is ``false``:
+    * if ``$path`` does not exist or is not a link, it returns ``null``.
+    * if ``$path`` is a link, it returns the next direct target of the link without considering the existence of the target.
+
+* When ``$canonicalize`` is ``true``:
+    * if ``$path`` does not exist, it returns null.
+    * if ``$path`` exists, it returns its absolute fully resolved final version.
+
 makePathRelative
 ~~~~~~~~~~~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::makePathRelative` returns
-the relative path of a directory given another one::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::makePathRelative` takes two
+absolute paths and returns the relative path from the second path to the first one::
 
     // returns '../'
     $fs->makePathRelative(
         '/var/lib/symfony/src/Symfony/',
         '/var/lib/symfony/src/Symfony/Component'
     );
-    // returns 'videos'
+    // returns 'videos/'
     $fs->makePathRelative('/tmp/videos', '/tmp')
 
 mirror
 ~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::mirror` mirrors a
-directory::
+:method:`Symfony\\Component\\Filesystem\\Filesystem::mirror` copies all the
+contents of the source directory into the target one (use the
+:method:`Symfony\\Component\\Filesystem\\Filesystem::copy` method to copy single
+files)::
 
     $fs->mirror('/path/to/source', '/path/to/target');
 
@@ -236,11 +280,8 @@ isAbsolutePath
 dumpFile
 ~~~~~~~~
 
-.. versionadded:: 2.3
-    ``dumpFile`` is new in Symfony 2.3.
-
-:method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` allows you to
-dump contents to a file. It does this in an atomic manner: it writes a temporary
+:method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` saves the given
+contents into a file. It does this in an atomic manner: it writes a temporary
 file first and then moves it to the new file location when it's finished.
 This means that the user will always see either the complete old file or
 complete new file (but never a partially-written file)::
@@ -249,7 +290,16 @@ complete new file (but never a partially-written file)::
 
 The ``file.txt`` file contains ``Hello World`` now.
 
-A desired file mode can be passed as the third argument.
+appendToFile
+~~~~~~~~~~~~
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile` adds new
+contents at the end of some file::
+
+    $fs->appendToFile('logs.txt', 'Email sent to user@example.com');
+
+If either the file or its containing directory doesn't exist, this method
+creates them before appending the contents.
 
 Error Handling
 --------------
@@ -264,3 +314,4 @@ Whenever something wrong happens, an exception implementing
     thrown if directory creation fails.
 
 .. _`Packagist`: https://packagist.org/packages/symfony/filesystem
+.. _`umask`: https://en.wikipedia.org/wiki/Umask

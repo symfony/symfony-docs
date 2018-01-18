@@ -1,16 +1,11 @@
 Callback
 ========
 
-.. versionadded:: 2.4
-    The ``Callback`` constraint was simplified in Symfony 2.4. For usage
-    examples with older Symfony versions, see the corresponding versions of this
-    documentation page.
-
 The purpose of the Callback constraint is to create completely custom
-validation rules and to assign any validation errors to specific fields on
-your object. If you're using validation with forms, this means that you can
-make these custom errors display next to a specific field, instead of simply
-at the top of your form.
+validation rules and to assign any validation errors to specific fields
+on your object. If you're using validation with forms, this means that you
+can make these custom errors display next to a specific field, instead of
+simply at the top of your form.
 
 This process works by specifying one or more *callback* methods, each of
 which will be called during the validation process. Each of those methods
@@ -26,6 +21,7 @@ can do anything, including creating and assigning validation errors.
 | Applies to     | :ref:`class <validation-class-target>`                                 |
 +----------------+------------------------------------------------------------------------+
 | Options        | - :ref:`callback <callback-option>`                                    |
+|                | - `payload`_                                                           |
 +----------------+------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Callback`          |
 +----------------+------------------------------------------------------------------------+
@@ -37,49 +33,49 @@ Configuration
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            constraints:
-                - Callback: [validate]
-
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
-        use Symfony\Component\Validator\ExecutionContextInterface;
+        use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
         class Author
         {
             /**
              * @Assert\Callback
              */
-            public function validate(ExecutionContextInterface $context)
+            public function validate(ExecutionContextInterface $context, $payload)
             {
                 // ...
             }
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Author:
+            constraints:
+                - Callback: validate
+
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <constraint name="Callback">validate</constraint>
             </class>
         </constraint-mapping>
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -95,31 +91,28 @@ Configuration
 The Callback Method
 -------------------
 
-The callback method is passed a special ``ExecutionContextInterface`` object. You
-can set "violations" directly on this object and determine to which field
-those errors should be attributed::
+The callback method is passed a special ``ExecutionContextInterface`` object.
+You can set "violations" directly on this object and determine to which
+field those errors should be attributed::
 
     // ...
-    use Symfony\Component\Validator\ExecutionContextInterface;
+    use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
     class Author
     {
         // ...
         private $firstName;
 
-        public function validate(ExecutionContextInterface $context)
+        public function validate(ExecutionContextInterface $context, $payload)
         {
             // somehow you have an array of "fake names"
             $fakeNames = array(/* ... */);
 
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
-                $context->addViolationAt(
-                    'firstName',
-                    'This name sounds totally fake!',
-                    array(),
-                    null
-                );
+                $context->buildViolation('This name sounds totally fake!')
+                    ->atPath('firstName')
+                    ->addViolation();
             }
         }
     }
@@ -130,37 +123,35 @@ Static Callbacks
 You can also use the constraint with static methods. Since static methods don't
 have access to the object instance, they receive the object as the first argument::
 
-    public static function validate($object, ExecutionContextInterface $context)
+    public static function validate($object, ExecutionContextInterface $context, $payload)
     {
         // somehow you have an array of "fake names"
         $fakeNames = array(/* ... */);
 
         // check if the name is actually a fake name
         if (in_array($object->getFirstName(), $fakeNames)) {
-            $context->addViolationAt(
-                'firstName',
-                'This name sounds totally fake!',
-                array(),
-                null
-            );
+            $context->buildViolation('This name sounds totally fake!')
+                ->atPath('firstName')
+                ->addViolation()
+            ;
         }
     }
 
 External Callbacks and Closures
 -------------------------------
 
-If you want to execute a static callback method that is not located in the class
-of the validated object, you can configure the constraint to invoke an array
-callable as supported by PHP's :phpfunction:`call_user_func` function. Suppose
-your validation function is ``Vendor\Package\Validator::validate()``::
+If you want to execute a static callback method that is not located in the
+class of the validated object, you can configure the constraint to invoke
+an array callable as supported by PHP's :phpfunction:`call_user_func` function.
+Suppose your validation function is ``Acme\Validator::validate()``::
 
-    namespace Vendor\Package;
+    namespace Acme;
 
-    use Symfony\Component\Validator\ExecutionContextInterface;
+    use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
     class Validator
     {
-        public static function validate($object, ExecutionContextInterface $context)
+        public static function validate($object, ExecutionContextInterface $context, $payload)
         {
             // ...
         }
@@ -170,38 +161,38 @@ You can then use the following configuration to invoke this validator:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            constraints:
-                - Callback: [Vendor\Package\Validator, validate]
-
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
         /**
-         * @Assert\Callback({"Vendor\Package\Validator", "validate"})
+         * @Assert\Callback({"Acme\Validator", "validate"})
          */
         class Author
         {
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Author:
+            constraints:
+                - Callback: [Acme\Validator, validate]
+
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <constraint name="Callback">
-                    <value>Vendor\Package\Validator</value>
+                    <value>Acme\Validator</value>
                     <value>validate</value>
                 </constraint>
             </class>
@@ -209,9 +200,10 @@ You can then use the following configuration to invoke this validator:
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
+        use Acme\Validator;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -220,7 +212,7 @@ You can then use the following configuration to invoke this validator:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addConstraint(new Assert\Callback(array(
-                    'Vendor\Package\Validator',
+                    Validator::class,
                     'validate',
                 )));
             }
@@ -228,17 +220,19 @@ You can then use the following configuration to invoke this validator:
 
 .. note::
 
-    The Callback constraint does *not* support global callback functions nor
-    is it possible to specify a global function or a :term:`service` method
+    The Callback constraint does *not* support global callback functions
+    nor is it possible to specify a global function or a service method
     as callback. To validate using a service, you should
-    :doc:`create a custom validation constraint </cookbook/validation/custom_constraint>`
+    :doc:`create a custom validation constraint </validation/custom_constraint>`
     and add that new constraint to your class.
 
 When configuring the constraint via PHP, you can also pass a closure to the
 constructor of the Callback constraint::
 
-    // src/Acme/BlogBundle/Entity/Author.php
-    namespace Acme\BlogBundle\Entity;
+    // src/Entity/Author.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
     use Symfony\Component\Validator\Mapping\ClassMetadata;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -247,7 +241,7 @@ constructor of the Callback constraint::
     {
         public static function loadValidatorMetadata(ClassMetadata $metadata)
         {
-            $callback = function ($object, ExecutionContextInterface $context) {
+            $callback = function ($object, ExecutionContextInterface $context, $payload) {
                 // ...
             };
 
@@ -274,9 +268,11 @@ callback method:
 
 * A closure.
 
-Concrete callbacks receive an :class:`Symfony\\Component\\Validator\\ExecutionContextInterface`
+Concrete callbacks receive an :class:`Symfony\\Component\\Validator\\Context\\ExecutionContextInterface`
 instance as only argument.
 
 Static or closure callbacks receive the validated object as the first argument
 and the :class:`Symfony\\Component\\Validator\\ExecutionContextInterface`
 instance as the second argument.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

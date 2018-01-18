@@ -3,12 +3,12 @@ label
 
 **type**: ``string`` **default**: The label is "guessed" from the field name
 
-Sets the label that will be displayed on the button. The label can also be
-directly set inside the template:
+Sets the label that will be displayed on the button. The label can also
+be directly set inside the template:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {{ form_widget(form.save, { 'label': 'Click me' }) }}
 

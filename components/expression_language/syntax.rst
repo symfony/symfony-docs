@@ -20,6 +20,18 @@ The component supports:
 * **booleans** - ``true`` and ``false``
 * **null** - ``null``
 
+.. caution::
+
+    A backslash (``\``) must be escaped by 4 backslashes (``\\\\``) in a string
+    and 8 backslashes (``\\\\\\\\``) in a regex::
+
+        echo $language->evaluate('"\\\\"'); // prints \
+        $language->evaluate('"a\\\\b" matches "/^a\\\\\\\\b$/"'); // returns true
+
+    Control characters (e.g. ``\n``) in expressions are replaced with
+    whitespace. To avoid this, escape the sequence with a single backslash
+    (e.g.  ``\\n``).
+
 .. _component-expression-objects:
 
 Working with Objects
@@ -42,14 +54,14 @@ to JavaScript::
     $apple = new Apple();
     $apple->variety = 'Honeycrisp';
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'fruit.variety',
         array(
             'fruit' => $apple,
         )
-    );
+    ));
 
-This will print ``Honeycrisp``.
+This will print out ``Honeycrisp``.
 
 Calling Methods
 ~~~~~~~~~~~~~~~
@@ -72,14 +84,14 @@ JavaScript::
 
     $robot = new Robot();
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'robot.sayHi(3)',
         array(
             'robot' => $robot,
         )
-    );
+    ));
 
-This will print ``Hi Hi Hi!``.
+This will print out ``Hi Hi Hi!``.
 
 .. _component-expression-functions:
 
@@ -93,11 +105,11 @@ constant::
 
     define('DB_USER', 'root');
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'constant("DB_USER")'
-    );
+    ));
 
-This will print ``root``.
+This will print out ``root``.
 
 .. tip::
 
@@ -114,14 +126,14 @@ array keys, similar to JavaScript::
 
     $data = array('life' => 10, 'universe' => 10, 'everything' => 22);
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'data["life"] + data["universe"] + data["everything"]',
         array(
             'data' => $data,
         )
-    );
+    ));
 
-This will print ``42``.
+This will print out ``42``.
 
 Supported Operators
 -------------------
@@ -140,14 +152,14 @@ Arithmetic Operators
 
 For example::
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'life + universe + everything',
         array(
             'life' => 10,
             'universe' => 10,
             'everything' => 22,
         )
-    );
+    ));
 
 This will print out ``42``.
 
@@ -230,13 +242,13 @@ String Operators
 
 For example::
 
-    echo $language->evaluate(
+    var_dump($language->evaluate(
         'firstName~" "~lastName',
         array(
             'firstName' => 'Arthur',
             'lastName' => 'Dent',
         )
-    );
+    ));
 
 This would print out ``Arthur Dent``.
 
@@ -259,7 +271,7 @@ For example::
     $inGroup = $language->evaluate(
         'user.group in ["human_resources", "marketing"]',
         array(
-            'user' => $user
+            'user' => $user,
         )
     );
 

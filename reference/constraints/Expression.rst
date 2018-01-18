@@ -1,9 +1,6 @@
 Expression
 ==========
 
-.. versionadded:: 2.4
-    The Expression constraint was introduced in Symfony 2.4.
-
 This constraint allows you to use an :ref:`expression <component-expression-language-examples>`
 for more complex, dynamic validation. See `Basic Usage`_ for an example.
 See :doc:`/reference/constraints/Callback` for a different constraint that
@@ -14,6 +11,7 @@ gives you similar flexibility.
 +----------------+-----------------------------------------------------------------------------------------------+
 | Options        | - :ref:`expression <reference-constraint-expression-option>`                                  |
 |                | - `message`_                                                                                  |
+|                | - `payload`_                                                                                  |
 +----------------+-----------------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Expression`                               |
 +----------------+-----------------------------------------------------------------------------------------------+
@@ -26,7 +24,8 @@ Basic Usage
 Imagine you have a class ``BlogPost`` with ``category`` and ``isTechnicalPost``
 properties::
 
-    namespace Acme\DemoBundle\Model;
+    // src/Model/BlogPost.php
+    namespace App\Model;
 
     use Symfony\Component\Validator\Constraints as Assert;
 
@@ -53,29 +52,19 @@ properties::
 
 To validate the object, you have some special requirements:
 
-* A) If ``isTechnicalPost`` is true, then ``category`` must be either ``php``
-  or ``symfony``;
-
-* B) If ``isTechnicalPost`` is false, then ``category`` can be anything.
+A) If ``isTechnicalPost`` is true, then ``category`` must be either ``php``
+   or ``symfony``;
+B) If ``isTechnicalPost`` is false, then ``category`` can be anything.
 
 One way to accomplish this is with the Expression constraint:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/DemoBundle/Resources/config/validation.yml
-        Acme\DemoBundle\Model\BlogPost:
-            constraints:
-                - Expression:
-                    expression: "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()"
-                    message: "If this is a tech post, the category should be either php or symfony!"
-
     .. code-block:: php-annotations
 
-        // src/Acme/DemoBundle/Model/BlogPost.php
-        namespace Acme\DemoBundle\Model\BlogPost;
-        
+        // src/Model/BlogPost.php
+        namespace App\Model;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         /**
@@ -89,26 +78,39 @@ One way to accomplish this is with the Expression constraint:
             // ...
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Model\BlogPost:
+            constraints:
+                - Expression:
+                    expression: "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()"
+                    message: "If this is a tech post, the category should be either php or symfony!"
+
     .. code-block:: xml
 
-        <!-- src/Acme/DemoBundle/Resources/config/validation.xml -->
-        <class name="Acme\DemoBundle\Model\BlogPost">
-            <constraint name="Expression">
-                <option name="expression">
-                    this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()
-                </option>
-                <option name="message">
-                    If this is a tech post, the category should be either php or symfony!
-                </option>
-            </constraint>
-        </class>
-
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            <class name="App\Model\BlogPost">
+                <constraint name="Expression">
+                    <option name="expression">
+                        this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()
+                    </option>
+                    <option name="message">
+                        If this is a tech post, the category should be either php or symfony!
+                    </option>
+                </constraint>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php
 
-        // src/Acme/DemoBundle/Model/BlogPost.php
-        namespace Acme\DemoBundle\Model\BlogPost;
-        
+        // src/Model/BlogPost.php
+        namespace App\Model;
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -129,6 +131,90 @@ The :ref:`expression <reference-constraint-expression-option>` option is the
 expression that must return true in order for validation to pass. To learn
 more about the expression language syntax, see
 :doc:`/components/expression_language/syntax`.
+
+.. sidebar:: Mapping the Error to a Specific Field
+
+    You can also attach the constraint to a specific property and still validate
+    based on the values of the entire entity. This is handy if you want to attach
+    the error to a specific field. In this context, ``value`` represents the value
+    of ``isTechnicalPost``.
+
+    .. configuration-block::
+
+        .. code-block:: php-annotations
+
+            // src/Model/BlogPost.php
+            namespace App\Model;
+
+            use Symfony\Component\Validator\Constraints as Assert;
+
+            class BlogPost
+            {
+                // ...
+
+                /**
+                 * @Assert\Expression(
+                 *     "this.getCategory() in ['php', 'symfony'] or value == false",
+                 *     message="If this is a tech post, the category should be either php or symfony!"
+                 * )
+                 */
+                private $isTechnicalPost;
+
+                // ...
+            }
+
+        .. code-block:: yaml
+
+            # config/validator/validation.yaml
+            App\Model\BlogPost:
+                properties:
+                    isTechnicalPost:
+                        - Expression:
+                            expression: "this.getCategory() in ['php', 'symfony'] or value == false"
+                            message: "If this is a tech post, the category should be either php or symfony!"
+
+        .. code-block:: xml
+
+            <!-- config/validator/validation.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+                <class name="App\Model\BlogPost">
+                    <property name="isTechnicalPost">
+                        <constraint name="Expression">
+                            <option name="expression">
+                                this.getCategory() in ['php', 'symfony'] or value == false
+                            </option>
+                            <option name="message">
+                                If this is a tech post, the category should be either php or symfony!
+                            </option>
+                        </constraint>
+                    </property>
+                </class>
+            </constraint-mapping>
+
+        .. code-block:: php
+
+            // src/Model/BlogPost.php
+            namespace App\Model;
+
+            use Symfony\Component\Validator\Constraints as Assert;
+            use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+            class BlogPost
+            {
+                public static function loadValidatorMetadata(ClassMetadata $metadata)
+                {
+                    $metadata->addPropertyConstraint('isTechnicalPost', new Assert\Expression(array(
+                        'expression' => 'this.getCategory() in ["php", "symfony"] or value == false',
+                        'message' => 'If this is a tech post, the category should be either php or symfony!',
+                    )));
+                }
+
+                // ...
+            }
 
 For more information about the expression and what variables are available
 to you, see the :ref:`expression <reference-constraint-expression-option>`
@@ -165,3 +251,5 @@ message
 **type**: ``string`` **default**: ``This value is not valid.``
 
 The default message supplied when the expression evaluates to false.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

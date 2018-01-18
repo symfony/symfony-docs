@@ -4,16 +4,12 @@
 Using the Logger
 ================
 
-.. versionadded:: 2.5
-    The :class:`Symfony\\Component\\Console\\Logger\\ConsoleLogger` was
-    introduced in Symfony 2.5.
-
 The Console component comes with a standalone logger complying with the
 `PSR-3`_ standard. Depending on the verbosity setting, log messages will
 be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance passed as a parameter to the constructor.
 
-The logger does not have any external dependency except ``php-fig/log``.
+The logger does not have any external dependency except ``psr/log``.
 This is useful for console applications and commands needing a lightweight
 PSR-3 compliant logger::
 
@@ -79,12 +75,14 @@ may not be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterf
 instance.
 
 By default, the console logger behaves like the
-:doc:`Monolog's Console Handler </cookbook/logging/monolog_console>`.
+:doc:`Monolog's Console Handler </logging/monolog_console>`.
 The association between the log level and the verbosity can be configured
 through the second parameter of the :class:`Symfony\\Component\\Console\\ConsoleLogger`
 constructor::
 
+    use Psr\Log\LogLevel;
     // ...
+
     $verbosityLevelMap = array(
         LogLevel::NOTICE => OutputInterface::VERBOSITY_NORMAL,
         LogLevel::INFO   => OutputInterface::VERBOSITY_NORMAL,
@@ -100,9 +98,17 @@ constructor::
 
     // ...
     $formatLevelMap = array(
-        LogLevel::CRITICAL => self::INFO,
-        LogLevel::DEBUG    => self::ERROR,
+        LogLevel::CRITICAL => ConsoleLogger::ERROR,
+        LogLevel::DEBUG    => ConsoleLogger::INFO,
     );
     $logger = new ConsoleLogger($output, array(), $formatLevelMap);
+
+Errors
+------
+
+The Console logger includes a ``hasErrored()`` method which returns ``true`` as
+soon as any error message has been logged during the execution of the command.
+This is useful to decide which status code to return as the result of executing
+the command.
 
 .. _PSR-3: http://www.php-fig.org/psr/psr-3/

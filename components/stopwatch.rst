@@ -5,7 +5,7 @@
 The Stopwatch Component
 =======================
 
-    Stopwatch component provides a way to profile code.
+    The Stopwatch component provides a way to profile code.
 
 Installation
 ------------
@@ -13,7 +13,9 @@ Installation
 You can install the component in two different ways:
 
 * :doc:`Install it via Composer</components/using_components>` (``symfony/stopwatch`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Stopwatch).
+* Use the official Git repository (https://github.com/symfony/stopwatch).
+
+.. include:: /components/require_autoload.rst.inc
 
 Usage
 -----
@@ -31,16 +33,25 @@ microtime by yourself. Instead, use the simple
     // ... some code goes here
     $event = $stopwatch->stop('eventName');
 
-.. versionadded:: 2.5
-    The ``getEvent()`` method was introduced in Symfony 2.5
-
 The :class:`Symfony\\Component\\Stopwatch\\StopwatchEvent` object can be retrieved
-from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`, 
-:method:`Symfony\\Component\\Stopwatch\\Stopwatch::stop`, 
-:method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap` and 
-:method:`Symfony\\Component\\Stopwatch\\Stopwatch::getEvent` methods. 
+from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`,
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::stop`,
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap` and
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::getEvent` methods.
 The latter should be used when you need to retrieve the duration of an event
 while it is still running.
+
+.. tip::
+
+    By default, the stopwatch truncates any sub-millisecond time measure to ``0``,
+    so you can't measure microseconds or nanoseconds. If you need more precision,
+    pass ``true`` to the ``Stopwatch`` class constructor to enable full precision::
+
+        $stopwatch = new Stopwatch(true);
+
+The stopwatch can be reset to its original state at any given time with the
+:method:`Symfony\\Component\\Stopwatch\\Stopwatch::reset` method, which deletes
+all the data measured so far.
 
 You can also provide a category name to an event::
 

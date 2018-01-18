@@ -1,47 +1,46 @@
 .. index::
-   single: Forms; Fields; date
+   single: Forms; Fields; DateType
 
-date Field Type
-===============
+DateType Field
+==============
 
 A field that allows the user to modify date information via a variety of
 different HTML elements.
 
-The underlying data used for this field type can be a ``DateTime`` object,
-a string, a timestamp or an array. As long as the `input`_ option is set
-correctly, the field will take care of all of the details.
-
-The field can be rendered as a single text box, three text boxes (month,
-day, and year) or three select boxes (see the `widget`_ option).
+This field can be rendered in a variety of different ways via the `widget`_ option
+and can understand a number of different input formats via the `input`_ option.
 
 +----------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `widget`_                                                                 |
-|                      | - `input`_                                                                  |
-|                      | - `empty_value`_                                                            |
-|                      | - `years`_                                                                  |
-|                      | - `months`_                                                                 |
+| Options              | - `choice_translation_domain`_                                              |
 |                      | - `days`_                                                                   |
+|                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
+|                      | - `html5`_                                                                  |
+|                      | - `input`_                                                                  |
 |                      | - `model_timezone`_                                                         |
+|                      | - `months`_                                                                 |
 |                      | - `view_timezone`_                                                          |
+|                      | - `widget`_                                                                 |
+|                      | - `years`_                                                                  |
 +----------------------+-----------------------------------------------------------------------------+
-| Overridden Options   | - `by_reference`_                                                           |
+| Overridden options   | - `by_reference`_                                                           |
+|                      | - `compound`_                                                               |
+|                      | - `data_class`_                                                             |
 |                      | - `error_bubbling`_                                                         |
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `data`_                                                                   |
-| options              | - `invalid_message`_                                                        |
-|                      | - `invalid_message_parameters`_                                             |
-|                      | - `read_only`_                                                              |
-|                      | - `disabled`_                                                               |
-|                      | - `mapped`_                                                                 |
-|                      | - `inherit_data`_                                                           |
+| options              | - `disabled`_                                                               |
 |                      | - `error_mapping`_                                                          |
+|                      | - `inherit_data`_                                                           |
+|                      | - `invalid_message`_                                                        |
+|                      | - `invalid_message_parameters`_                                             |
+|                      | - `mapped`_                                                                 |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | :doc:`form </reference/forms/types/form>`                                   |
+| Parent type          | :doc:`FormType </reference/forms/types/form>`                               |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |
 +----------------------+-----------------------------------------------------------------------------+
@@ -54,70 +53,128 @@ options are ``input`` and ``widget``.
 
 Suppose that you have a ``publishedAt`` field whose underlying date is a
 ``DateTime`` object. The following configures the ``date`` type for that
-field as three different choice fields:
+field as **three different choice fields**::
 
-.. code-block:: php
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    // ...
 
-    $builder->add('publishedAt', 'date', array(
-        'input'  => 'datetime',
+    $builder->add('publishedAt', DateType::class, array(
         'widget' => 'choice',
     ));
 
-The ``input`` option *must* be changed to match the type of the underlying
-date data. For example, if the ``publishedAt`` field's data were a unix timestamp,
-you'd need to set ``input`` to ``timestamp``:
+If your underlying date is *not* a ``DateTime`` object (e.g. it's a unix timestamp),
+configure the `input`_ option.
 
-.. code-block:: php
+Rendering a single HTML5 Textbox
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    $builder->add('publishedAt', 'date', array(
-        'input'  => 'timestamp',
-        'widget' => 'choice',
+For a better user experience, you may want to render a single text field and use
+some kind of "date picker" to help your user fill in the right format. To do that,
+use the ``single_text`` widget::
+
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    // ...
+
+    $builder->add('publishedAt', DateType::class, array(
+        // render as a single text box
+        'widget' => 'single_text',
     ));
 
-The field also supports an ``array`` and ``string`` as valid ``input`` option
-values.
+This will render as an ``input type="date"`` HTML5 field, which means that **some -
+but not all - browsers will add nice date picker functionality to the field**. If you
+want to be absolutely sure that *every* user has a consistent date picker, use an
+external JavaScript library.
+
+For example, suppose you want to use the `Bootstrap Datepicker`_ library. First,
+make the following changes::
+
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    // ...
+
+    $builder->add('publishedAt', DateType::class, array(
+        'widget' => 'single_text',
+
+        // do not render as type="date", to avoid HTML5 date pickers
+        'html5' => false,
+
+        // add a class that can be selected in JavaScript
+        'attr' => ['class' => 'js-datepicker'],
+    ));
+
+Then, add the following JavaScript code in your template to initialize the date
+picker:
+
+.. code-block:: html
+
+    <script>
+        $(document).ready(function() {
+            // you may need to change this code if you are not using Bootstrap Datepicker
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd'
+            });
+        });
+    </script>
+
+This ``format`` key tells the date picker to use the date format that Symfony expects.
+This can be tricky: if the date picker is misconfigured, Symfony won't understand
+the format and will throw a validation error. You can also configure the format
+that Symfony should expect via the `format`_ option.
+
+.. caution::
+
+    The string used by a JavaScript date picker to describe its format (e.g. ``yyyy-mm-dd``)
+    may not match the string that Symfony uses (e.g. ``yyyy-MM-dd``). This is because
+    different libraries use different formatting rules to describe the date format.
+    Be aware of this - it can be tricky to make the formats truly match!
 
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/date_widget.rst.inc
-
-.. _form-reference-date-input:
-
-.. include:: /reference/forms/types/options/date_input.rst.inc
-
-empty_value
-~~~~~~~~~~~
-
-**type**: ``string`` or ``array``
-
-If your widget option is set to ``choice``, then this field will be represented
-as a series of ``select`` boxes. The ``empty_value`` option can be used to
-add a "blank" entry to the top of each select box::
-
-    $builder->add('dueDate', 'date', array(
-        'empty_value' => '',
-    ));
-
-Alternatively, you can specify a string to be displayed for the "blank" value::
-
-    $builder->add('dueDate', 'date', array(
-        'empty_value' => array('year' => 'Year', 'month' => 'Month', 'day' => 'Day')
-    ));
-
-.. include:: /reference/forms/types/options/years.rst.inc
-
-.. include:: /reference/forms/types/options/months.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
+
+placeholder
+~~~~~~~~~~~
+
+**type**: ``string`` | ``array``
+
+If your widget option is set to ``choice``, then this field will be represented
+as a series of ``select`` boxes. When the placeholder value is a string,
+it will be used as the **blank value** of all select boxes::
+
+    $builder->add('dueDate', DateType::class, array(
+        'placeholder' => 'Select a value',
+    ));
+
+Alternatively, you can use an array that configures different placeholder
+values for the year, month and day fields::
+
+    $builder->add('dueDate', DateType::class, array(
+        'placeholder' => array(
+            'year' => 'Year', 'month' => 'Month', 'day' => 'Day'
+        )
+    ));
 
 .. _reference-forms-type-date-format:
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
 
+.. include:: /reference/forms/types/options/html5.rst.inc
+
+.. _form-reference-date-input:
+
+.. include:: /reference/forms/types/options/date_input.rst.inc
+
 .. include:: /reference/forms/types/options/model_timezone.rst.inc
 
+.. include:: /reference/forms/types/options/months.rst.inc
+
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
+
+.. include:: /reference/forms/types/options/date_widget.rst.inc
+
+.. include:: /reference/forms/types/options/years.rst.inc
 
 Overridden Options
 ------------------
@@ -129,6 +186,10 @@ by_reference
 
 The ``DateTime`` classes are treated as immutable objects.
 
+.. include:: /reference/forms/types/options/compound_type.rst.inc
+
+.. include:: /reference/forms/types/options/data_class_date.rst.inc
+
 error_bubbling
 ~~~~~~~~~~~~~~
 
@@ -137,23 +198,21 @@ error_bubbling
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
-.. include:: /reference/forms/types/options/read_only.rst.inc
-
-.. include:: /reference/forms/types/options/disabled.rst.inc
-
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/inherit_data.rst.inc
-
-.. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 Field Variables
 ---------------
@@ -168,3 +227,5 @@ Field Variables
 +--------------+------------+----------------------------------------------------------------------+
 | date_pattern | ``string`` | A string with the date format to use.                                |
 +--------------+------------+----------------------------------------------------------------------+
+
+.. _`Bootstrap Datepicker`: https://github.com/eternicode/bootstrap-datepicker

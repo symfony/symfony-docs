@@ -4,28 +4,47 @@ All
 When applied to an array (or Traversable object), this constraint allows
 you to apply a collection of constraints to each element of the array.
 
-+----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                 |
-+----------------+------------------------------------------------------------------------+
-| Options        | - `constraints`_                                                       |
-+----------------+------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\All`               |
-+----------------+------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\AllValidator`      |
-+----------------+------------------------------------------------------------------------+
++----------------+-------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`            |
++----------------+-------------------------------------------------------------------+
+| Options        | - `constraints`_                                                  |
+|                | - `payload`_                                                      |
++----------------+-------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\All`          |
++----------------+-------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\AllValidator` |
++----------------+-------------------------------------------------------------------+
 
 Basic Usage
 -----------
 
-Suppose that you have an array of strings, and you want to validate each
+Suppose that you have an array of strings and you want to validate each
 entry in that array:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            /**
+             * @Assert\All({
+             *     @Assert\NotBlank,
+             *     @Assert\Length(min=5)
+             * })
+             */
+             protected $favoriteColors = array();
+        }
+
     .. code-block:: yaml
 
-        # src/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\User:
+        # config/validator/validation.yaml
+        App\Entity\User:
             properties:
                 favoriteColors:
                     - All:
@@ -33,33 +52,15 @@ entry in that array:
                         - Length:
                             min: 5
 
-    .. code-block:: php-annotations
-
-        // src/Acme/UserBundle/Entity/User.php
-        namespace Acme\UserBundle\Entity;
-        
-        use Symfony\Component\Validator\Constraints as Assert;
-  
-        class User
-        {
-            /**
-             * @Assert\All({
-             *     @Assert\NotBlank,
-             *     @Assert\Length(min = "5")
-             * })
-             */
-             protected $favoriteColors = array();
-        }
-
     .. code-block:: xml
 
-        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\UserBundle\Entity\User">
+            <class name="App\Entity\User">
                 <property name="favoriteColors">
                     <constraint name="All">
                         <option name="constraints">
@@ -75,9 +76,9 @@ entry in that array:
 
     .. code-block:: php
 
-        // src/Acme/UserBundle/Entity/User.php
-        namespace Acme\UserBundle\Entity;
-       
+        // src/Entity/User.php
+        namespace App\Entity;
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -107,3 +108,5 @@ constraints
 
 This required option is the array of validation constraints that you want
 to apply to each element of the underlying array.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

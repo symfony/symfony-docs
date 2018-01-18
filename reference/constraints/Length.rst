@@ -3,6 +3,12 @@ Length
 
 Validates that a given string length is *between* some minimum and maximum value.
 
+.. caution::
+
+    ``null`` and empty strings are not handled by this constraint. You need to
+    also add the :doc:`/reference/constraints/NotBlank` or :doc:`/reference/constraints/NotNull`
+    constraints to validate against these.
+
 +----------------+----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`               |
 +----------------+----------------------------------------------------------------------+
@@ -12,6 +18,7 @@ Validates that a given string length is *between* some minimum and maximum value
 |                | - `minMessage`_                                                      |
 |                | - `maxMessage`_                                                      |
 |                | - `exactMessage`_                                                    |
+|                | - `payload`_                                                         |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Length`          |
 +----------------+----------------------------------------------------------------------+
@@ -21,27 +28,15 @@ Validates that a given string length is *between* some minimum and maximum value
 Basic Usage
 -----------
 
-To verify that the ``firstName`` field length of a class is between "2" and
-"50", you might add the following:
+To verify that the ``firstName`` field length of a class is between "2"
+and "50", you might add the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Participant:
-            properties:
-                firstName:
-                    - Length:
-                        min: 2
-                        max: 50
-                        minMessage: "Your first name must be at least {{ limit }} characters length"
-                        maxMessage: "Your first name cannot be longer than {{ limit }} characters length"
-
     .. code-block:: php-annotations
 
-        // src/Acme/EventBundle/Entity/Participant.php
-        namespace Acme\EventBundle\Entity;
+        // src/Entity/Participant.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -49,30 +44,46 @@ To verify that the ``firstName`` field length of a class is between "2" and
         {
             /**
              * @Assert\Length(
-             *      min = "2",
-             *      max = "50",
-             *      minMessage = "Your first name must be at least {{ limit }} characters length",
-             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters length"
+             *      min = 2,
+             *      max = 50,
+             *      minMessage = "Your first name must be at least {{ limit }} characters long",
+             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
              * )
              */
              protected $firstName;
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Participant:
+            properties:
+                firstName:
+                    - Length:
+                        min: 2
+                        max: 50
+                        minMessage: 'Your first name must be at least {{ limit }} characters long'
+                        maxMessage: 'Your first name cannot be longer than {{ limit }} characters'
+
     .. code-block:: xml
 
-        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\EventBundle\Entity\Participant">
+            <class name="App\Entity\Participant">
                 <property name="firstName">
                     <constraint name="Length">
                         <option name="min">2</option>
                         <option name="max">50</option>
-                        <option name="minMessage">Your first name must be at least {{ limit }} characters length</option>
-                        <option name="maxMessage">Your first name cannot be longer than {{ limit }} characters length</option>
+                        <option name="minMessage">
+                            Your first name must be at least {{ limit }} characters long
+                        </option>
+                        <option name="maxMessage">
+                            Your first name cannot be longer than {{ limit }} characters
+                        </option>
                     </constraint>
                 </property>
             </class>
@@ -80,8 +91,8 @@ To verify that the ``firstName`` field length of a class is between "2" and
 
     .. code-block:: php
 
-        // src/Acme/EventBundle/Entity/Participant.php
-        namespace Acme\EventBundle\Entity;
+        // src/Entity/Participant.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -93,8 +104,8 @@ To verify that the ``firstName`` field length of a class is between "2" and
                 $metadata->addPropertyConstraint('firstName', new Assert\Length(array(
                     'min'        => 2,
                     'max'        => 50,
-                    'minMessage' => 'Your first name must be at least {{ limit }} characters length',
-                    'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters length',
+                    'minMessage' => 'Your first name must be at least {{ limit }} characters long',
+                    'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters',
                 )));
             }
         }
@@ -107,40 +118,46 @@ min
 
 **type**: ``integer``
 
-This required option is the "min" length value. Validation will fail if the given
-value's length is **less** than this min value.
+This required option is the "min" length value. Validation will fail if
+the given value's length is **less** than this min value.
+
+It is important to notice that NULL values and empty strings are considered
+valid no matter if the constraint required a minimum length. Validators
+are triggered only if the value is not blank.
 
 max
 ~~~
 
 **type**: ``integer``
 
-This required option is the "max" length value. Validation will fail if the given
-value's length is **greater** than this max value.
+This required option is the "max" length value. Validation will fail if
+the given value's length is **greater** than this max value.
 
 charset
 ~~~~~~~
 
 **type**: ``string``  **default**: ``UTF-8``
 
-The charset to be used when computing value's length. The :phpfunction:`grapheme_strlen` PHP
-function is used if available. If not, the :phpfunction:`mb_strlen` PHP function
-is used if available. If neither are available, the :phpfunction:`strlen` PHP function
-is used.
+The charset to be used when computing value's length. The
+:phpfunction:`grapheme_strlen` PHP function is used if available. If not,
+the :phpfunction:`mb_strlen` PHP function is used if available. If neither
+are available, the :phpfunction:`strlen` PHP function is used.
 
 minMessage
 ~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is too short. It should have {{ limit }} characters or more.``
 
-The message that will be shown if the underlying value's length is less than the `min`_ option.
+The message that will be shown if the underlying value's length is less
+than the `min`_ option.
 
 maxMessage
 ~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is too long. It should have {{ limit }} characters or less.``
 
-The message that will be shown if the underlying value's length is more than the `max`_ option.
+The message that will be shown if the underlying value's length is more
+than the `max`_ option.
 
 exactMessage
 ~~~~~~~~~~~~
@@ -149,3 +166,5 @@ exactMessage
 
 The message that will be shown if min and max values are equal and the underlying
 value's length is not exactly this value.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
