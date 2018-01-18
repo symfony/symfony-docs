@@ -988,7 +988,7 @@ Serializing Interfaces and Abstract Classes
 
 When dealing with objects that are fairly similar or share properties, you may
 use interfaces or abstract classes. The Serializer component allows you to
-serialize and deserialize these objects using a *"discrimator class mapping"*.
+serialize and deserialize these objects using a *"discriminator class mapping"*.
 
 The discriminator is the field (in the serialized string) used to differentiate
 between the possible objects. In practice, when using the Serializer component,
@@ -998,6 +998,13 @@ to the :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`.
 Consider an application that defines an abstract ``CodeRepository`` class
 extended by ``GitHubCodeRepository`` and ``BitBucketCodeRepository`` classes.
 This example shows how to serialize and deserialize those objects::
+
+    // ...
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorMapping;
+    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorResolver;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
 
     $discriminator = new ClassDiscriminatorResolver();
     $discriminator->addClassMapping(CodeRepository::class, new ClassDiscriminatorMapping('type', [
