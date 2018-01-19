@@ -321,6 +321,7 @@ automatically upload the file when persisting the entity::
     namespace App\EventListener;
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
+    use Symfony\Component\HttpFoundation\File\File;
     use Doctrine\ORM\Event\LifecycleEventArgs;
     use Doctrine\ORM\Event\PreUpdateEventArgs;
     use App\Entity\Product;
@@ -362,6 +363,10 @@ automatically upload the file when persisting the entity::
             if ($file instanceof UploadedFile) {
                 $fileName = $this->uploader->upload($file);
                 $entity->setBrochure($fileName);
+            } elseif($file instanceof File) {
+                // prevents the full file path being saved on updates
+                // as the path is set on the postLoad listener
+                $entity->setBrocure($file->getFilename());
             }
         }
     }
