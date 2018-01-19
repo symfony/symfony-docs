@@ -104,7 +104,7 @@ of the most common elements of a bundle:
 
 ``Resources/public/``
     Contains web assets (images, stylesheets, etc) and is copied or symbolically
-    linked into the project ``web/`` directory via the ``assets:install`` console
+    linked into the project ``public/`` directory via the ``assets:install`` console
     command.
 
 ``Tests/``
