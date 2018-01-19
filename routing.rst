@@ -616,7 +616,7 @@ Troubleshooting
 
 Here are some common errors you might see while working with routing:
 
-    Controller "App\Controller\BlogController::show()" requires that you
+    Controller "App\\Controller\\BlogController::show()" requires that you
     provide a value for the "$slug" argument.
 
 This happens when your controller method has an argument (e.g. ``$slug``)::
