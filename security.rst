@@ -1062,7 +1062,7 @@ the User object, and use the ``isGranted()`` method (or
     This is only recommended for experienced developers who don't extend from the
     :ref:`Symfony base controller <the-base-controller-class-services>` and
     don't use the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerTrait`
-    either. Otherwise, keep usin the recommended ``getUser()`` shortcut.
+    either. Otherwise, it's recommended to keep using the ``getUser()`` shortcut.
 
 Retrieving the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
