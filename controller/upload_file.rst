@@ -363,7 +363,7 @@ automatically upload the file when persisting the entity::
             if ($file instanceof UploadedFile) {
                 $fileName = $this->uploader->upload($file);
                 $entity->setBrochure($fileName);
-            } elseif($file instanceof File) {
+            } elseif ($file instanceof File) {
                 // prevents the full file path being saved on updates
                 // as the path is set on the postLoad listener
                 $entity->setBrocure($file->getFilename());
