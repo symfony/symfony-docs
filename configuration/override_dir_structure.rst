@@ -143,7 +143,7 @@ those files::
 
     require_once __DIR__.'/../path/to/vendor/autoload.php';
 
-You also need to change the ``extra.symfony-public-dir`` option in the
+You also need to change the ``extra.public-dir`` option in the
 ``composer.json`` file:
 
 .. code-block:: json
@@ -152,7 +152,7 @@ You also need to change the ``extra.symfony-public-dir`` option in the
         "...": "...",
         "extra": {
             "...": "...",
-            "symfony-public-dir": "my_new_public_dir"
+            "public-dir": "my_new_public_dir"
         }
     }
 
