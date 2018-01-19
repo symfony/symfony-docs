@@ -1,0 +1,116 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-01-18T20:59:42Z
+
+I've updated the PR - we had no mention of the `attr` option before, so I think it was confusing (all you saw was `choice_attr`, which is not what you want if you want to add a class to the `select` element, not the `option`).
+
+---------------------------------------------------------------------------
+
+by jmangarret at 2018-01-18T22:15:17Z
+
+Perfecto! Entendido...
+
+El 18/01/2018 16:29, "Ryan Weaver" <notifications@github.com> escribió:
+
+*@weaverryan* commented on this pull request.
+------------------------------
+
+In reference/forms/types/choice.rst
+<https://github.com/symfony/symfony-docs/pull/9071#discussion_r162467619>:
+
+> @@ -99,6 +99,10 @@ method::
+         'choice_attr' => function($category, $key, $index) {
+             return ['class' => 'category_'.strtolower($category->getName())];
+         },
++        //Version 3.3 no funciona choice_attr.
++        //Lo correcto es
++        //'attr' => array('class' => 'form-control')
++
+
+Hola @jmangarret <https://github.com/jmangarret>!
+
+Hay dos opciones distintas: attr y choice_attr. La diferencia es que attr
+affecta el form control principal (e.g. el elemento select) mientras
+choice_attr se aplica a los elementos option. Pero, es cierto que no
+tenemos un ejemplo en esta página de attr. Por eso, yo he cambiado este PR
+para arreglar el problema.
+
+—
+You are receiving this because you were mentioned.
+Reply to this email directly, view it on GitHub
+<https://github.com/symfony/symfony-docs/pull/9071#pullrequestreview-89931060>,
+or mute the thread
+<https://github.com/notifications/unsubscribe-auth/AHBXaVP4j2XKuBzXKlTIMGQD63ckfIoHks5tL7CTgaJpZM4RhlGT>
+.
+
+---------------------------------------------------------------------------
+
+by jmangarret at 2018-01-18T22:28:32Z
+
+Tengo un problema.  Podrán ayudarme?  Cuando hago submit (newAction)  de un
+EntityType no recibo el id sino un objeto. Como puedo obtener el id del
+EntityType para poder guardar los datos?
+
+El error generado es:
+
+An exception occurred while executing 'INSERT INTO promocion (id_producto,
+fecha_creacion, hora_desde, hora_hasta, valor_venta, status) VALUES (?, ?,
+?, ?, ?, ?)' with params [{}, "2018-01-18", "10:00:00", "12:00:00", 2000,
+1]:
+
+Notice: Object of class BillarBundle\Entity\Producto could not be converted
+to int
+
+Y el codigo del control del formulario es el siguiente:
+
+   public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+        ->add('idProducto',
+            EntityType::class,
+            array(
+                'class' => 'BillarBundle:Producto',
+                'choice_label' => 'nombre',
+                'placeholder' => 'Seleccione una opción',
+                'attr' => array('class' => 'form-control'),
+            )
+        )
+
+El 18/01/2018 16:29, "Ryan Weaver" <notifications@github.com> escribió:
+
+*@weaverryan* commented on this pull request.
+------------------------------
+
+In reference/forms/types/choice.rst
+<https://github.com/symfony/symfony-docs/pull/9071#discussion_r162467619>:
+
+> @@ -99,6 +99,10 @@ method::
+         'choice_attr' => function($category, $key, $index) {
+             return ['class' => 'category_'.strtolower($category->getName())];
+         },
++        //Version 3.3 no funciona choice_attr.
++        //Lo correcto es
++        //'attr' => array('class' => 'form-control')
++
+
+Hola @jmangarret <https://github.com/jmangarret>!
+
+Hay dos opciones distintas: attr y choice_attr. La diferencia es que attr
+affecta el form control principal (e.g. el elemento select) mientras
+choice_attr se aplica a los elementos option. Pero, es cierto que no
+tenemos un ejemplo en esta página de attr. Por eso, yo he cambiado este PR
+para arreglar el problema.
+
+—
+You are receiving this because you were mentioned.
+Reply to this email directly, view it on GitHub
+<https://github.com/symfony/symfony-docs/pull/9071#pullrequestreview-89931060>,
+or mute the thread
+<https://github.com/notifications/unsubscribe-auth/AHBXaVP4j2XKuBzXKlTIMGQD63ckfIoHks5tL7CTgaJpZM4RhlGT>
+.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-19T08:07:39Z
+
+@jmangarret we're sorry but on this repository we don't provide Symfony support. You can use any of the channels listed here: https://symfony.com/support  For example, in the Symfony Slack there's a #support channel for questions in English and a #symfony-es channel for questions in Spanish.
