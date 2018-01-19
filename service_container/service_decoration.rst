@@ -177,7 +177,7 @@ Decoration Priority
 
 If you want to apply more than one decorator to a service, you can control their
 order by configuring the priority of decoration, this can be any integer number
-(decorators with higher priorities will be applied first).
+(decorators with higher priorities will be applied first). If ``decoration_priority`` option is omitted default value ``0`` will be used.
 
 .. configuration-block::
 
