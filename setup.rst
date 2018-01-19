@@ -35,7 +35,7 @@ First, move into your new project and install the server:
 .. code-block:: terminal
 
     $ cd my-project
-    $ composer require server --dev
+    $ composer require symfony/web-server-bundle --dev
 
 To start the server, run:
 
