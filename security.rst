@@ -997,27 +997,20 @@ shown above.
 -----------------------------
 
 After authentication, the ``User`` object of the current user can be accessed
-via the ``security.token_storage`` service. From inside a controller, this will
-look like::
-
-    use Symfony\Component\Security\Core\User\UserInterface;
+via the ``getUser()`` shortcut (which uses the ``security.token_storage``
+service). From inside a controller, this will look like::
 
     public function indexAction()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
-        // or you can also type-hint a method argument with UserInterface: e.g. "UserInterface $user"
     }
 
 .. tip::
 
     The user will be an object and the class of that object will depend on
     your :ref:`user provider <security-user-providers>`.
-
-.. versionadded:: 3.2
-    The ability to get the user by type-hinting an argument with UserInterface
-    was introduced in Symfony 3.2.
 
 Now you can call whatever methods are on *your* User object. For example,
 if your User object has a ``getFirstName()`` method, you could use that::
@@ -1039,14 +1032,7 @@ It's important to check if the user is authenticated first. If they're not,
 ``$user`` will either be ``null`` or the string ``anon.``. Wait, what? Yes,
 this is a quirk. If you're not logged in, the user is technically the string
 ``anon.``, though the ``getUser()`` controller shortcut converts this to
-``null`` for convenience. When type-hinting the
-:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface\\UserInterface`
-and being logged-in is optional, you can allow a null value for the argument::
-
-    public function indexAction(UserInterface $user = null)
-    {
-        // $user is null when not logged-in or anon.
-    }
+``null`` for convenience.
 
 The point is this: always check to see if the user is logged in before using
 the User object, and use the ``isGranted()`` method (or
@@ -1061,6 +1047,25 @@ the User object, and use the ``isGranted()`` method (or
     if ($this->getUser()) {
 
     }
+
+.. note::
+
+    An alternative way to get the current user in a controller is to type-hint
+    the controller argument with
+    :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface\\UserInterface`
+    (and default it to ``null`` if being logged-in is optional)::
+
+        use Symfony\Component\Security\Core\User\UserInterface\UserInterface;
+
+        public function indexAction(UserInterface $user = null)
+        {
+            // $user is null when not logged-in or anon.
+        }
+
+    This is only recommended for experienced developers who don't extend from the
+    :ref:`Symfony base controller <the-base-controller-class-services>` and
+    don't use the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerTrait`
+    either. Otherwise, it's recommended to keep using the ``getUser()`` shortcut.
 
 Retrieving the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
