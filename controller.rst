@@ -300,7 +300,7 @@ Managing Errors and 404 Pages
 When things are not found, you should return a 404 response. To do this, throw a
 special type of exception::
 
-    use Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException;
+    use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
     // ...
     public function indexAction()
