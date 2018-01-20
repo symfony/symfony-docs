@@ -1,0 +1,71 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-15T15:56:05Z
+
+My changes are wrong because `UserInterface` is used in other parts of the article. We need to **make a definitive decision** about `UserInterface`:
+
+a) Never use it or mention on Symfony Docs
+b) Never use it, but mention it in a note/tip somewhere, but discourage to use it
+c) Always use it, and explain the `$this->getUser()` shortcut in a note/tip somewhere, but discourage to use it
+
+I thought we were going for (a).
+
+Ping @weaverryan @chalasr @xabbuh
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-01-16T13:03:17Z
+
+I am not sure I follow what you would like to fix or at which stage we are right now.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-16T13:49:46Z
+
+@xabbuh we introduced `UserInterface` as a replacement of `$this->getUser()` ... but apparently using `UserInterface` is bad and even Ryan asked to keep using `$this->getUser()`.
+
+So, we need to make a definitive decision about `UserInterface`. Is something we want to promote or not? Thanks!
+
+---------------------------------------------------------------------------
+
+by iltar at 2018-01-16T13:58:06Z
+
+`UserInterface $user` provides an alternative for people that do not (want to) extend the Controller or implement the trait. If there is supposed to 1 way "to rule them all", it should be one that works for both.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-16T14:00:10Z
+
+@iltar if we do that, it'd be better if we type-hint the new `Security` utility class instead of `UserInterface`. Then we can do `$security->getUser()`
+
+---------------------------------------------------------------------------
+
+by iltar at 2018-01-16T14:01:53Z
+
+That would be an extra action and an extra dependency, which would beat the purpose imo
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-01-17T23:08:17Z
+
+> UserInterface $user provides an alternative for people that do not (want to) extend the Controller or implement the trait.
+
+This is definitely true! :) But we don't need to give this group very much help - it's a very small and very intelligent group.
+
+The problem with type-hinting is that it's not "discoverable": I can't think about my code or dig around and realize that `UserInterface` is a valid thing to type-hint. We already allow type-hinting for services and we added `debug:autowiring` so that (at least) there's an easy place to go to find the list of things you can type-hint. I don't think we should recommend any other type-hints (yes, we also have `Request` and param converters... so plenty already).
+
+I still think we should go with `$this->getUser()` everywhere: let's not complicate people's lives, this is a *really* easy way to get the user :). Also, I prefer to show the `Security` class a secondary option, instead of `UserInterface`, because you can inject `Security` elsewhere (so that code will work anywhere, not just in a controller).
+
+I know we disagree on this @iltar :). But the DX looks bad for `UserInterface` vs `$this->getUser()`, and for smart users like you, you don't need the docs to help you (other than a mention of this way).
+
+---------------------------------------------------------------------------
+
+by iltar at 2018-01-18T07:16:46Z
+
+As long as the feature is documented somewhere, I'm :+1: Would be a bit troublesome to have undocumented features, might as well remove them in that case.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-01-18T21:00:45Z
+
+@javiereguiluz can you update you the PR - let's look for all `UserInterface` spots and make them `getUser()`, but leave a mention somewhere.
