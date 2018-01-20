@@ -67,7 +67,7 @@ Creating a Bundle
 `SensioGeneratorBundle`_ is an optional bundle that includes commands to create
 different elements of your application, such as bundles. If you create lots of
 bundles, consider using it. However, this section creates and enables a new
-bundle by hand to show how simple is to do it.
+bundle by hand to show how simple it is to do it.
 
 The new bundle is called AcmeTestBundle, where the ``Acme`` portion is just a
 dummy name that should be replaced by some "vendor" name that represents you or
@@ -179,4 +179,4 @@ Learn more
     bundles/*
 
 .. _`third-party bundles`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories
-.. _`SensioGeneratorBundle`: https://github.com/sensiolabs/SensioGeneratorBundle
+.. _`SensioGeneratorBundle`: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
