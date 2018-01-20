@@ -217,7 +217,7 @@ manual steps:
 
    * ``app/Resources/views/`` -> ``templates/``
    * ``app/Resources/translations/`` -> ``translations/``
-   * ``app/Resources/<BundleName>/views/`` -> ``templates/<BundleName>/``
+   * ``app/Resources/<BundleName>/views/`` -> ``templates/bundles/<BundleName>/``
    * rest of ``app/Resources/`` files -> ``src/Resources/``
 
 #. Move the original PHP source code from ``src/AppBundle/*`` to ``src/``. In
