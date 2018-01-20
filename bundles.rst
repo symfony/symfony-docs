@@ -44,7 +44,7 @@ file::
 Creating a Bundle
 -----------------
 
-This section creates and enables a new bundle to show how simple is to do it.
+This section creates and enables a new bundle to show how simple it is to do it.
 The new bundle is called AcmeTestBundle, where the ``Acme`` portion is just a
 dummy name that should be replaced by some "vendor" name that represents you or
 your organization (e.g. ABCTestBundle for some company named ``ABC``).
@@ -104,7 +104,7 @@ of the most common elements of a bundle:
 
 ``Resources/public/``
     Contains web assets (images, stylesheets, etc) and is copied or symbolically
-    linked into the project ``web/`` directory via the ``assets:install`` console
+    linked into the project ``public/`` directory via the ``assets:install`` console
     command.
 
 ``Tests/``

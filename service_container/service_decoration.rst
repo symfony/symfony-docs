@@ -179,9 +179,9 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 Decoration Priority
 -------------------
 
-If you want to apply more than one decorator to a service, you can control their
-order by configuring the priority of decoration, this can be any integer number
-(decorators with higher priorities will be applied first).
+When applying multiple decorators to a service, you can control their order with
+the ``decoration_priority`` option. Its value is an integer that defaults to
+``0`` and higher priorities mean that decorators will be applied earlier.
 
 .. configuration-block::
 
