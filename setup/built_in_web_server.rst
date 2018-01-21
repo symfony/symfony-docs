@@ -32,7 +32,7 @@ First, execute this command:
 Then, enable the bundle in the kernel of the application::
 
     // src/Kernel.php
-    class Kernel extends Kernel
+    class Kernel extends BaseKernel
     {
         public function registerBundles()
         {
