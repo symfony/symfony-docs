@@ -534,7 +534,7 @@ The template is included using the ``{{ include() }}`` function. Notice that the
 template name follows the same typical convention. The ``article_details.html.twig``
 template uses an ``article`` variable, which we pass to it. In this case,
 you could avoid doing this entirely, as all of the variables available in
-``list.html.twig`` are also available in ``article_details.html.twig`` (unless
+``article_details.html.twig`` are also available in ``list.html.twig`` (unless
 you set `with_context`_ to false).
 
 .. tip::
