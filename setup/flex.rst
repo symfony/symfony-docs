@@ -184,8 +184,9 @@ manual steps:
 
    .. code-block:: terminal
 
-       $ composer require annotations asset doctrine twig profiler \
-         logger mailer form orm-fixtures security translation validator
+       $ composer require annotations asset orm-pack twig \
+         logger mailer form security translation validator
+       $ composer require --dev dotend maker-bundle orm-fixtures profiler
 
 #. If the project's ``composer.json`` file doesn't contain ``symfony/symfony``
    dependency, it already defines its dependencies explicitly, as required by
