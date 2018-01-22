@@ -153,6 +153,13 @@ link for details), create a ``shipping_widget`` block to handle this:
             <?php echo $view['form']->renderBlock('choice_widget') ?>
         <?php endif ?>
 
+.. tip::
+
+    You can further customize the template used to render each children of the
+    choice type. The block to override in that case is named ``widget name`` +
+    ``_entry_widget`` (e.g. for the Shipping widget you'd need to define
+    ``{% block shipping_entry_widget %} ... {% endblock %}``).
+
 .. note::
 
     Make sure the correct widget prefix is used. In this example the name should
