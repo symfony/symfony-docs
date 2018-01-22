@@ -430,3 +430,24 @@ are now fully customized:
             <input type="hidden" name="back_to" value="<?php echo $view['router']->path('forgot_password') ?>" />
             <input type="submit" name="login" />
         </form>
+
+The ``target_path`` Session Variable
+------------------------------------
+
+The last request URI is stored in a session variable named
+``_security.<your providerKey>.target_path`` (e.g. ``_security.main.target_path``
+if the name of your firewall is ``main``). Most of the times you don't have to
+deal with this low level session variable. However, if you ever need to get or
+remove this variable, consider using the
+:class:`Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait` utility::
+
+    // ...
+    use Symfony\Component\Security\Http\Util\TargetPathTrait;
+
+    $targetPath = $this->getTargetPath($request->getSession(), $providerKey);
+
+    // equivalent to:
+    // $targetPath = $request->getSession()->get('_security.'.$providerKey.'.target_path');
+
+.. versionadded:: 3.1
+    The ``TargetPathTrait`` was introduced in Symfony 3.1.
