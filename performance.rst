@@ -57,10 +57,11 @@ using APC and ``opcache_reset()`` when using OPcache).
     means that you cannot clear the web server OPcache by executing some command
     in your terminal. These are some of the possible solutions:
 
-    1. Restart the web server;
-    2. Call the ``apc_clear_cache()`` or ``opcache_reset()`` functions via the
-       web server (i.e. by having these in a script that you execute over the web);
-    3. Use the `cachetool`_ utility to control APC and OPcache from the CLI.
+    #. Restart the web server;
+    #. Call the :phpfunction:`apc_clear_cache` or :phpfunction:`opcache_reset`
+       functions via the web server (i.e. by having these in a script that
+       you execute over the web);
+    #. Use the `cachetool`_ utility to control APC and OPcache from the CLI.
 
 Optimizing all the Files Used by Symfony
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
