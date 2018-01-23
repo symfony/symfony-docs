@@ -55,9 +55,13 @@ using APC and ``opcache_reset()`` when using OPcache).
 
     In PHP, the CLI and the web processes don't share the same OPcache. This
     means that you cannot clear the web server OPcache by executing some command
-    in your terminal. You either need to restart the web server or call the
-    ``apc_clear_cache()`` or ``opcache_reset()`` functions via the web server
-    (i.e. by having these in a script that you execute over the web).
+    in your terminal. These are some of the possible solutions:
+
+    #. Restart the web server;
+    #. Call the :phpfunction:`apc_clear_cache` or :phpfunction:`opcache_reset`
+       functions via the web server (i.e. by having these in a script that
+       you execute over the web);
+    #. Use the `cachetool`_ utility to control APC and OPcache from the CLI.
 
 Optimizing all the Files Used by Symfony
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -134,3 +138,4 @@ Learn more
 .. _`APC`: http://php.net/manual/en/book.apc.php
 .. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu
 .. _`APCu PHP functions`: http://php.net/manual/en/ref.apcu.php
+.. _`cachetool`: https://github.com/gordalina/cachetool
