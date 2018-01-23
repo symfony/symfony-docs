@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-08-31T03:21:16Z
+
+~~I require some insight from someone (@javiereguiluz, @xabbuh, or @nicolas-grekas, perhaps) as to an appropriate location for describing the new `cache:pool:prune` command. Perhaps a person more familiar with the documentation has a better idea as to where this new (cache-related, framework-bundle-located) command should exist in the documentation structure? Does it deserve its own page (likely no), or can it be added to an appropriate existing page?~~
+
+*Edit:* Added a `tip` block at the end of the "Pruning Cache Items" section of the `cache_pools.rst` page briefly describing the `cache:pool:prune` command.
+
+---------------------------------------------------------------------------
+
+by Toflar at 2017-09-03T11:21:34Z
+
+Hey @robfrawley, would you mind adding the same hint as in `ChainAdapter` for `TagAwareAdapter` too? See https://github.com/symfony/symfony/pull/24075 😄
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-09-04T04:26:21Z
+
+@Toflar Done. There is no dedicated page for `TagAwareAdapter` so I added the comment to the "Cache Invalidation" page talking about usage of `TagAwareAdapter`. Does that seem logical? Anywhere else you think it should be noted or any additional information on this page that should be added?
+
+---------------------------------------------------------------------------
+
+by Toflar at 2017-09-04T11:00:18Z
+
+I think that's perfect - thanks a lot!
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2017-09-05T05:44:28Z
+
+A comment about the new `cache:pool:prune` command has been added to the "Pruning Cache Items" section of the `cache_pools.rst` page. Moreover, the multiple commits have now been squashed. This is done from my end and ready for any review(s).
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2018-01-22T18:55:27Z
+
+@javiereguiluz, @xabbuh, @nicolas-grekas: Do you guys intend to merge this documentation? It's becoming tiresome to continually rebase this over and over for past six months. If you need some aspect of it changed for inclusion, please advise. If you don't want it, let me know. Symfony 3.4 and 4.0 have been released; both versions include the functionality described here, so I think it makes sense to include. Regardless, can we wrap this up one way or the other? Thanks!
+
+---------------------------------------------------------------------------
+
+by robfrawley at 2018-01-22T23:59:13Z
+
+Rebased again...
