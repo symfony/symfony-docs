@@ -143,7 +143,7 @@ a second array argument to ``PdoSessionHandler``:
     The ``db_lifetime_col`` was introduced in Symfony 2.6. Prior to 2.6,
     this column did not exist.
 
-These are parameters that you must configure:
+These are parameters that you can configure:
 
 ``db_table`` (default ``sessions``):
     The name of the session table in your database;
@@ -216,8 +216,18 @@ Preparing the Database to Store Sessions
 ----------------------------------------
 
 Before storing sessions in the database, you must create the table that stores
-the information. The following sections contain some examples of the SQL statements
-you may use for your specific database engine.
+the information. The session handler provides a method called
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler::createTable`
+to set up this table for you according to the database engine used::
+
+    try {
+        $sessionHandlerService->createTable();
+    } catch (\PDOException $e) {
+        // the table could not be created for some reason
+    }
+
+If you prefer to set up the table yourself, these are some examples of the SQL
+statements you may use according to your specific database engine.
 
 .. _pdo-session-handle-26-changes:
 
