@@ -2,7 +2,7 @@
     single: Cache Pool
     single: PDO Cache, Doctrine DBAL Cache
 
-.. _`pdo-doctrine-adapter`:
+.. _pdo-doctrine-adapter:
 
 PDO & Doctrine DBAL Cache Adapter
 =================================
