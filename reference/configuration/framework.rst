@@ -1,6 +1,8 @@
 .. index::
     single: Configuration reference; Framework
 
+.. _framework-bundle-configuration:
+
 FrameworkBundle Configuration ("framework")
 ===========================================
 

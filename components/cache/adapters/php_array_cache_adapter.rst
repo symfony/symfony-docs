@@ -9,7 +9,7 @@ This adapter is a highly performant way to cache static data (e.g. application c
 that is optimized and preloaded into OPcache memory storage::
 
     use Symfony\Component\Cache\Adapter\PhpArrayAdapter;
-    use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
     // somehow, decide it's time to warm up the cache!
     if ($needsWarmup) {

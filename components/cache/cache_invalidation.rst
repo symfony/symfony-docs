@@ -80,6 +80,16 @@ your fronts and have very fast invalidation checks::
         new RedisAdapter('redis://localhost')
     );
 
+.. note::
+
+    Since Symfony 3.4, :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`
+    implements :class:`Symfony\\Component\\Cache\\PruneableInterface`,
+    enabling manual
+    :ref:`pruning of expired cache entries <component-cache-cache-pool-prune>` by
+    calling its :method:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter::prune`
+    method (assuming the wrapped adapter itself implements
+    :class:`Symfony\\Component\\Cache\\PruneableInterface`).
+
 .. _cache-component-expiration:
 
 Using Cache Expiration
