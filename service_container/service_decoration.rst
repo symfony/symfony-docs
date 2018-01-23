@@ -18,7 +18,7 @@ the original service is lost:
             # this replaces the old app.mailer definition with the new one, the
             # old definition is lost
             app.mailer:
-                class AppBundle\DecoratingMailer
+                class: AppBundle\DecoratingMailer
 
     .. code-block:: xml
 
@@ -35,7 +35,7 @@ the original service is lost:
                      one, the old definition is lost -->
                 <service id="app.mailer" class="AppBundle\DecoratingMailer" />
 
-            </service>
+            </services>
         </container>
 
     .. code-block:: php
@@ -83,7 +83,7 @@ a reference of the old one  as ``app.decorating_mailer.inner``:
                     <argument type="service" id="app.decorating_mailer.inner" />
                 </service>
 
-            </service>
+            </services>
         </container>
 
     .. code-block:: php
@@ -147,7 +147,7 @@ convention, the old ``app.mailer`` service is renamed to
                         <argument type="service" id="app.decorating_mailer.wooz" />
                     </service>
 
-                </service>
+                </services>
             </container>
 
         .. code-block:: php
