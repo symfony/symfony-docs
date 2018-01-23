@@ -14,7 +14,7 @@ a collection of directories on a locally mounted filesystem.
 
 .. tip::
 
-    The performance of this adapter can be greatly increased by utalizing a
+    The performance of this adapter can be greatly increased by utilizing a
     temporary, in-memory filesystem, such as `tmpfs`_ on Linux, or one of the
     many other `RAM disk solutions`_ available.
 
@@ -41,15 +41,18 @@ and cache root path as constructor parameters::
 
 .. caution::
 
-    The overhead of filesystem IO often makes this adapter one of the *slower* choices. If throughput is
-    paramount, the in-memory adapters (:ref:`Apcu <apcu-adapter>`, :ref:`Memcached <memcached-adapter>`,
-    and :ref:`Redis <redis-adapter>`) or the database adapters (:ref:`Doctrine <doctrine-adapter>` and
-    :ref:`PDO <pdo-doctrine-adapter>`) are recommended.
+    The overhead of filesystem IO often makes this adapter one of the *slower*
+    choices. If throughput is paramount, the in-memory adapters
+    (:ref:`Apcu <apcu-adapter>`, :ref:`Memcached <memcached-adapter>`, and
+    :ref:`Redis <redis-adapter>`) or the database adapters
+    (:ref:`Doctrine <doctrine- adapter>` and :ref:`PDO <pdo-doctrine-adapter>`)
+    are recommended.
 
 .. note::
 
-    Since Symfony 3.4, this adapter implements :class:`Symfony\\Component\\Cache\\PruneableInterface`,
-    enabling manual :ref:`pruning of expired cache items <component-cache-cache-pool-prune>` by
+    Since Symfony 3.4, this adapter implements
+    :class:`Symfony\\Component\\Cache\\PruneableInterface`, enabling manual
+    :ref:`pruning of expired cache items <component-cache-cache-pool-prune>` by
     calling its ``prune()`` method.
 
 .. _`tmpfs`: https://wiki.archlinux.org/index.php/tmpfs
