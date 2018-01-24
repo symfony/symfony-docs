@@ -29,12 +29,12 @@ The first step is to update the default services.yaml file, here's the new conte
             tags: 
                 - 'controller.service_arguments'
 
-Now that the container knows about our actions, time to build a simple Action !
+Now that the container knows about our actions, time to build a simple Action!
 
 Updating your classes
 ---------------------
 
-As the framework evolve, you must update your classes, first, delete your Controller folder and create an Actions one then a new class using the ADR principles, for this example, call it ``HelloAction.php``: 
+As the framework evolves, you must update your classes, first, delete your Controller folder and create an Actions one then a new class using the ADR principles, for this example, call it ``HelloAction.php``: 
 
 .. code-block:: php
 
