@@ -276,14 +276,6 @@ And that's all!
             $this->assertEquals(time() / 3600, $result);
         }
     }
-    
-    class MyClass
-    {
-        public function getTimeInHours()
-        {
-            return time() / 3600;
-        }
-    }
 
 .. tip::
 
