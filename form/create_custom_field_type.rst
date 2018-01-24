@@ -156,9 +156,10 @@ link for details), create a ``shipping_widget`` block to handle this:
 .. tip::
 
     You can further customize the template used to render each children of the
-    choice type. The block to override in that case is named ``widget name`` +
-    ``_entry_widget`` (e.g. for the Shipping widget you'd need to define
-    ``{% block shipping_entry_widget %} ... {% endblock %}``).
+    choice type. The block to override in that case is named "block name" +
+    ``_entry`` + "element name" (``label``, ``errors`` or ``widget``) (e.g. to
+    customize the labels of the children of the Shipping widget you'd need to
+    define ``{% block shipping_entry_label %} ... {% endblock %}``).
 
 .. note::
 
