@@ -298,7 +298,7 @@ Thanks to a new recipe installed by Flex, look at the ``.env`` file again:
     + DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
     + ###< doctrine/doctrine-bundle ###
 
-The new ``DATBASE_URL`` environment variable was added *automatically* and is already
+The new ``DATABASE_URL`` environment variable was added *automatically* and is already
 referenced by the new ``doctrine.yaml`` configuration file. By combining environment
 variables and Flex, you're using industry best practices without any extra effort.
 
