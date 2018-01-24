@@ -1,0 +1,110 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-23T08:32:16Z
+
+@workschan is there really a problem for using single quotes? I've just tested it in the Symfony Demo app and it works:
+
+```bash
+$ php bin/console doctrine:query:sql 'SELECT * FROM symfony_demo_user'
+
+array(3) {
+  [0]=>
+  array(6) {
+    ["id"]=>
+    string(1) "1"
+    ["full_name"]=>
+    string(8) "Jane Doe"
+    ["username"]=>
+    string(10) "jane_admin"
+    ["email"]=> "..."
+```
+
+---------------------------------------------------------------------------
+
+by mheki at 2018-01-23T10:35:01Z
+
+I think we should leave the docs as they are now with single quotes.
+For given example double quotes don't give any harm, but following that convention if someone tries to run a query with backticks, will get bash error.
+
+Example:
+```
+php bin/console doctrine:query:sql "SELECT * FROM `symfony_demo_user`"
+```
+
+returns:
+```
+bash: symfony_demo_user: command not found
+```
+but using single quote is fine:
+```
+php bin/console doctrine:query:sql 'SELECT * FROM `symfony_demo_user`'
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-23T11:32:28Z
+
+The arguments provided by @mheki are pretty convincing, so let's close as "won't merge". I'm sorry @workschan ... but we are looking forward to further contributions from you. Thanks!
+
+---------------------------------------------------------------------------
+
+by workschan at 2018-01-23T16:01:37Z
+
+@javiereguiluz I run this command in Windows cmd, then return:
+`Error thrown while running command "doctrine:query:sql "'SELECT" "*" FROM "product'"". Message: "Too many arguments, expected arguments "command" "sql"."`
+
+`Too many arguments, expected arguments "command" "sql".`
+
+use double quotes fix it.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-23T16:11:00Z
+
+I'm going to reopen to see if other people can explain to us if this is a Windows thing or a Doctrine thing. Thanks.
+
+---------------------------------------------------------------------------
+
+by mheki at 2018-01-23T16:25:27Z
+
+@workschan Could you paste here how exactly you run the command on Windows, please?
+
+---------------------------------------------------------------------------
+
+by workschan at 2018-01-24T05:32:41Z
+
+Just run the example command of docs on Windows  cmd:
+`php bin/console doctrine:query:sql 'SELECT * FROM product'`
+
+---------------------------------------------------------------------------
+
+by mheki at 2018-01-24T08:21:49Z
+
+thanks @workschan that's really interesting.
+@javiereguiluz I made a little bit of investigation on Windows 10:
+- running commands in Powershell is fine in both ways
+- running commands in command prompt (cmd.exe) works only with `"` double quotes as @workschan mentioned.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-24T08:42:47Z
+
+Marek, thanks for investigating this issue. I've reworded the contents to mention this. Thanks!
+
+---------------------------------------------------------------------------
+
+by workschan at 2018-01-24T08:52:07Z
+
+@javiereguiluz  That should change commands source code to matche single quotes and double quotes.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-01-24T08:54:12Z
+
+Is this the only place where such a change is necessary?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-24T12:32:55Z
+
+@xabbuh I've looked for and it's the only occurrence in this article and also in the entire docs (at least on 4.0 branch).
