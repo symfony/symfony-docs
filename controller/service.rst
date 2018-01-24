@@ -12,15 +12,9 @@ injection like any other normal service.
 Referencing your Service from Routing
 -------------------------------------
 
-Registering your controller as a service is great, but you also need to make sure
-that your routing references the service properly, so that Symfony knows to use it.
-
-If the service id is the fully-qualified class name (FQCN) of your controller, you're
-done! You can use the normal ``AppBundle:Hello:index`` syntax in your routing and
-it will find your service.
-
-But, if your service has a different id, you can use a special ``SERVICEID:METHOD``
-syntax:
+In addition to registering your controller as a service, you also need to make
+sure that your routing references the service properly, so that Symfony can find
+it. Use the ``service_id:method_name`` syntax:
 
 .. configuration-block::
 
@@ -67,11 +61,6 @@ syntax:
         $collection->add('hello', new Route('/hello', array(
             '_controller' => 'app.hello_controller:indexAction',
         )));
-
-.. note::
-
-    You cannot drop the ``Action`` part of the method name when using the
-    single colon notation.
 
 .. _controller-service-invoke:
 
