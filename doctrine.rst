@@ -370,6 +370,9 @@ you can query the database directly:
 
     $ php bin/console doctrine:query:sql 'SELECT * FROM product'
 
+    # on Windows systems not using Powershell, run this command instead:
+    # php bin/console doctrine:query:sql "SELECT * FROM product"
+
 Take a look at the previous example in more detail:
 
 .. _doctrine-entity-manager:
