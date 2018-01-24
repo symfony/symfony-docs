@@ -317,6 +317,6 @@ security configuration:
         $container->loadFromExtension('security', array(
             'access_decision_manager' => array(
                 'strategy' => 'unanimous',
-                'allow_if_all_abstain' => true
+                'allow_if_all_abstain' => true,
             ),
         ));
