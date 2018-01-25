@@ -1038,6 +1038,12 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
             App\Twig\AppExtension:
                 tags: [twig.extension]
 
+            # optionally you can define the priority of the extension (default = 0).
+            # Extensions with higher priorities are registered earlier. They are mostly
+            # useful to register late extensions that override other extensions.
+            App\Twig\AnotherExtension:
+                tags: [{ name: twig.extension, priority: 100 }]
+
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
@@ -1050,17 +1056,29 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
                 <service id="App\Twig\AppExtension">
                     <tag name="twig.extension" />
                 </service>
+
+                <service id="App\Twig\AnotherExtension">
+                    <tag name="twig.extension" priority="100" />
+                </service>
             </services>
         </container>
 
     .. code-block:: php
 
         use App\Twig\AppExtension;
+        use App\Twig\AnotherExtension;
 
         $container
             ->register(AppExtension::class)
             ->addTag('twig.extension')
+
+            ->register(AnotherExtension::class)
+            ->addTag('twig.extension', array('priority' => 100))
         ;
+
+.. versionadded::
+    The ``priority`` attribute of the ``twig.extension`` tag was introduced in
+    Symfony 4.1.
 
 For information on how to create the actual Twig Extension class, see
 `Twig's documentation`_ on the topic or read the
