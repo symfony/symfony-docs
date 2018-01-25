@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by crevillo at 2018-01-23T11:37:05Z
+
+Another question here. is possible to set a separator having more than one char? Also, are there anything that we shouldn't use as separator to avoid problems?
+
+---------------------------------------------------------------------------
+
+by bburnichon at 2018-01-24T15:59:04Z
+
+There are currently no limitation about separator being a single char. It could be any length. There are also no restriction about separator you can use. Currently, it is meant for display keys in a nice consistent manner. In my use case, I wished to use a `/` as separator as some configuration keys had `.` in names already.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-25T07:53:57Z
+
+Cool. Since there are no special constraints (length, allowed chars, etc.) there's no need to mention it. We usually only document constraints or things you can't do. Thanks!
