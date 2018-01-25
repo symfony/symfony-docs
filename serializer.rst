@@ -115,7 +115,8 @@ possible to set the priority of the tag in order to decide the matching order.
 Here is an example on how to load the
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
 faster alternative to the `ObjectNormalizer` when data objects always use
-getters and setters:
+getters (``getXxx()``), issers (``isXxx()``) or hassers (``hasXxx()``) to read
+properties and setters (``setXxx()``) to change properties:
 
 .. configuration-block::
 
@@ -153,6 +154,11 @@ getters and setters:
             ->setPublic(false)
             ->addTag('serializer.normalizer')
         ;
+
+.. versionadded:: 3.4
+    Support of hasser methods (``hasXxx()``) in ``GetSetMethodNormalizer`` was
+    introduced in Symfony 3.4. In previous Symfony versions only getters (``getXxx()``)
+    and issers (``isXxx()``) are supported.
 
 .. _serializer-using-serialization-groups-annotations:
 
