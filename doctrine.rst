@@ -40,6 +40,13 @@ The database connection information is stored as an environment variable called
 
     # to use sqlite:
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
+    
+.. caution::
+
+    If you have special charactes in your password, it's possible that you will
+    have to percent encode them. The driver manager uses PHP's ``parse_url()``
+    that implements _`RFC 3986`: http://www.faqs.org/rfcs/rfc3986.html.
+    The RFC lists characters that have to be encoded.
 
 Now that your connection parameters are setup, Doctrine can create the ``db_name``
 database for you:
