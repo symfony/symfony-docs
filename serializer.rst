@@ -116,7 +116,7 @@ Here is an example on how to load the
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
 faster alternative to the `ObjectNormalizer` when data objects always use
 getters (``getXxx()``), issers (``isXxx()``) or hassers (``hasXxx()``) to read
-properties and setters (``setXxx()``) to store properties:
+properties and setters (``setXxx()``) to change properties:
 
 .. configuration-block::
 
