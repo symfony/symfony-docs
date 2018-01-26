@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-01-22T18:25:08Z
+
+Question: when reading the setup doc, does anything else need to be updated (possible language about how small the project is, or something like that? Or a description of what you now have in your project?). These types of changes I think are where we’ve had problems in the past: making a tweak without considering the whole document (I could be wrong in this case - we just need to check!)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-26T16:37:01Z
+
+I've checked this again and the only section which could be a bit weird is https://symfony.com/doc/current/page_creation.html#auto-installing-recipes-with-symfony-flex  because it says that if you run `composer require annotations` you'll see the recipe being installed ... but that it's not entirely true because this was installed when creating the project with `website-skeleton`. I'm leaving it "as is" because changing this could require to refactor this section and move it somewhere else.
