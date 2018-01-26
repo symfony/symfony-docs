@@ -233,7 +233,7 @@ checkDNS
 
 By default, this constraint just validates the syntax of the given URL. If you
 also need to check whether the associated host exists, set the ``checkDNS``
-option to the value of any of the ``CHECK_DNS_TYPE_*`` constants of the
+option to the value of any of the ``CHECK_DNS_TYPE_*`` constants in the
 :class:`Symfony\\Component\\Validator\\Constraints\\Url` class:
 
 .. configuration-block::
@@ -299,7 +299,7 @@ option to the value of any of the ``CHECK_DNS_TYPE_*`` constants of the
         }
 
 This option uses the :phpfunction:`checkdnsrr` PHP function to check the validity
-of DNS record corresponding to the host associated with the given URL.
+of the DNS record corresponding to the host associated with the given URL.
 
 dnsMessage
 ~~~~~~~~~~
