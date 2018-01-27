@@ -311,6 +311,7 @@ security configuration:
         security:
             access_decision_manager:
                 strategy: unanimous
+                allow_if_all_abstain: false
 
     .. code-block:: xml
 
@@ -324,7 +325,7 @@ security configuration:
         >
 
             <config>
-                <access-decision-manager strategy="unanimous" />
+                <access-decision-manager strategy="unanimous" allow-if-all-abstain="false"  />
             </config>
         </srv:container>
 
@@ -334,5 +335,6 @@ security configuration:
         $container->loadFromExtension('security', array(
             'access_decision_manager' => array(
                 'strategy' => 'unanimous',
+                'allow_if_all_abstain' => false,
             ),
         ));
