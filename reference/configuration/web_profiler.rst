@@ -81,7 +81,7 @@ Full Default Configuration
             toolbar:              false
             position:             bottom
             intercept_redirects:  false
-            excluded_ajax_paths:  ^/bundles|^/_wdt
+            excluded_ajax_paths:  ^/(app(_[\\w]+)?\\.php/)?_wdt
 
             # DEPRECATED, it can be removed safely from your configuration
             verbose:              true
@@ -102,6 +102,6 @@ Full Default Configuration
                 toolbar="false"
                 verbose="true"
                 intercept-redirects="false"
-                excluded-ajax-paths="^/bundles|^/_wdt"
+                excluded-ajax-paths="^/(app(_[\\w]+)?\\.php/)?_wdt"
             />
         </container>
