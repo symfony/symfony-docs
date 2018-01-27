@@ -35,6 +35,7 @@ current log level and the console verbosity.
 The example above could then be rewritten as::
 
     use Psr\Log\LoggerInterface;
+    use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
     // ...
@@ -43,7 +44,7 @@ The example above could then be rewritten as::
     {
         private $logger;
 
-        public function __constructor(LoggerInterface $logger)
+        public function __construct(LoggerInterface $logger)
         {
             $this->logger = $logger;
         }

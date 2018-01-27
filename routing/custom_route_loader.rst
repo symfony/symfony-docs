@@ -59,6 +59,57 @@ containing :class:`Symfony\\Component\\Routing\\Route` objects.
     when they are defined in one of the default formats (e.g. XML, YAML,
     PHP file).
 
+Loading Routes with a Custom Service
+------------------------------------
+
+.. versionadded:: 2.8
+    The option to load routes using Symfony services was introduced in Symfony 2.8.
+
+Using a regular Symfony service is the simplest way to load routes in a
+customized way. It's much easier than creating a full custom route loader, so
+you should always consider this option first.
+
+To do so, define ``type: service`` as the type of the loaded routing resource
+and configure the service and method to call:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        admin_routes:
+            resource: 'admin_route_loader:loadRoutes'
+            type: service
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import resource="admin_route_loader:loadRoutes" type="service"/>
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $collection = new RouteCollection();
+        $collection->addCollection(
+            $loader->import("admin_route_loader:loadRoutes", "service")
+        );
+
+        return $collection;
+
+In this example, the routes are loaded by calling the ``loadRoutes()`` method of
+the service whose ID is ``admin_route_loader``. Your service doesn't have to
+extend or implement any special class, but the called method must return a
+:class:`Symfony\\Component\\Routing\\RouteCollection` object.
+
 Creating a custom Loader
 ------------------------
 
