@@ -70,7 +70,7 @@ Next, tell Symfony to use your service as the session handler:
 
     .. code-block:: yaml
 
-        # config/packages/doctrine.yaml
+        # config/packages/framework.yaml
         framework:
             session:
                 # ...
