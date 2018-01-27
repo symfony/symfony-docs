@@ -1039,10 +1039,10 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
                 tags: [twig.extension]
 
             # optionally you can define the priority of the extension (default = 0).
-            # Extensions with higher priorities are registered earlier. They are mostly
+            # Extensions with higher priorities are registered earlier. This is mostly
             # useful to register late extensions that override other extensions.
             App\Twig\AnotherExtension:
-                tags: [{ name: twig.extension, priority: 100 }]
+                tags: [{ name: twig.extension, priority: -100 }]
 
     .. code-block:: xml
 
@@ -1058,7 +1058,7 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
                 </service>
 
                 <service id="App\Twig\AnotherExtension">
-                    <tag name="twig.extension" priority="100" />
+                    <tag name="twig.extension" priority="-100" />
                 </service>
             </services>
         </container>
@@ -1073,7 +1073,7 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
             ->addTag('twig.extension')
 
             ->register(AnotherExtension::class)
-            ->addTag('twig.extension', array('priority' => 100))
+            ->addTag('twig.extension', array('priority' => -100))
         ;
 
 .. versionadded::
