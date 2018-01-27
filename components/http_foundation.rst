@@ -400,6 +400,13 @@ of methods to manipulate the HTTP headers related to the cache:
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`;
 
+.. note::
+
+    The methods :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`,
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified` and 
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setDate` accept any
+    object that implements ``\DateTimeInterface``, including immutable date objects.
+
 The :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method
 can be used to set the most commonly used cache information in one method
 call::

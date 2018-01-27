@@ -145,7 +145,7 @@ and ``redirect()`` methods::
     use Symfony\Component\HttpFoundation\RedirectResponse;
 
     // ...
-    public function indexAction()
+    public function index()
     {
         // redirect to the "homepage" route
         return $this->redirectToRoute('homepage');
@@ -209,7 +209,7 @@ If you need a service in a controller, just type-hint an argument with its class
     /**
      * @Route("/lucky/number/{max}")
      */
-    public function numberAction($max, LoggerInterface $logger)
+    public function number($max, LoggerInterface $logger)
     {
         $logger->info('We are logging!');
         // ...
@@ -303,7 +303,7 @@ special type of exception::
     use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
     // ...
-    public function indexAction()
+    public function index()
     {
         // retrieve the object from database
         $product = ...;
@@ -348,7 +348,7 @@ object. To get it in your controller, just add it as an argument and
 
     use Symfony\Component\HttpFoundation\Request;
 
-    public function indexAction(Request $request, $firstName, $lastName)
+    public function index(Request $request, $firstName, $lastName)
     {
         $page = $request->query->get('page', 1);
 
@@ -392,7 +392,7 @@ To get the session, add an argument and type-hint it with
 
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-    public function indexAction(SessionInterface $session)
+    public function index(SessionInterface $session)
     {
         // store an attribute for reuse during a later user request
         $session->set('foo', 'bar');
@@ -432,7 +432,7 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
 
     use Symfony\Component\HttpFoundation\Request;
 
-    public function updateAction(Request $request)
+    public function update(Request $request)
     {
         // ...
 
@@ -524,7 +524,7 @@ the ``Request`` class::
 
     use Symfony\Component\HttpFoundation\Request;
 
-    public function indexAction(Request $request)
+    public function index(Request $request)
     {
         $request->isXmlHttpRequest(); // is it an Ajax request?
 
@@ -579,7 +579,7 @@ To return JSON from a controller, use the ``json()`` helper method. This returns
 special ``JsonResponse`` object that encodes the data automatically::
 
     // ...
-    public function indexAction()
+    public function index()
     {
         // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
         return $this->json(array('username' => 'jane.doe'));

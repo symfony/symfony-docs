@@ -231,6 +231,12 @@ checkDNS
 
 **type**: ``boolean`` **default**: ``false``
 
+.. versionadded:: 4.1
+    This option was deprecated in Symfony 4.1 and will be removed in Symfony 5.0,
+    because checking the DNS records is not reliable enough to validate the
+    existence of the host. Use the :phpfunction:`checkdnsrr` PHP function if you
+    still want to use this kind of validation.
+
 By default, this constraint just validates the syntax of the given URL. If you
 also need to check whether the associated host exists, set the ``checkDNS``
 option to ``true``:
@@ -304,6 +310,12 @@ dnsMessage
 ~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The host could not be resolved.``
+
+.. versionadded:: 4.1
+    This option was deprecated in Symfony 4.1 and will be removed in Symfony 5.0,
+    because checking the DNS records is not reliable enough to validate the
+    existence of the host. Use the :phpfunction:`checkdnsrr` PHP function if you
+    still want to use this kind of validation.
 
 This message is shown when the ``checkDNS`` option is set to ``true`` and the
 DNS check failed.
