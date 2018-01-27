@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-27T08:55:45Z
+
+Good catch! In fact, this is the default value since 2.7: https://github.com/symfony/symfony/blob/2.7/src/Symfony/Bundle/WebProfilerBundle/DependencyInjection/Configuration.php so I'm going to merge this on 2.7 branch.
