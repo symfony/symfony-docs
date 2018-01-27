@@ -62,7 +62,7 @@ Full Default Configuration
         web_profiler:
             toolbar:              false
             intercept_redirects:  false
-            excluded_ajax_paths:  ^/bundles|^/_wdt
+            excluded_ajax_paths:  ^/(app(_[\\w]+)?\\.php/)?_wdt
 
     .. code-block:: xml
 
@@ -79,6 +79,6 @@ Full Default Configuration
             <web-profiler:config
                 toolbar="false"
                 intercept-redirects="false"
-                excluded-ajax-paths="^/bundles|^/_wdt"
+                excluded-ajax-paths="^/(app(_[\\w]+)?\\.php/)?_wdt"
             />
         </container>
