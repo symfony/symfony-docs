@@ -126,6 +126,8 @@ Whenever you have a ``{placeholder}`` in your route path, that portion becomes a
 wildcard: it matches *any* value. Your controller can now *also* have an argument
 called ``$placeholder`` (the wildcard and argument names *must* match).
 
+
+
 Each route also has an internal name: ``blog_list`` and ``blog_show``. These can
 be anything (as long as each is unique) and don't have any meaning yet. You'll
 use them later to :ref:`generate URLs <routing-generate>`.
@@ -240,6 +242,35 @@ URL                       Route          Parameters
 
 To learn about other route requirements - like HTTP method, hostname and dynamic
 expressions - see :doc:`/routing/requirements`.
+
+Prefix all controller route names and URLs
+------------------------------------------
+
+You have the possibility to prefix all routes names and URLs used by the action methods of a controller with the ``@Route`` annotation.
+
+Add a name property to the ``@Route`` annotation of the controller class and that will be considered the prefix of all route names
+
+.. code-block:: php
+
+      use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+      //prefix all URLs of this controller's action method with /blog and routes name with blog_
+      /**
+       * @Route("/blog", name="blog_")
+       */
+      class BlogController extends Controller
+      {
+          /**
+           * @Route("/", defaults={"page": "1"}, name="index")
+           */
+          public function indexAction($page, $_format) { ... }
+
+          /**
+           * @Route("/posts/{slug}", name="post")
+           */
+          public function showAction(Post $post) { ... }
+      }
+
+In this example, the URL of the index action will be ``/blog/`` and ``/blog/posts/``... and the URL of the show action will be /blog/posts/... It's the same logic for the routes name that will be ``blog_index`` and ``blog_post``. 
 
 Giving {placeholders} a Default Value
 -------------------------------------
