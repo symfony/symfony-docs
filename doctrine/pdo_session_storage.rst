@@ -78,7 +78,7 @@ Next, tell Symfony to use your service as the session handler:
 
     .. code-block:: xml
 
-        <!-- config/packages/doctrine.xml -->
+        <!-- config/packages/framework.xml -->
         <framework:config>
             <!-- ... -->
             <framework:session handler-id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" cookie-lifetime="3600" auto-start="true"/>
@@ -86,7 +86,7 @@ Next, tell Symfony to use your service as the session handler:
 
     .. code-block:: php
 
-        // config/packages/doctrine.php
+        // config/packages/framework.php
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
         // ...
