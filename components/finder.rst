@@ -109,6 +109,27 @@ Exclude directories from matching with the
    The :method:`Symfony\\Component\\Finder\\Finder::ignoreUnreadableDirs`
    method was introduced in Symfony 2.3.
 
+Note that the excluded paths provided are relative to the `in()` directories. For
+example if you have:
+
+    /path/to/project
+      \-- A/
+            |-- a0
+            |-- a1
+            \-- B
+                 |-- b0
+                 \-- b1
+
+And do the following:
+
+    Finder::create()
+        ->files()
+        ->in('/path/to/project)
+        ->exclude('A/B')
+    ;
+
+Then the finder will collect the files `a0` and `a1`.
+
 It's also possible to ignore directories that you don't have permission to read::
 
     $finder->ignoreUnreadableDirs()->in(__DIR__);
