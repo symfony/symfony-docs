@@ -191,7 +191,9 @@ into the client constructor::
     use Acme\Client;
 
     // create cookies and add to cookie jar
-    $cookieJar = new Cookie('flavor', 'chocolate', strtotime('+1 day'));
+    $cookie = new Cookie('flavor', 'chocolate', strtotime('+1 day'));
+    $cookieJar = new CookieJar();
+    $cookieJar->set($cookie);
 
     // create a client and set the cookies
     $client = new Client(array(), null, $cookieJar);
