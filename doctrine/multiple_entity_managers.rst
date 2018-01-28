@@ -238,7 +238,7 @@ the default entity manager (i.e. ``default``) is returned::
         public function indexAction(EntityManagerInterface $em)
         {
             // These methods also return the default entity manager, but it's preferred
-            // to get it by inyecting EntityManagerInterface in the action method
+            // to get it by injecting EntityManagerInterface in the action method
             $em = $this->getDoctrine()->getManager();
             $em = $this->getDoctrine()->getManager('default');
             $em = $this->get('doctrine.orm.default_entity_manager');
