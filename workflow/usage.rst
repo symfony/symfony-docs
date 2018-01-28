@@ -138,7 +138,7 @@ like this:
 
     class BlogPost
     {
-        // This property is used by the marking store
+        // This property is used by the marking store, by default, Symfony "mark" this attribute as an array.
         public $currentPlace;
         public $title;
         public $content;
@@ -155,7 +155,12 @@ like this:
     The ``type`` (default value ``single_state``) and ``arguments`` (default value ``marking``)
     attributes of the ``marking_store`` option are optional. If omitted, their default values
     will be used.
+    
+.. note::
 
+    Please note that if you decide to store $currentPlace using Doctrine, 
+    the attribute must be mapped to an array.
+    
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions are allowed on a blog post::
 
