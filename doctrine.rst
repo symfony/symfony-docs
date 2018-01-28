@@ -40,6 +40,13 @@ The database connection information is stored as an environment variable called
 
     # to use sqlite:
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
+    
+.. caution::
+
+    If the username, password or database name contain any character considered
+    special in a URI (such as ``!``, ``@``, ``$``, ``#``), you must encode them.
+    See `RFC 3986`_ for the full list of reserved characters or use the
+    :phpfunction:`urlencode` function to encode them.
 
 Now that your connection parameters are setup, Doctrine can create the ``db_name``
 database for you:
@@ -738,6 +745,7 @@ Learn more
 * `DoctrineFixturesBundle`_
 
 .. _`Doctrine`: http://www.doctrine-project.org/
+.. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`MongoDB`: https://www.mongodb.org/
 .. _`Doctrine's Mapping Types documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html
 .. _`Query Builder`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html
