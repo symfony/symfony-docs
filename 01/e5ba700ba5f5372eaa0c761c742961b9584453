@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-28T08:54:02Z
+
+@migo315 thanks for this ... but before merging I'm going to ask to @xabbuh, one of our doc maintainers, to see if he agree with this. It's tricky because you are configuring the session with Doctrine ... so, should it go to `doctrine.yaml` or `framework.yaml`?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-01-28T09:30:23Z
+
+As this part is configuring the FrameworkBundle (where this option is already present in the current version of the recipe: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/config/packages/framework.yaml#L9-L10) I agree with @migo315.
