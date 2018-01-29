@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by Xymanek at 2018-01-26T09:00:00Z
+
+How will this work if the service is also auto configured?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-26T09:04:10Z
+
+@Xymanek same as the other tags that allow priority. When using autoconfiguration you get a priority of `0` and can't change it.
+
+---------------------------------------------------------------------------
+
+by Xymanek at 2018-01-26T09:23:56Z
+
+Maybe it makes sense to mention that in docs? Because someone can think that to change priority they need to add a new tag, ending up with the service being tagged twice.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-26T09:33:43Z
+
+Not sure I follow you. You say *Because someone can think that to change priority they need to add a new tag* ... but that's exactly what you need to do. If you want a priority, you need to add the tag explicitly yourself.
+
+---------------------------------------------------------------------------
+
+by Xymanek at 2018-01-26T09:42:30Z
+
+If you add a tag to auto configured service, won't that service end up with 2 `twig.extension` tags? E.g.:
+
+- Auto configured tag with default priority
+- Manual tag with custom priority
