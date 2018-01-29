@@ -36,7 +36,8 @@ Another option would be to load the form via an uncached AJAX request, but
 cache the rest of the HTML response.
 
 Or you can even load just the CSRF token with an AJAX request and replace the
-form field value with it.
+form field value with it. Take a look at :doc:`hinclude.js </templating/hinclude>`
+for a nice solution.
 
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`Security CSRF Component`: https://github.com/symfony/security-csrf

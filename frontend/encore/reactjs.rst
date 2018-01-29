@@ -5,7 +5,8 @@ Using React? Make sure you have React installed, along with the `babel-preset-re
 
 .. code-block:: terminal
 
-    $ yarn add --dev react react-dom prop-types babel-preset-react
+    $ yarn add --dev babel-preset-react
+    $ yarn add react react-dom prop-types
 
 Enable react in your ``webpack.config.js``:
 

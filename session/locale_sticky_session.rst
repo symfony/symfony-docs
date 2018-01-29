@@ -52,8 +52,8 @@ correct locale however you want::
         public static function getSubscribedEvents()
         {
             return array(
-                // must be registered after the default Locale listener
-                KernelEvents::REQUEST => array(array('onKernelRequest', 15)),
+                // must be registered before (i.e. with a higher priority than) the default Locale listener
+                KernelEvents::REQUEST => array(array('onKernelRequest', 20)),
             );
         }
     }
