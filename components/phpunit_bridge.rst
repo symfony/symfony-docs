@@ -198,6 +198,29 @@ from a pull request on the outdated vendor). This mode allows you to
 ignore those deprecations, allowing you to notice when *your code* is
 using deprecated APIs, and to keep up with the changes.
 
+Here is a summary that should help you pick the right mode:
+
++------------------------+-----------------------------------------------------+
+| Mode                   | Recommended situation                               |
++========================+=====================================================+
+| strict                 | Recommended for actively maintained projects        |
+|                        | with little to no dependencies                      |
++------------------------+-----------------------------------------------------+
+| <some integer>         | Recommended for projects that you cannot            |
+|                        | immediately fix but don't want to make worse.       |
+|                        | Can be used to transition from one mode to another. |
++------------------------+-----------------------------------------------------+
+| allow_outdated_vendors | Recommended for projects with dependencies          |
+|                        | that fail to keep up with new deprecations.         |
++------------------------+-----------------------------------------------------+
+| weak_vendors           | Recommended for libraries that use                  |
+|                        | the deprecation system themselves and               |
+|                        | cannot afford to use one of the modes above.        |
++------------------------+-----------------------------------------------------+
+| weak                   | Not recommended; will probably lead to              |
+|                        | a big refactoring.                                  |
++------------------------+-----------------------------------------------------+
+
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
