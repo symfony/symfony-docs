@@ -31,7 +31,12 @@ Full Default Configuration
                         port:                 ~
                         user:                 root
                         password:             ~
+                        # charset of the database
                         charset:              ~
+                        # charset and collation of the tables. Not inherited from database
+                        default_table_options:
+                            charset:          ~
+                            collate:          ~
                         path:                 ~
                         memory:               ~
 
