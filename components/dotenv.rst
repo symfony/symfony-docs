@@ -90,6 +90,13 @@ Use environment variables in values by prefixing variables with ``$``:
     DB_USER=root
     DB_PASS=${DB_USER}pass # Include the user as a password prefix
 
+You can use array:
+
+.. code-block:: bash
+
+    DB[USER]=root
+    DB[PASS]=pass
+
 Embed commands via ``$()`` (not supported on Windows):
 
 .. code-block:: bash
