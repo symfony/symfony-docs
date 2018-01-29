@@ -23,10 +23,10 @@ it. Use the ``service_id:method_name`` syntax:
         // src/AppBundle/Controller/HelloController.php
         // ...
 
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         /**
-         * @Route(service="app.hello_controller")
+         * @Route(service="AppBundle\Controller\HelloController")
          */
         class HelloController
         {
@@ -38,7 +38,7 @@ it. Use the ``service_id:method_name`` syntax:
         # app/config/routing.yml
         hello:
             path:     /hello
-            defaults: { _controller: app.hello_controller:indexAction }
+            defaults: { _controller: AppBundle\Controller\HelloController:indexAction }
 
     .. code-block:: xml
 
@@ -50,7 +50,7 @@ it. Use the ``service_id:method_name`` syntax:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" path="/hello">
-                <default key="_controller">app.hello_controller:indexAction</default>
+                <default key="_controller">AppBundle\Controller\HelloController:indexAction</default>
             </route>
 
         </routes>
@@ -59,7 +59,7 @@ it. Use the ``service_id:method_name`` syntax:
 
         // app/config/routing.php
         $collection->add('hello', new Route('/hello', array(
-            '_controller' => 'app.hello_controller:indexAction',
+            '_controller' => 'AppBundle\Controller\HelloController:indexAction',
         )));
 
 .. _controller-service-invoke:
@@ -68,8 +68,9 @@ Invokable Controllers
 ---------------------
 
 If your controller implements the ``__invoke()`` method - popular with the
-Action-Domain-Response (ADR) pattern, you can simply refer to the service id
-(``AppBundle\Controller\HelloController`` or ``app.hello_controller`` for example).
+Action-Domain-Response (ADR) pattern, you can omit the method name from the
+``service_id:method_name`` syntax (in the previous example, you just need to
+use ``AppBundle\Controller\HelloController``).
 
 Alternatives to base Controller Methods
 ---------------------------------------
