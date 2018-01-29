@@ -1961,11 +1961,11 @@ example, when warming caches offline).
 .. _reference-lock:
 
 lock
-~~~~~
+~~~~
 
 **type**: ``string``
 
-The default lock adapter. If not defined the value is set to ``semaphore`` when
+The default lock adapter. If not defined, the value is set to ``semaphore`` when
 available, or to ``flock`` otherwise. Store's DSN are also allowed.
 
 Full Default Configuration
