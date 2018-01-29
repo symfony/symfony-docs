@@ -1071,12 +1071,13 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
         $container
             ->register(AppExtension::class)
             ->addTag('twig.extension')
-
+        ;
+        $container
             ->register(AnotherExtension::class)
             ->addTag('twig.extension', array('priority' => -100))
         ;
 
-.. versionadded::
+.. versionadded:: 4.1
     The ``priority`` attribute of the ``twig.extension`` tag was introduced in
     Symfony 4.1.
 
