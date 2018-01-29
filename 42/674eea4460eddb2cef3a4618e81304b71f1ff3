@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2017-09-27T15:10:02Z
+
+Question not related to this PR per se: do we have a place to document interfaces that one can use with auto-wiring? Like using `StoreInterface::class` to get the configured lock?
