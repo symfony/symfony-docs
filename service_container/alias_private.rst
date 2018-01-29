@@ -65,17 +65,15 @@ gives you better errors: if you try to reference a non-existent service, you wil
 get a clear error when you refresh *any* page, even if the problematic code would
 not have run on that page.
 
-Now that the service is private, you *should not* fetch the service directly
+Now that the service is private, you *must not* fetch the service directly
 from the container::
 
     use AppBundle\Service\Foo;
 
     $container->get(Foo::class);
 
-This *may or may not work*, depending on how the container has optimized the
-service instantiation and, even in the cases where it works, this possibility is
-deprecated. Simply said: A service should be marked as private if you do not want
-to access it directly from your code.
+Simply said: A service can be marked as private if you do not want to access
+it directly from your code.
 
 However, if a service has been marked as private, you can still alias it
 (see below) to access this service (via the alias).
