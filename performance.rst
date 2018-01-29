@@ -148,19 +148,18 @@ overhead that can be avoided as follows:
 .. code-block:: ini
 
     ; php.ini
-
-    ; after each deploy, call `opcache_reset()` or restart the web server
-    ; to empty the cache and regenerate the cached files. Otherwise you won't
-    ; see the updates made in the application
     opcache.validate_timestamps=0
 
-.. note::
+After each deploy, you must empty and regenerate the cache of OPcache. Otherwise
+you won't see the updates made in the application. Given than in PHP, the CLI
+and the web processes don't share the same OPcache, you cannot clear the web
+server OPcache by executing some command in your terminal. These are some of the
+possible solutions:
 
-    The OPcache is different for the web server and the command console.
-    You cannot clear the web server OPcache by executing some command
-    in your terminal. You either need to restart the web server or call the
-    ``opcache_reset()`` function via the web server (i.e. by having this in
-    a script that you execute over the web).
+1. Restart the web server;
+2. Call the ``apc_clear_cache()`` or ``opcache_reset()`` functions via the
+   web server (i.e. by having these in a script that you execute over the web);
+3. Use the `cachetool`_ utility to control APC and OPcache from the CLI.
 
 .. _performance-configure-realpath-cache:
 
@@ -219,3 +218,4 @@ Learn more
 .. _`APC`: http://php.net/manual/en/book.apc.php
 .. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu
 .. _`APCu PHP functions`: http://php.net/manual/en/ref.apcu.php
+.. _`cachetool`: https://github.com/gordalina/cachetool
