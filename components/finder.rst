@@ -103,13 +103,12 @@ Each pattern has to resolve to at least one directory path.
 Exclude directories from matching with the
 :method:`Symfony\\Component\\Finder\\Finder::exclude` method::
 
+    // directories passed as argument must be relative to the ones defined with the in() method
     $finder->in(__DIR__)->exclude('ruby');
 
 .. versionadded:: 2.3
    The :method:`Symfony\\Component\\Finder\\Finder::ignoreUnreadableDirs`
    method was introduced in Symfony 2.3.
-
-Note that the excluded paths provided are relative to the `in()` directories.
 
 It's also possible to ignore directories that you don't have permission to read::
 
