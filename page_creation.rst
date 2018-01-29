@@ -101,6 +101,21 @@ routes. To do this, install the annotations package:
 
     $ composer require annotations
 
+Enable parsing of annotations in all controllers:
+
+.. code-block:: diff
+
+    # config/routes.yaml
+
+    -  # the "app_lucky_number" route name is not important yet
+    -  app_lucky_number:
+    -      path: /lucky/number
+    -      controller: App\Controller\LuckyController::number
+    +  # Load all controllers routes
+    +  controllers:
+    +      resource: ../src/Controller
+    +      type: annotation
+
 You can now add your route directly *above* the controller:
 
 .. code-block:: diff
