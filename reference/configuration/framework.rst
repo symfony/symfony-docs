@@ -136,6 +136,7 @@ Configuration
             * `provider`_
             * `clearer`_
     * `prefix_seed`_
+* :ref:`lock <reference-lock>`
 
 secret
 ~~~~~~
@@ -1957,6 +1958,16 @@ It's also useful when using `blue/green deployment`_ strategies and more
 generally, when you need to abstract out the actual deployment directory (for
 example, when warming caches offline).
 
+.. _reference-lock:
+
+lock
+~~~~~
+
+**type**: ``string``
+
+The default lock adapter. If not defined the value is set to ``semaphore`` when
+available, or to ``flock`` otherwise. Store's DSN are also allowed.
+
 Full Default Configuration
 --------------------------
 
@@ -2118,6 +2129,14 @@ Full Default Configuration
                         default_lifetime: ~
                         provider: ~
                         clearer: ~
+
+            # lock configuration
+            lock:
+                invoice: 'redis://localhost'
+                report: semaphore
+            # lock: ~
+            # lock: 'flock'
+            # lock: ['semaphore', 'redis://localhost']
 
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
