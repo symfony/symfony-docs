@@ -200,6 +200,26 @@ the ``vendors`` directory will make the test suite fail, while deprecations
 triggered from a library inside it will not, giving you the best of both
 worlds.
 
+Here is a summary that should help you pick the right mode:
+
++----------------+-----------------------------------------------------+
+| Mode           | Recommended situation                               |
++================+=====================================================+
+| strict         | Recommended for actively maintained projects        |
+|                | with little to no dependencies                      |
++----------------+-----------------------------------------------------+
+| <some integer> | Recommended for projects that you cannot            |
+|                | immediately fix but don't want to make worse.       |
+|                | Can be used to transition from one mode to another. |
++----------------+-----------------------------------------------------+
+| weak_vendors   | Recommended for libraries that use                  |
+|                | the deprecation system themselves and               |
+|                | cannot afford to use one of the modes above.        |
++----------------+-----------------------------------------------------+
+| weak           | Not recommended; will probably lead to              |
+|                | a big refactoring.                                  |
++----------------+-----------------------------------------------------+
+
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
