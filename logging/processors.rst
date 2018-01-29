@@ -139,7 +139,7 @@ Finally, set the formatter to be used on whatever handler you want:
                     type="stream"
                     path="%kernel.logs_dir%/%kernel.environment%.log"
                     level="debug"
-                    formatter="app.logger.session_request_processor"
+                    formatter="monolog.formatter.session_request"
                 />
             </monolog:config>
         </container>
@@ -153,7 +153,7 @@ Finally, set the formatter to be used on whatever handler you want:
                     'type'      => 'stream',
                     'path'      => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level'     => 'debug',
-                    'formatter' => 'app.logger.session_request_processor',
+                    'formatter' => 'monolog.formatter.session_request',
                 ),
             ),
         ));
