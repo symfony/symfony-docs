@@ -63,6 +63,9 @@ state of the current configuration to build a new one:
     // build the first configuration
     const firstConfig = Encore.getWebpackConfig();
 
+    // Set a unique name for the config (needed later!)
+    firstConfig.name = 'firstConfig';
+
     // reset Encore to build the second config
     Encore.reset();
 
@@ -79,8 +82,18 @@ state of the current configuration to build a new one:
     // build the second configuration
     const secondConfig = Encore.getWebpackConfig();
 
+    // Set a unique name for the config (needed later!)
+    secondConfig.name = 'secondConfig';
+
     // export the final configuration as an array of multiple configurations
     module.exports = [firstConfig, secondConfig];
+
+When running Encore, both configurations will be built in parallel. If you
+prefer to build configs separately, pass the ``--config-name`` option:
+
+.. code-block:: terminal
+
+    $ yarn run encore dev --config-name firstConfig
 
 .. _`configuration options`: https://webpack.js.org/configuration/
 .. _`Webpack's watchOptions`: https://webpack.js.org/configuration/watch/#watchoptions
