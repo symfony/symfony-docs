@@ -71,7 +71,7 @@ using a processor.
                     type: stream
                     path: '%kernel.logs_dir%/%kernel.environment%.log'
                     level: debug
-                    formatter: app.logger.session_request_processor
+                    formatter: monolog.formatter.session_request
 
     .. code-block:: xml
 
@@ -106,7 +106,7 @@ using a processor.
                     type="stream"
                     path="%kernel.logs_dir%/%kernel.environment%.log"
                     level="debug"
-                    formatter="app.logger.session_request_processor"
+                    formatter="monolog.formatter.session_request"
                 />
             </monolog:config>
         </container>
@@ -132,7 +132,7 @@ using a processor.
                     'type'      => 'stream',
                     'path'      => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level'     => 'debug',
-                    'formatter' => 'app.logger.session_request_processor',
+                    'formatter' => 'monolog.formatter.session_request',
                 ),
             ),
         ));
