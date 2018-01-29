@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-08T08:17:03Z
+
+This looks OK ... but Monolog was always too confusing to me, so I'll wait for other reviews before merging. Also, if this is the correct change, we should update the XML and PHP config below too. Thanks!
