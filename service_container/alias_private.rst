@@ -57,12 +57,11 @@ What makes private services special is that, if they are only injected once,
 they are converted from services to inlined instantiations (e.g. ``new PrivateThing()``).
 This increases the container's performance.
 
-Now that the service is private, you *should not* fetch the service directly
+Now that the service is private, you *must not* fetch the service directly
 from the container::
 
     $container->get('foo');
 
-This *may or may not work*, depending on if the service could be inlined.
 Simply said: A service can be marked as private if you do not want to access
 it directly from your code.
 
