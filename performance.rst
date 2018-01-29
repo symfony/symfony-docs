@@ -74,6 +74,12 @@ For more details, see :doc:`/components/class_loader/cache_class_loader`.
 Use Bootstrap Files
 ~~~~~~~~~~~~~~~~~~~
 
+.. caution::
+
+    Thanks to the optimizations introduced in PHP 7, bootstrap files are no
+    longer necessary when running your Symfony applications with PHP 7 or a
+    newer PHP version.
+
 The Symfony Standard Edition includes a script to generate a so-called
 `bootstrap file`_, which is a large file containing the code of the most
 commonly used classes. This saves a lot of IO operations because Symfony no
