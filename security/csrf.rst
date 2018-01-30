@@ -12,12 +12,16 @@ CSRF protection works by adding a hidden field to your form that contains a
 value that only you and your user know. This ensures that the user - not some
 other entity - is submitting the given data.
 
-Before enabling the CSRF protection, install the CSRF support in your project
-(which in turn requires installing the Symfony Form component):
+Before using the CSRF protection, install it in your project (which in turn
+requires installing the Symfony Form component):
 
 .. code-block:: terminal
 
     $ composer require security-csrf form
+
+Then, enable/disable the CSRF protection with the ``csrf_protection`` option
+in the ``config/packages/framework.yaml`` file. For more information, see the
+:ref:`CSRF configuration reference <reference-framework-csrf-protection>`.
 
 CSRF Protection in Symfony Forms
 --------------------------------
@@ -25,10 +29,6 @@ CSRF Protection in Symfony Forms
 Forms created with the Symfony Form component include CSRF tokens by default
 and Symfony checks them automatically, so you don't have to anything to be
 protected against CSRF attacks.
-
-This automatic protection is enabled/disabled with the ``csrf_protection`` option
-in the ``config/packages/framework.yaml`` file. For more information, see the
-:ref:`CSRF configuration reference <reference-framework-csrf-protection>`.
 
 .. _form-csrf-customization:
 
