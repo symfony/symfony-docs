@@ -19,9 +19,42 @@ requires installing the Symfony Form component):
 
     $ composer require security-csrf form
 
-Then, enable/disable the CSRF protection with the ``csrf_protection`` option
-in the ``config/packages/framework.yaml`` file. For more information, see the
-:ref:`CSRF configuration reference <reference-framework-csrf-protection>`.
+Then, enable/disable the CSRF protection with the ``csrf_protection`` option.
+(see the :ref:`CSRF configuration reference <reference-framework-csrf-protection>`
+for more information):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            csrf_protection: ~
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:csrf-protection enabled="true" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', array(
+            'csrf_protection' => null,
+        ));
 
 CSRF Protection in Symfony Forms
 --------------------------------
