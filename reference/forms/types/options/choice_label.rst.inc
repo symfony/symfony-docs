@@ -16,7 +16,7 @@ more control::
             'no' => false,
             'maybe' => null,
         ),
-        'choice_label' => function ($value, $key, $index) {
+        'choice_label' => function ($value, $index, $key) {
             if ($value == true) {
                 return 'Definitely!';
             }
