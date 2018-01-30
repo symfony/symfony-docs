@@ -19,8 +19,8 @@ You can install the component in 2 different ways:
 
 .. note::
 
-    If using it inside a Symfony application, make sure that the
-    DebugBundle is enabled in your ``app/AppKernel.php`` file.
+    If using it inside a Symfony application, make sure that the DebugBundle has
+    been installed (or run ``composer require debug`` to install it).
 
 .. _components-var-dumper-dump:
 
@@ -49,6 +49,9 @@ For example::
     $someVar = ...;
 
     dump($someVar);
+
+    // dump() returns the passed value, so you can dump an object and keep using it
+    dump($someObject)->someMethod();
 
 By default, the output format and destination are selected based on your
 current PHP SAPI:
@@ -79,9 +82,8 @@ current PHP SAPI:
 DebugBundle and Twig Integration
 --------------------------------
 
-The DebugBundle allows greater integration of the component into the Symfony
-full-stack framework. It is enabled by default in the *dev* and *test*
-environment of the Symfony Standard Edition.
+The DebugBundle allows greater integration of this component into Symfony
+applications.
 
 Since generating (even debug) output in the controller or in the model
 of your application may just break it by e.g. sending HTTP headers or
@@ -101,14 +103,11 @@ Choosing between both is mostly a matter of personal taste, still:
   be suited to your use case (e.g. you shouldn't use it in an HTML
   attribute or a ``<script>`` tag).
 
-This behavior can be changed by configuring the ``dump.dump_destination``
+This behavior can be changed by configuring the ``debug.dump_destination``
 option. Read more about this and other options in
 :doc:`the DebugBundle configuration reference </reference/configuration/debug>`.
 
 .. tip::
-
-    .. versionadded:: 3.3
-        The local search box was introduced in Symfony 3.3.
 
     If the dumped contents are complex, consider using the local search box to
     look for specific variables or values. First, click anywhere on the dumped

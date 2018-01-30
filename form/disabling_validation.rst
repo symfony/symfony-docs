@@ -18,5 +18,9 @@ these cases you can set the ``validation_groups`` option to ``false``::
 
 Note that when you do that, the form will still run basic integrity checks,
 for example whether an uploaded file was too large or whether non-existing
-fields were submitted. If you want to suppress validation, you can use the
-:ref:`POST_SUBMIT event <form-dynamic-form-modification-suppressing-form-validation>`.
+fields were submitted.
+
+The submission of extra form fields can be controlled with the
+:ref:`allow_extra_fields config option <form-option-allow-extra-fields>` and
+the maximum upload file size should be handled via your PHP and web server
+configuration.

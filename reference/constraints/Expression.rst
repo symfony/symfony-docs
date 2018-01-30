@@ -24,8 +24,8 @@ Basic Usage
 Imagine you have a class ``BlogPost`` with ``category`` and ``isTechnicalPost``
 properties::
 
-    // src/AppBundle/Model/BlogPost.php
-    namespace AppBundle\Model;
+    // src/Model/BlogPost.php
+    namespace App\Model;
 
     use Symfony\Component\Validator\Constraints as Assert;
 
@@ -60,19 +60,10 @@ One way to accomplish this is with the Expression constraint:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Model\BlogPost:
-            constraints:
-                - Expression:
-                    expression: "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()"
-                    message: "If this is a tech post, the category should be either php or symfony!"
-
     .. code-block:: php-annotations
 
-        // src/AppBundle/Model/BlogPost.php
-        namespace AppBundle\Model;
+        // src/Model/BlogPost.php
+        namespace App\Model;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -87,14 +78,23 @@ One way to accomplish this is with the Expression constraint:
             // ...
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Model\BlogPost:
+            constraints:
+                - Expression:
+                    expression: "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()"
+                    message: "If this is a tech post, the category should be either php or symfony!"
+
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-            <class name="AppBundle\Model\BlogPost">
+            <class name="App\Model\BlogPost">
                 <constraint name="Expression">
                     <option name="expression">
                         this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()
@@ -108,8 +108,8 @@ One way to accomplish this is with the Expression constraint:
 
     .. code-block:: php
 
-        // src/AppBundle/Model/BlogPost.php
-        namespace AppBundle\Model;
+        // src/Model/BlogPost.php
+        namespace App\Model;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -141,20 +141,10 @@ more about the expression language syntax, see
 
     .. configuration-block::
 
-        .. code-block:: yaml
-
-            # src/AppBundle/Resources/config/validation.yml
-            AppBundle\Model\BlogPost:
-                properties:
-                    isTechnicalPost:
-                        - Expression:
-                            expression: "this.getCategory() in ['php', 'symfony'] or value == false"
-                            message: "If this is a tech post, the category should be either php or symfony!"
-
         .. code-block:: php-annotations
 
-            // src/AppBundle/Model/BlogPost.php
-            namespace AppBundle\Model;
+            // src/Model/BlogPost.php
+            namespace App\Model;
 
             use Symfony\Component\Validator\Constraints as Assert;
 
@@ -173,15 +163,25 @@ more about the expression language syntax, see
                 // ...
             }
 
+        .. code-block:: yaml
+
+            # config/validator/validation.yaml
+            App\Model\BlogPost:
+                properties:
+                    isTechnicalPost:
+                        - Expression:
+                            expression: "this.getCategory() in ['php', 'symfony'] or value == false"
+                            message: "If this is a tech post, the category should be either php or symfony!"
+
         .. code-block:: xml
 
-            <!-- src/AppBundle/Resources/config/validation.xml -->
+            <!-- config/validator/validation.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-                <class name="AppBundle\Model\BlogPost">
+                <class name="App\Model\BlogPost">
                     <property name="isTechnicalPost">
                         <constraint name="Expression">
                             <option name="expression">
@@ -197,8 +197,8 @@ more about the expression language syntax, see
 
         .. code-block:: php
 
-            // src/AppBundle/Model/BlogPost.php
-            namespace AppBundle\Model;
+            // src/Model/BlogPost.php
+            namespace App\Model;
 
             use Symfony\Component\Validator\Constraints as Assert;
             use Symfony\Component\Validator\Mapping\ClassMetadata;

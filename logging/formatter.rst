@@ -14,13 +14,13 @@ configure your handler to use it:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             # ...
 
             Monolog\Formatter\JsonFormatter: ~
 
-        # app/config/config_prod.yml (and/or config_dev.yml)
+        # config/packages/prod/monolog.yaml (and/or config/packages/dev/monolog.yaml)
         monolog:
             handlers:
                 file:
@@ -30,7 +30,7 @@ configure your handler to use it:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -44,7 +44,7 @@ configure your handler to use it:
                 <service id="Monolog\Formatter\JsonFormatter" />
             </services>
 
-            <!-- app/config/config_prod.xml (and/or config_dev.xml) -->
+            <!-- config/packages/prod/monolog.xml (and/or config/packages/dev/monolog.xml) -->
             <monolog:config>
                 <monolog:handler
                     name="file"
@@ -57,13 +57,12 @@ configure your handler to use it:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/services.php
         use Monolog\Formatter\JsonFormatter;
 
-        // app/config/services.php
         $container->register(JsonFormatter::class);
 
-        // app/config/config_prod.php (or config_dev.php)
+        // config/packages/prod/monolog.php (and/or config/packages/dev/monolog.php)
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'file' => array(

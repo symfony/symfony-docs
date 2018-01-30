@@ -237,10 +237,14 @@ The crawler supports multiple ways of adding the content::
 
 .. note::
 
-    When dealing with character sets other than ISO-8859-1, always add HTML
-    content using the :method:`Symfony\\Component\\DomCrawler\\Crawler::addHtmlContent`
-    method where you can specify the second parameter to be your target character
-    set.
+    The :method:`Symfony\\Component\\DomCrawler\\Crawler::addHtmlContent` and
+    :method:`Symfony\\Component\\DomCrawler\\Crawler::addXmlContent` methods
+    default to UTF-8 encoding but you can change this behavior with their second
+    optional argument.
+
+    The :method:`Symfony\\Component\\DomCrawler\\Crawler::addContent` method
+    guesses the best charset according to the given contents and defaults to
+    ``ISO-8859-1`` in case no charset can be guessed.
 
 As the Crawler's implementation is based on the DOM extension, it is also able
 to interact with native :phpclass:`DOMDocument`, :phpclass:`DOMNodeList`
@@ -284,10 +288,6 @@ and :phpclass:`DOMNode` objects:
 
 Expression Evaluation
 ~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.2
-    The :method:`Symfony\\Component\\DomCrawler\\Crawler::evaluate` method was
-    introduced in Symfony 3.2.
 
 The ``evaluate()`` method evaluates the given XPath expression. The return
 value depends on the XPath expression. If the expression evaluates to a scalar
@@ -397,13 +397,13 @@ a :class:`Symfony\\Component\\DomCrawler\\Form` object that represents the
 form that the button lives in::
 
     // button example: <button id="my-super-button" type="submit">My super button</button>
-    
+
     // you can get button by its label
     $form = $crawler->selectButton('My super button')->form();
-    
+
     // or by button id (#my-super-button) if the button doesn't have a label
     $form = $crawler->selectButton('my-super-button')->form();
-    
+
     // or you can filter the whole form, for example a form has a class attribute: <form class="form-vertical" method="POST">
     $crawler->filter('.form-vertical')->form();
 
@@ -424,11 +424,12 @@ than just return the ``action`` attribute of the form. If the form method
 is GET, then it mimics the browser's behavior and returns the ``action``
 attribute followed by a query string of all of the form's values.
 
-.. versionadded:: 3.3
-    Starting from Symfony 3.3, the optional ``formaction`` and ``formmethod``
-    button attributes are supported. The ``getUri()`` and ``getMethod()``
-    methods take into account those attributes to always return the right action
-    and method depending on the button used to get the form.
+.. note::
+
+    The optional ``formaction`` and ``formmethod`` button attributes are
+    supported. The ``getUri()`` and ``getMethod()`` methods take into account
+    those attributes to always return the right action and method depending on
+    the button used to get the form.
 
 You can virtually set and get values on the form::
 

@@ -1,29 +1,13 @@
 .. index::
    single: Expressions in the Framework
 
-How to use Expressions in Security, Routing, Services, and Validation
-=====================================================================
-
-Symfony comes with a powerful
-:doc:`ExpressionLanguage </components/expression_language>`
-component. It allows you to add highly customized logic inside configuration.
-
-The Symfony Framework leverages expressions out of the box in the following
-ways:
-
-* :doc:`Configuring services </service_container/expression_language>`;
-* :doc:`Route matching conditions </routing/conditions>`;
-* :ref:`Checking security <expressions-security>` (explained below) and
-  :ref:`access controls with allow_if <security-allow-if>`;
-* :doc:`Validation </reference/constraints/Expression>`.
-
-For more information about how to create and work with expressions, see
-:doc:`/components/expression_language/syntax`.
-
-.. _expressions-security:
-
 Security: Complex Access Controls with Expressions
---------------------------------------------------
+==================================================
+
+.. seealso::
+
+    The best solution for handling complex authorization rules is to use
+    the :doc:`Voter System </security/voters>`.
 
 In addition to a role like ``ROLE_ADMIN``, the ``isGranted()`` method also
 accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
@@ -31,7 +15,7 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
     use Symfony\Component\ExpressionLanguage\Expression;
     // ...
 
-    public function indexAction()
+    public function index()
     {
         $this->denyAccessUnlessGranted(new Expression(
             '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
@@ -86,17 +70,20 @@ Additionally, you have access to a number of functions inside the expression:
     The ``is_remember_me()`` and ``is_authenticated_fully()`` functions are *similar*
     to using ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``
     with the ``isGranted()`` function - but they are **not** the same. The
-    following shows the difference::
+    following controller snippet shows the difference::
 
         use Symfony\Component\ExpressionLanguage\Expression;
+        use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
         // ...
 
-        $ac = $this->get('security.authorization_checker');
-        $access1 = $ac->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        public function index(AuthorizationCheckerInterface $auth)
+        {
+            $access1 = $auth->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
-        $access2 = $ac->isGranted(new Expression(
-            'is_remember_me() or is_fully_authenticated()'
-        ));
+            $access2 = $auth->isGranted(new Expression(
+                'is_remember_me() or is_fully_authenticated()'
+            ));
+        }
 
     Here, ``$access1`` and ``$access2`` will be the same value. Unlike the
     behavior of ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``,

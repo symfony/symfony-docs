@@ -4,11 +4,11 @@
 Defining Services Dependencies Automatically (Autowiring)
 =========================================================
 
-Autowiring allows you to manage services in the container with minimal configuration.
-It reads the type-hints on your constructor (or other methods) and automatically
-passes you the correct services. Symfony's autowiring is designed to be predictable:
-if it is not absolutely clear which dependency should be passed, you'll see an
-actionable exception.
+Autowiring allows you to manage services in the container with minimal
+configuration. It reads the type-hints on your constructor (or other methods)
+and automatically passes the correct services to each method. Symfony's
+autowiring is designed to be predictable: if it is not absolutely clear which
+dependency should be passed, you'll see an actionable exception.
 
 .. tip::
 
@@ -24,7 +24,7 @@ the alphabet.
 
 Start by creating a ROT13 transformer class::
 
-    namespace AppBundle\Util;
+    namespace App\Util;
 
     class Rot13Transformer
     {
@@ -36,9 +36,9 @@ Start by creating a ROT13 transformer class::
 
 And now a Twitter client using this transformer::
 
-    namespace AppBundle\Service;
+    namespace App\Service;
 
-    use AppBundle\Util\Rot13Transformer;
+    use App\Util\Rot13Transformer;
 
     class TwitterClient
     {
@@ -57,7 +57,7 @@ And now a Twitter client using this transformer::
         }
     }
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 **both classes are automatically registered as services and configured to be autowired**.
 This means you can use them immediately without *any* configuration.
 
@@ -69,6 +69,7 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             _defaults:
                 autowire: true
@@ -76,17 +77,18 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
                 public: false
             # ...
 
-            AppBundle\Service\TwitterClient:
+            App\Service\TwitterClient:
                 # redundant thanks to _defaults, but value is overridable on each service
                 autowire: true
                 # not required, will help in our example
                 public: true
 
-            AppBundle\Util\Rot13Transformer:
+            App\Util\Rot13Transformer:
                 autowire: true
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -96,16 +98,17 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
                 <defaults autowire="true" autoconfigure="true" public="false" />
                 <!-- ... -->
 
-                <service id="AppBundle\Service\TwitterClient" autowire="true" public="true" />
+                <service id="App\Service\TwitterClient" autowire="true" public="true" />
 
-                <service id="AppBundle\Util\Rot13Transformer" autowire="true" />
+                <service id="App\Util\Rot13Transformer" autowire="true" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Service\TwitterClient;
-        use AppBundle\Util\Rot13Transformer;
+        // config/services.php
+        use App\Service\TwitterClient;
+        use App\Util\Rot13Transformer;
 
         // ...
 
@@ -119,9 +122,9 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
 
 Now, you can use the ``TwitterClient`` service immediately in a controller::
 
-    namespace AppBundle\Controller;
+    namespace App\Controller;
 
-    use AppBundle\Service\TwitterClient;
+    use App\Service\TwitterClient;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Routing\Annotation\Route;
 
@@ -130,7 +133,7 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
         /**
          * @Route("/tweet")
          */
-        public function tweetAction()
+        public function tweet()
         {
             // fetch $user, $key, $status from the POST'ed data
 
@@ -152,7 +155,7 @@ Autowiring Logic Explained
 Autowiring works by reading the ``Rot13Transformer`` *type-hint* in ``TwitterClient``::
 
     // ...
-    use AppBundle\Util\Rot13Transformer;
+    use App\Util\Rot13Transformer;
 
     class TwitterClient
     {
@@ -165,29 +168,14 @@ Autowiring works by reading the ``Rot13Transformer`` *type-hint* in ``TwitterCli
     }
 
 The autowiring system **looks for a service whose id exactly matches the type-hint**:
-so ``AppBundle\Util\Rot13Transformer``. In this case, that exists! When you configured
+so ``App\Util\Rot13Transformer``. In this case, that exists! When you configured
 the ``Rot13Transformer`` service, you used its fully-qualified class name as its
 id. Autowiring isn't magic: it simply looks for a service whose id matches the type-hint.
 If you :ref:`load services automatically <service-container-services-load-example>`,
-each service's id is its class name. This is the main way to control autowiring.
+each service's id is its class name.
 
-If there is *not* a service whose id exactly matches the type, then:
-
-If there are **0** services in the container that have the type, then:
-    If the type is a concrete class, then a new, private, autowired service is
-    auto-registered in the container and used for the argument.
-
-.. _autowiring-single-matching-service:
-
-If there is exactly **1** service in the container that has the type, then:
-    (deprecated) This service is used for the argument. In Symfony 4.0, this
-    will be removed. The proper solution is to create an :ref:`alias <service-autowiring-alias>`
-    from the type to the service id so that normal autowiring works.
-
-If there are **2 or more** services in the container that have the type, then:
-    A clear exception is thrown. You need to *choose* which service should
-    be used by creating an :ref:`alias <service-autowiring-alias>` or
-    :ref:`configuring the argument explicitly <services-wire-specific-service>`.
+If there is *not* a service whose id exactly matches the type, a clear exception
+will be thrown.
 
 Autowiring is a great way to automate configuration, and Symfony tries to be as
 *predictable* and clear as possible.
@@ -198,13 +186,13 @@ Using Aliases to Enable Autowiring
 ----------------------------------
 
 The main way to configure autowiring is to create a service whose id exactly matches
-its class. In the previous example, the service's id is ``AppBundle\Util\Rot13Transformer``,
+its class. In the previous example, the service's id is ``App\Util\Rot13Transformer``,
 which allows us to autowire this type automatically.
 
 This can also be accomplished using an :ref:`alias <services-alias>`. Suppose that
 for some reason, the id of the service was instead ``app.rot13.transformer``. In
-this case, any arguments type-hinted with the class name (``AppBundle\Util\Rot13Transformer``)
-can no longer be autowired (actually, it :ref:`will work now, but not in Symfony 4.0 <autowiring-single-matching-service>`).
+this case, any arguments type-hinted with the class name (``App\Util\Rot13Transformer``)
+can no longer be autowired.
 
 No problem! To fix this, you can *create* a service whose id matches the class by
 adding a service alias:
@@ -213,21 +201,23 @@ adding a service alias:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
             # the id is not a class, so it won't be used for autowiring
             app.rot13.transformer:
-                class: AppBundle\Util\Rot13Transformer
+                class: App\Util\Rot13Transformer
                 # ...
 
             # but this fixes it!
             # the ``app.rot13.transformer`` service will be injected when
-            # an ``AppBundle\Util\Rot13Transformer`` type-hint is detected
-            AppBundle\Util\Rot13Transformer: '@app.rot13.transformer'
+            # an ``App\Util\Rot13Transformer`` type-hint is detected
+            App\Util\Rot13Transformer: '@app.rot13.transformer'
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -236,14 +226,15 @@ adding a service alias:
             <services>
                 <!-- ... -->
 
-                <service id="app.rot13.transformer" class="AppBundle\Util\Rot13Transformer" autowire="true" />
-                <service id="AppBundle\Util\Rot13Transformer" alias="app.rot13.transformer" />
+                <service id="app.rot13.transformer" class="App\Util\Rot13Transformer" autowire="true" />
+                <service id="App\Util\Rot13Transformer" alias="app.rot13.transformer" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Util\Rot13Transformer;
+        // config/services.php
+        use App\Util\Rot13Transformer;
 
         // ...
 
@@ -251,7 +242,7 @@ adding a service alias:
             ->setPublic(false);
         $container->setAlias(Rot13Transformer::class, 'app.rot13.transformer');
 
-This creates a service "alias", whose id is ``AppBundle\Util\Rot13Transformer``.
+This creates a service "alias", whose id is ``App\Util\Rot13Transformer``.
 Thanks to this, autowiring sees this and uses it whenever the ``Rot13Transformer``
 class is type-hinted.
 
@@ -268,12 +259,12 @@ Working with Interfaces
 -----------------------
 
 You might also find yourself type-hinting abstractions (e.g. interfaces) instead
-of concreate classes as it makes it easy to replace your dependencies with other
+of concrete classes as it makes it easy to replace your dependencies with other
 objects.
 
 To follow this best practice, suppose you decide to create a ``TransformerInterface``::
 
-    namespace AppBundle\Util;
+    namespace App\Util;
 
     interface TransformerInterface
     {
@@ -300,10 +291,9 @@ Now that you have an interface, you should use this as your type-hint::
         // ...
     }
 
-But now, the type-hint (``AppBundle\Util\TransformerInterface``) no longer matches
-the id of the service (``AppBundle\Util\Rot13Transformer``). This means that the
-argument can no longer be autowired (actually, it
-:ref:`will work now, but not in Symfony 4.0 <autowiring-single-matching-service>`).
+But now, the type-hint (``App\Util\TransformerInterface``) no longer matches
+the id of the service (``App\Util\Rot13Transformer``). This means that the
+argument can no longer be autowired.
 
 To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
@@ -311,17 +301,19 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
-            AppBundle\Util\Rot13Transformer: ~
+            App\Util\Rot13Transformer: ~
 
-            # the ``AppBundle\Util\Rot13Transformer`` service will be injected when
-            # an ``AppBundle\Util\TransformerInterface`` type-hint is detected
-            AppBundle\Util\TransformerInterface: '@AppBundle\Util\Rot13Transformer'
+            # the ``App\Util\Rot13Transformer`` service will be injected when
+            # an ``App\Util\TransformerInterface`` type-hint is detected
+            App\Util\TransformerInterface: '@App\Util\Rot13Transformer'
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -329,23 +321,24 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
             <services>
                 <!-- ... -->
-                <service id="AppBundle\Util\Rot13Transformer" />
+                <service id="App\Util\Rot13Transformer" />
 
-                <service id="AppBundle\Util\TransformerInterface" alias="AppBundle\Util\Rot13Transformer" />
+                <service id="App\Util\TransformerInterface" alias="App\Util\Rot13Transformer" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Util\Rot13Transformer;
-        use AppBundle\Util\TransformerInterface;
+        // config/services.php
+        use App\Util\Rot13Transformer;
+        use App\Util\TransformerInterface;
 
         // ...
         $container->autowire(Rot13Transformer::class);
         $container->setAlias(TransformerInterface::class, Rot13Transformer::class);
 
-Thanks to the ``AppBundle\Util\TransformerInterface`` alias, the autowiring subsystem
-knows that the ``AppBundle\Util\Rot13Transformer`` service should be injected when
+Thanks to the ``App\Util\TransformerInterface`` alias, the autowiring subsystem
+knows that the ``App\Util\Rot13Transformer`` service should be injected when
 dealing with the ``TransformerInterface``.
 
 Dealing with Multiple Implementations of the Same Type
@@ -354,7 +347,7 @@ Dealing with Multiple Implementations of the Same Type
 Suppose you create a second class - ``UppercaseTransformer`` that implements
 ``TransformerInterface``::
 
-    namespace AppBundle\Util;
+    namespace App\Util;
 
     class UppercaseTransformer implements TransformerInterface
     {
@@ -365,7 +358,7 @@ Suppose you create a second class - ``UppercaseTransformer`` that implements
     }
 
 If you register this as a service, you now have *two* services that implement the
-``AppBundle\Util\TransformerInterface`` type. Symfony doesn't know which one should
+``App\Util\TransformerInterface`` type. Symfony doesn't know which one should
 be used for autowiring, so you need to choose one by creating an alias from the type
 to the correct service id (see :ref:`autowiring-interface-alias`).
 
@@ -376,27 +369,29 @@ that alias:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
-            AppBundle\Util\Rot13Transformer: ~
-            AppBundle\Util\UppercaseTransformer: ~
+            App\Util\Rot13Transformer: ~
+            App\Util\UppercaseTransformer: ~
 
-            # the ``AppBundle\Util\Rot13Transformer`` service will be injected when
-            # a ``AppBundle\Util\TransformerInterface`` type-hint is detected
-            AppBundle\Util\TransformerInterface: '@AppBundle\Util\Rot13Transformer'
+            # the ``App\Util\Rot13Transformer`` service will be injected when
+            # a ``App\Util\TransformerInterface`` type-hint is detected
+            App\Util\TransformerInterface: '@App\Util\Rot13Transformer'
 
-            AppBundle\Service\TwitterClient:
+            App\Service\TwitterClient:
                 # the Rot13Transformer will be passed as the $transformer argument
                 autowire: true
 
                 # If you wanted to choose the non-default service, wire it manually
                 # arguments:
-                #     $transformer: '@AppBundle\Util\UppercaseTransformer'
+                #     $transformer: '@App\Util\UppercaseTransformer'
                 # ...
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -404,23 +399,24 @@ that alias:
 
             <services>
                 <!-- ... -->
-                <service id="AppBundle\Util\Rot13Transformer" />
-                <service id="AppBundle\Util\UppercaseTransformer" />
+                <service id="App\Util\Rot13Transformer" />
+                <service id="App\Util\UppercaseTransformer" />
 
-                <service id="AppBundle\Util\TransformerInterface" alias="AppBundle\Util\Rot13Transformer" />
+                <service id="App\Util\TransformerInterface" alias="App\Util\Rot13Transformer" />
 
-                <service id="AppBundle\Service\TwitterClient" autowire="true">
-                    <!-- <argument key="$transformer" type="service" id="AppBundle\Util\UppercaseTransformer" /> -->
+                <service id="App\Service\TwitterClient" autowire="true">
+                    <!-- <argument key="$transformer" type="service" id="App\Util\UppercaseTransformer" /> -->
                 </service>
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Util\Rot13Transformer;
-        use AppBundle\Util\UppercaseTransformer;
-        use AppBundle\Util\TransformerInterface;
-        use AppBundle\Service\TwitterClient;
+        // config/services.php
+        use App\Util\Rot13Transformer;
+        use App\Util\UppercaseTransformer;
+        use App\Util\TransformerInterface;
+        use App\Service\TwitterClient;
 
         // ...
         $container->autowire(Rot13Transformer::class);
@@ -430,14 +426,10 @@ that alias:
             //->setArgument('$transformer', new Reference(UppercaseTransformer::class))
         ;
 
-Thanks to the ``AppBundle\Util\TransformerInterface`` alias, any argument type-hinted
-with this interface will be passed the ``AppBundle\Util\Rot13Transformer`` service.
+Thanks to the ``App\Util\TransformerInterface`` alias, any argument type-hinted
+with this interface will be passed the ``App\Util\Rot13Transformer`` service.
 But, you can also manually wire the *other* service by specifying the argument
 under the arguments key.
-
-.. versionadded:: 3.3
-    Using FQCN aliases to fix autowiring ambiguities was introduced in Symfony
-    3.3. Prior to version 3.3, you needed to use the ``autowiring_types`` key.
 
 Fixing Non-Autowireable Arguments
 ---------------------------------
@@ -458,7 +450,7 @@ When autowiring is enabled for a service, you can *also* configure the container
 to call methods on your class when it's instantiated. For example, suppose you want
 to inject the ``logger`` service, and decide to use setter-injection::
 
-    namespace AppBundle\Util;
+    namespace App\Util;
 
     class Rot13Transformer
     {

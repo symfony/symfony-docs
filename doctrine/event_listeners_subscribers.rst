@@ -2,9 +2,10 @@
    single: Doctrine; Event listeners and subscribers
 
 .. _doctrine-event-config:
+.. _how-to-register-event-listeners-and-subscribers:
 
-How to Register Event Listeners and Subscribers
-===============================================
+Doctrine Event Listeners and Subscribers
+========================================
 
 Doctrine packages have a rich event system that fires events when almost anything
 happens inside the system. For you, this means that you can create arbitrary
@@ -35,13 +36,13 @@ managers that use this connection.
         services:
             # ...
 
-            AppBundle\EventListener\SearchIndexer:
+            App\EventListener\SearchIndexer:
                 tags:
                     - { name: doctrine.event_listener, event: postPersist }
-            AppBundle\EventListener\SearchIndexer2:
+            App\EventListener\SearchIndexer2:
                 tags:
                     - { name: doctrine.event_listener, event: postPersist, connection: default }
-            AppBundle\EventListener\SearchIndexerSubscriber:
+            App\EventListener\SearchIndexerSubscriber:
                 tags:
                     - { name: doctrine.event_subscriber, connection: default }
 
@@ -53,13 +54,13 @@ managers that use this connection.
             <services>
                 <!-- ... -->
 
-                <service id="AppBundle\EventListener\SearchIndexer">
+                <service id="App\EventListener\SearchIndexer">
                     <tag name="doctrine.event_listener" event="postPersist" />
                 </service>
-                <service id="AppBundle\EventListener\SearchIndexer2">
+                <service id="App\EventListener\SearchIndexer2">
                     <tag name="doctrine.event_listener" event="postPersist" connection="default" />
                 </service>
-                <service id="AppBundle\EventListener\SearchIndexerSubscriber">
+                <service id="App\EventListener\SearchIndexerSubscriber">
                     <tag name="doctrine.event_subscriber" connection="default" />
                 </service>
             </services>
@@ -67,9 +68,9 @@ managers that use this connection.
 
     .. code-block:: php
 
-        use AppBundle\EventListener\SearchIndexer;
-        use AppBundle\EventListener\SearchIndexer2;
-        use AppBundle\EventListener\SearchIndexerSubscriber;
+        use App\EventListener\SearchIndexer;
+        use App\EventListener\SearchIndexer2;
+        use App\EventListener\SearchIndexerSubscriber;
 
         $container->autowire(SearchIndexer::class)
             ->addTag('doctrine.event_listener', array('event' => 'postPersist'))
@@ -91,24 +92,24 @@ In the previous example, a ``SearchIndexer`` service was configured as a Doctrin
 listener on the event ``postPersist``. The class behind that service must have
 a ``postPersist()`` method, which will be called when the event is dispatched::
 
-    // src/AppBundle/EventListener/SearchIndexer.php
-    namespace AppBundle\EventListener;
+    // src/EventListener/SearchIndexer.php
+    namespace App\EventListener;
 
     use Doctrine\ORM\Event\LifecycleEventArgs;
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
 
     class SearchIndexer
     {
         public function postPersist(LifecycleEventArgs $args)
         {
-            $object = $args->getObject();
+            $entity = $args->getEntity();
 
             // only act on some "Product" entity
-            if (!$object instanceof Product) {
+            if (!$entity instanceof Product) {
                 return;
             }
 
-            $objectManager = $args->getObjectManager();
+            $entityManager = $args->getEntityManager();
             // ... do something with the Product
         }
     }
@@ -135,13 +136,13 @@ Creating the Subscriber Class
 A Doctrine event subscriber must implement the ``Doctrine\Common\EventSubscriber``
 interface and have an event method for each event it subscribes to::
 
-    // src/AppBundle/EventListener/SearchIndexerSubscriber.php
-    namespace AppBundle\EventListener;
+    // src/EventListener/SearchIndexerSubscriber.php
+    namespace App\EventListener;
 
     use Doctrine\Common\EventSubscriber;
     // for Doctrine < 2.4: use Doctrine\ORM\Event\LifecycleEventArgs;
     use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
 
     class SearchIndexerSubscriber implements EventSubscriber
     {
@@ -184,6 +185,58 @@ interface and have an event method for each event it subscribes to::
     with the same name as each subscribed event, just as when using an event listener.
 
 For a full reference, see chapter `The Event System`_ in the Doctrine documentation.
+
+Lazy loading for Event Listeners
+--------------------------------
+
+One subtle difference between listeners and subscribers is that Symfony can load
+entity listeners lazily. This means that your listener class will only be fetched
+from the service container (and thus be instantiated) once the event it is linked
+to actually fires.
+
+Lazy loading might give you a slight performance improvement when your listener
+runs for events that rarely fire. Also, it can help you when you run into
+*circular dependency issues* that may occur when your listener service in turn
+depends on the DBAL connection.
+
+To mark a listener service as lazily loaded, just add the ``lazy`` attribute
+to the tag like so:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\EventListener\SearchIndexer:
+                tags:
+                    - { name: doctrine.event_listener, event: postPersist, lazy: true }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
+
+            <services>
+                <service id="App\EventListener\SearchIndexer" autowire="true">
+                    <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use App\EventListener\SearchIndexer;
+
+        $container
+            ->autowire(SearchIndexer::class)
+            ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'lazy' => 'true'))
+        ;
+
+.. note::
+
+    Marking an event listener as ``lazy`` has nothing to do with lazy service
+    definitions which are described :doc:`in their own section </service_container/lazy_services>`
 
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
 .. _`the Doctrine Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#entity-listeners

@@ -16,7 +16,7 @@ ignoring any existing cache:
     // ...
 
     Encore
-        .setOutputPath('web/build/')
+        .setOutputPath('public/build/')
         // ...
     +     .enableVersioning()
 
@@ -40,16 +40,16 @@ created in your ``outputPath`` directory:
 
 In your app, you need to read this file to dynamically render the correct paths
 in your ``script`` and ``link`` tags. If you're using Symfony, just activate the
-``json_manifest_file`` versioning strategy in ``config.yml``:
+``json_manifest_file`` versioning strategy:
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/packages/framework.yaml
     framework:
         # ...
         assets:
             # feature is supported in Symfony 3.3 and higher
-            json_manifest_path: '%kernel.project_dir%/web/build/manifest.json'
+            json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
 
 That's it! Just be sure to wrap each path in the Twig ``asset()`` function
 like normal:

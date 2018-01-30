@@ -41,8 +41,8 @@ executed, and ``mailer.post_send`` after the method is executed. Each uses a
 custom Event class to communicate information to the listeners of the two
 events. For example, ``BeforeSendMailEvent`` might look like this::
 
-    // src/AppBundle/Event/BeforeSendMailEvent.php
-    namespace AppBundle\Event;
+    // src/Event/BeforeSendMailEvent.php
+    namespace App\Event;
 
     use Symfony\Component\EventDispatcher\Event;
 
@@ -80,8 +80,8 @@ events. For example, ``BeforeSendMailEvent`` might look like this::
 
 And the ``AfterSendMailEvent`` even like this::
 
-    // src/AppBundle/Event/AfterSendMailEvent.php
-    namespace AppBundle\Event;
+    // src/Event/AfterSendMailEvent.php
+    namespace App\Event;
 
     use Symfony\Component\EventDispatcher\Event;
 
@@ -111,11 +111,11 @@ that information (e.g. ``setMessage()``).
 Now, you can create an event subscriber to hook into this event. For example, you
 could listen to the ``mailer.post_send`` event and change the method's return value::
 
-    // src/AppBundle/EventSubscriber/MailPostSendSubscriber.php
-    namespace AppBundle\EventSubscriber;
+    // src/EventSubscriber/MailPostSendSubscriber.php
+    namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use AppBundle\Event\AfterSendMailEvent;
+    use App\Event\AfterSendMailEvent;
 
     class MailPostSendSubscriber implements EventSubscriberInterface
     {

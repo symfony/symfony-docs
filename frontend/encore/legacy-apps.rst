@@ -52,7 +52,7 @@ method from Encore. In practice, it's equivalent to doing:
         // such as '_' for the 'underscore' library
         .autoProvideVariables({
             $: 'jquery',
-            jQuery: 'jquery'
+            jQuery: 'jquery',
             'window.jQuery': 'jquery',
         })
         // ...

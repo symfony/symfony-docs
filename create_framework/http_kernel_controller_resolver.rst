@@ -53,18 +53,8 @@ based on a Request object. All controller resolvers implement the following inte
     // ...
     interface ControllerResolverInterface
     {
-        function getController(Request $request);
-
-        function getArguments(Request $request, $controller);
+        public function getController(Request $request);
     }
-
-.. caution::
-
-    The ``getArguments()`` method is deprecated as of Symfony 3.1. and will be
-    removed in 4.0. You can use the
-    :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolver` which
-    uses the :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolverInterface`
-    instead.
 
 The ``getController()`` method relies on the same convention as the one we
 have defined earlier: the ``_controller`` request attribute must contain the
@@ -98,7 +88,16 @@ resolver from HttpKernel::
 
 Now, let's see how the controller arguments are guessed. ``getArguments()``
 introspects the controller signature to determine which arguments to pass to
-it by using the native PHP `reflection`_.
+it by using the native PHP `reflection`_. This method is defined in the
+following interface::
+
+    namespace Symfony\Component\HttpKernel\Controller;
+
+    // ...
+    interface ArgumentResolverInterface
+    {
+        public function getArguments(Request $request, $controller);
+    }
 
 The ``indexAction()`` method needs the Request object as an argument.
 ``getArguments()`` knows when to inject it properly if it is type-hinted

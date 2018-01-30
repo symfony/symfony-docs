@@ -1,17 +1,17 @@
-Symfony Framework Events
-========================
+Built-in Symfony Events
+=======================
 
-When the Symfony Framework (or anything using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`)
-handles a request, a few core events are dispatched so that you can add
-listeners throughout the process. These are called the "kernel events".
-For a larger explanation, see :doc:`/components/http_kernel`.
+During the handling of an HTTP request, the Symfony framework (or any
+application using the :doc:`HttpKernel component </components/http_kernel>`)
+dispatches some :doc:`events </event_dispatcher>` which you can use to modify
+how the request is handled.
 
 Kernel Events
 -------------
 
-Each event dispatched by the kernel is a subclass of
-:class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`. This means
-that each event has access to the following information:
+Each event dispatched by the HttpKernel component is a subclass of
+:class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`, which provides the
+following information:
 
 :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::getRequestType`
     Returns the *type* of the request (``HttpKernelInterface::MASTER_REQUEST``
@@ -31,67 +31,60 @@ that each event has access to the following information:
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent`
 
 This event is dispatched very early in Symfony, before the controller is
-determined.
+determined. It's useful to add information to the Request or return a Response
+early to stop the handling of the request.
 
 .. seealso::
 
     Read more on the :ref:`kernel.request event <component-http-kernel-kernel-request>`.
 
-These are the built-in Symfony listeners registered to this event:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
-=============================================================================  ========
-Listener Class Name                                                            Priority
-=============================================================================  ========
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`       1024
-:class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`  192
-:class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\SessionListener`      128
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterListener`         32
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener`         16
-:class:`Symfony\\Component\\Security\\Http\\Firewall`                          8
-=============================================================================  ========
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher kernel.request
 
 ``kernel.controller``
 ~~~~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
 
-This event can be an entry point used to modify the controller that should be executed::
+This event is dispatched after the controller to be executed has been resolved
+but before executing it. It's useful to initialize things later needed by the
+controller, such as `param converters`_, and even to change the controller
+entirely::
 
     use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
     public function onKernelController(FilterControllerEvent $event)
     {
-        $controller = $event->getController();
         // ...
 
         // the controller can be changed to any PHP callable
-        $event->setController($controller);
+        $event->setController($myCustomController);
     }
 
 .. seealso::
 
     Read more on the :ref:`kernel.controller event <component-http-kernel-kernel-controller>`.
 
-This is the built-in Symfony listener related to this event:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
-==============================================================================  ========
-Listener Class Name                                                             Priority
-==============================================================================  ========
-:class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\RequestDataCollector`  0
-==============================================================================  ========
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher kernel.controller
 
 ``kernel.view``
 ~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForControllerResultEvent`
 
-This event is not used by the FrameworkBundle, but it can be used to implement
-a view sub-system. This event is called *only* if the Controller does *not*
-return a ``Response`` object. The purpose of the event is to allow some
-other return value to be converted into a ``Response``.
-
-The value returned by the Controller is accessible via the ``getControllerResult()``
-method::
+This event is dispatched after the controller has been executed but *only* if
+the controller does *not* return a :class:`Symfony\\Component\\HttpFoundation\\Response`
+object. It's useful to transform the returned value (e.g. a string with some
+HTML contents) into the ``Response`` object needed by Symfony::
 
     use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -110,13 +103,21 @@ method::
 
     Read more on the :ref:`kernel.view event <component-http-kernel-kernel-view>`.
 
+Execute this command to find out which listeners are registered for this event and
+their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher kernel.view
+
 ``kernel.response``
 ~~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent`
 
-The purpose of this event is to allow other systems to modify or replace
-the ``Response`` object after its creation::
+This event is dispatched after the controller or any ``kernel.view`` listener
+returns a ``Response`` object. It's useful to modify or replace the response
+before sending it back (e.g. add/modify HTTP headers, add cookies, etc.)::
 
     public function onKernelResponse(FilterResponseEvent $event)
     {
@@ -125,49 +126,26 @@ the ``Response`` object after its creation::
         // ... modify the response object
     }
 
-The FrameworkBundle registers several listeners:
-
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`
-    Collects data for the current request.
-
-:class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`
-    Injects the Web Debug Toolbar.
-
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`
-    Fixes the Response ``Content-Type`` based on the request format.
-
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`
-    Adds a ``Surrogate-Control`` HTTP header when the Response needs to
-    be parsed for ESI tags.
-
 .. seealso::
 
     Read more on the :ref:`kernel.response event <component-http-kernel-kernel-response>`.
 
-These are the built-in Symfony listeners registered to this event:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
-===================================================================================  ========
-Listener Class Name                                                                  Priority
-===================================================================================  ========
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\EsiListener`                  0
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener`             0
-:class:`Symfony\\Component\\Security\\Http\\RememberMe\\ResponseListener`            0
-:class:`Symfony\\Bundle\\FrameworkBundle\\DataCollector\\RequestDataCollector`       0
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`             -100
-:class:`Symfony\\Bundle\\FrameworkBundle\\EventListener\\TestSessionListener`        -128
-:class:`Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener`  -128
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener`     -1024
-===================================================================================  ========
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher kernel.response
 
 ``kernel.finish_request``
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
 
-The purpose of this event is to allow you to reset the global and environmental
-state of the application after a sub-request has finished (for example, the
-translator listener resets the translator's locale to the one of the parent
-request)::
+This event is dispatched after a :ref:`sub request <http-kernel-sub-requests>`
+has finished. It's useful to reset the global state of the application (for
+example, the translator listener resets the translator's locale to the one of
+the parent request)::
 
     public function onKernelFinishRequest(FinishRequestEvent $event)
     {
@@ -175,41 +153,37 @@ request)::
             return;
         }
 
-        //Reset the locale of the subrequest to the locale of the parent request
+        // Reset the locale of the subrequest to the locale of the parent request
         $this->setLocale($parentRequest);
     }
 
-These are the built-in Symfony listeners related to this event:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
-==========================================================================  ========
-Listener Class Name                                                         Priority
-==========================================================================  ========
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener`      0
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\TranslatorListener`  0
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterListener`      0
-:class:`Symfony\\Component\\Security\\Http\\Firewall`                       0
-==========================================================================  ========
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher kernel.finish_request
 
 ``kernel.terminate``
 ~~~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\PostResponseEvent`
 
-The purpose of this event is to perform tasks after the response was already
-served to the client.
+This event is dispatched after the response has been sent (after the execution
+of the :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle` method).
+It's useful to perform slow or complex tasks that don't need to be completed to
+send the response (e.g. sending emails).
 
 .. seealso::
 
     Read more on the :ref:`kernel.terminate event <component-http-kernel-kernel-terminate>`.
 
-This is the built-in Symfony listener related to this event:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
-=========================================================================  ========
-Listener Class Name                                                        Priority
-=========================================================================  ========
-`EmailSenderListener`_                                                     0
-=========================================================================  ========
+.. code-block:: terminal
 
+    $ php bin/console debug:event-dispatcher kernel.terminate
 
 .. _kernel-kernel.exception:
 
@@ -218,12 +192,9 @@ Listener Class Name                                                        Prior
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 
-The TwigBundle registers an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`
-that forwards the ``Request`` to a given controller defined by the
-``exception_listener.controller`` parameter.
-
-A listener on this event can create and set a ``Response`` object, create
-and set a new ``Exception`` object, or do nothing::
+This event is dispatched as soon as an error occurs during the handling of the
+HTTP request. It's useful to recover from errors or modify the exception details
+sent as response::
 
     use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
     use Symfony\Component\HttpFoundation\Response;
@@ -242,32 +213,49 @@ and set a new ``Exception`` object, or do nothing::
 
 .. note::
 
-    Symfony uses the following logic to determine the HTTP status code of the
-    response:
+    The TwigBundle registers an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`
+    that forwards the ``Request`` to a given controller defined by the
+    ``exception_listener.controller`` parameter.
 
-    * If :method:`Symfony\\Component\\HttpFoundation\\Response::isClientError`,
-      :method:`Symfony\\Component\\HttpFoundation\\Response::isServerError` or
-      :method:`Symfony\\Component\\HttpFoundation\\Response::isRedirect` is true,
-      then the status code on your ``Response`` object is used;
+Symfony uses the following logic to determine the HTTP status code of the
+response:
 
-    * If the original exception implements
-      :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
-      then ``getStatusCode()`` is called on the exception and used (the headers
-      from ``getHeaders()`` are also added);
+* If :method:`Symfony\\Component\\HttpFoundation\\Response::isClientError`,
+  :method:`Symfony\\Component\\HttpFoundation\\Response::isServerError` or
+  :method:`Symfony\\Component\\HttpFoundation\\Response::isRedirect` is true,
+  then the status code on your ``Response`` object is used;
 
-    * If both of the above aren't true, then a 500 status code is used.
+* If the original exception implements
+  :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
+  then ``getStatusCode()`` is called on the exception and used (the headers
+  from ``getHeaders()`` are also added);
+
+* If both of the above aren't true, then a 500 status code is used.
+
+.. note::
+
+    If you want to overwrite the status code of the exception response, which
+    you should not without a good reason, call
+    ``GetResponseForExceptionEvent::allowSuccessfulResponse()`` first and then
+    set the status code on the response::
+
+        $event->allowSuccessfulResponse();
+        $response = new Response('No Content', 204);
+        $event->setResponse($response);
+
+    The status code sent to the client in the above example will be ``204``. If
+    ``$event->allowSuccessfulResponse()`` is omitted, then the kernel will set
+    an appropriate status code based on the type of exception thrown.
 
 .. seealso::
 
     Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
 
-These are the built-in Symfony listeners registered to this event:
+Execute this command to find out which listeners are registered for this event and
+their priorities:
 
-=========================================================================  ========
-Listener Class Name                                                        Priority
-=========================================================================  ========
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\ProfilerListener`   0
-:class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`  -128
-=========================================================================  ========
+.. code-block:: terminal
 
-.. _`EmailSenderListener`: https://github.com/symfony/swiftmailer-bundle/blob/master/EventListener/EmailSenderListener.php
+    $ php bin/console debug:event-dispatcher kernel.exception
+
+.. _`param converters`: https://symfony.com/doc/master/bundles/SensioFrameworkExtraBundle/annotations/converters.html

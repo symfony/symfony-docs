@@ -4,45 +4,82 @@
 How to Work with Doctrine Associations / Relations
 ==================================================
 
+There are **two** main relationship/association types:
+
+``ManyToOne`` / ``OneToMany``
+    The most common relationship, mapped in the database with a simple foreign
+    key column (e.g. a ``category_id`` column on the ``product`` table). This is
+    actually just *one* association type, but seen from the two different *sides*
+    of the relation.
+
+``ManyToMany``
+    Uses a join table and is needed when both sides of the relationship can have
+    many of the other side (e.g. "students" and "classes": each student is in many
+    classes, and each class has many students).
+
+First, you need to determine which relationship to use. If both sides of the relation
+will contain many of the other side (e.g. "students" and "classes"), you need a
+``ManyToMany`` relation. Otherwise, you likely need a ``ManyToOne``.
+
+.. tip::
+
+    There is also a OneToOne relationship (e.g. one User has one Profile and vice
+    versa). In practice, using this is similar to ``ManyToOne``.
+
+The ManyToOne / OneToMany Association
+-------------------------------------
+
 Suppose that each product in your application belongs to exactly one category.
 In this case, you'll need a ``Category`` class, and a way to relate a
 ``Product`` object to a ``Category`` object.
 
-Start by creating the ``Category`` entity. Since you know that you'll eventually
-need to persist category objects through Doctrine, you can let Doctrine create
-the class for you.
+Start by creating a ``Category`` entity:
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:generate:entity --no-interaction \
-        --entity="AppBundle:Category" \
-        --fields="name:string(255)"
+    $ php bin/console make:entity Category
 
-This command generates the ``Category`` entity for you, with an ``id`` field,
-a ``name`` field and the associated getter and setter functions.
+Then, add a ``name`` field to that new ``Category`` class::
 
-Relationship Mapping Metadata
------------------------------
+    // src/Entity/Category
+    // ...
 
-In this example, each category can be associated with *many* products, while
+    class Category
+    {
+        /**
+         * @ORM\Id
+         * @ORM\GeneratedValue
+         * @ORM\Column(type="integer")
+         */
+        private $id;
+
+        /**
+         * @ORM\Column(type="string")
+         */
+        private $name;
+
+        // ... getters and setters
+    }
+
+Mapping the ManyToOne Relationship
+----------------------------------
+
+In this example, each category can be associated with *many* products. But,
 each product can be associated with only *one* category. This relationship
 can be summarized as: *many* products to *one* category (or equivalently,
 *one* category to *many* products).
 
 From the perspective of the ``Product`` entity, this is a many-to-one relationship.
 From the perspective of the ``Category`` entity, this is a one-to-many relationship.
-This is important, because the relative nature of the relationship determines
-which mapping metadata to use. It also determines which class *must* hold
-a reference to the other class.
 
-To relate the ``Product`` and ``Category`` entities, simply create a ``category``
-property on the ``Product`` class, annotated as follows:
+To map this, first create a ``category`` property on the ``Product`` class with
+the ``ManyToOne`` annotation:
 
 .. configuration-block::
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Product.php
+        // src/Entity/Product.php
 
         // ...
         class Product
@@ -50,71 +87,78 @@ property on the ``Product`` class, annotated as follows:
             // ...
 
             /**
-             * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
-             * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+             * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
+             * @ORM\JoinColumn(nullable=true)
              */
             private $category;
+
+            public function getCategory(): Category
+            {
+                return $this->category;
+            }
+
+            public function setCategory(Category $category)
+            {
+                $this->category = $category;
+            }
         }
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/doctrine/Product.orm.yml
-        AppBundle\Entity\Product:
+        # src/Resources/config/doctrine/Product.orm.yml
+        App\Entity\Product:
             type: entity
             # ...
             manyToOne:
                 category:
-                    targetEntity: Category
+                    targetEntity: App\Entity\Category
                     inversedBy: products
                     joinColumn:
-                        name: category_id
-                        referencedColumnName: id
+                        nullable: true
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/doctrine/Product.orm.xml -->
+        <!-- src/Resources/config/doctrine/Product.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-            <entity name="AppBundle\Entity\Product">
+            <entity name="App\Entity\Product">
                 <!-- ... -->
                 <many-to-one
                     field="category"
-                    target-entity="Category"
-                    inversed-by="products"
-                    join-column="category">
-
-                    <join-column name="category_id" referenced-column-name="id" />
+                    target-entity="App\Entity\Category"
+                    inversed-by="products">
+                    <join-column nullable="true" />
                 </many-to-one>
             </entity>
         </doctrine-mapping>
 
-This many-to-one mapping is critical. It tells Doctrine to use the ``category_id``
+This many-to-one mapping is required. It tells Doctrine to use the ``category_id``
 column on the ``product`` table to relate each record in that table with
 a record in the ``category`` table.
 
-Next, since a single ``Category`` object will relate to many ``Product``
-objects, a ``products`` property can be added to the ``Category`` class
-to hold those associated objects.
+Next, since a *one* ``Category`` object will relate to *many* ``Product``
+objects, add a ``products`` property to ``Category`` that will hold those objects:
 
 .. configuration-block::
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Category.php
+        // src/Entity/Category.php
 
         // ...
         use Doctrine\Common\Collections\ArrayCollection;
+        use Doctrine\Common\Collections\Collection;
 
         class Category
         {
             // ...
 
             /**
-             * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
+             * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category")
              */
             private $products;
 
@@ -122,35 +166,43 @@ to hold those associated objects.
             {
                 $this->products = new ArrayCollection();
             }
+
+            /**
+             * @return Collection|Product[]
+             */
+            public function getProducts()
+            {
+                return $this->products;
+            }
         }
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/doctrine/Category.orm.yml
-        AppBundle\Entity\Category:
+        # src/Resources/config/doctrine/Category.orm.yml
+        App\Entity\Category:
             type: entity
             # ...
             oneToMany:
                 products:
-                    targetEntity: Product
+                    targetEntity: App\Entity\Product
                     mappedBy: category
         # Don't forget to initialize the collection in
         # the __construct() method of the entity
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/doctrine/Category.orm.xml -->
+        <!-- src/Resources/config/doctrine/Category.orm.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-            <entity name="AppBundle\Entity\Category">
+            <entity name="App\Entity\Category">
                 <!-- ... -->
                 <one-to-many
                     field="products"
-                    target-entity="Product"
+                    target-entity="App\Entity\Product"
                     mapped-by="category" />
 
                 <!--
@@ -160,68 +212,29 @@ to hold those associated objects.
             </entity>
         </doctrine-mapping>
 
-While the many-to-one mapping shown earlier was mandatory, this one-to-many
-mapping is optional. It is included here to help demonstrate Doctrine's range
-of relationship management capabilities. Plus, in the context of this application,
-it will likely be convenient for each ``Category`` object to automatically
-own a collection of its related ``Product`` objects.
+The ``ManyToOne`` mapping shown earlier is *required*, But, this ``OneToMany``
+is optional: only add it *if* you want to be able to access the products that are
+related to a category. In this example, it *will* be useful to be able to call
+``$category->getProducts()``. If you don't want it, then you also don't need the
+``inversedBy`` or ``mappedBy`` config.
 
-.. note::
+.. sidebar:: What is the ArrayCollection Stuff?
 
-    The code in the constructor is important. Rather than being instantiated
-    as a traditional ``array``, the ``$products`` property must be of a type
-    that implements Doctrine's ``Collection`` interface. In this case, an
-    ``ArrayCollection`` object is used. This object looks and acts almost
-    *exactly* like an array, but has some added flexibility. If this makes
-    you uncomfortable, don't worry. Just imagine that it's an ``array``
-    and you'll be in good shape.
+    The code inside ``__construct()`` is important: The ``$products`` property must
+    be a collection object that implements Doctrine's ``Collection`` interface.
+    In this case, an ``ArrayCollection`` object is used. This looks and acts almost
+    *exactly* like an array, but has some added flexibility. Just imagine that it's
+    an ``array`` and you'll be in good shape.
 
-.. seealso::
-
-    To understand ``inversedBy`` and ``mappedBy`` usage, see Doctrine's
-    `Association Updates`_ documentation.
-
-.. tip::
-
-    The targetEntity value in the metadata used above can reference any entity
-    with a valid namespace, not just entities defined in the same namespace. To
-    relate to an entity defined in a different class or bundle, enter a full
-    namespace as the targetEntity.
-
-Now that you've added new properties to both the ``Product`` and ``Category``
-classes, you must generate the missing getter and setter methods manually or
-using your own IDE.
-
-Ignore the Doctrine metadata for a moment. You now have two classes - ``Product``
-and ``Category``, with a natural many-to-one relationship. The ``Product``
-class holds a *single* ``Category`` object, and the ``Category`` class holds
-a *collection* of ``Product`` objects. In other words, you've built your classes
-in a way that makes sense for your application. The fact that the data needs
-to be persisted to a database is always secondary.
-
-Now, review the metadata above the ``Product`` entity's ``$category`` property.
-It tells Doctrine that the related class is ``Category``, and that the ``id``
-of the related category record should be stored in a ``category_id`` field
-on the ``product`` table.
-
-In other words, the related ``Category`` object will be stored in the
-``$category`` property, but behind the scenes, Doctrine will persist this
-relationship by storing the category's id in the ``category_id`` column
-of the ``product`` table.
-
-.. image:: /_images/doctrine/mapping_relations.png
-    :align: center
-
-The metadata above the ``Category`` entity's ``$products`` property is less
-complicated. It simply tells Doctrine to look at the ``Product.category``
-property to figure out how the relationship is mapped.
-
-Before you continue, be sure to tell Doctrine to add the new ``category``
-table, the new ``product.category_id`` column, and the new foreign key:
+Your database is setup! Now, execute the migrations like normal:
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:schema:update --force
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
+
+Thanks to the relationship, this creates a ``category_id`` foreign key column on
+the ``product`` table. Doctrine is ready to persist our relationship!
 
 Saving Related Entities
 -----------------------
@@ -230,13 +243,16 @@ Now you can see this new code in action! Imagine you're inside a controller::
 
     // ...
 
-    use AppBundle\Entity\Category;
-    use AppBundle\Entity\Product;
+    use App\Entity\Category;
+    use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
 
-    class DefaultController extends Controller
+    class ProductController extends Controller
     {
-        public function createProductAction()
+        /**
+         * @Route("/product", name="product")
+         */
+        public function index()
         {
             $category = new Category();
             $category->setName('Computer Peripherals');
@@ -261,10 +277,26 @@ Now you can see this new code in action! Imagine you're inside a controller::
         }
     }
 
-Now, a single row is added to both the ``category`` and ``product`` tables.
-The ``product.category_id`` column for the new product is set to whatever
-the ``id`` is of the new category. Doctrine manages the persistence of this
-relationship for you.
+When you go to ``/product``, a single row is added to both the ``category`` and
+``product`` tables. The ``product.category_id`` column for the new product is set
+to whatever the ``id`` is of the new category. Doctrine manages the persistence of this
+relationship for you:
+
+.. image:: /_images/doctrine/mapping_relations.png
+    :align: center
+
+If you're new to an ORM, this is the *hardest* concept: you need to stop thinking
+about your database, and instead *only* think about your objects. Instead of setting
+the category's integer id onto ``Product``, you set the entire ``Category`` *object*.
+Doctrine takes care of the rest when saving.
+
+.. sidebar:: Updating the Relationship from the Inverse Side
+
+    Could you also call ``$category->setProducts()`` to set the relationship? Actually,
+    no! Earlier, you did *not* add a ``setProducts()`` method on ``Category``. That's
+    on purpose: you can *only* set data on the *owning* side of the relationship. In
+    other words, if you call ``$category->setProducts()`` only, that is *completely*
+    ignored when saving. For more details, see: `associations-inverse-side`_.
 
 Fetching Related Objects
 ------------------------
@@ -273,14 +305,16 @@ When you need to fetch associated objects, your workflow looks just like it
 did before. First, fetch a ``$product`` object and then access its related
 ``Category`` object::
 
-    use AppBundle\Entity\Post;
+    use App\Entity\Product;
     // ...
 
-    public function showAction($productId)
+    public function showAction($id)
     {
         $product = $this->getDoctrine()
             ->getRepository(Product::class)
-            ->find($productId);
+            ->find($id);
+
+        // ...
 
         $categoryName = $product->getCategory()->getName();
 
@@ -289,7 +323,7 @@ did before. First, fetch a ``$product`` object and then access its related
 
 In this example, you first query for a ``Product`` object based on the product's
 ``id``. This issues a query for *just* the product data and hydrates the
-``$product`` object with that data. Later, when you call ``$product->getCategory()->getName()``,
+``$product``. Later, when you call ``$product->getCategory()->getName()``,
 Doctrine silently makes a second query to find the ``Category`` that's related
 to this ``Product``. It prepares the ``$category`` object and returns it to
 you.
@@ -301,24 +335,24 @@ What's important is the fact that you have easy access to the product's related
 category, but the category data isn't actually retrieved until you ask for
 the category (i.e. it's "lazily loaded").
 
-You can also query in the other direction::
+Because we mapped the optional ``OneToMany`` side, you can also query in the other
+direction::
 
-    public function showProductsAction($categoryId)
+    public function showProductsAction($id)
     {
         $category = $this->getDoctrine()
             ->getRepository(Category::class)
-            ->find($categoryId);
+            ->find($id);
 
         $products = $category->getProducts();
 
         // ...
     }
 
-In this case, the same things occur: you first query out for a single ``Category``
-object, and then Doctrine makes a second query to retrieve the related ``Product``
-objects, but only once/if you ask for them (i.e. when you call ``getProducts()``).
-The ``$products`` variable is an array of all ``Product`` objects that relate
-to the given ``Category`` object via their ``category_id`` value.
+In this case, the same things occur: you first query for a single ``Category``
+object. Then, only when (and if) you access the products, Doctrine makes a second
+query to retrieve the related ``Product`` objects. This extra query can be avoided
+by adding JOINs.
 
 .. sidebar:: Relationships and Proxy Classes
 
@@ -328,11 +362,11 @@ to the given ``Category`` object via their ``category_id`` value.
 
         $product = $this->getDoctrine()
             ->getRepository(Product::class)
-            ->find($productId);
+            ->find($id);
 
         $category = $product->getCategory();
 
-        // prints "Proxies\AppBundleEntityCategoryProxy"
+        // prints "Proxies\AppEntityCategoryProxy"
         dump(get_class($category));
         die();
 
@@ -342,8 +376,8 @@ to the given ``Category`` object via their ``category_id`` value.
     actually need that data (e.g. until you call ``$category->getName()``).
 
     The proxy classes are generated by Doctrine and stored in the cache directory.
-    And though you'll probably never even notice that your ``$category``
-    object is actually a proxy object, it's important to keep it in mind.
+    You'll probably never even notice that your ``$category`` object is actually
+    a proxy object.
 
     In the next section, when you retrieve the product and category data
     all at once (via a *join*), Doctrine will return the *true* ``Category``
@@ -352,7 +386,7 @@ to the given ``Category`` object via their ``category_id`` value.
 Joining Related Records
 -----------------------
 
-In the above examples, two queries were made - one for the original object
+In the examples above, two queries were made - one for the original object
 (e.g. a ``Category``) and one for the related object(s) (e.g. the ``Product``
 objects).
 
@@ -365,37 +399,131 @@ Of course, if you know up front that you'll need to access both objects, you
 can avoid the second query by issuing a join in the original query. Add the
 following method to the ``ProductRepository`` class::
 
-    // src/AppBundle/Repository/ProductRepository.php
+    // src/Repository/ProductRepository.php
     public function findOneByIdJoinedToCategory($productId)
     {
-        $query = $this->getDoctrine()
-            ->getManager()
-            ->createQuery(
-            'SELECT p, c FROM AppBundle:Product p
-            JOIN p.category c
-            WHERE p.id = :id'
-        )->setParameter('id', $productId);
-
-        try {
-            return $query->getSingleResult();
-        } catch (\Doctrine\ORM\NoResultException $e) {
-            return null;
-        }
+        return $this->createQueryBuilder('p')
+            // p.category refers to the "category" property on product
+            ->innerJoin('p.category', 'c')
+            // selects all the category data to avoid the query
+            ->addSelect('c')
+            ->andWhere('p.id = :id')
+            ->setParameter('id', $productId)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
+
+This will *still* return an array of ``Product`` objects. But now, when you call
+``$product->getCategory()`` and use that data, no second query is made.
 
 Now, you can use this method in your controller to query for a ``Product``
 object and its related ``Category`` with just one query::
 
-    public function showAction($productId)
+    public function showAction($id)
     {
         $product = $this->getDoctrine()
             ->getRepository(Product::class)
-            ->findOneByIdJoinedToCategory($productId);
+            ->findOneByIdJoinedToCategory($id);
 
         $category = $product->getCategory();
 
         // ...
     }
+
+.. _associations-inverse-side:
+
+Setting Information from the Inverse Side
+-----------------------------------------
+
+So far, you've updated the relationship by calling ``$product->setCategory($category)``.
+This is no accident: you *must* set the relationship on the *owning* side. The owning
+side is always where the ``ManyToOne`` mapping is set (for a ``ManyToMany`` relation,
+you can choose which side is the owning side).
+
+Does this means it's not possible to call ``$category->setProducts()``? Actually,
+it *is* possible, by writing clever methods. First, instead of a ``setProducts()``
+method, create a ``addProduct()`` method::
+
+    // src/Entity/Category.php
+
+    // ...
+    class Category
+    {
+        // ...
+
+        public function addProduct(Product $product)
+        {
+            if ($this->products->contains($product)) {
+                return;
+            }
+
+            $this->products[] = $product;
+            // set the *owning* side!
+            $product->setCategory($this);
+        }
+    }
+
+That's it! The *key* is ``$product->setCategory($this)``, which sets the *owning*
+side. Now, when you save, the relationship *will* update in the database.
+
+What about *removing* a ``Product`` from a ``Category``? Add a ``removeProduct()``
+method::
+
+    // src/Entity/Category.php
+
+    // ...
+    class Category
+    {
+        // ...
+
+        public function removeProduct(Product $product)
+        {
+            $this->products->removeElement($product);
+            // set the owning side to null
+            $product->setCategory(null);
+        }
+    }
+
+To make this work, you *now* need to allow ``null`` to be passed to ``Product::setCategory()``:
+
+.. code-block:: diff
+
+    // src/Entity/Product.php
+
+    // ...
+    class Product
+    {
+        // ...
+
+    -     public function getCategory(): Category
+    +     public function getCategory(): ?Category
+        // ...
+
+    -     public function setCategory(Category $category)
+    +     public function setCategory(Category $category = null)
+        {
+            $this->category = $category;
+        }
+    }
+
+And that's it! Now, if you call ``$category->removeProduct($product)``, the ``category_id``
+on that ``Product`` will be set to ``null`` in the database.
+
+But, instead of setting the ``category_id`` to null, what if you want the ``Product``
+to be *deleted* if it becomes "orphaned" (i.e. without a ``Category``)? To choose
+that behavior, use the `orphanRemoval`_ option inside ``Category``::
+
+    // src/Entity/Category.php
+
+    // ...
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category", orphanRemoval=true)
+     */
+    private $products;
+
+Thanks to this, if the ``Product`` is removed from the ``Category``, it will be
+removed from the database entirely.
 
 More Information on Associations
 --------------------------------
@@ -409,8 +537,7 @@ Doctrine's `Association Mapping Documentation`_.
 
     If you're using annotations, you'll need to prepend all annotations with
     ``@ORM\`` (e.g. ``@ORM\OneToMany``), which is not reflected in Doctrine's
-    documentation. You'll also need to include the ``use Doctrine\ORM\Mapping as ORM;``
-    statement, which *imports* the ``ORM`` annotations prefix.
+    documentation.
 
 .. _`Association Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
-.. _`Association Updates`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
+.. _`orphanRemoval`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/working-with-associations.html#orphan-removal

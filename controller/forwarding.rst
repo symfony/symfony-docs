@@ -11,9 +11,9 @@ sub-request and calls the defined controller. The ``forward()`` method returns
 the :class:`Symfony\\Component\\HttpFoundation\\Response` object that is returned
 from *that* controller::
 
-    public function indexAction($name)
+    public function index($name)
     {
-        $response = $this->forward('AppBundle:Something:fancy', array(
+        $response = $this->forward('App\Controller\OtherController::fancy', array(
             'name'  => $name,
             'color' => 'green',
         ));
@@ -26,10 +26,10 @@ from *that* controller::
 The array passed to the method becomes the arguments for the resulting controller.
 The target controller method might look something like this::
 
-    public function fancyAction($name, $color)
+    public function fancy($name, $color)
     {
         // ... create and return a Response object
     }
 
 Just like when creating a controller for a route, the order of the arguments
-of ``fancyAction()`` doesn't matter: the matching is done by name.
+of the ``fancy()`` method doesn't matter: the matching is done by name.

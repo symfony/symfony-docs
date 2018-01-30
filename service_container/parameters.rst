@@ -17,11 +17,13 @@ Use the ``parameters`` section of a config file to set parameters:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
             mailer.transport: sendmail
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -35,6 +37,7 @@ Use the ``parameters`` section of a config file to set parameters:
 
     .. code-block:: php
 
+        // config/services.php
         $container->setParameter('mailer.transport', 'sendmail');
 
 You can refer to parameters elsewhere in any config file by surrounding them
@@ -50,15 +53,17 @@ and hidden with the service definition:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
             mailer.transport: sendmail
 
         services:
-            AppBundle\Service\Mailer:
+            App\Service\Mailer:
                 arguments: ['%mailer.transport%']
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -70,7 +75,7 @@ and hidden with the service definition:
             </parameters>
 
             <services>
-                <service id="AppBundle\Service\Mailer">
+                <service id="App\Service\Mailer">
                     <argument>%mailer.transport%</argument>
                 </service>
             </services>
@@ -78,8 +83,8 @@ and hidden with the service definition:
 
     .. code-block:: php
 
-        use AppBundle\Service\Mailer;
-        use Symfony\Component\DependencyInjection\Reference;
+        // config/services.php
+        use App\Mailer;
 
         $container->setParameter('mailer.transport', 'sendmail');
 
@@ -117,7 +122,7 @@ and hidden with the service definition:
 
         .. code-block:: yaml
 
-            # app/config/parameters.yml
+            # config/services.yaml
             parameters:
                 # This will be parsed as string '@securepass'
                 mailer_password: '@@securepass'
@@ -127,6 +132,7 @@ and hidden with the service definition:
 
         .. code-block:: xml
 
+            <!-- config/services.xml -->
             <parameters>
                 <!-- the @ symbol does NOT need to be escaped in XML -->
                 <parameter key="mailer_password">@securepass</parameter>
@@ -137,6 +143,7 @@ and hidden with the service definition:
 
         .. code-block:: php
 
+            // config/services.php
             // the @ symbol does NOT need to be escaped in XML
             $container->setParameter('mailer_password', '@securepass');
 
@@ -149,7 +156,7 @@ Getting and Setting Container Parameters in PHP
 Working with container parameters is straightforward using the container's
 accessor methods for parameters::
 
-    // check if a parameter is defined
+    // check if a parameter is defined (parameter names are case-sensitive)
     $container->hasParameter('mailer.transport');
 
     // get value of a parameter
@@ -184,6 +191,7 @@ for all parameters that are arrays.
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
             my_mailer.gateways: [mail1, mail2, mail3]
 
@@ -197,6 +205,7 @@ for all parameters that are arrays.
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -226,6 +235,7 @@ for all parameters that are arrays.
 
     .. code-block:: php
 
+        // config/services.php
         $container->setParameter('my_mailer.gateways', array('mail1', 'mail2', 'mail3'));
         $container->setParameter('my_multilang.language_fallback', array(
             'en' => array('en', 'fr'),
@@ -242,20 +252,20 @@ See :doc:`/configuration/external_parameters`.
 Constants as Parameters
 -----------------------
 
-Setting PHP constants as parameters is also supported.
-To take advantage of this feature, map the name of your constant to a parameter
-key and define the type as ``constant``.
+Setting PHP constants as parameters is also supported:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
-            global.constant.value: !php/const:GLOBAL_CONSTANT
-            my_class.constant.value: !php/const:My_Class::CONSTANT_NAME
+            global.constant.value: !php/const GLOBAL_CONSTANT
+            my_class.constant.value: !php/const My_Class::CONSTANT_NAME
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -270,6 +280,7 @@ key and define the type as ``constant``.
 
     .. code-block:: php
 
+        // config/services.php
         $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
         $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
 

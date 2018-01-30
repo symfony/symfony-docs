@@ -24,8 +24,8 @@ which represents the functionality that you'll expose in your SOAP service.
 In this case, the SOAP service will allow the client to call a method called
 ``hello``, which happens to send an email::
 
-    // src/AppBundle/Service/HelloService.php
-    namespace AppBundle\Service;
+    // src/Service/HelloService.php
+    namespace App\Service;
 
     class HelloService
     {
@@ -54,22 +54,22 @@ the :ref:`default services configuration <service-container-services-load-exampl
 you don't need to do anything!
 
 Finally, below is an example of a controller that is capable of handling a SOAP
-request. Because ``indexAction()`` is accessible via ``/soap``, the WSDL document
+request. Because ``index()`` is accessible via ``/soap``, the WSDL document
 can be retrieved via ``/soap?wsdl``::
 
-    namespace AppBundle\Controller;
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
-    use AppBundle\Service\HelloService;
+    use App\Service\HelloService;
 
     class HelloServiceController extends Controller
     {
         /**
          * @Route("/soap")
          */
-        public function indexAction(HelloService $helloService)
+        public function index(HelloService $helloService)
         {
             $server = new \SoapServer('/path/to/hello.wsdl');
             $server->setObject($helloService);
@@ -96,10 +96,10 @@ into the content of the Response and clear the output buffer. Finally, you're
 ready to return the ``Response``.
 
 Below is an example calling the service using a `NuSOAP`_ client. This example
-assumes that the ``indexAction()`` in the controller above is accessible via the
-route ``/soap``::
+assumes that the ``index()`` method in the controller above is accessible via
+the route ``/soap``::
 
-    $client = new \Soapclient('http://example.com/app.php/soap?wsdl');
+    $client = new \Soapclient('http://example.com/index.php/soap?wsdl');
 
     $result = $client->call('hello', array('name' => 'Scott'));
 
@@ -160,7 +160,7 @@ An example WSDL is below.
 
         <service name="hellowsdl">
             <port name="hellowsdlPort" binding="tns:hellowsdlBinding">
-                <soap:address location="http://example.com/app.php/soap" />
+                <soap:address location="http://example.com/index.php/soap" />
             </port>
         </service>
     </definitions>

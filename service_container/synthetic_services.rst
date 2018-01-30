@@ -35,14 +35,15 @@ configuration:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
-
             # synthetic services don't specify a class
             app.synthetic_service:
                 synthetic: true
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -59,6 +60,7 @@ configuration:
 
     .. code-block:: php
 
+        // config/services.php
         // synthetic services don't specify a class
         $container->register('app.synthetic_service')
             ->setSynthetic(true)

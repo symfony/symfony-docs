@@ -4,31 +4,29 @@
 How to Override any Part of a Bundle
 ====================================
 
-This document is a quick reference for how to override different parts of
-third-party bundles.
+When using a third-party bundle, you might want to customize or override some of
+its features. This document describes ways of overriding the most common
+features of a bundle.
 
 .. tip::
 
     The bundle overriding mechanism means that you cannot use physical paths to
     refer to bundle's resources (e.g. ``__DIR__/config/services.xml``). Always
-    use logical paths in your bundles (e.g. ``@AppBundle/Resources/config/services.xml``)
+    use logical paths in your bundles (e.g. ``@FooBundle/Resources/config/services.xml``)
     and call the :ref:`locateResource() method <http-kernel-resource-locator>`
     to turn them into physical paths when needed.
 
 Templates
 ---------
 
-For information on overriding templates, see
-
-* :doc:`/templating/overriding`.
-* :doc:`/bundles/inheritance`
+See :doc:`/templating/overriding`.
 
 Routing
 -------
 
 Routing is never automatically imported in Symfony. If you want to include
 the routes from any bundle, then they must be manually imported from somewhere
-in your application (e.g. ``app/config/routing.yml``).
+in your application (e.g. ``config/routes.yaml``).
 
 The easiest way to "override" a bundle's routing is to never import it at
 all. Instead of importing a third-party bundle's routing, simply copy
@@ -37,10 +35,10 @@ that routing file into your application, modify it, and import it instead.
 Controllers
 -----------
 
-Assuming the third-party bundle involved uses non-service controllers (which
-is almost always the case), you can easily override controllers via bundle
-inheritance. For more information, see :doc:`/bundles/inheritance`.
 If the controller is a service, see the next section on how to override it.
+Otherwise, define a new route + controller with the same path associated to the
+controller you want to override (and make sure that the new route is loaded
+before the bundle one).
 
 Services & Configuration
 ------------------------
@@ -48,22 +46,25 @@ Services & Configuration
 If you want to modify service definitions of another bundle, you can use a compiler
 pass to change the class of the service or to modify method calls. In the following
 example, the implementing class for the ``original-service-id`` is changed to
-``Acme\DemoBundle\YourService``::
+``App\YourService``:
 
-    // src/Acme/DemoBundle/DependencyInjection/Compiler/OverrideServiceCompilerPass.php
-    namespace Acme\DemoBundle\DependencyInjection\Compiler;
+.. code-block:: diff
 
-    use Acme\DemoBundle\YourService;
-    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    // src/Kernel.php
+    namespace App;
 
-    class OverrideServiceCompilerPass implements CompilerPassInterface
+    // ...
+    + use App\Service\YourService;
+    + use Symfony\Component\DependencyInjection\ContainerBuilder;
+    + use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+
+    class Kernel extends BaseKernel implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $container)
-        {
-            $definition = $container->getDefinition('original-service-id');
-            $definition->setClass(YourService::class);
-        }
+    +     public function process(ContainerBuilder $container)
+    +     {
+    +         $definition = $container->findDefinition('original-service-id');
+    +         $definition->setClass(YourService::class);
+    +     }
     }
 
 For more information on compiler passes, see :doc:`/service_container/compiler_passes`.
@@ -101,7 +102,7 @@ to a new validation group:
 
     .. code-block:: yaml
 
-        # src/Acme/UserBundle/Resources/config/validation.yml
+        # config/validator/validation.yaml
         FOS\UserBundle\Model\User:
             properties:
                 plainPassword:
@@ -114,7 +115,7 @@ to a new validation group:
 
     .. code-block:: xml
 
-        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -152,13 +153,4 @@ Translations are not related to bundles, but to domains. That means that you
 can override the translations from any translation file, as long as it is in
 :ref:`the correct domain <using-message-domains>`.
 
-.. caution::
-
-    Translation files are not aware of :doc:`bundle inheritance </bundles/inheritance>`.
-    If you want to override translations from the parent bundle or another bundle,
-    make sure that the bundle containing *your* translations is loaded after any
-    bundle whose translations you're overriding. This is done in ``AppKernel``.
-
-    Finally, translations located in ``app/Resources/translations`` will override
-    all the other translations since those files are always loaded last.
 .. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides

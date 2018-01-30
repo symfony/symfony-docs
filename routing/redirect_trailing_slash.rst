@@ -12,15 +12,15 @@ Create a controller that will match any URL with a trailing slash, remove
 the trailing slash (keeping query parameters if any) and redirect to the
 new URL with a 301 response status code::
 
-    // src/AppBundle/Controller/RedirectingController.php
-    namespace AppBundle\Controller;
+    // src/Controller/RedirectingController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
 
     class RedirectingController extends Controller
     {
-        public function removeTrailingSlashAction(Request $request)
+        public function removeTrailingSlash(Request $request)
         {
             $pathInfo = $request->getPathInfo();
             $requestUri = $request->getRequestUri();
@@ -39,8 +39,8 @@ system, as explained below:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/RedirectingController.php
-        namespace AppBundle\Controller;
+        // src/Controller/RedirectingController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\HttpFoundation\Request;
@@ -52,7 +52,7 @@ system, as explained below:
              * @Route("/{url}", name="remove_trailing_slash",
              *     requirements={"url" = ".*\/$"}, methods={"GET"})
              */
-            public function removeTrailingSlashAction(Request $request)
+            public function removeTrailingSlash(Request $request)
             {
                 // ...
             }
@@ -60,9 +60,10 @@ system, as explained below:
 
     .. code-block:: yaml
 
+        # config/routes.yaml
         remove_trailing_slash:
             path: /{url}
-            defaults: { _controller: AppBundle:Redirecting:removeTrailingSlash }
+            controller: App\Controller\RedirectingController::removeTrailingSlash
             requirements:
                 url: .*/$
             methods: [GET]
@@ -72,7 +73,7 @@ system, as explained below:
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing">
             <route id="remove_trailing_slash" path="/{url}" methods="GET">
-                <default key="_controller">AppBundle:Redirecting:removeTrailingSlash</default>
+                <default key="_controller">App\Controller\RedirectingController::removeTrailingSlash</default>
                 <requirement key="url">.*/$</requirement>
             </route>
         </routes>
@@ -88,7 +89,7 @@ system, as explained below:
             new Route(
                 '/{url}',
                 array(
-                    '_controller' => 'AppBundle:Redirecting:removeTrailingSlash',
+                    '_controller' => 'App\Controller\RedirectingController::removeTrailingSlash',
                 ),
                 array(
                     'url' => '.*/$',

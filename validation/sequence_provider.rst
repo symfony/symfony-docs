@@ -17,8 +17,8 @@ username and the password are different only if all other validation passes
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         use Symfony\Component\Security\Core\User\UserInterface;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -49,8 +49,8 @@ username and the password are different only if all other validation passes
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\User:
+        # config/validator/validation.yaml
+        App\Entity\User:
             group_sequence:
                 - User
                 - Strict
@@ -67,13 +67,13 @@ username and the password are different only if all other validation passes
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\User">
+            <class name="App\Entity\User">
                 <property name="username">
                     <constraint name="NotBlank" />
                 </property>
@@ -100,8 +100,8 @@ username and the password are different only if all other validation passes
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -140,6 +140,23 @@ that group are valid, the second group, ``Strict``, will be validated.
     sequence, which will contain the ``Default`` group which references the
     same group sequence, ...).
 
+You can also define a group sequence in the ``validation_groups`` form option::
+
+    use Symfony\Component\Validator\Constraints\GroupSequence;
+    use Symfony\Component\Form\AbstractType;
+    // ...
+
+    class MyType extends AbstractType
+    {
+        // ...
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefaults([
+                'validation_groups' => new GroupSequence(['First', 'Second']),
+            ]);
+        }
+    }
+
 Group Sequence Providers
 ------------------------
 
@@ -153,8 +170,8 @@ entity and a new constraint group called ``Premium``:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -178,8 +195,8 @@ entity and a new constraint group called ``Premium``:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\User:
+        # config/validator/validation.yaml
+        App\Entity\User:
             properties:
                 name:
                     - NotBlank: ~
@@ -190,13 +207,13 @@ entity and a new constraint group called ``Premium``:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\User">
+            <class name="App\Entity\User">
                 <property name="name">
                     <constraint name="NotBlank" />
                 </property>
@@ -218,8 +235,8 @@ entity and a new constraint group called ``Premium``:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -247,8 +264,8 @@ add the
 :method:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface::getGroupSequence`,
 method, which should return an array of groups to use::
 
-    // src/AppBundle/Entity/User.php
-    namespace AppBundle\Entity;
+    // src/Entity/User.php
+    namespace App\Entity;
 
     // ...
     use Symfony\Component\Validator\GroupSequenceProviderInterface;
@@ -276,8 +293,8 @@ provides a sequence of groups to be validated:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         // ...
 
@@ -291,20 +308,20 @@ provides a sequence of groups to be validated:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\User:
+        # config/validator/validation.yaml
+        App\Entity\User:
             group_sequence_provider: true
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\User">
+            <class name="App\Entity\User">
                 <group-sequence-provider />
                 <!-- ... -->
             </class>
@@ -312,8 +329,8 @@ provides a sequence of groups to be validated:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;

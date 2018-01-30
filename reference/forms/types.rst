@@ -19,6 +19,8 @@ Form Types Reference
    types/search
    types/url
    types/range
+   types/tel
+   types/color
 
    types/choice
    types/entity

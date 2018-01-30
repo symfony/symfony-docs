@@ -20,6 +20,8 @@ are independent from the actual cache implementation. Therefore, applications
 can keep using the same cache pool even if the underlying cache mechanism
 changes from a file system based cache to a Redis or database based cache.
 
+.. _component-cache-creating-cache-pools:
+
 Creating Cache Pools
 --------------------
 
@@ -121,3 +123,81 @@ when all items are successfully deleted)::
 
     // ...
     $cacheIsEmpty = $cache->clear();
+
+.. tip::
+
+    If the cache component is used inside a Symfony application, you can remove
+    *all items* from the *given pool(s)* using the following command (which resides within
+    the :ref:`framework bundle <framework-bundle-configuration>`):
+
+    .. code-block:: terminal
+
+        $ php bin/console cache:pool:clear <cache-pool-name>
+
+        # clears the "cache.app" pool
+        $ php bin/console cache:pool:clear cache.app
+
+        # clears the "cache.validation" and "cache.app" pool
+        $ php bin/console cache:pool:clear cache.validation cache.app
+
+.. _component-cache-cache-pool-prune:
+
+Pruning Cache Items
+-------------------
+
+Some cache pools do not include an automated mechanism for pruning expired cache items.
+For example, the :ref:`FilesystemAdaper <component-cache-filesystem-adapter>` cache
+does not remove expired cache items *until an item is explicitly requested and determined to
+be expired*, for example, via a call to :method:`Psr\\Cache\\CacheItemPoolInterface::getItem`.
+Under certain workloads, this can cause stale cache entries to persist well past their
+expiration, resulting in a sizable consumption of wasted disk or memory space from excess,
+expired cache items.
+
+This shortcomming has been solved through the introduction of
+:class:`Symfony\\Component\\Cache\\PruneableInterface`, which defines the abstract method
+:method:`Symfony\\Component\\Cache\\PruneableInterface::prune`. The
+:ref:`ChainAdapter <component-cache-chain-adapter>`,
+:ref:`FilesystemAdaper <component-cache-filesystem-adapter>`,
+:ref:`PdoAdapter <pdo-doctrine-adapter>`, and
+:ref:`PhpFilesAdapter <component-cache-files-adapter>` all implement this new interface,
+allowing manual removal of stale cache items::
+
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+
+    $cache = new FilesystemAdapter('app.cache');
+    // ... do some set and get operations
+    $cache->prune();
+
+The :ref:`ChainAdapter <component-cache-chain-adapter>` implementation does not directly
+contain any pruning logic itself. Instead, when calling the chain adapter's
+:method:`Symfony\\Component\\Cache\\ChainAdapter::prune` method, the call is delegated to all
+its compatibe cache adapters (and those that do not implement ``PruneableInterface`` are
+silently ignored)::
+
+    use Symfony\Component\Cache\Adapter\ApcuAdapter;
+    use Syfmony\Component\Cache\Adapter\ChainAdapter;
+    use Syfmony\Component\Cache\Adapter\FilesystemAdapter;
+    use Syfmony\Component\Cache\Adapter\PdoAdapter;
+    use Syfmony\Component\Cache\Adapter\PhpFilesAdapter;
+
+    $cache = new ChainAdapter(array(
+        new ApcuAdapter(),       // does NOT implement PruneableInterface
+        new FilesystemAdapter(), // DOES implement PruneableInterface
+        new PdoAdapter(),        // DOES implement PruneableInterface
+        new PhpFilesAdapter(),   // DOES implement PruneableInterface
+        // ...
+    ));
+
+    // prune will proxy the call to PdoAdapter, FilesystemAdapter and PhpFilesAdapter,
+    // while silently skipping ApcuAdapter
+    $cache->prune();
+
+.. tip::
+
+    If the cache component is used inside a Symfony application, you can prune
+    *all items* from *all pools* using the following command (which resides within
+    the :ref:`framework bundle <framework-bundle-configuration>`):
+
+    .. code-block:: terminal
+
+        $ php bin/console cache:pool:prune

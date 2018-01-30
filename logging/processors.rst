@@ -18,14 +18,14 @@ using a processor.
 
 .. code-block:: php
 
-    namespace AppBundle;
+    namespace App\Logger;
 
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
     class SessionRequestProcessor
     {
         private $session;
-        private $token;
+        private $sessionId;
 
         public function __construct(SessionInterface $session)
         {
@@ -34,15 +34,15 @@ using a processor.
 
         public function processRecord(array $record)
         {
-            if (null === $this->token) {
-                try {
-                    $this->token = substr($this->session->getId(), 0, 8);
-                } catch (\RuntimeException $e) {
-                    $this->token = '????????';
-                }
-                $this->token .= '-' . substr(uniqid(), -8);
+            if (!$this->session->isStarted()) {
+                return $record;
             }
-            $record['extra']['token'] = $this->token;
+
+            if (!$this->sessionId) {
+                $this->sessionId = substr($this->session->getId(), 0, 8) ?: '????????';
+            }
+
+            $record['extra']['token'] = $this->sessionId.'-'.substr(uniqid('', true), -8);
 
             return $record;
         }
@@ -55,21 +55,20 @@ information:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             monolog.formatter.session_request:
                 class: Monolog\Formatter\LineFormatter
                 arguments:
                     - "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n"
 
-            AppBundle\SessionRequestProcessor:
-                autowire: true
+            App\Logger\SessionRequestProcessor:
                 tags:
                     - { name: monolog.processor, method: processRecord }
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -86,7 +85,7 @@ information:
                     <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%&#xA;</argument>
                 </service>
 
-                <service id="AppBundle\SessionRequestProcessor" autowire="true">
+                <service id="App\Logger\SessionRequestProcessor">
                     <tag name="monolog.processor" method="processRecord" />
                 </service>
             </services>
@@ -94,8 +93,8 @@ information:
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\SessionRequestProcessor;
+        // config/services.php
+        use App\Logger\SessionRequestProcessor;
         use Monolog\Formatter\LineFormatter;
 
         $container
@@ -103,7 +102,7 @@ information:
             ->addArgument('[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n');
 
         $container
-            ->autowire(SessionRequestProcessor::class)
+            ->register(SessionRequestProcessor::class)
             ->addTag('monolog.processor', array('method' => 'processRecord'));
 
 Finally, set the formatter to be used on whatever handler you want:
@@ -112,7 +111,7 @@ Finally, set the formatter to be used on whatever handler you want:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/monolog.yaml
         monolog:
             handlers:
                 main:
@@ -123,7 +122,7 @@ Finally, set the formatter to be used on whatever handler you want:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -146,7 +145,7 @@ Finally, set the formatter to be used on whatever handler you want:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'main' => array(
@@ -172,16 +171,15 @@ the ``monolog.processor`` tag:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/services.yaml
         services:
-            AppBundle\SessionRequestProcessor:
-                autowire: true
+            App\Logger\SessionRequestProcessor:
                 tags:
                     - { name: monolog.processor, method: processRecord, handler: main }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -192,7 +190,7 @@ the ``monolog.processor`` tag:
                 http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <services>
-                <service id="AppBundle\SessionRequestProcessor" autowire="true">
+                <service id="App\Logger\SessionRequestProcessor">
                     <tag name="monolog.processor" method="processRecord" handler="main" />
                 </service>
             </services>
@@ -200,11 +198,11 @@ the ``monolog.processor`` tag:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/services.php
 
         // ...
         $container
-            ->autowire(SessionRequestProcessor::class)
+            ->register(SessionRequestProcessor::class)
             ->addTag('monolog.processor', array('method' => 'processRecord', 'handler' => 'main'));
 
 Registering Processors per Channel
@@ -217,16 +215,15 @@ the ``monolog.processor`` tag:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/services.yaml
         services:
-            AppBundle\SessionRequestProcessor:
-                autowire: true
+            App\Logger\SessionRequestProcessor:
                 tags:
                     - { name: monolog.processor, method: processRecord, channel: main }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -237,7 +234,7 @@ the ``monolog.processor`` tag:
                 http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
             <services>
-                <service id="AppBundle\SessionRequestProcessor" autowire="true">
+                <service id="App\Logger\SessionRequestProcessor">
                     <tag name="monolog.processor" method="processRecord" channel="main" />
                 </service>
             </services>
@@ -245,9 +242,9 @@ the ``monolog.processor`` tag:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/services.php
 
         // ...
         $container
-            ->autowire(SessionRequestProcessor::class)
+            ->register(SessionRequestProcessor::class)
             ->addTag('monolog.processor', array('method' => 'processRecord', 'channel' => 'main'));

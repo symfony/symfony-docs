@@ -24,8 +24,8 @@ Defining the Form Type Extension
 
 First, create the form type extension class::
 
-    // src/AppBundle/Form/Extension/ImageTypeExtension.php
-    namespace AppBundle\Form\Extension;
+    // src/Form/Extension/ImageTypeExtension.php
+    namespace App\Form\Extension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
     use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -71,15 +71,17 @@ your class as a service and using the  ``form.type_extension`` tag:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
-            AppBundle\Form\Extension\ImageTypeExtension:
+            App\Form\Extension\ImageTypeExtension:
                 tags:
                     - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -87,7 +89,7 @@ your class as a service and using the  ``form.type_extension`` tag:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Form\Extension\ImageTypeExtension">
+                <service id="App\Form\Extension\ImageTypeExtension">
                     <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FileType" />
                 </service>
             </services>
@@ -95,7 +97,8 @@ your class as a service and using the  ``form.type_extension`` tag:
 
     .. code-block:: php
 
-        use AppBundle\Form\Extension\ImageTypeExtension;
+        // config/services.php
+        use App\Form\Extension\ImageTypeExtension;
         use Symfony\Component\Form\Extension\Core\Type\FileType;
 
         $container->autowire(ImageTypeExtension::class)
@@ -109,20 +112,13 @@ the ``getExtendedType()`` method. As *soon* as you do this, any method that you'
 overridden (e.g. ``buildForm()``) will be called whenever *any* field of the given
 type (``FileType``) is built. Let's see an example next.
 
-.. versionadded:: 3.3
-    Prior to Symfony 3.3, you needed to define type extension services as ``public``.
-    Starting from Symfony 3.3, you can also define them as ``private``.
-
 .. tip::
 
-    There is an optional tag attribute called ``priority``, which 
-    defaults to ``0`` and controls the order in which the form  
-    type extensions are loaded (the higher the priority, the earlier 
-    an extension is loaded). This is useful when you need to guarantee 
+    There is an optional tag attribute called ``priority``, which
+    defaults to ``0`` and controls the order in which the form
+    type extensions are loaded (the higher the priority, the earlier
+    an extension is loaded). This is useful when you need to guarantee
     that one extension is loaded before or after another extension.
-
-    .. versionadded:: 3.2
-        The ``priority`` attribute was introduced in Symfony 3.2.
 
 Adding the extension Business Logic
 -----------------------------------
@@ -134,8 +130,8 @@ you use an approach similar to the one described in
 you have a Media model with a path property, corresponding to the image path in
 the database::
 
-    // src/AppBundle/Entity/Media.php
-    namespace AppBundle\Entity;
+    // src/Entity/Media.php
+    namespace App\Entity;
 
     use Symfony\Component\Validator\Constraints as Assert;
 
@@ -167,8 +163,8 @@ the ``FileType::class`` form type:
 
 For example::
 
-    // src/AppBundle/Form/Extension/ImageTypeExtension.php
-    namespace AppBundle\Form\Extension;
+    // src/Form/Extension/ImageTypeExtension.php
+    namespace App\Form\Extension;
 
     use Symfony\Component\Form\AbstractTypeExtension;
     use Symfony\Component\Form\FormView;
@@ -224,7 +220,7 @@ Specifically, you need to override the ``file_widget`` block:
 
     .. code-block:: html+twig
 
-        {# app/Resources/fields.html.twig #}
+        {# templates/form/fields.html.twig #}
         {% extends 'form_div_layout.html.twig' %}
 
         {% block file_widget %}
@@ -240,7 +236,7 @@ Specifically, you need to override the ``file_widget`` block:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/file_widget.html.php -->
+        <!-- src/Resources/file_widget.html.php -->
         <?php echo $view['form']->widget($form) ?>
         <?php if (null !== $image_url): ?>
             <img src="<?php echo $view['assets']->getUrl($image_url) ?>"/>
@@ -256,8 +252,8 @@ From now on, when adding a field of type ``FileType::class`` to your form, you c
 specify an ``image_property`` option that will be used to display an image
 next to the file field. For example::
 
-    // src/AppBundle/Form/Type/MediaType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/MediaType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;

@@ -7,54 +7,52 @@ they are released as stable versions.
 Creating a New Project Based on an Unstable Symfony Version
 -----------------------------------------------------------
 
-Suppose that Symfony 2.7 version hasn't been released yet and you want to create
+Suppose that the Symfony 4.0 version hasn't been released yet and you want to create
 a new project to test its features. First, :doc:`install the Composer </setup/composer>`
 package manager. Then, open a command console, enter your project's directory and
 execute the following command:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/framework-standard-edition my_project "2.7.*" --stability=dev
+    # Download the latest beta version
+    $ composer create-project symfony/skeleton my_project "4.0.*" -s beta
+
+    # Download the absolute latest commit
+    $ composer create-project symfony/skeleton my_project "4.0.*" -s dev
 
 Once the command finishes its execution, you'll have a new Symfony project created
-in the ``my_project/`` directory and based on the most recent code found in the
-``2.7`` branch.
-
-If you want to test a beta version, use ``beta`` as the value of the ``stability``
-option:
-
-.. code-block:: terminal
-
-    $ composer create-project symfony/framework-standard-edition my_project "2.7.*" --stability=beta
+in the ``my_project/`` directory.
 
 Upgrading your Project to an Unstable Symfony Version
 -----------------------------------------------------
 
-Suppose again that Symfony 2.7 hasn't been released yet and you want to upgrade
+Suppose again that Symfony 4.0 hasn't been released yet and you want to upgrade
 an existing application to test that your project works with it.
 
 First, open the ``composer.json`` file located in the root directory of your
-project. Then, edit the value of the version defined for the ``symfony/symfony``
-dependency as follows:
+project. Then, edit the value of all of the ``symfony/*`` libraries to the
+new version and change your ``minimum-stability`` to ``beta``:
 
-.. code-block:: json
+.. code-block:: diff
 
     {
         "require": {
-            "symfony/symfony" : "2.7.*@dev"
-        }
+    +         "symfony/framework-bundle": "^4.0",
+    +         "symfony/finder": "^4.0",
+            "...": "..."
+        },
+    +     "minimum-stability": "beta"
     }
 
-Finally, open a command console, enter your project directory and execute the
-following command to update your project dependencies:
+You can also use set ``minimum-stability`` to ``dev``, or omit this line
+entirely, and opt into your stability on each package by using constraints
+like ``4.0.*@beta``.
+
+Finally, from a terminal, update your project's dependencies:
 
 .. code-block:: terminal
 
-    $ composer update symfony/symfony
-
-If you prefer to test a Symfony beta version, replace the ``"2.7.*@dev"`` constraint
-by ``"2.7.0-beta1"`` to install a specific beta number or ``2.7.*@beta`` to get
-the most recent beta version.
+    $ composer update
 
 After upgrading the Symfony version, read the :ref:`Symfony Upgrading Guide <upgrade-major-symfony-deprecations>`
 to learn how you should proceed to update your application's code in case the new

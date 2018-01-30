@@ -6,7 +6,7 @@ How to Test Code that Interacts with the Database
 
 If your code interacts with the database, e.g. reads data from or stores data
 into it, you need to adjust your tests to take this into account. There are
-many ways how to deal with this. In a unit test, you can create a mock for
+many ways to deal with this. In a unit test, you can create a mock for
 a ``Repository`` and use it to return expected objects. In a functional test,
 you may need to prepare a test database with predefined values to ensure that
 your test always has the same data to work with.
@@ -33,10 +33,10 @@ class.
 
 Suppose the class you want to test looks like this::
 
-    // src/AppBundle/Salary/SalaryCalculator.php
-    namespace AppBundle\Salary;
+    // src/Salary/SalaryCalculator.php
+    namespace App\Salary;
 
-    use AppBundle\Entity\Employee;
+    use App\Entity\Employee;
     use Doctrine\Common\Persistence\ObjectManager;
 
     class SalaryCalculator
@@ -61,11 +61,11 @@ Suppose the class you want to test looks like this::
 Since the ``EntityManagerInterface`` gets injected into the class through the constructor,
 it's easy to pass a mock object within a test::
 
-    // tests/AppBundle/Salary/SalaryCalculatorTest.php
-    namespace Tests\AppBundle\Salary;
+    // tests/Salary/SalaryCalculatorTest.php
+    namespace App\Tests\Salary;
 
-    use AppBundle\Entity\Employee;
-    use AppBundle\Salary\SalaryCalculator;
+    use App\Entity\Employee;
+    use App\Salary\SalaryCalculator;
     use Doctrine\Common\Persistence\ObjectManager;
     use Doctrine\Common\Persistence\ObjectRepository;
     use PHPUnit\Framework\TestCase;
@@ -112,45 +112,16 @@ Most of the time you want to use a dedicated database connection to make sure
 not to overwrite data you entered when developing the application and also
 to be able to clear the database before every test.
 
-To do this, you can specify a database configuration which overwrites the default
-configuration:
+To do this, you can override the value of the ``DATABASE_URL`` env var in the
+``phpunit.xml.dist`` to use a diferent database for your tests:
 
-.. configuration-block::
+.. code-block:: xml
 
-    .. code-block:: yaml
-
-        # app/config/config_test.yml
-        doctrine:
-            # ...
-            dbal:
-                host:     localhost
-                dbname:   testdb
-                user:     testdb
-                password: testdb
-
-    .. code-block:: xml
-
-        <!-- app/config/config_test.xml -->
-        <doctrine:config>
-            <doctrine:dbal
-                host="localhost"
-                dbname="testdb"
-                user="testdb"
-                password="testdb"
-            />
-        </doctrine:config>
-
-    .. code-block:: php
-
-        // app/config/config_test.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-                'host'     => 'localhost',
-                'dbname'   => 'testdb',
-                'user'     => 'testdb',
-                'password' => 'testdb',
-            ),
-        ));
-
-Make sure that your database runs on localhost and has the defined database and
-user credentials set up.
+    <?xml version="1.0" charset="utf-8" ?>
+    <phpunit>
+        <php>
+            <!-- the value is the Doctrine connection string in DSN format -->
+            <env name="DATABASE_URL" value="mysql://USERNAME:PASSWORD@127.0.0.1/DB_NAME" />
+        </php>
+        <!-- ... -->
+    </phpunit>

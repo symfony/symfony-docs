@@ -24,9 +24,10 @@ Your exact situation may differ, but in this example, a token is read
 from an ``apikey`` query parameter, the proper username is loaded from that
 value and then a User object is created::
 
-    // src/AppBundle/Security/ApiKeyAuthenticator.php
-    namespace AppBundle\Security;
+    // src/Security/ApiKeyAuthenticator.php
+    namespace App\Security;
 
+    use App\Security\ApiKeyUserProvider;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -119,8 +120,11 @@ method, if any.
 
 .. caution::
 
-    In case you return ``null`` from your ``createToken()`` method, be sure to enable
-    ``anonymous`` in you firewall. This way you'll be able to get an ``AnonymousToken``.
+    In case you return ``null`` from your ``createToken()`` method, Symfony
+    passes this request to the next authentication provider. If you haven't
+    configured any other provider, enable the ``anonymous`` option in your
+    firewall. This way Symfony executes the anonymous authentication provider
+    and you'll get an ``AnonymousToken``.
 
 2. supportsToken
 ~~~~~~~~~~~~~~~~
@@ -159,8 +163,8 @@ used by Symfony's core user provider system).
 
 The ``$userProvider`` might look something like this::
 
-    // src/AppBundle/Security/ApiKeyUserProvider.php
-    namespace AppBundle\Security;
+    // src/Security/ApiKeyUserProvider.php
+    namespace App\Security;
 
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\User\User;
@@ -205,9 +209,9 @@ The ``$userProvider`` might look something like this::
     }
 
 Next, make sure this class is registered as a service. If you're using the
-:ref:`default services.yml configuration <service-container-services-load-example>`,
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
 that happens automatically. A little later, you'll reference this service in
-your :ref:`security.yml configuration <security-api-key-config>`.
+your :ref:`security.yaml configuration <security-api-key-config>`.
 
 .. note::
 
@@ -247,8 +251,8 @@ need to implement the :class:`Symfony\\Component\\Security\\Http\\Authentication
 Authenticator. This will provide a method ``onAuthenticationFailure()`` which
 you can use to create an error ``Response``::
 
-    // src/AppBundle/Security/ApiKeyAuthenticator.php
-    namespace AppBundle\Security;
+    // src/Security/ApiKeyAuthenticator.php
+    namespace App\Security;
 
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
@@ -277,7 +281,7 @@ Configuration
 -------------
 
 Once you have your ``ApiKeyAuthenticator`` all setup, you need to register
-it as a service. If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+it as a service. If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that happens automatically.
 
 The last step is to activate your authenticator and custom user provider in the
@@ -288,25 +292,25 @@ and ``provider`` keys:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
             providers:
                 api_key_user_provider:
-                    id: AppBundle\Security\ApiKeyUserProvider
+                    id: App\Security\ApiKeyUserProvider
 
             firewalls:
                 main:
                     pattern: ^/api
                     stateless: true
                     simple_preauth:
-                        authenticator: AppBundle\Security\ApiKeyAuthenticator
+                        authenticator: App\Security\ApiKeyAuthenticator
                     provider: api_key_user_provider
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -316,25 +320,25 @@ and ``provider`` keys:
             <config>
                 <!-- ... -->
 
-                <provider name="api_key_user_provider" id="AppBundle\Security\ApiKeyUserProvider" />
+                <provider name="api_key_user_provider" id="App\Security\ApiKeyUserProvider" />
 
                 <firewall name="main"
                     pattern="^/api"
                     stateless="true"
                     provider="api_key_user_provider"
                 >
-                    <simple-preauth authenticator="AppBundle\Security\ApiKeyAuthenticator" />
+                    <simple-preauth authenticator="App\Security\ApiKeyAuthenticator" />
                 </firewall>
             </config>
         </srv:container>
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
-        use AppBundle\Security\ApiKeyAuthenticator;
-        use AppBundle\Security\ApiKeyUserProvider;
+        use App\Security\ApiKeyAuthenticator;
+        use App\Security\ApiKeyUserProvider;
 
         $container->loadFromExtension('security', array(
             'providers' => array(
@@ -360,7 +364,7 @@ If you have defined ``access_control``, make sure to add a new entry:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -369,7 +373,7 @@ If you have defined ``access_control``, make sure to add a new entry:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -383,7 +387,7 @@ If you have defined ``access_control``, make sure to add a new entry:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'access_control' => array(
                 array(
@@ -419,7 +423,7 @@ configuration or set it to ``false``:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -431,7 +435,7 @@ configuration or set it to ``false``:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -451,7 +455,7 @@ configuration or set it to ``false``:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ..
         $container->loadFromExtension('security', array(
@@ -469,7 +473,7 @@ case the API key (i.e. ``$token->getCredentials()``) - are not stored in the ses
 for security reasons. To take advantage of the session, update ``ApiKeyAuthenticator``
 to see if the stored token has a valid User object that can be used::
 
-    // src/AppBundle/Security/ApiKeyAuthenticator.php
+    // src/Security/ApiKeyAuthenticator.php
 
     // ...
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
@@ -533,7 +537,7 @@ stored in the database, then you may want to re-query for a fresh version
 of the user to make sure it's not out-of-date. But regardless of your requirements,
 ``refreshUser()`` should now return the User object::
 
-    // src/AppBundle/Security/ApiKeyUserProvider.php
+    // src/Security/ApiKeyUserProvider.php
 
     // ...
     class ApiKeyUserProvider implements UserProviderInterface
@@ -573,7 +577,7 @@ a certain URL (e.g. the redirect URL in OAuth).
 Fortunately, handling this situation is easy: just check to see what the
 current URL is before creating the token in ``createToken()``::
 
-    // src/AppBundle/Security/ApiKeyAuthenticator.php
+    // src/Security/ApiKeyAuthenticator.php
 
     // ...
     use Symfony\Component\Security\Http\HttpUtils;

@@ -20,9 +20,6 @@ The Symfony Cache component provides two mechanisms to help solving this problem
 Using Cache Tags
 ----------------
 
-.. versionadded:: 3.2
-    Tags based invalidation was introduced in Symfony 3.2.
-
 To benefit from tags based invalidation, you need to attach the proper tags to
 each cached item. Each tag is a plain string identifier that you can use at any
 time to trigger the removal of all items associated with this tag.
@@ -79,6 +76,16 @@ your fronts and have very fast invalidation checks::
         // Adapter for tags
         new RedisAdapter('redis://localhost')
     );
+
+.. note::
+
+    Since Symfony 3.4, :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`
+    implements :class:`Symfony\\Component\\Cache\\PruneableInterface`,
+    enabling manual
+    :ref:`pruning of expired cache entries <component-cache-cache-pool-prune>` by
+    calling its :method:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter::prune`
+    method (assuming the wrapped adapter itself implements
+    :class:`Symfony\\Component\\Cache\\PruneableInterface`).
 
 .. _cache-component-expiration:
 

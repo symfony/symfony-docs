@@ -8,9 +8,6 @@ The Workflow Component
     The Workflow component provides tools for managing a workflow or finite
     state machine.
 
-.. versionadded:: 3.2
-    The Workflow component was introduced in Symfony 3.2.
-
 Installation
 ------------
 
@@ -44,8 +41,8 @@ these statuses are called **places**. You can define the workflow like this::
     use Symfony\Component\Workflow\Workflow;
     use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
 
-    $definition = new DefinitionBuilder();
-    $definition->addPlaces(['draft', 'review', 'rejected', 'published'])
+    $definitionBuilder = new DefinitionBuilder();
+    $definition = $definitionBuilder->addPlaces(['draft', 'review', 'rejected', 'published'])
         // Transitions are defined with a unique name, an origin place and a destination place
         ->addTransition(new Transition('to_review', 'draft', 'review'))
         ->addTransition(new Transition('publish', 'review', 'published'))
@@ -55,11 +52,6 @@ these statuses are called **places**. You can define the workflow like this::
 
     $marking = new SingleStateMarkingStore('currentState');
     $workflow = new Workflow($definition, $marking);
-
-.. versionadded:: 3.3
-    The fluent interface for the ``DefinitionBuilder`` class was introduced in
-    Symfony 3.3. Before you had to call the ``addPlaces()``, ``addTransition()``
-    and ``build()`` methods separately.
 
 The ``Workflow`` can now help you to decide what actions are allowed
 on a blog post depending on what *place* it is in. This will keep your domain
@@ -78,8 +70,12 @@ are trying to use it with::
     $newsletterWorkflow = ...
 
     $registry = new Registry();
-    $registry->add($blogWorkflow, BlogPost::class);
-    $registry->add($newsletterWorkflow, Newsletter::class);
+    $registry->addWorkflow($blogWorkflow, BlogPost::class);
+    $registry->addWorkflow($newsletterWorkflow, Newsletter::class);
+    
+.. versionadded:: 4.1
+    The ``addWorkflow()`` method was introduced in Symfony 4.1. In previous
+    Symfony versions it was called ``add()``.
 
 Usage
 -----

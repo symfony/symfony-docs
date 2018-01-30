@@ -57,12 +57,13 @@ Basic Usage
 The ``entity`` type has just one required option: the entity which should
 be listed inside the choice field::
 
+    use App\Entity\User;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
     $builder->add('users', EntityType::class, array(
         // query choices from this entity
-        'class' => 'AppBundle:User',
+        'class' => User::class,
 
         // use the User.username property as the visible option string
         'choice_label' => 'username',
@@ -85,12 +86,13 @@ If you want to create a custom query to use when fetching the entities
 (e.g. you only want to return some entities, or need to order them), use
 the `query_builder`_ option::
 
+    use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
     $builder->add('users', EntityType::class, array(
-        'class' => 'AppBundle:User',
+        'class' => User::class,
         'query_builder' => function (EntityRepository $er) {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
@@ -110,11 +112,12 @@ For example, if you have a ``$group`` variable (passed into your form perhaps
 as a form option) and ``getUsers()`` returns a collection of ``User`` entities,
 then you can supply the ``choices`` option directly::
 
+    use App\Entity\User;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
     $builder->add('users', EntityType::class, array(
-        'class' => 'AppBundle:User',
+        'class' => User::class,
         'choices' => $group->getUsers(),
     ));
 
@@ -131,22 +134,24 @@ choice_label
 This is the property that should be used for displaying the entities as text in
 the HTML element::
 
+    use App\Entity\Category;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
     $builder->add('category', EntityType::class, array(
-        'class' => 'AppBundle:Category',
+        'class' => Category::class,
         'choice_label' => 'displayName',
     ));
 
 If left blank, the entity object will be cast to a string and so must have a ``__toString()``
 method. You can also pass a callback function for more control::
 
+    use App\Entity\Category;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
     $builder->add('category', EntityType::class, array(
-        'class' => 'AppBundle:Category',
+        'class' => Category::class,
         'choice_label' => function ($category) {
             return $category->getDisplayName();
         }
@@ -168,7 +173,7 @@ more details, see the main :ref:`choice_label <reference-form-choice-label>` doc
         // ...
 
         $builder->add('genre', EntityType::class, array(
-           'class' => 'MyBundle:Genre',
+           'class' => 'App\Entity\Genre',
            'choice_label' => 'translations[en].name',
         ));
 
@@ -177,8 +182,8 @@ class
 
 **type**: ``string`` **required**
 
-The class of your entity (e.g. ``AppBundle:Category``). This can be
-a fully-qualified class name (e.g. ``AppBundle\Entity\Category``)
+The class of your entity (e.g. ``App:Category``). This can be
+a fully-qualified class name (e.g. ``App\Entity\Category``)
 or the short alias name (as shown prior).
 
 em
@@ -192,13 +197,13 @@ instead of the ``default`` entity manager.
 query_builder
 ~~~~~~~~~~~~~
 
-**type**: ``Doctrine\ORM\QueryBuilder`` or a Closure **default**: ``null``
+**type**: ``Doctrine\ORM\QueryBuilder`` or a ``callable`` **default**: ``null``
 
 Allows you to create a custom query for your choices. See
 :ref:`ref-form-entity-query-builder` for an example.
 
-The value of this option can either be a ``QueryBuilder`` object, a Closure or
-``null`` (which will load all entities). When using a Closure, you will be
+The value of this option can either be a ``QueryBuilder`` object, a callable or
+``null`` (which will load all entities). When using a callable, you will be
 passed the ``EntityRepository`` of the entity as the only argument and should
 return a ``QueryBuilder``. Returning ``null`` in the Closure will result in
 loading all entities.

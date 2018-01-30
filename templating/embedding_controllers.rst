@@ -19,14 +19,14 @@ The solution is to simply embed the result of an entire controller from your
 template. First, create a controller that renders a certain number of recent
 articles::
 
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
 
     // ...
 
     class ArticleController extends Controller
     {
-        public function recentArticlesAction($max = 3)
+        public function recentArticles($max = 3)
         {
             // make a database call or other logic
             // to get the "$max" most recent articles
@@ -45,7 +45,7 @@ The ``recent_list`` template is perfectly straightforward:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/article/recent_list.html.twig #}
+        {# templates/article/recent_list.html.twig #}
         {% for article in articles %}
             <a href="/article/{{ article.slug }}">
                 {{ article.title }}
@@ -54,7 +54,7 @@ The ``recent_list`` template is perfectly straightforward:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/article/recent_list.html.php -->
+        <!-- templates/article/recent_list.html.php -->
         <?php foreach ($articles as $article): ?>
             <a href="/article/<?php echo $article->getSlug() ?>">
                 <?php echo $article->getTitle() ?>
@@ -68,34 +68,34 @@ The ``recent_list`` template is perfectly straightforward:
     you'll learn how to do this correctly.
 
 To include the controller, you'll need to refer to it using the standard
-string syntax for controllers (i.e. **bundle**:**controller**:**action**):
+string syntax for controllers (i.e. **controllerNamespace**::**action**):
 
 .. configuration-block::
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/base.html.twig #}
+        {# templates/base.html.twig #}
 
         {# ... #}
         <div id="sidebar">
             {{ render(controller(
-                'AppBundle:Article:recentArticles',
+                'App\\Controller\\ArticleController::recentArticles',
                 { 'max': 3 }
             )) }}
         </div>
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/base.html.php -->
+        <!-- templates/base.html.php -->
 
         <!-- ... -->
         <div id="sidebar">
             <?php echo $view['actions']->render(
                 new \Symfony\Component\HttpKernel\Controller\ControllerReference(
-                    'AppBundle:Article:recentArticles',
+                    'App\\Controller\\ArticleController::recentArticles',
                     array('max' => 3)
                 )
             ) ?>
         </div>
 
-The result of an embedded controler can also be :doc:`cached </http_cache/esi>`
+The result of an embedded controller can also be :doc:`cached </http_cache/esi>`

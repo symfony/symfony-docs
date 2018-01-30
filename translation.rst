@@ -48,24 +48,36 @@ to learn even more. Overall, the process has several steps:
 
 .. _translation-configuration:
 
+Installation
+------------
+
+First, run this command to install the translator before using it:
+
+.. code-block:: terminal
+
+    $ composer require translator
+
 Configuration
 -------------
 
-Translations are handled by a ``translator`` service that uses the user's
-locale to lookup and return translated messages. Before using it, enable the
-``translator`` in your configuration:
+The previous command creates an initial config file where you can define the
+default locale of the app and the :ref:`fallback locales <translation-fallback>`
+that will be used if Symfony can't find some translation:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/translation.yaml
         framework:
-            translator: { fallbacks: [en] }
+            default_locale: 'en'
+            translator:
+                fallbacks: ['en']
+                # ...
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/translation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -75,22 +87,22 @@ locale to lookup and return translated messages. Before using it, enable the
                 http://symfony.com/schema/dic/symfony
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config>
+            <framework:config default-locale="en">
                 <framework:translator>
                     <framework:fallback>en</framework:fallback>
+                    <!-- ... -->
                 </framework:translator>
             </framework:config>
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/translation.php
         $container->loadFromExtension('framework', array(
+            'default_locale' => 'en',
             'translator' => array('fallbacks' => array('en')),
+            // ...
         ));
-
-See :ref:`translation-fallback` for details on the ``fallbacks`` key
-and what Symfony does when it doesn't find a translation.
 
 The locale used in translations is the one stored on the request. This is
 typically set via a ``_locale`` attribute on your routes (see :ref:`translation-locale-url`).
@@ -108,12 +120,13 @@ for example, that you're translating a simple message from inside a controller::
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Translation\TranslatorInterface;
 
-    public function indexAction()
+    public function index(TranslatorInterface $translator)
     {
-        $translated = $this->get('translator')->trans('Symfony is great');
+        $translated = $translator->trans('Symfony is great');
 
-        return new Response($translated);
+        // ...
     }
 
 .. _translation-resources:
@@ -129,7 +142,7 @@ different formats, XLIFF being the recommended format:
 
     .. code-block:: xml
 
-        <!-- messages.fr.xlf -->
+        <!-- translations/messages.fr.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -144,12 +157,12 @@ different formats, XLIFF being the recommended format:
 
     .. code-block:: yaml
 
-        # messages.fr.yml
+        # translations/messages.fr.yaml
         Symfony is great: J'aime Symfony
 
     .. code-block:: php
 
-        // messages.fr.php
+        // translations/messages.fr.php
         return array(
             'Symfony is great' => 'J\'aime Symfony',
         );
@@ -186,12 +199,13 @@ Message Placeholders
 Sometimes, a message containing a variable needs to be translated::
 
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Translation\TranslatorInterface;
 
-    public function indexAction($name)
+    public function index(TranslatorInterface $translator, $name)
     {
-        $translated = $this->get('translator')->trans('Hello '.$name);
+        $translated = $translator->trans('Hello '.$name);
 
-        return new Response($translated);
+        // ...
     }
 
 However, creating a translation for this string is impossible since the translator
@@ -258,11 +272,11 @@ You can also specify the message domain and pass some additional variables:
 
 .. code-block:: twig
 
-    {% trans with {'%name%': 'Fabien'} from "app" %}Hello %name%{% endtrans %}
+    {% trans with {'%name%': 'Fabien'} from 'app' %}Hello %name%{% endtrans %}
 
-    {% trans with {'%name%': 'Fabien'} from "app" into "fr" %}Hello %name%{% endtrans %}
+    {% trans with {'%name%': 'Fabien'} from 'app' into 'fr' %}Hello %name%{% endtrans %}
 
-    {% transchoice count with {'%name%': 'Fabien'} from "app" %}
+    {% transchoice count with {'%name%': 'Fabien'} from 'app' %}
         {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples
     {% endtranschoice %}
 
@@ -277,7 +291,7 @@ texts* and complex expressions:
 
     {{ message|transchoice(5) }}
 
-    {{ message|trans({'%name%': 'Fabien'}, "app") }}
+    {{ message|trans({'%name%': 'Fabien'}, 'app') }}
 
     {{ message|transchoice(5, {'%name%': 'Fabien'}, 'app') }}
 
@@ -308,7 +322,7 @@ texts* and complex expressions:
 
     .. code-block:: twig
 
-           {% trans_default_domain "app" %}
+           {% trans_default_domain 'app' %}
 
     Note that this only influences the current template, not any "included"
     template (in order to avoid side effects).
@@ -329,6 +343,33 @@ The translator service is accessible in PHP templates through the
         array('%count%' => 10)
     ) ?>
 
+Extracting Translation Contents and Updating Catalogs Automatically
+-------------------------------------------------------------------
+
+The most time-consuming tasks when translating an application is to extract all
+the template contents to be translated and to keep all the translation files in
+sync. Symfony includes a command called ``translation:update`` that helps you
+with these tasks:
+
+.. code-block:: terminal
+
+    # updates the French translation file with the missing strings found in app/Resources/ templates
+    $ ./bin/console translation:update --dump-messages --force fr
+
+    # updates the English translation file with the missing strings found in AppBundle
+    $ ./bin/console translation:update --dump-messages --force en AppBundle
+
+.. note::
+
+    If you want to see the missing translation strings without actually updating
+    the translation files, remove the ``--force`` option from the command above.
+
+.. tip::
+
+    If you need to extract translation strings from other sources, such as
+    controllers, forms and flash messages, consider using the more advanced
+    third-party `TranslationBundle`_.
+
 .. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
@@ -336,14 +377,14 @@ Translation Resource/File Names and Locations
 
 Symfony looks for message files (i.e. translations) in the following default locations:
 
-* the ``app/Resources/translations`` directory;
+* the ``translations/`` directory;
 
-* the ``app/Resources/<bundle name>/translations`` directory;
+* the ``src/Resources/<bundle name>/translations/`` directory;
 
 * the ``Resources/translations/`` directory inside of any bundle.
 
 The locations are listed here with the highest priority first. That is, you can
-override the translation messages of a bundle in any of the top 2 directories.
+override the translation messages of a bundle in any of the top two directories.
 
 The override mechanism works at a key level: only the overridden keys need
 to be listed in a higher priority message file. When a key is not found
@@ -359,14 +400,14 @@ must be named according to the following path: ``domain.locale.loader``:
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
 * **loader**: How Symfony should load and parse the file (e.g. ``xlf``,
-  ``php``, ``yml``, etc).
+  ``php``, ``yaml``, etc).
 
 The loader can be the name of any registered loader. By default, Symfony
 provides many loaders, including:
 
 * ``xlf``: XLIFF file;
 * ``php``: PHP file;
-* ``yml``: YAML file.
+* ``yaml``: YAML file.
 
 The choice of which loader to use is entirely up to you and is a matter of
 taste. The recommended option is to use ``xlf`` for translations.
@@ -381,15 +422,15 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/packages/translation.yaml
             framework:
                 translator:
                     paths:
-                        - '%kernel.project_dir%/translations'
+                        - '%kernel.project_dir%/custom/path/to/translations'
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- config/packages/translation.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:framework="http://symfony.com/schema/dic/symfony"
@@ -402,18 +443,18 @@ For more options, see :ref:`component-translator-message-catalogs`.
 
                 <framework:config>
                     <framework:translator>
-                        <framework:path>%kernel.project_dir%/translations</framework:path>
+                        <framework:path>%kernel.project_dir%/custom/path/to/translations</framework:path>
                     </framework:translator>
                 </framework:config>
             </container>
 
         .. code-block:: php
 
-            // app/config/config.php
+            // config/packages/translation.php
             $container->loadFromExtension('framework', array(
                 'translator' => array(
                     'paths' => array(
-                        '%kernel.project_dir%/translations',
+                        '%kernel.project_dir%/custom/path/to/translations',
                     ),
                 ),
             ));
@@ -455,7 +496,7 @@ checks translation resources for several locales:
 
 .. note::
 
-    When Symfony doesn't find a translation in the given locale, it will
+    When Symfony can't find a translation in the given locale, it will
     add the missing translation to the log file. For details,
     see :ref:`reference-framework-translator-logging`.
 
@@ -504,12 +545,14 @@ Learn more
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
-    /translation/*
+    translation/locale
+    translation/debug
+    translation/lint
 
 .. _`i18n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: http://atlantic18.github.io/DoctrineExtensions/doc/translatable.html
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
+.. _`TranslationBundle`: https://github.com/php-translation/symfony-bundle

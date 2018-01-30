@@ -8,6 +8,17 @@ If you need to create custom Twig functions, filters, tests or more, you'll need
 to create a Twig extension. You can read more about `Twig Extensions`_ in the Twig
 documentation.
 
+.. tip::
+
+    Before writing your own Twig extension, check if the filter/function that
+    you need is already implemented in the :doc:`Symfony Twig extensions </reference/twig_reference>`.
+    Check also the `official Twig extensions`_, which can be installed in your
+    application as follows:
+
+    .. code-block:: terminal
+
+        $ composer require twig/extensions
+
 Create the Extension Class
 --------------------------
 
@@ -21,17 +32,21 @@ money:
     {# pass in the 3 optional arguments #}
     {{ product.price|price(2, ',', '.') }}
 
-Create a class that extends ``\Twig_Extension`` and fill in the logic::
+Create a class that extends the ``AbstractExtension`` class defined by Twig and
+fill in the logic::
 
-    // src/AppBundle/Twig/AppExtension.php
-    namespace AppBundle\Twig;
+    // src/Twig/AppExtension.php
+    namespace App\Twig;
 
-    class AppExtension extends \Twig_Extension
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
+
+    class AppExtension extends AbstractExtension
     {
         public function getFilters()
         {
             return array(
-                new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
+                new TwigFilter('price', array($this, 'priceFilter')),
             );
         }
 
@@ -44,14 +59,6 @@ Create a class that extends ``\Twig_Extension`` and fill in the logic::
         }
     }
 
-.. note::
-
-    Prior to Twig 1.26, your extension had to define an additional ``getName()``
-    method that returned a string with the extension's internal name (e.g.
-    ``app.my_extension``). When your extension needs to be compatible with Twig
-    versions before 1.26, include this method which is omitted in the example
-    above.
-
 .. tip::
 
     Along with custom filters, you can also add custom `functions`_ and register
@@ -61,11 +68,12 @@ Register an Extension as a Service
 ----------------------------------
 
 Next, register your class as a service and tag it with ``twig.extension``. If you're
-using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you're done! Symfony will automatically know about your new service and add the tag.
 
 You can now start using your filter in any Twig template.
 
+.. _`official Twig extensions`: https://github.com/twigphp/Twig-extensions
 .. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
 .. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2

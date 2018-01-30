@@ -10,7 +10,6 @@ Validates that a value is blank - meaning equal to an empty string or ``null``::
 To force that a value strictly be equal to ``null``, see the
 :doc:`/reference/constraints/IsNull` constraint.
 
-
 To force that a value is *not* blank, see :doc:`/reference/constraints/NotBlank`.
 But be careful as ``NotBlank`` is *not* strictly the opposite of ``Blank``.
 
@@ -35,8 +34,8 @@ of an ``Author`` class were blank, you could do the following:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -50,21 +49,21 @@ of an ``Author`` class were blank, you could do the following:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 firstName:
                     - Blank: ~
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="firstName">
                     <constraint name="Blank" />
                 </property>
@@ -73,8 +72,8 @@ of an ``Author`` class were blank, you could do the following:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

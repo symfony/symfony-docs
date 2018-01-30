@@ -15,21 +15,39 @@ When using Apache, you can configure PHP as an
 :ref:`PHP FPM <web-server-apache-fpm>`. FastCGI also is the preferred way
 to use PHP :ref:`with Nginx <web-server-nginx>`.
 
-.. sidebar:: The Web Directory
+.. sidebar:: The public directory
 
-    The web directory is the home of all of your application's public and
+    The public directory is the home of all of your application's public and
     static files, including images, stylesheets and JavaScript files. It is
-    also where the front controllers (``app.php`` and ``app_dev.php``) live.
+    also where the front controller (``index.php``) lives.
 
-    The web directory serves as the document root when configuring your
-    web server. In the examples below, the ``web/`` directory will be the
-    document root. This directory is ``/var/www/project/web/``.
+    The public directory serves as the document root when configuring your
+    web server. In the examples below, the ``public/`` directory will be the
+    document root. This directory is ``/var/www/project/public/``.
 
-    If your hosting provider requires you to change the ``web/`` directory to
+    If your hosting provider requires you to change the ``public/`` directory to
     another location (e.g. ``public_html/``) make sure you
-    :ref:`override the location of the web/ directory <override-web-dir>`.
+    :ref:`override the location of the public/ directory <override-web-dir>`.
 
 .. _web-server-apache-mod-php:
+
+Adding Rewrite Rules
+--------------------
+
+The easiest way is to install the Apache recipe by executing the following command:
+
+.. code-block:: terminal
+
+    $ composer require symfony/apache-pack
+
+This recipe installs a ``.htaccess`` file in the ``public/`` directory that contains
+the rewrite rules.
+
+.. tip::
+
+    A performance improvement can be achieved by moving the rewrite rules from the ``.htaccess``
+    file into the VirtualHost block of your Apache configuration and then changing
+    ``AllowOverride All`` to ``AllowOverride None`` in your VirtualHost block.
 
 Apache with mod_php/PHP-CGI
 ---------------------------
@@ -42,8 +60,8 @@ The **minimum configuration** to get your application running under Apache is:
         ServerName domain.tld
         ServerAlias www.domain.tld
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             AllowOverride All
             Order Allow,Deny
             Allow from All
@@ -73,8 +91,8 @@ and increase web server performance:
         ServerName domain.tld
         ServerAlias www.domain.tld
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             AllowOverride None
             Order Allow,Deny
             Allow from All
@@ -83,7 +101,7 @@ and increase web server performance:
                 Options -MultiViews
                 RewriteEngine On
                 RewriteCond %{REQUEST_FILENAME} !-f
-                RewriteRule ^(.*)$ app.php [QSA,L]
+                RewriteRule ^(.*)$ index.php [QSA,L]
             </IfModule>
         </Directory>
 
@@ -96,13 +114,18 @@ and increase web server performance:
         # optionally disable the RewriteEngine for the asset directories
         # which will allow apache to simply reply with a 404 when files are
         # not found instead of passing the request into the full symfony stack
-        <Directory /var/www/project/web/bundles>
+        <Directory /var/www/project/public/bundles>
             <IfModule mod_rewrite.c>
                 RewriteEngine Off
             </IfModule>
         </Directory>
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
+        
+        # optionally set the value of the environment variables used in the application
+        #SetEnv APP_ENV prod
+        #SetEnv APP_SECRET <app-secret-id>
+        #SetEnv DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name"
     </VirtualHost>
 
 .. tip::
@@ -123,7 +146,7 @@ Hence, you need to modify your ``Directory`` permission settings as follows:
 
 .. code-block:: apache
 
-    <Directory /var/www/project/web>
+    <Directory /var/www/project/public>
         Require all granted
         # ...
     </Directory>
@@ -135,10 +158,10 @@ For advanced Apache configuration options, read the official `Apache documentati
 Apache with PHP-FPM
 -------------------
 
-To make use of PHP5-FPM with Apache, you first have to ensure that you have
+To make use of PHP-FPM with Apache, you first have to ensure that you have
 the FastCGI process manager ``php-fpm`` binary and Apache's FastCGI module
 installed (for example, on a Debian based system you have to install the
-``libapache2-mod-fastcgi`` and ``php5-fpm`` packages).
+``libapache2-mod-fastcgi`` and ``php7.1-fpm`` packages).
 
 PHP-FPM uses so-called *pools* to handle incoming FastCGI requests. You can
 configure an arbitrary number of pools in the FPM configuration. In a pool
@@ -153,7 +176,7 @@ listen on. Each pool can also be run under a different UID and GID:
     group = www-data
 
     ; use a unix domain socket
-    listen = /var/run/php5-fpm.sock
+    listen = /var/run/php7.1-fpm.sock
 
     ; or listen on a TCP socket
     listen = 127.0.0.1:9000
@@ -187,14 +210,14 @@ use the ``SetHandler`` directive to pass requests for PHP files to PHP FPM:
         </FilesMatch>
 
         # If you use Apache version below 2.4.9 you must consider update or use this instead
-        # ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
+        # ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/public/$1
 
         # If you run your Symfony application on a subpath of your document root, the
         # regular expression must be changed accordingly:
-        # ProxyPassMatch ^/path-to-app/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/web/$1
+        # ProxyPassMatch ^/path-to-app/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/public/$1
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             # enable the .htaccess rewrites
             AllowOverride All
             Require all granted
@@ -223,13 +246,13 @@ should look something like this:
         ServerName domain.tld
         ServerAlias www.domain.tld
 
-        AddHandler php5-fcgi .php
-        Action php5-fcgi /php5-fcgi
-        Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi
-        FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -host 127.0.0.1:9000 -pass-header Authorization
+        AddHandler php7-fcgi .php
+        Action php7-fcgi /php7-fcgi
+        Alias /php7-fcgi /usr/lib/cgi-bin/php7-fcgi
+        FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -host 127.0.0.1:9000 -pass-header Authorization
 
-        DocumentRoot /var/www/project/web
-        <Directory /var/www/project/web>
+        DocumentRoot /var/www/project/public
+        <Directory /var/www/project/public>
             # enable the .htaccess rewrites
             AllowOverride All
             Order Allow,Deny
@@ -251,7 +274,7 @@ instead:
 
 .. code-block:: apache
 
-    FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization
+    FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -socket /var/run/php7.1-fpm.sock -pass-header Authorization
 
 .. _web-server-nginx:
 
@@ -264,34 +287,23 @@ The **minimum configuration** to get your application running under Nginx is:
 
     server {
         server_name domain.tld www.domain.tld;
-        root /var/www/project/web;
+        root /var/www/project/public;
 
         location / {
-            # try to serve file directly, fallback to app.php
-            try_files $uri /app.php$is_args$args;
+            # try to serve file directly, fallback to index.php
+            try_files $uri /index.php$is_args$args;
         }
-        # DEV
-        # This rule should only be placed on your development environment
-        # In production, don't include this and don't deploy app_dev.php or config.php
-        location ~ ^/(app_dev|config)\.php(/|$) {
-            fastcgi_pass unix:/var/run/php5-fpm.sock;
+
+        location ~ ^/index\.php(/|$) {
+            fastcgi_pass unix:/var/run/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
-            # When you are using symlinks to link the document root to the
-            # current version of your application, you should pass the real
-            # application path instead of the path to the symlink to PHP
-            # FPM.
-            # Otherwise, PHP's OPcache may not properly detect changes to
-            # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
-            # for more information).
-            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-            fastcgi_param DOCUMENT_ROOT $realpath_root;
-        }
-        # PROD
-        location ~ ^/app\.php(/|$) {
-            fastcgi_pass unix:/var/run/php5-fpm.sock;
-            fastcgi_split_path_info ^(.+\.php)(/.*)$;
-            include fastcgi_params;
+
+            # optionally set the value of the environment variables used in the application
+            # fastcgi_param APP_ENV prod;
+            # fastcgi_param APP_SECRET <app-secret-id>;
+            # fastcgi_param DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name";
+
             # When you are using symlinks to link the document root to the
             # current version of your application, you should pass the real
             # application path instead of the path to the symlink to PHP
@@ -302,7 +314,7 @@ The **minimum configuration** to get your application running under Nginx is:
             fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
             fastcgi_param DOCUMENT_ROOT $realpath_root;
             # Prevents URIs that include the front controller. This will 404:
-            # http://domain.tld/app.php/some-path
+            # http://domain.tld/index.php/some-path
             # Remove the internal directive to allow URIs like this
             internal;
         }
@@ -324,17 +336,16 @@ The **minimum configuration** to get your application running under Nginx is:
 
 .. tip::
 
-    This executes **only** ``app.php``, ``app_dev.php`` and ``config.php`` in
-    the web directory. All other files ending in ".php" will be denied.
+    This executes **only** ``index.php`` in the public directory. All other files
+    ending in ".php" will be denied.
 
-    If you have other PHP files in your web directory that need to be executed,
+    If you have other PHP files in your public directory that need to be executed,
     be sure to include them in the ``location`` block above.
 
 .. caution::
 
-    After you deploy to production, make sure that you **cannot** access the ``app_dev.php``
-    or ``config.php`` scripts (i.e. ``http://example.com/app_dev.php`` and ``http://example.com/config.php``).
-    If you *can* access these, be sure to remove the ``DEV`` section from the above configuration.
+    After you deploy to production, make sure that you **cannot** access the ``index.php``
+    script (i.e. ``http://example.com/index.php``).
 
 .. note::
 

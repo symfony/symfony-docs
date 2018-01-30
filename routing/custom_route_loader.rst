@@ -13,7 +13,7 @@ conventions or patterns. A great example for this use-case is the
 action methods in a controller.
 
 You still need to modify your routing configuration (e.g.
-``app/config/routing.yml``) manually, even when using a custom route
+``config/routes.yaml``) manually, even when using a custom route
 loader.
 
 .. note::
@@ -36,18 +36,18 @@ and therefore have two important methods:
 :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
 and :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load`.
 
-Take these lines from the ``routing.yml`` in the Symfony Standard Edition:
+Take these lines from the ``routes.yaml`` in the Symfony Standard Edition:
 
 .. code-block:: yaml
 
-    # app/config/routing.yml
-    app:
-        resource: '@AppBundle/Controller/'
-        type:     annotation
+    # config/routes.yaml
+    controllers:
+        resource: ../src/Controller/
+        type: annotation
 
 When the main loader parses this, it tries all registered delegate loaders and calls
 their :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
-method with the given resource (``@AppBundle/Controller/``)
+method with the given resource (``../src/Controller/``)
 and type (``annotation``) as arguments. When one of the loader returns ``true``,
 its :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load` method
 will be called, which should return a :class:`Symfony\\Component\\Routing\\RouteCollection`
@@ -56,8 +56,59 @@ containing :class:`Symfony\\Component\\Routing\\Route` objects.
 .. note::
 
     Routes loaded this way will be cached by the Router the same way as
-    when they are defined in one of the default formats (e.g. XML, YML,
+    when they are defined in one of the default formats (e.g. XML, YAML,
     PHP file).
+
+Loading Routes with a Custom Service
+------------------------------------
+
+.. versionadded:: 2.8
+    The option to load routes using Symfony services was introduced in Symfony 2.8.
+
+Using a regular Symfony service is the simplest way to load routes in a
+customized way. It's much easier than creating a full custom route loader, so
+you should always consider this option first.
+
+To do so, define ``type: service`` as the type of the loaded routing resource
+and configure the service and method to call:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        admin_routes:
+            resource: 'admin_route_loader:loadRoutes'
+            type: service
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import resource="admin_route_loader:loadRoutes" type="service"/>
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $collection = new RouteCollection();
+        $collection->addCollection(
+            $loader->import("admin_route_loader:loadRoutes", "service")
+        );
+
+        return $collection;
+
+In this example, the routes are loaded by calling the ``loadRoutes()`` method of
+the service whose ID is ``admin_route_loader``. Your service doesn't have to
+extend or implement any special class, but the called method must return a
+:class:`Symfony\\Component\\Routing\\RouteCollection` object.
 
 Creating a custom Loader
 ------------------------
@@ -75,8 +126,8 @@ The sample loader below supports loading routing resources with a type of
 support the same type of resource. Just make up a name specific to what
 you do. The resource name itself is not actually used in the example::
 
-    // src/AppBundle/Routing/ExtraLoader.php
-    namespace AppBundle\Routing;
+    // src/Routing/ExtraLoader.php
+    namespace App\Routing;
 
     use Symfony\Component\Config\Loader\Loader;
     use Symfony\Component\Routing\Route;
@@ -97,7 +148,7 @@ you do. The resource name itself is not actually used in the example::
             // prepare a new route
             $path = '/extra/{parameter}';
             $defaults = array(
-                '_controller' => 'AppBundle:Extra:extra',
+                '_controller' => 'App\Controller\ExtraController::extra',
             );
             $requirements = array(
                 'parameter' => '\d+',
@@ -120,18 +171,17 @@ you do. The resource name itself is not actually used in the example::
     }
 
 Make sure the controller you specify really exists. In this case you
-have to create an ``extraAction()`` method in the ``ExtraController``
-of the ``AppBundle``::
+have to create an ``extra()`` method in the ``ExtraController``::
 
-    // src/AppBundle/Controller/ExtraController.php
-    namespace AppBundle\Controller;
+    // src/Controller/ExtraController.php
+    namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class ExtraController extends Controller
     {
-        public function extraAction($parameter)
+        public function extra($parameter)
         {
             return new Response($parameter);
         }
@@ -143,15 +193,16 @@ Now define a service for the ``ExtraLoader``:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             # ...
 
-            AppBundle\Routing\ExtraLoader:
+            App\Routing\ExtraLoader:
                 tags: [routing.loader]
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -161,7 +212,7 @@ Now define a service for the ``ExtraLoader``:
             <services>
                 <!-- ... -->
 
-                <service id="AppBundle\Routing\ExtraLoader">
+                <service id="App\Routing\ExtraLoader">
                     <tag name="routing.loader" />
                 </service>
             </services>
@@ -169,7 +220,8 @@ Now define a service for the ``ExtraLoader``:
 
     .. code-block:: php
 
-        use AppBundle\Routing\ExtraLoader;
+        // config/services.php
+        use App\Routing\ExtraLoader;
 
         $container
             ->autowire(ExtraLoader::class)
@@ -191,13 +243,14 @@ What remains to do is adding a few lines to the routing configuration:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         app_extra:
             resource: .
             type: extra
 
     .. code-block:: xml
 
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -209,7 +262,7 @@ What remains to do is adding a few lines to the routing configuration:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
@@ -217,10 +270,10 @@ What remains to do is adding a few lines to the routing configuration:
 
         return $collection;
 
-The important part here is the ``type`` key. Its value should be "extra" as
+The important part here is the ``type`` key. Its value should be ``extra`` as
 this is the type which the ``ExtraLoader`` supports and this will make sure
 its ``load()`` method gets called. The ``resource`` key is insignificant
-for the ``ExtraLoader``, so it is set to ".".
+for the ``ExtraLoader``, so it is set to ``.`` (a single dot).
 
 .. note::
 
@@ -244,8 +297,8 @@ Whenever you want to load another resource - for instance a YAML routing
 configuration file - you can call the
 :method:`Symfony\\Component\\Config\\Loader\\Loader::import` method::
 
-    // src/AppBundle/Routing/AdvancedLoader.php
-    namespace AppBundle\Routing;
+    // src/Routing/AdvancedLoader.php
+    namespace App\Routing;
 
     use Symfony\Component\Config\Loader\Loader;
     use Symfony\Component\Routing\RouteCollection;
@@ -256,7 +309,7 @@ configuration file - you can call the
         {
             $collection = new RouteCollection();
 
-            $resource = '@AppBundle/Resources/config/import_routing.yml';
+            $resource = '@ThirdPartyBundle/Resources/config/routing.yaml';
             $type = 'yaml';
 
             $importedRoutes = $this->import($resource, $type);

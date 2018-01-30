@@ -58,8 +58,8 @@ Who this Book Is for (Hint: It's not a Tutorial)
 
 Any Symfony developer, whether you are an expert or a newcomer, can read this
 guide. But since this isn't a tutorial, you'll need some basic knowledge of
-Symfony to follow everything. If you are totally new to Symfony, welcome!
-Start with :doc:`The Quick Tour </quick_tour/the_big_picture>` tutorial first.
+Symfony to follow everything. If you are totally new to Symfony, welcome! and
+read the :doc:`Getting Started guides </setup>` first.
 
 We've deliberately kept this guide short. We won't repeat explanations that
 you can find in the vast Symfony documentation, like discussions about Dependency
@@ -69,14 +69,13 @@ what you already know.
 The Application
 ---------------
 
-In addition to this guide, a sample application has been developed with all these
-best practices in mind. This project, called the Symfony Demo application, can
-be obtained through the Symfony Installer. First, `download and install`_ the
-installer and then execute this command to download the demo application:
+In addition to this guide, a sample application called `Symfony Demo`_ has been
+developed with all these best practices in mind. Execute this command to download
+the demo application:
 
 .. code-block:: terminal
 
-    $ symfony demo
+    $ composer create-project symfony/symfony-demo
 
 **The demo application is a simple blog engine**, because that will allow us to
 focus on the Symfony concepts and features without getting buried in difficult
@@ -87,9 +86,10 @@ Don't Update Your Existing Applications
 ---------------------------------------
 
 After reading this handbook, some of you may be considering refactoring your
-existing Symfony applications. Our recommendation is sound and clear: **you
-should not refactor your existing applications to comply with these best
-practices**. The reasons for not doing it are various:
+existing Symfony applications. Our recommendation is sound and clear: you may
+use these best practices for **new applications** but **you should not refactor
+your existing applications to comply with these best practices**. The reasons
+for not doing it are various:
 
 * Your existing applications are not wrong, they just follow another set of
   guidelines;
@@ -98,5 +98,9 @@ practices**. The reasons for not doing it are various:
 * The amount of work spent on this could be better dedicated to improving
   your tests or adding features that provide real value to the end users.
 
+----
+
+Next: :doc:`/best_practices/creating-the-project`
+
 .. _`Fabien Potencier`: https://connect.sensiolabs.com/profile/fabpot
-.. _`download and install`: https://symfony.com/download
+.. _`Symfony Demo`: https://github.com/symfony/demo

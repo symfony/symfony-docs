@@ -14,7 +14,7 @@ machine.
 Example of a State Machine
 --------------------------
 
-A pull request starts in an intial "start" state, a state for e.g. running
+A pull request starts in an initial "start" state, a state for e.g. running
 tests on Travis. When this is finished, the pull request is in the "review"
 state, where contributors can require changes, reject or accept the
 pull request. At any time, you can also "update" the pull request, which
@@ -28,13 +28,13 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/workflow.yaml
         framework:
             workflows:
                 pull_request:
                     type: 'state_machine'
                     supports:
-                        - AppBundle\Entity\PullRequest
+                        - App\Entity\PullRequest
                     places:
                         - start
                         - coding
@@ -67,7 +67,7 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/workflow.xml -->
         <?xml version="1.0" encoding="utf-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -80,7 +80,7 @@ Below is the configuration for the pull request state machine.
                 <framework:workflow name="pull_request" type="state_machine">
                     <framework:marking-store type="single_state"/>
 
-                    <framework:support>AppBundle\Entity\PullRequest</framework:support>
+                    <framework:support>App\Entity\PullRequest</framework:support>
 
                     <framework:place>start</framework:place>
                     <framework:place>coding</framework:place>
@@ -140,14 +140,13 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: php
 
-        // app/config/config.php
-
+        // # config/packages/workflow.php
         $container->loadFromExtension('framework', array(
             // ...
             'workflows' => array(
                 'pull_request' => array(
                   'type' => 'state_machine',
-                  'supports' => array('AppBundle\Entity\PullRequest'),
+                  'supports' => array('App\Entity\PullRequest'),
                   'places' => array(
                     'start',
                     'coding',
@@ -157,7 +156,7 @@ Below is the configuration for the pull request state machine.
                     'closed',
                   ),
                   'transitions' => array(
-                    'start'=> array(
+                    'submit'=> array(
                       'from' => 'start',
                       'to' => 'travis',
                     ),
@@ -165,7 +164,7 @@ Below is the configuration for the pull request state machine.
                       'from' => array('coding','travis','review'),
                       'to' => 'travis',
                     ),
-                    'wait_for_reivew'=> array(
+                    'wait_for_review'=> array(
                       'from' => 'travis',
                       'to' => 'review',
                     ),
@@ -190,8 +189,29 @@ Below is the configuration for the pull request state machine.
             ),
         ));
 
-You can now use this state machine by getting the ``state_machine.pull_request`` service::
+In a Symfony application using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+you can get this state machine by injecting the Workflow registry service::
 
-    $stateMachine = $this->container->get('state_machine.pull_request');
+    // ...
+    use Symfony\Component\Workflow\Registry;
+
+    class SomeService
+    {
+        private $workflows;
+
+        public function __constructor(Registry $workflows)
+        {
+            $this->workflows = $workflows;
+        }
+
+        public function someMethod()
+        {
+            $stateMachine = $this->workflows->get('pull_request');
+            // ...
+        }
+
+        // ...
+    }
 
 .. _Petri net: https://en.wikipedia.org/wiki/Petri_net

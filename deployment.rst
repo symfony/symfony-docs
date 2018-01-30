@@ -30,7 +30,7 @@ A deployment may also include other tasks, such as:
   repository;
 * Creating a temporary staging area to build your updated setup "offline";
 * Running any tests available to ensure code and/or server stability;
-* Removal of any unnecessary files from the ``web/`` directory to keep your
+* Removal of any unnecessary files from the ``public/`` directory to keep your
   production environment clean;
 * Clearing of external cache systems (like `Memcached`_ or `Redis`_).
 
@@ -52,9 +52,10 @@ Using Source Control
 ~~~~~~~~~~~~~~~~~~~~
 
 If you're using source control (e.g. Git or SVN), you can simplify by having
-your live installation also be a copy of your repository. When you're ready
-to upgrade it is as simple as fetching the latest updates from your source
-control system.
+your live installation also be a copy of your repository. When you're ready to
+upgrade it is as simple as fetching the latest updates from your source control
+system. When using Git, a common approach is to create a tag for each release
+and check out the appropriate tag on deployment (see `Git Tagging`_).
 
 This makes updating your files *easier*, but you still need to worry about
 manually taking other steps (see `Common Post-Deployment Tasks`_).
@@ -62,14 +63,13 @@ manually taking other steps (see `Common Post-Deployment Tasks`_).
 Using Platforms as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The specific deployment steps vary greatly from one service provider to another,
-so check out the dedicated article for the service of your choose:
+Using a Platform as a Service (PaaS) can be a great way to deploy your Symfony app
+quickly and easily. There are many PaaS - below are a few that work well with Symfony:
 
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    deployment/*
+* `Heroku`_
+* `Platform.sh`_
+* `Azure`_
+* `fortrabbit`_
 
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -77,13 +77,15 @@ Using Build Scripts and other Tools
 There are also tools to help ease the pain of deployment. Some of them have been
 specifically tailored to the requirements of Symfony.
 
-`Capistrano`_ with `Symfony plugin`_
-    `Capistrano`_ is a remote server automation and deployment tool written in Ruby.
-    `Symfony plugin`_ is a plugin to ease Symfony related tasks, inspired by `Capifony`_
-    (which works only with Capistrano 2).
+`EasyDeployBundle`_
+    A Symfony bundle that adds easy deploy tools to your application.
 
-`sf2debpkg`_
-    Helps you build a native Debian package for your Symfony project.
+`Deployer`_
+    This is another native PHP rewrite of Capistrano, with some ready recipes for
+    Symfony.
+
+`Ansistrano`_
+    An Ansible role that allows you to configure a powerful deploy via YAML files.
 
 `Magallanes`_
     This Capistrano-like deployment tool is built in PHP, and may be easier
@@ -93,13 +95,13 @@ specifically tailored to the requirements of Symfony.
     This Python-based library provides a basic suite of operations for executing
     local or remote shell commands and uploading/downloading files.
 
-`Deployer`_
-    This is another native PHP rewrite of Capistrano, with some ready recipes for
-    Symfony.
+`Capistrano`_ with `Symfony plugin`_
+    `Capistrano`_ is a remote server automation and deployment tool written in Ruby.
+    `Symfony plugin`_ is a plugin to ease Symfony related tasks, inspired by `Capifony`_
+    (which works only with Capistrano 2).
 
-Bundles
-    There are some `bundles that add deployment features`_ directly into your
-    Symfony console.
+`sf2debpkg`_
+    Helps you build a native Debian package for your Symfony project.
 
 Basic scripting
     You can of course use shell, `Ant`_ or any other build tool to script
@@ -122,18 +124,16 @@ Check if your server meets the requirements by running:
 
 .. _b-configure-your-app-config-parameters-yml-file:
 
-B) Configure your Parameters File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+B) Configure your Environment Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Most Symfony applications define configuration parameters in a file called
-``app/config/parameters.yml``. This file should *not* be deployed, because
-Symfony generates it automatically using the ``app/config/parameters.yml.dist``
-file as a template (that's why ``parameters.yml.dist`` must be committed and
-deployed).
+Most Symfony applications read their configuration from environment variables.
+While developing locally, you'll usually store these in a ``.env`` file. But on
+production, instead of creating this file, you should set *real* environment variables.
 
-If your application uses environment variables instead of these parameters, you
-must define those env vars in your production server using the tools provided by
-your hosting service.
+How you set environment variables, depends on your setup: they can be set at the
+command line, in your Nginx configuration, or via other methods provided by your
+hosting service.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -156,8 +156,9 @@ as you normally do:
 .. caution::
 
     If you get a "class not found" error during this step, you may need to
-    run ``export SYMFONY_ENV=prod`` before running this command so that
-    the ``post-install-cmd`` scripts run in the ``prod`` environment.
+    run ``export SYMFONY_ENV=prod`` (or ``export APP_ENV=prod`` if you're
+    using :doc:`Symfony Flex </setup/flex>`) before running this command so
+    that the ``post-install-cmd`` scripts run in the ``prod`` environment.
 
 D) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -207,14 +208,57 @@ Don't forget that deploying your application also involves updating any dependen
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
+Troubleshooting
+---------------
+
+Deployments not Using the ``composer.json`` File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony applications provide a ``kernel.project_dir`` parameter and a related
+:method:`Symfony\\Component\\HttpKernel\\Kernel\\Kernel::getProjectDir>` method.
+You can use this method to perform operations with file paths relative to your
+project's root directory. The logic to find that project root directory is based
+on the location of the main ``composer.json`` file.
+
+If your deployment method doesn't use Composer, you may have removed the
+``composer.json`` file and the application won't work on the production server.
+The solution is to override the ``getProjectDir()`` method in the application
+kernel and return your project's root directory::
+
+    // src/Kernel.php
+    // ...
+    class Kernel extends BaseKernel
+    {
+        // ...
+
+        public function getProjectDir()
+        {
+            return __DIR__.'/..';
+        }
+    }
+
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+
+    deployment/proxies
+
 .. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: http://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
 .. _`Fabric`: http://www.fabfile.org/
+.. _`Ansistrano`: https://ansistrano.com/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
 .. _`Ant`: http://blog.sznapka.pl/deploying-symfony2-applications-with-ant
-.. _`bundles that add deployment features`: https://github.com/search?utf8=✓&q=topic%3Asymfony-bundle+topic%3Adeploy&type=Repositories&ref=searchresults
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: http://deployer.org/
+.. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
+.. _`Heroku`: https://devcenter.heroku.com/articles/getting-started-with-symfony
+.. _`platform.sh`: https://docs.platform.sh/frameworks/symfony.html
+.. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
+.. _`fortrabbit`: https://help.fortrabbit.com/install-symfony
+.. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle

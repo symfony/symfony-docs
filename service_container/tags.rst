@@ -5,24 +5,23 @@
 How to Work with Service Tags
 =============================
 
-In the same way that a blog post on the web might be tagged with things such
-as "Symfony" or "PHP", services configured in your container can also be
-tagged. In the service container, a tag implies that the service is meant
-to be used for a specific purpose. Take the following example:
+**Service tags** are a way to tell Symfony or other third-party bundles that
+your service should be registered in some special way. Take the following
+example:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
-            AppBundle\Twig\AppExtension:
+            App\Twig\AppExtension:
                 public: false
                 tags: [twig.extension]
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -30,7 +29,7 @@ to be used for a specific purpose. Take the following example:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Twig\AppExtension" public="false">
+                <service id="App\Twig\AppExtension" public="false">
                     <tag name="twig.extension" />
                 </service>
             </services>
@@ -38,26 +37,20 @@ to be used for a specific purpose. Take the following example:
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\Twig\AppExtension;
+        // config/services.php
+        use App\Twig\AppExtension;
 
-        $container->register('app.twig_extension', AppExtension::class)
+        $container->register(AppExtension::class)
             ->setPublic(false)
             ->addTag('twig.extension');
 
-The ``twig.extension`` tag is a special tag that the TwigBundle uses
-during configuration. By giving the service this ``twig.extension`` tag,
-the bundle knows that the ``AppExtension::class`` service should be registered
-as a Twig extension with Twig. In other words, Twig finds all services tagged
-with ``twig.extension`` and automatically registers them as extensions.
+Services tagged with the ``twig.extension`` tag are collected during the
+initialization of TwigBundle and added to Twig as extensions.
 
-Tags, then, are a way to tell Symfony or other third-party bundles that
-your service should be registered or used in some special way by the bundle.
-
-For a list of all the tags available in the core Symfony Framework, check
-out :doc:`/reference/dic_tags`. Each of these has a different effect on your
-service and many tags require additional arguments (beyond just the ``name``
-parameter).
+Other tags are used to integrate your services into other systems. For a list of
+all the tags available in the core Symfony Framework, check out
+:doc:`/reference/dic_tags`. Each of these has a different effect on your service
+and many tags require additional arguments (beyond just the ``name`` parameter).
 
 **For most users, this is all you need to know**. If you want to go further and
 learn how to create your own custom tags, keep reading.
@@ -65,19 +58,19 @@ learn how to create your own custom tags, keep reading.
 Autoconfiguring Tags
 --------------------
 
-Starting in Symfony 3.3, if you enable :ref:`autoconfigure <services-autoconfigure>`,
-then some tags are automatically applied for you. That's true for the ``twig.extension``
-tag: the container sees that your class extends ``Twig_Extension`` (or more accurately,
+If you enable :ref:`autoconfigure <services-autoconfigure>`, then some tags are
+automatically applied for you. That's true for the ``twig.extension`` tag: the
+container sees that your class extends ``Twig_Extension`` (or more accurately,
 that it implements ``Twig_ExtensionInterface``) and adds the tag for you.
 
 .. tip::
 
-    To apply a tag to all your autoconfigured services extending a class or an
+    To apply a tag to all your autoconfigured services extending a class or implementing an
     interface, call the :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration`
     method in an :doc:`extension </bundles/extension>` or from your kernel::
 
-        // app/AppKernel.php
-        class AppKernel extends Kernel
+        // src/Kernel.php
+        class Kernel extends Kernel
         {
             // ...
 
@@ -105,8 +98,8 @@ ways of transporting the message until one succeeds.
 
 To begin with, define the ``TransportChain`` class::
 
-    // src/AppBundle/Mail/TransportChain.php
-    namespace AppBundle\Mail;
+    // src/Mail/TransportChain.php
+    namespace App\Mail;
 
     class TransportChain
     {
@@ -129,11 +122,13 @@ Then, define the chain as a service:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
-            AppBundle\Mail\TransportChain: ~
+            App\Mail\TransportChain: ~
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -141,13 +136,14 @@ Then, define the chain as a service:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Mail\TransportChain" />
+                <service id="App\Mail\TransportChain" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Mail\TransportChain;
+        // config/services.php
+        use App\Mail\TransportChain;
 
         $container->autowire(TransportChain::class);
 
@@ -162,6 +158,7 @@ For example, you may add the following transports as services:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             Swift_SmtpTransport:
                 arguments: ['%mailer_host%']
@@ -172,6 +169,7 @@ For example, you may add the following transports as services:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -193,6 +191,7 @@ For example, you may add the following transports as services:
 
     .. code-block:: php
 
+        // config/services.php
         $container->register(\Swift_SmtpTransport::class)
             ->addArgument('%mailer_host%')
             ->addTag('app.mail_transport');
@@ -212,13 +211,13 @@ Create a Compiler Pass
 You can now use a :ref:`compiler pass <components-di-separate-compiler-passes>` to ask the
 container for any services with the ``app.mail_transport`` tag::
 
-    // src/AppBundle/DependencyInjection/Compiler/MailTransportPass.php
-    namespace AppBundle\DependencyInjection\Compiler;
+    // src/DependencyInjection/Compiler/MailTransportPass.php
+    namespace App\DependencyInjection\Compiler;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\Reference;
-    use AppBundle\Mail\TransportChain;
+    use App\Mail\TransportChain;
 
     class MailTransportPass implements CompilerPassInterface
     {
@@ -245,18 +244,21 @@ Register the Pass with the Container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to run the compiler pass when the container is compiled, you have to
-add the compiler pass to the container in the ``build()`` method of your
-bundle::
+add the compiler pass to the container in a :doc:`bundle extension </bundles/extension>`
+or from your kernel::
 
-    // src/AppBundle/AppBundle.php
+    // src/Kernel.php
+    namespace App;
 
+    use App\DependencyInjection\Compiler\MailTransportPass;
+    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
     // ...
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use AppBundle\DependencyInjection\Compiler\MailTransportPass;
 
-    class AppBundle extends Bundle
+    class Kernel extends BaseKernel
     {
-        public function build(ContainerBuilder $container)
+        // ...
+
+        protected function build(ContainerBuilder $container)
         {
             $container->addCompilerPass(new MailTransportPass());
         }
@@ -310,6 +312,7 @@ To answer this, change the service declaration:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             Swift_SmtpTransport:
                 arguments: ['%mailer_host%']
@@ -322,6 +325,7 @@ To answer this, change the service declaration:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -343,6 +347,7 @@ To answer this, change the service declaration:
 
     .. code-block:: php
 
+        // config/services.php
         $container->register(\Swift_SmtpTransport::class)
             ->addArgument('%mailer_host%')
             ->addTag('app.mail_transport', array('alias' => 'foo'));
@@ -358,8 +363,8 @@ To answer this, change the service declaration:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
-
             # Compact syntax
             Swift_SendmailTransport:
                 class: \Swift_SendmailTransport
@@ -370,10 +375,6 @@ To answer this, change the service declaration:
                 class: \Swift_SendmailTransport
                 tags:
                     - { name: app.mail_transport }
-
-    .. versionadded:: 3.3
-        Support for the compact tag notation in the YAML format was introduced
-        in Symfony 3.3.
 
 Notice that you've added a generic ``alias`` key to the tag. To actually
 use this, update the compiler::
@@ -405,3 +406,122 @@ The double loop may be confusing. This is because a service can have more
 than one tag. You tag a service twice or more with the ``app.mail_transport``
 tag. The second foreach loop iterates over the ``app.mail_transport``
 tags set for the current service and gives you the attributes.
+
+Reference Tagged Services
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony provides a shortcut to inject all services tagged with a specific tag,
+which is a common need in some applications, so you don't have to write a
+compiler pass just for that.
+
+In the following example, all services tagged with ``app.handler`` are passed as
+first  constructor argument to the ``App\HandlerCollection`` service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Handler\One:
+                tags: [app.handler]
+
+            App\Handler\Two:
+                tags: [app.handler]
+
+            App\HandlerCollection:
+                # inject all services tagged with app.handler as first argument
+                arguments: [!tagged app.handler]
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Handler\One">
+                    <tag name="app.handler" />
+                </service>
+
+                <service id="App\Handler\Two">
+                    <tag name="app.handler" />
+                </service>
+
+                <service id="App\HandlerCollection">
+                    <!-- inject all services tagged with app.handler as first argument -->
+                    <argument type="tagged" tag="app.handler" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
+
+        $container->register(App\Handler\One::class)
+            ->addTag('app.handler');
+
+        $container->register(App\Handler\Two::class)
+            ->addTag('app.handler');
+
+        $container->register(App\HandlerCollection::class)
+            // inject all services tagged with app.handler as first argument
+            ->addArgument(new TaggedIteratorArgument('app.handler'));
+
+After compilation the ``HandlerCollection`` service is able to iterate over your
+application handlers.
+
+.. code-block:: php
+
+    // src/HandlerCollection.php
+    namespace App;
+
+    class HandlerCollection
+    {
+        public function __construct(iterable $handlers)
+        {
+        }
+    }
+
+.. tip::
+
+    The collected services can be prioritized using the ``priority`` attribute:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                App\Handler\One:
+                    tags:
+                        - { name: app.handler, priority: 20 }
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <service id="App\Handler\One">
+                        <tag name="app.handler" priority="20" />
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->register(App\Handler\One::class)
+                ->addTag('app.handler', array('priority' => 20));
+
+    Note that any other custom attributes will be ignored by this feature.

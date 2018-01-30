@@ -1,5 +1,5 @@
-How to Dynamically Configure Validation Groups
-==============================================
+How to Dynamically Configure Form Validation Groups
+===================================================
 
 Sometimes you need advanced logic to determine the validation groups. If they
 can't be determined by a simple callback, you can use a service. Create a
@@ -8,8 +8,8 @@ parameter.
 
 .. code-block:: php
 
-    // src/AppBundle/Validation/ValidationGroupResolver.php
-    namespace AppBundle\Validation;
+    // src/Validation/ValidationGroupResolver.php
+    namespace App\Validation;
 
     use Symfony\Component\Form\FormInterface;
 
@@ -43,10 +43,10 @@ Then in your form, inject the resolver and set it as the ``validation_groups``.
 
 .. code-block:: php
 
-    // src/AppBundle/Form/MyClassType.php;
-    namespace AppBundle\Form;
+    // src/Form/MyClassType.php;
+    namespace App\Form;
 
-    use AppBundle\Validator\ValidationGroupResolver;
+    use App\Validator\ValidationGroupResolver;
     use Symfony\Component\Form\AbstractType
     use Symfony\Component\OptionsResolver\OptionsResolver;
 

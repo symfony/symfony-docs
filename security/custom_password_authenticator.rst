@@ -21,8 +21,8 @@ First, create a new class that implements
 Eventually, this will allow you to create custom logic for authenticating
 the user::
 
-    // src/AppBundle/Security/TimeAuthenticator.php
-    namespace AppBundle\Security;
+    // src/Security/TimeAuthenticator.php
+    namespace App\Security;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -61,6 +61,7 @@ the user::
                     // (so don't put any un-trusted messages / error strings here)
                     throw new CustomUserMessageAuthenticationException(
                         'You can only log in between 2 and 4!',
+                        array(), // Message Data
                         412 // HTTP 412 Precondition Failed
                     );
                 }
@@ -131,10 +132,10 @@ inside of it.
 
 Inside this method, the password encoder is needed to check the password's validity::
 
-        $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
+    $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
 
 This is a service that is already available in Symfony and it uses the password algorithm
-that is configured in the security configuration (e.g. ``security.yml``) under
+that is configured in the security configuration (e.g. ``security.yaml``) under
 the ``encoders`` key. Below, you'll see how to inject that into the ``TimeAuthenticator``.
 
 .. _security-password-authenticator-config:
@@ -143,7 +144,7 @@ Configuration
 -------------
 
 Now, make sure your ``TimeAuthenticator`` is registered as as service. If you're
-using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that happens automatically.
 
 Finally, activate the service in the ``firewalls`` section of the security configuration
@@ -153,7 +154,7 @@ using the ``simple_form`` key:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -162,13 +163,13 @@ using the ``simple_form`` key:
                     pattern: ^/admin
                     # ...
                     simple_form:
-                        authenticator: AppBundle\Security\TimeAuthenticator
+                        authenticator: App\Security\TimeAuthenticator
                         check_path:    login_check
                         login_path:    login
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -181,7 +182,7 @@ using the ``simple_form`` key:
                 <firewall name="secured_area"
                     pattern="^/admin"
                     >
-                    <simple-form authenticator="AppBundle\Security\TimeAuthenticator"
+                    <simple-form authenticator="App\Security\TimeAuthenticator"
                         check-path="login_check"
                         login-path="login"
                     />
@@ -191,10 +192,10 @@ using the ``simple_form`` key:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
-        use AppBundle\Security\TimeAuthenticator;
+        use App\Security\TimeAuthenticator;
 
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -202,7 +203,7 @@ using the ``simple_form`` key:
                     'pattern'     => '^/admin',
                     'simple_form' => array(
                         'provider'      => ...,
-                        'authenticator' => AppBundle\Security\TimeAuthenticator::class,
+                        'authenticator' => App\Security\TimeAuthenticator::class,
                         'check_path'    => 'login_check',
                         'login_path'    => 'login',
                     ),

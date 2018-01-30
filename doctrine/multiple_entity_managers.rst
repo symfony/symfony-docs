@@ -16,12 +16,19 @@ entity manager that connects to another database might handle the rest.
     usually required. Be sure you actually need multiple entity managers before
     adding in this layer of complexity.
 
+.. caution::
+
+    Entities cannot define associations across different entity managers. If you
+    need that, there are `several alternatives <https://stackoverflow.com/a/11494543/2804294>`_
+    that require some custom setup.
+
 The following configuration code shows how you can configure two entity managers:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # config/packages/doctrine.yaml
         doctrine:
             dbal:
                 default_connection: default
@@ -49,15 +56,25 @@ The following configuration code shows how you can configure two entity managers
                     default:
                         connection: default
                         mappings:
-                            AppBundle:  ~
-                            AcmeStoreBundle: ~
+                            Main:
+                                is_bundle: false
+                                type: annotation
+                                dir: '%kernel.project_dir%/src/Entity/Main'
+                                prefix: 'App\Entity\Main'
+                                alias: Main
                     customer:
                         connection: customer
                         mappings:
-                            AcmeCustomerBundle: ~
+                            Customer:
+                                is_bundle: false
+                                type: annotation
+                                dir: '%kernel.project_dir%/src/Entity/Customer'
+                                prefix: 'App\Entity\Customer'
+                                alias: Customer
 
     .. code-block:: xml
 
+        <!-- config/packages/doctrine.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -92,12 +109,25 @@ The following configuration code shows how you can configure two entity managers
 
                 <doctrine:orm default-entity-manager="default">
                     <doctrine:entity-manager name="default" connection="default">
-                        <doctrine:mapping name="AppBundle" />
-                        <doctrine:mapping name="AcmeStoreBundle" />
+                        <doctrine:mapping
+                            name="Main"
+                            is_bundle="false"
+                            type="annotation"
+                            dir="%kernel.project_dir%/src/Entity/Main"
+                            prefix="App\Entity\Main"
+                            alias="Main"
+                        />
                     </doctrine:entity-manager>
 
                     <doctrine:entity-manager name="customer" connection="customer">
-                        <doctrine:mapping name="AcmeCustomerBundle" />
+                        <doctrine:mapping
+                            name="Customer"
+                            is_bundle="false"
+                            type="annotation"
+                            dir="%kernel.project_dir%/src/Entity/Customer"
+                            prefix="App\Entity\Customer"
+                            alias="Customer"
+                        />
                     </doctrine:entity-manager>
                 </doctrine:orm>
             </doctrine:config>
@@ -105,6 +135,7 @@ The following configuration code shows how you can configure two entity managers
 
     .. code-block:: php
 
+        // config/packages/doctrine.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'default_connection' => 'default',
@@ -136,14 +167,25 @@ The following configuration code shows how you can configure two entity managers
                     'default' => array(
                         'connection' => 'default',
                         'mappings'   => array(
-                            'AppBundle'  => null,
-                            'AcmeStoreBundle' => null,
+                            'Main'  => array(
+                                is_bundle => false,
+                                type => 'annotation',
+                                dir => '%kernel.project_dir%/src/Entity/Main',
+                                prefix => 'App\Entity\Main',
+                                alias => 'Main',
+                            )
                         ),
                     ),
                     'customer' => array(
                         'connection' => 'customer',
                         'mappings'   => array(
-                            'AcmeCustomerBundle' => null,
+                            'Customer'  => array(
+                                is_bundle => false,
+                                type => 'annotation',
+                                dir => '%kernel.project_dir%/src/Entity/Customer',
+                                prefix => 'App\Entity\Customer',
+                                alias => 'Customer',
+                            )
                         ),
                     ),
                 ),
@@ -152,8 +194,8 @@ The following configuration code shows how you can configure two entity managers
 
 In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
-AppBundle and AcmeStoreBundle, while the ``customer`` entity manager manages
-entities in the AcmeCustomerBundle. You've also defined two connections, one
+``src/Entity/Main`` directory, while the ``customer`` entity manager manages
+entities in ``src/Entity/Customer``. You've also defined two connections, one
 for each entity manager.
 
 .. note::
@@ -172,26 +214,31 @@ When working with multiple connections to create your databases:
     # Play only with "customer" connection
     $ php bin/console doctrine:database:create --connection=customer
 
-When working with multiple entity managers to update your schema:
+When working with multiple entity managers to generate migrations:
 
 .. code-block:: terminal
 
     # Play only with "default" mappings
-    $ php bin/console doctrine:schema:update --force
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
 
     # Play only with "customer" mappings
-    $ php bin/console doctrine:schema:update --force --em=customer
+    $ php bin/console doctrine:migrations:diff --em=customer
+    $ php bin/console doctrine:migrations:migrate --em=customer
 
 If you *do* omit the entity manager's name when asking for it,
 the default entity manager (i.e. ``default``) is returned::
 
     // ...
 
+    use Doctrine\ORM\EntityManagerInterface;
+
     class UserController extends Controller
     {
-        public function indexAction()
+        public function indexAction(EntityManagerInterface $em)
         {
-            // All 3 return the "default" entity manager
+            // These methods also return the default entity manager, but it's preferred
+            // to get it by injecting EntityManagerInterface in the action method
             $em = $this->getDoctrine()->getManager();
             $em = $this->getDoctrine()->getManager('default');
             $em = $this->get('doctrine.orm.default_entity_manager');

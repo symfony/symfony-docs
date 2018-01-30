@@ -15,7 +15,7 @@ an array of the submitted data. This is actually really easy::
     use Symfony\Component\HttpFoundation\Request;
     // ...
 
-    public function contactAction(Request $request)
+    public function contact(Request $request)
     {
         $defaultData = array('message' => 'Type your message here');
         $form = $this->createFormBuilder($defaultData)
@@ -63,7 +63,7 @@ an array.
 Adding Validation
 -----------------
 
-The only missing piece is validation. Usually, when you call ``$form->isValid()``,
+The only missing piece is validation. Usually, when you call ``$form->handleRequest($request)``,
 the object is validated by reading the constraints that you applied to that
 class. If your form is mapped to an object (i.e. you're using the ``data_class``
 option or passing an object to your form), this is almost always the approach
@@ -102,7 +102,7 @@ but here's a short example:
     If you are using validation groups, you need to either reference the
     ``Default`` group when creating the form, or set the correct group on
     the constraint you are adding.
-    
+
     .. code-block:: php
 
         new NotBlank(array('groups' => array('create', 'update')));

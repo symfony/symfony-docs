@@ -26,16 +26,16 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\File:
+        # config/validator/validation.yaml
+        App\Entity\File:
             properties:
                 identifier:
                     - Uuid: ~
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/File.php
-        namespace AppBundle\Entity;
+        // src/Entity/File.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -49,13 +49,13 @@ Basic Usage
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\File">
+            <class name="App\Entity\File">
                 <property name="identifier">
                     <constraint name="Uuid" />
                 </property>
@@ -64,8 +64,8 @@ Basic Usage
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/File.php
-        namespace AppBundle\Entity;
+        // src/Entity/File.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -77,7 +77,6 @@ Basic Usage
                 $metadata->addPropertyConstraint('identifier', new Assert\Uuid());
             }
         }
-
 
 Options
 -------

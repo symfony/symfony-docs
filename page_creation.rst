@@ -20,7 +20,7 @@ simple two-step process:
 
 .. seealso::
 
-    Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
+    Do you prefer video tutorials? Check out the `Stellar Development with Symfony`_
     screencast series from KnpUniversity.
 
 .. seealso::
@@ -41,21 +41,16 @@ Creating a Page: Route and Controller
 
 Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (well,
 random) number and prints it. To do that, create a "Controller class" and a
-"controller" method inside of it that will be executed when someone goes to
-``/lucky/number``::
+"controller" method inside of it::
 
-    // src/AppBundle/Controller/LuckyController.php
-    namespace AppBundle\Controller;
+    // src/Controller/LuckyController.php
+    namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
 
     class LuckyController
     {
-        /**
-         * @Route("/lucky/number")
-         */
-        public function numberAction()
+        public function number()
         {
             $number = mt_rand(0, 100);
 
@@ -65,63 +60,176 @@ random) number and prints it. To do that, create a "Controller class" and a
         }
     }
 
-Before diving into this, test it out! If you are using PHP's internal web server
-go to:
+Now you need to associate this controller function with a public URL (e.g. ``/lucky/number``)
+so that the ``number()`` method is executed when a user browses to it. This association
+is defined by creating a **route** in the ``config/routes.yaml`` file:
 
-    http://localhost:8000/app_dev.php/lucky/number
+.. code-block:: yaml
 
-.. tip::
+    # config/routes.yaml
 
-    If you're using the built-in PHP web-server, you can omit the ``app_dev.php``
-    part of the URL.
+    # the "app_lucky_number" route name is not important yet
+    app_lucky_number:
+        path: /lucky/number
+        controller: App\Controller\LuckyController::number
+
+That's it! If you are using Symfony web server, try it out by going to:
+
+    http://localhost:8000/lucky/number
 
 If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works. Remember the two steps
 to creating a page?
 
-#. *Create a route*: The ``@Route`` above ``numberAction()`` is the *route*: it
-   defines the URL pattern for this page. You'll learn more about :doc:`routing </routing>`
-   in its own section, including how to make *variable* URLs;
+#. *Create a route*: In ``config/routes.yaml``, the route defines the URL to your
+    page (``path``) and what ``controller`` to call. You'll learn more about :doc:`routing </routing>`
+    in its own section, including how to make *variable* URLs;
 
-#. *Create a controller*: The method below the route - ``numberAction()`` - is called
-   the *controller*. This is a function where *you* build the page and ultimately
+#. *Create a controller*: This is a function where *you* build the page and ultimately
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
    in their own section, including how to return JSON responses.
+
+.. _annotation-routes:
+
+Annotation Routes
+-----------------
+
+Instead of defining your route in YAML, Symfony also allows you to use *annotation*
+routes. To do this, install the annotations package:
+
+.. code-block:: terminal
+
+    $ composer require annotations
+
+You can now add your route directly *above* the controller:
+
+.. code-block:: diff
+
+    // src/Controller/LuckyController.php
+
+    // ...
+    + use Symfony\Component\Routing\Annotation\Route;
+
+    class LuckyController
+    {
+    +     /**
+    +      * @Route("/lucky/number")
+    +      */
+        public function number()
+        {
+            // this looks exactly the same
+        }
+    }
+
+That's it! The page - ``http://localhost:8000/lucky/number`` will work exactly
+like before! Annotations are the recommended way to configure routes.
+
+.. _flex-quick-intro:
+
+Auto-Installing Recipes with Symfony Flex
+-----------------------------------------
+
+You may not have noticed, but when you ran ``composer require annotations``, two
+special things happened, both thanks to a powerful Composer plugin called
+:doc:`Flex </setup/flex>`.
+
+First, ``annotations`` isn't a real package name: it's an *alias* (i.e. shortcut)
+that Flex resolves to ``sensio/framework-extra-bundle``.
+
+Second, after this package was downloaded, Flex executed a *recipe*, which is a
+set of automated instructions that tell Symfony how to integrate an external
+package. Flex recipes exist for many packages (see `symfony.sh`_) and have the ability
+to do a lot, like adding configuration files, creating directories, updating ``.gitignore``
+and adding new config to your ``.env`` file. Flex *automates* the installation of
+packages so you can get back to coding.
+
+You can learn more about Flex by reading ":doc:`/setup/flex`". But that's not necessary:
+Flex works automatically in the background when you add packages.
+
+The bin/console Command
+-----------------------
+
+Your project already has a powerful debugging tool inside: the ``bin/console`` command.
+Try running it:
+
+.. code-block:: terminal
+
+    $ php bin/console
+
+You should see a list of commands that can give you debugging information, help generate
+code, generate database migrations and a lot more. As you install more packages,
+you'll see more commands.
+
+To get a list of *all* of the routes in your system, use the ``debug:router`` command:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:router
+
+You should see your *one* route so far:
+
+================== ======== ======== ====== ===============
+ Name               Method   Scheme   Host   Path
+================== ======== ======== ====== ===============
+ app_lucky_number   ANY      ANY      ANY    /lucky/number
+================== ======== ======== ====== ===============
+
+You'll learn about many more commands as you continue!
 
 The Web Debug Toolbar: Debugging Dream
 --------------------------------------
 
-If your page is working, then you should *also* see a bar along the bottom of your
-browser. This is called the Web Debug Toolbar: and it's your debugging best friend.
-You'll learn more about all the information it holds along the way, but feel free
-to experiment: hover over and click the different icons to get information about
-routing, performance, logging and more.
+One of Symfony's *killer* features is the Web Debug Toolbar: a bar that displays
+a *huge* amount of debugging information along the bottom of your page while developing.
 
-Rendering a Template (with the Service Container)
--------------------------------------------------
+To use the web debug toolbar, just install it:
+
+.. code-block:: terminal
+
+    $ composer require --dev profiler
+
+As soon as this finishes, refresh your page. You should see a black bar along the
+bottom of the page. You'll learn more about all the information it holds along the
+way, but feel free to experiment: hover over and click the different icons to get
+information about routing, performance, logging and more.
+
+The ``profiler`` package is also a great example of Flex! After downloading the
+package, the recipe created several configuration files so that the web debug toolbar
+worked instantly.
+
+Rendering a Template
+--------------------
 
 If you're returning HTML from your controller, you'll probably want to render
 a template. Fortunately, Symfony comes with `Twig`_: a templating language that's
 easy, powerful and actually quite fun.
 
-First, make sure that ``LuckyController`` extends Symfony's base
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class::
+First, install Twig:
 
-    // src/AppBundle/Controller/LuckyController.php
+.. code-block:: terminal
+
+    $ composer require twig
+
+Second, make sure that ``LuckyController`` extends Symfony's base
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class:
+
+.. code-block:: diff
+
+    // src/Controller/LuckyController.php
 
     // ...
-    // --> add this new use statement
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    + use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-    class LuckyController extends Controller
+    - class LuckyController
+    + class LuckyController extends Controller
     {
         // ...
     }
 
-Now, use the handy ``render()`` function to render a template. Pass it our ``number``
-variable so we can render that::
+Now, use the handy ``render()`` function to render a template. Pass it a ``number``
+variable so you can use it in Twig::
 
-    // src/AppBundle/Controller/LuckyController.php
+    // src/Controller/LuckyController.php
 
     // ...
     class LuckyController extends Controller
@@ -129,7 +237,7 @@ variable so we can render that::
         /**
          * @Route("/lucky/number")
          */
-        public function numberAction()
+        public function number()
         {
             $number = mt_rand(0, 100);
 
@@ -139,13 +247,13 @@ variable so we can render that::
         }
     }
 
-Finally, template files should live in the ``app/Resources/views`` directory. Create
-a new ``app/Resources/views/lucky`` directory with a new ``number.html.twig`` file
-inside:
+Template files live in the ``templates/`` directory, which was created for you automatically
+when you installed Twig. Create a new ``templates/lucky`` directory with a new
+``number.html.twig`` file inside:
 
 .. code-block:: twig
 
-    {# app/Resources/views/lucky/number.html.twig #}
+    {# templates/lucky/number.html.twig #}
 
     <h1>Your lucky number is {{ number }}</h1>
 
@@ -154,24 +262,31 @@ to get your *new* lucky number!
 
     http://localhost:8000/lucky/number
 
+Now you may wonder where the Web Debug Toolbar has gone: that's because there is
+no ``</body>`` tag in the current template. You can add the body element yourself,
+or extend ``base.html.twig``, which contains all default HTML elements.
+
 In the :doc:`/templating` article, you'll learn all about Twig: how to loop, render
 other templates and leverage its powerful layout inheritance system.
 
 Checking out the Project Structure
 ----------------------------------
 
-Great news! You've already worked inside the two most important directories in your
+Great news! You've already worked inside the most important directories in your
 project:
 
-``app/``
-    Contains things like configuration and templates. Basically, anything
-    that is *not* PHP code goes here.
+``config/``
+    Contains... configuration of course!. You will configure routes, :doc:`services </service_container>`
+    and packages.
 
 ``src/``
-    Your PHP code lives here.
+    All your PHP code lives here.
+    
+``templates/``
+    All your Twig templates live here.
 
-99% of the time, you'll be working in ``src/`` (PHP files) or ``app/`` (everything
-else). As you keep reading, you'll learn what can be done inside each of these.
+Most of the time, you'll be working in ``src/``, ``templates/`` or ``config/``.
+As you keep reading, you'll learn what can be done inside each of these.
 
 So what about the other directories in the project?
 
@@ -179,58 +294,20 @@ So what about the other directories in the project?
     The famous ``bin/console`` file lives here (and other, less important
     executable files).
 
-``tests/``
-    The automated tests (e.g. Unit tests) for your application live here.
-
 ``var/``
     This is where automatically-created files are stored, like cache files
-    (``var/cache/``), logs (``var/logs/``) and sessions (``var/sessions/``).
+    (``var/cache/``) and logs (``var/log/``).
 
 ``vendor/``
     Third-party (i.e. "vendor") libraries live here! These are downloaded via the `Composer`_
     package manager.
 
-``web/``
-    This is the document root for your project: put any publicly accessible files
-    here (e.g. CSS, JS and images).
+``public/``
+    This is the document root for your project: you put any publicly accessible files
+    here.
 
-Bundles & Configuration
------------------------
-
-Your Symfony application comes pre-installed with a collection of *bundles*, like
-``FrameworkBundle`` and ``TwigBundle``. Bundles are similar to the idea of a *plugin*,
-but with one important difference: *all* functionality in a Symfony application comes
-from a bundle.
-
-Bundles are registered in your ``app/AppKernel.php`` file (a rare PHP file in the
-``app/`` directory) and each gives you more *tools*, sometimes called *services*::
-
-    class AppKernel extends Kernel
-    {
-        public function registerBundles()
-        {
-            $bundles = array(
-                new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-                new Symfony\Bundle\TwigBundle\TwigBundle(),
-                // ...
-            );
-            // ...
-
-            return $bundles;
-        }
-
-        // ...
-    }
-
-For example, ``TwigBundle`` is responsible for adding the Twig tool to your app!
-
-Eventually, you'll download and add more third-party bundles to your app in order
-to get even more tools. Imagine a bundle that helps you create paginated lists.
-That exists!
-
-You can control how your bundles behave via the ``app/config/config.yml`` file.
-That file - and other details like environments & parameters - are discussed in
-the :doc:`/configuration` article.
+And when you install new packages, new directories will be created automatically
+when needed.
 
 What's Next?
 ------------
@@ -259,7 +336,6 @@ Go Deeper with HTTP & Framework Fundamentals
 
     routing
 
-
 .. toctree::
     :maxdepth: 1
     :glob:
@@ -268,4 +344,5 @@ Go Deeper with HTTP & Framework Fundamentals
 
 .. _`Twig`: http://twig.sensiolabs.org
 .. _`Composer`: https://getcomposer.org
-.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony/first-page
+.. _`Stellar Development with Symfony`: https://knpuniversity.com/screencast/symfony/setup
+.. _`symfony.sh`: https://symfony.sh/

@@ -11,7 +11,7 @@ the available blog posts for this imaginary blog application:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
+        // src/Controller/BlogController.php
 
         // ...
         class BlogController extends Controller
@@ -21,7 +21,7 @@ the available blog posts for this imaginary blog application:
             /**
              * @Route("/blog")
              */
-            public function indexAction()
+            public function index()
             {
                 // ...
             }
@@ -29,14 +29,14 @@ the available blog posts for this imaginary blog application:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog:
-            path:      /blog
-            defaults:  { _controller: AppBundle:Blog:index }
+            path:       /blog
+            controller: App\Controller\BlogController::index
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -44,19 +44,19 @@ the available blog posts for this imaginary blog application:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog">
-                <default key="_controller">AppBundle:Blog:index</default>
+                <default key="_controller">App\Controller\BlogController::index</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog', array(
-            '_controller' => 'AppBundle:Blog:index',
+            '_controller' => 'App\Controller\BlogController::index',
         )));
 
         return $collection;
@@ -70,28 +70,28 @@ entries? Update the route to have a new ``{page}`` placeholder:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
+        // src/Controller/BlogController.php
 
         // ...
 
         /**
          * @Route("/blog/{page}")
          */
-        public function indexAction($page)
+        public function index($page)
         {
             // ...
         }
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog:
-            path:      /blog/{page}
-            defaults:  { _controller: AppBundle:Blog:index }
+            path:       /blog/{page}
+            controller: App\Controller\BlogController::index
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -99,19 +99,19 @@ entries? Update the route to have a new ``{page}`` placeholder:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog/{page}">
-                <default key="_controller">AppBundle:Blog:index</default>
+                <default key="_controller">App\Controller\BlogController::index</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AppBundle:Blog:index',
+            '_controller' => 'App\Controller\BlogController::index',
         )));
 
         return $collection;
@@ -130,28 +130,29 @@ This is done by including it in the ``defaults`` collection:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
+        // src/Controller/BlogController.php
 
         // ...
 
         /**
-         * @Route("/blog/{page}", defaults={"page" = 1})
+         * @Route("/blog/{page}", defaults={"page"=1})
          */
-        public function indexAction($page)
+        public function index($page)
         {
             // ...
         }
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog:
-            path:      /blog/{page}
-            defaults:  { _controller: AppBundle:Blog:index, page: 1 }
+            path:       /blog/{page}
+            controller: App\Controller\BlogController::index
+            defaults:   { page: 1 }
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -159,20 +160,20 @@ This is done by including it in the ``defaults`` collection:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog" path="/blog/{page}">
-                <default key="_controller">AppBundle:Blog:index</default>
+                <default key="_controller">App\Controller\BlogController::index</default>
                 <default key="page">1</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('blog', new Route('/blog/{page}', array(
-            '_controller' => 'AppBundle:Blog:index',
+            '_controller' => 'App\Controller\BlogController::index',
             'page'        => 1,
         )));
 

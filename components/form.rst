@@ -174,7 +174,7 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
 
     use Symfony\Component\Form\Forms;
     use Symfony\Bridge\Twig\Extension\FormExtension;
-    use Symfony\Bridge\Twig\Form\TwigRenderer;
+    use Symfony\Component\Form\FormRenderer;
     use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 
     // the Twig file that holds all the default markup for rendering forms
@@ -195,8 +195,8 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     )));
     $formEngine = new TwigRendererEngine(array($defaultFormTheme), $twig);
     $twig->addRuntimeLoader(new \Twig_FactoryRuntimeLoader(array(
-        TwigRenderer::class => function () use ($formEngine, $csrfManager) {
-            return new TwigRenderer($formEngine, $csrfManager);
+        FormRenderer::class => function () use ($formEngine, $csrfManager) {
+            return new FormRenderer($formEngine, $csrfManager);
         },
     )));
 
@@ -398,17 +398,17 @@ is created from the form factory.
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/TaskController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-        class DefaultController extends Controller
+        class TaskController extends Controller
         {
-            public function newAction(Request $request)
+            public function new(Request $request)
             {
                 // createFormBuilder is a shortcut to get the "form factory"
                 // and then call "createBuilder()" on it
@@ -418,7 +418,7 @@ is created from the form factory.
                     ->add('dueDate', DateType::class)
                     ->getForm();
 
-                return $this->render('@AcmeTask/Default/new.html.twig', array(
+                return $this->render('task/new.html.twig', array(
                     'form' => $form->createView(),
                 ));
             }
@@ -476,8 +476,8 @@ builder:
                 );
 
                 $form = $this->createFormBuilder($defaults)
-		    ->add('task', TextType::class)
-		    ->add('dueDate', DateType::class)
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
                     ->getForm();
 
                 // ...
@@ -604,20 +604,20 @@ method:
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/TaskController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-        class DefaultController extends Controller
+        class TaskController extends Controller
         {
-            public function newAction(Request $request)
+            public function new(Request $request)
             {
                 $form = $this->createFormBuilder()
-		    ->add('task', TextType::class)
-		    ->add('dueDate', DateType::class)
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
                     ->getForm();
 
                 $form->handleRequest($request);
@@ -694,10 +694,10 @@ option when building each field:
             public function newAction(Request $request)
             {
                 $form = $this->createFormBuilder()
-		    ->add('task', TextType::class, array(
+                    ->add('task', TextType::class, array(
                         'constraints' => new NotBlank(),
                     ))
-		    ->add('dueDate', DateType::class, array(
+                    ->add('dueDate', DateType::class, array(
                         'constraints' => array(
                             new NotBlank(),
                             new Type(\DateTime::class),

@@ -2,7 +2,7 @@
     single: Cache Pool
     single: Doctrine Cache
 
-.. _`doctrine-adapter`:
+.. _doctrine-adapter:
 
 Doctrine Cache Adapter
 ======================

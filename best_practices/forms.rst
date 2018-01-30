@@ -12,14 +12,14 @@ Building Forms
 
     Define your forms as PHP classes.
 
-The Form component allows you to build forms right inside your controller
-code. This is perfectly fine if you don't need to reuse the form somewhere else.
-But for organization and reuse, we recommend that you define each
-form in its own PHP class::
+The Form component allows you to build forms right inside your controller code.
+This is perfectly fine if you don't need to reuse the form somewhere else. But
+for organization and reuse, we recommend that you define each form in its own
+PHP class::
 
-    namespace AppBundle\Form;
+    namespace App\Form;
 
-    use AppBundle\Entity\Post;
+    use App\Entity\Post;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,38 +42,30 @@ form in its own PHP class::
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'data_class' => Post::class,
-            ));
+            ]);
         }
     }
 
 .. best-practice::
 
-    Put the form type classes in the ``AppBundle\Form`` namespace, unless you
+    Put the form type classes in the ``App\Form`` namespace, unless you
     use other custom form classes like data transformers.
 
 To use the class, use ``createForm()`` and pass the fully qualified class name::
 
     // ...
-    use AppBundle\Form\PostType;
+    use App\Form\PostType;
 
     // ...
-    public function newAction(Request $request)
+    public function new(Request $request)
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
 
         // ...
     }
-
-Registering Forms as Services
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can also :ref:`register your form type as a service <form-field-service>`.
-This is only needed if your form type requires some dependencies to be injected
-by the container, otherwise it is unnecessary overhead and therefore *not*
-recommended to do this for all form type classes.
 
 Form Button Configuration
 -------------------------
@@ -98,7 +90,7 @@ scope of that form:
         {
             $builder
                 // ...
-                ->add('save', SubmitType::class, array('label' => 'Create Post'))
+                ->add('save', SubmitType::class, ['label' => 'Create Post'])
             ;
         }
 
@@ -109,26 +101,26 @@ This form *may* have been designed for creating posts, but if you wanted
 to reuse it for editing posts, the button label would be wrong. Instead,
 some developers configure form buttons in the controller::
 
-    namespace AppBundle\Controller\Admin;
+    namespace App\Controller\Admin;
 
+    use App\Entity\Post;
+    use App\Form\PostType;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-    use AppBundle\Entity\Post;
-    use AppBundle\Form\PostType;
 
     class PostController extends Controller
     {
         // ...
 
-        public function newAction(Request $request)
+        public function new(Request $request)
         {
             $post = new Post();
             $form = $this->createForm(PostType::class, $post);
-            $form->add('submit', SubmitType::class, array(
+            $form->add('submit', SubmitType::class, [
                 'label' => 'Create',
-                'attr'  => array('class' => 'btn btn-default pull-right')
-            ));
+                'attr' => ['class' => 'btn btn-default pull-right'],
+            ]);
 
             // ...
         }
@@ -144,8 +136,7 @@ view layer:
     {{ form_start(form) }}
         {{ form_widget(form) }}
 
-        <input type="submit" value="Create"
-               class="btn btn-default pull-right" />
+        <input type="submit" class="btn" value="Create" />
     {{ form_end(form) }}
 
 Rendering the Form
@@ -161,7 +152,7 @@ all of the fields:
 
 .. code-block:: html+twig
 
-    {{ form_start(form, {'attr': {'class': 'my-form-class'} }) }}
+    {{ form_start(form, {attr: {class: 'my-form-class'} }) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
 
@@ -177,7 +168,7 @@ Handling a form submit usually follows a similar template:
 
 .. code-block:: php
 
-    public function newAction(Request $request)
+    public function new(Request $request)
     {
         // build the form ...
 
@@ -188,22 +179,18 @@ Handling a form submit usually follows a similar template:
             $em->persist($post);
             $em->flush();
 
-            return $this->redirect($this->generateUrl(
-                'admin_post_show',
-                array('id' => $post->getId())
-            ));
+            return $this->redirectToRoute('admin_post_show', [
+                'id' => $post->getId()
+            ]);
         }
 
         // render the template
     }
 
-There are really only two notable things here. First, we recommend that you
-use a single action for both rendering the form and handling the form submit.
-For example, you *could* have a ``newAction()`` that *only* renders the form
-and a ``createAction()`` that *only* processes the form submit. Both those
-actions will be almost identical. So it's much simpler to let ``newAction()``
-handle everything.
+We recommend that you use a single action for both rendering the form and
+handling the form submit. For example, you *could* have a ``new()`` action that
+*only* renders the form and a ``create()`` action that *only* processes the form
+submit. Both those actions will be almost identical. So it's much simpler to let
+``new()`` handle everything.
 
-Second, is it required to call ``$form->isSubmitted()`` in the ``if`` statement
-before calling ``isValid()``. Calling ``isValid()`` with an unsubmitted form
-is deprecated since version 3.2 and will throw an exception in 4.0.
+Next: :doc:`/best_practices/i18n`

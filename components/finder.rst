@@ -5,8 +5,8 @@
 The Finder Component
 ====================
 
-   The Finder component finds files and directories via an intuitive fluent
-   interface.
+    The Finder component finds files and directories via an intuitive fluent
+    interface.
 
 Installation
 ------------
@@ -57,6 +57,12 @@ the Finder instance.
 
 .. caution::
 
+    The ``Finder`` object doesn't reset its internal state automatically.
+    This means that you need to create a new instance if you do not want
+    get mixed results.
+
+.. caution::
+
     When searching through multiple locations passed to the
     :method:`Symfony\\Component\\Finder\\Finder::in` method, a separate iterator
     is created internally for every location. This means we have multiple result
@@ -69,7 +75,9 @@ the Finder instance.
 Criteria
 --------
 
-There are lots of ways to filter and sort your results.
+There are lots of ways to filter and sort your results. You can also use the
+:method:`Symfony\\Component\\Finder\\Finder::hasResults` method to check if
+there's any file or directory matching the search criteria.
 
 Location
 ~~~~~~~~
@@ -83,7 +91,7 @@ Search in several locations by chaining calls to
 :method:`Symfony\\Component\\Finder\\Finder::in`::
 
     // search inside *both* directories
-    $finder->files()->in(array(__DIR__, '/elsewhere'));
+    $finder->in(array(__DIR__, '/elsewhere'));
 
     // same as above
     $finder->in(__DIR__)->in('/elsewhere');
@@ -97,6 +105,7 @@ Each pattern has to resolve to at least one directory path.
 Exclude directories from matching with the
 :method:`Symfony\\Component\\Finder\\Finder::exclude` method::
 
+    // directories passed as argument must be relative to the ones defined with the in() method
     $finder->in(__DIR__)->exclude('ruby');
 
 It's also possible to ignore directories that you don't have permission to read::

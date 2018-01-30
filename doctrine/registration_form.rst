@@ -10,6 +10,12 @@ Creating a registration form is pretty easy - it *really* means just creating
 a form that will update some ``User`` model object (a Doctrine entity in this
 example) and then save it.
 
+First, make sure you have all the dependencies you need installed:
+
+.. code-block:: terminal
+
+    $ composer require doctrine form security validator
+
 .. tip::
 
     The popular `FOSUserBundle`_ provides a registration form, reset password
@@ -39,8 +45,8 @@ Your ``User`` entity will probably at least have the following fields:
 
 With some validation added, your class may look something like this::
 
-    // src/AppBundle/Entity/User.php
-    namespace AppBundle\Entity;
+    // src/Entity/User.php
+    namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Validator\Constraints as Assert;
@@ -132,7 +138,7 @@ With some validation added, your class may look something like this::
 
         public function getSalt()
         {
-            // The bcrypt algorithm doesn't require a separate salt.
+            // The bcrypt and argon2i algorithms don't require a separate salt.
             // You *may* need a real salt if you choose a different encoder.
             return null;
         }
@@ -141,7 +147,7 @@ With some validation added, your class may look something like this::
     }
 
 The :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` requires
-a few other methods and your ``security.yml`` file needs to be configured
+a few other methods and your ``security.yaml`` file needs to be configured
 properly to work with the ``User`` entity. For a more complete example, see
 the :ref:`Entity Provider <security-crete-user-entity>` article.
 
@@ -167,10 +173,10 @@ Create a Form for the Entity
 
 Next, create the form for the ``User`` entity::
 
-    // src/AppBundle/Form/UserType.php
-    namespace AppBundle\Form;
+    // src/Form/UserType.php
+    namespace App\Form;
 
-    use AppBundle\Entity\User;
+    use App\Entity\User;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -217,11 +223,11 @@ Next, you need a controller to handle the form rendering and submission. If the
 form is submitted, the controller performs the validation and saves the data
 into the database::
 
-    // src/AppBundle/Controller/RegistrationController.php
-    namespace AppBundle\Controller;
+    // src/Controller/RegistrationController.php
+    namespace App\Controller;
 
-    use AppBundle\Form\UserType;
-    use AppBundle\Entity\User;
+    use App\Form\UserType;
+    use App\Entity\User;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
@@ -271,14 +277,14 @@ encoder in the security configuration:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             encoders:
-                AppBundle\Entity\User: bcrypt
+                App\Entity\User: bcrypt
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -286,14 +292,14 @@ encoder in the security configuration:
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <encoder class="AppBundle\Entity\User">bcrypt</encoder>
+                <encoder class="App\Entity\User">bcrypt</encoder>
             </config>
         </srv:container>
 
     .. code-block:: php
 
-        // app/config/security.php
-        use AppBundle\Entity\User;
+        // config/packages/security.php
+        use App\Entity\User;
 
         $container->loadFromExtension('security', array(
             'encoders' => array(
@@ -304,76 +310,20 @@ encoder in the security configuration:
 In this case the recommended ``bcrypt`` algorithm is used. If needed, check out
 the :ref:`user password encoding <security-encoding-user-password>` article.
 
-.. note::
-
-    If you decide to NOT use annotation routing (shown above), then you'll
-    need to create a route to this controller:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # app/config/routing.yml
-            user_registration:
-                path:     /register
-                defaults: { _controller: AppBundle:Registration:register }
-
-        .. code-block:: xml
-
-            <!-- app/config/routing.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <routes xmlns="http://symfony.com/schema/routing"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-
-                <route id="user_registration" path="/register">
-                    <default key="_controller">AppBundle:Registration:register</default>
-                </route>
-            </routes>
-
-        .. code-block:: php
-
-            // app/config/routing.php
-            use Symfony\Component\Routing\RouteCollection;
-            use Symfony\Component\Routing\Route;
-
-            $collection = new RouteCollection();
-            $collection->add('user_registration', new Route('/register', array(
-                '_controller' => 'AppBundle:Registration:register',
-            )));
-
-            return $collection;
-
 Next, create the template:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# templates/registration/register.html.twig #}
 
-        {# app/Resources/views/registration/register.html.twig #}
+    {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
 
-        {{ form_start(form) }}
-            {{ form_row(form.username) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.plainPassword.first) }}
-            {{ form_row(form.plainPassword.second) }}
-
-            <button type="submit">Register!</button>
-        {{ form_end(form) }}
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/registration/register.html.php -->
-
-        <?php echo $view['form']->start($form) ?>
-            <?php echo $view['form']->row($form['username']) ?>
-            <?php echo $view['form']->row($form['email']) ?>
-
-            <?php echo $view['form']->row($form['plainPassword']['first']) ?>
-            <?php echo $view['form']->row($form['plainPassword']['second']) ?>
-
-            <button type="submit">Register!</button>
-        <?php echo $view['form']->end($form) ?>
+        <button type="submit">Register!</button>
+    {{ form_end(form) }}
 
 See :doc:`/form/form_customization` for more details.
 
@@ -385,7 +335,8 @@ your database schema using this command:
 
 .. code-block:: terminal
 
-   $ php bin/console doctrine:schema:update --force
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
 
 That's it! Head to ``/register`` to try things out!
 
@@ -398,7 +349,7 @@ If you want your users to login via email and you don't need a username, then yo
 can remove it from your ``User`` entity entirely. Instead, make ``getUsername()``
 return the ``email`` property::
 
-    // src/AppBundle/Entity/User.php
+    // src/Entity/User.php
     // ...
 
     class User implements UserInterface
@@ -413,7 +364,7 @@ return the ``email`` property::
         // ...
     }
 
-Next, just update the ``providers`` section of your ``security.yml`` file
+Next, just update the ``providers`` section of your ``security.yaml`` file
 so that Symfony knows how to load your users via the ``email`` property on
 login. See :ref:`authenticating-someone-with-a-custom-entity-provider`.
 
@@ -428,7 +379,7 @@ that you'll never need.
 To do this, add a ``termsAccepted`` field to your form, but set its
 :ref:`mapped <reference-form-option-mapped>` option to ``false``::
 
-    // src/AppBundle/Form/UserType.php
+    // src/Form/UserType.php
     // ...
     use Symfony\Component\Validator\Constraints\IsTrue;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;

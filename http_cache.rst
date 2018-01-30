@@ -33,7 +33,6 @@ Nottingham's `Cache Tutorial`_.
 .. index::
    single: Cache; Proxy
    single: Cache; Reverse proxy
-   single: Cache; Gateway
 
 .. _gateway-caches:
 
@@ -78,23 +77,27 @@ but is a great way to start.
 
     For details on setting up Varnish, see :doc:`/http_cache/varnish`.
 
-Enabling the proxy is easy: each application comes with a caching kernel (``AppCache``)
-that wraps the default one (``AppKernel``). The caching Kernel *is* the reverse
-proxy.
+To enable the proxy, first create a caching kernel::
 
-To enable caching, modify the code of your front controller. You can also make these
-changes to ``app_dev.php`` to add caching to the ``dev`` environment::
+    // src/CacheKernel.php
+    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
-    // web/app.php
-    use Symfony\Component\HttpFoundation\Request;
+    class CacheKernel extends HttpCache
+    {
+    }
+
+Modify the code of your front controller to wrap the default kernel into the
+caching kernel:
+
+.. code-block:: diff
+
+    // public/index.php
 
     // ...
-    $kernel = new AppKernel('prod', false);
-    $kernel->loadClassCache();
+    $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev')));
 
-    // add (or uncomment) this new line!
-    // wrap the default AppKernel with the AppCache one
-    $kernel = new AppCache($kernel);
+    + // Wrap the default Kernel with the CacheKernel one
+    + $kernel = new CacheKernel($kernel);
 
     $request = Request::createFromGlobals();
     // ...
@@ -116,15 +119,17 @@ from your application and returning them to the client.
 
         error_log($kernel->getLog());
 
-The ``AppCache`` object has a sensible default configuration, but it can be
+The ``CacheKernel`` object has a sensible default configuration, but it can be
 finely tuned via a set of options you can set by overriding the
 :method:`Symfony\\Bundle\\FrameworkBundle\\HttpCache\\HttpCache::getOptions`
 method::
 
-    // app/AppCache.php
+    // src/CacheKernel.php
+    namespace App;
+
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
-    class AppCache extends HttpCache
+    class CacheKernel extends HttpCache
     {
         protected function getOptions()
         {
@@ -138,10 +143,9 @@ method::
 For a full list of the options and their meaning, see the
 :method:`HttpCache::__construct() documentation <Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache::__construct>`.
 
-When you're in debug mode (either because your booting a ``debug`` kernel, like
-in ``app_dev.php`` *or* you manually set the ``debug`` option to true), Symfony
-automatically adds an ``X-Symfony-Cache`` header to the response. Use this to get
-information about cache hits and misses.
+When you're in debug mode (the second argument of ``Kernel`` constructor in the
+front controller is ``true``), Symfony automatically adds an ``X-Symfony-Cache``
+header to the response. Use this to get information about cache hits and misses.
 
 .. _http-cache-symfony-versus-varnish:
 
@@ -151,7 +155,7 @@ information about cache hits and misses.
     website or when you deploy your website to a shared host where you cannot
     install anything beyond PHP code. But being written in PHP, it cannot
     be as fast as a proxy written in C.
-    
+
     Fortunately, since all reverse proxies are effectively the same, you should
     be able to switch to something more robust - like Varnish - without any problems.
     See :doc:`How to use Varnish </http_cache/varnish>`
@@ -193,7 +197,7 @@ These four headers are used to help cache your responses via *two* different mod
 
     All of the HTTP headers you'll read about are *not* invented by Symfony! They're
     part of an HTTP specification that's used by sites all over the web. To dig deeper
-    into HTTP Caching, check out the documents `RFC 7234 - Caching`_ and 
+    into HTTP Caching, check out the documents `RFC 7234 - Caching`_ and
     `RFC 7232 - Conditional Requests`_.
 
     As a web developer, you are strongly urged to read the specification. Its
@@ -211,11 +215,11 @@ Expiration Caching
 
 The *easiest* way to cache a response is by caching it for a specific amount of time::
 
-    // src/AppBundle/Controller/BlogController.php
+    // src/Controller/BlogController.php
     use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    public function indexAction()
+    public function index()
     {
         // somehow create a Response object, like by rendering a template
         $response = $this->render('blog/index.html.twig', []);
@@ -287,10 +291,14 @@ Safe Methods: Only caching GET or HEAD requests
 HTTP caching only works for "safe" HTTP methods (like GET and HEAD). This means
 two things:
 
-* Don't try to cache PUT, POST or DELETE requests. It won't work and with good
-  reason. These methods are meant to be used when mutating the state of your application
+* Don't try to cache PUT or DELETE requests. It won't work and with good reason.
+  These methods are meant to be used when mutating the state of your application
   (e.g. deleting a blog post). Caching them would prevent certain requests from hitting
   and mutating your application.
+
+* POST requests are generally considered uncachable, but `they can be cached`_
+  when they include explicit freshness information. However POST caching is not
+  widely implemented, so you should avoid it if possible.
 
 * You should *never* change the state of your application (e.g. update a blog post)
   when responding to a GET or HEAD request. If those requests are cached, future
@@ -367,3 +375,4 @@ Learn more
 .. _`RFC 7234 - Caching`: https://tools.ietf.org/html/rfc7234
 .. _`RFC 7232 - Conditional Requests`: https://tools.ietf.org/html/rfc7232
 .. _`FOSHttpCacheBundle`: http://foshttpcachebundle.readthedocs.org/
+.. _`they can be cached`: https://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-20#section-2.3.4

@@ -7,9 +7,9 @@ How to Configure empty Data for a Form Class
 The ``empty_data`` option allows you to specify an empty data set for your
 form class. This empty data set would be used if you submit your form, but
 haven't called ``setData()`` on your form or passed in data when you created
-your form. For example::
+your form. For example, in a controller::
 
-    public function indexAction()
+    public function index()
     {
         $blog = ...;
 
@@ -43,11 +43,11 @@ One reason you might use this option is if you want to use a constructor
 that takes arguments. Remember, the default ``data_class`` option calls
 that constructor with no arguments::
 
-    // src/AppBundle/Form/Type/BlogType.php
+    // src/Form/Type/BlogType.php
 
     // ...
     use Symfony\Component\Form\AbstractType;
-    use AppBundle\Entity\Blog;
+    use App\Entity\Blog;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class BlogType extends AbstractType

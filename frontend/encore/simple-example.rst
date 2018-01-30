@@ -4,10 +4,20 @@ First Example
 Imagine you have a simple project with one CSS and one JS file, organized into
 an ``assets/`` directory:
 
-* ``assets/js/main.js``
-* ``assets/css/global.scss``
+* ``assets/js/app.js``
+* ``assets/css/app.scss``
 
-With Encore, we can easily minify these files, pre-process ``global.scss``
+With Encore, you should think of CSS as a *dependency* of your JavaScript. This means,
+you will *require* whatever CSS you need from inside JavaScript:
+
+.. code-block:: javascript
+
+    // assets/js/app.js
+    require('../css/app.scss');
+
+    // ...rest of JavaScript code here
+
+With Encore, we can easily minify these files, pre-process ``app.scss``
 through Sass and a *lot* more.
 
 Configuring Encore/Webpack
@@ -22,20 +32,14 @@ Inside, use Encore to help generate your Webpack configuration.
     var Encore = require('@symfony/webpack-encore');
 
     Encore
-        // directory where all compiled assets will be stored
-        .setOutputPath('web/build/')
+        // the project directory where all compiled assets will be stored
+        .setOutputPath('public/build/')
 
-        // what's the public path to this directory (relative to your project's document root dir)
+        // the public path used by the web server to access the previous directory
         .setPublicPath('/build')
 
-        // empty the outputPath dir before each build
-        .cleanupOutputBeforeBuild()
-
-        // will output as web/build/app.js
-        .addEntry('app', './assets/js/main.js')
-
-        // will output as web/build/global.css
-        .addStyleEntry('global', './assets/css/global.scss')
+        // will create public/build/app.js and public/build/app.css
+        .addEntry('app', './assets/js/app.js')
 
         // allow sass/scss files to be processed
         .enableSassLoader()
@@ -44,6 +48,12 @@ Inside, use Encore to help generate your Webpack configuration.
         .autoProvidejQuery()
 
         .enableSourceMaps(!Encore.isProduction())
+
+        // empty the outputPath dir before each build
+        .cleanupOutputBeforeBuild()
+
+        // show OS notifications when builds finish/fail
+        .enableBuildNotifications()
 
         // create hashed filenames (e.g. app.abc123.css)
         // .enableVersioning()
@@ -70,6 +80,11 @@ To build the assets, use the ``encore`` executable:
     # compile assets, but also minify & optimize them
     $ ./node_modules/.bin/encore production
 
+    # shorter version of the above 3 commands
+    $ yarn run encore dev
+    $ yarn run encore dev --watch
+    $ yarn run encore production
+
 .. note::
 
     Re-run ``encore`` each time you update your ``webpack.config.js`` file.
@@ -78,7 +93,7 @@ Actually, to use ``enableSassLoader()``, you'll need to install a few
 more packages. But Encore will tell you *exactly* what you need.
 
 After running one of these commands, you can now add ``script`` and ``link`` tags
-to the new, compiled assets (e.g. ``/build/global.css`` and ``/build/app.js``).
+to the new, compiled assets (e.g. ``/build/app.css`` and ``/build/app.js``).
 In Symfony, use the ``asset()`` helper:
 
 .. code-block:: twig
@@ -88,7 +103,7 @@ In Symfony, use the ``asset()`` helper:
     <html>
         <head>
             <!-- ... -->
-            <link rel="stylesheet" href="{{ asset('build/global.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/app.css') }}">
         </head>
         <body>
             <!-- ... -->
@@ -119,7 +134,7 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
 
 .. code-block:: javascript
 
-    // assets/js/main.js
+    // assets/js/app.js
 
     // loads the jquery package from node_modules
     var $ = require('jquery');
@@ -129,39 +144,36 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
     var greet = require('./greet');
 
     $(document).ready(function() {
-        $('h1').html(greet('john'));
+        $('body').prepend('<h1>'+greet('john')+'</h1>');
     });
 
 That's it! When you build your assets, jQuery and ``greet.js`` will automatically
 be added to the output file (``app.js``). For common libraries like jQuery, you
-may want also to :doc:`create a shared entry </frontend/encore/shared-entry>` for better performance.
+may want to :doc:`create a shared entry </frontend/encore/shared-entry>` for better
+performance.
 
-Requiring CSS Files from JavaScript
------------------------------------
+Multiple JavaScript Entries
+---------------------------
 
-Above, you created an entry called ``app`` that pointed to ``main.js``:
+The previous example is the best way to deal with SPA (Single Page Applications)
+and very simple applications. However, as your app grows, you may want to have
+page-specific JavaScript or CSS (e.g. homepage, blog, store, etc.). To handle this,
+add a new "entry" for each page that needs custom JavaScript or CSS:
 
 .. code-block:: javascript
 
     Encore
         // ...
-        .addEntry('app', './assets/js/main.js')
+        .addEntry('homepage', './assets/js/homepage.js')
+        .addEntry('blog', './assets/js/blog.js')
+        .addEntry('store', './assets/js/store.js')
     ;
 
-Once inside ``main.js``, you can even require CSS files:
+If those entries include CSS/Sass files (e.g. ``homepage.js`` requires
+``assets/css/homepage.scss``), two files will be generated for each:
+(e.g. ``build/homepage.js`` and ``build/homepage.css``).
 
-.. code-block:: javascript
+Keep Going!
+-----------
 
-    // assets/js/main.js
-    // ...
-
-    // a CSS file with the same name as the entry js will be output
-    require('../css/main.scss');
-
-Now, both an ``app.js`` **and** an ``app.css`` file will be created. You'll need
-to add a link tag to the ``app.css`` file in your templates:
-
-.. code-block:: diff
-
-    <link rel="stylesheet" href="{{ asset('build/global.css') }}">
-    + <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+Go back to the :ref:`Encore Top List <encore-toc>` to learn more and add new features.

@@ -10,8 +10,8 @@ questions to the user involves a lot of repetitive code.
 
 Consider for example the code used to display the title of the following command::
 
-    // src/AppBundle/Command/GreetCommand.php
-    namespace AppBundle\Command;
+    // src/Command/GreetCommand.php
+    namespace App\Command;
 
     use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
     use Symfony\Component\Console\Input\InputInterface;
@@ -50,8 +50,8 @@ class and pass the ``$input`` and ``$output`` variables as its arguments. Then,
 you can start using any of its helpers, such as ``title()``, which displays the
 title of the command::
 
-    // src/AppBundle/Command/GreetCommand.php
-    namespace AppBundle\Command;
+    // src/Command/GreetCommand.php
+    namespace App\Command;
 
     use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
     use Symfony\Component\Console\Style\SymfonyStyle;
@@ -339,7 +339,7 @@ If you don't like the design of the commands that use the Symfony Style, you can
 define your own set of console styles. Just create a class that implements the
 :class:`Symfony\\Component\\Console\\Style\\StyleInterface`::
 
-    namespace AppBundle\Console;
+    namespace App\Console;
 
     use Symfony\Component\Console\Style\StyleInterface;
 
@@ -352,9 +352,9 @@ Then, instantiate this custom class instead of the default ``SymfonyStyle`` in
 your commands. Thanks to the ``StyleInterface`` you won't need to change the code
 of your commands to change their appearance::
 
-    namespace AppBundle\Console;
+    namespace App\Console;
 
-    use AppBundle\Console\CustomStyle;
+    use App\Console\CustomStyle;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 

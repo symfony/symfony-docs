@@ -10,17 +10,36 @@ the URI scheme via schemes:
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        // src/Controller/MainController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        class MainController extends Controller
+        {
+            /**
+             * @Route("/secure", name="secure", schemes={"https"})
+             */
+            public function secure()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         secure:
-            path:     /secure
-            defaults: { _controller: AppBundle:Main:secure }
-            schemes:  [https]
+            path:       /secure
+            controller: App\Controller\MainController::secure
+            schemes:    [https]
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://symfony.com/schema/routing"
@@ -28,19 +47,19 @@ the URI scheme via schemes:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="secure" path="/secure" schemes="https">
-                <default key="_controller">AppBundle:Main:secure</default>
+                <default key="_controller">App\Controller\MainController::secure</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $collection = new RouteCollection();
         $collection->add('secure', new Route('/secure', array(
-            '_controller' => 'AppBundle:Main:secure',
+            '_controller' => 'App\Controller\MainController::secure',
         ), array(), array(), '', array('https')));
 
         return $collection;
@@ -48,17 +67,18 @@ the URI scheme via schemes:
 The above configuration forces the ``secure`` route to always use HTTPS.
 
 When generating the ``secure`` URL, and if the current scheme is HTTP, Symfony
-will automatically generate an absolute URL with HTTPS as the scheme:
+will automatically generate an absolute URL with HTTPS as the scheme, even when
+using the ``path()`` function:
 
 .. code-block:: twig
 
     {# If the current scheme is HTTPS #}
     {{ path('secure') }}
-    {# generates /secure #}
+    {# generates a relative URL: /secure #}
 
     {# If the current scheme is HTTP #}
     {{ path('secure') }}
-    {# generates https://example.com/secure #}
+    {# generates an absolute URL: https://example.com/secure #}
 
 The requirement is also enforced for incoming requests. If you try to access
 the ``/secure`` path with HTTP, you will automatically be redirected to the

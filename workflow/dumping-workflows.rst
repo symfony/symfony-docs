@@ -4,8 +4,8 @@
 How to Dump Workflows
 =====================
 
-To help you debug your workflows, you can dump a representation of your workflow with
-the use of a ``DumperInterface``. Use the ``GraphvizDumper`` to create a
+To help you debug your workflows, you can dump a representation of your workflow
+with the use of a ``DumperInterface``. Use the ``GraphvizDumper`` to create a
 PNG image of the workflow defined above::
 
     // dump-graph.php
@@ -14,20 +14,18 @@ PNG image of the workflow defined above::
 
 .. code-block:: terminal
 
-    $ php dump-graph.php > out.dot
-    $ dot -Tpng out.dot -o graph.png
+    $ php dump-graph.php | dot -Tpng -o graph.png
 
 The result will look like this:
 
 .. image:: /_images/components/workflow/blogpost.png
 
-If you have configured your workflow with the Symfony framework, you may dump the dot file
-with the ``WorkflowDumpCommand``:
+Inside a Symfony application, you can dump the dot file with the
+``workflow:dump`` command:
 
 .. code-block:: terminal
 
-    $ php bin/console workflow:dump name > out.dot
-    $ dot -Tpng out.dot -o graph.png
+    $ php bin/console workflow:dump name | dot -Tpng -o graph.png
 
 .. note::
 

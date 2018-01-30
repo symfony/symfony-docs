@@ -46,6 +46,8 @@ characters long::
         }
     }
 
+The validator returns the list of violations.
+
 Retrieving a Validator Instance
 -------------------------------
 

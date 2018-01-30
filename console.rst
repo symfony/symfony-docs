@@ -9,17 +9,25 @@ The Symfony framework provides lots of commands through the ``bin/console`` scri
 created with the :doc:`Console component </components/console>`. You can also
 use it to create your own commands.
 
+The Console: APP_ENV & APP_DEBUG
+---------------------------------
+
+Console commands run in the :ref:`environment <config-dot-env>` defined in the ``APP_ENV``
+variable of the ``.env`` file, which is ``dev`` by default. It also reads the ``APP_DEBUG``
+value to turn "debug" mode on or off (it defaults to ``1``, which is on).
+
+To run the command in another environment or debug mode, edit the value of ``APP_ENV``
+and ``APP_DEBUG``.
+
 Creating a Command
 ------------------
 
-Commands are defined in classes which must be created in the ``Command`` namespace
-of your bundle (e.g. ``AppBundle\Command``) and their names must end with the
-``Command`` suffix.
+Commands are defined in classes extending
+:class:`Symfony\\Component\\Console\\Command\\Command`. For example, you may
+want a command to create a user::
 
-For example, a command called ``CreateUser`` must follow this structure::
-
-    // src/AppBundle/Command/CreateUserCommand.php
-    namespace AppBundle\Command;
+    // src/Command/CreateUserCommand.php
+    namespace App\Command;
 
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
@@ -64,11 +72,21 @@ method. Then you can optionally define a help message and the
 Executing the Command
 ---------------------
 
-After configuring the command, you can execute it in the terminal:
+Symfony registers any PHP class extending :class:`Symfony\\Component\\Console\\Command\\Command`
+as a console command automatically. So you can now execute this command in the
+terminal:
 
 .. code-block:: terminal
 
     $ php bin/console app:create-user
+
+.. note::
+
+    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+    your command classes are automatically registered as services.
+
+    You can also manually register your command as a service by configuring the service
+    and :doc:`tagging it </service_container/tags>` with ``console.command``.
 
 As you might expect, this command will do nothing as you didn't write any logic
 yet. Add your own logic inside the ``execute()`` method, which has access to the
@@ -153,32 +171,36 @@ Getting Services from the Service Container
 -------------------------------------------
 
 To actually create a new user, the command has to access to some
-:doc:`services </service_container>`. This can be done by making the command
-extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`
-instead::
+:doc:`services </service_container>`. Since your command is already registered
+as a service, you can use normal dependency injection. Imagine you have a
+``App\Service\UserManager`` service that you want to access::
 
     // ...
-    use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+    use Symfony\Component\Console\Command\Command;
+    use App\Service\UserManager;
 
-    class CreateUserCommand extends ContainerAwareCommand
+    class CreateUserCommand extends Command
     {
+        private $userManager;
+
+        public function __construct(UserManager $userManager)
+        {
+            $this->userManager = $userManager;
+
+            parent::__construct();
+        }
+
         // ...
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             // ...
 
-            // access the container using getContainer()
-            $userManager = $this->getContainer()->get('app.user_manager');
-            $userManager->create($input->getArgument('username'));
+            $this->userManager->create($input->getArgument('username'));
 
             $output->writeln('User successfully generated!');
         }
     }
-
-Now, once you have created the required services and logic, the command will execute
-the ``create()`` method of the ``app.user_manager`` service and the user will
-be created.
 
 Command Lifecycle
 -----------------
@@ -212,10 +234,10 @@ useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
 class. It uses special input and output classes to ease testing without a real
 console::
 
-    // tests/AppBundle/Command/CreateUserCommandTest.php
-    namespace Tests\AppBundle\Command;
+    // tests/Command/CreateUserCommandTest.php
+    namespace App\Tests\Command;
 
-    use AppBundle\Command\CreateUserCommand;
+    use App\Command\CreateUserCommand;
     use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
     use Symfony\Component\Console\Tester\CommandTester;
@@ -224,8 +246,8 @@ console::
     {
         public function testExecute()
         {
-            self::bootKernel();
-            $application = new Application(self::$kernel);
+            $kernel = self::bootKernel();
+            $application = new Application($kernel);
 
             $application->add(new CreateUserCommand());
 
@@ -277,7 +299,6 @@ you can extend your test from
             $kernel->boot();
 
             $application = new Application($kernel);
-            $application->add(new CreateUserCommand());
 
             $command = $application->find('app:create-user');
             $commandTester = new CommandTester($command);

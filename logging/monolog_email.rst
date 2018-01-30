@@ -14,7 +14,7 @@ it is broken down.
 
     .. code-block:: yaml
 
-        # app/config/config_prod.yml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 mail:
@@ -42,7 +42,7 @@ it is broken down.
 
     .. code-block:: xml
 
-        <!-- app/config/config_prod.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -93,7 +93,7 @@ it is broken down.
 
     .. code-block:: php
 
-        // app/config/config_prod.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'mail' => array(
@@ -143,6 +143,44 @@ then passes them onto the nested handler in one go, but only if the records are
 unique over a given period of time (60 seconds by default). If the records are
 duplicates they are simply discarded. Adding this handler reduces the amount of
 notifications to a manageable level, specially in critical failure scenarios.
+You can adjust the time period using the ``time`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/prod/monolog.yaml
+        monolog:
+            handlers:
+                # ...
+                deduplicated:
+                    type: deduplication
+                    # the time in seconds during which duplicate entries are discarded (default: 60)
+                    time: 10
+                    handler: swift
+
+    .. code-block:: xml
+
+        <!-- config/packages/prod/monolog.xml -->
+
+        <!-- time: the time in seconds during which duplicate entries are discarded (default: 60) -->
+        <monolog:handler name="deduplicated"
+            type="deduplication"
+            time="10"
+            handler="swift" />
+
+    .. code-block:: php
+
+        // config/packages/prod/monolog.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                // ...
+                'deduplicated' => array(
+                    'type'    => 'deduplication',
+                    // the time in seconds during which duplicate entries are discarded (default: 60)
+                    'time' => 10,
+                    'handler' => 'swift',
+                 )
 
 The messages are then passed to the ``swift`` handler. This is the handler that
 actually deals with emailing you the error. The settings for this are
@@ -156,7 +194,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: yaml
 
-        # app/config/config_prod.yml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 main:
@@ -184,7 +222,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: xml
 
-        <!-- app/config/config_prod.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -239,7 +277,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: php
 
-        // app/config/config_prod.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'main' => array(

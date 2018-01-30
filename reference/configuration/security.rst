@@ -17,7 +17,7 @@ Each part will be explained in the next section.
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             access_denied_url:    ~ # Example: /foo/error403
 
@@ -30,34 +30,18 @@ Each part will be explained in the next section.
                 strategy:             affirmative # One of affirmative, consensus, unanimous
                 allow_if_all_abstain:  false
                 allow_if_equal_granted_denied:  true
-            acl:
-
-                # any name configured in doctrine.dbal section
-                connection:           ~
-                cache:
-                    id:                   ~
-                    prefix:               sf2_acl_
-                provider:             ~
-                tables:
-                    class:                acl_classes
-                    entry:                acl_entries
-                    object_identity:      acl_object_identities
-                    object_identity_ancestors:  acl_object_identity_ancestors
-                    security_identity:    acl_security_identities
-                voter:
-                    allow_if_object_identity_unavailable:  true
 
             encoders:
                 # Examples:
-                Acme\DemoBundle\Entity\User1: sha512
-                Acme\DemoBundle\Entity\User2:
+                App\Entity\User1: sha512
+                App\Entity\User2:
                     algorithm:           sha512
                     encode_as_base64:    true
                     iterations:          5000
 
                 # PBKDF2 encoder
                 # see the note about PBKDF2 below for details on security and speed
-                Acme\Your\Class\Name:
+                App\Entity\User3:
                     algorithm:            pbkdf2
                     hash_algorithm:       sha512
                     encode_as_base64:     true
@@ -65,20 +49,24 @@ Each part will be explained in the next section.
                     key_length:           40
 
                 # Example options/values for what a custom encoder might look like
-                Acme\DemoBundle\Entity\User3:
-                    id:                   my.encoder.id
+                App\Entity\User4:
+                    id:                   App\Security\MyPasswordEncoder
 
                 # BCrypt encoder
                 # see the note about bcrypt below for details on specific dependencies
-                Acme\DemoBundle\Entity\User4:
+                App\Entity\User5:
                     algorithm:            bcrypt
                     cost:                 13
 
                 # Plaintext encoder
                 # it does not do any encoding
-                Acme\DemoBundle\Entity\User5:
+                App\Entity\User6:
                     algorithm:            plaintext
                     ignore_case:          false
+
+                # Argon2i encoder
+                Acme\DemoBundle\Entity\User6:
+                    algorithm:            argon2i
 
             providers:            # Required
                 # Examples:
@@ -94,7 +82,7 @@ Each part will be explained in the next section.
 
                 my_entity_provider:
                     entity:
-                        class:              SecurityBundle:User
+                        class:              App\Entity\User7
                         property:           username
                         # name of a non-default entity manager
                         manager_name:       ~
@@ -235,7 +223,6 @@ Each part will be explained in the next section.
 
                         # by default, a session must exist before submitting an authentication request
                         # if false, then Request::hasPreviousSession is not called during authentication
-                        # new in Symfony 2.3
                         require_previous_session: true
 
                         service:      ~
@@ -416,7 +403,14 @@ use_referer
 **type**: ``boolean`` **default**: ``false``
 
 If ``true``, the user is redirected to the value stored in the ``HTTP_REFERER``
-header when no previous URL was stored in the session.
+header when no previous URL was stored in the session. If the referrer URL is
+the same as the one generated with the ``login_path`` route, the user is
+redirected to the ``default_target_path`` to avoid a redirection loop.
+
+.. note::
+
+    For historical reasons, and to match the misspelling of the HTTP standard,
+    the option is called ``use_referer`` instead of ``use_referrer``.
 
 .. _reference-security-pbkdf2:
 
@@ -471,7 +465,7 @@ dn_string
 **type**: ``string`` **default**: ``{username}``
 
 This is the string which will be used as the bind DN. The ``{username}``
-placeholder will be replaced with the user-provided value (his login).
+placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you may need to override
 this value.
 
@@ -498,7 +492,7 @@ providers (``form_login_ldap`` or ``http_basic_ldap``).
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -538,7 +532,7 @@ Using the BCrypt Password Encoder
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -549,7 +543,7 @@ Using the BCrypt Password Encoder
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -602,10 +596,72 @@ persisting the encoded password alone is enough.
 
 .. note::
 
-    All the encoded passwords are ``60`` characters long, so make sure to
+    BCrypt encoded passwords are ``60`` characters long, so make sure to
     allocate enough space for them to be persisted.
 
-    .. _reference-security-firewall-context:
+.. tip::
+
+    A simple technique to make tests much faster when using BCrypt is to set
+    the cost to ``4``, which is the minimum value allowed, in the ``test``
+    environment configuration.
+
+.. _reference-security-argon2i:
+
+Using the Argon2i Password Encoder
+----------------------------------
+
+.. caution::
+
+    To use this encoder, you either need to use PHP version 7.2 or install
+    the `libsodium`_ extension.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/security.yml
+        security:
+            # ...
+
+            encoders:
+                Symfony\Component\Security\Core\User\User:
+                    algorithm: argon2i
+
+    .. code-block:: xml
+
+        <!-- app/config/security.xml -->
+        <config>
+            <!-- ... -->
+            <encoder
+                class="Symfony\Component\Security\Core\User\User"
+                algorithm="argon2i"
+            />
+        </config>
+
+    .. code-block:: php
+
+        // app/config/security.php
+        use Symfony\Component\Security\Core\User\User;
+
+        $container->loadFromExtension('security', array(
+            // ...
+            'encoders' => array(
+                User::class => array(
+                    'algorithm' => 'argon2i',
+                ),
+            ),
+        ));
+
+A salt for each new password is generated automatically and need not be
+persisted. Since an encoded password contains the salt used to encode it,
+persisting the encoded password alone is enough.
+
+.. note::
+
+    Argon2i encoded passwords are ``96`` characters long, but due to the hashing
+    requirements saved in the resulting hash this may change in the future.
+
+.. _reference-security-firewall-context:
 
 Firewall Context
 ----------------
@@ -625,7 +681,7 @@ multiple firewalls, the "context" could actually be shared:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -639,7 +695,7 @@ multiple firewalls, the "context" could actually be shared:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -659,7 +715,7 @@ multiple firewalls, the "context" could actually be shared:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'somename' => array(
@@ -680,53 +736,6 @@ multiple firewalls, the "context" could actually be shared:
     ignored and you won't be able to authenticate on multiple firewalls at the
     same time.
 
-HTTP-Digest Authentication
---------------------------
-
-To use HTTP-Digest authentication you need to provide a realm and a secret:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            firewalls:
-                somename:
-                    http_digest:
-                        secret: '%secret%'
-                        realm: 'secure-api'
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <firewall name="somename">
-                    <http-digest secret="%secret%" realm="secure-api" />
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'somename' => array(
-                    'http_digest' => array(
-                        'secret' => '%secret%',
-                        'realm'  => 'secure-api',
-                    ),
-                ),
-            ),
-        ));
-
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
+.. _`libsodium`: https://pecl.php.net/package/libsodium

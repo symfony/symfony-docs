@@ -14,6 +14,9 @@ A real-world example are applications that implement the `Command pattern`_
 using a CommandBus to map command handlers by Command class names and use them
 to handle their respective command when it is asked for::
 
+    // src/CommandBus.php
+    namespace App;
+
     // ...
     class CommandBus
     {
@@ -46,28 +49,29 @@ Considering that only one command is handled at a time, instantiating all the
 other command handlers is unnecessary. A possible solution to lazy-load the
 handlers could be to inject the whole dependency injection container::
 
-        use Symfony\Component\DependencyInjection\ContainerInterface;
+    // ...
+    use Symfony\Component\DependencyInjection\ContainerInterface;
 
-        class CommandBus
+    class CommandBus
+    {
+        private $container;
+
+        public function __construct(ContainerInterface $container)
         {
-            private $container;
+            $this->container = $container;
+        }
 
-            public function __construct(ContainerInterface $container)
-            {
-                $this->container = $container;
-            }
+        public function handle(Command $command)
+        {
+            $commandClass = get_class($command);
 
-            public function handle(Command $command)
-            {
-                $commandClass = get_class($command);
+            if ($this->container->has($commandClass)) {
+                $handler = $this->container->get($commandClass);
 
-                if ($this->container->has($commandClass)) {
-                    $handler = $this->container->get($commandClass);
-
-                    return $handler->handle($command);
-                }
+                return $handler->handle($command);
             }
         }
+    }
 
 However, injecting the entire container is discouraged because it gives too
 broad access to existing services and it hides the actual dependencies of the
@@ -87,18 +91,19 @@ option to include as many services as needed to it and add the
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
-
             app.command_handler_locator:
                 class: Symfony\Component\DependencyInjection\ServiceLocator
                 tags: ['container.service_locator']
                 arguments:
                     -
-                        AppBundle\FooCommand: '@app.command_handler.foo'
-                        AppBundle\BarCommand: '@app.command_handler.bar'
+                        App\FooCommand: '@app.command_handler.foo'
+                        App\BarCommand: '@app.command_handler.bar'
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -108,8 +113,8 @@ option to include as many services as needed to it and add the
 
                 <service id="app.command_handler_locator" class="Symfony\Component\DependencyInjection\ServiceLocator">
                     <argument type="collection">
-                        <argument key="AppBundle\FooCommand" type="service" id="app.command_handler.foo" />
-                        <argument key="AppBundle\BarCommand" type="service" id="app.command_handler.bar" />
+                        <argument key="App\FooCommand" type="service" id="app.command_handler.foo" />
+                        <argument key="App\BarCommand" type="service" id="app.command_handler.bar" />
                     </argument>
                     <tag name="container.service_locator" />
                 </service>
@@ -119,6 +124,7 @@ option to include as many services as needed to it and add the
 
     .. code-block:: php
 
+        // config/services.php
         use Symfony\Component\DependencyInjection\ServiceLocator;
         use Symfony\Component\DependencyInjection\Reference;
 
@@ -128,8 +134,8 @@ option to include as many services as needed to it and add the
             ->register('app.command_handler_locator', ServiceLocator::class)
             ->addTag('container.service_locator')
             ->setArguments(array(array(
-                'AppBundle\FooCommand' => new Reference('app.command_handler.foo'),
-                'AppBundle\BarCommand' => new Reference('app.command_handler.bar'),
+                'App\FooCommand' => new Reference('app.command_handler.foo'),
+                'App\BarCommand' => new Reference('app.command_handler.bar'),
             )))
         ;
 
@@ -144,13 +150,14 @@ Now you can use the service locator injecting it in any other service:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
-
-            AppBundle\CommandBus:
+            App\CommandBus:
                 arguments: ['@app.command_handler_locator']
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -158,8 +165,8 @@ Now you can use the service locator injecting it in any other service:
 
             <services>
 
-                <service id="AppBundle\CommandBus">
-                    <argument type="service" id="app.command_handler.locator" />
+                <service id="App\CommandBus">
+                    <argument type="service" id="app.command_handler_locator" />
                 </service>
 
             </services>
@@ -167,10 +174,9 @@ Now you can use the service locator injecting it in any other service:
 
     .. code-block:: php
 
-        use AppBundle\CommandBus;
+        // config/services.php
+        use App\CommandBus;
         use Symfony\Component\DependencyInjection\Reference;
-
-        //...
 
         $container
             ->register(CommandBus::class)
@@ -185,7 +191,7 @@ Now you can use the service locator injecting it in any other service:
 Usage
 -----
 
-Back to the previous CommandBus example, it looks like this when using the
+Back to the previous ``CommandBus`` example, it looks like this when using the
 service locator::
 
     // ...

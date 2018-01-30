@@ -15,9 +15,6 @@ functionality.
 Functionality Shipped with the HttpKernel
 -----------------------------------------
 
-.. versionadded:: 3.3
-    The ``SessionValueResolver`` and ``ServiceValueResolver`` were both added in Symfony 3.3.
-
 Symfony ships with five value resolvers in the HttpKernel component:
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
@@ -45,11 +42,6 @@ Symfony ships with five value resolvers in the HttpKernel component:
     argument list. When the action is called, the last (variadic) argument will
     contain all the values of this array.
 
-.. note::
-
-    Prior to Symfony 3.1, this logic was resolved within the ``ControllerResolver``.
-    The old functionality is rewritten to the aforementioned value resolvers.
-
 Adding a Custom Value Resolver
 ------------------------------
 
@@ -58,14 +50,14 @@ definition. In the next example, you'll create a value resolver to inject the
 ``User`` object from the security system. Given you write the following
 controller::
 
-    namespace AppBundle\Controller;
+    namespace App\Controller;
 
-    use AppBundle\Entity\User;
+    use App\Entity\User;
     use Symfony\Component\HttpFoundation\Response;
 
     class UserController
     {
-        public function indexAction(User $user)
+        public function index(User $user)
         {
             return new Response('Hello '.$user->getUsername().'!');
         }
@@ -92,10 +84,10 @@ Now that you know what to do, you can implement this interface. To get the
 current ``User``, you need the current security token. This token can be
 retrieved from the token storage::
 
-    // src/AppBundle/ArgumentResolver/UserValueResolver.php
-    namespace AppBundle\ArgumentResolver;
+    // src/ArgumentResolver/UserValueResolver.php
+    namespace App\ArgumentResolver;
 
-    use AppBundle\Entity\User;
+    use App\Entity\User;
     use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -148,20 +140,20 @@ and adding a priority.
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             _defaults:
                 # ... be sure autowiring is enabled
                 autowire: true
             # ...
 
-            AppBundle\ArgumentResolver\UserValueResolver:
+            App\ArgumentResolver\UserValueResolver:
                 tags:
                     - { name: controller.argument_value_resolver, priority: 50 }
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
@@ -172,7 +164,7 @@ and adding a priority.
                 <defaults autowire="true" />
                 <!-- ... -->
 
-                <service id="AppBundle\ArgumentResolver\UserValueResolver">
+                <service id="App\ArgumentResolver\UserValueResolver">
                     <tag name="controller.argument_value_resolver" priority="50" />
                 </service>
             </services>
@@ -181,8 +173,8 @@ and adding a priority.
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\ArgumentResolver\UserValueResolver;
+        // config/services.php
+        use App\ArgumentResolver\UserValueResolver;
 
         $container->autowire(UserValueResolver::class)
             ->addTag('controller.argument_value_resolver', array('priority' => 50));

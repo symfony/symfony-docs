@@ -15,6 +15,20 @@ a full-featured web server such as
     The built-in web server is meant to be run in a controlled environment.
     It is not designed to be used on public networks.
 
+Symfony provides a web server built on top of this PHP server to simplify your
+local setup. This server is distributed as a bundle, so you must first install
+and enable the server bundle.
+
+Installing the Web Server Bundle
+--------------------------------
+
+Move into your project directory and run this command:
+
+.. code-block:: terminal
+
+    $ cd your-project/
+    $ composer require server --dev
+
 Starting the Web Server
 -----------------------
 
@@ -33,7 +47,11 @@ can change the socket passing an IP address and a port as a command-line argumen
 
 .. code-block:: terminal
 
+    # passing a specific IP and port
     $ php bin/console server:start 192.168.0.1:8080
+
+    # passing '*' as the IP means to use 0.0.0.0 (i.e. any local IP address)
+    $ php bin/console server:start *:8080
 
 .. note::
 
@@ -84,7 +102,7 @@ Use the ``--router`` option to use your own router script:
 
 .. code-block:: terminal
 
-    $ php bin/console server:start --router=app/config/my_router.php
+    $ php bin/console server:start --router=config/my_router.php
 
 If your application's document root differs from the standard directory layout,
 you have to pass the correct location using the ``--docroot`` option:

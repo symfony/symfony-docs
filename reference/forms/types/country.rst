@@ -12,7 +12,7 @@ The "value" for each country is the two-letter country code.
 
 .. note::
 
-   The locale of your user is guessed using :phpmethod:`Locale::getDefault`
+    The locale of your user is guessed using :phpmethod:`Locale::getDefault`
 
 Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
 field type automatically uses all of the countries of the world. You *can* specify
@@ -63,8 +63,7 @@ The locale is used to translate the countries names.
 .. caution::
 
     If you want to override the built-in choices of the country type, you
-    will also have to set the ``choice_loader`` option to ``null``. Not doing
-    so is deprecated since Symfony 3.3.
+    will also have to set the ``choice_loader`` option to ``null``.
 
 Inherited Options
 -----------------

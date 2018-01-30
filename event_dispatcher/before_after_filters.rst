@@ -33,14 +33,13 @@ token.
 Before Filters with the ``kernel.controller`` Event
 ---------------------------------------------------
 
-First, store some basic token configuration using ``config.yml`` and the
-parameters key:
+First, define some token configuration as parameters:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/services.yaml
         parameters:
             tokens:
                 client1: pass1
@@ -48,7 +47,7 @@ parameters key:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -65,7 +64,7 @@ parameters key:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/services.php
         $container->setParameter('tokens', array(
             'client1' => 'pass1',
             'client2' => 'pass2',
@@ -81,7 +80,7 @@ some way to identify if the controller that matches the request needs token vali
 A clean and easy way is to create an empty interface and make the controllers
 implement it::
 
-    namespace AppBundle\Controller;
+    namespace App\Controller;
 
     interface TokenAuthenticatedController
     {
@@ -90,15 +89,15 @@ implement it::
 
 A controller that implements this interface simply looks like this::
 
-    namespace AppBundle\Controller;
+    namespace App\Controller;
 
-    use AppBundle\Controller\TokenAuthenticatedController;
+    use App\Controller\TokenAuthenticatedController;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class FooController extends Controller implements TokenAuthenticatedController
     {
         // An action that needs authentication
-        public function barAction()
+        public function bar()
         {
             // ...
         }
@@ -111,10 +110,10 @@ Next, you'll need to create an event listener, which will hold the logic
 that you want to be executed before your controllers. If you're not familiar with
 event listeners, you can learn more about them at :doc:`/event_dispatcher`::
 
-    // src/AppBundle/EventSubscriber/TokenSubscriber.php
-    namespace AppBundle\EventSubscriber;
+    // src/EventSubscriber/TokenSubscriber.php
+    namespace App\EventSubscriber;
 
-    use AppBundle\Controller\TokenAuthenticatedController;
+    use App\Controller\TokenAuthenticatedController;
     use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
     use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -158,7 +157,7 @@ event listeners, you can learn more about them at :doc:`/event_dispatcher`::
         }
     }
 
-That's it! Your ``services.yml`` file should already be setup to load services from
+That's it! Your ``services.yaml`` file should already be setup to load services from
 the ``EventSubscriber`` directory. Symfony takes care of the rest. Your
 ``TokenSubscriber`` ``onKernelController()`` method will be executed on each request.
 If the controller that is about to be executed implements ``TokenAuthenticatedController``,

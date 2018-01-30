@@ -12,6 +12,7 @@ than another value, see :doc:`/reference/constraints/LessThan`.
 | Options        | - `value`_                                                                |
 |                | - `message`_                                                              |
 |                | - `payload`_                                                              |
+|                | - `propertyPath`_                                                         |
 +----------------+---------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThan`          |
 +----------------+---------------------------------------------------------------------------+
@@ -30,8 +31,8 @@ The following constraints ensure that:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Person.php
-        namespace AppBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -53,8 +54,8 @@ The following constraints ensure that:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Person:
+        # config/validator/validation.yaml
+        App\Entity\Person:
             properties:
                 siblings:
                     - GreaterThan: 5
@@ -64,13 +65,13 @@ The following constraints ensure that:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Person">
+            <class name="App\Entity\Person">
                 <property name="siblings">
                     <constraint name="GreaterThan">
                         <value>5</value>
@@ -86,8 +87,8 @@ The following constraints ensure that:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Person.php
-        namespace AppBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -115,8 +116,8 @@ that a date must at least be the next day:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -130,21 +131,21 @@ that a date must at least be the next day:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Order:
+        # config/validator/validation.yaml
+        App\Entity\Order:
             properties:
                 deliveryDate:
                     - GreaterThan: today
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Order">
+            <class name="App\Entity\Order">
                 <property name="deliveryDate">
                     <constraint name="GreaterThan">today</constraint>
                 </property>
@@ -153,8 +154,8 @@ that a date must at least be the next day:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -174,8 +175,8 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -189,21 +190,21 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Order:
+        # config/validator/validation.yaml
+        App\Entity\Order:
             properties:
                 deliveryDate:
                     - GreaterThan: today UTC
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Order">
+            <class name="App\Entity\Order">
                 <property name="deliveryDate">
                     <constraint name="GreaterThan">today UTC</constraint>
                 </property>
@@ -212,8 +213,8 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -234,8 +235,8 @@ current time:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -249,21 +250,21 @@ current time:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Order:
+        # config/validator/validation.yaml
+        App\Entity\Order:
             properties:
                 deliveryDate:
                     - GreaterThan: +5 hours
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Order">
+            <class name="App\Entity\Order">
                 <property name="deliveryDate">
                     <constraint name="GreaterThan">+5 hours</constraint>
                 </property>
@@ -272,8 +273,8 @@ current time:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -300,5 +301,7 @@ This is the message that will be shown if the value is not greater than the
 comparison value.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. include:: /reference/constraints/_comparison-propertypath-option.rst.inc
 
 .. _`accepted by the DateTime constructor`: http://www.php.net/manual/en/datetime.formats.php

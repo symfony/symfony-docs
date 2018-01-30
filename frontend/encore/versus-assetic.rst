@@ -1,7 +1,7 @@
 Encore Versus Assetic?
 ======================
 
-Symfony originally shipped with support for :doc:`Assetic </assetic>`: a
+Symfony originally shipped with support for :doc:`Assetic </frontend/assetic>`: a
 pure PHP library capable of processing, combining and minifying CSS and JavaScript
 files. And while Encore is now the recommended way of processing your assets, Assetic
 still works well.

@@ -13,22 +13,22 @@ In Symfony, you can register your custom DQL functions as follows:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/doctrine.yaml
         doctrine:
             orm:
                 # ...
                 dql:
                     string_functions:
-                        test_string: AppBundle\DQL\StringFunction
-                        second_string: AppBundle\DQL\SecondStringFunction
+                        test_string: App\DQL\StringFunction
+                        second_string: App\DQL\SecondStringFunction
                     numeric_functions:
-                        test_numeric: AppBundle\DQL\NumericFunction
+                        test_numeric: App\DQL\NumericFunction
                     datetime_functions:
-                        test_datetime: AppBundle\DQL\DatetimeFunction
+                        test_datetime: App\DQL\DatetimeFunction
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/doctrine.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
@@ -41,10 +41,10 @@ In Symfony, you can register your custom DQL functions as follows:
                 <doctrine:orm>
                     <!-- ... -->
                     <doctrine:dql>
-                        <doctrine:string-function name="test_string">AppBundle\DQL\StringFunction</doctrine:string-function>
-                        <doctrine:string-function name="second_string">AppBundle\DQL\SecondStringFunction</doctrine:string-function>
-                        <doctrine:numeric-function name="test_numeric">AppBundle\DQL\NumericFunction</doctrine:numeric-function>
-                        <doctrine:datetime-function name="test_datetime">AppBundle\DQL\DatetimeFunction</doctrine:datetime-function>
+                        <doctrine:string-function name="test_string">App\DQL\StringFunction</doctrine:string-function>
+                        <doctrine:string-function name="second_string">App\DQL\SecondStringFunction</doctrine:string-function>
+                        <doctrine:numeric-function name="test_numeric">App\DQL\NumericFunction</doctrine:numeric-function>
+                        <doctrine:datetime-function name="test_datetime">App\DQL\DatetimeFunction</doctrine:datetime-function>
                     </doctrine:dql>
                 </doctrine:orm>
             </doctrine:config>
@@ -52,11 +52,11 @@ In Symfony, you can register your custom DQL functions as follows:
 
     .. code-block:: php
 
-        // app/config/config.php
-        use AppBundle\DQL\StringFunction;
-        use AppBundle\DQL\SecondStringFunction;
-        use AppBundle\DQL\NumericFunction;
-        use AppBundle\DQL\DatetimeFunction;
+        // config/packages/doctrine.php
+        use App\DQL\StringFunction;
+        use App\DQL\SecondStringFunction;
+        use App\DQL\NumericFunction;
+        use App\DQL\DatetimeFunction;
 
         $container->loadFromExtension('doctrine', array(
             'orm' => array(
@@ -86,7 +86,7 @@ In Symfony, you can register your custom DQL functions as follows:
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/packages/doctrine.yaml
             doctrine:
                 orm:
                     # ...
@@ -95,11 +95,11 @@ In Symfony, you can register your custom DQL functions as follows:
                             # Place your functions here
                             dql:
                                 datetime_functions:
-                                    test_datetime: AppBundle\DQL\DatetimeFunction
+                                    test_datetime: App\DQL\DatetimeFunction
 
         .. code-block:: xml
 
-            # app/config/config.xml
+            <!-- config/packages/doctrine.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -117,7 +117,7 @@ In Symfony, you can register your custom DQL functions as follows:
                             <!-- place your functions here -->
                             <doctrine:dql>
                                 <doctrine:datetime-function name="test_datetime">
-                                    AppBundle\DQL\DatetimeFunction
+                                    App\DQL\DatetimeFunction
                                 </doctrine:datetime-function>
                             </doctrine:dql>
                         </doctrine:entity-manager>
@@ -127,8 +127,8 @@ In Symfony, you can register your custom DQL functions as follows:
 
         .. code-block:: php
 
-            // app/config/config.php
-            use AppBundle\DQL\DatetimeFunction;
+            // config/packages/doctrine.php
+            use App\DQL\DatetimeFunction;
 
             $container->loadFromExtension('doctrine', array(
                 'doctrine' => array(

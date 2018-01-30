@@ -32,14 +32,14 @@ There are some helpful methods for working with the service definitions::
     $definition = $container->findDefinition('app.user_config_manager');
 
     // add a new "app.number_generator" definition
-    $definition = new Definition(\AppBundle\NumberGenerator::class);
+    $definition = new Definition(\App\NumberGenerator::class);
     $container->setDefinition('app.number_generator', $definition);
 
     // shortcut for the previous method
-    $container->register('app.number_generator', \AppBundle\NumberGenerator::class);
+    $container->register('app.number_generator', \App\NumberGenerator::class);
 
     // or create a service whose id matches its class
-    $container->register(\AppBundle\NumberGenerator::class);
+    $container->register(\App\NumberGenerator::class);
 
 Working with a Definition
 -------------------------
@@ -57,8 +57,8 @@ Class
 The first optional argument of the ``Definition`` class is the fully qualified
 class name of the object returned when the service is fetched from the container::
 
-    use AppBundle\Config\UserConfigManager;
-    use AppBundle\Config\CustomConfigManager;
+    use App\Config\UserConfigManager;
+    use App\Config\CustomConfigManager;
     use Symfony\Component\DependencyInjection\Definition;
 
     $definition = new Definition(UserConfigManager::class);
@@ -76,7 +76,7 @@ The second optional argument of the ``Definition`` class is an array with the
 arguments passed to the constructor of the object returned when the service is
 fetched from the container::
 
-    use AppBundle\Config\DoctrineConfigManager;
+    use App\Config\DoctrineConfigManager;
     use Symfony\Component\DependencyInjection\Definition;
     use Symfony\Component\DependencyInjection\Reference;
 

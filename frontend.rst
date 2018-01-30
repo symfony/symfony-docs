@@ -3,7 +3,7 @@ Managing CSS and JavaScript
 
 Symfony ships with a pure-JavaScript library - called Webpack Encore - that makes
 working with CSS and JavaScript a joy. You can use it, use something else, or just
-create static CSS and JS files in your ``web/`` directory and include them in your
+create static CSS and JS files in your ``public/`` directory and include them in your
 templates.
 
 .. _frontend-webpack-encore:
@@ -24,6 +24,8 @@ to solve the most common Webpack use cases.
 
     Encore is made by `Symfony`_ and works *beautifully* in Symfony applications.
     But it can easily be used in any application... in any language!
+
+.. _encore-toc:
 
 Encore Documentation
 --------------------
@@ -81,7 +83,7 @@ Assetic is a pure PHP library that helps to process & optimize your assets (simi
 to Encore). Even though we recommend using Encore, Assetic still works great. For
 a comparison, see :doc:`/frontend/encore/versus-assetic`.
 
-For more about Assetic, see :doc:`/assetic`.
+For more about Assetic, see :doc:`/frontend/assetic`.
 
 Other Front-End Articles
 ------------------------

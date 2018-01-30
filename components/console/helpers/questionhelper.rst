@@ -169,6 +169,8 @@ will be autocompleted as the user types::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
+        $helper = $this->getHelper('question');
+
         $bundles = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
         $question = new Question('Please enter the name of a bundle', 'FooBundle');
         $question->setAutocompleterValues($bundles);
@@ -188,6 +190,8 @@ convenient for passwords::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
+        $helper = $this->getHelper('question');
+
         $question = new Question('What is the database password?');
         $question->setHidden(true);
         $question->setHiddenFallback(false);
@@ -225,9 +229,6 @@ convenient for passwords::
             // ...
         }
 
-    .. versionadded:: 3.3
-        The ``QuestionHelper::disableStty()`` method was introduced in Symfony 3.3.
-
 Normalizing the Answer
 ----------------------
 
@@ -244,7 +245,9 @@ method::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
-        $question = new Question('Please enter the name of the bundle', 'AppBundle');
+        $helper = $this->getHelper('question');
+
+        $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
         $question->setNormalizer(function ($value) {
             // $value can be null here
             return $value ? trim($value) : '';
@@ -252,7 +255,6 @@ method::
 
         $name = $helper->ask($input, $output, $question);
     }
-
 
 .. caution::
 
@@ -275,6 +277,8 @@ method::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
+        $helper = $this->getHelper('question');
+
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
         $question->setValidator(function ($answer) {
             if (!is_string($answer) || 'Bundle' !== substr($answer, -6)) {
@@ -360,9 +364,6 @@ from the command line, you need to set the inputs that the command expects::
 
         // $this->assertRegExp('/.../', $commandTester->getDisplay());
     }
-
-.. versionadded:: 3.2
-    The ``CommandTester::setInputs()`` method was introduced in Symfony 3.2.
 
 By calling :method:`Symfony\\Component\\Console\\Tester\\CommandTester::setInputs`,
 you imitate what the console would do internally with all user input through the CLI.

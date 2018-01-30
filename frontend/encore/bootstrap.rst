@@ -35,14 +35,14 @@ file into ``global.scss``. You can even customize the Bootstrap variables first!
     in the ``bootstrap`` directory instead - e.g. ``~bootstrap-sass/assets/stylesheets/bootstrap/alerts``.
 
 After including ``bootstrap-sass``, your Webpack builds might become slow. To fix
-this, you can use the ``resolve_url_loader`` option:
+this, you can use the ``resolveUrlLoader`` option:
 
 .. code-block:: diff
 
     // webpack.config.js
     Encore
     +     .enableSassLoader(function(sassOptions) {}, {
-    +         resolve_url_loader: false
+    +         resolveUrlLoader: false
     +     })
     ;
 

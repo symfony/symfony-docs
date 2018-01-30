@@ -11,35 +11,38 @@ the original service is lost:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             app.mailer:
-                class: AppBundle\Mailer
+                class: App\Mailer
 
             # this replaces the old app.mailer definition with the new one, the
             # old definition is lost
             app.mailer:
-                class: AppBundle\DecoratingMailer
+                class: App\DecoratingMailer
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
             xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer" />
+                <service id="app.mailer" class="App\Mailer" />
 
                 <!-- this replaces the old app.mailer definition with the new
                      one, the old definition is lost -->
-                <service id="app.mailer" class="AppBundle\DecoratingMailer" />
+                <service id="app.mailer" class="App\DecoratingMailer" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Mailer;
-        use AppBundle\DecoratingMailer;
+        // config/services.php
+        use App\Mailer;
+        use App\DecoratingMailer;
 
         $container->register('app.mailer', Mailer::class);
 
@@ -55,12 +58,13 @@ that you can reference it:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             app.mailer:
-                class: AppBundle\Mailer
+                class: App\Mailer
 
             app.decorating_mailer:
-                class:     AppBundle\DecoratingMailer
+                class:     App\DecoratingMailer
                 # overrides the app.mailer service
                 # but that service is still available as app.decorating_mailer.inner
                 decorates: app.mailer
@@ -73,16 +77,17 @@ that you can reference it:
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
             xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer" />
+                <service id="app.mailer" class="App\Mailer" />
 
                 <service id="app.decorating_mailer"
-                    class="AppBundle\DecoratingMailer"
+                    class="App\DecoratingMailer"
                     decorates="app.mailer"
                     public="false"
                 >
@@ -94,8 +99,9 @@ that you can reference it:
 
     .. code-block:: php
 
-        use AppBundle\DecoratingMailer;
-        use AppBundle\Mailer;
+        // config/services.php
+        use App\DecoratingMailer;
+        use App\Mailer;
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('app.mailer', Mailer::class);
@@ -127,6 +133,7 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 
         .. code-block:: yaml
 
+            # config/services.yaml
             services:
                 app.decorating_mailer:
                     # ...
@@ -135,6 +142,7 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 
         .. code-block:: xml
 
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
@@ -145,7 +153,7 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 
                     <service
                         id="app.decorating_mailer"
-                        class="AppBundle\DecoratingMailer"
+                        class="App\DecoratingMailer"
                         decorates="app.mailer"
                         decoration-inner-name="app.decorating_mailer.wooz"
                         public="false"
@@ -158,7 +166,8 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 
         .. code-block:: php
 
-            use AppBundle\DecoratingMailer;
+            // config/services.php
+            use App\DecoratingMailer;
             use Symfony\Component\DependencyInjection\Reference;
 
             $container->register('app.decorating_mailer', DecoratingMailer::class)
@@ -170,14 +179,15 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 Decoration Priority
 -------------------
 
-If you want to apply more than one decorator to a service, you can control their
-order by configuring the priority of decoration, this can be any integer number
-(decorators with higher priorities will be applied first).
+When applying multiple decorators to a service, you can control their order with
+the ``decoration_priority`` option. Its value is an integer that defaults to
+``0`` and higher priorities mean that decorators will be applied earlier.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
+        # config/services.yaml
         foo:
             class: Foo
 
@@ -197,6 +207,7 @@ order by configuring the priority of decoration, this can be any integer number
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -218,6 +229,7 @@ order by configuring the priority of decoration, this can be any integer number
 
     .. code-block:: php
 
+        // config/services.php
         use Symfony\Component\DependencyInjection\Reference;
 
         $container->register('foo', 'Foo')

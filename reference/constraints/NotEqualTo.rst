@@ -17,6 +17,7 @@ options. To force that a value is equal, see
 | Options        | - `value`_                                                              |
 |                | - `message`_                                                            |
 |                | - `payload`_                                                            |
+|                | - `propertyPath`_                                                       |
 +----------------+-------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\NotEqualTo`         |
 +----------------+-------------------------------------------------------------------------+
@@ -34,8 +35,8 @@ the following:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Person.php
-        namespace AppBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -56,8 +57,8 @@ the following:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Person:
+        # config/validator/validation.yaml
+        App\Entity\Person:
             properties:
                 firstName:
                     - NotEqualTo: Mary
@@ -67,13 +68,13 @@ the following:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Person">
+            <class name="App\Entity\Person">
                 <property name="firstName">
                     <constraint name="NotEqualTo">
                         <value>Mary</value>
@@ -89,8 +90,8 @@ the following:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Person.php
-        namespace AppBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -120,3 +121,5 @@ message
 This is the message that will be shown if the value is equal.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. include:: /reference/constraints/_comparison-propertypath-option.rst.inc

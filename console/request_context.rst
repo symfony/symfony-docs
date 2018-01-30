@@ -21,8 +21,8 @@ Configuring the Request Context Globally
 
 To configure the Request Context - which is used by the URL Generator - you can
 redefine the parameters it uses as default values to change the default host
-(localhost) and scheme (http). You can also configure the base path if Symfony
-is not running in the root directory.
+(``localhost``) and scheme (``http``). You can also configure the base path if
+Symfony is not running in the root directory.
 
 Note that this does not impact URLs generated via normal web requests, since those
 will override the defaults.
@@ -31,7 +31,7 @@ will override the defaults.
 
     .. code-block:: yaml
 
-        # app/config/parameters.yml
+        # config/services.yaml
         parameters:
             router.request_context.host: example.org
             router.request_context.scheme: https
@@ -39,7 +39,7 @@ will override the defaults.
 
     .. code-block:: xml
 
-        <!-- app/config/parameters.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -54,7 +54,7 @@ will override the defaults.
 
     .. code-block:: php
 
-        // app/config/parameters.php
+        // config/services.php
         $container->setParameter('router.request_context.host', 'example.org');
         $container->setParameter('router.request_context.scheme', 'https');
         $container->setParameter('router.request_context.base_url', 'my/path');
@@ -62,21 +62,30 @@ will override the defaults.
 Configuring the Request Context per Command
 -------------------------------------------
 
-To change it only in one command you can simply fetch the Request Context
-from the ``router`` service and override its settings::
+To change it only in one command you can fetch the Request Context from the
+router service and override its settings::
 
-   // src/AppBundle/Command/DemoCommand.php
+    // src/Command/DemoCommand.php
+    use Symfony\Component\Routing\RouterInterface;
+    // ...
 
-   // ...
-   class DemoCommand extends ContainerAwareCommand
-   {
-       protected function execute(InputInterface $input, OutputInterface $output)
-       {
-           $context = $this->getContainer()->get('router')->getContext();
-           $context->setHost('example.com');
-           $context->setScheme('https');
-           $context->setBaseUrl('my/path');
+    class DemoCommand extends ContainerAwareCommand
+    {
+        private $router;
 
-           // ... your code here
-       }
-   }
+        public function __construct(RouterInterface $router)
+        {
+            $this->router = $router;
+        }
+
+        protected function execute(InputInterface $input, OutputInterface $output)
+        {
+            $context = $this->router->getContext();
+            $context->setHost('example.com');
+            $context->setScheme('https');
+            $context->setBaseUrl('my/path');
+
+            $url = $this->router->generate('route-name', array('param-name' => 'param-value'));
+            // ...
+        }
+    }

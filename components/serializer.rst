@@ -5,14 +5,11 @@
 The Serializer Component
 ========================
 
-   The Serializer component is meant to be used to turn objects into a
-   specific format (XML, JSON, YAML, ...) and the other way around.
+    The Serializer component is meant to be used to turn objects into a
+    specific format (XML, JSON, YAML, ...) and the other way around.
 
 In order to do so, the Serializer component follows the following
 simple schema.
-
-.. _component-serializer-encoders:
-.. _component-serializer-normalizers:
 
 .. image:: /_images/components/serializer/serializer_workflow.png
 
@@ -21,9 +18,8 @@ the middle. This way, Encoders will only deal with turning specific
 **formats** into **arrays** and vice versa. The same way, Normalizers
 will deal with turning specific **objects** into **arrays** and vice versa.
 
-Serialization is a complicated topic, and while this component may not work
-in all cases, it can be a useful tool while developing tools to serialize
-and deserialize your objects.
+Serialization is a complex topic. This component may not cover all your use cases out of the box,
+but it can be useful for developing tools to serialize and deserialize your objects.
 
 Installation
 ------------
@@ -32,7 +28,6 @@ You can install the component in 2 different ways:
 
 * :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
 * Use the official Git repository (https://github.com/symfony/serializer).
-
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -152,10 +147,6 @@ needs three parameters:
 #. The name of the class this information will be decoded to
 #. The encoder used to convert that information into an array
 
-.. versionadded:: 3.3
-    Support for the ``allow_extra_attributes`` key in the context was introduced
-    in Symfony 3.3.
-
 By default, additional attributes that are not mapped to the denormalized
 object will be ignored by the Serializer component. Set the ``allow_extra_attributes``
 key of the deserialization context to ``false`` to let the serializer throw
@@ -174,7 +165,6 @@ an exception when additional attributes are passed::
     $person = $serializer->deserialize($data, 'Acme\Person', 'xml', array(
         'allow_extra_attributes' => false,
     ));
-
 
 Deserializing in an Existing Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -248,7 +238,7 @@ like the following::
     // For XML
     // $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
     // For YAML
-    // $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader('/path/to/your/definition.yml'));
+    // $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader('/path/to/your/definition.yaml'));
 
 .. _component-serializer-attributes-groups-annotations:
 
@@ -334,6 +324,46 @@ You are now able to serialize only attributes in the groups you want::
 
 .. _ignoring-attributes-when-serializing:
 
+Selecting Specific Attributes
+-----------------------------
+
+It is also possible to serialize only a set of specific attributes::
+
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+    class User
+    {
+        public $familyName;
+        public $givenName;
+        public $company;
+    }
+
+    class Company
+    {
+        public $name;
+        public $address;
+    }
+
+    $company = new Company();
+    $company->name = 'Les-Tilleuls.coop';
+    $company->address = 'Lille, France';
+
+    $user = new User();
+    $user->familyName = 'Dunglas';
+    $user->givenName = 'Kévin';
+    $user->company = $company;
+
+    $serializer = new Serializer(array(new ObjectNormalizer()));
+
+    $data = $serializer->normalize($user, null, array('attributes' => array('familyName', 'company' => ['name'])));
+    // $data = array('familyName' => 'Dunglas', 'company' => array('name' => 'Les-Tilleuls.coop'));
+
+Only attributes that are not ignored (see below) are available.
+If some serialization groups are set, only attributes allowed by those groups can be used.
+
+As for groups, attributes can be selected during both the serialization and deserialization process.
+
 Ignoring Attributes
 -------------------
 
@@ -405,7 +435,7 @@ class extending :class:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNorm
 including :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
 and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
-    use Symfony\Component\Serializer\Encoder\JsonEncoder
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
@@ -418,9 +448,9 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
     $obj->name = 'Acme Inc.';
     $obj->address = '123 Main Street, Big City';
 
-    $json = $serializer->serialize($obj);
+    $json = $serializer->serialize($obj, 'json');
     // {"org_name": "Acme Inc.", "org_address": "123 Main Street, Big City"}
-    $objCopy = $serializer->deserialize($json);
+    $objCopy = $serializer->deserialize($json, Company::class, 'json');
     // Same data as $obj
 
 .. _using-camelized-method-names-for-underscored-attributes:
@@ -429,8 +459,9 @@ CamelCase to snake_case
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 In many formats, it's common to use underscores to separate words (also known
-as snake_case). However, PSR-1 specifies that the preferred style for PHP
-properties and methods is CamelCase.
+as snake_case). However, in Symfony applications is common to use CamelCase to
+name properties (even though the `PSR-1 standard`_ doesn't recommend any
+specific case for property names).
 
 Symfony provides a built-in name converter designed to transform between
 snake_case and CamelCased styles during serialization and deserialization
@@ -504,6 +535,8 @@ When serializing, you can set a callback to format a specific object property::
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
 
+.. _component-serializer-normalizers:
+
 Normalizers
 -----------
 
@@ -555,13 +588,18 @@ There are several types of normalizers available:
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
     By default it uses the RFC3339_ format.
 
-    .. versionadded:: 3.2
-        Support for specifying datetime format during denormalization was
-        introduced in the ``DateTimeNormalizer`` in Symfony 3.2.
-
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
     This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
     string (``data:...``) such that files can be embedded into serialized data.
+
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
+    This normalizer converts :phpclass:`DateInterval` objects into strings.
+    By default it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
+
+    .. versionadded:: 3.4
+        The ``DateIntervalNormalizer`` normalizer was added in Symfony 3.4.
+
+.. _component-serializer-encoders:
 
 Encoders
 --------
@@ -583,9 +621,6 @@ The Serializer component supports many formats out of the box:
 
 All these encoders are enabled by default when using the Symfony Standard Edition
 with the serializer enabled.
-
-.. versionadded:: 3.2
-    The ``YamlEncoder`` and ``CsvEncoder`` encoders were introduced in Symfony 3.2
 
 .. _component-serializer-handling-circular-references:
 
@@ -819,6 +854,63 @@ you indicate that you're expecting an array instead of a single object.
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
 
+The ``XmlEncoder``
+------------------
+
+This encoder transforms arrays into XML and vice versa. For example, take an
+object normalized as following::
+
+    array('foo' => array(1, 2), 'bar' => true);
+
+The ``XmlEncoder`` encodes this object as follows:
+
+.. code-block:: xml
+
+    <?xml version="1.0"?>
+    <response>
+        <foo>1</foo>
+        <foo>2</foo>
+        <bar>1</bar>
+    </response>
+
+The array keys beginning with ``@`` are considered XML attributes::
+
+    array('foo' => array('@bar' => 'value'));
+
+    // is encoded as follows:
+    // <?xml version="1.0"?>
+    // <response>
+    //     <foo bar="value" />
+    // </response>
+
+Context
+~~~~~~~
+
+The ``encode()`` method defines a third optional parameter called ``context``
+which defines the configuration options for the XmlEncoder an associative array::
+
+    $xmlEncoder->encode($array, 'xml', $context);
+
+These are the options available:
+
+``xml_format_output``
+    If set to true, formats the generated XML with line breaks and indentation.
+
+``xml_version``
+    Sets the XML version attribute (default: ``1.1``).
+
+``xml_encoding``
+    Sets the XML encoding attribute (default: ``utf-8``).
+
+``xml_standalone``
+    Adds standalone attribute in the generated XML (default: ``true``).
+
+``xml_root_node_name``
+    Sets the root node name (default: ``response``).
+
+``remove_empty_tags``
+    If set to true, removes all empty tags in the generated XML.
+
 Recursive Denormalization and Type Safety
 -----------------------------------------
 
@@ -870,7 +962,7 @@ parameter of the ``ObjectNormalizer``::
         public $bar;
     }
 
-    $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor()); //
+    $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor());
     $serializer = new Serializer(array(new DateTimeNormalizer(), $normalizer));
 
     $obj = $serializer->denormalize(
@@ -885,7 +977,97 @@ parameter of the ``ObjectNormalizer``::
 When a ``PropertyTypeExtractor`` is available, the normalizer will also check that the data to denormalize
 matches the type of the property (even for primitive types). For instance, if a ``string`` is provided, but
 the type of the property is ``int``, an :class:`Symfony\\Component\\Serializer\\Exception\\UnexpectedValueException`
-will be thrown.
+will be thrown. The type enforcement of the properties can be disabled by setting
+the serializer context option ``ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT``
+to ``true``.
+
+Serializing Interfaces and Abstract Classes
+-------------------------------------------
+
+When dealing with objects that are fairly similar or share properties, you may
+use interfaces or abstract classes. The Serializer component allows you to
+serialize and deserialize these objects using a *"discriminator class mapping"*.
+
+The discriminator is the field (in the serialized string) used to differentiate
+between the possible objects. In practice, when using the Serializer component,
+pass the :class:`Symfony\\Component\\Serializer\\Mapping\\ClassDiscriminatorResolver`
+to the :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`.
+
+Consider an application that defines an abstract ``CodeRepository`` class
+extended by ``GitHubCodeRepository`` and ``BitBucketCodeRepository`` classes.
+This example shows how to serialize and deserialize those objects::
+
+    // ...
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorMapping;
+    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorResolver;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $discriminator = new ClassDiscriminatorResolver();
+    $discriminator->addClassMapping(CodeRepository::class, new ClassDiscriminatorMapping('type', [
+        'github' => GitHubCodeRepository::class,
+        'bitbucket' => BitBucketCodeRepository::class,
+    ]));
+
+    $serializer = new Serializer(
+        array(new ObjectNormalizer(null, null, null, null, $discriminator)),
+        array('json' => new JsonEncoder())
+    );
+
+    $serialized = $serializer->serialize(new GitHubCodeRepository());
+    // {"type": "github"}
+
+    $repository = $serializer->unserialize($serialized, CodeRepository::class, 'json');
+    // instanceof GitHubCodeRepository
+
+If the class metadata factory is enabled as explained in the
+:ref:`Attributes Groups section <component-serializer-attributes-groups>`, you
+can use this simpler configuration:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        namespace App;
+
+        use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
+
+        /**
+         * @DiscriminatorMap(typeProperty="type", mapping={
+         *    "github"="App\GitHubCodeRepository",
+         *    "bitbucket"="App\BitBucketCodeRepository"
+         * })
+         */
+        interface CodeRepository
+        {
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        App\CodeRepository:
+            discriminator_map:
+                type_property: type
+                mapping:
+                    github: 'App\GitHubCodeRepository'
+                    bitbucket: 'App\BitBucketCodeRepository'
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                http://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="App\CodeRepository">
+                <discriminator-map type-property="type">
+                    <mapping type="github" class="App\GitHubCodeRepository" />
+                    <mapping type="bitbucket" class="App\BitBucketCodeRepository" />
+                </discriminator-map>
+            </class>
+        </serializer>
 
 Learn more
 ----------
@@ -901,6 +1083,7 @@ Learn more
     A popular alternative to the Symfony Serializer Component is the third-party
     library, `JMS serializer`_ (released under the Apache license, so incompatible with GPLv2 projects).
 
+.. _`PSR-1 standard`: http://www.php-fig.org/psr/psr-1/
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
 .. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8

@@ -8,7 +8,7 @@ CSRF tokens are meant to be different for every user. This is why you
 need to be cautious if you try to cache pages with forms including them.
 
 For more information about how CSRF protection works in Symfony, please
-check :doc:`CSRF Protection </form/csrf_protection>`.
+check :doc:`CSRF Protection </security/csrf>`.
 
 Why Caching Pages with a CSRF token is Problematic
 --------------------------------------------------
@@ -36,7 +36,8 @@ Another option would be to load the form via an uncached AJAX request, but
 cache the rest of the HTML response.
 
 Or you can even load just the CSRF token with an AJAX request and replace the
-form field value with it.
+form field value with it. Take a look at :doc:`hinclude.js </templating/hinclude>`
+for a nice solution.
 
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`Security CSRF Component`: https://github.com/symfony/security-csrf

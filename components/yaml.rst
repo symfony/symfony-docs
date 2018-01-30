@@ -92,8 +92,8 @@ other dumps a PHP array to a YAML string
 On top of these two classes, the :class:`Symfony\\Component\\Yaml\\Yaml` class
 acts as a thin wrapper that simplifies common uses.
 
-Reading YAML Files
-~~~~~~~~~~~~~~~~~~
+Reading YAML Contents
+~~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::parse` method parses a YAML
 string and converts it to a PHP array:
@@ -102,13 +102,8 @@ string and converts it to a PHP array:
 
     use Symfony\Component\Yaml\Yaml;
 
-    $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
-
-.. caution::
-
-    Because it is currently possible to pass a filename to this method, you
-    must validate the input first. Passing a filename is deprecated in
-    Symfony 2.2, and was removed in Symfony 3.0.
+    $value = Yaml::parse("foo: bar");
+    // $value = array('foo' => 'bar')
 
 If an error occurs during parsing, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\ParseException` exception
@@ -120,10 +115,22 @@ error occurred:
     use Symfony\Component\Yaml\Exception\ParseException;
 
     try {
-        $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
+        $value = Yaml::parse('...');
     } catch (ParseException $e) {
-        printf("Unable to parse the YAML string: %s", $e->getMessage());
+        printf('Unable to parse the YAML string: %s', $e->getMessage());
     }
+
+Reading YAML Files
+~~~~~~~~~~~~~~~~~~
+
+The :method:`Symfony\\Component\\Yaml\\Yaml::parseFile` method parses the YAML
+contents of the given file path and converts them to a PHP value::
+
+    use Symfony\Component\Yaml\Yaml;
+
+    $value = Yaml::parseFile('/path/to/file.yaml');
+
+If an error occurs during parsing, the parser throws a ``ParseException`` exception.
 
 .. _components-yaml-dump:
 
@@ -144,7 +151,7 @@ array to its YAML representation:
 
     $yaml = Yaml::dump($array);
 
-    file_put_contents('/path/to/file.yml', $yaml);
+    file_put_contents('/path/to/file.yaml', $yaml);
 
 If an error occurs during the dump, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\DumpException` exception.
@@ -206,10 +213,6 @@ changed using the third argument as follows::
 Numeric Literals
 ................
 
-.. versionadded:: 3.2
-    Support for parsing integers grouped by underscores was introduced in
-    Symfony 3.2.
-
 Long numeric literals, being integer, float or hexadecimal, are known for their
 poor readability in code and configuration files. That's why YAML files allow to
 add underscores to improve their readability:
@@ -240,7 +243,7 @@ You can dump objects by using the ``DUMP_OBJECT`` flag::
     $object->foo = 'bar';
 
     $dumped = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT);
-    // !php/object:O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}
+    // !php/object 'O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}'
 
 And parse them by using the ``PARSE_OBJECT`` flag::
 
@@ -266,7 +269,7 @@ By default the parser will encode invalid types as ``null``. You can make the
 parser throw exceptions by using the ``PARSE_EXCEPTION_ON_INVALID_TYPE``
 flag::
 
-    $yaml = '!php/object:O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}';
+    $yaml = '!php/object \'O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}\'';
     Yaml::parse($yaml, Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE); // throws an exception
 
 Similarly you can use ``DUMP_EXCEPTION_ON_INVALID_TYPE`` when dumping::
@@ -316,10 +319,10 @@ Parsing PHP Constants
 ~~~~~~~~~~~~~~~~~~~~~
 
 By default, the YAML parser treats the PHP constants included in the contents as
-regular strings. Use the ``PARSE_CONSTANT`` flag and the special ``!php/const:``
+regular strings. Use the ``PARSE_CONSTANT`` flag and the special ``!php/const``
 syntax to parse them as proper PHP constants::
 
-    $yaml = '{ foo: PHP_INT_SIZE, bar: !php/const:PHP_INT_SIZE }';
+    $yaml = '{ foo: PHP_INT_SIZE, bar: !php/const PHP_INT_SIZE }';
     $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
     // $parameters = array('foo' => 'PHP_INT_SIZE', 'bar' => 8);
 
@@ -353,20 +356,26 @@ Then, execute the script for validating contents:
 .. code-block:: terminal
 
     # validates a single file
-    $ php lint.php path/to/file.yml
+    $ php lint.php path/to/file.yaml
 
     # or all the files in a directory
     $ php lint.php path/to/directory
 
     # or contents passed to STDIN
-    $ cat path/to/file.yml | php lint.php
+    $ cat path/to/file.yaml | php lint.php
 
 The result is written to STDOUT and uses a plain text format by default.
 Add the ``--format`` option to get the output in JSON format:
 
 .. code-block:: terminal
 
-    $ php lint.php path/to/file.yml --format json
+    $ php lint.php path/to/file.yaml --format json
+
+.. tip::
+
+    The linting command will also report any deprecations in the checked
+    YAML files. This may for example be useful for recognizing deprecations of
+    contents of YAML files during automated tests.
 
 Learn More
 ----------

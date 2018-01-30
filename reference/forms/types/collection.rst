@@ -160,55 +160,64 @@ Using jQuery, a simple example might look like this. If you're rendering
 your collection fields all at once (e.g. ``form_row(form.emails)``), then
 things are even easier because the ``data-prototype`` attribute is rendered
 automatically for you (with a slight difference - see note below) and all
-you need is the JavaScript:
+you need is this JavaScript code:
 
-.. configuration-block::
+.. code-block:: javascript
 
-    .. code-block:: html+twig
+    // add-collection-widget.js
+    jQuery(document).ready(function () {
+        jQuery('.add-another-collection-widget').click(function (e) {
+            e.preventDefault();
+            var list = jQuery(jQuery(this).attr('data-list'));
+            // Try to find the counter of the list
+            var counter = list.data('widget-counter') | list.children().length;
+            // If the counter does not exist, use the length of the list
+            if (!counter) { counter = list.children().length; }
 
-        {{ form_start(form) }}
-            {# ... #}
+            // grab the prototype template
+            var newWidget = list.attr('data-prototype');
+            // replace the "__name__" used in the id and name of the prototype
+            // with a number that's unique to your emails
+            // end name attribute looks like name="contact[emails][2]"
+            newWidget = newWidget.replace(/__name__/g, counter);
+            // Increase the counter
+            counter++;
+            // And store it, the length cannot be used if deleting widgets is allowed
+            list.data(' widget-counter', counter);
 
-            {# store the prototype on the data-prototype attribute #}
-            <ul id="email-fields-list"
-                data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
-            {% for emailField in form.emails %}
-                <li>
-                    {{ form_errors(emailField) }}
-                    {{ form_widget(emailField) }}
-                </li>
-            {% endfor %}
-            </ul>
+            // create a new list element and add it to the list
+            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
+            newElem.appendTo(list);
+        });
+    });
 
-            <a href="#" id="add-another-email">Add another email</a>
+And update the template as follows:
 
-            {# ... #}
-        {{ form_end(form) }}
+.. code-block:: html+twig
 
-        <script type="text/javascript">
-            // keep track of how many email fields have been rendered
-            var emailCount = '{{ form.emails|length }}';
+    {{ form_start(form) }}
+        {# ... #}
 
-            jQuery(document).ready(function() {
-                jQuery('#add-another-email').click(function(e) {
-                    e.preventDefault();
+        {# store the prototype on the data-prototype attribute #}
+        <ul id="email-fields-list"
+            data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}"
+            data-widget-tags="{{ '<li></li>'|e }}">
+        {% for emailField in form.emails %}
+            <li>
+                {{ form_errors(emailField) }}
+                {{ form_widget(emailField) }}
+            </li>
+        {% endfor %}
+        </ul>
 
-                    var emailList = jQuery('#email-fields-list');
+        <a href="#"
+            class="add-another-collection-widget"
+            data-list="#email-field-list">Add another email</a>
 
-                    // grab the prototype template
-                    var newWidget = emailList.attr('data-prototype');
-                    // replace the "__name__" used in the id and name of the prototype
-                    // with a number that's unique to your emails
-                    // end name attribute looks like name="contact[emails][2]"
-                    newWidget = newWidget.replace(/__name__/g, emailCount);
-                    emailCount++;
+        {# ... #}
+    {{ form_end(form) }}
 
-                    // create a new list element and add it to the list
-                    var newLi = jQuery('<li></li>').html(newWidget);
-                    newLi.appendTo(emailList);
-                });
-            })
-        </script>
+    <script src="add-collection-widget.js"></script>
 
 .. tip::
 
@@ -270,12 +279,39 @@ For more information, see :ref:`form-collections-remove`.
 delete_empty
 ~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``Boolean`` or ``callable`` **default**: ``false``
 
 If you want to explicitly remove entirely empty collection entries from your
-form you have to set this option to true. However, existing collection entries
+form you have to set this option to ``true``. However, existing collection entries
 will only be deleted if you have the allow_delete_ option enabled. Otherwise
 the empty values will be kept.
+
+.. caution::
+
+    The ``delete_empty`` option only removes items when the normalized value is
+    ``null``. If the nested `entry_type`_ is a compound form type, you must
+    either set the ``required`` option to ``false`` or set the ``empty_data``
+    option to ``null``. Both of these options can be set inside `entry_options`_.
+    Read about the :ref:`form's empty_data option <reference-form-option-empty-data>`
+    to learn why this is necessary.
+
+A value is deleted from the collection only if the normalized value is ``null``.
+However, you can also set the option value to a callable, which will be executed
+for each value in the submitted collection. If the callable returns ``true``,
+the value is removed from the collection. For example::
+
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    // ...
+
+    $builder->add('users', CollectionType::class, array(
+        // ...
+        'delete_empty' => function (User $user = null) {
+            return null === $user || empty($user->getFirstName());
+        },
+    ));
+
+Using a callable is particularly useful in case of compound form types, which
+may define complex conditions for considering them empty.
 
 entry_options
 ~~~~~~~~~~~~~
@@ -307,7 +343,7 @@ type::
 entry_type
 ~~~~~~~~~~
 
-**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **required**
+**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **default**: Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType
 
 This is the field type for each item in this collection (e.g. ``TextType``,
 ``ChoiceType``, etc). For example, if you have an array of email addresses,

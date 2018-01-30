@@ -113,8 +113,25 @@ in the **Unsilenced** section of the deprecation report.
 Mark Tests as Legacy
 --------------------
 
-Add the ``@group legacy`` annotation to a test class or method to mark it
-as legacy.
+There are three ways to mark a test as legacy:
+
+* (**Recommended**) Add the ``@group legacy`` annotation to its class or method;
+
+* Make its class name start with the ``Legacy`` prefix;
+
+* Make its method name start with ``testLegacy*()`` instead of ``test*()``.
+
+.. note::
+
+    If your data provider calls code that would usually trigger a deprecation,
+    you can prefix its name with ``provideLegacy`` or ``getLegacy`` to silent
+    these deprecations. If your data provider does not execute deprecated
+    code, it is not required to choose a special naming just because the
+    test being fed by the data provider is marked as legacy.
+
+    Also be aware that choosing one of the two legacy prefixes will not mark
+    tests as legacy that make use of this data provider. You still have to
+    mark them as legacy tests explicitly.
 
 Configuration
 -------------
@@ -134,7 +151,7 @@ message, enclosed with ``/``. For example, with:
         <!-- ... -->
 
         <php>
-            <server name="KERNEL_DIR" value="app/" />
+            <server name="KERNEL_CLASS" value="App\Kernel" />
             <env name="SYMFONY_DEPRECATIONS_HELPER" value="/foobar/" />
         </php>
     </phpunit>
@@ -224,14 +241,14 @@ If you have this kind of time-related tests::
             sleep(10);
             $duration = $stopwatch->stop('event_name')->getDuration();
 
-            $this->assertEquals(10, $duration);
+            $this->assertEquals(10000, $duration);
         }
     }
 
 You used the :doc:`Symfony Stopwatch Component </components/stopwatch>` to
 calculate the duration time of your process, here 10 seconds. However, depending
 on the load of the server or the processes running on your local machine, the
-``$duration`` could for example be `10.000023s` instead of `10s`.
+``$duration`` could for example be ``10.000023s`` instead of ``10s``.
 
 This kind of tests are called transient tests: they are failing randomly
 depending on spurious and external circumstances. They are often cause trouble
@@ -414,10 +431,6 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
 Modified PHPUnit script
 -----------------------
 
-.. versionadded:: 3.2
-    This modified PHPUnit script was introduced in the 3.2 version of 
-    this component.
-
 This bridge provides a modified version of PHPUnit that you can call by using
 its ``bin/simple-phpunit`` command. It has the following features:
 
@@ -448,8 +461,113 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
 .. tip::
 
-    If you still need to use ``prophecy`` (but not ``symfony/yaml``), 
+    If you still need to use ``prophecy`` (but not ``symfony/yaml``),
     then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
+
+Code coverage listener
+----------------------
+
+By default, the code coverage is computed with the following rule: if a line of
+code is executed, then it is marked as covered. And the test which executes a
+line of code is therefore marked as "covering the line of code". This can be
+misleading.
+
+Consider the following example::
+
+    class Bar
+    {
+        public function barMethod()
+        {
+            return 'bar';
+        }
+    }
+
+    class Foo
+    {
+        private $bar;
+
+        public function __construct(Bar $bar)
+        {
+            $this->bar = $bar;
+        }
+
+        public function fooMethod()
+        {
+            $this->bar->barMethod();
+
+            return 'bar';
+        }
+    }
+
+    class FooTest extends PHPUnit\Framework\TestCase
+    {
+        public function test()
+        {
+            $bar = new Bar();
+            $foo = new Foo($bar);
+
+            $this->assertSame('bar', $foo->fooMethod());
+        }
+    }
+
+The ``FooTest::test`` method executes every single line of code of both ``Foo``
+and ``Bar`` classes, but ``Bar`` is not truly tested. The ``CoverageListener``
+aims to fix this behavior by adding the appropriate `@covers`_ annotation on
+each test class.
+
+If a test class already defines the ``@covers`` annotation, this listener does
+nothing. Otherwise, it tries to find the code related to the test by removing
+the ``Test`` part of the classname: ``My\Namespace\Tests\FooTest`` ->
+``My\Namespace\Foo``.
+
+Installation
+~~~~~~~~~~~~
+
+Add the following configuration to the ``phpunit.xml.dist`` file
+
+.. code-block:: xml
+
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\CoverageListener" />
+        </listeners>
+    </phpunit>
+
+If the logic used to find the related code is too simple or doesn't work for
+your application, you can use your own SUT (System Under Test) solver:
+
+.. code-block:: xml
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\CoverageListener">
+            <arguments>
+                <string>My\Namespace\SutSolver::solve</string>
+            </arguments>
+        </listener>
+    </listeners>
+
+The ``My\Namespace\SutSolver::solve`` can be any PHP callable and receives the
+current test classname as its first argument.
+
+Finally, the listener can also display warning messages when the SUT solver does
+not find the SUT:
+
+.. code-block:: xml
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\CoverageListener">
+            <arguments>
+                <null/>
+                <boolean>true</boolean>
+            </arguments>
+        </listener>
+    </listeners>
 
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
@@ -461,3 +579,4 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 .. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
 .. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
+.. _`@covers`: https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.covers

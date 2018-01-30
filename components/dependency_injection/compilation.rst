@@ -121,7 +121,7 @@ are loaded::
     $container->registerExtension(new AcmeDemoExtension);
 
     $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
-    $loader->load('config.yml');
+    $loader->load('config.yaml');
 
     // ...
     $container->compile();
@@ -422,9 +422,6 @@ been run, use::
         new CustomPass(),
         PassConfig::TYPE_AFTER_REMOVING
     );
-
-.. versionadded:: 3.2
-    The option to prioritize compiler passes was added in Symfony 3.2.
 
 You can also control the order in which compiler passes are run for each
 compilation phase. Use the optional third argument of ``addCompilerPass()`` to

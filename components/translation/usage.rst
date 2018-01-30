@@ -271,21 +271,6 @@ The second argument (``10`` in this example) is the *number* of objects being
 described and is used to determine which translation to use and also to populate
 the ``%count%`` placeholder.
 
-.. versionadded:: 3.2
-
-    Before Symfony 3.2, the placeholder used to select the plural (``%count%``
-    in this example) must be included in the third optional argument of the
-    ``transChoice()`` method::
-
-        $translator->transChoice(
-            'There is one apple|There are %count% apples',
-            10,
-            array('%count%' => 10)
-        );
-
-    Starting from Symfony 3.2, when the only placeholder is ``%count%``, you
-    don't have to pass this third argument.
-
 Based on the given number, the translator chooses the right plural form.
 In English, most words have a singular form when there is exactly one object
 and a plural form for all other numbers (0, 2, 3...). So, if ``count`` is

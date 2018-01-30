@@ -50,6 +50,8 @@ Field Options
 
 .. include:: /reference/forms/types/options/action.rst.inc
 
+.. _form-option-allow-extra-fields:
+
 allow_extra_fields
 ~~~~~~~~~~~~~~~~~~
 
@@ -70,6 +72,8 @@ option on the form.
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/data_class.rst.inc
+
+.. _reference-form-option-empty-data:
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER

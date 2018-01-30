@@ -5,8 +5,9 @@
 The DependencyInjection Component
 =================================
 
-    The DependencyInjection component allows you to standardize and centralize
-    the way objects are constructed in your application.
+    The DependencyInjection component implements a `PSR-11`_ compatible service
+    container that allows you to standardize and centralize the way objects are
+    constructed in your application.
 
 For an introduction to Dependency Injection and service containers see
 :doc:`/service_container`.
@@ -209,7 +210,7 @@ Loading a YAML config file::
 
     $container = new ContainerBuilder();
     $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
-    $loader->load('services.yml');
+    $loader->load('services.yaml');
 
 .. note::
 
@@ -305,4 +306,5 @@ Learn More
     /components/dependency_injection/*
     /service_container/*
 
+.. _`PSR-11`: http://www.php-fig.org/psr/psr-11/
 .. _Packagist: https://packagist.org/packages/symfony/dependency-injection

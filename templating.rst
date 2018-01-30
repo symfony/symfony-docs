@@ -6,7 +6,7 @@ Creating and Using Templates
 
 As explained in :doc:`the previous article </controller>`, controllers are
 responsible for handling each request that comes into a Symfony application and
-the usually end up rendering a template to generate the response contents.
+they usually end up rendering a template to generate the response contents.
 
 In reality, the controller delegates most of the heavy work to other places so
 that code can be tested and reused. When a controller needs to generate HTML,
@@ -174,7 +174,7 @@ First, build a base layout file:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/base.html.twig #}
+        {# templates/base.html.twig #}
         <!DOCTYPE html>
         <html>
             <head>
@@ -199,7 +199,7 @@ First, build a base layout file:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/base.html.php -->
+        <!-- templates/base.html.php -->
         <!DOCTYPE html>
         <html>
             <head>
@@ -242,7 +242,7 @@ A child template might look like this:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/blog/index.html.twig #}
+        {# templates/blog/index.html.twig #}
         {% extends 'base.html.twig' %}
 
         {% block title %}My cool blog posts{% endblock %}
@@ -256,7 +256,7 @@ A child template might look like this:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/blog/index.html.php -->
+        <!-- templates/blog/index.html.php -->
         <?php $view->extend('base.html.php') ?>
 
         <?php $view['slots']->set('title', 'My cool blog posts') ?>
@@ -270,9 +270,9 @@ A child template might look like this:
 
 .. note::
 
-   The parent template is stored in ``app/Resources/views/``, so its path is
-   simply ``base.html.twig``. The template naming conventions are explained
-   fully in :ref:`template-naming-locations`.
+    The parent template is stored in ``templates/``, so its path is
+    simply ``base.html.twig``. The template naming conventions are explained
+    fully in :ref:`template-naming-locations`.
 
 The key to template inheritance is the ``{% extends %}`` tag. This tells
 the templating engine to first evaluate the base template, which sets up
@@ -357,7 +357,7 @@ Template Naming and Locations
 
 By default, templates can live in two different locations:
 
-``app/Resources/views/``
+``templates/``
     The application's ``views`` directory can contain application-wide base templates
     (i.e. your application's layouts and templates of the application bundle) as
     well as templates that override third party bundle templates
@@ -366,13 +366,13 @@ By default, templates can live in two different locations:
 ``vendor/path/to/CoolBundle/Resources/views/``
     Each third party bundle houses its templates in its ``Resources/views/``
     directory (and subdirectories). When you plan to share your bundle, you should
-    put the templates in the bundle instead of the ``app/`` directory.
+    put the templates in the bundle instead of the ``templates/`` directory.
 
-Most of the templates you'll use live in the ``app/Resources/views/``
+Most of the templates you'll use live in the ``templates/``
 directory. The path you'll use will be relative to this directory. For example,
-to render/extend ``app/Resources/views/base.html.twig``, you'll use the
+to render/extend ``templates/base.html.twig``, you'll use the
 ``base.html.twig`` path and to render/extend
-``app/Resources/views/blog/index.html.twig``, you'll use the
+``templates/blog/index.html.twig``, you'll use the
 ``blog/index.html.twig`` path.
 
 .. _template-referencing-in-bundle:
@@ -407,7 +407,7 @@ for several types of templates, each which lives in a specific location:
 
 In the :doc:`/templating/overriding` section, you'll find out how each
 template living inside the AcmeBlogBundle, for example, can be overridden
-by placing a template of the same name in the ``app/Resources/AcmeBlogBundle/views/``
+by placing a template of the same name in the ``templates/bundles/AcmeBlogBundle/``
 directory. This gives the power to override templates from any vendor bundle.
 
 Template Suffix
@@ -479,7 +479,7 @@ template. First, create the template that you'll need to reuse.
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/article/article_details.html.twig #}
+        {# templates/article/article_details.html.twig #}
         <h2>{{ article.title }}</h2>
         <h3 class="byline">by {{ article.authorName }}</h3>
 
@@ -489,7 +489,7 @@ template. First, create the template that you'll need to reuse.
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/article/article_details.html.php -->
+        <!-- templates/article/article_details.html.php -->
         <h2><?php echo $article->getTitle() ?></h2>
         <h3 class="byline">by <?php echo $article->getAuthorName() ?></h3>
 
@@ -503,7 +503,7 @@ Including this template from any other template is simple:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/article/list.html.twig #}
+        {# templates/article/list.html.twig #}
         {% extends 'layout.html.twig' %}
 
         {% block body %}
@@ -516,7 +516,7 @@ Including this template from any other template is simple:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/article/list.html.php -->
+        <!-- templates/article/list.html.php -->
         <?php $view->extend('layout.html.php') ?>
 
         <?php $view['slots']->start('body') ?>
@@ -565,7 +565,7 @@ configuration:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/WelcomeController.php
+        // src/Controller/WelcomeController.php
 
         // ...
         use Symfony\Component\Routing\Annotation\Route;
@@ -575,7 +575,7 @@ configuration:
             /**
              * @Route("/", name="welcome")
              */
-            public function indexAction()
+            public function index()
             {
                 // ...
             }
@@ -583,14 +583,14 @@ configuration:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         welcome:
             path:     /
-            defaults: { _controller: AppBundle:Welcome:index }
+            controller: App\Controller\WelcomeController::index
 
     .. code-block:: xml
 
-        <!-- app/config/routing.yml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -598,19 +598,19 @@ configuration:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="welcome" path="/">
-                <default key="_controller">AppBundle:Welcome:index</default>
+                <default key="_controller">App\Controller\WelcomeController::index</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\Route;
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
         $collection->add('welcome', new Route('/', array(
-            '_controller' => 'AppBundle:Welcome:index',
+            '_controller' => 'App\Controller\WelcomeController::index',
         )));
 
         return $collection;
@@ -634,7 +634,7 @@ route:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/ArticleController.php
+        // src/Controller/ArticleController.php
 
         // ...
         use Symfony\Component\Routing\Annotation\Route;
@@ -644,7 +644,7 @@ route:
             /**
              * @Route("/article/{slug}", name="article_show")
              */
-            public function showAction($slug)
+            public function show($slug)
             {
                 // ...
             }
@@ -652,14 +652,14 @@ route:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         article_show:
-            path:     /article/{slug}
-            defaults: { _controller: AppBundle:Article:show }
+            path:       /article/{slug}
+            controller: App\Controller\ArticleController::show
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -667,19 +667,19 @@ route:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="article_show" path="/article/{slug}">
-                <default key="_controller">AppBundle:Article:show</default>
+                <default key="_controller">App\Controller\ArticleController::show</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\Route;
         use Symfony\Component\Routing\RouteCollection;
 
         $collection = new RouteCollection();
         $collection->add('article_show', new Route('/article/{slug}', array(
-            '_controller' => 'AppBundle:Article:show',
+            '_controller' => 'App\Controller\ArticleController::show',
         )));
 
         return $collection;
@@ -693,7 +693,7 @@ correctly:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/article/recent_list.html.twig #}
+        {# templates/article/recent_list.html.twig #}
         {% for article in articles %}
             <a href="{{ path('article_show', {'slug': article.slug}) }}">
                 {{ article.title }}
@@ -702,7 +702,7 @@ correctly:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/Article/recent_list.html.php -->
+        <!-- templates/Article/recent_list.html.php -->
         <?php foreach ($articles as $article): ?>
             <a href="<?php echo $view['router']->path('article_show', array(
                 'slug' => $article->getSlug(),
@@ -738,7 +738,15 @@ Linking to Assets
 
 Templates also commonly refer to images, JavaScript, stylesheets and other
 assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
-but Symfony provides a more dynamic option via the ``asset()`` Twig function:
+but Symfony provides a more dynamic option via the ``asset()`` Twig function.
+
+To use this function, install the *asset* package:
+
+.. code-block:: terminal
+
+    $ composer require asset
+
+You can now use the ``asset()`` function:
 
 .. configuration-block::
 
@@ -791,10 +799,10 @@ advantage of Symfony's template inheritance.
 .. tip::
 
     This section will teach you the philosophy behind including stylesheet
-    and JavaScript assets in Symfony. Symfony is also compatible with another
-    library, called Assetic, which follows this philosophy but allows you to do
-    much more interesting things with those assets. For more information on
-    using Assetic see :doc:`/assetic/asset_management`.
+    and JavaScript assets in Symfony. If you are interested in compiling and
+    creating those assets, check out the :doc:`Webpack Encore documentation </frontend>`
+    a tool that seamlessly integrates Webpack and other modern JavaScript tools
+    into Symfony applications.
 
 Start by adding two blocks to your base template that will hold your assets:
 one called ``stylesheets`` inside the ``head`` tag and another called ``javascripts``
@@ -805,7 +813,7 @@ stylesheets and JavaScripts that you'll need throughout your site:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/base.html.twig #}
+        {# templates/base.html.twig #}
         <html>
             <head>
                 {# ... #}
@@ -825,7 +833,7 @@ stylesheets and JavaScripts that you'll need throughout your site:
 
     .. code-block:: php
 
-        // app/Resources/views/base.html.php
+        // templates/base.html.php
         <html>
             <head>
                 <?php ... ?>
@@ -852,7 +860,7 @@ page. From inside that contact page's template, do the following:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/contact/contact.html.twig #}
+        {# templates/contact/contact.html.twig #}
         {% extends 'base.html.twig' %}
 
         {% block stylesheets %}
@@ -865,7 +873,7 @@ page. From inside that contact page's template, do the following:
 
     .. code-block:: php
 
-        // app/Resources/views/contact/contact.html.twig
+        // templates/contact/contact.html.twig
         <?php $view->extend('base.html.php') ?>
 
         <?php $view['slots']->start('stylesheets') ?>
@@ -878,10 +886,10 @@ to add to the parent block's content (and not actually *replace* it), you
 should use the ``parent()`` Twig function to include everything from the ``stylesheets``
 block of the base template.
 
-You can also include assets located in your bundles' ``Resources/public`` folder.
+You can also include assets located in your bundles' ``Resources/public/`` folder.
 You will need to run the ``php bin/console assets:install target [--symlink]``
 command, which copies (or symlinks) files into the correct location. (target
-is by default "web").
+is by default the "public/" directory of your application).
 
 .. code-block:: html+twig
 

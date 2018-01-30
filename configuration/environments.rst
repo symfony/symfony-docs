@@ -20,128 +20,58 @@ Different Environments, different Configuration Files
 -----------------------------------------------------
 
 A typical Symfony application begins with three environments: ``dev``,
-``prod``, and ``test``. As mentioned, each environment simply represents
-a way to execute the same codebase with different configuration. It should
-be no surprise then that each environment loads its own individual configuration
-file. If you're using the YAML configuration format, the following files
-are used:
+``prod`` and ``test``. As mentioned, each environment represents a way to
+execute the same codebase with different configuration. It should be no
+surprise then that each environment loads its own individual configuration
+files. These different files are organized by environment:
 
-* for the ``dev`` environment: ``app/config/config_dev.yml``
-* for the ``prod`` environment: ``app/config/config_prod.yml``
-* for the ``test`` environment: ``app/config/config_test.yml``
+* for the ``dev`` environment: ``config/packages/dev/``
+* for the ``prod`` environment: ``config/packages/prod/``
+* for the ``test`` environment: ``config/packages/test/``
 
-This works via a simple standard that's used by default inside the ``AppKernel``
-class:
+In reality, each environment differs only somewhat from others. This means that
+all environments share a large base of common configurations. This configuration
+is put in files directly in the ``config/packages/`` directory.
 
-.. code-block:: php
+The location of these files is defined by the application's Kernel::
 
-    // app/AppKernel.php
+    // src/Kernel.php
 
     // ...
-
-    class AppKernel extends Kernel
+    class Kernel extends BaseKernel
     {
         // ...
 
-        public function registerContainerConfiguration(LoaderInterface $loader)
+        protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
         {
-            $loader->load($this->getProjectDir().'/app/config/config_'.$this->getEnvironment().'.yml');
+            // ...
+            $confDir = $this->getProjectDir().'/config';
+
+            // always load all files in /config/packages/
+            $loader->load($confDir.'/packages/*'.self::CONFIG_EXTS, 'glob');
+
+            // then, if available, load the files in the specific environment directory
+            if (is_dir($confDir.'/packages/'.$this->environment)) {
+                $loader->load($confDir.'/packages/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
+            }
+
+            // load a special services.(yaml/xml/php) and, if available, services_ENVIRONMENT.(yaml/xml/php) file
+            $loader->load($confDir.'/services'.self::CONFIG_EXTS, 'glob');
+            $loader->load($confDir.'/services_'.$this->environment.self::CONFIG_EXTS, 'glob');
         }
     }
 
-As you can see, when Symfony is loaded, it uses the given environment to
-determine which configuration file to load. This accomplishes the goal of
-multiple environments in an elegant, powerful and transparent way.
+Take the framework package, installed by default, as an example:
 
-Of course, in reality, each environment differs only somewhat from others.
-Generally, all environments will share a large base of common configuration.
-Opening the ``config_dev.yml`` configuration file, you can see how this is
-accomplished easily and transparently:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        imports:
-            - { resource: config.yml }
-
-        # ...
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine
-                http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
-            <imports>
-                <import resource="config.xml" />
-            </imports>
-
-            <!-- ... -->
-
-        </container>
-
-    .. code-block:: php
-
-        $loader->import('config.php');
-
-        // ...
-
-To share common configuration, each environment's configuration file
-simply first imports from a central configuration file (``config.yml``).
-The remainder of the file can then deviate from the default configuration
-by overriding individual parameters. For example, by default, the ``web_profiler``
-toolbar is disabled. However, in the ``dev`` environment, the toolbar is
-activated by modifying the value of the ``toolbar`` option in the ``config_dev.yml``
-configuration file:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config_dev.yml
-        imports:
-            - { resource: config.yml }
-
-        web_profiler:
-            toolbar: true
-            # ...
-
-    .. code-block:: xml
-
-        <!-- app/config/config_dev.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/webprofiler
-                http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd">
-
-            <imports>
-                <import resource="config.xml" />
-            </imports>
-
-            <webprofiler:config toolbar="true" />
-
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config_dev.php
-        $loader->import('config.php');
-
-        $container->loadFromExtension('web_profiler', array(
-            'toolbar' => true,
-
-            // ...
-        ));
+* Loaded in all environments, ``config/packages/framework.yaml`` configures the
+  framework with some ``secret`` setting;
+* In the **prod** environment, nothing extra will be set as there is no
+  ``config/packages/prod/`` directory;
+* The same applies to **dev**, as there is no
+  ``config/packages/dev/framework.yaml``. There are however other packages (e.g.
+  ``routing.yaml``) with special dev settings;
+* At last, during the **test** environment, the framework's test features are
+  enabled in ``config/packages/test/framework.yaml``.
 
 .. index::
    single: Environments; Executing different environments
@@ -149,77 +79,77 @@ configuration file:
 Executing an Application in different Environments
 --------------------------------------------------
 
-To execute the application in each environment, load up the application using
-either ``app.php`` (for the ``prod`` environment) or ``app_dev.php``
-(for the ``dev`` environment) front controller:
+To execute the application in each environment, change the ``APP_ENV``
+environment variable. During development, this is done in ``.env``:
 
-.. code-block:: text
+.. code-block:: bash
 
-    http://localhost/app.php      -> *prod* environment
-    http://localhost/app_dev.php  -> *dev* environment
+    # .env
+    APP_ENV=dev
 
-If you don't have *either* filename in your URL, then it's up to your web server
-to decide *which* file to execute behind the scenes. If you're using the built-in
-PHP web server, it knows to use the ``app_dev.php`` file. On production, you'll
-:doc:`configure your web server </setup/web_server_configuration>` to use ``app.php``.
-Either way: *one of these two files is always executed*.
+    # or for test:
+    #APP_ENV=test
 
-.. note::
+Visit the ``http://localhost:8000/index.php`` page in your web browser to see
+your application in the configured environment.
 
-   The given URLs assume that your web server is configured to use the ``web/``
-   directory of the application as its root. Read more in
-   :doc:`Installing Symfony </setup>`.
+.. tip::
 
-If you open up one of these files, you'll quickly see that the environment
-used by each is explicitly set::
-
-    // web/app.php
-    // ...
-
-    $kernel = new AppKernel('prod', false);
-
-    // ...
-
-The ``prod`` key specifies that this application will run in the ``prod``
-environment. A Symfony application can be executed in any environment by using
-this code and changing the environment string.
+    In production, it is recommended to configure the environment variables in
+    your :ref:`web server configuration <configuration-env-var-in-prod>`.
 
 .. note::
 
-   The ``test`` environment is used when writing functional tests and is
-   not accessible in the browser directly via a front controller. In other
-   words, unlike the other environments, there is no ``app_test.php`` front
-   controller file.
+    The given URLs assume that your web server is configured to use the ``public/``
+    directory of the application as its root. Read more in :doc:`Installing Symfony </setup>`.
+
+If you open the file you just visited (``public/index.php``), you'll see that
+the environment variable is passed to the kernel::
+
+    // public/index.php
+
+    // ...
+    $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? false);
+
+    // ...
+
+You can also replace ``$_SERVER['APP_ENV'] ?? 'dev'`` by just ``'dev'`` to
+always run the application in the dev environment, independent of the
+``APP_ENV`` variable.
+
+.. note::
+
+    The ``test`` environment is used when writing functional tests and is
+    usually not accessed in the browser directly via a front controller.
 
 .. index::
    single: Configuration; Debug mode
 
 .. sidebar:: *Debug* Mode
 
-    Important, but unrelated to the topic of *environments* is the ``false``
-    argument as the second argument to the ``AppKernel`` constructor. This
-    specifies if the application should run in "debug mode". Regardless
-    of the environment, a Symfony application can be run with debug mode
-    set to ``true`` or ``false``. This affects many things in the application,
-    such as displaying stacktraces on error pages or if cache files are
-    dynamically rebuilt on each request. Though not a requirement, debug mode
-    is generally set to ``true`` for the ``dev`` and ``test`` environments and
-    ``false`` for the ``prod`` environment.
+    Important, but unrelated to the topic of *environments* is the second
+    argument to the ``Kernel`` constructor. This specifies if the application
+    should run in "debug mode". Regardless of the environment, a Symfony
+    application can be run with debug mode set to ``true`` or ``false``
+    (respectively ``1`` or ``0`` for the ``APP_DEBUG`` variable defined in
+    ``.env``). This affects many things in the application, such as displaying
+    stacktraces on error pages or if cache files are dynamically rebuilt on
+    each request.  Though not a requirement, debug mode is generally set to
+    ``true`` for the ``dev`` and ``test`` environments and ``false`` for the
+    ``prod`` environment.
 
     Internally, the value of the debug mode becomes the ``kernel.debug``
     parameter used inside the :doc:`service container </service_container>`.
     If you look inside the application configuration file, you'll see the
-    parameter used, for example, to turn logging on or off when using the
-    Doctrine DBAL:
+    parameter used, for example, to turn Twig's debug mode on:
 
     .. configuration-block::
 
         .. code-block:: yaml
 
-            doctrine:
-               dbal:
-                   logging: '%kernel.debug%'
-                   # ...
+            # config/packages/twig.yaml
+            twig:
+                debug: '%kernel.debug%'
 
         .. code-block:: xml
 
@@ -229,29 +159,27 @@ this code and changing the environment string.
                 xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     http://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/doctrine
-                    http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+                    http://symfony.com/schema/dic/twig
+                    http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
-                <doctrine:dbal logging="%kernel.debug%" />
+                <twig:config debug="%kernel.debug%" />
 
             </container>
 
         .. code-block:: php
 
-            $container->loadFromExtension('doctrine', array(
-                'dbal' => array(
-                    'logging'  => '%kernel.debug%',
-                    // ...
-                ),
+            $container->loadFromExtension('twig', array(
+                'debug' => '%kernel.debug%',
                 // ...
             ));
 
 Selecting the Environment for Console Commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, Symfony commands are executed in the ``dev`` environment and with the
-debug mode enabled. Use the ``--env`` and ``--no-debug`` options to modify this
-behavior:
+By default, Symfony commands are executed in whatever environment is defined by
+the ``APP_ENV`` environment variable (usually configured in your ``.env`` file).
+
+Use the ``--env`` and ``--no-debug`` options to modify this behavior:
 
 .. code-block:: terminal
 
@@ -264,31 +192,14 @@ behavior:
     # 'test' environment and debug disabled
     $ php bin/console command_name --env=test --no-debug
 
-In addition to the ``--env`` and ``--no-debug`` options, the behavior of Symfony
-commands can also be controlled with environment variables. The Symfony console
-application checks the existence and value of these environment variables before
-executing any command:
-
-``SYMFONY_ENV``
-    Sets the execution environment of the command to the value of this variable
-    (``dev``, ``prod``, ``test``, etc.);
-``SYMFONY_DEBUG``
-    If ``0``, debug mode is disabled. Otherwise, debug mode is enabled.
-
-These environment variables are very useful for production servers because they
-allow you to ensure that commands always run in the ``prod`` environment without
-having to add any command option.
-
 .. index::
    single: Environments; Creating a new environment
 
 Creating a new Environment
 --------------------------
 
-By default, a Symfony application has three environments that handle most
-cases. Of course, since an environment is nothing more than a string that
-corresponds to a set of configuration, creating a new environment is quite
-easy.
+Since an environment is nothing more than a string that corresponds to a set of
+configuration, creating a new environment is quite easy.
 
 Suppose, for example, that before deployment, you need to benchmark your
 application. One way to benchmark the application is to use near-production
@@ -296,22 +207,20 @@ settings, but with Symfony's ``web_profiler`` enabled. This allows Symfony
 to record information about your application while benchmarking.
 
 The best way to accomplish this is via a new environment called, for example,
-``benchmark``. Start by creating a new configuration file:
+``benchmark``. Start by creating a new configuration directory and a
+configuration file:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config_benchmark.yml
-        imports:
-            - { resource: config_prod.yml }
-
+        # config/packages/benchmark/web_profiler.yaml
         framework:
             profiler: { only_exceptions: false }
 
     .. code-block:: xml
 
-        <!-- app/config/config_benchmark.xml -->
+        <!-- config/packages/benchmark/web_profiler.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -321,10 +230,6 @@ The best way to accomplish this is via a new environment called, for example,
                 http://symfony.com/schema/dic/symfony
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <imports>
-                <import resource="config_prod.xml" />
-            </imports>
-
             <framework:config>
                 <framework:profiler only-exceptions="false" />
             </framework:config>
@@ -333,50 +238,77 @@ The best way to accomplish this is via a new environment called, for example,
 
     .. code-block:: php
 
-        // app/config/config_benchmark.php
-        $loader->import('config_prod.php');
-
+        // config/packages/benchmark/web_profiler.php
         $container->loadFromExtension('framework', array(
             'profiler' => array('only_exceptions' => false),
         ));
 
-.. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
+And... you're finished! The application now supports a new environment called
+``benchmark``.
 
-And with this simple addition, the application now supports a new environment
-called ``benchmark``.
+Change the ``APP_ENV`` variable to ``benchmark`` to be able to access the new
+environment through your browser:
 
-This new configuration file imports the configuration from the ``prod`` environment
-and modifies it. This guarantees that the new environment is identical to
-the ``prod`` environment, except for any changes explicitly made here.
+.. code-block:: bash
 
-Because you'll want this environment to be accessible via a browser, you
-should also create a front controller for it. Copy the ``web/app.php`` file
-to ``web/app_benchmark.php`` and edit the environment to be ``benchmark``::
+    # .env
+    APP_ENV=benchmark
 
-    // web/app_benchmark.php
-    // ...
+.. sidebar:: Importing configuration
 
-    // change just this line
-    $kernel = new AppKernel('benchmark', false);
+    Besides loading files in the Kernel, you can also import files in the
+    configuration directly. For instance, to make sure the benchmark
+    environment is identical to the prod environment, you might want to load
+    all its configuration as well.
 
-    // ...
+    You can achieve this by using a special ``imports`` key:
 
-The new environment is now accessible via::
+    .. configuration-block:
 
-    http://localhost/app_benchmark.php
+        .. code-block:: yaml
 
-.. note::
+            # config/packages/benchmark/other.yaml
+            imports:
+                - { resource: '../prod/' }
 
-    Some environments, like the ``dev`` environment, are never meant to be
-    accessed on any deployed server by the public. This is because
-    certain environments, for debugging purposes, may give too much information
-    about the application or underlying infrastructure. To be sure these environments
-    aren't accessible, the front controller is usually protected from external
-    IP addresses via the following code at the top of the controller::
+                # other resources are possible as well, like importing other
+                # files or using globs:
+                #- { resource: '/etc/myapp/some_special_config.xml' }
+                #- { resource: '/etc/myapp/*.yaml' }
 
-        if (!in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) {
-            die('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
-        }
+        .. code-block:: xml
+
+            <!-- config/packages/benchmark/other.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <imports>
+                    <import resource="../prod/"/>
+
+                    <!-- other resources are possible as well, like importing other
+                         files or using globs:
+                    <import resource="/etc/myapp/some_special_config.yaml"/>
+                    <import resource="/etc/myapp/*.xml"/>
+                    -->
+                </imports>
+
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/benchmark/other.php
+            $loader->import('../prod/');
+
+            // other resources are possible as well, like importing other
+            // files or using globs:
+            //$loader->import('/etc/myapp/some_special_config.yaml');
+            //$loader->import('/etc/myapp/*.php');
 
 .. index::
    single: Environments; Cache directory
@@ -388,7 +320,7 @@ Symfony takes advantage of caching in many ways: the application configuration,
 routing configuration, Twig templates and more are cached to PHP objects
 stored in files on the filesystem.
 
-By default, these cached files are largely stored in the ``var/cache`` directory.
+By default, these cached files are largely stored in the ``var/cache/`` directory.
 However, each environment caches its own set of files:
 
 .. code-block:: text
@@ -402,8 +334,8 @@ However, each environment caches its own set of files:
 
 Sometimes, when debugging, it may be helpful to inspect a cached file to
 understand how something is working. When doing so, remember to look in
-the directory of the environment you're using (most commonly ``dev`` while
-developing and debugging). While it can vary, the ``var/cache/dev`` directory
+the directory of the environment you're using (most commonly ``dev/`` while
+developing and debugging). While it can vary, the ``var/cache/dev/`` directory
 includes the following:
 
 ``appDevDebugProjectContainer.php``

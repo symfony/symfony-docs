@@ -20,8 +20,11 @@ You can install the component in 2 different ways:
 Usage
 -----
 
-The :class:`Symfony\\Component\\Process\\Process` class allows you to execute
-a command in a sub-process::
+The :class:`Symfony\\Component\\Process\\Process` class executes a command in a
+sub-process, taking care of the differences between operating system and
+escaping arguments to prevent security issues. It replaces PHP functions like
+:phpfunction:`exec`, :phpfunction:`passthru`, :phpfunction:`shell_exec` and
+:phpfunction:`system`::
 
     use Symfony\Component\Process\Process;
     use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -36,8 +39,18 @@ a command in a sub-process::
 
     echo $process->getOutput();
 
-The component takes care of the subtle differences between the different platforms
-when executing the command.
+.. tip::
+
+    In addition to passing the command binary and its arguments as a string, you
+    can also pass them as an array, which is useful when building a complex
+    command programmatically::
+
+        // traditional string based commands
+        $builder = new Process('ls -lsa');
+        // same example but using an array
+        $builder = new Process(array('ls', '-lsa'));
+        // the array can contain any number of arguments and options
+        $builder = new Process(array('ls', '-l', '-s', '-a'));
 
 The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
@@ -77,9 +90,6 @@ for new output before going to the next iteration::
         foreach ($iterator as $data) {
             echo $data."\n";
         }
-
-    .. versionadded:: 3.2
-        The ``getIterator()`` method was introduced in Symfony 3.2.
 
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
 a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
@@ -230,6 +240,29 @@ stream resources or Traversable objects as argument. As shown in the above examp
 you need to explicitly call the :method:`Symfony\\Component\\Process\\InputStream::close`
 method when you are done writing to the standard input of the subprocess.
 
+Using PHP Streams as the Standard Input of a Process
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The input of a process can also be defined using `PHP streams`_::
+
+    $stream = fopen('php://temporary', 'w+');
+
+    $process = new Process('cat');
+    $process->setInput($stream);
+    $process->start();
+
+    fwrite($stream, 'foo');
+
+    // ... read process output or do other things
+
+    fwrite($stream, 'bar');
+    fclose($stream);
+
+    $process->wait();
+
+    // will echo: 'foobar'
+    echo $process->getOutput();
+
 Stopping a Process
 ------------------
 
@@ -260,38 +293,6 @@ instead::
     EOF
     );
     $process->run();
-
-To make your code work better on all platforms, you might want to use the
-:class:`Symfony\\Component\\Process\\ProcessBuilder` class instead::
-
-    use Symfony\Component\Process\ProcessBuilder;
-
-    $builder = new ProcessBuilder(array('ls', '-lsa'));
-    $builder->getProcess()->run();
-
-In case you are building a binary driver, you can use the
-:method:`Symfony\\Component\\Process\\ProcessBuilder::setPrefix` method to prefix all
-the generated process commands.
-
-The following example will generate two process commands for a tar binary
-adapter::
-
-    use Symfony\Component\Process\ProcessBuilder;
-
-    $builder = new ProcessBuilder();
-    $builder->setPrefix('/usr/bin/tar');
-
-    // '/usr/bin/tar' '--list' '--file=archive.tar.gz'
-    echo $builder
-        ->setArguments(array('--list', '--file=archive.tar.gz'))
-        ->getProcess()
-        ->getCommandLine();
-
-    // '/usr/bin/tar' '-xzf' 'archive.tar.gz'
-    echo $builder
-        ->setArguments(array('-xzf', 'archive.tar.gz'))
-        ->getProcess()
-        ->getCommandLine();
 
 Process Timeout
 ---------------
@@ -331,12 +332,12 @@ Process Idle Timeout
 In contrast to the timeout of the previous paragraph, the idle timeout only
 considers the time since the last output was produced by the process::
 
-   use Symfony\Component\Process\Process;
+    use Symfony\Component\Process\Process;
 
-   $process = new Process('something-with-variable-runtime');
-   $process->setTimeout(3600);
-   $process->setIdleTimeout(60);
-   $process->run();
+    $process = new Process('something-with-variable-runtime');
+    $process->setTimeout(3600);
+    $process->setIdleTimeout(60);
+    $process->run();
 
 In the case above, a process is considered timed out, when either the total runtime
 exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
@@ -410,13 +411,10 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
     However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
     methods to handle process output in a streaming fashion.
 
-    .. versionadded:: 3.1
-        The ability to pass a callback to these methods when output is disabled
-        was added in Symfony 3.1.
-
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
 .. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
 .. _`PHP Documentation`: http://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process
+.. _`PHP streams`: http://www.php.net/manual/en/book.stream.php

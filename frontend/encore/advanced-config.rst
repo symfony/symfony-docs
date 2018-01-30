@@ -40,5 +40,48 @@ But be careful not to accidentally override any config from Encore:
     // BAD - this replaces any extensions added by Encore
     // config.resolve.extensions = ['json'];
 
+Defining Multiple Webpack Configurations
+----------------------------------------
+
+Webpack supports passing an `array of configurations`_, which are processed in
+parallel. Webpack Encore includes a ``reset()`` object allowing to reset the
+state of the current configuration to build a new one:
+
+.. code-block:: javascript
+
+    // define the first configuration
+    Encore
+        .setOutputPath('web/build/')
+        .setPublicPath('/build')
+        .addEntry('app', './assets/js/main.js')
+        .addStyleEntry('global', './assets/css/global.scss')
+        .enableSassLoader()
+        .autoProvidejQuery()
+        .enableSourceMaps(!Encore.isProduction())
+    ;
+
+    // build the first configuration
+    const firstConfig = Encore.getWebpackConfig();
+
+    // reset Encore to build the second config
+    Encore.reset();
+
+    // define the second configuration
+    Encore
+        .setOutputPath('web/build/')
+        .setPublicPath('/build')
+        .addEntry('mobile', './assets/js/mobile.js')
+        .addStyleEntry('mobile', './assets/css/mobile.less')
+        .enableLessLoader()
+        .enableSourceMaps(!Encore.isProduction())
+    ;
+
+    // build the second configuration
+    const secondConfig = Encore.getWebpackConfig();
+
+    // export the final configuration as an array of multiple configurations
+    module.exports = [firstConfig, secondConfig];
+
 .. _`configuration options`: https://webpack.js.org/configuration/
 .. _`Webpack's watchOptions`: https://webpack.js.org/configuration/watch/#watchoptions
+.. _`array of configurations`: https://github.com/webpack/docs/wiki/configuration#multiple-configurations
