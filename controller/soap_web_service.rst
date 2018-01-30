@@ -40,8 +40,8 @@ In this case, the SOAP service will allow the client to call a method called
         {
 
             $message = new \Swift_Message('Hello Service')
-                                    ->setTo('me@example.com')
-                                    ->setBody($name . ' says hi!');
+                ->setTo('me@example.com')
+                ->setBody($name.' says hi!');
 
             $this->mailer->send($message);
 
