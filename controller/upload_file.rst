@@ -133,7 +133,7 @@ Finally, you need to update the code of the controller that handles the form::
                 $file = $product->getBrochure();
 
                 // Generate a unique name for the file before saving it
-                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $fileName = uniqid().'.'.$file->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 $file->move(
