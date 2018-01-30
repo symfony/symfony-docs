@@ -503,7 +503,7 @@ One of ``annotation`` (the default value), ``xml``, ``yml``, ``php`` or
 dir
 ...
 
-Absolute path to the mapping or entity files (depending on the driver.
+Absolute path to the mapping or entity files (depending on the driver).
 
 prefix
 ......
