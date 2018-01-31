@@ -40,8 +40,8 @@ Building a simple Component
 Once Vue is installed and ``webpack.config.js`` has been updated,
 you can build your first component and display a simple ``Hello World from Vue !``.
 
-In order to ease the process, the usage of ``.vue`` files is recommended,
-start by adding a ``main.js`` file inside the assets folder:
+In order to ease the process, the usage of ``.vue`` files is recommended.
+Start by adding a ``main.js`` file inside the assets folder:
 
 .. code-block:: javascript
 
@@ -54,10 +54,11 @@ start by adding a ``main.js`` file inside the assets folder:
         render: h => h(Hello)
     });
 
-This file's gonna call the component Hello from the components folder, once the component is found,
-Vue gonna instantiate a new Root component and attach your component to the HTML element who contain the app identifier.
+First, this file's gonna call the component Hello from the components folder.
+Once the component is found, Vue gonna instantiate a new Root component and 
+attach your component to the HTML element who contain the app identifier.
 
-Now, let's build the Hello component :
+Now, let's build the Hello component:
 
 .. code-block:: html
 
@@ -83,8 +84,8 @@ This component is pretty simple at this stage but once you're aware about Vue an
 you can easily integrate it into your own Twig views and logic.
 
 Now that your component is ready and that your Vue instance is configured,
-let's use Encore to build everything and call Vue inside your views,
-in order to ease the process, let's use the watcher :
+time to use Encore to build everything and call ``Vue`` inside your views,
+in order to ease the process, let's use the watcher:
 
 .. code-block:: terminal
 
@@ -92,7 +93,7 @@ in order to ease the process, let's use the watcher :
 
 If everything goes right, Encore should compile ``main.js`` and produce a new ``main.js`` file
 inside the ``public/build`` directory, once the file is packed into the folder,
-let's call it inside your Twig views :
+let's call it inside your Twig views:
 
 .. code-block:: twig
 
