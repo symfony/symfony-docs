@@ -132,8 +132,7 @@ Finally, you need to update the code of the controller that handles the form::
                 /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
                 $file = $product->getBrochure();
 
-                // Generate a unique name for the file before saving it
-                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
 
                 // Move the file to the directory where brochures are stored
                 $file->move(
@@ -153,6 +152,18 @@ Finally, you need to update the code of the controller that handles the form::
             return $this->render('product/new.html.twig', array(
                 'form' => $form->createView(),
             ));
+        }
+        
+        /**
+         * @return string
+         */
+        private function generateUniqueFileName()
+        {
+            // uniqid() is based on timestamp,
+            // so it creates similar and predictible file names as a result.
+            // md5() is used to guarantee equal distribuition
+            // and smaller predictibility of the file names.
+            return md5(uniqid());
         }
     }
 
