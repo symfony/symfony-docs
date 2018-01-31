@@ -580,7 +580,7 @@ nice way to group related pages. The controller functions are also sometimes cal
 The two controllers (or actions) are still lightweight. Each uses the
 :doc:`Doctrine ORM library </doctrine>` to retrieve objects from the
 database and the Templating component to render a template and return a
-``Response`` object. The list ``list.php`` template is now quite a bit simpler:
+``Response`` object. The ``list.php`` template is now quite a bit simpler:
 
 .. code-block:: html+php
 
@@ -623,7 +623,7 @@ The ``layout.php`` file is nearly identical:
 
 .. note::
 
-    The show ``show.php`` template is left as an exercise: updating it should be
+    The ``show.php`` template is left as an exercise: updating it should be
     really similar to updating the ``list.php`` template.
 
 When Symfony's engine (called the Kernel) boots up, it needs a map so
@@ -673,10 +673,10 @@ It's a beautiful thing.
 Better Templates
 ~~~~~~~~~~~~~~~~
 
-If you choose to use it, Symfony comes standard with a templating engine
+If you choose to use it, Symfony comes with a templating engine
 called `Twig`_ that makes templates faster to write and easier to read.
-It means that the sample application could contain even less code! Take,
-for example, rewriting ``list.html.php`` template in Twig would look like
+It means that the sample application could contain even less code! For
+example, rewriting the ``list.html.php`` template in Twig would look like
 this:
 
 .. code-block:: html+twig
@@ -699,7 +699,7 @@ this:
         </ul>
     {% endblock %}
 
-And rewriting ``layout.html.php`` template in Twig would look like this:
+And rewriting the ``layout.html.php`` template in Twig would look like this:
 
 .. code-block:: html+twig
 
@@ -721,9 +721,9 @@ be discussed. For more information, see the :doc:`templating article </templatin
 Where Symfony Delivers
 ----------------------
 
-In the rest of documentation articles, you'll learn more about how each piece of
-Symfony works and how you can organize your project. For now, celebrate at how
-migrating the blog from flat PHP to Symfony has improved life:
+In the rest of the documentation articles, you'll learn more about how each piece of
+Symfony works and how you can organize your project. For now, celebrate how
+migrating the blog from flat PHP to Symfony has improved your life:
 
 * Your application now has **clear and consistently organized code** (though
   Symfony doesn't force you into this). This promotes **reusability** and
