@@ -19,7 +19,7 @@ requires installing the Symfony Form component):
 
     $ composer require security-csrf form
 
-Then, enable/disable the CSRF protection with the ``csrf_protection`` option.
+Then, enable/disable the CSRF protection with the ``csrf_protection`` option
 (see the :ref:`CSRF configuration reference <reference-framework-csrf-protection>`
 for more information):
 
