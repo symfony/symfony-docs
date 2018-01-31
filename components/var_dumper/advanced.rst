@@ -325,8 +325,8 @@ being cloned in an array. They are callables that accept five arguments:
 * a :class:`Symfony\\Component\\VarDumper\\Cloner\\Stub` object
   representing the main properties of the object (class, type, etc.);
 * true/false when the caster is called nested in a structure or not;
-* A bit field of :class:`Symfony\\Component\\VarDumper\\Caster\\Caster```::EXCLUDE_*``
-  constants.
+* A bit field of ``EXCLUDE_*`` constants from the
+  :class:`Symfony\\Component\\VarDumper\\Caster\\Caster` class.
 
 Here is a simple caster not doing anything::
 
