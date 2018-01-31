@@ -80,10 +80,10 @@ Now, let's build the Hello component:
         }
     </script>
 
-This component is pretty simple at this stage but once you're aware about Vue and his internal logic,
+This component is pretty simple at this stage but once you're aware about ``Vue`` and his internal logic,
 you can easily integrate it into your own Twig views and logic.
 
-Now that your component is ready and that your Vue instance is configured,
+Now that your component is ready and that your ``Vue`` instance is configured,
 time to use Encore to build everything and call ``Vue`` inside your views,
 in order to ease the process, let's use the watcher:
 
