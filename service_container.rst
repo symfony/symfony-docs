@@ -700,8 +700,8 @@ If some service or controller needs lots of container parameters, there's an
 easier alternative to binding all of them. Type-hint an argument with the
 :class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ContainerBagInterface`
 class to inject all container parameters in a single object similar to the
-:class:`Symfony\Component\DependencyInjection\ParameterBag\ParameterBag` objects
-used in other parts of the framework::
+:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBag`
+objects used in other parts of the framework::
 
     // src/Service/MessageGenerator.php
     // ...
