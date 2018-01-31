@@ -83,7 +83,7 @@ let Encore = require('@symfony/webpack-encore');
 
     module.exports = Encore.getWebpackConfig();
 
-Here, Encore gonna find the ``hello.js`` file and compile it into a ``hello.js``
+Here are, Encore is gonna find the ``hello.js`` file and compile it 
 into the ``public/build/`` folder.
 In order to tell Twig to load the file, here's the modifications needed:
 
@@ -99,5 +99,5 @@ In order to tell Twig to load the file, here's the modifications needed:
         <script src="{{ asset('build/hello.js') }}"></script>
     {% endblock %}
 
-If the webpack command for developement is launched, reload the webpage
+If the webpack command for developement is launched, reloading the webpage
 and the DOM should display ``Hello World from React !``.
