@@ -296,7 +296,7 @@ made. To do that, you create a new class::
                 ->addPart(
                     'Someone just updated the site. We told them: '.$happyMessage
                 );
-            
+
             return $this->mailer->send($message) > 0;
         }
     }
@@ -317,7 +317,7 @@ you can type-hint the new ``SiteUpdateManager`` class and use it::
         if ($siteUpdateManager->notifyOfSiteUpdate()) {
             $this->addFlash('success', 'Notification mail was sent successfully.');
         }
-        
+
         // ...
     }
 
@@ -689,6 +689,40 @@ argument for *any* service defined in this file! You can bind arguments by name
 
 The ``bind`` config can be also be applied to specific services or when loading many
 services at once (i.e. :ref:`service-psr4-loader`).
+
+Getting Container Parameters as a Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.1
+    The ``ContainerBagInterface`` class was introduced in Symfony 4.1.
+
+If some service or controller needs lots of container parameters, there's an
+easier alternative to binding all of them. Type-hint an argument with the
+:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ContainerBagInterface`
+class to inject all container parameters in a single object similar to the
+:class:`Symfony\Component\DependencyInjection\ParameterBag\ParameterBag` objects
+used in other parts of the framework::
+
+    // src/Service/MessageGenerator.php
+    // ...
+
+    use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+
+    class MessageGenerator
+    {
+        private $params;
+
+        public function __construct(ContainerBagInterface $params)
+        {
+            $this->params = $params;
+        }
+
+        public function someMethod()
+        {
+            $parameterValue = $this->params->get('parameter_name');
+            // ...
+        }
+    }
 
 .. _services-autowire:
 
