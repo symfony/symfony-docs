@@ -350,6 +350,22 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
     Moreover, you could not pass a callback to the ``start()``, ``run()`` or ``mustRun()``
     methods or use ``setIdleTimeout()``.
 
+Finding the Executable PHP Binary
+---------------------------------
+
+This component also provides a utility class called
+:class:`Symfony\\Component\\Process\\PhpExecutableFinder` which returns the
+absolute path of the executable PHP binary available on your server. It looks
+for the PHP executable using environment variables like ``PHP_BINARY``,
+``PHP_PATH``, ``PHP_PEAR_PHP_BIN``, ``PHP_BINDIR`, etc. and returns the first
+available binary::
+
+    use Symfony\Component\Process\PhpExecutableFinder;
+
+    $phpBinaryFinder = new PhpExecutableFinder();
+    $phpBinaryPath = $phpBinaryFinder->find();
+    // $phpBinaryPath = '/usr/local/bin/php' (the result will be different on your computer)
+
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
 .. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
