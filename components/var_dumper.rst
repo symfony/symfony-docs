@@ -127,7 +127,7 @@ This will provide you with two new assertions:
 
 :method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpEquals`
     verifies that the dump of the variable given as the second argument matches
-    the expected dump provided as a string in the first argument.
+    the expected dump provided as the first argument.
 
 :method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpMatchesFormat`
     is like the previous method but accepts placeholders in the expected dump,
@@ -152,9 +152,18 @@ Example::
     ]
     EOTXT;
 
+            // if the first argument is a string, it must be the whole expected dump
             $this->assertDumpEquals($expectedDump, $testedVar);
+
+            // if the first argument is not a string, assertDumpEquals() dumps it
+            // and compares it with the dump of the second argument
+            $this->assertDumpEquals($testedVar, $testedVar);
         }
     }
+
+.. versionadded:: 4.1
+    The possibility of passing non-string variables as the first argument of
+    ``assertDumpEquals()`` was introduced in Symfony 4.1.
 
 Dump Examples and Output
 ------------------------
