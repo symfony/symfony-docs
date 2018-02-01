@@ -694,32 +694,34 @@ Getting Container Parameters as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 4.1
-    The ``ContainerBagInterface`` class was introduced in Symfony 4.1.
+    The feature to get container parameters as a service was introduced in Symfony 4.1.
 
 If some service or controller needs lots of container parameters, there's an
-easier alternative to binding all of them. Type-hint an argument with the
-:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ContainerBagInterface`
-class to inject all container parameters in a single object similar to the
-:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBag`
-objects used in other parts of the framework::
+easier alternative to binding all of them with the ``services._defaults.bind``
+option. Type-hint any of its constructor arguments with the
+:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBagInterface`
+or the new :class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ContainerBagInterface`
+and the service will get all container parameters in a
+:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBag` object::
 
     // src/Service/MessageGenerator.php
     // ...
 
-    use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+    use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
     class MessageGenerator
     {
         private $params;
 
-        public function __construct(ContainerBagInterface $params)
+        public function __construct(ParameterBagInterface $params)
         {
             $this->params = $params;
         }
 
         public function someMethod()
         {
-            $parameterValue = $this->params->get('parameter_name');
+            // get any param from $this->params, which stores all container parameters
+            $sender = $this->params->get('mailer_sender');
             // ...
         }
     }
