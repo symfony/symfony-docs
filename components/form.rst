@@ -242,13 +242,18 @@ To add these Twig filters, you can either use the built-in
 with Symfony's Translation component, or add the 2 Twig filters yourself,
 via your own Twig extension.
 
-To use the built-in integration, be sure that your project has Symfony's
-Translation and :doc:`Config </components/config>` components
-installed:
+The ``TranslationExtension`` registers an identity translator as fallback: when
+the Translation component is installed, it uses it to actually translate the
+contents; otherwise, the fallback is used to return the original content unchanged.
+That's why it's recommended to install the Translation and
+:doc:`Config </components/config>` components:
 
 .. code-block:: terminal
 
     $ composer require symfony/translation symfony/config
+
+.. versionadded:: 3.4
+    The identity translator of ``TranslationExtension`` was introduced in Symfony 3.4.
 
 Next, add the :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension`
 to your ``Twig_Environment`` instance::
