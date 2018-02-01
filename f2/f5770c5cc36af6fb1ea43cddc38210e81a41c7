@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-01-31T15:16:43Z
+
+In [this comment](https://github.com/symfony/symfony-docs/issues/9010#issuecomment-360480683) Ryan said that we can use `ParameterBagInterface` as the type-hint instead of `ContainerBagInterface`. Are we sure about that? Thanks!
