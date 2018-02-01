@@ -157,6 +157,10 @@ Great! Next, add the logic to ``loginAction()`` that displays the login form::
         ));
     }
 
+Please note that the controller autoresolve the AuthenticationUtils injection
+only if defined as a service. Since Symfony 3.3, this comportment is adopted 
+by default in the services.yml file.
+
 Don't let this controller confuse you. As you'll see in a moment, when the
 user submits the form, the security system automatically handles the form
 submission for you. If the user submits an invalid username or password,
