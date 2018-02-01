@@ -12,12 +12,13 @@ By default, console commands run in the ``dev`` environment and you may want to
 change this for some commands. For example, you may want to run some commands in
 the ``prod`` environment for performance reasons. Also, the result of some
 commands will be different depending on the environment. For example, the
-``cache:clear`` command will clear the cache for the specified environment only.
-To clear the ``prod`` cache you need to run:
+``cache:clear`` command will clear and warm up the cache for the specified
+environment only:
 
 .. code-block:: terminal
 
-    $ php bin/console cache:clear --no-warmup --env=prod
+    # clear (and warm up) the cache of the 'prod' environment
+    $ php bin/console cache:clear --env=prod
 
     # this is equivalent:
     $ php bin/console cache:clear --no-warmup -e prod
