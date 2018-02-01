@@ -133,6 +133,31 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 The path of each route being loaded from the new routing resource will now
 be prefixed with the string ``/site``.
 
+Prefixing the Names of Imported Routes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+You have the possibility to prefix all routes names with the ``@Route`` annotation.
+Add a ``name`` property to the ``@Route`` annotation of the controller class and that will be considered the prefix of all route names
+
+.. code-block:: php
+      use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+      /**
+       * @Route("/blog", name="blog_")
+       */
+      class BlogController extends Controller
+      {
+          /**
+           * @Route("/", defaults={"page": "1"}, name="index")
+           * @Route("/page/{page}", name="index_paginated")
+           */
+          public function indexAction($page, $_format) { ... }
+
+          /**
+           * @Route("/posts/{slug}", name="post")
+           */
+          public function showAction(Post $post) { ... }
+      }
+      
 Adding a Host Requirement to Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
