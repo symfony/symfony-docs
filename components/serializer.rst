@@ -569,10 +569,14 @@ There are several types of normalizers available:
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
     This normalizer directly reads and writes public properties as well as
-    **private and protected** properties. It supports calling the constructor
-    during the denormalization process.
+    **private and protected** properties (from both the class and all of its
+    parent classes). It supports calling the constructor during the denormalization process.
 
     Objects are normalized to a map of property names to property values.
+
+    .. versionadded:: 3.4
+        The ability to handle parent classes for ``PropertyNormalizer`` was
+        introduced in Symfony 3.4.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
     This normalizer works with classes that implement :phpclass:`JsonSerializable`.
