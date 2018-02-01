@@ -167,8 +167,7 @@ Make sure you clear and warm-up your Symfony cache:
 
 .. code-block:: terminal
 
-    $ php bin/console cache:clear --env=prod --no-debug --no-warmup
-    $ php bin/console cache:warmup --env=prod
+    $ php bin/console cache:clear --env=prod --no-debug
 
 E) Dump your Assetic Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

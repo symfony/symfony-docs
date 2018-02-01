@@ -578,7 +578,7 @@ nice way to group related pages. The controller functions are also sometimes cal
 The two controllers (or actions) are still lightweight. Each uses the
 :doc:`Doctrine ORM library </doctrine>` to retrieve objects from the
 database and the Templating component to render a template and return a
-``Response`` object. The list ``list.html.twig`` template is now quite a bit simpler,
+``Response`` object. The ``list.html.twig`` template is now quite a bit simpler,
 and uses Twig:
 
 .. code-block:: html+twig
@@ -669,9 +669,9 @@ It's a beautiful thing.
 Where Symfony Delivers
 ----------------------
 
-In the rest of documentation articles, you'll learn more about how each piece of
-Symfony works and how you can organize your project. For now, celebrate at how
-migrating the blog from flat PHP to Symfony has improved life:
+In the rest of the documentation articles, you'll learn more about how each piece of
+Symfony works and how you can organize your project. For now, celebrate how
+migrating the blog from flat PHP to Symfony has improved your life:
 
 * Your application now has **clear and consistently organized code** (though
   Symfony doesn't force you into this). This promotes **reusability** and
