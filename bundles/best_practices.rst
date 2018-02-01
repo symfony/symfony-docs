@@ -166,6 +166,11 @@ the ``Tests/`` directory. Tests should follow the following principles:
     A test suite must not contain ``AllTests.php`` scripts, but must rely on the
     existence of a ``phpunit.xml.dist`` file.
 
+.. tip::
+
+    The :doc:`PHPUnit bridge component <../components/phpunit_bridge>` helps with
+    testing legacy code and deprecations.
+
 Continuous Integration
 ----------------------
 
@@ -236,6 +241,9 @@ of Symfony and the latest beta release:
     script:
         - composer validate --strict --no-check-lock
         - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
+
+Note that simple-phpunit is the phpunit script when using the
+:doc:`PHPUnit bridge component <../components/phpunit_bridge>`.
 
 Consider using `Travis cron`_ too to make sure your project is built even if
 there are no new pull requests or commits.
