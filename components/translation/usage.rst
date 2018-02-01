@@ -418,5 +418,62 @@ The ``$messages`` variable will have the following structure::
         ),
     );
 
+Adding Notes to Translation Contents
+------------------------------------
+
+.. versionadded: 3.4
+    The feature to load and dump translation notes was introduced in Symfony 3.4.
+
+Sometimes translators need additional context to better decide how to translate
+some content. This context can be provided with notes, which are a collection of
+comments used to store end user readable information. The only format that
+supports loading and dumping notes is XLIFF version 2.0.
+
+If the XLIFF 2.0 document contains ``<notes>`` nodes, they are automatically
+loaded/dumped when using this component inside a Symfony application:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
+           srcLang="fr-FR" trgLang="en-US">
+      <file id="messages.en_US">
+        <unit id="LCa0a2j">
+          <notes>
+            <note category="state">new</note>
+            <note category="approved">true</note>
+            <note category="section" priority="1">user login</note>
+          </notes>
+          <segment>
+            <source>original-content</source>
+            <target>translated-content</target>
+          </segment>
+        </unit>
+      </file>
+    </xliff>
+
+When using the standalone Translation component, call the ``setMetadata()``
+method of the catalogue and pass the notes as arrays. This is for example the
+code needed to generate the previous XLIFF file::
+
+    use Symfony\Component\Translation\MessageCatalogue;
+    use Symfony\Component\Translation\Dumper\XliffFileDumper;
+
+    $catalogue = new MessageCatalogue('en_US');
+    $catalogue->add([
+        'original-content' => 'translated-content',
+    ]);
+    $catalogue->setMetadata('original-content', ['notes' => [
+        ['category' => 'state', 'content' => 'new'],
+        ['category' => 'approved', 'content' => 'true'],
+        ['category' => 'section', 'content' => 'user login', 'priority' => '1'],
+    ]]);
+
+    $dumper = new XliffFileDumper();
+    $dumper->formatCatalogue($catalogue, 'messages', [
+        'default_locale' => 'fr_FR',
+        'xliff_version' => '2.0'
+    ]);
+
 .. _`L10n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ISO 31-11`: https://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals
