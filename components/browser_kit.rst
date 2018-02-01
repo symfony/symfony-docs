@@ -109,6 +109,9 @@ method (which makes the needed HTTP POST request to submit the form contents)::
     $form['login'] = 'symfonyfan';
     $form['password'] = 'anypass';
 
+    // To upload a file, the value should be the absolute file path
+    $form['file'] = __FILE__;
+
     // submit that form
     $crawler = $client->submit($form);
 
