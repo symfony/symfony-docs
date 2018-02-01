@@ -7,7 +7,7 @@ Then, install Encore into your project with Yarn:
 
 .. code-block:: terminal
 
-    $ yarn add @symfony/webpack-encore --dev
+    $ yarn add @symfony/webpack-encore --only=dev
 
 .. note::
 
