@@ -383,7 +383,7 @@ A custom name converter can handle such cases::
 
         public function denormalize($propertyName)
         {
-            // remove org_ prefix
+            // removes 'org_' prefix
             return 'org_' === substr($propertyName, 0, 4) ? substr($propertyName, 4) : $propertyName;
         }
     }

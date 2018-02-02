@@ -15,7 +15,7 @@ magic ``__call()`` method in the class you want to be extended like this:
 
         public function __call($method, $arguments)
         {
-            // create an event named 'foo.method_is_not_found'
+            // creates an event named 'foo.method_is_not_found'
             $event = new HandleUndefinedMethodEvent($this, $method, $arguments);
             $this->dispatcher->dispatch('foo.method_is_not_found', $event);
 
@@ -24,7 +24,7 @@ magic ``__call()`` method in the class you want to be extended like this:
                 throw new \Exception(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
             }
 
-            // return the listener returned value
+            // returns the listener returned value
             return $event->getReturnValue();
         }
     }

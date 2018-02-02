@@ -207,7 +207,7 @@ Indentation
 By default the YAML component will use 4 spaces for indentation. This can be
 changed using the third argument as follows::
 
-    // use 8 spaces for indentation
+    // uses 8 spaces for indentation
     echo Yaml::dump($array, 2, 8);
 
 .. code-block:: yaml
@@ -226,10 +226,10 @@ resources and objects) as ``null``.
 Instead of encoding as ``null`` you can choose to throw an exception if an invalid
 type is encountered in either the dumper or parser as follows::
 
-    // throw an exception if a resource or object is encountered
+    // throws an exception if a resource or object is encountered
     Yaml::dump($data, 2, 4, true);
 
-    // throw an exception if an encoded object is found in the YAML string
+    // throws an exception if an encoded object is found in the YAML string
     Yaml::parse($yaml, true);
 
 However, you can activate object support using the next argument::

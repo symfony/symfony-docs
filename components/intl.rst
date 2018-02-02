@@ -192,10 +192,10 @@ returned::
 
     $data = $reader->read('/path/to/bundle', 'en');
 
-    // Produces an error if the key "Data" does not exist
+    // produces an error if the key "Data" does not exist
     var_dump($data['Data']['entry1']);
 
-    // Returns null if the key "Data" does not exist
+    // returns null if the key "Data" does not exist
     var_dump($reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1')));
 
 Additionally, the

@@ -167,16 +167,16 @@ and ``redirect()`` methods::
 
     public function indexAction()
     {
-        // redirect to the "homepage" route
+        // redirects to the "homepage" route
         return $this->redirectToRoute('homepage');
 
-        // do a permanent - 301 redirect
+        // does a permanent - 301 redirect
         return $this->redirectToRoute('homepage', array(), 301);
 
-        // redirect to a route with parameters
+        // redirects to a route with parameters
         return $this->redirectToRoute('blog_show', array('slug' => 'my-page'));
 
-        // redirect externally
+        // redirects externally
         return $this->redirect('http://symfony.com/doc');
     }
 
@@ -366,13 +366,13 @@ methods for storing and fetching things from the session::
     {
         $session = $request->getSession();
 
-        // store an attribute for reuse during a later user request
+        // stores an attribute for reuse during a later user request
         $session->set('foo', 'bar');
 
-        // get the attribute set by another controller in another request
+        // gets the attribute set by another controller in another request
         $foobar = $session->get('foobar');
 
-        // use a default value if the attribute doesn't exist
+        // uses a default value if the attribute doesn't exist
         $filters = $session->get('filters', array());
     }
 
@@ -493,20 +493,20 @@ the ``Request`` class::
 
         $request->getPreferredLanguage(array('en', 'fr'));
 
-        // retrieve GET and POST variables respectively
+        // retrieves GET and POST variables respectively
         $request->query->get('page');
         $request->request->get('page');
 
-        // retrieve SERVER variables
+        // retrieves SERVER variables
         $request->server->get('HTTP_HOST');
 
         // retrieves an instance of UploadedFile identified by foo
         $request->files->get('foo');
 
-        // retrieve a COOKIE value
+        // retrieves a COOKIE value
         $request->cookies->get('PHPSESSID');
 
-        // retrieve an HTTP request header, with normalized, lowercase keys
+        // retrieves an HTTP request header, with normalized, lowercase keys
         $request->headers->get('host');
         $request->headers->get('content_type');
     }
@@ -527,12 +527,12 @@ headers and content that's sent back to the client::
 
     use Symfony\Component\HttpFoundation\Response;
 
-    // create a simple Response with a 200 status code (the default)
+    // creates a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, Response::HTTP_OK);
 
     // JsonResponse is a sub-class of Response
     $response = new JsonResponse(array('name' => $name));
-    // set a header!
+    // sets a header!
     $response->headers->set('X-Rate-Limit', 10);
 
 There are special classes that make certain kinds of responses easier:

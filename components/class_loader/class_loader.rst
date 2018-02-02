@@ -40,13 +40,13 @@ your classes::
     // register a single namespaces
     $loader->addPrefix('Symfony', __DIR__.'/vendor/symfony/symfony/src');
 
-    // register several namespaces at once
+    // registers several namespaces at once
     $loader->addPrefixes(array(
         'Symfony' => __DIR__.'/../vendor/symfony/symfony/src',
         'Monolog' => __DIR__.'/../vendor/monolog/monolog/src',
     ));
 
-    // register a prefix for a class following the PEAR naming conventions
+    // registers a prefix for a class following the PEAR naming conventions
     $loader->addPrefix('Twig_', __DIR__.'/vendor/twig/twig/lib');
 
     $loader->addPrefixes(array(

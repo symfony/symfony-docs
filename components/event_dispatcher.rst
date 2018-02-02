@@ -206,18 +206,18 @@ determine which instance is passed.
         $containerBuilder = new ContainerBuilder(new ParameterBag());
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
 
-        // register the event dispatcher service
+        // registers the event dispatcher service
         $containerBuilder->register('event_dispatcher', ContainerAwareEventDispatcher::class)
             ->addArgument(new Reference('service_container'));
 
-        // register your event listener service
+        // registers your event listener service
         $containerBuilder->register('listener_service_id', \AcmeListener::class)
             ->addTag('kernel.event_listener', array(
                 'event' => 'acme.foo.action',
                 'method' => 'onFooAction',
             ));
 
-        // register an event subscriber
+        // registers an event subscriber
         $containerBuilder->register('subscriber_service_id', \AcmeSubscriber::class)
             ->addTag('kernel.event_subscriber');
 
@@ -302,7 +302,7 @@ each listener of that event::
     $order = new Order();
     // ...
 
-    // create the OrderPlacedEvent and dispatch it
+    // creates the OrderPlacedEvent and dispatches it
     $event = new OrderPlacedEvent($order);
     $dispatcher->dispatch(OrderPlacedEvent::NAME, $event);
 
