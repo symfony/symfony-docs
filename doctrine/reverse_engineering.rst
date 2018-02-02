@@ -7,7 +7,7 @@ How to Generate Entities from an Existing Database
 .. caution::
 
     The feature explained in this article doesn't work in modern Symfony
-    applications that have no bundles. The workaround, is to temporarily create
+    applications that have no bundles. The workaround is to temporarily create
     a bundle. See `doctrine/doctrine#729`_ for details. Moreover, this feature
     to generate entities from existing databases will be completely removed in
     the next Doctrine version.
