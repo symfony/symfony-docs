@@ -282,9 +282,21 @@ method, which should return an array of groups to use::
                 $groups[] = 'Premium';
             }
 
+            // Caution: the validation behavior depends on how this method
+            // returns its result (a simple array or a nested array).
+
+            // if the User group causes any violations, the Premium group will
+            // not be validated (even if $this->isPremium() is true)
             return $groups;
+
+            // both groups are validated and you'll get violations from any of them
+            return array($groups);
         }
     }
+
+.. versionadded:: 3.2
+    The feature to return a nested array to get violations from all groups was
+    introduced in Symfony 3.2.
 
 At last, you have to notify the Validator component that your ``User`` class
 provides a sequence of groups to be validated:
