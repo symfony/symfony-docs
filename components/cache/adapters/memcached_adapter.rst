@@ -55,6 +55,9 @@ helper method allows creating and configuring a `Memcached`_ class instance usin
     // pass a single DSN string to register a single server with the client
     $client = MemcachedAdapter::createConnection(
         'memcached://localhost'
+        // the DSN can include config options (pass them as a query string):
+        // 'memcached://localhost:11222?retry_timeout=10'
+        // 'memcached://localhost:11222?socket_recv_size=1&socket_send_size=2'
     );
 
     // pass an array of DSN strings to register multiple servers with the client
@@ -64,6 +67,10 @@ helper method allows creating and configuring a `Memcached`_ class instance usin
         'memcached://10.0.0.102',
         // etc...
     ));
+
+.. versionadded:: 3.4
+    The feature to pass configuration options in the memcached DSN was
+    introduced in Symfony 3.4.
 
 The `Data Source Name (DSN)`_ for this adapter must use the following format:
 
