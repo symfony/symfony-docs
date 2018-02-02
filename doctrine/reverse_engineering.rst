@@ -4,6 +4,14 @@
 How to Generate Entities from an Existing Database
 ==================================================
 
+.. caution::
+
+    The feature explained in this article doesn't work in modern Symfony
+    applications that have no bundles. The workaround, is to temporarily create
+    a bundle. See `doctrine/doctrine#729`_ for details. Moreover, this feature
+    to generate entities from existing databases will be completely removed in
+    the next Doctrine version.
+
 When starting work on a brand new project that uses a database, two different
 situations comes naturally. In most cases, the database model is designed
 and built from scratch. Sometimes, however, you'll start with an existing and
@@ -53,12 +61,6 @@ The first step towards building entity classes from an existing database
 is to ask Doctrine to introspect the database and generate the corresponding
 metadata files. Metadata files describe the entity class to generate based on
 table fields.
-
-.. caution::
-
-    If your application has *no* bundles, then this command will currently fail!
-    The workaround, is to temporarily create a bundle. See `doctrine/doctrine#729`_
-    for details.
 
 .. code-block:: terminal
 
