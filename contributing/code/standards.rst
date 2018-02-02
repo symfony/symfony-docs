@@ -147,7 +147,7 @@ Structure
 
 * Always use `identical comparison`_ unless you need type juggling;
 
-* Use your IDE to check for Assignment In Conditions and make sure it hilights it as an error.
+* Use your IDE to check for Assignment In Conditions and make sure it highlights it as an error.
 
 * Add a comma after each array item in a multi-line array, even after the
   last one;
