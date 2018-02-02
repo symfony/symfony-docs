@@ -181,7 +181,7 @@ If you're serving HTML, you'll want to render a template. The ``render()``
 method renders a template **and** puts that content into a ``Response``
 object for you::
 
-    // renders templates/lucky/number.html.twig
+    // render templates/lucky/number.html.twig
     return $this->render('lucky/number.html.twig', array('name' => $name));
 
 Templating and Twig are explained more in the
@@ -537,7 +537,7 @@ the ``Request`` class::
         // retrieve SERVER variables
         $request->server->get('HTTP_HOST');
 
-        // retrieves an instance of UploadedFile identified by foo
+        // retrieve an instance of UploadedFile identified by foo
         $request->files->get('foo');
 
         // retrieve a COOKIE value
@@ -581,7 +581,7 @@ special ``JsonResponse`` object that encodes the data automatically::
     // ...
     public function index()
     {
-        // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
+        // return '{"username":"jane.doe"}' and set the proper Content-Type header
         return $this->json(array('username' => 'jane.doe'));
 
         // the shortcut defines three optional arguments
