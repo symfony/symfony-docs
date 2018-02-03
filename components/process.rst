@@ -355,10 +355,7 @@ Finding the Executable PHP Binary
 
 This component also provides a utility class called
 :class:`Symfony\\Component\\Process\\PhpExecutableFinder` which returns the
-absolute path of the executable PHP binary available on your server. It looks
-for the PHP executable using environment variables like ``PHP_BINARY``,
-``PHP_PATH``, ``PHP_PEAR_PHP_BIN``, ``PHP_BINDIR``, etc. and returns the first
-available binary::
+absolute path of the executable PHP binary available on your server::
 
     use Symfony\Component\Process\PhpExecutableFinder;
 
