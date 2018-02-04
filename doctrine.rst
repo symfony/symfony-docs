@@ -186,7 +186,7 @@ in the database. This is usually done with annotations:
 Doctrine supports a wide variety of different field types, each with their own options.
 To see a full list of types and options, see `Doctrine's Mapping Types documentation`_.
 If you want to use XML instead of annotations, add ``type: xml`` and
-``dir: '%kernel.project_dir%/config/doctrine`` to the entity mappings in your
+``dir: '%kernel.project_dir%/config/doctrine'`` to the entity mappings in your
 ``config/packages/doctrine.yaml`` file.
 
 .. caution::
