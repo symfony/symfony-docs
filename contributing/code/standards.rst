@@ -147,9 +147,7 @@ Structure
 
 * Always use `identical comparison`_ unless you need type juggling;
 
-* Use `Yoda conditions`_ when checking a variable against an expression to avoid
-  an accidental assignment inside the condition statement (this applies to ``==``,
-  ``!=``, ``===``, and ``!==``);
+* Use your IDE to check for Assignment In Conditions and make sure it highlights it as an error.;
 
 * Add a comma after each array item in a multi-line array, even after the
   last one;
@@ -269,4 +267,3 @@ License
 .. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
 .. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
 .. _`identical comparison`: http://php.net/manual/en/language.operators.comparison.php
-.. _`Yoda conditions`: https://en.wikipedia.org/wiki/Yoda_conditions
