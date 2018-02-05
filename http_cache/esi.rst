@@ -107,7 +107,7 @@ independent of the rest of the page.
         public function aboutAction()
         {
             $response = $this->render('static/about.html.twig');
-            // set the shared max age - which also marks the response as public
+            // sets the shared max age - which also marks the response as public
             $response->setSharedMaxAge(600);
 
             return $response;

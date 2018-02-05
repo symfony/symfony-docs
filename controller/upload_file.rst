@@ -138,13 +138,13 @@ Finally, you need to update the code of the controller that handles the form::
 
                 $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
 
-                // Move the file to the directory where brochures are stored
+                // moves the file to the directory where brochures are stored
                 $file->move(
                     $this->getParameter('brochures_directory'),
                     $fileName
                 );
 
-                // Update the 'brochure' property to store the PDF file name
+                // updates the 'brochure' property to store the PDF file name
                 // instead of its contents
                 $product->setBrochure($fileName);
 
@@ -157,7 +157,7 @@ Finally, you need to update the code of the controller that handles the form::
                 'form' => $form->createView(),
             ));
         }
-        
+
         /**
          * @return string
          */

@@ -208,7 +208,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
 
     $person = new Person();
 
-    // Enable magic __call
+    // enables PHP __call() magic method
     $accessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
@@ -435,13 +435,13 @@ configured to enable extra features. To do that you could use the
     // ...
     $accessorBuilder = PropertyAccess::createPropertyAccessorBuilder();
 
-    // Enable magic __call
+    // enables magic __call
     $accessorBuilder->enableMagicCall();
 
-    // Disable magic __call
+    // disables magic __call
     $accessorBuilder->disableMagicCall();
 
-    // Check if magic __call handling is enabled
+    // checks if magic __call handling is enabled
     $accessorBuilder->isMagicCallEnabled(); // true or false
 
     // At the end get the configured property accessor

@@ -110,7 +110,7 @@ to the events discussed below::
     // send the headers and echo the content
     $response->send();
 
-    // triggers the kernel.terminate event
+    // trigger the kernel.terminate event
     $kernel->terminate($request, $response);
 
 See ":ref:`http-kernel-working-example`" for a more concrete implementation.
@@ -468,7 +468,7 @@ because it occurs *after* the ``HttpKernel::handle()`` method, and after the
 response is sent to the user. Recall from above, then the code that uses
 the kernel, ends like this::
 
-    // send the headers and echo the content
+    // sends the headers and echoes the content
     $response->send();
 
     // triggers the kernel.terminate event

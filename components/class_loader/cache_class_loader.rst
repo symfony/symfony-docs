@@ -34,10 +34,10 @@ ApcClassLoader
     // sha1(__FILE__) generates an APC namespace prefix
     $cachedLoader = new ApcClassLoader(sha1(__FILE__), $loader);
 
-    // register the cached class loader
+    // registers the cached class loader
     $cachedLoader->register();
 
-    // deactivate the original, non-cached loader if it was registered previously
+    // deactivates the original, non-cached loader if it was registered previously
     $loader->unregister();
 
 XcacheClassLoader
@@ -54,10 +54,10 @@ it is straightforward::
     // sha1(__FILE__) generates an XCache namespace prefix
     $cachedLoader = new XcacheClassLoader(sha1(__FILE__), $loader);
 
-    // register the cached class loader
+    // registers the cached class loader
     $cachedLoader->register();
 
-    // deactivate the original, non-cached loader if it was registered previously
+    // deactivates the original, non-cached loader if it was registered previously
     $loader->unregister();
 
 .. _APC:        http://php.net/manual/en/book.apc.php
