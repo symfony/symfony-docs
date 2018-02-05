@@ -69,6 +69,9 @@ You can now start using your filter in any Twig template.
 Creating Lazy-Loaded Twig Extensions
 ------------------------------------
 
+.. versionadded:: 1.26
+    Support for lazy-loaded extensions was introduced in Twig 1.26.
+
 Including the code of the custom filters/functions in the Twig extension class
 is the simplest way to create extensions. However, Twig must initialize all
 extensions before rendering any template, even if the template doesn't use an
