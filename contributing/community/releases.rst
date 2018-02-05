@@ -212,4 +212,4 @@ version is published every two years and there is a year to upgrade.
 .. _`4.2`: https://symfony.com/roadmap?version=4.2
 .. _`4.3`: https://symfony.com/roadmap?version=4.3
 .. _`4.4`: https://symfony.com/roadmap?version=4.4
-.. _`5.0`: 5https://symfony.com/roadmap?version=.0
+.. _`5.0`: https://symfony.com/roadmap?version=5.0
