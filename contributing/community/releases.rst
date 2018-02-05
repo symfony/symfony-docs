@@ -133,8 +133,8 @@ Version       Feature Freeze  Release  End of Maintenance        End of Life
 `4.3`_        03/2019         05/2019  01/2020 (8 months)        07/2020
 `4.4`_ (LTS)  09/2019         11/2019  11/2022 (36 months)       11/2023
 `5.0`_        09/2019         11/2019  07/2020 (8 months)        01/2021
-...      ...             ...      ...                       ...
-=======  ==============  =======  ========================  ===========
+...           ...             ...      ...                       ...
+============  ==============  =======  ========================  ===========
 
 .. [1] Symfony 2.4 maintenance has been `extended to September 2014`_.
 .. [2] Symfony 2.8 is the last version of the Symfony 2.x branch.
