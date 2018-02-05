@@ -1768,6 +1768,13 @@ The cache adapter used by the ``cache.app`` service. The FrameworkBundle
 ships with multiple adapters: ``apcu``, ``doctrine``, ``system``, ``filesystem``,
 ``psr6``, ``redis`` and ``memcached``.
 
+There's also a special adapter called ``cache.adapter.array`` which stores
+contents in memory using a PHP array and it's used to disable caching (mostly on
+the ``dev`` environment).
+
+.. versionadded:: 4.1
+    The ``cache.adapter.array`` adapter was introduced in Symfony 4.1.
+
 .. tip::
 
     It might be tough to understand at the beginning, so to avoid confusion remember that all pools perform the
