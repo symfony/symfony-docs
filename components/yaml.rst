@@ -377,6 +377,31 @@ Binary data is automatically parsed if they include the ``!!binary`` YAML tag
     $parsed = Yaml::parse($dumped);
     $imageContents = $parsed['logo'];
 
+Parsing and Dumping Custom Tags
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.3
+    Support for parsing and dumping custom tags was introduced in Symfony 3.3.
+
+In addition to the built-in support of tags like ``!php/const`` and
+``!!binary``, you can define your own custom YAML tags and parse them with the
+``PARSE_CUSTOM_TAGS`` flag::
+
+    $data = "!my_tag { foo: bar }";
+    $parsed = Yaml::parse($data, Yaml::PARSE_CUSTOM_TAGS);
+    // $parsed = Symfony\Component\Yaml\Tag\TaggedValue('my_tag', array('foo' => 'bar'));
+    $tagName = $parsed->getTag();     // $tagName = 'my_tag'
+    $tagValue = $parsed->getValue(); // $tagValue = array('foo' => 'bar')
+
+If the contents to dump contain :class:`Symfony\\Component\\Yaml\\Tag\\TaggedValue`
+objects, they are automatically transformed into YAML tags::
+
+    use Symfony\Component\Yaml\Tag\TaggedValue;
+
+    $data = new TaggedValue('my_tag', array('foo' => 'bar'));
+    $dumped = Yaml::parse($data);
+    // $dumped = '!my_tag { foo: bar }'
+
 Syntax Validation
 ~~~~~~~~~~~~~~~~~
 
