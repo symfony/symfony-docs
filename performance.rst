@@ -167,9 +167,8 @@ Configure the PHP realpath Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When a relative path is transformed into its real and absolute path, PHP
-caches the result to improve performance. The default config of this cache
-is not suited for applications that open many PHP files, such as Symfony.
-It's recommended to change these settings as follows:
+caches the result to improve performance. Applications that open many PHP files,
+such as Symfony projects, must use at least these values:
 
 .. code-block:: ini
 
