@@ -390,7 +390,7 @@ In addition to the built-in support of tags like ``!php/const`` and
     $data = "!my_tag { foo: bar }";
     $parsed = Yaml::parse($data, Yaml::PARSE_CUSTOM_TAGS);
     // $parsed = Symfony\Component\Yaml\Tag\TaggedValue('my_tag', array('foo' => 'bar'));
-    $tagName = $parsed->getTag();     // $tagName = 'my_tag'
+    $tagName = $parsed->getTag();    // $tagName = 'my_tag'
     $tagValue = $parsed->getValue(); // $tagValue = array('foo' => 'bar')
 
 If the contents to dump contain :class:`Symfony\\Component\\Yaml\\Tag\\TaggedValue`
