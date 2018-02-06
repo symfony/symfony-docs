@@ -271,7 +271,7 @@ Parsing and Dumping Objects as Maps
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.2
-    Support for parsing and dumping objectas as maps was introduced in Symfony 3.2.
+    Support for parsing and dumping objects as maps was introduced in Symfony 3.2.
 
 You can dump objects as Yaml maps by using the ``DUMP_OBJECT_AS_MAP`` flag::
 
@@ -279,13 +279,14 @@ You can dump objects as Yaml maps by using the ``DUMP_OBJECT_AS_MAP`` flag::
     $object->foo = 'bar';
 
     $dumped = Yaml::dump(array('data' => $object), 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
-    // $dumped = "data:\nfoo:\nSbar"
+    // $dumped = "data:\n    foo: bar"
 
 And parse them by using the ``PARSE_OBJECT_FOR_MAP`` flag::
 
-    $parsed = Yaml::parse($dumped, Yaml::PARSE_OBJECT);
+    $parsed = Yaml::parse($dumped, Yaml::PARSE_OBJECT_FOR_MAP);
     var_dump(is_object($parsed)); // true
-    echo $parsed->foo; // bar
+    var_dump(is_object($parsed->data)); // true
+    echo $parsed->data->foo; // bar
 
 The YAML component uses PHP's ``(array)`` casting to generate a string
 representation of the object as a map.
