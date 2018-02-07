@@ -59,9 +59,6 @@ you can configure these limits:
     items. Specifying ``-1`` removes the limit.
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMinDepth`
-    .. versionadded:: 3.4
-        The ``setMinDepth()`` method was introduced in Symfony 3.4.
-
     Configures the minimum tree depth where we are guaranteed to clone
     all the items. After this depth is reached, only ``setMaxItems``
     items will be cloned. The default value is ``1``, which is consistent

@@ -404,10 +404,6 @@ To get the session, add an argument and type-hint it with
         $filters = $session->get('filters', array());
     }
 
-.. versionadded:: 3.3
-    The ability to request a ``Session`` instance in controllers was introduced
-    in Symfony 3.3.
-
 Stored attributes remain in the session for the remainder of that user's session.
 
 .. tip::

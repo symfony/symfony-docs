@@ -263,9 +263,6 @@ representation of the object.
 Parsing and Dumping Objects as Maps
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 3.2
-    Support for parsing and dumping objects as maps was introduced in Symfony 3.2.
-
 You can dump objects as Yaml maps by using the ``DUMP_OBJECT_AS_MAP`` flag::
 
     $object = new \stdClass();
@@ -352,9 +349,6 @@ syntax to parse them as proper PHP constants::
 
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.2
-    Support for parsing and dumping binary data was introduced in Symfony 3.2.
 
 You can dump binary data by using the ``DUMP_BASE64_BINARY_DATA`` flag::
 

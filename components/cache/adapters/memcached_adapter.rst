@@ -64,10 +64,6 @@ helper method allows creating and configuring a `Memcached`_ class instance usin
         // etc...
     ));
 
-.. versionadded:: 3.4
-    The feature to pass configuration options in the memcached DSN was
-    introduced in Symfony 3.4.
-
 The `Data Source Name (DSN)`_ for this adapter must use the following format:
 
 .. code-block:: text
