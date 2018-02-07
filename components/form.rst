@@ -125,7 +125,7 @@ The following snippet adds CSRF protection to the form factory::
     use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
     use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
-    // create a Session object from the HttpFoundation component
+    // creates a Session object from the HttpFoundation component
     $session = new Session();
 
     $csrfGenerator = new UriSafeTokenGenerator();
@@ -202,10 +202,10 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
 
     // ... (see the previous CSRF Protection section for more information)
 
-    // add the FormExtension to Twig
+    // adds the FormExtension to Twig
     $twig->addExtension(new FormExtension());
 
-    // create your form factory as normal
+    // creates a form factory
     $formFactory = Forms::createFormFactoryBuilder()
         // ...
         ->getFormFactory();
@@ -258,7 +258,7 @@ to your ``Twig_Environment`` instance::
     use Symfony\Component\Translation\Loader\XliffFileLoader;
     use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
-    // create the Translator
+    // creates the Translator
     $translator = new Translator('en');
     // somehow load some translations into it
     $translator->addLoader('xlf', new XliffFileLoader());
@@ -268,7 +268,7 @@ to your ``Twig_Environment`` instance::
         'en'
     );
 
-    // add the TranslationExtension (gives us trans and transChoice filters)
+    // adds the TranslationExtension (gives us trans and transChoice filters)
     $twig->addExtension(new TranslationExtension($translator));
 
     $formFactory = Forms::createFormFactoryBuilder()
@@ -311,7 +311,7 @@ Your integration with the Validation component will look something like this::
     $vendorFormDir = $vendorDir.'/symfony/form';
     $vendorValidatorDir = $vendorDir.'/symfony/validator';
 
-    // create the validator - details will vary
+    // creates the validator - details will vary
     $validator = Validation::createValidator();
 
     // there are built-in translations for the core error messages

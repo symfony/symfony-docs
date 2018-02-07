@@ -39,14 +39,14 @@ to get information about the messages sent on the previous request::
         {
             $client = static::createClient();
 
-            // Enable the profiler for the next request (it does nothing if the profiler is not available)
+            // enables the profiler for the next request (it does nothing if the profiler is not available)
             $client->enableProfiler();
 
             $crawler = $client->request('POST', '/path/to/above/action');
 
             $mailCollector = $client->getProfile()->getCollector('swiftmailer');
 
-            // Check that an email was sent
+            // checks that an email was sent
             $this->assertSame(1, $mailCollector->getMessageCount());
 
             $collectedMessages = $mailCollector->getMessages();

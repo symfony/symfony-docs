@@ -235,6 +235,8 @@ of Symfony and the latest beta release:
 
     script:
         - composer validate --strict --no-check-lock
+        # simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
+        # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
         - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
 
 Consider using `Travis cron`_ too to make sure your project is built even if

@@ -15,7 +15,7 @@ which will be responsible for returning ``Command`` instances::
 
     use App\Command\HeavyCommand;
     use Symfony\Component\Console\Application;
-    use Symfony\Component\Console\CommandLoader\FactoryCommmandLoader;
+    use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
 
     $commandLoader = new FactoryCommandLoader(array(
         'app:heavy' => function () { return new HeavyCommand() },

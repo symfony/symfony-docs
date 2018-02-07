@@ -40,7 +40,7 @@ The database connection information is stored as an environment variable called
 
     # to use sqlite:
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
-    
+
 .. caution::
 
     If the username, password or database name contain any character considered
@@ -186,7 +186,7 @@ in the database. This is usually done with annotations:
 Doctrine supports a wide variety of different field types, each with their own options.
 To see a full list of types and options, see `Doctrine's Mapping Types documentation`_.
 If you want to use XML instead of annotations, add ``type: xml`` and
-``dir: '%kernel.project_dir%/config/doctrine`` to the entity mappings in your
+``dir: '%kernel.project_dir%/config/doctrine'`` to the entity mappings in your
 ``config/packages/doctrine.yaml`` file.
 
 .. caution::
@@ -451,10 +451,10 @@ Once you have a repository object, you have many helper methods::
 
     $repository = $this->getDoctrine()->getRepository(Product::class);
 
-    // query for a single Product by its primary key (usually "id")
+    // look for a single Product by its primary key (usually "id")
     $product = $repository->find($id);
 
-    // query for a single Product by name
+    // look for a single Product by name
     $product = $repository->findOneBy(['name' => 'Keyboard']);
     // or find by name and price
     $product = $repository->findOneBy([
@@ -462,13 +462,13 @@ Once you have a repository object, you have many helper methods::
         'price' => 19.99,
     ]);
 
-    // query for multiple Product objects matching the name, ordered by price
+    // look for multiple Product objects matching the name, ordered by price
     $products = $repository->findBy(
         ['name' => 'Keyboard'],
         ['price' => 'ASC']
     );
 
-    // find *all* Product objects
+    // look for *all* Product objects
     $products = $repository->findAll();
 
 You can also add *custom* methods for more complex queries! More on that later in
@@ -666,7 +666,7 @@ In addition to the query builder, you can also query with `Doctrine Query Langua
     public function findAllGreaterThanPrice($price): array
     {
         $em = $this->getEntityManager();
-        
+
         $query = $em->createQuery(
             'SELECT p
             FROM App\Entity\Product p

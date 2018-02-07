@@ -335,10 +335,6 @@ You may also pass fully qualified class or interface names (which is checked
 using ``instanceof``). Additionally, you can validate all items in an array
 recursively by suffixing the type with ``[]``.
 
-.. versionadded:: 3.4
-    Validating types of array items recursively was introduced in Symfony 3.4.
-    Prior to Symfony 3.4, only scalar values could be validated.
-
 If you pass an invalid option now, an
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
 is thrown::

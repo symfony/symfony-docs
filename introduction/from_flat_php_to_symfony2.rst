@@ -551,7 +551,7 @@ them for you. Here's the same sample application, now built in Symfony::
         {
             $posts = $this->getDoctrine()
                 ->getRepository(Post::class)
-                ->findAll()
+                ->findAll();
 
             return $this->render('blog/list.html.twig', ['posts' => $posts]);
         }
@@ -567,7 +567,7 @@ them for you. Here's the same sample application, now built in Symfony::
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('blog/show.html.php', ['post' => $post]);
+            return $this->render('blog/show.html.twig', ['post' => $post]);
         }
     }
 
@@ -588,6 +588,7 @@ and uses Twig:
 
     {% block title %}List of Posts{% endblock %}
 
+    {% block body %}
     <h1>List of Posts</h1>
     <ul>
         {% for post in posts %}
@@ -598,6 +599,7 @@ and uses Twig:
         </li>
         {% endfor %}
     </ul>
+    {% endblock %}
 
 The ``layout.php`` file is nearly identical:
 

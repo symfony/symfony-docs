@@ -51,6 +51,6 @@ Should I Upgrade from Assetic to Encore
 ---------------------------------------
 
 If you already have Assetic working in an application, and haven't needed any of
-the features that Encore offers over Assetic, continuting to use Assetic is fine.
+the features that Encore offers over Assetic, continuing to use Assetic is fine.
 If you *do* start to need more features, then you might have a business case for
 changing to Encore.

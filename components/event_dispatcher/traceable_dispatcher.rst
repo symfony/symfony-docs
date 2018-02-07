@@ -27,7 +27,7 @@ to register event listeners and dispatch events::
 
     // ...
 
-    // register an event listener
+    // registers an event listener
     $eventListener = ...;
     $priority = ...;
     $traceableEventDispatcher->addListener(
@@ -36,7 +36,7 @@ to register event listeners and dispatch events::
         $priority
     );
 
-    // dispatch an event
+    // dispatches an event
     $event = ...;
     $traceableEventDispatcher->dispatch('event.the_name', $event);
 

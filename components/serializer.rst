@@ -322,6 +322,8 @@ You are now able to serialize only attributes in the groups you want::
     );
     // $obj2 = MyObj(foo: 'foo', bar: 'bar')
 
+.. include:: /_includes/_annotation_loader_tip.rst.inc
+
 .. _ignoring-attributes-when-serializing:
 
 Selecting Specific Attributes
@@ -425,7 +427,7 @@ A custom name converter can handle such cases::
 
         public function denormalize($propertyName)
         {
-            // remove org_ prefix
+            // removes 'org_' prefix
             return 'org_' === substr($propertyName, 0, 4) ? substr($propertyName, 4) : $propertyName;
         }
     }
@@ -570,10 +572,6 @@ There are several types of normalizers available:
 
     Objects are normalized to a map of property names to property values.
 
-    .. versionadded:: 3.4
-        The ability to handle parent classes for ``PropertyNormalizer`` was
-        introduced in Symfony 3.4.
-
 :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
     This normalizer works with classes that implement :phpclass:`JsonSerializable`.
 
@@ -599,9 +597,6 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
     This normalizer converts :phpclass:`DateInterval` objects into strings.
     By default it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
-
-    .. versionadded:: 3.4
-        The ``DateIntervalNormalizer`` normalizer was added in Symfony 3.4.
 
 .. _component-serializer-encoders:
 
