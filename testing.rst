@@ -11,14 +11,16 @@ using both functional and unit tests.
 The PHPUnit Testing Framework
 -----------------------------
 
-Symfony integrates with an independent library - called PHPUnit - to give
-you a rich testing framework. This article won't cover PHPUnit itself, but
-it has its own excellent `documentation`_.
+Symfony integrates with an independent library called `PHPUnit`_ to give you a
+rich testing framework. This article won't cover PHPUnit itself, which has its
+own excellent `documentation`_.
 
-.. note::
+Before creating your first test, install the `PHPUnit Bridge component`_, which
+wraps the original PHPUnit binary to provide additional features:
 
-    It's recommended to use the latest stable PHPUnit version, `installed as
-    PHAR`_.
+.. code-block:: terminal
+
+    $ composer require --dev symfony/phpunit-bridge
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the ``Tests/`` subdirectory of your bundles. If you follow
@@ -27,11 +29,10 @@ command:
 
 .. code-block:: terminal
 
-    # specify the configuration directory on the command line
-    $ phpunit -c app/
+    # the -c option specifies the directory where PHPUnit config is stored
+    $ ./vendor/bin/simple-phpunit -c app/
 
-The ``-c`` option tells PHPUnit to look in the ``app/`` directory for a configuration
-file. If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
+If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
 file.
 
 .. tip::
@@ -101,16 +102,16 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: terminal
 
     # run all tests of the application
-    $ phpunit -c app
+    $ ./vendor/bin/simple-phpunit -c app
 
     # run all tests in the Util directory
-    $ phpunit -c app src/AppBundle/Tests/Util
+    $ ./vendor/bin/simple-phpunit -c app src/AppBundle/Tests/Util
 
     # run tests for the Calculator class
-    $ phpunit -c app src/AppBundle/Tests/Util/CalculatorTest.php
+    $ ./vendor/bin/simple-phpunit -c app src/AppBundle/Tests/Util/CalculatorTest.php
 
     # run all tests for the entire Bundle
-    $ phpunit -c app src/AppBundle/
+    $ ./vendor/bin/simple-phpunit -c app src/AppBundle/
 
 .. index::
    single: Tests; Functional tests
@@ -924,6 +925,7 @@ Learn more
 * :doc:`/components/dom_crawler`
 * :doc:`/components/css_selector`
 
-.. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
+.. _`PHPUnit`: https://phpunit.de/
 .. _`documentation`: https://phpunit.de/manual/current/en/
-.. _`installed as PHAR`: https://phpunit.de/manual/current/en/installation.html#installation.phar
+.. _`PHPUnit Bridge component`: https://symfony.com/components/PHPUnit%20Bridge
+.. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
