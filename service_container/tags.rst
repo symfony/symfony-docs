@@ -81,6 +81,14 @@ that it implements ``Twig_ExtensionInterface``) and adds the tag for you.
                 ;
             }
         }
+        
+    If you do not want to create a custom kernel, it is also possible to use `_instanceof`:
+
+        // app/config/services.yml
+        services:
+            _instanceof:
+                AppBundle\Component\CustomInterface:
+                    tags: ['app.custom_tag']
 
 Creating custom Tags
 --------------------
