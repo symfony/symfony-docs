@@ -399,7 +399,7 @@ objects, they are automatically transformed into YAML tags::
     use Symfony\Component\Yaml\Tag\TaggedValue;
 
     $data = new TaggedValue('my_tag', array('foo' => 'bar'));
-    $dumped = Yaml::parse($data);
+    $dumped = Yaml::dump($data);
     // $dumped = '!my_tag { foo: bar }'
 
 Syntax Validation
