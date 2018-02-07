@@ -57,6 +57,12 @@ configure the service container to use the
                 <service id="AppBundle\Email\NewsletterManager">
                     <!-- call the static method -->
                     <factory class="AppBundle\Email\NewsletterManagerStaticFactory" method="createNewsletterManager" />
+
+                    <!-- starting from Symfony 3.3, if the factory class is the same as the service
+                         class, you can omit the 'class' attribute and define just the 'method' attribute:
+
+                         <factory method="createNewsletterManager" />
+                    -->
                 </service>
             </services>
         </container>
