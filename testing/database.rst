@@ -71,7 +71,7 @@ it's easy to pass a mock object within a test::
         public function testCalculateTotalSalary()
         {
             $employee = new Employee();
-            $employee->setSalaray(1000);
+            $employee->setSalary(1000);
             $employee->setBonus(1100);
 
             // Now, mock the repository so it returns the mock of the employee
