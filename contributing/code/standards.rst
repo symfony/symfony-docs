@@ -233,7 +233,7 @@ Service Naming Conventions
   its class (e.g. ``App\EventSubscriber\UserSubscriber``);
 
 * If there are multiple services for the same class, use the FQCN for the main
-  service and use lowercased, underscored names for the rest of services.
+  service and use lowercased and underscored names for the rest of services.
   Optionally divide them in groups separated with dots (e.g.
   ``something.service_name``, ``fos_user.something.service_name``);
 
