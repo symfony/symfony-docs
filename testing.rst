@@ -11,14 +11,16 @@ using both functional and unit tests.
 The PHPUnit Testing Framework
 -----------------------------
 
-Symfony integrates with an independent library - called PHPUnit - to give
-you a rich testing framework. This article won't cover PHPUnit itself, but
-it has its own excellent `documentation`_.
+Symfony integrates with an independent library called `PHPUnit`_ to give you a
+rich testing framework. This article won't cover PHPUnit itself, which has its
+own excellent `documentation`_.
 
-.. note::
+Before creating your first test, install the `PHPUnit Bridge component`_, which
+wraps the original PHPUnit binary to provide additional features:
 
-    It's recommended to use the latest stable PHPUnit version, `installed as
-    PHAR`_.
+.. code-block:: terminal
+
+    $ composer require --dev symfony/phpunit-bridge
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the ``tests/`` directory of your application. If you follow
@@ -27,7 +29,7 @@ command:
 
 .. code-block:: terminal
 
-    $ phpunit
+    $ ./vendor/bin/simple-phpunit
 
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
@@ -99,16 +101,16 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: terminal
 
     # run all tests of the application
-    $ phpunit
+    $ ./vendor/bin/simple-phpunit
 
     # run all tests in the Util directory
-    $ phpunit tests/AppBundle/Util
+    $ ./vendor/bin/simple-phpunit tests/AppBundle/Util
 
     # run tests for the Calculator class
-    $ phpunit tests/AppBundle/Util/CalculatorTest.php
+    $ ./vendor/bin/simple-phpunit tests/AppBundle/Util/CalculatorTest.php
 
     # run all tests for the entire Bundle
-    $ phpunit tests/AppBundle/
+    $ ./vendor/bin/simple-phpunit tests/AppBundle/
 
 .. index::
    single: Tests; Functional tests
@@ -223,7 +225,7 @@ Now that you can easily navigate through an application, use assertions to test
 that it actually does what you expect it to. Use the Crawler to make assertions
 on the DOM::
 
-    // Assert that the response matches a given CSS selector.
+    // asserts that the response matches a given CSS selector.
     $this->assertGreaterThan(0, $crawler->filter('h1')->count());
 
 Or test against the response content directly if you just want to assert that
@@ -247,17 +249,17 @@ document::
 
         // ...
 
-        // Assert that there is at least one h2 tag
+        // asserts that there is at least one h2 tag
         // with the class "subtitle"
         $this->assertGreaterThan(
             0,
             $crawler->filter('h2.subtitle')->count()
         );
 
-        // Assert that there are exactly 4 h2 tags on the page
+        // asserts that there are exactly 4 h2 tags on the page
         $this->assertCount(4, $crawler->filter('h2'));
 
-        // Assert that the "Content-Type" header is "application/json"
+        // asserts that the "Content-Type" header is "application/json"
         $this->assertTrue(
             $client->getResponse()->headers->contains(
                 'Content-Type',
@@ -266,22 +268,22 @@ document::
             'the "Content-Type" header is "application/json"' // optional message shown on failure
         );
 
-        // Assert that the response content contains a string
+        // asserts that the response content contains a string
         $this->assertContains('foo', $client->getResponse()->getContent());
         // ...or matches a regex
         $this->assertRegExp('/foo(bar)?/', $client->getResponse()->getContent());
 
-        // Assert that the response status code is 2xx
+        // asserts that the response status code is 2xx
         $this->assertTrue($client->getResponse()->isSuccessful(), 'response status is 2xx');
-        // Assert that the response status code is 404
+        // asserts that the response status code is 404
         $this->assertTrue($client->getResponse()->isNotFound());
-        // Assert a specific 200 status code
+        // asserts a specific 200 status code
         $this->assertEquals(
             200, // or Symfony\Component\HttpFoundation\Response::HTTP_OK
             $client->getResponse()->getStatusCode()
         );
 
-        // Assert that the response is a redirect to /demo/contact
+        // asserts that the response is a redirect to /demo/contact
         $this->assertTrue(
             $client->getResponse()->isRedirect('/demo/contact')
             // if the redirection URL was generated as an absolute URL
@@ -365,10 +367,10 @@ giving you a nice API for uploading files.
 The ``request()`` method can also be used to simulate form submissions directly
 or perform more complex requests. Some useful examples::
 
-    // Directly submit a form (but using the Crawler is easier!)
+    // submits a form directly (but using the Crawler is easier!)
     $client->request('POST', '/submit', array('name' => 'Fabien'));
 
-    // Submit a raw JSON string in the request body
+    // submits a raw JSON string in the request body
     $client->request(
         'POST',
         '/submit',
@@ -418,7 +420,7 @@ The Client supports many operations that can be done in a real browser::
     $client->forward();
     $client->reload();
 
-    // Clears all cookies and the history
+    // clears all cookies and the history
     $client->restart();
 
 .. versionadded:: 3.4
@@ -481,12 +483,12 @@ queries when loading.
 
 To get the Profiler for the last request, do the following::
 
-    // enable the profiler for the very next request
+    // enables the profiler for the very next request
     $client->enableProfiler();
 
     $crawler = $client->request('GET', '/profiler');
 
-    // get the profile
+    // gets the profile
     $profile = $client->getProfile();
 
 For specific details on using the profiler inside a test, see the
@@ -583,19 +585,19 @@ Extracting Information
 
 The Crawler can extract information from the nodes::
 
-    // Returns the attribute value for the first node
+    // returns the attribute value for the first node
     $crawler->attr('class');
 
-    // Returns the node value for the first node
+    // returns the node value for the first node
     $crawler->text();
 
-    // Extracts an array of attributes for all nodes
+    // extracts an array of attributes for all nodes
     // (_text returns the node value)
     // returns an array for each element in crawler,
     // each with the value and href
     $info = $crawler->extract(array('_text', 'href'));
 
-    // Executes a lambda for each node and return an array of results
+    // executes a lambda for each node and return an array of results
     $data = $crawler->each(function ($node, $i) {
         return $node->attr('href');
     });
@@ -675,20 +677,20 @@ method::
 For more complex situations, use the ``Form`` instance as an array to set the
 value of each field individually::
 
-    // Change the value of a field
+    // changes the value of a field
     $form['name'] = 'Fabien';
     $form['my_form[subject]'] = 'Symfony rocks!';
 
 There is also a nice API to manipulate the values of the fields according to
 their type::
 
-    // Select an option or a radio
+    // selects an option or a radio
     $form['country']->select('France');
 
-    // Tick a checkbox
+    // ticks a checkbox
     $form['like_symfony']->tick();
 
-    // Upload a file
+    // uploads a file
     $form['photo']->upload('/path/to/lucas.jpg');
 
 .. tip::
@@ -715,21 +717,21 @@ you can't add fields to an existing form with
 set values of existing fields. In order to add new fields, you have to
 add the values to the raw data array::
 
-    // Get the form.
+    // gets the form
     $form = $crawler->filter('button')->form();
 
-    // Get the raw values.
+    // gets the raw values
     $values = $form->getPhpValues();
 
-    // Add fields to the raw values.
+    // adds fields to the raw values
     $values['task']['tags'][0]['name'] = 'foo';
     $values['task']['tags'][1]['name'] = 'bar';
 
-    // Submit the form with the existing and new values.
+    // submits the form with the existing and new values
     $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
         $form->getPhpFiles());
 
-    // The 2 tags have been added to the collection.
+    // the 2 tags have been added to the collection
     $this->assertEquals(2, $crawler->filter('ul.tags > li')->count());
 
 Where ``task[tags][0][name]`` is the name of a field created
@@ -737,17 +739,17 @@ with JavaScript.
 
 You can remove an existing field, e.g. a tag::
 
-    // Get the values of the form.
+    // gets the values of the form
     $values = $form->getPhpValues();
 
-    // Remove the first tag.
+    // removes the first tag
     unset($values['task']['tags'][0]);
 
-    // Submit the data.
+    // submits the data
     $crawler = $client->request($form->getMethod(), $form->getUri(),
         $values, $form->getPhpFiles());
 
-    // The tag has been removed.
+    // the tag has been removed
     $this->assertEquals(0, $crawler->filter('ul.tags > li')->count());
 
 .. index::
@@ -915,6 +917,7 @@ Learn more
 * :doc:`/components/dom_crawler`
 * :doc:`/components/css_selector`
 
-.. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
+.. _`PHPUnit`: https://phpunit.de/
 .. _`documentation`: https://phpunit.de/manual/current/en/
-.. _`installed as PHAR`: https://phpunit.de/manual/current/en/installation.html#installation.phar
+.. _`PHPUnit Bridge component`: https://symfony.com/components/PHPUnit%20Bridge
+.. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php

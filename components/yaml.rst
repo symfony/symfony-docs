@@ -203,7 +203,7 @@ Indentation
 By default the YAML component will use 4 spaces for indentation. This can be
 changed using the third argument as follows::
 
-    // use 8 spaces for indentation
+    // uses 8 spaces for indentation
     echo Yaml::dump($array, 2, 8);
 
 .. code-block:: yaml

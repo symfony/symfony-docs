@@ -302,13 +302,13 @@ from any controller::
 
     public function indexAction(Session $session)
     {
-        // store an attribute for reuse during a later user request
+        // stores an attribute for reuse during a later user request
         $session->set('foo', 'bar');
 
-        // get the value of a session attribute
+        // gets the value of a session attribute
         $foo = $session->get('foo');
 
-        // use a default value if the attribute doesn't exist
+        // uses a default value if the attribute doesn't exist
         $foo = $session->get('foo', 'default_value');
     }
 

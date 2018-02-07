@@ -153,7 +153,7 @@ the parent request)::
             return;
         }
 
-        // Reset the locale of the subrequest to the locale of the parent request
+        // reset the locale of the subrequest to the locale of the parent request
         $this->setLocale($parentRequest);
     }
 

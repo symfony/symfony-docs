@@ -61,10 +61,10 @@ be listed inside the choice field::
     // ...
 
     $builder->add('users', EntityType::class, array(
-        // query choices from this entity
+        // looks for choices from this entity
         'class' => 'AppBundle:User',
 
-        // use the User.username property as the visible option string
+        // uses the User.username property as the visible option string
         'choice_label' => 'username',
 
         // used to render a select box, check boxes or radios

@@ -257,7 +257,8 @@ Documentation
 
 * The ``@package`` and ``@subpackage`` annotations are not used;
 
-* Inline the ``@inheritdoc`` tag.
+* Don't inline PHPDoc blocks, even when they contain just one tag (e.g. don't
+  put ``/** {@inheritdoc} */`` in a single line).
 
 License
 ~~~~~~~

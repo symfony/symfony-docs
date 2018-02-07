@@ -21,7 +21,7 @@ the ``test`` environment)::
         {
             $client = static::createClient();
 
-            // Enable the profiler for the next request
+            // enable the profiler for the next request
             // (it does nothing if the profiler is not available)
             $client->enableProfiler();
 
@@ -29,7 +29,7 @@ the ``test`` environment)::
 
             // ... write some assertions about the Response
 
-            // Check that the profiler is enabled
+            // check that the profiler is enabled
             if ($profile = $client->getProfile()) {
                 // check the number of requests
                 $this->assertLessThan(

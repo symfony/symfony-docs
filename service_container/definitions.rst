@@ -21,17 +21,17 @@ Getting and Setting Service Definitions
 
 There are some helpful methods for working with the service definitions::
 
-    // find out if there is an "app.mailer" definition
+    // finds out if there is an "app.mailer" definition
     $container->hasDefinition('app.mailer');
-    // find out if there is an "app.mailer" definition or alias
+    // finds out if there is an "app.mailer" definition or alias
     $container->has('app.mailer');
 
-    // get the "app.user_config_manager" definition
+    // gets the "app.user_config_manager" definition
     $definition = $container->getDefinition('app.user_config_manager');
-    // get the definition with the "app.user_config_manager" ID or alias
+    // gets the definition with the "app.user_config_manager" ID or alias
     $definition = $container->findDefinition('app.user_config_manager');
 
-    // add a new "app.number_generator" definition
+    // adds a new "app.number_generator" definition
     $definition = new Definition(\AppBundle\NumberGenerator::class);
     $container->setDefinition('app.number_generator', $definition);
 
@@ -85,16 +85,16 @@ fetched from the container::
         '%app.config_table_name%'  // will be resolved to the value of a container parameter
     ));
 
-    // get all arguments configured for this definition
+    // gets all arguments configured for this definition
     $constructorArguments = $definition->getArguments();
 
-    // get a specific argument
+    // gets a specific argument
     $firstArgument = $definition->getArgument(0);
 
-    // add a new argument
+    // adds a new argument
     $definition->addArgument($argument);
 
-    // replace argument on a specific index (0 = first argument)
+    // replaces argument on a specific index (0 = first argument)
     $definition->replaceArgument($index, $argument);
 
     // replace all previously configured arguments with the passed array
@@ -112,13 +112,13 @@ Method Calls
 If the service you are working with uses setter injection then you can manipulate
 any method calls in the definitions as well::
 
-    // get all configured method calls
+    // gets all configured method calls
     $methodCalls = $definition->getMethodCalls();
 
-    // configure a new method call
+    // configures a new method call
     $definition->addMethodCall('setLogger', array(new Reference('logger')));
 
-    // replace all previously configured method calls with the passed array
+    // replaces all previously configured method calls with the passed array
     $definition->setMethodCalls($methodCalls);
 
 .. tip::

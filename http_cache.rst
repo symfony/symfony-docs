@@ -308,16 +308,16 @@ More Response Methods
 The Response class provides many more methods related to the cache. Here are
 the most useful ones::
 
-    // Marks the Response stale
+    // marks the Response stale
     $response->expire();
 
-    // Force the response to return a proper 304 response with no content
+    // forces the response to return a proper 304 response with no content
     $response->setNotModified();
 
 Additionally, most cache-related HTTP headers can be set via the single
 :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method::
 
-    // Set cache settings in one call
+    // sets cache settings in one call
     $response->setCache(array(
         'etag'          => $etag,
         'last_modified' => $date,

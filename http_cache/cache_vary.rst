@@ -35,10 +35,10 @@ trigger a different representation of the requested resource:
 The ``Response`` object offers a clean interface for managing the ``Vary``
 header::
 
-    // set one vary header
+    // sets one vary header
     $response->setVary('Accept-Encoding');
 
-    // set multiple vary headers
+    // sets multiple vary headers
     $response->setVary(array('Accept-Encoding', 'User-Agent'));
 
 The ``setVary()`` method takes a header name or an array of header names for

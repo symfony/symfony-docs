@@ -119,7 +119,7 @@ method. It takes an optional annotation reader instance, which defaults to
 To disable the annotation loader after it was enabled, call
 :method:`Symfony\\Component\\Validator\\ValidatorBuilder::disableAnnotationMapping`.
 
-.. include:: /_includes/_rewrite_rule_tip.rst.inc
+.. include:: /_includes/_annotation_loader_tip.rst.inc
 
 Using Multiple Loaders
 ----------------------

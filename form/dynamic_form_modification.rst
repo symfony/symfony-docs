@@ -116,7 +116,7 @@ the event listener might look like the following::
             $product = $event->getData();
             $form = $event->getForm();
 
-            // check if the Product object is "new"
+            // checks if the Product object is "new"
             // If no data is passed to the form, the data is "null".
             // This should be considered a new "Product"
             if (!$product || null === $product->getId()) {
