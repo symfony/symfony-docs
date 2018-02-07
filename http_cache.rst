@@ -80,6 +80,8 @@ but is a great way to start.
 To enable the proxy, first create a caching kernel::
 
     // src/CacheKernel.php
+    namespace App;
+
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
     class CacheKernel extends HttpCache
@@ -92,6 +94,9 @@ caching kernel:
 .. code-block:: diff
 
     // public/index.php
+
+    use App\Kernel;
+    + use App\CacheKernel;
 
     // ...
     $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev')));
