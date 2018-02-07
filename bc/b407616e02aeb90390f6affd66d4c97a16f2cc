@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-02T14:36:53Z
+
+@ismail1432 I've reviewed your contribution and made some fixes. You may be thinking *"he changed everything I contributed!!"* but I hope you understand why we made those changes:
+
+* Syntax issues: Symfony Docs use a very strict format called reStructuredText. That's why the underline of a heading must be of the same length of the heading, the code blocks that contain PHP don't need a `.. code-block` directive, etc.
+* Content issues: the example you took from the blog post was a bit complex (my bad!) so I've simplified the route config to make things easier to understand.
+* Missing `.. versionadded` directive: it's needed when we document a new feature so the reader knows when a feature was introduced.
+
+In any case, thanks for your contribution and we hope to get more contributions from you in the future. Thanks!
+
+---------------------------------------------------------------------------
+
+by ismail1432 at 2018-02-02T15:37:27Z
+
+No worries @javiereguiluz ! I totally understand.
+Thanks for the feedback
