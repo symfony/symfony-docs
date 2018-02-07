@@ -577,7 +577,7 @@ Once you have a repository object, you can access all sorts of helpful methods::
 
     $repository = $this->getDoctrine()->getRepository(Product::class);
 
-    // query for a single product by its primary key (usually "id")
+    // looks for a single product by its primary key (usually "id")
     $product = $repository->find($productId);
 
     // dynamic method names to find a single product based on a column value
@@ -587,7 +587,7 @@ Once you have a repository object, you can access all sorts of helpful methods::
     // dynamic method names to find a group of products based on a column value
     $products = $repository->findByPrice(19.99);
 
-    // find *all* products
+    // finds *all* products
     $products = $repository->findAll();
 
 .. note::
@@ -600,12 +600,12 @@ to easily fetch objects based on multiple conditions::
 
     $repository = $this->getDoctrine()->getRepository(Product::class);
 
-    // query for a single product matching the given name and price
+    // looks for a single product matching the given name and price
     $product = $repository->findOneBy(
         array('name' => 'Keyboard', 'price' => 19.99)
     );
 
-    // query for multiple products matching the given name, ordered by price
+    // looks for multiple products matching the given name, ordered by price
     $products = $repository->findBy(
         array('name' => 'Keyboard'),
         array('price' => 'ASC')

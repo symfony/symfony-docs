@@ -55,7 +55,7 @@ The most common way to listen to an event is to register an **event listener**::
                 $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
-            // Send the modified response object to the event
+            // sends the modified response object to the event
             $event->setResponse($response);
         }
     }

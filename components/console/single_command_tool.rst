@@ -35,7 +35,7 @@ it is possible to remove this need by extending the application::
          */
         protected function getDefaultCommands()
         {
-            // Keep the core default commands to have the HelpCommand
+            // Keeps the core default commands to have the HelpCommand
             // which is used when using the --help option
             $defaultCommands = parent::getDefaultCommands();
 
@@ -51,7 +51,7 @@ it is possible to remove this need by extending the application::
         public function getDefinition()
         {
             $inputDefinition = parent::getDefinition();
-            // clear out the normal first argument, which is the command name
+            // clears out the normal first argument, which is the command name
             $inputDefinition->setArguments();
 
             return $inputDefinition;

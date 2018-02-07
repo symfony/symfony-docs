@@ -194,7 +194,7 @@ first constructor argument::
 
     $role = new Role('ROLE_ADMIN');
 
-    // will show 'ROLE_ADMIN'
+    // shows 'ROLE_ADMIN'
     var_dump($role->getRole());
 
 .. note::

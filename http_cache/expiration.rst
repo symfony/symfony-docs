@@ -35,7 +35,7 @@ Expiration with the ``Cache-Control`` Header
 Most of the time, you will use the ``Cache-Control`` header. Recall that the
 ``Cache-Control`` header is used to specify many different cache directives::
 
-    // Sets the number of seconds after which the response
+    // sets the number of seconds after which the response
     // should no longer be considered fresh by shared caches
     $response->setSharedMaxAge(600);
 

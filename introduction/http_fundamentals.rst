@@ -216,20 +216,20 @@ have all the request information at your fingertips::
     // the URI being requested (e.g. /about) minus any query parameters
     $request->getPathInfo();
 
-    // retrieve $_GET and $_POST variables respectively
+    // retrieves $_GET and $_POST variables respectively
     $request->query->get('id');
     $request->request->get('category', 'default category');
 
-    // retrieve $_SERVER variables
+    // retrieves $_SERVER variables
     $request->server->get('HTTP_HOST');
 
     // retrieves an instance of UploadedFile identified by "attachment"
     $request->files->get('attachment');
 
-    // retrieve a $_COOKIE value
+    // retrieves a $_COOKIE value
     $request->cookies->get('PHPSESSID');
 
-    // retrieve an HTTP request header, with normalized, lowercase keys
+    // retrieves an HTTP request header, with normalized, lowercase keys
     $request->headers->get('host');
     $request->headers->get('content_type');
 
@@ -256,10 +256,10 @@ needs to be returned to the client::
     $response->setContent('<html><body><h1>Hello world!</h1></body></html>');
     $response->setStatusCode(Response::HTTP_OK);
 
-    // set a HTTP response header
+    // sets a HTTP response header
     $response->headers->set('Content-Type', 'text/html');
 
-    // print the HTTP headers followed by the content
+    // prints the HTTP headers followed by the content
     $response->send();
 
 There are also several response *sub-classes* to help you return
