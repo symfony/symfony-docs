@@ -198,7 +198,7 @@ For example::
                     $imageUrl = $accessor->getValue($parentData, $options['image_property']);
                 }
 
-                // set an "image_url" variable that will be available when rendering this field
+                // sets an "image_url" variable that will be available when rendering this field
                 $view->vars['image_url'] = $imageUrl;
             }
         }

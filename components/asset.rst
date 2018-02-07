@@ -121,13 +121,13 @@ suffix to any asset path::
 In case you want to modify the version format, pass a sprintf-compatible format
 string as the second argument of the ``StaticVersionStrategy`` constructor::
 
-    // put the 'version' word before the version value
+    // puts the 'version' word before the version value
     $package = new Package(new StaticVersionStrategy('v1', '%s?version=%s'));
 
     echo $package->getUrl('/image.png');
     // result: /image.png?version=v1
 
-    // put the asset version before its path
+    // puts the asset version before its path
     $package = new Package(new StaticVersionStrategy('v1', '%2$s/%1$s'));
 
     echo $package->getUrl('/image.png');

@@ -110,11 +110,11 @@ touch
 modification time for a file. The current time is used by default. You can set
 your own with the second argument. The third argument is the access time::
 
-    // set modification time to the current timestamp
+    // sets modification time to the current timestamp
     $fs->touch('file.txt');
-    // set modification time 10 seconds in the future
+    // sets modification time 10 seconds in the future
     $fs->touch('file.txt', time() + 10);
-    // set access time 10 seconds in the past
+    // sets access time 10 seconds in the past
     $fs->touch('file.txt', time(), time() - 10);
 
 .. note::
@@ -128,9 +128,9 @@ chown
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chown` changes the owner of
 a file. The third argument is a boolean recursive option::
 
-    // set the owner of the lolcat video to www-data
+    // sets the owner of the lolcat video to www-data
     $fs->chown('lolcat.mp4', 'www-data');
-    // change the owner of the video directory recursively
+    // changes the owner of the video directory recursively
     $fs->chown('/video', 'www-data', true);
 
 .. note::
@@ -144,9 +144,9 @@ chgrp
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` changes the group of
 a file. The third argument is a boolean recursive option::
 
-    // set the group of the lolcat video to nginx
+    // sets the group of the lolcat video to nginx
     $fs->chgrp('lolcat.mp4', 'nginx');
-    // change the group of the video directory recursively
+    // changes the group of the video directory recursively
     $fs->chgrp('/video', 'nginx', true);
 
 .. note::
@@ -160,9 +160,9 @@ chmod
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chmod` changes the mode or
 permissions of a file. The fourth argument is a boolean recursive option::
 
-    // set the mode of the video to 0600
+    // sets the mode of the video to 0600
     $fs->chmod('video.ogg', 0600);
-    // change the mod of the src directory recursively
+    // changes the mod of the src directory recursively
     $fs->chmod('src', 0700, 0000, true);
 
 .. note::
@@ -189,9 +189,9 @@ rename
 :method:`Symfony\\Component\\Filesystem\\Filesystem::rename` changes the name
 of a single file or directory::
 
-    // rename a file
+    // renames a file
     $fs->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
-    // rename a directory
+    // renames a directory
     $fs->rename('/tmp/files', '/path/to/store/files');
 
 symlink
@@ -201,9 +201,9 @@ symlink
 symbolic link from the target to the destination. If the filesystem does not
 support symbolic links, a third boolean argument is available::
 
-    // create a symbolic link
+    // creates a symbolic link
     $fs->symlink('/path/to/source', '/path/to/destination');
-    // duplicate the source directory if the filesystem
+    // duplicates the source directory if the filesystem
     // does not support symbolic links
     $fs->symlink('/path/to/source', '/path/to/destination', true);
 
@@ -268,13 +268,13 @@ isAbsolutePath
 :method:`Symfony\\Component\\Filesystem\\Filesystem::isAbsolutePath` returns
 ``true`` if the given path is absolute, ``false`` otherwise::
 
-    // return true
+    // returns true
     $fs->isAbsolutePath('/tmp');
-    // return true
+    // returns true
     $fs->isAbsolutePath('c:\\Windows');
-    // return false
+    // returns false
     $fs->isAbsolutePath('tmp');
-    // return false
+    // returns false
     $fs->isAbsolutePath('../dir');
 
 dumpFile

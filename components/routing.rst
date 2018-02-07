@@ -261,7 +261,7 @@ To load this file, you can use the following code. This assumes that your
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\Routing\Loader\YamlFileLoader;
 
-    // look inside *this* directory
+    // looks inside *this* directory
     $locator = new FileLocator(array(__DIR__));
     $loader = new YamlFileLoader($locator);
     $collection = $loader->load('routes.yaml');
@@ -312,7 +312,7 @@ Last but not least there are
 route definitions from class annotations. The specific details are left
 out here.
 
-.. include:: /_includes/_rewrite_rule_tip.rst.inc
+.. include:: /_includes/_annotation_loader_tip.rst.inc
 
 The all-in-one Router
 ~~~~~~~~~~~~~~~~~~~~~

@@ -262,7 +262,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
             $product->setPrice(19.99);
             $product->setDescription('Ergonomic and stylish!');
 
-            // relate this product to the category
+            // relates this product to the category
             $product->setCategory($category);
 
             $em = $this->getDoctrine()->getManager();

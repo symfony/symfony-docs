@@ -97,7 +97,7 @@ from inside a controller::
     {
         public function new(Request $request)
         {
-            // create a task and give it some dummy data for this example
+            // creates a task and gives it some dummy data for this example
             $task = new Task();
             $task->setTask('Write a blog post');
             $task->setDueDate(new \DateTime('tomorrow'));

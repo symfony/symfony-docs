@@ -249,7 +249,7 @@ which should be used to encode this user's password::
 
     $encoder = $encoderFactory->getEncoder($user);
 
-    // will return $weakEncoder (see above)
+    // returns $weakEncoder (see above)
     $encodedPassword = $encoder->encodePassword($plainPassword, $user->getSalt());
 
     $user->setPassword($encodedPassword);

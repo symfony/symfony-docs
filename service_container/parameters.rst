@@ -156,13 +156,13 @@ Getting and Setting Container Parameters in PHP
 Working with container parameters is straightforward using the container's
 accessor methods for parameters::
 
-    // check if a parameter is defined (parameter names are case-sensitive)
+    // checks if a parameter is defined (parameter names are case-sensitive)
     $container->hasParameter('mailer.transport');
 
-    // get value of a parameter
+    // gets value of a parameter
     $container->getParameter('mailer.transport');
 
-    // add a new parameter
+    // adds a new parameter
     $container->setParameter('mailer.transport', 'sendmail');
 
 .. caution::

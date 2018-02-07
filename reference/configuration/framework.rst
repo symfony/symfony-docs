@@ -1739,13 +1739,15 @@ app
 **type**: ``string`` **default**: ``cache.adapter.filesystem``
 
 The cache adapter used by the ``cache.app`` service. The FrameworkBundle
-ships with multiple adapters: ``apcu``, ``doctrine``, ``system``, ``filesystem``,
-``psr6``, ``redis`` and ``memcached``.
+ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``,
+``cache.adapter.system``, ``cache.adapter.filesystem``, ``cache.adapter.psr6``,
+``cache.adapter.redis`` and ``cache.adapter.memcached``.
 
 .. tip::
 
-    It might be tough to understand at the beginning, so to avoid confusion remember that all pools perform the
-    same actions but on different medium given the adapter they are based on. Internally, a pool wraps the definition
+    It might be tough to understand at the beginning, so to avoid confusion
+    remember that all pools perform the same actions but on different medium
+    given the adapter they are based on. Internally, a pool wraps the definition
     of an adapter.
 
 system
@@ -1753,7 +1755,8 @@ system
 
 **type**: ``string`` **default**: ``cache.adapter.system``
 
-The cache adapter used by the ``cache.system`` service.
+The cache adapter used by the ``cache.system`` service. It supports the same
+adapters available for the ``cache.app`` service.
 
 directory
 .........
