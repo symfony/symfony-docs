@@ -69,6 +69,8 @@ that it implements ``Twig_ExtensionInterface``) and adds the tag for you.
     interface, call the :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration`
     method in an :doc:`extension </bundles/extension>` or from your kernel::
 
+    .. code-block:: php
+
         // app/AppKernel.php
         class AppKernel extends Kernel
         {
@@ -81,8 +83,10 @@ that it implements ``Twig_ExtensionInterface``) and adds the tag for you.
                 ;
             }
         }
-        
+
     If you do not want to create a custom kernel, it is also possible to use `_instanceof`:
+
+    .. code-block:: yaml
 
         // app/config/services.yml
         services:
