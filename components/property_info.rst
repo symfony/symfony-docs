@@ -73,6 +73,35 @@ provide it with a set of information extractors.
     $class = YourAwesomeCoolClass::class;
     $properties = $propertyInfo->getProperties($class);
 
+``YourAwesomeCoolClass`` my look like the following::
+
+    namespace Example\Namespace;
+
+    use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+
+    class YourAwesomeCoolClass
+    {
+        /**
+         * @var string|float Object name
+         */
+        public $name;
+
+        /**
+         * @var int Object id
+         */
+        protected $id;
+
+        /**
+         * @var array|null Object data
+         */
+        private $data;
+
+        /**
+         * @var PropertyInfoExtractor
+         */
+        private $extractor;
+    }
+
 Extractor Ordering
 ~~~~~~~~~~~~~~~~~~
 
