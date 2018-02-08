@@ -432,8 +432,9 @@ Each authenticator needs the following methods:
 
 The picture below shows how Symfony calls Guard Authenticator methods:
 
-.. image:: /_images/security/authentication-guard-methods.svg
-   :align: center
+.. raw:: html
+
+    <object data="./_images/security/authentication-guard-methods.svg" type="image/svg+xml"></object>
 
 .. _guard-customize-error:
 
