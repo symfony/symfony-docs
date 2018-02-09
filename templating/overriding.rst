@@ -19,6 +19,11 @@ from the bundle to ``templates/bundles/AcmeBlogBundle/Blog/index.html.twig``
 (the ``templates/bundles/AcmeBlogBundle/`` directory won't exist, so you'll need
 to create it). You're now free to customize the template.
 
+If you don't want to override the entire template but instead just want to 
+override a block, as of Symfony 3.4 you can now do with by extending the original
+template using the "!" prefix. For example:
+``{% extends "@!AcmeBlogBundle/layout.html.twig" %}``
+
 .. caution::
 
     If you add a template in a new location, you *may* need to clear your

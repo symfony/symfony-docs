@@ -410,6 +410,9 @@ template living inside the AcmeBlogBundle, for example, can be overridden
 by placing a template of the same name in the ``templates/bundles/AcmeBlogBundle/``
 directory. This gives the power to override templates from any vendor bundle.
 
+If you have overridden a template, you can use the "!" prefix to refer to the original bundle's
+template. E.g. ``@!AcmeBlog/layout.html.twig``
+
 Template Suffix
 ~~~~~~~~~~~~~~~
 
