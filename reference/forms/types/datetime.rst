@@ -125,6 +125,7 @@ on your underlying object. Valid values are:
 
 * ``string`` (e.g. ``2011-06-05 12:15:00``)
 * ``datetime`` (a ``DateTime`` object)
+* ``datetime_immutable`` (a ``DateTimeImmutable`` object)
 * ``array`` (e.g. ``array(2011, 06, 05, 12, 15, 0)``)
 * ``timestamp`` (e.g. ``1307276100``)
 
