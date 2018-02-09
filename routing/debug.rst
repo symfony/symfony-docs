@@ -31,6 +31,14 @@ the route name as the command argument:
 
     $ php bin/console debug:router article_show
 
+    # or use part of the name to search for routes
+    $ php bin/console debug:router blo
+    
+      Select one of the matching routes:
+      [0] blog
+      [1] blog_show
+     >
+
 Likewise, if you want to test whether a URL matches a given route, use the
 ``router:match`` command. This is useful to debug routing issues and find out
 which route is associated with the given URL:
