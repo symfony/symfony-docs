@@ -276,21 +276,15 @@ method, which should return an array of groups to use::
 
         public function getGroupSequence()
         {
-            $groups = array('User');
+            // when returning a simple array, if there's a violation in any group
+            // the rest of groups are not validated. E.g. if 'User' fails,
+            // 'Premium' and 'Api' are not validated:
+            return array('User', 'Premium', 'Api');
 
-            if ($this->isPremium()) {
-                $groups[] = 'Premium';
-            }
-
-            // Caution: the validation behavior depends on how this method
-            // returns its result (a simple array or a nested array).
-
-            // if the User group causes any violations, the Premium group will
-            // not be validated (even if $this->isPremium() is true)
-            return $groups;
-
-            // both groups are validated and you'll get violations from any of them
-            return array($groups);
+            // when returning a nested array, all the groups included in each array
+            // are validated. E.g. if 'User' fails, 'Premium' is also validated
+            // (and you'll get its violations too) but 'Api' won't be validated:
+            return array(array('User', 'Premium'), 'Api');
         }
     }
 
