@@ -157,6 +157,12 @@ Great! Next, add the logic to ``loginAction()`` that displays the login form::
         ));
     }
 
+.. note::
+
+    If you get an error that the ``$authUtils`` argument is missing, it's
+    probably because you need to activate this new feature in Symfony 3.4. See
+    this :ref:`controller service argument note <controller-service-arguments-tag>`.
+
 Don't let this controller confuse you. As you'll see in a moment, when the
 user submits the form, the security system automatically handles the form
 submission for you. If the user submits an invalid username or password,
