@@ -434,7 +434,7 @@ The picture below shows how Symfony calls Guard Authenticator methods:
 
 .. raw:: html
 
-    <object data="./_images/security/authentication-guard-methods.svg" type="image/svg+xml"></object>
+    <object data="../_images/security/authentication-guard-methods.svg" type="image/svg+xml"></object>
 
 .. _guard-customize-error:
 
