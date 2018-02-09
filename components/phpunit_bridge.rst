@@ -188,6 +188,39 @@ the ``vendors`` directory will make the test suite fail, while deprecations
 triggered from a library inside it will not, giving you the best of both
 worlds.
 
+When working on a project, you might be more interested in the
+``allow_outdated_vendors``, which is a bit more strict. Let's say you
+want to fix deprecations as soon as they appear. A problem many people
+experience is that some dependencies they have tend to lag behind their
+own dependencies, meaning they do not fix deprecations as soon as
+possible, which means there is nothing you can do to fix that (apart
+from a pull request on the outdated vendor). This mode allows you to
+ignore those deprecations, allowing you to notice when *your code* is
+using deprecated APIs, and to keep up with the changes.
+
+Here is a summary that should help you pick the right mode:
+
++------------------------+-----------------------------------------------------+
+| Mode                   | Recommended situation                               |
++========================+=====================================================+
+| strict                 | Recommended for actively maintained projects        |
+|                        | with little to no dependencies                      |
++------------------------+-----------------------------------------------------+
+| <some integer>         | Recommended for projects that you cannot            |
+|                        | immediately fix but don't want to make worse.       |
+|                        | Can be used to transition from one mode to another. |
++------------------------+-----------------------------------------------------+
+| allow_outdated_vendors | Recommended for projects with dependencies          |
+|                        | that fail to keep up with new deprecations.         |
++------------------------+-----------------------------------------------------+
+| weak_vendors           | Recommended for libraries that use                  |
+|                        | the deprecation system themselves and               |
+|                        | cannot afford to use one of the modes above.        |
++------------------------+-----------------------------------------------------+
+| weak                   | Not recommended; will probably lead to              |
+|                        | a big refactoring.                                  |
++------------------------+-----------------------------------------------------+
+
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
