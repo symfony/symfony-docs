@@ -703,6 +703,12 @@ the choice is ultimately up to you.
 
         $form->get('agreeTerms')->setData(true);
 
+
+.. note::
+    A form name is generated from the type class name, if you want to set it
+    explicitly, use :method:`FormFactoryInterface::createNamed() <Symfony\\Component\\Form\\FormFactoryInterface>`.
+    You can even suppress the name completely by setting it to an empty string.
+
 Final Thoughts
 --------------
 
