@@ -923,16 +923,26 @@ them will not cause the container to be rebuilt.
     means that all classes are "available to be *used* as services" without needing
     to be manually configured.
 
-.. sidebar:: The ``namespace`` Option
+Multiple Service Definitions Using the Same Namespace
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    .. versionadded:: 3.4
-        The ``namespace`` option was added in Symfony 3.4.
+.. versionadded:: 3.4
+    The ``namespace`` option in the YAML configuration was introduced in Symfony 3.4.
 
-    When using the ``resource`` option in YAML, the namespace prefix can only be used once
-    per file when defining it as the ``id``. In order to have multiple definitions in the
-    same file with the same namespace prefix, you can use the ``namespace`` option. When
-    this option is used, the ``id`` can be anything as long as it is unique. For example,
-    you can define your services like this:
+If you define services using the YAML config format, the PHP namespace is used
+as the key of each configuration, so you can't define different service configs
+for classes under the same namespace:
+
+.. code-block:: yaml
+
+    # app/config/services.yml
+    services:
+        App\Domain\:
+            resource: '../../src/Domain/*'
+            # ...
+
+In order to have multiple definitions, add the ``namespace`` option and use any
+unique string as the key of each service config:
 
     .. code-block:: yaml
 
@@ -940,12 +950,12 @@ them will not cause the container to be rebuilt.
         services:
             command_handlers:
                 namespace: App\Domain\
-                resource: ../../src/Domain/*/CommandHandler
+                resource: '../../src/Domain/*/CommandHandler'
                 tags: [command_handler]
 
             event_subscribers:
                 namespace: App\Domain\
-                resource: ../../src/Domain/*/EventSubscriber
+                resource: '../../src/Domain/*/EventSubscriber'
                 tags: [event_subscriber]
 
 .. _services-explicitly-configure-wire-services:
