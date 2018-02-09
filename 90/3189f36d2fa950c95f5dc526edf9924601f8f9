@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2017-11-30T20:48:04Z
+
+@kbond Can you tell me when this is a useful feature people (I didn't meant that to sound negative at all - I want to make sure I understand the precise use-case). Is it only when there are multiple classes in the same file? If not, I didn't quite understand the description of it.
+
+I would also prefer to put this doc somewhere else (though I'm not sure where). I want to keep the main article very light and focused on the 90% use-cases.
+
+---------------------------------------------------------------------------
+
+by kbond at 2017-11-30T20:59:18Z
+
+Here is a use-case: https://github.com/SimpleBus/SymfonyBridge/pull/43#issuecomment-325676233
+
+It allows you to use the same namespace multiple times in the same yaml file.
+
+---------------------------------------------------------------------------
+
+by kbond at 2017-12-01T14:32:32Z
+
+FYI - XML has the namespace option already. I can find reference to it on this page: http://symfony.com/doc/current/service_container/3.3-di-changes.html. Don't know if it makes sense to move there as this is a 3.4 change.
