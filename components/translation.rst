@@ -34,9 +34,8 @@ The constructor of the ``Translator`` class needs one argument: The locale.
 .. code-block:: php
 
     use Symfony\Component\Translation\Translator;
-    use Symfony\Component\Translation\MessageSelector;
 
-    $translator = new Translator('fr_FR', new MessageSelector());
+    $translator = new Translator('fr_FR');
 
 .. note::
 

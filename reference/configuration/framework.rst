@@ -1328,7 +1328,7 @@ Assume you have custom global form themes in
             'templating' => array(
                 'form' => array(
                     'resources' => array(
-                        'WebsiteBundle:Form'
+                        'WebsiteBundle:Form',
                     ),
                 ),
             ),

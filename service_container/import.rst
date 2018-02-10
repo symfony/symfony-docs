@@ -174,7 +174,6 @@ invokes the service container extension inside the FrameworkBundle:
         $container->loadFromExtension('framework', array(
             'secret' => 'xxxxxxxxxx',
             'form'   => array(),
-
             // ...
         ));
 

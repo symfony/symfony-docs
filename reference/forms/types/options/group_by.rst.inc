@@ -23,7 +23,7 @@ Take the following example::
             'now' => new \DateTime('now'),
             'tomorrow' => new \DateTime('+1 day'),
             '1 week' => new \DateTime('+1 week'),
-            '1 month' => new \DateTime('+1 month')
+            '1 month' => new \DateTime('+1 month'),
         ),
         'choices_as_values' => true,
         'group_by' => function($val, $key, $index) {

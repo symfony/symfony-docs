@@ -557,7 +557,7 @@ class, which can make this even easier::
 
     $response = new JsonResponse();
     $response->setData(array(
-        'data' => 123
+        'data' => 123,
     ));
 
 This encodes your array of data to JSON and sets the ``Content-Type`` header

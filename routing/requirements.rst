@@ -65,7 +65,7 @@ a routing ``{wildcard}`` to only match some regular expression:
         $collection->add('blog_list', new Route('/blog/{page}', array(
             '_controller' => 'AppBundle:Blog:list',
         ), array(
-            'page' => '\d+'
+            'page' => '\d+',
         )));
 
         // ...

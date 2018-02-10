@@ -60,10 +60,10 @@ address as its own input text box::
 
     $builder->add('emails', CollectionType::class, array(
         // each entry in the array will be an "email" field
-        'entry_type'   => EmailType::class,
+        'entry_type' => EmailType::class,
         // these options are passed to each "email" type
-        'entry_options'  => array(
-            'attr'      => array('class' => 'email-box')
+        'entry_options' => array(
+            'attr' => array('class' => 'email-box'),
         ),
     ));
 
@@ -211,7 +211,7 @@ And update the template as follows:
         {% endfor %}
         </ul>
 
-        <a href="#" 
+        <a href="#"
             class="add-another-collection-widget"
             data-list="#email-field-list">Add another email</a>
 

@@ -126,7 +126,7 @@ some developers configure form buttons in the controller::
             $form = $this->createForm(PostType::class, $post);
             $form->add('submit', SubmitType::class, array(
                 'label' => 'Create',
-                'attr'  => array('class' => 'btn btn-default pull-right')
+                'attr'  => array('class' => 'btn btn-default pull-right'),
             ));
 
             // ...

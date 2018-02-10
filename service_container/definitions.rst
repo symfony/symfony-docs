@@ -79,7 +79,7 @@ fetched from the container::
 
     $definition = new Definition(DoctrineConfigManager::class, array(
         new Reference('doctrine'), // a reference to another service
-        '%app.config_table_name%'  // will be resolved to the value of a container parameter
+        '%app.config_table_name%',  // will be resolved to the value of a container parameter
     ));
 
     // gets all arguments configured for this definition

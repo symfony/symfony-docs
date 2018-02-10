@@ -110,7 +110,7 @@ for that::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefaults(array(
-                'inherit_data' => true
+                'inherit_data' => true,
             ));
         }
     }
