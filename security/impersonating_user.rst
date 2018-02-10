@@ -228,7 +228,7 @@ the sticky locale:
             ->register('app.switch_user_listener', SwitchUserListener::class)
             ->addTag('kernel.event_listener', array(
                 'event' => 'security.switch_user',
-                'method' => 'onSwitchUser'
+                'method' => 'onSwitchUser',
             ))
         ;
 
