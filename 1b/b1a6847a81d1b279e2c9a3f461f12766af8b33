@@ -1,0 +1,75 @@
+---------------------------------------------------------------------------
+
+by lyrixx at 2017-03-15T09:37:17Z
+
+@javiereguiluz Thanks but actually it a bit more complex than that. The ObjectNormalizer use the property name for the name, but use the getter to get the value.
+
+```php
+class Post
+{
+    private $publishedAt;
+
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
+    }
+}
+```
+
+it will be serialized to `{"publishedAt": "2017...."}"`
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2017-03-15T09:49:32Z
+
+@lyrixx OK. Then I don't understand this phrase:
+
+```
+Objects are normalized to a map of property names (method name stripped
+of the get/set/has/remove prefix) to property values.
+```
+
+By the way,  I can understand your comment perfectly ... so maybe that's the description we should use.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2017-03-15T09:55:07Z
+
+Indeed, I don't understand the comment either...
+maybe @dunglas could help us on this one.
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2017-03-15T13:40:09Z
+
+May be we could explain how to add this name converter in the SE:
+
+```yml
+    serializer:
+        enabled: true
+        name_converter: serializer.name_converter.camel_case_to_snake_case
+```
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2017-03-26T13:55:36Z
+
+ping @dunglas :)
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2017-10-16T14:15:25Z
+
+ping @dunglas
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-09T14:44:20Z
+
+Should we close here? We have no more feedback or information about what to do 😞
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2018-02-09T17:30:04Z
+
+No, you can merge as it
