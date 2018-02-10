@@ -96,7 +96,7 @@ named encoders:
             'encoders' => array(
                 'harsh' => array(
                     'algorithm' => 'bcrypt',
-                    'cost'      => '15'
+                    'cost'      => '15',
                 ),
             ),
         ));
@@ -165,7 +165,7 @@ you must register a service for it in order to use it as a named encoder:
             // ...
             'encoders' => array(
                 'app_encoder' => array(
-                    'id' => 'app.password_encoder_service'
+                    'id' => 'app.password_encoder_service',
                 ),
             ),
         ));

@@ -70,7 +70,7 @@ a new method called ``helloAction()`` with the following content::
         public function helloAction($name)
         {
             return $this->render('default/hello.html.twig', array(
-                'name' => $name
+                'name' => $name,
             ));
         }
     }
@@ -125,7 +125,7 @@ as its default value::
     public function helloAction($name, $_format)
     {
         return $this->render('default/hello.'.$_format.'.twig', array(
-            'name' => $name
+            'name' => $name,
         ));
     }
 
@@ -168,7 +168,7 @@ option of the ``@Route()`` annotation::
     public function helloAction($name, $_format)
     {
         return $this->render('default/hello.'.$_format.'.twig', array(
-            'name' => $name
+            'name' => $name,
         ));
     }
 

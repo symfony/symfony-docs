@@ -145,7 +145,7 @@ values for the year, month and day fields::
 
     $builder->add('dueDate', 'date', array(
         'placeholder' => array(
-            'year' => 'Year', 'month' => 'Month', 'day' => 'Day'
+            'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
         )
     ));
 

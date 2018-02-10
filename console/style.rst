@@ -372,7 +372,6 @@ of your commands to change their appearance::
 
             // After
             $io = new CustomStyle($input, $output);
-
             // ...
         }
     }

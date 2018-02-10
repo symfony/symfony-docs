@@ -106,7 +106,7 @@ managers that use this connection.
             ->register('my.listener2', SearchIndexer2::class)
             ->addTag('doctrine.event_listener', array(
                 'event' => 'postPersist',
-                'connection' => 'default'
+                'connection' => 'default',
             ))
         ;
         $container

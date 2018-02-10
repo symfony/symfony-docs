@@ -209,11 +209,11 @@ pattern so that it is only accessible by requests from the local server itself:
                 array(
                     'path' => '^/internal',
                     'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
-                    'ips' => '127.0.0.1, ::1'
+                    'ips' => '127.0.0.1, ::1',
                 ),
                 array(
                     'path' => '^/internal',
-                    'role' => 'ROLE_NO_ACCESS'
+                    'role' => 'ROLE_NO_ACCESS',
                 ),
             ),
         ));
