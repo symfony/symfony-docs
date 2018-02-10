@@ -218,7 +218,7 @@ exposing a simple and efficient pattern::
             // or render a template with the $response you've already started
             return $this->render('article/show.html.twig', array(
                 'article' => $article,
-                'comments' => $comments
+                'comments' => $comments,
             ), $response);
         }
     }

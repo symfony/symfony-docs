@@ -470,7 +470,7 @@ Pass an array of values::
     // sets multiple fields at once
     $form->setValues(array('multi' => array(
         1             => 'value',
-        'dimensional' => 'an other value'
+        'dimensional' => 'an other value',
     )));
 
 This is great, but it gets better! The ``Form`` object allows you to interact

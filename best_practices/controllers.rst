@@ -111,7 +111,7 @@ for the homepage of our app:
                 ->findLatest();
 
             return $this->render('default/index.html.twig', array(
-                'posts' => $posts
+                'posts' => $posts,
             ));
         }
     }

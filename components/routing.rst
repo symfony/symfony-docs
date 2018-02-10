@@ -62,7 +62,7 @@ URL path and some array of custom variables in its constructor. This array
 of custom variables can be *anything* that's significant to your application,
 and is returned when that route is matched.
 
-The :method:`UrlMatcher::match() <Symfony\\Component\\Routing\\UrlMatcher::match>`
+The :method:`UrlMatcher::match() <Symfony\\Component\\Routing\\Matcher\\UrlMatcher::match>`
 returns the variables you set on the route as well as the wildcard placeholders
 (see below). Your application can now use this information to continue
 processing the request. In addition to the configured variables, a ``_route``

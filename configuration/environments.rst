@@ -139,7 +139,6 @@ configuration file:
 
         $container->loadFromExtension('web_profiler', array(
             'toolbar' => true,
-
             // ...
         ));
 

@@ -78,7 +78,7 @@ managers that use this connection.
         $container->autowire(SearchIndexer2::class)
             ->addTag('doctrine.event_listener', array(
                 'event' => 'postPersist',
-                'connection' => 'default'
+                'connection' => 'default',
             ))
         ;
         $container->autowire(SearchIndexerSubscriber::class)

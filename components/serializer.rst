@@ -554,9 +554,10 @@ There are several types of normalizers available:
     directly and through getters, setters, hassers, adders and removers. It supports
     calling the constructor during the denormalization process.
 
-    Objects are normalized to a map of property names (method name stripped of
-    the "get"/"set"/"has"/"remove" prefix and converted to lower case) to property
-    values.
+    Objects are normalized to a map of property names and values (names are
+    generated removing the ``get``, ``set``, ``has`` or ``remove`` prefix from
+    the method name and lowercasing the first letter; e.g. ``getFirstName()`` ->
+    ``firstName``).
 
     The ``ObjectNormalizer`` is the most powerful normalizer. It is configured by
     default when using the Symfony Standard Edition with the serializer enabled.
@@ -566,8 +567,9 @@ There are several types of normalizers available:
     (public methods starting with "get"). It will denormalize data by calling
     the constructor and the "setters" (public methods starting with "set").
 
-    Objects are normalized to a map of property names (method name stripped of
-    the "get" prefix and converted to lower case) to property values.
+    Objects are normalized to a map of property names and values (names are
+    generated removing the ``get`` prefix from the method name and lowercasing
+    the first letter; e.g. ``getFirstName()`` -> ``firstName``).
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
     This normalizer directly reads and writes public properties as well as
@@ -699,7 +701,8 @@ Circular references are common when dealing with entity relations::
     }
 
 To avoid infinite loops, :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
-throws a :class:`Symfony\\Component\\Serializer\\Exception\\CircularReferenceException`
+or :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
+throw a :class:`Symfony\\Component\\Serializer\\Exception\\CircularReferenceException`
 when such a case is encountered::
 
     $member = new Member();

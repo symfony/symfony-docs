@@ -217,7 +217,7 @@ After this, you have protected your login form against CSRF attacks.
                         'form_login' => array(
                             // ...
                             'csrf_parameter' => '_csrf_security_token',
-                            'csrf_token_id'     => 'a_private_string'
+                            'csrf_token_id'  => 'a_private_string',
                         ),
                     ),
                 ),
