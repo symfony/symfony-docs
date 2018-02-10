@@ -296,7 +296,7 @@ made. To do that, you create a new class::
                 ->addPart(
                     'Someone just updated the site. We told them: '.$happyMessage
                 );
-            
+
             return $this->mailer->send($message) > 0;
         }
     }
@@ -317,7 +317,7 @@ you can type-hint the new ``SiteUpdateManager`` class and use it::
         if ($siteUpdateManager->notifyOfSiteUpdate()) {
             $this->addFlash('success', 'Notification mail was sent successfully.');
         }
-        
+
         // ...
     }
 
@@ -862,6 +862,41 @@ them will not cause the container to be rebuilt.
     automatically removed from the final container. In reality, the import
     means that all classes are "available to be *used* as services" without needing
     to be manually configured.
+
+Multiple Service Definitions Using the Same Namespace
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.4
+    The ``namespace`` option in the YAML configuration was introduced in Symfony 3.4.
+
+If you define services using the YAML config format, the PHP namespace is used
+as the key of each configuration, so you can't define different service configs
+for classes under the same namespace:
+
+.. code-block:: yaml
+
+    # app/config/services.yml
+    services:
+        App\Domain\:
+            resource: '../../src/Domain/*'
+            # ...
+
+In order to have multiple definitions, add the ``namespace`` option and use any
+unique string as the key of each service config:
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            command_handlers:
+                namespace: App\Domain\
+                resource: '../../src/Domain/*/CommandHandler'
+                tags: [command_handler]
+
+            event_subscribers:
+                namespace: App\Domain\
+                resource: '../../src/Domain/*/EventSubscriber'
+                tags: [event_subscriber]
 
 .. _services-explicitly-configure-wire-services:
 

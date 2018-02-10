@@ -1408,7 +1408,7 @@ configure this like:
             'templating' => array(
                 'form' => array(
                     'resources' => array(
-                        'form_themes'
+                        'form_themes',
                     ),
                 ),
             ),
