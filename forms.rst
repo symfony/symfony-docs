@@ -705,8 +705,9 @@ the choice is ultimately up to you.
 
 
 .. note::
-    A form name is generated from the type class name, if you want to set it
-    explicitly, use :method:`FormFactoryInterface::createNamed() <Symfony\\Component\\Form\\FormFactoryInterface>`.
+
+    The form name is automatically generated from the type class name. If you want
+    to modify it, use the :method:`Symfony\\Component\\Form\\FormFactoryInterface::createNamed` method.
     You can even suppress the name completely by setting it to an empty string.
 
 Final Thoughts
