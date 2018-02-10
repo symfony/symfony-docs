@@ -52,7 +52,7 @@ swiftmailer with the memory option, use the following configuration:
         // app/config/config.php
         $container->loadFromExtension('swiftmailer', array(
              // ...
-            'spool' => array('type' => 'memory')
+            'spool' => array('type' => 'memory'),
         ));
 
 .. _spool-using-a-file:

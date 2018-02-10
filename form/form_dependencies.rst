@@ -37,7 +37,7 @@ create your form::
     {
         $task = ...;
         $form = $this->createForm(new TaskType(), $task, array(
-            'entity_manager' => $this->get('doctrine.orm.entity_manager')
+            'entity_manager' => $this->get('doctrine.orm.entity_manager'),
         ));
 
         // ...
