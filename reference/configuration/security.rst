@@ -531,11 +531,11 @@ multiple firewalls, the "context" could actually be shared:
             'firewalls' => array(
                 'somename' => array(
                     // ...
-                    'context' => 'my_context'
+                    'context' => 'my_context',
                 ),
                 'othername' => array(
                     // ...
-                    'context' => 'my_context'
+                    'context' => 'my_context',
                 ),
             ),
         ));

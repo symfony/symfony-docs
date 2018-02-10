@@ -12,10 +12,10 @@ you can list the most popular on top, like Bork Bork and Pirate::
             'English' => 'en',
             'Spanish' => 'es',
             'Bork'   => 'muppets',
-            'Pirate' => 'arr'
+            'Pirate' => 'arr',
         ),
         'choices_as_values' => true,
-        'preferred_choices' => array('muppets', 'arr')
+        'preferred_choices' => array('muppets', 'arr'),
     ));
 
 .. versionadded:: 2.7
@@ -29,7 +29,7 @@ be especially useful if your values are objects::
             'now' => new \DateTime('now'),
             'tomorrow' => new \DateTime('+1 day'),
             '1 week' => new \DateTime('+1 week'),
-            '1 month' => new \DateTime('+1 month')
+            '1 month' => new \DateTime('+1 month'),
         ),
         'choices_as_values' => true,
         'preferred_choices' => function ($val, $key) {
