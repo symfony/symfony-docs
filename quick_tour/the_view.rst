@@ -68,8 +68,8 @@ on its type:
 
     {# 1. Simple variables #}
     {# $this->render('template.html.twig', array(
-           'name' => 'Fabien'),
-       ) #}
+           'name' => 'Fabien',
+       )) #}
     {{ name }}
 
     {# 2. Arrays #}
