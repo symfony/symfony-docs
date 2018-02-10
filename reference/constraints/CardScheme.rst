@@ -89,7 +89,7 @@ on an object that will contain a credit card number.
             {
                 $metadata->addPropertyConstraint('cardNumber', new Assert\CardScheme(array(
                     'schemes' => array(
-                        'VISA'
+                        'VISA',
                     ),
                     'message' => 'Your credit card number is invalid.',
                 )));

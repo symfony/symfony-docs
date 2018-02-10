@@ -289,7 +289,7 @@ Here, the ``AppBundle:Hello:fancy`` string refers to the ``fancy`` action of the
 
             return $this->render('AppBundle:Hello:fancy.html.php', array(
                 'name'   => $name,
-                'object' => $object
+                'object' => $object,
             ));
         }
 
