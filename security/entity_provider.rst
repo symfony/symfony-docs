@@ -369,14 +369,14 @@ so you only need the new interface::
         {
             return serialize(array(
                 // ...
-                $this->isActive
+                $this->isActive,
             ));
         }
         public function unserialize($serialized)
         {
             list (
                 // ...
-                $this->isActive
+                $this->isActive,
             ) = unserialize($serialized);
         }
     }

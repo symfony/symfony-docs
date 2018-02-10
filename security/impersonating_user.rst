@@ -198,32 +198,32 @@ The :doc:`/session/locale_sticky_session` article does not update the locale
 when you impersonate a user. If you *do* want to be sure to update the locale when
 you switch users, add an event subscriber on this event::
 
-        // src/EventListener/SwitchUserListener.php
-        namespace App\EventListener;
+    // src/EventListener/SwitchUserListener.php
+    namespace App\EventListener;
 
-        use Symfony\Component\Security\Http\Event\SwitchUserEvent;
-        use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-        use Symfony\Component\Security\Http\SecurityEvents;
+    use Symfony\Component\Security\Http\Event\SwitchUserEvent;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Security\Http\SecurityEvents;
 
-        class SwitchUserSubscriber implements EventSubscriberInterface
+    class SwitchUserSubscriber implements EventSubscriberInterface
+    {
+        public function onSwitchUser(SwitchUserEvent $event)
         {
-            public function onSwitchUser(SwitchUserEvent $event)
-            {
-                $event->getRequest()->getSession()->set(
-                    '_locale',
-                    // assuming your User has some getLocale() method
-                    $event->getTargetUser()->getLocale()
-                );
-            }
-
-            public static function getSubscribedEvents()
-            {
-                return array(
-                    // constant for security.switch_user
-                    SecurityEvents::SWITCH_USER => 'onSwitchUser',
-                );
-            }
+            $event->getRequest()->getSession()->set(
+                '_locale',
+                // assuming your User has some getLocale() method
+                $event->getTargetUser()->getLocale()
+            );
         }
+
+        public static function getSubscribedEvents()
+        {
+            return array(
+                // constant for security.switch_user
+                SecurityEvents::SWITCH_USER => 'onSwitchUser',
+            );
+        }
+    }
 
 That's it! If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically discover your service and call ``onSwitchUser`` whenever
