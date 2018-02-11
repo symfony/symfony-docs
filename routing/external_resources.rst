@@ -101,6 +101,18 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 
 .. configuration-block::
 
+    .. code-block:: php-annotations
+
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        /**
+         * @Route("/site")
+         */
+        class DefaultController
+        {
+            // ...
+        }
+
     .. code-block:: yaml
 
         # app/config/routing.yml
