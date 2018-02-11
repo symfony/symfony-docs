@@ -161,8 +161,9 @@ Great! Next, add the logic to ``login()`` that displays the login form::
 .. note::
 
     If you get an error that the ``$authUtils`` argument is missing, it's
-    probably because you need to activate this new feature in Symfony 3.4. See
-    this :ref:`controller service argument note <controller-service-arguments-tag>`.
+    probably because the controllers of your application are not defined as
+    services and tagged with the ``controller.service_arguments`` tag, as done
+    in the :ref:`default services.yaml configuration <service-container-services-load-example>`.
 
 Don't let this controller confuse you. As you'll see in a moment, when the
 user submits the form, the security system automatically handles the form
