@@ -136,34 +136,79 @@ be prefixed with the string ``/site``.
 Prefixing the Names of Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You also have the possibility to prefix all route names defined in a controller
-class with the ``name`` attribute of the ``@Route`` annotation::
+You also have the possibility to prefix the names of all the routes defined in
+a controller class or imported from a configuration file:
 
-    use Symfony\Component\Routing\Annotation\Route;
+.. configuration-block::
 
-    /**
-     * @Route(name="blog_")
-     */
-    class BlogController extends Controller
-    {
-        /**
-         * @Route("/blog", name="index")
-         */
-        public function indexAction()
-        {
-            // ...
-        }
+    .. code-block:: php-annotations
+
+        use Symfony\Component\Routing\Annotation\Route;
 
         /**
-         * @Route("/blog/posts/{slug}", name="post")
+         * @Route(name="blog_")
          */
-        public function showAction(Post $post)
+        class BlogController extends Controller
         {
-            // ...
+            /**
+             * @Route("/blog", name="index")
+             */
+            public function indexAction()
+            {
+                // ...
+            }
+
+            /**
+             * @Route("/blog/posts/{slug}", name="post")
+             */
+            public function showAction(Post $post)
+            {
+                // ...
+            }
         }
-    }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        controllers:
+            resource:    '../src/Controller/'
+            type:        annotation
+            name_prefix: 'blog_'
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import
+                resource="../src/Controller/"
+                type="annotation"
+                name-prefix="blog_" />
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $app = $loader->import('../src/Controller/', 'annotation');
+        $app->addNamePrefix('blog_');
+
+        $collection = new RouteCollection();
+        $collection->addCollection($app);
+
+        return $collection;
 
 In this example, the names of the routes will be ``blog_index`` and ``blog_post``.
+
+.. versionadded:: 4.1
+    The option to prefix route names in YAML, XML and PHP files was introduced
+    in Symfony 4.1. Previously only the ``@Route()`` annotation supported this
+    feature.
 
 Adding a Host Requirement to Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
