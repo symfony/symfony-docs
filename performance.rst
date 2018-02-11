@@ -120,9 +120,9 @@ deployment process too):
 
 .. code-block:: bash
 
-    $ composer dump-autoload --optimize --no-dev --classmap-authoritative
+    $ composer dump-autoload --optimize-autoloader --no-dev --classmap-authoritative
 
-* ``--optimize`` dumps every PSR-0 and PSR-4 compatible class used in your
+* ``--optimize-autoloader`` dumps every PSR-0 and PSR-4 compatible class used in your
   application;
 * ``--no-dev`` excludes the classes that are only needed in the development
   environment (e.g. tests);
