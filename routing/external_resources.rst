@@ -92,8 +92,10 @@ in that directory are parsed and put into the routing.
 
             return $collection;
 
-Prefixing Imported Routes
-~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _prefixing-imported-routes:
+
+Prefixing the URLs of Imported Routes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also choose to provide a "prefix" for the imported routes. For example,
 suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
