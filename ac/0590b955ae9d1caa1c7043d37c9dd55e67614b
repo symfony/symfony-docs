@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-02-13T14:39:58Z
+
+compare http://symfony.com/doc/3.4/service_container.html#multiple-service-definitions-using-the-same-namespace with http://pr-9255-gshotaa-6qmocelev2lwe.eu.platform.sh/service_container.html#multiple-service-definitions-using-the-same-namespace to spot the difference
