@@ -54,7 +54,7 @@ it's recommended to change these settings as follows:
 
     ; php.ini
     ; maximum memory that OPcache can use to store compiled PHP files
-    opcache.memory_consumption=256M
+    opcache.memory_consumption=256
 
     ; maximum number of files that can be stored in the cache
     opcache.max_accelerated_files=20000
