@@ -887,7 +887,7 @@ The array keys beginning with ``@`` are considered XML attributes::
 
 If you want create a node with value and attribute use this::
 
-    array('foo' => array('@bar' => 'value', # => 'baz'));
+    array('foo' => array('@bar' => 'value', '#' => 'baz'));
 
     // is encoded as follows:
     // <?xml version="1.0"?>
