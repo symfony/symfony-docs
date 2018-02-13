@@ -27,9 +27,14 @@ The Workflow of a Request
 Every HTTP web interaction begins with a request and ends with a response.
 Your job as a developer is to create PHP code that reads the request information
 (e.g. the URL) and creates and returns a response (e.g. an HTML page or JSON string).
+This is a simplified overview of the request workflow in Symfony applications:
 
-.. image:: /_images/components/http_kernel/request-response-flow.png
-   :align: center
+#. The **user** asks for a **resource** in a **browser**;
+#. The **browser** sends a **request** to the **server**;
+#. **Symfony** gives the **application** a **Request** object;
+#. The **application** generates a **Response** object using the data of the **Request** object;
+#. The **server** sends back the **response** to the **browser**;
+#. The **browser** displays the **resource** to the **user**.
 
 Typically, some sort of framework or system is built to handle all the repetitive
 tasks (e.g. routing, security, etc) so that a developer can easily build
@@ -62,8 +67,9 @@ the concrete implementation of :method:`HttpKernelInterface::handle() <Symfony\\
 defines a workflow that starts with a :class:`Symfony\\Component\\HttpFoundation\\Request`
 and ends with a :class:`Symfony\\Component\\HttpFoundation\\Response`.
 
-.. image:: /_images/components/http_kernel/01-workflow.png
-   :align: center
+.. raw:: html
+
+    <object data="../_images/components/http_kernel/http-workflow.svg" type="image/svg+xml"></object>
 
 The exact details of this workflow are the key to understanding how the kernel
 (and the Symfony Framework or any other library that uses the kernel) works.
@@ -138,9 +144,6 @@ layer that denies access).
 The first event that is dispatched inside :method:`HttpKernel::handle <Symfony\\Component\\HttpKernel\\HttpKernel::handle>`
 is ``kernel.request``, which may have a variety of different listeners.
 
-.. image:: /_images/components/http_kernel/02-kernel-request.png
-   :align: center
-
 Listeners of this event can be quite varied. Some listeners - such as a security
 listener - might have enough information to create a ``Response`` object immediately.
 For example, if a security listener determined that a user doesn't have access,
@@ -149,9 +152,6 @@ to the login page or a 403 Access Denied response.
 
 If a ``Response`` is returned at this stage, the process skips directly to
 the :ref:`kernel.response <component-http-kernel-kernel-response>` event.
-
-.. image:: /_images/components/http_kernel/03-kernel-request-response.png
-   :align: center
 
 Other listeners simply initialize things or add more information to the request.
 For example, a listener might determine and set the locale on the ``Request``
@@ -204,9 +204,6 @@ But *how* you determine the exact controller for a request is entirely up
 to your application. This is the job of the "controller resolver" - a class
 that implements :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface`
 and is one of the constructor arguments to ``HttpKernel``.
-
-.. image:: /_images/components/http_kernel/04-resolve-controller.png
-   :align: center
 
 Your job is to create a class that implements the interface and fill in its
 two methods: ``getController()`` and ``getArguments()``. In fact, one default
@@ -280,9 +277,6 @@ some part of the system that needs to be initialized after certain things
 have been determined (e.g. the controller, routing information) but before
 the controller is executed. For some examples, see the Symfony section below.
 
-.. image:: /_images/components/http_kernel/06-kernel-controller.png
-   :align: center
-
 Listeners to this event can also change the controller callable completely
 by calling :method:`FilterControllerEvent::setController <Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent::setController>`
 on the event object that's passed to listeners on this event.
@@ -314,9 +308,6 @@ should be passed to that controller. Exactly how this is done is completely
 up to your design, though the built-in :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`
 is a good example.
 
-.. image:: /_images/components/http_kernel/07-controller-arguments.png
-   :align: center
-
 At this point the kernel has a PHP callable (the controller) and an array
 of arguments that should be passed when executing that callable.
 
@@ -345,9 +336,6 @@ of arguments that should be passed when executing that callable.
 
 The next step is simple! ``HttpKernel::handle()`` executes the controller.
 
-.. image:: /_images/components/http_kernel/08-call-controller.png
-   :align: center
-
 The job of the controller is to build the response for the given resource.
 This could be an HTML page, a JSON string or anything else. Unlike every
 other part of the process so far, this step is implemented by the "end-developer",
@@ -356,9 +344,6 @@ for each page that is built.
 Usually, the controller will return a ``Response`` object. If this is true,
 then the work of the kernel is just about done! In this case, the next step
 is the :ref:`kernel.response <component-http-kernel-kernel-response>` event.
-
-.. image:: /_images/components/http_kernel/09-controller-returns-response.png
-   :align: center
 
 But if the controller returns anything besides a ``Response``, then the kernel
 has a little bit more work to do - :ref:`kernel.view <component-http-kernel-kernel-view>`
@@ -383,9 +368,6 @@ If the controller doesn't return a ``Response`` object, then the kernel dispatch
 another event - ``kernel.view``. The job of a listener to this event is to
 use the return value of the controller (e.g. an array of data or an object)
 to create a ``Response``.
-
-.. image:: /_images/components/http_kernel/10-kernel-view.png
-   :align: center
 
 This can be useful if you want to use a "view" layer: instead of returning
 a ``Response`` from the controller, you return data that represents the page.
@@ -515,8 +497,9 @@ function is wrapped in a try-catch block. When any exception is thrown, the
 ``kernel.exception`` event is dispatched so that your system can somehow respond
 to the exception.
 
-.. image:: /_images/components/http_kernel/11-kernel-exception.png
-   :align: center
+.. raw:: html
+
+    <object data="../_images/components/http_kernel/http-workflow-exception.svg" type="image/svg+xml"></object>
 
 Each listener to this event is passed a :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent`
 object, which you can use to access the original exception via the
@@ -661,8 +644,9 @@ a page instead of a full page. You'll most commonly make sub-requests from
 your controller (or perhaps from inside a template, that's being rendered by
 your controller).
 
-.. image:: /_images/components/http_kernel/sub-request.png
-   :align: center
+.. raw:: html
+
+    <object data="../_images/components/http_kernel/http-workflow-subrequest.svg" type="image/svg+xml"></object>
 
 To execute a sub request, use ``HttpKernel::handle()``, but change the second
 argument as follows::
