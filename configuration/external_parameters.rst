@@ -123,6 +123,13 @@ the following:
 
         fastcgi_param DATABASE_URL "mysql://db_user:db_password@127.0.0.1:3306/db_name";
 
+.. caution::
+
+    Beware that dumping the contents of the ``$_SERVER`` and ``$_ENV`` variables
+    or outputting the ``phpinfo()`` contents will display the values of the
+    environment variables, exposing sensitive information such as the database
+    credentials.
+
 Constants
 ---------
 

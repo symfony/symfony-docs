@@ -920,19 +920,19 @@ for classes under the same namespace:
 In order to have multiple definitions, add the ``namespace`` option and use any
 unique string as the key of each service config:
 
-    .. code-block:: yaml
+.. code-block:: yaml
 
-        # app/config/services.yml
-        services:
-            command_handlers:
-                namespace: App\Domain\
-                resource: '../../src/Domain/*/CommandHandler'
-                tags: [command_handler]
+    # app/config/services.yml
+    services:
+        command_handlers:
+            namespace: App\Domain\
+            resource: '../../src/Domain/*/CommandHandler'
+            tags: [command_handler]
 
-            event_subscribers:
-                namespace: App\Domain\
-                resource: '../../src/Domain/*/EventSubscriber'
-                tags: [event_subscriber]
+        event_subscribers:
+            namespace: App\Domain\
+            resource: '../../src/Domain/*/EventSubscriber'
+            tags: [event_subscriber]
 
 .. _services-explicitly-configure-wire-services:
 
