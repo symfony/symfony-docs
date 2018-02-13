@@ -74,11 +74,10 @@ with the following fields: ``id``, ``username``, ``password``,
         /**
          * @ORM\Column(name="is_active", type="boolean")
          */
-        private $isActive;
+        private $isActive = true;
 
         public function __construct()
         {
-            $this->isActive = true;
             // may not be needed, see section on salt below
             // $this->salt = md5(uniqid('', true));
         }
@@ -314,8 +313,8 @@ and password ``admin`` (which has been encoded).
 
 .. sidebar:: Do you need to use a Salt property?
 
-    If you use ``bcrypt``, no. Otherwise, yes. All passwords must be hashed
-    with a salt, but ``bcrypt`` does this internally. Since this tutorial
+    If you use ``bcrypt`` or ``Argon2i`` no. Otherwise, yes. All passwords must
+    be hashed with a salt, but ``bcrypt`` does this internally. Since this tutorial
     *does* use ``bcrypt``, the ``getSalt()`` method in ``User`` can just
     return ``null`` (it's not used). If you use a different algorithm, you'll
     need to uncomment the ``salt`` lines in the ``User`` entity and add a
