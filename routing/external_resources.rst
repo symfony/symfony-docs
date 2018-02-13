@@ -85,14 +85,28 @@ This can be done by importing routing resources from the main routing file:
     When importing resources from YAML, the key (e.g. ``app_file``) is meaningless.
     Just be sure that it's unique so no other lines override it.
 
-Prefixing Imported Routes
-~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _prefixing-imported-routes:
+
+Prefixing the URLs of Imported Routes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also choose to provide a "prefix" for the imported routes. For example,
 suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 ``/site/blog/{slug}`` instead of ``/blog/{slug}``):
 
 .. configuration-block::
+
+    .. code-block:: php-annotations
+
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+        /**
+         * @Route("/site")
+         */
+        class DefaultController
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 

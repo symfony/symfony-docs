@@ -616,9 +616,11 @@ Now, you need to put some code into the ``removeTag()`` method of ``Task``::
 Template Modifications
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The ``allow_delete`` option has one consequence: if an item of a collection
+The ``allow_delete`` option means that if an item of a collection
 isn't sent on submission, the related data is removed from the collection
-on the server. The solution is to remove the form element from the DOM.
+on the server. In order for this to work in an HTML form, you must remove 
+the DOM element for the collection item to be removed, before submitting
+the form.
 
 First, add a "delete this tag" link to each tag form:
 
