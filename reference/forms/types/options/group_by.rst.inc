@@ -22,7 +22,7 @@ Take the following example::
             '1 week' => new \DateTime('+1 week'),
             '1 month' => new \DateTime('+1 month'),
         ),
-        'group_by' => function($val, $key, $index) {
+        'group_by' => function($val, $index, $key) {
             if ($val <= new \DateTime('+3 days')) {
                 return 'Soon';
             } else {
