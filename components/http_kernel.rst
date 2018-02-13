@@ -239,12 +239,12 @@ This implementation is explained more in the sidebar below::
 .. caution::
 
     The ``getArguments()`` method in the
-    :class:`Symfony\\Component\\Httpkernel\\Controller\\ControllerResolver` and
+    :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver` and
     respective interface
-    :class:`Symfony\\Component\\Httpkernel\\Controller\\ControllerResolverInterface`
+    :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface`
     are deprecated as of 3.1 and will be removed in 4.0. You can use the
-    :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolver` which
-    uses the :class:`Symfony\\Component\\Httpkernel\\Controller\\ArgumentResolverInterface`
+    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver` which
+    uses the :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolverInterface`
     instead.
 
 Internally, the ``HttpKernel::handle()`` method first calls
