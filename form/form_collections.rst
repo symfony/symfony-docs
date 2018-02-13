@@ -557,7 +557,21 @@ you will learn about next!).
     The trick is to make sure that the single "Task" is set on each "Tag".
     One easy way to do this is to add some extra logic to ``addTag()``,
     which is called by the form type since ``by_reference`` is set to
-    ``false``::
+    ``false``.
+    
+    For a one-to-many relationship you just need to add one line to ``Task``:
+
+        // src/AppBundle/Entity/Task.php
+
+        // ...
+        public function addTag(Tag $tag)
+        {
+            $tag->setTask($this);
+
+            $this->tags->add($tag);
+        }
+        
+    For a many-to-many relationship:
 
         // src/AppBundle/Entity/Task.php
 
@@ -580,9 +594,6 @@ you will learn about next!).
                 $this->tasks->add($task);
             }
         }
-
-    If you have a one-to-many relationship, then the workaround is similar,
-    except that you can simply call ``setTask()`` from inside ``addTag()``.
 
 .. _form-collections-remove:
 
