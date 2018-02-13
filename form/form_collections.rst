@@ -561,15 +561,19 @@ you will learn about next!).
 
         // src/AppBundle/Entity/Task.php
 
-        // ...
         public function addTag(Tag $tag)
         {
+            // for a many-to-many association:
             $tag->addTask($this);
+
+            // for a many-to-one association:
+            $tag->setTask($this);
 
             $this->tags->add($tag);
         }
 
-    Inside ``Tag``, just make sure you have an ``addTask()`` method::
+    If you're going for ``addTask()``, just make sure you have an appropriate method
+    that looks something like this::
 
         // src/AppBundle/Entity/Tag.php
 
@@ -580,9 +584,6 @@ you will learn about next!).
                 $this->tasks->add($task);
             }
         }
-
-    If you have a one-to-many relationship, then the workaround is similar,
-    except that you can simply call ``setTask()`` from inside ``addTag()``.
 
 .. _form-collections-remove:
 
