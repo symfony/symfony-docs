@@ -71,5 +71,5 @@ the ``doctrine-common`` directory. If not found, it will then fallback to
 the default ``Doctrine`` directory (the last one configured) before giving
 up. The order of the prefix registrations is significant in this case.
 
-.. _PEAR:  http://pear.php.net/manual/en/standards.naming.php
-.. _PSR-0: http://www.php-fig.org/psr/psr-0/
+.. _PEAR:  https://pear.php.net/manual/en/standards.naming.php
+.. _PSR-0: https://www.php-fig.org/psr/psr-0/

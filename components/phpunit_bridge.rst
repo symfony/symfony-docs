@@ -153,8 +153,8 @@ compatibility reasons.
 
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
-.. _`PHP error handler`: http://php.net/manual/en/book.errorfunc.php
+.. _`PHP error handler`: https://php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
 .. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
-.. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
-.. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
+.. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php
+.. _`@-silenced`: https://php.net/manual/en/language.operators.errorcontrol.php

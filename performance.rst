@@ -212,10 +212,10 @@ Learn more
 * :doc:`/http_cache/form_csrf_caching`
 
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
-.. _`OPcache`: http://php.net/manual/en/book.opcache.php
+.. _`OPcache`: https://php.net/manual/en/book.opcache.php
 .. _`bootstrap file`: https://github.com/sensiolabs/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php
 .. _`Composer's autoloader optimization`: https://getcomposer.org/doc/articles/autoloader-optimization.md
-.. _`APC`: http://php.net/manual/en/book.apc.php
+.. _`APC`: https://php.net/manual/en/book.apc.php
 .. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu
-.. _`APCu PHP functions`: http://php.net/manual/en/ref.apcu.php
+.. _`APCu PHP functions`: https://php.net/manual/en/ref.apcu.php
 .. _`cachetool`: https://github.com/gordalina/cachetool

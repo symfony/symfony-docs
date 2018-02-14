@@ -320,8 +320,8 @@ The contents of returned files can be read with
         // ...
     }
 
-.. _strtotime:    http://www.php.net/manual/en/datetime.formats.php
-.. _protocol:     http://www.php.net/manual/en/wrappers.php
-.. _Streams:      http://www.php.net/streams
-.. _IEC standard: http://physics.nist.gov/cuu/Units/binary.html
+.. _strtotime:    https://php.net/manual/en/datetime.formats.php
+.. _protocol:     https://php.net/manual/en/wrappers.php
+.. _Streams:      https://php.net/streams
+.. _IEC standard: https://physics.nist.gov/cuu/Units/binary.html
 .. _Packagist:    https://packagist.org/packages/symfony/finder

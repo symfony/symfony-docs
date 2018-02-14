@@ -314,6 +314,6 @@ without knowledge of the specific save handler.
     Before PHP 5.4, you can only proxy user-land save handlers but not
     native PHP save handlers.
 
-.. _`php.net/session.customhandler`: http://php.net/session.customhandler
-.. _`php.net/session.configuration`: http://php.net/session.configuration
-.. _`php.net/memcached.setoption`: http://php.net/memcached.setoption
+.. _`php.net/session.customhandler`: https://php.net/session.customhandler
+.. _`php.net/session.configuration`: https://php.net/session.configuration
+.. _`php.net/memcached.setoption`: https://php.net/memcached.setoption

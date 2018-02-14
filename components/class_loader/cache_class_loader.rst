@@ -60,6 +60,6 @@ it is straightforward::
     // deactivates the original, non-cached loader if it was registered previously
     $loader->unregister();
 
-.. _APC:        http://php.net/manual/en/book.apc.php
+.. _APC:        https://php.net/manual/en/book.apc.php
 .. _autoloader: https://getcomposer.org/doc/01-basic-usage.md#autoloading
-.. _XCache:     http://xcache.lighttpd.net
+.. _XCache:     https://xcache.lighttpd.net
