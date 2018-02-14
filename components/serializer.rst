@@ -885,6 +885,18 @@ The array keys beginning with ``@`` are considered XML attributes::
     //     <foo bar="value" />
     // </response>
 
+Use the special ``#`` key to define the data of a node::
+
+    array('foo' => array('@bar' => 'value', '#' => 'baz'));
+
+    // is encoded as follows:
+    // <?xml version="1.0"?>
+    // <response>
+    //     <foo bar="value">
+    //        baz
+    //     </foo>
+    // </response>
+
 Context
 ~~~~~~~
 
