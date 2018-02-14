@@ -453,6 +453,6 @@ of steps needed so that deployment becomes even easier.
 
 .. _`sign up with Azure`: https://azure.microsoft.com/free/
 .. _`Azure Portal`: https://portal.azure.com
-.. _`PHP MSDN documentation`: http://blogs.msdn.com/b/silverlining/archive/2012/07/10/configuring-php-in-windows-azure-websites-with-user-ini-files.aspx
-.. _`git-scm.com`: http://git-scm.com/download
+.. _`PHP MSDN documentation`: https://blogs.msdn.com/b/silverlining/archive/2012/07/10/configuring-php-in-windows-azure-websites-with-user-ini-files.aspx
+.. _`git-scm.com`: https://git-scm.com/download
 .. _`SymfonyAzureEdition`: https://github.com/beberlei/symfony-azure-edition/

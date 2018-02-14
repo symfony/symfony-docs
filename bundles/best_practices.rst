@@ -492,9 +492,9 @@ Learn more
 * :doc:`/bundles/extension`
 * :doc:`/bundles/configuration`
 
-.. _`PSR-0`: http://www.php-fig.org/psr/psr-0/
-.. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
-.. _`Semantic Versioning Standard`: http://semver.org/
+.. _`PSR-0`: https://www.php-fig.org/psr/psr-0/
+.. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
+.. _`Semantic Versioning Standard`: https://semver.org/
 .. _`Packagist`: https://packagist.org/
-.. _`choose any license`: http://choosealicense.com/
+.. _`choose any license`: https://choosealicense.com/
 .. _`valid license identifier`: https://spdx.org/licenses/

@@ -103,4 +103,4 @@ constructor::
     );
     $logger = new ConsoleLogger($output, array(), $formatLevelMap);
 
-.. _PSR-3: http://www.php-fig.org/psr/psr-3/
+.. _PSR-3: https://www.php-fig.org/psr/psr-3/

@@ -307,7 +307,7 @@ Go Deeper with Setup
     setup/*
 
 .. _`Composer`: https://getcomposer.org/
-.. _`Phar extension`: http://php.net/manual/en/intro.phar.php
+.. _`Phar extension`: https://php.net/manual/en/intro.phar.php
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
 .. _`The Symfony Demo application`: https://github.com/symfony/symfony-demo
 .. _`The Symfony CMF Standard Edition`: https://github.com/symfony-cmf/standard-edition

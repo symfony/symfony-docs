@@ -291,9 +291,9 @@ Change value of a constant                          Yes [1]_ [5]_
        Changing an argument type is only possible with a parent type.
        Changing a return type is only possible with a child type.
 
-.. _Semantic Versioning: http://semver.org/
-.. _scalar type: http://php.net/manual/en/function.is-scalar.php
-.. _boolean values: http://php.net/manual/en/function.boolval.php
-.. _string values: http://www.php.net/manual/en/function.strval.php
-.. _integer values: http://www.php.net/manual/en/function.intval.php
-.. _float values: http://www.php.net/manual/en/function.floatval.php
+.. _Semantic Versioning: https://semver.org/
+.. _scalar type: https://php.net/manual/en/function.is-scalar.php
+.. _boolean values: https://php.net/manual/en/function.boolval.php
+.. _string values: https://php.net/manual/en/function.strval.php
+.. _integer values: https://php.net/manual/en/function.intval.php
+.. _float values: https://php.net/manual/en/function.floatval.php

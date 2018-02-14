@@ -739,4 +739,4 @@ Learn more
 * :doc:`/http_cache/form_csrf_caching`
 
 .. _`Symfony Form component`: https://github.com/symfony/form
-.. _`DateTime`: http://php.net/manual/en/class.datetime.php
+.. _`DateTime`: https://php.net/manual/en/class.datetime.php
