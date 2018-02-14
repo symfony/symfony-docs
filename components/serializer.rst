@@ -903,7 +903,7 @@ The array keys beginning with ``@`` are considered XML attributes::
     //     <foo bar="value" />
     // </response>
 
-If you want create a node with value and attribute use this::
+Use the special ``#`` key to define the data of a node::
 
     array('foo' => array('@bar' => 'value', '#' => 'baz'));
 
