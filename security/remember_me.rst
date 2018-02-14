@@ -251,7 +251,7 @@ In the following example, the action is only allowed if the user has the
         // ...
     }
 
-If your application is based on the Symfony Standard Edition, you can also secure
+If you have installed `SensioFrameworkExtraBundle`_ in your application, you can also secure
 your controller using annotations:
 
 .. code-block:: php
@@ -288,3 +288,5 @@ your controller using annotations:
 
 For more information on securing services or methods in this way,
 see :doc:`/security/securing_services`.
+
+.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
