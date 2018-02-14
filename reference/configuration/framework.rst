@@ -523,7 +523,7 @@ enabled
 **type**: ``boolean`` **default**: ``false``
 
 The profiler can be enabled by setting this option to ``true``. When you
-are using the Symfony Standard Edition, the profiler is enabled in the ``dev``
+install it using Symfony Flex, the profiler is enabled in the ``dev``
 and ``test`` environments.
 
 .. note::
