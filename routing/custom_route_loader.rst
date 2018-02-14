@@ -36,7 +36,7 @@ and therefore have two important methods:
 :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
 and :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load`.
 
-Take these lines from the ``routes.yaml`` in the Symfony Standard Edition:
+Take these lines from the ``routes.yaml``:
 
 .. code-block:: yaml
 
