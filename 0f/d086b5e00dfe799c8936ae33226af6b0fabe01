@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-14T12:08:57Z
+
+@pyatnitsev thanks for this contribution. I've slightly reworded the content because XML terminology is sometimes tricky (at least to me it is 😊). "value" is usually reserved to "attribute values", so it was a bit confusing to say "attributes and values" ... we can say "attributes and data":
+
+![xml-terms](https://user-images.githubusercontent.com/73419/36203515-249d061e-1188-11e8-89af-f0ee0e36610a.jpg)
