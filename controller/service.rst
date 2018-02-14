@@ -30,9 +30,6 @@ syntax:
 
         // You need to use Sensio's annotation to specify a service id
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-        // ...
-
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
         /**
          * @Route(service="app.hello_controller")
