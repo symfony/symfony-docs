@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-14T09:34:19Z
+
+@chucky2305 thanks for contributing to Symfony Docs. Sadly I don't fully understand the explanation -> *"... Even if you don`t specify a path ..."*  But you are specifying a path! So, which are the conditions under you should add a trailing slash? Maybe a link to the Symfony code would be enough for us to fully understand this. Thanks!
+
+---------------------------------------------------------------------------
+
+by chucky2305 at 2018-02-14T09:43:35Z
+
+Sorry. After reading it again, i think my words were not clear enough. I tried to make i more clear now. Is it sufficient now?
