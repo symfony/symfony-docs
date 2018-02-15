@@ -44,6 +44,11 @@ remain resistant to brute-force search attacks.
     you are using PHP 7.2+ or have the `libsodium`_ extension installed.
     ``bcrypt`` is sufficient for most applications.
 
+.. caution::
+
+    Argon2i is not available on the Cedar-14 and Heroku-16 stacks on Heroku.
+    Use ``bcrypt`` instead.
+
 With this in mind, here is the authentication setup from our application,
 which uses a login form to load users from the database:
 
