@@ -579,7 +579,7 @@ below for more details).
        :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException` class.
 
     3) If the original exception implements
-       :class:`Symfony\\Component\\HttpKernel\\Exception\\RequestExceptionInterface`,
+       :class:`Symfony\\Component\\HttpFoundation\\Exception\\RequestExceptionInterface`,
        then the status code of the ``FlattenException`` object is populated with
        ``400`` and no other headers are modified.
 
