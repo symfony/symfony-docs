@@ -1226,7 +1226,7 @@ translation.dumper
 
 **Purpose**: To register a custom service that dumps messages to a file
 
-After an `Extractor <translation.extractor>`_ has extracted all messages
+After an instance of ::class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface` has extracted all messages
 from the templates, the dumpers are executed to dump the messages to a
 translation file in a specific format.
 
