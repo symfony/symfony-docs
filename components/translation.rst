@@ -153,6 +153,17 @@ and returns it (if it exists).
 
 Fallback Locales
 ~~~~~~~~~~~~~~~~
+Turn on the translation system
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config.yaml
+        framework:
+            #uncomment this line
+            translator: { fallbacks: ['%locale%'] }
+
 
 If the message is not located in the catalog of the specific locale, the
 translator will look into the catalog of one or more fallback locales. For
