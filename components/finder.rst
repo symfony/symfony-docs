@@ -114,12 +114,11 @@ It's also possible to ignore directories that you don't have permission to read:
 
 As the Finder uses PHP iterators, you can pass any URL with a supported
 `protocol`_::
-(Note: Even if you dont want to enter a specitic path in your ftp-server and instead just go to the root of your server, your URL should end with a `/`)
 
+    // always add a trailing slash when looking for in the FTP root dir
     $finder->in('ftp://example.com/');
 
-Use this to go directly to subfolder "pub":
-
+    // you can also look for in a FTP directory
     $finder->in('ftp://example.com/pub/');
 
 And it also works with user-defined streams::
