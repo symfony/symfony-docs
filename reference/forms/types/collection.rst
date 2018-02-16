@@ -206,9 +206,9 @@ And update the template as follows:
         {% endfor %}
         </ul>
 
-        <a href="#" 
+        <a href="#"
             class="add-another-collection-widget"
-            data-list="#email-field-list">Add another email</a>
+            data-list="#email-fields-list">Add another email</a>
 
         {# ... #}
     {{ form_end(form) }}
