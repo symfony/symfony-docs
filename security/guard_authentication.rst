@@ -419,7 +419,7 @@ Each authenticator needs the following methods:
 
 **supportsRememberMe()**
     If you want to support "remember me" functionality, return true from this method.
-    You will still need to active ``remember_me`` under your firewall for it to work.
+    You will still need to activate ``remember_me`` under your firewall for it to work.
     Since this is a stateless API, you do not want to support "remember me"
     functionality in this example.
 
