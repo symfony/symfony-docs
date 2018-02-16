@@ -236,7 +236,7 @@ provide whether properties are readable or writable as booleans.
     // Example Result: bool(false)
 
 The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor` looks
-for getter/isser/setter/hassser method in addition to whether or not a property is public
+for getter/isser/setter/hasser method in addition to whether or not a property is public
 to determine if it's accessible. This based on how the :doc:`PropertyAccess </components/property_access>`
 works.
 
