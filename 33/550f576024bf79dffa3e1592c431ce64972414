@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by chalasr at 2018-02-15T12:54:19Z
+
+@javiereguiluz Thanks for the PR, I totally forgot about this.
+As mentioned in the fixed ticket, use cases for getting firewall information are not common, right now I fail at finding a concrete, legit example for userland code. It can be useful to third party libraries needing to introspect the security layer behind an HTTP request, I don't think such examples should be added to the docs.
+Could we just show how to get the firewall name for the current request without providing a real life example?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-16T15:22:52Z
+
+@chalasr thanks for reviewing. Let's do as you propose. Should we change anything in the current PR to better show the example code ... or is it enough as it is?
