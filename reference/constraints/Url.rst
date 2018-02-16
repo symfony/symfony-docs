@@ -11,6 +11,7 @@ Validates that a value is a valid URL string.
 |                | - `payload`_                                                        |
 |                | - `checkDNS`_                                                       |
 |                | - `dnsMessage`_                                                     |
+|                | - `relativeProtocol`_                                               |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Url`            |
 +----------------+---------------------------------------------------------------------+
@@ -379,6 +380,80 @@ DNS check failed.
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
                      'dnsMessage' => 'The host "{{ value }}" could not be resolved.',
+                )));
+            }
+        }
+
+relativeProtocol
+~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 4.1
+    The ``relativeProtocol`` option was introduced in Symfony 4.1.
+
+If ``true``, the protocol is ignored when validating the syntax of the given URL.
+This makes both ``http://`` and ``https://`` URL validate but also relative URLs
+that contain no protocol (e.g. ``//example.com``).
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\Url(
+             *    relativeProtocol = "true"
+             * )
+             */
+             protected $bioUrl;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Author:
+            properties:
+                bioUrl:
+                    - Url: { relativeProtocol: true }
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Author">
+                <property name="bioUrl">
+                    <constraint name="Url">
+                        <option name="relativeProtocol">true</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
+                    'relativeProtocol'  => true,
                 )));
             }
         }
