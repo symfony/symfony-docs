@@ -16,7 +16,7 @@ Defining the Field Type
 In order to create the custom field type, first you have to create the class
 representing the field. In this situation the class holding the field type
 will be called ``ShippingType`` and the file will be stored in the default location
-for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
+for form fields, which is ``App\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
 
     // src/Form/Type/ShippingType.php
