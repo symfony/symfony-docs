@@ -119,6 +119,10 @@ listener class:
    method (which makes event listeners invokable);
 #. If the ``_invoke()`` method is not defined either, throw an exception.
 
+.. versionadded:: 4.1
+    The support of the ``__invoke()`` method to create invokable event listeners
+    was introduced in Symfony 4.1.
+
 .. note::
 
     There is an optional attribute for the ``kernel.event_listener`` tag called
