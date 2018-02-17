@@ -173,10 +173,9 @@ What do the serialize and unserialize Methods do?
 At the end of each request, the User object is serialized to the session.
 On the next request, it's unserialized. To help PHP do this correctly, you
 need to implement ``Serializable``. But you don't need to serialize everything:
-you only need a few fields (the ones shown above plus a few extra if you
-decide to implement :ref:`AdvancedUserInterface <security-advanced-user-interface>`).
-On each request, the ``id`` is used to query for a fresh ``User`` object
-from the database.
+you only need a few fields (the ones shown above plus a few extra if you added
+other important fields to your user entity). On each request, the ``id`` is used
+to query for a fresh ``User`` object from the database.
 
 Want to know more? See :ref:`security-serialize-equatable`.
 
@@ -325,6 +324,11 @@ and password ``admin`` (which has been encoded).
 
 Forbid Inactive Users (AdvancedUserInterface)
 ---------------------------------------------
+
+.. versionadded:: 4.1
+    The ``AdvancedUserInterface`` class was deprecated in Symfony 4.1 and no
+    alternative is provided. If you need this functionality in your application,
+    add the ``AdvancedUserInterface`` methods to your own user class.
 
 If a User's ``isActive`` property is set to ``false`` (i.e. ``is_active``
 is 0 in the database), the user will still be able to login to the site
