@@ -10,7 +10,7 @@ trailing slash to the same URL without a trailing slash
 
 Create a controller that will match any URL with a trailing slash, remove
 the trailing slash (keeping query parameters if any) and redirect to the
-new URL with a 301 response status code::
+new URL with a 308 response status code::
 
     // src/AppBundle/Controller/RedirectingController.php
     namespace AppBundle\Controller;
@@ -27,7 +27,7 @@ new URL with a 301 response status code::
 
             $url = str_replace($pathInfo, rtrim($pathInfo, ' /'), $requestUri);
 
-            return $this->redirect($url, 301);
+            return $this->redirect($url, 308);
         }
     }
 
@@ -50,7 +50,7 @@ system, as explained below:
         {
             /**
              * @Route("/{url}", name="remove_trailing_slash",
-             *     requirements={"url" = ".*\/$"}, methods={"GET"})
+             *     requirements={"url" = ".*\/$"})
              */
             public function removeTrailingSlashAction(Request $request)
             {
@@ -65,7 +65,6 @@ system, as explained below:
             defaults: { _controller: AppBundle:Redirecting:removeTrailingSlash }
             requirements:
                 url: .*/$
-            methods: [GET]
 
     .. code-block:: xml
 
@@ -92,19 +91,9 @@ system, as explained below:
                 ),
                 array(
                     'url' => '.*/$',
-                ),
-                array(),
-                '',
-                array(),
-                array('GET')
+                )
             )
         );
-
-.. note::
-
-    Redirecting a POST request does not work well in old browsers. A 302
-    on a POST request would send a GET request after the redirection for legacy
-    reasons. For that reason, the route here only matches GET requests.
 
 .. caution::
 
