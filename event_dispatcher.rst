@@ -114,7 +114,7 @@ listener class:
    the name of the method to be executed;
 #. If no ``method`` attribute is defined, try to execute the method whose name
    is ``on`` + "camel-cased event name" (e.g. ``onKernelException()`` method for
-   the ``kernel.exception`` envet);
+   the ``kernel.exception`` event);
 #. If that method is not defined either, try to execute the ``__invoke()`` magic
    method (which makes event listeners invokable);
 #. If the ``_invoke()`` method is not defined either, throw an exception.
