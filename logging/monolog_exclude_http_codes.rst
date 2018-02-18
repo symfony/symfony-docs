@@ -21,9 +21,7 @@ logging these HTTP codes based on the MonologBundle configuration:
                     # ...
                     type: fingers_crossed
                     handler: ...
-                    excluded_http_codes:
-                        - 403
-                        - 404
+                    excluded_http_codes: [403, 404, { 400: ['^/foo', '^/bar'] }]
 
     .. code-block:: xml
 
@@ -39,8 +37,11 @@ logging these HTTP codes based on the MonologBundle configuration:
             <monolog:config>
                 <monolog:handler type="fingers_crossed" name="main" handler="...">
                     <!-- ... -->
-                    <monolog:excluded-http-code>403</monolog:excluded-http-code>
-                    <monolog:excluded-http-code>404</monolog:excluded-http-code>
+                    <monolog:excluded-http-code code="403">
+                      <monolog:url>^/foo</monolog:url>
+                      <monolog:url>^/bar</monolog:url>
+                    </monolog:excluded-http-code>
+                    <monolog:excluded-http-code code="404" />
                 </monolog:handler>
             </monolog:config>
         </container>
