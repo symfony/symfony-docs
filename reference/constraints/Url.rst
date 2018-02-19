@@ -409,7 +409,7 @@ that contain no protocol (e.g. ``//example.com``).
         {
             /**
              * @Assert\Url(
-             *    relativeProtocol = "true"
+             *    relativeProtocol = true
              * )
              */
              protected $bioUrl;
