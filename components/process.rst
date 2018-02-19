@@ -410,6 +410,18 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
 
     However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
     methods to handle process output in a streaming fashion.
+    
+Using the prepared command lines
+--------------------------------
+
+This components also provides a way to use the process command with prepared using the double brackets notations:
+
+    use Symfony\Component\Process\Process;
+
+    $process = new Process('/usr/bin/php {{ phpFile }}');
+    $process->run(null, array('phpFile' => 'worker.php'));
+
+Which means that you can use placeholder in order to have a process that can be changed only with the values and without changing the php code.
 
 Finding the Executable PHP Binary
 ---------------------------------
