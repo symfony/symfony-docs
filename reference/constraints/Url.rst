@@ -392,9 +392,9 @@ relativeProtocol
 .. versionadded:: 4.1
     The ``relativeProtocol`` option was introduced in Symfony 4.1.
 
-If ``true``, the protocol is ignored when validating the syntax of the given URL.
-This makes both ``http://`` and ``https://`` URL validate but also relative URLs
-that contain no protocol (e.g. ``//example.com``).
+If ``true``, the protocol is considered optional when validating the syntax of
+the given URL. This means that both ``http://`` and ``https://`` are valid but
+also relative URLs that contain no protocol (e.g. ``//example.com``).
 
 .. configuration-block::
 
