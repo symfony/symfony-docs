@@ -126,7 +126,7 @@ delete existing ones::
     $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
     $result = $query->execute();
     $entry = $result[0];
-    $entry->addAttribute('email', array('fabpot@symfony.com'));
+    $entry->setAttribute('email', array('fabpot@symfony.com'));
     $em->update($entry);
 
     // Removing an existing entry
