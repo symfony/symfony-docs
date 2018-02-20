@@ -28,7 +28,7 @@ new URL with a 308 (*HTTP Permanent Redirect*) response status code::
             $url = str_replace($pathInfo, rtrim($pathInfo, ' /'), $requestUri);
 
             // 308 (Permanent Redirect) is similar to 301 (Moved Permanently) except
-            // that it does not allow changing the request method from POST to GET
+            // that it does not allow changing the request method (e.g. from POST to GET)
             return $this->redirect($url, 308);
         }
     }
