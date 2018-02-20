@@ -203,7 +203,7 @@ order:
     * ``workflow.[workflow name].guard.[transition name]``
 
 ``workflow.leave``
-    The object is about to leave a place.
+    The subject is about to leave a place.
 
     The three events being dispatched are:
 
@@ -212,7 +212,7 @@ order:
     * ``workflow.[workflow name].leave.[place name]``
 
 ``workflow.transition``
-    The object is going through this transition.
+    The subject is going through this transition.
 
     The three events being dispatched are:
 
@@ -221,8 +221,9 @@ order:
     * ``workflow.[workflow name].transition.[transition name]``
 
 ``workflow.enter``
-    The object entered a new place. This is the first event where the object
-    is marked as being in the new place.
+    The subject is about to enter a new place. This is the event triggered before the
+    subject is going to be updated as being in the new places.
+    Please notice: the marking of the subject is not yet updated with the new places.
 
     The three events being dispatched are:
 
@@ -231,8 +232,8 @@ order:
     * ``workflow.[workflow name].enter.[place name]``
 
 ``workflow.entered``
-    Similar to ``workflow.enter``, except the marking store is updated before this
-    event (making it a good place to flush data in Doctrine).
+    The subject has entered in the places and the marking is updated (making it a good
+    place to flush data in Doctrine).
 
     The three events being dispatched are:
 
@@ -251,7 +252,7 @@ order:
 
 
 ``workflow.announce``
-    Triggered for each transition that now is accessible for the object.
+    Triggered for each transition that now is accessible for the subject.
 
     The three events being dispatched are:
 
