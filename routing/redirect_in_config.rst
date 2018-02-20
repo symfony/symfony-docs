@@ -159,72 +159,18 @@ action:
 Redirecting POST/PUT calls
 --------------------------
 
-As default behaviour of both methods mentioned above results in sending
+As a default behaviour of both methods mentioned above results in sending
 response with ``301`` or ``302`` HTTP status codes, the following call will
-be made with use of HTTP request method. But it some scenarios it is
-expected or required that following call will be made with the same HTTP
+be made with use of HTTP request method. But in some scenarios it's either
+expected or required that the following call will be made with the same HTTP
 method, i.e. when initial call was ``POST`` one, then following one should
 be also ``POST`` not ``GET``. In order to achieve this both
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::urlRedirectAction`
 and
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction`
-are accepting aditional switch called ``keepRequestMethod``:
+are accepting aditional switch called ``keepRequestMethod``.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/routes.yaml
-
-        # ...
-
-        admin:
-            path: /webhooks/foo
-            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
-            defaults:
-                route: foo_webhook_handler
-                permanent: true
-                keepRequestMethod: true
-
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                http://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <!-- ... -->
-
-            <route id="admin" path="/webhooks/foo"> ``
-                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction</default>
-                <default key="route">foo_webhook_handler</default>
-                <default key="permanent">true</default>
-                <default key="keepRequestMethod">true</default>
-            </route>
-        </routes>
-
-    .. code-block:: php
-
-        // config/routes.php
-        use Symfony\Component\Routing\RouteCollection;
-        use Symfony\Component\Routing\Route;
-
-        $collection = new RouteCollection();
-        // ...
-
-        $collection->add('admin', new Route('/webhooks/foo', array(
-            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction',
-            'route'       => 'foo_webhook_handler',
-            'permanent'   => true,
-            'keepRequestMethod' => true
-        )));
-
-        return $collection;
-
-Switching ``keepRequestMethod`` switch to ``true`` will result in sending
-response with either ``307`` (when ``permament`` switch is set to false) or
-``308`` (with ``permament`` being true) HTTP status code which will tell that
-HTTP request should be repeated with both request method and body being
-unchanged.
+When ``keepRequestMethod`` is set to ``true`` with either ``permanent`` set to
+``false`` which will lead to a ``307`` response or ``308`` with
+``permanent`` being ``true``. Theses codes will give information in the HTTP
+request that the method should be repeated without altering the body.
