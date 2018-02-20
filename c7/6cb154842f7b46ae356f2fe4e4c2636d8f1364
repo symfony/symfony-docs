@@ -1,0 +1,85 @@
+---------------------------------------------------------------------------
+
+by greg0ire at 2018-02-17T16:03:45Z
+
+This seems to be fully supported by all browsers: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/308
+
+---------------------------------------------------------------------------
+
+by Soullivaneuh at 2018-02-18T11:01:46Z
+
+@javiereguiluz @greg0ire As we spoke about doc improvement, I have a question: Why using a controller? Why not a kernel exception listener?
+
+I gave a try and it works very well:
+
+```php
+namespace App\Subscriber;
+
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+
+final class TrailingSlashSubscriber implements EventSubscriberInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            KernelEvents::EXCEPTION => [
+                ['onKernelException', 1]
+            ]
+        ];
+    }
+
+    public function onKernelException(GetResponseForExceptionEvent $event)
+    {
+        if (!$event->getException() instanceof NotFoundHttpException) {
+            return;
+        }
+
+        $request = $event->getRequest();
+        $pathInfo = $request->getPathInfo();
+        $requestUri = $request->getRequestUri();
+
+        $url = str_replace($pathInfo, rtrim($pathInfo, '/'), $requestUri);
+
+        if ($url !== $requestUri) {
+            $event->setResponse(new RedirectResponse($url, Response::HTTP_PERMANENTLY_REDIRECT));
+        }
+    }
+}
+```
+
+Plus, it avoids possible issue explained by this warning:
+
+> Make sure to include this route in your routing configuration at the very end of your route listing. Otherwise, you risk redirecting real routes (including Symfony core routes) that actually do have a trailing slash in their path.
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2018-02-18T11:31:58Z
+
+Maybe the controller + route is more explicit than waiting for an exception you could avoid from the start? Otherwise yeah, it looks good too! Anyway, that's the kind of thing I would do even earlier, with my webserver: https://www.scalescale.com/tips/nginx/nginx-remove-trailing-slash/
+
+---------------------------------------------------------------------------
+
+by Soullivaneuh at 2018-02-18T11:37:31Z
+
+@greg0ire That was I was thinking about. But my listener took 1ms to process, so it's still worth it IMO.
+
+---------------------------------------------------------------------------
+
+by Soullivaneuh at 2018-02-18T11:48:35Z
+
+My listener may also match is the previous excpetion is a `ResourceNotFoundException`. It will ignores manual not found from controller.
+
+---------------------------------------------------------------------------
+
+by Soullivaneuh at 2018-02-19T18:53:30Z
+
+After some tests, I don't recommend to use a listener.
+
+Indeed, if you try something like `/blog/post/4/` where the trailing slash is valid but the post `4` does not exists, it will be redirect to `/blog/post/4` and then again to `/blog/post/4/`.
