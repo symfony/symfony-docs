@@ -24,9 +24,9 @@ can be a string :ref:`property path <reference-form-option-property-path>`. Imag
         'choice_label' => 'displayName',
     ));
 
-If set as a callable is called for each choice, passing you its model data ``$choice``
-and the ``$key`` from the choices array (default label). ``$value`` is either
-`choice_value`_ option value when defined or the default string value of the choice::
+If set as a callable, your function is called for each choice, passing the
+model data ``$choice`` and the ``$key`` from the choices array (the default
+label)::
 
     $builder->add('attending', 'choice', array(
         'choices' => array(
@@ -39,6 +39,7 @@ and the ``$key`` from the choices array (default label). ``$value`` is either
             if (true === $choice) {
                 return 'Definitely!';
             }
+
             return strtoupper($key);
 
             // or if you want to translate some key

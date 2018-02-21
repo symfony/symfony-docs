@@ -71,14 +71,12 @@ This will create a ``select`` drop-down like this:
 .. image:: /_images/reference/form/choice-example1.png
    :align: center
 
-The model data of this field, the **choice** may be any of the ``choices`` option
-values, while **keys** are used as default label that the user will see and select.
-
-If the starting data for this field is ``true``, then ``Yes`` will be auto-selected.
-In other words, each value of the ``choices`` option is the **choice** data you
-want to deal with in PHP code, while the **key** is the default label that will be
-shown to the user and the **value** is the string that will be submitted to the
-form and used in the template for the corresponding html attribute.
+Each choice defined in the ``choices`` option consists of a **key** containing
+the label (e.g. ``Yes``) that will be shown to the user and a **value**
+containing the PHP data (e.g. ``true``) you want to retrieve from the field.
+This means that if you manually set the field data to ``true``, the user will
+see ``Yes`` as the selected choice. If the user selects ``No``, the returned
+data will be ``false``.
 
 .. caution::
 
@@ -90,11 +88,12 @@ form and used in the template for the corresponding html attribute.
 
 .. note::
 
-    Pre selected choices will depend on the **data** passed to the field and
-    the values of the ``choices`` option. However submitted choices will depend
-    on the **string** matching the **choice**. In the example above, the default
-    values are incrementing integers because ``null`` cannot be casted to string.
-    You should consider it as well when dealing with ``empty_data`` option::
+    The **value** (e.g. ``true``) of a choice is converted to a string and used
+    in the ``value`` attribute in HTML and submitted in the POST/PUT requests.
+    In cases where one of the values can't be converted to a string
+    (e.g. ``null`` like in the example above), the values will be rendered
+    as incrementing integers. You should consider it as well when dealing with
+    the ``empty_data`` option::
 
         $builder->add('isAttending', 'choice', array(
             'choices'  => array(
@@ -148,18 +147,18 @@ you need further HTML customization.
 
 .. caution::
 
-    When dealing with objects as choices, you should be careful about how
-    string values are set to use them with the `empty_data` option.
+    When dealing with objects as choices, if you need to set the
+    ``empty_data`` option, you may need to override the ``choice_value``.
     In the example above, the default values are incrementing integers if the
     ``Category`` class does not implement ``toString`` method.
-    To get a full control of the string values use the `choice_value`_ option::
+    To get full control of the string values use the `choice_value`_ option::
 
         $builder->add('category', 'choice', array(
             'choices'  => array(
-            new Category('Cat1'),
-            new Category('Cat2'),
-            new Category('Cat3'),
-            new Category('Cat4'),
+                new Category('Cat1'),
+                new Category('Cat2'),
+                new Category('Cat3'),
+                new Category('Cat4'),
             ),
             'choices_as_values' => true,
             'choice_value' => function(Category $category = null) {
@@ -173,8 +172,10 @@ you need further HTML customization.
                 return strtoupper($category->getName());
             },
             'multiple' => true,
-            'empty_data' => array('cat2'), // default submitted value
-                                           // an array because of multiple option
+            'empty_data' => array('cat2'), // the default submitted value, matches
+                                           // a value of the choice_value option.
+                                           // passed as an array because the multiple
+                                           // option is true.
         ));
 
     Note that `choice_value`_ option set as a callable can get passed ``null``
@@ -238,9 +239,11 @@ is the choice's label and the array value is the choice's data::
         'choices_as_values' => true,
     ));
 
-The component will try to cast the choices data to string to use it in view
-format, in that case ``"0"`` and ``"1"``, but you can customize it using the
-`choice_value`_ option.
+The field will try to cast the choice values (e.g. ``true`` and ``false``) into
+strings to be rendered in HTML (in this case, ``"0"`` and ``"1"```). In the case
+that one of the values can't be casted to a string, the values will be rendered
+as incrementing integers. You can also customize these strings by using
+the `choice_value`_ option.
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
@@ -299,14 +302,14 @@ choice_loader
 
 **type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
 
-The ``choice_loader`` can be used to load the choices form a data source with a
-custom logic (e.g query language) such as database or search engine.
-The list will be fully loaded to display the form, but while submission only the
+The ``choice_loader`` can be used to load the choices from a data source with
+custom logic (e.g. query language) such as a database or a search engine.
+The list will be fully loaded to display the form, but on submission, only the
 submitted choices will be loaded.
 
-Also, the :class:``Symfony\\Component\\Form\\ChoiceList\\Factory\\ChoiceListFactoryInterface`` will cache the choice list
-so the same :class:``Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`` can be used in different fields with more performance
-(reducing N queries to 1).
+Also, the :class:``Symfony\\Component\\Form\\ChoiceList\\Factory\\ChoiceListFactoryInterface``
+will cache the choice list so the same :class:``Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface``
+can be used in different fields with more performance (reducing N queries to 1).
 
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
@@ -326,7 +329,7 @@ choices_as_values
 The ``choices_as_values`` option was added to keep backward compatibility with the
 *old* way of handling the ``choices`` option. When set to ``false`` (or omitted),
 the choice keys are used as the view value and the choice values are shown
-to the user as label.
+to the user as the label.
 
 * Before 2.7 (and deprecated now)::
 
