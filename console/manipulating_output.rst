@@ -7,7 +7,7 @@ information can be manipulated by clearing or overwriting the displayed content.
 In order to manipulate the content, you need to create a new output section. An output section is
 a part in the terminal where information will be displayed from the console.
 
-A section can be manipulated individually, and multiple sections can appended to the output.
+A section can be manipulated individually, and multiple sections can be appended to the output.
 
 To create a new output section, you need to use the
 :method:`Symfony\\Component\\Console\\Output\\ConsoleOutput::section` method::
@@ -20,7 +20,7 @@ To create a new output section, you need to use the
         }
     }
 
-This will return an instance of of the :class:`Symfony\\Component\\Console\\Output\\ConsoleSectionOutput`
+This will return an instance of the :class:`Symfony\\Component\\Console\\Output\\ConsoleSectionOutput`
 
 .. tip::
 
@@ -31,7 +31,6 @@ This will return an instance of of the :class:`Symfony\\Component\\Console\\Outp
 .. caution::
 
     Displaying information in a section will always append a new line to the output.
-
 
 Overwriting Output
 ------------------
@@ -45,11 +44,11 @@ When displaying information in the console, you can overwrite the output by usin
 The only information displayed in the terminal will be ``World!`` as the first part will
 be overwritten.
 
-Clearing s Section
+Clearing a Section
 ------------------
 
 You can clear all the content in a section by using the
-:method:`Symfony\\Component\\Console\\Output\\ConsoleSectionOutput::overwrite` method.
+:method:`Symfony\\Component\\Console\\Output\\ConsoleSectionOutput::clear` method.
 
 Clearing a section will erase all the content that is displayed in that section::
 
