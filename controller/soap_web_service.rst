@@ -165,7 +165,7 @@ An example WSDL is below.
         </service>
     </definitions>
 
-.. _`PHP SOAP`: http://php.net/manual/en/book.soap.php
+.. _`PHP SOAP`: https://php.net/manual/en/book.soap.php
 .. _`NuSOAP`: http://sourceforge.net/projects/nusoap
-.. _`output buffering`: http://php.net/manual/en/book.outcontrol.php
+.. _`output buffering`: https://php.net/manual/en/book.outcontrol.php
 .. _`Zend SOAP`: http://framework.zend.com/manual/current/en/modules/zend.soap.server.html

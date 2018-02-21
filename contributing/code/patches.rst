@@ -368,15 +368,15 @@ convert many commits to one commit. This is no longer necessary today, because
 Symfony project uses a proprietary tool which automatically squashes all commits
 before merging.
 
-.. _ProGit: http://git-scm.com/book
+.. _ProGit: https://git-scm.com/book
 .. _GitHub: https://github.com/join
 .. _`GitHub's Documentation`: https://help.github.com/articles/ignoring-files
 .. _Symfony repository: https://github.com/symfony/symfony
-.. _dev mailing-list: http://groups.google.com/group/symfony-devs
+.. _dev mailing-list: https://groups.google.com/group/symfony-devs
 .. _travis-ci.org: https://travis-ci.org/
-.. _`travis-ci.org status icon`: http://about.travis-ci.org/docs/user/status-images/
-.. _`travis-ci.org Getting Started Guide`: http://about.travis-ci.org/docs/user/getting-started/
+.. _`travis-ci.org status icon`: https://about.travis-ci.com/docs/user/status-images/
+.. _`travis-ci.org Getting Started Guide`: https://about.travis-ci.com/docs/user/getting-started/
 .. _`documentation repository`: https://github.com/symfony/symfony-docs
-.. _`fabbot`: http://fabbot.io
-.. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
-.. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
+.. _`fabbot`: https://fabbot.io
+.. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
+.. _`PSR-2`: https://www.php-fig.org/psr/psr-2/

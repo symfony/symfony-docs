@@ -214,4 +214,4 @@ Field Variables
 |          |            | contains the input type to use (``datetime``, ``date`` or ``time``). |
 +----------+------------+----------------------------------------------------------------------+
 
-.. _`RFC 3339`: http://tools.ietf.org/html/rfc3339
+.. _`RFC 3339`: https://tools.ietf.org/html/rfc3339

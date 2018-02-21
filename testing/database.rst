@@ -113,7 +113,7 @@ not to overwrite data you entered when developing the application and also
 to be able to clear the database before every test.
 
 To do this, you can override the value of the ``DATABASE_URL`` env var in the
-``phpunit.xml.dist`` to use a diferent database for your tests:
+``phpunit.xml.dist`` to use a different database for your tests:
 
 .. code-block:: xml
 

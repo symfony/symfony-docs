@@ -85,6 +85,6 @@ to a :class:`Symfony\\Component\\HttpFoundation\\Response` instance::
     $httpFoundationFactory = new HttpFoundationFactory();
     $symfonyResponse = $httpFoundationFactory->createResponse($psrResponse);
 
-.. _`PSR-7`: http://www.php-fig.org/psr/psr-7/
+.. _`PSR-7`: https://www.php-fig.org/psr/psr-7/
 .. _`Zend Diactoros`: https://github.com/zendframework/zend-diactoros
 .. _`symfony/psr-http-message-bridge on Packagist`: https://packagist.org/packages/symfony/psr-http-message-bridge

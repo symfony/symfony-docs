@@ -885,6 +885,18 @@ The array keys beginning with ``@`` are considered XML attributes::
     //     <foo bar="value" />
     // </response>
 
+Use the special ``#`` key to define the data of a node::
+
+    array('foo' => array('@bar' => 'value', '#' => 'baz'));
+
+    // is encoded as follows:
+    // <?xml version="1.0"?>
+    // <response>
+    //     <foo bar="value">
+    //        baz
+    //     </foo>
+    // </response>
+
 Context
 ~~~~~~~
 
@@ -1085,7 +1097,7 @@ Learn more
     A popular alternative to the Symfony Serializer Component is the third-party
     library, `JMS serializer`_ (released under the Apache license, so incompatible with GPLv2 projects).
 
-.. _`PSR-1 standard`: http://www.php-fig.org/psr/psr-1/
+.. _`PSR-1 standard`: https://www.php-fig.org/psr/psr-1/
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
 .. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8

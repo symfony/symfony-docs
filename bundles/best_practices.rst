@@ -546,11 +546,11 @@ Learn more
 * :doc:`/bundles/extension`
 * :doc:`/bundles/configuration`
 
-.. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
+.. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
 .. _`Symfony Flex recipe`: https://github.com/symfony/recipes
-.. _`Semantic Versioning Standard`: http://semver.org/
+.. _`Semantic Versioning Standard`: https://semver.org/
 .. _`Packagist`: https://packagist.org/
-.. _`choose any license`: http://choosealicense.com/
+.. _`choose any license`: https://choosealicense.com/
 .. _`valid license identifier`: https://spdx.org/licenses/
 .. _`Travis CI`: https://travis-ci.org/
 .. _`Travis Cron`: https://docs.travis-ci.com/user/cron-jobs/

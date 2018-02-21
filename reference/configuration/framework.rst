@@ -13,10 +13,10 @@ configured under the ``framework`` key in your application configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php bin/console config:dump framework
+    $ php app/console config:dump framework
 
     # displays the actual config values used by your application
-    $ php bin/console debug:config framework
+    $ php app/console debug:config framework
 
 .. note::
 
@@ -525,7 +525,7 @@ enabled
 **type**: ``boolean`` **default**: ``false``
 
 The profiler can be enabled by setting this option to ``true``. When you
-are using the Symfony Standard Edition, the profiler is enabled in the ``dev``
+install it using Symfony Flex, the profiler is enabled in the ``dev``
 and ``test`` environments.
 
 .. note::

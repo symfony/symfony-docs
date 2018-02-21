@@ -88,6 +88,21 @@ will be dispatched by the HttpKernel at the beginning of each request
 it processes. This way, the firewall may prevent the user from going any
 further than allowed.
 
+Firewall Config
+~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.2
+    The ``FirewallConfig`` class was introduced in Symfony 3.2.
+
+The information about a given firewall, such as its name, provider, context,
+entry point and access denied URL, is provided by instances of the
+:class:`Symfony\\Bundle\\SecurityBundle\\Security\\FirewallConfig` class.
+
+This object can be accessed through the ``getFirewallConfig(Request $request)``
+method of the :class:`Symfony\\Component\\Security\\Http\\FirewallMap` class and
+through the ``getConfig()``  method of the
+:class:`Symfony\\Bundle\\SecurityBundle\\Security\\FirewallContext` class.
+
 .. _firewall_listeners:
 
 Firewall Listeners

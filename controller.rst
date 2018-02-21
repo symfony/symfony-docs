@@ -58,8 +58,8 @@ This controller is pretty straightforward:
   the ``use`` keyword imports the ``Response`` class, which the controller
   must return.
 
-* *line 7*: The class can technically be called anything - but should end in the
-  word ``Controller``
+* *line 7*: The class can technically be called anything, but it's suffixed
+  with ``Controller`` by convention.
 
 * *line 12*: The action method is allowed to have a ``$max`` argument thanks to the
   ``{max}`` :doc:`wildcard in the route </routing>`.
