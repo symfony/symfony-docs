@@ -58,4 +58,4 @@ tell the class loader where to look for classes with the
 ``Symfony\Component\Yaml\`` namespace prefix. After registering the autoloader,
 the Yaml component is ready to be used.
 
-.. _PSR-4: http://www.php-fig.org/psr/psr-4/
+.. _PSR-4: https://www.php-fig.org/psr/psr-4/

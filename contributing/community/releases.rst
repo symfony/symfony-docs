@@ -187,7 +187,7 @@ version: a new version is published every six months, and there is a two months
 period to upgrade. Companies wanting more stability use the LTS versions: a new
 version is published every two years and there is a year to upgrade.
 
-.. _Semantic Versioning: http://semver.org/
+.. _Semantic Versioning: https://semver.org/
 .. _Git repository: https://github.com/symfony/symfony
 .. _SensioLabs:     http://sensiolabs.com/
 .. _roadmap notification: https://symfony.com/roadmap

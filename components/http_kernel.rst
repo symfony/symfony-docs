@@ -722,10 +722,10 @@ Learn more
    /reference/events
 
 .. _Packagist: https://packagist.org/packages/symfony/http-kernel
-.. _reflection: http://php.net/manual/en/book.reflection.php
+.. _reflection: https://php.net/manual/en/book.reflection.php
 .. _FOSRestBundle: https://github.com/friendsofsymfony/FOSRestBundle
 .. _`Create your own framework... on top of the Symfony2 Components`: http://fabien.potencier.org/article/50/create-your-own-framework-on-top-of-the-symfony2-components-part-1
-.. _`PHP FPM`: http://php.net/manual/en/install.fpm.php
+.. _`PHP FPM`: https://php.net/manual/en/install.fpm.php
 .. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html

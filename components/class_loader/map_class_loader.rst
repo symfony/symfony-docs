@@ -38,4 +38,4 @@ an instance of the ``MapClassLoader`` class::
 
     $loader->register();
 
-.. _PSR-0: http://www.php-fig.org/psr/psr-0/
+.. _PSR-0: https://www.php-fig.org/psr/psr-0/

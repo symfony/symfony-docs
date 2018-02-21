@@ -304,4 +304,4 @@ comparison value.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`accepted by the DateTime constructor`: http://www.php.net/manual/en/datetime.formats.php
+.. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php
