@@ -713,5 +713,5 @@ Learn more
 * :doc:`/http_cache/form_csrf_caching`
 
 .. _`Symfony Form component`: https://github.com/symfony/form
-.. _`DateTime`: http://php.net/manual/en/class.datetime.php
+.. _`DateTime`: https://php.net/manual/en/class.datetime.php
 .. _`2.8 UPGRADE Log`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-2.8.md#form

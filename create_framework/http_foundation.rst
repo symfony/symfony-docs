@@ -289,16 +289,16 @@ applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 3`_, `ezPublish
 5`_, `Laravel`_, `Silex`_ and `more`_).
 
 .. _`Twig`: http://twig.sensiolabs.org/
-.. _`HTTP specification`: http://tools.ietf.org/wg/httpbis/
+.. _`HTTP specification`: https://tools.ietf.org/wg/httpbis/
 .. _`audited`: https://symfony.com/blog/symfony2-security-audit
 .. _`Symfony`: https://symfony.com/
 .. _`Drupal 8`: https://drupal.org/
 .. _`phpBB 3`: https://www.phpbb.com/
-.. _`ezPublish 5`: http://ez.no/
-.. _`Laravel`: http://laravel.com/
-.. _`Silex`: http://silex.sensiolabs.org/
+.. _`ezPublish 5`: https://ez.no/
+.. _`Laravel`: https://laravel.com/
+.. _`Silex`: https://silex.sensiolabs.org/
 .. _`Midgard CMS`: http://www.midgard-project.org/
-.. _`Zikula`: http://zikula.org/
-.. _`autoloaded`: http://php.net/autoload
-.. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
+.. _`Zikula`: https://zikula.org/
+.. _`autoloaded`: https://php.net/autoload
+.. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
 .. _`more`: https://symfony.com/components/HttpFoundation

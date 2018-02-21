@@ -920,4 +920,4 @@ Learn more
 .. _`PHPUnit`: https://phpunit.de/
 .. _`documentation`: https://phpunit.de/manual/current/en/
 .. _`PHPUnit Bridge component`: https://symfony.com/components/PHPUnit%20Bridge
-.. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php
+.. _`$_SERVER`: https://php.net/manual/en/reserved.variables.server.php

@@ -219,4 +219,4 @@ safely think about the next batch of features we want to add to our framework.
 
 .. _`PHPUnit`: https://phpunit.de/manual/current/en/index.html
 .. _`test doubles`: https://phpunit.de/manual/current/en/test-doubles.html
-.. _`XDebug`: http://xdebug.org/
+.. _`XDebug`: https://xdebug.org/

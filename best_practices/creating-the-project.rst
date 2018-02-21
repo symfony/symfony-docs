@@ -173,6 +173,6 @@ structure of Symfony, you can
 Next: :doc:`/best_practices/configuration`
 
 .. _`Composer`: https://getcomposer.org/
-.. _`Phar extension`: http://php.net/manual/en/intro.phar.php
+.. _`Phar extension`: https://php.net/manual/en/intro.phar.php
 .. _`public checksums repository`: https://github.com/sensiolabs/checksums
 .. _`these steps`: http://fabien.potencier.org/signing-project-releases.html

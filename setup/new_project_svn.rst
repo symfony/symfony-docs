@@ -133,12 +133,12 @@ central repository to work. You then have several solutions:
   available like `GitHub`_, `Google code`_, `SourceForge`_ or `Gna`_. Some of them offer
   Git hosting as well.
 
-.. _`Git`: http://git-scm.com/
-.. _`SVN`: http://subversion.apache.org/
-.. _`Subversion`: http://subversion.apache.org/
+.. _`Git`: https://git-scm.com/
+.. _`SVN`: https://subversion.apache.org/
+.. _`Subversion`: https://subversion.apache.org/
 .. _`Symfony Standard Edition`: https://symfony.com/download
 .. _`Version Control with Subversion`: http://svnbook.red-bean.com/
 .. _`GitHub`: https://github.com/
-.. _`Google code`: http://code.google.com/hosting/
-.. _`SourceForge`: http://sourceforge.net/
+.. _`Google code`: https://code.google.com/hosting/
+.. _`SourceForge`: https://sourceforge.net/
 .. _`Gna`: http://gna.org/

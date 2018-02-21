@@ -114,4 +114,4 @@ soon as any error message has been logged during the execution of the command.
 This is useful to decide which status code to return as the result of executing
 the command.
 
-.. _PSR-3: http://www.php-fig.org/psr/psr-3/
+.. _PSR-3: https://www.php-fig.org/psr/psr-3/

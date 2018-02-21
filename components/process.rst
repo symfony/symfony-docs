@@ -454,6 +454,6 @@ absolute path of the executable PHP binary available on your server::
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
 .. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
-.. _`PHP Documentation`: http://php.net/manual/en/pcntl.constants.php
+.. _`PHP Documentation`: https://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process
 .. _`PHP streams`: http://www.php.net/manual/en/book.stream.php

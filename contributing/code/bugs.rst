@@ -44,7 +44,7 @@ If your problem definitely looks like a bug, report it using the official bug
 
 * *(optional)* Attach a :doc:`patch <patches>`.
 
-.. _`Stack Overflow`: http://stackoverflow.com/questions/tagged/symfony2
+.. _`Stack Overflow`: https://stackoverflow.com/questions/tagged/symfony2
 .. _IRC channel: https://symfony.com/irc
 .. _the Symfony Slack: https://symfony.com/slack-invite
 .. _tracker: https://github.com/symfony/symfony/issues

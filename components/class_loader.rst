@@ -68,8 +68,8 @@ Learn More
 
     class_loader/cache_class_loader
 
-.. _PSR-0: http://www.php-fig.org/psr/psr-0/
-.. _PSR-4: http://www.php-fig.org/psr/psr-4/
-.. _`autoloading mechanism`: http://php.net/manual/en/language.oop5.autoload.php
+.. _PSR-0: https://www.php-fig.org/psr/psr-0/
+.. _PSR-4: https://www.php-fig.org/psr/psr-4/
+.. _`autoloading mechanism`: https://php.net/manual/en/language.oop5.autoload.php
 .. _Packagist: https://packagist.org/packages/symfony/class-loader
 .. _`class loading optimizations`: https://getcomposer.org/doc/articles/autoloader-optimization.md
