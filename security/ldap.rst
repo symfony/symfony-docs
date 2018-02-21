@@ -173,6 +173,16 @@ use the ``ldap`` user provider.
     provider is used. However, the LDAP component itself does not provide
     any escaping yet. Thus, it's your responsibility to prevent LDAP injection
     attacks when using the component directly.
+    
+.. caution::
+
+    It's important to note that the user you configure for the user provider
+    is only going to be retrieving data. It is a statically defined user and
+    password. If you wish to keep your password out of version control, you
+    may want to configure the password as a parameter.
+    
+    If your ldap server allows you to retrieve information anonymously, you
+    can leave the ``search_dn`` and ``search_password`` as ``null``.
 
 The ``ldap`` user provider supports many different configuration options:
 
