@@ -881,6 +881,8 @@ file, but it might either be blank or contain a little bit of information
 about loading those resources from the database. The file is key to trigger
 the ``load()`` method on your custom loader.
 
+.. _reference-dic-tags-translation-extractor:
+
 translation.extractor
 ---------------------
 
@@ -961,9 +963,9 @@ translation.dumper
 
 **Purpose**: To register a custom service that dumps messages to a file
 
-After an `Extractor <translation.extractor>`_ has extracted all messages
-from the templates, the dumpers are executed to dump the messages to a
-translation file in a specific format.
+After a :ref:`translation extractor <reference-dic-tags-translation-extractor>`
+has extracted all messages from the templates, the dumpers are executed to dump
+the messages to a translation file in a specific format.
 
 Symfony already comes with many dumpers:
 

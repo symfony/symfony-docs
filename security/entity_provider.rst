@@ -314,12 +314,12 @@ and password ``admin`` (which has been encoded).
 
 .. sidebar:: Do you need to use a Salt property?
 
-    If you use ``bcrypt``, no. Otherwise, yes. All passwords must be hashed
-    with a salt, but ``bcrypt`` does this internally. Since this tutorial
-    *does* use ``bcrypt``, the ``getSalt()`` method in ``User`` can just
-    return ``null`` (it's not used). If you use a different algorithm, you'll
-    need to uncomment the ``salt`` lines in the ``User`` entity and add a
-    persisted ``salt`` property.
+    If you use ``bcrypt`` or ``argon2i``, no. Otherwise, yes. All passwords must
+    be hashed with a salt, but ``bcrypt`` and ``argon2i`` do this internally.
+    Since this tutorial *does* use ``bcrypt``, the ``getSalt()`` method in
+    ``User`` can just return ``null`` (it's not used). If you use a different
+    algorithm, you'll need to uncomment the ``salt`` lines in the ``User``
+    entity and add a persisted ``salt`` property.
 
 .. _security-advanced-user-interface:
 

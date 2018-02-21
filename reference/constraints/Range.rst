@@ -359,5 +359,5 @@ the `is_numeric`_ PHP function).
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`is_numeric`: http://www.php.net/manual/en/function.is-numeric.php
-.. _`accepted by the DateTime constructor`: http://www.php.net/manual/en/datetime.formats.php
+.. _`is_numeric`: https://php.net/manual/en/function.is-numeric.php
+.. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php

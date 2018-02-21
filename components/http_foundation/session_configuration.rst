@@ -261,6 +261,6 @@ particular cookie by reading the ``getLifetime()`` method::
 The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
 
-.. _`php.net/session.customhandler`: http://php.net/session.customhandler
-.. _`php.net/session.configuration`: http://php.net/session.configuration
-.. _`php.net/memcached.setoption`: http://php.net/memcached.setoption
+.. _`php.net/session.customhandler`: https://php.net/session.customhandler
+.. _`php.net/session.configuration`: https://php.net/session.configuration
+.. _`php.net/memcached.setoption`: https://php.net/memcached.setoption
