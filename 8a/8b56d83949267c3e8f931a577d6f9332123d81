@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-02-20T15:51:50Z
+
+That is a super valid comment. From https://github.com/symfony/symfony/issues/25758
+
+> For backward compatibility I don't expect to see a change to the way the <source> element is used, but for the 1.2 and 2.0 formats to be treated as equivalent it seems the same logic should be applied.
+
+So my answer is simply just: "but we do it in 1.2, that is why I do it in 2.0".
+
+Im not sure what the reasoning were back when 1.2 was made. Im also not sure what would be a good value if the `source` is super long as you describe. To only use the ID is not really preferred. That does not bring any additional value.
+
+Maybe one could improve the name by somehow slugify and shorten the `source` into a `name`?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-20T15:54:53Z
+
+I see, it's because of BC compatibility. Thanks! Maybe we could use: `substr(md5($source), -7)`
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-02-20T16:32:14Z
+
+I would rather do something like:
+
+```php
+$name = $source;
+if (strlen($source) > 80)) {
+  $name = substr(md5($source), -7); // Why "-7" btw?
+}
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-20T16:34:43Z
+
+The `-7` is because of what Git does and also is common in Symfony:
+
+* https://github.com/symfony/symfony/blob/49759e3138e15998e7e90fe188108c7651c5b3c8/src/Symfony/Bridge/ProxyManager/LazyProxy/PhpDumper/ProxyDumper.php#L139
+* https://github.com/symfony/symfony/blob/e81aa7694c714fc9640f5d6be4891c649bd9055c/src/Symfony/Component/HttpKernel/Kernel.php#L546
