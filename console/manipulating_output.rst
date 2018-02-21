@@ -19,7 +19,6 @@ To create a new output section, you need to use the
             $section = $output->section();
         }
     }
-}
 
 This will return an instance of of the :class:`Symfony\\Component\\Console\\Output\\ConsoleSectionOutput`
 
