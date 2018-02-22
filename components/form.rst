@@ -700,7 +700,7 @@ method to access the list of errors. It returns a
     // ...
 
     // a FormErrorIterator instance, but only errors attached to this
-    // form level (e.g. "global errors)
+    // form level (e.g. global errors)
     $errors = $form->getErrors();
 
     // a FormErrorIterator instance, but only errors attached to the
