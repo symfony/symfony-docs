@@ -75,8 +75,12 @@ Creating Lazy-Loaded Twig Extensions
 Including the code of the custom filters/functions in the Twig extension class
 is the simplest way to create extensions. However, Twig must initialize all
 extensions before rendering any template, even if the template doesn't use an
-extension. This means that performance can be slow if you define extensions with
-lots of complex dependencies (e.g. those making database connections).
+extension.
+
+If extensions don't define dependencies (i.e. if you don't inject services in
+them) performance is not affected. However, if extensions define lots of complex
+dependencies (e.g. those making database connections), the performance loss can
+be significant.
 
 That's why Twig allows to decouple the extension definition from its
 implementation. Following the same example as before, the first change would be
@@ -108,8 +112,11 @@ previous ``priceFilter()`` method::
 
     class AppRuntime
     {
-        // for complex Twig extensions you may need to define a constructor
-        // in this class to inject external services
+        public function __construct()
+        {
+            // this simple example doesn't define any dependency, but in your own
+            // extensions, you'll need to inject services using this constructor
+        }
 
         public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
         {
