@@ -206,7 +206,7 @@ allows you to return a list of extensions to register::
 
 It is also possible to load custom form types, form type extensions or type
 guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypes`,
-`:method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::`getTypeExtensions`
+:method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeExtensions`
 and :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeGuessers`
 methods.
 
