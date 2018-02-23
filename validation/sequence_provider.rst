@@ -288,10 +288,6 @@ method, which should return an array of groups to use::
         }
     }
 
-.. versionadded:: 3.2
-    The feature to return a nested array to get violations from all groups was
-    introduced in Symfony 3.2.
-
 At last, you have to notify the Validator component that your ``User`` class
 provides a sequence of groups to be validated:
 

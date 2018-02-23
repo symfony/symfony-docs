@@ -866,9 +866,6 @@ them will not cause the container to be rebuilt.
 Multiple Service Definitions Using the Same Namespace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 3.4
-    The ``namespace`` option in the YAML configuration was introduced in Symfony 3.4.
-
 If you define services using the YAML config format, the PHP namespace is used
 as the key of each configuration, so you can't define different service configs
 for classes under the same namespace:

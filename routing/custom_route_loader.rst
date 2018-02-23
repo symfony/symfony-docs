@@ -62,9 +62,6 @@ containing :class:`Symfony\\Component\\Routing\\Route` objects.
 Loading Routes with a Custom Service
 ------------------------------------
 
-.. versionadded:: 2.8
-    The option to load routes using Symfony services was introduced in Symfony 2.8.
-
 Using a regular Symfony service is the simplest way to load routes in a
 customized way. It's much easier than creating a full custom route loader, so
 you should always consider this option first.
