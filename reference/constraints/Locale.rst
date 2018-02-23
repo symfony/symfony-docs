@@ -105,9 +105,8 @@ canonicalize
     Using this option with value ``false`` was deprecated in Symfony 4.1 and it
     will throw an exception in Symfony 5.0. Use ``true`` instead.
 
-If true, the :phpmethod:`Locale::canonicalize` method will be applied before checking
-the validity of the given locale (e.g. ``FR-fr.utf8`` is transformed into ``fr_FR``
-).
+If ``true``, the :phpmethod:`Locale::canonicalize` method will be applied before checking
+the validity of the given locale (e.g. ``FR-fr.utf8`` is transformed into ``fr_FR``).
 
 .. _`ICU format locale IDs`: http://userguide.icu-project.org/locale
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
