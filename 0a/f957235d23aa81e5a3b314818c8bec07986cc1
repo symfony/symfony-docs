@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-16T16:14:52Z
+
+@lyrixx since you are our biggest Workflow expert, could you please review these proposed changes? Thanks!
+
+---------------------------------------------------------------------------
+
+by thePanz at 2018-02-20T17:42:56Z
+
+Thanks @javiereguiluz  and @lyrixx for the review!
+I updated the PR following your comments!
+
+---------------------------------------------------------------------------
+
+by thePanz at 2018-02-21T17:34:50Z
+
+Thanks @lyrixx I changed the target branch and rebased my changes on the `3.3` branch.
