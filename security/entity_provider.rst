@@ -328,7 +328,8 @@ Forbid Inactive Users (AdvancedUserInterface)
 .. versionadded:: 4.1
     The ``AdvancedUserInterface`` class was deprecated in Symfony 4.1 and no
     alternative is provided. If you need this functionality in your application,
-    add the ``AdvancedUserInterface`` methods to your own user class.
+    implement :doc:`a custom user checker </security/user_checkers>` that
+    performs the needed checks.
 
 If a User's ``isActive`` property is set to ``false`` (i.e. ``is_active``
 is 0 in the database), the user will still be able to login to the site
