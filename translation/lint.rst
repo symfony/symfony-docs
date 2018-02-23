@@ -15,17 +15,17 @@ using the ``lint:yaml`` command:
 .. code-block:: terminal
 
     # lint a single file
-    $ ./bin/console lint:yaml app/Resources/translations/messages.en.yml
+    $ ./app/console lint:yaml app/Resources/translations/messages.en.yml
 
     # lint a whole directory
-    $ ./bin/console lint:yaml app/Resources/translations
+    $ ./app/console lint:yaml app/Resources/translations
 
     # lint a specific bundle
-    $ ./bin/console lint:yaml @AppBundle
+    $ ./app/console lint:yaml @AppBundle
 
 The linter results can be exported to JSON using the ``--format`` option:
 
 .. code-block:: terminal
 
     # lint a single file
-    $ ./bin/console lint:yaml app/Resources/translations --format=json
+    $ ./app/console lint:yaml app/Resources/translations --format=json

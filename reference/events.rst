@@ -43,7 +43,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:event-dispatcher kernel.request
+    $ php app/console debug:event-dispatcher kernel.request
 
 ``kernel.controller``
 ~~~~~~~~~~~~~~~~~~~~~
@@ -74,7 +74,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:event-dispatcher kernel.controller
+    $ php app/console debug:event-dispatcher kernel.controller
 
 ``kernel.view``
 ~~~~~~~~~~~~~~~
@@ -108,7 +108,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:event-dispatcher kernel.view
+    $ php app/console debug:event-dispatcher kernel.view
 
 ``kernel.response``
 ~~~~~~~~~~~~~~~~~~~
@@ -135,7 +135,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:event-dispatcher kernel.response
+    $ php app/console debug:event-dispatcher kernel.response
 
 ``kernel.finish_request``
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -162,7 +162,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:event-dispatcher kernel.finish_request
+    $ php app/console debug:event-dispatcher kernel.finish_request
 
 ``kernel.terminate``
 ~~~~~~~~~~~~~~~~~~~~
@@ -183,7 +183,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:event-dispatcher kernel.terminate
+    $ php app/console debug:event-dispatcher kernel.terminate
 
 .. _kernel-kernel.exception:
 
@@ -243,6 +243,6 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:event-dispatcher kernel.exception
+    $ php app/console debug:event-dispatcher kernel.exception
 
 .. _`param converters`: https://symfony.com/doc/master/bundles/SensioFrameworkExtraBundle/annotations/converters.html
