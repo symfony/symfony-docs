@@ -20,6 +20,8 @@ makes it easy to execute queries and perform other database actions.
 
     Read the official Doctrine `DBAL Documentation`_ to learn all the details
     and capabilities of Doctrine's DBAL library.
+    
+    Before you start you will need `DoctrineBundle`_ which supports both Doctrine ORM and Doctrine DBAL (together or just DBAL). This will generate ``config/packages/doctrine.yaml``.
 
 To get started, configure the ``DATABASE_URL`` environment variable in ``.env``:
 
@@ -156,3 +158,4 @@ mapping type:
 .. _`Doctrine`:      http://www.doctrine-project.org
 .. _`DBAL Documentation`: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html
 .. _`Custom Mapping Types`: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/types.html#custom-mapping-types
+.. _`DoctrineBundle`:      https://symfony.com/doc/current/bundles/DoctrineBundle/index.html
