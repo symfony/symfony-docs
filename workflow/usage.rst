@@ -221,9 +221,9 @@ order:
     * ``workflow.[workflow name].transition.[transition name]``
 
 ``workflow.enter``
-    The subject is about to enter a new place. This is the event triggered before the
-    subject is going to be updated as being in the new places.
-    Please notice: the marking of the subject is not yet updated with the new places.
+    The subject is about to enter a new place. This event is triggered just
+    before the subject places are updated, which means that the marking of the
+    subject is not yet updated with the new places.
 
     The three events being dispatched are:
 
