@@ -137,7 +137,7 @@ With this configuration, there are three validation groups:
 ``User``
     Equivalent to all constraints of the ``User`` object in the ``Default``
     group. This is always the name of the class. The difference between this
-    and ``Default`` is explained below.
+    and ``Default`` is explained in :doc:`/validation/sequence_provider`.
 
 ``registration``
     Contains the constraints on the ``email`` and ``password`` fields only.
