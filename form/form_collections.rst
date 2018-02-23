@@ -557,33 +557,23 @@ you will learn about next!).
     The trick is to make sure that the single "Task" is set on each "Tag".
     One easy way to do this is to add some extra logic to ``addTag()``,
     which is called by the form type since ``by_reference`` is set to
-    ``false``.
-    
-    For a one-to-many relationship you just need to add one line to ``Task``:
+    ``false``::
 
         // src/AppBundle/Entity/Task.php
 
-        // ...
         public function addTag(Tag $tag)
         {
+            // for a many-to-many association:
+            $tag->addTask($this);
+
+            // for a many-to-one association:
             $tag->setTask($this);
 
             $this->tags->add($tag);
         }
-        
-    For a many-to-many relationship:
 
-        // src/AppBundle/Entity/Task.php
-
-        // ...
-        public function addTag(Tag $tag)
-        {
-            $tag->addTask($this);
-
-            $this->tags->add($tag);
-        }
-
-    Inside ``Tag``, just make sure you have an ``addTask()`` method::
+    If you're going for ``addTask()``, just make sure you have an appropriate method
+    that looks something like this::
 
         // src/AppBundle/Entity/Tag.php
 
