@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-02-23T16:05:36Z
+
+I think we should simplify the process for removing `versionadded` directives (currently document at http://symfony.com/doc/current/contributing/documentation/format.html#new-features-or-behavior-changes) and just always drop all existing `versionadded` directives when a new major version is released. What do you think?
