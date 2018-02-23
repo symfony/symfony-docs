@@ -143,9 +143,9 @@ config files or better, import them and override the needed options:
 Executing Commands with a Different Kernel
 ------------------------------------------
 
-The ``bin/console`` script used to run Symfony commands always uses the default
+The ``app/console`` script used to run Symfony commands always uses the default
 ``AppKernel`` class to build the application and load the commands. If you need
-to execute console commands using the new kernel, duplicate the ``bin/console``
+to execute console commands using the new kernel, duplicate the ``app/console``
 script and rename it (e.g. ``bin/api``).
 
 Then, replace the ``AppKernel`` instantiation by your own kernel instantiation
@@ -155,7 +155,7 @@ new kernel.
 
 .. note::
 
-    The commands available for each console script (e.g. ``bin/console`` and
+    The commands available for each console script (e.g. ``app/console`` and
     ``bin/api``) can differ because they depend on the bundles enabled for each
     kernel, which could be different.
 
