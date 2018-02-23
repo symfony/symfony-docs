@@ -367,9 +367,6 @@ Binary data is automatically parsed if they include the ``!!binary`` YAML tag
 Parsing and Dumping Custom Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 3.3
-    Support for parsing and dumping custom tags was introduced in Symfony 3.3.
-
 In addition to the built-in support of tags like ``!php/const`` and
 ``!!binary``, you can define your own custom YAML tags and parse them with the
 ``PARSE_CUSTOM_TAGS`` flag::
