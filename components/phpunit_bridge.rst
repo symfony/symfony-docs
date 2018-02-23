@@ -232,11 +232,11 @@ test::
         {
             $stopwatch = new Stopwatch();
 
-            $stopwatch->start();
+            $stopwatch->start('event_name');
             sleep(10);
-            $duration = $stopwatch->stop();
+            $duration = $stopwatch->stop('event_name')->getDuration();
 
-            $this->assertEquals(10, $duration);
+            $this->assertEquals(10000, $duration);
         }
     }
 
