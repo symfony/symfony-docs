@@ -137,5 +137,27 @@ these (see ":doc:`/components/http_foundation/trusting_proxies`").
 
 The code for doing this will need to live in your front controller (e.g. ``web/app.php``).
 
+
+My Reverse Proxy do not provide all the standards headers
+---------------------------------------------------------
+For example, as AWS Elastic Load Balancing provide standard header but no X-Forwarded-Host and X-Forwarded, you should use this configuration your front controller::
+   .. code-block:: diff
+
+        // web/app.php
+
+        // ...
+        $request = Request::createFromGlobals();
+        + Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR'))); //be very carefully with this line, see the above chapter "But what if the IP of my Reverse Proxy Changes Constantly!"
+        + 
+        + Request::setTrustedHeaderName(Request::HEADER_CLIENT_HOST, '');// AWS ELB doesn't send X-Forwarded-Host
+        + Request::setTrustedHeaderName(Request::HEADER_FORWARDED, '');// AWS ELB doesn't use RFC 7239
+        + Request::setTrustedProxies(
+        +     // trust *all* requests
+        +     array('127.0.0.1', $request->server->get('REMOTE_ADDR'))
+        + );
+
+        // ...
+        
+
 .. _`security groups`: http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
 .. _`RFC 7239`: http://tools.ietf.org/html/rfc7239
