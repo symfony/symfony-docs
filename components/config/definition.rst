@@ -726,7 +726,7 @@ The builder is used for adding advanced validation rules to node definitions, li
                     ->scalarNode('driver')
                         ->isRequired()
                         ->validate()
-                        ->ifNotInArray(array('mysql', 'sqlite', 'mssql'))
+                            ->ifNotInArray(array('mysql', 'sqlite', 'mssql'))
                             ->thenInvalid('Invalid database driver %s')
                         ->end()
                     ->end()
