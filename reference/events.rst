@@ -236,15 +236,15 @@ response:
 
     If you want to overwrite the status code of the exception response, which
     you should not without a good reason, call
-    ``GetResponseForExceptionEvent::allowSuccessfulResponse()`` first and then
+    ``GetResponseForExceptionEvent::allowCustomResponseCode()`` first and then
     set the status code on the response::
 
-        $event->allowSuccessfulResponse();
+        $event->allowCustomResponseCode();
         $response = new Response('No Content', 204);
         $event->setResponse($response);
 
     The status code sent to the client in the above example will be ``204``. If
-    ``$event->allowSuccessfulResponse()`` is omitted, then the kernel will set
+    ``$event->allowCustomResponseCode()`` is omitted, then the kernel will set
     an appropriate status code based on the type of exception thrown.
 
 .. seealso::
