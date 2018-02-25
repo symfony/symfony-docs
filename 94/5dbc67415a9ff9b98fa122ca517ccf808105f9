@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-25T18:11:17Z
+
+@ptrkcsk thanks! It's true that `setFormatDefinition()` method is static. See https://github.com/symfony/symfony/blob/cd5f4105a43208632c8b62fd75b4dad53dcd8a41/src/Symfony/Component/Console/Helper/ProgressBar.php#L115  but don't you think that the code now is a bit ugly? But I guess we can't do any better 😞
+
+---------------------------------------------------------------------------
+
+by ptrkcsk at 2018-02-25T18:28:32Z
+
+@javiereguiluz  It's consistent with the [examples](https://github.com/symfony/symfony-docs/blame/a439f6351a4e1a14d84e9076029a3b963ffe3995/components/console/helpers/progressbar.rst#L192) in the [Custom Formats section](https://github.com/symfony/symfony-docs/blame/a439f6351a4e1a14d84e9076029a3b963ffe3995/components/console/helpers/progressbar.rst#L151) of the same page.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-25T18:33:13Z
+
+You are completely right! Sorry for not having checked this. Merging it. Thanks and congrats on your first contribution to Symfony Docs!
