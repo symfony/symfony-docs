@@ -12,7 +12,7 @@ is world-wide and is composed of a wide variety of people with differing
 ideas and opinions.
 
 Not everyone speaks English or is able to use a keyboard. Some might
-have Dyslexia or similar conditions that affect their writing.
+have dyslexia or similar conditions that affect their writing.
 
 Not to mention that some might have a bad experience from previous
 contributions (to other projects).
@@ -32,39 +32,39 @@ First of, accept that many programming decisions are opinions.
 Discuss trade offs, which you prefer, and reach a resolution quickly.
 It's not about being right or wrong, but using what works.
 
-Tone of voice
+Tone of Voice
 -------------
 
 We don't expect you to be completely formal, or to even write error-free
-English. Just remember one thing: Don't swear, and be respectful to others.
+English. Just remember this: don't swear, and be respectful to others.
 
 Don't reply in anger or with an aggressive tone. You're angry, we understand
 that, but swearing/cursing and name calling doesn't really encourage anyone to
 help you. Take a deep breath, count to 10 and try to *clearly* explain what problems
 you encounter.
 
-Gender pronouns
----------------
+Gender-neutral Pronouns
+-----------------------
 
-While not "formally" required it's better to use gender-neutral pronouns.
+While not "formally" required, it's better to use gender-neutral pronouns.
 Unless someone "indicated" their pronouns, use "they", "them" instead of
 "he", "she", "his", "hers", "his/hers", "he/she", etc.
 
 Try to avoid using wording that may be considered excluding and needlessly gendered,
 like for example words that have a male base. For example we recommend to use other
-words like “folks”, “team”, “everyone” in place of “guys”.
+words like "folks", "team", "everyone" in place of "guys".
 
-Giving positive feedback
+Giving Positive Feedback
 ------------------------
 
 While reviewing issues and pull requests you may run into some suggestions
 (including patches) that don't reflect your ideas, are not good, or downright wrong.
 
 Now, when you prepare your comment, consider the amount of work and time the author
-has spent on their idea and how your response would make them feel;
+has spent on their idea and how your response would make them feel.
 
 Did you correctly understand their intention? Or are you making assumptions?
-Which ever you respond, be explicit. Remember people don't always understand your
+Whatever your response, be explicit. Remember people don't always understand your
 intentions online.
 
 Avoid using terms that could be seen as referring to personal traits ("dumb", "stupid").
@@ -86,21 +86,21 @@ don't get into endless you-are-wrong discussions or "flame wars".
 
 Don't use hyperbole ("always", "never", "endlessly", "nothing", "worst", "horrible", "terrible").
 
-  **Don't:** ``I don't like how you wrote this code`` - there is no clear explanation why you
-  don't like how it's written.
+**Don't:** *"I don't like how you wrote this code"* - there is no clear explanation why you
+don't like how it's written.
 
-  **Better:** ``I find it hard to read this code as there many nested if statements, can you make it more
-  readable? by encapsulating some of it's details or maybe adding some comments to explain the overall logic.`` -
-  You explain why you find the code hard to read *and* give some suggestions for improvement.
+**Better:** *"I find it hard to read this code as there many nested if statements, can you make it more
+readable? By encapsulating some of it's details or maybe adding some comments to explain the overall logic."* -
+You explain why you find the code hard to read *and* give some suggestions for improvement.
 
 If a piece of code is in fact wrong, explain why:
 
-    * ``This code doesn't comply with Symfony's CS rules. Please see [...] for details``.
+* ``This code doesn't comply with Symfony's CS rules. Please see [...] for details``.
 
-    * ``Symfony 3 still uses PHP 5 and doesn't allow the usage scalar type-hints.``.
+* ``Symfony 3 still uses PHP 5 and doesn't allow the usage scalar type-hints.``.
 
-    * ``I think the code is less readable now`` - careful here, be sure explain why you think
-      the code is less readable, and maybe give some suggestions?
+* ``I think the code is less readable now`` - careful here, be sure explain why you think
+  the code is less readable, and maybe give some suggestions?
 
 **Examples of valid reasons to reject:**
 
@@ -113,12 +113,12 @@ If a piece of code is in fact wrong, explain why:
 
     * Code doesn't match Symfony's CS rules (e.g. ``use array()`` instead of ``[]``)
 
-    * We only provide integration with very popular projects (e.g. we integrate Bootstrap but not your own CSS framework
+    * We only provide integration with very popular projects (e.g. we integrate Bootstrap but not your own CSS framework)
 
     * This would require adding lots of code and making lots of changes for a feature that doesn't look so important.
       That could hurt maintaining in the future.
 
-Asking for changes
+Asking for Changes
 ------------------
 
 Rarely something is perfect from the start, while the code itself is good.
@@ -141,17 +141,17 @@ Use words like "Please", "Thank you" and "Could you" instead of making demands;
 
 * "Please use 4 spaces instead of tabs", "This needs be on the previous line";
 
-  During a pull request review you can usually leave more then one comment,
-  you don't have to use "Please" all the time. But it wouldn't hurt.
+During a pull request review you can usually leave more then one comment,
+you don't have to use "Please" all the time. But it wouldn't hurt.
 
 It may not seem like much, but saying "Thank you" does make others feel
 more welcome.
 
-Using humor
+Using Humor
 -----------
 
-In short: Don't be a troll; This violates the Code of Conduct and may
-even get you banned! Keep it real and friendly.
+In short: Extreme misbehavior will not be tolerated and may even get you banned;
+Keep it real and friendly.
 
 **Don't use sarcasm for a serious topic, that's not something that belongs
 to the Symfony community.** And don't marginalize someone's problems;
@@ -162,7 +162,7 @@ problem to them. Making jokes about this doesn't help with solving their
 problem and only makes them *feel stupid*. Instead try to discover what
 the problem is really about.
 
-Final words
+Final Words
 -----------
 
 Don't feel bad if you "failed" to follow these tips. As long as your
