@@ -176,6 +176,16 @@ manual steps:
    .. code-block:: terminal
 
        $ composer remove symfony/symfony
+       
+   Now add the ``symfony/symfony`` package to the ``conflict`` section of the project's
+   ``composer.json`` file as `shown in this example of the skeleton-project`_ so that
+   it will not be installed again:
+
+   .. code-block:: json
+
+        "conflict": {
+            "symfony/symfony": "*"
+        },
 
    Now you must add in ``composer.json`` all the Symfony dependencies required
    by your project. A quick way to do that is to add all the components that
@@ -254,5 +264,6 @@ manual steps:
 .. _`Symfony Recipes documentation`: https://github.com/symfony/recipes/blob/master/README.rst
 .. _`default services.yaml file`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/config/services.yaml
 .. _`shown in this example`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L24-L33
+.. _`shown in this example of the skeleton-project`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L44-L46
 .. _`copying Symfony's index.php source`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/public/index.php
 .. _`copying Symfony's bin/console source`: https://github.com/symfony/recipes/blob/master/symfony/console/3.3/bin/console
