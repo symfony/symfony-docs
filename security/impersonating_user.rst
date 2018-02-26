@@ -234,9 +234,7 @@ the sticky locale:
 
 .. caution::
 
-    The listener implementation assumes your ``User`` entity has a ``getLocale()`` method.
-
-.. code-block:: php
+    The listener implementation assumes your ``User`` entity has a ``getLocale()`` method::
 
         // src/AppBundle/EventListener/SwitchUserListener.php
         namespace AppBundle\EventListener;

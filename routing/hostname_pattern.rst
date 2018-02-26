@@ -408,9 +408,7 @@ Testing your Controllers
 ------------------------
 
 You need to set the Host HTTP header on your request objects if you want to get
-past url matching in your functional tests.
-
-.. code-block:: php
+past url matching in your functional tests::
 
     $crawler = $client->request(
         'GET',

@@ -36,9 +36,7 @@ The Voter Interface
 A custom voter needs to implement
 :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`
 or extend :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\AbstractVoter`,
-which makes creating a voter even easier.
-
-.. code-block:: php
+which makes creating a voter even easier::
 
     abstract class AbstractVoter implements VoterInterface
     {
@@ -58,9 +56,7 @@ Creating the custom Voter
 -------------------------
 
 The goal is to create a voter that checks if a user has access to view or
-edit a particular object. Here's an example implementation:
-
-.. code-block:: php
+edit a particular object. Here's an example implementation::
 
     // src/AppBundle/Security/Authorization/Voter/PostVoter.php
     namespace AppBundle\Security\Authorization\Voter;

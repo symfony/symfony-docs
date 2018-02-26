@@ -43,9 +43,7 @@ Your handler must implement the
 :class:`Symfony\\Component\\Security\\Http\\Authorization\\AccessDeniedHandlerInterface`.
 This interface defines one method called ``handle()`` that implements the logic to
 execute when access is denied to the current user (send a mail, log a message, or
-generally return a custom response).
-
-.. code-block:: php
+generally return a custom response)::
 
     namespace AppBundle\Security;
 
