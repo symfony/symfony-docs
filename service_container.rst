@@ -364,13 +364,10 @@ made. To do that, you create a new class::
         {
             $happyMessage = $this->messageGenerator->getHappyMessage();
 
-            $message = \Swift_Message::newInstance()
+            $message = (new \Swift_Message('Someone just updated the site. We told them: '.$happyMessage))
                 ->setSubject('Site update just happened!')
                 ->setFrom('admin@example.com')
-                ->setTo('manager@example.com')
-                ->addPart(
-                    'Someone just updated the site. We told them: '.$happyMessage
-                );
+                ->setTo('manager@example.com');
 
             return $this->mailer->send($message) > 0;
         }
