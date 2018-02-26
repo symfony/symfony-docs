@@ -364,8 +364,7 @@ made. To do that, you create a new class::
         {
             $happyMessage = $this->messageGenerator->getHappyMessage();
 
-            $message = \Swift_Message::newInstance()
-                ->setSubject('Site update just happened!')
+            $message = (new \Swift_Message('Site update just happened!))
                 ->setFrom('admin@example.com')
                 ->setTo('manager@example.com')
                 ->addPart(
