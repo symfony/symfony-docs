@@ -261,6 +261,11 @@ Nginx
 The **minimum configuration** to get your application running under Nginx is:
 
 .. code-block:: nginx
+    upstream php-handler {
+      #Make sure that PHP-FPM is installed on the server.
+      #You may want to change php7.1 to something like php7.2-fpm.sock.
+      server unix:/run/php/php7.1-fpm.sock;
+    }
 
     server {
         server_name domain.tld www.domain.tld;
@@ -289,7 +294,7 @@ The **minimum configuration** to get your application running under Nginx is:
         }
         # PROD
         location ~ ^/app\.php(/|$) {
-            fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+            fastcgi_pass php-handler;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             # When you are using symlinks to link the document root to the
