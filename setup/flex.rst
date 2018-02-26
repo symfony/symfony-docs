@@ -177,8 +177,9 @@ manual steps:
 
        $ composer remove symfony/symfony
        
-   Now add the ``symfony/symfony``-package to the ``conflict``-section of the project's
-   ``composer.json`` file as `shown in this example of the skeleton-project`_ so that it will not be installed again.
+   Now add the ``symfony/symfony`` package to the ``conflict`` section of the project's
+   ``composer.json`` file as `shown in this example of the skeleton-project`_ so that
+   it will not be installed again:
 
    .. code-block:: json
 
