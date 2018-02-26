@@ -174,4 +174,3 @@ But don't say it "just because", if your apology is not really meant
 you *will* lose credibility and respect from other developers.
 
 *Do unto others as you would have them do unto you.*
-
