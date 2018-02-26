@@ -32,10 +32,19 @@ to bind to all IP addresses and allow any host to access the server:
 
 .. code-block:: terminal
 
-    $ ./node_modules/.bin/encore dev-server --host 0.0.0.0 --disable-host-check
+    $ ./node_modules/.bin/encore dev-server --public http://docker-host:9000 --port 9000 --host 0.0.0.0 --disable-host-check
 
 You can now access the dev-server using the IP address to your virtual machine on
-port 8080 - e.g. http://192.168.1.1:8080.
+port 9000 - e.g. http://192.168.1.1:9000.
+If you've activated the :ref:`manifest.json versioning <load-manifest-files>` you need additional configuration to alter the url used in your templates to the ``dev-server``:
+
+.. code-block:: javascript
+    
+    Encore
+        .setManifestKeyPrefix('build/')
+
+When you're using the ``dev-server`` in a docker container, configure accordingly and bind the port from the ``dev-server`` (default 8080) onto a port on the host and provide this port --public parameter above.
+
 
 Hot Module Replacement HMR
 --------------------------
