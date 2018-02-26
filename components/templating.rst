@@ -188,9 +188,7 @@ takes a list of engines and acts just like a normal templating engine. The
 only difference is that it delegates the calls to one of the other engines. To
 choose which one to use for the template, the
 :method:`EngineInterface::supports() <Symfony\\Component\\Templating\\EngineInterface::supports>`
-method is used.
-
-.. code-block:: php
+method is used::
 
     use Acme\Templating\CustomEngine;
     use Symfony\Component\Templating\PhpEngine;

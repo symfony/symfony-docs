@@ -133,9 +133,7 @@ Constants can be used for example in your Twig templates thanks to the
     </p>
 
 And Doctrine entities and repositories can now easily access these values,
-whereas they cannot access the container parameters:
-
-.. code-block:: php
+whereas they cannot access the container parameters::
 
     namespace AppBundle\Repository;
 

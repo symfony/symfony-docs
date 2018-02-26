@@ -36,7 +36,7 @@ accuracy.
 Example Usage
 -------------
 
-.. code-block:: php
+::
 
     $builder->add('password', 'repeated', array(
         'type' => 'password',

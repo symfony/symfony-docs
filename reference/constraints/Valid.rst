@@ -22,9 +22,7 @@ Basic Usage
 
 In the following example, create two classes ``Author`` and ``Address``
 that both have constraints on their properties. Furthermore, ``Author``
-stores an ``Address`` instance in the ``$address`` property.
-
-.. code-block:: php
+stores an ``Address`` instance in the ``$address`` property::
 
     // src/AppBundle/Entity/Address.php
     namespace AppBundle\Entity;
@@ -35,7 +33,7 @@ stores an ``Address`` instance in the ``$address`` property.
         protected $zipCode;
     }
 
-.. code-block:: php
+::
 
     // src/AppBundle/Entity/Author.php
     namespace AppBundle\Entity;

@@ -35,7 +35,7 @@ true, if the box is unchecked, the value will be set to false.
 Example Usage
 -------------
 
-.. code-block:: php
+::
 
     $builder->add('public', 'checkbox', array(
         'label'    => 'Show this entry publicly?',

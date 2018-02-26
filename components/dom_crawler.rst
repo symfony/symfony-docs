@@ -260,9 +260,7 @@ The crawler supports multiple ways of adding the content::
 
 As the Crawler's implementation is based on the DOM extension, it is also able
 to interact with native :phpclass:`DOMDocument`, :phpclass:`DOMNodeList`
-and :phpclass:`DOMNode` objects:
-
-.. code-block:: php
+and :phpclass:`DOMNode` objects::
 
     $document = new \DOMDocument();
     $document->loadXml('<root><node /><node /></root>');

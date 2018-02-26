@@ -95,7 +95,7 @@ options are buried in the business logic of your code. Use the
 Now all four options are guaranteed to be set. But what happens if the user of
 the ``Mailer`` class makes a mistake?
 
-.. code-block:: php
+::
 
     $mailer = new Mailer(array(
         'usernme' => 'johndoe',  // usernme misspelled (instead of username)

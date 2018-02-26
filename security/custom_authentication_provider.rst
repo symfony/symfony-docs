@@ -58,9 +58,7 @@ A token represents the user authentication data present in the request. Once
 a request is authenticated, the token retains the user's data, and delivers
 this data across the security context. First, you'll create your token class.
 This will allow the passing of all relevant information to your authentication
-provider.
-
-.. code-block:: php
+provider::
 
     // src/AppBundle/Security/Authentication/Token/WsseUserToken.php
     namespace AppBundle\Security\Authentication\Token;
@@ -104,9 +102,7 @@ provider. A listener must be an instance of
 :class:`Symfony\\Component\\Security\\Http\\Firewall\\ListenerInterface`.
 A security listener should handle the
 :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseEvent` event, and
-set an authenticated token in the token storage if successful.
-
-.. code-block:: php
+set an authenticated token in the token storage if successful::
 
     // src/AppBundle/Security/Firewall/WsseListener.php
     namespace AppBundle\Security\Firewall;
@@ -200,9 +196,7 @@ The Authentication Provider
 The authentication provider will do the verification of the ``WsseUserToken``.
 Namely, the provider will verify the ``Created`` header value is valid within
 five minutes, the ``Nonce`` header value is unique within five minutes, and
-the ``PasswordDigest`` header value matches with the user's password.
-
-.. code-block:: php
+the ``PasswordDigest`` header value matches with the user's password::
 
     // src/AppBundle/Security/Authentication/Provider/WsseProvider.php
     namespace AppBundle\Security\Authentication\Provider;
@@ -309,9 +303,7 @@ for every firewall? The answer is by using a *factory*. A factory
 is where you hook into the Security component, telling it the name of your
 provider and any configuration options available for it. First, you must
 create a class which implements
-:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`.
-
-.. code-block:: php
+:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`::
 
     // src/AppBundle/DependencyInjection/Security/Factory/WsseFactory.php
     namespace AppBundle\DependencyInjection\Security\Factory;
@@ -469,9 +461,7 @@ to service ids that do not exist yet: ``wsse.security.authentication.provider`` 
             ->setPublic(false);
 
 Now that your services are defined, tell your security context about your
-factory in your bundle class:
-
-.. code-block:: php
+factory in your bundle class::
 
     // src/AppBundle/AppBundle.php
     namespace AppBundle;
@@ -563,9 +553,7 @@ by default, is 5 minutes. Make this configurable, so different firewalls
 can have different timeout lengths.
 
 You will first need to edit ``WsseFactory`` and define the new option in
-the ``addConfiguration()`` method.
-
-.. code-block:: php
+the ``addConfiguration()`` method::
 
     class WsseFactory implements SecurityFactoryInterface
     {
@@ -583,9 +571,7 @@ the ``addConfiguration()`` method.
 Now, in the ``create()`` method of the factory, the ``$config`` argument will
 contain a ``lifetime`` key, set to 5 minutes (300 seconds) unless otherwise
 set in the configuration. Pass this argument to your authentication provider
-in order to put it to use.
-
-.. code-block:: php
+in order to put it to use::
 
     class WsseFactory implements SecurityFactoryInterface
     {

@@ -40,7 +40,7 @@ This interface requires four methods:
 
 Start by creating the class and these methods. Next, you'll learn how to fill each on.
 
-.. code-block:: php
+::
 
     // src/AppBundle/Form/TypeGuesser/PHPDocTypeGuesser.php
     namespace AppBundle\Form\TypeGuesser;

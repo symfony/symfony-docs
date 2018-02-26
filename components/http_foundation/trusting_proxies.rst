@@ -17,9 +17,7 @@ the actual host may be stored in an ``X-Forwarded-Host`` header.
 
 Since HTTP headers can be spoofed, Symfony does *not* trust these proxy
 headers by default. If you are behind a proxy, you should manually whitelist
-your proxy as follows:
-
-.. code-block:: php
+your proxy as follows::
 
     use Symfony\Component\HttpFoundation\Request;
 

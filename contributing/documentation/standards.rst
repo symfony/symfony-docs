@@ -98,7 +98,7 @@ Configuration examples should show all supported formats using
 Example
 ~~~~~~~
 
-.. code-block:: php
+::
 
     // src/Foo/Bar.php
     namespace Foo;

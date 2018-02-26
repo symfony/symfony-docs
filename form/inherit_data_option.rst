@@ -26,7 +26,7 @@ entities, a ``Company`` and a ``Customer``::
         private $country;
     }
 
-.. code-block:: php
+::
 
     // src/AppBundle/Entity/Customer.php
     namespace AppBundle\Entity;
@@ -63,7 +63,7 @@ Start with building two forms for these entities, ``CompanyType`` and ``Customer
         }
     }
 
-.. code-block:: php
+::
 
     // src/AppBundle/Form/Type/CustomerType.php
     namespace AppBundle\Form\Type;
@@ -143,7 +143,7 @@ Finally, make this work by adding the location form to your two original forms::
         ));
     }
 
-.. code-block:: php
+::
 
     // src/AppBundle/Form/Type/CustomerType.php
     use AppBundle\Entity\Customer;
