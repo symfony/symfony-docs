@@ -127,6 +127,10 @@ fragment needed to render every part of a form:
     calling ``form_label()`` for a checkbox/radio field doesn't show anything.
     Due to Bootstrap internals, the label is already shown by ``form_widget()``.
 
+.. tip::
+
+    Read more about :doc:`Bootstrap 4 form theme </form/bootstrap4>`.
+
 In the next section you will learn how to customize a theme by overriding
 some or all of its fragments.
 
