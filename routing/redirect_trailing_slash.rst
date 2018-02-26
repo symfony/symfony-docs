@@ -83,8 +83,8 @@ system, as explained below:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add(
+        $routes = new RouteCollection();
+        $routes->add(
             'remove_trailing_slash',
             new Route(
                 '/{url}',

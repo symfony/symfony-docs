@@ -196,13 +196,13 @@ the default entity manager (i.e. ``default``) is returned::
         public function indexAction()
         {
             // All three return the "default" entity manager
-            $em = $this->get('doctrine')->getManager();
-            $em = $this->get('doctrine')->getManager('default');
-            $em = $this->get('doctrine.orm.default_entity_manager');
+            $entityManager = $this->get('doctrine')->getManager();
+            $entityManager = $this->get('doctrine')->getManager('default');
+            $entityManager = $this->get('doctrine.orm.default_entity_manager');
 
             // Both of these return the "customer" entity manager
-            $customerEm = $this->get('doctrine')->getManager('customer');
-            $customerEm = $this->get('doctrine.orm.customer_entity_manager');
+            $customerEntityManager = $this->get('doctrine')->getManager('customer');
+            $customerEntityManager = $this->get('doctrine.orm.customer_entity_manager');
         }
     }
 

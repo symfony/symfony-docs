@@ -269,9 +269,9 @@ In your extension, you can load this and dynamically set its arguments::
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $def = $container->getDefinition('acme.social.twitter_client');
-        $def->replaceArgument(0, $config['twitter']['client_id']);
-        $def->replaceArgument(1, $config['twitter']['client_secret']);
+        $definition = $container->getDefinition('acme.social.twitter_client');
+        $definition->replaceArgument(0, $config['twitter']['client_id']);
+        $definition->replaceArgument(1, $config['twitter']['client_secret']);
     }
 
 .. tip::

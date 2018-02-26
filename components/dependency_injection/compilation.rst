@@ -117,14 +117,14 @@ are loaded::
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-    $container = new ContainerBuilder();
-    $container->registerExtension(new AcmeDemoExtension);
+    $containerBuilder = new ContainerBuilder();
+    $containerBuilder->registerExtension(new AcmeDemoExtension);
 
-    $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
+    $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
     $loader->load('config.yml');
 
     // ...
-    $container->compile();
+    $containerBuilder->compile();
 
 .. note::
 
@@ -263,11 +263,11 @@ file but also load a secondary one only if a certain parameter is set::
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-        $container = new ContainerBuilder();
+        $containerBuilder = new ContainerBuilder();
         $extension = new AcmeDemoExtension();
-        $container->registerExtension($extension);
-        $container->loadFromExtension($extension->getAlias());
-        $container->compile();
+        $containerBuilder->registerExtension($extension);
+        $containerBuilder->loadFromExtension($extension->getAlias());
+        $containerBuilder->compile();
 
 .. note::
 
@@ -344,8 +344,8 @@ will then be called when the container is compiled::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    $container = new ContainerBuilder();
-    $container->addCompilerPass(new CustomCompilerPass);
+    $containerBuilder = new ContainerBuilder();
+    $containerBuilder->addCompilerPass(new CustomCompilerPass);
 
 .. note::
 
@@ -378,8 +378,8 @@ been run::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 
-    $container = new ContainerBuilder();
-    $container->addCompilerPass(
+    $containerBuilder = new ContainerBuilder();
+    $containerBuilder->addCompilerPass(
         new CustomCompilerPass,
         PassConfig::TYPE_AFTER_REMOVING
     );
@@ -407,11 +407,11 @@ makes dumping the compiled container easy::
         require_once $file;
         $container = new ProjectServiceContainer();
     } else {
-        $container = new ContainerBuilder();
+        $containerBuilder = new ContainerBuilder();
         // ...
-        $container->compile();
+        $containerBuilder->compile();
 
-        $dumper = new PhpDumper($container);
+        $dumper = new PhpDumper($containerBuilder);
         file_put_contents($file, $dumper->dump());
     }
 
@@ -426,11 +426,11 @@ dump it::
         require_once $file;
         $container = new MyCachedContainer();
     } else {
-        $container = new ContainerBuilder();
+        $containerBuilder = new ContainerBuilder();
         // ...
-        $container->compile();
+        $containerBuilder->compile();
 
-        $dumper = new PhpDumper($container);
+        $dumper = new PhpDumper($containerBuilder);
         file_put_contents(
             $file,
             $dumper->dump(array('class' => 'MyCachedContainer'))
@@ -458,12 +458,12 @@ application::
         require_once $file;
         $container = new MyCachedContainer();
     } else {
-        $container = new ContainerBuilder();
+        $containerBuilder = new ContainerBuilder();
         // ...
-        $container->compile();
+        $containerBuilder->compile();
 
         if (!$isDebug) {
-            $dumper = new PhpDumper($container);
+            $dumper = new PhpDumper($containerBuilder);
             file_put_contents(
                 $file,
                 $dumper->dump(array('class' => 'MyCachedContainer'))

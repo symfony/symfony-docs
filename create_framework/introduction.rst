@@ -104,9 +104,9 @@ Instead of creating our framework from scratch, we are going to write the same
 start with the simplest web application we can think of in PHP::
 
     // framework/index.php
-    $input = $_GET['name'];
+    $name = $_GET['name'];
 
-    printf('Hello %s', $input);
+    printf('Hello %s', $name);
 
 If you have PHP 5.4, you can use the PHP built-in server to test this great
 application in a browser (``http://localhost:4321/index.php?name=Fabien``):

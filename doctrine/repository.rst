@@ -89,8 +89,8 @@ You can use this new method just like the default finder methods of the reposito
     use AppBundle\Entity\Post;
     // ...
 
-    $em = $this->getDoctrine()->getManager();
-    $products = $em->getRepository(Product::class)
+    $entityManager = $this->getDoctrine()->getManager();
+    $products = $entityManager->getRepository(Product::class)
         ->findAllOrderedByName();
 
 .. note::

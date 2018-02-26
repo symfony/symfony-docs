@@ -61,7 +61,7 @@ the user::
     use Symfony\Component\HttpFoundation\RequestMatcher;
     use Symfony\Component\Security\Http\Firewall\ExceptionListener;
 
-    $map = new FirewallMap();
+    $firewallMap = new FirewallMap();
 
     $requestMatcher = new RequestMatcher('^/secured-area/');
 
@@ -70,7 +70,7 @@ the user::
 
     $exceptionListener = new ExceptionListener(...);
 
-    $map->add($requestMatcher, $listeners, $exceptionListener);
+    $firewallMap->add($requestMatcher, $listeners, $exceptionListener);
 
 The firewall map will be given to the firewall as its first argument, together
 with the event dispatcher that is used by the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`::
@@ -81,7 +81,7 @@ with the event dispatcher that is used by the :class:`Symfony\\Component\\HttpKe
     // the EventDispatcher used by the HttpKernel
     $dispatcher = ...;
 
-    $firewall = new Firewall($map, $dispatcher);
+    $firewall = new Firewall($firewallMap, $dispatcher);
 
     $dispatcher->addListener(
         KernelEvents::REQUEST,

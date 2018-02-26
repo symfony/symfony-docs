@@ -287,10 +287,10 @@ do the following:
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $collection = new RouteCollection();
-        $collection->addCollection($loader->import("@AcmeHelloBundle/Resources/config/routing.php"));
+        $routes = new RouteCollection();
+        $routes->addCollection($loader->import("@AcmeHelloBundle/Resources/config/routing.php"));
 
-        return $collection;
+        return $routes;
 
 This will load the routes found in the ``Resources/config/routing.yml`` file
 of the AcmeDemoBundle. The special ``@AcmeDemoBundle`` is a shortcut syntax

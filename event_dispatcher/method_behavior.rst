@@ -26,10 +26,10 @@ method::
             $bar = $event->getBar();
 
             // the real method implementation is here
-            $ret = ...;
+            $returnValue = ...;
 
             // do something after the method
-            $event = new FilterSendReturnValue($ret);
+            $event = new FilterSendReturnValue($returnValue);
             $this->dispatcher->dispatch('foo.post_send', $event);
 
             return $event->getReturnValue();
@@ -40,7 +40,7 @@ In this example, two events are thrown: ``foo.pre_send``, before the method is
 executed, and ``foo.post_send`` after the method is executed. Each uses a
 custom Event class to communicate information to the listeners of the two
 events. These event classes would need to be created by you and should allow,
-in this example, the variables ``$foo``, ``$bar`` and ``$ret`` to be retrieved
+in this example, the variables ``$foo``, ``$bar`` and ``$returnValue`` to be retrieved
 and set by the listeners.
 
 For example, assuming the ``FilterSendReturnValue`` has a ``setReturnValue()``
@@ -50,8 +50,8 @@ method, one listener might look like this:
 
     public function onFooPostSend(FilterSendReturnValue $event)
     {
-        $ret = $event->getReturnValue();
-        // modify the original ``$ret`` value
+        $returnValue = $event->getReturnValue();
+        // modify the original ``$returnValue`` value
 
-        $event->setReturnValue($ret);
+        $event->setReturnValue($returnValue);
     }

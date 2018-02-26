@@ -627,7 +627,7 @@ as "getters".
 The benefit of this technique is that it allows you to validate your object
 dynamically. For example, suppose you want to make sure that a password field
 doesn't match the first name of the user (for security reasons). You can
-do this by creating an ``isPasswordLegal()`` method, and then asserting that
+do this by creating an ``isPasswordSafe()`` method, and then asserting that
 this method must return ``true``:
 
 .. configuration-block::
@@ -644,7 +644,7 @@ this method must return ``true``:
             /**
              * @Assert\IsTrue(message="The password cannot match your first name")
              */
-            public function isPasswordLegal()
+            public function isPasswordSafe()
             {
                 // ... return true or false
             }
@@ -655,7 +655,7 @@ this method must return ``true``:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             getters:
-                passwordLegal:
+                passwordSafe:
                     - 'IsTrue': { message: 'The password cannot match your first name' }
 
     .. code-block:: xml
@@ -668,7 +668,7 @@ this method must return ``true``:
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
-                <getter property="passwordLegal">
+                <getter property="passwordSafe">
                     <constraint name="IsTrue">
                         <option name="message">The password cannot match your first name</option>
                     </constraint>
@@ -688,15 +688,15 @@ this method must return ``true``:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addGetterConstraint('passwordLegal', new Assert\IsTrue(array(
+                $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue(array(
                     'message' => 'The password cannot match your first name',
                 )));
             }
         }
 
-Now, create the ``isPasswordLegal()`` method and include the logic you need::
+Now, create the ``isPasswordSafe()`` method and include the logic you need::
 
-    public function isPasswordLegal()
+    public function isPasswordSafe()
     {
         return $this->firstName !== $this->password;
     }

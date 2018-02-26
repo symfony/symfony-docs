@@ -46,9 +46,9 @@ be adapted for your case::
             parent::build($container);
             // ...
 
-            $modelDir = realpath(__DIR__.'/Resources/config/doctrine/model');
+            $modelDirectory = realpath(__DIR__.'/Resources/config/doctrine/model');
             $mappings = array(
-                $modelDir => Model::class,
+                $modelDirectory => Model::class,
             );
 
             if (class_exists(DoctrineOrmMappingsPass::class)) {
@@ -135,11 +135,11 @@ Annotations, XML, Yaml, PHP and StaticPHP. The arguments are:
         // ...
         private function buildMappingCompilerPass()
         {
-            $locator = new Definition(DefaultFileLocator::class, array(
+            $fileLocator = new Definition(DefaultFileLocator::class, array(
                 array(realpath(__DIR__ . '/Resources/config/doctrine-base')),
                 '.orm.xml'
             ));
-            $driver = new Definition(XmlDriver::class, array($locator));
+            $driver = new Definition(XmlDriver::class, array($fileLocator));
 
             return new DoctrineOrmMappingsPass(
                 $driver,

@@ -187,13 +187,13 @@ To use this feature, you need to have a definition in your
         // app/config/routing_dev.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $collection = new RouteCollection();
-        $collection->addCollection(
+        $routes = new RouteCollection();
+        $routes->addCollection(
             $loader->import('@TwigBundle/Resources/config/routing/errors.xml')
         );
-        $collection->addPrefix("/_error");
+        $routes->addPrefix("/_error");
 
-        return $collection;
+        return $routes;
 
 If you're coming from an older version of Symfony, you might need to
 add this to your ``routing_dev.yml`` file. If you're starting from

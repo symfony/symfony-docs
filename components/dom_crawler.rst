@@ -264,16 +264,16 @@ and :phpclass:`DOMNode` objects:
 
 .. code-block:: php
 
-    $document = new \DOMDocument();
-    $document->loadXml('<root><node /><node /></root>');
-    $nodeList = $document->getElementsByTagName('node');
-    $node = $document->getElementsByTagName('node')->item(0);
+    $domDocument = new \DOMDocument();
+    $domDocument->loadXml('<root><node /><node /></root>');
+    $nodeList = $domDocument->getElementsByTagName('node');
+    $node = $domDocument->getElementsByTagName('node')->item(0);
 
-    $crawler->addDocument($document);
+    $crawler->addDocument($domDocument);
     $crawler->addNodeList($nodeList);
     $crawler->addNodes(array($node));
     $crawler->addNode($node);
-    $crawler->add($document);
+    $crawler->add($domDocument);
 
 .. _component-dom-crawler-dumping:
 

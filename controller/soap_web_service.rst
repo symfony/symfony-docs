@@ -105,14 +105,14 @@ WSDL document can be retrieved via ``/soap?wsdl``.
     {
         public function indexAction()
         {
-            $server = new \SoapServer('/path/to/hello.wsdl');
-            $server->setObject($this->get('hello_service'));
+            $soapServer = new \SoapServer('/path/to/hello.wsdl');
+            $soapServer->setObject($this->get('hello_service'));
 
             $response = new Response();
             $response->headers->set('Content-Type', 'text/xml; charset=ISO-8859-1');
 
             ob_start();
-            $server->handle();
+            $soapServer->handle();
             $response->setContent(ob_get_clean());
 
             return $response;
@@ -133,9 +133,9 @@ Below is an example calling the service using a `NuSOAP`_ client. This example
 assumes that the ``indexAction()`` in the controller above is accessible via the
 route ``/soap``::
 
-    $client = new \Soapclient('http://example.com/app.php/soap?wsdl');
+    $soapClient = new \Soapclient('http://example.com/app.php/soap?wsdl');
 
-    $result = $client->call('hello', array('name' => 'Scott'));
+    $result = $soapClient->call('hello', array('name' => 'Scott'));
 
 An example WSDL is below.
 

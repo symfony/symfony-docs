@@ -21,24 +21,24 @@ looks like this::
 
         // use the validator to validate the value
         // If you're using the new 2.5 validation API (you probably are!)
-        $errorList = $this->get('validator')->validate(
+        $errors = $this->get('validator')->validate(
             $email,
             $emailConstraint
         );
 
         // If you're using the old 2.4 validation API
         /*
-        $errorList = $this->get('validator')->validateValue(
+        $errors = $this->get('validator')->validateValue(
             $email,
             $emailConstraint
         );
         */
 
-        if (0 === count($errorList)) {
+        if (0 === count($errors)) {
             // ... this IS a valid email address, do something
         } else {
             // this is *not* a valid email address
-            $errorMessage = $errorList[0]->getMessage();
+            $errorMessage = $errors[0]->getMessage();
 
             // ... do something with the error
         }
