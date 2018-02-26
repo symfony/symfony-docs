@@ -379,7 +379,7 @@ has a certain value:
     (``null``, ``true``, ``false``), provide a replacement value in case
     the value is ``*.``
 
-::
+.. code-block:: php
 
     $rootNode
         ->children()

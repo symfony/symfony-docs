@@ -107,7 +107,7 @@ above each action.
 In our application, you need the ``ROLE_ADMIN`` in order to create a new post.
 Using ``@Security``, this looks like:
 
-::
+.. code-block:: php
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

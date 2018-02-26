@@ -113,7 +113,7 @@ and your user.
 Creating an ACL and Adding an ACE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-::
+.. code-block:: php
 
     // src/AppBundle/Controller/BlogController.php
     namespace AppBundle\Controller;
@@ -181,7 +181,7 @@ database row which gives a considerable boost in performance.
 Checking Access
 ~~~~~~~~~~~~~~~
 
-::
+.. code-block:: php
 
     // src/AppBundle/Controller/BlogController.php
 

@@ -288,7 +288,7 @@ can use setters, the magic ``__set()`` method or properties to set values::
 You can also use ``__call()`` to set values but you need to enable the feature,
 see `Enable other Features`_.
 
-::
+.. code-block:: php
 
     // ...
     class Person
@@ -327,7 +327,7 @@ Writing to Array Properties
 The ``PropertyAccessor`` class allows to update the content of arrays stored in
 properties through *adder* and *remover* methods.
 
-::
+.. code-block:: php
 
     // ...
     class Person

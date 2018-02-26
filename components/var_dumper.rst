@@ -180,7 +180,7 @@ then its dump representation::
     The gray arrow is a toggle button for hiding/showing children of
     nested structures.
 
-::
+.. code-block:: php
 
     $var = "This is a multi-line string.\n";
     $var .= "Hovering a string shows its length.\n";
@@ -192,7 +192,7 @@ then its dump representation::
 
 .. image:: /_images/components/var_dumper/02-multi-line-str.png
 
-::
+.. code-block:: php
 
     class PropertyExample
     {
@@ -211,7 +211,7 @@ then its dump representation::
     `#14` is the internal object handle. It allows comparing two
     consecutive dumps of the same object.
 
-::
+.. code-block:: php
 
     class DynamicPropertyExample
     {
@@ -224,7 +224,7 @@ then its dump representation::
 
 .. image:: /_images/components/var_dumper/04-dynamic-property.png
 
-::
+.. code-block:: php
 
     class ReferenceExample
     {
@@ -236,7 +236,7 @@ then its dump representation::
 
 .. image:: /_images/components/var_dumper/05-soft-ref.png
 
-::
+.. code-block:: php
 
     $var = new \ErrorException(
         "For some objects, properties have special values\n"
@@ -249,7 +249,7 @@ then its dump representation::
 
 .. image:: /_images/components/var_dumper/06-constants.png
 
-::
+.. code-block:: php
 
     $var = array();
     $var[0] = 1;
@@ -262,7 +262,7 @@ then its dump representation::
 
 .. image:: /_images/components/var_dumper/07-hard-ref.png
 
-::
+.. code-block:: php
 
     $var = new \ArrayObject();
     $var[] = "Some resources and special objects like the current";
@@ -272,7 +272,7 @@ then its dump representation::
 
 .. image:: /_images/components/var_dumper/08-virtual-property.png
 
-::
+.. code-block:: php
 
     $var = new AcmeController(
         "When a dump goes over its maximum items limit,\n"

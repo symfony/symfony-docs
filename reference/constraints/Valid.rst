@@ -33,7 +33,7 @@ stores an ``Address`` instance in the ``$address`` property::
         protected $zipCode;
     }
 
-::
+.. code-block:: php
 
     // src/AppBundle/Entity/Author.php
     namespace AppBundle\Entity;

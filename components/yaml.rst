@@ -182,7 +182,7 @@ representation to the inline one::
     foo: bar
     bar: { foo: bar, bar: baz }
 
-::
+.. code-block:: php
 
     echo Yaml::dump($array, 2);
 

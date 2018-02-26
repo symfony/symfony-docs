@@ -58,7 +58,7 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
 
     var_dump($language->evaluate($expression)); // prints 5
 
-::
+.. code-block:: php
 
     use Symfony\Component\ExpressionLanguage\SerializedParsedExpression;
     // ...

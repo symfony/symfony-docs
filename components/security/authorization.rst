@@ -54,7 +54,7 @@ recognizes several strategies:
 ``unanimous``
     only grant access if none of the voters has denied access;
 
-::
+.. code-block:: php
 
     use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 
@@ -115,7 +115,7 @@ and ``IS_AUTHENTICATED_ANONYMOUSLY`` and grants access based on the current
 level of authentication, i.e. is the user fully authenticated, or only based
 on a "remember-me" cookie, or even authenticated anonymously?
 
-::
+.. code-block:: php
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
     use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;

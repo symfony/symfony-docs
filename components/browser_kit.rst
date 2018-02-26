@@ -155,7 +155,7 @@ retrieve any cookie while making requests with the client::
 Looping Through Cookies
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-::
+.. code-block:: php
 
     use Acme\Client;
 
