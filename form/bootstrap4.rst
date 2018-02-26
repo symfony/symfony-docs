@@ -24,7 +24,6 @@ use any sources for the Boostrap CSS and JavaScript.
       {{ form(form) }}
     {% endblock body %}
 
-
 Accessibility
 -------------
 
@@ -58,8 +57,6 @@ internals, the label is already shown by ``form_widget()``.
 You may also note that the form errors is rendered **inside** the ``<label>``. This
 is done to make sure there is a strong connection between the error and in the
 ``<input>``, as required by the `WCAG2.0 standard`_.
-
-
 
 .. _`their documentation`: https://getbootstrap.com/docs/4.0/
 .. _`WCAG2.0 standard`: https://www.w3.org/TR/WCAG20/
