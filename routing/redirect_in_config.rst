@@ -156,21 +156,97 @@ action:
     option is called ``route`` in the ``redirect()`` action, instead of ``path``
     in the ``urlRedirect()`` action.
 
-Redirecting POST/PUT calls
---------------------------
+Keeping the Request Method when Redirecting
+-------------------------------------------
 
-As a default behaviour of both methods mentioned above results in sending
-response with ``301`` or ``302`` HTTP status codes, the following call will
-be made with use of HTTP request method. But in some scenarios it's either
-expected or required that the following call will be made with the same HTTP
-method, i.e. when initial call was ``POST`` one, then following one should
-be also ``POST`` not ``GET``. In order to achieve this both
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::urlRedirectAction`
-and
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction`
-are accepting aditional switch called ``keepRequestMethod``.
+The redirections performed in the previous examples use the ``301`` and ``302``
+HTTP status codes. For legacy reasons, these HTTP redirections change the method
+of ``POST`` requests to ``GET`` (because redirecting a ``POST`` request didn't
+work well in old browsers).
 
-When ``keepRequestMethod`` is set to ``true`` with either ``permanent`` set to
-``false`` which will lead to a ``307`` response or ``308`` with
-``permanent`` being ``true``. Theses codes will give information in the HTTP
-request that the method should be repeated without altering the body.
+However, in some scenarios it's either expected or required that the redirection
+request uses the same HTTP method. That's why the HTTP standard defines two
+additional status codes (``307`` and ``308``) to perform temporary/permanent
+redirects that maintain the original request method.
+
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::urlRedirectAction`
+and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction`
+methods accept an additional argument called ``keepRequestMethod``. When it's
+set to ``true``, temporary redirects use ``307`` code instead of ``302`` and
+permanent redirects use ``308`` code instead of ``301``::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+
+        # redirects with the 308 status code
+        route_foo:
+            # ...
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+            defaults:
+                # ...
+                permanent: true
+                keepRequestMethod: true
+
+        # redirects with the 307 status code
+        route_bar:
+            # ...
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+            defaults:
+                # ...
+                permanent: false
+                keepRequestMethod: true
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <!-- redirects with the 308 status code -->
+            <route id="route_foo" path="...">
+                <!-- ... -->
+                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction</default>
+                <default key="permanent">true</default>
+                <default key="keepRequestMethod">true</default>
+            </route>
+
+            <!-- redirects with the 307 status code -->
+            <route id="route_bar" path="...">
+                <!-- ... -->
+                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction</default>
+                <default key="permanent">false</default>
+                <default key="keepRequestMethod">true</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+
+        // redirects with the 308 status code
+        $collection->add('route_foo', new Route('...', array(
+            // ...
+            '_controller'       => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
+            'permanent'         => true,
+            'keepRequestMethod' => true,
+        )));
+
+        // redirects with the 307 status code
+        $collection->add('route_bar', new Route('...', array(
+            // ...
+            '_controller'       => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
+            'permanent'         => false,
+            'keepRequestMethod' => true,
+        )));
+
+        return $collection;
