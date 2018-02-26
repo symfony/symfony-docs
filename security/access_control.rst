@@ -23,7 +23,7 @@ access control should be used on this request. The following ``access_control``
 options are used for matching:
 
 * ``path``
-* ``ip`` or ``ips`` (IP range is supported)
+* ``ip`` or ``ips`` (netmask is supported)
 * ``host``
 * ``methods``
 
@@ -176,7 +176,7 @@ pattern so that it is only accessible by requests from the local server itself:
             # ...
             access_control:
                 #
-                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1, 127.0.0.1/24] }
+                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1, 192.168.0.1/24] }
                 - { path: ^/internal, roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
@@ -193,7 +193,7 @@ pattern so that it is only accessible by requests from the local server itself:
                 <!-- ... -->
                 <rule path="^/internal"
                     role="IS_AUTHENTICATED_ANONYMOUSLY"
-                    ips="127.0.0.1, ::1, 127.0.0.1/24"
+                    ips="127.0.0.1, ::1, 192.168.0.1/24"
                 />
 
                 <rule path="^/internal" role="ROLE_NO_ACCESS" />
@@ -209,7 +209,7 @@ pattern so that it is only accessible by requests from the local server itself:
                 array(
                     'path' => '^/internal',
                     'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
-                    'ips' => '127.0.0.1, ::1, 127.0.0.1/24',
+                    'ips' => '127.0.0.1, ::1, 192.168.0.1/24',
                 ),
                 array(
                     'path' => '^/internal',
@@ -239,7 +239,7 @@ address):
 
 * The second access rule is not examined as the first rule matched.
 
-IP range is supported. You can write ``ip`` or ``ips`` with gateway submask like ``127.0.0.1/24`` or ``127.0.0.1/32``.
+IP netmask is supported. You can write ``ip`` or ``ips`` with ``192.168.0.1/24`` or ``192.168.0.1/32``.
 
 .. _security-allow-if:
 
