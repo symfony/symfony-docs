@@ -39,6 +39,16 @@ value and then a User object is created::
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
+        /**
+         * @var UserCheckerInterface
+         */
+        private $userChecker;
+
+        public function __construct(UserCheckerInterface $userChecker)
+        {
+            $this->userChecker = $userChecker;
+        }
+
         public function createToken(Request $request, $providerKey)
         {
             // look for an apikey query parameter
@@ -89,6 +99,9 @@ value and then a User object is created::
             }
 
             $user = $userProvider->loadUserByUsername($username);
+
+            $this->userChecker->checkPreAuth($user);
+            $this->userChecker->checkPostAuth($user);
 
             return new PreAuthenticatedToken(
                 $user,
