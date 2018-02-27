@@ -181,11 +181,16 @@ manual steps:
    ``composer.json`` file as `shown in this example of the skeleton-project`_ so that
    it will not be installed again:
 
-   .. code-block:: json
+   .. code-block:: diff
 
-        "conflict": {
-            "symfony/symfony": "*"
-        },
+       {
+           "require": {
+               "symfony/flex": "^1.0",
+       +     },
+       +     "conflict": {
+       +         "symfony/symfony": "*"
+           }
+       }
 
    Now you must add in ``composer.json`` all the Symfony dependencies required
    by your project. A quick way to do that is to add all the components that
