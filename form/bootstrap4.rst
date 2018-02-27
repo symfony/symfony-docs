@@ -1,27 +1,52 @@
 Bootstrap 4 Form Theme
 ======================
 
-The Boostrap 4 form theme is a great way to make sure your project gets nice looking
-forms without you have to do any work at all. Read about all of the features of
-Bootstrap in `their documentation`_.
-
-An example how to use the Boostrap 4 theme might look like this. You could of course
-use any sources for the Boostrap CSS and JavaScript.
+Symfony provides several ways of integrating Bootstrap into your application. The
+most straightforward way is to just add the required ``<link>`` and ``<script>``
+elements in your templates (usually you only include them in the main layout
+template which other templates extend from):
 
 .. code-block:: html+twig
 
-    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {# templates/base.html.twig #}
 
-    {% block head %}
+    {# beware that the blocks in your template may be named different #}
+    {% block head_css %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    {% endblock %}
+    {% block head_js %}
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     {% endblock head %}
 
+If your application uses modern front-end practices, it's better to use
+:ref:`Webpack Encore </frontend>` and follow :ref:`this tutorial </frontend/encore/bootstrap>`
+to import Bootstrap's sources into your SCSS and JavaScript files.
+
+The next step is to configure the Symfony application to use Bootstrap 4 styles
+when rendering forms. If you want to apply them to all forms, define this
+configuration:
+
+.. code-block:: yaml
+
+    # config/packages/twig.yaml
+    twig:
+        # ...
+        form_themes: ['bootstrap_4_layout.html.twig']
+
+If you prefer to apply the Bootstrap styles on a form to form basis, include the
+``form_theme`` tag in the templates where those forms are used:
+
+.. code-block:: twig
+
+    {# ... #}
+    {# this tag only applies to the forms defined in this template #}
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+
     {% block body %}
-      <h1>Here is my form:</h1>
-      {{ form(form) }}
+        <h1>User Sign Up:</h1>
+        {{ form(form) }}
     {% endblock body %}
 
 Accessibility
