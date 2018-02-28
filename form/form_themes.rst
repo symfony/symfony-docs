@@ -35,6 +35,7 @@ do this, create a new template file that will store the new markup:
                 {{ form_label(form) }}
                 {{ form_errors(form) }}
                 {{ form_widget(form) }}
+                {{ form_help(form) }}
             </div>
         {% endspaceless %}
         {% endblock form_row %}
@@ -134,6 +135,8 @@ are 4 possible *parts* of a form that can be rendered:
 | ``widget``  | (e.g. ``form_widget()``)   | renders the field's HTML representation                 |
 +-------------+----------------------------+---------------------------------------------------------+
 | ``errors``  | (e.g. ``form_errors()``)   | renders the field's errors                              |
++-------------+----------------------------+---------------------------------------------------------+
+| ``help``    | (e.g. ``form_help()``)     | renders the field's help                              |
 +-------------+----------------------------+---------------------------------------------------------+
 | ``row``     | (e.g. ``form_row()``)      | renders the field's entire row (label, widget & errors) |
 +-------------+----------------------------+---------------------------------------------------------+
