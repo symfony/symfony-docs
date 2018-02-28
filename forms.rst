@@ -165,7 +165,7 @@ helper functions:
         <?php echo $view['form']->widget($form) ?>
         <?php echo $view['form']->end($form) ?>
 
-.. image:: /_images/form/simple-form.png
+.. image:: /_images/form/simple-form.png <- this image is not shown
     :align: center
 
 .. note::
