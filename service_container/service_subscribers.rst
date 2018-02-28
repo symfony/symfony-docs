@@ -79,14 +79,15 @@ services.
 
 **Service Subscribers** are intended to solve this problem by giving access to a
 set of predefined services while instantiating them only when actually needed
-through a service locator.
+through a **Service Locator**, a separate lazy-loaded container.
 
 Defining a Service Subscriber
 -----------------------------
 
 First, turn ``CommandBus`` into an implementation of :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`.
 Use its ``getSubscribedServices`` method to include as many services as needed
-in the service locater and change the container to a PSR-11 ``ContainerInterface``::
+in the service subscriber and change the type hint of the container to
+a PSR-11 ``ContainerInterface``::
 
     // src/AppBundle/CommandBus.php
     namespace AppBundle;
@@ -128,7 +129,7 @@ in the service locater and change the container to a PSR-11 ``ContainerInterface
 .. tip::
 
     If the container does *not* contain the subscribed services, double-check
-    that you  have :ref:`autoconfigure <services-autoconfigure>` enabled. You
+    that you have :ref:`autoconfigure <services-autoconfigure>` enabled. You
     can also manually add the ``container.service_subscriber`` tag.
 
 The injected service is an instance of :class:`Symfony\\Component\\DependencyInjection\\ServiceLocator`
@@ -173,7 +174,7 @@ Optional services
 ~~~~~~~~~~~~~~~~~
 
 For optional dependencies, prepend the service type with a ``?`` to prevent
-errors if there's no matching service in the service container::
+errors if there's no matching service found in the service container::
 
     use Psr\Log\LoggerInterface;
 
@@ -306,7 +307,7 @@ include as many services as needed in it.
     The services defined in the service locator argument must include keys,
     which later become their unique identifiers inside the locator.
 
-Now you can use the service locator injecting it in any other service:
+Now you can use the service locator by injecting it in any other service:
 
 .. configuration-block::
 
