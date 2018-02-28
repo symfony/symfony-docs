@@ -36,6 +36,7 @@ You can also render each of the three parts of the field individually:
             {{ form_label(form.age) }}
             {{ form_errors(form.age) }}
             {{ form_widget(form.age) }}
+            {{ form_help(form.age) }}
         </div>
 
     .. code-block:: php
@@ -796,6 +797,7 @@ You can also override the markup for an entire field row using the same method:
                 {{ form_label(form) }}
                 {{ form_errors(form) }}
                 {{ form_widget(form) }}
+                {{ form_help(form) }}
             </div>
         {% endblock %}
 
@@ -1024,6 +1026,7 @@ class to the ``div`` element around each row:
                 {{ form_label(form) }}
                 {{ form_errors(form) }}
                 {{ form_widget(form) }}
+                {{ form_help(form) }}
             </div>
         {% endblock form_row %}
 

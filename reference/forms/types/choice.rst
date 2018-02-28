@@ -34,6 +34,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `data`_                                                                    |
 |             | - `disabled`_                                                                |
 |             | - `error_mapping`_                                                           |
+|             | - `help`_                                                                    |
 |             | - `inherit_data`_                                                            |
 |             | - `label`_                                                                   |
 |             | - `label_attr`_                                                              |
@@ -263,6 +264,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
