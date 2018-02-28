@@ -434,7 +434,9 @@ Validation is a very powerful feature of Symfony and has its own
         .. code-block:: html+twig
 
             {# templates/default/new.html.twig #}
-            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
 
         .. code-block:: html+php
 
@@ -442,6 +444,9 @@ Validation is a very powerful feature of Symfony and has its own
             <?php echo $view['form']->form($form, array(
                 'attr' => array('novalidate' => 'novalidate'),
             )) ?>
+            <?php echo $view['form']->start($form, array('attr' => array('novalidate' => 'novalidate') ?>
+            <?php echo $view['form']->widget($form) ?>
+            <?php echo $view['form']->end($form) ?>
 
 .. index::
    single: Forms; Built-in field types
