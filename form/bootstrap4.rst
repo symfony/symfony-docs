@@ -21,7 +21,7 @@ template which other templates extend from):
     {% endblock head %}
 
 If your application uses modern front-end practices, it's better to use
-:ref:`Webpack Encore </frontend>` and follow :ref:`this tutorial </frontend/encore/bootstrap>`
+:doc:`Webpack Encore </frontend>` and follow :doc:`this tutorial </frontend/encore/bootstrap>`
 to import Bootstrap's sources into your SCSS and JavaScript files.
 
 The next step is to configure the Symfony application to use Bootstrap 4 styles
