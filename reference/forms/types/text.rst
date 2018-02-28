@@ -20,6 +20,7 @@ The TextType field represents the most basic input text field.
 |             | - `mapped`_                                                        |
 |             | - `required`_                                                      |
 |             | - `trim`_                                                          |
+|             | - `help`_                                                          |
 +-------------+--------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                      |
 | options     |                                                                    |
@@ -61,6 +62,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 Overridden Options
 ------------------

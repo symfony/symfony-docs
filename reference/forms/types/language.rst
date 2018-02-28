@@ -45,6 +45,7 @@ manually, but then you should just use the ``ChoiceType`` directly.
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
 |             | - `required`_                                                          |
+|             | - `help`_                                                              |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +-------------+------------------------------------------------------------------------+
@@ -111,5 +112,7 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. _`International Components for Unicode`: http://site.icu-project.org

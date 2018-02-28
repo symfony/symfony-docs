@@ -40,6 +40,7 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
 |                      | - `mapped`_                                                                 |
+|                      | - `help`_                                                                   |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | FormType                                                                    |
 +----------------------+-----------------------------------------------------------------------------+
@@ -200,6 +201,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 Form Variables
 --------------

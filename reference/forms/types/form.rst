@@ -30,6 +30,7 @@ on all types for which ``FormType`` is the parent.
 |           | - `property_path`_                                                 |
 |           | - `required`_                                                      |
 |           | - `trim`_                                                          |
+|           | - `help`_                                                          |
 +-----------+--------------------------------------------------------------------+
 | Inherited | - `attr`_                                                          |
 | options   | - `auto_initialize`_                                               |
@@ -127,6 +128,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 Inherited Options
 -----------------

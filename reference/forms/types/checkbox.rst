@@ -25,6 +25,7 @@ true, if the box is unchecked, the value will be set to false.
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
 |             | - `required`_                                                          |
+|             | - `help`_                                                              |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                          |
 +-------------+------------------------------------------------------------------------+
@@ -78,6 +79,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 Form Variables
 --------------

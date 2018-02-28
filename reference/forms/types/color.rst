@@ -28,6 +28,7 @@ element.
 |             | - `mapped`_                                                         |
 |             | - `required`_                                                       |
 |             | - `trim`_                                                           |
+|             | - `help`_                                                           |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`TextType </reference/forms/types/text>`                       |
 +-------------+---------------------------------------------------------------------+
@@ -66,3 +67,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc

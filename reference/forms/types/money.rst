@@ -34,6 +34,7 @@ how the input and output of the data is handled.
 |             | - `label_format`_                                                   |
 |             | - `mapped`_                                                         |
 |             | - `required`_                                                       |
+|             | - `help`_                                                           |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                       |
 +-------------+---------------------------------------------------------------------+
@@ -128,6 +129,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 Form Variables
 --------------

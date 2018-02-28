@@ -35,6 +35,7 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 |             | - `label_format`_                                                     |
 |             | - `mapped`_                                                           |
 |             | - `required`_                                                         |
+|             | - `help`_                                                             |
 +-------------+-----------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                         |
 +-------------+-----------------------------------------------------------------------+
@@ -116,3 +117,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
