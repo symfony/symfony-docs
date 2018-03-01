@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by kunicmarko20 at 2018-02-27T08:20:39Z
+
+Is there any chance that I can help with merging when the time comes? I wouldn't mind doing it and I really want to see this one get merged.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-27T08:33:00Z
+
+@kunicmarko20 sorry but that can't happen because only the Doc Team members have permission to merge.
+
+---------------------------------------------------------------------------
+
+by kunicmarko20 at 2018-02-27T18:53:48Z
+
+Some of the names have been updated according to comments, some are still waiting for a reply.
+
+---------------------------------------------------------------------------
+
+by kunicmarko20 at 2018-02-27T21:11:05Z
+
+I renamed all `$container` to `$containerBuilder` where we have a new instance of `ContainerBuilder` the only place I left it as `$container` is in the examples that show the real code e.g. [the Dependency Injection Extension](https://github.com/symfony/dependency-injection/blob/master/Extension/Extension.php#L80)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-28T16:47:20Z
+
+@kunicmarko20 please tell me when you think this is ready so I can better prepare for merging this. Thanks!
+
+---------------------------------------------------------------------------
+
+by kunicmarko20 at 2018-02-28T17:14:47Z
+
+@javiereguiluz if there is nothing else that needs to be changed on my side, it is ready.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-01T14:57:06Z
+
+Let's merge this. Wish me luck!
