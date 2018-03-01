@@ -124,7 +124,7 @@ You can now reference these parameters wherever you need them.
 
         </container>
 
-    ::
+    .. code-block:: php
 
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
