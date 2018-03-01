@@ -5,9 +5,7 @@ How to Extend a Class without Using Inheritance
 ===============================================
 
 To allow multiple classes to add methods to another one, you can define the
-magic ``__call()`` method in the class you want to be extended like this:
-
-.. code-block:: php
+magic ``__call()`` method in the class you want to be extended like this::
 
     class Foo
     {
@@ -31,9 +29,7 @@ magic ``__call()`` method in the class you want to be extended like this:
 
 This uses a special ``HandleUndefinedMethodEvent`` that should also be
 created. This is a generic class that could be reused each time you need to
-use this pattern of class extension:
-
-.. code-block:: php
+use this pattern of class extension::
 
     use Symfony\Component\EventDispatcher\Event;
 
@@ -89,9 +85,7 @@ use this pattern of class extension:
     }
 
 Next, create a class that will listen to the ``foo.method_is_not_found`` event
-and *add* the method ``bar()``:
-
-.. code-block:: php
+and *add* the method ``bar()``::
 
     class Bar
     {
@@ -117,9 +111,7 @@ and *add* the method ``bar()``:
     }
 
 Finally, add the new ``bar()`` method to the ``Foo`` class by registering an
-instance of ``Bar`` with the ``foo.method_is_not_found`` event:
-
-.. code-block:: php
+instance of ``Bar`` with the ``foo.method_is_not_found`` event::
 
     $bar = new Bar();
     $dispatcher->addListener('foo.method_is_not_found', array($bar, 'onFooMethodIsNotFound'));

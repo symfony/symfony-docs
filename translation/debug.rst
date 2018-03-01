@@ -23,9 +23,7 @@ tag or filter usages in Twig templates:
 
     {% transchoice 1 %}Symfony is great{% endtranschoice %}
 
-It will also detect the following translator usages in PHP templates:
-
-.. code-block:: php
+It will also detect the following translator usages in PHP templates::
 
     $view['translator']->trans("Symfony is great");
 

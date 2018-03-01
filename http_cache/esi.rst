@@ -95,9 +95,7 @@ First, to use ESI, be sure to enable it in your application configuration:
 
 Now, suppose you have a page that is relatively static, except for a news
 ticker at the bottom of the content. With ESI, you can cache the news ticker
-independent of the rest of the page.
-
-.. code-block:: php
+independent of the rest of the page::
 
     // src/AppBundle/Controller/DefaultController.php
 
@@ -191,9 +189,7 @@ used ``render()``.
     proxy.
 
 The embedded action can now specify its own caching rules, entirely independent
-of the master page.
-
-.. code-block:: php
+of the master page::
 
     // src/AppBundle/Controller/NewsController.php
     namespace AppBundle\Controller;

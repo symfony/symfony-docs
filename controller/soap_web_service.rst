@@ -92,9 +92,7 @@ a ``HelloService`` object properly:
 
 Below is an example of a controller that is capable of handling a SOAP
 request. If ``indexAction()`` is accessible via the route ``/soap``, then the
-WSDL document can be retrieved via ``/soap?wsdl``.
-
-.. code-block:: php
+WSDL document can be retrieved via ``/soap?wsdl``::
 
     namespace Acme\SoapBundle\Controller;
 
