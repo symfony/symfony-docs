@@ -65,9 +65,7 @@ This interface requires one method:
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunctionProviderInterface::getFunctions`,
 which returns an array of expression functions (instances of
 :class:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction`) to
-register.
-
-.. code-block:: php
+register::
 
     use Symfony\Component\ExpressionLanguage\ExpressionFunction;
     use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;

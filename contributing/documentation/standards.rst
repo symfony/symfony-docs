@@ -13,8 +13,8 @@ Sphinx
 * Each line should break approximately after the first word that crosses the
   72nd character (so most lines end up being 72-78 characters);
 * The ``::`` shorthand is *preferred* over ``.. code-block:: php`` to begin a PHP
-  code block (read `the Sphinx documentation`_ to see when you should use the
-  shorthand);
+  code block unless it results in the marker being on its own line (read
+  `the Sphinx documentation`_ to see when you should use the shorthand);
 * Inline hyperlinks are **not** used. Separate the link and their target
   definition, which you add on the bottom of the page;
 * Inline markup should be closed on the same line as the open-string;

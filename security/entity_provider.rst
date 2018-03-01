@@ -38,9 +38,7 @@ and :ref:`user serialization to the session <security-serialize-equatable>`
 
 For this entry, suppose that you already have a ``User`` entity inside an
 ``AppBundle`` with the following fields: ``id``, ``username``, ``password``,
-``email`` and ``isActive``:
-
-.. code-block:: php
+``email`` and ``isActive``::
 
     // src/AppBundle/Entity/User.php
     namespace AppBundle\Entity;
