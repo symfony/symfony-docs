@@ -295,8 +295,9 @@ Progress bars define a placeholder called ``message`` to display arbitrary
 messages. However, none of the built-in formats include that placeholder, so
 before displaying these messages, you must define your own custom format::
 
+    ProgressBar::setFormatDefinition('custom', ' %current%/%max% -- %message%');
+
     $progressBar = new ProgressBar($output, 100);
-    $progressBar->setFormatDefinition('custom', ' %current%/%max% -- %message%');
     $progressBar->setFormat('custom');
 
 Now, use the ``setMessage()`` method to set the value of the ``%message%``
@@ -314,8 +315,9 @@ placeholder before displaying the progress bar::
 Messages can be combined with custom placeholders too. In this example, the
 progress bar uses the ``%message%`` and ``%filename%`` placeholders::
 
+    ProgressBar::setFormatDefinition('custom', ' %current%/%max% -- %message% (%filename%)');
+
     $progressBar = new ProgressBar($output, 100);
-    $progressBar->setFormatDefinition('custom', ' %current%/%max% -- %message% (%filename%)');
     $progressBar->setFormat('custom');
 
 The ``setMessage()`` method accepts a second optional argument to set the value
