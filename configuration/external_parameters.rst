@@ -54,7 +54,7 @@ variable in your service container configuration, you can reference it using
 
         </container>
 
-    ::
+    .. code-block:: php
 
         // app/config/config.php
         $container->loadFromExtension('doctrine', array(
