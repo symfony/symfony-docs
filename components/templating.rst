@@ -38,9 +38,9 @@ which uses the template reference to actually find and load the template::
     use Symfony\Component\Templating\TemplateNameParser;
     use Symfony\Component\Templating\Loader\FilesystemLoader;
 
-    $loader = new FilesystemLoader(__DIR__.'/views/%name%');
+    $filesystemLoader = new FilesystemLoader(__DIR__.'/views/%name%');
 
-    $templating = new PhpEngine(new TemplateNameParser(), $loader);
+    $templating = new PhpEngine(new TemplateNameParser(), $filesystemLoader);
 
     echo $templating->render('hello.php', array('firstname' => 'Fabien'));
 

@@ -68,16 +68,16 @@ You can also match on the HTTP *host* of the incoming request.
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('mobile_homepage', new Route('/', array(
+        $routes = new RouteCollection();
+        $routes->add('mobile_homepage', new Route('/', array(
             '_controller' => 'AcmeDemoBundle:Main:mobileHomepage',
         ), array(), array(), 'm.example.com'));
 
-        $collection->add('homepage', new Route('/', array(
+        $routes->add('homepage', new Route('/', array(
             '_controller' => 'AcmeDemoBundle:Main:homepage',
         )));
 
-        return $collection;
+        return $routes;
 
 Both routes match the same path ``/``, however the first one will match
 only if the host is ``m.example.com``.
@@ -150,16 +150,16 @@ you can use placeholders in your hostname:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('project_homepage', new Route('/', array(
+        $routes = new RouteCollection();
+        $routes->add('project_homepage', new Route('/', array(
             '_controller' => 'AcmeDemoBundle:Main:projectsHomepage',
         ), array(), array(), '{project_name}.example.com'));
 
-        $collection->add('homepage', new Route('/', array(
+        $routes->add('homepage', new Route('/', array(
             '_controller' => 'AcmeDemoBundle:Main:homepage',
         )));
 
-        return $collection;
+        return $routes;
 
 You can also set requirements and default options for these placeholders. For
 instance, if you want to match both ``m.example.com`` and
@@ -239,19 +239,19 @@ instance, if you want to match both ``m.example.com`` and
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('mobile_homepage', new Route('/', array(
+        $routes = new RouteCollection();
+        $routes->add('mobile_homepage', new Route('/', array(
             '_controller' => 'AcmeDemoBundle:Main:mobileHomepage',
             'subdomain'   => 'm',
         ), array(
             'subdomain' => 'm|mobile',
         ), array(), '{subdomain}.example.com'));
 
-        $collection->add('homepage', new Route('/', array(
+        $routes->add('homepage', new Route('/', array(
             '_controller' => 'AcmeDemoBundle:Main:homepage',
         )));
 
-        return $collection;
+        return $routes;
 
 .. tip::
 
@@ -332,19 +332,19 @@ instance, if you want to match both ``m.example.com`` and
             use Symfony\Component\Routing\RouteCollection;
             use Symfony\Component\Routing\Route;
 
-            $collection = new RouteCollection();
-            $collection->add('mobile_homepage', new Route('/', array(
+            $routes = new RouteCollection();
+            $routes->add('mobile_homepage', new Route('/', array(
                 '_controller' => 'AcmeDemoBundle:Main:mobileHomepage',
                 'domain' => '%domain%',
             ), array(
                 'domain' => '%domain%',
             ), array(), 'm.{domain}'));
 
-            $collection->add('homepage', new Route('/', array(
+            $routes->add('homepage', new Route('/', array(
                 '_controller' => 'AcmeDemoBundle:Main:homepage',
             )));
 
-            return $collection;
+            return $routes;
 
 .. tip::
 
@@ -396,10 +396,10 @@ You can also set the host option on imported routes:
 
     .. code-block:: php
 
-        $collection = $loader->import("@AcmeHelloBundle/Resources/config/routing.php");
-        $collection->setHost('hello.example.com');
+        $routes = $loader->import("@AcmeHelloBundle/Resources/config/routing.php");
+        $routes->setHost('hello.example.com');
 
-        return $collection;
+        return $routes;
 
 The host ``hello.example.com`` will be set on each route loaded from the new
 routing resource.

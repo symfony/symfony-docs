@@ -25,8 +25,8 @@ The component supports:
     A backslash (``\``) must be escaped by 4 backslashes (``\\\\``) in a string
     and 8 backslashes (``\\\\\\\\``) in a regex::
 
-        echo $language->evaluate('"\\\\"'); // prints \
-        $language->evaluate('"a\\\\b" matches "/^a\\\\\\\\b$/"'); // returns true
+        echo $expressionLanguage->evaluate('"\\\\"'); // prints \
+        $expressionLanguage->evaluate('"a\\\\b" matches "/^a\\\\\\\\b$/"'); // returns true
 
     Control characters (e.g. ``\n``) in expressions are replaced with
     whitespace. To avoid this, escape the sequence with a single backslash
@@ -54,7 +54,7 @@ to JavaScript::
     $apple = new Apple();
     $apple->variety = 'Honeycrisp';
 
-    var_dump($language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'fruit.variety',
         array(
             'fruit' => $apple,
@@ -84,7 +84,7 @@ JavaScript::
 
     $robot = new Robot();
 
-    var_dump($language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'robot.sayHi(3)',
         array(
             'robot' => $robot,
@@ -105,7 +105,7 @@ constant::
 
     define('DB_USER', 'root');
 
-    var_dump($language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'constant("DB_USER")'
     ));
 
@@ -126,7 +126,7 @@ array keys, similar to JavaScript::
 
     $data = array('life' => 10, 'universe' => 10, 'everything' => 22);
 
-    var_dump($language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'data["life"] + data["universe"] + data["everything"]',
         array(
             'data' => $data,
@@ -152,7 +152,7 @@ Arithmetic Operators
 
 For example::
 
-    var_dump($language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'life + universe + everything',
         array(
             'life' => 10,
@@ -188,14 +188,14 @@ Comparison Operators
     To test if a string does *not* match a regex, use the logical ``not``
     operator in combination with the ``matches`` operator::
 
-        $language->evaluate('not ("foo" matches "/bar/")'); // returns true
+        $expressionLanguage->evaluate('not ("foo" matches "/bar/")'); // returns true
 
     You must use parenthesis because the unary operator ``not`` has precedence
     over the binary operator ``matches``.
 
 Examples::
 
-    $ret1 = $language->evaluate(
+    $ret1 = $expressionLanguage->evaluate(
         'life == everything',
         array(
             'life' => 10,
@@ -204,7 +204,7 @@ Examples::
         )
     );
 
-    $ret2 = $language->evaluate(
+    $ret2 = $expressionLanguage->evaluate(
         'life > everything',
         array(
             'life' => 10,
@@ -224,7 +224,7 @@ Logical Operators
 
 For example::
 
-    $ret = $language->evaluate(
+    $ret = $expressionLanguage->evaluate(
         'life < universe or life < everything',
         array(
             'life' => 10,
@@ -242,7 +242,7 @@ String Operators
 
 For example::
 
-    var_dump($language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'firstName~" "~lastName',
         array(
             'firstName' => 'Arthur',
@@ -268,7 +268,7 @@ For example::
     $user = new User();
     $user->group = 'human_resources';
 
-    $inGroup = $language->evaluate(
+    $inGroup = $expressionLanguage->evaluate(
         'user.group in ["human_resources", "marketing"]',
         array(
             'user' => $user,
@@ -292,7 +292,7 @@ For example::
     $user = new User();
     $user->age = 34;
 
-    $language->evaluate(
+    $expressionLanguage->evaluate(
         'user.age in 18..45',
         array(
             'user' => $user,

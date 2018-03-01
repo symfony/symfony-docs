@@ -248,9 +248,9 @@ into the database::
                 $user->setPassword($password);
 
                 // 4) save the User!
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
                 // ... do any other work - like sending them an email, etc
                 // maybe set a "flash" success message for the user
@@ -338,12 +338,12 @@ the :ref:`user password encoding <security-encoding-user-password>` article.
             use Symfony\Component\Routing\RouteCollection;
             use Symfony\Component\Routing\Route;
 
-            $collection = new RouteCollection();
-            $collection->add('user_registration', new Route('/register', array(
+            $routes = new RouteCollection();
+            $routes->add('user_registration', new Route('/register', array(
                 '_controller' => 'AppBundle:Registration:register',
             )));
 
-            return $collection;
+            return $routes;
 
 Next, create the template:
 

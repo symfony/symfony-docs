@@ -176,12 +176,9 @@ Sort the result by name or by type (directories first, then files)::
 
 You can also define your own sorting algorithm with ``sort()`` method::
 
-    $sort = function (\SplFileInfo $a, \SplFileInfo $b)
-    {
+    $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
         return strcmp($a->getRealPath(), $b->getRealPath());
-    };
-
-    $finder->sort($sort);
+    });
 
 File Name
 ~~~~~~~~~

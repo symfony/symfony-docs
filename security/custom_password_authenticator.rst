@@ -46,7 +46,7 @@ the user::
         {
             try {
                 $user = $userProvider->loadUserByUsername($token->getUsername());
-            } catch (UsernameNotFoundException $e) {
+            } catch (UsernameNotFoundException $exception) {
                 throw new AuthenticationException('Invalid username or password');
             }
 

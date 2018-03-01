@@ -15,10 +15,10 @@ Pass the event dispatcher to be wrapped and an instance of the
     use Symfony\Component\Stopwatch\Stopwatch;
 
     // the event dispatcher to debug
-    $eventDispatcher = ...;
+    $dispatcher = ...;
 
     $traceableEventDispatcher = new TraceableEventDispatcher(
-        $eventDispatcher,
+        $dispatcher,
         new Stopwatch()
     );
 

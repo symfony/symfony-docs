@@ -184,17 +184,17 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     // this file comes with TwigBridge
     $defaultFormTheme = 'form_div_layout.html.twig';
 
-    $vendorDir = realpath(__DIR__.'/../vendor');
+    $vendorDirectory = realpath(__DIR__.'/../vendor');
     // the path to TwigBridge library so Twig can locate the
     // form_div_layout.html.twig file
     $appVariableReflection = new \ReflectionClass('\Symfony\Bridge\Twig\AppVariable');
-    $vendorTwigBridgeDir = dirname($appVariableReflection->getFileName());
+    $vendorTwigBridgeDirectory = dirname($appVariableReflection->getFileName());
     // the path to your other templates
-    $viewsDir = realpath(__DIR__.'/../views');
+    $viewsDirectory = realpath(__DIR__.'/../views');
 
     $twig = new Twig_Environment(new Twig_Loader_Filesystem(array(
-        $viewsDir,
-        $vendorTwigBridgeDir.'/Resources/views/Form',
+        $viewsDirectory,
+        $vendorTwigBridgeDirectory.'/Resources/views/Form',
     )));
     $formEngine = new TwigRendererEngine(array($defaultFormTheme));
     $formEngine->setEnvironment($twig);
@@ -305,9 +305,9 @@ Your integration with the Validation component will look something like this::
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Validator\Validation;
 
-    $vendorDir = realpath(__DIR__.'/../vendor');
-    $vendorFormDir = $vendorDir.'/symfony/form';
-    $vendorValidatorDir = $vendorDir.'/symfony/validator';
+    $vendorDirectory = realpath(__DIR__.'/../vendor');
+    $vendorFormDirectory = $vendorDir.'/symfony/form';
+    $vendorValidatorDirectory = $vendorDirectory.'/symfony/validator';
 
     // creates the validator - details will vary
     $validator = Validation::createValidator();
@@ -315,13 +315,13 @@ Your integration with the Validation component will look something like this::
     // there are built-in translations for the core error messages
     $translator->addResource(
         'xlf',
-        $vendorFormDir.'/Resources/translations/validators.en.xlf',
+        $vendorFormDirectory.'/Resources/translations/validators.en.xlf',
         'en',
         'validators'
     );
     $translator->addResource(
         'xlf',
-        $vendorValidatorDir.'/Resources/translations/validators.en.xlf',
+        $vendorValidatorDirectory.'/Resources/translations/validators.en.xlf',
         'en',
         'validators'
     );

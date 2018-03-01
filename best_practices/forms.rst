@@ -189,9 +189,9 @@ Handling a form submit usually follows a similar template:
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
-            $em->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($post);
+            $entityManager->flush();
 
             return $this->redirect($this->generateUrl(
                 'admin_post_show',
