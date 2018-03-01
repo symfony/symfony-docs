@@ -61,7 +61,7 @@ This variable is referenced in the service container configuration using
 
         </container>
 
-    .. code-block:: php
+    ::
 
         // config/packages/doctrine.php
         $container->loadFromExtension('doctrine', array(

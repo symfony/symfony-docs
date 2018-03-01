@@ -34,9 +34,7 @@ The Voter Interface
 A custom voter needs to implement
 :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`
 or extend :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\Voter`,
-which makes creating a voter even easier.
-
-.. code-block:: php
+which makes creating a voter even easier::
 
     abstract class Voter implements VoterInterface
     {

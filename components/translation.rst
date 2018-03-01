@@ -29,9 +29,7 @@ catalogs*).
 Configuration
 ~~~~~~~~~~~~~
 
-The constructor of the ``Translator`` class needs one argument: The locale.
-
-.. code-block:: php
+The constructor of the ``Translator`` class needs one argument: The locale::
 
     use Symfony\Component\Translation\Translator;
 

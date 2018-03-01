@@ -452,9 +452,7 @@ Documenting the Option
 
 All options can be documented using the
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
-method.
-
-.. code-block:: php
+method::
 
     $rootNode
         ->children()
