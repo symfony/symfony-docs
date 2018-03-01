@@ -21,8 +21,8 @@ files. This can be done with the :class:`Symfony\\Component\\Config\\FileLocator
 
     $configDirectories = array(__DIR__.'/app/config');
 
-    $locator = new FileLocator($configDirectories);
-    $yamlUserFiles = $locator->locate('users.yml', null, false);
+    $fileLocator = new FileLocator($configDirectories);
+    $yamlUserFiles = $fileLocator->locate('users.yml', null, false);
 
 The locator receives a collection of locations where it should look for
 files. The first argument of ``locate()`` is the name of the file to look
@@ -84,7 +84,7 @@ the resource::
     use Symfony\Component\Config\Loader\LoaderResolver;
     use Symfony\Component\Config\Loader\DelegatingLoader;
 
-    $loaderResolver = new LoaderResolver(array(new YamlUserLoader($locator)));
+    $loaderResolver = new LoaderResolver(array(new YamlUserLoader($fileLocator)));
     $delegatingLoader = new DelegatingLoader($loaderResolver);
 
     // YamlUserLoader is used to load this resource because it supports

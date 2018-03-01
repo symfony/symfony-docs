@@ -95,7 +95,7 @@ with a non-zero code)::
         $process->mustRun();
 
         echo $process->getOutput();
-    } catch (ProcessFailedException $e) {
+    } catch (ProcessFailedException $exception) {
         echo $e->getMessage();
     }
 
@@ -289,8 +289,8 @@ To make your code work better on all platforms, you might want to use the
 
     use Symfony\Component\Process\ProcessBuilder;
 
-    $builder = new ProcessBuilder(array('ls', '-lsa'));
-    $builder->getProcess()->run();
+    $processBuilder = new ProcessBuilder(array('ls', '-lsa'));
+    $processBuilder->getProcess()->run();
 
 In case you are building a binary driver, you can use the
 :method:`Symfony\\Component\\Process\\ProcessBuilder::setPrefix` method to prefix all
@@ -301,17 +301,17 @@ adapter::
 
     use Symfony\Component\Process\ProcessBuilder;
 
-    $builder = new ProcessBuilder();
-    $builder->setPrefix('/usr/bin/tar');
+    $processBuilder = new ProcessBuilder();
+    $processBuilder->setPrefix('/usr/bin/tar');
 
     // '/usr/bin/tar' '--list' '--file=archive.tar.gz'
-    echo $builder
+    echo $processBuilder
         ->setArguments(array('--list', '--file=archive.tar.gz'))
         ->getProcess()
         ->getCommandLine();
 
     // '/usr/bin/tar' '-xzf' 'archive.tar.gz'
-    echo $builder
+    echo $processBuilder
         ->setArguments(array('-xzf', 'archive.tar.gz'))
         ->getProcess()
         ->getCommandLine();

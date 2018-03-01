@@ -26,10 +26,10 @@ method::
             $message = $event->getMessage();
 
             // the real method implementation is here
-            $ret = ...;
+            $returnValue = ...;
 
             // do something after the method
-            $event = new AfterSendMailEvent($ret);
+            $event = new AfterSendMailEvent($returnValue);
             $this->dispatcher->dispatch('mailer.post_send', $event);
 
             return $event->getReturnValue();

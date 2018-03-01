@@ -103,15 +103,15 @@ The route is simple:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('blog_list', new Route('/blog', array(
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog', array(
             '_controller' => 'AppBundle:Blog:list',
         )));
-        $collection->add('blog_show', new Route('/blog/{slug}', array(
+        $routes->add('blog_show', new Route('/blog/{slug}', array(
             '_controller' => 'AppBundle:Blog:show',
         )));
 
-        return $collection;
+        return $routes;
 
 Thanks to these two routes:
 
@@ -230,8 +230,8 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('blog_list', new Route('/blog/{page}', array(
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog/{page}', array(
             '_controller' => 'AppBundle:Blog:list',
         ), array(
             'page' => '\d+'
@@ -239,7 +239,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
 
         // ...
 
-        return $collection;
+        return $routes;
 
 The ``\d+`` is a regular expression that matches a *digit* of any length. Now:
 
@@ -322,8 +322,8 @@ So how can you make ``blog_list`` once again match when the user visits
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('blog_list', new Route(
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route(
             '/blog/{page}',
             array(
                 '_controller' => 'AppBundle:Blog:list',
@@ -336,7 +336,7 @@ So how can you make ``blog_list`` once again match when the user visits
 
         // ...
 
-        return $collection;
+        return $routes;
 
 Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 ``$page`` will default to a value of ``1``.
@@ -415,8 +415,8 @@ With all of this in mind, check out this advanced example:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add(
+        $routes = new RouteCollection();
+        $routes->add(
             'article_show',
             new Route('/articles/{_locale}/{year}/{slug}.{_format}', array(
                 '_controller' => 'AppBundle:Article:show',
@@ -428,7 +428,7 @@ With all of this in mind, check out this advanced example:
             ))
         );
 
-        return $collection;
+        return $routes;
 
 As you've seen, this route will only match if the ``{_locale}`` portion of
 the URL is either ``en`` or ``fr`` and if the ``{year}`` is a number. This
@@ -596,14 +596,14 @@ sees our annotation routes:
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $collection = new RouteCollection();
-        $collection->addCollection(
+        $routes = new RouteCollection();
+        $routes->addCollection(
             // second argument is the type, which is required to enable
             // the annotation reader for this resource
             $loader->import("@AppBundle/Controller/", "annotation")
         );
 
-        return $collection;
+        return $routes;
 
 For more details on loading routes, including how to prefix the paths of loaded routes,
 see :doc:`/routing/external_resources`.

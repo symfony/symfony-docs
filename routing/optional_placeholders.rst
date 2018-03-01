@@ -54,12 +54,12 @@ the available blog posts for this imaginary blog application:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('blog', new Route('/blog', array(
+        $routes = new RouteCollection();
+        $routes->add('blog', new Route('/blog', array(
             '_controller' => 'AppBundle:Blog:index',
         )));
 
-        return $collection;
+        return $routes;
 
 So far, this route is as simple as possible - it contains no placeholders
 and will only match the exact URL ``/blog``. But what if you need this route
@@ -109,12 +109,12 @@ entries? Update the route to have a new ``{page}`` placeholder:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('blog', new Route('/blog/{page}', array(
+        $routes = new RouteCollection();
+        $routes->add('blog', new Route('/blog/{page}', array(
             '_controller' => 'AppBundle:Blog:index',
         )));
 
-        return $collection;
+        return $routes;
 
 Like the ``{slug}`` placeholder before, the value matching ``{page}`` will
 be available inside your controller. Its value can be used to determine which
@@ -170,13 +170,13 @@ This is done by including it in the ``defaults`` collection:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('blog', new Route('/blog/{page}', array(
+        $routes = new RouteCollection();
+        $routes->add('blog', new Route('/blog/{page}', array(
             '_controller' => 'AppBundle:Blog:index',
             'page'        => 1,
         )));
 
-        return $collection;
+        return $routes;
 
 By adding ``page`` to the ``defaults`` key, the ``{page}`` placeholder is
 no longer required. The URL ``/blog`` will match this route and the value

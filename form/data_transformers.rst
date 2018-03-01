@@ -171,11 +171,11 @@ to and from the issue number and the ``Issue`` object::
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
-        private $em;
+        private $entityManager;
 
-        public function __construct(EntityManagerInterface $em)
+        public function __construct(EntityManagerInterface $entityManager)
         {
-            $this->em = $em;
+            $this->entityManager = $entityManager;
         }
 
         /**
@@ -207,7 +207,7 @@ to and from the issue number and the ``Issue`` object::
                 return;
             }
 
-            $issue = $this->em
+            $issue = $this->entityManager
                 ->getRepository(Issue::class)
                 // query for the issue with this id
                 ->find($issueNumber)

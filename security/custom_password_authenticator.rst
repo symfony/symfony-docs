@@ -46,7 +46,7 @@ the user::
         {
             try {
                 $user = $userProvider->loadUserByUsername($token->getUsername());
-            } catch (UsernameNotFoundException $e) {
+            } catch (UsernameNotFoundException $exception) {
                 // CAUTION: this message will be returned to the client
                 // (so don't put any un-trusted messages / error strings here)
                 throw new CustomUserMessageAuthenticationException('Invalid username or password');

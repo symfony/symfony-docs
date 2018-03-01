@@ -69,22 +69,22 @@ action to redirect to this new url:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
+        $routes = new RouteCollection();
 
         // load some routes - one should ultimately have the path "/app"
         $appRoutes = $loader->import("@AppBundle/Controller/", "annotation");
         $appRoutes->setPrefix('/app');
 
-        $collection->addCollection($appRoutes);
+        $routes->addCollection($appRoutes);
 
         // redirecting the root
-        $collection->add('root', new Route('/', array(
+        $routes->add('root', new Route('/', array(
             '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
             'path'        => '/app',
             'permanent'   => true,
         )));
 
-        return $collection;
+        return $routes;
 
 In this example, you configured a route for the ``/`` path and let the
 ``RedirectController`` redirect it to ``/app``. The ``permanent`` switch
@@ -141,17 +141,17 @@ action:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
+        $routes = new RouteCollection();
         // ...
 
         // redirecting the root
-        $collection->add('root', new Route('/wp-admin', array(
+        $routes->add('root', new Route('/wp-admin', array(
             '_controller' => 'FrameworkBundle:Redirect:redirect',
             'route'       => 'sonata_admin_dashboard',
             'permanent'   => true,
         )));
 
-        return $collection;
+        return $routes;
 
 .. caution::
 

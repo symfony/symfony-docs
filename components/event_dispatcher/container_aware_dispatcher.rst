@@ -31,8 +31,8 @@ into the :class:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatc
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 
-    $container = new ContainerBuilder();
-    $dispatcher = new ContainerAwareEventDispatcher($container);
+    $containerBuilder = new ContainerBuilder();
+    $dispatcher = new ContainerAwareEventDispatcher($containerBuilder);
 
 Adding Listeners
 ----------------

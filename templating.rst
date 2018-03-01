@@ -608,12 +608,12 @@ configuration:
         use Symfony\Component\Routing\Route;
         use Symfony\Component\Routing\RouteCollection;
 
-        $collection = new RouteCollection();
-        $collection->add('welcome', new Route('/', array(
+        $routes = new RouteCollection();
+        $routes->add('welcome', new Route('/', array(
             '_controller' => 'AppBundle:Welcome:index',
         )));
 
-        return $collection;
+        return $routes;
 
 To link to the page, just use the ``path()`` Twig function and refer to the route:
 
@@ -677,12 +677,12 @@ route:
         use Symfony\Component\Routing\Route;
         use Symfony\Component\Routing\RouteCollection;
 
-        $collection = new RouteCollection();
-        $collection->add('article_show', new Route('/article/{slug}', array(
+        $routes = new RouteCollection();
+        $routes->add('article_show', new Route('/article/{slug}', array(
             '_controller' => 'AppBundle:Article:show',
         )));
 
-        return $collection;
+        return $routes;
 
 In this case, you need to specify both the route name (``article_show``) and
 a value for the ``{slug}`` parameter. Using this route, revisit the

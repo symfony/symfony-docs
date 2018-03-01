@@ -35,7 +35,7 @@ ones and injecting this using the constructor::
     use Symfony\Component\Cache\Adapter\RedisAdapter;
 
     $cache = new RedisAdapter(...);
-    $language = new ExpressionLanguage($cache);
+    $expressionLanguage = new ExpressionLanguage($cache);
 
 .. versionadded:: 3.2
     PSR-6 caching support was introduced in Symfony 3.2. Prior to version 3.2,
@@ -57,9 +57,9 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
     // ...
 
     // the parse() method returns a ParsedExpression
-    $expression = $language->parse('1 + 4', array());
+    $expression = $expressionLanguage->parse('1 + 4', array());
 
-    var_dump($language->evaluate($expression)); // prints 5
+    var_dump($expressionLanguage->evaluate($expression)); // prints 5
 
 .. code-block:: php
 
@@ -68,9 +68,9 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
 
     $expression = new SerializedParsedExpression(
         '1 + 4',
-        serialize($language->parse('1 + 4', array())->getNodes())
+        serialize($expressionLanguage->parse('1 + 4', array())->getNodes())
     );
 
-    var_dump($language->evaluate($expression)); // prints 5
+    var_dump($expressionLanguage->evaluate($expression)); // prints 5
 
 .. _`CacheItemPoolInterface`: https://github.com/php-fig/cache/blob/master/src/CacheItemPoolInterface.php

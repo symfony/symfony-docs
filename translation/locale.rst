@@ -94,8 +94,8 @@ by the routing system using the special ``_locale`` parameter:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('contact', new Route(
+        $routes = new RouteCollection();
+        $routes->add('contact', new Route(
             '/{_locale}/contact',
             array(
                 '_controller' => 'AppBundle:Contact:index',
@@ -105,7 +105,7 @@ by the routing system using the special ``_locale`` parameter:
             )
         ));
 
-        return $collection;
+        return $routes;
 
 When using the special ``_locale`` parameter in a route, the matched locale
 is *automatically set on the Request* and can be retrieved via the

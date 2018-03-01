@@ -63,8 +63,8 @@ This can be done by importing routing resources from the main routing file:
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $collection = new RouteCollection();
-        $collection->addCollection(
+        $routes = new RouteCollection();
+        $routes->addCollection(
             // loads routes from the given routing file stored in some bundle
             $loader->import("@AcmeOtherBundle/Resources/config/routing.yml")
 
@@ -78,7 +78,7 @@ This can be done by importing routing resources from the main routing file:
             $loader->import("@AppBundle/Resources/config/routing/public/", "directory")
         );
 
-        return $collection;
+        return $routes;
 
 .. note::
 
@@ -139,10 +139,10 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
         $app = $loader->import('@AppBundle/Controller/', 'annotation');
         $app->addPrefix('/site');
 
-        $collection = new RouteCollection();
-        $collection->addCollection($app);
+        $routes = new RouteCollection();
+        $routes->addCollection($app);
 
-        return $collection;
+        return $routes;
 
 The path of each route being loaded from the new routing resource will now
 be prefixed with the string ``/site``.
