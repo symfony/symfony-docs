@@ -95,9 +95,7 @@ via the ``delivery_addresses`` option:
             'delivery_addresses' => array("dev@example.com"),
         ));
 
-Now, suppose you're sending an email to ``recipient@example.com``.
-
-.. code-block:: php
+Now, suppose you're sending an email to ``recipient@example.com``::
 
     public function indexAction($name, \Swift_Mailer $mailer)
     {

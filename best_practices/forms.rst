@@ -88,9 +88,7 @@ makes them easier to re-use later.
 The Symfony Form component allows you to add buttons as fields on your form.
 This is a nice way to simplify the template that renders your form. But if you
 add the buttons directly in your form class, this would effectively limit the
-scope of that form:
-
-.. code-block:: php
+scope of that form::
 
     class PostType extends AbstractType
     {
@@ -173,9 +171,7 @@ can control *how* the form renders at a global level using form theming.
 Handling Form Submits
 ---------------------
 
-Handling a form submit usually follows a similar template:
-
-.. code-block:: php
+Handling a form submit usually follows a similar template::
 
     public function newAction(Request $request)
     {

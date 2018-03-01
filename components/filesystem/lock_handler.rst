@@ -24,9 +24,7 @@ Usage
     The lock handler only works if you're using just one server. If you have
     several hosts, you must not use this helper.
 
-A lock can be used, for example, to allow only one instance of a command to run.
-
-.. code-block:: php
+A lock can be used, for example, to allow only one instance of a command to run::
 
     use Symfony\Component\Filesystem\LockHandler;
 

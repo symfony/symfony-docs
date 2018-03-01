@@ -58,9 +58,7 @@ from ``Doctrine\ORM\EntityRepository``.
 
 Next, add a new method - ``findAllOrderedByName()`` - to the newly-generated
 ``ProductRepository`` class. This method will query for all the ``Product``
-entities, ordered alphabetically by name.
-
-.. code-block:: php
+entities, ordered alphabetically by name::
 
     // src/AppBundle/Repository/ProductRepository.php
     namespace AppBundle\Repository;

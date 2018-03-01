@@ -135,9 +135,7 @@ you can hook into the login process and update the user's session with this
 locale value before they are redirected to their first page.
 
 To do this, you need an event subscriber on the ``security.interactive_login``
-event:
-
-.. code-block:: php
+event::
 
     // src/AppBundle/EventSubscriber/UserLocaleSubscriber.php
     namespace AppBundle\EventSubscriber;

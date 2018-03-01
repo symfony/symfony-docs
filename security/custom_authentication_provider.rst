@@ -302,9 +302,7 @@ for every firewall? The answer is by using a *factory*. A factory
 is where you hook into the Security component, telling it the name of your
 provider and any configuration options available for it. First, you must
 create a class which implements
-:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`.
-
-.. code-block:: php
+:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`::
 
     // src/AppBundle/DependencyInjection/Security/Factory/WsseFactory.php
     namespace AppBundle\DependencyInjection\Security\Factory;
@@ -549,9 +547,7 @@ by default, is 5 minutes. Make this configurable, so different firewalls
 can have different timeout lengths.
 
 You will first need to edit ``WsseFactory`` and define the new option in
-the ``addConfiguration()`` method.
-
-.. code-block:: php
+the ``addConfiguration()`` method::
 
     class WsseFactory implements SecurityFactoryInterface
     {
@@ -569,9 +565,7 @@ the ``addConfiguration()`` method.
 Now, in the ``create()`` method of the factory, the ``$config`` argument will
 contain a ``lifetime`` key, set to 5 minutes (300 seconds) unless otherwise
 set in the configuration. Pass this argument to your authentication provider
-in order to put it to use.
-
-.. code-block:: php
+in order to put it to use::
 
     use AppBundle\Security\Authentication\Provider\WsseProvider;
 

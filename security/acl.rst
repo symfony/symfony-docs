@@ -227,9 +227,7 @@ operation such as view, edit, etc. on the domain object, there are cases where
 you may want to grant these permissions explicitly.
 
 The ``MaskBuilder`` can be used for creating bit masks easily by combining
-several base permissions:
-
-.. code-block:: php
+several base permissions::
 
     $builder = new MaskBuilder();
     $builder
@@ -241,9 +239,7 @@ several base permissions:
     $mask = $builder->get(); // int(29)
 
 This integer bitmask can then be used to grant a user the base permissions you
-added above:
-
-.. code-block:: php
+added above::
 
     $identity = new UserSecurityIdentity('johannes', 'AppBundle\Entity\User');
     $acl->insertObjectAce($identity, $mask);

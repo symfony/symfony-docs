@@ -105,9 +105,7 @@ Markdown content into HTML::
 
 Next, create a new Twig extension and define a new filter called ``md2html``
 using the ``Twig_SimpleFilter`` class. Inject the newly defined ``Markdown``
-class in the constructor of the Twig extension:
-
-.. code-block:: php
+class in the constructor of the Twig extension::
 
     namespace AppBundle\Twig;
 

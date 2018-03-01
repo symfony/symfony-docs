@@ -80,9 +80,7 @@ generator service:
     generator.
 
 Consider the following functional test that uses the ``router`` service to
-generate the URL of the tested page:
-
-.. code-block:: php
+generate the URL of the tested page::
 
     public function testBlogArchives()
     {

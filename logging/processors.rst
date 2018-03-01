@@ -14,9 +14,7 @@ Adding a Session/Request Token
 
 Sometimes it is hard to tell which entries in the log belong to which session
 and/or request. The following example will add a unique token for each request
-using a processor.
-
-.. code-block:: php
+using a processor::
 
     namespace AppBundle\Logger;
 

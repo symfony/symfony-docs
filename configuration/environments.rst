@@ -31,9 +31,7 @@ are used:
 * for the ``test`` environment: ``app/config/config_test.yml``
 
 This works via a simple standard that's used by default inside the ``AppKernel``
-class:
-
-.. code-block:: php
+class::
 
     // app/AppKernel.php
 

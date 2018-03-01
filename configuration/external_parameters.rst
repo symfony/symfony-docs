@@ -54,7 +54,7 @@ variable in your service container configuration, you can reference it using
 
         </container>
 
-    .. code-block:: php
+    ::
 
         // app/config/config.php
         $container->loadFromExtension('doctrine', array(
@@ -184,9 +184,7 @@ in the container. The following imports a file named ``parameters.php``.
 In ``parameters.php``, tell the service container the parameters that you wish
 to set. This is useful when important configuration is in a non-standard
 format. The example below includes a Drupal database configuration in
-the Symfony service container.
-
-.. code-block:: php
+the Symfony service container::
 
     // app/config/parameters.php
     include_once('/path/to/drupal/sites/default/settings.php');
