@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-27T11:08:25Z
+
+@CoalaJoe thanks for updating the docs (and thanks for implementing the feature too!). I have a question about the `time_cost` parameter:
+
+1) In the RFC it says: *"The time cost represents the number of times the hash algorithm will be run"* (https://wiki.php.net/rfc/argon2_password_hash)
+
+2) In the PHP manual it says: *"Maximum amount of time it may take to compute the Argon2 hash"* (http://php.net/manual/en/function.password-hash.php)
+
+So, is it the number of seconds or the number of iterations?
+
+---------------------------------------------------------------------------
+
+by CoalaJoe at 2018-02-27T15:34:03Z
+
+@javiereguiluz Thank you, it was fun to give symfony something back after using it so long. :)
+
+Excellent question!
+
+I had to dig into the source code to find clarification.
+As statet a couple time, like here: https://github.com/P-H-C/phc-winner-argon2/blob/54ff100b0717505493439ec9d4ca85cb9cbdef00/src/run.c#L85
+
+So I feel confident telling you that it is the amount of iterations.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-27T16:05:49Z
+
+Nice digging in the source code! Now it's clear the intention of that parameter (the name could be less confusing to be honest ... but that's what PHP uses, so we can't change it).
