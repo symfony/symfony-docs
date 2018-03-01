@@ -96,9 +96,7 @@ Reading YAML Files
 ~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::parse` method parses a YAML
-string and converts it to a PHP array:
-
-.. code-block:: php
+string and converts it to a PHP array::
 
     use Symfony\Component\Yaml\Yaml;
 
@@ -113,9 +111,7 @@ string and converts it to a PHP array:
 If an error occurs during parsing, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\ParseException` exception
 indicating the error type and the line in the original YAML string where the
-error occurred:
-
-.. code-block:: php
+error occurred::
 
     use Symfony\Component\Yaml\Exception\ParseException;
 
@@ -145,9 +141,7 @@ Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::dump` method dumps any PHP
-array to its YAML representation:
-
-.. code-block:: php
+array to its YAML representation::
 
     use Symfony\Component\Yaml\Yaml;
 
@@ -179,9 +173,7 @@ representation:
 
 The second argument of the :method:`Symfony\\Component\\Yaml\\Yaml::dump`
 method customizes the level at which the output switches from the expanded
-representation to the inline one:
-
-.. code-block:: php
+representation to the inline one::
 
     echo Yaml::dump($array, 1);
 

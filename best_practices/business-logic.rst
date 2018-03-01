@@ -57,9 +57,7 @@ The blog application needs a utility that can transform a post title (e.g.
 part of the post URL.
 
 Let's create a new ``Slugger`` class inside ``src/AppBundle/Utils/`` and
-add the following ``slugify()`` method:
-
-.. code-block:: php
+add the following ``slugify()`` method::
 
     // src/AppBundle/Utils/Slugger.php
     namespace AppBundle\Utils;
@@ -96,9 +94,7 @@ your code will be easier to read and use.
     you ever need to.
 
 Now you can use the custom slugger in any controller class, such as the
-``AdminController``:
-
-.. code-block:: php
+``AdminController``::
 
     public function createAction(Request $request)
     {
@@ -203,9 +199,7 @@ PHP and annotations.
     Use annotations to define the mapping information of the Doctrine entities.
 
 Annotations are by far the most convenient and agile way of setting up and
-looking for mapping information:
-
-.. code-block:: php
+looking for mapping information::
 
     namespace AppBundle\Entity;
 
@@ -284,9 +278,7 @@ the following command to install the Doctrine fixtures bundle:
     $ composer require "doctrine/doctrine-fixtures-bundle"
 
 Then, enable the bundle in ``AppKernel.php``, but only for the ``dev`` and
-``test`` environments:
-
-.. code-block:: php
+``test`` environments::
 
     use Symfony\Component\HttpKernel\Kernel;
 

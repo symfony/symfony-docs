@@ -44,9 +44,7 @@ in this example, the variables ``$foo``, ``$bar`` and ``$returnValue`` to be ret
 and set by the listeners.
 
 For example, assuming the ``FilterSendReturnValue`` has a ``setReturnValue()``
-method, one listener might look like this:
-
-.. code-block:: php
+method, one listener might look like this::
 
     public function onFooPostSend(FilterSendReturnValue $event)
     {
