@@ -265,10 +265,10 @@ Now you can see this new code in action! Imagine you're inside a controller::
             // relates this product to the category
             $product->setCategory($category);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($category);
-            $em->persist($product);
-            $em->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($category);
+            $entityManager->persist($product);
+            $entityManager->flush();
 
             return new Response(
                 'Saved new product with id: '.$product->getId()

@@ -484,7 +484,7 @@ you will learn about next!).
 
     To save the new tags with Doctrine, you need to consider a couple more
     things. First, unless you iterate over all of the new ``Tag`` objects and
-    call ``$em->persist($tag)`` on each, you'll receive an error from
+    call ``$entityManager->persist($tag)`` on each, you'll receive an error from
     Doctrine:
 
         A new entity was found through the relationship
@@ -695,8 +695,8 @@ the relationship between the removed ``Tag`` and ``Task`` object.
         // ...
         public function edit($id, Request $request)
         {
-            $em = $this->getDoctrine()->getManager();
-            $task = $em->getRepository(Task::class)->find($id);
+            $entityManager = $this->getDoctrine()->getManager();
+            $task = $entityManager->getRepository(Task::class)->find($id);
 
             if (!$task) {
                 throw $this->createNotFoundException('No task found for id '.$id);
@@ -724,15 +724,15 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                         // if it was a many-to-one relationship, remove the relationship like this
                         // $tag->setTask(null);
 
-                        $em->persist($tag);
+                        $entityManager->persist($tag);
 
                         // if you wanted to delete the Tag entirely, you can also do that
-                        // $em->remove($tag);
+                        // $entityManager->remove($tag);
                     }
                 }
 
-                $em->persist($task);
-                $em->flush();
+                $entityManager->persist($task);
+                $entityManager->flush();
 
                 // redirect back to some edit page
                 return $this->redirectToRoute('task_edit', array('id' => $id));

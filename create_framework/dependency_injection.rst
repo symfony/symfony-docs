@@ -104,30 +104,30 @@ Create a new file to host the dependency injection container configuration::
     use Symfony\Component\EventDispatcher;
     use Simplex\Framework;
 
-    $sc = new DependencyInjection\ContainerBuilder();
-    $sc->register('context', Routing\RequestContext::class);
-    $sc->register('matcher', Routing\Matcher\UrlMatcher::class)
+    $containerBuilder = new DependencyInjection\ContainerBuilder();
+    $containerBuilder->register('context', Routing\RequestContext::class);
+    $containerBuilder->register('matcher', Routing\Matcher\UrlMatcher::class)
         ->setArguments(array($routes, new Reference('context')))
     ;
-    $sc->register('request_stack', HttpFoundation\RequestStack::class);
-    $sc->register('controller_resolver', HttpKernel\Controller\ControllerResolver::class);
-    $sc->register('argument_resolver', HttpKernel\Controller\ArgumentResolver::class);
+    $containerBuilder->register('request_stack', HttpFoundation\RequestStack::class);
+    $containerBuilder->register('controller_resolver', HttpKernel\Controller\ControllerResolver::class);
+    $containerBuilder->register('argument_resolver', HttpKernel\Controller\ArgumentResolver::class);
 
-    $sc->register('listener.router', HttpKernel\EventListener\RouterListener::class)
+    $containerBuilder->register('listener.router', HttpKernel\EventListener\RouterListener::class)
         ->setArguments(array(new Reference('matcher'), new Reference('request_stack')))
     ;
-    $sc->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
+    $containerBuilder->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
         ->setArguments(array('UTF-8'))
     ;
-    $sc->register('listener.exception', HttpKernel\EventListener\ExceptionListener::class)
+    $containerBuilder->register('listener.exception', HttpKernel\EventListener\ExceptionListener::class)
         ->setArguments(array('Calendar\Controller\ErrorController::exceptionAction'))
     ;
-    $sc->register('dispatcher', EventDispatcher\EventDispatcher::class)
+    $containerBuilder->register('dispatcher', EventDispatcher\EventDispatcher::class)
         ->addMethodCall('addSubscriber', array(new Reference('listener.router')))
         ->addMethodCall('addSubscriber', array(new Reference('listener.response')))
         ->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
     ;
-    $sc->register('framework', Framework::class)
+    $containerBuilder->register('framework', Framework::class)
         ->setArguments(array(
             new Reference('dispatcher'),
             new Reference('controller_resolver'),
@@ -136,7 +136,7 @@ Create a new file to host the dependency injection container configuration::
         ))
     ;
 
-    return $sc;
+    return $containerBuilder;
 
 The goal of this file is to configure your objects and their dependencies.
 Nothing is instantiated during this configuration step. This is purely a
@@ -165,11 +165,11 @@ The front controller is now only about wiring everything together::
     use Symfony\Component\HttpFoundation\Request;
 
     $routes = include __DIR__.'/../src/app.php';
-    $sc = include __DIR__.'/../src/container.php';
+    $container = include __DIR__.'/../src/container.php';
 
     $request = Request::createFromGlobals();
 
-    $response = $sc->get('framework')->handle($request);
+    $response = $container->get('framework')->handle($request);
 
     $response->send();
 
@@ -195,8 +195,8 @@ Now, here is how you can register a custom listener in the front controller::
     // ...
     use Simplex\StringResponseListener;
 
-    $sc->register('listener.string_response', StringResposeListener::class);
-    $sc->getDefinition('dispatcher')
+    $container->register('listener.string_response', StringResposeListener::class);
+    $container->getDefinition('dispatcher')
         ->addMethodCall('addSubscriber', array(new Reference('listener.string_response')))
     ;
 
@@ -204,34 +204,34 @@ Beside describing your objects, the dependency injection container can also be
 configured via parameters. Let's create one that defines if we are in debug
 mode or not::
 
-    $sc->setParameter('debug', true);
+    $container->setParameter('debug', true);
 
-    echo $sc->getParameter('debug');
+    echo $container->getParameter('debug');
 
 These parameters can be used when defining object definitions. Let's make the
 charset configurable::
 
     // ...
-    $sc->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
+    $container->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
         ->setArguments(array('%charset%'))
     ;
 
 After this change, you must set the charset before using the response listener
 object::
 
-    $sc->setParameter('charset', 'UTF-8');
+    $container->setParameter('charset', 'UTF-8');
 
 Instead of relying on the convention that the routes are defined by the
 ``$routes`` variables, let's use a parameter again::
 
     // ...
-    $sc->register('matcher', Routing\Matcher\UrlMatcher::class)
+    $container->register('matcher', Routing\Matcher\UrlMatcher::class)
         ->setArguments(array('%routes%', new Reference('context')))
     ;
 
 And the related change in the front controller::
 
-    $sc->setParameter('routes', include __DIR__.'/../src/app.php');
+    $container->setParameter('routes', include __DIR__.'/../src/app.php');
 
 We have obviously barely scratched the surface of what you can do with the
 container: from class names as parameters, to overriding existing object

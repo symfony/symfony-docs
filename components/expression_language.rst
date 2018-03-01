@@ -66,11 +66,11 @@ The main class of the component is
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-    $language = new ExpressionLanguage();
+    $expressionLanguage = new ExpressionLanguage();
 
-    var_dump($language->evaluate('1 + 2')); // displays 3
+    var_dump($expressionLanguage->evaluate('1 + 2')); // displays 3
 
-    var_dump($language->compile('1 + 2')); // displays (1 + 2)
+    var_dump($expressionLanguage->compile('1 + 2')); // displays (1 + 2)
 
 Expression Syntax
 -----------------
@@ -86,7 +86,7 @@ PHP type (including objects)::
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-    $language = new ExpressionLanguage();
+    $expressionLanguage = new ExpressionLanguage();
 
     class Apple
     {
@@ -96,7 +96,7 @@ PHP type (including objects)::
     $apple = new Apple();
     $apple->variety = 'Honeycrisp';
 
-    var_dump($language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'fruit.variety',
         array(
             'fruit' => $apple,

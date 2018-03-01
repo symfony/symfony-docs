@@ -45,8 +45,8 @@ Example usage::
     use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler;
 
-    $storage = new NativeSessionStorage(array(), new NativeFileSessionHandler());
-    $session = new Session($storage);
+    $sessionStorage = new NativeSessionStorage(array(), new NativeFileSessionHandler());
+    $session = new Session($sessionStorage);
 
 .. note::
 
@@ -84,8 +84,8 @@ Example usage::
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
     $pdo = new \PDO(...);
-    $storage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
-    $session = new Session($storage);
+    $sessionStorage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
+    $session = new Session($sessionStorage);
 
 Configuring PHP Sessions
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -231,7 +231,7 @@ response headers.
         use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
         $options['cache_limiter'] = session_cache_limiter();
-        $storage = new NativeSessionStorage($options);
+        $sessionStorage = new NativeSessionStorage($options);
 
 Session Metadata
 ~~~~~~~~~~~~~~~~

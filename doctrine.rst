@@ -348,8 +348,8 @@ and save it!
         public function index()
         {
             // you can fetch the EntityManager via $this->getDoctrine()
-            // or you can add an argument to your action: index(EntityManagerInterface $em)
-            $em = $this->getDoctrine()->getManager();
+            // or you can add an argument to your action: index(EntityManagerInterface $entityManager)
+            $entityManager = $this->getDoctrine()->getManager();
 
             $product = new Product();
             $product->setName('Keyboard');
@@ -357,10 +357,10 @@ and save it!
             $product->setDescription('Ergonomic and stylish!');
 
             // tell Doctrine you want to (eventually) save the Product (no queries yet)
-            $em->persist($product);
+            $entityManager->persist($product);
 
             // actually executes the queries (i.e. the INSERT query)
-            $em->flush();
+            $entityManager->flush();
 
             return new Response('Saved new product with id '.$product->getId());
         }
@@ -530,8 +530,8 @@ Once you've fetched an object from Doctrine, updating it is easy::
      */
     public function updateAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $product = $em->getRepository(Product::class)->find($id);
+        $entityManager = $this->getDoctrine()->getManager();
+        $product = $entityManager->getRepository(Product::class)->find($id);
 
         if (!$product) {
             throw $this->createNotFoundException(
@@ -540,7 +540,7 @@ Once you've fetched an object from Doctrine, updating it is easy::
         }
 
         $product->setName('New product name!');
-        $em->flush();
+        $entityManager->flush();
 
         return $this->redirectToRoute('product_show', [
             'id' => $product->getId()
@@ -553,8 +553,8 @@ Updating an object involves just three steps:
 #. modifying the object;
 #. calling ``flush()`` on the entity manager.
 
-You *can* call ``$em->persist($product)``, but it isn't necessary: Doctrine is already
-"watching" your object for changes.
+You *can* call ``$entityManager->persist($product)``, but it isn't necessary:
+Doctrine is already "watching" your object for changes.
 
 Deleting an Object
 ------------------
@@ -562,8 +562,8 @@ Deleting an Object
 Deleting an object is very similar, but requires a call to the ``remove()``
 method of the entity manager::
 
-    $em->remove($product);
-    $em->flush();
+    $entityManager->remove($product);
+    $entityManager->flush();
 
 As you might expect, the ``remove()`` method notifies Doctrine that you'd
 like to remove the given object from the database. The ``DELETE`` query isn't
@@ -665,9 +665,9 @@ In addition to the query builder, you can also query with `Doctrine Query Langua
 
     public function findAllGreaterThanPrice($price): array
     {
-        $em = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
-        $query = $em->createQuery(
+        $query = $entityManager->createQuery(
             'SELECT p
             FROM App\Entity\Product p
             WHERE p.price > :price

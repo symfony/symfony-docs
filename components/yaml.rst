@@ -116,8 +116,8 @@ error occurred:
 
     try {
         $value = Yaml::parse('...');
-    } catch (ParseException $e) {
-        printf('Unable to parse the YAML string: %s', $e->getMessage());
+    } catch (ParseException $exception) {
+        printf('Unable to parse the YAML string: %s', $exception->getMessage());
     }
 
 Reading YAML Files

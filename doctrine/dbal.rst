@@ -47,9 +47,9 @@ object::
 
     class UserController extends Controller
     {
-        public function indexAction(Connection $conn)
+        public function indexAction(Connection $connection)
         {
-            $users = $conn->fetchAll('SELECT * FROM users');
+            $users = $connection->fetchAll('SELECT * FROM users');
 
             // ...
         }

@@ -46,14 +46,14 @@ inside your routing configuration:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('contact', new Route('/{_locale}/contact', array(
+        $routes = new RouteCollection();
+        $routes->add('contact', new Route('/{_locale}/contact', array(
             '_controller' => 'App\Controller\MainController::contact',
         ), array(
             '_locale' => '%app.locales%',
         )));
 
-        return $collection;
+        return $routes;
 
 You can now control and set the  ``app.locales`` parameter somewhere
 in your container:
@@ -117,12 +117,12 @@ path):
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('some_route', new Route('/%app.route_prefix%/contact', array(
+        $routes = new RouteCollection();
+        $routes->add('some_route', new Route('/%app.route_prefix%/contact', array(
             '_controller' => 'App\Controller\MainController::contact',
         )));
 
-        return $collection;
+        return $routes;
 
 .. note::
 

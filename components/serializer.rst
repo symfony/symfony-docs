@@ -690,13 +690,13 @@ when such a case is encountered::
     $member = new Member();
     $member->setName('Kévin');
 
-    $org = new Organization();
-    $org->setName('Les-Tilleuls.coop');
-    $org->setMembers(array($member));
+    $organization = new Organization();
+    $organization->setName('Les-Tilleuls.coop');
+    $organization->setMembers(array($member));
 
-    $member->setOrganization($org);
+    $member->setOrganization($organization);
 
-    echo $serializer->serialize($org, 'json'); // Throws a CircularReferenceException
+    echo $serializer->serialize($organization, 'json'); // Throws a CircularReferenceException
 
 The ``setCircularReferenceLimit()`` method of this normalizer sets the number
 of times it will serialize the same object before considering it a circular

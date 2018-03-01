@@ -79,7 +79,7 @@ if you want to know a bundle name, you can add this to your command::
         // ...
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
 
-        $bundle = $helper->ask($input, $output, $question);
+        $bundleName = $helper->ask($input, $output, $question);
     }
 
 The user will be asked "Please enter the name of the bundle". They can type
@@ -175,7 +175,7 @@ will be autocompleted as the user types::
         $question = new Question('Please enter the name of a bundle', 'FooBundle');
         $question->setAutocompleterValues($bundles);
 
-        $name = $helper->ask($input, $output, $question);
+        $bundleName = $helper->ask($input, $output, $question);
     }
 
 Hiding the User's Response
@@ -253,7 +253,7 @@ method::
             return $value ? trim($value) : '';
         });
 
-        $name = $helper->ask($input, $output, $question);
+        $bundleName = $helper->ask($input, $output, $question);
     }
 
 .. caution::
@@ -291,7 +291,7 @@ method::
         });
         $question->setMaxAttempts(2);
 
-        $name = $helper->ask($input, $output, $question);
+        $bundleName = $helper->ask($input, $output, $question);
     }
 
 The ``$validator`` is a callback which handles the validation. It should
