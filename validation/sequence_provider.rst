@@ -128,7 +128,7 @@ that group are valid, the second group, ``Strict``, will be validated.
 
 .. caution::
 
-    As you have already seen in the previous section, the ``Default`` group
+    As you have already seen in :doc:`/validation/groups`, the ``Default`` group
     and the group containing the class name (e.g. ``User``) were identical.
     However, when using Group Sequences, they are no longer identical. The
     ``Default`` group will now reference the group sequence, instead of all
@@ -287,10 +287,6 @@ method, which should return an array of groups to use::
             return array(array('User', 'Premium'), 'Api');
         }
     }
-
-.. versionadded:: 3.2
-    The feature to return a nested array to get violations from all groups was
-    introduced in Symfony 3.2.
 
 At last, you have to notify the Validator component that your ``User`` class
 provides a sequence of groups to be validated:

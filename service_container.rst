@@ -289,8 +289,7 @@ made. To do that, you create a new class::
         {
             $happyMessage = $this->messageGenerator->getHappyMessage();
 
-            $message = \Swift_Message::newInstance()
-                ->setSubject('Site update just happened!')
+            $message = (new \Swift_Message('Site update just happened!'))
                 ->setFrom('admin@example.com')
                 ->setTo('manager@example.com')
                 ->addPart(
@@ -901,9 +900,6 @@ them will not cause the container to be rebuilt.
 
 Multiple Service Definitions Using the Same Namespace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.4
-    The ``namespace`` option in the YAML configuration was introduced in Symfony 3.4.
 
 If you define services using the YAML config format, the PHP namespace is used
 as the key of each configuration, so you can't define different service configs
