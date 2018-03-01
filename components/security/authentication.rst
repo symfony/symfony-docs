@@ -81,7 +81,7 @@ The default authentication manager is an instance of
     try {
         $authenticatedToken = $authenticationManager
             ->authenticate($unauthenticatedToken);
-    } catch (AuthenticationException $failed) {
+    } catch (AuthenticationException $exception) {
         // authentication failed
     }
 
@@ -147,14 +147,14 @@ password was valid::
     // an array of password encoders (see below)
     $encoderFactory = new EncoderFactory(...);
 
-    $provider = new DaoAuthenticationProvider(
+    $daoProvider = new DaoAuthenticationProvider(
         $userProvider,
         $userChecker,
         'secured_area',
         $encoderFactory
     );
 
-    $provider->authenticate($unauthenticatedToken);
+    $daoProvider->authenticate($unauthenticatedToken);
 
 .. note::
 

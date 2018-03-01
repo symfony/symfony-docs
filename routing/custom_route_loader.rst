@@ -135,11 +135,11 @@ you do. The resource name itself is not actually used in the example::
 
     class ExtraLoader extends Loader
     {
-        private $loaded = false;
+        private $isLoaded = false;
 
         public function load($resource, $type = null)
         {
-            if (true === $this->loaded) {
+            if (true === $this->isLoaded) {
                 throw new \RuntimeException('Do not add the "extra" loader twice');
             }
 
@@ -159,7 +159,7 @@ you do. The resource name itself is not actually used in the example::
             $routeName = 'extraRoute';
             $routes->add($routeName, $route);
 
-            $this->loaded = true;
+            $this->isLoaded = true;
 
             return $routes;
         }
@@ -261,10 +261,10 @@ What remains to do is adding a few lines to the routing configuration:
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $collection = new RouteCollection();
-        $collection->addCollection($loader->import('.', 'extra'));
+        $routes = new RouteCollection();
+        $routes->addCollection($loader->import('.', 'extra'));
 
-        return $collection;
+        return $routes;
 
 The important part here is the ``type`` key. Its value should be "extra" as
 this is the type which the ``ExtraLoader`` supports and this will make sure
@@ -303,16 +303,16 @@ configuration file - you can call the
     {
         public function load($resource, $type = null)
         {
-            $collection = new RouteCollection();
+            $routes = new RouteCollection();
 
             $resource = '@AppBundle/Resources/config/import_routing.yml';
             $type = 'yaml';
 
             $importedRoutes = $this->import($resource, $type);
 
-            $collection->addCollection($importedRoutes);
+            $routes->addCollection($importedRoutes);
 
-            return $collection;
+            return $routes;
         }
 
         public function supports($resource, $type = null)

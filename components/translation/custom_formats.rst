@@ -46,10 +46,10 @@ create the catalog that will be returned::
                 }
             }
 
-            $catalogue = new MessageCatalogue($locale);
-            $catalogue->add($messages, $domain);
+            $messageCatalogue = new MessageCatalogue($locale);
+            $messageCatalogue->add($messages, $domain);
 
-            return $catalogue;
+            return $messageCatalogue;
         }
 
     }
@@ -121,7 +121,7 @@ YAML file are dumped into a text file with the custom format::
     use Symfony\Component\Translation\Loader\YamlFileLoader;
 
     $loader = new YamlFileLoader();
-    $catalogue = $loader->load(__DIR__ . '/translations/messages.fr_FR.yml' , 'fr_FR');
+    $translations = $loader->load(__DIR__ . '/translations/messages.fr_FR.yml' , 'fr_FR');
 
     $dumper = new MyFormatDumper();
-    $dumper->dump($catalogue, array('path' => __DIR__.'/dumps'));
+    $dumper->dump($translations, array('path' => __DIR__.'/dumps'));

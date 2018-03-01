@@ -463,13 +463,13 @@ a controller, this is pretty easy. Add the following method to the
         $product->setPrice(19.99);
         $product->setDescription('Ergonomic and stylish!');
 
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
         // tells Doctrine you want to (eventually) save the Product (no queries yet)
-        $em->persist($product);
+        $entityManager->persist($product);
 
         // actually executes the queries (i.e. the INSERT query)
-        $em->flush();
+        $entityManager->flush();
 
         return new Response('Saved new product with id '.$product->getId());
     }
@@ -636,8 +636,8 @@ you have a route that maps a product id to an update action in a controller::
 
     public function updateAction($productId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $product = $em->getRepository(Product::class)->find($productId);
+        $entityManager = $this->getDoctrine()->getManager();
+        $product = $entityManager->getRepository(Product::class)->find($productId);
 
         if (!$product) {
             throw $this->createNotFoundException(
@@ -646,7 +646,7 @@ you have a route that maps a product id to an update action in a controller::
         }
 
         $product->setName('New product name!');
-        $em->flush();
+        $entityManager->flush();
 
         return $this->redirectToRoute('homepage');
     }
@@ -657,7 +657,7 @@ Updating an object involves just three steps:
 #. modifying the object;
 #. calling ``flush()`` on the entity manager.
 
-Notice that calling ``$em->persist($product)`` isn't necessary. Recall that
+Notice that calling ``$entityManager->persist($product)`` isn't necessary. Recall that
 this method simply tells Doctrine to manage or "watch" the ``$product`` object.
 In this case, since you fetched the ``$product`` object from Doctrine, it's
 already managed.
@@ -668,8 +668,8 @@ Deleting an Object
 Deleting an object is very similar, but requires a call to the ``remove()``
 method of the entity manager::
 
-    $em->remove($product);
-    $em->flush();
+    $entityManager->remove($product);
+    $entityManager->flush();
 
 As you might expect, the ``remove()`` method notifies Doctrine that you'd
 like to remove the given object from the database. The actual ``DELETE`` query,
@@ -703,8 +703,8 @@ Imagine that you want to query for products that cost more than ``19.99``,
 ordered from least to most expensive. You can use DQL, Doctrine's native
 SQL-like language, to construct a query for this scenario::
 
-    $em = $this->getDoctrine()->getManager();
-    $query = $em->createQuery(
+    $entityManager = $this->getDoctrine()->getManager();
+    $query = $entityManager->createQuery(
         'SELECT p
         FROM AppBundle:Product p
         WHERE p.price > :price

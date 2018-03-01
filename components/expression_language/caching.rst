@@ -36,8 +36,8 @@ in the object using the constructor::
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
     use Acme\ExpressionLanguage\ParserCache\MyDatabaseParserCache;
 
-    $cache = new MyDatabaseParserCache(...);
-    $language = new ExpressionLanguage($cache);
+    $databaseParserCache = new MyDatabaseParserCache(...);
+    $expressionLanguage = new ExpressionLanguage($databaseParserCache);
 
 .. note::
 
@@ -54,9 +54,9 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
     // ...
 
     // the parse() method returns a ParsedExpression
-    $expression = $language->parse('1 + 4', array());
+    $expression = $expressionLanguage->parse('1 + 4', array());
 
-    var_dump($language->evaluate($expression)); // prints 5
+    var_dump($expressionLanguage->evaluate($expression)); // prints 5
 
 .. code-block:: php
 
@@ -65,10 +65,10 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
 
     $expression = new SerializedParsedExpression(
         '1 + 4',
-        serialize($language->parse('1 + 4', array())->getNodes())
+        serialize($expressionLanguage->parse('1 + 4', array())->getNodes())
     );
 
-    var_dump($language->evaluate($expression)); // prints 5
+    var_dump($expressionLanguage->evaluate($expression)); // prints 5
 
 .. _DoctrineBridge: https://github.com/symfony/doctrine-bridge
 .. _`doctrine cache library`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html

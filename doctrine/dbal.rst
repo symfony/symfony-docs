@@ -87,8 +87,8 @@ You can then access the Doctrine DBAL connection by accessing the
     {
         public function indexAction()
         {
-            $conn = $this->get('database_connection');
-            $users = $conn->fetchAll('SELECT * FROM users');
+            $connection = $this->get('database_connection');
+            $users = $connection->fetchAll('SELECT * FROM users');
 
             // ...
         }

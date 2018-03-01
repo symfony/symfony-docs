@@ -54,8 +54,8 @@ of your ``buildForm()`` method::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            /** @var \Doctrine\ORM\EntityManager $em */
-            $em = $options['entity_manager'];
+            /** @var \Doctrine\ORM\EntityManager $entityManager */
+            $entityManager = $options['entity_manager'];
             // ...
         }
 
@@ -81,11 +81,11 @@ can make a query. First, add this as an argument to your form class::
 
     class TaskType extends AbstractType
     {
-        private $em;
+        private $entityManager;
 
-        public function __construct(EntityManager $em)
+        public function __construct(EntityManager $entityManager)
         {
-            $this->em = $em;
+            $this->entityManager = $entityManager;
         }
 
         // ...

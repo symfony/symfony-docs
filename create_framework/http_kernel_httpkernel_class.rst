@@ -133,8 +133,8 @@ instead of a full Response object::
     {
         public function indexAction(Request $request, $year)
         {
-            $leapyear = new LeapYear();
-            if ($leapyear->isLeapYear($year)) {
+            $leapYear = new LeapYear();
+            if ($leapYear->isLeapYear($year)) {
                 return 'Yep, this is a leap year! ';
             }
 

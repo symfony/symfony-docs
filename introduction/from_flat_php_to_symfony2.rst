@@ -33,9 +33,9 @@ persisted to the database. Writing in flat PHP is quick and dirty:
 
     <?php
     // index.php
-    $link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
+    $connection = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
 
-    $result = $link->query('SELECT id, title FROM post');
+    $result = $connection->query('SELECT id, title FROM post');
     ?>
 
     <!DOCTYPE html>
@@ -58,7 +58,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:
     </html>
 
     <?php
-    $link = null;
+    $connection = null;
     ?>
 
 That's quick to write, fast to execute, and, as your app grows, impossible
@@ -87,16 +87,16 @@ The code can immediately gain from separating the application "logic" from
 the code that prepares the HTML "presentation"::
 
     // index.php
-    $link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
+    $connection = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
 
-    $result = $link->query('SELECT id, title FROM post');
+    $result = $connection->query('SELECT id, title FROM post');
 
     $posts = array();
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $posts[] = $row;
     }
 
-    $link = null;
+    $connection = null;
 
     // include the HTML presentation code
     require 'templates/list.php';
@@ -147,27 +147,27 @@ of the application are isolated in a new file called ``model.php``::
     // model.php
     function open_database_connection()
     {
-        $link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
+        $connection = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
 
-        return $link;
+        return $connection;
     }
 
-    function close_database_connection(&$link)
+    function close_database_connection(&$connection)
     {
-        $link = null;
+        $connection = null;
     }
 
     function get_all_posts()
     {
-        $link = open_database_connection();
+        $connection = open_database_connection();
 
-        $result = $link->query('SELECT id, title FROM post');
+        $result = $connection->query('SELECT id, title FROM post');
 
         $posts = array();
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = $row;
         }
-        close_database_connection($link);
+        close_database_connection($connection);
 
         return $posts;
     }
@@ -260,16 +260,16 @@ an individual blog result based on a given id::
     // model.php
     function get_post_by_id($id)
     {
-        $link = open_database_connection();
+        $connection = open_database_connection();
 
         $query = 'SELECT created_at, title, body FROM post WHERE  id=:id';
-        $statement = $link->prepare($query);
+        $statement = $connection->prepare($query);
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
         $row = $statement->fetch(PDO::FETCH_ASSOC);
 
-        close_database_connection($link);
+        close_database_connection($connection);
 
         return $row;
     }

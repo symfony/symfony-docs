@@ -140,8 +140,8 @@ retrieve any cookie while making requests with the client::
     // Get cookie data
     $name       = $cookie->getName();
     $value      = $cookie->getValue();
-    $raw        = $cookie->getRawValue();
-    $secure     = $cookie->isSecure();
+    $rawValue   = $cookie->getRawValue();
+    $isSecure   = $cookie->isSecure();
     $isHttpOnly = $cookie->isHttpOnly();
     $isExpired  = $cookie->isExpired();
     $expires    = $cookie->getExpiresTime();

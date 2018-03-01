@@ -149,9 +149,9 @@ With this knowledge in mind, let's write the new version of our framework::
         include sprintf(__DIR__.'/../src/pages/%s.php', $_route);
 
         $response = new Response(ob_get_clean());
-    } catch (Routing\Exception\ResourceNotFoundException $e) {
+    } catch (Routing\Exception\ResourceNotFoundException $exception) {
         $response = new Response('Not Found', 404);
-    } catch (Exception $e) {
+    } catch (Exception $exception) {
         $response = new Response('An error occurred', 500);
     }
 

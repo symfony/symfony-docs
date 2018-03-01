@@ -91,7 +91,7 @@ HTML contents) into the ``Response`` object needed by Symfony::
 
     public function onKernelView(GetResponseForControllerResultEvent $event)
     {
-        $val = $event->getControllerResult();
+        $value = $event->getControllerResult();
         $response = new Response();
 
         // ... somehow customize the Response from the return value

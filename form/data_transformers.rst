@@ -171,11 +171,11 @@ to and from the issue number and the ``Issue`` object::
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
-        private $manager;
+        private $objectManager;
 
-        public function __construct(ObjectManager $manager)
+        public function __construct(ObjectManager $objectManager)
         {
-            $this->manager = $manager;
+            $this->objectManager = $objectManager;
         }
 
         /**
@@ -207,7 +207,7 @@ to and from the issue number and the ``Issue`` object::
                 return;
             }
 
-            $issue = $this->manager
+            $issue = $this->objectManager
                 ->getRepository(Issue::class)
                 // query for the issue with this id
                 ->find($issueNumber)
@@ -264,11 +264,11 @@ to be passed in by registering ``TaskType`` as a service::
     // ...
     class TaskType extends AbstractType
     {
-        private $manager;
+        private $objectManager;
 
-        public function __construct(ObjectManager $manager)
+        public function __construct(ObjectManager $objectManager)
         {
-            $this->manager = $manager;
+            $this->objectManager = $objectManager;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -283,7 +283,7 @@ to be passed in by registering ``TaskType`` as a service::
             // ...
 
             $builder->get('issue')
-                ->addModelTransformer(new IssueToNumberTransformer($this->manager));
+                ->addModelTransformer(new IssueToNumberTransformer($this->objectManager));
         }
 
         // ...
@@ -388,16 +388,16 @@ First, create the custom field type class::
 
     class IssueSelectorType extends AbstractType
     {
-        private $manager;
+        private $objectManager;
 
-        public function __construct(ObjectManager $manager)
+        public function __construct(ObjectManager $objectManager)
         {
-            $this->manager = $manager;
+            $this->objectManager = $objectManager;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $transformer = new IssueToNumberTransformer($this->manager);
+            $transformer = new IssueToNumberTransformer($this->objectManager);
             $builder->addModelTransformer($transformer);
         }
 

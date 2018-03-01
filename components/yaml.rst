@@ -121,8 +121,8 @@ error occurred:
 
     try {
         $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
-    } catch (ParseException $e) {
-        printf("Unable to parse the YAML string: %s", $e->getMessage());
+    } catch (ParseException $exception) {
+        printf("Unable to parse the YAML string: %s", $exception->getMessage());
     }
 
 .. _components-yaml-dump:

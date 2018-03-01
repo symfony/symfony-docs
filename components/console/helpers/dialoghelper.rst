@@ -52,7 +52,7 @@ You can also ask question with more than a simple yes/no answer. For instance,
 if you want to know a bundle name, you can add this to your command::
 
     // ...
-    $bundle = $dialog->ask(
+    $bundleName = $dialog->ask(
         $output,
         'Please enter the name of the bundle',
         'AcmeDemoBundle'
@@ -71,7 +71,7 @@ will be autocompleted as the user types::
 
     $dialog = $this->getHelper('dialog');
     $bundleNames = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
-    $name = $dialog->ask(
+    $bundleName = $dialog->ask(
         $output,
         'Please enter the name of a bundle',
         'FooBundle',
@@ -109,7 +109,7 @@ be suffixed with ``Bundle``. You can validate that by using the
 method::
 
     // ...
-    $bundle = $dialog->askAndValidate(
+    $bundleName = $dialog->askAndValidate(
         $output,
         'Please enter the name of the bundle',
         function ($answer) {
