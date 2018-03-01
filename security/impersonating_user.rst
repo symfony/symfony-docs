@@ -109,12 +109,12 @@ over the user's roles until you find one that a ``SwitchUserRole`` object::
     use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
     use Symfony\Component\Security\Core\Role\SwitchUserRole;
 
-    private $authChecker;
+    private $authorizationChecker;
     private $tokenStorage;
 
-    public function __construct(AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage)
     {
-        $this->authChecker = $authChecker;
+        $this->authorizationChecker = $authorizationChecker;
         $this->tokenStorage = $tokenStorage;
     }
 
@@ -122,7 +122,7 @@ over the user's roles until you find one that a ``SwitchUserRole`` object::
     {
         // ...
 
-        if ($authChecker->isGranted('ROLE_PREVIOUS_ADMIN')) {
+        if ($authorizationChecker->isGranted('ROLE_PREVIOUS_ADMIN')) {
             foreach ($tokenStorage->getToken()->getRoles() as $role) {
                 if ($role instanceof SwitchUserRole) {
                     $impersonatorUser = $role->getSource()->getUser();

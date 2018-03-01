@@ -43,14 +43,14 @@ to your controller, and as attributes of the ``Request`` object:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('blog', new Route('/blog/{page}', array(
+        $routes = new RouteCollection();
+        $routes->add('blog', new Route('/blog/{page}', array(
             '_controller' => 'App\Controller\BlogController::index',
             'page'        => 1,
             'title'       => 'Hello world!',
         )));
 
-        return $collection;
+        return $routes;
 
 Now, you can access this extra parameter in your controller, as an argument
 to the controller method::

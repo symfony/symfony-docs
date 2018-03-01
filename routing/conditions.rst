@@ -39,8 +39,8 @@ define arbitrary matching logic, use the ``conditions`` routing option:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('contact', new Route(
+        $routes = new RouteCollection();
+        $routes->add('contact', new Route(
             '/contact', array(
                 '_controller' => 'App\Controller\DefaultController::contact',
             ),
@@ -78,7 +78,7 @@ variables that are passed into the expression:
     Behind the scenes, expressions are compiled down to raw PHP. Our example
     would generate the following PHP in the cache directory::
 
-        if (rtrim($pathinfo, '/contact') === '' && (
+        if (rtrim($pathInfo, '/contact') === '' && (
             in_array($context->getMethod(), array(0 => "GET", 1 => "HEAD"))
             && preg_match("/firefox/i", $request->headers->get("User-Agent"))
         )) {

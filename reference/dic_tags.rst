@@ -267,7 +267,7 @@ service class::
 
     class MyClearer implements CacheClearerInterface
     {
-        public function clear($cacheDir)
+        public function clear($cacheDirectory)
         {
             // clear your cache
         }
@@ -333,7 +333,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
 
     class MyCustomWarmer implements CacheWarmerInterface
     {
-        public function warmUp($cacheDir)
+        public function warmUp($cacheDirectory)
         {
             // ... do some sort of operations to "warm" your cache
         }

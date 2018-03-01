@@ -105,7 +105,7 @@ with a non-zero code)::
         $process->mustRun();
 
         echo $process->getOutput();
-    } catch (ProcessFailedException $e) {
+    } catch (ProcessFailedException $exception) {
         echo $e->getMessage();
     }
 

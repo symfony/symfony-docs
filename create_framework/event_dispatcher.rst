@@ -70,9 +70,9 @@ the Response instance::
                 $arguments = $this->argumentResolver->getArguments($request, $controller);
 
                 $response = call_user_func_array($controller, $arguments);
-            } catch (ResourceNotFoundException $e) {
+            } catch (ResourceNotFoundException $exception) {
                 $response = new Response('Not Found', 404);
-            } catch (\Exception $e) {
+            } catch (\Exception $exception) {
                 $response = new Response('An error occurred', 500);
             }
 

@@ -41,7 +41,7 @@ username and the password are different only if all other validation passes
             /**
              * @Assert\IsTrue(message="The password cannot match your username", groups={"Strict"})
              */
-            public function isPasswordLegal()
+            public function isPasswordSafe()
             {
                 return ($this->username !== $this->password);
             }
@@ -55,7 +55,7 @@ username and the password are different only if all other validation passes
                 - User
                 - Strict
             getters:
-                passwordLegal:
+                passwordSafe:
                     - 'IsTrue':
                         message: 'The password cannot match your username'
                         groups: [Strict]
@@ -82,7 +82,7 @@ username and the password are different only if all other validation passes
                     <constraint name="NotBlank" />
                 </property>
 
-                <getter property="passwordLegal">
+                <getter property="passwordSafe">
                     <constraint name="IsTrue">
                         <option name="message">The password cannot match your username</option>
                         <option name="groups">
@@ -113,7 +113,7 @@ username and the password are different only if all other validation passes
                 $metadata->addPropertyConstraint('username', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('password', new Assert\NotBlank());
 
-                $metadata->addGetterConstraint('passwordLegal', new Assert\IsTrue(array(
+                $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue(array(
                     'message' => 'The password cannot match your first name',
                     'groups'  => array('Strict'),
                 )));

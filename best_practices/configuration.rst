@@ -103,20 +103,20 @@ to control the number of posts to display on the blog homepage:
 
     # config/services.yaml
     parameters:
-        homepage.num_items: 10
+        homepage.number_of_items: 10
 
 If you've done something like this in the past, it's likely that you've in fact
 *never* actually needed to change that value. Creating a configuration
 option for a value that you are never going to configure just isn't necessary.
 Our recommendation is to define these values as constants in your application.
-You could, for example, define a ``NUM_ITEMS`` constant in the ``Post`` entity::
+You could, for example, define a ``NUMBER_OF_ITEMS`` constant in the ``Post`` entity::
 
     // src/Entity/Post.php
     namespace App\Entity;
 
     class Post
     {
-        const NUM_ITEMS = 10;
+        const NUMBER_OF_ITEMS = 10;
 
         // ...
     }
@@ -131,7 +131,7 @@ Constants can be used for example in your Twig templates thanks to the
 .. code-block:: html+twig
 
     <p>
-        Displaying the {{ constant('NUM_ITEMS', post) }} most recent results.
+        Displaying the {{ constant('NUMBER_OF_ITEMS', post) }} most recent results.
     </p>
 
 And Doctrine entities and repositories can now easily access these values,
@@ -146,7 +146,7 @@ whereas they cannot access the container parameters:
 
     class PostRepository extends EntityRepository
     {
-        public function findLatest($limit = Post::NUM_ITEMS)
+        public function findLatest($limit = Post::NUMBER_OF_ITEMS)
         {
             // ...
         }

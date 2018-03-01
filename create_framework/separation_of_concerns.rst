@@ -49,9 +49,9 @@ request handling logic into its own ``Simplex\\Framework`` class::
                 $arguments = $this->argumentResolver->getArguments($request, $controller);
 
                 return call_user_func_array($controller, $arguments);
-            } catch (ResourceNotFoundException $e) {
+            } catch (ResourceNotFoundException $exception) {
                 return new Response('Not Found', 404);
-            } catch (\Exception $e) {
+            } catch (\Exception $exception) {
                 return new Response('An error occurred', 500);
             }
         }
@@ -108,8 +108,8 @@ Move the controller to ``Calendar\Controller\LeapYearController``::
     {
         public function indexAction(Request $request, $year)
         {
-            $leapyear = new LeapYear();
-            if ($leapyear->isLeapYear($year)) {
+            $leapYear = new LeapYear();
+            if ($leapYear->isLeapYear($year)) {
                 return new Response('Yep, this is a leap year!');
             }
 

@@ -1189,10 +1189,10 @@ Next, you'll need to create a route for this URL (but not a controller):
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('logout', new Route('/logout'));
+        $routes = new RouteCollection();
+        $routes->add('logout', new Route('/logout'));
 
-        return $collection;
+        return $routes;
 
 And that's it! By sending a user to ``/logout`` (or whatever you configure
 the ``path`` to be), Symfony will un-authenticate the current user.

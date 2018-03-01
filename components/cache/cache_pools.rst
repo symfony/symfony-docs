@@ -175,10 +175,10 @@ its compatibe cache adapters (and those that do not implement ``PruneableInterfa
 silently ignored)::
 
     use Symfony\Component\Cache\Adapter\ApcuAdapter;
-    use Syfmony\Component\Cache\Adapter\ChainAdapter;
-    use Syfmony\Component\Cache\Adapter\FilesystemAdapter;
-    use Syfmony\Component\Cache\Adapter\PdoAdapter;
-    use Syfmony\Component\Cache\Adapter\PhpFilesAdapter;
+    use Symfony\Component\Cache\Adapter\ChainAdapter;
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+    use Symfony\Component\Cache\Adapter\PdoAdapter;
+    use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
 
     $cache = new ChainAdapter(array(
         new ApcuAdapter(),       // does NOT implement PruneableInterface

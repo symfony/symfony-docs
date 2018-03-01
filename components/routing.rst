@@ -262,9 +262,9 @@ To load this file, you can use the following code. This assumes that your
     use Symfony\Component\Routing\Loader\YamlFileLoader;
 
     // looks inside *this* directory
-    $locator = new FileLocator(array(__DIR__));
-    $loader = new YamlFileLoader($locator);
-    $collection = $loader->load('routes.yaml');
+    $fileLocator = new FileLocator(array(__DIR__));
+    $loader = new YamlFileLoader($fileLocator);
+    $routes = $loader->load('routes.yaml');
 
 Besides :class:`Symfony\\Component\\Routing\\Loader\\YamlFileLoader` there are two
 other loaders that work the same way:
@@ -279,14 +279,14 @@ have to provide the name of a PHP file which returns a :class:`Symfony\\Componen
     use Symfony\Component\Routing\RouteCollection;
     use Symfony\Component\Routing\Route;
 
-    $collection = new RouteCollection();
-    $collection->add(
+    $routes = new RouteCollection();
+    $routes->add(
         'route_name',
         new Route('/foo', array('_controller' => 'ExampleController'))
     );
     // ...
 
-    return $collection;
+    return $routes;
 
 Routes as Closures
 ..................
@@ -301,7 +301,7 @@ calls a closure and uses the result as a :class:`Symfony\\Component\\Routing\\Ro
     };
 
     $loader = new ClosureLoader();
-    $collection = $loader->load($closure);
+    $routes = $loader->load($closure);
 
 Routes as Annotations
 .....................
@@ -334,11 +334,11 @@ path) or disable caching (if it's set to ``null``). The caching is done
 automatically in the background if you want to use it. A basic example of the
 :class:`Symfony\\Component\\Routing\\Router` class would look like::
 
-    $locator = new FileLocator(array(__DIR__));
+    $fileLocator = new FileLocator(array(__DIR__));
     $requestContext = new RequestContext('/');
 
     $router = new Router(
-        new YamlFileLoader($locator),
+        new YamlFileLoader($fileLocator),
         'routes.yaml',
         array('cache_dir' => __DIR__.'/cache'),
         $requestContext
