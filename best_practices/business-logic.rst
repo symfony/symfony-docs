@@ -43,9 +43,7 @@ as Twig extensions, event subscribers, etc.
 
 The blog application needs a utility that can transform a post title (e.g.
 "Hello World") into a slug (e.g. "hello-world") to include it as part of the
-post URL. Let's create a new ``Slugger`` class inside ``src/Utils/``:
-
-.. code-block:: php
+post URL. Let's create a new ``Slugger`` class inside ``src/Utils/``::
 
     // src/Utils/Slugger.php
     namespace App\Utils;
@@ -69,9 +67,7 @@ simply ``Slugger::class`` if the class is already imported in your code).
     case, use a snake case id).
 
 Now you can use the custom slugger in any other service or controller class,
-such as the ``AdminController``:
-
-.. code-block:: php
+such as the ``AdminController``::
 
     use App\Utils\Slugger;
 
@@ -152,9 +148,7 @@ PHP and annotations.
     Use annotations to define the mapping information of the Doctrine entities.
 
 Annotations are by far the most convenient and agile way of setting up and
-looking for mapping information:
-
-.. code-block:: php
+looking for mapping information::
 
     namespace App\Entity;
 
@@ -233,9 +227,7 @@ the following command to install the Doctrine fixtures bundle:
     $ composer require "doctrine/doctrine-fixtures-bundle"
 
 Then, this bundle is enabled automatically, but only for the ``dev`` and
-``test`` environments:
-
-.. code-block:: php
+``test`` environments::
 
     // config/bundles.php
 

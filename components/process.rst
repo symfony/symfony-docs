@@ -369,9 +369,7 @@ Process Pid
 -----------
 
 You can access the `pid`_ of a running process with the
-:method:`Symfony\\Component\\Process\\Process::getPid` method.
-
-.. code-block:: php
+:method:`Symfony\\Component\\Process\\Process::getPid` method::
 
     use Symfony\Component\Process\Process;
 

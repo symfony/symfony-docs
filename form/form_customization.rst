@@ -423,9 +423,7 @@ When the ``form.age`` widget is rendered, Symfony will use the customized
 the ``div`` element.
 
 If you want to apply a theme to a specific child form, pass it to the ``setTheme()``
-method:
-
-.. code-block:: php
+method::
 
     <?php $view['form']->setTheme($form['child'], ':form'); ?>
 

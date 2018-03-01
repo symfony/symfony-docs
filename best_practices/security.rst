@@ -134,9 +134,7 @@ Using Expressions for Complex Security Restrictions
 If your security logic is a little bit more complex, you can use an :doc:`expression </components/expression_language>`
 inside ``@Security``. In the following example, a user can only access the
 controller if their email matches the value returned by the ``getAuthorEmail()``
-method on the ``Post`` object:
-
-.. code-block:: php
+method on the ``Post`` object::
 
     use App\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -167,9 +165,7 @@ need to repeat the expression code using Twig syntax:
     {% endif %}
 
 The easiest solution - if your logic is simple enough - is to add a new method
-to the ``Post`` entity that checks if a given user is its author:
-
-.. code-block:: php
+to the ``Post`` entity that checks if a given user is its author::
 
     // src/Entity/Post.php
     // ...
@@ -189,9 +185,7 @@ to the ``Post`` entity that checks if a given user is its author:
         }
     }
 
-Now you can reuse this method both in the template and in the security expression:
-
-.. code-block:: php
+Now you can reuse this method both in the template and in the security expression::
 
     use App\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -222,9 +216,7 @@ Checking Permissions without @Security
 The above example with ``@Security`` only works because we're using the
 :ref:`ParamConverter <best-practices-paramconverter>`, which gives the expression
 access to the ``post`` variable. If you don't use this, or have some other
-more advanced use-case, you can always do the same security check in PHP:
-
-.. code-block:: php
+more advanced use-case, you can always do the same security check in PHP::
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
@@ -271,9 +263,7 @@ If your security logic is complex and can't be centralized into a method like
 all cases.
 
 First, create a voter class. The following example shows a voter that implements
-the same ``getAuthorEmail()`` logic you used above:
-
-.. code-block:: php
+the same ``getAuthorEmail()`` logic you used above::
 
     namespace App\Security;
 
@@ -345,9 +335,7 @@ your application will :ref:`autoconfigure <services-autoconfigure>` your securit
 voter and inject an ``AccessDecisionManagerInterface`` instance into it thanks to
 :doc:`autowiring </service_container/autowiring>`.
 
-Now, you can use the voter with the ``@Security`` annotation:
-
-.. code-block:: php
+Now, you can use the voter with the ``@Security`` annotation::
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
@@ -359,9 +347,7 @@ Now, you can use the voter with the ``@Security`` annotation:
     }
 
 You can also use this directly with the ``security.authorization_checker`` service or
-via the even easier shortcut in a controller:
-
-.. code-block:: php
+via the even easier shortcut in a controller::
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")

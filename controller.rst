@@ -323,9 +323,7 @@ method is just a shortcut to create a special
 object, which ultimately triggers a 404 HTTP response inside Symfony.
 
 Of course, you can throw any ``Exception`` class in your controller: Symfony will
-automatically return a 500 HTTP response code.
-
-.. code-block:: php
+automatically return a 500 HTTP response code::
 
     throw new \Exception('Something went wrong!');
 
