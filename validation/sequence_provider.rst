@@ -128,7 +128,7 @@ that group are valid, the second group, ``Strict``, will be validated.
 
 .. caution::
 
-    As you have already seen in the previous section, the ``Default`` group
+    As you have already seen in :doc:`/validation/groups`, the ``Default`` group
     and the group containing the class name (e.g. ``User``) were identical.
     However, when using Group Sequences, they are no longer identical. The
     ``Default`` group will now reference the group sequence, instead of all
