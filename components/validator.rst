@@ -23,7 +23,7 @@ Usage
 
 The Validator component behavior is based on two concepts:
 
-* Contraints, which define the rules to be validated;
+* Constraints, which define the rules to be validated;
 * Validators, which are the classes that contain the actual validation logic.
 
 The following example shows how to validate that a string is at least 10
