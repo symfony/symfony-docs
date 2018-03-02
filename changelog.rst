@@ -2622,7 +2622,7 @@ Fixed Documentation
 - `e385d28 <https://github.com/symfony/symfony-docs/commit/e385d28bee7c7418c8175d43befc4954a43a300c>`_ #3503 file extension correction xfliff to xliff (nixilla)
 - `6d34aa6 <https://github.com/symfony/symfony-docs/commit/6d34aa6038b8317259d2e8fffd186ad24fef5bc5>`_ #3478 Update custom_password_authenticator.rst (piotras-s)
 - `a171700 <https://github.com/symfony/symfony-docs/commit/a171700fb8d9695947bc1b16c6f61c183f296657>`_ #3477 Api key user provider should use "implements" instead of "extends" (skowi)
-- `7fe0de3 <https://github.com/symfony/symfony-docs/commit/7fe0de330b2d72155b6b7ec87c59f5a7e7ee4881>`_ #3475 Fixed doc for framework.session.cookie_lifetime refrence. (tyomo4ka)
+- `7fe0de3 <https://github.com/symfony/symfony-docs/commit/7fe0de330b2d72155b6b7ec87c59f5a7e7ee4881>`_ #3475 Fixed doc for framework.session.cookie_lifetime reference. (tyomo4ka)
 - `8155e4c <https://github.com/symfony/symfony-docs/commit/8155e4cab70e481962a4775274a4412a4465ecdc>`_ #3473 Update proxy_examples.rst (AZielinski)
 
 Minor Documentation Changes
