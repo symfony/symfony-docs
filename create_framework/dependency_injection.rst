@@ -183,7 +183,7 @@ Now, here is how you can register a custom listener in the front controller::
     // ...
     use Simplex\StringResponseListener;
 
-    $container->register('listener.string_response', StringResposeListener::class);
+    $container->register('listener.string_response', StringResponseListener::class);
     $container->getDefinition('dispatcher')
         ->addMethodCall('addSubscriber', array(new Reference('listener.string_response')))
     ;
