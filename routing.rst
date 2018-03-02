@@ -493,6 +493,30 @@ that are special: each adds a unique piece of functionality inside your applicat
 ``_locale``
     Used to set the locale on the request (:ref:`read more <translation-locale-url>`).
 
+Redirecting URLs with Trailing Slashes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Historically, URLs have followed the UNIX convention of adding trailing slashes
+for directories (e.g. ``https://example.com/foo/``) and removing them to refer
+to files (``https://example.com/foo``). Although serving different contents for
+both URLs is OK, nowadays it's common to treat both URLs as the same URL and
+redirect between them.
+
+Symfony follows this logic to redirect between URLs with and without trailing
+slashes (but only for ``GET`` and ``HEAD`` requests):
+
+----------  ----------------------------------------  ------------------------------------------
+Route path  If the requested URL is ``/foo``          If the requested URL is ``/foo/``
+----------  ----------------------------------------  ------------------------------------------
+``/foo``    It matches (``200`` status response)      It doesn't match (``404`` status response)
+``/foo/``   It makes a ``301`` redirect to ``/foo/``  It matches (``200`` status response)
+----------  ----------------------------------------  ------------------------------------------
+
+In summary, adding a trailing slash in the route path is the best way to ensure
+that both URLs work. Read the :doc:`/routing/redirect_trailing_slash` article to
+learn how to avoid the ``404`` error when the request URL contains a trailing
+slash and the route path does not.
+
 .. index::
    single: Routing; Controllers
    single: Controller; String naming format
