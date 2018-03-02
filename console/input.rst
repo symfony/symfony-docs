@@ -174,6 +174,8 @@ flag:
                 1
             );
 
+Note that while long options are separated from their value with an ``=`` character, e.g. ``--iterations=5``, short options do not use any separator. The short option variant of the previous example would therefore be ``-i5``.
+
 There are four option variants you can use:
 
 ``InputOption::VALUE_IS_ARRAY``
@@ -184,7 +186,7 @@ There are four option variants you can use:
     behavior of options;
 
 ``InputOption::VALUE_REQUIRED``
-    This value is required (e.g. ``--iterations=5``), the option itself is
+    This value is required (e.g. ``--iterations=5`` or ``-i5``), the option itself is
     still optional;
 
 ``InputOption::VALUE_OPTIONAL``
