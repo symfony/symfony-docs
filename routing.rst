@@ -493,7 +493,7 @@ that are special: each adds a unique piece of functionality inside your applicat
 ``_locale``
     Used to set the locale on the request (:ref:`read more <translation-locale-url>`).
 
-.. routing-trailing-slash-redirection:
+.. _routing-trailing-slash-redirection:
 
 Redirecting URLs with Trailing Slashes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
