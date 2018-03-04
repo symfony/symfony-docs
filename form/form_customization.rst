@@ -129,7 +129,7 @@ fragment needed to render every part of a form:
 
 .. tip::
 
-    Read more about :doc:`Bootstrap 4 form theme </form/bootstrap4>`.
+    Read more about the :doc:`Bootstrap 4 form theme </form/bootstrap4>`.
 
 In the next section you will learn how to customize a theme by overriding
 some or all of its fragments.

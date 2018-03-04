@@ -52,7 +52,7 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
 Accessibility
 -------------
 
-The Bootstrap 4 framework has done a good job making in accessible for function
+The Bootstrap 4 framework has done a good job making it accessible for function
 variations like impaired vision and cognitive ability. Symfony has taken this one
 step further to make sure the form theme complies with the `WCAG2.0 standard`_.
 
@@ -79,8 +79,8 @@ When you use the Bootstrap form themes and render the fields manually, calling
 ``form_label()`` for a checkbox/radio field doesn't show anything. Due to Bootstrap
 internals, the label is already shown by ``form_widget()``.
 
-You may also note that the form errors is rendered **inside** the ``<label>``. This
-is done to make sure there is a strong connection between the error and in the
+You may also note that the form errors are rendered **inside** the ``<label>``. This
+is done to make sure there is a strong connection between the error and in
 ``<input>``, as required by the `WCAG2.0 standard`_.
 
 .. _`their documentation`: https://getbootstrap.com/docs/4.0/
