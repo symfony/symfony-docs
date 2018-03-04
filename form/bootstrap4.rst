@@ -80,7 +80,7 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
 Accessibility
 -------------
 
-The Bootstrap 4 framework has done a good job making it accessible for function
+The Bootstrap 4 framework has done a good job making it accessible for functional
 variations like impaired vision and cognitive ability. Symfony has taken this one
 step further to make sure the form theme complies with the `WCAG 2.0 standard`_.
 
