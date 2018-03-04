@@ -82,7 +82,7 @@ Accessibility
 
 The Bootstrap 4 framework has done a good job making it accessible for function
 variations like impaired vision and cognitive ability. Symfony has taken this one
-step further to make sure the form theme complies with the `WCAG2.0 standard`_.
+step further to make sure the form theme complies with the `WCAG 2.0 standard`_.
 
 This does not mean that your entire website automatically complies with the full
 standard, but it does mean that you have come far in your work to create a design
@@ -104,13 +104,13 @@ Labels and Errors
 -----------------
 
 When you use the Bootstrap form themes and render the fields manually, calling
-``form_label()`` for a checkbox/radio field doesn't show anything. Due to Bootstrap
-internals, the label is already shown by ``form_widget()``.
+``form_label()`` for a checkbox/radio field doesn't render anything. Due to Bootstrap
+internals, the label is already rendered by ``form_widget()``.
 
-You may also note that the form errors are rendered **inside** the ``<label>``. This
-is done to make sure there is a strong connection between the error and in
-``<input>``, as required by the `WCAG2.0 standard`_.
+Form errors are rendered **inside** the ``<label>`` element to make sure there
+is a strong connection between the error and its ``<input>``, as required by the
+`WCAG 2.0 standard`_.
 
 .. _`their documentation`: https://getbootstrap.com/docs/4.0/
-.. _`WCAG2.0 standard`: https://www.w3.org/TR/WCAG20/
+.. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
 .. _`custom forms`: https://getbootstrap.com/docs/4.0/components/forms/#custom-forms
