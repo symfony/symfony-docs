@@ -517,12 +517,12 @@ Route path  If the requested URL is ``/foo``          If the requested URL is ``
 .. note::
 
     If your application defines different routes for each path (``/foo`` and
-    ``/foo/``) then this automatic redirection doesn't take place and the right
+    ``/foo/``) this automatic redirection doesn't take place and the right
     route is always matched.
 
 .. versionadded:: 4.1
     The automatic ``301`` redirection from ``/foo/`` to ``/foo`` was introduced
-    in Symfony 4.1. In previous Symfony version this results in a ``404`` response.
+    in Symfony 4.1. In previous Symfony versions this results in a ``404`` response.
 
 .. index::
    single: Routing; Controllers
