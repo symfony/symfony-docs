@@ -87,5 +87,6 @@ Related documents
 
     reporting_guidelines
     enforcement_team
+    concrete_example_document
 
 .. _Contributor Covenant: https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
