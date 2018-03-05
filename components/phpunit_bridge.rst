@@ -220,6 +220,9 @@ following listener in your PHPUnit configuration:
 As a result, the following is guaranteed to work and is no longer a transient
 test::
 
+    # ClockMock mocks PHP functions on the namespace level
+    namespace Tests\Symfony\Component\Stopwatch;
+
     use PHPUnit\Framework\TestCase;
     use Symfony\Component\Stopwatch\Stopwatch;
 
