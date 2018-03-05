@@ -174,7 +174,9 @@ flag:
                 1
             );
 
-Note that while long options are separated from their value with an ``=`` character, e.g. ``--iterations=5``, short options do not use any separator. The short option variant of the previous example would therefore be ``-i5``.
+Note that while long options are separated from their value with an ``=``
+character, e.g. ``--iterations=5``, short options do not use any separator. The
+short option variant of the previous example would therefore be ``-i5``.
 
 There are four option variants you can use:
 
