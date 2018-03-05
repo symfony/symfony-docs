@@ -326,7 +326,7 @@ correctly. To validate the types of the options, call
 
             // check all items in an array recursively for a type
             $resolver->setAllowedTypes('dates', 'DateTime[]');
-            $resolver->setAllowedtypes('ports', 'int[]');
+            $resolver->setAllowedTypes('ports', 'int[]');
         }
     }
 
