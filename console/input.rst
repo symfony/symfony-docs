@@ -219,3 +219,19 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
     Similarly, due to a PHP limitation, there is no way to pass an empty string
     as the value of an option. In ``command --prefix`` and ``command --prefix=''``
     cases, the value of the ``prefix`` option will be ``null``.
+
+Note that to comply with the `docopt standard`_, long options can specify their
+values after a white space or an ``=`` sign (e.g. ``--iterations 5`` or
+``--iterations=5``), but short options can only use white spaces or no
+separation at all (e.g. ``-i 5`` or ``-i5``).
+
+.. _`docopt standard`: http://docopt.org/
+
+.. tip::
+
+    While it is possible to use whitespace to separate an option from its value,
+    using this form leads to an ambiguity should the option appear before the
+    command name. In other words, ``php bin/console --iterations 5 app:greet Fabien``
+    is ambiguous; Symfony would interpret ``5`` as the command name. To avoid
+    this situation, always place options after the command name, or avoid using
+    a space to separate the option name from its value.
