@@ -11,41 +11,43 @@ the original service is lost:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
-            app.mailer:
-                class: AppBundle\Mailer
+            AppBundle\Mailer: ~
 
-            # this replaces the old app.mailer definition with the new one, the
+            # this replaces the old AppBundle\Mailer definition with the new one, the
             # old definition is lost
-            app.mailer:
+            AppBundle\Mailer:
                 class: AppBundle\DecoratingMailer
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
             xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer" />
+                <service id="AppBundle\Mailer" />
 
-                <!-- this replaces the old app.mailer definition with the new
+                <!-- this replaces the old AppBundle\Mailer definition with the new
                      one, the old definition is lost -->
-                <service id="app.mailer" class="AppBundle\DecoratingMailer" />
+                <service id="AppBundle\Mailer" class="AppBundle\DecoratingMailer" />
             </services>
         </container>
 
     .. code-block:: php
 
+        // config/services.php
         use AppBundle\Mailer;
         use AppBundle\DecoratingMailer;
 
-        $container->register('app.mailer', Mailer::class);
+        $container->register(Mailer::class);
 
-        // this replaces the old app.mailer definition with the new one, the
+        // this replaces the old AppBundle\Mailer definition with the new one, the
         // old definition is lost
-        $container->register('app.mailer', DecoratingMailer::class);
+        $container->register(Mailer::class, DecoratingMailer::class);
 
 Most of the time, that's exactly what you want to do. But sometimes,
 you might want to decorate the old service instead and keep the old service so
@@ -55,38 +57,37 @@ that you can reference it:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
-            app.mailer:
-                class: AppBundle\Mailer
+            AppBundle\Mailer: ~
 
-            app.decorating_mailer:
-                class:     AppBundle\DecoratingMailer
-                # overrides the app.mailer service
-                # but that service is still available as app.decorating_mailer.inner
-                decorates: app.mailer
+            AppBundle\DecoratingMailer:
+                # overrides the AppBundle\Mailer service
+                # but that service is still available as AppBundle\Mailer.inner
+                decorates: AppBundle\Mailer
 
                 # pass the old service as an argument
-                arguments: ['@app.decorating_mailer.inner']
+                arguments: ['@AppBundle\DecoratingMailer.inner']
 
-                # private, because usually you do not need to fetch app.decorating_mailer directly
+                # private, because usually you do not need to fetch AppBundle\DecoratingMailer directly
                 public:    false
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
             xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer" />
+                <service id="AppBundle\Mailer" />
 
-                <service id="app.decorating_mailer"
-                    class="AppBundle\DecoratingMailer"
-                    decorates="app.mailer"
+                <service id="AppBundle\DecoratingMailer"
+                    decorates="AppBundle\Mailer"
                     public="false"
                 >
-                    <argument type="service" id="app.decorating_mailer.inner" />
+                    <argument type="service" id="AppBundle\DecoratingMailer.inner" />
                 </service>
 
             </services>
@@ -94,32 +95,33 @@ that you can reference it:
 
     .. code-block:: php
 
+        // config/services.php
         use AppBundle\DecoratingMailer;
         use AppBundle\Mailer;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register('app.mailer', Mailer::class);
+        $container->register(Mailer::class);
 
-        $container->register('app.decorating_mailer', DecoratingMailer::class)
-            ->setDecoratedService('app.mailer')
-            ->addArgument(new Reference('app.decorating_mailer.inner'))
+        $container->register(DecoratingMailer::class)
+            ->setDecoratedService(Mailer::class)
+            ->addArgument(new Reference(DecoratingMailer::class.'.inner'))
             ->setPublic(false)
         ;
 
-The ``decorates`` option tells the container that the ``app.decorating_mailer`` service
-replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed to
-``app.decorating_mailer.inner`` so you can inject it into your new service.
+The ``decorates`` option tells the container that the ``AppBundle\DecoratingMailer`` service
+replaces the ``AppBundle\Mailer`` service. The old ``AppBundle\Mailer`` service is renamed to
+``AppBundle\DecoratingMailer.inner`` so you can inject it into your new service.
 
 .. tip::
 
-    The visibility (public) of the decorated ``app.mailer`` service (which is an alias
-    for the new service) will still be the same as the original ``app.mailer``
+    The visibility (public) of the decorated ``AppBundle\Mailer`` service (which is an alias
+    for the new service) will still be the same as the original ``AppBundle\Mailer``
     visibility.
 
 .. note::
 
     The generated inner id is based on the id of the decorator service
-    (``app.decorating_mailer`` here), not of the decorated service (``app.mailer``
+    (``AppBundle\DecoratingMailer`` here), not of the decorated service (``AppBundle\Mailer``
     here). You can control the inner service name via the ``decoration_inner_name``
     option:
 
@@ -127,14 +129,16 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 
         .. code-block:: yaml
 
+            # config/services.yaml
             services:
-                app.decorating_mailer:
+                AppBundle\DecoratingMailer:
                     # ...
-                    decoration_inner_name: app.decorating_mailer.wooz
-                    arguments: ['@app.decorating_mailer.wooz']
+                    decoration_inner_name: AppBundle\DecoratingMailer.wooz
+                    arguments: ['@AppBundle\DecoratingMailer.wooz']
 
         .. code-block:: xml
 
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
@@ -144,13 +148,12 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
                     <!-- ... -->
 
                     <service
-                        id="app.decorating_mailer"
-                        class="AppBundle\DecoratingMailer"
-                        decorates="app.mailer"
-                        decoration-inner-name="app.decorating_mailer.wooz"
+                        id="AppBundle\DecoratingMailer"
+                        decorates="AppBundle\Mailer"
+                        decoration-inner-name="AppBundle\DecoratingMailer.wooz"
                         public="false"
                     >
-                        <argument type="service" id="app.decorating_mailer.wooz" />
+                        <argument type="service" id="AppBundle\DecoratingMailer.wooz" />
                     </service>
 
                 </services>
@@ -158,12 +161,13 @@ replaces the ``app.mailer`` service. The old ``app.mailer`` service is renamed t
 
         .. code-block:: php
 
+            // config/services.php
             use AppBundle\DecoratingMailer;
             use Symfony\Component\DependencyInjection\Reference;
 
-            $container->register('app.decorating_mailer', DecoratingMailer::class)
-                ->setDecoratedService('app.mailer', 'app.decorating_mailer.wooz')
-                ->addArgument(new Reference('app.decorating_mailer.wooz'))
+            $container->register(DecoratingMailer::class)
+                ->setDecoratedService(AppBundle\Mailer, DecoratingMailer::class.'.wooz')
+                ->addArgument(new Reference(DecoratingMailer::class.'.wooz'))
                 // ...
             ;
 
@@ -178,25 +182,24 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
 
     .. code-block:: yaml
 
-        foo:
-            class: Foo
+        # config/services.yaml
+        Foo: ~
 
-        bar:
-            class: Bar
+        Bar:
             public: false
-            decorates: foo
+            decorates: Foo
             decoration_priority: 5
-            arguments: ['@bar.inner']
+            arguments: ['@Bar.inner']
 
-        baz:
-            class: Baz
+        Baz:
             public: false
-            decorates: foo
+            decorates: Foo
             decoration_priority: 1
-            arguments: ['@baz.inner']
+            arguments: ['@Baz.inner']
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -204,36 +207,37 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="foo" class="Foo" />
+                <service id="Foo" />
 
-                <service id="bar" class="Bar" decorates="foo" decoration-priority="5" public="false">
-                    <argument type="service" id="bar.inner" />
+                <service id="Bar" decorates="Foo" decoration-priority="5" public="false">
+                    <argument type="service" id="Bar.inner" />
                 </service>
 
-                <service id="baz" class="Baz" decorates="foo" decoration-priority="1" public="false">
-                    <argument type="service" id="baz.inner" />
+                <service id="Baz" decorates="Foo" decoration-priority="1" public="false">
+                    <argument type="service" id="Baz.inner" />
                 </service>
             </services>
         </container>
 
     .. code-block:: php
 
+        // config/services.php
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register('foo', 'Foo')
+        $container->register(Foo:class)
 
-        $container->register('bar', 'Bar')
-            ->addArgument(new Reference('bar.inner'))
+        $container->register(Bar:class)
+            ->addArgument(new Reference(Bar:class.'inner'))
             ->setPublic(false)
-            ->setDecoratedService('foo', null, 5);
+            ->setDecoratedService(Foo:class, null, 5);
 
-        $container->register('baz', 'Baz')
-            ->addArgument(new Reference('baz.inner'))
+        $container->register(Baz:class)
+            ->addArgument(new Reference(Baz:class.'inner'))
             ->setPublic(false)
-            ->setDecoratedService('foo', null, 1);
+            ->setDecoratedService(Foo:class, null, 1);
 
 The generated code will be the following::
 
-    $this->services['foo'] = new Baz(new Bar(new Foo()));
+    $this->services[Foo:class] = new Baz(new Bar(new Foo()));
 
 .. _decorator pattern: https://en.wikipedia.org/wiki/Decorator_pattern
