@@ -66,11 +66,6 @@ firewall listener:
             ),
         ));
 
-.. tip::
-
-    For using the ``switch_user`` listener in a ``stateless`` firewall, set the
-    ``switch_user.stateless`` option to ``true``.
-
 To switch to another user, just add a query string with the ``_switch_user``
 parameter and the username as the value to the current URL:
 

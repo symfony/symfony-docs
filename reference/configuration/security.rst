@@ -283,7 +283,6 @@ Each part will be explained in the next section.
                         provider:             ~
                         parameter:            _switch_user
                         role:                 ROLE_ALLOWED_TO_SWITCH
-                        stateless:            false
 
             access_control:
                 requires_channel:     ~
