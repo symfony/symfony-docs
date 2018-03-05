@@ -22,7 +22,7 @@ files. This can be done with the :class:`Symfony\\Component\\Config\\FileLocator
     $configDirectories = array(__DIR__.'/config');
 
     $fileLocator = new FileLocator($configDirectories);
-    $yamlUserFiles = $locator->locate('users.yaml', null, false);
+    $yamlUserFiles = $fileLocator->locate('users.yaml', null, false);
 
 The locator receives a collection of locations where it should look for
 files. The first argument of ``locate()`` is the name of the file to look

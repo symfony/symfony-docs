@@ -69,6 +69,7 @@ path:
         // src/Controller/SecurityController.php
 
         // ...
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\Routing\Annotation\Route;
 
