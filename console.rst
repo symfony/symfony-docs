@@ -72,9 +72,7 @@ method. Then you can optionally define a help message and the
 Executing the Command
 ---------------------
 
-Symfony registers any PHP class extending :class:`Symfony\\Component\\Console\\Command\\Command`
-as a console command automatically. So you can now execute this command in the
-terminal:
+You can now execute this command in the terminal:
 
 .. code-block:: terminal
 
@@ -82,10 +80,12 @@ terminal:
 
 .. note::
 
-    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-    your command classes are automatically registered as services.
+    The command class must be registered as a service with the ``console.command`` tag.
 
-    You can also manually register your command as a service by configuring the service
+    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+    this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
+
+    Otherwise, you can manually register your command as a service by configuring the service
     and :doc:`tagging it </service_container/tags>` with ``console.command``.
 
 As you might expect, this command will do nothing as you didn't write any logic
