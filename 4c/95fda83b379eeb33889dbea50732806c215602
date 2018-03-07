@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by greg-1-anderson at 2018-03-05T15:53:58Z
+
+@javiereguiluz I like your improvement. There is one problem that remains, though, and that is that Symfony fetches the command name via `getFirstArgument()`, and that method always takes the literal first argument, i.e. the first one that does not start with a `-`, without any consideration that said argument might actually be the value of some option that came before (e.g. `--foo BAR` or `-f BAR`). It's hard to fix this behavior in code, though, because Symfony needs to know the command name before it can apply the command-specific option definitions.
+
+Perhaps this should be explained in the documentation as well? I'll try taking a pass a this.
