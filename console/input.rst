@@ -221,11 +221,6 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
     as the value of an option. In ``command --prefix`` and ``command --prefix=''``
     cases, the value of the ``prefix`` option will be ``null``.
 
-Note that to comply with the `docopt standard`_, long options can specify their
-values after a white space or an ``=`` sign (e.g. ``--iterations 5`` or
-``--iterations=5``), but short options can only use white spaces or no
-separation at all (e.g. ``-i 5`` or ``-i5``).
-
 .. caution::
 
     While it is possible to separate an option from its value with a white space,
