@@ -1,0 +1,106 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-28T07:56:53Z
+
+@nasaralla thanks for your first contribution to this repository. However, this is not really an error but a decision. We decided to not include any PHP opening tag in the docs (here you have more details: https://github.com/symfony/symfony-docs/pull/8324#issuecomment-326307432) Other frameworks do the same in their docs.
+
+-----
+
+Now a comment directed at the people who manage this repository: @weaverryan, @xabbuh, @wouterj and @HeahDude. What do you think about adding `<?php` just to this article which is the first one that Symfony newcomers read?
+
+In 2015 some people asked us to add it (https://github.com/symfony/symfony-docs/pull/5741) but we said no.
+
+In 2016 some people asked us to add it (https://github.com/symfony/symfony-docs/pull/6389) but we said no.
+
+In 2017 some people asked us to add it (https://github.com/symfony/symfony-docs/pull/8324) but we said no.
+
+When lots of people ask you to change your decision ... you probably made a wrong decision.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2018-02-28T08:42:46Z
+
+The reasons for closing https://github.com/symfony/symfony-docs/pull/5741 are still valid IMO.
+What about a little `Prerequisite` section dedicated to new comers that we could link in the introduction of some guides to explain that Symfony cannot be mastered without basic knowledge of PHP with a link to its docs and where we could mention that we make use of a ton of code examples without explicit opening tag.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-28T08:48:54Z
+
+I don't think they'll read an external document. The thing is that if you are a newcomer and reading the first tutorial of some project, you probably copy+paste things without much thinking to test them in your browser. That's why I do at least 😅 , so I expect my first copy+paste to work perfectly.
+
+---------------------------------------------------------------------------
+
+by theofidry at 2018-02-28T08:58:07Z
+
+I also think like @javiereguiluz that the first read is worth special attention and may warrant a different policy
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2018-02-28T09:14:06Z
+
+This may also give a bad habit :), and can be frustrating when the first works and not the others.
+
+I have no hard feeling on this, but my point is that we better learn from mistakes than from things working out of the box.
+We should not copy/paste code without trying to understand if it's what we expect, people doing so should make the mistake to understand it and not do it anymore.
+For that I would not change this example.
+
+Again, I'm fine either way, just expressing another opinion here :).
+
+---------------------------------------------------------------------------
+
+by theofidry at 2018-02-28T09:21:11Z
+
+Sure, but when you doubt, things are not working and you do _exactly_ as said in the docs and it's not working, it's a desperate situation and if it's only for one `<?php` tag it's really infuriating :)
+
+But I do think it's only valid for that specific page.
+
+---------------------------------------------------------------------------
+
+by nasaralla at 2018-02-28T09:30:07Z
+
+Well for me I am doing php for 9 / 10 years ... and even I didn't spot that
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-03-03T19:35:02Z
+
++1 for adding it to the intro docs. And maybe to other docs later, but let’s start there. I have always seen people copy code in trainings and try to debug their missing open php tag (which is really tricky). Just last month it happened to maybe 10% if a conference workshop.
+
+I think it’s time to be pragmatic.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-03-04T08:16:17Z
+
+Could we add this automatically when PHP code blocks are rendered?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-04T18:12:23Z
+
+@xabbuh that's actually a very nice idea. I've put together some quick CSS styles:
+
+```css
+.highlight-php .highlight pre {
+    position: relative;
+    padding-top: 30px;
+}
+.highlight-php .linenos {
+    padding-top: 30px;
+}
+.highlight-php .highlight pre::before{
+    content: "<?php";
+    color: #999;
+    position: absolute;
+    top: 5px
+}
+```
+
+And this is how it looks:
+
+![php-listing](https://user-images.githubusercontent.com/73419/36948759-efbbaf2a-1fdf-11e8-9bf5-e08814b8bcf8.png)
+
+-----
+
+There's a problem though: content generated via CSS is not selectable 😢
