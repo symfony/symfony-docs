@@ -271,7 +271,7 @@ Then, define a service for this class:
 
             App\Service\FileUploader:
                 arguments:
-                    $targetDir: '%brochures_directory%'
+                    $targetDirectory: '%brochures_directory%'
 
     .. code-block:: xml
 
