@@ -431,7 +431,7 @@ whether `TTY`_ is supported on the current operating system::
 
     use Symfony\Component\Process\Process;
 
-    $process = (new Process)->setTty(Process::isTtySupported());
+    $process = (new Process())->setTty(Process::isTtySupported());
 
 .. versionadded:: 4.1
     The ``isTtySupported()`` method was introduced in Symfony 4.1.
