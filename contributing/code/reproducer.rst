@@ -39,7 +39,7 @@ a PHP script, it's better to reproduce the bug by creating a new project. To do 
 
 .. code-block:: terminal
 
-    $ composer require symfony/skeleton bug_app
+    $ composer create-project symfony/skeleton bug_app
 
 2. Now you must add the minimum amount of code to reproduce the bug. This is the
    trickiest part and it's explained a bit more later.
