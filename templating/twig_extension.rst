@@ -94,10 +94,10 @@ implementation. Following the same example as before, the first change would be
 to remove the ``priceFilter()`` method from the extension and update the PHP
 callable defined in ``getFilters()``::
 
-    // src/AppBundle/Twig/AppExtension.php
-    namespace AppBundle\Twig;
+    // src/Twig/AppExtension.php
+    namespace App\Twig;
 
-    use AppBundle\Twig\AppRuntime;
+    use App\Twig\AppRuntime;
 
     class AppExtension extends \Twig_Extension
     {
@@ -114,8 +114,8 @@ Then, create the new ``AppRuntime`` class (it's not required but these classes
 are suffixed with ``Runtime`` by convention) and include the logic of the
 previous ``priceFilter()`` method::
 
-    // src/AppBundle/Twig/AppRuntime.php
-    namespace AppBundle\Twig;
+    // src/Twig/AppRuntime.php
+    namespace App\Twig;
 
     class AppRuntime
     {
@@ -147,7 +147,7 @@ Finally, register your new class as a service and tag it with ``twig.runtime``
         # app/config/services.yml
         services:
             app.twig_runtime:
-                class: AppBundle\Twig\AppRuntime
+                class: App\Twig\AppRuntime
                 public: false
                 tags:
                     - { name: twig.runtime }
@@ -163,7 +163,7 @@ Finally, register your new class as a service and tag it with ``twig.runtime``
 
             <services>
                 <service id="app.twig_runtime"
-                    class="AppBundle\Twig\AppRuntime"
+                    class="App\Twig\AppRuntime"
                     public="false">
                     <tag name="twig.runtime" />
                 </service>
@@ -173,7 +173,7 @@ Finally, register your new class as a service and tag it with ``twig.runtime``
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\Twig\AppExtension;
+        use App\Twig\AppExtension;
 
         $container
             ->register('app.twig_runtime', AppRuntime::class)
