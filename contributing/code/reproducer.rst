@@ -44,7 +44,9 @@ edition. To do so:
    ``reproduce_23657``, etc.)
 #. Now you must add the minimum amount of code to reproduce the bug. This is the
    trickiest part and it's explained a bit more later.
-#. Add, commit and push all your changes.
+#. Add, commit and push all your changes. If possible, make one commit for the
+   initial contents created by Symfony and a second commit that only contains
+   your own changes.
 #. Add a comment in your original issue report to share the URL of your forked
    project (e.g. ``https://github.com/YOUR-GITHUB-USERNAME/symfony-standard/tree/issue_23567``)
    and, if necessary, explain the steps to reproduce (e.g. "browse this URL",
