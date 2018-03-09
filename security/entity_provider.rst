@@ -70,7 +70,7 @@ For this entry, suppose that you already have a ``User`` entity inside an
         private $password;
 
         /**
-         * @ORM\Column(type="string", length=60, unique=true)
+         * @ORM\Column(type="string", length=254, unique=true)
          */
         private $email;
 

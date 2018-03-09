@@ -61,24 +61,22 @@ method. Then you can optionally define a help message and the
         ;
     }
 
+Registering the Command
+-----------------------
+
+Symfony commands must be registered as services and :doc:`tagged </service_container/tags>`
+with the ``console.command`` tag. If the PHP class of your command extends from
+:class:`Symfony\\Component\\Console\\Command\\Command`, Symfony does this for
+you automatically.
+
 Executing the Command
 ---------------------
 
-Symfony registers any PHP class extending :class:`Symfony\\Component\\Console\\Command\\Command`
-as a console command automatically. So you can now execute this command in the
-terminal:
+After configuring and registering the command, you can execute it in the terminal:
 
 .. code-block:: terminal
 
     $ php bin/console app:create-user
-
-.. note::
-
-    If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
-    your command classes are automatically registered as services.
-
-    You can also manually register your command as a service by configuring the service
-    and :doc:`tagging it </service_container/tags>` with ``console.command``.
 
 .. caution::
 
