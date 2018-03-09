@@ -29,7 +29,7 @@ Installation
 
     $ composer require symfony/phpunit-bridge
 
-Alternatively, you can clone the ``https://github.com/symfony/phpunit-bridge`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/phpunit-bridge>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

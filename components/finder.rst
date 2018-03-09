@@ -15,7 +15,7 @@ Installation
 
     $ composer require symfony/finder
 
-Alternatively, you can clone the ``https://github.com/symfony/finder`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/finder>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

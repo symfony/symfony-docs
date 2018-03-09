@@ -49,7 +49,7 @@ Installation
 
     $ composer require symfony/asset
 
-Alternatively, you can clone the ``https://github.com/symfony/asset`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/asset>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

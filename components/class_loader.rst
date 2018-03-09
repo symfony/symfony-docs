@@ -45,7 +45,7 @@ Installation
 
     $ composer require symfony/class-loader
 
-Alternatively, you can clone the ``https://github.com/symfony/class-loader`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/class-loader>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

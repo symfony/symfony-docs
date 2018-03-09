@@ -16,7 +16,7 @@ Installation
 
     $ composer require symfony/expression-language
 
-Alternatively, you can clone the ``https://github.com/symfony/expression-language`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/expression-language>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

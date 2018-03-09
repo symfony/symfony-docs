@@ -18,7 +18,7 @@ Installation
 
     $ composer require symfony/debug
 
-Alternatively, you can clone the ``https://github.com/symfony/debug`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/debug>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

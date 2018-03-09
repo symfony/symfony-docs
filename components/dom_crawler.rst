@@ -19,7 +19,7 @@ Installation
 
     $ composer require symfony/dom-crawler
 
-Alternatively, you can clone the ``https://github.com/symfony/dom-crawler`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/dom-crawler>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

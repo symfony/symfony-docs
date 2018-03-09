@@ -31,7 +31,7 @@ Installation
 
     $ composer require symfony/serializer
 
-Alternatively, you can clone the ``https://github.com/symfony/serializer`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/serializer>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

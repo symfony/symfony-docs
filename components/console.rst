@@ -19,7 +19,7 @@ Installation
 
     $ composer require symfony/console
 
-Alternatively, you can clone the ``https://github.com/symfony/console`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/console>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

@@ -33,7 +33,7 @@ Installation
 
     $ composer require symfony/yaml
 
-Alternatively, you can clone the ``https://github.com/symfony/yaml`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/yaml>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

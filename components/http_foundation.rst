@@ -23,7 +23,7 @@ Installation
 
     $ composer require symfony/http-foundation
 
-Alternatively, you can clone the ``https://github.com/symfony/http-foundation`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/http-foundation>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

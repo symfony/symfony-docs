@@ -18,7 +18,7 @@ Installation
 
     $ composer require symfony/security
 
-Alternatively, you can clone the ``https://github.com/symfony/security`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/security>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

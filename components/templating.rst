@@ -20,7 +20,7 @@ Installation
 
     $ composer require symfony/templating
 
-Alternatively, you can clone the ``https://github.com/symfony/templating`` repository.
+Alternatively, you can clone the `<https://github.com/symfony/templating>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
