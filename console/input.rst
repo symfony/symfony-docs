@@ -225,7 +225,7 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
 
     While it is possible to separate an option from its value with a white space,
     using this form leads to an ambiguity should the option appear before the
-    command name. For example, ``php bin/console --iterations 5 app:greet Fabien``
+    command name. For example, ``php app/console --iterations 5 app:greet Fabien``
     is ambiguous; Symfony would interpret ``5`` as the command name. To avoid
     this situation, always place options after the command name, or avoid using
     a space to separate the option name from its value.
