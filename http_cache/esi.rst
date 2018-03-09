@@ -139,7 +139,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
         <!-- you can use a controller reference -->
         <?php echo $view['actions']->render(
             new Symfony\Component\HttpKernel\Controller\ControllerReference(
-                'AppBundle:News:latest',
+                'App\Controller\NewsController::latest',
                 array('maxPerPage' => 5)
             ),
             array('strategy' => 'esi')

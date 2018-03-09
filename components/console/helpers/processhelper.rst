@@ -14,7 +14,7 @@ a very verbose verbosity (e.g. -vv)::
     use Symfony\Component\Process\ProcessBuilder;
 
     $helper = $this->getHelper('process');
-    $process = ProcessBuilder::create(array('figlet', 'Symfony'))->getProcess();
+    $process = new Process(array('figlet', 'Symfony'));
 
     $helper->run($output, $process);
 
@@ -55,7 +55,7 @@ There are three ways to use the process helper:
     use Symfony\Component\Process\ProcessBuilder;
 
     // ...
-    $process = ProcessBuilder::create(array('figlet', 'Symfony'))->getProcess();
+    $process = new Process(array('figlet', 'Symfony'));
 
     $helper->run($output, $process);
 

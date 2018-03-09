@@ -67,7 +67,7 @@ with the following fields: ``id``, ``username``, ``password``,
         private $password;
 
         /**
-         * @ORM\Column(type="string", length=60, unique=true)
+         * @ORM\Column(type="string", length=254, unique=true)
          */
         private $email;
 

@@ -94,10 +94,10 @@ implementation. Following the same example as before, the first change would be
 to remove the ``priceFilter()`` method from the extension and update the PHP
 callable defined in ``getFilters()``::
 
-    // src/AppBundle/Twig/AppExtension.php
-    namespace AppBundle\Twig;
+    // src/Twig/AppExtension.php
+    namespace App\Twig;
 
-    use AppBundle\Twig\AppRuntime;
+    use App\Twig\AppRuntime;
 
     class AppExtension extends \Twig_Extension
     {
@@ -114,8 +114,8 @@ Then, create the new ``AppRuntime`` class (it's not required but these classes
 are suffixed with ``Runtime`` by convention) and include the logic of the
 previous ``priceFilter()`` method::
 
-    // src/AppBundle/Twig/AppRuntime.php
-    namespace AppBundle\Twig;
+    // src/Twig/AppRuntime.php
+    namespace App\Twig;
 
     class AppRuntime
     {
