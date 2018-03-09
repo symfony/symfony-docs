@@ -106,7 +106,7 @@ with a non-zero code)::
 
         echo $process->getOutput();
     } catch (ProcessFailedException $exception) {
-        echo $e->getMessage();
+        echo $exception->getMessage();
     }
 
 Getting real-time Process Output
