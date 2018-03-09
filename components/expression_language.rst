@@ -12,10 +12,13 @@ The ExpressionLanguage Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/expression-language`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/expression-language).
+    $ composer require symfony/expression-language
+
+Alternatively, you can clone the `<https://github.com/symfony/expression-language>`_ repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 How can the Expression Engine Help Me?
 --------------------------------------

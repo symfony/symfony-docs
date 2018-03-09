@@ -14,10 +14,11 @@ The HttpKernel Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/http-kernel`` on Packagist_);
-* Use the official Git repository (https://github.com/symfony/http-kernel).
+    $ composer require symfony/http-kernel
+
+Alternatively, you can clone the `<https://github.com/symfony/http-kernel>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
