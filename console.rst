@@ -65,11 +65,11 @@ Registering the Command
 -----------------------
 
 Symfony commands must be registered before using them. In order to be registered,
-a command must:
+a command must bw:
 
-#. Be stored in a directory called ``Command/``;
-#. Be defined in a class whose name ends with ``Command``;
-#. Be defined in a class that extends from
+#. Stored in a directory called ``Command/``;
+#. Defined in a class whose name ends with ``Command``;
+#. Defined in a class that extends from
    :class:`Symfony\\Component\\Console\\Command\\Command`.
 
 Executing the Command
