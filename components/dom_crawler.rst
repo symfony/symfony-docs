@@ -15,10 +15,11 @@ The DomCrawler Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/dom-crawler`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/dom-crawler).
+    $ composer require symfony/dom-crawler
+
+Alternatively, you can clone the ``https://github.com/symfony/dom-crawler`` repository.
 
 .. include:: /components/require_autoload.rst.inc
 

@@ -27,10 +27,11 @@ but it can be useful for developing tools to serialize and deserialize your obje
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/serializer).
+    $ composer require symfony/serializer
+
+Alternatively, you can clone the ``https://github.com/symfony/serializer`` repository.
 
 .. include:: /components/require_autoload.rst.inc
 

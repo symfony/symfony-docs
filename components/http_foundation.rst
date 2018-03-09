@@ -19,10 +19,11 @@ variables and functions by an object-oriented layer.
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/http-foundation`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/http-foundation).
+    $ composer require symfony/http-foundation
+
+Alternatively, you can clone the ``https://github.com/symfony/http-foundation`` repository.
 
 .. include:: /components/require_autoload.rst.inc
 

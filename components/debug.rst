@@ -14,10 +14,11 @@ The Debug Component
 Installation
 ------------
 
-You can install the component in many different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/debug`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/debug).
+    $ composer require symfony/debug
+
+Alternatively, you can clone the ``https://github.com/symfony/debug`` repository.
 
 .. include:: /components/require_autoload.rst.inc
 

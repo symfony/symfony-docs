@@ -15,10 +15,11 @@ other batch jobs.
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/console`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/console).
+    $ composer require symfony/console
+
+Alternatively, you can clone the ``https://github.com/symfony/console`` repository.
 
 .. include:: /components/require_autoload.rst.inc
 

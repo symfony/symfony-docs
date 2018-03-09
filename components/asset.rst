@@ -45,10 +45,13 @@ simple. Hardcoding URLs can be a disadvantage because:
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/asset`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/asset).
+    $ composer require symfony/asset
+
+Alternatively, you can clone the ``https://github.com/symfony/asset`` repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 Usage
 -----

@@ -15,10 +15,13 @@ The VarDumper Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/var-dumper`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/var-dumper).
+    $ composer require symfony/var-dumper
+
+Alternatively, you can clone the ``https://github.com/symfony/var-dumper`` repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 .. note::
 

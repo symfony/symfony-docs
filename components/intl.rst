@@ -20,10 +20,13 @@ The Intl Component
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer</components/using_components>` (``symfony/intl`` on `Packagist`_);
-* Using the official Git repository (https://github.com/symfony/intl).
+    $ composer require symfony/intl
+
+Alternatively, you can clone the ``https://github.com/symfony/intl`` repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 If you install the component via Composer, the following classes and functions
 of the intl extension will be automatically provided if the intl extension is

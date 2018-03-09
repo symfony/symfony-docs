@@ -10,10 +10,11 @@ The Stopwatch Component
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer</components/using_components>` (``symfony/stopwatch`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/stopwatch).
+    $ composer require symfony/stopwatch
+
+Alternatively, you can clone the ``https://github.com/symfony/stopwatch`` repository.
 
 .. include:: /components/require_autoload.rst.inc
 

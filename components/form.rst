@@ -16,10 +16,11 @@ be from a normal form post or from an API.
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/form`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/form).
+    $ composer require symfony/form
+
+Alternatively, you can clone the ``https://github.com/symfony/form`` repository.
 
 .. include:: /components/require_autoload.rst.inc
 
