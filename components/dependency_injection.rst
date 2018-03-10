@@ -15,11 +15,11 @@ For an introduction to Dependency Injection and service containers see
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/dependency-injection``
-  on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/dependency-injection).
+    $ composer require symfony/dependency-injection
+
+Alternatively, you can clone the `<https://github.com/symfony/dependency-injection>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

@@ -29,10 +29,11 @@ the `YAML 1.2 version specification`_.
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/yaml`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/yaml).
+    $ composer require symfony/yaml
+
+Alternatively, you can clone the `<https://github.com/symfony/yaml>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

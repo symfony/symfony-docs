@@ -11,10 +11,11 @@ The PropertyAccess Component
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer</components/using_components>` (``symfony/property-access`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/property-access).
+    $ composer require symfony/property-access
+
+Alternatively, you can clone the `<https://github.com/symfony/property-access>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
