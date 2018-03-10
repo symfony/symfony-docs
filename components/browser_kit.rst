@@ -17,11 +17,13 @@ The BrowserKit Component
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>`
-  (``symfony/browser-kit`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/browser-kit).
+    $ composer require symfony/browser-kit
+
+Alternatively, you can clone the `<https://github.com/symfony/browser-kit>`_ repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 Basic Usage
 -----------

@@ -27,12 +27,11 @@ It comes with the following features:
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>`
-  (``symfony/phpunit-bridge`` on `Packagist`_); as a dev dependency;
+    $ composer require symfony/phpunit-bridge
 
-* Use the official Git repository (https://github.com/symfony/phpunit-bridge).
+Alternatively, you can clone the `<https://github.com/symfony/phpunit-bridge>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
