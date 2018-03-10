@@ -11,10 +11,11 @@ The Validator Component
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/validator`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Validator).
+    $ composer require symfony/validator
+
+Alternatively, you can clone the `<https://github.com/symfony/validator>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

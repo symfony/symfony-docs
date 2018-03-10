@@ -11,10 +11,11 @@ The Routing Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/routing`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/routing).
+    $ composer require symfony/routing
+
+Alternatively, you can clone the `<https://github.com/symfony/routing>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

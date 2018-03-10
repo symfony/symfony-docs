@@ -10,10 +10,11 @@ The Process Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/process`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/process).
+    $ composer require symfony/process
+
+Alternatively, you can clone the `<https://github.com/symfony/process>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -106,7 +107,7 @@ with a non-zero code)::
 
         echo $process->getOutput();
     } catch (ProcessFailedException $exception) {
-        echo $e->getMessage();
+        echo $exception->getMessage();
     }
 
 Getting real-time Process Output
