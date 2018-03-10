@@ -14,10 +14,11 @@ The Dotenv Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/dotenv`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/dotenv).
+    $ composer require symfony/dotenv
+
+Alternatively, you can clone the `<https://github.com/symfony/dotenv>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 

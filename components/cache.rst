@@ -19,10 +19,13 @@ The Cache Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/cache`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/cache).
+    $ composer require symfony/cache
+
+Alternatively, you can clone the `<https://github.com/symfony/cache>`_ repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 Cache (PSR-6) Versus Simple Cache (PSR-16)
 ------------------------------------------
