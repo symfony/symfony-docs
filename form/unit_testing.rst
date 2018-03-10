@@ -46,17 +46,20 @@ The simplest ``TypeTestCase`` implementation looks like the following::
                 'test' => 'test',
                 'test2' => 'test2',
             );
-
-            $form = $this->factory->create(TestedType::class);
-
+           
+            $objectToCompare = new TestObject();
+            // $objectToCompare will retrieve data from the form submission pass it at second argument
+            $form = $this->factory->create(TestedType::class, $objectToCompare);
+            
             $object = new TestObject();
             // ...populate $object properties with the data stored in $formData
 
             // submit the data to the form directly
             $form->submit($formData);
-
+           
+            $objectToCompare = $form->getData();
             $this->assertTrue($form->isSynchronized());
-            $this->assertEquals($object, $form->getData());
+            $this->assertEquals($object, $objectToCompare);
 
             $view = $form->createView();
             $children = $view->children;
@@ -73,7 +76,7 @@ First you verify if the ``FormType`` compiles. This includes basic class
 inheritance, the ``buildForm()`` function and options resolution. This should
 be the first test you write::
 
-    $form = $this->factory->create(TestedType::class);
+    $form = $this->factory->create(TestedType::class, $objectToCompare);
 
 This test checks that none of your data transformers used by the form
 failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized`
@@ -91,7 +94,7 @@ method is only set to ``false`` if a data transformer throws an exception::
 Next, verify the submission and mapping of the form. The test below
 checks if all the fields are correctly specified::
 
-    $this->assertEquals($object, $form->getData());
+    $this->assertEquals($object, $objectToCompare);
 
 Finally, check the creation of the ``FormView``. You should check if all
 widgets you want to display are available in the children property::
