@@ -47,8 +47,8 @@ The simplest ``TypeTestCase`` implementation looks like the following::
                 'test2' => 'test2',
             );
            
-           $objectToCompare = new TestObject();
-           //$objectToCompare will retrieve data from the form submission pass it at second argument
+            $objectToCompare = new TestObject();
+            // $objectToCompare will retrieve data from the form submission pass it at second argument
             $form = $this->factory->create(TestedType::class, $objectToCompare);
             
             $object = new TestObject();
@@ -56,8 +56,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 
             // submit the data to the form directly
             $form->submit($formData);
-            
-            //Will fill data in $objectToCompare
+           
             $objectToCompare = $form->getData();
             $this->assertTrue($form->isSynchronized());
             $this->assertEquals($object, $objectToCompare);
