@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-03-09T16:11:26Z
+
+I don't know if we really need an explanation here. On http://symfony.com/doc/2.7/console/commands_as_services.html we already have an IMO good enough one.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-09T16:17:09Z
+
+But this is the main article about Console, the only one who anybody interested in Symfony + commands is going to write. If you are new to Symfony I think you'll never look for "symfony commands as services" because you don't even know what a service is.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-03-09T18:05:18Z
+
+Fair enough, but then we can probably better just borrow the sentences from the existing section, right?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-10T18:56:44Z
+
+I looked into the original article but I didn't like it because it doesn't explain the conditions in a simple and comprehensive list. However, I made some changes here after your comments and I've added a link to that "commands as services" article. Thanks!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2018-03-10T19:26:24Z
+
+Hmm, why did we remove the notion about the `console.command` tag (which, afaik, is required in 4.x)?
+
+Otherwise, :+1:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-10T19:28:52Z
+
+@wouter I made a lot of changes about this and merged some. so in 4.0 we mention that tag: https://github.com/symfony/symfony-docs/blob/master/console.rst#registering-the-command  We just need to fix the 2.7 and 2.8 and 3.4 branches to fix the mistake I made in their explanation.
