@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2018-03-10T19:24:25Z
+
+:+1: This is indeed correct (thanks to the many engines that parse this string and remove one backslash).
+
+I think XML would need just two backslashes (as the XML engine, unlike YAML and PHP, doesn't remove backslashes from text). Feel free to push another commit to this branch to fix that, or we'll manage during the merge.
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by hacfi at 2018-03-11T05:59:56Z
+
+@wouterj I just tried it out and you’re right: in XML you just need two backslashes. Created #9422 for it
