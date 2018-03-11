@@ -60,7 +60,7 @@ to another service: ``AppBundle\Mailer``. One way to do this is with an expressi
         $container->autowire(MailerConfiguration::class);
 
         $container->autowire(Mailer::class)
-            ->addArgument(new Expression('service("AppBundle\Mail\MailerConfiguration").getMailerMethod()'));
+            ->addArgument(new Expression('service("AppBundle\\\\Mail\\\\MailerConfiguration").getMailerMethod()'));
 
 To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
 
