@@ -98,7 +98,6 @@ store the default value in some ``%command.default_name%`` parameter::
         {
             // try to avoid work here (e.g. database query)
             // this method is *always* called - see warning below
-            $defaultName = $this->defaultName;
 
             $this
                 ->setName('demo:greet')
@@ -108,7 +107,7 @@ store the default value in some ``%command.default_name%`` parameter::
                     '-n',
                     InputOption::VALUE_REQUIRED,
                     'Who do you want to greet?',
-                    $defaultName
+                    $this->defaultName
                 )
             ;
         }

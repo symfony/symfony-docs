@@ -212,12 +212,12 @@ the ``PasswordDigest`` header value matches with the user's password::
     class WsseProvider implements AuthenticationProviderInterface
     {
         private $userProvider;
-        private $cacheDir;
+        private $cacheDirectory;
 
-        public function __construct(UserProviderInterface $userProvider, $cacheDir)
+        public function __construct(UserProviderInterface $userProvider, $cacheDirectory)
         {
-            $this->userProvider = $userProvider;
-            $this->cacheDir     = $cacheDir;
+            $this->userProvider   = $userProvider;
+            $this->cacheDirectory = $cacheDirectory;
         }
 
         public function authenticate(TokenInterface $token)
@@ -255,16 +255,16 @@ the ``PasswordDigest`` header value matches with the user's password::
             // Validate that the nonce is *not* used in the last 5 minutes
             // if it has, this could be a replay attack
             if (
-                file_exists($this->cacheDir.'/'.md5($nonce))
-                && file_get_contents($this->cacheDir.'/'.md5($nonce)) + 300 > time()
+                file_exists($this->cacheDirectory.'/'.md5($nonce))
+                && file_get_contents($this->cacheDirectory.'/'.md5($nonce)) + 300 > time()
             ) {
                 throw new NonceExpiredException('Previously used nonce detected');
             }
             // If cache directory does not exist we create it
-            if (!is_dir($this->cacheDir)) {
-                mkdir($this->cacheDir, 0777, true);
+            if (!is_dir($this->cacheDirectory)) {
+                mkdir($this->cacheDirectory, 0777, true);
             }
-            file_put_contents($this->cacheDir.'/'.md5($nonce), time());
+            file_put_contents($this->cacheDirectory.'/'.md5($nonce), time());
 
             // Validate Secret
             $expected = base64_encode(sha1(base64_decode($nonce).$created.$secret, true));
