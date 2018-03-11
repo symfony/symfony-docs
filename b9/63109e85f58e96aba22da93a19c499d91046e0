@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-09T08:02:20Z
+
+Let's ask for a review to our Forms expert @vudaltsov Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-03-09T15:53:06Z
+
+To be more precise, the type of the returned data depends on whether or not the `data_class` option is set (see http://symfony.com/doc/current/reference/forms/types/form.html#empty-data). However, passing the data object when creating the form does not harm. So let's do this change. 👍
+
+---------------------------------------------------------------------------
+
+by ismail1432 at 2018-03-09T17:48:37Z
+
+Thanks for all feedbacks, I'll work on quickly,
+
+---------------------------------------------------------------------------
+
+by wouterj at 2018-03-10T22:39:25Z
+
+:+1: Looks great, thanks!
+
+status: reviewed
