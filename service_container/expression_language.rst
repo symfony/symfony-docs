@@ -45,7 +45,7 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
                 <service id="App\Mail\MailerConfiguration"></service>
 
                 <service id="App\Mailer">
-                    <argument type="expression">service('App\Mail\MailerConfiguration').getMailerMethod()</argument>
+                    <argument type="expression">service('App\\Mail\\MailerConfiguration').getMailerMethod()</argument>
                 </service>
             </services>
         </container>
