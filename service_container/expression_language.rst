@@ -45,7 +45,7 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
                 <service id="App\Mail\MailerConfiguration"></service>
 
                 <service id="App\Mailer">
-                    <argument type="expression">service('App\Mail\MailerConfiguration').getMailerMethod()</argument>
+                    <argument type="expression">service('App\\Mail\\MailerConfiguration').getMailerMethod()</argument>
                 </service>
             </services>
         </container>
@@ -60,7 +60,7 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
         $container->autowire(MailerConfiguration::class);
 
         $container->autowire(Mailer::class)
-            ->addArgument(new Expression('service("App\Mail\MailerConfiguration").getMailerMethod()'));
+            ->addArgument(new Expression('service("App\\\\Mail\\\\MailerConfiguration").getMailerMethod()'));
 
 To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
 
