@@ -45,7 +45,7 @@ to another service: ``AppBundle\Mailer``. One way to do this is with an expressi
                 <service id="AppBundle\Mail\MailerConfiguration"></service>
 
                 <service id="AppBundle\Mailer">
-                    <argument type="expression">service('AppBundle\Mail\MailerConfiguration').getMailerMethod()</argument>
+                    <argument type="expression">service('App\\Mail\\MailerConfiguration').getMailerMethod()</argument>
                 </service>
             </services>
         </container>
