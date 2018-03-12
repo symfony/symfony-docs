@@ -12,6 +12,7 @@ gives you similar flexibility.
 | Options        | - :ref:`expression <reference-constraint-expression-option>`                                  |
 |                | - `message`_                                                                                  |
 |                | - `payload`_                                                                                  |
+|                | - `values`_                                                                                   |
 +----------------+-----------------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Expression`                               |
 +----------------+-----------------------------------------------------------------------------------------------+
@@ -253,3 +254,90 @@ message
 The default message supplied when the expression evaluates to false.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+values
+~~~~~~
+
+**type**: ``array`` **default**: an empty array
+
+.. versionadded:: 4.1
+    The ``values`` option was introduced in Symfony 4.1.
+
+The values of the custom variables used in the expression.
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Model/Analysis.php
+        namespace App\Model;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Analysis
+        {
+            // ...
+
+            /**
+             * @Assert\Expression(
+             *     "value + error_margin < threshold",
+             *     values = { "error_margin": 0.25, threshold: 1.5 }
+             * )
+             */
+            private $metric;
+
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Model\Analysis:
+            properties:
+                metric:
+                    - Expression:
+                        expression: "value + error_margin < threshold"
+                        values:     { error_margin: 0.25, threshold: 1.5 }
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Model\Analysis">
+                <property name="metric">
+                    <constraint name="Expression">
+                        <option name="expression">
+                            value + error_margin < threshold
+                        </option>
+                        <option name="values">
+                            ... ?
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Model/Analysis.php
+        namespace App\Model;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class Analysis
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('metric', new Assert\Expression(array(
+                    'expression' => 'value + error_margin < threshold',
+                    'values' => array('error_margin' => 0.25, 'threshold' => 1.5),
+                )));
+            }
+
+            // ...
+        }
