@@ -95,12 +95,12 @@ and configure the service and method to call:
         // app/config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $collection = new RouteCollection();
-        $collection->addCollection(
+        $routes = new RouteCollection();
+        $routes->addCollection(
             $loader->import("admin_route_loader:loadRoutes", "service")
         );
 
-        return $collection;
+        return $routes;
 
 In this example, the routes are loaded by calling the ``loadRoutes()`` method of
 the service whose ID is ``admin_route_loader``. Your service doesn't have to

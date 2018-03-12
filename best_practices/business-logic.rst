@@ -160,7 +160,7 @@ looking for mapping information::
      */
     class Post
     {
-        const NUM_ITEMS = 10;
+        const NUMBER_OF_ITEMS = 10;
 
         /**
          * @ORM\Id
