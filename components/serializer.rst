@@ -813,8 +813,9 @@ because it is deeper than the configured maximum depth of 2::
     );
     */
 
-Instead of throwing an exception, a custom callable can be executed when the maximum depth is reached. This is especially
-useful when serializing entities having unique identifiers::
+Instead of throwing an exception, a custom callable can be executed when the
+maximum depth is reached. This is especially useful when serializing entities
+having unique identifiers::
 
     use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\Serializer\Serializer;
@@ -826,6 +827,7 @@ useful when serializing entities having unique identifiers::
     class Foo
     {
         public $id;
+
         /**
          * @MaxDepth(1)
          */
@@ -860,6 +862,9 @@ useful when serializing entities having unique identifiers::
             'child' => '/foos/3',
     );
     */
+
+.. versionadded:: 4.1
+    The ``setMaxDepthHandler()`` method was introduced in Symfony 4.1.
 
 Handling Arrays
 ---------------
