@@ -37,5 +37,5 @@ in your service definition:
         $container->register(SomeNonSharedService::class)
             ->setShared(false);
 
-Now, whenever you request an the ``App\SomeNonSharedService`` from the container,
+Now, whenever you request the ``App\SomeNonSharedService`` from the container,
 you will be passed a new instance.
