@@ -504,7 +504,7 @@ a controller, this is pretty easy. Add the following method to the
     public function createAction()
     {
         // you can fetch the EntityManager via $this->getDoctrine()
-        // or you can add an argument to your action: createAction(EntityManagerInterface $em)
+        // or you can add an argument to your action: createAction(EntityManagerInterface $entityManager)
         $entityManager = $this->getDoctrine()->getManager();
 
         $product = new Product();
@@ -525,8 +525,8 @@ a controller, this is pretty easy. Add the following method to the
     public function editAction()
     {
         $doctrine = $this->getDoctrine();
-        $em = $doctrine->getManager();
-        $em2 = $doctrine->getManager('other_connection');
+        $entityManager = $doctrine->getManager();
+        $otherEntityManager = $doctrine->getManager('other_connection');
     }
 
 .. note::

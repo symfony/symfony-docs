@@ -168,7 +168,7 @@ what actions are allowed on a blog post::
     // Update the currentState on the post
     try {
         $workflow->apply($post, 'to_review');
-    } catch (LogicException $e) {
+    } catch (LogicException $exception) {
         // ...
     }
 

@@ -143,13 +143,13 @@ Great! Next, add the logic to ``loginAction()`` that displays the login form::
     // src/AppBundle/Controller/SecurityController.php
     use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-    public function loginAction(Request $request, AuthenticationUtils $authUtils)
+    public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
     {
         // get the login error if there is one
-        $error = $authUtils->getLastAuthenticationError();
+        $error = $authenticationUtils->getLastAuthenticationError();
 
         // last username entered by the user
-        $lastUsername = $authUtils->getLastUsername();
+        $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', array(
             'last_username' => $lastUsername,
@@ -159,9 +159,9 @@ Great! Next, add the logic to ``loginAction()`` that displays the login form::
 
 .. note::
 
-    If you get an error that the ``$authUtils`` argument is missing, it's
-    probably because you need to activate this new feature in Symfony 3.4. See
-    this :ref:`controller service argument note <controller-service-arguments-tag>`.
+    If you get an error that the ``$authenticationUtils`` argument is missing,
+    it's probably because you need to activate this new feature in Symfony 3.4.
+    See this :ref:`controller service argument note <controller-service-arguments-tag>`.
 
 Don't let this controller confuse you. As you'll see in a moment, when the
 user submits the form, the security system automatically handles the form

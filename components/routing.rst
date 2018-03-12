@@ -413,8 +413,8 @@ routes with UTF-8 characters:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('route1', new Route('/category/{name}',
+        $routes = new RouteCollection();
+        $routes->add('route1', new Route('/category/{name}',
             array(
                 '_controller' => 'AppBundle:Default:category',
             ),
@@ -426,7 +426,7 @@ routes with UTF-8 characters:
 
         // ...
 
-        return $collection;
+        return $routes;
 
 In this route, the ``utf8`` option set to ``true`` makes Symfony consider the
 ``.`` requirement to match any UTF-8 characters instead of just a single
@@ -494,8 +494,8 @@ You can also include UTF-8 strings as routing requirements:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('route2', new Route('/default/{default}',
+        $routes = new RouteCollection();
+        $routes->add('route2', new Route('/default/{default}',
             array(
                 '_controller' => 'AppBundle:Default:default',
             ),
@@ -509,7 +509,7 @@ You can also include UTF-8 strings as routing requirements:
 
         // ...
 
-        return $collection;
+        return $routes;
 
 .. tip::
 

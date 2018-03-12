@@ -121,10 +121,10 @@ could listen to the ``mailer.post_send`` event and change the method's return va
     {
         public function onMailerPostSend(AfterSendMailEvent $event)
         {
-            $ret = $event->getReturnValue();
-            // modify the original ``$ret`` value
+            $returnValue = $event->getReturnValue();
+            // modify the original ``$returnValue`` value
 
-            $event->setReturnValue($ret);
+            $event->setReturnValue($returnValue);
         }
 
         public static function getSubscribedEvents()
