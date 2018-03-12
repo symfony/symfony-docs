@@ -194,6 +194,9 @@ Structure
 
 * Do not use spaces around ``[`` offset accessor and before ``]`` offset accessor.
 
+* Import classes from other namespaces with the ``use`` statement, except for
+  built-in PHP classes.
+
 Naming Conventions
 ~~~~~~~~~~~~~~~~~~
 
