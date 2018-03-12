@@ -263,7 +263,8 @@ values
 .. versionadded:: 4.1
     The ``values`` option was introduced in Symfony 4.1.
 
-The values of the custom variables used in the expression.
+The values of the custom variables used in the expression. Values can be of any
+type (numeric, boolean, strings, null, etc.)
 
 .. configuration-block::
 
@@ -311,10 +312,11 @@ The values of the custom variables used in the expression.
                 <property name="metric">
                     <constraint name="Expression">
                         <option name="expression">
-                            value + error_margin < threshold
+                            value + error_margin &lt; threshold
                         </option>
                         <option name="values">
-                            ... ?
+                            <value key="error_margin">0.25</value>
+                            <value key="threshold">1.5</value>
                         </option>
                     </constraint>
                 </property>
