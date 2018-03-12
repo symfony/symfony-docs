@@ -99,7 +99,7 @@ Below is an example calling the service using a `NuSOAP`_ client. This example
 assumes that the ``indexAction()`` in the controller above is accessible via the
 route ``/soap``::
 
-    $soapClient = new \Soapclient('http://example.com/app.php/soap?wsdl');
+    $soapClient = new \SoapClient('http://example.com/app.php/soap?wsdl');
 
     $result = $soapClient->call('hello', array('name' => 'Scott'));
 

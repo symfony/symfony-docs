@@ -129,12 +129,12 @@ make sure the ``FormRegistry`` uses the created instance::
 
     class TestedTypeTest extends TypeTestCase
     {
-        private $entityManager;
+        private $objectManager;
 
         protected function setUp()
         {
             // mock any dependencies
-            $this->entityManager = $this->createMock(ObjectManager::class);
+            $this->objectManager = $this->createMock(ObjectManager::class);
 
             parent::setUp();
         }
@@ -142,7 +142,7 @@ make sure the ``FormRegistry`` uses the created instance::
         protected function getExtensions()
         {
             // create a type instance with the mocked dependencies
-            $type = new TestedType($this->entityManager);
+            $type = new TestedType($this->objectManager);
 
             return array(
                 // register the type instances with the PreloadedExtension
