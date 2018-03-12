@@ -813,6 +813,54 @@ because it is deeper than the configured maximum depth of 2::
     );
     */
 
+Instead of throwing an exception, a custom callable can be executed when the maximum depth is reached. This is especially
+useful when serializing entities having unique identifiers::
+
+    use Doctrine\Common\Annotations\AnnotationReader;
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Annotation\MaxDepth;
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+    class Foo
+    {
+        public $id;
+        /**
+         * @MaxDepth(1)
+         */
+        public $child;
+    }
+
+    $level1 = new Foo();
+    $level1->id = 1;
+
+    $level2 = new Foo();
+    $level2->id = 2;
+    $level1->child = $level2;
+
+    $level3 = new Foo();
+    $level3->id = 3;
+    $level2->child = $level3;
+
+    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $normalizer = new ObjectNormalizer($classMetadataFactory);
+    $normalizer->setMaxDepthHandler(function ($foo) {
+        return '/foos/'.$foo->id;
+    });
+
+    $serializer = new Serializer(array($normalizer));
+
+    $result = $serializer->normalize($level1, null, array(ObjectNormalizer::ENABLE_MAX_DEPTH => true));
+    /*
+    $result = array(
+        'id' => 1,
+        'child' => array(
+            'id' => 2,
+            'child' => '/foos/3',
+    );
+    */
+
 Handling Arrays
 ---------------
 
