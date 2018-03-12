@@ -66,9 +66,9 @@ use this pattern of class extension::
         /**
          * Sets the value to return and stops other listeners from being notified
          */
-        public function setReturnValue($val)
+        public function setReturnValue($returnValue)
         {
-            $this->returnValue = $val;
+            $this->returnValue = $returnValue;
             $this->isProcessed = true;
             $this->stopPropagation();
         }

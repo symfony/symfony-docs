@@ -442,8 +442,8 @@ Customizing Error Messages
 --------------------------
 
 When ``onAuthenticationFailure()`` is called, it is passed an ``AuthenticationException``
-that describes *how* authentication failed via its ``$e->getMessageKey()`` (and
-``$e->getMessageData()``) method. The message will be different based on *where*
+that describes *how* authentication failed via its ``$exception->getMessageKey()`` (and
+``$exception->getMessageData()``) method. The message will be different based on *where*
 authentication fails (i.e. ``getUser()`` versus ``checkCredentials()``).
 
 But, you can easily return a custom message by throwing a

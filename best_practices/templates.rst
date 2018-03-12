@@ -107,9 +107,7 @@ Markdown content into HTML::
 
         public function toHtml($text)
         {
-            $html = $this->parser->text($text);
-
-            return $html;
+            return $this->parser->text($text);
         }
     }
 
