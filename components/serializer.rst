@@ -606,12 +606,11 @@ There are several types of normalizers available:
 Encoders
 --------
 
-Encoders basically turn **arrays** into **formats** and vice versa.
-They implement
-:class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface` for
-encoding (array to format) and
-:class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface` for
-decoding (format to array).
+Encoders turn **arrays** into **formats** and vice versa. They implement
+:class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface`
+for encoding (array to format) and
+:class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface` for decoding
+(format to array).
 
 You can add new encoders to a Serializer instance by using its second constructor argument::
 
@@ -625,7 +624,7 @@ You can add new encoders to a Serializer instance by using its second constructo
 Built-in Encoders
 ~~~~~~~~~~~~~~~~~
 
-The Serializer component provides built-in encoders:
+The Serializer component provides several built-in encoders:
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`
     This class encodes and decodes data in JSON_.
@@ -654,7 +653,11 @@ The ``CsvEncoder``
 
 The ``CsvEncoder`` encodes to and decodes from CSV.
 
-You can pass the context key ``as_collection`` in order to have the results always as a collection.
+You can pass the context key ``as_collection`` in order to have the results
+always as a collection.
+
+.. versionadded:: 4.1
+    The ``as_collection`` option was introduced in Symfony 4.1.
 
 The ``XmlEncoder``
 ~~~~~~~~~~~~~~~~~~
@@ -684,7 +687,11 @@ Be aware that this encoder will consider keys beginning with ``@`` as attributes
     //     <foo bar="value" />
     // </response>
 
-You can pass the context key ``as_collection`` in order to have the results always as a collection.
+You can pass the context key ``as_collection`` in order to have the results
+always as a collection.
+
+.. versionadded:: 4.1
+    The ``as_collection`` option was introduced in Symfony 4.1.
 
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
