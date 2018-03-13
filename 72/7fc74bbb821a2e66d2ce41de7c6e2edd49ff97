@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-02-27T09:08:26Z
+
+Do we really need a full article for this theme? Couldn't this be integrated into the existing page where we list all the available form themes?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-27T09:16:06Z
+
+The thing is that Bootstrap is extremely special and popular. Fun fact: this article published on symfony.com blog in 2014 is still our most popular blog post ever by an infinite difference: https://symfony.com/blog/new-in-symfony-2-6-bootstrap-form-theme  Bootstrap is just incredibly popular, so I like the idea of a short and practical guide for it (and not for other frameworks).
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-02-27T09:18:06Z
+
+Thank you for the feedback and reviews.
+
+I've considered to make it as a part as an existing page. But it was too many things that were special with bootstrap 4. Also this https://github.com/symfony/symfony/issues/26331 will be a special symfony/boostrap feature.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-02-28T18:12:26Z
+
+@weaverryan Do you have any input on this PR?
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-03-04T11:07:46Z
+
+Thank you for the review. I've updated accordingly
