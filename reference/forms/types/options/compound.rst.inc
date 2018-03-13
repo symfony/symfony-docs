@@ -14,7 +14,7 @@ a ``<form>`` element (the whole form is obviously a compound form).
 Non-compound forms are always leaves in a form tree, they cannot have children.
 
 A non-compound form is rendered as one of the html form elements: ``<input>``
-(``TextType``, ``FileType``, ``HiddenType``), ``<textarea>`` (``TextareType``)
+(``TextType``, ``FileType``, ``HiddenType``), ``<textarea>`` (``TextareaType``)
 or ``<select>`` (``ChoiceType``).
 
 An interesting case is the ``ChoiceType``. With ``expanded=false`` it is a non-compound form
