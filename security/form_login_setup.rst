@@ -144,11 +144,7 @@ Great! Next, add the logic to ``login()`` that displays the login form::
     // src/Controller/SecurityController.php
     use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-<<<<<<< HEAD
-    public function login(Request $request, AuthenticationUtils $authUtils)
-=======
-    public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
->>>>>>> 3.4
+    public function login(Request $request, AuthenticationUtils $authenticationUtils)
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -164,16 +160,10 @@ Great! Next, add the logic to ``login()`` that displays the login form::
 
 .. note::
 
-<<<<<<< HEAD
-    If you get an error that the ``$authUtils`` argument is missing, it's
-    probably because the controllers of your application are not defined as
+    If you get an error that the ``$authenticationUtils`` argument is missing,
+    it's probably because the controllers of your application are not defined as
     services and tagged with the ``controller.service_arguments`` tag, as done
     in the :ref:`default services.yaml configuration <service-container-services-load-example>`.
-=======
-    If you get an error that the ``$authenticationUtils`` argument is missing,
-    it's probably because you need to activate this new feature in Symfony 3.4.
-    See this :ref:`controller service argument note <controller-service-arguments-tag>`.
->>>>>>> 3.4
 
 Don't let this controller confuse you. As you'll see in a moment, when the
 user submits the form, the security system automatically handles the form
