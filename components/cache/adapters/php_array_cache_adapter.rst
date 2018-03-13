@@ -15,8 +15,8 @@ that is optimized and preloaded into OPcache memory storage::
     if ($needsWarmup) {
         // some static values
         $values = array(
-            'stats.num_products' => 4711,
-            'stats.num_users' => 1356,
+            'stats.products_count' => 4711,
+            'stats.users_count' => 1356,
         );
 
         $cache = new PhpArrayAdapter(
@@ -29,7 +29,7 @@ that is optimized and preloaded into OPcache memory storage::
     }
 
     // ... then, use the cache!
-    $cacheItem = $cache->getItem('stats.num_users');
+    $cacheItem = $cache->getItem('stats.users_count');
     echo $cacheItem->get();
 
 .. note::

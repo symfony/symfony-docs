@@ -36,11 +36,11 @@ create your form::
     // ...
     public function new()
     {
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
         $task = ...;
         $form = $this->createForm(TaskType::class, $task, array(
-            'entity_manager' => $em,
+            'entity_manager' => $entityManager,
         ));
 
         // ...
