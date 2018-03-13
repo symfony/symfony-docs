@@ -225,10 +225,10 @@ The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method provid
 by the Filesystem component always behaves in the same way::
 
     // returns the next direct target of the link without considering the existence of the target
-    $fs->readlink('/path/to/link');
+    $fileSystem->readlink('/path/to/link');
 
     // returns its absolute fully resolved final version of the target (if there are nested links, they are resolved)
-    $fs->readlink('/path/to/link', true);
+    $fileSystem->readlink('/path/to/link', true);
 
 Its behavior is the following::
 
@@ -304,7 +304,7 @@ appendToFile
 :method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile` adds new
 contents at the end of some file::
 
-    $fs->appendToFile('logs.txt', 'Email sent to user@example.com');
+    $fileSystem->appendToFile('logs.txt', 'Email sent to user@example.com');
 
 If either the file or its containing directory doesn't exist, this method
 creates them before appending the contents.
