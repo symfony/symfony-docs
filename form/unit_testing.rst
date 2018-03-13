@@ -57,8 +57,9 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             // submit the data to the form directly
             $form->submit($formData);
 
-            $objectToCompare = $form->getData();
             $this->assertTrue($form->isSynchronized());
+
+            // check that $objectToCompare was modified as expected when the form was submitted
             $this->assertEquals($object, $objectToCompare);
 
             $view = $form->createView();
