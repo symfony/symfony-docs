@@ -60,24 +60,24 @@ instantiate :class:`Symfony\\Component\\Cache\\Simple\\FilesystemCache`::
 Now you can create, retrieve, update and delete items using this object::
 
     // save a new item in the cache
-    $cache->set('stats.num_products', 4711);
+    $cache->set('stats.products_count', 4711);
 
     // or set it with a custom ttl
-    // $cache->set('stats.num_products', 4711, 3600);
+    // $cache->set('stats.products_count', 4711, 3600);
 
     // retrieve the cache item
-    if (!$cache->has('stats.num_products')) {
+    if (!$cache->has('stats.products_count')) {
         // ... item does not exists in the cache
     }
 
     // retrieve the value stored by the item
-    $numProducts = $cache->get('stats.num_products');
+    $productsCount = $cache->get('stats.products_count');
 
     // or specify a default value, if the key doesn't exist
-    // $numProducts = $cache->get('stats.num_products', 100);
+    // $productsCount = $cache->get('stats.products_count', 100);
 
     // remove the cache key
-    $cache->delete('stats.num_products');
+    $cache->delete('stats.products_count');
 
     // clear *all* cache keys
     $cache->clear();
@@ -85,18 +85,18 @@ Now you can create, retrieve, update and delete items using this object::
 You can also work with multiple items at once::
 
     $cache->setMultiple(array(
-        'stats.num_products' => 4711,
-        'stats.num_users' => 1356,
+        'stats.products_count' => 4711,
+        'stats.users_count' => 1356,
     ));
 
     $stats = $cache->getMultiple(array(
-        'stats.num_products',
-        'stats.num_users',
+        'stats.products_count',
+        'stats.users_count',
     ));
 
     $cache->deleteMultiple(array(
-        'stats.num_products',
-        'stats.num_users',
+        'stats.products_count',
+        'stats.users_count',
     ));
 
 Available Simple Cache (PSR-16) Classes
@@ -159,22 +159,22 @@ a filesystem-based cache, instantiate :class:`Symfony\\Component\\Cache\\Adapter
 Now you can create, retrieve, update and delete items using this cache pool::
 
     // create a new item by trying to get it from the cache
-    $numProducts = $cache->getItem('stats.num_products');
+    $productsCount = $cache->getItem('stats.products_count');
 
     // assign a value to the item and save it
-    $numProducts->set(4711);
-    $cache->save($numProducts);
+    $productsCount->set(4711);
+    $cache->save($productsCount);
 
     // retrieve the cache item
-    $numProducts = $cache->getItem('stats.num_products');
-    if (!$numProducts->isHit()) {
+    $productsCount = $cache->getItem('stats.products_count');
+    if (!$productsCount->isHit()) {
         // ... item does not exists in the cache
     }
     // retrieve the value stored by the item
-    $total = $numProducts->get();
+    $total = $productsCount->get();
 
     // remove the cache item
-    $cache->deleteItem('stats.num_products');
+    $cache->deleteItem('stats.products_count');
 
 For a list of all of the supported adapters, see :doc:`/components/cache/cache_pools`.
 

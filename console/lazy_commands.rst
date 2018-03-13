@@ -68,13 +68,13 @@ with command names as keys and service identifiers as values::
     use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    $container = new ContainerBuilder();
-    $container->register(FooCommand::class, FooCommand::class);
-    $container->compile();
+    $containerBuilder = new ContainerBuilder();
+    $containerBuilder->register(FooCommand::class, FooCommand::class);
+    $containerBuilder->compile();
 
-    $commandLoader = new ContainerCommandLoader($container, array(
+    $commandLoader = new ContainerCommandLoader($containerBuilder, array(
         'app:foo' => FooCommand::class,
     ));
 
 Like this, executing the ``app:foo`` command will load the ``FooCommand`` service
-by calling ``$container->get(FooCommand::class)``.
+by calling ``$containerBuilder->get(FooCommand::class)``.

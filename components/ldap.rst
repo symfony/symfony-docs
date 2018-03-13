@@ -118,19 +118,19 @@ delete existing ones::
         'objectClass' => array('inetOrgPerson'),
     ));
 
-    $em = $ldap->getEntryManager();
+    $entityManager = $ldap->getEntryManager();
 
     // Creating a new entry
-    $em->add($entry);
+    $entityManager->add($entry);
 
     // Finding and updating an existing entry
     $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
     $result = $query->execute();
     $entry = $result[0];
     $entry->setAttribute('email', array('fabpot@symfony.com'));
-    $em->update($entry);
+    $entityManager->update($entry);
 
     // Removing an existing entry
-    $em->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
+    $entityManager->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
 
 .. _Packagist: https://packagist.org/packages/symfony/ldap

@@ -296,14 +296,14 @@ add a ``__construct()`` method like normal::
 
     class ShippingType extends AbstractType
     {
-        private $em;
+        private $entityManager;
 
-        public function __construct(EntityManagerInterface $em)
+        public function __construct(EntityManagerInterface $entityManager)
         {
-            $this->em = $em;
+            $this->entityManager = $entityManager;
         }
 
-        // use $this->em down anywhere you want ...
+        // use $this->entityManager down anywhere you want ...
     }
 
 If you're using the default ``services.yaml`` configuration (i.e. services from the

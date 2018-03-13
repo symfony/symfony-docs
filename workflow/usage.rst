@@ -200,7 +200,7 @@ you can get the workflow by injecting the Workflow registry service::
             // Update the currentState on the post
             try {
                 $workflow->apply($post, 'to_review');
-            } catch (LogicException $e) {
+            } catch (LogicException $exception) {
                 // ... if the transition is not allowed
             }
 
