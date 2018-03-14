@@ -258,7 +258,7 @@ The default message supplied when the expression evaluates to false.
 values
 ~~~~~~
 
-**type**: ``array`` **default**: an empty array
+**type**: ``array`` **default**: ``[]``
 
 .. versionadded:: 4.1
     The ``values`` option was introduced in Symfony 4.1.
@@ -277,8 +277,6 @@ type (numeric, boolean, strings, null, etc.)
 
         class Analysis
         {
-            // ...
-
             /**
              * @Assert\Expression(
              *     "value + error_margin < threshold",
