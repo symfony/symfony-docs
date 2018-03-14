@@ -128,6 +128,12 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 * Test the response;
 * Rinse and repeat.
 
+Before creating your first test, be sure the following packages are installed:
+
+.. code-block:: terminal
+
+    $ composer require --dev symfony/browser-kit symfony/css-selector
+
 Your First Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
