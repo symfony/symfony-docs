@@ -20,7 +20,7 @@ wraps the original PHPUnit binary to provide additional features:
 
 .. code-block:: terminal
 
-    $ composer require --dev symfony/phpunit-bridge
+    $ composer require --dev phpunit
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the ``tests/`` directory of your application. If you follow
@@ -29,7 +29,7 @@ command:
 
 .. code-block:: terminal
 
-    $ ./vendor/bin/simple-phpunit
+    $ ./bin/phpunit
 
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
@@ -101,13 +101,13 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: terminal
 
     # run all tests of the application
-    $ ./vendor/bin/simple-phpunit
+    $ ./bin/phpunit
 
     # run all tests in the Util/ directory
-    $ ./vendor/bin/simple-phpunit tests/Util
+    $ ./bin/phpunit tests/Util
 
     # run tests for the Calculator class
-    $ ./vendor/bin/simple-phpunit tests/Util/CalculatorTest.php
+    $ ./bin/phpunit tests/Util/CalculatorTest.php
 
 .. index::
    single: Tests; Functional tests
@@ -259,6 +259,17 @@ document::
         'Hello World',
         $client->getResponse()->getContent()
     );
+
+.. note::
+
+    Instead of adding each dependency individually, you can also run:
+
+        .. code-block:: terminal
+
+            $ composer require --dev test
+
+    If the ``PHPUnit Bridge`` wasn't installed before, the test pack will add
+    it too.
 
 .. index::
    single: Tests; Assertions
