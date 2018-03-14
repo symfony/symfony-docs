@@ -72,8 +72,8 @@ automatically, a command must be:
 #. Defined in a class that extends from
    :class:`Symfony\\Component\\Console\\Command\\Command`.
 
-If you can't meet these conditions for some command, the alternative is to
-manually :doc`register the command as a service </console/commands_as_services>`.
+If you can't meet these conditions for a command, the alternative is to manually
+:doc:`register the command as a service </console/commands_as_services>`.
 
 Executing the Command
 ---------------------
@@ -166,7 +166,7 @@ Now, you can pass the username to the command:
 Getting Services from the Service Container
 -------------------------------------------
 
-To actually create a new user, the command has to access to some
+To actually create a new user, the command has to access some
 :doc:`services </service_container>`. This can be done by making the command
 extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`
 instead::
