@@ -76,7 +76,7 @@ sending an email is pretty straightforward::
             */
         ;
 
-        $mailer->send($message);
+        $this->get('mailer')->send($message);
 
         return $this->render(...);
     }
