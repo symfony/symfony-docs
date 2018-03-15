@@ -312,7 +312,7 @@ The following block shows all possible configuration keys:
                 charset:              UTF8
                 logging:              '%kernel.debug%'
                 platform_service:     MyOwnDatabasePlatformService
-                server_version:       5.6
+                server_version:       '5.6'
                 mapping_types:
                     enum: string
                 types:
@@ -362,6 +362,13 @@ The following block shows all possible configuration keys:
     your database server version (use ``postgres -V`` or ``psql -V`` command
     to find your PostgreSQL version and ``mysql -V`` to get your MySQL
     version).
+    
+    If the server version is specified without quotes (i.e. ``5.6``), then the
+    resulting compiled container will contain the value ``5.5999999999999996447286321199499070644378662109375``.
+    
+    This is a result of floating-point representation issues.  Quoting the 
+    value will avoid that and will deliver the string ``'5.6'`` to the 
+    ``version_compare`` function, as it's expecting.
 
     If you don't define this option and you haven't created your database
     yet, you may get ``PDOException`` errors because Doctrine will try to
