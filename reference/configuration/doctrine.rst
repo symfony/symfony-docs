@@ -134,18 +134,21 @@ Full Default Configuration
                             port:                 ~
                             instance_class:       ~
                             class:                ~
+                            namespace:            ~
                         metadata_cache_driver:
                             type:                 array # Required
                             host:                 ~
                             port:                 ~
                             instance_class:       ~
                             class:                ~
+                            namespace:            ~
                         result_cache_driver:
                             type:                 array # Required
                             host:                 ~
                             port:                 ~
                             instance_class:       ~
                             class:                ~
+                            namespace:            ~
                         connection:           ~
                         class_metadata_factory_name:  Doctrine\ORM\Mapping\ClassMetadataFactory
                         default_repository_class:  Doctrine\ORM\EntityRepository
