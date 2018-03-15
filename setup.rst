@@ -23,6 +23,16 @@ This will create a new ``my-project`` directory, download some dependencies into
 it and even generate the basic directories and files you'll need to get started.
 In other words, your new app is ready!
 
+.. tip::
+
+    The ``website-skeleton`` is optimized for traditional web applications. If
+    you are building microservices, console applications or APIs, consider
+    using the much simpler ``skeleton`` project:
+
+    .. code-block:: terminal
+
+        $ composer create-project symfony/skeleton my-project
+
 Running your Symfony Application
 --------------------------------
 
