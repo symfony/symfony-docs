@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by kylekatarnls at 2018-03-14T16:27:13Z
+
+I'm native, I can tell it's not a counter-sens but saying "I like Symfony" = "Symfony is great" in the i18n example seems not very relevant to me. Not the same subject, opinion vs. assertion. If I was asked to translate "Symfony is great" in French with no context precision, I would certainly not take the risk to use the subject `Je` (`I`) because this could mismatch with previous/next titles and sentences. It would be some kind of fancy the translator would added.
