@@ -217,7 +217,7 @@ Deployments not Using the ``composer.json`` File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony applications provide a ``kernel.project_dir`` parameter and a related
-:method:`Symfony\\Component\\HttpKernel\\Kernel\\Kernel::getProjectDir>` method.
+:method:`Symfony\\Component\\HttpKernel\\Kernel::getProjectDir` method.
 You can use this method to perform operations with file paths relative to your
 project's root directory. The logic to find that project root directory is based
 on the location of the main ``composer.json`` file.
