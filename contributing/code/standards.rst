@@ -192,7 +192,9 @@ Structure
 * Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
   which return or throw something;
 
-* Do not use spaces around ``[`` offset accessor and before ``]`` offset accessor.
+* Do not use spaces around ``[`` offset accessor and before ``]`` offset accessor;
+
+* Add a ``use`` statement for every class that is not part of the global namespace.
 
 Naming Conventions
 ~~~~~~~~~~~~~~~~~~
