@@ -242,7 +242,7 @@ form_help
 ``view``
     **type**: ``FormView``
 
-Renders the text help for the given field.
+Renders the help text for the given field.
 
 form_row
 ~~~~~~~~
