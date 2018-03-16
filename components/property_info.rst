@@ -125,10 +125,10 @@ Extractable Information
 The :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`
 class exposes public methods to extract four types of information:
 
-* :ref:`*List* of properties <property-info-list>`: `getProperties()`
-* :ref:`Property *type* <property-info-type>`: `getTypes()`
-* :ref:`Property *description* <property-info-description>`: `getShortDescription()` and `getLongDescription()`
-* :ref:`Property *access* details <property-info-access>`: `isReadable()` and `isWritable()`
+* :ref:`List of properties <property-info-list>`: `getProperties()`
+* :ref:`Property type <property-info-type>`: `getTypes()`
+* :ref:`Property description <property-info-description>`: `getShortDescription()` and `getLongDescription()`
+* :ref:`Property access details <property-info-access>`: `isReadable()` and `isWritable()`
 
 .. note::
 
