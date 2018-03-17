@@ -12,7 +12,7 @@ install the profiler before using it:
 
 .. code-block:: terminal
 
-    $ composer require profiler
+    $ composer require profiler --dev
 
 .. toctree::
     :maxdepth: 1

@@ -52,8 +52,8 @@ correct locale however you want::
         public static function getSubscribedEvents()
         {
             return array(
-                // must be registered after the default Locale listener
-                KernelEvents::REQUEST => array(array('onKernelRequest', 15)),
+                // must be registered before (i.e. with a higher priority than) the default Locale listener
+                KernelEvents::REQUEST => array(array('onKernelRequest', 20)),
             );
         }
     }
@@ -140,9 +140,7 @@ you can hook into the login process and update the user's session with this
 locale value before they are redirected to their first page.
 
 To do this, you need an event subscriber on the ``security.interactive_login``
-event:
-
-.. code-block:: php
+event::
 
     // src/EventSubscriber/UserLocaleSubscriber.php
     namespace App\EventSubscriber;

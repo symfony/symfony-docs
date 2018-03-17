@@ -51,6 +51,9 @@ helper method allows creating and configuring a `Memcached`_ class instance usin
     // pass a single DSN string to register a single server with the client
     $client = MemcachedAdapter::createConnection(
         'memcached://localhost'
+        // the DSN can include config options (pass them as a query string):
+        // 'memcached://localhost:11222?retry_timeout=10'
+        // 'memcached://localhost:11222?socket_recv_size=1&socket_send_size=2'
     );
 
     // pass an array of DSN strings to register multiple servers with the client

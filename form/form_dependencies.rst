@@ -36,11 +36,11 @@ create your form::
     // ...
     public function new()
     {
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
         $task = ...;
         $form = $this->createForm(TaskType::class, $task, array(
-            'entity_manager' => $em,
+            'entity_manager' => $entityManager,
         ));
 
         // ...
@@ -56,8 +56,8 @@ of your ``buildForm()`` method::
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            /** @var \Doctrine\ORM\EntityManager $em */
-            $em = $options['entity_manager'];
+            /** @var \Doctrine\ORM\EntityManager $entityManager */
+            $entityManager = $options['entity_manager'];
             // ...
         }
 
@@ -83,11 +83,11 @@ so that you can make a query. First, add this as an argument to your form class:
 
     class TaskType extends AbstractType
     {
-        private $em;
+        private $entityManager;
 
-        public function __construct(EntityManagerInterface $em)
+        public function __construct(EntityManagerInterface $entityManager)
         {
-            $this->em = $em;
+            $this->entityManager = $entityManager;
         }
 
         // ...

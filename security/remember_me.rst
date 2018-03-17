@@ -236,9 +236,7 @@ by securing specific controller actions using these roles. The edit action
 in the controller could be secured using the service context.
 
 In the following example, the action is only allowed if the user has the
-``IS_AUTHENTICATED_FULLY`` role.
-
-.. code-block:: php
+``IS_AUTHENTICATED_FULLY`` role::
 
     // ...
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -251,10 +249,8 @@ In the following example, the action is only allowed if the user has the
         // ...
     }
 
-If your application is based on the Symfony Standard Edition, you can also secure
-your controller using annotations:
-
-.. code-block:: php
+If you have installed `SensioFrameworkExtraBundle`_ in your application, you can also secure
+your controller using annotations::
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -288,3 +284,5 @@ your controller using annotations:
 
 For more information on securing services or methods in this way,
 see :doc:`/security/securing_services`.
+
+.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html

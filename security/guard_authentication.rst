@@ -404,7 +404,7 @@ Each authenticator needs the following methods:
 
 **supportsRememberMe()**
     If you want to support "remember me" functionality, return true from this method.
-    You will still need to active ``remember_me`` under your firewall for it to work.
+    You will still need to activate ``remember_me`` under your firewall for it to work.
     Since this is a stateless API, you do not want to support "remember me"
     functionality in this example.
 
@@ -417,8 +417,9 @@ Each authenticator needs the following methods:
 
 The picture below shows how Symfony calls Guard Authenticator methods:
 
-.. image:: /_images/security/authentication-guard-methods.png
-   :align: center
+.. raw:: html
+
+    <object data="../_images/security/authentication-guard-methods.svg" type="image/svg+xml"></object>
 
 .. _guard-customize-error:
 
@@ -426,8 +427,8 @@ Customizing Error Messages
 --------------------------
 
 When ``onAuthenticationFailure()`` is called, it is passed an ``AuthenticationException``
-that describes *how* authentication failed via its ``$e->getMessageKey()`` (and
-``$e->getMessageData()``) method. The message will be different based on *where*
+that describes *how* authentication failed via its ``$exception->getMessageKey()`` (and
+``$exception->getMessageData()``) method. The message will be different based on *where*
 authentication fails (i.e. ``getUser()`` versus ``checkCredentials()``).
 
 But, you can easily return a custom message by throwing a

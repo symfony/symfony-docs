@@ -29,7 +29,7 @@ which makes all of this quite easy::
         /**
          * @var \Doctrine\ORM\EntityManager
          */
-        private $em;
+        private $entityManager;
 
         /**
          * {@inheritDoc}
@@ -38,14 +38,14 @@ which makes all of this quite easy::
         {
             $kernel = self::bootKernel();
 
-            $this->em = $kernel->getContainer()
+            $this->entityManager = $kernel->getContainer()
                 ->get('doctrine')
                 ->getManager();
         }
 
         public function testSearchByCategoryName()
         {
-            $products = $this->em
+            $products = $this->entityManager
                 ->getRepository(Product::class)
                 ->searchByCategoryName('foo')
             ;
@@ -60,7 +60,7 @@ which makes all of this quite easy::
         {
             parent::tearDown();
 
-            $this->em->close();
-            $this->em = null; // avoid memory leaks
+            $this->entityManager->close();
+            $this->entityManager = null; // avoid memory leaks
         }
     }

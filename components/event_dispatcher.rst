@@ -52,11 +52,11 @@ event - ``kernel.response``. Here's how it works:
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>`
-  (``symfony/event-dispatcher`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/event-dispatcher).
+    $ composer require symfony/event-dispatcher
+
+Alternatively, you can clone the `<https://github.com/symfony/event-dispatcher>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -207,14 +207,14 @@ determine which instance is passed.
 
         $containerBuilder->register('event_dispatcher', EventDispatcher::class);
 
-        // register an event listener
+        // registers an event listener
         $containerBuilder->register('listener_service_id', \AcmeListener::class)
             ->addTag('kernel.event_listener', array(
                 'event' => 'acme.foo.action',
                 'method' => 'onFooAction',
             ));
 
-        // register an event subscriber
+        // registers an event subscriber
         $containerBuilder->register('subscriber_service_id', \AcmeSubscriber::class)
             ->addTag('kernel.event_subscriber');
 
@@ -299,7 +299,7 @@ each listener of that event::
     $order = new Order();
     // ...
 
-    // create the OrderPlacedEvent and dispatch it
+    // creates the OrderPlacedEvent and dispatches it
     $event = new OrderPlacedEvent($order);
     $dispatcher->dispatch(OrderPlacedEvent::NAME, $event);
 
@@ -513,6 +513,6 @@ Learn More
 * :ref:`The kernel.event_subscriber tag <dic-tags-kernel-event-subscriber>`
 
 .. _Mediator: https://en.wikipedia.org/wiki/Mediator_pattern
-.. _Closures: http://php.net/manual/en/functions.anonymous.php
-.. _PHP callable: http://www.php.net/manual/en/language.pseudo-types.php#language.types.callback
+.. _Closures: https://php.net/manual/en/functions.anonymous.php
+.. _PHP callable: https://php.net/manual/en/language.pseudo-types.php#language.types.callback
 .. _Packagist: https://packagist.org/packages/symfony/event-dispatcher

@@ -16,7 +16,7 @@ Defining the Field Type
 In order to create the custom field type, first you have to create the class
 representing the field. In this situation the class holding the field type
 will be called ``ShippingType`` and the file will be stored in the default location
-for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
+for form fields, which is ``App\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
 
     // src/Form/Type/ShippingType.php
@@ -155,6 +155,14 @@ link for details), create a ``shipping_widget`` block to handle this:
             <?php echo $view['form']->renderBlock('choice_widget') ?>
         <?php endif ?>
 
+.. tip::
+
+    You can further customize the template used to render each children of the
+    choice type. The block to override in that case is named "block name" +
+    ``_entry`` + "element name" (``label``, ``errors`` or ``widget``) (e.g. to
+    customize the labels of the children of the Shipping widget you'd need to
+    define ``{% block shipping_entry_label %} ... {% endblock %}``).
+
 .. note::
 
     Make sure the correct widget prefix is used. In this example the name should
@@ -288,14 +296,14 @@ add a ``__construct()`` method like normal::
 
     class ShippingType extends AbstractType
     {
-        private $em;
+        private $entityManager;
 
-        public function __construct(EntityManagerInterface $em)
+        public function __construct(EntityManagerInterface $entityManager)
         {
-            $this->em = $em;
+            $this->entityManager = $entityManager;
         }
 
-        // use $this->em down anywhere you want ...
+        // use $this->entityManager down anywhere you want ...
     }
 
 If you're using the default ``services.yaml`` configuration (i.e. services from the

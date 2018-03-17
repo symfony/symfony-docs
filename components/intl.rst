@@ -16,10 +16,13 @@ The Intl Component
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer</components/using_components>` (``symfony/intl`` on `Packagist`_);
-* Using the official Git repository (https://github.com/symfony/intl).
+    $ composer require symfony/intl
+
+Alternatively, you can clone the `<https://github.com/symfony/intl>`_ repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 If you install the component via Composer, the following classes and functions
 of the intl extension will be automatically provided if the intl extension is
@@ -44,17 +47,6 @@ replace the intl classes:
 * :class:`Symfony\\Component\\Intl\\Globals\\IntlGlobals`
 
 Composer automatically exposes these classes in the global namespace.
-
-If you don't use Composer but the
-:doc:`Symfony ClassLoader component </components/class_loader>`,
-you need to expose them manually by adding the following lines to your autoload
-code::
-
-    if (!function_exists('intl_is_failure')) {
-        require '/path/to/Icu/Resources/stubs/functions.php';
-
-        $loader->registerPrefixFallback('/path/to/Icu/Resources/stubs');
-    }
 
 Writing and Reading Resource Bundles
 ------------------------------------
@@ -188,10 +180,10 @@ returned::
 
     $data = $reader->read('/path/to/bundle', 'en');
 
-    // Produces an error if the key "Data" does not exist
+    // produces an error if the key "Data" does not exist
     var_dump($data['Data']['entry1']);
 
-    // Returns null if the key "Data" does not exist
+    // returns null if the key "Data" does not exist
     var_dump($reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1')));
 
 Additionally, the
@@ -347,6 +339,6 @@ Learn more
 
 .. _Packagist: https://packagist.org/packages/symfony/intl
 .. _Icu component: https://packagist.org/packages/symfony/icu
-.. _intl extension: http://www.php.net/manual/en/book.intl.php
-.. _install the intl extension: http://www.php.net/manual/en/intl.setup.php
+.. _intl extension: https://php.net/manual/en/book.intl.php
+.. _install the intl extension: https://php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/

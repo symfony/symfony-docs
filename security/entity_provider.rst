@@ -12,15 +12,6 @@ you how to load your users from the database via a Doctrine entity.
 Introduction
 ------------
 
-.. tip::
-
-    Before you start, you should check out `FOSUserBundle`_. This external
-    bundle allows you to load users from the database (like you'll learn here)
-    *and* gives you built-in routes & controllers for things like login,
-    registration and forgot password. But, if you need to heavily customize
-    your user system *or* if you want to learn how things work, this tutorial
-    is even better.
-
 Loading users via a Doctrine entity has 2 basic steps:
 
 #. :ref:`Create your User entity <security-crete-user-entity>`
@@ -76,7 +67,7 @@ with the following fields: ``id``, ``username``, ``password``,
         private $password;
 
         /**
-         * @ORM\Column(type="string", length=60, unique=true)
+         * @ORM\Column(type="string", length=254, unique=true)
          */
         private $email;
 
@@ -139,12 +130,19 @@ with the following fields: ``id``, ``username``, ``password``,
                 $this->password,
                 // see section on salt below
                 // $this->salt
-            ) = unserialize($serialized);
+            ) = unserialize($serialized, ['allowed_classes' => false]);
         }
     }
 
 To make things shorter, some of the getter and setter methods aren't shown.
 But you can generate these manually or with your own IDE.
+
+.. caution::
+
+    In the example above, the User entity's table name is "app_users" because
+    "USER" is a SQL reserved word. If you wish to call your table name "user",
+    `it must be quoted with backticks`_ to avoid errors. The annotation should
+    look like ``@ORM\Table(name="`user`")``.
 
 Next, make sure to :ref:`create the database table <doctrine-creating-the-database-tables-schema>`:
 
@@ -323,12 +321,12 @@ and password ``admin`` (which has been encoded).
 
 .. sidebar:: Do you need to use a Salt property?
 
-    If you use ``bcrypt``, no. Otherwise, yes. All passwords must be hashed
-    with a salt, but ``bcrypt`` does this internally. Since this tutorial
-    *does* use ``bcrypt``, the ``getSalt()`` method in ``User`` can just
-    return ``null`` (it's not used). If you use a different algorithm, you'll
-    need to uncomment the ``salt`` lines in the ``User`` entity and add a
-    persisted ``salt`` property.
+    If you use ``bcrypt`` or ``argon2i``, no. Otherwise, yes. All passwords must
+    be hashed with a salt, but ``bcrypt`` and ``argon2i`` do this internally.
+    Since this tutorial *does* use ``bcrypt``, the ``getSalt()`` method in
+    ``User`` can just return ``null`` (it's not used). If you use a different
+    algorithm, you'll need to uncomment the ``salt`` lines in the ``User``
+    entity and add a persisted ``salt`` property.
 
 .. _security-advanced-user-interface:
 
@@ -378,14 +376,14 @@ so you only need the new interface::
         {
             return serialize(array(
                 // ...
-                $this->isActive
+                $this->isActive,
             ));
         }
         public function unserialize($serialized)
         {
             list (
                 // ...
-                $this->isActive
+                $this->isActive,
             ) = unserialize($serialized);
         }
     }
@@ -548,3 +546,4 @@ or worry about it.
 
 .. _fixtures: https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
 .. _FOSUserBundle: https://github.com/FriendsOfSymfony/FOSUserBundle
+.. _`it must be quoted with backticks`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words

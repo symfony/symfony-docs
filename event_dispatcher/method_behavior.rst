@@ -26,10 +26,10 @@ method::
             $message = $event->getMessage();
 
             // the real method implementation is here
-            $ret = ...;
+            $returnValue = ...;
 
             // do something after the method
-            $event = new AfterSendMailEvent($ret);
+            $event = new AfterSendMailEvent($returnValue);
             $this->dispatcher->dispatch('mailer.post_send', $event);
 
             return $event->getReturnValue();
@@ -121,10 +121,10 @@ could listen to the ``mailer.post_send`` event and change the method's return va
     {
         public function onMailerPostSend(AfterSendMailEvent $event)
         {
-            $ret = $event->getReturnValue();
-            // modify the original ``$ret`` value
+            $returnValue = $event->getReturnValue();
+            // modify the original ``$returnValue`` value
 
-            $event->setReturnValue($ret);
+            $event->setReturnValue($returnValue);
         }
 
         public static function getSubscribedEvents()

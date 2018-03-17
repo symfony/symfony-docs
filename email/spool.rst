@@ -54,7 +54,7 @@ this spool, use the following configuration:
         // config/packages/swiftmailer.php
         $container->loadFromExtension('swiftmailer', array(
              // ...
-            'spool' => array('type' => 'memory')
+            'spool' => array('type' => 'memory'),
         ));
 
 .. _spool-using-a-file:

@@ -116,7 +116,7 @@ the event listener might look like the following::
             $product = $event->getData();
             $form = $event->getForm();
 
-            // check if the Product object is "new"
+            // checks if the Product object is "new"
             // If no data is passed to the form, the data is "null".
             // This should be considered a new "Product"
             if (!$product || null === $product->getId()) {
@@ -501,6 +501,11 @@ You can see that you need to listen on these two events and have different
 callbacks only because in two different scenarios, the data that you can use is
 available in different events. Other than that, the listeners always perform
 exactly the same things on a given form.
+
+.. tip::
+
+    The ``FormEvents::POST_SUBMIT`` event does not allow to modify the form
+    the listener is bound to, but it allows to modify its parent.
 
 One piece that is still missing is the client-side updating of your form after
 the sport is selected. This should be handled by making an AJAX call back to

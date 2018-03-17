@@ -40,8 +40,8 @@ It is possible to define your own styles using the
     use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
     // ...
-    $style = new OutputFormatterStyle('red', 'yellow', array('bold', 'blink'));
-    $output->getFormatter()->setStyle('fire', $style);
+    $outputStyle = new OutputFormatterStyle('red', 'yellow', array('bold', 'blink'));
+    $output->getFormatter()->setStyle('fire', $outputStyle);
 
     $output->writeln('<fire>foo</>');
 

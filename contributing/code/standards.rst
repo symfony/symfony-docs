@@ -192,7 +192,9 @@ Structure
 * Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
   which return or throw something;
 
-* Do not use spaces around ``[`` offset accessor and before ``]`` offset accessor.
+* Do not use spaces around ``[`` offset accessor and before ``]`` offset accessor;
+
+* Add a ``use`` statement for every class that is not part of the global namespace.
 
 Naming Conventions
 ~~~~~~~~~~~~~~~~~~
@@ -229,14 +231,16 @@ Naming Conventions
 Service Naming Conventions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* A service name contains groups, separated by dots;
+* A service name must be the same as the fully qualified class name (FQCN) of
+  its class (e.g. ``App\EventSubscriber\UserSubscriber``);
 
-* The DI alias of the bundle is the first group (e.g. ``fos_user``);
+* If there are multiple services for the same class, use the FQCN for the main
+  service and use lowercased and underscored names for the rest of services.
+  Optionally divide them in groups separated with dots (e.g.
+  ``something.service_name``, ``fos_user.something.service_name``);
 
-* Use lowercase letters for service and parameter names (except when referring
+* Use lowercase letters for parameter names (except when referring
   to environment variables with the ``%env(VARIABLE_NAME)%`` syntax);
-
-* A group name uses the underscore notation;
 
 * Add class aliases for public services (e.g. alias ``Symfony\Component\Something\ClassName``
   to ``something.service_name``).
@@ -255,7 +259,8 @@ Documentation
 
 * The ``@package`` and ``@subpackage`` annotations are not used;
 
-* Inline the ``@inheritdoc`` tag.
+* Don't inline PHPDoc blocks, even when they contain just one tag (e.g. don't
+  put ``/** {@inheritdoc} */`` in a single line).
 
 License
 ~~~~~~~
@@ -264,9 +269,9 @@ License
   present at the top of every PHP file, before the namespace.
 
 .. _`PHP CS Fixer tool`: http://cs.sensiolabs.org/
-.. _`PSR-0`: http://www.php-fig.org/psr/psr-0/
-.. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
-.. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
-.. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
-.. _`identical comparison`: http://php.net/manual/en/language.operators.comparison.php
+.. _`PSR-0`: https://www.php-fig.org/psr/psr-0/
+.. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
+.. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
+.. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
+.. _`identical comparison`: https://php.net/manual/en/language.operators.comparison.php
 .. _`Yoda conditions`: https://en.wikipedia.org/wiki/Yoda_conditions

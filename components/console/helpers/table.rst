@@ -148,17 +148,17 @@ If the built-in styles do not fit your need, define your own::
     use Symfony\Component\Console\Helper\TableStyle;
 
     // by default, this is based on the default style
-    $style = new TableStyle();
+    $tableStyle = new TableStyle();
 
-    // customize the style
-    $style
+    // customizes the style
+    $tableStyle
         ->setHorizontalBorderChar('<fg=magenta>|</>')
         ->setVerticalBorderChar('<fg=magenta>-</>')
         ->setCrossingChar(' ')
     ;
 
-    // use the style for this table
-    $table->setStyle($style);
+    // uses the custom style for this table
+    $table->setStyle($tableStyle);
 
 Here is a full list of things you can customize:
 
@@ -175,10 +175,10 @@ Here is a full list of things you can customize:
 
     You can also register a style globally::
 
-        // register the style under the colorful name
-        Table::setStyleDefinition('colorful', $style);
+        // registers the style under the colorful name
+        Table::setStyleDefinition('colorful', $tableStyle);
 
-        // use it for a table
+        // applies the custom style for the given table
         $table->setStyle('colorful');
 
     This method can also be used to override a built-in style.

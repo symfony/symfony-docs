@@ -467,8 +467,8 @@ C) Encoding the User's Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Whether your users are stored in ``security.yaml``, in a database or somewhere
-else, you'll want to encode their passwords. The best algorithm to use is
-``bcrypt``:
+else, you'll want to encode their passwords. The most suitable algorithm to use
+is ``bcrypt``:
 
 .. configuration-block::
 
@@ -603,8 +603,8 @@ before inserting them into the database? Don't worry, see
 
     Supported algorithms for this method depend on your PHP version, but
     include the algorithms returned by the PHP function :phpfunction:`hash_algos`
-    as well as a few others (e.g. bcrypt). See the ``encoders`` key in the
-    :doc:`Security Reference Section </reference/configuration/security>`
+    as well as a few others (e.g. bcrypt and argon2i). See the ``encoders`` key
+    in the :doc:`Security Reference Section </reference/configuration/security>`
     for examples.
 
     It's also possible to use different hashing algorithms on a user-by-user
@@ -1007,16 +1007,14 @@ If you still prefer to use traditional ACLs, refer to the `Symfony ACL bundle`_.
 -----------------------------
 
 After authentication, the ``User`` object of the current user can be accessed
-via the ``security.token_storage`` service. From inside a controller, this will
-look like::
+via the ``getUser()`` shortcut (which uses the ``security.token_storage``
+service). From inside a controller, this will look like::
 
     public function index()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
-        // or you can also type-hint a method argument with this class:
-        // Symfony\Component\Security\Core\User\UserInterface (e.g. "UserInterface $user")
     }
 
 .. tip::
@@ -1044,14 +1042,7 @@ It's important to check if the user is authenticated first. If they're not,
 ``$user`` will either be ``null`` or the string ``anon.``. Wait, what? Yes,
 this is a quirk. If you're not logged in, the user is technically the string
 ``anon.``, though the ``getUser()`` controller shortcut converts this to
-``null`` for convenience. When type-hinting the
-:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface\\UserInterface`
-and being logged-in is optional, you can allow a null value for the argument::
-
-    public function index(UserInterface $user = null)
-    {
-        // $user is null when not logged-in or anon.
-    }
+``null`` for convenience.
 
 The point is this: always check to see if the user is logged in before using
 the User object, and use the ``isGranted()`` method (or
@@ -1064,6 +1055,25 @@ the User object, and use the ``isGranted()`` method (or
     if ($this->getUser()) {
         // ...
     }
+
+.. note::
+
+    An alternative way to get the current user in a controller is to type-hint
+    the controller argument with
+    :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface\\UserInterface`
+    (and default it to ``null`` if being logged-in is optional)::
+
+        use Symfony\Component\Security\Core\User\UserInterface\UserInterface;
+
+        public function indexAction(UserInterface $user = null)
+        {
+            // $user is null when not logged-in or anon.
+        }
+
+    This is only recommended for experienced developers who don't extend from the
+    :ref:`Symfony base controller <the-base-controller-class-services>` and
+    don't use the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerTrait`
+    either. Otherwise, it's recommended to keep using the ``getUser()`` shortcut.
 
 Retrieving the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1179,10 +1189,10 @@ Next, you'll need to create a route for this URL (but not a controller):
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('logout', new Route('/logout'));
+        $routes = new RouteCollection();
+        $routes->add('logout', new Route('/logout'));
 
-        return $collection;
+        return $routes;
 
 And that's it! By sending a user to ``/logout`` (or whatever you configure
 the ``path`` to be), Symfony will un-authenticate the current user.

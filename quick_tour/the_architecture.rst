@@ -21,14 +21,24 @@ Want a logging system? No problem:
 This installs and configures (via a recipe) the powerful `Monolog`_ library. To
 use the logger in a controller, add a new argument type-hinted with ``LoggerInterface``::
 
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
+
     use Psr\Log\LoggerInterface;
-    // ...
+    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    public function index($name, LoggerInterface $logger)
+    class DefaultController extends AbstractController
     {
-        $logger->info("Saying hello to $name!");
+        /**
+         * @Route("/hello/{name}")
+         */
+        public function index($name, LoggerInterface $logger)
+        {
+            $logger->info("Saying hello to $name!");
 
-        // ...
+            // ...
+        }
     }
 
 That's it! The new log message will be written to ``var/log/dev.log``. Of course, this
@@ -89,16 +99,27 @@ this code directly in your controller, create a new class::
 
 Great! You can use this immediately in your controller::
 
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
+
     use App\GreetingGenerator;
-    // ...
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    public function index($name, LoggerInterface $logger, GreetingGenerator $generator)
+    class DefaultController extends AbstractController
     {
-        $greeting = $generator->getRandomGreeting();
+        /**
+         * @Route("/hello/{name}")
+         */
+        public function index($name, LoggerInterface $logger, GreetingGenerator $generator)
+        {
+            $greeting = $generator->getRandomGreeting();
 
-        $logger->info("Saying $greeting to $name!");
+            $logger->info("Saying $greeting to $name!");
 
-        // ...
+            // ...
+        }
     }
 
 That's it! Symfony will instantiate the ``GreetingGenerator`` automatically and
@@ -108,6 +129,7 @@ difference is that it's done in the constructor:
 
 .. code-block:: diff
 
+    // src/GreetingGenerator.php
     + use Psr\Log\LoggerInterface;
 
     class GreetingGenerator
@@ -174,6 +196,7 @@ After creating just *one* file, you can use this immediately:
 
 .. code-block:: twig
 
+    {# templates/default/index.html.twig #}
     {# Will print something like "Hey Symfony!" #}
     <h1>{{ name|greet }}</h1>
 
@@ -207,7 +230,7 @@ great tools for this: the web debug toolbar displays at the bottom of the page, 
 are big, beautiful & explicit, and any configuration cache is automatically rebuilt
 whenever needed.
 
-But what about when you deploy to production? We will need to hide those tool and
+But what about when you deploy to production? We will need to hide those tools and
 optimize for speed!
 
 This is solved by Symfony's *environment* system and there are three: ``dev``, ``prod``
@@ -266,7 +289,7 @@ Platform as a Service (PaaS) deployment systems as well as Docker.
 But setting environment variables while developing can be a pain. That's why your
 app automatically loads a ``.env`` file, if the ``APP_ENV`` environment variable
 isn't set in the environment. The keys in this file then become environment variables
-are and read by your app:
+and are read by your app:
 
 .. code-block:: bash
 
@@ -278,7 +301,7 @@ are and read by your app:
 
 At first, the file doesn't contain much. But as your app grows, you'll add more
 configuration as you need it. But, actually, it gets much more interesting! Suppose
-your app needs database ORM. Let's install the Doctrine ORM:
+your app needs a database ORM. Let's install the Doctrine ORM:
 
 .. code-block:: terminal
 
@@ -298,7 +321,7 @@ Thanks to a new recipe installed by Flex, look at the ``.env`` file again:
     + DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/db_name
     + ###< doctrine/doctrine-bundle ###
 
-The new ``DATBASE_URL`` environment variable was added *automatically* and is already
+The new ``DATABASE_URL`` environment variable was added *automatically* and is already
 referenced by the new ``doctrine.yaml`` configuration file. By combining environment
 variables and Flex, you're using industry best practices without any extra effort.
 

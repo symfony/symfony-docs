@@ -76,7 +76,7 @@ use the ``single_text`` widget::
     // ...
 
     $builder->add('publishedAt', DateType::class, array(
-        // render as a single text box
+        // renders it as a single text box
         'widget' => 'single_text',
     ));
 
@@ -94,10 +94,10 @@ make the following changes::
     $builder->add('publishedAt', DateType::class, array(
         'widget' => 'single_text',
 
-        // do not render as type="date", to avoid HTML5 date pickers
+        // prevents rendering it as type="date", to avoid HTML5 date pickers
         'html5' => false,
 
-        // add a class that can be selected in JavaScript
+        // adds a class that can be selected in JavaScript
         'attr' => ['class' => 'js-datepicker'],
     ));
 
@@ -152,7 +152,7 @@ values for the year, month and day fields::
 
     $builder->add('dueDate', DateType::class, array(
         'placeholder' => array(
-            'year' => 'Year', 'month' => 'Month', 'day' => 'Day'
+            'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
         )
     ));
 

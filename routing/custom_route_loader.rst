@@ -36,7 +36,7 @@ and therefore have two important methods:
 :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
 and :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load`.
 
-Take these lines from the ``routes.yaml`` in the Symfony Standard Edition:
+Take these lines from the ``routes.yaml``:
 
 .. code-block:: yaml
 
@@ -58,6 +58,54 @@ containing :class:`Symfony\\Component\\Routing\\Route` objects.
     Routes loaded this way will be cached by the Router the same way as
     when they are defined in one of the default formats (e.g. XML, YAML,
     PHP file).
+
+Loading Routes with a Custom Service
+------------------------------------
+
+Using a regular Symfony service is the simplest way to load routes in a
+customized way. It's much easier than creating a full custom route loader, so
+you should always consider this option first.
+
+To do so, define ``type: service`` as the type of the loaded routing resource
+and configure the service and method to call:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        admin_routes:
+            resource: 'admin_route_loader:loadRoutes'
+            type: service
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import resource="admin_route_loader:loadRoutes" type="service"/>
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $routes = new RouteCollection();
+        $routes->addCollection(
+            $loader->import("admin_route_loader:loadRoutes", "service")
+        );
+
+        return $routes;
+
+In this example, the routes are loaded by calling the ``loadRoutes()`` method of
+the service whose ID is ``admin_route_loader``. Your service doesn't have to
+extend or implement any special class, but the called method must return a
+:class:`Symfony\\Component\\Routing\\RouteCollection` object.
 
 Creating a custom Loader
 ------------------------
@@ -84,11 +132,11 @@ you do. The resource name itself is not actually used in the example::
 
     class ExtraLoader extends Loader
     {
-        private $loaded = false;
+        private $isLoaded = false;
 
         public function load($resource, $type = null)
         {
-            if (true === $this->loaded) {
+            if (true === $this->isLoaded) {
                 throw new \RuntimeException('Do not add the "extra" loader twice');
             }
 
@@ -108,7 +156,7 @@ you do. The resource name itself is not actually used in the example::
             $routeName = 'extraRoute';
             $routes->add($routeName, $route);
 
-            $this->loaded = true;
+            $this->isLoaded = true;
 
             return $routes;
         }
@@ -214,10 +262,10 @@ What remains to do is adding a few lines to the routing configuration:
         // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $collection = new RouteCollection();
-        $collection->addCollection($loader->import('.', 'extra'));
+        $routes = new RouteCollection();
+        $routes->addCollection($loader->import('.', 'extra'));
 
-        return $collection;
+        return $routes;
 
 The important part here is the ``type`` key. Its value should be ``extra`` as
 this is the type which the ``ExtraLoader`` supports and this will make sure
@@ -256,16 +304,16 @@ configuration file - you can call the
     {
         public function load($resource, $type = null)
         {
-            $collection = new RouteCollection();
+            $routes = new RouteCollection();
 
             $resource = '@ThirdPartyBundle/Resources/config/routing.yaml';
             $type = 'yaml';
 
             $importedRoutes = $this->import($resource, $type);
 
-            $collection->addCollection($importedRoutes);
+            $routes->addCollection($importedRoutes);
 
-            return $collection;
+            return $routes;
         }
 
         public function supports($resource, $type = null)

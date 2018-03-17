@@ -126,7 +126,7 @@ for example, that you're translating a simple message from inside a controller::
     {
         $translated = $translator->trans('Symfony is great');
 
-        return new Response($translated);
+        // ...
     }
 
 .. _translation-resources:
@@ -205,7 +205,7 @@ Sometimes, a message containing a variable needs to be translated::
     {
         $translated = $translator->trans('Hello '.$name);
 
-        return new Response($translated);
+        // ...
     }
 
 However, creating a translation for this string is impossible since the translator
@@ -272,11 +272,11 @@ You can also specify the message domain and pass some additional variables:
 
 .. code-block:: twig
 
-    {% trans with {'%name%': 'Fabien'} from "app" %}Hello %name%{% endtrans %}
+    {% trans with {'%name%': 'Fabien'} from 'app' %}Hello %name%{% endtrans %}
 
-    {% trans with {'%name%': 'Fabien'} from "app" into "fr" %}Hello %name%{% endtrans %}
+    {% trans with {'%name%': 'Fabien'} from 'app' into 'fr' %}Hello %name%{% endtrans %}
 
-    {% transchoice count with {'%name%': 'Fabien'} from "app" %}
+    {% transchoice count with {'%name%': 'Fabien'} from 'app' %}
         {0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples
     {% endtranschoice %}
 
@@ -291,7 +291,7 @@ texts* and complex expressions:
 
     {{ message|transchoice(5) }}
 
-    {{ message|trans({'%name%': 'Fabien'}, "app") }}
+    {{ message|trans({'%name%': 'Fabien'}, 'app') }}
 
     {{ message|transchoice(5, {'%name%': 'Fabien'}, 'app') }}
 
@@ -322,7 +322,7 @@ texts* and complex expressions:
 
     .. code-block:: twig
 
-           {% trans_default_domain "app" %}
+           {% trans_default_domain 'app' %}
 
     Note that this only influences the current template, not any "included"
     template (in order to avoid side effects).
@@ -343,6 +343,33 @@ The translator service is accessible in PHP templates through the
         array('%count%' => 10)
     ) ?>
 
+Extracting Translation Contents and Updating Catalogs Automatically
+-------------------------------------------------------------------
+
+The most time-consuming tasks when translating an application is to extract all
+the template contents to be translated and to keep all the translation files in
+sync. Symfony includes a command called ``translation:update`` that helps you
+with these tasks:
+
+.. code-block:: terminal
+
+    # updates the French translation file with the missing strings found in app/Resources/ templates
+    $ ./bin/console translation:update --dump-messages --force fr
+
+    # updates the English translation file with the missing strings found in AppBundle
+    $ ./bin/console translation:update --dump-messages --force en AppBundle
+
+.. note::
+
+    If you want to see the missing translation strings without actually updating
+    the translation files, remove the ``--force`` option from the command above.
+
+.. tip::
+
+    If you need to extract translation strings from other sources, such as
+    controllers, forms and flash messages, consider using the more advanced
+    third-party `TranslationBundle`_.
+
 .. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
@@ -350,7 +377,7 @@ Translation Resource/File Names and Locations
 
 Symfony looks for message files (i.e. translations) in the following default locations:
 
-* the ``translations/`` directory;
+* the ``translations/`` directory (at the root of the project);
 
 * the ``src/Resources/<bundle name>/translations/`` directory;
 
@@ -528,3 +555,4 @@ Learn more
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: http://atlantic18.github.io/DoctrineExtensions/doc/translatable.html
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
+.. _`TranslationBundle`: https://github.com/php-translation/symfony-bundle

@@ -9,10 +9,11 @@ The Filesystem Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/filesystem`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/filesystem).
+    $ composer require symfony/filesystem
+
+Alternatively, you can clone the `<https://github.com/symfony/filesystem>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -25,12 +26,12 @@ endpoint for filesystem operations::
     use Symfony\Component\Filesystem\Filesystem;
     use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
-    $fs = new Filesystem();
+    $fileSystem = new Filesystem();
 
     try {
-        $fs->mkdir('/tmp/random/dir/'.mt_rand());
-    } catch (IOExceptionInterface $e) {
-        echo "An error occurred while creating your directory at ".$e->getPath();
+        $fileSystem->mkdir('/tmp/random/dir/'.mt_rand());
+    } catch (IOExceptionInterface $exception) {
+        echo "An error occurred while creating your directory at ".$exception->getPath();
     }
 
 .. note::
@@ -52,7 +53,7 @@ mkdir
 On POSIX filesystems, directories are created with a default mode value
 `0777`. You can use the second argument to set your own mode::
 
-    $fs->mkdir('/tmp/photos', 0700);
+    $fileSystem->mkdir('/tmp/photos', 0700);
 
 .. note::
 
@@ -78,10 +79,10 @@ presence of one or more files or directories and returns ``false`` if any of
 them is missing::
 
     // this directory exists, return true
-    $fs->exists('/tmp/photos');
+    $fileSystem->exists('/tmp/photos');
 
     // rabbit.jpg exists, bottle.png does not exist, return false
-    $fs->exists(array('rabbit.jpg', 'bottle.png'));
+    $fileSystem->exists(array('rabbit.jpg', 'bottle.png'));
 
 .. note::
 
@@ -98,10 +99,10 @@ source modification date is later than the target. This behavior can be overridd
 by the third boolean argument::
 
     // works only if image-ICC has been modified after image.jpg
-    $fs->copy('image-ICC.jpg', 'image.jpg');
+    $fileSystem->copy('image-ICC.jpg', 'image.jpg');
 
     // image.jpg will be overridden
-    $fs->copy('image-ICC.jpg', 'image.jpg', true);
+    $fileSystem->copy('image-ICC.jpg', 'image.jpg', true);
 
 touch
 ~~~~~
@@ -110,12 +111,12 @@ touch
 modification time for a file. The current time is used by default. You can set
 your own with the second argument. The third argument is the access time::
 
-    // set modification time to the current timestamp
-    $fs->touch('file.txt');
-    // set modification time 10 seconds in the future
-    $fs->touch('file.txt', time() + 10);
-    // set access time 10 seconds in the past
-    $fs->touch('file.txt', time(), time() - 10);
+    // sets modification time to the current timestamp
+    $fileSystem->touch('file.txt');
+    // sets modification time 10 seconds in the future
+    $fileSystem->touch('file.txt', time() + 10);
+    // sets access time 10 seconds in the past
+    $fileSystem->touch('file.txt', time(), time() - 10);
 
 .. note::
 
@@ -128,10 +129,10 @@ chown
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chown` changes the owner of
 a file. The third argument is a boolean recursive option::
 
-    // set the owner of the lolcat video to www-data
-    $fs->chown('lolcat.mp4', 'www-data');
-    // change the owner of the video directory recursively
-    $fs->chown('/video', 'www-data', true);
+    // sets the owner of the lolcat video to www-data
+    $fileSystem->chown('lolcat.mp4', 'www-data');
+    // changes the owner of the video directory recursively
+    $fileSystem->chown('/video', 'www-data', true);
 
 .. note::
 
@@ -144,10 +145,10 @@ chgrp
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` changes the group of
 a file. The third argument is a boolean recursive option::
 
-    // set the group of the lolcat video to nginx
-    $fs->chgrp('lolcat.mp4', 'nginx');
-    // change the group of the video directory recursively
-    $fs->chgrp('/video', 'nginx', true);
+    // sets the group of the lolcat video to nginx
+    $fileSystem->chgrp('lolcat.mp4', 'nginx');
+    // changes the group of the video directory recursively
+    $fileSystem->chgrp('/video', 'nginx', true);
 
 .. note::
 
@@ -160,10 +161,10 @@ chmod
 :method:`Symfony\\Component\\Filesystem\\Filesystem::chmod` changes the mode or
 permissions of a file. The fourth argument is a boolean recursive option::
 
-    // set the mode of the video to 0600
-    $fs->chmod('video.ogg', 0600);
-    // change the mod of the src directory recursively
-    $fs->chmod('src', 0700, 0000, true);
+    // sets the mode of the video to 0600
+    $fileSystem->chmod('video.ogg', 0600);
+    // changes the mod of the src directory recursively
+    $fileSystem->chmod('src', 0700, 0000, true);
 
 .. note::
 
@@ -176,7 +177,7 @@ remove
 :method:`Symfony\\Component\\Filesystem\\Filesystem::remove` deletes files,
 directories and symlinks::
 
-    $fs->remove(array('symlink', '/path/to/directory', 'activity.log'));
+    $fileSystem->remove(array('symlink', '/path/to/directory', 'activity.log'));
 
 .. note::
 
@@ -189,10 +190,10 @@ rename
 :method:`Symfony\\Component\\Filesystem\\Filesystem::rename` changes the name
 of a single file or directory::
 
-    // rename a file
-    $fs->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
-    // rename a directory
-    $fs->rename('/tmp/files', '/path/to/store/files');
+    // renames a file
+    $fileSystem->rename('/tmp/processed_video.ogg', '/path/to/store/video_647.ogg');
+    // renames a directory
+    $fileSystem->rename('/tmp/files', '/path/to/store/files');
 
 symlink
 ~~~~~~~
@@ -201,11 +202,11 @@ symlink
 symbolic link from the target to the destination. If the filesystem does not
 support symbolic links, a third boolean argument is available::
 
-    // create a symbolic link
-    $fs->symlink('/path/to/source', '/path/to/destination');
-    // duplicate the source directory if the filesystem
+    // creates a symbolic link
+    $fileSystem->symlink('/path/to/source', '/path/to/destination');
+    // duplicates the source directory if the filesystem
     // does not support symbolic links
-    $fs->symlink('/path/to/source', '/path/to/destination', true);
+    $fileSystem->symlink('/path/to/source', '/path/to/destination', true);
 
 readlink
 ~~~~~~~~
@@ -221,10 +222,10 @@ The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method provid
 by the Filesystem component always behaves in the same way::
 
     // returns the next direct target of the link without considering the existence of the target
-    $fs->readlink('/path/to/link');
+    $fileSystem->readlink('/path/to/link');
 
     // returns its absolute fully resolved final version of the target (if there are nested links, they are resolved)
-    $fs->readlink('/path/to/link', true);
+    $fileSystem->readlink('/path/to/link', true);
 
 Its behavior is the following::
 
@@ -245,12 +246,12 @@ makePathRelative
 absolute paths and returns the relative path from the second path to the first one::
 
     // returns '../'
-    $fs->makePathRelative(
+    $fileSystem->makePathRelative(
         '/var/lib/symfony/src/Symfony/',
         '/var/lib/symfony/src/Symfony/Component'
     );
     // returns 'videos/'
-    $fs->makePathRelative('/tmp/videos', '/tmp')
+    $fileSystem->makePathRelative('/tmp/videos', '/tmp')
 
 mirror
 ~~~~~~
@@ -260,7 +261,7 @@ contents of the source directory into the target one (use the
 :method:`Symfony\\Component\\Filesystem\\Filesystem::copy` method to copy single
 files)::
 
-    $fs->mirror('/path/to/source', '/path/to/target');
+    $fileSystem->mirror('/path/to/source', '/path/to/target');
 
 isAbsolutePath
 ~~~~~~~~~~~~~~
@@ -268,14 +269,14 @@ isAbsolutePath
 :method:`Symfony\\Component\\Filesystem\\Filesystem::isAbsolutePath` returns
 ``true`` if the given path is absolute, ``false`` otherwise::
 
-    // return true
-    $fs->isAbsolutePath('/tmp');
-    // return true
-    $fs->isAbsolutePath('c:\\Windows');
-    // return false
-    $fs->isAbsolutePath('tmp');
-    // return false
-    $fs->isAbsolutePath('../dir');
+    // returns true
+    $fileSystem->isAbsolutePath('/tmp');
+    // returns true
+    $fileSystem->isAbsolutePath('c:\\Windows');
+    // returns false
+    $fileSystem->isAbsolutePath('tmp');
+    // returns false
+    $fileSystem->isAbsolutePath('../dir');
 
 dumpFile
 ~~~~~~~~
@@ -286,7 +287,7 @@ file first and then moves it to the new file location when it's finished.
 This means that the user will always see either the complete old file or
 complete new file (but never a partially-written file)::
 
-    $fs->dumpFile('file.txt', 'Hello World');
+    $fileSystem->dumpFile('file.txt', 'Hello World');
 
 The ``file.txt`` file contains ``Hello World`` now.
 
@@ -296,7 +297,7 @@ appendToFile
 :method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile` adds new
 contents at the end of some file::
 
-    $fs->appendToFile('logs.txt', 'Email sent to user@example.com');
+    $fileSystem->appendToFile('logs.txt', 'Email sent to user@example.com');
 
 If either the file or its containing directory doesn't exist, this method
 creates them before appending the contents.

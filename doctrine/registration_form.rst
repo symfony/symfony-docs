@@ -138,7 +138,7 @@ With some validation added, your class may look something like this::
 
         public function getSalt()
         {
-            // The bcrypt algorithm doesn't require a separate salt.
+            // The bcrypt and argon2i algorithms don't require a separate salt.
             // You *may* need a real salt if you choose a different encoder.
             return null;
         }
@@ -253,9 +253,9 @@ into the database::
                 $user->setPassword($password);
 
                 // 4) save the User!
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
                 // ... do any other work - like sending them an email, etc
                 // maybe set a "flash" success message for the user

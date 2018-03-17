@@ -11,10 +11,11 @@ The Routing Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/routing`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/routing).
+    $ composer require symfony/routing
+
+Alternatively, you can clone the `<https://github.com/symfony/routing>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -62,7 +63,7 @@ URL path and some array of custom variables in its constructor. This array
 of custom variables can be *anything* that's significant to your application,
 and is returned when that route is matched.
 
-The :method:`UrlMatcher::match() <Symfony\\Component\\Routing\\UrlMatcher::match>`
+The :method:`UrlMatcher::match() <Symfony\\Component\\Routing\\Matcher\\UrlMatcher::match>`
 returns the variables you set on the route as well as the wildcard placeholders
 (see below). Your application can now use this information to continue
 processing the request. In addition to the configured variables, a ``_route``
@@ -261,10 +262,10 @@ To load this file, you can use the following code. This assumes that your
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\Routing\Loader\YamlFileLoader;
 
-    // look inside *this* directory
-    $locator = new FileLocator(array(__DIR__));
-    $loader = new YamlFileLoader($locator);
-    $collection = $loader->load('routes.yaml');
+    // looks inside *this* directory
+    $fileLocator = new FileLocator(array(__DIR__));
+    $loader = new YamlFileLoader($fileLocator);
+    $routes = $loader->load('routes.yaml');
 
 Besides :class:`Symfony\\Component\\Routing\\Loader\\YamlFileLoader` there are two
 other loaders that work the same way:
@@ -279,14 +280,14 @@ have to provide the name of a PHP file which returns a :class:`Symfony\\Componen
     use Symfony\Component\Routing\RouteCollection;
     use Symfony\Component\Routing\Route;
 
-    $collection = new RouteCollection();
-    $collection->add(
+    $routes = new RouteCollection();
+    $routes->add(
         'route_name',
         new Route('/foo', array('_controller' => 'ExampleController'))
     );
     // ...
 
-    return $collection;
+    return $routes;
 
 Routes as Closures
 ..................
@@ -301,7 +302,7 @@ calls a closure and uses the result as a :class:`Symfony\\Component\\Routing\\Ro
     };
 
     $loader = new ClosureLoader();
-    $collection = $loader->load($closure);
+    $routes = $loader->load($closure);
 
 Routes as Annotations
 .....................
@@ -311,6 +312,8 @@ Last but not least there are
 :class:`Symfony\\Component\\Routing\\Loader\\AnnotationFileLoader` to load
 route definitions from class annotations. The specific details are left
 out here.
+
+.. include:: /_includes/_annotation_loader_tip.rst.inc
 
 The all-in-one Router
 ~~~~~~~~~~~~~~~~~~~~~
@@ -332,11 +335,11 @@ path) or disable caching (if it's set to ``null``). The caching is done
 automatically in the background if you want to use it. A basic example of the
 :class:`Symfony\\Component\\Routing\\Router` class would look like::
 
-    $locator = new FileLocator(array(__DIR__));
+    $fileLocator = new FileLocator(array(__DIR__));
     $requestContext = new RequestContext('/');
 
     $router = new Router(
-        new YamlFileLoader($locator),
+        new YamlFileLoader($fileLocator),
         'routes.yaml',
         array('cache_dir' => __DIR__.'/cache'),
         $requestContext
@@ -402,8 +405,8 @@ routes with UTF-8 characters:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('route1', new Route('/category/{name}',
+        $routes = new RouteCollection();
+        $routes->add('route1', new Route('/category/{name}',
             array(
                 '_controller' => 'App\Controller\DefaultController::category',
             ),
@@ -415,7 +418,7 @@ routes with UTF-8 characters:
 
         // ...
 
-        return $collection;
+        return $routes;
 
 In this route, the ``utf8`` option set to ``true`` makes Symfony consider the
 ``.`` requirement to match any UTF-8 characters instead of just a single
@@ -479,8 +482,8 @@ You can also include UTF-8 strings as routing requirements:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('route2', new Route('/default/{default}',
+        $routes = new RouteCollection();
+        $routes->add('route2', new Route('/default/{default}',
             array(
                 '_controller' => 'App\Controller\DefaultController::default',
             ),
@@ -494,7 +497,7 @@ You can also include UTF-8 strings as routing requirements:
 
         // ...
 
-        return $collection;
+        return $routes;
 
 .. tip::
 

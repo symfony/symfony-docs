@@ -40,8 +40,8 @@ In this case, the SOAP service will allow the client to call a method called
         {
 
             $message = new \Swift_Message('Hello Service')
-                                    ->setTo('me@example.com')
-                                    ->setBody($name . ' says hi!');
+                ->setTo('me@example.com')
+                ->setBody($name.' says hi!');
 
             $this->mailer->send($message);
 
@@ -71,14 +71,14 @@ can be retrieved via ``/soap?wsdl``::
          */
         public function index(HelloService $helloService)
         {
-            $server = new \SoapServer('/path/to/hello.wsdl');
-            $server->setObject($helloService);
+            $soapServer = new \SoapServer('/path/to/hello.wsdl');
+            $soapServer->setObject($helloService);
 
             $response = new Response();
             $response->headers->set('Content-Type', 'text/xml; charset=ISO-8859-1');
 
             ob_start();
-            $server->handle();
+            $soapServer->handle();
             $response->setContent(ob_get_clean());
 
             return $response;
@@ -99,9 +99,9 @@ Below is an example calling the service using a `NuSOAP`_ client. This example
 assumes that the ``index()`` method in the controller above is accessible via
 the route ``/soap``::
 
-    $client = new \Soapclient('http://example.com/index.php/soap?wsdl');
+    $soapClient = new \SoapClient('http://example.com/index.php/soap?wsdl');
 
-    $result = $client->call('hello', array('name' => 'Scott'));
+    $result = $soapClient->call('hello', array('name' => 'Scott'));
 
 An example WSDL is below.
 
@@ -165,7 +165,7 @@ An example WSDL is below.
         </service>
     </definitions>
 
-.. _`PHP SOAP`: http://php.net/manual/en/book.soap.php
+.. _`PHP SOAP`: https://php.net/manual/en/book.soap.php
 .. _`NuSOAP`: http://sourceforge.net/projects/nusoap
-.. _`output buffering`: http://php.net/manual/en/book.outcontrol.php
+.. _`output buffering`: https://php.net/manual/en/book.outcontrol.php
 .. _`Zend SOAP`: http://framework.zend.com/manual/current/en/modules/zend.soap.server.html

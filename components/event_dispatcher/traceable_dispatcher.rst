@@ -15,10 +15,10 @@ Pass the event dispatcher to be wrapped and an instance of the
     use Symfony\Component\Stopwatch\Stopwatch;
 
     // the event dispatcher to debug
-    $eventDispatcher = ...;
+    $dispatcher = ...;
 
     $traceableEventDispatcher = new TraceableEventDispatcher(
-        $eventDispatcher,
+        $dispatcher,
         new Stopwatch()
     );
 
@@ -27,7 +27,7 @@ to register event listeners and dispatch events::
 
     // ...
 
-    // register an event listener
+    // registers an event listener
     $eventListener = ...;
     $priority = ...;
     $traceableEventDispatcher->addListener(
@@ -36,7 +36,7 @@ to register event listeners and dispatch events::
         $priority
     );
 
-    // dispatch an event
+    // dispatches an event
     $event = ...;
     $traceableEventDispatcher->dispatch('event.the_name', $event);
 

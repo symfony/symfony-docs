@@ -19,11 +19,11 @@ within that class.
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/property-info``
-  on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/property-info).
+    $ composer require symfony/property-info
+
+Alternatively, you can clone the `<https://github.com/symfony/property-info>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -122,10 +122,10 @@ Extractable Information
 The :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`
 class exposes public methods to extract four types of information:
 
-* :ref:`*List* of properties <property-info-list>`: `getProperties()`
-* :ref:`Property *type* <property-info-type>`: `getTypes()`
-* :ref:`Property *description* <property-info-description>`: `getShortDescription()` and `getLongDescription()`
-* :ref:`Property *access* details <property-info-access>`: `isReadable()` and `isWritable()`
+* :ref:`List of properties <property-info-list>`: `getProperties()`
+* :ref:`Property type <property-info-type>`: `getTypes()`
+* :ref:`Property description <property-info-description>`: `getShortDescription()` and `getLongDescription()`
+* :ref:`Property access details <property-info-access>`: `isReadable()` and `isWritable()`
 
 .. note::
 
@@ -237,8 +237,44 @@ provide whether properties are readable or writable as booleans.
 
 The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor` looks
 for getter/isser/setter method in addition to whether or not a property is public
-to determine if it's accessible. This based on how the :doc:`PropertyAccess </components/property_access>`
-works.
+to determine if it's accessible.
+
+This is based on how :doc:`PropertyAccess </components/property_access>` works,
+so it even looks for adder/remover methods and can transform between singular
+and plural property names::
+
+    class SomeClass
+    {
+        private $analyses;
+        private $feet;
+
+        public function addAnalyse(Dummy $analyse)
+        {
+            // ...
+        }
+
+        public function removeAnalyse(Dummy $analyse)
+        {
+            // ...
+        }
+
+        public function addFoot(Dummy $foot)
+        {
+            // ...
+        }
+
+        public function removeFoot(Dummy $foot)
+        {
+            // ...
+        }
+    }
+
+    // to be writable, both the adder and the remover methods must be defined
+    $propertyInfo->isWritable(SomeClass::class, 'analyses'); // returns true
+    $propertyInfo->isWritable(SomeClass::class, 'feet');     // returns true
+
+.. versionadded:: 3.2
+    The support of adder/remover methods was introduced in Symfony 3.2.
 
 .. tip::
 
@@ -280,9 +316,9 @@ Type::getBuiltInType()
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Type::getBuiltinType() <Symfony\\Component\\PropertyInfo\\Type::getBuiltinType>`
-method will return the built-in PHP data type, which can be one of 9 possible
-string values: ``array``, ``bool``, ``callable``, ``float``, ``int``, ``null``,
-``object``, ``resource`` or ``string``.
+method returns the built-in PHP data type, which can be one of these
+string values: ``array``, ``bool``, ``callable``, ``float``, ``int``,
+``iterable``, ``null``, ``object``, ``resource`` or ``string``.
 
 Constants inside the :class:`Symfony\\Component\\PropertyInfo\\Type`
 class, in the form ``Type::BUILTIN_TYPE_*``, are provided for convenience.

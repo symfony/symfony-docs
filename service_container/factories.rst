@@ -56,6 +56,12 @@ configure the service container to use the
                 <service id="App\Email\NewsletterManager">
                     <!-- call the static method -->
                     <factory class="App\Email\NewsletterManagerStaticFactory" method="createNewsletterManager" />
+
+                    <!-- if the factory class is the same as the service class, you can omit
+                         the 'class' attribute and define just the 'method' attribute:
+
+                         <factory method="createNewsletterManager" />
+                    -->
                 </service>
             </services>
         </container>
@@ -146,7 +152,7 @@ Configuration of the service container then looks like this:
     .. code-block:: yaml
 
         # config/services.yaml
-        AppBundle\Email\NewsletterManager:
+        App\Email\NewsletterManager:
             # new syntax
             factory: 'App\Email\NewsletterManagerFactory:createNewsletterManager'
             # old syntax

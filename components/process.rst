@@ -10,10 +10,11 @@ The Process Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/process`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/process).
+    $ composer require symfony/process
+
+Alternatively, you can clone the `<https://github.com/symfony/process>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -105,8 +106,8 @@ with a non-zero code)::
         $process->mustRun();
 
         echo $process->getOutput();
-    } catch (ProcessFailedException $e) {
-        echo $e->getMessage();
+    } catch (ProcessFailedException $exception) {
+        echo $exception->getMessage();
     }
 
 Getting real-time Process Output
@@ -240,6 +241,29 @@ stream resources or Traversable objects as argument. As shown in the above examp
 you need to explicitly call the :method:`Symfony\\Component\\Process\\InputStream::close`
 method when you are done writing to the standard input of the subprocess.
 
+Using PHP Streams as the Standard Input of a Process
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The input of a process can also be defined using `PHP streams`_::
+
+    $stream = fopen('php://temporary', 'w+');
+
+    $process = new Process('cat');
+    $process->setInput($stream);
+    $process->start();
+
+    fwrite($stream, 'foo');
+
+    // ... read process output or do other things
+
+    fwrite($stream, 'bar');
+    fclose($stream);
+
+    $process->wait();
+
+    // will echo: 'foobar'
+    echo $process->getOutput();
+
 Stopping a Process
 ------------------
 
@@ -346,9 +370,7 @@ Process Pid
 -----------
 
 You can access the `pid`_ of a running process with the
-:method:`Symfony\\Component\\Process\\Process::getPid` method.
-
-.. code-block:: php
+:method:`Symfony\\Component\\Process\\Process::getPid` method::
 
     use Symfony\Component\Process\Process;
 
@@ -388,9 +410,23 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
     However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
     methods to handle process output in a streaming fashion.
 
+Finding the Executable PHP Binary
+---------------------------------
+
+This component also provides a utility class called
+:class:`Symfony\\Component\\Process\\PhpExecutableFinder` which returns the
+absolute path of the executable PHP binary available on your server::
+
+    use Symfony\Component\Process\PhpExecutableFinder;
+
+    $phpBinaryFinder = new PhpExecutableFinder();
+    $phpBinaryPath = $phpBinaryFinder->find();
+    // $phpBinaryPath = '/usr/local/bin/php' (the result will be different on your computer)
+
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
 .. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
-.. _`PHP Documentation`: http://php.net/manual/en/pcntl.constants.php
+.. _`PHP Documentation`: https://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process
+.. _`PHP streams`: http://www.php.net/manual/en/book.stream.php

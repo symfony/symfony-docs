@@ -24,10 +24,11 @@ but it can be useful for developing tools to serialize and deserialize your obje
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/serializer).
+    $ composer require symfony/serializer
+
+Alternatively, you can clone the `<https://github.com/symfony/serializer>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -69,6 +70,7 @@ exists in your project::
         private $age;
         private $name;
         private $sportsman;
+        private $createdAt;
 
         // Getters
         public function getName()
@@ -79,6 +81,11 @@ exists in your project::
         public function getAge()
         {
             return $this->age;
+        }
+
+        public function getCreatedAt()
+        {
+            return $this->createdAt;
         }
 
         // Issers
@@ -101,6 +108,11 @@ exists in your project::
         public function setSportsman($sportsman)
         {
             $this->sportsman = $sportsman;
+        }
+
+        public function setCreatedAt($createdAt)
+        {
+            $this->createdAt = $createdAt;
         }
     }
 
@@ -322,6 +334,8 @@ You are now able to serialize only attributes in the groups you want::
     );
     // $obj2 = MyObj(foo: 'foo', bar: 'bar')
 
+.. include:: /_includes/_annotation_loader_tip.rst.inc
+
 .. _ignoring-attributes-when-serializing:
 
 Selecting Specific Attributes
@@ -425,12 +439,12 @@ A custom name converter can handle such cases::
 
         public function denormalize($propertyName)
         {
-            // remove org_ prefix
+            // removes 'org_' prefix
             return 'org_' === substr($propertyName, 0, 4) ? substr($propertyName, 4) : $propertyName;
         }
     }
 
-The custom normalizer can be used by passing it as second parameter of any
+The custom name converter can be used by passing it as second parameter of any
 class extending :class:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer`,
 including :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
 and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
@@ -444,14 +458,14 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
     $serializer = new Serializer(array($normalizer), array(new JsonEncoder()));
 
-    $obj = new Company();
-    $obj->name = 'Acme Inc.';
-    $obj->address = '123 Main Street, Big City';
+    $company = new Company();
+    $company->name = 'Acme Inc.';
+    $company->address = '123 Main Street, Big City';
 
-    $json = $serializer->serialize($obj, 'json');
+    $json = $serializer->serialize($company, 'json');
     // {"org_name": "Acme Inc.", "org_address": "123 Main Street, Big City"}
-    $objCopy = $serializer->deserialize($json, Company::class, 'json');
-    // Same data as $obj
+    $companyCopy = $serializer->deserialize($json, Company::class, 'json');
+    // Same data as $company
 
 .. _using-camelized-method-names-for-underscored-attributes:
 
@@ -548,9 +562,10 @@ There are several types of normalizers available:
     directly and through getters, setters, hassers, adders and removers. It supports
     calling the constructor during the denormalization process.
 
-    Objects are normalized to a map of property names (method name stripped of
-    the "get"/"set"/"has"/"remove" prefix and converted to lower case) to property
-    values.
+    Objects are normalized to a map of property names and values (names are
+    generated removing the ``get``, ``set``, ``has`` or ``remove`` prefix from
+    the method name and lowercasing the first letter; e.g. ``getFirstName()`` ->
+    ``firstName``).
 
     The ``ObjectNormalizer`` is the most powerful normalizer. It is configured by
     default when using the Symfony Standard Edition with the serializer enabled.
@@ -560,13 +575,14 @@ There are several types of normalizers available:
     (public methods starting with "get"). It will denormalize data by calling
     the constructor and the "setters" (public methods starting with "set").
 
-    Objects are normalized to a map of property names (method name stripped of
-    the "get" prefix and converted to lower case) to property values.
+    Objects are normalized to a map of property names and values (names are
+    generated removing the ``get`` prefix from the method name and lowercasing
+    the first letter; e.g. ``getFirstName()`` -> ``firstName``).
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
     This normalizer directly reads and writes public properties as well as
-    **private and protected** properties. It supports calling the constructor
-    during the denormalization process.
+    **private and protected** properties (from both the class and all of its
+    parent classes). It supports calling the constructor during the denormalization process.
 
     Objects are normalized to a map of property names to property values.
 
@@ -595,9 +611,6 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
     This normalizer converts :phpclass:`DateInterval` objects into strings.
     By default it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
-
-    .. versionadded:: 3.4
-        The ``DateIntervalNormalizer`` normalizer was added in Symfony 3.4.
 
 .. _component-serializer-encoders:
 
@@ -682,19 +695,20 @@ Circular references are common when dealing with entity relations::
     }
 
 To avoid infinite loops, :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
-throws a :class:`Symfony\\Component\\Serializer\\Exception\\CircularReferenceException`
+or :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
+throw a :class:`Symfony\\Component\\Serializer\\Exception\\CircularReferenceException`
 when such a case is encountered::
 
     $member = new Member();
     $member->setName('Kévin');
 
-    $org = new Organization();
-    $org->setName('Les-Tilleuls.coop');
-    $org->setMembers(array($member));
+    $organization = new Organization();
+    $organization->setName('Les-Tilleuls.coop');
+    $organization->setMembers(array($member));
 
-    $member->setOrganization($org);
+    $member->setOrganization($organization);
 
-    echo $serializer->serialize($org, 'json'); // Throws a CircularReferenceException
+    echo $serializer->serialize($organization, 'json'); // Throws a CircularReferenceException
 
 The ``setCircularReferenceLimit()`` method of this normalizer sets the number
 of times it will serialize the same object before considering it a circular
@@ -883,6 +897,18 @@ The array keys beginning with ``@`` are considered XML attributes::
     //     <foo bar="value" />
     // </response>
 
+Use the special ``#`` key to define the data of a node::
+
+    array('foo' => array('@bar' => 'value', '#' => 'baz'));
+
+    // is encoded as follows:
+    // <?xml version="1.0"?>
+    // <response>
+    //     <foo bar="value">
+    //        baz
+    //     </foo>
+    // </response>
+
 Context
 ~~~~~~~
 
@@ -995,7 +1021,7 @@ Learn more
     A popular alternative to the Symfony Serializer Component is the third-party
     library, `JMS serializer`_ (released under the Apache license, so incompatible with GPLv2 projects).
 
-.. _`PSR-1 standard`: http://www.php-fig.org/psr/psr-1/
+.. _`PSR-1 standard`: https://www.php-fig.org/psr/psr-1/
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _Packagist: https://packagist.org/packages/symfony/serializer
 .. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8

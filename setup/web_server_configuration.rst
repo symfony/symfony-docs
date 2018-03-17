@@ -121,6 +121,11 @@ and increase web server performance:
         </Directory>
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
+        
+        # optionally set the value of the environment variables used in the application
+        #SetEnv APP_ENV prod
+        #SetEnv APP_SECRET <app-secret-id>
+        #SetEnv DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name"
     </VirtualHost>
 
 .. tip::
@@ -293,6 +298,12 @@ The **minimum configuration** to get your application running under Nginx is:
             fastcgi_pass unix:/var/run/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
+
+            # optionally set the value of the environment variables used in the application
+            # fastcgi_param APP_ENV prod;
+            # fastcgi_param APP_SECRET <app-secret-id>;
+            # fastcgi_param DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name";
+
             # When you are using symlinks to link the document root to the
             # current version of your application, you should pass the real
             # application path instead of the path to the symlink to PHP
@@ -345,6 +356,6 @@ The **minimum configuration** to get your application running under Nginx is:
 
 For advanced Nginx configuration options, read the official `Nginx documentation`_.
 
-.. _`Apache documentation`: http://httpd.apache.org/docs/
+.. _`Apache documentation`: https://httpd.apache.org/docs/
 .. _`FastCgiExternalServer`: https://docs.oracle.com/cd/B31017_01/web.1013/q20204/mod_fastcgi.html#FastCgiExternalServer
 .. _`Nginx documentation`: https://www.nginx.com/resources/wiki/start/topics/recipes/symfony/

@@ -161,5 +161,5 @@ The message if the underlying data is not of the given type.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _built-in PHP extension: http://php.net/book.ctype.php
-.. _a list of ctype functions: http://php.net/ref.ctype.php
+.. _built-in PHP extension: https://php.net/book.ctype.php
+.. _a list of ctype functions: https://php.net/ref.ctype.php

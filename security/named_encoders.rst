@@ -96,10 +96,16 @@ named encoders:
             'encoders' => array(
                 'harsh' => array(
                     'algorithm' => 'bcrypt',
-                    'cost'      => '15'
+                    'cost'      => '15',
                 ),
             ),
         ));
+
+.. note::
+
+    If you are running PHP 7.2+ or have the `libsodium`_ extension installed,
+    then the recommended hashing algorithm to use is
+    :ref:`Argon2i <reference-security-argon2i>`.
 
 This creates an encoder named ``harsh``. In order for a ``User`` instance
 to use it, the class must implement
@@ -168,10 +174,12 @@ you must register a service for it in order to use it as a named encoder:
             // ...
             'encoders' => array(
                 'app_encoder' => array(
-                    'id' => MyCustomPasswordEncoder::class
+                    'id' => MyCustomPasswordEncoder::class,
                 ),
             ),
         ));
 
 This creates an encoder named ``app_encoder`` from a service with the ID
 ``App\Security\Encoder\MyCustomPasswordEncoder``.
+
+.. _`libsodium`: https://pecl.php.net/package/libsodium

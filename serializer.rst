@@ -58,11 +58,11 @@ As well as the following normalizers:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` to
   handle typical data objects
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` for
-  objects implementing the :class:`DateTimeInterface` interface
+  objects implementing the :phpclass:`DateTimeInterface` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
-  transform :class:`SplFileInfo` objects in `Data URIs`_
+  transform :phpclass:`SplFileInfo` objects in `Data URIs`_
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
-  to deal with objects implementing the :class:`JsonSerializable` interface
+  to deal with objects implementing the :phpclass:`JsonSerializable` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
   denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
 
@@ -74,7 +74,8 @@ possible to set the priority of the tag in order to decide the matching order.
 Here is an example on how to load the
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
 faster alternative to the `ObjectNormalizer` when data objects always use
-getters and setters:
+getters (``getXxx()``), issers (``isXxx()``) or hassers (``hasXxx()``) to read
+properties and setters (``setXxx()``) to change properties:
 
 .. configuration-block::
 

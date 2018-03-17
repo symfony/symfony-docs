@@ -53,16 +53,20 @@ Before calling :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::cloneV
 you can configure these limits:
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxItems`
-    configures the maximum number of items that will be cloned
-    *past the first nesting level*. Items are counted using a breadth-first
+    Configures the maximum number of items that will be cloned
+    *past the minimum nesting depth*. Items are counted using a breadth-first
     algorithm so that lower level items have higher priority than deeply nested
-    items;
+    items. Specifying ``-1`` removes the limit.
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMinDepth`
+    Configures the minimum tree depth where we are guaranteed to clone
+    all the items. After this depth is reached, only ``setMaxItems``
+    items will be cloned. The default value is ``1``, which is consistent
+    with older Symfony versions.
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxString`
-    configures the maximum number of characters that will be cloned before
-    cutting overlong strings;
-
-In both cases, specifying ``-1`` removes any limit.
+    Configures the maximum number of characters that will be cloned before
+    cutting overlong strings.  Specifying ``-1`` removes the limit.
 
 Before dumping it, you can further limit the resulting
 :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object using the following methods:
@@ -196,8 +200,12 @@ The output format of a dumper can be fine tuned by the two flags
 ``DUMP_STRING_LENGTH`` and ``DUMP_LIGHT_ARRAY`` which are passed as a bitmap
 in the third constructor argument. They can also be set via environment
 variables when using
-:method:`assertDumpEquals($dump, $data, $message) <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpEquals>`
+:method:`assertDumpEquals($dump, $data, $filter, $message) <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpEquals>`
 during unit testing.
+
+The ``$filter`` argument of ``assertDumpEquals()`` can be used to pass a
+bit field of ``Caster::EXCLUDE_*`` constants and influences the expected
+output produced by the different casters.
 
 If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed
 next to its content:
@@ -356,23 +364,23 @@ thus to dumpers. To help you do this (see the source code for how it works),
 the component comes with a set of wrappers for common additional semantics. You
 can use:
 
- * :class:`Symfony\\Component\\VarDumper\\Caster\\ConstStub` to wrap a value that is
-   best represented by a PHP constant;
- * :class:`Symfony\\Component\\VarDumper\\Caster\\ClassStub` to wrap a PHP identifier
-   (*i.e.* a class name, a method name, an interface, *etc.*);
- * :class:`Symfony\\Component\\VarDumper\\Caster\\CutStub` to replace big noisy
-   objects/strings/*etc.* by ellipses;
- * :class:`Symfony\\Component\\VarDumper\\Caster\\CutArrayStub` to keep only some
-   useful keys of an array;
- * :class:`Symfony\\Component\\VarDumper\\Caster\\EnumStub` to wrap a set of virtual
-   values (*i.e.* values that do not exist as properties in the original PHP data
-   structure, but are worth listing alongside with real ones);
- * :class:`Symfony\\Component\\VarDumper\\Caster\\LinkStub` to wrap strings that can
-   be turned into links by dumpers;
- * :class:`Symfony\\Component\\VarDumper\\Caster\\TraceStub` and their
- * :class:`Symfony\\Component\\VarDumper\\Caster\\FrameStub` and
- * :class:`Symfony\\Component\\VarDumper\\Caster\\ArgsStub` relatives to wrap PHP
-   traces (used by :class:`Symfony\\Component\\VarDumper\\Caster\\ExceptionCaster`).
+* :class:`Symfony\\Component\\VarDumper\\Caster\\ConstStub` to wrap a value that is
+  best represented by a PHP constant;
+* :class:`Symfony\\Component\\VarDumper\\Caster\\ClassStub` to wrap a PHP identifier
+  (*i.e.* a class name, a method name, an interface, *etc.*);
+* :class:`Symfony\\Component\\VarDumper\\Caster\\CutStub` to replace big noisy
+  objects/strings/*etc.* by ellipses;
+* :class:`Symfony\\Component\\VarDumper\\Caster\\CutArrayStub` to keep only some
+  useful keys of an array;
+* :class:`Symfony\\Component\\VarDumper\\Caster\\EnumStub` to wrap a set of virtual
+  values (*i.e.* values that do not exist as properties in the original PHP data
+  structure, but are worth listing alongside with real ones);
+* :class:`Symfony\\Component\\VarDumper\\Caster\\LinkStub` to wrap strings that can
+  be turned into links by dumpers;
+* :class:`Symfony\\Component\\VarDumper\\Caster\\TraceStub` and their
+* :class:`Symfony\\Component\\VarDumper\\Caster\\FrameStub` and
+* :class:`Symfony\\Component\\VarDumper\\Caster\\ArgsStub` relatives to wrap PHP
+  traces (used by :class:`Symfony\\Component\\VarDumper\\Caster\\ExceptionCaster`).
 
 For example, if you know that your ``Product`` objects have a ``brochure`` property
 that holds a file name or a URL, you can wrap them in a ``LinkStub`` to tell

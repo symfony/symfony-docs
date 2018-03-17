@@ -33,15 +33,31 @@ Suppose that each product in your application belongs to exactly one category.
 In this case, you'll need a ``Category`` class, and a way to relate a
 ``Product`` object to a ``Category`` object.
 
-Start by creating a ``Category`` entity:
+Start by creating a ``Category`` entity with a ``name`` field:
 
 .. code-block:: terminal
 
     $ php bin/console make:entity Category
 
-Then, add a ``name`` field to that new ``Category`` class::
+    New property name (press <return> to stop adding fields):
+    > name
 
-    // src/Entity/Category
+    Field type (enter ? to see all types) [string]:
+    > string
+
+    Field length [255]:
+    > 255
+
+    Can this field be null in the database (nullable) (yes/no) [no]:
+    > no
+
+    New property name (press <return> to stop adding fields):
+    >
+    (press enter again to finish)
+
+This will generate your new entity class::
+
+    // src/Entity/Category.php
     // ...
 
     class Category
@@ -73,7 +89,49 @@ From the perspective of the ``Product`` entity, this is a many-to-one relationsh
 From the perspective of the ``Category`` entity, this is a one-to-many relationship.
 
 To map this, first create a ``category`` property on the ``Product`` class with
-the ``ManyToOne`` annotation:
+the ``ManyToOne`` annotation. You can do this by hand, or by using the ``make:entity``
+command, which will ask you several questions about your relationship. If you're
+not sure of the answer, don't worry! You can always change the settings later:
+
+.. code-block:: terminal
+
+    $ php bin/console make:entity
+
+    Class name of the entity to create or update (e.g. BraveChef):
+    > Product
+
+    New property name (press <return> to stop adding fields):
+    > category
+
+    Field type (enter ? to see all types) [string]:
+    > relation
+
+    What class should this entity be related to?:
+    > Category
+
+    Relation type? [ManyToOne, OneToMany, ManyToMany, OneToOne]:
+    > ManyToOne
+
+    Is the Product.category property allowed to be null (nullable)? (yes/no) [yes]:
+    > no
+
+    Do you want to add a new property to Category so that you can access/update
+    Product objects from it - e.g. $category->getProducts()? (yes/no) [yes]:
+    > yes
+
+    New field name inside Category [products]:
+    > products
+
+    Do you want to automatically delete orphaned App\Entity\Product objects
+    (orphanRemoval)? (yes/no) [no]:
+    > no
+
+    New property name (press <return> to stop adding fields):
+    >
+    (press enter again to finish)
+
+This made changes to *two* changes. First, added a new ``category`` property to
+the ``Product`` entity (and getter & setter methods):
 
 .. configuration-block::
 
@@ -88,18 +146,20 @@ the ``ManyToOne`` annotation:
 
             /**
              * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
-             * @ORM\JoinColumn(nullable=true)
+             * @ORM\JoinColumn(nullable=false)
              */
             private $category;
 
-            public function getCategory(): Category
+            public function getCategory(): ?Category
             {
                 return $this->category;
             }
 
-            public function setCategory(Category $category)
+            public function setCategory(?Category $category): self
             {
                 $this->category = $category;
+
+                return $this;
             }
         }
 
@@ -114,7 +174,7 @@ the ``ManyToOne`` annotation:
                     targetEntity: App\Entity\Category
                     inversedBy: products
                     joinColumn:
-                        nullable: true
+                        nullable: false
 
     .. code-block:: xml
 
@@ -131,17 +191,18 @@ the ``ManyToOne`` annotation:
                     field="category"
                     target-entity="App\Entity\Category"
                     inversed-by="products">
-                    <join-column nullable="true" />
+                    <join-column nullable="false" />
                 </many-to-one>
             </entity>
         </doctrine-mapping>
 
-This many-to-one mapping is required. It tells Doctrine to use the ``category_id``
+This ``ManyToOne`` mapping is required. It tells Doctrine to use the ``category_id``
 column on the ``product`` table to relate each record in that table with
 a record in the ``category`` table.
 
-Next, since a *one* ``Category`` object will relate to *many* ``Product``
-objects, add a ``products`` property to ``Category`` that will hold those objects:
+Next, since a *one* ``Category`` object will relate to *many* ``Product`` objects,
+the ``make:entity`` command *also* added a ``products`` property to the ``Category``
+class that will hold these objects::
 
 .. configuration-block::
 
@@ -170,10 +231,12 @@ objects, add a ``products`` property to ``Category`` that will hold those object
             /**
              * @return Collection|Product[]
              */
-            public function getProducts()
+            public function getProducts(): Collection
             {
                 return $this->products;
             }
+
+            // addProduct() and removeProduct() were also added
         }
 
     .. code-block:: yaml
@@ -214,9 +277,10 @@ objects, add a ``products`` property to ``Category`` that will hold those object
 
 The ``ManyToOne`` mapping shown earlier is *required*, But, this ``OneToMany``
 is optional: only add it *if* you want to be able to access the products that are
-related to a category. In this example, it *will* be useful to be able to call
-``$category->getProducts()``. If you don't want it, then you also don't need the
-``inversedBy`` or ``mappedBy`` config.
+related to a category (this is one of the questions ``make:entity`` asks you). In
+this example, it *will* be useful to be able to call ``$category->getProducts()``.
+If you don't want it, then you also don't need the ``inversedBy`` or ``mappedBy``
+config.
 
 .. sidebar:: What is the ArrayCollection Stuff?
 
@@ -262,13 +326,13 @@ Now you can see this new code in action! Imagine you're inside a controller::
             $product->setPrice(19.99);
             $product->setDescription('Ergonomic and stylish!');
 
-            // relate this product to the category
+            // relates this product to the category
             $product->setCategory($category);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($category);
-            $em->persist($product);
-            $em->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($category);
+            $entityManager->persist($product);
+            $entityManager->flush();
 
             return new Response(
                 'Saved new product with id: '.$product->getId()
@@ -292,11 +356,9 @@ Doctrine takes care of the rest when saving.
 
 .. sidebar:: Updating the Relationship from the Inverse Side
 
-    Could you also call ``$category->setProducts()`` to set the relationship? Actually,
-    no! Earlier, you did *not* add a ``setProducts()`` method on ``Category``. That's
-    on purpose: you can *only* set data on the *owning* side of the relationship. In
-    other words, if you call ``$category->setProducts()`` only, that is *completely*
-    ignored when saving. For more details, see: `associations-inverse-side`_.
+    Could you also call ``$category->addProduct()`` to change the relationship? Yes,
+    but, only because the ``make:entity`` command helped us. For more details,
+    see: `associations-inverse-side`_.
 
 Fetching Related Objects
 ------------------------
@@ -436,13 +498,16 @@ Setting Information from the Inverse Side
 -----------------------------------------
 
 So far, you've updated the relationship by calling ``$product->setCategory($category)``.
-This is no accident: you *must* set the relationship on the *owning* side. The owning
-side is always where the ``ManyToOne`` mapping is set (for a ``ManyToMany`` relation,
-you can choose which side is the owning side).
+This is no accident! Each relationship has two sides: in this example, ``Product.category``
+is the *owning* side and ``Category.products`` is the *inverse* side.
 
-Does this means it's not possible to call ``$category->setProducts()``? Actually,
-it *is* possible, by writing clever methods. First, instead of a ``setProducts()``
-method, create a ``addProduct()`` method::
+To update a relationship in the database, you *must* set the relationship on the
+*owning* side. The owning side is always where the ``ManyToOne`` mapping is set
+(for a ``ManyToMany`` relation, you can choose which side is the owning side).
+
+Does this means it's not possible to call ``$category->addProduct()`` or
+``$category->removeProduct()`` to update the database? Actually, it *is* possible,
+thanks to some clever code that the ``make:entity`` command generated::
 
     // src/Entity/Category.php
 
@@ -451,23 +516,22 @@ method, create a ``addProduct()`` method::
     {
         // ...
 
-        public function addProduct(Product $product)
+        public function addProduct(Product $product): self
         {
-            if ($this->products->contains($product)) {
-                return;
+            if (!$this->products->contains($product)) {
+                $this->products[] = $product;
+                $product->setCategory($this);
             }
 
-            $this->products[] = $product;
-            // set the *owning* side!
-            $product->setCategory($this);
+            return $this;
         }
     }
 
-That's it! The *key* is ``$product->setCategory($this)``, which sets the *owning*
-side. Now, when you save, the relationship *will* update in the database.
+The *key* is ``$product->setCategory($this)``, which sets the *owning* side. Thanks,
+to this, when you save, the relationship *will* update in the database.
 
-What about *removing* a ``Product`` from a ``Category``? Add a ``removeProduct()``
-method::
+What about *removing* a ``Product`` from a ``Category``? The ``make:entity`` command
+also generated a ``removeProduct()`` method::
 
     // src/Entity/Category.php
 
@@ -476,37 +540,21 @@ method::
     {
         // ...
 
-        public function removeProduct(Product $product)
+        public function removeProduct(Product $product): self
         {
-            $this->products->removeElement($product);
-            // set the owning side to null
-            $product->setCategory(null);
+            if ($this->products->contains($product)) {
+                $this->products->removeElement($product);
+                // set the owning side to null (unless already changed)
+                if ($product->getCategory() === $this) {
+                    $product->setCategory(null);
+                }
+            }
+
+            return $this;
         }
     }
 
-To make this work, you *now* need to allow ``null`` to be passed to ``Product::setCategory()``:
-
-.. code-block:: diff
-
-    // src/Entity/Product.php
-
-    // ...
-    class Product
-    {
-        // ...
-
-    -     public function getCategory(): Category
-    +     public function getCategory(): ?Category
-        // ...
-
-    -     public function setCategory(Category $category)
-    +     public function setCategory(Category $category = null)
-        {
-            $this->category = $category;
-        }
-    }
-
-And that's it! Now, if you call ``$category->removeProduct($product)``, the ``category_id``
+Thanks to this, if you call ``$category->removeProduct($product)``, the ``category_id``
 on that ``Product`` will be set to ``null`` in the database.
 
 But, instead of setting the ``category_id`` to null, what if you want the ``Product``

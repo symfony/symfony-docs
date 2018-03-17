@@ -11,10 +11,11 @@ The Finder Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/finder`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/finder).
+    $ composer require symfony/finder
+
+Alternatively, you can clone the `<https://github.com/symfony/finder>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -30,13 +31,13 @@ directories::
     $finder->files()->in(__DIR__);
 
     foreach ($finder as $file) {
-        // Dump the absolute path
+        // dumps the absolute path
         var_dump($file->getRealPath());
 
-        // Dump the relative path to the file, omitting the filename
+        // dumps the relative path to the file, omitting the filename
         var_dump($file->getRelativePath());
 
-        // Dump the relative path to the file
+        // dumps the relative path to the file
         var_dump($file->getRelativePathname());
     }
 
@@ -105,6 +106,7 @@ Each pattern has to resolve to at least one directory path.
 Exclude directories from matching with the
 :method:`Symfony\\Component\\Finder\\Finder::exclude` method::
 
+    // directories passed as argument must be relative to the ones defined with the in() method
     $finder->in(__DIR__)->exclude('ruby');
 
 It's also possible to ignore directories that you don't have permission to read::
@@ -114,6 +116,10 @@ It's also possible to ignore directories that you don't have permission to read:
 As the Finder uses PHP iterators, you can pass any URL with a supported
 `protocol`_::
 
+    // always add a trailing slash when looking for in the FTP root dir
+    $finder->in('ftp://example.com/');
+
+    // you can also look for in a FTP directory
     $finder->in('ftp://example.com/pub/');
 
 And it also works with user-defined streams::
@@ -169,12 +175,9 @@ Sort the result by name or by type (directories first, then files)::
 
 You can also define your own sorting algorithm with ``sort()`` method::
 
-    $sort = function (\SplFileInfo $a, \SplFileInfo $b)
-    {
+    $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
         return strcmp($a->getRealPath(), $b->getRealPath());
-    };
-
-    $finder->sort($sort);
+    });
 
 File Name
 ~~~~~~~~~
@@ -317,8 +320,8 @@ The contents of returned files can be read with
         // ...
     }
 
-.. _strtotime:    http://www.php.net/manual/en/datetime.formats.php
-.. _protocol:     http://www.php.net/manual/en/wrappers.php
-.. _Streams:      http://www.php.net/streams
-.. _IEC standard: http://physics.nist.gov/cuu/Units/binary.html
+.. _strtotime:    https://php.net/manual/en/datetime.formats.php
+.. _protocol:     https://php.net/manual/en/wrappers.php
+.. _Streams:      https://php.net/streams
+.. _IEC standard: https://physics.nist.gov/cuu/Units/binary.html
 .. _Packagist:    https://packagist.org/packages/symfony/finder

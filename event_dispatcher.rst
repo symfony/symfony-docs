@@ -55,7 +55,7 @@ The most common way to listen to an event is to register an **event listener**::
                 $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
-            // Send the modified response object to the event
+            // sends the modified response object to the event
             $event->setResponse($response);
         }
     }
@@ -91,7 +91,7 @@ using a special "tag":
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\EventListener\ExceptionListener">
+                <service id="App\EventListener\ExceptionListener">
                     <tag name="kernel.event_listener" event="kernel.exception" />
                 </service>
             </services>

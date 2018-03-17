@@ -131,17 +131,17 @@ set an authenticated token in the token storage if successful::
         {
             $request = $event->getRequest();
 
-            $wsseRegex = '/UsernameToken Username="([^"]+)", PasswordDigest="([^"]+)", Nonce="([a-zA-Z0-9+\/]+={0,2})", Created="([^"]+)"/';
+            $wsseRegex = '/UsernameToken Username="(?P<username>[^"]+)", PasswordDigest="(?P<digest>[^"]+)", Nonce="(?P<nonce>[a-zA-Z0-9+\/]+={0,2})", Created="(?P<created>[^"]+)"/';
             if (!$request->headers->has('x-wsse') || 1 !== preg_match($wsseRegex, $request->headers->get('x-wsse'), $matches)) {
                 return;
             }
 
             $token = new WsseUserToken();
-            $token->setUser($matches[1]);
+            $token->setUser($matches['username']);
 
-            $token->digest  = $matches[2];
-            $token->nonce   = $matches[3];
-            $token->created = $matches[4];
+            $token->digest  = $matches['digest'];
+            $token->nonce   = $matches['nonce'];
+            $token->created = $matches['created'];
 
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
@@ -302,9 +302,7 @@ for every firewall? The answer is by using a *factory*. A factory
 is where you hook into the Security component, telling it the name of your
 provider and any configuration options available for it. First, you must
 create a class which implements
-:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`.
-
-.. code-block:: php
+:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\SecurityFactoryInterface`::
 
     // src/DependencyInjection/Security/Factory/WsseFactory.php
     namespace App\DependencyInjection\Security\Factory;
@@ -548,9 +546,7 @@ by default, is 5 minutes. Make this configurable, so different firewalls
 can have different timeout lengths.
 
 You will first need to edit ``WsseFactory`` and define the new option in
-the ``addConfiguration()`` method.
-
-.. code-block:: php
+the ``addConfiguration()`` method::
 
     class WsseFactory implements SecurityFactoryInterface
     {
@@ -568,9 +564,7 @@ the ``addConfiguration()`` method.
 Now, in the ``create()`` method of the factory, the ``$config`` argument will
 contain a ``lifetime`` key, set to 5 minutes (300 seconds) unless otherwise
 set in the configuration. Pass this argument to your authentication provider
-in order to put it to use.
-
-.. code-block:: php
+in order to put it to use::
 
     use App\Security\Authentication\Provider\WsseProvider;
 

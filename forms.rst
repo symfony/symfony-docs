@@ -97,7 +97,7 @@ from inside a controller::
     {
         public function new(Request $request)
         {
-            // create a task and give it some dummy data for this example
+            // creates a task and gives it some dummy data for this example
             $task = new Task();
             $task->setTask('Write a blog post');
             $task->setDueDate(new \DateTime('tomorrow'));
@@ -250,9 +250,9 @@ your controller::
 
             // ... perform some action, such as saving the task to the database
             // for example, if Task is a Doctrine entity, save it!
-            // $em = $this->getDoctrine()->getManager();
-            // $em->persist($task);
-            // $em->flush();
+            // $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($task);
+            // $entityManager->flush();
 
             return $this->redirectToRoute('task_success');
         }
@@ -434,14 +434,16 @@ Validation is a very powerful feature of Symfony and has its own
         .. code-block:: html+twig
 
             {# templates/default/new.html.twig #}
-            {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
 
         .. code-block:: html+php
 
             <!-- templates/default/new.html.php -->
-            <?php echo $view['form']->form($form, array(
-                'attr' => array('novalidate' => 'novalidate'),
-            )) ?>
+            <?php echo $view['form']->start($form, array('attr' => array('novalidate' => 'novalidate') ?>
+            <?php echo $view['form']->widget($form) ?>
+            <?php echo $view['form']->end($form) ?>
 
 .. index::
    single: Forms; Built-in field types
@@ -699,6 +701,13 @@ the choice is ultimately up to you.
 
         $form->get('agreeTerms')->setData(true);
 
+
+.. note::
+
+    The form name is automatically generated from the type class name. If you want
+    to modify it, use the :method:`Symfony\\Component\\Form\\FormFactoryInterface::createNamed` method.
+    You can even suppress the name completely by setting it to an empty string.
+
 Final Thoughts
 --------------
 
@@ -722,4 +731,4 @@ Learn more
 * :doc:`/http_cache/form_csrf_caching`
 
 .. _`Symfony Form component`: https://github.com/symfony/form
-.. _`DateTime`: http://php.net/manual/en/class.datetime.php
+.. _`DateTime`: https://php.net/manual/en/class.datetime.php

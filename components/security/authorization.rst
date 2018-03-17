@@ -109,10 +109,7 @@ on a "remember-me" cookie, or even authenticated anonymously?
     use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
     use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 
-    $anonymousClass = AnonymousToken::class;
-    $rememberMeClass = RememberMeToken::class;
-
-    $trustResolver = new AuthenticationTrustResolver($anonymousClass, $rememberMeClass);
+    $trustResolver = new AuthenticationTrustResolver(AnonymousToken::class, RememberMeToken::class);
 
     $authenticatedVoter = new AuthenticatedVoter($trustResolver);
 
@@ -181,7 +178,7 @@ first constructor argument::
 
     $role = new Role('ROLE_ADMIN');
 
-    // will show 'ROLE_ADMIN'
+    // shows 'ROLE_ADMIN'
     var_dump($role->getRole());
 
 .. note::

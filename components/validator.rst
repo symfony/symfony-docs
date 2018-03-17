@@ -11,10 +11,11 @@ The Validator Component
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/validator`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Validator).
+    $ composer require symfony/validator
+
+Alternatively, you can clone the `<https://github.com/symfony/validator>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -23,7 +24,7 @@ Usage
 
 The Validator component behavior is based on two concepts:
 
-* Contraints, which define the rules to be validated;
+* Constraints, which define the rules to be validated;
 * Validators, which are the classes that contain the actual validation logic.
 
 The following example shows how to validate that a string is at least 10

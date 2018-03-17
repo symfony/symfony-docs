@@ -4,9 +4,7 @@ How to Dynamically Configure Form Validation Groups
 Sometimes you need advanced logic to determine the validation groups. If they
 can't be determined by a simple callback, you can use a service. Create a
 service that implements ``__invoke()`` which accepts a ``FormInterface`` as a
-parameter.
-
-.. code-block:: php
+parameter::
 
     // src/Validation/ValidationGroupResolver.php
     namespace App\Validation;
@@ -39,9 +37,7 @@ parameter.
         }
     }
 
-Then in your form, inject the resolver and set it as the ``validation_groups``.
-
-.. code-block:: php
+Then in your form, inject the resolver and set it as the ``validation_groups``::
 
     // src/Form/MyClassType.php;
     namespace App\Form;

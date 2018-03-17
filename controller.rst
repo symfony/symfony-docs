@@ -58,8 +58,8 @@ This controller is pretty straightforward:
   the ``use`` keyword imports the ``Response`` class, which the controller
   must return.
 
-* *line 7*: The class can technically be called anything - but should end in the
-  word ``Controller``
+* *line 7*: The class can technically be called anything, but it's suffixed
+  with ``Controller`` by convention.
 
 * *line 12*: The action method is allowed to have a ``$max`` argument thanks to the
   ``{max}`` :doc:`wildcard in the route </routing>`.
@@ -145,21 +145,21 @@ and ``redirect()`` methods::
     use Symfony\Component\HttpFoundation\RedirectResponse;
 
     // ...
-    public function indexAction()
+    public function index()
     {
-        // redirect to the "homepage" route
+        // redirects to the "homepage" route
         return $this->redirectToRoute('homepage');
 
         // redirectToRoute is a shortcut for:
         // return new RedirectResponse($this->generateUrl('homepage'));
 
-        // do a permanent - 301 redirect
+        // does a permanent - 301 redirect
         return $this->redirectToRoute('homepage', array(), 301);
 
         // redirect to a route with parameters
         return $this->redirectToRoute('app_lucky_number', array('max' => 10));
 
-        // redirect externally
+        // redirects externally
         return $this->redirect('http://symfony.com/doc');
     }
 
@@ -182,7 +182,7 @@ method renders a template **and** puts that content into a ``Response``
 object for you::
 
     // renders templates/lucky/number.html.twig
-    return $this->render('lucky/number.html.twig', array('name' => $name));
+    return $this->render('lucky/number.html.twig', array('number' => $number));
 
 Templating and Twig are explained more in the
 :doc:`Creating and Using Templates article </templating>`.
@@ -209,7 +209,7 @@ If you need a service in a controller, just type-hint an argument with its class
     /**
      * @Route("/lucky/number/{max}")
      */
-    public function numberAction($max, LoggerInterface $logger)
+    public function number($max, LoggerInterface $logger)
     {
         $logger->info('We are logging!');
         // ...
@@ -290,6 +290,27 @@ in your controllers.
 
 For more information about services, see the :doc:`/service_container` article.
 
+Generating Controllers
+----------------------
+
+To save time, you can also tell Symfony to generate a new controller class:
+
+.. code-block:: terminal
+
+    $ php bin/console make:controller BrandNewController
+
+    created: src/Controller/BrandNewController.php
+
+If you want to generate an entire CRUD from a Doctrine :doc:`entity </doctrine>`,
+use:
+
+.. code-block:: terminal
+
+    $ php bin/console make:crud Product
+
+.. versionadded:: 1.2
+    The ``make:crud`` command was introduced in MakerBundle 1.2.
+
 .. index::
    single: Controller; Managing errors
    single: Controller; 404 pages
@@ -300,10 +321,10 @@ Managing Errors and 404 Pages
 When things are not found, you should return a 404 response. To do this, throw a
 special type of exception::
 
-    use Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException;
+    use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
     // ...
-    public function indexAction()
+    public function index()
     {
         // retrieve the object from database
         $product = ...;
@@ -323,9 +344,7 @@ method is just a shortcut to create a special
 object, which ultimately triggers a 404 HTTP response inside Symfony.
 
 Of course, you can throw any ``Exception`` class in your controller: Symfony will
-automatically return a 500 HTTP response code.
-
-.. code-block:: php
+automatically return a 500 HTTP response code::
 
     throw new \Exception('Something went wrong!');
 
@@ -348,7 +367,7 @@ object. To get it in your controller, just add it as an argument and
 
     use Symfony\Component\HttpFoundation\Request;
 
-    public function indexAction(Request $request, $firstName, $lastName)
+    public function index(Request $request, $firstName, $lastName)
     {
         $page = $request->query->get('page', 1);
 
@@ -392,21 +411,17 @@ To get the session, add an argument and type-hint it with
 
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-    public function indexAction(SessionInterface $session)
+    public function index(SessionInterface $session)
     {
-        // store an attribute for reuse during a later user request
+        // stores an attribute for reuse during a later user request
         $session->set('foo', 'bar');
 
-        // get the attribute set by another controller in another request
+        // gets the attribute set by another controller in another request
         $foobar = $session->get('foobar');
 
-        // use a default value if the attribute doesn't exist
+        // uses a default value if the attribute doesn't exist
         $filters = $session->get('filters', array());
     }
-
-.. versionadded:: 3.3
-    The ability to request a ``Session`` instance in controllers was introduced
-    in Symfony 3.3.
 
 Stored attributes remain in the session for the remainder of that user's session.
 
@@ -432,7 +447,7 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
 
     use Symfony\Component\HttpFoundation\Request;
 
-    public function updateAction(Request $request)
+    public function update(Request $request)
     {
         // ...
 
@@ -524,26 +539,26 @@ the ``Request`` class::
 
     use Symfony\Component\HttpFoundation\Request;
 
-    public function indexAction(Request $request)
+    public function index(Request $request)
     {
         $request->isXmlHttpRequest(); // is it an Ajax request?
 
         $request->getPreferredLanguage(array('en', 'fr'));
 
-        // retrieve GET and POST variables respectively
+        // retrieves GET and POST variables respectively
         $request->query->get('page');
         $request->request->get('page');
 
-        // retrieve SERVER variables
+        // retrieves SERVER variables
         $request->server->get('HTTP_HOST');
 
         // retrieves an instance of UploadedFile identified by foo
         $request->files->get('foo');
 
-        // retrieve a COOKIE value
+        // retrieves a COOKIE value
         $request->cookies->get('PHPSESSID');
 
-        // retrieve an HTTP request header, with normalized, lowercase keys
+        // retrieves an HTTP request header, with normalized, lowercase keys
         $request->headers->get('host');
         $request->headers->get('content_type');
     }
@@ -561,10 +576,10 @@ The only requirement for a controller is to return a ``Response`` object::
 
     use Symfony\Component\HttpFoundation\Response;
 
-    // create a simple Response with a 200 status code (the default)
+    // creates a simple Response with a 200 status code (the default)
     $response = new Response('Hello '.$name, Response::HTTP_OK);
 
-    // create a CSS-response with a 200 status code
+    // creates a CSS-response with a 200 status code
     $response = new Response('<style> ... </style>');
     $response->headers->set('Content-Type', 'text/css');
 
@@ -579,7 +594,7 @@ To return JSON from a controller, use the ``json()`` helper method. This returns
 special ``JsonResponse`` object that encodes the data automatically::
 
     // ...
-    public function indexAction()
+    public function index()
     {
         // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
         return $this->json(array('username' => 'jane.doe'));

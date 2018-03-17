@@ -29,10 +29,11 @@ the `YAML 1.2 version specification`_.
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/yaml`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/yaml).
+    $ composer require symfony/yaml
+
+Alternatively, you can clone the `<https://github.com/symfony/yaml>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -96,9 +97,7 @@ Reading YAML Contents
 ~~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::parse` method parses a YAML
-string and converts it to a PHP array:
-
-.. code-block:: php
+string and converts it to a PHP array::
 
     use Symfony\Component\Yaml\Yaml;
 
@@ -108,16 +107,14 @@ string and converts it to a PHP array:
 If an error occurs during parsing, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\ParseException` exception
 indicating the error type and the line in the original YAML string where the
-error occurred:
-
-.. code-block:: php
+error occurred::
 
     use Symfony\Component\Yaml\Exception\ParseException;
 
     try {
         $value = Yaml::parse('...');
-    } catch (ParseException $e) {
-        printf('Unable to parse the YAML string: %s', $e->getMessage());
+    } catch (ParseException $exception) {
+        printf('Unable to parse the YAML string: %s', $exception->getMessage());
     }
 
 Reading YAML Files
@@ -138,9 +135,7 @@ Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::dump` method dumps any PHP
-array to its YAML representation:
-
-.. code-block:: php
+array to its YAML representation::
 
     use Symfony\Component\Yaml\Yaml;
 
@@ -172,9 +167,7 @@ representation:
 
 The second argument of the :method:`Symfony\\Component\\Yaml\\Yaml::dump`
 method customizes the level at which the output switches from the expanded
-representation to the inline one:
-
-.. code-block:: php
+representation to the inline one::
 
     echo Yaml::dump($array, 1);
 
@@ -200,7 +193,7 @@ Indentation
 By default the YAML component will use 4 spaces for indentation. This can be
 changed using the third argument as follows::
 
-    // use 8 spaces for indentation
+    // uses 8 spaces for indentation
     echo Yaml::dump($array, 2, 8);
 
 .. code-block:: yaml
@@ -259,6 +252,27 @@ representation of the object.
     Object serialization is specific to this implementation, other PHP YAML
     parsers will likely not recognize the ``php/object`` tag and non-PHP
     implementations certainly won't - use with discretion!
+
+Parsing and Dumping Objects as Maps
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can dump objects as Yaml maps by using the ``DUMP_OBJECT_AS_MAP`` flag::
+
+    $object = new \stdClass();
+    $object->foo = 'bar';
+
+    $dumped = Yaml::dump(array('data' => $object), 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
+    // $dumped = "data:\n    foo: bar"
+
+And parse them by using the ``PARSE_OBJECT_FOR_MAP`` flag::
+
+    $parsed = Yaml::parse($dumped, Yaml::PARSE_OBJECT_FOR_MAP);
+    var_dump(is_object($parsed)); // true
+    var_dump(is_object($parsed->data)); // true
+    echo $parsed->data->foo; // bar
+
+The YAML component uses PHP's ``(array)`` casting to generate a string
+representation of the object as a map.
 
 .. _invalid-types-and-object-serialization:
 
@@ -325,6 +339,45 @@ syntax to parse them as proper PHP constants::
     $yaml = '{ foo: PHP_INT_SIZE, bar: !php/const PHP_INT_SIZE }';
     $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
     // $parameters = array('foo' => 'PHP_INT_SIZE', 'bar' => 8);
+
+Parsing and Dumping of Binary Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can dump binary data by using the ``DUMP_BASE64_BINARY_DATA`` flag::
+
+    $imageContents = file_get_contents(__DIR__.'/images/logo.png');
+
+    $dumped = Yaml::dump(array('logo' => $imageContents), 2, 4, Yaml::DUMP_BASE64_BINARY_DATA);
+    // logo: !!binary iVBORw0KGgoAAAANSUhEUgAAA6oAAADqCAY...
+
+Binary data is automatically parsed if they include the ``!!binary`` YAML tag
+(there's no need to pass any flag to the Yaml parser)::
+
+    $dumped = 'logo: !!binary iVBORw0KGgoAAAANSUhEUgAAA6oAAADqCAY...';
+    $parsed = Yaml::parse($dumped);
+    $imageContents = $parsed['logo'];
+
+Parsing and Dumping Custom Tags
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In addition to the built-in support of tags like ``!php/const`` and
+``!!binary``, you can define your own custom YAML tags and parse them with the
+``PARSE_CUSTOM_TAGS`` flag::
+
+    $data = "!my_tag { foo: bar }";
+    $parsed = Yaml::parse($data, Yaml::PARSE_CUSTOM_TAGS);
+    // $parsed = Symfony\Component\Yaml\Tag\TaggedValue('my_tag', array('foo' => 'bar'));
+    $tagName = $parsed->getTag();    // $tagName = 'my_tag'
+    $tagValue = $parsed->getValue(); // $tagValue = array('foo' => 'bar')
+
+If the contents to dump contain :class:`Symfony\\Component\\Yaml\\Tag\\TaggedValue`
+objects, they are automatically transformed into YAML tags::
+
+    use Symfony\Component\Yaml\Tag\TaggedValue;
+
+    $data = new TaggedValue('my_tag', array('foo' => 'bar'));
+    $dumped = Yaml::dump($data);
+    // $dumped = '!my_tag { foo: bar }'
 
 Syntax Validation
 ~~~~~~~~~~~~~~~~~

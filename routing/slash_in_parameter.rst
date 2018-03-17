@@ -69,16 +69,25 @@ a more permissive regular expression for it:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('share', new Route('/share/{token}', array(
+        $routes = new RouteCollection();
+        $routes->add('share', new Route('/share/{token}', array(
             '_controller' => 'App\Controller\DefaultController::share',
         ), array(
             'token' => '.+',
         )));
 
-        return $collection;
+        return $routes;
 
 That's it! Now, the ``{token}`` parameter can contain the ``/`` character.
+
+.. note::
+
+    If the route includes the special ``{_format}`` placeholder, you shouldn't
+    use the ``.+`` requirement for the parameters that allow slashes. For example,
+    if the pattern is ``/share/{token}.{_format}`` and ``{token}`` allows any
+    character, the ``/share/foo/bar.json`` URL will consider ``foo/bar.json``
+    as the token and the format will be empty. This can be solved replacing the
+    ``.+`` requirement by ``[^.]+`` to allow any character except dots.
 
 .. note::
 

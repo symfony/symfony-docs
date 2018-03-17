@@ -47,7 +47,9 @@ The simplest ``TypeTestCase`` implementation looks like the following::
                 'test2' => 'test2',
             );
 
-            $form = $this->factory->create(TestedType::class);
+            $objectToCompare = new TestObject();
+            // $objectToCompare will retrieve data from the form submission; pass it as the second argument
+            $form = $this->factory->create(TestedType::class, $objectToCompare);
 
             $object = new TestObject();
             // ...populate $object properties with the data stored in $formData
@@ -56,7 +58,9 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             $form->submit($formData);
 
             $this->assertTrue($form->isSynchronized());
-            $this->assertEquals($object, $form->getData());
+
+            // check that $objectToCompare was modified as expected when the form was submitted
+            $this->assertEquals($object, $objectToCompare);
 
             $view = $form->createView();
             $children = $view->children;
@@ -73,7 +77,7 @@ First you verify if the ``FormType`` compiles. This includes basic class
 inheritance, the ``buildForm()`` function and options resolution. This should
 be the first test you write::
 
-    $form = $this->factory->create(TestedType::class);
+    $form = $this->factory->create(TestedType::class, $objectToCompare);
 
 This test checks that none of your data transformers used by the form
 failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized`
@@ -91,7 +95,7 @@ method is only set to ``false`` if a data transformer throws an exception::
 Next, verify the submission and mapping of the form. The test below
 checks if all the fields are correctly specified::
 
-    $this->assertEquals($object, $form->getData());
+    $this->assertEquals($object, $objectToCompare);
 
 Finally, check the creation of the ``FormView``. You should check if all
 widgets you want to display are available in the children property::
@@ -115,7 +119,7 @@ To solve this, you have to mock the injected dependencies, instantiate your own
 form type and use the :class:`Symfony\\Component\\Form\\PreloadedExtension` to
 make sure the ``FormRegistry`` uses the created instance::
 
-    // tests/Form/Type/TestedTypeTests.php
+    // tests/Form/Type/TestedTypeTest.php
     namespace App\Tests\Form\Type;
 
     use App\Form\Type\TestedType;
@@ -126,12 +130,12 @@ make sure the ``FormRegistry`` uses the created instance::
 
     class TestedTypeTest extends TypeTestCase
     {
-        private $entityManager;
+        private $objectManager;
 
         protected function setUp()
         {
             // mock any dependencies
-            $this->entityManager = $this->createMock(ObjectManager::class);
+            $this->objectManager = $this->createMock(ObjectManager::class);
 
             parent::setUp();
         }
@@ -139,7 +143,7 @@ make sure the ``FormRegistry`` uses the created instance::
         protected function getExtensions()
         {
             // create a type instance with the mocked dependencies
-            $type = new TestedType($this->entityManager);
+            $type = new TestedType($this->objectManager);
 
             return array(
                 // register the type instances with the PreloadedExtension
@@ -169,7 +173,7 @@ will be raised if you try to test a class that depends on other extensions.
 The :method:`Symfony\\Component\\Form\\Test\\TypeTestCase::getExtensions` method
 allows you to return a list of extensions to register::
 
-    // tests/Form/Type/TestedTypeTests.php
+    // tests/Form/Type/TestedTypeTest.php
     namespace App\Tests\Form\Type;
 
     // ...
@@ -206,7 +210,7 @@ allows you to return a list of extensions to register::
 
 It is also possible to load custom form types, form type extensions or type
 guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypes`,
-`:method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::`getTypeExtensions`
+:method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeExtensions`
 and :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeGuessers`
 methods.
 
@@ -216,7 +220,7 @@ Testing against Different Sets of Data
 If you are not familiar yet with PHPUnit's `data providers`_, this might be
 a good opportunity to use them::
 
-    // tests/Form/Type/TestedTypeTests.php
+    // tests/Form/Type/TestedTypeTest.php
     namespace App\Tests\Form\Type;
 
     use App\Form\Type\TestedType;

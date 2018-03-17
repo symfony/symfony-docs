@@ -20,9 +20,9 @@ Change the template rendering part of the framework to read as follows::
     try {
         $request->attributes->add($matcher->match($request->getPathInfo()));
         $response = call_user_func('render_template', $request);
-    } catch (Routing\Exception\ResourceNotFoundException $e) {
+    } catch (Routing\Exception\ResourceNotFoundException $exception) {
         $response = new Response('Not Found', 404);
-    } catch (Exception $e) {
+    } catch (Exception $exception) {
         $response = new Response('An error occurred', 500);
     }
 
@@ -63,9 +63,9 @@ the ``_controller`` route attribute::
     try {
         $request->attributes->add($matcher->match($request->getPathInfo()));
         $response = call_user_func($request->attributes->get('_controller'), $request);
-    } catch (Routing\Exception\ResourceNotFoundException $e) {
+    } catch (Routing\Exception\ResourceNotFoundException $exception) {
         $response = new Response('Not Found', 404);
-    } catch (Exception $e) {
+    } catch (Exception $exception) {
         $response = new Response('An error occurred', 500);
     }
 
@@ -125,9 +125,9 @@ Here is the updated and improved version of our framework::
     try {
         $request->attributes->add($matcher->match($request->getPathInfo()));
         $response = call_user_func($request->attributes->get('_controller'), $request);
-    } catch (Routing\Exception\ResourceNotFoundException $e) {
+    } catch (Routing\Exception\ResourceNotFoundException $exception) {
         $response = new Response('Not Found', 404);
-    } catch (Exception $e) {
+    } catch (Exception $exception) {
         $response = new Response('An error occurred', 500);
     }
 
@@ -177,5 +177,5 @@ As always, you can decide to stop here and use the framework as is; it's
 probably all you need to create simple websites like those fancy one-page
 `websites`_ and hopefully a few others.
 
-.. _`callbacks`: http://php.net/callback#language.types.callback
-.. _`websites`: http://kottke.org/08/02/single-serving-sites
+.. _`callbacks`: https://php.net/callback#language.types.callback
+.. _`websites`: https://kottke.org/08/02/single-serving-sites

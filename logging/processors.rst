@@ -14,9 +14,7 @@ Adding a Session/Request Token
 
 Sometimes it is hard to tell which entries in the log belong to which session
 and/or request. The following example will add a unique token for each request
-using a processor.
-
-.. code-block:: php
+using a processor::
 
     namespace App\Logger;
 
@@ -138,7 +136,7 @@ Finally, set the formatter to be used on whatever handler you want:
                     type="stream"
                     path="%kernel.logs_dir%/%kernel.environment%.log"
                     level="debug"
-                    formatter="app.logger.session_request_processor"
+                    formatter="monolog.formatter.session_request"
                 />
             </monolog:config>
         </container>
@@ -152,7 +150,7 @@ Finally, set the formatter to be used on whatever handler you want:
                     'type'      => 'stream',
                     'path'      => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level'     => 'debug',
-                    'formatter' => 'app.logger.session_request_processor',
+                    'formatter' => 'monolog.formatter.session_request',
                 ),
             ),
         ));

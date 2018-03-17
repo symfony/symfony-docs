@@ -95,9 +95,7 @@ First, to use ESI, be sure to enable it in your application configuration:
 
 Now, suppose you have a page that is relatively static, except for a news
 ticker at the bottom of the content. With ESI, you can cache the news ticker
-independent of the rest of the page.
-
-.. code-block:: php
+independent of the rest of the page::
 
     // src/Controller/DefaultController.php
 
@@ -107,7 +105,7 @@ independent of the rest of the page.
         public function about()
         {
             $response = $this->render('static/about.html.twig');
-            // set the shared max age - which also marks the response as public
+            // sets the shared max age - which also marks the response as public
             $response->setSharedMaxAge(600);
 
             return $response;
@@ -141,7 +139,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
         <!-- you can use a controller reference -->
         <?php echo $view['actions']->render(
             new Symfony\Component\HttpKernel\Controller\ControllerReference(
-                'AppBundle:News:latest',
+                'App\Controller\NewsController::latest',
                 array('maxPerPage' => 5)
             ),
             array('strategy' => 'esi')
@@ -185,9 +183,7 @@ used ``render()``.
     proxy.
 
 The embedded action can now specify its own caching rules, entirely independent
-of the master page.
-
-.. code-block:: php
+of the master page::
 
     // src/Controller/NewsController.php
     namespace App\Controller;

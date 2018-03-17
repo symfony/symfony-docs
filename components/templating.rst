@@ -16,10 +16,11 @@ The Templating Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/templating`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/templating).
+    $ composer require symfony/templating
+
+Alternatively, you can clone the `<https://github.com/symfony/templating>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -38,9 +39,9 @@ which uses the template reference to actually find and load the template::
     use Symfony\Component\Templating\TemplateNameParser;
     use Symfony\Component\Templating\Loader\FilesystemLoader;
 
-    $loader = new FilesystemLoader(__DIR__.'/views/%name%');
+    $filesystemLoader = new FilesystemLoader(__DIR__.'/views/%name%');
 
-    $templating = new PhpEngine(new TemplateNameParser(), $loader);
+    $templating = new PhpEngine(new TemplateNameParser(), $filesystemLoader);
 
     echo $templating->render('hello.php', array('firstname' => 'Fabien'));
 
@@ -187,9 +188,7 @@ takes a list of engines and acts just like a normal templating engine. The
 only difference is that it delegates the calls to one of the other engines. To
 choose which one to use for the template, the
 :method:`EngineInterface::supports() <Symfony\\Component\\Templating\\EngineInterface::supports>`
-method is used.
-
-.. code-block:: php
+method is used::
 
     use Acme\Templating\CustomEngine;
     use Symfony\Component\Templating\PhpEngine;

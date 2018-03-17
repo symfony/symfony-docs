@@ -10,10 +10,11 @@ The Stopwatch Component
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer</components/using_components>` (``symfony/stopwatch`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/stopwatch).
+    $ composer require symfony/stopwatch
+
+Alternatively, you can clone the `<https://github.com/symfony/stopwatch>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -28,7 +29,7 @@ microtime by yourself. Instead, use the simple
     use Symfony\Component\Stopwatch\Stopwatch;
 
     $stopwatch = new Stopwatch();
-    // Start event named 'eventName'
+    // starts event named 'eventName'
     $stopwatch->start('eventName');
     // ... some code goes here
     $event = $stopwatch->stop('eventName');
@@ -69,7 +70,7 @@ This is exactly what the :method:`Symfony\\Component\\Stopwatch\\Stopwatch::lap`
 method does::
 
     $stopwatch = new Stopwatch();
-    // Start event named 'foo'
+    // starts event named 'foo'
     $stopwatch->start('foo');
     // ... some code goes here
     $stopwatch->lap('foo');
@@ -86,13 +87,13 @@ call::
 In addition to periods, you can get other useful information from the event object.
 For example::
 
-    $event->getCategory();   // Returns the category the event was started in
-    $event->getOrigin();     // Returns the event start time in milliseconds
-    $event->ensureStopped(); // Stops all periods not already stopped
-    $event->getStartTime();  // Returns the start time of the very first period
-    $event->getEndTime();    // Returns the end time of the very last period
-    $event->getDuration();   // Returns the event duration, including all periods
-    $event->getMemory();     // Returns the max memory usage of all periods
+    $event->getCategory();   // returns the category the event was started in
+    $event->getOrigin();     // returns the event start time in milliseconds
+    $event->ensureStopped(); // stops all periods not already stopped
+    $event->getStartTime();  // returns the start time of the very first period
+    $event->getEndTime();    // returns the end time of the very last period
+    $event->getDuration();   // returns the event duration, including all periods
+    $event->getMemory();     // returns the max memory usage of all periods
 
 Sections
 --------

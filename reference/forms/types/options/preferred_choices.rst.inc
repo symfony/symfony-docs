@@ -15,9 +15,9 @@ you can list the most popular on top, like Bork Bork and Pirate::
             'English' => 'en',
             'Spanish' => 'es',
             'Bork'   => 'muppets',
-            'Pirate' => 'arr'
+            'Pirate' => 'arr',
         ),
-        'preferred_choices' => array('muppets', 'arr')
+        'preferred_choices' => array('muppets', 'arr'),
     ));
 
 This options can also be a callback function to give you more flexibility. This might
@@ -31,11 +31,11 @@ be especially useful if your values are objects::
             'now' => new \DateTime('now'),
             'tomorrow' => new \DateTime('+1 day'),
             '1 week' => new \DateTime('+1 week'),
-            '1 month' => new \DateTime('+1 month')
+            '1 month' => new \DateTime('+1 month'),
         ),
-        'preferred_choices' => function ($val, $key) {
+        'preferred_choices' => function ($value, $key) {
             // prefer options within 3 days
-            return $val <= new \DateTime('+3 days');
+            return $value <= new \DateTime('+3 days');
         },
     ));
 

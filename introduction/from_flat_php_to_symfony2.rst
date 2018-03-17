@@ -33,9 +33,9 @@ persisted to the database. Writing in flat PHP is quick and dirty:
 
     <?php
     // index.php
-    $link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
+    $connection = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
 
-    $result = $link->query('SELECT id, title FROM post');
+    $result = $connection->query('SELECT id, title FROM post');
     ?>
 
     <!DOCTYPE html>
@@ -58,7 +58,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:
     </html>
 
     <?php
-    $link = null;
+    $connection = null;
     ?>
 
 That's quick to write, fast to execute, and, as your app grows, impossible
@@ -87,16 +87,16 @@ The code can immediately gain from separating the application "logic" from
 the code that prepares the HTML "presentation"::
 
     // index.php
-    $link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
+    $connection = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
 
-    $result = $link->query('SELECT id, title FROM post');
+    $result = $connection->query('SELECT id, title FROM post');
 
     $posts = array();
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $posts[] = $row;
     }
 
-    $link = null;
+    $connection = null;
 
     // include the HTML presentation code
     require 'templates/list.php';
@@ -147,27 +147,27 @@ of the application are isolated in a new file called ``model.php``::
     // model.php
     function open_database_connection()
     {
-        $link = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
+        $connection = new PDO("mysql:host=localhost;dbname=blog_db", 'myuser', 'mypassword');
 
-        return $link;
+        return $connection;
     }
 
-    function close_database_connection(&$link)
+    function close_database_connection(&$connection)
     {
-        $link = null;
+        $connection = null;
     }
 
     function get_all_posts()
     {
-        $link = open_database_connection();
+        $connection = open_database_connection();
 
-        $result = $link->query('SELECT id, title FROM post');
+        $result = $connection->query('SELECT id, title FROM post');
 
         $posts = array();
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = $row;
         }
-        close_database_connection($link);
+        close_database_connection($connection);
 
         return $posts;
     }
@@ -260,16 +260,16 @@ an individual blog result based on a given id::
     // model.php
     function get_post_by_id($id)
     {
-        $link = open_database_connection();
+        $connection = open_database_connection();
 
         $query = 'SELECT created_at, title, body FROM post WHERE  id=:id';
-        $statement = $link->prepare($query);
+        $statement = $connection->prepare($query);
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
         $row = $statement->fetch(PDO::FETCH_ASSOC);
 
-        close_database_connection($link);
+        close_database_connection($connection);
 
         return $row;
     }
@@ -551,7 +551,7 @@ them for you. Here's the same sample application, now built in Symfony::
         {
             $posts = $this->getDoctrine()
                 ->getRepository(Post::class)
-                ->findAll()
+                ->findAll();
 
             return $this->render('blog/list.html.twig', ['posts' => $posts]);
         }
@@ -567,7 +567,7 @@ them for you. Here's the same sample application, now built in Symfony::
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('blog/show.html.php', ['post' => $post]);
+            return $this->render('blog/show.html.twig', ['post' => $post]);
         }
     }
 
@@ -578,7 +578,7 @@ nice way to group related pages. The controller functions are also sometimes cal
 The two controllers (or actions) are still lightweight. Each uses the
 :doc:`Doctrine ORM library </doctrine>` to retrieve objects from the
 database and the Templating component to render a template and return a
-``Response`` object. The list ``list.html.twig`` template is now quite a bit simpler,
+``Response`` object. The ``list.html.twig`` template is now quite a bit simpler,
 and uses Twig:
 
 .. code-block:: html+twig
@@ -588,6 +588,7 @@ and uses Twig:
 
     {% block title %}List of Posts{% endblock %}
 
+    {% block body %}
     <h1>List of Posts</h1>
     <ul>
         {% for post in posts %}
@@ -598,6 +599,7 @@ and uses Twig:
         </li>
         {% endfor %}
     </ul>
+    {% endblock %}
 
 The ``layout.php`` file is nearly identical:
 
@@ -669,9 +671,9 @@ It's a beautiful thing.
 Where Symfony Delivers
 ----------------------
 
-In the rest of documentation articles, you'll learn more about how each piece of
-Symfony works and how you can organize your project. For now, celebrate at how
-migrating the blog from flat PHP to Symfony has improved life:
+In the rest of the documentation articles, you'll learn more about how each piece of
+Symfony works and how you can organize your project. For now, celebrate how
+migrating the blog from flat PHP to Symfony has improved your life:
 
 * Your application now has **clear and consistently organized code** (though
   Symfony doesn't force you into this). This promotes **reusability** and

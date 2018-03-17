@@ -45,8 +45,8 @@ Example usage::
     use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler;
 
-    $storage = new NativeSessionStorage(array(), new NativeFileSessionHandler());
-    $session = new Session($storage);
+    $sessionStorage = new NativeSessionStorage(array(), new NativeFileSessionHandler());
+    $session = new Session($sessionStorage);
 
 .. note::
 
@@ -83,8 +83,8 @@ Example usage::
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
     $pdo = new \PDO(...);
-    $storage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
-    $session = new Session($storage);
+    $sessionStorage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
+    $session = new Session($sessionStorage);
 
 Configuring PHP Sessions
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -230,7 +230,7 @@ response headers.
         use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
         $options['cache_limiter'] = session_cache_limiter();
-        $storage = new NativeSessionStorage($options);
+        $sessionStorage = new NativeSessionStorage($options);
 
 Session Metadata
 ~~~~~~~~~~~~~~~~
@@ -261,6 +261,6 @@ particular cookie by reading the ``getLifetime()`` method::
 The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
 
-.. _`php.net/session.customhandler`: http://php.net/session.customhandler
-.. _`php.net/session.configuration`: http://php.net/session.configuration
-.. _`php.net/memcached.setoption`: http://php.net/memcached.setoption
+.. _`php.net/session.customhandler`: https://php.net/session.customhandler
+.. _`php.net/session.configuration`: https://php.net/session.configuration
+.. _`php.net/memcached.setoption`: https://php.net/memcached.setoption

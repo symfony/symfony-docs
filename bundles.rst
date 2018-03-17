@@ -44,23 +44,16 @@ file::
 Creating a Bundle
 -----------------
 
-The Symfony Standard Edition comes with a handy task that creates a fully-functional
-bundle for you. Of course, creating a bundle by hand is pretty easy as well.
-
-To show you how simple the bundle system is, create a new bundle called
-AcmeTestBundle and enable it.
-
-.. tip::
-
-    The ``Acme`` portion is just a dummy name that should be replaced by
-    some "vendor" name that represents you or your organization (e.g.
-    ABCTestBundle for some company named ``ABC``).
+This section creates and enables a new bundle to show how simple it is to do it.
+The new bundle is called AcmeTestBundle, where the ``Acme`` portion is just a
+dummy name that should be replaced by some "vendor" name that represents you or
+your organization (e.g. ABCTestBundle for some company named ``ABC``).
 
 Start by creating a ``src/Acme/TestBundle/`` directory and adding a new file
 called ``AcmeTestBundle.php``::
 
     // src/Acme/TestBundle/AcmeTestBundle.php
-    namespace Acme\TestBundle;
+    namespace App\Acme\TestBundle;
 
     use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -82,7 +75,7 @@ of the bundle. Now that you've created the bundle, enable it::
     // config/bundles.php
     return [
         // ...
-        Acme\TestBundle\AcmeTestBundle::class => ['all' => true],
+        App\Acme\TestBundle\AcmeTestBundle::class => ['all' => true],
     ];
 
 And while it doesn't do anything yet, AcmeTestBundle is now ready to be used.
@@ -111,7 +104,7 @@ of the most common elements of a bundle:
 
 ``Resources/public/``
     Contains web assets (images, stylesheets, etc) and is copied or symbolically
-    linked into the project ``web/`` directory via the ``assets:install`` console
+    linked into the project ``public/`` directory via the ``assets:install`` console
     command.
 
 ``Tests/``

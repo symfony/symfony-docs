@@ -207,13 +207,13 @@ the report with details of the sent emails.
 
     .. code-block:: yaml
 
-        # config/packages/dev/swiftmailer.yaml
+        # config/packages/dev/web_profiler.yaml
         web_profiler:
             intercept_redirects: true
 
     .. code-block:: xml
 
-        <!-- config/packages/dev/swiftmailer.xml -->
+        <!-- config/packages/dev/web_profiler.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -230,7 +230,7 @@ the report with details of the sent emails.
 
     .. code-block:: php
 
-        // config/packages/dev/swiftmailer.php
+        // config/packages/dev/web_profiler.php
         $container->loadFromExtension('web_profiler', array(
             'intercept_redirects' => 'true',
         ));

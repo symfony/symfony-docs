@@ -12,7 +12,7 @@ Imagine you want to translate the string *"Symfony is great"* into French::
     $translator = new Translator('fr_FR');
     $translator->addLoader('array', new ArrayLoader());
     $translator->addResource('array', array(
-        'Symfony is great!' => 'J\'aime Symfony!',
+        'Symfony is great!' => 'Symfony est super !',
     ), 'fr_FR');
 
     var_dump($translator->trans('Symfony is great!'));
@@ -336,8 +336,8 @@ effect after removing the explicit rules:
     '{0} There are no apples|[20,Inf[ There are many apples|There is one apple|a_few: There are %count% apples'
 
 For example, for ``1`` apple, the standard rule ``There is one apple`` will
-be used. For ``2-19`` apples, the second standard rule ``There are %count%
-apples`` will be selected.
+be used. For ``2-19`` apples, the second standard rule 
+``There are %count% apples`` will be selected.
 
 An :class:`Symfony\\Component\\Translation\\Interval` can represent a finite set
 of numbers:
@@ -417,6 +417,60 @@ The ``$messages`` variable will have the following structure::
             'Value is too long' => 'Valeur est trop long',
         ),
     );
+
+Adding Notes to Translation Contents
+------------------------------------
+
+Sometimes translators need additional context to better decide how to translate
+some content. This context can be provided with notes, which are a collection of
+comments used to store end user readable information. The only format that
+supports loading and dumping notes is XLIFF version 2.0.
+
+If the XLIFF 2.0 document contains ``<notes>`` nodes, they are automatically
+loaded/dumped when using this component inside a Symfony application:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
+           srcLang="fr-FR" trgLang="en-US">
+      <file id="messages.en_US">
+        <unit id="LCa0a2j">
+          <notes>
+            <note category="state">new</note>
+            <note category="approved">true</note>
+            <note category="section" priority="1">user login</note>
+          </notes>
+          <segment>
+            <source>original-content</source>
+            <target>translated-content</target>
+          </segment>
+        </unit>
+      </file>
+    </xliff>
+
+When using the standalone Translation component, call the ``setMetadata()``
+method of the catalogue and pass the notes as arrays. This is for example the
+code needed to generate the previous XLIFF file::
+
+    use Symfony\Component\Translation\MessageCatalogue;
+    use Symfony\Component\Translation\Dumper\XliffFileDumper;
+
+    $catalogue = new MessageCatalogue('en_US');
+    $catalogue->add([
+        'original-content' => 'translated-content',
+    ]);
+    $catalogue->setMetadata('original-content', ['notes' => [
+        ['category' => 'state', 'content' => 'new'],
+        ['category' => 'approved', 'content' => 'true'],
+        ['category' => 'section', 'content' => 'user login', 'priority' => '1'],
+    ]]);
+
+    $dumper = new XliffFileDumper();
+    $dumper->formatCatalogue($catalogue, 'messages', [
+        'default_locale' => 'fr_FR',
+        'xliff_version' => '2.0'
+    ]);
 
 .. _`L10n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ISO 31-11`: https://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals

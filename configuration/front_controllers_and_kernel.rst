@@ -83,7 +83,7 @@ you must implement them all:
 :method:`Symfony\\Component\\HttpKernel\\KernelInterface::registerBundles`
     It must return an array of all bundles needed to run the application.
 
-:method:`Symfony\\Bundle\\FrameworkBundle\\Kernel\\MicroKernelTrait:configureRoutes`
+:method:`Symfony\\Bundle\\FrameworkBundle\\Kernel\\MicroKernelTrait::configureRoutes`
     It adds individual routes or collections of routes to the application (for
     example loading the routes defined in some config file).
 

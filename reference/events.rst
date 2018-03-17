@@ -91,7 +91,7 @@ HTML contents) into the ``Response`` object needed by Symfony::
 
     public function onKernelView(GetResponseForControllerResultEvent $event)
     {
-        $val = $event->getControllerResult();
+        $value = $event->getControllerResult();
         $response = new Response();
 
         // ... somehow customize the Response from the return value
@@ -153,7 +153,7 @@ the parent request)::
             return;
         }
 
-        // Reset the locale of the subrequest to the locale of the parent request
+        // reset the locale of the subrequest to the locale of the parent request
         $this->setLocale($parentRequest);
     }
 
@@ -217,22 +217,35 @@ sent as response::
     that forwards the ``Request`` to a given controller defined by the
     ``exception_listener.controller`` parameter.
 
+Symfony uses the following logic to determine the HTTP status code of the
+response:
+
+* If :method:`Symfony\\Component\\HttpFoundation\\Response::isClientError`,
+  :method:`Symfony\\Component\\HttpFoundation\\Response::isServerError` or
+  :method:`Symfony\\Component\\HttpFoundation\\Response::isRedirect` is true,
+  then the status code on your ``Response`` object is used;
+
+* If the original exception implements
+  :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
+  then ``getStatusCode()`` is called on the exception and used (the headers
+  from ``getHeaders()`` are also added);
+
+* If both of the above aren't true, then a 500 status code is used.
+
 .. note::
 
-    Symfony uses the following logic to determine the HTTP status code of the
-    response:
+    If you want to overwrite the status code of the exception response, which
+    you should not without a good reason, call
+    ``GetResponseForExceptionEvent::allowCustomResponseCode()`` first and then
+    set the status code on the response::
 
-    * If :method:`Symfony\\Component\\HttpFoundation\\Response::isClientError`,
-      :method:`Symfony\\Component\\HttpFoundation\\Response::isServerError` or
-      :method:`Symfony\\Component\\HttpFoundation\\Response::isRedirect` is true,
-      then the status code on your ``Response`` object is used;
+        $event->allowCustomResponseCode();
+        $response = new Response('No Content', 204);
+        $event->setResponse($response);
 
-    * If the original exception implements
-      :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
-      then ``getStatusCode()`` is called on the exception and used (the headers
-      from ``getHeaders()`` are also added);
-
-    * If both of the above aren't true, then a 500 status code is used.
+    The status code sent to the client in the above example will be ``204``. If
+    ``$event->allowCustomResponseCode()`` is omitted, then the kernel will set
+    an appropriate status code based on the type of exception thrown.
 
 .. seealso::
 

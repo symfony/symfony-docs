@@ -26,12 +26,11 @@ It comes with the following features:
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>`
-  (``symfony/phpunit-bridge`` on `Packagist`_); as a ``dev`` dependency;
+    $ composer require --dev symfony/phpunit-bridge
 
-* Use the official Git repository (https://github.com/symfony/phpunit-bridge).
+Alternatively, you can clone the `<https://github.com/symfony/phpunit-bridge>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -296,11 +295,11 @@ test::
         {
             $stopwatch = new Stopwatch();
 
-            $stopwatch->start();
+            $stopwatch->start('event_name');
             sleep(10);
-            $duration = $stopwatch->stop();
+            $duration = $stopwatch->stop('event_name')->getDuration();
 
-            $this->assertEquals(10, $duration);
+            $this->assertEquals(10000, $duration);
         }
     }
 
@@ -572,11 +571,11 @@ not find the SUT:
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
 .. _`PHPUnit's assertStringMatchesFormat()`: https://phpunit.de/manual/current/en/appendixes.assertions.html#appendixes.assertions.assertStringMatchesFormat
-.. _`PHP error handler`: http://php.net/manual/en/book.errorfunc.php
+.. _`PHP error handler`: https://php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
 .. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
-.. _`@-silencing operator`: http://php.net/manual/en/language.operators.errorcontrol.php
-.. _`@-silenced`: http://php.net/manual/en/language.operators.errorcontrol.php
+.. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php
+.. _`@-silenced`: https://php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
 .. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
 .. _`@covers`: https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.covers

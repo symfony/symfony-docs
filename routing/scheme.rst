@@ -57,12 +57,12 @@ the URI scheme via schemes:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('secure', new Route('/secure', array(
+        $routes = new RouteCollection();
+        $routes->add('secure', new Route('/secure', array(
             '_controller' => 'App\Controller\MainController::secure',
         ), array(), array(), '', array('https')));
 
-        return $collection;
+        return $routes;
 
 The above configuration forces the ``secure`` route to always use HTTPS.
 

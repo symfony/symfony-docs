@@ -102,15 +102,15 @@ like ``/blog/my-post`` or ``/blog/all-about-symfony``:
         use Symfony\Component\Routing\Route;
         use App\Controller\BlogController;
 
-        $collection = new RouteCollection();
-        $collection->add('blog_list', new Route('/blog', array(
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog', array(
             '_controller' => [BlogController::class, 'list']
         )));
-        $collection->add('blog_show', new Route('/blog/{slug}', array(
+        $routes->add('blog_show', new Route('/blog/{slug}', array(
             '_controller' => [BlogController::class, 'show']
         )));
 
-        return $collection;
+        return $routes;
 
 Thanks to these two routes:
 
@@ -218,8 +218,8 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
         use Symfony\Component\Routing\Route;
         use App\Controller\BlogController;
 
-        $collection = new RouteCollection();
-        $collection->add('blog_list', new Route('/blog/{page}', array(
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog/{page}', array(
             '_controller' => [BlogController::class, 'list'],
         ), array(
             'page' => '\d+'
@@ -227,7 +227,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
 
         // ...
 
-        return $collection;
+        return $routes;
 
 The ``\d+`` is a regular expression that matches a *digit* of any length. Now:
 
@@ -312,8 +312,8 @@ So how can you make ``blog_list`` once again match when the user visits
         use Symfony\Component\Routing\Route;
         use App\Controller\BlogController;
 
-        $collection = new RouteCollection();
-        $collection->add('blog_list', new Route(
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route(
             '/blog/{page}',
             array(
                 '_controller' => [BlogController::class, 'list'],
@@ -326,7 +326,7 @@ So how can you make ``blog_list`` once again match when the user visits
 
         // ...
 
-        return $collection;
+        return $routes;
 
 Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 ``$page`` will default to a value of ``1``.
@@ -426,8 +426,8 @@ With all of this in mind, check out this advanced example:
         use Symfony\Component\Routing\Route;
         use App\Controller\ArticleController;
 
-        $collection = new RouteCollection();
-        $collection->add(
+        $routes = new RouteCollection();
+        $routes->add(
             'article_show',
             new Route('/articles/{_locale}/{year}/{slug}.{_format}', array(
                 '_controller' => [ArticleController::class, 'show'],
@@ -439,7 +439,7 @@ With all of this in mind, check out this advanced example:
             ))
         );
 
-        return $collection;
+        return $routes;
 
 As you've seen, this route will only match if the ``{_locale}`` portion of
 the URL is either ``en`` or ``fr`` and if the ``{year}`` is a number. This
@@ -468,10 +468,6 @@ a slash. URLs matching this route might look like:
     Symfony provides you with a way to do this by leveraging service container
     parameters. Read more about this in ":doc:`/routing/service_container_parameters`".
 
-.. caution::
-
-    A route placeholder name cannot start with a digit and cannot be longer than 32 characters.
-
 Special Routing Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -492,6 +488,30 @@ that are special: each adds a unique piece of functionality inside your applicat
 
 ``_locale``
     Used to set the locale on the request (:ref:`read more <translation-locale-url>`).
+
+Redirecting URLs with Trailing Slashes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Historically, URLs have followed the UNIX convention of adding trailing slashes
+for directories (e.g. ``https://example.com/foo/``) and removing them to refer
+to files (``https://example.com/foo``). Although serving different contents for
+both URLs is OK, nowadays it's common to treat both URLs as the same URL and
+redirect between them.
+
+Symfony follows this logic to redirect between URLs with and without trailing
+slashes (but only for ``GET`` and ``HEAD`` requests):
+
+==========  ========================================  ==========================================
+Route path  If the requested URL is ``/foo``          If the requested URL is ``/foo/``
+==========  ========================================  ==========================================
+``/foo``    It matches (``200`` status response)      It doesn't match (``404`` status response)
+``/foo/``   It makes a ``301`` redirect to ``/foo/``  It matches (``200`` status response)
+==========  ========================================  ==========================================
+
+In summary, adding a trailing slash in the route path is the best way to ensure
+that both URLs work. Read the :doc:`/routing/redirect_trailing_slash` article to
+learn how to avoid the ``404`` error when the request URL contains a trailing
+slash and the route path does not.
 
 .. index::
    single: Routing; Controllers
@@ -578,7 +598,7 @@ But if you pass extra ones, they will be added to the URI as a query string::
 
     $this->router->generate('blog', array(
         'page' => 2,
-        'category' => 'Symfony'
+        'category' => 'Symfony',
     ));
     // /blog/2?category=Symfony
 
@@ -616,7 +636,7 @@ Troubleshooting
 
 Here are some common errors you might see while working with routing:
 
-    Controller "App\Controller\BlogController::show()" requires that you
+    Controller "App\\Controller\\BlogController::show()" requires that you
     provide a value for the "$slug" argument.
 
 This happens when your controller method has an argument (e.g. ``$slug``)::

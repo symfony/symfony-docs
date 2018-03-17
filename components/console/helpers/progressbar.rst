@@ -15,25 +15,25 @@ number of units, and advance the progress as the command executes::
 
     use Symfony\Component\Console\Helper\ProgressBar;
 
-    // create a new progress bar (50 units)
-    $progress = new ProgressBar($output, 50);
+    // creates a new progress bar (50 units)
+    $progressBar = new ProgressBar($output, 50);
 
-    // start and displays the progress bar
-    $progress->start();
+    // starts and displays the progress bar
+    $progressBar->start();
 
     $i = 0;
     while ($i++ < 50) {
         // ... do some work
 
-        // advance the progress bar 1 unit
-        $progress->advance();
+        // advances the progress bar 1 unit
+        $progressBar->advance();
 
         // you can also advance the progress bar by more than 1 unit
-        // $progress->advance(3);
+        // $progressBar->advance(3);
     }
 
-    // ensure that the progress bar is at 100%
-    $progress->finish();
+    // ensures that the progress bar is at 100%
+    $progressBar->finish();
 
 .. tip::
 
@@ -59,7 +59,7 @@ If you don't know the number of steps in advance, just omit the steps argument
 when creating the :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
 instance::
 
-    $progress = new ProgressBar($output);
+    $progressBar = new ProgressBar($output);
 
 The progress will then be displayed as a throbber:
 
@@ -126,7 +126,7 @@ level of verbosity of the ``OutputInterface`` instance:
 Instead of relying on the verbosity mode of the current command, you can also
 force a format via ``setFormat()``::
 
-    $bar->setFormat('verbose');
+    $progressBar->setFormat('verbose');
 
 The built-in formats are the following:
 
@@ -148,7 +148,7 @@ Custom Formats
 
 Instead of using the built-in formats, you can also set your own::
 
-    $bar->setFormat('%bar%');
+    $progressBar->setFormat('%bar%');
 
 This sets the format to only display the progress bar itself:
 
@@ -175,7 +175,7 @@ current progress of the bar. Here is a list of the built-in placeholders:
 For instance, here is how you could set the format to be the same as the
 ``debug`` one::
 
-    $bar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%');
+    $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%');
 
 Notice the ``:6s`` part added to some placeholders? That's how you can tweak
 the appearance of the bar (formatting and alignment). The part after the colon
@@ -186,8 +186,8 @@ also define global formats::
 
     ProgressBar::setFormatDefinition('minimal', 'Progress: %percent%%');
 
-    $bar = new ProgressBar($output, 3);
-    $bar->setFormat('minimal');
+    $progressBar = new ProgressBar($output, 3);
+    $progressBar->setFormat('minimal');
 
 This code defines a new ``minimal`` format that you can then use for your
 progress bars:
@@ -211,8 +211,8 @@ variant::
     ProgressBar::setFormatDefinition('minimal', '%percent%% %remaining%');
     ProgressBar::setFormatDefinition('minimal_nomax', '%percent%%');
 
-    $bar = new ProgressBar($output);
-    $bar->setFormat('minimal');
+    $progressBar = new ProgressBar($output);
+    $progressBar->setFormat('minimal');
 
 When displaying the progress bar, the format will automatically be set to
 ``minimal_nomax`` if the bar does not have a maximum number of steps like in
@@ -241,16 +241,16 @@ Amongst the placeholders, ``bar`` is a bit special as all the characters used
 to display it can be customized::
 
     // the finished part of the bar
-    $progress->setBarCharacter('<comment>=</comment>');
+    $progressBar->setBarCharacter('<comment>=</comment>');
 
     // the unfinished part of the bar
-    $progress->setEmptyBarCharacter(' ');
+    $progressBar->setEmptyBarCharacter(' ');
 
     // the progress character
-    $progress->setProgressCharacter('|');
+    $progressBar->setProgressCharacter('|');
 
     // the bar width
-    $progress->setBarWidth(50);
+    $progressBar->setBarWidth(50);
 
 .. caution::
 
@@ -260,17 +260,17 @@ to display it can be customized::
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency`,
     so it updates on only some iterations::
 
-        $progress = new ProgressBar($output, 50000);
-        $progress->start();
+        $progressBar = new ProgressBar($output, 50000);
+        $progressBar->start();
 
         // update every 100 iterations
-        $progress->setRedrawFrequency(100);
+        $progressBar->setRedrawFrequency(100);
 
         $i = 0;
         while ($i++ < 50000) {
             // ... do some work
 
-            $progress->advance();
+            $progressBar->advance();
         }
 
 Custom Placeholders
@@ -283,8 +283,8 @@ that displays the number of remaining steps::
 
     ProgressBar::setPlaceholderFormatterDefinition(
         'remaining_steps',
-        function (ProgressBar $bar, OutputInterface $output) {
-            return $bar->getMaxSteps() - $bar->getProgress();
+        function (ProgressBar $progressBar, OutputInterface $output) {
+            return $progressBar->getMaxSteps() - $progressBar->getProgress();
         }
     );
 
@@ -295,8 +295,9 @@ Progress bars define a placeholder called ``message`` to display arbitrary
 messages. However, none of the built-in formats include that placeholder, so
 before displaying these messages, you must define your own custom format::
 
+    ProgressBar::setFormatDefinition('custom', ' %current%/%max% -- %message%');
+
     $progressBar = new ProgressBar($output, 100);
-    $progressBar->setFormatDefinition('custom', ' %current%/%max% -- %message%');
     $progressBar->setFormat('custom');
 
 Now, use the ``setMessage()`` method to set the value of the ``%message%``
@@ -314,8 +315,9 @@ placeholder before displaying the progress bar::
 Messages can be combined with custom placeholders too. In this example, the
 progress bar uses the ``%message%`` and ``%filename%`` placeholders::
 
+    ProgressBar::setFormatDefinition('custom', ' %current%/%max% -- %message% (%filename%)');
+
     $progressBar = new ProgressBar($output, 100);
-    $progressBar->setFormatDefinition('custom', ' %current%/%max% -- %message% (%filename%)');
     $progressBar->setFormat('custom');
 
 The ``setMessage()`` method accepts a second optional argument to set the value

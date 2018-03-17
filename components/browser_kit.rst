@@ -17,11 +17,13 @@ The BrowserKit Component
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>`
-  (``symfony/browser-kit`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/browser-kit).
+    $ composer require symfony/browser-kit
+
+Alternatively, you can clone the `<https://github.com/symfony/browser-kit>`_ repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 Basic Usage
 -----------
@@ -109,6 +111,9 @@ method (which makes the needed HTTP POST request to submit the form contents)::
     $form['login'] = 'symfonyfan';
     $form['password'] = 'anypass';
 
+    // To upload a file, the value should be the absolute file path
+    $form['file'] = __FILE__;
+
     // submit that form
     $crawler = $client->submit($form);
 
@@ -137,8 +142,8 @@ retrieve any cookie while making requests with the client::
     // Get cookie data
     $name       = $cookie->getName();
     $value      = $cookie->getValue();
-    $raw        = $cookie->getRawValue();
-    $secure     = $cookie->isSecure();
+    $rawValue   = $cookie->getRawValue();
+    $isSecure   = $cookie->isSecure();
     $isHttpOnly = $cookie->isHttpOnly();
     $isExpired  = $cookie->isExpired();
     $expires    = $cookie->getExpiresTime();
@@ -191,7 +196,9 @@ into the client constructor::
     use Acme\Client;
 
     // create cookies and add to cookie jar
-    $cookieJar = new Cookie('flavor', 'chocolate', strtotime('+1 day'));
+    $cookie = new Cookie('flavor', 'chocolate', strtotime('+1 day'));
+    $cookieJar = new CookieJar();
+    $cookieJar->set($cookie);
 
     // create a client and set the cookies
     $client = new Client(array(), null, $cookieJar);

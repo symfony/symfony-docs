@@ -15,10 +15,11 @@ The DomCrawler Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/dom-crawler`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/dom-crawler).
+    $ composer require symfony/dom-crawler
+
+Alternatively, you can clone the `<https://github.com/symfony/dom-crawler>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -89,7 +90,7 @@ An anonymous function can be used to filter with more complex criteria::
     $crawler = $crawler
         ->filter('body > p')
         ->reduce(function (Crawler $node, $i) {
-            // filter every other node
+            // filters every other node
             return ($i % 2) == 0;
         });
 
@@ -185,7 +186,7 @@ Accessing Node Values
 
 Access the node name (HTML tag name) of the first node of the current selection (eg. "p" or "div")::
 
-    // will return the node name (HTML tag name) of the first child element under <body>
+    // returns the node name (HTML tag name) of the first child element under <body>
     $tag = $crawler->filterXPath('//body/*')->nodeName();
 
 Access the value of the first node of the current selection::
@@ -248,20 +249,18 @@ The crawler supports multiple ways of adding the content::
 
 As the Crawler's implementation is based on the DOM extension, it is also able
 to interact with native :phpclass:`DOMDocument`, :phpclass:`DOMNodeList`
-and :phpclass:`DOMNode` objects:
+and :phpclass:`DOMNode` objects::
 
-.. code-block:: php
+    $domDocument = new \DOMDocument();
+    $domDocument->loadXml('<root><node /><node /></root>');
+    $nodeList = $domDocument->getElementsByTagName('node');
+    $node = $domDocument->getElementsByTagName('node')->item(0);
 
-    $document = new \DOMDocument();
-    $document->loadXml('<root><node /><node /></root>');
-    $nodeList = $document->getElementsByTagName('node');
-    $node = $document->getElementsByTagName('node')->item(0);
-
-    $crawler->addDocument($document);
+    $crawler->addDocument($domDocument);
     $crawler->addNodeList($nodeList);
     $crawler->addNodes(array($node));
     $crawler->addNode($node);
-    $crawler->add($document);
+    $crawler->add($domDocument);
 
 .. _component-dom-crawler-dumping:
 
@@ -358,7 +357,7 @@ instance with just the selected link(s). Calling ``link()`` gives you a special
 The :class:`Symfony\\Component\\DomCrawler\\Link` object has several useful
 methods to get more information about the selected link itself::
 
-    // return the proper URI that can be used to make another request
+    // returns the proper URI that can be used to make another request
     $uri = $link->getUri();
 
 .. note::
@@ -433,13 +432,13 @@ attribute followed by a query string of all of the form's values.
 
 You can virtually set and get values on the form::
 
-    // set values on the form internally
+    // sets values on the form internally
     $form->setValues(array(
         'registration[username]' => 'symfonyfan',
         'registration[terms]'    => 1,
     ));
 
-    // get back an array of values - in the "flat" array like above
+    // gets back an array of values - in the "flat" array like above
     $values = $form->getValues();
 
     // returns the values like PHP would see them,
@@ -456,13 +455,13 @@ To work with multi-dimensional fields::
 
 Pass an array of values::
 
-    // Set a single field
+    // sets a single field
     $form->setValues(array('multi' => array('value')));
 
-    // Set multiple fields at once
+    // sets multiple fields at once
     $form->setValues(array('multi' => array(
         1             => 'value',
-        'dimensional' => 'an other value'
+        'dimensional' => 'an other value',
     )));
 
 This is great, but it gets better! The ``Form`` object allows you to interact
@@ -471,17 +470,17 @@ and uploading files::
 
     $form['registration[username]']->setValue('symfonyfan');
 
-    // check or uncheck a checkbox
+    // checks or unchecks a checkbox
     $form['registration[terms]']->tick();
     $form['registration[terms]']->untick();
 
-    // select an option
+    // selects an option
     $form['registration[birthday][year]']->select(1984);
 
-    // select many options from a "multiple" select
+    // selects many options from a "multiple" select
     $form['registration[interests]']->select(array('symfony', 'cookies'));
 
-    // even fake a file upload
+    // fakes a file upload
     $form['registration[photo]']->upload('/path/to/lucas.jpg');
 
 Using the Form Data
@@ -510,7 +509,7 @@ directly::
 
     use Goutte\Client;
 
-    // make a real request to an external site
+    // makes a real request to an external site
     $client = new Client();
     $crawler = $client->request('GET', 'https://github.com/login');
 
@@ -519,7 +518,7 @@ directly::
     $form['login'] = 'symfonyfan';
     $form['password'] = 'anypass';
 
-    // submit that form
+    // submits the given form
     $crawler = $client->submit($form);
 
 .. _components-dom-crawler-invalid:
@@ -532,10 +531,10 @@ to prevent you from setting invalid values. If you want to be able to set
 invalid values, you can use the  ``disableValidation()`` method on either
 the whole form or specific field(s)::
 
-    // Disable validation for a specific field
+    // disables validation for a specific field
     $form['country']->disableValidation()->select('Invalid value');
 
-    // Disable validation for the whole form
+    // disables validation for the whole form
     $form->disableValidation();
     $form['country']->select('Invalid value');
 

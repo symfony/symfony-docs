@@ -2,7 +2,7 @@
     single: Cache Pool
     single: Redis Cache
 
-.. _`redis-adapter`:
+.. _redis-adapter:
 
 Redis Cache Adapter
 ===================

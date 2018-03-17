@@ -77,9 +77,7 @@ your form?
 
 The answer is to setup the constraints yourself, and attach them to the individual
 fields. The overall approach is covered a bit more in :doc:`this validation article </validation/raw_values>`,
-but here's a short example:
-
-.. code-block:: php
+but here's a short example::
 
     use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\NotBlank;

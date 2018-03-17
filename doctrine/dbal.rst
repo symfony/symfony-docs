@@ -21,7 +21,13 @@ makes it easy to execute queries and perform other database actions.
     Read the official Doctrine `DBAL Documentation`_ to learn all the details
     and capabilities of Doctrine's DBAL library.
 
-To get started, configure the ``DATABASE_URL`` environment variable in ``.env``:
+First, install the Doctrine bundle:
+
+.. code-block:: terminal
+
+    composer require doctrine/doctrine-bundle
+
+Then configure the ``DATABASE_URL`` environment variable in ``.env``:
 
 .. code-block:: text
 
@@ -41,9 +47,9 @@ object::
 
     class UserController extends Controller
     {
-        public function indexAction(Connection $conn)
+        public function indexAction(Connection $connection)
         {
-            $users = $conn->fetchAll('SELECT * FROM users');
+            $users = $connection->fetchAll('SELECT * FROM users');
 
             // ...
         }
@@ -152,7 +158,7 @@ mapping type:
             ),
         ));
 
-.. _`PDO`:           http://www.php.net/pdo
+.. _`PDO`:           https://php.net/pdo
 .. _`Doctrine`:      http://www.doctrine-project.org
 .. _`DBAL Documentation`: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/index.html
 .. _`Custom Mapping Types`: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/types.html#custom-mapping-types

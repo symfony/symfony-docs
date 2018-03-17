@@ -21,7 +21,7 @@ Configuration
 toolbar
 ~~~~~~~
 
-**type**: ``boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``false``
 
 It enables and disables the toolbar entirely. Usually you set this to ``true``
 in the ``dev`` and ``test`` environments and to ``false`` in the ``prod``
@@ -62,7 +62,7 @@ Full Default Configuration
         web_profiler:
             toolbar:              false
             intercept_redirects:  false
-            excluded_ajax_paths:  ^/bundles|^/_wdt
+            excluded_ajax_paths:  ^/(app(_[\\w]+)?\\.php/)?_wdt
 
     .. code-block:: xml
 
@@ -79,6 +79,6 @@ Full Default Configuration
             <web-profiler:config
                 toolbar="false"
                 intercept-redirects="false"
-                excluded-ajax-paths="^/bundles|^/_wdt"
+                excluded-ajax-paths="^/(app(_[\\w]+)?\\.php/)?_wdt"
             />
         </container>

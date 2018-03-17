@@ -11,10 +11,13 @@ The PSR-7 Bridge
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (`symfony/psr-http-message-bridge on Packagist`_);
-* Use the official Git repository (https://github.com/symfony/psr-http-message-bridge).
+    $ composer require symfony/psr-http-message-bridge
+
+Alternatively, you can clone the `<https://github.com/symfony/psr-http-message-bridge>`_ repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 The bridge also needs a PSR-7 implementation to allow converting HttpFoundation
 objects to PSR-7 objects. It provides native support for `Zend Diactoros`_.
@@ -85,6 +88,6 @@ to a :class:`Symfony\\Component\\HttpFoundation\\Response` instance::
     $httpFoundationFactory = new HttpFoundationFactory();
     $symfonyResponse = $httpFoundationFactory->createResponse($psrResponse);
 
-.. _`PSR-7`: http://www.php-fig.org/psr/psr-7/
+.. _`PSR-7`: https://www.php-fig.org/psr/psr-7/
 .. _`Zend Diactoros`: https://github.com/zendframework/zend-diactoros
 .. _`symfony/psr-http-message-bridge on Packagist`: https://packagist.org/packages/symfony/psr-http-message-bridge

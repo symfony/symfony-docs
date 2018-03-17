@@ -39,25 +39,25 @@ to get information about the messages sent on the previous request::
         {
             $client = static::createClient();
 
-            // Enable the profiler for the next request (it does nothing if the profiler is not available)
+            // enables the profiler for the next request (it does nothing if the profiler is not available)
             $client->enableProfiler();
 
             $crawler = $client->request('POST', '/path/to/above/action');
 
             $mailCollector = $client->getProfile()->getCollector('swiftmailer');
 
-            // Check that an email was sent
-            $this->assertEquals(1, $mailCollector->getMessageCount());
+            // checks that an email was sent
+            $this->assertSame(1, $mailCollector->getMessageCount());
 
             $collectedMessages = $mailCollector->getMessages();
             $message = $collectedMessages[0];
 
             // Asserting email data
             $this->assertInstanceOf('Swift_Message', $message);
-            $this->assertEquals('Hello Email', $message->getSubject());
-            $this->assertEquals('send@example.com', key($message->getFrom()));
-            $this->assertEquals('recipient@example.com', key($message->getTo()));
-            $this->assertEquals(
+            $this->assertSame('Hello Email', $message->getSubject());
+            $this->assertSame('send@example.com', key($message->getFrom()));
+            $this->assertSame('recipient@example.com', key($message->getTo()));
+            $this->assertSame(
                 'You should see me from the profiler!',
                 $message->getBody()
             );

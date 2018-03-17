@@ -19,10 +19,11 @@ variables and functions by an object-oriented layer.
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/http-foundation`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/http-foundation).
+    $ composer require symfony/http-foundation
+
+Alternatively, you can clone the `<https://github.com/symfony/http-foundation>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -258,15 +259,15 @@ If you need to get full access to parsed data from ``Accept``, ``Accept-Language
 
     use Symfony\Component\HttpFoundation\AcceptHeader;
 
-    $accept = AcceptHeader::fromString($request->headers->get('Accept'));
-    if ($accept->has('text/html')) {
-        $item = $accept->get('text/html');
+    $acceptHeader = AcceptHeader::fromString($request->headers->get('Accept'));
+    if ($acceptHeader->has('text/html')) {
+        $item = $acceptHeader->get('text/html');
         $charset = $item->getAttribute('charset', 'utf-8');
         $quality = $item->getQuality();
     }
 
     // Accept header items are sorted by descending quality
-    $accepts = AcceptHeader::fromString($request->headers->get('Accept'))
+    $acceptHeaders = AcceptHeader::fromString($request->headers->get('Accept'))
         ->all();
 
 Accessing other Data

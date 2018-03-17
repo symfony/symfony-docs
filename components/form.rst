@@ -16,10 +16,11 @@ be from a normal form post or from an API.
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/form`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/form).
+    $ composer require symfony/form
+
+Alternatively, you can clone the `<https://github.com/symfony/form>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -125,7 +126,7 @@ The following snippet adds CSRF protection to the form factory::
     use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
     use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
-    // create a Session object from the HttpFoundation component
+    // creates a Session object from the HttpFoundation component
     $session = new Session();
 
     $csrfGenerator = new UriSafeTokenGenerator();
@@ -181,17 +182,17 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     // this file comes with TwigBridge
     $defaultFormTheme = 'form_div_layout.html.twig';
 
-    $vendorDir = realpath(__DIR__.'/../vendor');
+    $vendorDirectory = realpath(__DIR__.'/../vendor');
     // the path to TwigBridge library so Twig can locate the
     // form_div_layout.html.twig file
     $appVariableReflection = new \ReflectionClass('\Symfony\Bridge\Twig\AppVariable');
-    $vendorTwigBridgeDir = dirname($appVariableReflection->getFileName());
+    $vendorTwigBridgeDirectory = dirname($appVariableReflection->getFileName());
     // the path to your other templates
-    $viewsDir = realpath(__DIR__.'/../views');
+    $viewsDirectory = realpath(__DIR__.'/../views');
 
     $twig = new Twig_Environment(new Twig_Loader_Filesystem(array(
-        $viewsDir,
-        $vendorTwigBridgeDir.'/Resources/views/Form',
+        $viewsDirectory,
+        $vendorTwigBridgeDirectory.'/Resources/views/Form',
     )));
     $formEngine = new TwigRendererEngine(array($defaultFormTheme), $twig);
     $twig->addRuntimeLoader(new \Twig_FactoryRuntimeLoader(array(
@@ -202,10 +203,10 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
 
     // ... (see the previous CSRF Protection section for more information)
 
-    // add the FormExtension to Twig
+    // adds the FormExtension to Twig
     $twig->addExtension(new FormExtension());
 
-    // create your form factory as normal
+    // creates a form factory
     $formFactory = Forms::createFormFactoryBuilder()
         // ...
         ->getFormFactory();
@@ -258,7 +259,7 @@ to your ``Twig_Environment`` instance::
     use Symfony\Component\Translation\Loader\XliffFileLoader;
     use Symfony\Bridge\Twig\Extension\TranslationExtension;
 
-    // create the Translator
+    // creates the Translator
     $translator = new Translator('en');
     // somehow load some translations into it
     $translator->addLoader('xlf', new XliffFileLoader());
@@ -268,7 +269,7 @@ to your ``Twig_Environment`` instance::
         'en'
     );
 
-    // add the TranslationExtension (gives us trans and transChoice filters)
+    // adds the TranslationExtension (gives us trans and transChoice filters)
     $twig->addExtension(new TranslationExtension($translator));
 
     $formFactory = Forms::createFormFactoryBuilder()
@@ -307,23 +308,23 @@ Your integration with the Validation component will look something like this::
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Validator\Validation;
 
-    $vendorDir = realpath(__DIR__.'/../vendor');
-    $vendorFormDir = $vendorDir.'/symfony/form';
-    $vendorValidatorDir = $vendorDir.'/symfony/validator';
+    $vendorDirectory = realpath(__DIR__.'/../vendor');
+    $vendorFormDirectory = $vendorDirectory.'/symfony/form';
+    $vendorValidatorDirectory = $vendorDirectory.'/symfony/validator';
 
-    // create the validator - details will vary
+    // creates the validator - details will vary
     $validator = Validation::createValidator();
 
     // there are built-in translations for the core error messages
     $translator->addResource(
         'xlf',
-        $vendorFormDir.'/Resources/translations/validators.en.xlf',
+        $vendorFormDirectory.'/Resources/translations/validators.en.xlf',
         'en',
         'validators'
     );
     $translator->addResource(
         'xlf',
-        $vendorValidatorDir.'/Resources/translations/validators.en.xlf',
+        $vendorValidatorDirectory.'/Resources/translations/validators.en.xlf',
         'en',
         'validators'
     );
@@ -728,7 +729,7 @@ method to access the list of errors. It returns a
     // ...
 
     // a FormErrorIterator instance, but only errors attached to this
-    // form level (e.g. "global errors)
+    // form level (e.g. global errors)
     $errors = $form->getErrors();
 
     // a FormErrorIterator instance, but only errors attached to the

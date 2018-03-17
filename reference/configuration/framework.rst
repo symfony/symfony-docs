@@ -1,6 +1,8 @@
 .. index::
     single: Configuration reference; Framework
 
+.. _framework-bundle-configuration:
+
 FrameworkBundle Configuration ("framework")
 ===========================================
 
@@ -129,6 +131,7 @@ Configuration
             * `provider`_
             * `clearer`_
     * `prefix_seed`_
+* :ref:`lock <reference-lock>`
 
 secret
 ~~~~~~
@@ -520,7 +523,7 @@ enabled
 **type**: ``boolean`` **default**: ``false``
 
 The profiler can be enabled by setting this option to ``true``. When you
-are using the Symfony Standard Edition, the profiler is enabled in the ``dev``
+install it using Symfony Flex, the profiler is enabled in the ``dev``
 and ``test`` environments.
 
 .. note::
@@ -1405,7 +1408,7 @@ configure this like:
             'templating' => array(
                 'form' => array(
                     'resources' => array(
-                        'form_themes'
+                        'form_themes',
                     ),
                 ),
             ),
@@ -1736,13 +1739,15 @@ app
 **type**: ``string`` **default**: ``cache.adapter.filesystem``
 
 The cache adapter used by the ``cache.app`` service. The FrameworkBundle
-ships with multiple adapters: ``apcu``, ``doctrine``, ``system``, ``filesystem``,
-``psr6``, ``redis`` and ``memcached``.
+ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``,
+``cache.adapter.system``, ``cache.adapter.filesystem``, ``cache.adapter.psr6``,
+``cache.adapter.redis`` and ``cache.adapter.memcached``.
 
 .. tip::
 
-    It might be tough to understand at the beginning, so to avoid confusion remember that all pools perform the
-    same actions but on different medium given the adapter they are based on. Internally, a pool wraps the definition
+    It might be tough to understand at the beginning, so to avoid confusion
+    remember that all pools perform the same actions but on different medium
+    given the adapter they are based on. Internally, a pool wraps the definition
     of an adapter.
 
 system
@@ -1750,7 +1755,8 @@ system
 
 **type**: ``string`` **default**: ``cache.adapter.system``
 
-The cache adapter used by the ``cache.system`` service.
+The cache adapter used by the ``cache.system`` service. It supports the same
+adapters available for the ``cache.app`` service.
 
 directory
 .........
@@ -1873,6 +1879,16 @@ same cache backend.
 It's also useful when using `blue/green deployment`_ strategies and more
 generally, when you need to abstract out the actual deployment directory (for
 example, when warming caches offline).
+
+.. _reference-lock:
+
+lock
+~~~~
+
+**type**: ``string``
+
+The default lock adapter. If not defined, the value is set to ``semaphore`` when
+available, or to ``flock`` otherwise. Store's DSN are also allowed.
 
 Full Default Configuration
 --------------------------
@@ -2029,6 +2045,14 @@ Full Default Configuration
                         default_lifetime: ~
                         provider: ~
                         clearer: ~
+
+            # lock configuration
+            lock:
+                invoice: 'redis://localhost'
+                report: semaphore
+            # lock: ~
+            # lock: 'flock'
+            # lock: ['semaphore', 'redis://localhost']
 
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning

@@ -46,15 +46,15 @@ the user::
         {
             try {
                 $user = $userProvider->loadUserByUsername($token->getUsername());
-            } catch (UsernameNotFoundException $e) {
+            } catch (UsernameNotFoundException $exception) {
                 // CAUTION: this message will be returned to the client
                 // (so don't put any un-trusted messages / error strings here)
                 throw new CustomUserMessageAuthenticationException('Invalid username or password');
             }
 
-            $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
+            $isPasswordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
 
-            if ($passwordValid) {
+            if ($isPasswordValid) {
                 $currentHour = date('G');
                 if ($currentHour < 14 || $currentHour > 16) {
                     // CAUTION: this message will be returned to the client
@@ -132,7 +132,7 @@ inside of it.
 
 Inside this method, the password encoder is needed to check the password's validity::
 
-    $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
+    $isPasswordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
 
 This is a service that is already available in Symfony and it uses the password algorithm
 that is configured in the security configuration (e.g. ``security.yaml``) under

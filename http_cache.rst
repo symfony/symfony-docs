@@ -80,6 +80,8 @@ but is a great way to start.
 To enable the proxy, first create a caching kernel::
 
     // src/CacheKernel.php
+    namespace App;
+
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
     class CacheKernel extends HttpCache
@@ -92,6 +94,9 @@ caching kernel:
 .. code-block:: diff
 
     // public/index.php
+
+    use App\Kernel;
+    + use App\CacheKernel;
 
     // ...
     $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev')));
@@ -296,7 +301,7 @@ two things:
   (e.g. deleting a blog post). Caching them would prevent certain requests from hitting
   and mutating your application.
 
-* POST requests are generally considered uncachable, but `they can be cached`_
+* POST requests are generally considered uncacheable, but `they can be cached`_
   when they include explicit freshness information. However POST caching is not
   widely implemented, so you should avoid it if possible.
 
@@ -313,16 +318,16 @@ More Response Methods
 The Response class provides many more methods related to the cache. Here are
 the most useful ones::
 
-    // Marks the Response stale
+    // marks the Response stale
     $response->expire();
 
-    // Force the response to return a proper 304 response with no content
+    // forces the response to return a proper 304 response with no content
     $response->setNotModified();
 
 Additionally, most cache-related HTTP headers can be set via the single
 :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method::
 
-    // Set cache settings in one call
+    // sets cache settings in one call
     $response->setCache(array(
         'etag'          => $etag,
         'last_modified' => $date,
