@@ -12,7 +12,7 @@ Imagine you want to translate the string *"Symfony is great"* into French::
     $translator = new Translator('fr_FR');
     $translator->addLoader('array', new ArrayLoader());
     $translator->addResource('array', array(
-        'Symfony is great!' => 'J\'aime Symfony!',
+        'Symfony is great!' => 'Symfony est super !',
     ), 'fr_FR');
 
     var_dump($translator->trans('Symfony is great!'));
