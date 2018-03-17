@@ -507,12 +507,12 @@ redirect between them.
 Symfony follows this logic to redirect between URLs with and without trailing
 slashes (but only for ``GET`` and ``HEAD`` requests):
 
-----------  ----------------------------------------  ------------------------------------------
+==========  ========================================  ==========================================
 Route path  If the requested URL is ``/foo``          If the requested URL is ``/foo/``
 ----------  ----------------------------------------  ------------------------------------------
 ``/foo``    It matches (``200`` status response)      It makes a ``301`` redirect to ``/foo``
 ``/foo/``   It makes a ``301`` redirect to ``/foo/``  It matches (``200`` status response)
-----------  ----------------------------------------  ------------------------------------------
+==========  ========================================  ==========================================
 
 .. note::
 

@@ -383,7 +383,7 @@ This means that each event has access to the following information:
 :method:`Symfony\\Component\\Workflow\\Event\\Event::getMarking`
     Returns the :class:`Symfony\\Component\\Workflow\\Marking` of the workflow.
 
-:method:`Symfony\\Component\\Worflow\\Event\\Event::getSubject`
+:method:`Symfony\\Component\\Workflow\\Event\\Event::getSubject`
     Returns the object that dispatches the event.
 
 :method:`Symfony\\Component\\Workflow\\Event\\Event::getTransition`
