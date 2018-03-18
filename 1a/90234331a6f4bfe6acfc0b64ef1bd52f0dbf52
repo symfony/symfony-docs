@@ -1,0 +1,71 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-26T08:22:23Z
+
+@vudaltsov you know Symfony Forms very well. If you have some time, could you please review this proposal? Thanks a lot!
+
+---------------------------------------------------------------------------
+
+by vudaltsov at 2018-02-26T09:18:55Z
+
+Another related PR: https://github.com/symfony/symfony-docs/pull/5996
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-09T08:03:25Z
+
+@julienfalque do you think that your pull request is ready to merge? Thanks!
+
+---------------------------------------------------------------------------
+
+by julienfalque at 2018-03-09T08:21:41Z
+
+@javiereguiluz I would like to have some feedback to https://github.com/symfony/symfony-docs/pull/9254#discussion_r170543624 before merging.
+
+---------------------------------------------------------------------------
+
+by vudaltsov at 2018-03-09T08:25:21Z
+
+I will give that feedback today, I will try to use those events the way you explain and we'll discuss it.
+As for the other two changes, I am 👍
+
+---------------------------------------------------------------------------
+
+by vudaltsov at 2018-03-09T16:41:55Z
+
+I tried to add a field on a `SUBMIT` event to the current form and although it didn't throw any exceptions and the field appeared in the view, the data was not handled and did not appear in the result array.
+
+```php
+$builder = $this->createFormBuilder()
+    ->add('children', FormType::class)
+    ->add('submit', SubmitType::class, [
+        'attr' => ['class' => 'btn btn-black']
+    ]);
+
+$builder
+    ->get('children')
+    ->add('text', TextType::class)
+    ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+        $event->getForm()->add('textarea', TextareaType::class);
+    });
+
+$form = $builder
+    ->getForm()
+    ->handleRequest($request);
+```
+
+![image](https://user-images.githubusercontent.com/2552865/37218496-a65d4a0a-23d1-11e8-847c-072808dfd478.png)
+
+So I think the notice is correct and should not be removed.
+
+---------------------------------------------------------------------------
+
+by vudaltsov at 2018-03-09T16:55:14Z
+
+I noticed that [ResizeFormListener](https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/EventListener/ResizeFormListener.php#L144) actually removes fields from the listened form on `SUBMIT` but I don't think this possibility is worth mentioning in the docs.
+
+---------------------------------------------------------------------------
+
+by julienfalque at 2018-03-09T18:36:47Z
+
+Ok, I reverted the notice removal.
