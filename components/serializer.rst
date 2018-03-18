@@ -73,6 +73,7 @@ exists in your project::
         private $age;
         private $name;
         private $sportsman;
+        private $createdAt;
 
         // Getters
         public function getName()
@@ -83,6 +84,11 @@ exists in your project::
         public function getAge()
         {
             return $this->age;
+        }
+
+        public function getCreatedAt()
+        {
+            return $this->createdAt;
         }
 
         // Issers
@@ -105,6 +111,11 @@ exists in your project::
         public function setSportsman($sportsman)
         {
             $this->sportsman = $sportsman;
+        }
+
+        public function setCreatedAt($createdAt)
+        {
+            $this->createdAt = $createdAt;
         }
     }
 
