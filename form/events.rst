@@ -219,7 +219,8 @@ View data        Normalized data transformed using a view transformer
 
 .. caution::
 
-    At this point, you cannot add or remove fields to the form.
+    At this point, you cannot add or remove fields to the current form and its
+    children.
 
 .. sidebar:: ``FormEvents::POST_SUBMIT`` in the Form component
 
