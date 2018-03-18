@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by ostrolucky at 2018-03-12T15:56:38Z
+
+I'm not knowledgable in XML, but this reminds me same issue we had with Workflow metadata. @stof responded with this https://github.com/symfony/symfony/issues/23257#issuecomment-312025290, seems it could be applied here too
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-12T16:38:10Z
+
+@ostrolucky thanks for your help! I did some changes, but we'll need a review here from some XML expert. Thanks!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2018-03-13T22:19:18Z
+
+I can confirm the XML is correct
+
+status: reviewed
+
+---------------------------------------------------------------------------
+
+by ostrolucky at 2018-03-13T23:05:52Z
+
+Tried this xml, works
