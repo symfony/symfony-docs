@@ -23,6 +23,16 @@ This will create a new ``my-project`` directory, download some dependencies into
 it and even generate the basic directories and files you'll need to get started.
 In other words, your new app is ready!
 
+.. tip::
+
+    The ``website-skeleton`` is optimized for traditional web applications. If
+    you are building microservices, console applications or APIs, consider
+    using the much simpler ``skeleton`` project:
+
+    .. code-block:: terminal
+
+        $ composer create-project symfony/skeleton my-project
+
 Running your Symfony Application
 --------------------------------
 
@@ -112,7 +122,7 @@ vulnerability. Run this command to install it in your application:
 .. code-block:: terminal
 
     $ cd my-project/
-    $ composer require sec-checker
+    $ composer require sec-checker --dev
 
 From now on, this utility will be run automatically whenever you install or
 update any dependency in the application. If a dependency contains a vulnerability,

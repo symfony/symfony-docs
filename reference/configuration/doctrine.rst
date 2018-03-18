@@ -134,18 +134,21 @@ Full Default Configuration
                             port:                 ~
                             instance_class:       ~
                             class:                ~
+                            namespace:            ~
                         metadata_cache_driver:
                             type:                 array # Required
                             host:                 ~
                             port:                 ~
                             instance_class:       ~
                             class:                ~
+                            namespace:            ~
                         result_cache_driver:
                             type:                 array # Required
                             host:                 ~
                             port:                 ~
                             instance_class:       ~
                             class:                ~
+                            namespace:            ~
                         connection:           ~
                         class_metadata_factory_name:  Doctrine\ORM\Mapping\ClassMetadataFactory
                         default_repository_class:  Doctrine\ORM\EntityRepository
@@ -318,7 +321,7 @@ The following block shows all possible configuration keys:
                 charset:              UTF8
                 logging:              '%kernel.debug%'
                 platform_service:     App\DBAL\MyDatabasePlatformService
-                server_version:       5.6
+                server_version:       '5.6'
                 mapping_types:
                     enum: string
                 types:
@@ -368,6 +371,11 @@ The following block shows all possible configuration keys:
     your database server version (use ``postgres -V`` or ``psql -V`` command
     to find your PostgreSQL version and ``mysql -V`` to get your MySQL
     version).
+
+    Always wrap the server version number with quotes to parse it as a string
+    instead of a float number. Otherwise, the floating-point representation
+    issues can make your version be considered a different number (e.g. ``5.6``
+    will be rounded as ``5.5999999999999996447286321199499070644378662109375``).
 
     If you don't define this option and you haven't created your database
     yet, you may get ``PDOException`` errors because Doctrine will try to
