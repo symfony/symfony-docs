@@ -26,8 +26,8 @@ In other words, your new app is ready!
 .. tip::
 
     The ``website-skeleton`` is optimized for traditional web applications. If
-    you are building microservices, console applications and APIs, consider
-    using the more lightweight ``skeleton`` project:
+    you are building microservices, console applications or APIs, consider
+    using the much simpler ``skeleton`` project:
 
     .. code-block:: terminal
 
