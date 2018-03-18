@@ -363,12 +363,10 @@ The following block shows all possible configuration keys:
     to find your PostgreSQL version and ``mysql -V`` to get your MySQL
     version).
     
-    If the server version is specified without quotes (i.e. ``5.6``), then the
-    resulting compiled container will contain the value ``5.5999999999999996447286321199499070644378662109375``.
-    
-    This is a result of floating-point representation issues.  Quoting the 
-    value will avoid that and will deliver the string ``'5.6'`` to the 
-    ``version_compare`` function, as it's expecting.
+    Always wrap the server version number with quotes to parse it as a string
+    instead of a float number. Otherwise, the floating-point representation
+    issues can make your version be considered a different number (e.g. ``5.6``
+    will be rounded as ``5.5999999999999996447286321199499070644378662109375``).
 
     If you don't define this option and you haven't created your database
     yet, you may get ``PDOException`` errors because Doctrine will try to
