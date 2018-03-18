@@ -3,10 +3,12 @@ compound
 
 **type**: ``boolean`` **default**: ``true``
 
-The compound option determines whether a form is compound.
+If ``true`` this option creates the form as "compound", meaning that it
+can contain children and be a parent of other forms.
 
-Compound forms are structural elements in a form tree.
-Only a compound form can have children, in other words can be a parent for other forms.
+Most of the time you won't need to override this option.
+You might want to control for it when creating a custom form type
+with advanced rendering logic.
 
 In a view a compound form is rendered as a ``<div>`` container or
 a ``<form>`` element (the whole form is obviously a compound form).
