@@ -280,7 +280,7 @@ type (numeric, boolean, strings, null, etc.)
             /**
              * @Assert\Expression(
              *     "value + error_margin < threshold",
-             *     values = { "error_margin": 0.25, threshold: 1.5 }
+             *     values = { "error_margin": 0.25, "threshold": 1.5 }
              * )
              */
             private $metric;
