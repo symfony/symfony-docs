@@ -253,12 +253,23 @@ and plural property names::
             // ...
         }
 
+        public function removeAnalyse(Dummy $analyse)
+        {
+            // ...
+        }
+
+        public function addFoot(Dummy $foot)
+        {
+            // ...
+        }
+
         public function removeFoot(Dummy $foot)
         {
             // ...
         }
     }
 
+    // to be writable, both the adder and the remover methods must be defined
     $propertyInfo->isWritable(SomeClass::class, 'analyses'); // returns true
     $propertyInfo->isWritable(SomeClass::class, 'feet');     // returns true
 
