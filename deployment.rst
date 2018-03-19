@@ -138,6 +138,11 @@ If your application uses environment variables instead of these parameters, you
 must define those env vars in your production server using the tools provided by
 your hosting service.
 
+At the very least you need to define the ``SYMFONY_ENV=prod`` (or
+``APP_ENV=prod`` if you're using :doc:`Symfony Flex </setup/flex>`) to run the
+application in ``prod`` mode, but depending on your application you may need to
+define other env vars too.
+
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
