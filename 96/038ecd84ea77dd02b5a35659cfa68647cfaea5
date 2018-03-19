@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by dunglas at 2018-02-02T18:27:11Z
+
+Perfect. Thank you very much for documenting this @javiereguiluz!
+
+---------------------------------------------------------------------------
+
+by dunglas at 2018-02-02T18:31:08Z
+
+After a second check, I think that the property will be considered writable if it has associated adder **and** remover methods. If only one of them is present, the PropertyAccessor component cannot update reliably the array, and so doesn't do it.
+
+Should be:
+
+```php
+<?php
+
+<?php
+
+class SomeClass
+{
+    private $analyses;
+    private $feet;
+
+    public function addAnalyse(Dummy $analyse)
+    {
+        // ...
+    }
+
+    public function removeAnalyse(Dummy $analyse)
+    {
+        // ...
+    }
+
+    public function addFoot(Dummy $foot)
+    {
+        // ...
+    }
+
+    public function removeFoot(Dummy $foot)
+    {
+        // ...
+    }
+}
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-02T19:52:41Z
+
+Thanks for reviewing Kévin. This is a bit confusing, because I took the original example from the tests of your pull request: https://github.com/symfony/symfony/pull/18337/files#diff-cf4f68ffc8f26be7f990461bb282f50cR126
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-19T07:49:22Z
+
+I have checked this again and you are right ... it checks by default both array mutator methods (add and remove) to determine if it's writable or not. Thanks!
