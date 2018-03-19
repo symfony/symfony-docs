@@ -31,7 +31,7 @@ Instead of using these semantic methods to test for each of the verbosity
 levels, the `MonologBridge`_ provides a `ConsoleHandler`_ that listens to
 console events and writes log messages to the console output depending on the
 current log level and the console verbosity.
-
+ 
 The example above could then be rewritten as::
 
     use Psr\Log\LoggerInterface;
