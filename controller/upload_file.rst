@@ -237,11 +237,11 @@ logic to a separate service::
 
     class FileUploader
     {
-        private $targetDirectory;
+        private $targetDir;
 
-        public function __construct($targetDirectory)
+        public function __construct($targetDir)
         {
-            $this->targetDirectory = $targetDirectory;
+            $this->targetDir = $targetDir;
         }
 
         public function upload(UploadedFile $file)
@@ -255,7 +255,7 @@ logic to a separate service::
 
         public function getTargetDirectory()
         {
-            return $this->targetDirectory;
+            return $this->targetDir;
         }
     }
 
