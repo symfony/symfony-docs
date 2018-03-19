@@ -131,15 +131,14 @@ Most Symfony applications read their configuration from environment variables.
 While developing locally, you'll usually store these in a ``.env`` file. But on
 production, instead of creating this file, you should set *real* environment variables.
 
-.. tip::
-
-    You need to enable the ``prod`` environment with the environment variable
-    ``SYMFONY_ENV=prod`` (or ``APP_ENV=prod`` if you're
-    using :doc:`Symfony Flex </setup/flex>`)
-
 How you set environment variables, depends on your setup: they can be set at the
 command line, in your Nginx configuration, or via other methods provided by your
 hosting service.
+
+At the very least you need to define the ``SYMFONY_ENV=prod`` (or
+``APP_ENV=prod`` if you're using :doc:`Symfony Flex </setup/flex>`) to run the
+application in ``prod`` mode, but depending on your application you may need to 
+define other env vars too.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
