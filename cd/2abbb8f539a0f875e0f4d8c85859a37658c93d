@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2018-02-18T11:04:43Z
+
+@javiereguiluz I think that's more due to non-nativeness. In the second statement, "is" should be "may" or "can be": In other words, can be a parent form for other forms.
+
+---------------------------------------------------------------------------
+
+by vudaltsov at 2018-02-18T11:11:23Z
+
+Yes, agree, I will fix this. We also discussed a couple of corrections with @HeahDude, I hope to commit them today.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-09T08:03:51Z
+
+@vudaltsov could you please finish this PR? I'd love to merge it. Thanks!
+
+---------------------------------------------------------------------------
+
+by vudaltsov at 2018-03-11T12:52:27Z
+
+@javiereguiluz , does it look better now?
+I removed everything I was trying to tell about data in the previous commit. Because it's actually wrong. Compoundness is not about data, it's about the form structure and mostly influences the view, not data.
+
+ping @wouterj , @xabbuh , @HeahDude
+
+---------------------------------------------------------------------------
+
+by vudaltsov at 2018-03-18T23:03:21Z
+
+@javiereguiluz , I feel like I am ready to write an article about this option. Ahahah
+I realized that it is one of the clues to understanding the philosophy behind the symfony forms.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-19T07:26:47Z
+
+@vudaltsov thanks for your work on this. After your last changes, even I can fully understand what this option means and why/when should I use it. Thanks!
