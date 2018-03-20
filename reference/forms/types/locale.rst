@@ -46,7 +46,7 @@ manually, but then you should just use the ``ChoiceType`` directly.
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
 |             | - `required`_                                                          |
-|             | - `help`_                                                          |
+|             | - `help`_                                                              |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +-------------+------------------------------------------------------------------------+

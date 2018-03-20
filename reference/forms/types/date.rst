@@ -39,7 +39,7 @@ and can understand a number of different input formats via the `input`_ option.
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
 |                      | - `mapped`_                                                                 |
-|                      | - `help`_                                                                 |
+|                      | - `help`_                                                                   |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | :doc:`FormType </reference/forms/types/form>`                               |
 +----------------------+-----------------------------------------------------------------------------+
