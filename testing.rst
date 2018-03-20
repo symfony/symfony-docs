@@ -128,7 +128,8 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 * Test the response;
 * Rinse and repeat.
 
-Before creating your first test, be sure the following packages are installed:
+Before creating your first test, install these packages that provide some of the
+utilities used in the functional tests:
 
 .. code-block:: terminal
 
