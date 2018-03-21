@@ -191,10 +191,10 @@ pattern so that it is only accessible by requests from the local server itself:
 
             <config>
                 <!-- ... -->
-                <rule path="^/internal"
-                    role="IS_AUTHENTICATED_ANONYMOUSLY"
-                    ips="127.0.0.1, ::1"
-                />
+                <rule path="^/internal" role="IS_AUTHENTICATED_ANONYMOUSLY">
+                    <ip>127.0.0.1</ip>
+                    <ip>::1</ip>
+                </rule>
 
                 <rule path="^/internal" role="ROLE_NO_ACCESS" />
             </config>
@@ -209,7 +209,7 @@ pattern so that it is only accessible by requests from the local server itself:
                 array(
                     'path' => '^/internal',
                     'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
-                    'ips' => '127.0.0.1, ::1',
+                    'ips' => array('127.0.0.1', '::1'),
                 ),
                 array(
                     'path' => '^/internal',
@@ -262,10 +262,19 @@ key:
 
     .. code-block:: xml
 
-            <access-control>
+        <!-- app/config/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
                 <rule path="^/_internal/secure"
                     allow-if="'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')" />
-            </access-control>
+            </config>
+        </srv:container>
 
     .. code-block:: php
 
