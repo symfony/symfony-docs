@@ -240,7 +240,7 @@ for getter/isser/setter method in addition to whether or not a property is publi
 to determine if it's accessible.
 
 This is based on how :doc:`PropertyAccess </components/property_access>` works,
-so it even looks for in adder/remover methods and can transform between singular
+so it even looks for adder/remover methods and can transform between singular
 and plural property names::
 
     class SomeClass
