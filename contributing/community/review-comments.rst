@@ -166,8 +166,8 @@ Final Words
 -----------
 
 Don't feel bad if you "failed" to follow these tips. As long as your
-intentions were good and you didn't really offended or insult anyone;
-you can explain you misunderstood, you didn't meant to marginalize or
+intentions were good and you didn't really offend or insult anyone;
+you can explain you misunderstood, you didn't mean to marginalize or
 simply failed.
 
 But don't say it "just because", if your apology is not really meant
