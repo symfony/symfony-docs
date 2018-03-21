@@ -271,7 +271,7 @@ Then, define a service for this class:
 
             AppBundle\Service\FileUploader:
                 arguments:
-                    $targetDir: '%brochures_directory%'
+                    $targetDirectory: '%brochures_directory%'
 
     .. code-block:: xml
 
@@ -294,7 +294,7 @@ Then, define a service for this class:
         use AppBundle\Service\FileUploader;
 
         $container->autowire(FileUploader::class)
-            ->setArgument('$targetDir', '%brochures_directory%');
+            ->setArgument('$targetDirectory', '%brochures_directory%');
 
 Now you're ready to use this service in the controller::
 
@@ -452,7 +452,7 @@ controller.
                 }
 
                 if ($fileName = $entity->getBrochure()) {
-                    $entity->setBrochure(new File($this->uploader->getTargetDir().'/'.$fileName));
+                    $entity->setBrochure(new File($this->uploader->getTargetDirectory().'/'.$fileName));
                 }
             }
         }
