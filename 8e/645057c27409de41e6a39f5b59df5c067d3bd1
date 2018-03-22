@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------
+
+by greg0ire at 2018-03-22T13:46:00Z
+
+Please format your commit message according to these rules :
+
+- The commit message subject must be less than 50 characters and tell us *what* you did.
+- The commit message body should tell us *why* you did it. It is optional but highly recommended.
