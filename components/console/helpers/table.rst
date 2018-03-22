@@ -195,8 +195,8 @@ Here is a full list of things you can customize:
 
 .. versionadded:: 4.1
     The ``setCrossingChars()`` and ``setDefaultCrossingChar()`` methods were
-    introduced in Symfony 4.1. Previously you could only call to the now
-    deprecated ``setCrossingChar()`` method.
+    introduced in Symfony 4.1. Previously you could only use the now deprecated
+    ``setCrossingChar()`` method.
 
 .. tip::
 
