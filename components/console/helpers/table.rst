@@ -175,7 +175,7 @@ If the built-in styles do not fit your need, define your own::
     $tableStyle
         ->setHorizontalBorderChar('<fg=magenta>|</>')
         ->setVerticalBorderChar('<fg=magenta>-</>')
-        ->setCrossingChar(' ')
+        ->setDefaultCrossingChar(' ')
     ;
 
     // uses the custom style for this table
@@ -186,11 +186,17 @@ Here is a full list of things you can customize:
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setPaddingChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setHorizontalBorderChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setVerticalBorderChar`
-*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCrossingChar`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCrossingChars`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setDefaultCrossingChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCellHeaderFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCellRowFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setBorderFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setPadType`
+
+.. versionadded:: 4.1
+    The ``setCrossingChars()`` and ``setDefaultCrossingChar()`` methods were
+    introduced in Symfony 4.1. Previously you could only call to the now
+    deprecated ``setCrossingChar()`` method.
 
 .. tip::
 
