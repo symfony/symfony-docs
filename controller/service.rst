@@ -19,9 +19,6 @@ If the service id is the fully-qualified class name (FQCN) of your controller,
 you're done! You can use the normal ``App\Controller\HelloController::index``
 syntax in your routing and it will find your service.
 
-But, if your service has a different id, you can use a special
-``service_id:method_name`` syntax:
-
 .. configuration-block::
 
     .. code-block:: php-annotations

@@ -534,8 +534,6 @@ Controller Naming Pattern
 -------------------------
 
 The ``controller`` value in your routes has a very simple format ``CONTROLLER_CLASS::METHOD``.
-If your controller is registered as a service, you can also use just one colon separator
-(e.g. ``service_name:index``).
 
 .. tip::
 
