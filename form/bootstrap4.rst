@@ -97,8 +97,8 @@ and ``checkbox-custom`` respectively.
 
 .. code-block:: html+twig
 
-    {{ form_row(form.myRadio, {attr: {class: 'radio-custom'} }) }}
-    {{ form_row(form.myCheckbox, {attr: {class: 'checkbox-custom'} }) }}
+    {{ form_row(form.myRadio, {label_attr: {class: 'radio-custom'} }) }}
+    {{ form_row(form.myCheckbox, {label_attr: {class: 'checkbox-custom'} }) }}
 
 Labels and Errors
 -----------------
