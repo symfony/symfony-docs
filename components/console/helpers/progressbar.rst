@@ -56,7 +56,7 @@ you can also set the current progress by calling the
     is set to *10%* of your ``max``.
 
 If you don't know the exact number of steps in advance, set it to a reasonable
-value and then call the ``setMaxSteps()`` method to updated it as needed::
+value and then call the ``setMaxSteps()`` method to update it as needed::
 
     // start with a 50 units progressbar
     $progressBar = new ProgressBar($output, 50);
