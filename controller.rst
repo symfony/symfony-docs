@@ -284,6 +284,10 @@ the argument by its name:
 You can of course also use normal :ref:`constructor injection <services-constructor-injection>`
 in your controllers.
 
+.. versionadded:: 4.1
+    The ability to bind scalar values to controller arguments was introduced in
+    Symfony 4.1. Previously you could only bind services.
+
 For more information about services, see the :doc:`/service_container` article.
 
 .. index::
