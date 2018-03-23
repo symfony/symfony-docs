@@ -156,18 +156,6 @@ be prefixed with the string ``/site``.
 
     .. configuration-block::
 
-        .. code-block:: php-annotations
-
-            use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
-            /**
-             * @Route("/site", "trailing_slash_on_root"="false")
-             */
-            class DefaultController
-            {
-                // ...
-            }
-
         .. code-block:: yaml
 
             # config/routes.yaml
