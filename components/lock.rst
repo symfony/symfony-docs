@@ -419,7 +419,7 @@ be lost without notify running processes.
     To avoid that someone else acquires a lock after a restart, we recommend
     to delayed service start and wait at least as long as the longest lock TTL.
 
-.. tips::
+.. tip::
 
     Redis can be configured to persist items on disk, but this option would
     slow down writes on the service. This could go against other uses of the
@@ -447,7 +447,7 @@ the ``CombinedStore`` would be not reliable.
     All concurrent processes MUST use the same configuration. with the same
     amount of managed stored and the same endpoint.
 
-.. tips::
+.. tip::
 
     Instead of using Cluster of Redis or memcached servers, we recommend to use
     a ``CombinedStore`` with & single server per managed store.
