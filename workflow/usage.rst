@@ -450,3 +450,145 @@ The following example shows these functions in action:
     {% if 'waiting_some_approval' in workflow_marked_places(post) %}
         <span class="label">PENDING</span>
     {% endif %}
+
+Storing Metadata
+----------------
+
+.. versionadded:: 4.1
+    The feature to store metadata in workflows was introduced in Symfony 4.1.
+
+In case you need it, you can store arbitrary metadata in workflows, their
+places, and their transitions using the ``metadata`` option. This metadata can
+be as simple as the title of the workflow or as complex as your own application
+requires:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    metadata: 'Blog Publishing Workflow'
+                    # ...
+                    places:
+                        draft:
+                            metadata:
+                                max_num_of_words: 500
+                        # ...
+                    transitions:
+                        to_review:
+                            from: draft
+                            to:   review
+                            metadata:
+                                priority: 0.5
+                        # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/workflow.xml -->
+        <?xml version="1.0" encoding="utf-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+
+            <framework:config>
+                <framework:workflow name="blog_publishing" type="workflow">
+                    <framework:metadata>
+                        <framework:title>Blog Publishing Workflow</framework:title>
+                    </framework:metadata>
+                    <!-- ... -->
+
+                    <framework:place name="draft">
+                        <framework:metadata>
+                            <framework:max-num-of-words>500</framework:max-num-of-words>
+                        </framework:metadata>
+                    </framework:place>
+                    <!-- ... -->
+
+                    <framework:transition name="to_review">
+                        <framework:from>draft</framework:from>
+                        <framework:to>review</framework:to>
+                        <framework:metadata>
+                            <framework:priority>0.5</framework:priority>
+                        </framework:metadata>
+                    </framework:transition>
+                    <!-- ... -->
+                </framework:workflow>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+
+        $container->loadFromExtension('framework', array(
+            // ...
+            'workflows' => array(
+                'blog_publishing' => array(
+                    'metadata' => array(
+                        'title' => 'Blog Publishing Workflow',
+                    ),
+                    // ...
+                    'places' => array(
+                        'draft' => array(
+                            'max_num_of_words' => 500,
+                        ),
+                        // ...
+                    ),
+                    'transitions' => array(
+                        'to_review' => array(
+                            'from' => 'draft',
+                            'to' => 'review',
+                            'metadata' => array(
+                                'priority' => 0.5,
+                            ),
+                         ),
+                     ),
+                 ),
+             ),
+         ));
+
+Then, you can access this metadata in your PHP code as follows::
+
+    // MISSING EXAMPLE HERE...
+    //
+    //
+    //
+    //
+
+In Twig templates, metadata is available via the ``workflow_metadata()`` function:
+
+.. code-block:: twig
+
+    <h2>Metadata</h2>
+    <p>
+        <strong>Workflow</strong>:<br >
+        <code>{{ workflow_metadata(article, 'title') }}</code>
+    </p>
+    <p>
+        <strong>Current place(s)</strong>
+        <ul>
+            {% for place in workflow_marked_places(article) %}
+                <li>
+                    {{ place }}:
+                    <code>{{ workflow_metadata(article, 'max_num_of_words', place) ?: 'Unlimited'}}</code>
+                </li>
+            {% endfor %}
+        </ul>
+    </p>
+    <p>
+        <strong>Enabled transition(s)</strong>
+        <ul>
+            {% for transition in workflow_transitions(article) %}
+                <li>
+                    {{ transition.name }}:
+                    <code>{{ workflow_metadata(article, 'priority', transition) ?: '0' }}</code>
+                </li>
+            {% endfor %}
+        </ul>
+    </p>
