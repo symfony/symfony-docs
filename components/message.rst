@@ -95,7 +95,7 @@ message later in the background, using a _worker_.
 Adapters
 ~~~~~~~~
 
-The communication with queuing system or third parties is for delegated to
+The communication with queuing system or third parties is delegated to
 libraries for now. You can use one of the following adapters:
 
 #. `PHP Enqueue bridge`_ to use one of their 10+ compatible queues such as
@@ -221,7 +221,7 @@ Finally, route your important message to the sender:
 Your own receiver
 -----------------
 
-A consumer is responsible of receiving messages from a source and dispatching
+A consumer is responsible for receiving messages from a source and dispatching
 them to the application.
 
 Let's say you already proceed some "orders" on your application using a
