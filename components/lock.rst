@@ -425,7 +425,7 @@ be lost without notifying the running processes.
     To avoid that someone else acquires a lock after a restart, it's recommended
     to delay service start and wait at least as long as the longest lock TTL.
 
-.. tips::
+.. tip::
 
     Redis can be configured to persist items on disk, but this option would
     slow down writes on the service. This could go against other uses of the
