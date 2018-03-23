@@ -155,14 +155,16 @@ a second array argument to ``PdoSessionHandler``:
         // ...
 
         $container->autowire(PdoSessionHandler::class)
-            ->setArguments(array(
-                'mysql:dbname=%env(MYDATABASE_NAME)%, host=%env(MYDATABASE_HOST)%',
+            ->setArguments(
                 array(
-                    'db_table' => '%env(SESSIONS_TABLE)%',
-                    'db_username' => '%env(MYDATABASE_USERNAME)%',
-                    'db_password' => '%env(MYDATABASE_PASSWORD)')
-            ))
-        ;
+                    'mysql:dbname=%env(MYDATABASE_NAME)%, host=%env(MYDATABASE_HOST)%',
+                    array(
+                        'db_table' => '%env(SESSIONS_TABLE)%',
+                        'db_username' => '%env(MYDATABASE_USERNAME)%',
+                        'db_password' => '%env(MYDATABASE_PASSWORD)'
+                    )
+                )
+            );
 
 These are parameters that you can configure:
 
