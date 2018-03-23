@@ -12,15 +12,14 @@ injection like any other normal service.
 Referencing your Service from Routing
 -------------------------------------
 
-Registering your controller as a service is great, but you also need to make sure
-that your routing references the service properly, so that Symfony knows to use it.
+Registering your controller as a service is the first step, but you also need to
+update your routing config to reference the service properly, so that Symfony
+knows to use it.
 
+Use the ``service_id::method_name`` syntax to refer to the controller method.
 If the service id is the fully-qualified class name (FQCN) of your controller,
-you're done! You can use the normal ``App\Controller\HelloController::index``
-syntax in your routing and it will find your service.
-
-But, if your service has a different id, you can use a special
-``service_id:method_name`` syntax:
+as Symfony recommends, then you can use something like:
+``App\Controller\HelloController::index``:
 
 .. configuration-block::
 
@@ -33,7 +32,7 @@ But, if your service has a different id, you can use a special
         // ...
 
         /**
-         * @Route(service="app.hello_controller")
+         * @Route(service="App\Controller\HelloController::index")
          */
         class HelloController
         {
@@ -45,7 +44,7 @@ But, if your service has a different id, you can use a special
         # config/routes.yaml
         hello:
             path:     /hello
-            defaults: { _controller: app.hello_controller:indexAction }
+            defaults: { _controller: App\Controller\HelloController::index }
 
     .. code-block:: xml
 
@@ -57,7 +56,7 @@ But, if your service has a different id, you can use a special
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" path="/hello">
-                <default key="_controller">app.hello_controller:indexAction</default>
+                <default key="_controller">App\Controller\HelloController::index</default>
             </route>
 
         </routes>
@@ -66,13 +65,8 @@ But, if your service has a different id, you can use a special
 
         // config/routes.php
         $collection->add('hello', new Route('/hello', array(
-            '_controller' => 'app.hello_controller:indexAction',
+            '_controller' => 'App\Controller\HelloController::index',
         )));
-
-.. note::
-
-    When using the ``service_id:method_name`` syntax, the method name must
-    end with the ``Action`` suffix.
 
 .. _controller-service-invoke:
 
@@ -81,7 +75,7 @@ Invokable Controllers
 
 If your controller implements the ``__invoke()`` method - popular with the
 Action-Domain-Response (ADR) pattern, you can simply refer to the service id
-(``App\Controller\HelloController`` or ``app.hello_controller`` for example).
+(``App\Controller\HelloController`` for example).
 
 Alternatives to base Controller Methods
 ---------------------------------------

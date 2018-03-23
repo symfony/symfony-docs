@@ -9,7 +9,7 @@ to transform any data to an array. Then, by leveraging *Encoders*, that data can
 be converted into any data-structure (e.g. JSON).
 
 The Component provides several built-in encoders that are described
-:doc:`in their own section </serializer/encoders>` but you may want
+:doc:`in the serializer component </components/serializer>` but you may want
 to use another structure that's not supported.
 
 Creating a new encoder

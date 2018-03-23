@@ -270,6 +270,19 @@ If you need to get full access to parsed data from ``Accept``, ``Accept-Language
     $acceptHeaders = AcceptHeader::fromString($request->headers->get('Accept'))
         ->all();
 
+The default values that can be optionally included in the ``Accept-*`` headers
+are also supported::
+
+    $acceptHeader = 'text/plain;q=0.5, text/html, text/*;q=0.8, */*;q=0.3';
+    $accept = AcceptHeader::fromString($acceptHeader);
+
+    $quality = $accept->get('text/xml')->getQuality(); // $quality = 0.8
+    $quality = $accept->get('application/xml')->getQuality(); // $quality = 0.3
+
+.. versionadded:: 4.1
+    The support of default values in the ``Accept-*`` headers was introduced in
+    Symfony 4.1.
+
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -400,6 +413,13 @@ of methods to manipulate the HTTP headers related to the cache:
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`;
+
+.. note::
+
+    The methods :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`,
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified` and
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setDate` accept any
+    object that implements ``\DateTimeInterface``, including immutable date objects.
 
 The :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method
 can be used to set the most commonly used cache information in one method

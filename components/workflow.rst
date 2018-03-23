@@ -64,6 +64,7 @@ A registry will also help you to decide if a workflow supports the object you
 are trying to use it with::
 
     use Symfony\Component\Workflow\Registry;
+    use Symfony\Component\Workflow\WorkflowInterface\InstanceOfSupportStrategy;
     use Acme\Entity\BlogPost;
     use Acme\Entity\Newsletter;
 
@@ -71,8 +72,12 @@ are trying to use it with::
     $newsletterWorkflow = ...
 
     $registry = new Registry();
-    $registry->add($blogWorkflow, BlogPost::class);
-    $registry->add($newsletterWorkflow, Newsletter::class);
+    $registry->addWorkflow($blogWorkflow, new InstanceOfSupportStrategy(BlogPost::class));
+    $registry->addWorkflow($newsletterWorkflow, new InstanceOfSupportStrategy(Newsletter::class));
+    
+.. versionadded:: 4.1
+    The ``addWorkflow()`` method was introduced in Symfony 4.1. In previous
+    Symfony versions it was called ``add()``.
 
 Usage
 -----
