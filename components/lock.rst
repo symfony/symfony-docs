@@ -453,7 +453,7 @@ the ``CombinedStore`` won't be reliable.
     All concurrent processes must use the same configuration, with the same
     amount of managed stored and the same endpoint.
 
-.. tips::
+.. tip::
 
     Instead of using a cluster of Redis or Memcached servers, it's better to use
     a ``CombinedStore`` with a single server per managed store.
