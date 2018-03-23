@@ -187,7 +187,7 @@ be prefixed with the string ``/site``.
             use Symfony\Component\Routing\RouteCollection;
 
             $app = $loader->import('../src/Controller/', 'annotation');
-            // the second argument is the $trailing_slash_on_root option
+            // the second argument is the $trailingSlashOnRoot option
             $app->addPrefix('/site', false);
             // ...
 
