@@ -11,7 +11,7 @@ To display process details, use the :class:`Symfony\\Component\\Console\\Helper\
 and run your command with verbosity. For example, running the following code with
 a very verbose verbosity (e.g. -vv)::
 
-    use Symfony\Component\Process\ProcessBuilder;
+    use Symfony\Component\Process\Process;
 
     $helper = $this->getHelper('process');
     $process = new Process(array('figlet', 'Symfony'));
@@ -52,7 +52,7 @@ There are three ways to use the process helper:
 
 * Passing a :class:`Symfony\\Component\\Process\\Process` instance::
 
-    use Symfony\Component\Process\ProcessBuilder;
+    use Symfony\Component\Process\Process;
 
     // ...
     $process = new Process(array('figlet', 'Symfony'));
