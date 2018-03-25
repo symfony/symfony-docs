@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-23T16:34:15Z
+
+Sweet! To avoid confusion for readers that may be using 4.0 but reading 4.1 docs, what about adding this:
+
+```rst
+.. versionadded:: 4.1
+    The feature to bind scalar values to controller arguments was introduced in
+    Symfony 4.1. Previously you could only autowire services.
+```
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-03-23T16:39:52Z
+
+You're totally right! I added the note.
