@@ -262,9 +262,10 @@ the stores.
 
 .. caution::
 
-    Because the ``ConsensusStrategy`` requires more 50% + 1 servers to be
-    available, in order to offer an highest availability, the simplest valid
-    cluster size is three instances, which allows for a single master failure.
+    In order to get high availability when using the ``ConsensusStrategy``, the
+    minimum cluster size must be three servers. This allows the cluster to keep
+    working when a single server fails (because this strategy requires that the
+    lock is acquired in more than half of the servers).
 
 Reliability
 -----------
