@@ -277,6 +277,10 @@ After this, you have protected your login form against CSRF attacks.
 CSRF Protection in HTML Forms
 -----------------------------
 
+.. versionadded:: 4.1
+    In Symfony versions prior to 4.1, CSRF support required installing the
+    Symfony Form component even if you didn't use it.
+
 It's also possible to add CSRF protection to regular HTML forms not managed by
 the Symfony Form component, for example the simple forms used to delete items.
 First, use the ``csrf_token()`` function in the Twig template to generate a CSRF
