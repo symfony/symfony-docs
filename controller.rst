@@ -290,6 +290,27 @@ in your controllers.
 
 For more information about services, see the :doc:`/service_container` article.
 
+Generating Controllers
+----------------------
+
+To save time, you can also tell Symfony to generate a new controller class:
+
+.. code-block:: terminal
+
+    $ php bin/console make:controller BrandNewController
+
+    created: src/Controller/BrandNewController.php
+
+If you want to generate an entire CRUD from a Doctrine :doc:`entity </doctrine>`,
+use:
+
+.. code-block:: terminal
+
+    $ php bin/console make:crud Product
+
+.. versionadded::
+    The ``make:crud`` command was introduced in MakerBundle 1.2.
+
 .. index::
    single: Controller; Managing errors
    single: Controller; 404 pages
