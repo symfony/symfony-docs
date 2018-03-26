@@ -237,8 +237,44 @@ provide whether properties are readable or writable as booleans.
 
 The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor` looks
 for getter/isser/setter method in addition to whether or not a property is public
-to determine if it's accessible. This based on how the :doc:`PropertyAccess </components/property_access>`
-works.
+to determine if it's accessible.
+
+This is based on how :doc:`PropertyAccess </components/property_access>` works,
+so it even looks for adder/remover methods and can transform between singular
+and plural property names::
+
+    class SomeClass
+    {
+        private $analyses;
+        private $feet;
+
+        public function addAnalyse(Dummy $analyse)
+        {
+            // ...
+        }
+
+        public function removeAnalyse(Dummy $analyse)
+        {
+            // ...
+        }
+
+        public function addFoot(Dummy $foot)
+        {
+            // ...
+        }
+
+        public function removeFoot(Dummy $foot)
+        {
+            // ...
+        }
+    }
+
+    // to be writable, both the adder and the remover methods must be defined
+    $propertyInfo->isWritable(SomeClass::class, 'analyses'); // returns true
+    $propertyInfo->isWritable(SomeClass::class, 'feet');     // returns true
+
+.. versionadded:: 3.2
+    The support of adder/remover methods was introduced in Symfony 3.2.
 
 .. tip::
 
