@@ -181,7 +181,7 @@ to the ``Post`` entity that checks if a given user is its author::
          */
         public function isAuthor(User $user = null)
         {
-            return $user && $user->getEmail() == $this->getAuthorEmail();
+            return $user && $user->getEmail() === $this->getAuthorEmail();
         }
     }
 
