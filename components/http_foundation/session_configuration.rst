@@ -73,6 +73,7 @@ easily serve as examples if you wish to write your own.
 
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`
+* :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MigratingSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\RedisSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MongoDbSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NullSessionHandler`
@@ -86,6 +87,35 @@ Example usage::
     $pdo = new \PDO(...);
     $sessionStorage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
     $session = new Session($sessionStorage);
+
+Migrating Between Save Handlers
+-------------------------------
+
+The :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MigratingSessionHandler`
+can be used to migrate between old and new save handlers without losing session data.
+
+It can be used to support the following workflow:
+
+* Switch to the migrating handler, with your new handler as the write-only one. The old handler behaves as usual and sessions get written to the new one.
+* After your session gc period, verify the data in the new handler
+* Update the migrating handler to use the old handler as the write-only one, so the sessions will now be read from the new handler. This step allows easier rollbacks.
+* After verifying everything, switch from the migrating handler to the new handler
+
+Example usage::
+
+    use Symfony\Component\HttpFoundation\Session\Storage\Handler\MigratingSessionHandler;
+
+    $oldSessionStorage = ...;
+    $newSessionStorage = ...;
+
+    // First step, for the the garbage collection period so we get all sessions in the new storage handler
+    $sessionStorage = new MigratingSessionHandler($oldSessionStorage, $newSessionStorage);
+
+    // Second step, just while we verify that the new session storage handler works as expected
+    $sessionStorage = new MigratingSessionHandler($newSessionStorage, $oldSessionStorage);
+
+    // Final step - switching to the new storage handler!
+    $sessionStorage = $newSessionStorage;
 
 Configuring PHP Sessions
 ~~~~~~~~~~~~~~~~~~~~~~~~
