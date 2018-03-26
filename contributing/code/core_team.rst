@@ -230,3 +230,4 @@ discretion of the **Project Leader**.
 .. _`chalasr`: https://github.com/chalasr/
 .. _`ogizanagi`: https://github.com/ogizanagi/
 .. _`Nyholm`: https://github.com/Nyholm
+.. _`sroze`: https://github.com/sroze
