@@ -92,6 +92,7 @@ Active Core Members
 
   * **Jordi Boggiano** (`seldaek`_);
   * **Lukas Kahwe Smith** (`lsmith77`_).
+  * **Michael Cullum** (`michaelcullum`_) (he is also the Security Team leader)
 
 Former Core Members
 ~~~~~~~~~~~~~~~~~~~
@@ -231,3 +232,4 @@ discretion of the **Project Leader**.
 .. _`ogizanagi`: https://github.com/ogizanagi/
 .. _`Nyholm`: https://github.com/Nyholm
 .. _`sroze`: https://github.com/sroze
+.. _`michaelcullum`: https://github.com/michaelcullum
