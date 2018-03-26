@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-03-23T18:54:06Z
+
+I think it's safe to assume that someone using Twig in a Symfony project has installed the TwigBundle which in turn pulls in the Twig bridge.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-03-23T18:54:59Z
+
+Well, what of course could happen is that someone installs the Security CSRF component 4.1 while still using TwigBundle and TwigBridge 4.0. Do we need to take care of that?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-25T18:24:26Z
+
+@xabbuh thanks for sharing these details. I'd say that we should not explain this info because it's like an edge case and unrelated to Symfony ... it's more about managing Composer dependencies in your project.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-25T18:27:13Z
+
+@xabbuh I finally added a `versionadded` directive mentioning that before 4.1 you needed to install Symfony Forms even if you didn't use them.
