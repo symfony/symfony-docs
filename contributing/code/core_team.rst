@@ -84,7 +84,9 @@ Active Core Members
     Form_, Serializer_, DependencyInjection_, and HttpKernel_ components;
 
   * **Tobias Nyholm** (`Nyholm`) manages the official and contrib recipes
-    repositories.
+    repositories;
+
+  * **Samuel Rozé** (`sroze`_) can merge into Messenger_ component.
 
 * **Deciders** (``@symfony/deciders`` on GitHub):
 
@@ -192,6 +194,7 @@ discretion of the **Project Leader**.
 .. _Intl: https://github.com/symfony/intl
 .. _LDAP: https://github.com/symfony/ldap
 .. _Locale: https://github.com/symfony/locale
+.. _Messenger: https://github.com/symfony/messenger
 .. _MonologBridge: https://github.com/symfony/monolog-bridge
 .. _OptionsResolver: https://github.com/symfony/options-resolver
 .. _Process: https://github.com/symfony/process
@@ -227,3 +230,4 @@ discretion of the **Project Leader**.
 .. _`chalasr`: https://github.com/chalasr/
 .. _`ogizanagi`: https://github.com/ogizanagi/
 .. _`Nyholm`: https://github.com/Nyholm
+.. _`sroze`: https://github.com/sroze
