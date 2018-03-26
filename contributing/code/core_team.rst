@@ -16,7 +16,7 @@ must adhere to said rules and protocol.
 Core Organization
 -----------------
 
-Symfony Core members are divided into three groups. Each member can only belong
+Symfony Core members are divided into four groups. Each member can only belong
 to one group at a time. The privileges granted to a group are automatically
 granted to all higher priority groups.
 
@@ -27,14 +27,19 @@ The Symfony Core groups, in descending order of priority, are as follows:
 * Elects members in any other group;
 * Merges pull requests in all Symfony repositories.
 
-2. **Mergers**
+2. **Mergers Team**
 
 * Merge pull requests for the component or components on which they have been
   granted privileges.
 
-3. **Deciders**
+3. **Deciders Team**
 
 * Decide to merge or reject a pull request.
+
+4. **Security Team**
+
+* Manage the whole security process (triaging reported vulnerabilities, fixing
+  the reported issues, coordinating the release of security fixes, etc.)
 
 Active Core Members
 ~~~~~~~~~~~~~~~~~~~
@@ -47,7 +52,7 @@ Active Core Members
 
   * **Fabien Potencier** (`fabpot`_).
 
-* **Mergers** (``@symfony/mergers`` on GitHub):
+* **Mergers Team** (``@symfony/mergers`` on GitHub):
 
   * **Tobias Schultze** (`Tobion`_) can merge into the Routing_,
     OptionsResolver_ and PropertyAccess_ components;
@@ -88,10 +93,15 @@ Active Core Members
 
   * **Samuel Rozé** (`sroze`_) can merge into Messenger_ component.
 
-* **Deciders** (``@symfony/deciders`` on GitHub):
+* **Deciders Team** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
   * **Lukas Kahwe Smith** (`lsmith77`_).
+
+* **Security Team** (``@symfony/security`` on GitHub):
+
+  * **Fabien Potencier** (`fabpot`_);
+  * **Michael Cullum** (`michaelcullum`_),
 
 Former Core Members
 ~~~~~~~~~~~~~~~~~~~
@@ -231,3 +241,4 @@ discretion of the **Project Leader**.
 .. _`ogizanagi`: https://github.com/ogizanagi/
 .. _`Nyholm`: https://github.com/Nyholm
 .. _`sroze`: https://github.com/sroze
+.. _`michaelcullum`: https://github.com/michaelcullum
