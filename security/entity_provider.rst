@@ -140,6 +140,36 @@ For this entry, suppose that you already have a ``User`` entity inside an
 To make things shorter, some of the getter and setter methods aren't shown.
 But you can generate these manually or with your own IDE.
 
+.. tip::
+    Since Symfony 3.4, the User class should implements the ``EquatableInterface``in order to allow 
+    the security to check if the User stored in the Session is the one who's been authenticated, in 
+    order to allow this check, just implement the ``isEqualTo`` method::
+    
+    // src/AppBundle/Entity/User.php
+    namespace AppBundle\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Security\Core\User\UserInterface;
+    use Symfony\Component\Security\Core\User\EquatableInterface;
+
+    /**
+     * @ORM\Table(name="app_users")
+     * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+     */
+    class User implements UserInterface, EquatableInterface, \Serializable
+    {
+        // ...
+        
+        public function isEqualTo(UserInterface $user) 
+        {
+            return $this->username === $user->getUsername();
+        }
+    }
+    
+    This method allow to check if the current username is matching the one stored in the Session,
+    if not, the user is logged out and he must relaunch the authentication process.
+
+
 Next, make sure to :ref:`create the database table <doctrine-creating-the-database-tables-schema>`:
 
 .. code-block:: terminal
