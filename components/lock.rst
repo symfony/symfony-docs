@@ -260,6 +260,13 @@ Instead of the simple majority strategy (``ConsensusStrategy``) an
 ``UnanimousStrategy`` can be used to require the lock to be acquired in all
 the stores.
 
+.. caution::
+
+    In order to get high availability when using the ``ConsensusStrategy``, the
+    minimum cluster size must be three servers. This allows the cluster to keep
+    working when a single server fails (because this strategy requires that the
+    lock is acquired in more than half of the servers).
+
 Reliability
 -----------
 
