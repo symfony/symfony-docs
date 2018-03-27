@@ -63,6 +63,11 @@ To use it, first register a new handler service:
                 array('db_username' => 'myuser', 'db_password' => 'mypassword')
             ))
         ;
+.. caution::
+
+    If you are using the same database connection for your sessions and for Doctrine,
+    it is important to verify which ``lock mode`` you are using, because the default
+    value is going to cause an PDOException when you try to flush data.
 
 Next, tell Symfony to use your service as the session handler:
 
