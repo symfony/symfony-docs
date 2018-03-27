@@ -73,7 +73,7 @@ Adapters
 --------
 
 The communication with queuing system or third parties is delegated to
-libraries for now. The `built-in AMQP adapter`_ allows you to communicate with
+libraries for now. The built-in AMQP adapter allows you to communicate with
 most of the AMQP brokers such as RabbitMQ.
 
 .. note::
@@ -167,14 +167,16 @@ like this:
     $ bin/console messenger:consume-messages messenger.default_receiver
 
 The first argument is the receiver's service name. It might have been created by
-your :code:`adapaters` configuration or it can be your own receiver.
+your :code:`adapters` configuration or it can be your own receiver.
 
 Your own Adapters
 -----------------
 
 Learn how to build your own adapters within the Component's documentation. Once
-you have built your classes, you can register your adapater to be able to use
-it via a DSN in the Symfony application.
+you have built your classes, you can register your adapter factory to be able to
+use it via a DSN in the Symfony application.
+
+
 
 Register your factory
 ~~~~~~~~~~~~~~~~~~~~~

@@ -38,13 +38,13 @@ Concepts
 Bus
 ---
 
-The bus is used to dispatch messages. MessageBus' behavior is in its ordered
+The bus is used to dispatch messages. MessageBus' behaviour is in its ordered
 middleware stack. When using the message bus with Symfony's FrameworkBundle, the
 following middlewares are configured for you:
 
-#. ``LoggingMiddleware`` (logs the processing of your messages)
-#. ``SendMessageMiddleware`` (enables asynchronous processing)
-#. ``HandleMessageMiddleware`` (calls the registered handle)
+#. :code:`LoggingMiddleware` (logs the processing of your messages)
+#. :code:`SendMessageMiddleware` (enables asynchronous processing)
+#. :code:`HandleMessageMiddleware` (calls the registered handle)
 
 Example::
 
@@ -175,11 +175,6 @@ First, create your receiver::
            }
        }
     }
-
-Your adapter factory
-~~~~~~~~~~~~~~~~~~~~
-
-TODO.
 
 Same bus received and sender
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
