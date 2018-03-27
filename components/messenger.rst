@@ -38,9 +38,11 @@ Concepts
 Bus
 ---
 
-The bus is used to dispatch messages. MessageBus' behaviour is in its ordered
-middleware stack. When using the message bus with Symfony's FrameworkBundle, the
-following middlewares are configured for you:
+The bus is used to dispatch messages. The behaviour of the bus is in its ordered
+middleware stack. The component comes with a set of middlewares that you can use.
+
+When using the message bus with Symfony's FrameworkBundle, the following middlewares
+are configured for you:
 
 #. :code:`LoggingMiddleware` (logs the processing of your messages)
 #. :code:`SendMessageMiddleware` (enables asynchronous processing)
@@ -56,10 +58,14 @@ Example::
     $bus = new MessageBus([
         new HandleMessageMiddleware(new HandlerLocator([
             MyMessage::class => $handler,
-        ]))
+        ])),
     ]);
 
     $result = $bus->handle(new MyMessage(/* ... */));
+
+.. note:
+
+    Every middleware need to implement the :code:`MiddlewareInterface` interface.
 
 Handlers
 --------
@@ -87,11 +93,8 @@ Adapters
 The communication with queuing system or third parties is delegated to
 libraries for now.
 
-Create your adapter
-~~~~~~~~~~~~~~~~~~~
-
 Your own sender
----------------
+~~~~~~~~~~~~~~~
 
 Using the ``SenderInterface``, you can easily create your own message sender.
 Let's say you already have an ``ImportantAction`` message going through the
@@ -134,7 +137,7 @@ First, create your sender::
     }
 
 Your own receiver
------------------
+~~~~~~~~~~~~~~~~~
 
 A receiver is responsible for receiving messages from a source and dispatching
 them to the application.

@@ -93,7 +93,7 @@ the messenger component, the following configuration should have been created:
             adapters:
                 default: "%env(MESSENGER_DSN)%"
 
-.. code-block:: env
+.. code-block:: bash
 
     # .env
     ###> symfony/messenger ###
@@ -168,6 +168,21 @@ like this:
 
 The first argument is the receiver's service name. It might have been created by
 your :code:`adapters` configuration or it can be your own receiver.
+
+Registering your middlewares
+----------------------------
+
+The message bus is based on middlewares. If you are un-familiar with the concept,
+look at the :doc:`Messenger component docs </components/messenger>`.
+
+To register your middleware, use the :code:`messenger.middleware` tag as in the
+following example:
+
+.. code-block:: xml
+
+    <service id="Your\Own\Middleware">
+       <tag name="messenger.middleware" />
+    </service>
 
 Your own Adapters
 -----------------
