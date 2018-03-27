@@ -5,7 +5,7 @@
 The Messenger Component
 =======================
 
-    The Messenger component helps application send and receive messages to/from other applications or via message queues.
+    The Messenger component helps applications send and receive messages to/from other applications or via message queues.
 
 Installation
 ------------
