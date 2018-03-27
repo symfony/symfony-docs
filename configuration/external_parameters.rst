@@ -99,6 +99,86 @@ will be used whenever the corresponding environment variable is *not* found:
         // config/services.php
         $container->setParameter('env(DATABASE_HOST)', 'localhost');
 
+Environment Variable Processors
+-------------------------------
+
+When using environment variables they are always strings by default, but sometimes
+you will want to have specific types so that they match the types expected by your code.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            router:
+                http_port: env(int:HTTP_PORT)
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:router http_port="%env(int:HTTP_PORT)%" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/doctrine.php
+        $container->loadFromExtension('framework', array(
+            'router' => array(
+                'http_port' => '%env(int:HTTP_PORT)%',
+            )
+        ));
+
+A number of different types are supported:
+
+``env(string):FOO)``
+    Casts ``FOO`` to a string
+    
+``env(bool:FOO)``
+    Casts ``FOO`` to a bool
+
+``env(int:FOO)``
+    Casts ``FOO`` to an int
+
+``env(float:FOO)``
+    Casts ``FOO`` to an float
+
+``env(const:FOO)``
+    Finds the const value named in ``FOO``
+
+``env(base64:FOO)``
+    Decodes ``FOO`` that is a base64 encoded string
+    
+``env(json:FOO)``
+    Decodes ``FOO`` that is a json encoded string into either an array or ``null``
+    
+``env(resolve:FOO)``
+    Resolves references in the string ``FOO`` to other parameters
+    
+``env(csv:FOO)``
+    Decodes ``FOO`` that is a single row of comma seperated values
+
+``env(file:FOO)``
+    Reads the contents of a file named in ``FOO``
+    
+It is also possible to combine the processors:
+
+``env(json:file:FOO)``
+    Reads the contents of a file named in ``FOO``, and then decode it from json, resulting in an array or ``null``
+
+
 .. _configuration-env-var-in-prod:
 
 Configuring Environment Variables in Production
