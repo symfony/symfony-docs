@@ -136,16 +136,16 @@ First, create your sender::
 Your own receiver
 -----------------
 
-A consumer is responsible for receiving messages from a source and dispatching
+A receiver is responsible for receiving messages from a source and dispatching
 them to the application.
 
-Let's say you already proceed some "orders" on your application using a
+Let's say you already processed some "orders" in your application using a
 ``NewOrder`` message. Now you want to integrate with a 3rd party or a legacy
 application but you can't use an API and need to use a shared CSV file with new
 orders.
 
 You will read this CSV file and dispatch a ``NewOrder`` message. All you need to
-do is your custom CSV consumer and Symfony will do the rest.
+do is to write your custom CSV receiver and Symfony will do the rest.
 
 First, create your receiver::
 
@@ -179,9 +179,8 @@ First, create your receiver::
 Same bus received and sender
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To allow us to receive and send messages on the same bus and prevent a loop, the
-message bus is equipped with the ``WrapIntoReceivedMessage`` received. It will
-wrap the received messages into ``ReceivedMessage`` objects and the
-``SendMessageMiddleware`` middleware will know it should not send these messages.
-
-.. _`PHP Enqueue bridge`: https://github.com/sroze/enqueue-bridge
+To allow us to receive and send messages on the same bus and prevent an infinite
+loop, the message bus is equipped with the :code:`WrapIntoReceivedMessage` middleware.
+It will wrap the received messages into :code:`ReceivedMessage` objects and the
+:code:`SendMessageMiddleware` middleware will know it should not route these
+messages again to an adapter.

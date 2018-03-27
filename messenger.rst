@@ -61,7 +61,7 @@ Once you've created your handler, you need to register it:
 .. code-block:: xml
 
     <service id="App\MessageHandler\MyMessageHandler">
-       <tag name="message_handler" />
+       <tag name="messenger.message_handler" />
     </service>
 
 .. note::
@@ -78,7 +78,7 @@ most of the AMQP brokers such as RabbitMQ.
 
 .. note::
 
-    If you need more message brokers, you should have a look to Enqueue's adapter
+    If you need more message brokers, you should have a look to `Enqueue's adapter`_
     which supports things like Kafka, Amazon SQS or Google Pub/Sub.
 
 An adapter is registered using a "DSN", which is a string that represents the
@@ -176,7 +176,47 @@ Learn how to build your own adapters within the Component's documentation. Once
 you have built your classes, you can register your adapter factory to be able to
 use it via a DSN in the Symfony application.
 
+Create your adapter Factory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+You need to give FrameworkBundle the opportunity to create your adapter from a
+DSN. You will need an adapter factory::
+
+    use Symfony\Component\Messenger\Adapter\Factory\AdapterInterface;
+    use Symfony\Component\Messenger\Adapter\Factory\AdapterFactoryInterface;
+
+    class YourAdapterFactory implements AdapterFactoryInterface
+    {
+        public function create(string $dsn): AdapterInterface
+        {
+            return new YourAdapter(/* ... */);
+        }
+
+        public function supports(string $dsn): bool
+        {
+            return 0 === strpos($dsn, 'my-adapter://');
+        }
+    }
+
+The :code:`YourAdaper` class need to implements the :code:`AdapterInterface`. It
+will like the following example::
+
+    use Symfony\Component\Messenger\Adapter\Factory\AdapterInterface;
+    use Symfony\Component\Messenger\Transport\ReceiverInterface;
+    use Symfony\Component\Messenger\Transport\SenderInterface;
+
+    class YourAdapter implements AdapterInterface
+    {
+        public function receiver(): ReceiverInterface
+        {
+            return new YourReceiver(/* ... */);
+        }
+
+        public function sender(): SenderInterface
+        {
+            return new YourSender(/* ... */);
+        }
+    }
 
 Register your factory
 ~~~~~~~~~~~~~~~~~~~~~
@@ -186,3 +226,24 @@ Register your factory
     <service id="Your\Adapter\Factory">
        <tag name="messenger.adapter_factory" />
     </service>
+
+Use your adapter
+~~~~~~~~~~~~~~~~
+
+Within the :code:`framework.messenger.adapters.*` configuration, create your
+named adapter using your own DSN:
+
+.. code-block:: yaml
+
+    framework:
+        messenger:
+            adapters:
+                yours: 'my-adapter://...'
+
+This will give you access to the following services:
+
+1. :code:`messenger.yours_adapter`: the instance of your adapter.
+2. :code:`messenger.yours_receiver` and :code:`messenger.yours_sender`, the
+   receiver and sender created by the adapter.
+
+.. _`PHP Enqueue bridge`: https://github.com/sroze/enqueue-bridge
