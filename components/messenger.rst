@@ -1,28 +1,27 @@
 .. index::
-   single: Message
-   single: Components; Message
+   single: Messenger
+   single: Components; Messenger
 
-The Message Component
-=====================
+The Messenger Component
+=======================
 
-    The Message component helps application to send and receive messages
-    to/from other applications or via
+    The Messenger component helps application send and receive messages to/from other applications or via message queues.
 
 Installation
 ------------
 
 .. code-block:: terminal
 
-    $ composer require symfony/message
+    $ composer require symfony/messenger
 
-Alternatively, you can clone the `<https://github.com/symfony/message>`_ repository.
+Alternatively, you can clone the `<https://github.com/symfony/messenger>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
 Concepts
 --------
 
-.. image:: /_images/components/message/overview.png
+.. image:: /_images/components/messenger/overview.png
 
 **Sender**:
    Responsible for serializing and sending the message to _something_. This
@@ -47,11 +46,20 @@ following middlewares are configured for you:
 #. ``SendMessageMiddleware`` (enables asynchronous processing)
 #. ``HandleMessageMiddleware`` (calls the registered handle)
 
-Example::
+Example:
 
     use App\Message\MyMessage;
+    use Symfony\Component\Messenger\MessageBus;
+    use Symfony\Component\Messenger\HandlerLocator;
+    use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
 
-    $result = $this->get('message_bus')->handle(new MyMessage(/* ... */));
+    $bus = new MessageBus([
+        new HandleMessageMiddleware(new HandlerLocator([
+            MyMessage::class => $handler,
+        ]))
+    ]);
+
+    $result = $bus->handle(new MyMessage(/* ... */));
 
 Handlers
 --------
@@ -59,7 +67,7 @@ Handlers
 Once dispatched to the bus, messages will be handled by a "message handler". A
 message handler is a PHP callable (i.e. a function or an instance of a class)
 that will do the required processing for your message. It _might_ return a
-result::
+result:
 
     namespace App\MessageHandler;
 
@@ -73,80 +81,14 @@ result::
        }
     }
 
-.. code-block:: xml
-
-    <service id="App\Handler\MyMessageHandler">
-       <tag name="message_handler" />
-    </service>
-
-.. note::
-
-    If the message cannot be guessed from the handler's type-hint, use the
-    ``handles`` attribute on the tag.
-
-Asynchronous messages
-~~~~~~~~~~~~~~~~~~~~~
-
-Using the Message Component is useful to decouple your application but it also
-very useful when you want to do some asynchronous processing. This means that
-your application will produce a message to a queuing system and consume this
-message later in the background, using a _worker_.
-
 Adapters
-~~~~~~~~
+--------
 
 The communication with queuing system or third parties is delegated to
-libraries for now. You can use one of the following adapters:
+libraries for now.
 
-#. `PHP Enqueue bridge`_ to use one of their 10+ compatible queues such as
-   RabbitMq, Amazon SQS or Google Pub/Sub.
-
-Routing
--------
-
-When doing asynchronous processing, the key is to route the message to the right
-sender. As the routing is application-specific and not message-specific, the
-configuration can be made within the ``framework.yaml`` configuration file as
-well:
-
-.. code-block:: yaml
-
-    framework:
-       message:
-           routing:
-               'My\Message\MessageAboutDoingOperationalWork': my_operations_queue_sender
-
-Such configuration would only route the ``MessageAboutDoingOperationalWork``
-message to be asynchronous, the rest of the messages would still be directly
-handled.
-
-If you want to do route all the messages to a queue by default, you can use such
-configuration:
-
-.. code-block:: yaml
-
-    framework:
-       message:
-           routing:
-               'My\Message\MessageAboutDoingOperationalWork': my_operations_queue_sender
-               '*': my_default_sender
-
-Note that you can also route a message to multiple senders at the same time:
-
-.. code-block:: yaml
-
-    framework:
-       message:
-           routing:
-               'My\Message\AnImportantMessage': [my_default_sender, my_audit_sender]
-
-Same bus received and sender
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To allow us to receive and send messages on the same bus and prevent a loop, the
-message bus is equipped with the ``WrapIntoReceivedMessage`` received. It will
-wrap the received messages into ``ReceivedMessage`` objects and the
-``SendMessageMiddleware`` middleware will know it should not send these messages.
+Create your adapter
+~~~~~~~~~~~~~~~~~~~
 
 Your own sender
 ---------------
@@ -160,8 +102,8 @@ First, create your sender::
 
     namespace App\MessageSender;
 
-    use Symfony\Component\Message\SenderInterface;
     use App\Message\ImportantAction;
+    use Symfony\Component\Message\SenderInterface;
 
     class ImportantActionToEmailSender implements SenderInterface
     {
@@ -191,33 +133,6 @@ First, create your sender::
        }
     }
 
-Then, register your sender service:
-
-.. code-block:: yaml
-
-    services:
-         App\MessageSender\ImportantActionToEmailSender:
-             arguments:
-                 - "@mailer"
-                 - "%to_email%"
-
-             tags:
-                 - message.sender
-
-Finally, route your important message to the sender:
-
-.. code-block:: yaml
-
-    framework:
-       message:
-           routing:
-               'App\Message\ImportantAction': [App\MessageSender\ImportantActionToEmailSender, ~]
-
-.. note::
-
-    This example shows you how you can at the same time send your message and
-    directly handle it using a ``null`` (``~``) sender.
-
 Your own receiver
 -----------------
 
@@ -236,10 +151,9 @@ First, create your receiver::
 
     namespace App\MessageReceiver;
 
+    use App\Message\NewOrder;
     use Symfony\Component\Message\ReceiverInterface;
     use Symfony\Component\Serializer\SerializerInterface;
-
-    use App\Message\NewOrder;
 
     class NewOrdersFromCsvFile implements ReceiverInterface
     {
@@ -262,23 +176,17 @@ First, create your receiver::
        }
     }
 
-Then, register your receiver service:
+Your adapter factory
+~~~~~~~~~~~~~~~~~~~~
 
-.. code-block:: yaml
+TODO.
 
-    services:
-       App\MessageReceiver\NewOrdersFromCsvFile:
-           arguments:
-               - "@serializer"
-               - "%new_orders_csv_file_path%"
+Same bus received and sender
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-           tags:
-               - message.receiver
-
-Finally, use your consumer:
-
-.. code-block:: terminal
-
-    $ bin/console message:consume App\MessageReceived\NewOrdersFromCsvFile
+To allow us to receive and send messages on the same bus and prevent a loop, the
+message bus is equipped with the ``WrapIntoReceivedMessage`` received. It will
+wrap the received messages into ``ReceivedMessage`` objects and the
+``SendMessageMiddleware`` middleware will know it should not send these messages.
 
 .. _`PHP Enqueue bridge`: https://github.com/sroze/enqueue-bridge
