@@ -246,4 +246,4 @@ This will give you access to the following services:
 2. :code:`messenger.yours_receiver` and :code:`messenger.yours_sender`, the
    receiver and sender created by the adapter.
 
-.. _`PHP Enqueue bridge`: https://github.com/sroze/enqueue-bridge
+.. _`enqueue's adapter`: https://github.com/sroze/enqueue-bridge
