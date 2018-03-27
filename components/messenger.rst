@@ -46,7 +46,7 @@ following middlewares are configured for you:
 #. ``SendMessageMiddleware`` (enables asynchronous processing)
 #. ``HandleMessageMiddleware`` (calls the registered handle)
 
-Example:
+Example::
 
     use App\Message\MyMessage;
     use Symfony\Component\Messenger\MessageBus;
@@ -67,7 +67,7 @@ Handlers
 Once dispatched to the bus, messages will be handled by a "message handler". A
 message handler is a PHP callable (i.e. a function or an instance of a class)
 that will do the required processing for your message. It _might_ return a
-result:
+result::
 
     namespace App\MessageHandler;
 

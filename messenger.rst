@@ -43,7 +43,7 @@ Registering Handlers
 --------------------
 
 In order to do something when your message is dispatched, you need to create a
-message handler. It's a class with an `__invoke` method:
+message handler. It's a class with an `__invoke` method::
 
     // src/MessageHandler/MyMessageHandler.php
     namespace App\MessageHandler;
