@@ -159,6 +159,19 @@ remove the ``form_widget(form)`` function and render your fields individually.
 See :doc:`/form/form_customization` for more information on this and how you
 can control *how* the form renders at a global level using form theming.
 
+As the whole rendering of a form can be passed to a form theme, it can be 
+usefull to do something like that: 
+
+.. code-block:: html+twig 
+
+    <!-- templates/random.html.twig -->
+    {% form_theme someform 'templates/form/themes/_someform.html.twig' %}
+
+    {{ form(someform) }}
+
+This way, the entire form rendering is passed to the theme where you can
+control all field independently. 
+
 Handling Form Submits
 ---------------------
 
@@ -188,5 +201,65 @@ handling the form submit. For example, you *could* have a ``new()`` action that
 *only* renders the form and a ``create()`` action that *only* processes the form
 submit. Both those actions will be almost identical. So it's much simpler to let
 ``new()`` handle everything.
+
+If you need to add more control over the form handling process, you can use a ``FormHander``
+which is responsible to handling the whole logic between the submission and the rendering part
+of the ``new()`` method. 
+So, what is a FormHandler ? 
+
+In it's purest expression, a FormHandler is a service which wait for your form and 
+call everything you need to manage the handling process, here's a exemple: 
+
+.. code-block:: php
+
+    <?php
+
+    class PostTypeHandler
+    { 
+        private $entityManager;
+
+        public function __construct(EntityManagerInterface $entityManager)
+        {
+            $this->entityManager = $entityManager;
+        }
+        
+        public function handle(FormInterface $postType): bool
+        { 
+            if ($postType->isSubmitted() && $postType->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($post);
+                $entityManager->flush();
+                
+                return true;
+            }
+
+            return false;
+        } 
+    }
+
+Here's a simple exemple of what can do a FormHandler but you can injecte every services
+that you need. 
+Once in the controller, the logic can be simplified by the call of the PostTypeHandler: 
+
+.. code-block:: php
+
+    public function new(Request $request, PostTypeHandler $handler)
+    {
+        // build the form ...
+
+        $form->handleRequest($request);
+
+        if ($handler->handle($form)) {
+            return $this->redirectToRoute('admin_post_show', [
+                'id' => $post->getId()
+            ]);
+        }
+
+        // render the template
+    }
+
+Keep in mind that a FormHandler is just a service, your controller can easily
+call it using the ``controler.service_arguments`` tag and let it handle all the 
+heavy tasks, this way, your code stay easy to test and maintain. 
 
 Next: :doc:`/best_practices/i18n`
