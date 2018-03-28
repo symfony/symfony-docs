@@ -16,9 +16,9 @@ must adhere to said rules and protocol.
 Core Organization
 -----------------
 
-Symfony Core members are divided into four groups. Each member, except the
-project leader, can only belong to one group at a time. The privileges granted
-to a group are automatically granted to all higher priority groups.
+Symfony Core members are divided into four groups. Each member can only belong
+to one group at a time. The privileges granted to a group are automatically
+granted to all higher priority groups.
 
 The Symfony Core groups, in descending order of priority, are as follows:
 
@@ -38,7 +38,8 @@ The Symfony Core groups, in descending order of priority, are as follows:
 
 4. **Security Team**
 
-* Decide to merge or reject a pull request related to security issues.
+* Manage the whole security process (triaging reported vulnerabilities, fixing
+  the reported issues, coordinating the release of security fixes, etc.)
 
 Active Core Members
 ~~~~~~~~~~~~~~~~~~~
