@@ -56,7 +56,7 @@ Start by adding a ``main.js`` file inside the assets folder:
 
 First, this file's gonna call the component Hello from the components folder.
 Once the component is found, Vue gonna instantiate a new Root component and 
-attach your component to the HTML element who contain the app identifier.
+attach your component to the HTML element which contain the app identifier.
 
 Now, let's build the Hello component:
 
