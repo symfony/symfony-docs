@@ -63,7 +63,7 @@ that you can reference it:
 
             AppBundle\DecoratingMailer:
                 # overrides the AppBundle\Mailer service
-                # but that service is still available as AppBundle\Mailer.inner
+                # but that service is still available as AppBundle\DecoratingMailer.inner
                 decorates: AppBundle\Mailer
 
                 # pass the old service as an argument
