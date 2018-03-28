@@ -181,7 +181,7 @@ you can get the workflow by injecting the Workflow registry service::
     use Symfony\Component\Workflow\Registry;
     use App\Entity\BlogPost;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\Workflow\Exception\LogicException;
+    use Symfony\Component\Workflow\Exception\TransitionException;
 
     class BlogController extends Controller
     {
@@ -200,7 +200,7 @@ you can get the workflow by injecting the Workflow registry service::
             // Update the currentState on the post
             try {
                 $workflow->apply($post, 'to_review');
-            } catch (LogicException $exception) {
+            } catch (TransitionException $exception) {
                 // ... if the transition is not allowed
             }
 
@@ -208,6 +208,10 @@ you can get the workflow by injecting the Workflow registry service::
             $transitions = $workflow->getEnabledTransitions($post);
         }
     }
+
+.. versionadded:: 4.1
+    The :class:`Symfony\\Component\\Workflow\\Exception\\TransitionException`
+    class was introduced in Symfony 4.1.
 
 Using Events
 ------------
