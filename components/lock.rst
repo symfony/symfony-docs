@@ -36,9 +36,10 @@ create the lock for some resource::
     $store = new SemaphoreStore();
     $factory = new Factory($store);
 
-Then, a call to the :method:`Symfony\\Component\\Lock\\LockInterface::acquire`
-method will try to acquire the lock. Its first argument is an arbitrary string
-that represents the locked resource::
+The lock can be created by calling the :method:`Symfony\\Component\\Lock\\Factory::createLock`
+method. Its first argument is an arbitrary string that represents the locked
+resource. Then, a call to the :method:`Symfony\\Component\\Lock\\LockInterface::acquire`
+method will try to acquire the lock::
 
     // ...
     $lock = $factory->createLock('pdf-invoice-generation');
