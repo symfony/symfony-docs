@@ -16,9 +16,9 @@ must adhere to said rules and protocol.
 Core Organization
 -----------------
 
-Symfony Core members are divided into four groups. Each member can only belong
-to one group at a time. The privileges granted to a group are automatically
-granted to all higher priority groups.
+Symfony Core members are divided into groups. Each member can only belong to one
+group at a time. The privileges granted to a group are automatically granted to
+all higher priority groups.
 
 The Symfony Core groups, in descending order of priority, are as follows:
 
@@ -36,10 +36,16 @@ The Symfony Core groups, in descending order of priority, are as follows:
 
 * Decide to merge or reject a pull request.
 
-4. **Security Team**
+In addition, there are other groups created to manage specific topics:
+
+**Security Team**
 
 * Manage the whole security process (triaging reported vulnerabilities, fixing
   the reported issues, coordinating the release of security fixes, etc.)
+
+**Documentation Team**
+
+* Manage the whole `symfony-docs repository`_.
 
 Active Core Members
 ~~~~~~~~~~~~~~~~~~~
@@ -101,7 +107,16 @@ Active Core Members
 * **Security Team** (``@symfony/security`` on GitHub):
 
   * **Fabien Potencier** (`fabpot`_);
-  * **Michael Cullum** (`michaelcullum`_),
+  * **Michael Cullum** (`michaelcullum`_).
+
+* **Documentation Team** (``@symfony/team-symfony-docs`` on GitHub):
+
+  * **Fabien Potencier** (`fabpot`_);
+  * **Ryan Weaver** (`weaverryan`_);
+  * **Christian Flothmann** (`xabbuh`_);
+  * **Wouter De Jong** (`wouterj`_);
+  * **Jules Pietri** (`HeahDude`_);
+  * **Javier Eguiluz** (`javiereguiluz`_).
 
 Former Core Members
 ~~~~~~~~~~~~~~~~~~~
@@ -222,6 +237,7 @@ discretion of the **Project Leader**.
 .. _Workflow: https://github.com/symfony/workflow
 .. _Yaml: https://github.com/symfony/yaml
 .. _WebProfilerBundle: https://github.com/symfony/web-profiler-bundle
+.. _`symfony-docs repository`: https://github.com/symfony/symfony-docs
 .. _`fabpot`: https://github.com/fabpot/
 .. _`webmozart`: https://github.com/webmozart/
 .. _`Tobion`: https://github.com/Tobion/
@@ -242,3 +258,5 @@ discretion of the **Project Leader**.
 .. _`Nyholm`: https://github.com/Nyholm
 .. _`sroze`: https://github.com/sroze
 .. _`michaelcullum`: https://github.com/michaelcullum
+.. _`wouterj`: https://github.com/wouterj
+.. _`HeahDude`: https://github.com/HeahDude
