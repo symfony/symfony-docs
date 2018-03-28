@@ -12,13 +12,19 @@ directory structure is:
 
     your-project/
     ├─ app/
-    │  ├─ cache/
     │  ├─ config/
-    │  ├─ logs/
     │  ├─ Resources/
     │  │  └─ views/
     │  └─ ...
+    ├─ bin/
+    │  └─ ...
     ├─ src/
+    │  └─ ...
+    ├─ tests/
+    │  └─ ...
+    ├─ var/
+    │  ├─ cache/
+    │  ├─ logs/
     │  └─ ...
     ├─ vendor/
     │  └─ ...
@@ -43,13 +49,13 @@ in the ``AppKernel`` class of your application::
 
         public function getCacheDir()
         {
-            return $this->rootDir.'/'.$this->environment.'/cache';
+            return dirname(__DIR__).'/var/'.$this->environment.'/cache';
         }
     }
 
-``$this->rootDir`` is the absolute path to the ``app`` directory and ``$this->environment``
-is the current environment (i.e. ``dev``). In this case you have changed
-the location of the cache directory to ``app/{environment}/cache``.
+In this code, ``$this->environment`` is the current environment (i.e. ``dev``).
+In this case you have changed the location of the cache directory to
+``var/{environment}/cache``.
 
 .. caution::
 
@@ -76,11 +82,11 @@ method::
 
         public function getLogDir()
         {
-            return $this->rootDir.'/'.$this->environment.'/logs';
+            return dirname(__DIR__).'/var/'.$this->environment.'/logs';
         }
     }
 
-Here you have changed the location of the directory to ``app/{environment}/logs``.
+Here you have changed the location of the directory to ``var/{environment}/logs``.
 
 .. _override-templates-dir:
 
@@ -98,7 +104,7 @@ define your own templates directory (or directories):
         # app/config/config.yml
         twig:
             # ...
-            paths: ["%kernel.root_dir%/../templates"]
+            paths: ["%kernel.project_dir%/templates"]
 
     .. code-block:: xml
 
@@ -113,7 +119,7 @@ define your own templates directory (or directories):
                 http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:path>%kernel.root_dir%/../templates</twig:path>
+                <twig:path>%kernel.project_dir%/templates</twig:path>
             </twig:config>
 
         </container>
@@ -123,7 +129,7 @@ define your own templates directory (or directories):
         // app/config/config.php
         $container->loadFromExtension('twig', array(
             'paths' => array(
-                '%kernel.root_dir%/../templates',
+                '%kernel.project_dir%/templates',
             ),
         ));
 
@@ -133,23 +139,22 @@ Override the ``web`` Directory
 ------------------------------
 
 If you need to rename or move your ``web`` directory, the only thing you
-need to guarantee is that the path to the ``app`` directory is still correct
+need to guarantee is that the path to the ``var`` directory is still correct
 in your ``app.php`` and ``app_dev.php`` front controllers. If you simply
 renamed the directory, you're fine. But if you moved it in some way, you
 may need to modify these paths inside those files::
 
-    require_once __DIR__.'/../Symfony/app/bootstrap.php.cache';
-    require_once __DIR__.'/../Symfony/app/AppKernel.php';
+    require_once __DIR__.'/../path/to/app/autoload.php';
 
-You also need to change the ``extra.symfony-web-dir`` option in the ``composer.json``
-file:
+You also need to change the ``extra.symfony-web-dir`` option in the
+``composer.json`` file:
 
-.. code-block:: javascript
+.. code-block:: json
 
     {
-        ...
+        "...": "...",
         "extra": {
-            ...
+            "...": "...",
             "symfony-web-dir": "my_new_web_dir"
         }
     }
@@ -177,7 +182,7 @@ file:
             # ...
             assetic:
                 # ...
-                read_from: '%kernel.root_dir%/../../public_html'
+                read_from: '%kernel.project_dir%/../public_html'
 
         .. code-block:: xml
 
@@ -192,7 +197,7 @@ file:
                     http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
 
                 <!-- ... -->
-                <assetic:config read-from="%kernel.root_dir%/../../public_html" />
+                <assetic:config read-from="%kernel.project_dir%/../public_html" />
 
             </container>
 
@@ -203,7 +208,7 @@ file:
             // ...
             $container->loadFromExtension('assetic', array(
                 // ...
-                'read_from' => '%kernel.root_dir%/../../public_html',
+                'read_from' => '%kernel.project_dir%/../public_html',
             ));
 
     Now you just need to clear the cache and dump the assets again and your
@@ -211,8 +216,8 @@ file:
 
     .. code-block:: terminal
 
-        $ php app/console cache:clear --env=prod
-        $ php app/console assetic:dump --env=prod --no-debug
+        $ php bin/console cache:clear --env=prod
+        $ php bin/console assetic:dump --env=prod --no-debug
 
 Override the ``vendor`` Directory
 ---------------------------------
@@ -234,6 +239,7 @@ The change in the ``composer.json`` will look like this:
 Then, update the path to the ``autoload.php`` file in ``app/autoload.php``::
 
     // app/autoload.php
+
     // ...
     $loader = require '/some/dir/vendor/autoload.php';
 

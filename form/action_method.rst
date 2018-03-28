@@ -19,6 +19,9 @@ form, you can use ``setAction()`` and ``setMethod()``:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
         class DefaultController extends Controller
         {
@@ -27,9 +30,9 @@ form, you can use ``setAction()`` and ``setMethod()``:
                 $form = $this->createFormBuilder($task)
                     ->setAction($this->generateUrl('target_route'))
                     ->setMethod('GET')
-                    ->add('task', 'text')
-                    ->add('dueDate', 'date')
-                    ->add('save', 'submit')
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
+                    ->add('save', SubmitType::class)
                     ->getForm();
 
                 // ...
@@ -39,6 +42,10 @@ form, you can use ``setAction()`` and ``setMethod()``:
     .. code-block:: php-standalone
 
         use Symfony\Component\Form\Forms;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+        use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
         // ...
 
@@ -48,12 +55,12 @@ form, you can use ``setAction()`` and ``setMethod()``:
 
         $formFactory = $formFactoryBuilder->getFormFactory();
 
-        $form = $formFactory->createBuilder('form', $task)
+        $form = $formFactory->createBuilder(FormType::class, $task)
             ->setAction('...')
             ->setMethod('GET')
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
-            ->add('save', 'submit')
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
+            ->add('save', SubmitType::class)
             ->getForm();
 
 .. note::
@@ -80,7 +87,7 @@ options:
             {
                 // ...
 
-                $form = $this->createForm(new TaskType(), $task, array(
+                $form = $this->createForm(TaskType::class, $task, array(
                     'action' => $this->generateUrl('target_route'),
                     'method' => 'GET',
                 ));
@@ -100,7 +107,7 @@ options:
 
         $formFactory = $formFactoryBuilder->getFormFactory();
 
-        $form = $formFactory->create(new TaskType(), $task, array(
+        $form = $formFactory->create(TaskType::class, $task, array(
             'action' => '...',
             'method' => 'GET',
         ));
@@ -119,7 +126,9 @@ to the ``form()`` or the ``form_start()`` helper functions:
 
         <!-- app/Resources/views/default/new.html.php -->
         <?php echo $view['form']->start($form, array(
-            'action' => $view['router']->generate('target_route'),
+            // The path() method was introduced in Symfony 2.8. Prior to 2.8,
+            // you had to use generate().
+            'action' => $view['router']->path('target_route'),
             'method' => 'GET',
         )) ?>
 

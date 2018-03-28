@@ -276,15 +276,21 @@ method, which should return an array of groups to use::
 
         public function getGroupSequence()
         {
-            $groups = array('User');
+            // when returning a simple array, if there's a violation in any group
+            // the rest of groups are not validated. E.g. if 'User' fails,
+            // 'Premium' and 'Api' are not validated:
+            return array('User', 'Premium', 'Api');
 
-            if ($this->isPremium()) {
-                $groups[] = 'Premium';
-            }
-
-            return $groups;
+            // when returning a nested array, all the groups included in each array
+            // are validated. E.g. if 'User' fails, 'Premium' is also validated
+            // (and you'll get its violations too) but 'Api' won't be validated:
+            return array(array('User', 'Premium'), 'Api');
         }
     }
+
+.. versionadded:: 3.2
+    The feature to return a nested array to get violations from all groups was
+    introduced in Symfony 3.2.
 
 At last, you have to notify the Validator component that your ``User`` class
 provides a sequence of groups to be validated:

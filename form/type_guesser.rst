@@ -32,15 +32,11 @@ This interface requires four methods:
     Tries to guess the value of the :ref:`required <reference-form-option-required>`
     option;
 :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessMaxLength`
-    Tries to guess the value of the :ref:`max_length <reference-form-option-max_length>`
-    option;
+    Tries to guess the value of the ``maxlength`` input attribute;
 :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessPattern`
-    Tries to guess the value of the :ref:`pattern <reference-form-option-pattern>`
-    option.
+    Tries to guess the value of the ``pattern`` input attribute.
 
-Start by creating the class and these methods. Next, you'll learn how to fill each on.
-
-.. code-block:: php
+Start by creating the class and these methods. Next, you'll learn how to fill each in::
 
     // src/AppBundle/Form/TypeGuesser/PHPDocTypeGuesser.php
     namespace AppBundle\Form\TypeGuesser;
@@ -92,6 +88,10 @@ With this knowledge, you can easily implement the ``guessType()`` method of the
 
     use Symfony\Component\Form\Guess\Guess;
     use Symfony\Component\Form\Guess\TypeGuess;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+    use Symfony\Component\Form\Extension\Core\Type\NumberType;
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
     class PHPDocTypeGuesser implements FormTypeGuesserInterface
     {
@@ -108,25 +108,25 @@ With this knowledge, you can easily implement the ``guessType()`` method of the
                 case 'string':
                     // there is a high confidence that the type is text when
                     // @var string is used
-                    return new TypeGuess('text', array(), Guess::HIGH_CONFIDENCE);
+                    return new TypeGuess(TextType::class, array(), Guess::HIGH_CONFIDENCE);
 
                 case 'int':
                 case 'integer':
                     // integers can also be the id of an entity or a checkbox (0 or 1)
-                    return new TypeGuess('integer', array(), Guess::MEDIUM_CONFIDENCE);
+                    return new TypeGuess(IntegerType::class, array(), Guess::MEDIUM_CONFIDENCE);
 
                 case 'float':
                 case 'double':
                 case 'real':
-                    return new TypeGuess('number', array(), Guess::MEDIUM_CONFIDENCE);
+                    return new TypeGuess(NumberType::class, array(), Guess::MEDIUM_CONFIDENCE);
 
                 case 'boolean':
                 case 'bool':
-                    return new TypeGuess('checkbox', array(), Guess::HIGH_CONFIDENCE);
+                    return new TypeGuess(CheckboxType::class, array(), Guess::HIGH_CONFIDENCE);
 
                 default:
                     // there is a very low confidence that this one is correct
-                    return new TypeGuess('text', array(), Guess::LOW_CONFIDENCE);
+                    return new TypeGuess(TextType::class, array(), Guess::LOW_CONFIDENCE);
             }
         }
 
@@ -173,8 +173,12 @@ set.
 Registering a Type Guesser
 --------------------------
 
-The last thing you need to do is registering your custom type guesser by
-creating a service and tagging it as ``form.type_guesser``:
+If you're using :ref:`autowire <services-autowire>` and
+:ref:`autoconfigure <services-autoconfigure>`, you're done! Symfony already knows
+and is using your form type guesser.
+
+If you're **not** using autowire and autoconfigure, register your service manually
+and tag it with ``form.type_guesser``:
 
 .. configuration-block::
 
@@ -182,11 +186,10 @@ creating a service and tagging it as ``form.type_guesser``:
 
         # app/config/services.yml
         services:
+            # ...
 
-            app.phpdoc_type_guesser:
-                class: AppBundle\Form\TypeGuesser\PHPDocTypeGuesser
-                tags:
-                    - { name: form.type_guesser }
+            AppBundle\Form\TypeGuesser\PHPDocTypeGuesser:
+                tags: [form.type_guesser]
 
     .. code-block:: xml
 
@@ -198,7 +201,7 @@ creating a service and tagging it as ``form.type_guesser``:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service class="AppBundle\Form\TypeGuesser\PHPDocTypeGuesser">
+                <service id="AppBundle\Form\TypeGuesser\PHPDocTypeGuesser">
                     <tag name="form.type_guesser"/>
                 </service>
             </services>
@@ -209,9 +212,13 @@ creating a service and tagging it as ``form.type_guesser``:
         // app/config/services.php
         use AppBundle\Form\TypeGuesser\PHPDocTypeGuesser;
 
-        $container->register('app.phpdoc_type_guesser', PHPDocTypeGuesser::class)
+        $container->register(PHPDocTypeGuesser::class)
             ->addTag('form.type_guesser')
         ;
+
+.. versionadded:: 3.3
+    Prior to Symfony 3.3, you needed to define type guesser services as ``public``.
+    Starting from Symfony 3.3, you can also define them as ``private``.
 
 .. sidebar:: Registering a Type Guesser in the Component
 

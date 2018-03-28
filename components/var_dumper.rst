@@ -5,12 +5,9 @@
 The VarDumper Component
 =======================
 
-    The VarDumper component provides mechanisms for walking through any
-    arbitrary PHP variable. Built on top, it provides a better ``dump()``
-    function that you can use instead of :phpfunction:`var_dump`.
-
-.. versionadded:: 2.6
-    The VarDumper component was introduced in Symfony 2.6.
+    The VarDumper component provides mechanisms for extracting the state out of
+    any PHP variables. Built on top, it provides a better ``dump()`` function
+    that you can use instead of :phpfunction:`var_dump`.
 
 Installation
 ------------
@@ -56,6 +53,9 @@ For example::
 
     dump($someVar);
 
+    // dump() returns the passed value, so you can dump an object and keep using it
+    dump($someObject)->someMethod();
+
 By default, the output format and destination are selected based on your
 current PHP SAPI:
 
@@ -87,7 +87,7 @@ DebugBundle and Twig Integration
 
 The DebugBundle allows greater integration of the component into the Symfony
 full-stack framework. It is enabled by default in the *dev* and *test*
-environment of the standard edition since version 2.6.
+environment of the Symfony Standard Edition.
 
 Since generating (even debug) output in the controller or in the model
 of your application may just break it by e.g. sending HTTP headers or
@@ -111,12 +111,20 @@ This behavior can be changed by configuring the ``debug.dump_destination``
 option. Read more about this and other options in
 :doc:`the DebugBundle configuration reference </reference/configuration/debug>`.
 
+.. tip::
+
+    .. versionadded:: 3.3
+        The local search box was introduced in Symfony 3.3.
+
+    If the dumped contents are complex, consider using the local search box to
+    look for specific variables or values. First, click anywhere on the dumped
+    contents and then press :kbd:`Ctrl. + F` or :kbd:`Cmd. + F` to make the local
+    search box appear. All the common shortcuts to navigate the search results
+    are supported (:kbd:`Ctrl. + G` or :kbd:`Cmd. + G`, :kbd:`F3`, etc.) When
+    finished, press :kbd:`Esc.` to hide the box again.
+
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------
-
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait` was
-    introduced in Symfony 2.7.
 
 The VarDumper component provides
 :class:`a trait <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait>`
@@ -154,11 +162,6 @@ Example::
             $this->assertDumpEquals($expectedDump, $testedVar);
         }
     }
-
-.. tip::
-
-    If you still use PHP 5.3, you can extend the
-    :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestClass` instead.
 
 Dump Examples and Output
 ------------------------

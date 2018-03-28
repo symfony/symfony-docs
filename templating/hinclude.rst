@@ -23,8 +23,11 @@ tags:
             array('renderer' => 'hinclude')
         ) ?>
 
+        <!-- The url() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate() with UrlGeneratorInterface::ABSOLUTE_URL
+             passed as the third argument. -->
         <?php echo $view['actions']->render(
-            $view['router']->generate('...'),
+            $view['router']->url('...'),
             array('renderer' => 'hinclude')
         ) ?>
 

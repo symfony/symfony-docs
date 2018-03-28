@@ -23,17 +23,16 @@ wraps the original PHPUnit binary to provide additional features:
     $ composer require --dev symfony/phpunit-bridge
 
 Each test - whether it's a unit test or a functional test - is a PHP class
-that should live in the ``Tests/`` subdirectory of your bundles. If you follow
+that should live in the ``tests/`` directory of your application. If you follow
 this rule, then you can run all of your application's tests with the following
 command:
 
 .. code-block:: terminal
 
-    # the -c option specifies the directory where PHPUnit config is stored
-    $ ./vendor/bin/simple-phpunit -c app/
+    $ ./vendor/bin/simple-phpunit
 
-If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
-file.
+PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
+Symfony application.
 
 .. tip::
 
@@ -65,11 +64,11 @@ called ``Calculator`` in the ``Util/`` directory of the app bundle::
         }
     }
 
-To test this, create a ``CalculatorTest`` file in the ``Tests/Util`` directory
-of your bundle::
+To test this, create a ``CalculatorTest`` file in the ``tests/AppBundle/Util`` directory
+of your application::
 
-    // src/AppBundle/Tests/Util/CalculatorTest.php
-    namespace AppBundle\Tests\Util;
+    // tests/AppBundle/Util/CalculatorTest.php
+    namespace Tests\AppBundle\Util;
 
     use AppBundle\Util\Calculator;
     use PHPUnit\Framework\TestCase;
@@ -88,30 +87,30 @@ of your bundle::
 
 .. note::
 
-    By convention, the ``Tests/`` sub-directory should replicate the directory
-    of your bundle for unit tests. So, if you're testing a class in your
-    bundle's ``Util/`` directory, put the test in the ``Tests/Util/``
+    By convention, the ``tests/AppBundle`` directory should replicate the directory
+    of your bundle for unit tests. So, if you're testing a class in the
+    ``src/AppBundle/Util/`` directory, put the test in the ``tests/AppBundle/Util/``
     directory.
 
 Just like in your real application - autoloading is automatically enabled
-via the ``bootstrap.php.cache`` file (as configured by default in the
-``app/phpunit.xml.dist`` file).
+via the ``vendor/autoload.php`` file (as configured by default in the
+``phpunit.xml.dist`` file).
 
 Running tests for a given file or directory is also very easy:
 
 .. code-block:: terminal
 
     # run all tests of the application
-    $ ./vendor/bin/simple-phpunit -c app
+    $ ./vendor/bin/simple-phpunit
 
     # run all tests in the Util directory
-    $ ./vendor/bin/simple-phpunit -c app src/AppBundle/Tests/Util
+    $ ./vendor/bin/simple-phpunit tests/AppBundle/Util
 
     # run tests for the Calculator class
-    $ ./vendor/bin/simple-phpunit -c app src/AppBundle/Tests/Util/CalculatorTest.php
+    $ ./vendor/bin/simple-phpunit tests/AppBundle/Util/CalculatorTest.php
 
     # run all tests for the entire Bundle
-    $ ./vendor/bin/simple-phpunit -c app src/AppBundle/
+    $ ./vendor/bin/simple-phpunit tests/AppBundle/
 
 .. index::
    single: Tests; Functional tests
@@ -129,18 +128,25 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 * Test the response;
 * Rinse and repeat.
 
+Before creating your first test, install these packages that provide some of the
+utilities used in the functional tests:
+
+.. code-block:: terminal
+
+    $ composer require --dev symfony/browser-kit symfony/css-selector
+
 Your First Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functional tests are simple PHP files that typically live in the ``Tests/Controller``
-directory of your bundle. If you want to test the pages handled by your
+Functional tests are simple PHP files that typically live in the ``tests/AppBundle/Controller``
+directory for your bundle. If you want to test the pages handled by your
 ``PostController`` class, start by creating a new ``PostControllerTest.php``
 file that extends a special ``WebTestCase`` class.
 
 As an example, a test could look like this::
 
-    // src/AppBundle/Tests/Controller/PostControllerTest.php
-    namespace AppBundle\Tests\Controller;
+    // tests/AppBundle/Controller/PostControllerTest.php
+    namespace Tests\AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -424,13 +430,13 @@ The Client supports many operations that can be done in a real browser::
     // clears all cookies and the history
     $client->restart();
 
+.. versionadded:: 3.4
+    Starting from Symfony 3.4, the ``back()`` and ``forward()`` methods skip the
+    redirects that may have occurred when requesting a URL, as normal browsers
+    do. In previous Symfony versions they weren't skipped.
+
 Accessing Internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    The :method:`Symfony\\Component\\BrowserKit\\Client::getInternalRequest`
-    and :method:`Symfony\\Component\\BrowserKit\\Client::getInternalResponse`
-    methods were introduced in Symfony 2.3.
 
 If you use the client to test your application, you might want to access the
 client's internal objects::
@@ -468,9 +474,6 @@ Injection Container::
 
 For a list of services available in your application, use the ``debug:container``
 command.
-
-.. versionadded:: 2.6
-    Prior to Symfony 2.6, this command was called ``container:debug``.
 
 .. tip::
 
@@ -844,30 +847,26 @@ PHPUnit Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
 Each application has its own PHPUnit configuration, stored in the
-``app/phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create an ``app/phpunit.xml`` file to set up a configuration for your local
-machine only.
+``phpunit.xml.dist`` file. You can edit this file to change the defaults or
+create a ``phpunit.xml`` file to set up a configuration for your local machine
+only.
 
 .. tip::
 
-    Store the ``app/phpunit.xml.dist`` file in your code repository and ignore
-    the ``app/phpunit.xml`` file.
+    Store the ``phpunit.xml.dist`` file in your code repository and ignore
+    the ``phpunit.xml`` file.
 
-By default, only the tests from your own custom bundles stored in the standard
-directories ``src/*/*Bundle/Tests``, ``src/*/Bundle/*Bundle/Tests``,
-``src/*Bundle/Tests`` are run by the ``phpunit`` command, as configured
-in the ``app/phpunit.xml.dist`` file:
+By default, only the tests stored in ``/tests`` are run via the ``phpunit`` command,
+as configured in the ``phpunit.xml.dist`` file:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <testsuites>
             <testsuite name="Project Test Suite">
-                <directory>../src/*/*Bundle/Tests</directory>
-                <directory>../src/*/Bundle/*Bundle/Tests</directory>
-                <directory>../src/*Bundle/Tests</directory>
+                <directory>tests</directory>
             </testsuite>
         </testsuites>
         <!-- ... -->
@@ -878,13 +877,13 @@ configuration adds tests from a custom ``lib/tests`` directory:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <testsuites>
             <testsuite name="Project Test Suite">
-                <!-- ... -->
-                <directory>../lib/tests</directory>
+                <!-- ... --->
+                <directory>lib/tests</directory>
             </testsuite>
         </testsuites>
         <!-- ... -->
@@ -895,16 +894,16 @@ section:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <filter>
             <whitelist>
                 <!-- ... -->
-                <directory>../lib</directory>
+                <directory>lib</directory>
                 <exclude>
                     <!-- ... -->
-                    <directory>../lib/tests</directory>
+                    <directory>lib/tests</directory>
                 </exclude>
             </whitelist>
         </filter>

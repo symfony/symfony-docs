@@ -121,7 +121,7 @@ Check if your server meets the requirements by running:
 
 .. code-block:: terminal
 
-    $ php app/check.php
+    $ php bin/symfony_requirements
 
 .. _b-configure-your-app-config-parameters-yml-file:
 
@@ -137,6 +137,11 @@ deployed).
 If your application uses environment variables instead of these parameters, you
 must define those env vars in your production server using the tools provided by
 your hosting service.
+
+At the very least you need to define the ``SYMFONY_ENV=prod`` (or
+``APP_ENV=prod`` if you're using :doc:`Symfony Flex </setup/flex>`) to run the
+application in ``prod`` mode, but depending on your application you may need to
+define other env vars too.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -159,17 +164,18 @@ as you normally do:
 .. caution::
 
     If you get a "class not found" error during this step, you may need to
-    run ``export SYMFONY_ENV=prod`` before running this command so that
-    the ``post-install-cmd`` scripts run in the ``prod`` environment.
+    run ``export SYMFONY_ENV=prod`` (or ``export APP_ENV=prod`` if you're
+    using :doc:`Symfony Flex </setup/flex>`) before running this command so
+    that the ``post-install-cmd`` scripts run in the ``prod`` environment.
 
 D) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Make sure you clear (and warm-up) your Symfony cache:
+Make sure you clear and warm-up your Symfony cache:
 
 .. code-block:: terminal
 
-    $ php app/console cache:clear --env=prod --no-debug
+    $ php bin/console cache:clear --env=prod --no-debug
 
 E) Dump your Assetic Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -178,7 +184,7 @@ If you're using Assetic, you'll also want to dump your assets:
 
 .. code-block:: terminal
 
-    $ php app/console assetic:dump --env=prod --no-debug
+    $ php bin/console assetic:dump --env=prod --no-debug
 
 F) Other Things!
 ~~~~~~~~~~~~~~~~
@@ -209,7 +215,35 @@ Don't forget that deploying your application also involves updating any dependen
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
 
-.. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
+Troubleshooting
+---------------
+
+Deployments not Using the ``composer.json`` File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony applications provide a ``kernel.project_dir`` parameter and a related
+:method:`Symfony\\Component\\HttpKernel\\Kernel::getProjectDir` method.
+You can use this method to perform operations with file paths relative to your
+project's root directory. The logic to find that project root directory is based
+on the location of the main ``composer.json`` file.
+
+If your deployment method doesn't use Composer, you may have removed the
+``composer.json`` file and the application won't work on the production server.
+The solution is to override the ``getProjectDir()`` method in the application
+kernel and return your project's root directory::
+
+    // app/AppKernel.php
+    // ...
+    class AppKernel extends Kernel
+    {
+        // ...
+
+        public function getProjectDir()
+        {
+            return __DIR__.'/..';
+        }
+    }
+
 .. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: http://capistranorb.com/
 .. _`sf2debpkg`: https://github.com/liip/sf2debpkg
@@ -221,4 +255,5 @@ other potential things like pushing assets to a CDN (see `Common Post-Deployment
 .. _`Redis`: http://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: http://deployer.org/
+.. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 .. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle

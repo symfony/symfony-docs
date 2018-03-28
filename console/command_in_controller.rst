@@ -32,12 +32,12 @@ Run this command from inside your controller via::
     use Symfony\Component\Console\Input\ArrayInput;
     use Symfony\Component\Console\Output\BufferedOutput;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\KernelInterface;
 
     class SpoolController extends Controller
     {
-        public function sendSpoolAction($messages = 10)
+        public function sendSpoolAction($messages = 10, KernelInterface $kernel)
         {
-            $kernel = $this->get('kernel');
             $application = new Application($kernel);
             $application->setAutoExit(false);
 

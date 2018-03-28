@@ -101,6 +101,12 @@ named encoders:
             ),
         ));
 
+.. note::
+
+    If you are running PHP 7.2+ or have the `libsodium`_ extension installed,
+    then the recommended hashing algorithm to use is
+    :ref:`Argon2i <reference-security-argon2i>`.
+
 This creates an encoder named ``harsh``. In order for a ``User`` instance
 to use it, the class must implement
 :class:`Symfony\\Component\\Security\\Core\\Encoder\\EncoderAwareInterface`.
@@ -172,3 +178,5 @@ you must register a service for it in order to use it as a named encoder:
 
 This creates an encoder named ``app_encoder`` from a service named
 ``app.password_encoder_service``.
+
+.. _`libsodium`: https://pecl.php.net/package/libsodium

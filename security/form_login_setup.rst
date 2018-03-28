@@ -92,7 +92,7 @@ configuration (``login``):
 
         // ...
         use Symfony\Component\HttpFoundation\Request;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class SecurityController extends Controller
         {
@@ -141,11 +141,10 @@ configuration (``login``):
 Great! Next, add the logic to ``loginAction()`` that displays the login form::
 
     // src/AppBundle/Controller/SecurityController.php
+    use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-    public function loginAction(Request $request)
+    public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
     {
-        $authenticationUtils = $this->get('security.authentication_utils');
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
@@ -158,10 +157,11 @@ Great! Next, add the logic to ``loginAction()`` that displays the login form::
         ));
     }
 
-.. versionadded:: 2.6
-    The ``security.authentication_utils`` service and the
-    :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationUtils`
-    class were introduced in Symfony 2.6.
+.. note::
+
+    If you get an error that the ``$authenticationUtils`` argument is missing,
+    it's probably because you need to activate this new feature in Symfony 3.4.
+    See this :ref:`controller service argument note <controller-service-arguments-tag>`.
 
 Don't let this controller confuse you. As you'll see in a moment, when the
 user submits the form, the security system automatically handles the form
@@ -209,7 +209,7 @@ Finally, create the template:
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
 

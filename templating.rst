@@ -434,11 +434,6 @@ to be rendered as HTML (``index.html.twig``), XML (``index.xml.twig``),
 or any other format. For more information, read the :doc:`/templating/formats`
 section.
 
-.. note::
-
-    The available "engines" can be configured and even new engines added.
-    See :ref:`Templating Configuration <template-configuration>` for more details.
-
 .. index::
    single: Templating; Tags and helpers
    single: Templating; Helpers
@@ -548,10 +543,6 @@ you set `with_context`_ to false).
     maps (i.e. an array with named keys). If you needed to pass in multiple
     elements, it would look like this: ``{'foo': foo, 'bar': bar}``.
 
-.. versionadded:: 2.3
-    The `include() function`_ is available since Symfony 2.3. Prior, the
-    `{% include %} tag`_ was used.
-
 .. index::
    single: Templating; Linking to pages
 
@@ -577,7 +568,7 @@ configuration:
         // src/AppBundle/Controller/WelcomeController.php
 
         // ...
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class WelcomeController extends Controller
         {
@@ -634,7 +625,7 @@ To link to the page, just use the ``path()`` Twig function and refer to the rout
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('welcome') ?>">Home</a>
+        <a href="<?php echo $view['router']->path('welcome') ?>">Home</a>
 
 As expected, this will generate the URL ``/``. Now, for a more complicated
 route:
@@ -646,7 +637,7 @@ route:
         // src/AppBundle/Controller/ArticleController.php
 
         // ...
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class ArticleController extends Controller
         {
@@ -713,7 +704,7 @@ correctly:
 
         <!-- app/Resources/views/Article/recent_list.html.php -->
         <?php foreach ($articles as $article): ?>
-            <a href="<?php echo $view['router']->generate('article_show', array(
+            <a href="<?php echo $view['router']->path('article_show', array(
                 'slug' => $article->getSlug(),
             )) ?>">
                 <?php echo $article->getTitle() ?>
@@ -724,24 +715,18 @@ correctly:
 
     You can also generate an absolute URL by using the ``url()`` Twig function:
 
-    .. code-block:: html+twig
+    .. configuration-block::
 
-        <a href="{{ url('welcome') }}">Home</a>
+        .. code-block:: html+twig
 
-    The same can be done in PHP templates by passing a third argument to
-    the ``generate()`` method:
+            <a href="{{ url('welcome') }}">Home</a>
 
-    .. code-block:: html+php
+        .. code-block:: html+php
 
-        <?php
-        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-        ?>
-
-        <a href="<?php echo $view['router']->generate(
-            'welcome',
-            array(),
-            UrlGeneratorInterface::ABSOLUTE_URL
-        ) ?>">Home</a>
+            <a href="<?php echo $view['router']->url(
+                'welcome',
+                array()
+            ) ?>">Home</a>
 
 .. index::
    single: Templating; Linking to assets
@@ -777,11 +762,12 @@ should render with the subdirectory (e.g. ``/my_app/images/logo.png``). The
 ``asset()`` function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.
 
-Additionally, if you use the ``asset()`` function, Symfony can automatically
-append a query string to your asset, in order to guarantee that updated static
-assets won't be loaded from cache after being deployed. For example, ``/images/logo.png`` might
-look like ``/images/logo.png?v2``. For more information, see the :ref:`reference-framework-assets-version`
-configuration option.
+.. tip::
+
+    The ``asset()`` function supports various cache busting techniques via the
+    :ref:`version <reference-framework-assets-version>`,
+    :ref:`version_format <reference-assets-version-format>`, and
+    :ref:`json_manifest_path <reference-assets-json-manifest-path>` configuration options.
 
 If you need absolute URLs for assets, use the ``absolute_url()`` Twig function
 as follows:
@@ -805,9 +791,9 @@ advantage of Symfony's template inheritance.
 .. tip::
 
     This section will teach you the philosophy behind including stylesheet
-    and JavaScript assets in Symfony. Symfony also packages another library,
-    called Assetic, which follows this philosophy but allows you to do much
-    more interesting things with those assets. For more information on
+    and JavaScript assets in Symfony. Symfony is also compatible with another
+    library, called Assetic, which follows this philosophy but allows you to do
+    much more interesting things with those assets. For more information on
     using Assetic see :doc:`/frontend/assetic/asset_management`.
 
 Start by adding two blocks to your base template that will hold your assets:
@@ -893,9 +879,9 @@ should use the ``parent()`` Twig function to include everything from the ``style
 block of the base template.
 
 You can also include assets located in your bundles' ``Resources/public`` folder.
-You will need to run the ``php app/console assets:install target [--symlink]``
+You will need to run the ``php bin/console assets:install target [--symlink]``
 command, which copies (or symlinks) files into the correct location. (target
-is by default "web").
+is by default the "web/" directory of your application).
 
 .. code-block:: html+twig
 

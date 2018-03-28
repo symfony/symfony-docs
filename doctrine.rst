@@ -116,7 +116,7 @@ can automatically generate an empty ``test_project`` database for you:
 
 .. code-block:: terminal
 
-    $ php app/console doctrine:database:create
+    $ php bin/console doctrine:database:create
 
 .. sidebar:: Setting up the Database to be UTF8
 
@@ -128,12 +128,8 @@ can automatically generate an empty ``test_project`` database for you:
 
     .. code-block:: terminal
 
-        $ php app/console doctrine:database:drop --force
-        $ php app/console doctrine:database:create
-
-    There's no way to configure these defaults inside Doctrine, as it tries to be
-    as agnostic as possible in terms of environment configuration. One way to solve
-    this problem is to configure server-level defaults.
+        $ php bin/console doctrine:database:drop --force
+        $ php bin/console doctrine:database:create
 
     Setting UTF8 defaults for MySQL is as simple as adding a few lines to
     your configuration file  (typically ``my.cnf``):
@@ -144,6 +140,55 @@ can automatically generate an empty ``test_project`` database for you:
         # Version 5.5.3 introduced "utf8mb4", which is recommended
         collation-server     = utf8mb4_unicode_ci # Replaces utf8_unicode_ci
         character-set-server = utf8mb4            # Replaces utf8
+
+    You can also change the defaults for Doctrine so that the generated SQL
+    uses the correct character set.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            doctrine:
+                dbal:
+                    charset: utf8mb4
+                    default_table_options:
+                        charset: utf8mb4
+                        collate: utf8mb4_unicode_ci
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/doctrine
+                    http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+
+                <doctrine:config>
+                    <doctrine:dbal
+                        charset="utf8mb4">
+                            <doctrine:default-table-option name="charset">utf8mb4</doctrine:default-table-option>
+                            <doctrine:default-table-option name="collate">utf8mb4_unicode_ci</doctrine:default-table-option>
+                    </doctrine:dbal>
+                </doctrine:config>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $configuration->loadFromExtension('doctrine', array(
+                'dbal' => array(
+                    'charset' => 'utf8mb4',
+                    'default_table_options' => array(
+                        'charset' => 'utf8mb4',
+                        'collate' => 'utf8mb4_unicode_ci',
+                    )
+                ),
+            ));
 
     We recommend against MySQL's ``utf8`` character set, since it does not
     support 4-byte unicode characters, and strings containing them will be
@@ -162,7 +207,7 @@ can automatically generate an empty ``test_project`` database for you:
             doctrine:
                 dbal:
                     driver: pdo_sqlite
-                    path: '%kernel.root_dir%/sqlite.db'
+                    path: '%kernel.project_dir%/app/sqlite.db'
                     charset: UTF8
 
         .. code-block:: xml
@@ -180,7 +225,7 @@ can automatically generate an empty ``test_project`` database for you:
                 <doctrine:config>
                     <doctrine:dbal
                         driver="pdo_sqlite"
-                        path="%kernel.root_dir%/sqlite.db"
+                        path="%kernel.project_dir%/app/sqlite.db"
                         charset="UTF-8" />
                 </doctrine:config>
             </container>
@@ -191,7 +236,7 @@ can automatically generate an empty ``test_project`` database for you:
             $container->loadFromExtension('doctrine', array(
                 'dbal' => array(
                     'driver'  => 'pdo_sqlite',
-                    'path'    => '%kernel.root_dir%/sqlite.db',
+                    'path'    => '%kernel.project_dir%/app/sqlite.db',
                     'charset' => 'UTF-8',
                 ),
             ));
@@ -227,7 +272,7 @@ just a simple PHP class.
 
     .. code-block:: terminal
 
-        $ php app/console doctrine:generate:entity
+        $ php bin/console doctrine:generate:entity
 
 .. index::
     single: Doctrine; Adding mapping metadata
@@ -389,7 +434,7 @@ see the :ref:`doctrine-field-types` section.
 
     .. code-block:: terminal
 
-        $ php app/console doctrine:schema:validate
+        $ php bin/console doctrine:schema:validate
 
 .. _doctrine-generating-getters-and-setters:
 
@@ -416,7 +461,7 @@ in your application. To do this, run:
 
 .. code-block:: terminal
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
 .. tip::
 
@@ -454,16 +499,18 @@ a controller, this is pretty easy. Add the following method to the
     // ...
     use AppBundle\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
+    use Doctrine\ORM\EntityManagerInterface;
 
-    // ...
     public function createAction()
     {
+        // you can fetch the EntityManager via $this->getDoctrine()
+        // or you can add an argument to your action: createAction(EntityManagerInterface $entityManager)
+        $entityManager = $this->getDoctrine()->getManager();
+
         $product = new Product();
         $product->setName('Keyboard');
         $product->setPrice(19.99);
         $product->setDescription('Ergonomic and stylish!');
-
-        $entityManager = $this->getDoctrine()->getManager();
 
         // tells Doctrine you want to (eventually) save the Product (no queries yet)
         $entityManager->persist($product);
@@ -474,33 +521,34 @@ a controller, this is pretty easy. Add the following method to the
         return new Response('Saved new product with id '.$product->getId());
     }
 
+    // if you have multiple entity managers, use the registry to fetch them
+    public function editAction()
+    {
+        $doctrine = $this->getDoctrine();
+        $entityManager = $doctrine->getManager();
+        $otherEntityManager = $doctrine->getManager('other_connection');
+    }
+
 .. note::
 
     If you're following along with this example, you'll need to create a
     route that points to this action to see it work.
 
-.. tip::
-
-    This article shows working with Doctrine from within a controller by using
-    the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::getDoctrine`
-    method of the controller. This method is a shortcut to get the
-    ``doctrine`` service. You can work with Doctrine anywhere else
-    by injecting that service in the service. See
-    :doc:`/service_container` for more on creating your own services.
-
 Take a look at the previous example in more detail:
 
-* **lines 10-13** In this section, you instantiate and work with the ``$product``
+.. _doctrine-entity-manager:
+
+* **line 12** The ``$this->getDoctrine()->getManager()`` method gets Doctrine's
+  *entity manager* object, which is the most important object in Doctrine. It's
+  responsible for saving objects to, and fetching objects from, the database.
+
+* **lines 14-17** In this section, you instantiate and work with the ``$product``
   object like any other normal PHP object.
 
-* **line 15** This line fetches Doctrine's *entity manager* object, which is
-  responsible for the process of persisting objects to, and fetching objects
-  from, the database.
-
-* **line 18** The ``persist($product)`` call tells Doctrine to "manage" the
+* **line 20** The ``persist($product)`` call tells Doctrine to "manage" the
   ``$product`` object. This does **not** cause a query to be made to the database.
 
-* **line 21** When the ``flush()`` method is called, Doctrine looks through
+* **line 23** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object's data doesn't
   exist in the database, so the entity manager executes an ``INSERT`` query,
@@ -703,7 +751,6 @@ Imagine that you want to query for products that cost more than ``19.99``,
 ordered from least to most expensive. You can use DQL, Doctrine's native
 SQL-like language, to construct a query for this scenario::
 
-    $entityManager = $this->getDoctrine()->getManager();
     $query = $entityManager->createQuery(
         'SELECT p
         FROM AppBundle:Product p

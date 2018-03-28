@@ -101,7 +101,7 @@ The Swift Mailer library works by creating, configuring and then sending
 of the message and is accessible via the ``mailer`` service. Overall, sending
 an email is pretty straightforward::
 
-    public function indexAction($name)
+    public function indexAction($name, \Swift_Mailer $mailer)
     {
         $message = (new \Swift_Message('Hello Email'))
             ->setFrom('send@example.com')
@@ -126,7 +126,10 @@ an email is pretty straightforward::
             */
         ;
 
-        $this->get('mailer')->send($message);
+        $mailer->send($message);
+
+        // or, you can also fetch the mailer service this way
+        // $this->get('mailer')->send($message);
 
         return $this->render(...);
     }
@@ -149,11 +152,6 @@ template might look something like this:
 
     {# Makes an absolute URL to the /images/logo.png file #}
     <img src="{{ absolute_url(asset('images/logo.png')) }}">
-
-.. versionadded:: 2.7
-    The ``absolute_url()`` function was introduced in Symfony 2.7. Prior
-    to 2.7, the ``asset()`` function has an argument to enable returning
-    an absolute URL.
 
 The ``$message`` object supports many more options, such as including attachments,
 adding HTML content, and much more. Fortunately, Swift Mailer covers the topic

@@ -10,9 +10,6 @@ Symfony full-stack framework and can be configured under the ``debug`` key
 in your application configuration. When using XML, you must use the
 ``http://symfony.com/schema/dic/debug`` namespace.
 
-.. versionadded:: 2.6
-    The DebugBundle was introduced in Symfony 2.6.
-
 .. tip::
 
    The XSD schema is available at
@@ -22,6 +19,7 @@ Configuration
 -------------
 
 * `max_items`_
+* `min_depth`_
 * `max_string_length`_
 * `dump_destination`_
 
@@ -32,6 +30,19 @@ max_items
 
 This is the maximum number of items to dump. Setting this option to ``-1``
 disables the limit.
+
+min_depth
+~~~~~~~~~
+
+**type**: ``integer`` **default**: ``1``
+
+Configures the minimum tree depth until which all items are guaranteed to
+be cloned. After this depth is reached, only ``max_items`` items will be
+cloned. The default value is ``1``, which is consistent with older Symfony
+versions.
+
+.. versionadded:: 3.4
+    The ``min_depth`` option was introduced in Symfony 3.4.
 
 max_string_length
 ~~~~~~~~~~~~~~~~~

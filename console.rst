@@ -4,19 +4,19 @@
 Console Commands
 ================
 
-The Symfony framework provides lots of commands through the ``app/console`` script
-(e.g. the well-known ``app/console cache:clear`` command). These commands are
+The Symfony framework provides lots of commands through the ``bin/console`` script
+(e.g. the well-known ``bin/console cache:clear`` command). These commands are
 created with the :doc:`Console component </components/console>`. You can also
 use it to create your own commands.
 
 Creating a Command
 ------------------
 
-Commands are defined in classes which must be created in the ``Command`` namespace
-of your bundle (e.g. ``AppBundle\Command``) and their names must end with the
+Commands are defined in classes which should be created in the ``Command`` namespace
+of your bundle (e.g. ``AppBundle\Command``) and their names should end with the
 ``Command`` suffix.
 
-For example, a command called ``CreateUser`` must follow this structure::
+For example, you may want a command to create a user::
 
     // src/AppBundle/Command/CreateUserCommand.php
     namespace AppBundle\Command;
@@ -49,10 +49,10 @@ method. Then you can optionally define a help message and the
     protected function configure()
     {
         $this
-            // the name of the command (the part after "app/console")
+            // the name of the command (the part after "bin/console")
             ->setName('app:create-user')
 
-            // the short description shown while running "php app/console list"
+            // the short description shown while running "php bin/console list"
             ->setDescription('Creates a new user.')
 
             // the full command description shown when running the command with
@@ -82,7 +82,13 @@ After configuring and registering the command, you can execute it in the termina
 
 .. code-block:: terminal
 
-    $ php app/console app:create-user
+    $ php bin/console app:create-user
+
+.. caution::
+
+    Symfony also looks in the ``Command/`` directory of bundles for commands
+    that are not registered as a service. But this auto discovery is deprecated
+    since Symfony 3.4 and won't be supported anymore in Symfony 4.0.
 
 As you might expect, this command will do nothing as you didn't write any logic
 yet. Add your own logic inside the ``execute()`` method, which has access to the
@@ -111,7 +117,7 @@ Now, try executing the command:
 
 .. code-block:: terminal
 
-    $ php app/console app:create-user
+    $ php bin/console app:create-user
     User Creator
     ============
 
@@ -152,7 +158,7 @@ Now, you can pass the username to the command:
 
 .. code-block:: terminal
 
-    $ php app/console app:create-user Wouter
+    $ php bin/console app:create-user Wouter
     User Creator
     ============
 
@@ -166,33 +172,37 @@ Now, you can pass the username to the command:
 Getting Services from the Service Container
 -------------------------------------------
 
-To actually create a new user, the command has to access some
-:doc:`services </service_container>`. This can be done by making the command
-extend the :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`
-instead::
+To actually create a new user, the command has to access to some
+:doc:`services </service_container>`. Since your command is already registered
+as a service, you can use normal dependency injection. Imagine you have a
+``AppBundle\Service\UserManager`` service that you want to access::
 
     // ...
-    use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+    use Symfony\Component\Console\Command\Command;
+    use AppBundle\Service\UserManager;
 
-    class CreateUserCommand extends ContainerAwareCommand
+    class CreateUserCommand extends Command
     {
+        private $userManager;
+
+        public function __construct(UserManager $userManager)
+        {
+            $this->userManager = $userManager;
+
+            parent::__construct();
+        }
+
         // ...
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             // ...
 
-            // access the container using getContainer()
-            $userManager = $this->getContainer()->get('app.user_manager');
-            $userManager->create($input->getArgument('username'));
+            $this->userManager->create($input->getArgument('username'));
 
             $output->writeln('User successfully generated!');
         }
     }
-
-Now, once you have created the required services and logic, the command will execute
-the ``create()`` method of the ``app.user_manager`` service and the user will
-be created.
 
 Command Lifecycle
 -----------------
@@ -238,8 +248,8 @@ console::
     {
         public function testExecute()
         {
-            self::bootKernel();
-            $application = new Application(self::$kernel);
+            $kernel = self::bootKernel();
+            $application = new Application($kernel);
 
             $application->add(new CreateUserCommand());
 

@@ -12,9 +12,8 @@ The ``ImmutableEventDispatcher`` takes another event dispatcher with all
 the listeners and subscribers. The immutable dispatcher is just a proxy
 of this original dispatcher.
 
-To use it, first create a normal dispatcher (``EventDispatcher`` or
-``ContainerAwareEventDispatcher``) and register some listeners or
-subscribers::
+To use it, first create a normal ``EventDispatcher`` dispatcher and register
+some listeners or subscribers::
 
     use Symfony\Component\EventDispatcher\EventDispatcher;
 

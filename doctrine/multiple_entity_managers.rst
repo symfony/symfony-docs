@@ -173,35 +173,37 @@ When working with multiple connections to create your databases:
 .. code-block:: terminal
 
     # Play only with "default" connection
-    $ php app/console doctrine:database:create
+    $ php bin/console doctrine:database:create
 
     # Play only with "customer" connection
-    $ php app/console doctrine:database:create --connection=customer
+    $ php bin/console doctrine:database:create --connection=customer
 
 When working with multiple entity managers to update your schema:
 
 .. code-block:: terminal
 
     # Play only with "default" mappings
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
     # Play only with "customer" mappings
-    $ php app/console doctrine:schema:update --force --em=customer
+    $ php bin/console doctrine:schema:update --force --em=customer
 
 If you *do* omit the entity manager's name when asking for it,
 the default entity manager (i.e. ``default``) is returned::
+
+    // ...
 
     class UserController extends Controller
     {
         public function indexAction()
         {
-            // All three return the "default" entity manager
-            $entityManager = $this->get('doctrine')->getManager();
-            $entityManager = $this->get('doctrine')->getManager('default');
+            // All 3 return the "default" entity manager
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->getDoctrine()->getManager('default');
             $entityManager = $this->get('doctrine.orm.default_entity_manager');
 
             // Both of these return the "customer" entity manager
-            $customerEntityManager = $this->get('doctrine')->getManager('customer');
+            $customerEntityManager = $this->getDoctrine()->getManager('customer');
             $customerEntityManager = $this->get('doctrine.orm.customer_entity_manager');
         }
     }
@@ -214,25 +216,26 @@ The same applies to repository calls::
 
     use AcmeStoreBundle\Entity\Customer;
     use AcmeStoreBundle\Entity\Product;
+    // ...
 
     class UserController extends Controller
     {
         public function indexAction()
         {
             // Retrieves a repository managed by the "default" em
-            $products = $this->get('doctrine')
+            $products = $this->getDoctrine()
                 ->getRepository(Product::class)
                 ->findAll()
             ;
 
             // Explicit way to deal with the "default" em
-            $products = $this->get('doctrine')
+            $products = $this->getDoctrine()
                 ->getRepository(Product::class, 'default')
                 ->findAll()
             ;
 
             // Retrieves a repository managed by the "customer" em
-            $customers = $this->get('doctrine')
+            $customers = $this->getDoctrine()
                 ->getRepository(Customer::class, 'customer')
                 ->findAll()
             ;

@@ -25,7 +25,7 @@ The main configuration file is called ``config.yml``:
 
         framework:
             secret:          '%secret%'
-            router:          { resource: '%kernel.root_dir%/config/routing.yml' }
+            router:          { resource: '%kernel.project_dir%/app/config/routing.yml' }
             # ...
 
         # Twig Configuration
@@ -57,7 +57,7 @@ The main configuration file is called ``config.yml``:
             </imports>
 
             <framework:config secret="%secret%">
-                <framework:router resource="%kernel.root_dir%/config/routing.xml" />
+                <framework:router resource="%kernel.project_dir%/app/config/routing.xml" />
                 <!-- ... -->
             </framework:config>
 
@@ -77,7 +77,7 @@ The main configuration file is called ``config.yml``:
         $container->loadFromExtension('framework', array(
             'secret' => '%secret%',
             'router' => array(
-                'resource' => '%kernel.root_dir%/config/routing.php',
+                'resource' => '%kernel.project_dir%/app/config/routing.php',
             ),
             // ...
         ));
@@ -119,7 +119,7 @@ dump of all available configuration options by running:
 
 .. code-block:: terminal
 
-    $ php app/console config:dump-reference twig
+    $ php bin/console config:dump-reference twig
 
 .. index::
    single: Environments; Introduction
@@ -174,6 +174,48 @@ it *also* loads other configuration files via its ``imports`` key:
 The ``imports`` key works a lot like the PHP ``include()`` function: the contents of
 ``parameters.yml``, ``security.yml`` and ``services.yml`` are read and loaded. You
 can also load XML files or PHP files.
+
+.. tip::
+
+    If your application uses unconventional file extensions (for example, your
+    YAML files have a ``.res`` extension) you can set the file type explicitly
+    with the ``type`` option:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # app/config/config.yml
+            imports:
+                - { resource: parameters.res, type: yml }
+                # ...
+
+        .. code-block:: xml
+
+            <!-- app/config/config.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xmlns:twig="http://symfony.com/schema/dic/twig"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                    http://symfony.com/schema/dic/twig
+                    http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+                <imports>
+                    <import resource="parameters.res" type="yml" />
+                    <!-- ... -->
+                </imports>
+            </container>
+
+        .. code-block:: php
+
+            // app/config/config.php
+            $this->import('parameters.res', 'yml');
+            // ...
 
 .. _config-parameter-intro:
 

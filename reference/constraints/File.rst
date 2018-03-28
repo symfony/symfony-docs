@@ -8,8 +8,8 @@ Validates that a value is a valid "file", which can be one of the following:
 * A valid :class:`Symfony\\Component\\HttpFoundation\\File\\File` object
   (including objects of class :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`).
 
-This constraint is commonly used in forms with the :doc:`file </reference/forms/types/file>`
-form type.
+This constraint is commonly used in forms with the :doc:`FileType </reference/forms/types/file>`
+form field.
 
 .. tip::
 
@@ -41,7 +41,7 @@ Basic Usage
 -----------
 
 This constraint is most commonly used on a property that will be rendered
-in a form as a :doc:`file </reference/forms/types/file>` form type. For
+in a form as a :doc:`FileType </reference/forms/types/file>` field. For
 example, suppose you're creating an author form where you can upload a "bio"
 PDF for the author. In your form, the ``bioFile`` property would be a ``file``
 type. The ``Author`` class might look as follows::
@@ -156,9 +156,6 @@ Options
 maxSize
 ~~~~~~~
 
-.. versionadded:: 2.6
-    The suffixes ``Ki`` and ``Mi`` were introduced in Symfony 2.6.
-
 **type**: ``mixed``
 
 If set, the size of the underlying file must be below this file size in
@@ -184,9 +181,6 @@ see `Wikipedia: Binary prefix`_.
 
 binaryFormat
 ~~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``binaryFormat`` option was introduced in Symfony 2.6.
 
 **type**: ``boolean`` **default**: ``null``
 
@@ -226,10 +220,6 @@ per the `mimeTypes`_ option.
 
 disallowEmptyMessage
 ~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``disallowEmptyMessage`` option was introduced in Symfony 2.6. Prior to 2.6,
-    if the user uploaded an empty file, no validation error occurred.
 
 **type**: ``string`` **default**: ``An empty file is not allowed.``
 

@@ -76,11 +76,7 @@ installer and then execute this command to download the demo application:
 
 .. code-block:: terminal
 
-    # Linux and Mac OS X
     $ symfony demo
-
-    # Windows
-    c:\> php symfony demo
 
 **The demo application is a simple blog engine**, because that will allow us to
 focus on the Symfony concepts and features without getting buried in difficult

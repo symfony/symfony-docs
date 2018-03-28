@@ -1,9 +1,6 @@
 GreaterThan
 ===========
 
-.. versionadded:: 2.3
-    The ``GreaterThan`` constraint was introduced in Symfony 2.3.
-
 Validates that a value is greater than another value, defined in the options. To
 force that a value is greater than or equal to another value, see
 :doc:`/reference/constraints/GreaterThanOrEqual`. To force a value is less
@@ -15,6 +12,7 @@ than another value, see :doc:`/reference/constraints/LessThan`.
 | Options        | - `value`_                                                                |
 |                | - `message`_                                                              |
 |                | - `payload`_                                                              |
+|                | - `propertyPath`_                                                         |
 +----------------+---------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThan`          |
 +----------------+---------------------------------------------------------------------------+
@@ -109,9 +107,6 @@ The following constraints ensure that:
 
 Comparing Dates
 ---------------
-
-.. versionadded:: 2.6
-    The feature to compare dates was introduced in Symfony 2.6.
 
 This constraint can be used to compare ``DateTime`` objects against any date
 string `accepted by the DateTime constructor`_. For example, you could check
@@ -306,5 +301,7 @@ This is the message that will be shown if the value is not greater than the
 comparison value.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. include:: /reference/constraints/_comparison-propertypath-option.rst.inc
 
 .. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php

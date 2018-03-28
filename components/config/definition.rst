@@ -174,7 +174,7 @@ Or you may define a prototype for each node inside an array node::
     $rootNode
         ->children()
             ->arrayNode('connections')
-                ->prototype('array')
+                ->arrayPrototype()
                     ->children()
                         ->scalarNode('driver')->end()
                         ->scalarNode('host')->end()
@@ -186,10 +186,28 @@ Or you may define a prototype for each node inside an array node::
         ->end()
     ;
 
+.. versionadded:: 3.3
+    The ``arrayPrototype()`` method (and the related ``booleanPrototype()``
+    ``integerPrototype()``, ``floatPrototype()``, ``scalarPrototype()`` and
+    ``enumPrototype()``) was introduced in Symfony 3.3. In previous versions,
+    you needed to use ``prototype('array')``, ``prototype('boolean')``, etc.
+
 A prototype can be used to add a definition which may be repeated many times
 inside the current node. According to the prototype definition in the example
 above, it is possible to have multiple connection arrays (containing a ``driver``,
 ``host``, etc.).
+
+.. versionadded:: 3.3
+    The ``castToArray()`` helper was added in Symfony 3.3.
+
+Sometimes, to improve the user experience of your application or bundle, you may
+allow to use a simple string or numeric value where an array value is required.
+Use the ``castToArray()`` helper to turn those variables into arrays::
+
+    ->arrayNode('hosts')
+        ->beforeNormalization()->castToArray()->end()
+        // ...
+    ->end()
 
 Array Node Options
 ~~~~~~~~~~~~~~~~~~
@@ -210,6 +228,9 @@ Before defining the children of an array node, you can provide options like:
     If called (with ``false``), keys with dashes are *not* normalized to underscores.
     It is recommended to use this with prototype nodes where the user will define
     a key-value map, to avoid an unnecessary transformation.
+``ignoreExtraKeys()``
+    Allows extra config keys to be specified under an array without
+    throwing an exception.
 
 A basic prototyped array configuration can be defined as follows::
 
@@ -217,7 +238,7 @@ A basic prototyped array configuration can be defined as follows::
         ->fixXmlConfig('driver')
         ->children()
             ->arrayNode('drivers')
-                ->prototype('scalar')->end()
+                ->scalarPrototype()->end()
             ->end()
         ->end()
     ;
@@ -248,7 +269,7 @@ A more complex example would be to define a prototyped array with children::
         ->fixXmlConfig('connection')
         ->children()
             ->arrayNode('connections')
-                ->prototype('array')
+                ->arrayPrototype()
                     ->children()
                         ->scalarNode('table')->end()
                         ->scalarNode('user')->end()
@@ -322,7 +343,7 @@ In order to maintain the array keys use the ``useAttributeAsKey()`` method::
         ->children()
             ->arrayNode('connections')
                 ->useAttributeAsKey('name')
-                ->prototype('array')
+                ->arrayPrototype()
                     ->children()
                         ->scalarNode('table')->end()
                         ->scalarNode('user')->end()
@@ -412,6 +433,29 @@ has a certain value:
         ->end()
     ;
 
+Deprecating the Option
+----------------------
+
+You can deprecate options using the
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::setDeprecated`
+method::
+
+    $rootNode
+        ->children()
+            ->integerNode('old_option')
+                // this outputs the following generic deprecation message:
+                // The child node "old_option" at path "..." is deprecated.
+                ->setDeprecated()
+
+                // you can also pass a custom deprecation message (%node% and %path% placeholders are available):
+                ->setDeprecated('The "%node%" option is deprecated. Use "new_config_option" instead.')
+            ->end()
+        ->end()
+    ;
+
+If you use the Web Debug Toolbar, these deprecation notices are shown when the
+configuration is rebuilt.
+
 Documenting the Option
 ----------------------
 
@@ -444,10 +488,6 @@ and in XML:
 
     <!-- entries-per-page: This value is only used for the search results page. -->
     <config entries-per-page="25" />
-
-.. versionadded:: 2.6
-    Since Symfony 2.6, the info will also be added to the exception message
-    when an invalid type is given.
 
 Optional Sections
 -----------------
@@ -539,7 +579,7 @@ tree with ``append()``::
             ->isRequired()
             ->requiresAtLeastOneElement()
             ->useAttributeAsKey('name')
-            ->prototype('array')
+            ->arrayPrototype()
                 ->children()
                     ->scalarNode('value')->isRequired()->end()
                 ->end()
@@ -637,7 +677,7 @@ with ``fixXmlConfig()``::
         ->fixXmlConfig('extension')
         ->children()
             ->arrayNode('extensions')
-                ->prototype('scalar')->end()
+                ->scalarPrototype()->end()
             ->end()
         ->end()
     ;
@@ -739,6 +779,7 @@ the following ways:
 - ``ifTrue()``
 - ``ifString()``
 - ``ifNull()``
+- ``ifEmpty()`` (since Symfony 3.2)
 - ``ifArray()``
 - ``ifInArray()``
 - ``ifNotInArray()``
@@ -752,8 +793,7 @@ A validation rule also requires a "then" part:
 - ``thenUnset()``
 
 Usually, "then" is a closure. Its return value will be used as a new value
-for the node, instead
-of the node's original value.
+for the node, instead of the node's original value.
 
 Processing Configuration Values
 -------------------------------

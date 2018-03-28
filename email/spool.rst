@@ -112,12 +112,12 @@ In order to use the spool with files, use the following configuration:
 .. tip::
 
     If you want to store the spool somewhere with your project directory,
-    remember that you can use the ``%kernel.root_dir%`` parameter to reference
+    remember that you can use the ``%kernel.project_dir%`` parameter to reference
     the project's root:
 
     .. code-block:: yaml
 
-        path: '%kernel.root_dir%/spool'
+        path: '%kernel.project_dir%/app/spool'
 
 Now, when your app sends an email, it will not actually be sent but instead
 added to the spool. Sending the messages from the spool is done separately.
@@ -125,19 +125,19 @@ There is a console command to send the messages in the spool:
 
 .. code-block:: terminal
 
-    $ php app/console swiftmailer:spool:send --env=prod
+    $ php bin/console swiftmailer:spool:send --env=prod
 
 It has an option to limit the number of messages to be sent:
 
 .. code-block:: terminal
 
-    $ php app/console swiftmailer:spool:send --message-limit=10 --env=prod
+    $ php bin/console swiftmailer:spool:send --message-limit=10 --env=prod
 
 You can also set the time limit in seconds:
 
 .. code-block:: terminal
 
-    $ php app/console swiftmailer:spool:send --time-limit=10 --env=prod
+    $ php bin/console swiftmailer:spool:send --time-limit=10 --env=prod
 
 Of course you will not want to run this manually in reality. Instead, the
 console command should be triggered by a cron job or scheduled task and run

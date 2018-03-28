@@ -67,8 +67,8 @@ Twig Extensions
 
 .. best-practice::
 
-    Define your Twig extensions in the ``AppBundle/Twig/`` directory and
-    configure them using the ``app/config/services.yml`` file.
+    Define your Twig extensions in the ``AppBundle/Twig/`` directory. Your
+    application will automatically detect them and configure them.
 
 Our application needs a custom ``md2html`` Twig filter so that we can transform
 the Markdown contents of each post into HTML.
@@ -80,18 +80,8 @@ a new dependency of the project:
 
     $ composer require erusev/parsedown
 
-Then, create a new ``Markdown`` service that will be used later by the Twig
-extension. The service definition only requires the path to the class:
-
-.. code-block:: yaml
-
-    # app/config/services.yml
-    services:
-        # ...
-        app.markdown:
-            class: AppBundle\Utils\Markdown
-
-And the ``Markdown`` class just needs to define one single method to transform
+Then, create a new ``Markdown`` class that will be used later by the Twig
+extension. It just needs to define one single method to transform
 Markdown content into HTML::
 
     namespace AppBundle\Utils;
@@ -107,15 +97,13 @@ Markdown content into HTML::
 
         public function toHtml($text)
         {
-            $html = $this->parser->text($text);
-
-            return $html;
+            return $this->parser->text($text);
         }
     }
 
 Next, create a new Twig extension and define a new filter called ``md2html``
-using the ``Twig_SimpleFilter`` class. Inject the newly defined ``markdown``
-service in the constructor of the Twig extension::
+using the ``Twig_SimpleFilter`` class. Inject the newly defined ``Markdown``
+class in the constructor of the Twig extension::
 
     namespace AppBundle\Twig;
 
@@ -152,19 +140,11 @@ service in the constructor of the Twig extension::
         }
     }
 
-Lastly define a new service to enable this Twig extension in the app (the service
-name is irrelevant because you never use it in your own code):
+And that's it!
 
-.. code-block:: yaml
-
-    # app/config/services.yml
-    services:
-        app.twig.app_extension:
-            class:     AppBundle\Twig\AppExtension
-            arguments: ['@app.markdown']
-            public:    false
-            tags:
-                - { name: twig.extension }
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+you're done! Symfony will automatically know about your new service and tag it to
+be used as a Twig extension.
 
 ----
 

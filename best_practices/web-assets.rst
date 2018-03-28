@@ -35,6 +35,8 @@ much more concise:
 Using Assetic
 -------------
 
+.. include:: /assetic/_standard_edition_warning.rst.inc
+
 These days, you probably can't simply create static CSS and JavaScript files
 and include them in your template. Instead, you'll probably want to combine
 and minify these to improve client-side performance. You may also want to

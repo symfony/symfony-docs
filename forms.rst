@@ -79,6 +79,9 @@ from inside a controller::
     use AppBundle\Entity\Task;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
     class DefaultController extends Controller
     {
@@ -90,9 +93,9 @@ from inside a controller::
             $task->setDueDate(new \DateTime('tomorrow'));
 
             $form = $this->createFormBuilder($task)
-                ->add('task', 'text')
-                ->add('dueDate', 'date')
-                ->add('save', 'submit', array('label' => 'Create Task'))
+                ->add('task', TextType::class)
+                ->add('dueDate', DateType::class)
+                ->add('save', SubmitType::class, array('label' => 'Create Task'))
                 ->getForm();
 
             return $this->render('default/new.html.twig', array(
@@ -115,15 +118,12 @@ building the form.
 
 In this example, you've added two fields to your form - ``task`` and ``dueDate`` -
 corresponding to the ``task`` and ``dueDate`` properties of the ``Task`` class.
-You've also assigned each a "type" (e.g. ``text``, ``date``), which, among
-other things, determines which HTML form tag(s) is rendered for that field.
+You've also assigned each a "type" (e.g. ``TextType`` and ``DateType``),
+represented by its fully qualified class name. Among other things, it determines
+which HTML form tag(s) is rendered for that field.
 
 Finally, you added a submit button with a custom label for submitting the form to
 the server.
-
-.. versionadded:: 2.3
-    Support for submit buttons was introduced in Symfony 2.3. Before that, you had
-    to add buttons to the form's HTML manually.
 
 Symfony comes with many built-in types that will be discussed shortly
 (see :ref:`forms-type-reference`).
@@ -226,9 +226,9 @@ your controller::
         $task = new Task();
 
         $form = $this->createFormBuilder($task)
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
-            ->add('save', 'submit', array('label' => 'Create Task'))
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
+            ->add('save', SubmitType::class, array('label' => 'Create Task'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -257,12 +257,6 @@ your controller::
     Be aware that the ``createView()`` method should be called *after* ``handleRequest()``
     is called. Otherwise, changes done in the ``*_SUBMIT`` events aren't applied to the
     view (like validation errors).
-
-.. versionadded:: 2.3
-    The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest` method
-    was introduced in Symfony 2.3. Previously, the ``$request`` was passed
-    to the ``submit()`` method - a strategy which is deprecated and will be
-    removed in Symfony 3.0. For details on that method, see :ref:`form-submit-request`.
 
 This controller follows a common pattern for handling forms and has three
 possible paths:
@@ -459,11 +453,11 @@ Field Type Options
 
 Each field type has a number of options that can be used to configure it.
 For example, the ``dueDate`` field is currently being rendered as 3 select
-boxes. However, the :doc:`date field </reference/forms/types/date>` can be
+boxes. However, the :doc:`DateType </reference/forms/types/date>` can be
 configured to be rendered as a single text box (where the user would enter
 the date as a string in the box)::
 
-    ->add('dueDate', 'date', array('widget' => 'single_text'))
+    ->add('dueDate', DateType::class, array('widget' => 'single_text'))
 
 .. image:: /_images/form/simple-form-2.png
     :align: center
@@ -481,7 +475,7 @@ the documentation for each type.
     :ref:`disable HTML5 validation <forms-html5-validation-disable>`
     or set the ``required`` option on your field to ``false``::
 
-        ->add('dueDate', 'date', array(
+        ->add('dueDate', DateType::class, array(
             'widget' => 'single_text',
             'required' => false
         ))
@@ -500,7 +494,7 @@ the documentation for each type.
     The label for the form field can be set using the ``label`` option,
     which can be applied to any field::
 
-        ->add('dueDate', 'date', array(
+        ->add('dueDate', DateType::class, array(
             'widget' => 'single_text',
             'label'  => 'Due Date',
         ))
@@ -521,7 +515,7 @@ Now that you've added validation metadata to the ``Task`` class, Symfony
 already knows a bit about your fields. If you allow it, Symfony can "guess"
 the type of your field and set it up for you. In this example, Symfony can
 guess from the validation rules that both the ``task`` field is a normal
-``text`` field and the ``dueDate`` field is a ``date`` field::
+``TextType`` field and the ``dueDate`` field is a ``DateType`` field::
 
     public function newAction()
     {
@@ -530,7 +524,7 @@ guess from the validation rules that both the ``task`` field is a normal
         $form = $this->createFormBuilder($task)
             ->add('task')
             ->add('dueDate', null, array('widget' => 'single_text'))
-            ->add('save', 'submit')
+            ->add('save', SubmitType::class)
             ->getForm();
     }
 
@@ -602,6 +596,7 @@ that will house the logic for building the task form::
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
     class TaskType extends AbstractType
     {
@@ -610,36 +605,21 @@ that will house the logic for building the task form::
             $builder
                 ->add('task')
                 ->add('dueDate', null, array('widget' => 'single_text'))
-                ->add('save', 'submit')
+                ->add('save', SubmitType::class)
             ;
         }
-
-        public function getName()
-        {
-            return 'app_task';
-        }
     }
-
-.. caution::
-
-    The ``getName()`` method returns the identifier of this form "type". These
-    identifiers must be unique in the application. Unless you want to override
-    a built-in type, they should be different from the default Symfony types
-    and from any type defined by a third-party bundle installed in your application.
-    Consider prefixing your types with ``app_`` to avoid identifier collisions.
 
 This new class contains all the directions needed to create the task form. It can
 be used to quickly build a form object in the controller::
 
     // src/AppBundle/Controller/DefaultController.php
-
-    // add this new use statement at the top of the class
     use AppBundle\Form\TaskType;
 
     public function newAction()
     {
         $task = ...;
-        $form = $this->createForm(new TaskType(), $task);
+        $form = $this->createForm(TaskType::class, $task);
 
         // ...
     }
@@ -689,8 +669,8 @@ the choice is ultimately up to you.
             $builder
                 ->add('task')
                 ->add('dueDate')
-                ->add('agreeTerms', 'checkbox', array('mapped' => false))
-                ->add('save', 'submit')
+                ->add('agreeTerms', CheckboxType::class, array('mapped' => false))
+                ->add('save', SubmitType::class)
             ;
         }
 
@@ -724,12 +704,6 @@ There's a lot more to learn and a lot of *powerful* tricks in the form system.
 
 Learn more
 ----------
-
-.. toctree::
-    :hidden:
-
-    form/use_virtuals_forms
-
 .. toctree::
     :maxdepth: 1
     :glob:
@@ -742,3 +716,4 @@ Learn more
 
 .. _`Symfony Form component`: https://github.com/symfony/form
 .. _`DateTime`: https://php.net/manual/en/class.datetime.php
+.. _`2.8 UPGRADE Log`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-2.8.md#form

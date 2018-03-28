@@ -21,9 +21,6 @@ The process to achieve this behavior consists of two steps:
 1. Assigning the Error Level
 ----------------------------
 
-.. versionadded:: 2.6
-    The ``payload`` option was introduced in Symfony 2.6.
-
 Use the ``payload`` option to configure the error level for each constraint:
 
 .. configuration-block::
@@ -130,10 +127,6 @@ Use the ``payload`` option to configure the error level for each constraint:
 
 2. Customize the Error Message Template
 ---------------------------------------
-
-.. versionadded:: 2.6
-    The ``getConstraint()`` method in the ``ConstraintViolation`` class was
-    introduced in Symfony 2.6.
 
 When validation of the ``User`` object fails, you can retrieve the constraint
 that caused a particular failure using the

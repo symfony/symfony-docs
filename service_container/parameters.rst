@@ -54,8 +54,7 @@ and hidden with the service definition:
             mailer.transport: sendmail
 
         services:
-            app.mailer:
-                class:     AppBundle\Mailer
+            AppBundle\Service\Mailer:
                 arguments: ['%mailer.transport%']
 
     .. code-block:: xml
@@ -71,7 +70,7 @@ and hidden with the service definition:
             </parameters>
 
             <services>
-                <service id="app.mailer" class="AppBundle\Mailer">
+                <service id="AppBundle\Service\Mailer">
                     <argument>%mailer.transport%</argument>
                 </service>
             </services>
@@ -83,7 +82,7 @@ and hidden with the service definition:
 
         $container->setParameter('mailer.transport', 'sendmail');
 
-        $container->register('app.mailer', Mailer::class)
+        $container->register(Mailer::class)
             ->addArgument('%mailer.transport%');
 
 .. caution::
@@ -110,22 +109,38 @@ and hidden with the service definition:
 
 .. note::
 
-    The percent sign inside a parameter or argument, as part of the string,
-    must be escaped with another percent sign:
+    If you use a string that starts with ``@`` or  has ``%`` anywhere in it, you
+    need to escape it by adding another ``@`` or ``%``:
 
     .. configuration-block::
 
         .. code-block:: yaml
 
-            arguments: ['http://symfony.com/?foo=%%s&bar=%%d']
+            # app/config/parameters.yml
+            parameters:
+                # This will be parsed as string '@securepass'
+                mailer_password: '@@securepass'
+
+                # Parsed as http://symfony.com/?foo=%s&amp;bar=%d
+                url_pattern: 'http://symfony.com/?foo=%%s&amp;bar=%%d'
 
         .. code-block:: xml
 
-            <argument>http://symfony.com/?foo=%%s&amp;bar=%%d</argument>
+            <parameters>
+                <!-- the @ symbol does NOT need to be escaped in XML -->
+                <parameter key="mailer_password">@securepass</parameter>
+
+                <!-- But % does need to be escaped -->
+                <parameter key="url_pattern">http://symfony.com/?foo=%%s&amp;bar=%%d</parameter>
+            </parameters>
 
         .. code-block:: php
 
-            ->addArgument('http://symfony.com/?foo=%%s&bar=%%d');
+            // the @ symbol does NOT need to be escaped in XML
+            $container->setParameter('mailer_password', '@securepass');
+
+            // But % does need to be escaped
+            $container->setParameter('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
 
 Getting and Setting Container Parameters in PHP
 -----------------------------------------------
@@ -151,9 +166,14 @@ accessor methods for parameters::
 
 .. note::
 
-    You can only set a parameter before the container is compiled. To learn
-    more about compiling the container see
+    You can only set a parameter before the container is compiled: not at run-time.
+    To learn more about compiling the container see
     :doc:`/components/dependency_injection/compilation`.
+
+.. versionadded:: 3.4
+    Container parameters are case sensitive starting from Symfony 3.4. In
+    previous Symfony versions, parameters were case insensitive, meaning that
+    ``mailer.transport`` and ``Mailer.Transport`` were considered the same parameter.
 
 .. _component-di-parameters-array:
 
@@ -216,22 +236,25 @@ for all parameters that are arrays.
             'fr' => array('fr', 'en'),
         ));
 
+Environment Variables and Dynamic Values
+----------------------------------------
+
+See :doc:`/configuration/external_parameters`.
+
 .. _component-di-parameters-constants:
 
 Constants as Parameters
 -----------------------
 
-The XML and PHP formats also have support for setting PHP constants as parameters.
-To take advantage of this feature, map the name of your constant to a parameter
-key and define the type as ``constant``.
+Setting PHP constants as parameters is also supported:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         parameters:
-            global.constant.value: "@=constant('GLOBAL_CONSTANT')"
-            my_class.constant.value: "@=constant('My_Class::CONSTANT_NAME')"
+            global.constant.value: !php/const GLOBAL_CONSTANT
+            my_class.constant.value: !php/const My_Class::CONSTANT_NAME
 
     .. code-block:: xml
 
@@ -251,27 +274,6 @@ key and define the type as ``constant``.
 
         $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
         $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
-
-.. caution::
-
-    YAML files can refer to PHP constants via the ``@=constant('CONSTANT_NAME')``
-    syntax, which is provided by the
-    :doc:`Expression Language component </components/expression_language>`. See
-    :doc:`/components/expression_language/syntax` to learn more about its syntax.
-
-.. tip::
-
-    If you're using YAML, you can :doc:`import an XML file </service_container/import>`
-    to take advantage of this functionality:
-
-    .. code-block:: yaml
-
-        imports:
-            - { resource: parameters.xml }
-
-.. note::
-
-    In Symfony 3.2, YAML supports PHP constants via the ``!php/const:CONSTANT_NAME`` syntax.
 
 PHP Keywords in XML
 -------------------

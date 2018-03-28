@@ -4,6 +4,10 @@
 How to Use Access Control Lists (ACLs)
 ======================================
 
+.. versionadded:: 3.4
+    ACL support was deprecated in Symfony 3.4 and will be removed in 4.0. Install
+    the `Symfony ACL bundle`_ if you want to keep using ACL.
+
 In complex applications, you will often face the problem that access decisions
 cannot only be based on the person (``Token``) who is requesting access, but
 also involve a domain object that access is being requested for. This is where
@@ -98,7 +102,7 @@ running the following command:
 
 .. code-block:: terminal
 
-    $ php app/console init:acl
+    $ php bin/console init:acl
 
 Getting Started
 ---------------
@@ -242,4 +246,5 @@ added above::
 
 The user is now allowed to view, edit, delete, and un-delete objects.
 
+.. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
 .. _`MongoDBAclBundle`: https://github.com/IamPersistent/MongoDBAclBundle

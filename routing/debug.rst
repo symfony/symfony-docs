@@ -11,21 +11,25 @@ lists *all* the configured routes in your application:
 
 .. code-block:: terminal
 
-    $ php app/console debug:router
+    $ php bin/console debug:router
 
-    homepage              ANY       /
-    contact               GET       /contact
-    contact_process       POST      /contact
-    article_show          ANY       /articles/{_locale}/{year}/{title}.{_format}
-    blog                  ANY       /blog/{page}
-    blog_show             ANY       /blog/{slug}
+    ------------------ -------- -------- ------ ----------------------------------------------
+     Name               Method   Scheme   Host   Path
+    ------------------ -------- -------- ------ ----------------------------------------------
+     homepage           ANY      ANY      ANY    /
+     contact            GET      ANY      ANY    /contact
+     contact_process    POST     ANY      ANY    /contact
+     article_show       ANY      ANY      ANY    /articles/{_locale}/{year}/{title}.{_format}
+     blog               ANY      ANY      ANY    /blog/{page}
+     blog_show          ANY      ANY      ANY    /blog/{slug}
+    ------------------ -------- -------- ------ ----------------------------------------------
 
 You can also get very specific information on a single route by including
 the route name as the command argument:
 
 .. code-block:: terminal
 
-    $ php app/console debug:router article_show
+    $ php bin/console debug:router article_show
 
 Likewise, if you want to test whether a URL matches a given route, use the
 ``router:match`` command. This is useful to debug routing issues and find out
@@ -33,6 +37,6 @@ which route is associated with the given URL:
 
 .. code-block:: terminal
 
-    $ php app/console router:match /blog/my-latest-post
+    $ php bin/console router:match /blog/my-latest-post
 
     Route "blog_show" matches

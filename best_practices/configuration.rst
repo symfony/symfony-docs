@@ -52,8 +52,8 @@ Canonical Parameters
     Define all your application's parameters in the
     ``app/config/parameters.yml.dist`` file.
 
-Since version 2.3, Symfony includes a configuration file called ``parameters.yml.dist``,
-which stores the canonical list of configuration parameters for the application.
+Symfony includes a configuration file called ``parameters.yml.dist``, which
+stores the canonical list of configuration parameters for the application.
 
 Whenever a new configuration parameter is defined for the application, you
 should also add it to this file and submit the changes to your version control
@@ -198,8 +198,20 @@ Moving Sensitive Options Outside of Symfony Entirely
 
 When dealing with sensitive options, like database credentials, we also recommend
 that you store them outside the Symfony project and make them available
-through environment variables. Learn how to do it in the following article:
-:doc:`/configuration/external_parameters`.
+through environment variables:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    doctrine:
+        dbal:
+            # ...
+            password: "%env(DB_PASSWORD)%"
+
+.. versionadded:: 3.2
+    Support for runtime environment variables via the ``%env(...)%`` syntax
+    was added in Symfony 3.2. Prior to version 3.2, you needed to use the
+    :doc:`special SYMFONY__ variables </configuration/external_parameters>`.
 
 ----
 

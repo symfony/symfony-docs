@@ -13,7 +13,7 @@ console command:
 .. code-block:: terminal
 
     # You can check by filename:
-    $ php app/console lint:twig app/Resources/views/article/recent_list.html.twig
+    $ php bin/console lint:twig app/Resources/views/article/recent_list.html.twig
 
     # or by directory:
-    $ php app/console lint:twig app/Resources/views
+    $ php bin/console lint:twig app/Resources/views

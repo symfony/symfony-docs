@@ -38,6 +38,13 @@ of ``bcrypt`` are the inclusion of a *salt* value to protect against rainbow
 table attacks, and its adaptive nature, which allows to make it slower to
 remain resistant to brute-force search attacks.
 
+.. note::
+
+    :ref:`Argon2i <reference-security-argon2i>` is the hashing algorithm as
+    recommended by industry standards, but this won't be available to you unless
+    you are using PHP 7.2+ or have the `libsodium`_ extension installed.
+    ``bcrypt`` is sufficient for most applications.
+
 With this in mind, here is the authentication setup from our application,
 which uses a login form to load users from the database:
 
@@ -109,8 +116,8 @@ Using ``@Security``, this looks like:
 
 .. code-block:: php
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     /**
@@ -133,8 +140,8 @@ controller if their email matches the value returned by the ``getAuthorEmail()``
 method on the ``Post`` object::
 
     use AppBundle\Entity\Post;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
@@ -185,6 +192,7 @@ Now you can reuse this method both in the template and in the security expressio
 
     use AppBundle\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
@@ -218,7 +226,8 @@ more advanced use-case, you can always do the same security check in PHP::
      */
     public function editAction($id)
     {
-        $post = $this->getDoctrine()->getRepository(Post::class)
+        $post = $this->getDoctrine()
+            ->getRepository(Post::class)
             ->find($id);
 
         if (!$post) {
@@ -253,55 +262,75 @@ the same ``getAuthorEmail()`` logic you used above::
 
     namespace AppBundle\Security;
 
-    use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
     use Symfony\Component\Security\Core\User\UserInterface;
+    use AppBundle\Entity\Post;
 
-    // AbstractVoter class requires Symfony 2.6 or higher version
-    class PostVoter extends AbstractVoter
+    class PostVoter extends Voter
     {
         const CREATE = 'create';
         const EDIT   = 'edit';
 
-        protected function getSupportedAttributes()
+        /**
+         * @var AccessDecisionManagerInterface
+         */
+        private $decisionManager;
+
+        public function __construct(AccessDecisionManagerInterface $decisionManager)
         {
-            return array(self::CREATE, self::EDIT);
+            $this->decisionManager = $decisionManager;
         }
 
-        protected function getSupportedClasses()
+        protected function supports($attribute, $subject)
         {
-            return array('AppBundle\Entity\Post');
+            if (!in_array($attribute, array(self::CREATE, self::EDIT))) {
+                return false;
+            }
+
+            if (!$subject instanceof Post) {
+                return false;
+            }
+
+            return true;
         }
 
-        protected function isGranted($attribute, $post, $user = null)
+        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
         {
+            $user = $token->getUser();
+            /** @var Post */
+            $post = $subject; // $subject must be a Post instance, thanks to the supports method
+
             if (!$user instanceof UserInterface) {
                 return false;
             }
 
-            if ($attribute === self::CREATE && in_array('ROLE_ADMIN', $user->getRoles(), true)) {
-                return true;
-            }
+            switch ($attribute) {
+                case self::CREATE:
+                    // if the user is an admin, allow them to create new posts
+                    if ($this->decisionManager->decide($token, array('ROLE_ADMIN'))) {
+                        return true;
+                    }
 
-            if ($attribute === self::EDIT && $user->getEmail() === $post->getAuthorEmail()) {
-                return true;
+                    break;
+                case self::EDIT:
+                    // if the user is the author of the post, allow them to edit the posts
+                    if ($user->getEmail() === $post->getAuthorEmail()) {
+                        return true;
+                    }
+
+                    break;
             }
 
             return false;
         }
     }
 
-To enable the security voter in the application, define a new service:
-
-.. code-block:: yaml
-
-    # app/config/services.yml
-    services:
-        # ...
-        app.post_voter:
-            class:  AppBundle\Security\PostVoter
-            public: false
-            tags:
-               - { name: security.voter }
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+your application will :ref:`autoconfigure <services-autoconfigure>` your security
+voter and inject an ``AccessDecisionManagerInterface`` instance into it thanks to
+:doc:`autowiring </service_container/autowiring>`.
 
 Now, you can use the voter with the ``@Security`` annotation::
 
@@ -322,7 +351,7 @@ via the even easier shortcut in a controller::
      */
     public function editAction($id)
     {
-        $post = // query for the post ...
+        $post = ...; // query for the post
 
         $this->denyAccessUnlessGranted('edit', $post);
 
@@ -361,3 +390,4 @@ Next: :doc:`/best_practices/web-assets`
 .. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Security annotation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
+.. _`libsodium`: https://pecl.php.net/package/libsodium

@@ -14,7 +14,7 @@ the class for you.
 
 .. code-block:: terminal
 
-    $ php app/console doctrine:generate:entity --no-interaction \
+    $ php bin/console doctrine:generate:entity --no-interaction \
         --entity="AppBundle:Category" \
         --fields="name:string(255)"
 
@@ -221,7 +221,7 @@ table, the new ``product.category_id`` column, and the new foreign key:
 
 .. code-block:: terminal
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
 Saving Related Entities
 -----------------------
@@ -370,10 +370,10 @@ following method to the ``ProductRepository`` class::
     {
         $query = $this->getEntityManager()
             ->createQuery(
-                'SELECT p, c FROM AppBundle:Product p
-                JOIN p.category c
-                WHERE p.id = :id'
-            )->setParameter('id', $productId);
+            'SELECT p, c FROM AppBundle:Product p
+            JOIN p.category c
+            WHERE p.id = :id'
+        )->setParameter('id', $productId);
 
         try {
             return $query->getSingleResult();

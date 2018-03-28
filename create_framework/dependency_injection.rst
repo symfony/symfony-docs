@@ -9,9 +9,11 @@ to it::
     // example.com/src/Simplex/Framework.php
     namespace Simplex;
 
-    use Symfony\Component\Routing;
-    use Symfony\Component\HttpKernel;
     use Symfony\Component\EventDispatcher\EventDispatcher;
+    use Symfony\Component\HttpFoundation;
+    use Symfony\Component\HttpFoundation\RequestStack;
+    use Symfony\Component\HttpKernel;
+    use Symfony\Component\Routing;
 
     class Framework extends HttpKernel\HttpKernel
     {
@@ -19,13 +21,16 @@ to it::
         {
             $context = new Routing\RequestContext();
             $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
-            $resolver = new HttpKernel\Controller\ControllerResolver();
+            $requestStack = new RequestStack();
+
+            $controllerResolver = new HttpKernel\Controller\ControllerResolver();
+            $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
 
             $dispatcher = new EventDispatcher();
-            $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher));
+            $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher, $requestStack));
             $dispatcher->addSubscriber(new HttpKernel\EventListener\ResponseListener('UTF-8'));
 
-            parent::__construct($dispatcher, $resolver);
+            parent::__construct($dispatcher, $controllerResolver, $requestStack, $argumentResolver);
         }
     }
 
@@ -94,6 +99,7 @@ Create a new file to host the dependency injection container configuration::
     // example.com/src/container.php
     use Symfony\Component\DependencyInjection;
     use Symfony\Component\DependencyInjection\Reference;
+    use Symfony\Component\HttpFoundation;
     use Symfony\Component\HttpKernel;
     use Symfony\Component\Routing;
     use Symfony\Component\EventDispatcher;
@@ -104,10 +110,12 @@ Create a new file to host the dependency injection container configuration::
     $containerBuilder->register('matcher', Routing\Matcher\UrlMatcher::class)
         ->setArguments(array($routes, new Reference('context')))
     ;
-    $containerBuilder->register('resolver', HttpKernel\Controller\ControllerResolver::class);
+    $containerBuilder->register('request_stack', HttpFoundation\RequestStack::class);
+    $containerBuilder->register('controller_resolver', HttpKernel\Controller\ControllerResolver::class);
+    $containerBuilder->register('argument_resolver', HttpKernel\Controller\ArgumentResolver::class);
 
     $containerBuilder->register('listener.router', HttpKernel\EventListener\RouterListener::class)
-        ->setArguments(array(new Reference('matcher')))
+        ->setArguments(array(new Reference('matcher'), new Reference('request_stack')))
     ;
     $containerBuilder->register('listener.response', HttpKernel\EventListener\ResponseListener::class)
         ->setArguments(array('UTF-8'))
@@ -121,7 +129,12 @@ Create a new file to host the dependency injection container configuration::
         ->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
     ;
     $containerBuilder->register('framework', Framework::class)
-        ->setArguments(array(new Reference('dispatcher'), new Reference('resolver')))
+        ->setArguments(array(
+            new Reference('dispatcher'),
+            new Reference('controller_resolver'),
+            new Reference('request_stack'),
+            new Reference('argument_resolver'),
+        ))
     ;
 
     return $containerBuilder;
@@ -223,7 +236,7 @@ And the related change in the front controller::
 
 We have obviously barely scratched the surface of what you can do with the
 container: from class names as parameters, to overriding existing object
-definitions, from scope support to dumping a container to a plain PHP class,
+definitions, from shared service support to dumping a container to a plain PHP class,
 and much more. The Symfony dependency injection container is really powerful
 and is able to manage any kind of PHP class.
 

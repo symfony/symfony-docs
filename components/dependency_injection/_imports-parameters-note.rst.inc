@@ -10,7 +10,7 @@
 
             # app/config/config.yml
             imports:
-                - { resource: '%kernel.root_dir%/parameters.yml' }
+                - { resource: '%kernel.project_dir%/app/parameters.yml' }
 
         .. code-block:: xml
 
@@ -22,11 +22,11 @@
                     http://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <imports>
-                    <import resource="%kernel.root_dir%/parameters.yml" />
+                    <import resource="%kernel.project_dir%/app/parameters.yml" />
                 </imports>
             </container>
 
         .. code-block:: php
 
             // app/config/config.php
-            $loader->import('%kernel.root_dir%/parameters.yml');
+            $loader->import('%kernel.project_dir%/app/parameters.yml');

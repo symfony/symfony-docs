@@ -101,7 +101,7 @@ they don't collide with the files from ``AppKernel``::
 
         public function registerContainerConfiguration(LoaderInterface $loader)
         {
-            $loader->load($this->getRootDir().'/config/api/config_'.$this->getEnvironment().'.yml');
+            $loader->load($this->getProjectDir().'/app/config/api/config_'.$this->getEnvironment().'.yml');
         }
     }
 
@@ -143,9 +143,9 @@ config files or better, import them and override the needed options:
 Executing Commands with a Different Kernel
 ------------------------------------------
 
-The ``app/console`` script used to run Symfony commands always uses the default
+The ``bin/console`` script used to run Symfony commands always uses the default
 ``AppKernel`` class to build the application and load the commands. If you need
-to execute console commands using the new kernel, duplicate the ``app/console``
+to execute console commands using the new kernel, duplicate the ``bin/console``
 script and rename it (e.g. ``bin/api``).
 
 Then, replace the ``AppKernel`` instantiation by your own kernel instantiation
@@ -155,7 +155,7 @@ new kernel.
 
 .. note::
 
-    The commands available for each console script (e.g. ``app/console`` and
+    The commands available for each console script (e.g. ``bin/console`` and
     ``bin/api``) can differ because they depend on the bundles enabled for each
     kernel, which could be different.
 
@@ -175,7 +175,7 @@ In order to solve this issue, add the following configuration to your kernel:
     twig:
         paths:
             # allows to use app/Resources/views/ templates in the ApiKernel
-            "%kernel.root_dir%/../app/Resources/views": ~
+            "%kernel.project_dir%/app/Resources/views": ~
 
 Running Tests Using a Different Kernel
 --------------------------------------

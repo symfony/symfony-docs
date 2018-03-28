@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; language
+   single: Forms; Fields; LanguageType
 
-language Field Type
-===================
+LanguageType Field
+==================
 
-The ``language`` type is a subset of the ``ChoiceType`` that allows the
+The ``LanguageType`` is a subset of the ``ChoiceType`` that allows the
 user to select from a large list of languages. As an added bonus, the language
 names are displayed in the language of the user.
 
@@ -16,10 +16,9 @@ in the `International Components for Unicode`_ (e.g. ``fr`` or ``zh_Hant``).
     The locale of your user is guessed using :phpmethod:`Locale::getDefault`,
     which requires the ``intl`` PHP extension to be installed and enabled.
 
-Unlike the ``choice`` type, you don't need to specify a ``choices`` or
-``choice_list`` option as the field type automatically uses a large list
-of languages. You *can* specify either of these options manually, but then
-you should just use the ``choice`` type directly.
+Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
+field type automatically uses a large list of languages. You *can* specify the option
+manually, but then you should just use the ``ChoiceType`` directly.
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
@@ -27,7 +26,7 @@ you should just use the ``choice`` type directly.
 | Overridden  | - `choices`_                                                           |
 | options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
+| Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
@@ -36,7 +35,7 @@ you should just use the ``choice`` type directly.
 |             | - `placeholder`_                                                       |
 |             | - `preferred_choices`_                                                 |
 |             |                                                                        |
-|             | from the :doc:`form </reference/forms/types/form>` type                |
+|             | from the :doc:`FormType </reference/forms/types/form>`                 |
 |             |                                                                        |
 |             | - `data`_                                                              |
 |             | - `disabled`_                                                          |
@@ -45,10 +44,9 @@ you should just use the ``choice`` type directly.
 |             | - `label_attr`_                                                        |
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
-|             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`choice </reference/forms/types/choice>`                          |
+| Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\LanguageType` |
 +-------------+------------------------------------------------------------------------+
@@ -64,11 +62,16 @@ choices
 The choices option defaults to all languages.
 The default locale is used to translate the languages names.
 
+.. caution::
+
+    If you want to override the built-in choices of the language type, you
+    will also have to set the ``choice_loader`` option to ``null``. Not doing
+    so is deprecated since Symfony 3.3.
+
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`choice </reference/forms/types/choice>`
-type:
+These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
@@ -82,8 +85,7 @@ type:
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -108,8 +110,6 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

@@ -189,9 +189,9 @@ example, if you use annotations, create something like this::
     // src/AppBundle/Controller/DefaultController.php
     // ...
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends Controller
     {
@@ -457,8 +457,8 @@ C) Encoding the User's Password
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Whether your users are stored in ``security.yml``, in a database or somewhere
-else, you'll want to encode their passwords. The best algorithm to use is
-``bcrypt``:
+else, you'll want to encode their passwords. The most suitable algorithm to use
+is ``bcrypt``:
 
 .. configuration-block::
 
@@ -509,14 +509,12 @@ else, you'll want to encode their passwords. The best algorithm to use is
             // ...
         ));
 
-.. include:: /security/_ircmaxwell_password-compat.rst.inc
-
 Of course, your users' passwords now need to be encoded with this exact algorithm.
-For hardcoded users, since 2.7 you can use the built-in command:
+For hardcoded users, you can use the built-in command:
 
 .. code-block:: terminal
 
-    $ php app/console security:encode-password
+    $ php bin/console security:encode-password
 
 It will give you something like this:
 
@@ -595,8 +593,8 @@ before inserting them into the database? Don't worry, see
 
     Supported algorithms for this method depend on your PHP version, but
     include the algorithms returned by the PHP function :phpfunction:`hash_algos`
-    as well as a few others (e.g. bcrypt). See the ``encoders`` key in the
-    :doc:`Security Reference Section </reference/configuration/security>`
+    as well as a few others (e.g. bcrypt and argon2i). See the ``encoders`` key
+    in the :doc:`Security Reference Section </reference/configuration/security>`
     for examples.
 
     It's also possible to use different hashing algorithms on a user-by-user
@@ -639,10 +637,9 @@ The process of authorization has two different sides:
 .. tip::
 
     In addition to roles (e.g. ``ROLE_ADMIN``), you can protect a resource
-    using other attributes/strings (e.g. ``EDIT``) and use voters or Symfony's
-    ACL system to give these meaning. This might come in handy if you need
-    to check if user A can "EDIT" some object B (e.g. a Product with id 5).
-    See :ref:`security-secure-objects`.
+    using other attributes/strings (e.g. ``EDIT``) and use voters to give these
+    meaning. This might come in handy if you need to check if user A can "EDIT"
+    some object B (e.g. a Product with id 5). See :ref:`security-secure-objects`.
 
 Roles
 ~~~~~
@@ -843,15 +840,6 @@ You can easily deny access from inside a controller::
         // ...
     }
 
-.. versionadded:: 2.6
-    The ``denyAccessUnlessGranted()`` method was introduced in Symfony 2.6. Previously (and
-    still now), you could check access directly and throw the ``AccessDeniedException`` as shown
-    in the example above).
-
-.. versionadded:: 2.6
-    The ``security.authorization_checker`` service was introduced in Symfony 2.6. Prior
-    to Symfony 2.6, you had to use the ``isGranted()`` method of the ``security.context`` service.
-
 In both cases, a special
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 is thrown, which ultimately triggers a 403 HTTP response inside Symfony.
@@ -886,7 +874,7 @@ Access Control in Templates
 ...........................
 
 If you want to check if the current user has a role inside a template, use
-the built-in helper function:
+the built-in ``is_granted()`` helper function:
 
 .. configuration-block::
 
@@ -901,20 +889,6 @@ the built-in helper function:
         <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
             <a href="...">Delete</a>
         <?php endif ?>
-
-If you use this function and you are *not* behind a firewall, an exception will
-be thrown. Again, it's almost always a good idea to have a main firewall that
-covers all URLs (as shown before in this article).
-
-.. caution::
-
-    Be careful with this in your base layout or on your error pages! Because of
-    some internal Symfony details, to avoid broken error pages in the ``prod``
-    environment, wrap calls in these templates with a check for ``app.user``:
-
-    .. code-block:: html+twig
-
-        {% if app.user and is_granted('ROLE_ADMIN') %}
 
 Securing other Services
 .......................
@@ -995,6 +969,10 @@ For more details on expressions and security, see :doc:`/security/expressions`.
 Access Control Lists (ACLs): Securing individual Database Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 3.4
+    ACL support was deprecated in Symfony 3.4 and will be removed in 4.0. Install
+    the `Symfony ACL bundle`_ if you want to keep using ACL.
+
 Imagine you are designing a blog where users can comment on your posts. You
 also want a user to be able to edit their own comments, but not those of
 other users. Also, as the admin user, you yourself want to be able to edit
@@ -1018,24 +996,15 @@ shown above.
 3) Retrieving the User Object
 -----------------------------
 
-.. versionadded:: 2.6
-     The ``security.token_storage`` service was introduced in Symfony 2.6. Prior
-     to Symfony 2.6, you had to use the ``getToken()`` method of the ``security.context`` service.
-
 After authentication, the ``User`` object of the current user can be accessed
-via the ``security.token_storage`` service. From inside a controller, this will
-look like::
+via the ``getUser()`` shortcut (which uses the ``security.token_storage``
+service). From inside a controller, this will look like::
 
     public function indexAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $user = $this->getUser();
-
-        // the above is a shortcut for this
-        $user = $this->get('security.token_storage')->getToken()->getUser();
     }
 
 .. tip::
@@ -1078,6 +1047,25 @@ the User object, and use the ``isGranted()`` method (or
     if ($this->getUser()) {
 
     }
+
+.. note::
+
+    An alternative way to get the current user in a controller is to type-hint
+    the controller argument with
+    :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface\\UserInterface`
+    (and default it to ``null`` if being logged-in is optional)::
+
+        use Symfony\Component\Security\Core\User\UserInterface\UserInterface;
+
+        public function indexAction(UserInterface $user = null)
+        {
+            // $user is null when not logged-in or anon.
+        }
+
+    This is only recommended for experienced developers who don't extend from the
+    :ref:`Symfony base controller <the-base-controller-class-services>` and
+    don't use the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerTrait`
+    either. Otherwise, it's recommended to keep using the ``getUser()`` shortcut.
 
 Retrieving the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1294,7 +1282,9 @@ Authentication (Identifying/Logging in the User)
     :maxdepth: 1
 
     security/form_login_setup
+    security/ldap
     security/entity_provider
+    security/guard_authentication
     security/remember_me
     security/impersonating_user
     security/form_login
@@ -1303,12 +1293,13 @@ Authentication (Identifying/Logging in the User)
     security/api_key_authentication
     security/custom_authentication_provider
     security/pre_authenticated
-    security/target_path
     security/csrf_in_login_form
     security/named_encoders
     security/multiple_user_providers
+    security/multiple_guard_authenticators
     security/firewall_restriction
     security/host_restriction
+    security/user_checkers
 
 Authorization (Denying Access)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1335,3 +1326,4 @@ Other Security Related Topics
 
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
+.. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle

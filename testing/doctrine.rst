@@ -18,13 +18,13 @@ If you need to actually execute a query, you will need to boot the kernel
 to get a valid connection. In this case, you'll extend the ``KernelTestCase``,
 which makes all of this quite easy::
 
-    // src/AppBundle/Tests/Repository/ProductRepositoryFunctionalTest.php
-    namespace AppBundle\Tests\Repository;
+    // tests/AppBundle/Repository/ProductRepositoryTest.php
+    namespace Tests\AppBundle\Repository;
 
     use AppBundle\Entity\Product;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-    class ProductRepositoryFunctionalTest extends KernelTestCase
+    class ProductRepositoryTest extends KernelTestCase
     {
         /**
          * @var \Doctrine\ORM\EntityManager
@@ -36,11 +36,11 @@ which makes all of this quite easy::
          */
         protected function setUp()
         {
-            self::bootKernel();
-            $this->entityManager = static::$kernel->getContainer()
+            $kernel = self::bootKernel();
+
+            $this->entityManager = $kernel->getContainer()
                 ->get('doctrine')
-                ->getManager()
-            ;
+                ->getManager();
         }
 
         public function testSearchByCategoryName()

@@ -4,20 +4,20 @@
 How to Create a Custom Form Password Authenticator
 ==================================================
 
+.. tip::
+
+    Check out :doc:`/security/guard_authentication` for a simpler and more
+    flexible way to accomplish custom authentication tasks like this.
+
 Imagine you want to allow access to your website only between 2pm and 4pm
-UTC. Before Symfony 2.4, you had to create a custom token, factory, listener
-and provider. In this entry, you'll learn how to do this for a login form
-(i.e. where your user submits their username and password).
-Before Symfony 2.6, you had to use the password encoder to authenticate the user password.
+UTC. In this entry, you'll learn how to do this for a login form (i.e. where
+your user submits their username and password).
 
 The Password Authenticator
 --------------------------
 
-.. versionadded:: 2.6
-    The ``UserPasswordEncoderInterface`` interface was introduced in Symfony 2.6.
-
 First, create a new class that implements
-:class:`Symfony\\Component\\Security\\Core\\Authentication\\SimpleFormAuthenticatorInterface`.
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\SimpleFormAuthenticatorInterface`.
 Eventually, this will allow you to create custom logic for authenticating
 the user::
 
@@ -25,13 +25,13 @@ the user::
     namespace AppBundle\Security;
 
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Security\Core\Authentication\SimpleFormAuthenticatorInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-    use Symfony\Component\Security\Core\Exception\AuthenticationException;
+    use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
+    use Symfony\Component\Security\Http\Authentication\SimpleFormAuthenticatorInterface;
 
     class TimeAuthenticator implements SimpleFormAuthenticatorInterface
     {
@@ -47,16 +47,21 @@ the user::
             try {
                 $user = $userProvider->loadUserByUsername($token->getUsername());
             } catch (UsernameNotFoundException $exception) {
-                throw new AuthenticationException('Invalid username or password');
+                // CAUTION: this message will be returned to the client
+                // (so don't put any un-trusted messages / error strings here)
+                throw new CustomUserMessageAuthenticationException('Invalid username or password');
             }
 
-            $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
+            $isPasswordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
 
-            if ($passwordValid) {
+            if ($isPasswordValid) {
                 $currentHour = date('G');
                 if ($currentHour < 14 || $currentHour > 16) {
-                    throw new AuthenticationException(
+                    // CAUTION: this message will be returned to the client
+                    // (so don't put any un-trusted messages / error strings here)
+                    throw new CustomUserMessageAuthenticationException(
                         'You can only log in between 2 and 4!',
+                        array(), // Message Data
                         412 // HTTP 412 Precondition Failed
                     );
                 }
@@ -69,7 +74,9 @@ the user::
                 );
             }
 
-            throw new AuthenticationException('Invalid username or password');
+            // CAUTION: this message will be returned to the client
+            // (so don't put any un-trusted messages / error strings here)
+            throw new CustomUserMessageAuthenticationException('Invalid username or password');
         }
 
         public function supportsToken(TokenInterface $token, $providerKey)
@@ -125,7 +132,7 @@ inside of it.
 
 Inside this method, the password encoder is needed to check the password's validity::
 
-        $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
+        $isPasswordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
 
 This is a service that is already available in Symfony and it uses the password algorithm
 that is configured in the security configuration (e.g. ``security.yml``) under
@@ -136,51 +143,11 @@ the ``encoders`` key. Below, you'll see how to inject that into the ``TimeAuthen
 Configuration
 -------------
 
-Now, configure your ``TimeAuthenticator`` as a service:
+Now, make sure your ``TimeAuthenticator`` is registered as as service. If you're
+using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+that happens automatically.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        services:
-            # ...
-
-            time_authenticator:
-                class:     AppBundle\Security\TimeAuthenticator
-                arguments: ["@security.password_encoder"]
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-            <services>
-                <!-- ... -->
-
-                <service id="time_authenticator"
-                    class="AppBundle\Security\TimeAuthenticator"
-                >
-                    <argument type="service" id="security.password_encoder" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use AppBundle\Security\TimeAuthenticator;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        // ...
-
-        $container->register('time_authenticator', TimeAuthenticator::class)
-            ->addArgument(new Reference('security.password_encoder'));
-
-Then, activate it in the ``firewalls`` section of the security configuration
+Finally, activate the service in the ``firewalls`` section of the security configuration
 using the ``simple_form`` key:
 
 .. configuration-block::
@@ -196,7 +163,7 @@ using the ``simple_form`` key:
                     pattern: ^/admin
                     # ...
                     simple_form:
-                        authenticator: time_authenticator
+                        authenticator: AppBundle\Security\TimeAuthenticator
                         check_path:    login_check
                         login_path:    login
 
@@ -215,7 +182,7 @@ using the ``simple_form`` key:
                 <firewall name="secured_area"
                     pattern="^/admin"
                     >
-                    <simple-form authenticator="time_authenticator"
+                    <simple-form authenticator="AppBundle\Security\TimeAuthenticator"
                         check-path="login_check"
                         login-path="login"
                     />
@@ -227,7 +194,8 @@ using the ``simple_form`` key:
 
         // app/config/security.php
 
-        // ..
+        // ...
+        use AppBundle\Security\TimeAuthenticator;
 
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -235,7 +203,7 @@ using the ``simple_form`` key:
                     'pattern'     => '^/admin',
                     'simple_form' => array(
                         'provider'      => ...,
-                        'authenticator' => 'time_authenticator',
+                        'authenticator' => AppBundle\Security\TimeAuthenticator::class,
                         'check_path'    => 'login_check',
                         'login_path'    => 'login',
                     ),

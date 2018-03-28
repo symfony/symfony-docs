@@ -42,6 +42,17 @@ from the  :method:`Symfony\\Component\\Stopwatch\\Stopwatch::start`,
 The latter should be used when you need to retrieve the duration of an event
 while it is still running.
 
+.. tip::
+
+    By default, the stopwatch truncates any sub-millisecond time measure to ``0``,
+    so you can't measure microseconds or nanoseconds. If you need more precision,
+    pass ``true`` to the ``Stopwatch`` class constructor to enable full precision::
+
+        $stopwatch = new Stopwatch(true);
+
+    .. versionadded:: 3.4
+        Full precision support was introduced in Symfony 3.4.
+
 You can also provide a category name to an event::
 
     $stopwatch->start('eventName', 'categoryName');

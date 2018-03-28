@@ -11,28 +11,20 @@ looks like this::
 
     // ...
     use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     // ...
-    public function addEmailAction($email)
+    public function addEmailAction($email, ValidatorInterface $validator)
     {
         $emailConstraint = new Assert\Email();
         // all constraint "options" can be set this way
         $emailConstraint->message = 'Invalid email address';
 
         // use the validator to validate the value
-        // If you're using the new 2.5 validation API (you probably are!)
-        $errors = $this->get('validator')->validate(
+        $errors = $validator->validate(
             $email,
             $emailConstraint
         );
-
-        // If you're using the old 2.4 validation API
-        /*
-        $errors = $this->get('validator')->validateValue(
-            $email,
-            $emailConstraint
-        );
-        */
 
         if (0 === count($errors)) {
             // ... this IS a valid email address, do something

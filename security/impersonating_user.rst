@@ -66,6 +66,11 @@ firewall listener:
             ),
         ));
 
+.. tip::
+
+    For using the ``switch_user`` listener in a ``stateless`` firewall, set the
+    ``switch_user.stateless`` option to ``true``.
+
 To switch to another user, just add a query string with the ``_switch_user``
 parameter and the username as the value to the current URL:
 
@@ -94,11 +99,9 @@ to show a link to exit impersonation:
     .. code-block:: html+php
 
         <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
-            <a
-                href="<?php echo $view['router']->generate('homepage', array(
-                    '_switch_user' => '_exit',
-                )) ?>"
-            >
+            <a href="<?php echo $view['router']->path('homepage', array(
+                '_switch_user' => '_exit',
+            )) ?>">
                 Exit impersonation
             </a>
         <?php endif ?>
@@ -184,70 +187,38 @@ is completed. The :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserE
 passed to the listener, and you can use this to get the user that you are now impersonating.
 
 The :doc:`/session/locale_sticky_session` article does not update the locale
-when you impersonate a user. The following code sample will show how to change
-the sticky locale:
+when you impersonate a user. If you *do* want to be sure to update the locale when
+you switch users, add an event subscriber on this event::
 
-.. configuration-block::
+    // src/AppBundle/EventListener/SwitchUserListener.php
+    namespace AppBundle\EventListener;
 
-    .. code-block:: yaml
+    use Symfony\Component\Security\Http\Event\SwitchUserEvent;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Security\Http\SecurityEvents;
 
-        # app/config/services.yml
-        services:
-            app.switch_user_listener:
-                class: AppBundle\EventListener\SwitchUserListener
-                tags:
-                    - { name: kernel.event_listener, event: security.switch_user, method: onSwitchUser }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-            <services>
-                <service id="app.switch_user_listener"
-                    class="AppBundle\EventListener\SwitchUserListener"
-                >
-                    <tag name="kernel.event_listener"
-                        event="security.switch_user"
-                        method="onSwitchUser"
-                    />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\EventListener\SwitchUserListener;
-
-        $container
-            ->register('app.switch_user_listener', SwitchUserListener::class)
-            ->addTag('kernel.event_listener', array(
-                'event' => 'security.switch_user',
-                'method' => 'onSwitchUser',
-            ))
-        ;
-
-.. caution::
-
-    The listener implementation assumes your ``User`` entity has a ``getLocale()`` method::
-
-        // src/AppBundle/EventListener/SwitchUserListener.php
-        namespace AppBundle\EventListener;
-
-        use Symfony\Component\Security\Http\Event\SwitchUserEvent;
-
-        class SwitchUserListener
+    class SwitchUserSubscriber implements EventSubscriberInterface
+    {
+        public function onSwitchUser(SwitchUserEvent $event)
         {
-            public function onSwitchUser(SwitchUserEvent $event)
-            {
-                $event->getRequest()->getSession()->set(
-                    '_locale',
-                    $event->getTargetUser()->getLocale()
-                );
-            }
+            $event->getRequest()->getSession()->set(
+                '_locale',
+                // assuming your User has some getLocale() method
+                $event->getTargetUser()->getLocale()
+            );
         }
+
+        public static function getSubscribedEvents()
+        {
+            return array(
+                // constant for security.switch_user
+                SecurityEvents::SWITCH_USER => 'onSwitchUser',
+            );
+        }
+    }
+
+That's it! If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+Symfony will automatically discover your service and call ``onSwitchUser`` whenever
+a switch user occurs.
+
+For more details about event subscribers, see :doc:`/event_dispatcher`.

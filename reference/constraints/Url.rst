@@ -229,14 +229,12 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 checkDNS
 ~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``checkDNS`` option was introduced in Symfony 2.7.
-
 **type**: ``boolean`` **default**: ``false``
 
 By default, this constraint just validates the syntax of the given URL. If you
 also need to check whether the associated host exists, set the ``checkDNS``
-option to ``true``:
+option to the value of any of the ``CHECK_DNS_TYPE_*`` constants in the
+:class:`Symfony\\Component\\Validator\\Constraints\\Url` class:
 
 .. configuration-block::
 
@@ -251,7 +249,7 @@ option to ``true``:
         {
             /**
              * @Assert\Url(
-             *    checkDNS = true
+             *    checkDNS = "ANY"
              * )
              */
              protected $bioUrl;
@@ -263,7 +261,7 @@ option to ``true``:
         AppBundle\Entity\Author:
             properties:
                 bioUrl:
-                    - Url: { checkDNS: true }
+                    - Url: { checkDNS: 'ANY' }
 
     .. code-block:: xml
 
@@ -276,7 +274,7 @@ option to ``true``:
             <class name="AppBundle\Entity\Author">
                 <property name="bioUrl">
                     <constraint name="Url">
-                        <option name="checkDNS">true</option>
+                        <option name="checkDNS">ANY</option>
                     </constraint>
                 </property>
             </class>
@@ -295,19 +293,16 @@ option to ``true``:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
-                    'checkDNS'  => true,
+                    'checkDNS'  => Assert\Url::CHECK_DNS_TYPE_ANY,
                 )));
             }
         }
 
 This option uses the :phpfunction:`checkdnsrr` PHP function to check the validity
-of the ``ANY`` DNS record corresponding to the host associated with the given URL.
+of the DNS record corresponding to the host associated with the given URL.
 
 dnsMessage
 ~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The ``dnsMessage`` option was introduced in Symfony 2.7.
 
 **type**: ``string`` **default**: ``The host could not be resolved.``
 

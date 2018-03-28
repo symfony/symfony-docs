@@ -29,7 +29,7 @@ several ways.
     Sometimes, redirecting to the originally requested page can cause problems,
     like if a background Ajax request "appears" to be the last visited URL,
     causing the user to be redirected there. For information on controlling this
-    behavior, see :doc:`/security/target_path`.
+    behavior, see :doc:`/security`.
 
 Changing the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -179,10 +179,10 @@ Defining the redirect URL via POST using a hidden form field:
     .. code-block:: html+php
 
         <!-- app/Resources/views/security/login.html.php -->
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             // ...
 
-            <input type="hidden" name="_target_path" value="<?php echo $view['router']->generate('account') ?>" />
+            <input type="hidden" name="_target_path" value="<?php echo $view['router']->path('account') ?>" />
             <input type="submit" name="login" />
         </form>
 
@@ -333,10 +333,10 @@ This option can also be set via the ``_failure_path`` request parameter:
     .. code-block:: html+php
 
         <!-- app/Resources/views/security/login.html.php -->
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <!-- ... -->
 
-            <input type="hidden" name="_failure_path" value="<?php echo $view['router']->generate('forgot_password') ?>" />
+            <input type="hidden" name="_failure_path" value="<?php echo $view['router']->path('forgot_password') ?>" />
             <input type="submit" name="login" />
         </form>
 
@@ -423,10 +423,31 @@ are now fully customized:
     .. code-block:: html+php
 
         <!-- app/Resources/views/security/login.html.php -->
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <!-- ... -->
 
-            <input type="hidden" name="go_to" value="<?php echo $view['router']->generate('dashboard') ?>" />
-            <input type="hidden" name="back_to" value="<?php echo $view['router']->generate('forgot_password') ?>" />
+            <input type="hidden" name="go_to" value="<?php echo $view['router']->path('dashboard') ?>" />
+            <input type="hidden" name="back_to" value="<?php echo $view['router']->path('forgot_password') ?>" />
             <input type="submit" name="login" />
         </form>
+
+Redirecting to the Last Accessed Page with ``TargetPathTrait``
+--------------------------------------------------------------
+
+The last request URI is stored in a session variable named
+``_security.<your providerKey>.target_path`` (e.g. ``_security.main.target_path``
+if the name of your firewall is ``main``). Most of the times you don't have to
+deal with this low level session variable. However, if you ever need to get or
+remove this variable, it's better to use the
+:class:`Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait` utility::
+
+    // ...
+    use Symfony\Component\Security\Http\Util\TargetPathTrait;
+
+    $targetPath = $this->getTargetPath($request->getSession(), $providerKey);
+
+    // equivalent to:
+    // $targetPath = $request->getSession()->get('_security.'.$providerKey.'.target_path');
+
+.. versionadded:: 3.1
+    The ``TargetPathTrait`` was introduced in Symfony 3.1.

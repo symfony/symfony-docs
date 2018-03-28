@@ -38,6 +38,9 @@ There are some helpful methods for working with the service definitions::
     // shortcut for the previous method
     $container->register('app.number_generator', \AppBundle\NumberGenerator::class);
 
+    // or create a service whose id matches its class
+    $container->register(\AppBundle\NumberGenerator::class);
+
 Working with a Definition
 -------------------------
 

@@ -4,10 +4,6 @@
 How to Use PHP's built-in Web Server
 ====================================
 
-.. versionadded:: 2.6
-    The ability to run the server as a background process was introduced
-    in Symfony 2.6.
-
 Since PHP 5.4 the CLI SAPI comes with a `built-in web server`_. It can be used
 to run your PHP applications locally during development, for testing or for
 application demonstrations. This way, you don't have to bother configuring
@@ -19,6 +15,42 @@ a full-featured web server such as
     The built-in web server is meant to be run in a controlled environment.
     It is not designed to be used on public networks.
 
+Symfony provides a web server built on top of this PHP server to simplify your
+local setup. This server is distributed as a bundle, so you must first install
+and enable the server bundle.
+
+Installing the Web Server Bundle
+--------------------------------
+
+First, execute this command:
+
+.. code-block:: terminal
+
+    $ cd your-project/
+    $ composer require --dev symfony/web-server-bundle
+
+Then, enable the bundle in the kernel of the application::
+
+    // app/AppKernel.php
+    class AppKernel extends Kernel
+    {
+        public function registerBundles()
+        {
+            $bundles = array(
+                // ...
+            );
+
+            if ('dev' === $this->getEnvironment()) {
+                // ...
+                $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
+            }
+
+            // ...
+        }
+
+        // ...
+    }
+
 Starting the Web Server
 -----------------------
 
@@ -27,7 +59,7 @@ executing the ``server:start`` command:
 
 .. code-block:: terminal
 
-    $ php app/console server:start
+    $ php bin/console server:start
 
 This starts the web server at ``localhost:8000`` in the background that serves
 your Symfony application.
@@ -37,7 +69,14 @@ can change the socket passing an IP address and a port as a command-line argumen
 
 .. code-block:: terminal
 
-    $ php app/console server:start 192.168.0.1:8080
+    # passing a specific IP and port
+    $ php bin/console server:start 192.168.0.1:8080
+
+    # passing '*' as the IP means to use 0.0.0.0 (i.e. any local IP address)
+    $ php bin/console server:start *:8080
+
+.. versionadded:: 3.4
+    The support of ``*`` as a valid IP address was introduced in Symfony 3.4.
 
 .. note::
 
@@ -46,20 +85,20 @@ can change the socket passing an IP address and a port as a command-line argumen
 
     .. code-block:: terminal
 
-        $ php app/console server:status
+        $ php bin/console server:status
 
-        $ php app/console server:status 192.168.0.1:8080
+        $ php bin/console server:status 192.168.0.1:8080
 
     The first command shows if your Symfony application will be server through
     ``localhost:8000``, the second one does the same for ``192.168.0.1:8080``.
 
-.. note::
+.. tip::
 
-    Before Symfony 2.6, the ``server:run`` command was used to start the built-in
-    web server. This command is still available and behaves slightly different.
-    Instead of starting the server in the background, it will block the current
-    terminal until you terminate it (this is usually done by pressing Ctrl
-    and C).
+    Some systems do not support the ``server:start`` command, in these cases
+    you can execute the ``server:run`` command. This command behaves slightly
+    different. Instead of starting the server in the background, it will block
+    the current terminal until you terminate it (this is usually done by
+    pressing Ctrl and C).
 
 .. sidebar:: Using the built-in Web Server from inside a Virtual Machine
 
@@ -70,7 +109,7 @@ can change the socket passing an IP address and a port as a command-line argumen
 
     .. code-block:: terminal
 
-        $ php app/console server:start 0.0.0.0:8000
+        $ php bin/console server:start 0.0.0.0:8000
 
     .. caution::
 
@@ -88,14 +127,14 @@ Use the ``--router`` option to use your own router script:
 
 .. code-block:: terminal
 
-    $ php app/console server:start --router=app/config/my_router.php
+    $ php bin/console server:start --router=app/config/my_router.php
 
 If your application's document root differs from the standard directory layout,
 you have to pass the correct location using the ``--docroot`` option:
 
 .. code-block:: terminal
 
-    $ php app/console server:start --docroot=public_html
+    $ php bin/console server:start --docroot=public_html
 
 Stopping the Server
 -------------------
@@ -105,7 +144,7 @@ command:
 
 .. code-block:: terminal
 
-    $ php app/console server:stop
+    $ php bin/console server:stop
 
 Like with the start command, if you omit the socket information, Symfony will
 stop the web server bound to ``localhost:8000``. Just pass the socket information
@@ -113,7 +152,7 @@ when the web server listens to another IP address or to another port:
 
 .. code-block:: terminal
 
-    $ php app/console server:stop 192.168.0.1:8080
+    $ php bin/console server:stop 192.168.0.1:8080
 
 .. _`built-in web server`: https://php.net/manual/en/features.commandline.webserver.php
 .. _`php.net`: https://php.net/manual/en/features.commandline.webserver.php#example-411

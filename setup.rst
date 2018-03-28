@@ -7,6 +7,11 @@ Installing & Setting up the Symfony Framework
 This article explains how to install Symfony in different ways and how to solve
 the most common issues that may appear during the installation process.
 
+.. seealso::
+
+    Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
+    screencast series from KnpUniversity.
+
 Creating Symfony Applications
 -----------------------------
 
@@ -46,6 +51,8 @@ executable that needs to be installed on your system only once:
         # ... then, execute the command as
         c:\> cd projects
         c:\projects\> php symfony
+
+.. _installation-creating-the-app:
 
 Once the Symfony Installer is installed, create your first Symfony application
 with the ``new`` command:
@@ -122,9 +129,9 @@ page.
 Creating Symfony Applications with Composer
 -------------------------------------------
 
-If you still use PHP 5.3 or can't use the Symfony installer for any reason, you
-can create Symfony applications with `Composer`_, the dependency manager used by
-modern PHP applications.
+If you can't use the Symfony installer for any reason, you can create Symfony
+applications with `Composer`_, the dependency manager used by modern PHP
+applications.
 
 If you don't have Composer installed in your computer, start by
 :doc:`installing Composer globally </setup/composer>`. Then, execute the
@@ -140,7 +147,7 @@ the ``create-project`` command:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/framework-standard-edition my_project_name "2.7.*"
+    $ composer create-project symfony/framework-standard-edition my_project_name "2.8.*"
 
 .. tip::
 
@@ -151,16 +158,20 @@ the ``create-project`` command:
 Running the Symfony Application
 -------------------------------
 
-Symfony leverages the internal PHP web server (available since PHP 5.4) to run
-applications while developing them. Therefore, running a Symfony application is
-a matter of browsing to the project directory and executing this command:
+On production servers, Symfony applications use web servers such as Apache or
+Nginx (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
+However, on your local development machine you can also use the web server
+provided by Symfony, which in turn uses the built-in web server provided by PHP.
+
+First, :doc:`install the Symfony Web Server </setup/built_in_web_server>` and
+then, execute this command:
 
 .. code-block:: terminal
 
     $ cd my_project_name/
-    $ php app/console server:run
+    $ php bin/console server:run
 
-Then, open your browser and access the ``http://localhost:8000/`` URL to see the
+Open your browser and access the ``http://localhost:8000/`` URL to see the
 Welcome Page of Symfony:
 
 .. image:: /_images/quick_tour/welcome.png
@@ -177,7 +188,7 @@ pressing ``Ctrl+C`` from the terminal or command console.
 
 .. tip::
 
-    PHP's internal web server is great for developing, but should **not** be
+    Symfony's web server is great for developing, but should **not** be
     used on production. Instead, use Apache or Nginx.
     See :doc:`/setup/web_server_configuration`.
 
@@ -226,7 +237,7 @@ complexity of your project):
 
     .. code-block:: terminal
 
-        $ php app/console security:check
+        $ php bin/console security:check
 
     A good security practice is to execute this command regularly to be able to
     update or replace compromised dependencies as soon as possible.
@@ -306,6 +317,7 @@ Go Deeper with Setup
     setup/composer
     setup/*
 
+.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony
 .. _`Composer`: https://getcomposer.org/
 .. _`Phar extension`: https://php.net/manual/en/intro.phar.php
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard

@@ -56,9 +56,6 @@ evaluating or the "names" if compiling).
 Using Expression Providers
 --------------------------
 
-.. versionadded:: 2.6
-    Expression providers were introduced in Symfony 2.6.
-
 When you use the ``ExpressionLanguage`` class in your library, you often want
 to add custom functions. To do so, you can create a new expression provider by
 creating a class that implements
@@ -90,6 +87,21 @@ register::
             );
         }
     }
+
+.. tip::
+
+    To create an expression function from a PHP function with the
+    :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction::fromPhp` static method::
+
+        ExpressionFunction::fromPhp('strtoupper');
+
+    Namespaced functions are supported, but they require a second argument to
+    define the name of the expression::
+
+        ExpressionFunction::fromPhp('My\strtoupper', 'my_strtoupper');
+
+    .. versionadded:: 3.3
+        The ``ExpressionFunction::fromPhp()`` method was introduced in Symfony 3.3.
 
 You can register providers using
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::registerProvider`

@@ -144,7 +144,7 @@ Next, make sure to :ref:`create the database table <doctrine-creating-the-databa
 
 .. code-block:: terminal
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:schema:update --force
 
 What's this UserInterface?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -293,8 +293,6 @@ name ``our_db_provider`` isn't important: it just needs to match the value
 of the ``provider`` key under your firewall. Or, if you don't set the ``provider``
 key under your firewall, the first "user provider" is automatically used.
 
-.. include:: /security/_ircmaxwell_password-compat.rst.inc
-
 Creating your First User
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -318,12 +316,12 @@ and password ``admin`` (which has been encoded).
 
 .. sidebar:: Do you need to use a Salt property?
 
-    If you use ``bcrypt``, no. Otherwise, yes. All passwords must be hashed
-    with a salt, but ``bcrypt`` does this internally. Since this tutorial
-    *does* use ``bcrypt``, the ``getSalt()`` method in ``User`` can just
-    return ``null`` (it's not used). If you use a different algorithm, you'll
-    need to uncomment the ``salt`` lines in the ``User`` entity and add a
-    persisted ``salt`` property.
+    If you use ``bcrypt`` or ``argon2i``, no. Otherwise, yes. All passwords must
+    be hashed with a salt, but ``bcrypt`` and ``argon2i`` do this internally.
+    Since this tutorial *does* use ``bcrypt``, the ``getSalt()`` method in
+    ``User`` can just return ``null`` (it's not used). If you use a different
+    algorithm, you'll need to uncomment the ``salt`` lines in the ``User``
+    entity and add a persisted ``salt`` property.
 
 .. _security-advanced-user-interface:
 
@@ -426,19 +424,16 @@ both are unique in the database. Unfortunately, the native entity provider
 is only able to handle querying via a single property on the user.
 
 To do this, make your ``UserRepository`` implement a special
-:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`. This
-interface requires three methods: ``loadUserByUsername($username)``,
-``refreshUser(UserInterface $user)``, and ``supportsClass($class)``::
+:class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`. This
+interface only requires one method: ``loadUserByUsername($username)``::
 
     // src/AppBundle/Repository/UserRepository.php
     namespace AppBundle\Repository;
 
-    use Symfony\Component\Security\Core\User\UserInterface;
-    use Symfony\Component\Security\Core\User\UserProviderInterface;
-    use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+    use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
     use Doctrine\ORM\EntityRepository;
 
-    class UserRepository extends EntityRepository implements UserProviderInterface
+    class UserRepository extends EntityRepository implements UserLoaderInterface
     {
         public function loadUserByUsername($username)
         {
@@ -449,30 +444,7 @@ interface requires three methods: ``loadUserByUsername($username)``,
                 ->getQuery()
                 ->getOneOrNullResult();
         }
-
-        public function refreshUser(UserInterface $user)
-        {
-            $class = get_class($user);
-            if (!$this->supportsClass($class)) {
-                throw new UnsupportedUserException(
-                    sprintf(
-                        'Instances of "%s" are not supported.',
-                        $class
-                    )
-                );
-            }
-
-            return $this->find($user->getId());
-        }
-
-        public function supportsClass($class)
-        {
-            return $this->getEntityName() === $class
-                || is_subclass_of($class, $this->getEntityName());
-        }
     }
-
-For more details on these methods, see :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`.
 
 .. tip::
 

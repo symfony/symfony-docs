@@ -10,6 +10,8 @@ How to Minify JavaScripts and Stylesheets with YUI Compressor
     **strongly advised to avoid using YUI utilities** unless strictly necessary.
     Read :doc:`/frontend/assetic/uglifyjs` for a modern and up-to-date alternative.
 
+.. include:: /assetic/_standard_edition_warning.rst.inc
+
 Yahoo! provides an excellent utility for minifying JavaScripts and stylesheets
 so they travel over the wire faster, the `YUI Compressor`_. Thanks to Assetic,
 you can take advantage of this tool very easily.
@@ -36,9 +38,9 @@ stylesheets:
             # java: '/usr/bin/java'
             filters:
                 yui_css:
-                    jar: '%kernel.root_dir%/Resources/java/yuicompressor.jar'
+                    jar: '%kernel.project_dir%/app/Resources/java/yuicompressor.jar'
                 yui_js:
-                    jar: '%kernel.root_dir%/Resources/java/yuicompressor.jar'
+                    jar: '%kernel.project_dir%/app/Resources/java/yuicompressor.jar'
 
     .. code-block:: xml
 
@@ -55,10 +57,10 @@ stylesheets:
             <assetic:config>
                 <assetic:filter
                     name="yui_css"
-                    jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
+                    jar="%kernel.project_dir%/app/Resources/java/yuicompressor.jar" />
                 <assetic:filter
                     name="yui_js"
-                    jar="%kernel.root_dir%/Resources/java/yuicompressor.jar" />
+                    jar="%kernel.project_dir%/app/Resources/java/yuicompressor.jar" />
             </assetic:config>
         </container>
 
@@ -69,10 +71,10 @@ stylesheets:
             // 'java' => '/usr/bin/java',
             'filters' => array(
                 'yui_css' => array(
-                    'jar' => '%kernel.root_dir%/Resources/java/yuicompressor.jar',
+                    'jar' => '%kernel.project_dir%/app/Resources/java/yuicompressor.jar',
                 ),
                 'yui_js' => array(
-                    'jar' => '%kernel.root_dir%/Resources/java/yuicompressor.jar',
+                    'jar' => '%kernel.project_dir%/app/Resources/java/yuicompressor.jar',
                 ),
             ),
         ));

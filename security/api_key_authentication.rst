@@ -4,6 +4,11 @@
 How to Authenticate Users with API Keys
 =======================================
 
+.. tip::
+
+    Check out :doc:`/security/guard_authentication` for a simpler and more
+    flexible way to accomplish custom authentication tasks like this.
+
 Nowadays, it's quite usual to authenticate the user via an API key (when developing
 a web service for instance). The API key is provided for every request and is
 passed as a query string parameter or via an HTTP header.
@@ -12,7 +17,7 @@ The API Key Authenticator
 -------------------------
 
 Authenticating a user based on the Request information should be done via a
-pre-authentication mechanism. The :class:`Symfony\\Component\\Security\\Core\\Authentication\\SimplePreAuthenticatorInterface`
+pre-authentication mechanism. The :class:`Symfony\\Component\\Security\\Http\\Authentication\\SimplePreAuthenticatorInterface`
 allows you to implement such a scheme really easily.
 
 Your exact situation may differ, but in this example, a token is read
@@ -24,12 +29,13 @@ value and then a User object is created::
 
     use AppBundle\Security\ApiKeyUserProvider;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Security\Core\Authentication\SimplePreAuthenticatorInterface;
     use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
-    use Symfony\Component\Security\Core\User\UserProviderInterface;
+    use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
     use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+    use Symfony\Component\Security\Core\User\UserProviderInterface;
+    use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterface;
 
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
@@ -75,7 +81,9 @@ value and then a User object is created::
             $username = $userProvider->getUsernameForApiKey($apiKey);
 
             if (!$username) {
-                throw new AuthenticationException(
+                // CAUTION: this message will be returned to the client
+                // (so don't put any un-trusted messages / error strings here)
+                throw new CustomUserMessageAuthenticationException(
                     sprintf('API Key "%s" does not exist.', $apiKey)
                 );
             }
@@ -200,41 +208,10 @@ The ``$userProvider`` might look something like this::
         }
     }
 
-Now register your user provider as a service:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            api_key_user_provider:
-                class: AppBundle\Security\ApiKeyUserProvider
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-            <services>
-                <!-- ... -->
-
-                <service id="api_key_user_provider"
-                    class="AppBundle\Security\ApiKeyUserProvider" />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Security\ApiKeyUserProvider;
-
-        // ...
-        $container
-            ->register('api_key_user_provider', ApiKeyUserProvider::class);
+Next, make sure this class is registered as a service. If you're using the
+:ref:`default services.yml configuration <service-container-services-load-example>`,
+that happens automatically. A little later, you'll reference this service in
+your :ref:`security.yml configuration <security-api-key-config>`.
 
 .. note::
 
@@ -277,9 +254,9 @@ you can use to create an error ``Response``::
     // src/AppBundle/Security/ApiKeyAuthenticator.php
     namespace AppBundle\Security;
 
-    use Symfony\Component\Security\Core\Authentication\SimplePreAuthenticatorInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
+    use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterface;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\Request;
 
@@ -289,7 +266,12 @@ you can use to create an error ``Response``::
 
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
         {
-            return new Response("Authentication Failed.", 401);
+            return new Response(
+                // this contains information about *why* authentication failed
+                // use it, or return your own message
+                strtr($exception->getMessageKey(), $exception->getMessageData()),
+                401
+            );
         }
     }
 
@@ -299,52 +281,12 @@ Configuration
 -------------
 
 Once you have your ``ApiKeyAuthenticator`` all setup, you need to register
-it as a service and use it in your security configuration (e.g. ``security.yml``).
-First, register it as a service.
+it as a service. If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+that happens automatically.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        services:
-            # ...
-
-            apikey_authenticator:
-                class:  AppBundle\Security\ApiKeyAuthenticator
-                public: false
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-            <services>
-                <!-- ... -->
-
-                <service id="apikey_authenticator"
-                    class="AppBundle\Security\ApiKeyAuthenticator"
-                    public="false" />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use AppBundle\Security\ApiKeyAuthenticator;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        // ...
-
-        $container->register('apikey_authenticator', ApiKeyAuthenticator::class)
-            ->setPublic(false);
-
-Now, activate it and your custom user provider (see :doc:`/security/custom_provider`)
-in the ``firewalls`` section of your security configuration
-using the ``simple_preauth`` and ``provider`` keys respectively:
+The last step is to activate your authenticator and custom user provider in the
+``firewalls`` section of your security configuration using the ``simple_preauth``
+and ``provider`` keys:
 
 .. configuration-block::
 
@@ -354,17 +296,17 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
         security:
             # ...
 
+            providers:
+                api_key_user_provider:
+                    id: AppBundle\Security\ApiKeyUserProvider
+
             firewalls:
-                secured_area:
+                main:
                     pattern: ^/api
                     stateless: true
                     simple_preauth:
-                        authenticator: apikey_authenticator
+                        authenticator: AppBundle\Security\ApiKeyAuthenticator
                     provider: api_key_user_provider
-
-            providers:
-                api_key_user_provider:
-                    id: api_key_user_provider
 
     .. code-block:: xml
 
@@ -378,15 +320,15 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
             <config>
                 <!-- ... -->
 
-                <firewall name="secured_area"
+                <provider name="api_key_user_provider" id="AppBundle\Security\ApiKeyUserProvider" />
+
+                <firewall name="main"
                     pattern="^/api"
                     stateless="true"
                     provider="api_key_user_provider"
                 >
-                    <simple-preauth authenticator="apikey_authenticator" />
+                    <simple-preauth authenticator="AppBundle\Security\ApiKeyAuthenticator" />
                 </firewall>
-
-                <provider name="api_key_user_provider" id="api_key_user_provider" />
             </config>
         </srv:container>
 
@@ -394,22 +336,24 @@ using the ``simple_preauth`` and ``provider`` keys respectively:
 
         // app/config/security.php
 
-        // ..
+        // ...
+        use AppBundle\Security\ApiKeyAuthenticator;
+        use AppBundle\Security\ApiKeyUserProvider;
 
         $container->loadFromExtension('security', array(
+            'providers' => array(
+                'api_key_user_provider' => array(
+                    'id' => ApiKeyUserProvider::class,
+                ),
+            ),
             'firewalls' => array(
-                'secured_area'       => array(
+                'main' => array(
                     'pattern'        => '^/api',
                     'stateless'      => true,
                     'simple_preauth' => array(
-                        'authenticator'  => 'apikey_authenticator',
+                        'authenticator'  => ApiKeyAuthenticator::class,
                     ),
                     'provider' => 'api_key_user_provider',
-                ),
-            ),
-            'providers' => array(
-                'api_key_user_provider'  => array(
-                    'id' => 'api_key_user_provider',
                 ),
             ),
         ));
@@ -487,13 +431,7 @@ configuration or set it to ``false``:
                 secured_area:
                     pattern: ^/api
                     stateless: false
-                    simple_preauth:
-                        authenticator: apikey_authenticator
-                    provider: api_key_user_provider
-
-            providers:
-                api_key_user_provider:
-                    id: api_key_user_provider
+                    # ...
 
     .. code-block:: xml
 
@@ -510,12 +448,8 @@ configuration or set it to ``false``:
                 <firewall name="secured_area"
                     pattern="^/api"
                     stateless="false"
-                    provider="api_key_user_provider"
                 >
-                    <simple-preauth authenticator="apikey_authenticator" />
                 </firewall>
-
-                <provider name="api_key_user_provider" id="api_key_user_provider" />
             </config>
         </srv:container>
 
@@ -529,15 +463,7 @@ configuration or set it to ``false``:
                 'secured_area'       => array(
                     'pattern'        => '^/api',
                     'stateless'      => false,
-                    'simple_preauth' => array(
-                        'authenticator'  => 'apikey_authenticator',
-                    ),
-                    'provider' => 'api_key_user_provider',
-                ),
-            ),
-            'providers' => array(
-                'api_key_user_provider' => array(
-                    'id' => 'api_key_user_provider',
+                    // ...
                 ),
             ),
         ));
@@ -548,8 +474,8 @@ for security reasons. To take advantage of the session, update ``ApiKeyAuthentic
 to see if the stored token has a valid User object that can be used::
 
     // src/AppBundle/Security/ApiKeyAuthenticator.php
-    // ...
 
+    // ...
     class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
     {
         // ...
@@ -579,7 +505,8 @@ to see if the stored token has a valid User object that can be used::
             }
 
             if (!$username) {
-                throw new AuthenticationException(
+                // this message will be returned to the client
+                throw new CustomUserMessageAuthenticationException(
                     sprintf('API Key "%s" does not exist.', $apiKey)
                 );
             }
@@ -670,65 +597,12 @@ current URL is before creating the token in ``createToken()``::
             // set the only URL where we should look for auth information
             // and only return the token if we're at that URL
             $targetUrl = '/login/check';
-            if (!$this->httpUtils->checkRequestPath($request, $targetUrl)) {
+            if ($request->getPathInfo() !== $targetUrl) {
                 return;
             }
 
             // ...
         }
     }
-
-This uses the handy :class:`Symfony\\Component\\Security\\Http\\HttpUtils`
-class to check if the current URL matches the URL you're looking for. In this
-case, the URL (``/login/check``) has been hardcoded in the class, but you
-could also inject it as the second constructor argument.
-
-Next, just update your service configuration to inject the ``security.http_utils``
-service:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        services:
-            # ...
-
-            apikey_authenticator:
-                class:     AppBundle\Security\ApiKeyAuthenticator
-                arguments: ["@security.http_utils"]
-                public:    false
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-            <services>
-                <!-- ... -->
-
-                <service id="apikey_authenticator"
-                    class="AppBundle\Security\ApiKeyAuthenticator"
-                    public="false"
-                >
-                    <argument type="service" id="security.http_utils" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use AppBundle\Security\ApiKeyAuthenticator;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        // ...
-
-        $container->register('apikey_authenticator', ApiKeyAuthenticator::class)
-            ->addArgument(new Reference('security.http_utils'))
-            ->setPublic(false);
 
 That's it! Have fun!

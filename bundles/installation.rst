@@ -107,14 +107,14 @@ via the ``config:dump-reference`` command:
 
 .. code-block:: terminal
 
-    $ app/console config:dump-reference AsseticBundle
+    $ bin/console config:dump-reference AsseticBundle
 
 Instead of the full bundle name, you can also pass the short name used as the root
 of the bundle's configuration:
 
 .. code-block:: terminal
 
-    $ app/console config:dump-reference assetic
+    $ bin/console config:dump-reference assetic
 
 The output will look like this:
 
@@ -125,12 +125,27 @@ The output will look like this:
         use_controller:
             enabled:              '%kernel.debug%'
             profiler:             false
-        read_from:            '%kernel.root_dir%/../web'
+        read_from:            '%kernel.project_dir%/web'
         write_to:             '%assetic.read_from%'
         java:                 /usr/bin/java
         node:                 /usr/local/bin/node
         node_paths:           []
         # ...
+
+.. tip::
+
+    For complex bundles that define lots of configuration options, you can pass
+    a second optional argument to the ``config:dump-reference`` command to only
+    display a section of the entire configuration:
+
+    .. code-block:: terminal
+
+        $ bin/console config:dump-reference AsseticBundle use_controller
+
+        # Default configuration for "AsseticBundle" at path "use_controller"
+        use_controller:
+            enabled:              '%kernel.debug%'
+            profiler:             false
 
 Other Setup
 -----------

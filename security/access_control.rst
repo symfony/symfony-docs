@@ -23,7 +23,7 @@ access control should be used on this request. The following ``access_control``
 options are used for matching:
 
 * ``path``
-* ``ip`` or ``ips``
+* ``ip`` or ``ips`` (netmasks are also supported)
 * ``host``
 * ``methods``
 
@@ -176,7 +176,8 @@ pattern so that it is only accessible by requests from the local server itself:
             # ...
             access_control:
                 #
-                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
+                # the 'ips' option supports IP addresses and subnet masks
+                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1, 192.168.0.1/24] }
                 - { path: ^/internal, roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
@@ -191,6 +192,8 @@ pattern so that it is only accessible by requests from the local server itself:
 
             <config>
                 <!-- ... -->
+
+                <!-- the 'ips' option supports IP addresses and subnet masks -->
                 <rule path="^/internal" role="IS_AUTHENTICATED_ANONYMOUSLY">
                     <ip>127.0.0.1</ip>
                     <ip>::1</ip>
@@ -209,6 +212,7 @@ pattern so that it is only accessible by requests from the local server itself:
                 array(
                     'path' => '^/internal',
                     'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                    // the 'ips' option supports IP addresses and subnet masks
                     'ips' => array('127.0.0.1', '::1'),
                 ),
                 array(

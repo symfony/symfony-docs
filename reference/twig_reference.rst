@@ -114,21 +114,19 @@ asset
 
 .. code-block:: twig
 
-    {{ asset(path, packageName = null, absolute = false, version = null) }}
+    {{ asset(path, packageName = null) }}
 
 ``path``
     **type**: ``string``
 ``packageName`` *(optional)*
     **type**: ``string`` | ``null`` **default**: ``null``
-``absolute`` (deprecated as of 2.7)
-    **type**: ``boolean`` **default**: ``false``
-``version`` (deprecated as of 2.7)
-    **type**: ``string`` **default** ``null``
 
 Returns a public path to ``path``, which takes into account the base path
 set for the package and the URL path. More information in
-:ref:`templating-assets`. For asset versioning, see
-:ref:`reference-framework-assets-version`.
+:ref:`templating-assets`. Symfony provides various cache busting
+implementations via the :ref:`reference-framework-assets-version`,
+:ref:`reference-assets-version-strategy`, and
+:ref:`reference-assets-json-manifest-path` configuration options.
 
 asset_version
 ~~~~~~~~~~~~~~
@@ -188,20 +186,6 @@ form_end
 Renders the HTML end tag of a form together with all fields that have not
 been rendered yet, more information in
 :ref:`the Twig Form reference <reference-forms-twig-end>`.
-
-form_enctype
-~~~~~~~~~~~~
-
-.. code-block:: twig
-
-    {{ form_enctype(view) }}
-
-``view``
-    **type**: ``FormView``
-
-Renders the required ``enctype="multipart/form-data"`` attribute if the
-form contains at least one file upload field, more information in
-:ref:`the Twig Form reference <reference-forms-twig-enctype>`.
 
 form_widget
 ~~~~~~~~~~~
@@ -387,9 +371,6 @@ information in :ref:`templating-pages`.
 absolute_url
 ~~~~~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``absolute_url()`` function was introduced in Symfony 2.7.
-
 .. code-block:: jinja
 
     {{ absolute_url(path) }}
@@ -411,9 +392,6 @@ you're on the following page in your app:
 
 relative_path
 ~~~~~~~~~~~~~
-
-.. versionadded:: 2.7
-    The ``relative_path()`` function was introduced in Symfony 2.7.
 
 .. code-block:: jinja
 
@@ -460,10 +438,6 @@ humanize
 Makes a technical name human readable (i.e. replaces underscores by spaces
 or transforms camelCase text like ``helloWorld`` to ``hello world``
 and then capitalizes the string).
-
-.. versionadded:: 2.3
-    Transforming camelCase text into human readable text was introduced in
-    Symfony 2.3.
 
 trans
 ~~~~~
@@ -595,14 +569,18 @@ file_excerpt
 
 .. code-block:: twig
 
-    {{ file|file_excerpt(line) }}
+    {{ file|file_excerpt(line, srcContext = 3) }}
 
 ``file``
     **type**: ``string``
 ``line``
     **type**: ``integer``
+``srcContext`` *(optional)*
+    **type**: ``integer``
 
-Generates an excerpt of a code file around the given ``line`` number.
+Generates an excerpt of a code file around the given ``line`` number. The
+``srcContext`` argument defines the total number of lines to display around the
+given line number (use ``-1`` to display the whole file).
 
 format_file
 ~~~~~~~~~~~
@@ -766,22 +744,9 @@ The available attributes are:
 * ``app.session``, a :class:``Symfony\\Component\\HttpFoundation\\Session\\Session`` object;
 * ``app.environment``, a string with the name of the execution environment;
 * ``app.debug``, a boolean telling whether the debug mode is enabled in the app;
-* ``app.security`` (deprecated as of 2.6).
-
-.. caution::
-
-     The ``app.security`` global is deprecated as of 2.6. The user is already
-     available as ``app.user`` and ``is_granted()`` is registered as function.
-
-Symfony Standard Edition Extensions
------------------------------------
-
-The Symfony Standard Edition adds some bundles to the Symfony Core Framework.
-Those bundles can have other Twig extensions:
-
-* **Assetic** adds the ``{% stylesheets %}``, ``{% javascripts %}`` and
-  ``{% image %}`` tags. You can read more about them in
-  :doc:`the Assetic Documentation </frontend/assetic/asset_management>`.
+* ``app.token``, a :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
+  object representing the security token
+* ``app.flashes``, returns flash messages from the session
 
 .. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
 .. _`Twig Extensions repository`: https://github.com/twigphp/Twig-extensions

@@ -4,9 +4,6 @@
 Bridge a legacy Application with Symfony Sessions
 =================================================
 
-.. versionadded:: 2.3
-    The ability to integrate with a legacy PHP session was introduced in Symfony 2.3.
-
 If you're integrating the Symfony full-stack Framework into a legacy application
 that starts the session with ``session_start()``, you may still be able to
 use Symfony's session management by using the PHP Bridge session.
@@ -93,7 +90,7 @@ the example below:
     override this. Instead set ``handler_id: ~``. Note that a save handler
     cannot be changed once the session has been started. If the application
     starts the session before Symfony is initialized, the save handler will
-    have already been  set. In this case, you will need ``handler_id: ~``.
+    have already been set. In this case, you will need ``handler_id: ~``.
     Only override the save handler if you are sure the legacy application
     can use the Symfony save handler without side effects and that the session
     has not been started before Symfony is initialized.

@@ -4,10 +4,6 @@
 How to Use the submit() Function to Handle Form Submissions
 ===========================================================
 
-.. versionadded:: 2.3
-    The :method:`Symfony\\Component\\Form\\FormInterface::handleRequest`
-    method was introduced in Symfony 2.3.
-
 With the ``handleRequest()`` method, it is really easy to handle form
 submissions::
 
@@ -28,7 +24,7 @@ submissions::
             return $this->redirectToRoute('task_success');
         }
 
-        return $this->render('default/new.html.twig', array(
+        return $this->render('product/new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -67,7 +63,7 @@ method, pass the submitted data directly to
             }
         }
 
-        return $this->render('default/new.html.twig', array(
+        return $this->render('product/new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -94,44 +90,3 @@ method, pass the submitted data directly to
     "PATCH" method, the validation extension will only handle the submitted
     fields. If the underlying data needs to be validated, this should be done
     manually, i.e. using the validator.
-
-.. _form-submit-request:
-
-Passing a Request to Form::submit() (Deprecated)
-------------------------------------------------
-
-.. versionadded:: 2.3
-    Before Symfony 2.3, the ``submit()`` method was known as ``bind()``.
-
-Before Symfony 2.3, the :method:`Symfony\\Component\\Form\\FormInterface::submit`
-method accepted a :class:`Symfony\\Component\\HttpFoundation\\Request` object as
-a convenient shortcut to the previous example::
-
-    use Symfony\Component\HttpFoundation\Request;
-    // ...
-
-    public function newAction(Request $request)
-    {
-        $form = $this->createFormBuilder()
-            // ...
-            ->getForm();
-
-        if ($request->isMethod('POST')) {
-            $form->submit($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                // perform some action...
-
-                return $this->redirectToRoute('task_success');
-            }
-        }
-
-        return $this->render('default/new.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-
-Passing the :class:`Symfony\\Component\\HttpFoundation\\Request` directly to
-:method:`Symfony\\Component\\Form\\FormInterface::submit` still works, but is
-deprecated and has been removed in Symfony 3.0. You should use the method
-:method:`Symfony\\Component\\Form\\FormInterface::handleRequest` instead.

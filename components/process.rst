@@ -51,6 +51,37 @@ the contents of the output and
 :method:`Symfony\\Component\\Process\\Process::clearErrorOutput` clears
 the contents of the error output.
 
+You can also use the :class:`Symfony\\Component\\Process\\Process` class with the
+foreach construct to get the output while it is generated. By default, the loop waits
+for new output before going to the next iteration::
+
+    $process = new Process('ls -lsa');
+    $process->start();
+
+    foreach ($process as $type => $data) {
+        if ($process::OUT === $type) {
+            echo "\nRead from stdout: ".$data;
+        } else { // $process::ERR === $type
+            echo "\nRead from stderr: ".$data;
+        }
+    }
+
+.. tip::
+
+    The Process component internally uses a PHP iterator to get the output while
+    it is generated. That iterator is exposed via the ``getIterator()`` method
+    to allow customizing its behavior::
+
+        $process = new Process('ls -lsa');
+        $process->start();
+        $iterator = $process->getIterator($process::ITER_SKIP_ERR | $process::ITER_KEEP_OUTPUT);
+        foreach ($iterator as $data) {
+            echo $data."\n";
+        }
+
+    .. versionadded:: 3.2
+        The ``getIterator()`` method was introduced in Symfony 3.2.
+
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
 a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
 if the process couldn't be executed successfully (i.e. the process exited
@@ -160,11 +191,71 @@ in the output and its type::
         }
     });
 
+Streaming to the Standard Input of a Process
+--------------------------------------------
+
+Before a process is started, you can specify its standard input using either the
+:method:`Symfony\\Component\\Process\\Process::setInput` method or the 4th argument
+of the constructor. The provided input can be a string, a stream resource or a
+Traversable object::
+
+    $process = new Process('cat');
+    $process->setInput('foobar');
+    $process->run();
+
+When this input is fully written to the subprocess standard input, the corresponding
+pipe is closed.
+
+In order to write to a subprocess standard input while it is running, the component
+provides the :class:`Symfony\\Component\\Process\\InputStream` class::
+
+    $input = new InputStream();
+    $input->write('foo');
+
+    $process = new Process('cat');
+    $process->setInput($input);
+    $process->start();
+
+    // ... read process output or do other things
+
+    $input->write('bar');
+    $input->close();
+
+    $process->wait();
+
+    // will echo: foobar
+    echo $process->getOutput();
+
+The :method:`Symfony\\Component\\Process\\InputStream::write` method accepts scalars,
+stream resources or Traversable objects as argument. As shown in the above example,
+you need to explicitly call the :method:`Symfony\\Component\\Process\\InputStream::close`
+method when you are done writing to the standard input of the subprocess.
+
+Using PHP Streams as the Standard Input of a Process
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The input of a process can also be defined using `PHP streams`_::
+
+    $stream = fopen('php://temporary', 'w+');
+
+    $process = new Process('cat');
+    $process->setInput($stream);
+    $process->start();
+
+    fwrite($stream, 'foo');
+
+    // ... read process output or do other things
+
+    fwrite($stream, 'bar');
+    fclose($stream);
+
+    $process->wait();
+
+    // will echo: 'foobar'
+    echo $process->getOutput();
+
 Stopping a Process
 ------------------
-
-.. versionadded:: 2.3
-    The ``signal`` parameter of the ``stop()`` method was introduced in Symfony 2.3.
 
 Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
@@ -201,10 +292,6 @@ To make your code work better on all platforms, you might want to use the
 
     $processBuilder = new ProcessBuilder(array('ls', '-lsa'));
     $processBuilder->getProcess()->run();
-
-.. versionadded:: 2.3
-    The :method:`ProcessBuilder::setPrefix<Symfony\\Component\\Process\\ProcessBuilder::setPrefix>`
-    method was introduced in Symfony 2.3.
 
 In case you are building a binary driver, you can use the
 :method:`Symfony\\Component\\Process\\ProcessBuilder::setPrefix` method to prefix all
@@ -281,9 +368,6 @@ exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
 Process Signals
 ---------------
 
-.. versionadded:: 2.3
-    The ``signal()`` method was introduced in Symfony 2.3.
-
 When running a program asynchronously, you can send it POSIX signals with the
 :method:`Symfony\\Component\\Process\\Process::signal` method::
 
@@ -306,9 +390,6 @@ When running a program asynchronously, you can send it POSIX signals with the
 
 Process Pid
 -----------
-
-.. versionadded:: 2.3
-    The ``getPid()`` method was introduced in Symfony 2.3.
 
 You can access the `pid`_ of a running process with the
 :method:`Symfony\\Component\\Process\\Process::getPid` method::
@@ -345,9 +426,15 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
     You cannot enable or disable the output while the process is running.
 
     If you disable the output, you cannot access ``getOutput()``,
-    ``getIncrementalOutput()``, ``getErrorOutput()`` or ``getIncrementalErrorOutput()``.
-    Moreover, you could not pass a callback to the ``start()``, ``run()`` or ``mustRun()``
-    methods or use ``setIdleTimeout()``.
+    ``getIncrementalOutput()``, ``getErrorOutput()``, ``getIncrementalErrorOutput()`` or
+    ``setIdleTimeout()``.
+
+    However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
+    methods to handle process output in a streaming fashion.
+
+    .. versionadded:: 3.1
+        The ability to pass a callback to these methods when output is disabled
+        was added in Symfony 3.1.
 
 Finding the Executable PHP Binary
 ---------------------------------
@@ -368,3 +455,4 @@ absolute path of the executable PHP binary available on your server::
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
 .. _`PHP Documentation`: https://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process
+.. _`PHP streams`: http://www.php.net/manual/en/book.stream.php

@@ -216,12 +216,6 @@ more about the expression language syntax, see
                 // ...
             }
 
-    .. versionadded:: 2.6
-        In Symfony 2.6, the Expression constraint *is* executed if the value
-        is ``null``. Before 2.6, if the value was ``null``, the expression
-        was never executed and the value was considered valid (unless you
-        also had a constraint like ``NotBlank`` on the property).
-
 For more information about the expression and what variables are available
 to you, see the :ref:`expression <reference-constraint-expression-option>`
 option details below.

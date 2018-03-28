@@ -210,7 +210,7 @@ following standardized instructions in your ``README.md`` file.
         following command to download the latest stable version of this bundle:
 
         ```console
-        $ composer require <package-name> "~1"
+        $ composer require <package-name>
         ```
 
         This command requires you to have Composer installed globally, as explained
@@ -257,7 +257,7 @@ following standardized instructions in your ``README.md`` file.
 
         .. code-block:: terminal
 
-            $ composer require <package-name> "~1"
+            $ composer require <package-name>
 
         This command requires you to have Composer installed globally, as explained
         in the `installation chapter`_ of the Composer documentation.
@@ -385,7 +385,14 @@ If the bundle defines services, they must be prefixed with the bundle alias.
 For example, AcmeBlogBundle services must be prefixed with ``acme_blog``.
 
 In addition, services not meant to be used by the application directly, should
-be :ref:`defined as private <container-private-services>`.
+be :ref:`defined as private <container-private-services>`. For public services,
+:ref:`aliases should be created <service-autowiring-alias>` from the interface/class
+to the service id. For example, in MonologBundle, an alias is created from
+``Psr\Log\LoggerInterface`` to ``logger`` so that the ``LoggerInterface`` type-hint
+can be used for autowiring.
+
+Services should not use autowiring or autoconfiguration. Instead, all services should
+be defined explicitly.
 
 .. seealso::
 
@@ -421,55 +428,6 @@ The ``composer.json`` file should include at least the following metadata:
 
 In order to make it easier for developers to find your bundle, register it on
 `Packagist`_, the official repository for Composer packages.
-
-Custom Validation Constraints
------------------------------
-
-Starting with Symfony 2.5, a new Validation API was introduced. In fact,
-there are 3 modes, which the user can configure in their project:
-
-* 2.4: the original 2.4 and earlier validation API;
-* 2.5: the new 2.5 and later validation API;
-* 2.5-BC: the new 2.5 API with a backwards-compatible layer so that the
-  2.4 API still works. This is only available in PHP 5.3.9+.
-
-.. note::
-
-    Starting with Symfony 2.7, the support for the 2.4 API has been
-    dropped and the minimal PHP version required for Symfony was
-    increased to 5.3.9. If your bundles requires Symfony >=2.7, you
-    don't need to take care about the 2.4 API anymore.
-
-As a bundle author, you'll want to support *both* API's, since some users
-may still be using the 2.4 API. Specifically, if your bundle adds a violation
-directly to the :class:`Symfony\\Component\\Validator\\Context\\ExecutionContext`
-(e.g. like in a custom validation constraint), you'll need to check for which
-API is being used. The following code, would work for *all* users::
-
-    use Symfony\Component\Validator\ConstraintValidator;
-    use Symfony\Component\Validator\Constraint;
-    use Symfony\Component\Validator\Context\ExecutionContextInterface;
-    // ...
-
-    class ContainsAlphanumericValidator extends ConstraintValidator
-    {
-        public function validate($value, Constraint $constraint)
-        {
-            if ($this->context instanceof ExecutionContextInterface) {
-                // the 2.5 API
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('%string%', $value)
-                    ->addViolation()
-                ;
-            } else {
-                // the 2.4 API
-                $this->context->addViolation(
-                    $constraint->message,
-                    array('%string%' => $value)
-                );
-            }
-        }
-    }
 
 Resources
 ---------

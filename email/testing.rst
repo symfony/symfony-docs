@@ -12,7 +12,7 @@ content or any other headers, you can use :doc:`the Symfony Profiler </profiler>
 
 Start with an easy controller action that sends an email::
 
-    public function sendEmailAction($name)
+    public function sendEmailAction($name, \Swift_Mailer $mailer)
     {
         $message = (new \Swift_Message('Hello Email'))
             ->setFrom('send@example.com')
@@ -20,7 +20,7 @@ Start with an easy controller action that sends an email::
             ->setBody('You should see me from the profiler!')
         ;
 
-        $this->get('mailer')->send($message);
+        $mailer->send($message);
 
         return $this->render(...);
     }
@@ -28,7 +28,9 @@ Start with an easy controller action that sends an email::
 In your functional test, use the ``swiftmailer`` collector on the profiler
 to get information about the messages sent on the previous request::
 
-    // src/AppBundle/Tests/Controller/MailControllerTest.php
+    // tests/AppBundle/Controller/MailControllerTest.php
+    namespace Tests\AppBundle\Controller;
+
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
     class MailControllerTest extends WebTestCase

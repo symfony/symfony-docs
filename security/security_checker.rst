@@ -11,7 +11,7 @@ security vulnerability in your installed dependencies:
 
 .. code-block:: terminal
 
-    $ php app/console security:check
+    $ php bin/console security:check
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. Internally,

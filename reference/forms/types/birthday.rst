@@ -1,16 +1,16 @@
 .. index::
-   single: Forms; Fields; birthday
+   single: Forms; Fields; BirthdayType
 
-birthday Field Type
-===================
+BirthdayType Field
+==================
 
-A :doc:`date </reference/forms/types/date>` field that specializes in handling
+A :doc:`DateType </reference/forms/types/date>` field that specializes in handling
 birthdate data.
 
 Can be rendered as a single text box, three text boxes (month, day and year),
 or three select boxes.
 
-This type is essentially the same as the :doc:`date </reference/forms/types/date>`
+This type is essentially the same as the :doc:`DateType </reference/forms/types/date>`
 type, but with a more appropriate default for the `years`_ option. The `years`_
 option defaults to 120 years ago to the current year.
 
@@ -22,8 +22,9 @@ option defaults to 120 years ago to the current year.
 +----------------------+-------------------------------------------------------------------------------+
 | Overridden options   | - `years`_                                                                    |
 +----------------------+-------------------------------------------------------------------------------+
-| Inherited options    | from the :doc:`date </reference/forms/types/date>` type:                      |
+| Inherited options    | from the :doc:`DateType </reference/forms/types/date>`:                       |
 |                      |                                                                               |
+|                      | - `choice_translation_domain`_                                                |
 |                      | - `days`_                                                                     |
 |                      | - `placeholder`_                                                              |
 |                      | - `format`_                                                                   |
@@ -33,7 +34,7 @@ option defaults to 120 years ago to the current year.
 |                      | - `view_timezone`_                                                            |
 |                      | - `widget`_                                                                   |
 |                      |                                                                               |
-|                      | from the :doc:`form </reference/forms/types/form>` type:                      |
+|                      | from the :doc:`FormType </reference/forms/types/form>`:                       |
 |                      |                                                                               |
 |                      | - `data`_                                                                     |
 |                      | - `disabled`_                                                                 |
@@ -41,9 +42,8 @@ option defaults to 120 years ago to the current year.
 |                      | - `invalid_message`_                                                          |
 |                      | - `invalid_message_parameters`_                                               |
 |                      | - `mapped`_                                                                   |
-|                      | - `read_only`_                                                                |
 +----------------------+-------------------------------------------------------------------------------+
-| Parent type          | :doc:`date </reference/forms/types/date>`                                     |
+| Parent type          | :doc:`DateType </reference/forms/types/date>`                                 |
 +----------------------+-------------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BirthdayType`        |
 +----------------------+-------------------------------------------------------------------------------+
@@ -62,17 +62,14 @@ relevant when the ``widget`` option is set to ``choice``.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`date </reference/forms/types/date>`
-type:
+These options inherit from the :doc:`DateType </reference/forms/types/date>`:
+
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
 placeholder
 ~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
-    ``empty_value``, which is available prior to 2.6.
 
 **type**: ``string`` | ``array``
 
@@ -80,14 +77,14 @@ If your widget option is set to ``choice``, then this field will be represented
 as a series of ``select`` boxes. When the placeholder value is a string,
 it will be used as the **blank value** of all select boxes::
 
-    $builder->add('birthdate', 'birthday', array(
+    $builder->add('birthdate', BirthdayType::class, array(
         'placeholder' => 'Select a value',
     ));
 
 Alternatively, you can use an array that configures different placeholder
 values for the year, month and day fields::
 
-    $builder->add('birthdate', 'birthday', array(
+    $builder->add('birthdate', BirthdayType::class, array(
         'placeholder' => array(
             'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
         )
@@ -105,8 +102,7 @@ values for the year, month and day fields::
 
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -119,5 +115,3 @@ type:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc

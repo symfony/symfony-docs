@@ -41,7 +41,7 @@ directory:
         twig:
             # ...
             paths:
-                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': foo_bar
+                '%kernel.project_dir%/vendor/acme/foo-bar/templates': foo_bar
 
     .. code-block:: xml
 
@@ -54,7 +54,7 @@ directory:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%">
-                <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
+                <twig:path namespace="foo_bar">%kernel.project_dir%/vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
         </container>
 
@@ -63,16 +63,9 @@ directory:
         // app/config/config.php
         $container->loadFromExtension('twig', array(
             'paths' => array(
-                '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar',
+                '%kernel.project_dir%/vendor/acme/foo-bar/templates' => 'foo_bar',
             ),
         ));
-
-.. caution::
-
-    Prior to 2.8, templates in custom namespaces are not pre-compiled by
-    Symfony's cache warmup process. They are compiled on demand. This may
-    cause problems if two simultaneous requests are trying to use the
-    template for the first time.
 
 The registered namespace is called ``foo_bar``, which refers to the
 ``vendor/acme/foo-bar/templates`` directory. Assuming there's a file
@@ -99,9 +92,9 @@ specific template doesn't exist.
         twig:
             # ...
             paths:
-                '%kernel.root_dir%/../vendor/acme/themes/theme1': theme
-                '%kernel.root_dir%/../vendor/acme/themes/theme2': theme
-                '%kernel.root_dir%/../vendor/acme/themes/common': theme
+                '%kernel.project_dir%/vendor/acme/themes/theme1': theme
+                '%kernel.project_dir%/vendor/acme/themes/theme2': theme
+                '%kernel.project_dir%/vendor/acme/themes/common': theme
 
     .. code-block:: xml
 
@@ -114,9 +107,9 @@ specific template doesn't exist.
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%">
-                <twig:path namespace="theme">%kernel.root_dir%/../vendor/acme/themes/theme1</twig:path>
-                <twig:path namespace="theme">%kernel.root_dir%/../vendor/acme/themes/theme2</twig:path>
-                <twig:path namespace="theme">%kernel.root_dir%/../vendor/acme/themes/common</twig:path>
+                <twig:path namespace="theme">%kernel.project_dir%/vendor/acme/themes/theme1</twig:path>
+                <twig:path namespace="theme">%kernel.project_dir%/vendor/acme/themes/theme2</twig:path>
+                <twig:path namespace="theme">%kernel.project_dir%/vendor/acme/themes/common</twig:path>
             </twig:config>
         </container>
 
@@ -125,9 +118,9 @@ specific template doesn't exist.
         // app/config/config.php
         $container->loadFromExtension('twig', array(
             'paths' => array(
-                '%kernel.root_dir%/../vendor/acme/themes/theme1' => 'theme',
-                '%kernel.root_dir%/../vendor/acme/themes/theme2' => 'theme',
-                '%kernel.root_dir%/../vendor/acme/themes/common' => 'theme',
+                '%kernel.project_dir%/vendor/acme/themes/theme1' => 'theme',
+                '%kernel.project_dir%/vendor/acme/themes/theme2' => 'theme',
+                '%kernel.project_dir%/vendor/acme/themes/common' => 'theme',
             ),
         ));
 

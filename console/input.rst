@@ -54,10 +54,10 @@ The command can now be used in either of the following ways:
 
 .. code-block:: terminal
 
-    $ php app/console app:greet Fabien
+    $ php bin/console app:greet Fabien
     Hi Fabien!
 
-    $ php app/console app:greet Fabien Potencier
+    $ php bin/console app:greet Fabien Potencier
     Hi Fabien Potencier!
 
 It is also possible to let an argument take a list of values (imagine you want
@@ -75,7 +75,7 @@ To use this, just specify as many names as you want:
 
 .. code-block:: terminal
 
-    $ php app/console app:greet Fabien Ryan Bernhard
+    $ php bin/console app:greet Fabien Ryan Bernhard
 
 You can access the ``names`` argument as an array::
 
@@ -144,10 +144,10 @@ flag:
 .. code-block:: terminal
 
     # no --iterations provided, the default (1) is used
-    $ php app/console app:greet Fabien
+    $ php bin/console app:greet Fabien
     Hi Fabien!
 
-    $ php app/console app:greet Fabien --iterations=5
+    $ php bin/console app:greet Fabien --iterations=5
     Hi Fabien
     Hi Fabien
     Hi Fabien
@@ -155,9 +155,9 @@ flag:
     Hi Fabien
 
     # the order of options isn't important
-    $ php app/console app:greet Fabien --iterations=5 --yell
-    $ php app/console app:greet Fabien --yell --iterations=5
-    $ php app/console app:greet --yell --iterations=5 Fabien
+    $ php bin/console app:greet Fabien --iterations=5 --yell
+    $ php bin/console app:greet Fabien --yell --iterations=5
+    $ php bin/console app:greet --yell --iterations=5 Fabien
 
 .. tip::
 
@@ -217,15 +217,11 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
     it wasn't used at all (``command``). In both cases, the value retrieved for
     the option will be ``null``.
 
-    Similarly, due to a PHP limitation, there is no way to pass an empty string
-    as the value of an option. In ``command --prefix`` and ``command --prefix=''``
-    cases, the value of the ``prefix`` option will be ``null``.
-
 .. caution::
 
     While it is possible to separate an option from its value with a white space,
     using this form leads to an ambiguity should the option appear before the
-    command name. For example, ``php app/console --iterations 5 app:greet Fabien``
+    command name. For example, ``php bin/console --iterations 5 app:greet Fabien``
     is ambiguous; Symfony would interpret ``5`` as the command name. To avoid
     this situation, always place options after the command name, or avoid using
     a space to separate the option name from its value.

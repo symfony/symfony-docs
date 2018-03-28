@@ -15,9 +15,9 @@ spent in the framework, etc. But before writing assertions, enable the profiler
 and check that the profiler is indeed available (it is enabled by default in
 the ``test`` environment)::
 
-    class HelloControllerTest extends WebTestCase
+    class LuckyControllerTest extends WebTestCase
     {
-        public function testIndex()
+        public function testNumberAction()
         {
             $client = static::createClient();
 
@@ -25,7 +25,7 @@ the ``test`` environment)::
             // (it does nothing if the profiler is not available)
             $client->enableProfiler();
 
-            $crawler = $client->request('GET', '/hello/Fabien');
+            $crawler = $client->request('GET', '/lucky/number');
 
             // ... write some assertions about the Response
 
@@ -58,12 +58,6 @@ finish. It's easy to achieve if you embed the token in the error message::
             $profile->getToken()
         )
     );
-
-.. caution::
-
-    The profiler store can be different depending on the environment
-    (especially if you use the SQLite store, which is the default configured
-    one).
 
 .. note::
 

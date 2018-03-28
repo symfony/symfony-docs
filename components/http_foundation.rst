@@ -129,9 +129,6 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getBoolean`
     Returns the parameter value converted to boolean;
 
-    .. versionadded:: 2.6
-        The ``getBoolean()`` method was introduced in Symfony 2.6.
-
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
     Returns the digits of the parameter value;
 
@@ -141,39 +138,35 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
 
-All getters take up to three arguments: the first one is the parameter name
+All getters take up to two arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
 exist::
 
     // the query string is '?foo=bar'
 
     $request->query->get('foo');
-    // returns bar
+    // returns 'bar'
 
     $request->query->get('bar');
     // returns null
 
-    $request->query->get('bar', 'bar');
-    // returns 'bar'
+    $request->query->get('bar', 'baz');
+    // returns 'baz'
 
 When PHP imports the request query, it handles request parameters like
-``foo[bar]=bar`` in a special way as it creates an array. So you can get the
-``foo`` parameter and you will get back an array with a ``bar`` element. But
-sometimes, you might want to get the value for the "original" parameter name:
-``foo[bar]``. This is possible with all the ``ParameterBag`` getters like
-:method:`Symfony\\Component\\HttpFoundation\\Request::get` via the third
-argument::
+``foo[bar]=baz`` in a special way as it creates an array. So you can get the
+``foo`` parameter and you will get back an array with a ``bar`` element::
 
-    // the query string is '?foo[bar]=bar'
+    // the query string is '?foo[bar]=baz'
 
     $request->query->get('foo');
-    // returns array('bar' => 'bar')
+    // returns array('bar' => 'baz')
 
     $request->query->get('foo[bar]');
     // returns null
 
-    $request->query->get('foo[bar]', null, true);
-    // returns 'bar'
+    $request->query->get('foo')['bar'];
+    // returns 'baz'
 
 .. _component-foundation-attributes:
 
@@ -386,6 +379,13 @@ method takes an instance of
 You can clear a cookie via the
 :method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::clearCookie` method.
 
+Note you can create a
+:class:`Symfony\\Component\\HttpFoundation\\Cookie` object from a raw header
+value using :method:`Symfony\\Component\\HttpFoundation\\Cookie::fromString`.
+
+.. versionadded:: 3.3
+    The ``Cookie::fromString()`` method was introduced in Symfony 3.3.
+
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -527,12 +527,23 @@ or change its ``Content-Disposition``::
         'filename.txt'
     );
 
-.. versionadded:: 2.6
-    The ``deleteFileAfterSend()`` method was introduced in Symfony 2.6.
-
 It is possible to delete the file after the request is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
+
+.. versionadded:: 3.3
+    The ``Stream`` class was introduced in Symfony 3.3.
+
+If the size of the served file is unknown (e.g. because it's being generated on the fly,
+or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``
+instance to ``BinaryFileResponse``. This will disable ``Range`` and ``Content-Length``
+handling, switching to chunked encoding instead::
+
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
+    use Symfony\Component\HttpFoundation\File\Stream;
+
+    $stream  = new Stream('path/to/stream');
+    $response = new BinaryFileResponse($stream);
 
 .. note::
 
@@ -563,13 +574,23 @@ class, which can make this even easier::
 
     use Symfony\Component\HttpFoundation\JsonResponse;
 
-    $response = new JsonResponse();
-    $response->setData(array(
-        'data' => 123,
-    ));
+    // if you know the data to send when creating the response
+    $response = new JsonResponse(array('data' => 123));
 
-This encodes your array of data to JSON and sets the ``Content-Type`` header
-to ``application/json``.
+    // if you don't know the data to send when creating the response
+    $response = new JsonResponse();
+    // ...
+    $response->setData(array('data' => 123));
+
+    // if the data to send is already encoded in JSON
+    $response = JsonResponse::fromJsonString('{ "data": 123 }');
+
+.. versionadded:: 3.2
+    The :method:`Symfony\\Component\\HttpFoundation\\JsonResponse::fromJsonString`
+    method was added in Symfony 3.2.
+
+The ``JsonResponse`` class sets the ``Content-Type`` header to
+``application/json`` and encodes your data to JSON when needed.
 
 .. caution::
 

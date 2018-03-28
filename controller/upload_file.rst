@@ -58,6 +58,7 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
 
     class ProductType extends AbstractType
     {
@@ -65,7 +66,7 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
         {
             $builder
                 // ...
-                ->add('brochure', 'file', array('label' => 'Brochure (PDF file)'))
+                ->add('brochure', FileType::class, array('label' => 'Brochure (PDF file)'))
                 // ...
             ;
         }
@@ -75,11 +76,6 @@ Then, add a new ``brochure`` field to the form that manages the ``Product`` enti
             $resolver->setDefaults(array(
                 'data_class' => Product::class,
             ));
-        }
-
-        public function getName()
-        {
-            return 'product';
         }
     }
 
@@ -114,9 +110,9 @@ Finally, you need to update the code of the controller that handles the form::
     // src/AppBundle/Controller/ProductController.php
     namespace AppBundle\Controller;
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Annotation\Route;
     use AppBundle\Entity\Product;
     use AppBundle\Form\ProductType;
 
@@ -128,7 +124,7 @@ Finally, you need to update the code of the controller that handles the form::
         public function newAction(Request $request)
         {
             $product = new Product();
-            $form = $this->createForm(new ProductType(), $product);
+            $form = $this->createForm(ProductType::class, $product);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -178,7 +174,7 @@ controller to specify the directory in which the brochures should be stored:
 
     # ...
     parameters:
-        brochures_directory: '%kernel.root_dir%/../web/uploads/brochures'
+        brochures_directory: '%kernel.project_dir%/web/uploads/brochures'
 
 There are some important things to consider in the code of the above controller:
 
@@ -234,8 +230,8 @@ Creating an Uploader Service
 To avoid logic in controllers, making them big, you can extract the upload
 logic to a separate service::
 
-    // src/AppBundle/FileUploader.php
-    namespace AppBundle;
+    // src/AppBundle/Service/FileUploader.php
+    namespace AppBundle\Service;
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -272,13 +268,14 @@ Then, define a service for this class:
         # app/config/services.yml
         services:
             # ...
-            app.brochure_uploader:
-                class: AppBundle\FileUploader
-                arguments: ['%brochures_directory%']
+
+            AppBundle\Service\FileUploader:
+                arguments:
+                    $targetDirectory: '%brochures_directory%'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -286,33 +283,33 @@ Then, define a service for this class:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
             <!-- ... -->
 
-            <service id="app.brochure_uploader" class="AppBundle\FileUploader">
+            <service id="AppBundle\FileUploader">
                 <argument>%brochures_directory%</argument>
             </service>
-
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\FileUploader;
+        use AppBundle\Service\FileUploader;
 
-        // ...
-        $container->register('app.brochure_uploader', FileUploader::class)
-            ->addArgument('%brochures_directory%');
+        $container->autowire(FileUploader::class)
+            ->setArgument('$targetDirectory', '%brochures_directory%');
 
 Now you're ready to use this service in the controller::
 
     // src/AppBundle/Controller/ProductController.php
+    use Symfony\Component\HttpFoundation\Request;
+    use AppBundle\Service\FileUploader;
 
     // ...
-    public function newAction(Request $request)
+    public function newAction(Request $request, FileUploader $fileUploader)
     {
         // ...
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $product->getBrochure();
-            $fileName = $this->get('app.brochure_uploader')->upload($file);
+            $fileName = $fileUploader->upload($file);
 
             $product->setBrochure($fileName);
 
@@ -336,7 +333,7 @@ automatically upload the file when persisting the entity::
     use Doctrine\ORM\Event\LifecycleEventArgs;
     use Doctrine\ORM\Event\PreUpdateEventArgs;
     use AppBundle\Entity\Product;
-    use AppBundle\FileUploader;
+    use AppBundle\Service\FileUploader;
 
     class BrochureUploadListener
     {
@@ -386,10 +383,12 @@ Now, register this class as a Doctrine listener:
 
         # app/config/services.yml
         services:
+            _defaults:
+                # ... be sure autowiring is enabled
+                autowire: true
             # ...
-            app.doctrine_brochure_listener:
-                class: AppBundle\EventListener\BrochureUploadListener
-                arguments: ['@app.brochure_uploader']
+
+            AppBundle\EventListener\BrochureUploadListener:
                 tags:
                     - { name: doctrine.event_listener, event: prePersist }
                     - { name: doctrine.event_listener, event: preUpdate }
@@ -402,35 +401,30 @@ Now, register this class as a Doctrine listener:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <!-- ... be sure autowiring is enabled -->
+            <defaults autowire="true" />
             <!-- ... -->
 
-            <services>
-                <service id="app.doctrine_brochure_listener"
-                    class="AppBundle\EventListener\BrochureUploaderListener"
-                >
-                    <argument type="service" id="app.brochure_uploader"/>
-
-                    <tag name="doctrine.event_listener" event="prePersist"/>
-                    <tag name="doctrine.event_listener" event="preUpdate"/>
-                </service>
-            </services>
+            <service id="AppBundle\EventListener\BrochureUploaderListener">
+                <tag name="doctrine.event_listener" event="prePersist"/>
+                <tag name="doctrine.event_listener" event="preUpdate"/>
+            </service>
         </container>
 
     .. code-block:: php
 
         // app/config/services.php
         use AppBundle\EventListener\BrochureUploaderListener;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
-        $container->register('app.doctrine_brochure_listener', BrochureUploaderListener::class)
-            ->addArgument(new Reference('app.brochure_uploader'))
+        $container->autowire(BrochureUploaderListener::class)
             ->addTag('doctrine.event_listener', array(
                 'event' => 'prePersist',
             ))
             ->addTag('doctrine.event_listener', array(
-                'event' => 'prePersist',
-            ));
+                'event' => 'preUpdate',
+            ))
+        ;
 
 This listener is now automatically executed when persisting a new Product
 entity. This way, you can remove everything related to uploading from the
@@ -458,7 +452,7 @@ controller.
                 }
 
                 if ($fileName = $entity->getBrochure()) {
-                    $entity->setBrochure(new File($this->uploader->getTargetDir().'/'.$fileName));
+                    $entity->setBrochure(new File($this->uploader->getTargetDirectory().'/'.$fileName));
                 }
             }
         }

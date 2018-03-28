@@ -65,6 +65,9 @@ You can also set these colors and options directly inside the tagname::
     // bold text on a yellow background
     $output->writeln('<bg=yellow;options=bold>foo</>');
 
+    // bold text with underscore
+    $output->writeln('<options=bold,underscore>foo</>');
+
 .. note::
 
     If you need to render a tag literally, escape it with a backslash: ``\<info>``

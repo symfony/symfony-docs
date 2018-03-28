@@ -24,7 +24,7 @@ Preparing your Application
 Deploying a Symfony application to Heroku doesn't require any change in its
 code, but it requires some minor tweaks to its configuration.
 
-By default, the Symfony app will log into your application's ``app/log/``
+By default, the Symfony app will log into your application's ``var/log/``
 directory. This is not ideal as Heroku uses an `ephemeral file system`_. On
 Heroku, the best way to handle logging is using `Logplex`_. And the best way to
 send log data to Logplex is by writing to ``STDERR`` or ``STDOUT``. Luckily,
@@ -85,26 +85,16 @@ below:
 ~~~~~~~~~~~~~~~~~~~~
 
 By default, Heroku will launch an Apache web server together with PHP to serve
-applications. However, two special circumstances apply to Symfony applications:
-
-#. The document root is in the ``web/`` directory and not in the root directory
-   of the application;
-#. The Composer ``bin-dir``, where vendor binaries (and thus Heroku's own boot
-   scripts) are placed, is ``bin/`` , and not the default ``vendor/bin``.
-
-.. note::
-
-    Vendor binaries are usually installed to ``vendor/bin`` by Composer, but
-    sometimes (e.g. when running a Symfony Standard Edition project!), the
-    location will be different. If in doubt, you can always run
-    ``composer config bin-dir`` to figure out the right location.
+applications. However, a special circumstance apply to Symfony applications:
+the document root is in the ``web/`` directory and not in the root directory
+of the application.
 
 Create a new file called ``Procfile`` (without any extension) at the root
 directory of the application and add just the following content:
 
 .. code-block:: text
 
-    web: bin/heroku-php-apache2 web/
+    web: vendor/bin/heroku-php-apache2 web/
 
 .. note::
 
@@ -114,14 +104,14 @@ directory of the application and add just the following content:
 
     .. code-block:: text
 
-        web: bin/heroku-php-nginx -C nginx_app.conf web/
+        web: vendor/bin/heroku-php-nginx -C nginx_app.conf web/
 
 If you prefer working on the command console, execute the following commands to
 create the ``Procfile`` file and to add it to the repository:
 
 .. code-block:: terminal
 
-    $ echo "web: bin/heroku-php-apache2 web/" > Procfile
+    $ echo "web: vendor/bin/heroku-php-apache2 web/" > Procfile
     $ git add .
     $ git commit -m "Procfile for Apache and PHP"
     [master 35075db] Procfile for Apache and PHP
@@ -275,7 +265,7 @@ This is also very useful to build assets on the production system, e.g. with Ass
     {
         "scripts": {
             "compile": [
-                "app/console assetic:dump"
+                "bin/console assetic:dump"
             ]
         }
     }

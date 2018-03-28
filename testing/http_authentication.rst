@@ -83,8 +83,8 @@ This technique requires some knowledge of the Security component internals,
 but the following example shows a complete example that you can adapt to your
 needs::
 
-    // src/AppBundle/Tests/Controller/DefaultControllerTest.php
-    namespace AppBundle\Tests\Controller;
+    // tests/AppBundle/Controller/DefaultControllerTest.php
+    namespace Tests\AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     use Symfony\Component\BrowserKit\Cookie;

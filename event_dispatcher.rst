@@ -77,8 +77,7 @@ using a special "tag":
 
         # app/config/services.yml
         services:
-            app.exception_listener:
-                class: AppBundle\EventListener\ExceptionListener
+            AppBundle\EventListener\ExceptionListener:
                 tags:
                     - { name: kernel.event_listener, event: kernel.exception }
 
@@ -92,9 +91,7 @@ using a special "tag":
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.exception_listener"
-                    class="AppBundle\EventListener\ExceptionListener">
-
+                <service id="AppBundle\EventListener\ExceptionListener">
                     <tag name="kernel.event_listener" event="kernel.exception" />
                 </service>
             </services>
@@ -106,7 +103,7 @@ using a special "tag":
         use AppBundle\EventListener\ExceptionListener;
 
         $container
-            ->register('app.exception_listener', ExceptionListener::class)
+            ->autowire(ExceptionListener::class)
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception'))
         ;
 
@@ -123,6 +120,8 @@ using a special "tag":
     need to guarantee that one listener is executed before another. The priorities
     of the internal Symfony listeners usually range from ``-255`` to ``255`` but
     your own listeners can use any positive or negative integer.
+
+.. _events-subscriber:
 
 Creating an Event Subscriber
 ----------------------------
@@ -177,47 +176,17 @@ listen to the same ``kernel.exception`` event::
         }
     }
 
-Now, you just need to register the class as a service and add the
-``kernel.event_subscriber`` tag to tell Symfony that this is an event subscriber:
+That's it! Your ``services.yml`` file should already be setup to load services from
+the ``EventSubscriber`` directory. Symfony takes care of the rest.
 
-.. configuration-block::
+.. _ref-event-subscriber-configuration:
 
-    .. code-block:: yaml
+.. tip::
 
-        # app/config/services.yml
-        services:
-            app.exception_subscriber:
-                class: AppBundle\EventSubscriber\ExceptionSubscriber
-                tags:
-                    - { name: kernel.event_subscriber }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.exception_subscriber"
-                    class="AppBundle\EventSubscriber\ExceptionSubscriber">
-
-                    <tag name="kernel.event_subscriber"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\EventSubscriber\ExceptionSubscriber;
-
-        $container
-            ->register('app.exception_subscriber', ExceptionSubscriber::class)
-            ->addTag('kernel.event_subscriber')
-        ;
+    If your methods are *not* called when an exception is thrown, double-check that
+    you're :ref:`loading services <service-container-services-load-example>` from
+    the ``EventSubscriber`` directory and have :ref:`autoconfigure <services-autoconfigure>`
+    enabled. You can also manually add the ``kernel.event_subscriber`` tag.
 
 Request Events, Checking Types
 ------------------------------
@@ -268,22 +237,19 @@ there are some minor advantages for each of them:
 Debugging Event Listeners
 -------------------------
 
-.. versionadded:: 2.6
-    The ``debug:event-dispatcher`` command was introduced in Symfony 2.6.
-
 You can find out what listeners are registered in the event dispatcher
 using the console. To show all events and their listeners, run:
 
 .. code-block:: terminal
 
-    $ php app/console debug:event-dispatcher
+    $ php bin/console debug:event-dispatcher
 
 You can get registered listeners for a particular event by specifying
 its name:
 
 .. code-block:: terminal
 
-    $ php app/console debug:event-dispatcher kernel.exception
+    $ php bin/console debug:event-dispatcher kernel.exception
 
 Learn more
 ----------

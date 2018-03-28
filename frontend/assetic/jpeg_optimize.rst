@@ -4,6 +4,8 @@
 How to Use Assetic for Image Optimization with Twig Functions
 =============================================================
 
+.. include:: /assetic/_standard_edition_warning.rst.inc
+
 Among its many filters, Assetic has four filters which can be used for on-the-fly
 image optimization. This allows you to get the benefits of smaller file sizes
 without having to use an image editor to process each image. The results

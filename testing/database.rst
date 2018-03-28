@@ -33,6 +33,7 @@ class.
 
 Suppose the class you want to test looks like this::
 
+    // src/AppBundle/Salary/SalaryCalculator.php
     namespace AppBundle\Salary;
 
     use AppBundle\Entity\Employee;
@@ -57,8 +58,11 @@ Suppose the class you want to test looks like this::
         }
     }
 
-Since the ``ObjectManager`` gets injected into the class through the constructor,
+Since the ``EntityManagerInterface`` gets injected into the class through the constructor,
 it's easy to pass a mock object within a test::
+
+    // tests/AppBundle/Salary/SalaryCalculatorTest.php
+    namespace Tests\AppBundle\Salary;
 
     use AppBundle\Entity\Employee;
     use AppBundle\Salary\SalaryCalculator;

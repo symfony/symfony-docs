@@ -142,6 +142,9 @@ form element::
         }
     }
 
+.. versionadded:: 3.2
+    As of Symfony 3.2 the callback no longer needs to be static.
+
 You can pass the name of this method to the `callback`_ option of the ``Choice``
 constraint.
 
@@ -207,7 +210,7 @@ constraint.
             }
         }
 
-If the static callback is stored in a different class, for example ``Util``,
+If the callback is stored in a different class and is static, for example ``Util``,
 you can pass the class name and the method as an array.
 
 .. configuration-block::
@@ -365,8 +368,13 @@ strict
 
 **type**: ``boolean`` **default**: ``false``
 
-If true, the validator will also check the type of the input value. Specifically,
+The validator will also check the type of the input value. Specifically,
 this value is passed to as the third argument to the PHP :phpfunction:`in_array`
 method when checking to see if a value is in the valid choices array.
+
+.. caution::
+
+    Setting the strict option of the Choice Constraint to ``false`` has been
+    deprecated as of Symfony 3.2 and the option will be changed to ``true`` as of 4.0.
 
 .. include:: /reference/constraints/_payload-option.rst.inc

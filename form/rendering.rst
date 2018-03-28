@@ -60,7 +60,7 @@ output can be customized on many different levels.
             <?php echo $form->vars['value']->getTask() ?>
 
 .. index::
-    single: Forms; Rendering each field by hand
+   single: Forms; Rendering each field by hand
 
 Rendering each Field by Hand
 ----------------------------

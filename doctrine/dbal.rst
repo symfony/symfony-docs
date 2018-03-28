@@ -83,11 +83,12 @@ connections, see :ref:`reference-dbal-configuration`.
 You can then access the Doctrine DBAL connection by accessing the
 ``database_connection`` service::
 
+    use Doctrine\DBAL\Driver\Connection;
+
     class UserController extends Controller
     {
-        public function indexAction()
+        public function indexAction(Connection $connection)
         {
-            $connection = $this->get('database_connection');
             $users = $connection->fetchAll('SELECT * FROM users');
 
             // ...

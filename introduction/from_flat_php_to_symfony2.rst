@@ -430,7 +430,7 @@ content:
 
     {
         "require": {
-            "symfony/symfony": "2.6.*"
+            "symfony/symfony": "3.1.*"
         },
         "autoload": {
             "files": ["model.php","controllers.php"]
@@ -550,7 +550,7 @@ them for you. Here's the same sample application, now built in Symfony::
     {
         public function listAction()
         {
-            $posts = $this->get('doctrine')
+            $posts = $this->getDoctrine()
                 ->getManager()
                 ->createQuery('SELECT p FROM AppBundle:Post p')
                 ->execute();
@@ -560,8 +560,7 @@ them for you. Here's the same sample application, now built in Symfony::
 
         public function showAction($id)
         {
-            $post = $this->get('doctrine')
-                ->getManager()
+            $post = $this->getDoctrine()
                 ->getRepository(Post::class)
                 ->find($id);
 
@@ -594,7 +593,7 @@ database and the Templating component to render a template and return a
     <ul>
         <?php foreach ($posts as $post): ?>
         <li>
-            <a href="<?= $view['router']->generate(
+            <a href="<?php echo $view['router']->path(
                 'blog_show',
                 array('id' => $post->getId())
             ) ?>">

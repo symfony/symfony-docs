@@ -4,9 +4,6 @@
 Using Events
 ============
 
-.. versionadded:: 2.3
-    Console events were introduced in Symfony 2.3.
-
 The Application class of the Console component allows you to optionally hook
 into the lifecycle of a console application via events. Instead of reinventing
 the wheel, it uses the Symfony EventDispatcher component to do the work::
@@ -59,9 +56,6 @@ dispatched. Listeners receive a
 Disable Commands inside Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.6
-    Disabling commands inside listeners was introduced in Symfony 2.6.
-
 Using the
 :method:`Symfony\\Component\\Console\\Event\\ConsoleCommandEvent::disableCommand`
 method, you can disable a command inside a listener. The application
@@ -92,6 +86,10 @@ C/C++ standard.::
 The ``ConsoleEvents::EXCEPTION`` Event
 --------------------------------------
 
+.. versionadded:: 3.3
+    The ``ConsoleEvents::EXCEPTION`` event was deprecated in Symfony 3.3. Use
+    the ``ConsoleEvents::ERROR`` event instead.
+
 **Typical Purposes**: Handle exceptions thrown during the execution of a
 command.
 
@@ -118,6 +116,19 @@ Listeners receive a
         // changes the exception to another one
         $event->setException(new \LogicException('Caught exception', $exitCode, $event->getException()));
     });
+
+The ``ConsoleEvents::ERROR`` Event
+----------------------------------
+
+.. versionadded:: 3.3
+    The ``ConsoleEvents::ERROR`` event was introduced in Symfony 3.3.
+
+**Typical Purposes**: Handle exceptions thrown during the execution of a
+command.
+
+This event is an improved version of the ``ConsoleEvents::EXCEPTION`` event,
+because it can handle every exception thrown during the execution of a command,
+including those triggered from event listeners.
 
 The ``ConsoleEvents::TERMINATE`` Event
 --------------------------------------

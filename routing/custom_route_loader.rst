@@ -29,8 +29,8 @@ Loading Routes
 The routes in a Symfony application are loaded by the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 This loader uses several other loaders (delegates) to load resources of
-different types, for instance YAML files or ``@Route`` and ``@Method`` annotations
-in controller files. The specialized loaders implement
+different types, for instance YAML files or ``@Route`` annotations in controller
+files. The specialized loaders implement
 :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
 and therefore have two important methods:
 :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
@@ -58,6 +58,57 @@ containing :class:`Symfony\\Component\\Routing\\Route` objects.
     Routes loaded this way will be cached by the Router the same way as
     when they are defined in one of the default formats (e.g. XML, YML,
     PHP file).
+
+Loading Routes with a Custom Service
+------------------------------------
+
+.. versionadded:: 2.8
+    The option to load routes using Symfony services was introduced in Symfony 2.8.
+
+Using a regular Symfony service is the simplest way to load routes in a
+customized way. It's much easier than creating a full custom route loader, so
+you should always consider this option first.
+
+To do so, define ``type: service`` as the type of the loaded routing resource
+and configure the service and method to call:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/routing.yml
+        admin_routes:
+            resource: 'admin_route_loader:loadRoutes'
+            type: service
+
+    .. code-block:: xml
+
+        <!-- app/config/routing.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import resource="admin_route_loader:loadRoutes" type="service"/>
+        </routes>
+
+    .. code-block:: php
+
+        // app/config/routing.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $routes = new RouteCollection();
+        $routes->addCollection(
+            $loader->import("admin_route_loader:loadRoutes", "service")
+        );
+
+        return $routes;
+
+In this example, the routes are loaded by calling the ``loadRoutes()`` method of
+the service whose ID is ``admin_route_loader``. Your service doesn't have to
+extend or implement any special class, but the called method must return a
+:class:`Symfony\\Component\\Routing\\RouteCollection` object.
 
 Creating a custom Loader
 ------------------------
@@ -145,10 +196,10 @@ Now define a service for the ``ExtraLoader``:
 
         # app/config/services.yml
         services:
-            app.routing_loader:
-                class: AppBundle\Routing\ExtraLoader
-                tags:
-                    - { name: routing.loader }
+            # ...
+
+            AppBundle\Routing\ExtraLoader:
+                tags: [routing.loader]
 
     .. code-block:: xml
 
@@ -159,7 +210,9 @@ Now define a service for the ``ExtraLoader``:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.routing_loader" class="AppBundle\Routing\ExtraLoader">
+                <!-- ... -->
+
+                <service id="AppBundle\Routing\ExtraLoader">
                     <tag name="routing.loader" />
                 </service>
             </services>
@@ -170,7 +223,7 @@ Now define a service for the ``ExtraLoader``:
         use AppBundle\Routing\ExtraLoader;
 
         $container
-            ->register('app.routing_loader', ExtraLoader::class)
+            ->autowire(ExtraLoader::class)
             ->addTag('routing.loader')
         ;
 

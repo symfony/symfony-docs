@@ -8,9 +8,6 @@ The Asset Component
     The Asset component manages URL generation and versioning of web assets such
     as CSS stylesheets, JavaScript files and image files.
 
-.. versionadded:: 2.7
-    The Asset component was introduced in Symfony 2.7.
-
 In the past, it was common for web applications to hardcode URLs of web assets.
 For example:
 
@@ -69,8 +66,13 @@ any versioning::
 
     $package = new Package(new EmptyVersionStrategy());
 
+    // Absolute path
     echo $package->getUrl('/image.png');
     // result: /image.png
+
+    // Relative path
+    echo $package->getUrl('image.png');
+    // result: image.png
 
 Packages implement :class:`Symfony\\Component\\Asset\\PackageInterface`,
 which defines the following two methods:
@@ -111,8 +113,13 @@ suffix to any asset path::
 
     $package = new Package(new StaticVersionStrategy('v1'));
 
+    // Absolute path
     echo $package->getUrl('/image.png');
     // result: /image.png?v1
+
+    // Relative path
+    echo $package->getUrl('image.png');
+    // result: image.png?v1
 
 In case you want to modify the version format, pass a sprintf-compatible format
 string as the second argument of the ``StaticVersionStrategy`` constructor::
@@ -128,6 +135,9 @@ string as the second argument of the ``StaticVersionStrategy`` constructor::
 
     echo $package->getUrl('/image.png');
     // result: /v1/image.png
+
+    echo $package->getUrl('image.png');
+    // result: v1/image.png
 
 Custom Version Strategies
 .........................
@@ -174,8 +184,12 @@ that path over and over again::
 
     $pathPackage = new PathPackage('/static/images', new StaticVersionStrategy('v1'));
 
-    echo $pathPackage->getUrl('/logo.png');
+    echo $pathPackage->getUrl('logo.png');
     // result: /static/images/logo.png?v1
+
+    // Base path is ignored when using absolute paths
+    echo $package->getUrl('/logo.png');
+    // result: /logo.png?v1
 
 Request Context Aware Assets
 ............................
@@ -194,8 +208,12 @@ class can take into account the context of the current request::
         new RequestStackContext($requestStack)
     );
 
-    echo $pathPackage->getUrl('/logo.png');
+    echo $pathPackage->getUrl('logo.png');
     // result: /somewhere/static/images/logo.png?v1
+
+    // Both "base path" and "base url" are ignored when using absolute path for asset
+    echo $package->getUrl('/logo.png');
+    // result: /logo.png?v1
 
 Now that the request context is set, the ``PathPackage`` will prepend the
 current request base URL. So, for example, if your entire site is hosted under
@@ -324,7 +342,7 @@ document inside a template::
     echo $packages->getUrl('/logo.png', 'img');
     // result: http://img.example.com/logo.png?v1
 
-    echo $packages->getUrl('/resume.pdf', 'doc');
+    echo $packages->getUrl('resume.pdf', 'doc');
     // result: /somewhere/deep/for/documents/resume.pdf?v1
 
 Learn more

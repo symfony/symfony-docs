@@ -68,7 +68,7 @@ use the default provider available in the security component:
                     # ...
                     form_login:
                         # ...
-                        csrf_provider: security.csrf.token_manager
+                        csrf_token_generator: security.csrf.token_manager
 
     .. code-block:: xml
 
@@ -85,7 +85,7 @@ use the default provider available in the security component:
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <form-login csrf-provider="security.csrf.token_manager" />
+                    <form-login csrf-token-generator="security.csrf.token_manager" />
                 </firewall>
             </config>
         </srv:container>
@@ -101,7 +101,7 @@ use the default provider available in the security component:
                     // ...
                     'form_login' => array(
                         // ...
-                        'csrf_provider' => 'security.csrf.token_manager',
+                        'csrf_token_generator' => 'security.csrf.token_manager',
                     ),
                 ),
             ),
@@ -109,6 +109,14 @@ use the default provider available in the security component:
 
 The Security component can be configured further, but this is all information
 it needs to be able to use CSRF in the login form.
+
+.. tip::
+
+    If you're using a :doc:`Guard Authenticator </security/guard_authentication>`,
+    you'll need to validate the CSRF token manually inside of that class. See
+    :ref:`guard-csrf-protection` for details.
+
+.. _csrf-login-template:
 
 Rendering the CSRF field
 ------------------------
@@ -142,7 +150,7 @@ using the login form:
         <!-- src/AppBundle/Resources/views/Security/login.html.php -->
 
         <!-- ... -->
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <!-- ... the login fields -->
 
             <input type="hidden" name="_csrf_token"
@@ -157,7 +165,7 @@ After this, you have protected your login form against CSRF attacks.
 .. tip::
 
     You can change the name of the field by setting ``csrf_parameter`` and change
-    the token ID by setting  ``intention`` in your configuration:
+    the token ID by setting  ``csrf_token_id`` in your configuration:
 
     .. configuration-block::
 
@@ -173,7 +181,7 @@ After this, you have protected your login form against CSRF attacks.
                         form_login:
                             # ...
                             csrf_parameter: _csrf_security_token
-                            intention: a_private_string
+                            csrf_token_id: a_private_string
 
         .. code-block:: xml
 
@@ -191,7 +199,7 @@ After this, you have protected your login form against CSRF attacks.
                     <firewall name="secured_area">
                         <!-- ... -->
                         <form-login csrf-parameter="_csrf_security_token"
-                            intention="a_private_string"
+                            csrf-token-id="a_private_string"
                         />
                     </firewall>
                 </config>
@@ -209,7 +217,7 @@ After this, you have protected your login form against CSRF attacks.
                         'form_login' => array(
                             // ...
                             'csrf_parameter' => '_csrf_security_token',
-                            'intention'      => 'a_private_string',
+                            'csrf_token_id'  => 'a_private_string',
                         ),
                     ),
                 ),

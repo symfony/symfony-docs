@@ -4,6 +4,11 @@
 Service Method Calls and Setter Injection
 =========================================
 
+.. tip::
+
+    If you're using autowiring, you can use ``@required`` to
+    :ref:`automatically configure method calls <autowiring-calls>`.
+
 Usually, you'll want to inject your dependencies via the constructor. But sometimes,
 especially if a dependency is optional, you may want to use "setter injection". For
 example::
@@ -32,7 +37,7 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
 
         # app/config/services.yml
         services:
-            app.message_generator:
+            AppBundle\Service\MessageGenerator:
                 # ...
                 calls:
                     - method: setLogger
@@ -49,7 +54,7 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.message_generator" class="AppBundle\Service\MessageGenerator">
+                <service id="AppBundle\Service\MessageGenerator">
                     <!-- ... -->
                     <call method="setLogger">
                         <argument type="service" id="logger" />
@@ -64,5 +69,5 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
         use AppBundle\Service\MessageGenerator;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register('app.message_generator', 'AppBundle\Service\MessageGenerator')
+        $container->register(MessageGenerator::class)
             ->addMethodCall('setLogger', array(new Reference('logger')));

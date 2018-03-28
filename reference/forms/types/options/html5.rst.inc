@@ -1,9 +1,6 @@
 html5
 ~~~~~
 
-.. versionadded:: 2.6
-    The ``html5`` option was introduced in Symfony 2.6.
-
 **type**: ``boolean`` **default**: ``true``
 
 If this is set to ``true`` (the default), it'll use the HTML5 type (date, time

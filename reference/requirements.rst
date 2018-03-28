@@ -6,7 +6,7 @@
 Requirements for Running Symfony
 ================================
 
-Symfony 2.7 requires **PHP 5.3.9** or higher to run, in addition to other minor
+Symfony 3.4 requires **PHP 5.5.9** or higher to run, in addition to other minor
 requirements. To make things simple, Symfony provides a tool to quickly check if
 your system meets all those requirements.
 
@@ -31,4 +31,4 @@ command and fix the reported issues:
 .. code-block:: terminal
 
     $ cd my-project/
-    $ php app/check.php
+    $ php bin/symfony_requirements

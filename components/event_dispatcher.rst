@@ -187,30 +187,27 @@ event. In many cases, a special event subclass is passed with extra
 information. You can check the documentation or implementation of each event to
 determine which instance is passed.
 
-.. sidebar:: Registering Event Listeners in the Service Container
+.. sidebar:: Registering Event Listeners and Subscribers in the Service Container
 
-    When you are using the
-    :class:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher`
-    and the
-    :doc:`DependencyInjection component </components/dependency_injection>`,
-    you can use the
-    :class:`Symfony\\Component\\EventDispatcher\\DependencyInjection\\RegisterListenersPass`
-    to tag services as event listeners::
+    Registering service definitions and tagging them with the
+    ``kernel.event_listener`` and ``kernel.event_subscriber`` tags is not enough
+    to enable the event listeners and event subscribers. You must also register
+    a compiler pass called ``RegisterListenersPass()`` in the container builder::
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
         use Symfony\Component\DependencyInjection\Reference;
-        use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
+        use Symfony\Component\EventDispatcher\EventDispatcher;
         use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
         $containerBuilder = new ContainerBuilder(new ParameterBag());
+        // register the compiler pass that handles the 'kernel.event_listener'
+        // and 'kernel.event_subscriber' service tags
         $containerBuilder->addCompilerPass(new RegisterListenersPass());
 
-        // registers the event dispatcher service
-        $containerBuilder->register('event_dispatcher', ContainerAwareEventDispatcher::class)
-            ->addArgument(new Reference('service_container'));
+        $containerBuilder->register('event_dispatcher', EventDispatcher::class);
 
-        // registers your event listener service
+        // registers an event listener
         $containerBuilder->register('listener_service_id', \AcmeListener::class)
             ->addTag('kernel.event_listener', array(
                 'event' => 'acme.foo.action',
@@ -500,8 +497,7 @@ with some other dispatchers:
 
 * :doc:`/components/event_dispatcher/container_aware_dispatcher`
 * :doc:`/components/event_dispatcher/immutable_dispatcher`
-* :doc:`/components/event_dispatcher/traceable_dispatcher` (provided by the
-  :doc:`HttpKernel component </components/http_kernel>`)
+* :doc:`/components/event_dispatcher/traceable_dispatcher`
 
 Learn More
 ----------

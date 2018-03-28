@@ -6,6 +6,12 @@
 The Bundle System
 =================
 
+.. caution::
+
+    In Symfony versions prior to 3.4, it was recommended to organize your own
+    application code using bundles. This is no longer recommended and bundles
+    should only be used to share code and features between multiple applications.
+
 A bundle is similar to a plugin in other software, but even better. The key
 difference is that *everything* is a bundle in Symfony, including both the
 core framework functionality and the code written for your application.
@@ -40,7 +46,6 @@ the ``registerBundles()`` method of the ``AppKernel`` class::
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
-            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
         );
@@ -104,6 +109,7 @@ Now that you've created the bundle, enable it via the ``AppKernel`` class::
     {
         $bundles = array(
             // ...
+
             // register your bundle
             new Acme\TestBundle\AcmeTestBundle(),
         );
@@ -119,7 +125,7 @@ generating a basic bundle skeleton:
 
 .. code-block:: terminal
 
-    $ php app/console generate:bundle --namespace=Acme/TestBundle
+    $ php bin/console generate:bundle --namespace=Acme/TestBundle
 
 The bundle skeleton generates a basic controller, template and routing
 resource that can be customized. You'll learn more about Symfony's command-line
