@@ -16,9 +16,9 @@ must adhere to said rules and protocol.
 Core Organization
 -----------------
 
-Symfony Core members are divided into three groups. Each member can only belong
-to one group at a time. The privileges granted to a group are automatically
-granted to all higher priority groups.
+Symfony Core members are divided into four groups. Each member, except the
+project leader, can only belong to one group at a time. The privileges granted
+to a group are automatically granted to all higher priority groups.
 
 The Symfony Core groups, in descending order of priority, are as follows:
 
@@ -27,14 +27,18 @@ The Symfony Core groups, in descending order of priority, are as follows:
 * Elects members in any other group;
 * Merges pull requests in all Symfony repositories.
 
-2. **Mergers**
+2. **Mergers Team**
 
 * Merge pull requests for the component or components on which they have been
   granted privileges.
 
-3. **Deciders**
+3. **Deciders Team**
 
 * Decide to merge or reject a pull request.
+
+4. **Security Team**
+
+* Decide to merge or reject a pull request related to security issues.
 
 Active Core Members
 ~~~~~~~~~~~~~~~~~~~
@@ -47,7 +51,7 @@ Active Core Members
 
   * **Fabien Potencier** (`fabpot`_).
 
-* **Mergers** (``@symfony/mergers`` on GitHub):
+* **Mergers Team** (``@symfony/mergers`` on GitHub):
 
   * **Tobias Schultze** (`Tobion`_) can merge into the Routing_,
     OptionsResolver_ and PropertyAccess_ components;
@@ -88,11 +92,15 @@ Active Core Members
 
   * **Samuel Rozé** (`sroze`_) can merge into Messenger_ component.
 
-* **Deciders** (``@symfony/deciders`` on GitHub):
+* **Deciders Team** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
   * **Lukas Kahwe Smith** (`lsmith77`_).
-  * **Michael Cullum** (`michaelcullum`_) (he is also the Security Team leader)
+
+* **Security Team** (``@symfony/security`` on GitHub):
+
+  * **Fabien Potencier** (`fabpot`_);
+  * **Michael Cullum** (`michaelcullum`_),
 
 Former Core Members
 ~~~~~~~~~~~~~~~~~~~
