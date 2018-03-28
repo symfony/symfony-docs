@@ -690,23 +690,21 @@ a different path per locale:
 
 This option is available as well for XML and annotations:
 
-.. code-block:: php
+.. code-block:: php-annotations
 
-    namespace Acme\DatabaseConfiguration;
+    use Symfony\Component\Routing\Annotation\Route;
 
-    use Symfony\Component\Config\Definition\ConfigurationInterface;
-    use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-
-    class DatabaseConfiguration implements ConfigurationInterface
+    class ContactController
     {
-        public function getConfigTreeBuilder()
+        /**
+         * @Route({
+         *     "en": "/send-us-an-email",
+         *     "nl": "/stuur-ons-een-email"
+         * }, name="contact")
+         */
+        public function send()
         {
-            $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('database');
-
-            // ... add node definitions to the root of the tree
-
-            return $treeBuilder;
+            // ...
         }
     }
 
