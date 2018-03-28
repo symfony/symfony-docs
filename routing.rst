@@ -675,10 +675,40 @@ route::
 Translating Routes
 ------------------
 
-Symfony doesn't support defining routes with different contents depending on the
-user language. In those cases, you can define multiple routes per controller,
-one for each supported language; or use any of the bundles created by the
-community to implement this feature, such as `JMSI18nRoutingBundle`_ and
+Symfony support for internationalized routes depending on the user locale.
+
+For YAML configuration you can define an array in the `path` option to define 
+a different path per locale:
+
+.. code-block:: yaml
+
+    contact:
+        controller: App\Controller\ContactController::send
+        path:
+            en: /send-us-an-email
+            nl: /stuur-ons-een-email
+
+This option is available as well for XML and annotations:
+
+    namespace Acme\DatabaseConfiguration;
+
+    use Symfony\Component\Config\Definition\ConfigurationInterface;
+    use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+
+    class DatabaseConfiguration implements ConfigurationInterface
+    {
+        public function getConfigTreeBuilder()
+        {
+            $treeBuilder = new TreeBuilder();
+            $rootNode = $treeBuilder->root('database');
+
+            // ... add node definitions to the root of the tree
+
+            return $treeBuilder;
+        }
+    }
+
+For more advanced needs you can look on community bundles such as `JMSI18nRoutingBundle`_ and
 `BeSimpleI18nRoutingBundle`_.
 
 Keep Going!
