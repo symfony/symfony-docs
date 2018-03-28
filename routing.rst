@@ -690,6 +690,8 @@ a different path per locale:
 
 This option is available as well for XML and annotations:
 
+.. code-block:: php
+
     namespace Acme\DatabaseConfiguration;
 
     use Symfony\Component\Config\Definition\ConfigurationInterface;
