@@ -83,7 +83,7 @@ Active Core Members
   * **Maxime Steinhausser** (`ogizanagi`_) can merge into Config_, Console_,
     Form_, Serializer_, DependencyInjection_, and HttpKernel_ components;
 
-  * **Tobias Nyholm** (`Nyholm`) manages the official and contrib recipes
+  * **Tobias Nyholm** (`Nyholm`_) manages the official and contrib recipes
     repositories;
 
   * **Samuel Rozé** (`sroze`_) can merge into Messenger_ component.
