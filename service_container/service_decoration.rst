@@ -63,7 +63,7 @@ that you can reference it:
 
             App\DecoratingMailer:
                 # overrides the App\Mailer service
-                # but that service is still available as App\Mailer.inner
+                # but that service is still available as App\DecoratingMailer.inner
                 decorates: App\Mailer
 
                 # pass the old service as an argument
