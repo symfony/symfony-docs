@@ -95,11 +95,13 @@ option to include as many services as needed to it and add the
         services:
             app.command_handler_locator:
                 class: Symfony\Component\DependencyInjection\ServiceLocator
-                tags: ['container.service_locator']
                 arguments:
                     -
                         App\FooCommand: '@app.command_handler.foo'
                         App\BarCommand: '@app.command_handler.bar'
+                # if you are not using the default service autoconfiguration,
+                # add the following tag to the service definition:
+                # tags: ['container.service_locator']
 
     .. code-block:: xml
 
@@ -116,7 +118,11 @@ option to include as many services as needed to it and add the
                         <argument key="App\FooCommand" type="service" id="app.command_handler.foo" />
                         <argument key="App\BarCommand" type="service" id="app.command_handler.bar" />
                     </argument>
-                    <tag name="container.service_locator" />
+                    <!--
+                        if you are not using the default service autoconfiguration,
+                        add the following tag to the service definition:
+                        <tag name="container.service_locator" />
+                    -->
                 </service>
 
             </services>
@@ -132,12 +138,19 @@ option to include as many services as needed to it and add the
 
         $container
             ->register('app.command_handler_locator', ServiceLocator::class)
-            ->addTag('container.service_locator')
             ->setArguments(array(array(
                 'App\FooCommand' => new Reference('app.command_handler.foo'),
                 'App\BarCommand' => new Reference('app.command_handler.bar'),
             )))
+            // if you are not using the default service autoconfiguration,
+            // add the following tag to the service definition:
+            // ->addTag('container.service_locator')
         ;
+
+.. versionadded:: 4.1
+    The service locator autoconfiguration was introduced in Symfony 4.1. In
+    previous Symfony versions you always needed to add the
+    ``container.service_locator`` tag explicitly.
 
 .. note::
 
