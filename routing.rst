@@ -677,7 +677,7 @@ Translating Routes
 
 Symfony support for internationalized routes depending on the user locale.
 
-For YAML configuration you can define an array in the `path` option to define 
+For YAML configuration you can define an array in the `path` option to add 
 a different path per locale:
 
 .. code-block:: yaml
