@@ -142,7 +142,7 @@ Localized Routing (i18n)
 ------------------------
 
 Routes can be localized to provide unique paths per *locale*. Symfony provides a
-handle way to declare localized routes without duplication.
+handy way to declare localized routes without duplication.
 
 .. configuration-block::
 
