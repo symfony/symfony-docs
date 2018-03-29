@@ -75,6 +75,19 @@ The value returned by the ``request()`` method is an instance of the
 :doc:`DomCrawler component </components/dom_crawler>`, which allows accessing
 and traversing HTML elements programmatically.
 
+The :method:`Symfony\\Component\\BrowserKit\\Client::xmlHttpRequest` method,
+which defines the same arguments as the ``request()`` method, is a shortcut to
+make AJAX requests::
+
+    use Acme\Client;
+
+    $client = new Client();
+    // the required HTTP_X_REQUESTED_WITH header is added automatically
+    $crawler = $client->xmlHttpRequest('GET', '/');
+
+.. versionadded:: 4.1
+    The ``xmlHttpRequest()`` method was introduced in Symfony 4.1.
+
 Clicking Links
 ~~~~~~~~~~~~~~
 
