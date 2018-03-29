@@ -29,9 +29,8 @@ Locks are used to guarantee exclusive access to some shared resource. In
 Symfony applications, you can use locks for example to ensure that a command is
 not executed more than once at the same time (on the same or different servers).
 
-In order to manage the state of locks, a ``Store`` needs to be created first
-and then use the :class:`Symfony\\Component\\Lock\\Factory` class to actually
-create the lock for some resource::
+Locks are created using a :class:`Symfony\\Component\\Lock\\Factory` class,
+which in turn requires another class to manage the storage of locks::
 
     use Symfony\Component\Lock\Factory;
     use Symfony\Component\Lock\Store\SemaphoreStore;
@@ -39,7 +38,7 @@ create the lock for some resource::
     $store = new SemaphoreStore();
     $factory = new Factory($store);
 
-The lock can be created by calling the :method:`Symfony\\Component\\Lock\\Factory::createLock`
+The lock is created by calling the :method:`Symfony\\Component\\Lock\\Factory::createLock`
 method. Its first argument is an arbitrary string that represents the locked
 resource. Then, a call to the :method:`Symfony\\Component\\Lock\\LockInterface::acquire`
 method will try to acquire the lock::
