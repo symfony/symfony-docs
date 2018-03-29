@@ -16,9 +16,9 @@ must adhere to said rules and protocol.
 Core Organization
 -----------------
 
-Symfony Core members are divided into three groups. Each member can only belong
-to one group at a time. The privileges granted to a group are automatically
-granted to all higher priority groups.
+Symfony Core members are divided into groups. Each member can only belong to one
+group at a time. The privileges granted to a group are automatically granted to
+all higher priority groups.
 
 The Symfony Core groups, in descending order of priority, are as follows:
 
@@ -27,14 +27,25 @@ The Symfony Core groups, in descending order of priority, are as follows:
 * Elects members in any other group;
 * Merges pull requests in all Symfony repositories.
 
-2. **Mergers**
+2. **Mergers Team**
 
 * Merge pull requests for the component or components on which they have been
   granted privileges.
 
-3. **Deciders**
+3. **Deciders Team**
 
 * Decide to merge or reject a pull request.
+
+In addition, there are other groups created to manage specific topics:
+
+**Security Team**
+
+* Manage the whole security process (triaging reported vulnerabilities, fixing
+  the reported issues, coordinating the release of security fixes, etc.)
+
+**Documentation Team**
+
+* Manage the whole `symfony-docs repository`_.
 
 Active Core Members
 ~~~~~~~~~~~~~~~~~~~
@@ -47,7 +58,7 @@ Active Core Members
 
   * **Fabien Potencier** (`fabpot`_).
 
-* **Mergers** (``@symfony/mergers`` on GitHub):
+* **Mergers Team** (``@symfony/mergers`` on GitHub):
 
   * **Tobias Schultze** (`Tobion`_) can merge into the Routing_,
     OptionsResolver_ and PropertyAccess_ components;
@@ -88,10 +99,24 @@ Active Core Members
 
   * **Samuel Rozé** (`sroze`_) can merge into Messenger_ component.
 
-* **Deciders** (``@symfony/deciders`` on GitHub):
+* **Deciders Team** (``@symfony/deciders`` on GitHub):
 
   * **Jordi Boggiano** (`seldaek`_);
   * **Lukas Kahwe Smith** (`lsmith77`_).
+
+* **Security Team** (``@symfony/security`` on GitHub):
+
+  * **Fabien Potencier** (`fabpot`_);
+  * **Michael Cullum** (`michaelcullum`_).
+
+* **Documentation Team** (``@symfony/team-symfony-docs`` on GitHub):
+
+  * **Fabien Potencier** (`fabpot`_);
+  * **Ryan Weaver** (`weaverryan`_);
+  * **Christian Flothmann** (`xabbuh`_);
+  * **Wouter De Jong** (`wouterj`_);
+  * **Jules Pietri** (`HeahDude`_);
+  * **Javier Eguiluz** (`javiereguiluz`_).
 
 Former Core Members
 ~~~~~~~~~~~~~~~~~~~
@@ -212,6 +237,7 @@ discretion of the **Project Leader**.
 .. _Workflow: https://github.com/symfony/workflow
 .. _Yaml: https://github.com/symfony/yaml
 .. _WebProfilerBundle: https://github.com/symfony/web-profiler-bundle
+.. _`symfony-docs repository`: https://github.com/symfony/symfony-docs
 .. _`fabpot`: https://github.com/fabpot/
 .. _`webmozart`: https://github.com/webmozart/
 .. _`Tobion`: https://github.com/Tobion/
@@ -231,3 +257,6 @@ discretion of the **Project Leader**.
 .. _`ogizanagi`: https://github.com/ogizanagi/
 .. _`Nyholm`: https://github.com/Nyholm
 .. _`sroze`: https://github.com/sroze
+.. _`michaelcullum`: https://github.com/michaelcullum
+.. _`wouterj`: https://github.com/wouterj
+.. _`HeahDude`: https://github.com/HeahDude
