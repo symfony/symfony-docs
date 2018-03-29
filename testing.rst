@@ -20,7 +20,7 @@ wraps the original PHPUnit binary to provide additional features:
 
 .. code-block:: terminal
 
-    $ composer require --dev phpunit
+    $ composer require --dev symfony/phpunit-bridge
 
 Each test - whether it's a unit test or a functional test - is a PHP class
 that should live in the ``tests/`` directory of your application. If you follow
@@ -38,6 +38,11 @@ Symfony application.
 
     Code coverage can be generated with the ``--coverage-*`` options, see the
     help information that is shown when using ``--help`` for more information.
+
+.. note::
+
+    Thanks to Symfony Flex recipes aliases, you can require ``phpunit`` instead
+    of ``symfony/phpunit-bridge``.
 
 .. index::
    single: Tests; Unit tests
