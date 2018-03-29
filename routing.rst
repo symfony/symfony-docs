@@ -238,6 +238,72 @@ URL                       Route          Parameters
 ``/blog/yay-routing``     ``blog_show``  ``$slug`` = ``yay-routing``
 ========================  =============  ===============================
 
+If you prefer, requirements can be inlined in each placeholder using the syntax
+``{placeholder_name<requirements>}``. This feature makes configuration more
+concise, but it can decrease route readability when requirements are complex:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{page<\d+>}", name="blog_list")
+             */
+            public function list($page)
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        blog_list:
+            path:      /blog/{page<\d+>}
+            controller: App\Controller\BlogController::list
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_list" path="/blog/{page<\d+>}"
+                   controller="App\Controller\BlogController::list" />
+
+            <!-- ... -->
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+        use App\Controller\BlogController;
+
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog/{page<\d+>}', array(
+            '_controller' => [BlogController::class, 'list'],
+        )));
+
+        // ...
+
+        return $routes;
+
+.. versionadded:: 4.1
+    The feature to inline requirements was introduced in Symfony 4.1.
+
 To learn about other route requirements - like HTTP method, hostname and dynamic
 expressions - see :doc:`/routing/requirements`.
 
@@ -330,6 +396,78 @@ So how can you make ``blog_list`` once again match when the user visits
 
 Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 ``$page`` will default to a value of ``1``.
+
+As it happens with requirements, default values can also be inlined in each
+placeholder using the syntax ``{placeholder_name?default_value}``. This feature
+is compatible with inlined requirements, so you can inline both in a single
+placeholder:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{page<\d+>?1}", name="blog_list")
+             */
+            public function list($page)
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        blog_list:
+            path:      /blog/{page<\d+>?1}
+            controller: App\Controller\BlogController::list
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_list" path="/blog/{page <\d+>?1}"
+                   controller="App\Controller\BlogController::list" />
+
+            <!-- ... -->
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+        use App\Controller\BlogController;
+
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog/{page<\d+>?1}', array(
+            '_controller' => [BlogController::class, 'list'],
+        )));
+
+        // ...
+
+        return $routes;
+
+.. tip::
+
+    To give a ``null`` default value to any placeholder, add nothing after the
+    ``?`` character (e.g. ``/blog/{page?}``).
+
+.. versionadded:: 4.1
+    The feature to inline default values was introduced in Symfony 4.1.
 
 Listing all of your Routes
 --------------------------
