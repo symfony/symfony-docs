@@ -261,5 +261,24 @@ Once in the controller, the logic can be simplified by the call of the PostTypeH
 Keep in mind that a FormHandler is just a service, your controller can easily
 call it using the ``controler.service_arguments`` tag and let it handle all the 
 heavy tasks, this way, your code stay easy to test and maintain. 
+Last thing, thanks to the DIC, you can easily define a interface and call it,
+this way, you stay in line with the SOLID princiles:
+
+.. code-block:: php
+
+    public function new(Request $request, PostTypeHandlerInterface $handler)
+    {
+        // build the form ...
+
+        $form->handleRequest($request);
+
+        if ($handler->handle($form)) {
+            return $this->redirectToRoute('admin_post_show', [
+                'id' => $post->getId()
+            ]);
+        }
+
+        // render the template
+    }
 
 Next: :doc:`/best_practices/i18n`
