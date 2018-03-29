@@ -444,7 +444,7 @@ A custom name converter can handle such cases::
         }
     }
 
-The custom normalizer can be used by passing it as second parameter of any
+The custom name converter can be used by passing it as second parameter of any
 class extending :class:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer`,
 including :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
 and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
