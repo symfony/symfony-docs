@@ -39,14 +39,14 @@ Bus
 ---
 
 The bus is used to dispatch messages. The behaviour of the bus is in its ordered
-middleware stack. The component comes with a set of middlewares that you can use.
+middleware stack. The component comes with a set of middleware that you can use.
 
-When using the message bus with Symfony's FrameworkBundle, the following middlewares
+When using the message bus with Symfony's FrameworkBundle, the following middleware
 are configured for you:
 
-#. :code:`LoggingMiddleware` (logs the processing of your messages)
-#. :code:`SendMessageMiddleware` (enables asynchronous processing)
-#. :code:`HandleMessageMiddleware` (calls the registered handle)
+#. ``LoggingMiddleware`` (logs the processing of your messages)
+#. ``SendMessageMiddleware`` (enables asynchronous processing)
+#. ``HandleMessageMiddleware`` (calls the registered handle)
 
 Example::
 
@@ -65,7 +65,7 @@ Example::
 
 .. note:
 
-    Every middleware need to implement the :code:`MiddlewareInterface` interface.
+    Every middleware need to implement the ``MiddlewareInterface`` interface.
 
 Handlers
 --------
@@ -183,7 +183,7 @@ Same bus received and sender
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To allow us to receive and send messages on the same bus and prevent an infinite
-loop, the message bus is equipped with the :code:`WrapIntoReceivedMessage` middleware.
-It will wrap the received messages into :code:`ReceivedMessage` objects and the
-:code:`SendMessageMiddleware` middleware will know it should not route these
+loop, the message bus is equipped with the ``WrapIntoReceivedMessage`` middleware.
+It will wrap the received messages into ``ReceivedMessage`` objects and the
+``SendMessageMiddleware`` middleware will know it should not route these
 messages again to an adapter.

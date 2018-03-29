@@ -22,7 +22,7 @@ install messenger before using it:
 Using the Messenger Service
 ---------------------------
 
-Once enabled, the :code:`message_bus` service can be injected in any service where
+Once enabled, the ``message_bus`` service can be injected in any service where
 you need it, like in a controller::
 
     // src/Controller/DefaultController.php
@@ -33,9 +33,9 @@ you need it, like in a controller::
 
     class DefaultController extends Controller
     {
-        public function indexAction(MessageBusInterface $bus)
+        public function index(MessageBusInterface $bus)
         {
-            $bus->dispatch(new MyMessage());
+            $bus->dispatch(new SendNotification('A string to be sent...'));
         }
     }
 
@@ -97,21 +97,21 @@ the messenger component, the following configuration should have been created:
 
     # .env
     ###> symfony/messenger ###
-    AMQP_DSN=amqp://guest:guest@localhost:5672/%2f/messages
+    MESSENGER_DSN=amqp://guest:guest@localhost:5672/%2f/messages
     ###< symfony/messenger ###
 
-This is enough to allow you to route your message to the :code:`messenger.default_adapter`
+This is enough to allow you to route your message to the ``messenger.default_adapter``
 adapter. This will also configure the following for you:
 
-1. A :code:`messenger.default_sender` sender to be used when routing messages
-2. A :code:`messenger.default_receiver` receiver to be used when consuming messages.
+1. A ``messenger.default_sender`` sender to be used when routing messages
+2. A ``messenger.default_receiver`` receiver to be used when consuming messages.
 
 Routing
 -------
 
 Instead of calling a handler, you have the option to route your message(s) to a
 sender. Part of an adapter, it is responsible of sending your message somewhere.
-You can configuration which message is routed to which sender with the following
+You can configure which message is routed to which sender with the following
 configuration:
 
 .. code-block:: yaml
@@ -121,9 +121,8 @@ configuration:
             routing:
                 'My\Message\Message':  messenger.default_sender # Or another sender service name
 
-Such configuration would only route the ``MessageAboutDoingOperationalWork``
-message to be asynchronous, the rest of the messages would still be directly
-handled.
+Such configuration would only route the ``My\Message\Message`` message to be
+asynchronous, the rest of the messages would still be directly handled.
 
 If you want to do route all the messages to a queue by default, you can use such
 configuration:
@@ -146,7 +145,7 @@ Note that you can also route a message to multiple senders at the same time:
                 'My\Message\ToBeSentToTwoSenders': [messenger.default_sender, messenger.audit_sender]
 
 Last but not least you can also route a message while still calling the handler
-on your application by having a :code:`null` sender:
+on your application by having a ``null`` sender:
 
 .. code-block:: yaml
 
@@ -159,7 +158,7 @@ Consuming messages
 ------------------
 
 Once your messages have been routed, you will like to consume your messages in most
-of the cases. Do to so, you can use the :code:`messenger:consume-messages` command
+of the cases. Do to so, you can use the ``messenger:consume-messages`` command
 like this:
 
 .. code-block:: terminal
@@ -167,15 +166,15 @@ like this:
     $ bin/console messenger:consume-messages messenger.default_receiver
 
 The first argument is the receiver's service name. It might have been created by
-your :code:`adapters` configuration or it can be your own receiver.
+your ``adapters`` configuration or it can be your own receiver.
 
-Registering your middlewares
-----------------------------
+Registering your middleware
+---------------------------
 
-The message bus is based on middlewares. If you are un-familiar with the concept,
+The message bus is based on a set of middleware. If you are un-familiar with the concept,
 look at the :doc:`Messenger component docs </components/messenger>`.
 
-To register your middleware, use the :code:`messenger.middleware` tag as in the
+To register your middleware, use the ``messenger.middleware`` tag as in the
 following example:
 
 .. code-block:: xml
@@ -213,7 +212,7 @@ DSN. You will need an adapter factory::
         }
     }
 
-The :code:`YourAdaper` class need to implements the :code:`AdapterInterface`. It
+The ``YourAdaper`` class need to implement the ``AdapterInterface``. It
 will like the following example::
 
     use Symfony\Component\Messenger\Adapter\Factory\AdapterInterface;
@@ -245,7 +244,7 @@ Register your factory
 Use your adapter
 ~~~~~~~~~~~~~~~~
 
-Within the :code:`framework.messenger.adapters.*` configuration, create your
+Within the ``framework.messenger.adapters.*`` configuration, create your
 named adapter using your own DSN:
 
 .. code-block:: yaml
@@ -257,8 +256,8 @@ named adapter using your own DSN:
 
 This will give you access to the following services:
 
-1. :code:`messenger.yours_adapter`: the instance of your adapter.
-2. :code:`messenger.yours_receiver` and :code:`messenger.yours_sender`, the
+1. ``messenger.yours_adapter``: the instance of your adapter.
+2. ``messenger.yours_receiver`` and ``messenger.yours_sender``, the
    receiver and sender created by the adapter.
 
 .. _`enqueue's adapter`: https://github.com/sroze/enqueue-bridge
