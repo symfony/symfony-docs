@@ -379,6 +379,17 @@ objects, they are automatically transformed into YAML tags::
     $dumped = Yaml::dump($data);
     // $dumped = '!my_tag { foo: bar }'
 
+Dumping null
+~~~~~~~~~~~~~
+
+By default, the dumper will represent ``null`` values with ``null``::
+
+    Yaml::dump(array('foo' => null)); // foo: null
+
+You can make it represent them with ``~`` by using the ``DUMP_NULL_AS_TILDE`` flag::
+
+    Yaml::dump(array('foo' => null), 2, 4, Yaml::DUMP_NULL_AS_TILDE); // foo: ~
+
 Syntax Validation
 ~~~~~~~~~~~~~~~~~
 
