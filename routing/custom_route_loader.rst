@@ -73,14 +73,14 @@ and configure the service and method to call:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routing.yaml
         admin_routes:
             resource: 'admin_route_loader:loadRoutes'
             type: service
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -92,7 +92,7 @@ and configure the service and method to call:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routing.php
         use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
