@@ -470,7 +470,7 @@ builder:
 
         class DefaultController extends Controller
         {
-            public function newAction(Request $request)
+            public function new(Request $request)
             {
                 $defaults = array(
                     'dueDate' => new \DateTime('tomorrow'),
@@ -551,7 +551,7 @@ by ``handleRequest()`` to determine whether a form has been submitted):
 
         class DefaultController extends Controller
         {
-            public function searchAction()
+            public function search()
             {
                 $formBuilder = $this->createFormBuilder(null, array(
                     'action' => '/search',
@@ -692,7 +692,7 @@ option when building each field:
 
         class DefaultController extends Controller
         {
-            public function newAction(Request $request)
+            public function new(Request $request)
             {
                 $form = $this->createFormBuilder()
                     ->add('task', TextType::class, array(
