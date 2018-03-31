@@ -461,8 +461,8 @@ builder:
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -543,8 +543,8 @@ by ``handleRequest()`` to determine whether a form has been submitted):
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -681,8 +681,8 @@ option when building each field:
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Validator\Constraints\NotBlank;
