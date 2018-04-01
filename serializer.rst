@@ -103,7 +103,7 @@ As well as the following normalizers:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
   transform :class:`SplFileInfo` objects in `Data URIs`_
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
-  to deal with objects implementing the :class:`JsonSerializable` interface
+  to deal with objects implementing the `JsonSerializable`_ interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
   denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
 
@@ -333,3 +333,4 @@ take a look at how this bundle works.
 .. _`JSON-LD`: http://json-ld.org
 .. _`Hydra Core Vocabulary`: http://hydra-cg.com
 .. _`Data URIs`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
+.. _`JsonSerializable`: http://php.net/manual/en/class.jsonserializable.php
