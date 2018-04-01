@@ -101,7 +101,7 @@ As well as the following normalizers:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` for
   objects implementing the :class:`DateTimeInterface` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
-  transform :class:`SplFileInfo` objects in `Data URIs`_
+  transform `SplFileInfo`_ objects in `Data URIs`_
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
   to deal with objects implementing the :class:`JsonSerializable` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
@@ -332,4 +332,5 @@ take a look at how this bundle works.
 .. _`ApiPlatform`: https://github.com/api-platform/core
 .. _`JSON-LD`: http://json-ld.org
 .. _`Hydra Core Vocabulary`: http://hydra-cg.com
+.. _`SplFileInfo`: http://php.net/manual/en/class.splfileinfo.php
 .. _`Data URIs`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
