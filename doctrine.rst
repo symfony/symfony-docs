@@ -272,7 +272,7 @@ knows that the first migration was already executed earlier. Behind the scenes, 
 automatically manages a ``migration_versions`` table to track this.
 
 Each time you make a change to your schema, run these two commands to generate the
-migration and then execute it. Be sure to commit the migration files and run execute
+migration and then execute it. Be sure to commit the migration files and execute
 them when you deploy.
 
 .. _doctrine-generating-getters-and-setters:
@@ -316,7 +316,7 @@ then go to the Code -> Generate menu and select "Getters and Setters"::
 
 .. tip::
 
-    Typically you won't need a ``setId()`` method: Doctrine will set this for you
+    Typically you won't need a ``setId()`` method: Doctrine will set the ID
     automatically.
 
 Persisting Objects to the Database
