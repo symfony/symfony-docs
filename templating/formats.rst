@@ -35,7 +35,7 @@ pattern is to do the following::
             // retrieve the article based on $slug
             $article = ...;
 
-            $format = $request->getRequestFormat();
+            $format = $request->getRequestedResponseFormat();
 
             return $this->render('article/show.'.$format.'.twig', array(
                 'article' => $article,
@@ -43,7 +43,7 @@ pattern is to do the following::
         }
     }
 
-The ``getRequestFormat()`` on the ``Request`` object defaults to ``html``,
+The ``getRequestedResponseFormat()`` on the ``Request`` object defaults to ``html``,
 but can return any other format based on the format requested by the user.
 The request format is most often managed by the routing, where a route can
 be configured so that ``/about-us`` sets the request format to ``html`` while

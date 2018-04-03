@@ -131,7 +131,7 @@ the registration of a listener for the ``response`` event::
 
         if ($response->isRedirection()
             || ($response->headers->has('Content-Type') && false === strpos($response->headers->get('Content-Type'), 'html'))
-            || 'html' !== $event->getRequest()->getRequestFormat()
+            || 'html' !== $event->getRequest()->getRequestedResponseFormat()
         ) {
             return;
         }
@@ -210,7 +210,7 @@ Let's refactor the code a bit by moving the Google listener to its own class::
 
             if ($response->isRedirection()
                 || ($response->headers->has('Content-Type') && false === strpos($response->headers->get('Content-Type'), 'html'))
-                || 'html' !== $event->getRequest()->getRequestFormat()
+                || 'html' !== $event->getRequest()->getRequestedResponseFormat()
             ) {
                 return;
             }
