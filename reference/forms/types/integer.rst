@@ -17,11 +17,10 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 | Rendered as | ``input`` ``number`` field                                            |
 +-------------+-----------------------------------------------------------------------+
 | Options     | - `grouping`_                                                         |
-|             | - `scale`_                                                            |
 |             | - `rounding_mode`_                                                    |
 +-------------+-----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                         |
-| options     |                                                                       |
+| options     | - `scale`_                                                            |
 +-------------+-----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                             |
 | options     | - `disabled`_                                                         |
@@ -46,8 +45,6 @@ Field Options
 -------------
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
-
-.. include:: /reference/forms/types/options/scale.rst.inc
 
 rounding_mode
 ~~~~~~~~~~~~~
@@ -82,6 +79,13 @@ Overridden Options
 ------------------
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
+
+scale
+~~~~~
+
+**type**: ``integer`` **default**: ``0``
+
+This specifies how many decimals will be allowed until the field rounds the submitted value (via ``rounding_mode``). This option inherits from :doc:`number </reference/forms/types/number>` type and is overriden to ``0`` for ``IntegerType``.
 
 Inherited Options
 -----------------
