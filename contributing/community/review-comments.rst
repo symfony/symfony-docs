@@ -43,16 +43,18 @@ that, but swearing/cursing and name calling doesn't really encourage anyone to
 help you. Take a deep breath, count to 10 and try to *clearly* explain what problems
 you encounter.
 
-Gender-neutral Pronouns
------------------------
+Inclusive Language
+------------------
 
-While not "formally" required, it's better to use gender-neutral pronouns.
-Unless someone "indicated" their pronouns, use "they", "them" instead of
-"he", "she", "his", "hers", "his/hers", "he/she", etc.
+In an effort to be inclusive to a wide group of developers, it's recommended to
+use personal pronouns that don't suggest a particular gender. Unless someone
+has stated their pronouns, use "they", "them" instead of "he", "she", "his",
+"hers", "his/hers", "he/she", etc.
 
-Try to avoid using wording that may be considered excluding and needlessly gendered,
-like for example words that have a male base. For example we recommend to use other
-words like "folks", "team", "everyone" in place of "guys".
+Try to avoid using wording that may be considered excluding, needlessly gendered
+(e.g. words that have a male or female base), racially motivated or singles out
+a particular group in society. For example, we recommend to use words like
+"folks", "team", "everyone" instead of "guys", "ladies", "yanks", etc.
 
 Giving Positive Feedback
 ------------------------
