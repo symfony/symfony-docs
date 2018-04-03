@@ -46,14 +46,14 @@ you encounter.
 Inclusive Language
 ------------------
 
-In an effort to be inclusive to a wide group of developers, it's recommended to
+In an effort to be inclusive to a wide group of people, it's recommended to
 use personal pronouns that don't suggest a particular gender. Unless someone
 has stated their pronouns, use "they", "them" instead of "he", "she", "his",
 "hers", "his/hers", "he/she", etc.
 
 Try to avoid using wording that may be considered excluding, needlessly gendered
 (e.g. words that have a male or female base), racially motivated or singles out
-a particular group in society. For example, we recommend to use words like
+a particular group in society. For example, it's recommended to use words like
 "folks", "team", "everyone" instead of "guys", "ladies", "yanks", etc.
 
 Giving Positive Feedback
