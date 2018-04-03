@@ -21,14 +21,24 @@ Want a logging system? No problem:
 This installs and configures (via a recipe) the powerful `Monolog`_ library. To
 use the logger in a controller, add a new argument type-hinted with ``LoggerInterface``::
 
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
+
     use Psr\Log\LoggerInterface;
-    // ...
+    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    public function index($name, LoggerInterface $logger)
+    class DefaultController extends AbstractController
     {
-        $logger->info("Saying hello to $name!");
+        /**
+         * @Route("/hello/{name}")
+         */
+        public function index($name, LoggerInterface $logger)
+        {
+            $logger->info("Saying hello to $name!");
 
-        // ...
+            // ...
+        }
     }
 
 That's it! The new log message will be written to ``var/log/dev.log``. Of course, this
@@ -89,16 +99,27 @@ this code directly in your controller, create a new class::
 
 Great! You can use this immediately in your controller::
 
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
+
     use App\GreetingGenerator;
-    // ...
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    public function index($name, LoggerInterface $logger, GreetingGenerator $generator)
+    class DefaultController extends AbstractController
     {
-        $greeting = $generator->getRandomGreeting();
+        /**
+         * @Route("/hello/{name}")
+         */
+        public function index($name, LoggerInterface $logger, GreetingGenerator $generator)
+        {
+            $greeting = $generator->getRandomGreeting();
 
-        $logger->info("Saying $greeting to $name!");
+            $logger->info("Saying $greeting to $name!");
 
-        // ...
+            // ...
+        }
     }
 
 That's it! Symfony will instantiate the ``GreetingGenerator`` automatically and
@@ -108,6 +129,7 @@ difference is that it's done in the constructor:
 
 .. code-block:: diff
 
+    // src/GreetingGenerator.php
     + use Psr\Log\LoggerInterface;
 
     class GreetingGenerator
@@ -174,6 +196,7 @@ After creating just *one* file, you can use this immediately:
 
 .. code-block:: twig
 
+    {# templates/default/index.html.twig #}
     {# Will print something like "Hey Symfony!" #}
     <h1>{{ name|greet }}</h1>
 
