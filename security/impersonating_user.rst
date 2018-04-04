@@ -195,7 +195,7 @@ elevated user such as an administrator.
 
 First, create the voter class::
 
-    namespace AppBundle\Security\Voter;
+    namespace App\Security\Voter;
 
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -227,7 +227,7 @@ First, create the voter class::
 
             if (in_array('ROLE_CUSTOMER', $subject->getRoles()) 
                 && $this->hasSwitchToCustomerRole($token)) {
-                return self::ACCESS_GRANTED;
+                return true;
             }
 
             return false;
@@ -340,6 +340,7 @@ the voter as a service:
         // config/services.php
         use App\Security\Voter\SwitchToCustomerVoter;
         use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
 
         // Same as before
         $definition = new Definition();
@@ -354,7 +355,7 @@ the voter as a service:
 
         // Explicitly configure the service
         $container->getDefinition(SwitchToCustomerVoter::class)
-            ->setArgument('$roleHierarchy', '@security.role_hierarchy');   
+            ->setArgument('$roleHierarchy', new Reference('security.role_hierarchy'));   
 
 Now a user who has the ``ROLE_SWITCH_TO_CUSTOMER`` role can switch to a user who explicitly has the 
 ``ROLE_CUSTOMER`` role, but not other users.
