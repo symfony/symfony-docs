@@ -27,7 +27,7 @@ property they use to access their account via the API::
 
     /**
      * @ORM\Entity
-     * @ORM\Table(name="user")
+     * @ORM\Table(name="`user`")
      */
     class User implements UserInterface
     {
