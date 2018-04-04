@@ -13,7 +13,7 @@ First, install the security checker in your project:
 
 .. code-block:: terminal
 
-    $ composer require security-checker
+    $ composer require sensiolabs/security-checker
 
 Then run this command:
 
