@@ -101,7 +101,7 @@ As well as the following normalizers:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` for
   objects implementing the :phpclass:`DateTimeInterface` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
-  transform :class:`SplFileInfo` objects in `Data URIs`_
+  transform :phpclass:`SplFileInfo` objects in `Data URIs`_
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
   to deal with objects implementing the :class:`JsonSerializable` interface
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
