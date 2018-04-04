@@ -87,32 +87,6 @@ Symfony Standard Edition:
             </services>
         </container>
 
-    .. code-block:: php
-
-        // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        // To use as default template
-        $definition = new Definition();
-
-        $definition
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->setPublic(false)
-        ;
-
-        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
-
-        // Changes default config
-        $definition
-            ->addTag('controller.service_arguments')
-        ;
-
-        // $this is a reference to the current loader
-        $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
-
-        // add more services, or override services that need manual wiring
-
 This small bit of configuration contains a paradigm shift of how services
 are configured in Symfony.
 
@@ -159,22 +133,6 @@ thanks to the following config:
                 <prototype namespace="AppBundle\" resource="../../src/AppBundle/*" exclude="../../src/AppBundle/{Entity,Repository}" />
             </services>
         </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        // To use as default template
-        $definition = new Definition();
-
-        $definition
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->setPublic(false)
-        ;
-
-        $this->registerClasses($definition, 'AppBundle\\', '../../src/AppBundle/*', '../../src/AppBundle/{Entity,Repository}');
 
 This means that every class in ``src/AppBundle/`` is *available* to be used as a
 service. And thanks to the ``_defaults`` section at the top of the file, all of
@@ -511,18 +469,6 @@ inherited from an abstract definition:
                 </instanceof>
             </services>
         </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Domain\LoaderInterface;
-
-        // ...
-
-        /* This method returns a child definition to define the default
-           configuration of the given class or interface */
-        $container->registerForAutoconfiguration(LoaderInterface::class)
-            ->addTag('app.domain_loader');
 
 What about Performance
 ----------------------
