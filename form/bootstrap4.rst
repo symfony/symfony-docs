@@ -16,7 +16,7 @@ template which other templates extend from):
     {% endblock %}
     {% block head_js %}
         <!-- Copy JavaScript from https://getbootstrap.com/docs/4.0/getting-started/introduction/#js -->
-    {% endblock head %}
+    {% endblock %}
 
 If your application uses modern front-end practices, it's better to use
 :doc:`Webpack Encore </frontend>` and follow :doc:`this tutorial </frontend/encore/bootstrap>`
