@@ -139,6 +139,29 @@ string as the second argument of the ``StaticVersionStrategy`` constructor::
     echo $package->getUrl('image.png');
     // result: v1/image.png
 
+JSON File Manifest
+..................
+
+Use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\JsonManifestVersionStrategy`
+to take advantage of the strategy used by popular tools such as `Webpack 
+<https://webpack.js.org/>`_, which generate a JSON file mapping all source file names to their corresponding output file. For example::
+
+    // rev-manifest.json
+    {
+        "css/app.css": "build/css/app.b916426ea1d10021f3f17ce8031f93c2.css",
+        "js/app.js": "build/js/app.13630905267b809161e71d0f8a0c017b.js"
+        "...": "..."
+    }
+
+
+    use Symfony\Component\Asset\Package;
+    use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
+
+    $package = new Package(new JsonManifestVersionStrategy(__DIR__'./rev-manifest.json'));
+
+    echo $package->getUrl('css/app.css');
+    // result: build/css/app.b916426ea1d10021f3f17ce8031f93c2.css
+
 Custom Version Strategies
 .........................
 
