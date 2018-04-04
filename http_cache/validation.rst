@@ -200,7 +200,7 @@ exposing a simple and efficient pattern::
 
             // create a Response with an ETag and/or a Last-Modified header
             $response = new Response();
-            $response->setETag($article->computeETag());
+            $response->setEtag($article->computeETag());
             $response->setLastModified($article->getPublishedAt());
 
             // Set response as public. Otherwise it will be private by default.
