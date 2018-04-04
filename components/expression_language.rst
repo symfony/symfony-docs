@@ -12,10 +12,13 @@ The ExpressionLanguage Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/expression-language`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/expression-language).
+    $ composer require symfony/expression-language
+
+Alternatively, you can clone the `<https://github.com/symfony/expression-language>`_ repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 How can the Expression Engine Help Me?
 --------------------------------------
@@ -66,11 +69,11 @@ The main class of the component is
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-    $language = new ExpressionLanguage();
+    $expressionLanguage = new ExpressionLanguage();
 
-    var_dump($language->evaluate('1 + 2')); // displays 3
+    var_dump($expressionLanguage->evaluate('1 + 2')); // displays 3
 
-    var_dump($language->compile('1 + 2')); // displays (1 + 2)
+    var_dump($expressionLanguage->compile('1 + 2')); // displays (1 + 2)
 
 Expression Syntax
 -----------------
@@ -86,7 +89,7 @@ PHP type (including objects)::
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-    $language = new ExpressionLanguage();
+    $expressionLanguage = new ExpressionLanguage();
 
     class Apple
     {
@@ -96,7 +99,7 @@ PHP type (including objects)::
     $apple = new Apple();
     $apple->variety = 'Honeycrisp';
 
-    var_dump($language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'fruit.variety',
         array(
             'fruit' => $apple,

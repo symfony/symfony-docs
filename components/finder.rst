@@ -11,10 +11,11 @@ The Finder Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/finder`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/finder).
+    $ composer require symfony/finder
+
+Alternatively, you can clone the `<https://github.com/symfony/finder>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -174,12 +175,9 @@ Sort the result by name or by type (directories first, then files)::
 
 You can also define your own sorting algorithm with ``sort()`` method::
 
-    $sort = function (\SplFileInfo $a, \SplFileInfo $b)
-    {
+    $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
         return strcmp($a->getRealPath(), $b->getRealPath());
-    };
-
-    $finder->sort($sort);
+    });
 
 File Name
 ~~~~~~~~~

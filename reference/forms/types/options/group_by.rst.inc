@@ -22,8 +22,8 @@ Take the following example::
             '1 week' => new \DateTime('+1 week'),
             '1 month' => new \DateTime('+1 month'),
         ),
-        'group_by' => function($val, $key, $index) {
-            if ($val <= new \DateTime('+3 days')) {
+        'group_by' => function($value, $key, $index) {
+            if ($value <= new \DateTime('+3 days')) {
                 return 'Soon';
             } else {
                 return 'Later';

@@ -165,13 +165,13 @@ automatically when installing Twig support):
         // config/routes/dev/twig.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $collection = new RouteCollection();
-        $collection->addCollection(
+        $routes = new RouteCollection();
+        $routes->addCollection(
             $loader->import('@TwigBundle/Resources/config/routing/errors.xml')
         );
-        $collection->addPrefix("/_error");
+        $routes->addPrefix("/_error");
 
-        return $collection;
+        return $routes;
 
 With this route added, you can use URLs like these to preview the *error* page
 for a given status code as HTML or for a given status code and format.

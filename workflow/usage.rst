@@ -181,7 +181,7 @@ you can get the workflow by injecting the Workflow registry service::
     use Symfony\Component\Workflow\Registry;
     use App\Entity\BlogPost;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\Workflow\Exception\LogicException;
+    use Symfony\Component\Workflow\Exception\TransitionException;
 
     class BlogController extends Controller
     {
@@ -200,7 +200,7 @@ you can get the workflow by injecting the Workflow registry service::
             // Update the currentState on the post
             try {
                 $workflow->apply($post, 'to_review');
-            } catch (LogicException $e) {
+            } catch (TransitionException $exception) {
                 // ... if the transition is not allowed
             }
 
@@ -208,6 +208,10 @@ you can get the workflow by injecting the Workflow registry service::
             $transitions = $workflow->getEnabledTransitions($post);
         }
     }
+
+.. versionadded:: 4.1
+    The :class:`Symfony\\Component\\Workflow\\Exception\\TransitionException`
+    class was introduced in Symfony 4.1.
 
 Using Events
 ------------
@@ -237,7 +241,7 @@ order:
     * ``workflow.[workflow name].guard.[transition name]``
 
 ``workflow.leave``
-    The object is about to leave a place.
+    The subject is about to leave a place.
 
     The three events being dispatched are:
 
@@ -246,7 +250,7 @@ order:
     * ``workflow.[workflow name].leave.[place name]``
 
 ``workflow.transition``
-    The object is going through this transition.
+    The subject is going through this transition.
 
     The three events being dispatched are:
 
@@ -255,8 +259,9 @@ order:
     * ``workflow.[workflow name].transition.[transition name]``
 
 ``workflow.enter``
-    The object entered a new place. This is the first event where the object
-    is marked as being in the new place.
+    The subject is about to enter a new place. This event is triggered just
+    before the subject places are updated, which means that the marking of the
+    subject is not yet updated with the new places.
 
     The three events being dispatched are:
 
@@ -265,8 +270,8 @@ order:
     * ``workflow.[workflow name].enter.[place name]``
 
 ``workflow.entered``
-    Similar to ``workflow.enter``, except the marking store is updated before this
-    event (making it a good place to flush data in Doctrine).
+    The subject has entered in the places and the marking is updated (making it a good
+    place to flush data in Doctrine).
 
     The three events being dispatched are:
 
@@ -285,7 +290,7 @@ order:
 
 
 ``workflow.announce``
-    Triggered for each transition that now is accessible for the object.
+    Triggered for each transition that now is accessible for the subject.
 
     The three events being dispatched are:
 
@@ -382,7 +387,7 @@ This means that each event has access to the following information:
 :method:`Symfony\\Component\\Workflow\\Event\\Event::getMarking`
     Returns the :class:`Symfony\\Component\\Workflow\\Marking` of the workflow.
 
-:method:`Symfony\\Component\\Worflow\\Event\\Event::getSubject`
+:method:`Symfony\\Component\\Workflow\\Event\\Event::getSubject`
     Returns the object that dispatches the event.
 
 :method:`Symfony\\Component\\Workflow\\Event\\Event::getTransition`

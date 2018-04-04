@@ -33,7 +33,7 @@ In reality, each environment differs only somewhat from others. This means that
 all environments share a large base of common configurations. This configuration
 is put in files directly in the ``config/packages/`` directory.
 
-The location of these files is defined by the application's Kernel::
+The location of these files is defined by the application's kernel::
 
     // src/Kernel.php
 

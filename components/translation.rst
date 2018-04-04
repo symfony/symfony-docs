@@ -11,10 +11,11 @@ The Translation Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/translation`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/translation).
+    $ composer require symfony/translation
+
+Alternatively, you can clone the `<https://github.com/symfony/translation>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -29,9 +30,7 @@ catalogs*).
 Configuration
 ~~~~~~~~~~~~~
 
-The constructor of the ``Translator`` class needs one argument: The locale.
-
-.. code-block:: php
+The constructor of the ``Translator`` class needs one argument: The locale::
 
     use Symfony\Component\Translation\Translator;
 

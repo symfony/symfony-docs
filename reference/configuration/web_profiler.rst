@@ -44,7 +44,7 @@ on the given link to perform the redirect.
 excluded_ajax_paths
 ~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'^/(app(_[\\w]+)?\\.php/)?_wdt'``
+**type**: ``string`` **default**: ``'^/((index|app(_[\w]+)?)\.php/)?_wdt'``
 
 When the toolbar logs Ajax requests, it matches their URLs against this regular
 expression. If the URL matches, the request is not displayed in the toolbar. This
@@ -62,7 +62,7 @@ Full Default Configuration
         web_profiler:
             toolbar:              false
             intercept_redirects:  false
-            excluded_ajax_paths:  ^/(app(_[\\w]+)?\\.php/)?_wdt
+            excluded_ajax_paths:  ^/((index|app(_[\w]+)?)\.php/)?_wdt
 
     .. code-block:: xml
 
@@ -79,6 +79,6 @@ Full Default Configuration
             <web-profiler:config
                 toolbar="false"
                 intercept-redirects="false"
-                excluded-ajax-paths="^/(app(_[\\w]+)?\\.php/)?_wdt"
+                excluded-ajax-paths="^/((index|app(_[\w]+)?)\.php/)?_wdt"
             />
         </container>

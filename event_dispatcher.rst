@@ -91,7 +91,7 @@ using a special "tag":
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\EventListener\ExceptionListener">
+                <service id="App\EventListener\ExceptionListener">
                     <tag name="kernel.event_listener" event="kernel.exception" />
                 </service>
             </services>

@@ -42,10 +42,13 @@ simple. Hardcoding URLs can be a disadvantage because:
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/asset`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/asset).
+    $ composer require symfony/asset
+
+Alternatively, you can clone the `<https://github.com/symfony/asset>`_ repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 Usage
 -----
@@ -179,9 +182,9 @@ that path over and over again::
     use Symfony\Component\Asset\PathPackage;
     // ...
 
-    $package = new PathPackage('/static/images', new StaticVersionStrategy('v1'));
+    $pathPackage = new PathPackage('/static/images', new StaticVersionStrategy('v1'));
 
-    echo $package->getUrl('logo.png');
+    echo $pathPackage->getUrl('logo.png');
     // result: /static/images/logo.png?v1
 
     // Base path is ignored when using absolute paths
@@ -199,13 +202,13 @@ class can take into account the context of the current request::
     use Symfony\Component\Asset\Context\RequestStackContext;
     // ...
 
-    $package = new PathPackage(
+    $pathPackage = new PathPackage(
         '/static/images',
         new StaticVersionStrategy('v1'),
         new RequestStackContext($requestStack)
     );
 
-    echo $package->getUrl('logo.png');
+    echo $pathPackage->getUrl('logo.png');
     // result: /somewhere/static/images/logo.png?v1
 
     // Both "base path" and "base url" are ignored when using absolute path for asset
@@ -230,12 +233,12 @@ class to generate absolute URLs for their assets::
     use Symfony\Component\Asset\UrlPackage;
     // ...
 
-    $package = new UrlPackage(
+    $urlPackage = new UrlPackage(
         'http://static.example.com/images/',
         new StaticVersionStrategy('v1')
     );
 
-    echo $package->getUrl('/logo.png');
+    echo $urlPackage->getUrl('/logo.png');
     // result: http://static.example.com/images/logo.png?v1
 
 You can also pass a schema-agnostic URL::
@@ -243,12 +246,12 @@ You can also pass a schema-agnostic URL::
     use Symfony\Component\Asset\UrlPackage;
     // ...
 
-    $package = new UrlPackage(
+    $urlPackage = new UrlPackage(
         '//static.example.com/images/',
         new StaticVersionStrategy('v1')
     );
 
-    echo $package->getUrl('/logo.png');
+    echo $urlPackage->getUrl('/logo.png');
     // result: //static.example.com/images/logo.png?v1
 
 This is useful because assets will automatically be requested via HTTPS if
@@ -266,11 +269,11 @@ constructor::
         '//static1.example.com/images/',
         '//static2.example.com/images/',
     );
-    $package = new UrlPackage($urls, new StaticVersionStrategy('v1'));
+    $urlPackage = new UrlPackage($urls, new StaticVersionStrategy('v1'));
 
-    echo $package->getUrl('/logo.png');
+    echo $urlPackage->getUrl('/logo.png');
     // result: http://static1.example.com/images/logo.png?v1
-    echo $package->getUrl('/icon.png');
+    echo $urlPackage->getUrl('/icon.png');
     // result: http://static2.example.com/images/icon.png?v1
 
 For each asset, one of the URLs will be randomly used. But, the selection
@@ -289,13 +292,13 @@ protocol-relative URLs for HTTPs requests, any base URL for HTTP requests)::
     use Symfony\Component\Asset\Context\RequestStackContext;
     // ...
 
-    $package = new UrlPackage(
+    $urlPackage = new UrlPackage(
         array('http://example.com/', 'https://example.com/'),
         new StaticVersionStrategy('v1'),
         new RequestStackContext($requestStack)
     );
 
-    echo $package->getUrl('/logo.png');
+    echo $urlPackage->getUrl('/logo.png');
     // assuming the RequestStackContext says that we are on a secure host
     // result: https://example.com/logo.png?v1
 

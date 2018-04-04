@@ -127,6 +127,10 @@ fragment needed to render every part of a form:
     calling ``form_label()`` for a checkbox/radio field doesn't show anything.
     Due to Bootstrap internals, the label is already shown by ``form_widget()``.
 
+.. tip::
+
+    Read more about the :doc:`Bootstrap 4 form theme </form/bootstrap4>`.
+
 In the next section you will learn how to customize a theme by overriding
 some or all of its fragments.
 
@@ -423,9 +427,7 @@ When the ``form.age`` widget is rendered, Symfony will use the customized
 the ``div`` element.
 
 If you want to apply a theme to a specific child form, pass it to the ``setTheme()``
-method:
-
-.. code-block:: php
+method::
 
     <?php $view['form']->setTheme($form['child'], ':form'); ?>
 

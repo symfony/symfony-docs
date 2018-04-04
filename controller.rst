@@ -241,6 +241,8 @@ the argument by its name:
                 bind:
                     # for any $logger argument, pass this specific service
                     $logger: '@monolog.logger.doctrine'
+                    # for any $projectDir argument, pass this parameter value
+                    $projectDir: '%kernel.project_dir%'
 
     .. code-block:: xml
 
@@ -260,6 +262,7 @@ the argument by its name:
                         type="service"
                         id="monolog.logger.doctrine"
                     />
+                    <bind key="$projectDir">%kernel.project_dir%</bind>
                 </service>
             </services>
         </container>
@@ -274,21 +277,39 @@ the argument by its name:
             ->setPublic(true)
             ->setBindings(array(
                 '$logger' => new Reference('monolog.logger.doctrine'),
+                '$projectDir' => '%kernel.project_dir%'
             ))
         ;
 
 You can of course also use normal :ref:`constructor injection <services-constructor-injection>`
 in your controllers.
 
-.. caution::
-
-    You can *only* pass *services* to your controller arguments in this way. It's not
-    possible, for example, to pass a service parameter as a controller argument,
-    even by using ``bind``. If you need a parameter, use the ``$this->getParameter('kernel.debug')``
-    shortcut or pass the value through your controller's ``__construct()`` method
-    and specify its value with ``bind``.
+.. versionadded:: 4.1
+    The ability to bind scalar values to controller arguments was introduced in
+    Symfony 4.1. Previously you could only bind services.
 
 For more information about services, see the :doc:`/service_container` article.
+
+Generating Controllers
+----------------------
+
+To save time, you can also tell Symfony to generate a new controller class:
+
+.. code-block:: terminal
+
+    $ php bin/console make:controller BrandNewController
+
+    created: src/Controller/BrandNewController.php
+
+If you want to generate an entire CRUD from a Doctrine :doc:`entity </doctrine>`,
+use:
+
+.. code-block:: terminal
+
+    $ php bin/console make:crud Product
+
+.. versionadded::
+    The ``make:crud`` command was introduced in MakerBundle 1.2.
 
 .. index::
    single: Controller; Managing errors
@@ -323,9 +344,7 @@ method is just a shortcut to create a special
 object, which ultimately triggers a 404 HTTP response inside Symfony.
 
 Of course, you can throw any ``Exception`` class in your controller: Symfony will
-automatically return a 500 HTTP response code.
-
-.. code-block:: php
+automatically return a 500 HTTP response code::
 
     throw new \Exception('Something went wrong!');
 

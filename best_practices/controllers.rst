@@ -98,9 +98,7 @@ What does the Controller look like
 ----------------------------------
 
 Considering all this, here is an example of what the controller should look like
-for the homepage of our app:
-
-.. code-block:: php
+for the homepage of our app::
 
     namespace App\Controller;
 
@@ -154,9 +152,7 @@ to automatically query for an entity and pass it as an argument to your controll
     Use the ParamConverter trick to automatically query for Doctrine entities
     when it's simple and convenient.
 
-For example:
-
-.. code-block:: php
+For example::
 
     use App\Entity\Post;
     use Symfony\Component\Routing\Annotation\Route;
@@ -187,9 +183,7 @@ The above example works without any configuration because the wildcard name
 ``{id}`` matches the name of the property on the entity. If this isn't true, or
 if you have even more complex logic, the easiest thing to do is just query for
 the entity manually. In our application, we have this situation in
-``CommentController``:
-
-.. code-block:: php
+``CommentController``::
 
     /**
      * @Route("/comment/{postSlug}/new", name="comment_new")
@@ -208,9 +202,7 @@ the entity manually. In our application, we have this situation in
     }
 
 You can also use the ``@ParamConverter`` configuration, which is infinitely
-flexible:
-
-.. code-block:: php
+flexible::
 
     use App\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

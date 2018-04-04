@@ -132,25 +132,25 @@ configuration (``login``):
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('login', new Route('/login', array(
+        $routes = new RouteCollection();
+        $routes->add('login', new Route('/login', array(
             '_controller' => array(SecurityController::class, 'login'),
         )));
 
-        return $collection;
+        return $routes;
 
 Great! Next, add the logic to ``login()`` that displays the login form::
 
     // src/Controller/SecurityController.php
     use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-    public function login(Request $request, AuthenticationUtils $authUtils)
+    public function login(Request $request, AuthenticationUtils $authenticationUtils)
     {
         // get the login error if there is one
-        $error = $authUtils->getLastAuthenticationError();
+        $error = $authenticationUtils->getLastAuthenticationError();
 
         // last username entered by the user
-        $lastUsername = $authUtils->getLastUsername();
+        $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', array(
             'last_username' => $lastUsername,
@@ -160,8 +160,8 @@ Great! Next, add the logic to ``login()`` that displays the login form::
 
 .. note::
 
-    If you get an error that the ``$authUtils`` argument is missing, it's
-    probably because the controllers of your application are not defined as
+    If you get an error that the ``$authenticationUtils`` argument is missing,
+    it's probably because the controllers of your application are not defined as
     services and tagged with the ``controller.service_arguments`` tag, as done
     in the :ref:`default services.yaml configuration <service-container-services-load-example>`.
 

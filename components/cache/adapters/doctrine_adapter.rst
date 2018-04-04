@@ -20,7 +20,7 @@ third parameters::
 
     $provider = new SQLite3Cache(new \SQLite3(__DIR__.'/cache/data.sqlite'), 'youTableName');
 
-    $symfonyCache = new DoctrineAdapter(
+    $cache = new DoctrineAdapter(
 
         // a cache provider instance
         CacheProvider $provider,

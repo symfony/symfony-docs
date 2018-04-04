@@ -69,14 +69,14 @@ a more permissive regular expression for it:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('share', new Route('/share/{token}', array(
+        $routes = new RouteCollection();
+        $routes->add('share', new Route('/share/{token}', array(
             '_controller' => 'App\Controller\DefaultController::share',
         ), array(
             'token' => '.+',
         )));
 
-        return $collection;
+        return $routes;
 
 That's it! Now, the ``{token}`` parameter can contain the ``/`` character.
 

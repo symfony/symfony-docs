@@ -152,14 +152,14 @@ which outputs:
 
 .. code-block:: text
 
-    ┼───────────────┼──────────────────────────┼──────────────────┼
+    ┌───────────────┬──────────────────────────┬──────────────────┐
     │ ISBN          │ Title                    │ Author           │
-    ┼───────────────┼──────────────────────────┼──────────────────┼
+    ├───────────────┼──────────────────────────┼──────────────────┤
     │ 99921-58-10-7 │ Divine Comedy            │ Dante Alighieri  │
     │ 9971-5-0210-0 │ A Tale of Two Cities     │ Charles Dickens  │
     │ 960-425-059-0 │ The Lord of the Rings    │ J. R. R. Tolkien │
     │ 80-902734-1-6 │ And Then There Were None │ Agatha Christie  │
-    ┼───────────────┼──────────────────────────┼──────────────────┼
+    └───────────────┴──────────────────────────┴──────────────────┘
 
 .. versionadded:: 4.1
     The ``box`` style was introduced in Symfony 4.1.
@@ -169,35 +169,41 @@ If the built-in styles do not fit your need, define your own::
     use Symfony\Component\Console\Helper\TableStyle;
 
     // by default, this is based on the default style
-    $style = new TableStyle();
+    $tableStyle = new TableStyle();
 
     // customizes the style
-    $style
+    $tableStyle
         ->setHorizontalBorderChar('<fg=magenta>|</>')
         ->setVerticalBorderChar('<fg=magenta>-</>')
-        ->setCrossingChar(' ')
+        ->setDefaultCrossingChar(' ')
     ;
 
     // uses the custom style for this table
-    $table->setStyle($style);
+    $table->setStyle($tableStyle);
 
 Here is a full list of things you can customize:
 
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setPaddingChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setHorizontalBorderChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setVerticalBorderChar`
-*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCrossingChar`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCrossingChars`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setDefaultCrossingChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCellHeaderFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCellRowFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setBorderFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setPadType`
+
+.. versionadded:: 4.1
+    The ``setCrossingChars()`` and ``setDefaultCrossingChar()`` methods were
+    introduced in Symfony 4.1. Previously you could only use the now deprecated
+    ``setCrossingChar()`` method.
 
 .. tip::
 
     You can also register a style globally::
 
         // registers the style under the colorful name
-        Table::setStyleDefinition('colorful', $style);
+        Table::setStyleDefinition('colorful', $tableStyle);
 
         // applies the custom style for the given table
         $table->setStyle('colorful');

@@ -17,11 +17,13 @@ The BrowserKit Component
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>`
-  (``symfony/browser-kit`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/browser-kit).
+    $ composer require symfony/browser-kit
+
+Alternatively, you can clone the `<https://github.com/symfony/browser-kit>`_ repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 Basic Usage
 -----------
@@ -72,6 +74,19 @@ The value returned by the ``request()`` method is an instance of the
 :class:`Symfony\\Component\\DomCrawler\\Crawler` class, provided by the
 :doc:`DomCrawler component </components/dom_crawler>`, which allows accessing
 and traversing HTML elements programmatically.
+
+The :method:`Symfony\\Component\\BrowserKit\\Client::xmlHttpRequest` method,
+which defines the same arguments as the ``request()`` method, is a shortcut to
+make AJAX requests::
+
+    use Acme\Client;
+
+    $client = new Client();
+    // the required HTTP_X_REQUESTED_WITH header is added automatically
+    $crawler = $client->xmlHttpRequest('GET', '/');
+
+.. versionadded:: 4.1
+    The ``xmlHttpRequest()`` method was introduced in Symfony 4.1.
 
 Clicking Links
 ~~~~~~~~~~~~~~
@@ -140,8 +155,8 @@ retrieve any cookie while making requests with the client::
     // Get cookie data
     $name       = $cookie->getName();
     $value      = $cookie->getValue();
-    $raw        = $cookie->getRawValue();
-    $secure     = $cookie->isSecure();
+    $rawValue   = $cookie->getRawValue();
+    $isSecure   = $cookie->isSecure();
     $isHttpOnly = $cookie->isHttpOnly();
     $isExpired  = $cookie->isExpired();
     $expires    = $cookie->getExpiresTime();

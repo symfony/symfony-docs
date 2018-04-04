@@ -174,6 +174,11 @@ flag:
                 1
             );
 
+Note that to comply with the `docopt standard`_, long options can specify their
+values after a white space or an ``=`` sign (e.g. ``--iterations 5`` or
+``--iterations=5``), but short options can only use white spaces or no
+separation at all (e.g. ``-i 5`` or ``-i5``).
+
 There are four option variants you can use:
 
 ``InputOption::VALUE_IS_ARRAY``
@@ -184,8 +189,8 @@ There are four option variants you can use:
     behavior of options;
 
 ``InputOption::VALUE_REQUIRED``
-    This value is required (e.g. ``--iterations=5``), the option itself is
-    still optional;
+    This value is required (e.g. ``--iterations=5`` or ``-i5``), the option
+    itself is still optional;
 
 ``InputOption::VALUE_OPTIONAL``
     This option may or may not have a value (e.g. ``--yell`` or
@@ -211,3 +216,14 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
     when the option was used without a value (``command --language``) or when
     it wasn't used at all (``command``). In both cases, the value retrieved for
     the option will be ``null``.
+
+.. caution::
+
+    While it is possible to separate an option from its value with a white space,
+    using this form leads to an ambiguity should the option appear before the
+    command name. For example, ``php bin/console --iterations 5 app:greet Fabien``
+    is ambiguous; Symfony would interpret ``5`` as the command name. To avoid
+    this situation, always place options after the command name, or avoid using
+    a space to separate the option name from its value.
+
+.. _`docopt standard`: http://docopt.org/

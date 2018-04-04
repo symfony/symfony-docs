@@ -21,7 +21,13 @@ makes it easy to execute queries and perform other database actions.
     Read the official Doctrine `DBAL Documentation`_ to learn all the details
     and capabilities of Doctrine's DBAL library.
 
-To get started, configure the ``DATABASE_URL`` environment variable in ``.env``:
+First, install the Doctrine bundle:
+
+.. code-block:: terminal
+
+    composer require doctrine/doctrine-bundle
+
+Then configure the ``DATABASE_URL`` environment variable in ``.env``:
 
 .. code-block:: text
 
@@ -41,9 +47,9 @@ object::
 
     class UserController extends Controller
     {
-        public function indexAction(Connection $conn)
+        public function indexAction(Connection $connection)
         {
-            $users = $conn->fetchAll('SELECT * FROM users');
+            $users = $connection->fetchAll('SELECT * FROM users');
 
             // ...
         }

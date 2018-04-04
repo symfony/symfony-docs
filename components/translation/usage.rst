@@ -12,7 +12,7 @@ Imagine you want to translate the string *"Symfony is great"* into French::
     $translator = new Translator('fr_FR');
     $translator->addLoader('array', new ArrayLoader());
     $translator->addResource('array', array(
-        'Symfony is great!' => 'J\'aime Symfony!',
+        'Symfony is great!' => 'Symfony est super !',
     ), 'fr_FR');
 
     var_dump($translator->trans('Symfony is great!'));
@@ -336,8 +336,8 @@ effect after removing the explicit rules:
     '{0} There are no apples|[20,Inf[ There are many apples|There is one apple|a_few: There are %count% apples'
 
 For example, for ``1`` apple, the standard rule ``There is one apple`` will
-be used. For ``2-19`` apples, the second standard rule ``There are %count%
-apples`` will be selected.
+be used. For ``2-19`` apples, the second standard rule 
+``There are %count% apples`` will be selected.
 
 An :class:`Symfony\\Component\\Translation\\Interval` can represent a finite set
 of numbers:
@@ -420,9 +420,6 @@ The ``$messages`` variable will have the following structure::
 
 Adding Notes to Translation Contents
 ------------------------------------
-
-.. versionadded: 3.4
-    The feature to load and dump translation notes was introduced in Symfony 3.4.
 
 Sometimes translators need additional context to better decide how to translate
 some content. This context can be provided with notes, which are a collection of

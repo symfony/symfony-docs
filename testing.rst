@@ -77,8 +77,8 @@ of your application::
     {
         public function testAdd()
         {
-            $calc = new Calculator();
-            $result = $calc->add(30, 12);
+            $calculator = new Calculator();
+            $result = $calculator->add(30, 12);
 
             // assert that your calculator added the numbers correctly!
             $this->assertEquals(42, $result);
@@ -124,6 +124,13 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 * Click on a link or submit a form;
 * Test the response;
 * Rinse and repeat.
+
+Before creating your first test, install these packages that provide some of the
+utilities used in the functional tests:
+
+.. code-block:: terminal
+
+    $ composer require --dev symfony/browser-kit symfony/css-selector
 
 Your First Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -352,8 +359,8 @@ returns a ``Crawler`` instance.
         )
 
     The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the ``Content-Type``,
-    ``Referer`` and ``X-Requested-With`` HTTP headers, you'd pass the following (mind
+    find in the PHP `$_SERVER`_ superglobal. For example, to set the
+    ``Content-Type`` and ``Referer`` HTTP headers, you'd pass the following (mind
     the ``HTTP_`` prefix for non standard headers)::
 
         $client->request(
@@ -362,9 +369,8 @@ returns a ``Crawler`` instance.
             array(),
             array(),
             array(
-                'CONTENT_TYPE'          => 'application/json',
-                'HTTP_REFERER'          => '/foo/bar',
-                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_REFERER' => '/foo/bar',
             )
         );
 
@@ -433,6 +439,19 @@ process to avoid any side-effects when working with several clients in the same
 script::
 
     $client->insulate();
+
+AJAX Requests
+~~~~~~~~~~~~~
+
+The Client provides a :method:`Symfony\\Component\\BrowserKit\\Client::xmlHttpRequest`
+method, which has the same arguments as the ``request()`` method, and it's a
+shortcut to make AJAX requests::
+
+    // the required HTTP_X_REQUESTED_WITH header is added automatically
+    $client->xmlHttpRequest('POST', '/submit', array('name' => 'Fabien'));
+
+.. versionadded:: 4.1
+    The ``xmlHttpRequest()`` method was introduced in Symfony 4.1.
 
 Browsing
 ~~~~~~~~

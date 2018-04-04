@@ -43,6 +43,7 @@ Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (
 random) number and prints it. To do that, create a "Controller class" and a
 "controller" method inside of it::
 
+    <?php
     // src/Controller/LuckyController.php
     namespace App\Controller;
 
@@ -123,6 +124,14 @@ You can now add your route directly *above* the controller:
 
 That's it! The page - ``http://localhost:8000/lucky/number`` will work exactly
 like before! Annotations are the recommended way to configure routes.
+
+.. tip::
+
+    To create controllers faster, let Symfony generate it for you:
+
+    .. code-block:: terminal
+
+        $ php bin/console make:controller
 
 .. _flex-quick-intro:
 
@@ -281,7 +290,7 @@ project:
 
 ``src/``
     All your PHP code lives here.
-    
+
 ``templates/``
     All your Twig templates live here.
 

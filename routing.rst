@@ -102,15 +102,15 @@ like ``/blog/my-post`` or ``/blog/all-about-symfony``:
         use Symfony\Component\Routing\Route;
         use App\Controller\BlogController;
 
-        $collection = new RouteCollection();
-        $collection->add('blog_list', new Route('/blog', array(
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog', array(
             '_controller' => [BlogController::class, 'list']
         )));
-        $collection->add('blog_show', new Route('/blog/{slug}', array(
+        $routes->add('blog_show', new Route('/blog/{slug}', array(
             '_controller' => [BlogController::class, 'show']
         )));
 
-        return $collection;
+        return $routes;
 
 Thanks to these two routes:
 
@@ -218,8 +218,8 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
         use Symfony\Component\Routing\Route;
         use App\Controller\BlogController;
 
-        $collection = new RouteCollection();
-        $collection->add('blog_list', new Route('/blog/{page}', array(
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog/{page}', array(
             '_controller' => [BlogController::class, 'list'],
         ), array(
             'page' => '\d+'
@@ -227,7 +227,7 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
 
         // ...
 
-        return $collection;
+        return $routes;
 
 The ``\d+`` is a regular expression that matches a *digit* of any length. Now:
 
@@ -237,6 +237,72 @@ URL                       Route          Parameters
 ``/blog/2``               ``blog_list``  ``$page`` = ``2``
 ``/blog/yay-routing``     ``blog_show``  ``$slug`` = ``yay-routing``
 ========================  =============  ===============================
+
+If you prefer, requirements can be inlined in each placeholder using the syntax
+``{placeholder_name<requirements>}``. This feature makes configuration more
+concise, but it can decrease route readability when requirements are complex:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{page<\d+>}", name="blog_list")
+             */
+            public function list($page)
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        blog_list:
+            path:      /blog/{page<\d+>}
+            controller: App\Controller\BlogController::list
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_list" path="/blog/{page<\d+>}"
+                   controller="App\Controller\BlogController::list" />
+
+            <!-- ... -->
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+        use App\Controller\BlogController;
+
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog/{page<\d+>}', array(
+            '_controller' => [BlogController::class, 'list'],
+        )));
+
+        // ...
+
+        return $routes;
+
+.. versionadded:: 4.1
+    The feature to inline requirements was introduced in Symfony 4.1.
 
 To learn about other route requirements - like HTTP method, hostname and dynamic
 expressions - see :doc:`/routing/requirements`.
@@ -312,8 +378,8 @@ So how can you make ``blog_list`` once again match when the user visits
         use Symfony\Component\Routing\Route;
         use App\Controller\BlogController;
 
-        $collection = new RouteCollection();
-        $collection->add('blog_list', new Route(
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route(
             '/blog/{page}',
             array(
                 '_controller' => [BlogController::class, 'list'],
@@ -326,10 +392,82 @@ So how can you make ``blog_list`` once again match when the user visits
 
         // ...
 
-        return $collection;
+        return $routes;
 
 Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 ``$page`` will default to a value of ``1``.
+
+As it happens with requirements, default values can also be inlined in each
+placeholder using the syntax ``{placeholder_name?default_value}``. This feature
+is compatible with inlined requirements, so you can inline both in a single
+placeholder:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends Controller
+        {
+            /**
+             * @Route("/blog/{page<\d+>?1}", name="blog_list")
+             */
+            public function list($page)
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        blog_list:
+            path:      /blog/{page<\d+>?1}
+            controller: App\Controller\BlogController::list
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_list" path="/blog/{page <\d+>?1}"
+                   controller="App\Controller\BlogController::list" />
+
+            <!-- ... -->
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+        use App\Controller\BlogController;
+
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog/{page<\d+>?1}', array(
+            '_controller' => [BlogController::class, 'list'],
+        )));
+
+        // ...
+
+        return $routes;
+
+.. tip::
+
+    To give a ``null`` default value to any placeholder, add nothing after the
+    ``?`` character (e.g. ``/blog/{page?}``).
+
+.. versionadded:: 4.1
+    The feature to inline default values was introduced in Symfony 4.1.
 
 Listing all of your Routes
 --------------------------
@@ -426,8 +564,8 @@ With all of this in mind, check out this advanced example:
         use Symfony\Component\Routing\Route;
         use App\Controller\ArticleController;
 
-        $collection = new RouteCollection();
-        $collection->add(
+        $routes = new RouteCollection();
+        $routes->add(
             'article_show',
             new Route('/articles/{_locale}/{year}/{slug}.{_format}', array(
                 '_controller' => [ArticleController::class, 'show'],
@@ -439,7 +577,7 @@ With all of this in mind, check out this advanced example:
             ))
         );
 
-        return $collection;
+        return $routes;
 
 As you've seen, this route will only match if the ``{_locale}`` portion of
 the URL is either ``en`` or ``fr`` and if the ``{year}`` is a number. This
@@ -493,6 +631,37 @@ that are special: each adds a unique piece of functionality inside your applicat
 ``_locale``
     Used to set the locale on the request (:ref:`read more <translation-locale-url>`).
 
+.. _routing-trailing-slash-redirection:
+
+Redirecting URLs with Trailing Slashes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Historically, URLs have followed the UNIX convention of adding trailing slashes
+for directories (e.g. ``https://example.com/foo/``) and removing them to refer
+to files (``https://example.com/foo``). Although serving different contents for
+both URLs is OK, nowadays it's common to treat both URLs as the same URL and
+redirect between them.
+
+Symfony follows this logic to redirect between URLs with and without trailing
+slashes (but only for ``GET`` and ``HEAD`` requests):
+
+==========  ========================================  ==========================================
+Route path  If the requested URL is ``/foo``          If the requested URL is ``/foo/``
+----------  ----------------------------------------  ------------------------------------------
+``/foo``    It matches (``200`` status response)      It makes a ``301`` redirect to ``/foo``
+``/foo/``   It makes a ``301`` redirect to ``/foo/``  It matches (``200`` status response)
+==========  ========================================  ==========================================
+
+.. note::
+
+    If your application defines different routes for each path (``/foo`` and
+    ``/foo/``) this automatic redirection doesn't take place and the right
+    route is always matched.
+
+.. versionadded:: 4.1
+    The automatic ``301`` redirection from ``/foo/`` to ``/foo`` was introduced
+    in Symfony 4.1. In previous Symfony versions this results in a ``404`` response.
+
 .. index::
    single: Routing; Controllers
    single: Controller; String naming format
@@ -503,8 +672,6 @@ Controller Naming Pattern
 -------------------------
 
 The ``controller`` value in your routes has a very simple format ``CONTROLLER_CLASS::METHOD``.
-If your controller is registered as a service, you can also use just one colon separator
-(e.g. ``service_name:index``).
 
 .. tip::
 

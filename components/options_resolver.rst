@@ -12,10 +12,11 @@ The OptionsResolver Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/options-resolver`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/options-resolver).
+    $ composer require symfony/options-resolver
+
+Alternatively, you can clone the `<https://github.com/symfony/options-resolver>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -326,7 +327,7 @@ correctly. To validate the types of the options, call
 
             // check all items in an array recursively for a type
             $resolver->setAllowedTypes('dates', 'DateTime[]');
-            $resolver->setAllowedtypes('ports', 'int[]');
+            $resolver->setAllowedTypes('ports', 'int[]');
         }
     }
 

@@ -46,13 +46,13 @@ can do this without creating a controller:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('acme_privacy', new Route('/privacy', array(
+        $routes = new RouteCollection();
+        $routes->add('acme_privacy', new Route('/privacy', array(
             '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction',
             'template'    => 'static/privacy.html.twig',
         )));
 
-        return $collection;
+        return $routes;
 
 The ``TemplateController`` will simply render whatever template you've passed as
 the ``template`` default value.
@@ -123,15 +123,15 @@ other variables in your route, you can control exactly how your page is cached:
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
-        $collection = new RouteCollection();
-        $collection->add('acme_privacy', new Route('/privacy', array(
+        $routes = new RouteCollection();
+        $routes->add('acme_privacy', new Route('/privacy', array(
             '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction',
             'template'    => 'static/privacy.html.twig',
             'maxAge'      => 86400,
             'sharedAge'   => 86400,
         )));
 
-        return $collection;
+        return $routes;
 
 The ``maxAge`` and ``sharedAge`` values are used to modify the Response
 object created in the controller. For more information on caching, see

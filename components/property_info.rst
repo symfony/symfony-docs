@@ -19,11 +19,11 @@ within that class.
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/property-info``
-  on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/property-info).
+    $ composer require symfony/property-info
+
+Alternatively, you can clone the `<https://github.com/symfony/property-info>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -122,10 +122,10 @@ Extractable Information
 The :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`
 class exposes public methods to extract four types of information:
 
-* :ref:`*List* of properties <property-info-list>`: `getProperties()`
-* :ref:`Property *type* <property-info-type>`: `getTypes()`
-* :ref:`Property *description* <property-info-description>`: `getShortDescription()` and `getLongDescription()`
-* :ref:`Property *access* details <property-info-access>`: `isReadable()` and `isWritable()`
+* :ref:`List of properties <property-info-list>`: `getProperties()`
+* :ref:`Property type <property-info-type>`: `getTypes()`
+* :ref:`Property description <property-info-description>`: `getShortDescription()` and `getLongDescription()`
+* :ref:`Property access details <property-info-access>`: `isReadable()` and `isWritable()`
 
 .. note::
 

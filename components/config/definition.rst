@@ -452,9 +452,7 @@ Documenting the Option
 
 All options can be documented using the
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
-method.
-
-.. code-block:: php
+method::
 
     $rootNode
         ->children()
@@ -565,8 +563,8 @@ tree with ``append()``::
 
     public function addParametersNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('parameters');
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('parameters');
 
         $node
             ->isRequired()
@@ -757,7 +755,7 @@ The builder is used for adding advanced validation rules to node definitions, li
                     ->scalarNode('driver')
                         ->isRequired()
                         ->validate()
-                        ->ifNotInArray(array('mysql', 'sqlite', 'mssql'))
+                            ->ifNotInArray(array('mysql', 'sqlite', 'mssql'))
                             ->thenInvalid('Invalid database driver %s')
                         ->end()
                     ->end()
@@ -845,18 +843,18 @@ Otherwise the result is a clean array of configuration values::
     use Symfony\Component\Config\Definition\Processor;
     use Acme\DatabaseConfiguration;
 
-    $config1 = Yaml::parse(
+    $config = Yaml::parse(
         file_get_contents(__DIR__.'/src/Matthias/config/config.yaml')
     );
-    $config2 = Yaml::parse(
+    $extraConfig = Yaml::parse(
         file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yaml')
     );
 
-    $configs = array($config1, $config2);
+    $configs = array($config, $extraConfig);
 
     $processor = new Processor();
-    $configuration = new DatabaseConfiguration();
+    $databaseConfiguration = new DatabaseConfiguration();
     $processedConfiguration = $processor->processConfiguration(
-        $configuration,
+        $databaseConfiguration,
         $configs
     );

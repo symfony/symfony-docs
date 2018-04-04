@@ -65,8 +65,12 @@ Each part will be explained in the next section.
                     ignore_case:          false
 
                 # Argon2i encoder
-                Acme\DemoBundle\Entity\User6:
+                # See https://wiki.php.net/rfc/argon2_password_hash#resolved_cost_factors
+                Acme\DemoBundle\Entity\User7:
                     algorithm:            argon2i
+                    memory_cost:          1024 # Amount in KiB
+                    time_cost:            2 # Number of iterations
+                    threads:              2 # Number of parallel threads
 
             providers:            # Required
                 # Examples:
@@ -626,6 +630,9 @@ Using the Argon2i Password Encoder
             encoders:
                 Symfony\Component\Security\Core\User\User:
                     algorithm: argon2i
+                    memory_cost:          16384 # Amount in KiB. 16 MiB
+                    time_cost:            2 # Number of iterations
+                    threads:              4 # Number of parallel threads
 
     .. code-block:: xml
 
@@ -635,6 +642,9 @@ Using the Argon2i Password Encoder
             <encoder
                 class="Symfony\Component\Security\Core\User\User"
                 algorithm="argon2i"
+                memory_cost="16384"
+                time_cost="2"
+                threads="4"
             />
         </config>
 
@@ -648,6 +658,9 @@ Using the Argon2i Password Encoder
             'encoders' => array(
                 User::class => array(
                     'algorithm' => 'argon2i',
+                    'memory_cost' => 16384,
+                    'time_cost' => 2,
+                    'threads' => 4,
                 ),
             ),
         ));

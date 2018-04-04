@@ -177,9 +177,7 @@ Sequences use a dash followed by a space:
     - Perl
     - Python
 
-The previous YAML file is equivalent to the following PHP code:
-
-.. code-block:: php
+The previous YAML file is equivalent to the following PHP code::
 
     array('PHP', 'Perl', 'Python');
 
@@ -191,9 +189,7 @@ Mappings use a colon followed by a space (``:`` ) to mark each key/value pair:
     MySQL: 5.1
     Apache: 2.2.20
 
-which is equivalent to this PHP code:
-
-.. code-block:: php
+which is equivalent to this PHP code::
 
     array('PHP' => 5.2, 'MySQL' => 5.1, 'Apache' => '2.2.20');
 
@@ -220,9 +216,7 @@ YAML uses indentation with one or more spaces to describe nested collections:
       PHP:    5.2
       Propel: 1.3
 
-The above YAML is equivalent to the following PHP code:
-
-.. code-block:: php
+The above YAML is equivalent to the following PHP code::
 
     array(
         'symfony 1.0' => array(

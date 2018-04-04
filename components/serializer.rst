@@ -24,10 +24,11 @@ but it can be useful for developing tools to serialize and deserialize your obje
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/serializer`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/serializer).
+    $ composer require symfony/serializer
+
+Alternatively, you can clone the `<https://github.com/symfony/serializer>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -69,6 +70,7 @@ exists in your project::
         private $age;
         private $name;
         private $sportsman;
+        private $createdAt;
 
         // Getters
         public function getName()
@@ -79,6 +81,11 @@ exists in your project::
         public function getAge()
         {
             return $this->age;
+        }
+
+        public function getCreatedAt()
+        {
+            return $this->createdAt;
         }
 
         // Issers
@@ -101,6 +108,11 @@ exists in your project::
         public function setSportsman($sportsman)
         {
             $this->sportsman = $sportsman;
+        }
+
+        public function setCreatedAt($createdAt)
+        {
+            $this->createdAt = $createdAt;
         }
     }
 
@@ -432,7 +444,7 @@ A custom name converter can handle such cases::
         }
     }
 
-The custom normalizer can be used by passing it as second parameter of any
+The custom name converter can be used by passing it as second parameter of any
 class extending :class:`Symfony\\Component\\Serializer\\Normalizer\\AbstractNormalizer`,
 including :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
 and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
@@ -446,14 +458,14 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
     $serializer = new Serializer(array($normalizer), array(new JsonEncoder()));
 
-    $obj = new Company();
-    $obj->name = 'Acme Inc.';
-    $obj->address = '123 Main Street, Big City';
+    $company = new Company();
+    $company->name = 'Acme Inc.';
+    $company->address = '123 Main Street, Big City';
 
-    $json = $serializer->serialize($obj, 'json');
+    $json = $serializer->serialize($company, 'json');
     // {"org_name": "Acme Inc.", "org_address": "123 Main Street, Big City"}
-    $objCopy = $serializer->deserialize($json, Company::class, 'json');
-    // Same data as $obj
+    $companyCopy = $serializer->deserialize($json, Company::class, 'json');
+    // Same data as $company
 
 .. _using-camelized-method-names-for-underscored-attributes:
 
@@ -605,7 +617,25 @@ There are several types of normalizers available:
 Encoders
 --------
 
-The Serializer component supports many formats out of the box:
+Encoders turn **arrays** into **formats** and vice versa. They implement
+:class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface`
+for encoding (array to format) and
+:class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface` for decoding
+(format to array).
+
+You can add new encoders to a Serializer instance by using its second constructor argument::
+
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+
+    $encoders = array(new XmlEncoder(), new JsonEncoder());
+    $serializer = new Serializer(array(), $encoders);
+
+Built-in Encoders
+~~~~~~~~~~~~~~~~~
+
+The Serializer component provides several built-in encoders:
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`
     This class encodes and decodes data in JSON_.
@@ -622,6 +652,64 @@ The Serializer component supports many formats out of the box:
 
 All these encoders are enabled by default when using the Symfony Standard Edition
 with the serializer enabled.
+
+The ``JsonEncoder``
+~~~~~~~~~~~~~~~~~~~
+
+The ``JsonEncoder`` encodes to and decodes from JSON strings, based on the PHP
+:phpfunction:`json_encode` and :phpfunction:`json_decode` functions.
+
+The ``CsvEncoder``
+~~~~~~~~~~~~~~~~~~~
+
+The ``CsvEncoder`` encodes to and decodes from CSV.
+
+You can pass the context key ``as_collection`` in order to have the results
+always as a collection.
+
+.. versionadded:: 4.1
+    The ``as_collection`` option was introduced in Symfony 4.1.
+
+The ``XmlEncoder``
+~~~~~~~~~~~~~~~~~~
+
+This encoder transforms arrays into XML and vice versa.
+
+For example, take an object normalized as following::
+
+    array('foo' => array(1, 2), 'bar' => true);
+
+The ``XmlEncoder`` will encode this object like that::
+
+    <?xml version="1.0"?>
+    <response>
+        <foo>1</foo>
+        <foo>2</foo>
+        <bar>1</bar>
+    </response>
+
+Be aware that this encoder will consider keys beginning with ``@`` as attributes::
+
+    $encoder = new XmlEncoder();
+    $encoder->encode(array('foo' => array('@bar' => 'value')));
+    // will return:
+    // <?xml version="1.0"?>
+    // <response>
+    //     <foo bar="value" />
+    // </response>
+
+You can pass the context key ``as_collection`` in order to have the results
+always as a collection.
+
+.. versionadded:: 4.1
+    The ``as_collection`` option was introduced in Symfony 4.1.
+
+The ``YamlEncoder``
+~~~~~~~~~~~~~~~~~~~
+
+This encoder requires the :doc:`Yaml Component </components/yaml>` and
+transforms from and to Yaml.
+
 
 .. _component-serializer-handling-circular-references:
 
@@ -690,13 +778,13 @@ when such a case is encountered::
     $member = new Member();
     $member->setName('Kévin');
 
-    $org = new Organization();
-    $org->setName('Les-Tilleuls.coop');
-    $org->setMembers(array($member));
+    $organization = new Organization();
+    $organization->setName('Les-Tilleuls.coop');
+    $organization->setMembers(array($member));
 
-    $member->setOrganization($org);
+    $member->setOrganization($organization);
 
-    echo $serializer->serialize($org, 'json'); // Throws a CircularReferenceException
+    echo $serializer->serialize($organization, 'json'); // Throws a CircularReferenceException
 
 The ``setCircularReferenceLimit()`` method of this normalizer sets the number
 of times it will serialize the same object before considering it a circular
@@ -811,6 +899,59 @@ because it is deeper than the configured maximum depth of 2::
             ),
     );
     */
+
+Instead of throwing an exception, a custom callable can be executed when the
+maximum depth is reached. This is especially useful when serializing entities
+having unique identifiers::
+
+    use Doctrine\Common\Annotations\AnnotationReader;
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Annotation\MaxDepth;
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+    class Foo
+    {
+        public $id;
+
+        /**
+         * @MaxDepth(1)
+         */
+        public $child;
+    }
+
+    $level1 = new Foo();
+    $level1->id = 1;
+
+    $level2 = new Foo();
+    $level2->id = 2;
+    $level1->child = $level2;
+
+    $level3 = new Foo();
+    $level3->id = 3;
+    $level2->child = $level3;
+
+    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $normalizer = new ObjectNormalizer($classMetadataFactory);
+    $normalizer->setMaxDepthHandler(function ($foo) {
+        return '/foos/'.$foo->id;
+    });
+
+    $serializer = new Serializer(array($normalizer));
+
+    $result = $serializer->normalize($level1, null, array(ObjectNormalizer::ENABLE_MAX_DEPTH => true));
+    /*
+    $result = array(
+        'id' => 1,
+        'child' => array(
+            'id' => 2,
+            'child' => '/foos/3',
+    );
+    */
+
+.. versionadded:: 4.1
+    The ``setMaxDepthHandler()`` method was introduced in Symfony 4.1.
 
 Handling Arrays
 ---------------

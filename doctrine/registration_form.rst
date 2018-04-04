@@ -253,9 +253,9 @@ into the database::
                 $user->setPassword($password);
 
                 // 4) save the User!
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
                 // ... do any other work - like sending them an email, etc
                 // maybe set a "flash" success message for the user

@@ -182,7 +182,7 @@ to set up this table for you according to the database engine used::
 
     try {
         $sessionHandlerService->createTable();
-    } catch (\PDOException $e) {
+    } catch (\PDOException $exception) {
         // the table could not be created for some reason
     }
 

@@ -15,10 +15,11 @@ The DomCrawler Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/dom-crawler`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/dom-crawler).
+    $ composer require symfony/dom-crawler
+
+Alternatively, you can clone the `<https://github.com/symfony/dom-crawler>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -248,20 +249,18 @@ The crawler supports multiple ways of adding the content::
 
 As the Crawler's implementation is based on the DOM extension, it is also able
 to interact with native :phpclass:`DOMDocument`, :phpclass:`DOMNodeList`
-and :phpclass:`DOMNode` objects:
+and :phpclass:`DOMNode` objects::
 
-.. code-block:: php
+    $domDocument = new \DOMDocument();
+    $domDocument->loadXml('<root><node /><node /></root>');
+    $nodeList = $domDocument->getElementsByTagName('node');
+    $node = $domDocument->getElementsByTagName('node')->item(0);
 
-    $document = new \DOMDocument();
-    $document->loadXml('<root><node /><node /></root>');
-    $nodeList = $document->getElementsByTagName('node');
-    $node = $document->getElementsByTagName('node')->item(0);
-
-    $crawler->addDocument($document);
+    $crawler->addDocument($domDocument);
     $crawler->addNodeList($nodeList);
     $crawler->addNodes(array($node));
     $crawler->addNode($node);
-    $crawler->add($document);
+    $crawler->add($domDocument);
 
 .. _component-dom-crawler-dumping:
 

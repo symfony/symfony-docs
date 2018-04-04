@@ -144,7 +144,7 @@ forked repository and ``improve_install_article`` is the name of the branch you
 created previously.
 
 **Step 7.** Everything is now ready to initiate a **pull request**. Go to your
-forked repository at ``https//github.com/YOUR-GITHUB-USERNAME/symfony-docs``
+forked repository at ``https://github.com/YOUR-GITHUB-USERNAME/symfony-docs``
 and click on the **Pull Requests** link located in the sidebar.
 
 Then, click on the big **New pull request** button. As GitHub cannot guess the

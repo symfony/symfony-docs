@@ -29,10 +29,11 @@ the `YAML 1.2 version specification`_.
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/yaml`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/yaml).
+    $ composer require symfony/yaml
+
+Alternatively, you can clone the `<https://github.com/symfony/yaml>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -96,9 +97,7 @@ Reading YAML Contents
 ~~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::parse` method parses a YAML
-string and converts it to a PHP array:
-
-.. code-block:: php
+string and converts it to a PHP array::
 
     use Symfony\Component\Yaml\Yaml;
 
@@ -108,16 +107,14 @@ string and converts it to a PHP array:
 If an error occurs during parsing, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\ParseException` exception
 indicating the error type and the line in the original YAML string where the
-error occurred:
-
-.. code-block:: php
+error occurred::
 
     use Symfony\Component\Yaml\Exception\ParseException;
 
     try {
         $value = Yaml::parse('...');
-    } catch (ParseException $e) {
-        printf('Unable to parse the YAML string: %s', $e->getMessage());
+    } catch (ParseException $exception) {
+        printf('Unable to parse the YAML string: %s', $exception->getMessage());
     }
 
 Reading YAML Files
@@ -138,9 +135,7 @@ Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::dump` method dumps any PHP
-array to its YAML representation:
-
-.. code-block:: php
+array to its YAML representation::
 
     use Symfony\Component\Yaml\Yaml;
 
@@ -172,9 +167,7 @@ representation:
 
 The second argument of the :method:`Symfony\\Component\\Yaml\\Yaml::dump`
 method customizes the level at which the output switches from the expanded
-representation to the inline one:
-
-.. code-block:: php
+representation to the inline one::
 
     echo Yaml::dump($array, 1);
 
@@ -366,9 +359,6 @@ Binary data is automatically parsed if they include the ``!!binary`` YAML tag
 
 Parsing and Dumping Custom Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.3
-    Support for parsing and dumping custom tags was introduced in Symfony 3.3.
 
 In addition to the built-in support of tags like ``!php/const`` and
 ``!!binary``, you can define your own custom YAML tags and parse them with the

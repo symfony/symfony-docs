@@ -33,8 +33,8 @@ This method has 3 arguments:
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-    $language = new ExpressionLanguage();
-    $language->register('lowercase', function ($str) {
+    $expressionLanguage = new ExpressionLanguage();
+    $expressionLanguage->register('lowercase', function ($str) {
         return sprintf('(is_string(%1$s) ? strtolower(%1$s) : %1$s)', $str);
     }, function ($arguments, $str) {
         if (!is_string($str)) {
@@ -44,7 +44,7 @@ This method has 3 arguments:
         return strtolower($str);
     });
 
-    var_dump($language->evaluate('lowercase("HELLO")'));
+    var_dump($expressionLanguage->evaluate('lowercase("HELLO")'));
 
 This will print ``hello``. Both the **compiler** and **evaluator** are passed
 an ``arguments`` variable as their first argument, which is equal to the
@@ -65,9 +65,7 @@ This interface requires one method:
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunctionProviderInterface::getFunctions`,
 which returns an array of expression functions (instances of
 :class:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction`) to
-register.
-
-.. code-block:: php
+register::
 
     use Symfony\Component\ExpressionLanguage\ExpressionFunction;
     use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
@@ -109,13 +107,13 @@ or by using the second argument of the constructor::
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
     // using the constructor
-    $language = new ExpressionLanguage(null, array(
+    $expressionLanguage = new ExpressionLanguage(null, array(
         new StringExpressionLanguageProvider(),
         // ...
     ));
 
     // using registerProvider()
-    $language->registerProvider(new StringExpressionLanguageProvider());
+    $expressionLanguage->registerProvider(new StringExpressionLanguageProvider());
 
 .. tip::
 

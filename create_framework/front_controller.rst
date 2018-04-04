@@ -38,9 +38,9 @@ Let's see it in action::
     // framework/index.php
     require_once __DIR__.'/init.php';
 
-    $input = $request->get('name', 'World');
+    $name = $request->get('name', 'World');
 
-    $response->setContent(sprintf('Hello %s', htmlspecialchars($input, ENT_QUOTES, 'UTF-8')));
+    $response->setContent(sprintf('Hello %s', htmlspecialchars($name, ENT_QUOTES, 'UTF-8')));
     $response->send();
 
 And for the "Goodbye" page::
@@ -98,8 +98,8 @@ Such a script might look like the following::
 And here is for instance the new ``hello.php`` script::
 
     // framework/hello.php
-    $input = $request->get('name', 'World');
-    $response->setContent(sprintf('Hello %s', htmlspecialchars($input, ENT_QUOTES, 'UTF-8')));
+    $name = $request->get('name', 'World');
+    $response->setContent(sprintf('Hello %s', htmlspecialchars($name, ENT_QUOTES, 'UTF-8')));
 
 In the ``front.php`` script, ``$map`` associates URL paths with their
 corresponding PHP script paths.

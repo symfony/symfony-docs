@@ -76,11 +76,11 @@ Additionally, you have access to a number of functions inside the expression:
         use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
         // ...
 
-        public function index(AuthorizationCheckerInterface $auth)
+        public function index(AuthorizationCheckerInterface $authorizationChecker)
         {
-            $access1 = $auth->isGranted('IS_AUTHENTICATED_REMEMBERED');
+            $access1 = $authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
-            $access2 = $auth->isGranted(new Expression(
+            $access2 = $authorizationChecker->isGranted(new Expression(
                 'is_remember_me() or is_fully_authenticated()'
             ));
         }

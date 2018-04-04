@@ -81,15 +81,3 @@ thanks to autowiring and the ``AuthorizationCheckerInterface`` type-hint.
 
 If the current user does not have the ``ROLE_NEWSLETTER_ADMIN``, they will
 be prompted to log in.
-
-Securing Methods Using Annotations
-----------------------------------
-
-You can also secure method calls in any service with annotations by using the
-optional `JMSSecurityExtraBundle`_ bundle. This bundle is not included in the
-Symfony Standard Distribution, but you can choose to install it.
-
-See the `JMSSecurityExtraBundle Documentation`_ for more details.
-
-.. _`JMSSecurityExtraBundle`: https://github.com/schmittjoh/JMSSecurityExtraBundle
-.. _`JMSSecurityExtraBundle Documentation`: http://jmsyst.com/bundles/JMSSecurityExtraBundle

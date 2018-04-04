@@ -41,7 +41,7 @@ username and the password are different only if all other validation passes
             /**
              * @Assert\IsTrue(message="The password cannot match your username", groups={"Strict"})
              */
-            public function isPasswordLegal()
+            public function isPasswordSafe()
             {
                 return ($this->username !== $this->password);
             }
@@ -55,7 +55,7 @@ username and the password are different only if all other validation passes
                 - User
                 - Strict
             getters:
-                passwordLegal:
+                passwordSafe:
                     - 'IsTrue':
                         message: 'The password cannot match your username'
                         groups: [Strict]
@@ -82,7 +82,7 @@ username and the password are different only if all other validation passes
                     <constraint name="NotBlank" />
                 </property>
 
-                <getter property="passwordLegal">
+                <getter property="passwordSafe">
                     <constraint name="IsTrue">
                         <option name="message">The password cannot match your username</option>
                         <option name="groups">
@@ -113,7 +113,7 @@ username and the password are different only if all other validation passes
                 $metadata->addPropertyConstraint('username', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('password', new Assert\NotBlank());
 
-                $metadata->addGetterConstraint('passwordLegal', new Assert\IsTrue(array(
+                $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue(array(
                     'message' => 'The password cannot match your first name',
                     'groups'  => array('Strict'),
                 )));
@@ -128,7 +128,7 @@ that group are valid, the second group, ``Strict``, will be validated.
 
 .. caution::
 
-    As you have already seen in the previous section, the ``Default`` group
+    As you have already seen in :doc:`/validation/groups`, the ``Default`` group
     and the group containing the class name (e.g. ``User``) were identical.
     However, when using Group Sequences, they are no longer identical. The
     ``Default`` group will now reference the group sequence, instead of all
@@ -287,10 +287,6 @@ method, which should return an array of groups to use::
             return array(array('User', 'Premium'), 'Api');
         }
     }
-
-.. versionadded:: 3.2
-    The feature to return a nested array to get violations from all groups was
-    introduced in Symfony 3.2.
 
 At last, you have to notify the Validator component that your ``User`` class
 provides a sequence of groups to be validated:

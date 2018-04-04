@@ -11,10 +11,11 @@ The PropertyAccess Component
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer</components/using_components>` (``symfony/property-access`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/property-access).
+    $ composer require symfony/property-access
+
+Alternatively, you can clone the `<https://github.com/symfony/property-access>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -29,7 +30,7 @@ default configuration::
 
     use Symfony\Component\PropertyAccess\PropertyAccess;
 
-    $accessor = PropertyAccess::createPropertyAccessor();
+    $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
 Reading from Arrays
 -------------------
@@ -43,8 +44,8 @@ method. This is done using the index notation that is used in PHP::
         'first_name' => 'Wouter',
     );
 
-    var_dump($accessor->getValue($person, '[first_name]')); // 'Wouter'
-    var_dump($accessor->getValue($person, '[age]')); // null
+    var_dump($propertyAccessor->getValue($person, '[first_name]')); // 'Wouter'
+    var_dump($propertyAccessor->getValue($person, '[age]')); // null
 
 As you can see, the method will return ``null`` if the index does not exists.
 
@@ -60,8 +61,8 @@ You can also use multi dimensional arrays::
         )
     );
 
-    var_dump($accessor->getValue($persons, '[0][first_name]')); // 'Wouter'
-    var_dump($accessor->getValue($persons, '[1][first_name]')); // 'Ryan'
+    var_dump($propertyAccessor->getValue($persons, '[0][first_name]')); // 'Wouter'
+    var_dump($propertyAccessor->getValue($persons, '[1][first_name]')); // 'Ryan'
 
 Reading from Objects
 --------------------
@@ -78,13 +79,13 @@ To read from properties, use the "dot" notation::
     $person = new Person();
     $person->firstName = 'Wouter';
 
-    var_dump($accessor->getValue($person, 'firstName')); // 'Wouter'
+    var_dump($propertyAccessor->getValue($person, 'firstName')); // 'Wouter'
 
     $child = new Person();
     $child->firstName = 'Bar';
     $person->children = array($child);
 
-    var_dump($accessor->getValue($person, 'children[0].firstName')); // 'Bar'
+    var_dump($propertyAccessor->getValue($person, 'children[0].firstName')); // 'Bar'
 
 .. caution::
 
@@ -114,7 +115,7 @@ property name (``first_name`` becomes ``FirstName``) and prefixes it with
 
     $person = new Person();
 
-    var_dump($accessor->getValue($person, 'first_name')); // 'Wouter'
+    var_dump($propertyAccessor->getValue($person, 'first_name')); // 'Wouter'
 
 Using Hassers/Issers
 ~~~~~~~~~~~~~~~~~~~~
@@ -142,10 +143,10 @@ getters, this means that you can do something like this::
 
     $person = new Person();
 
-    if ($accessor->getValue($person, 'author')) {
+    if ($propertyAccessor->getValue($person, 'author')) {
         var_dump('He is an author');
     }
-    if ($accessor->getValue($person, 'children')) {
+    if ($propertyAccessor->getValue($person, 'children')) {
         var_dump('He has children');
     }
 
@@ -171,7 +172,7 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
 
     $person = new Person();
 
-    var_dump($accessor->getValue($person, 'Wouter')); // array(...)
+    var_dump($propertyAccessor->getValue($person, 'Wouter')); // array(...)
 
 .. _components-property-access-magic-call:
 
@@ -205,11 +206,11 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
     $person = new Person();
 
     // enables PHP __call() magic method
-    $accessor = PropertyAccess::createPropertyAccessorBuilder()
+    $propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
 
-    var_dump($accessor->getValue($person, 'wouter')); // array(...)
+    var_dump($propertyAccessor->getValue($person, 'wouter')); // array(...)
 
 .. caution::
 
@@ -228,9 +229,9 @@ method::
     // ...
     $person = array();
 
-    $accessor->setValue($person, '[first_name]', 'Wouter');
+    $propertyAccessor->setValue($person, '[first_name]', 'Wouter');
 
-    var_dump($accessor->getValue($person, '[first_name]')); // 'Wouter'
+    var_dump($propertyAccessor->getValue($person, '[first_name]')); // 'Wouter'
     // or
     // var_dump($person['first_name']); // 'Wouter'
 
@@ -270,9 +271,9 @@ can use setters, the magic ``__set()`` method or properties to set values::
 
     $person = new Person();
 
-    $accessor->setValue($person, 'firstName', 'Wouter');
-    $accessor->setValue($person, 'lastName', 'de Jong'); // setLastName is called
-    $accessor->setValue($person, 'children', array(new Person())); // __set is called
+    $propertyAccessor->setValue($person, 'firstName', 'Wouter');
+    $propertyAccessor->setValue($person, 'lastName', 'de Jong'); // setLastName is called
+    $propertyAccessor->setValue($person, 'children', array(new Person())); // __set is called
 
     var_dump($person->firstName); // 'Wouter'
     var_dump($person->getLastName()); // 'de Jong'
@@ -306,11 +307,11 @@ see `Enable other Features`_.
     $person = new Person();
 
     // Enable magic __call
-    $accessor = PropertyAccess::createPropertyAccessorBuilder()
+    $propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
 
-    $accessor->setValue($person, 'wouter', array(...));
+    $propertyAccessor->setValue($person, 'wouter', array(...));
 
     var_dump($person->getWouter()); // array(...)
 
@@ -347,7 +348,7 @@ properties through *adder* and *remover* methods.
     }
 
     $person = new Person();
-    $accessor->setValue($person, 'children', array('kevin', 'wouter'));
+    $propertyAccessor->setValue($person, 'children', array('kevin', 'wouter'));
 
     var_dump($person->getChildren()); // array('kevin', 'wouter')
 
@@ -370,7 +371,7 @@ instead::
 
     $person = new Person();
 
-    if ($accessor->isReadable($person, 'firstName')) {
+    if ($propertyAccessor->isReadable($person, 'firstName')) {
         // ...
     }
 
@@ -381,7 +382,7 @@ method to find out whether a property path can be updated::
 
     $person = new Person();
 
-    if ($accessor->isWritable($person, 'firstName')) {
+    if ($propertyAccessor->isWritable($person, 'firstName')) {
         // ...
     }
 
@@ -409,13 +410,13 @@ You can also mix objects and arrays::
 
     $person = new Person();
 
-    $accessor->setValue($person, 'children[0]', new Person);
+    $propertyAccessor->setValue($person, 'children[0]', new Person);
     // equal to $person->getChildren()[0] = new Person()
 
-    $accessor->setValue($person, 'children[0].firstName', 'Wouter');
+    $propertyAccessor->setValue($person, 'children[0].firstName', 'Wouter');
     // equal to $person->getChildren()[0]->firstName = 'Wouter'
 
-    var_dump('Hello '.$accessor->getValue($person, 'children[0].firstName')); // 'Wouter'
+    var_dump('Hello '.$propertyAccessor->getValue($person, 'children[0].firstName')); // 'Wouter'
     // equal to $person->getChildren()[0]->firstName
 
 Enable other Features
@@ -426,29 +427,29 @@ configured to enable extra features. To do that you could use the
 :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder`::
 
     // ...
-    $accessorBuilder = PropertyAccess::createPropertyAccessorBuilder();
+    $propertyAccessorBuilder = PropertyAccess::createPropertyAccessorBuilder();
 
     // enables magic __call
-    $accessorBuilder->enableMagicCall();
+    $propertyAccessorBuilder->enableMagicCall();
 
     // disables magic __call
-    $accessorBuilder->disableMagicCall();
+    $propertyAccessorBuilder->disableMagicCall();
 
     // checks if magic __call handling is enabled
-    $accessorBuilder->isMagicCallEnabled(); // true or false
+    $propertyAccessorBuilder->isMagicCallEnabled(); // true or false
 
     // At the end get the configured property accessor
-    $accessor = $accessorBuilder->getPropertyAccessor();
+    $propertyAccessor = $propertyAccessorBuilder->getPropertyAccessor();
 
     // Or all in one
-    $accessor = PropertyAccess::createPropertyAccessorBuilder()
+    $propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
         ->enableMagicCall()
         ->getPropertyAccessor();
 
 Or you can pass parameters directly to the constructor (not the recommended way)::
 
     // ...
-    $accessor = new PropertyAccessor(true); // this enables handling of magic __call
+    $propertyAccessor = new PropertyAccessor(true); // this enables handling of magic __call
 
 .. _Packagist: https://packagist.org/packages/symfony/property-access
 .. _The Inflector component: https://github.com/symfony/inflector
