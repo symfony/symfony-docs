@@ -301,6 +301,10 @@ and functions including ``request``, which is the Symfony
 For a list of the other functions and variables, see
 :ref:`functions and variables <security-expression-variables>`.
 
+.. tip::
+
+    Since Symfony 4.1 you can also use custom functions (that are registered via providers using the tag ``security.expression_language_provider``; also see :ref:`custom providers <components-expression-language-provider>`) inside your ``allow_if`` expressions.
+
 Forcing a Channel (http, https)
 -------------------------------
 
