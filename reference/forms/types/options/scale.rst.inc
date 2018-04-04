@@ -1,7 +1,7 @@
 scale
 ~~~~~
 
-**type**: ``integer`` **default**: Locale-specific (usually around ``3``)
+**type**: ``integer`` **default**: ``0``. Any other value is ignored.
 
 This specifies how many decimals will be allowed until the field rounds
 the submitted value (via ``rounding_mode``). For example, if ``scale`` is set
