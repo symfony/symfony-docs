@@ -263,7 +263,7 @@ Now check the value of the option and keep in mind that ``false !== null``::
 
 .. caution::
 
-    Due to a PHP limitation, passing an empty string is indistinguishable from 
+    Due to a PHP limitation, passing an empty string is indistinguishable from
     not passing any value at all. In ``command --prefix`` and ``command --prefix=''``
     cases, the value of the ``prefix`` option will be ``null``.
 
