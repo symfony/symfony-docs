@@ -148,7 +148,7 @@ each time you ask for it.
                 # this creates a service per class whose id is the fully-qualified class name
                 App\:
                     resource: '../src/*'
-                    exclude: '../src/{Entity,Migrations,Tests}'
+                    exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
 
                 # ...
 
