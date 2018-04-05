@@ -179,6 +179,15 @@ values after a white space or an ``=`` sign (e.g. ``--iterations 5`` or
 ``--iterations=5``), but short options can only use white spaces or no
 separation at all (e.g. ``-i 5`` or ``-i5``).
 
+.. caution::
+
+    While it is possible to separate an option from its value with a white space,
+    using this form leads to an ambiguity should the option appear before the
+    command name. For example, ``php app/console --iterations 5 app:greet Fabien``
+    is ambiguous; Symfony would interpret ``5`` as the command name. To avoid
+    this situation, always place options after the command name, or avoid using
+    a space to separate the option name from its value.
+
 There are four option variants you can use:
 
 ``InputOption::VALUE_IS_ARRAY``
@@ -209,25 +218,69 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
             array('blue', 'red')
         );
 
-.. tip::
+Options with optional arguments
+-------------------------------
 
-    There is nothing forbidding you to create a command with an option that
-    optionally accepts a value. However, there is no way you can distinguish
-    when the option was used without a value (``command --language``) or when
-    it wasn't used at all (``command``). In both cases, the value retrieved for
-    the option will be ``null``.
+There is nothing forbidding you to create a command with an option that
+optionally accepts a value, but it's a bit tricky. Let's use this
+option definition as an example::
 
-    Similarly, due to a PHP limitation, there is no way to pass an empty string
-    as the value of an option. In ``command --prefix`` and ``command --prefix=''``
-    cases, the value of the ``prefix`` option will be ``null``.
+    // ...
+    use Symfony\Component\Console\Input\InputOption;
+
+    $this
+        // ...
+        ->addOption(
+            'yell',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'Should I yell while greeting?'
+        );
+
+We want to use this option in 3 ways: ``--yell``, ``yell=louder``, and not 
+passing the option at all; however, the task of distinguishing between when 
+the option was used without a value (``greet --yell``) or when it wasn't used 
+at all (``greet``) it's a bit impervious. 
+
+To solve this issue, you have two possible solutions: in the first case, you
+can use the ``hasParameterOption`` method::
+
+    if ($input->hasParameterOption('--yell')) {
+        $yell = true;
+        $yellLouder = $input->getOption('yell') === 'louder';
+    }
 
 .. caution::
 
-    While it is possible to separate an option from its value with a white space,
-    using this form leads to an ambiguity should the option appear before the
-    command name. For example, ``php app/console --iterations 5 app:greet Fabien``
-    is ambiguous; Symfony would interpret ``5`` as the command name. To avoid
-    this situation, always place options after the command name, or avoid using
-    a space to separate the option name from its value.
+    Note that the ``hasParameterOption`` method requires prepending ``--``
+    to the option name.
+
+The second solution is to alter the option definition, setting the default value
+to ``false``::
+
+    // ...
+    use Symfony\Component\Console\Input\InputOption;
+
+    $this
+        // ...
+        ->addOption(
+            'yell',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'Should I yell while greeting?',
+            false // this is the new default value, instead of null
+        );
+
+And then checking carefully the value of the option, minding that ``false !== null``::
+
+    $optionValue = $input->getOptions('yell');
+    $yell = ($optionValue !== false);
+    $yellLouder = ($optionValue === 'louder');
+
+.. caution::
+
+    Due to a PHP limitation, passing an empty string is indistinguishable from 
+    not passing any value at all. In ``command --prefix`` and ``command --prefix=''``
+    cases, the value of the ``prefix`` option will be ``null``.
 
 .. _`docopt standard`: http://docopt.org/
