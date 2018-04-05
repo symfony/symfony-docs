@@ -521,6 +521,13 @@ With all of this in mind, check out this advanced example:
             public function show($_locale, $year, $slug)
             {
             }
+            
+            //or you can use the inlined routing configuration
+            
+            /** @Route("/articles/{_locale<en|fr>}/{year<\d+>}/{slug}/.{_format<html|rss>?html}") */
+            public function show($_locale, $year, $slug) 
+            {
+            }
         }
 
     .. code-block:: yaml
@@ -579,6 +586,9 @@ With all of this in mind, check out this advanced example:
 
         return $routes;
 
+.. note::
+The new syntax is {placeholder-name<requirements>?defaults}, every part of it is optional and it works in all config formats (annotations, YAML and XML).
+    
 As you've seen, this route will only match if the ``{_locale}`` portion of
 the URL is either ``en`` or ``fr`` and if the ``{year}`` is a number. This
 route also shows how you can use a dot between placeholders instead of
