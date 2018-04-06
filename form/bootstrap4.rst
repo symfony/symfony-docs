@@ -75,7 +75,7 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
     {% block body %}
         <h1>User Sign Up:</h1>
         {{ form(form) }}
-    {% endblock body %}
+    {% endblock %}
 
 Accessibility
 -------------
