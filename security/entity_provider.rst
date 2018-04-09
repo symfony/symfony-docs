@@ -133,7 +133,7 @@ For this entry, suppose that you already have a ``User`` entity inside an
                 $this->password,
                 // see section on salt below
                 // $this->salt
-            ) = unserialize($serialized);
+            ) = unserialize($serialized, ['allowed_classes' => false]);
         }
     }
 
