@@ -218,14 +218,14 @@ method renders a template **and** puts that content into a ``Response``
 object for you::
 
     // renders app/Resources/views/lucky/number.html.twig
-    return $this->render('lucky/number.html.twig', array('name' => $name));
+    return $this->render('lucky/number.html.twig', array('number' => $number));
 
 Templates can also live in deeper sub-directories. Just try to avoid
 creating unnecessarily deep structures::
 
     // renders app/Resources/views/lottery/lucky/number.html.twig
     return $this->render('lottery/lucky/number.html.twig', array(
-        'name' => $name,
+        'number' => $number,
     ));
 
 The Symfony templating system and Twig are explained more in the
