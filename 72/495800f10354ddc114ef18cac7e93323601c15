@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2018-04-08T16:29:55Z
+
+This is done for automatically when you're using the Symfony framework and is only something you should care about if you're using the Form component in a standalone project.
+
+But as this is the main guide everyone will read, I agree with removing it here, it'll only cause confusion.
+
+So thanks for reporting & fixing confusing bits of the docs! :+1:
+
+status: reviewed
