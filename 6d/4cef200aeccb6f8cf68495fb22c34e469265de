@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2018-04-08T16:28:05Z
+
+I like this suggestion! :+1: Let's wait to hear what others think.
+
+Status: reviewed
+
+---------------------------------------------------------------------------
+
+by comxd at 2018-04-09T02:26:25Z
+
+Hi @weaverryan. Yes, it's a required parameter from version 7.0.0 of PHP. @see http://php.net/manual/en/function.unserialize.php
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-04-09T02:29:33Z
+
+It’s not required, right? Just available?
+
+---------------------------------------------------------------------------
+
+by comxd at 2018-04-09T02:33:48Z
+
+Sorry, you are right. It's symply recommended for security reasons.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-04-09T03:53:20Z
+
+Can you explain what it does? Why is it useful here? And what does it protect from? Sorry, I’m just not familiar - and the php.net description didn’t help much :)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2018-04-09T08:54:38Z
+
+@weaverryan it disallows initiating classes from the serialized string. For instance, if a hacker is able to change the serialized string in the session, they are able to set the username for instance to some object. This can pose security issues.
+
+Setting it to false gives a php error in this case.
