@@ -69,7 +69,7 @@ configure your handler to use it:
                 'file' => array(
                     'type'      => 'stream',
                     'level'     => 'debug',
-                    'formatter' => JsonFormatter::class',
+                    'formatter' => JsonFormatter::class,
                 ),
             ),
         ));
