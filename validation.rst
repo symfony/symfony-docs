@@ -504,14 +504,6 @@ of the form fields::
         ;
     }
 
-The ``constraints`` option is only available if the ``ValidatorExtension``
-was enabled through the form factory builder::
-
-    Forms::createFormFactoryBuilder()
-        ->addExtension(new ValidatorExtension(Validation::createValidator()))
-        ->getFormFactory()
-    ;
-
 .. index::
    single: Validation; Constraint targets
 
