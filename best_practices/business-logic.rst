@@ -38,7 +38,7 @@ Services: Naming and Configuration
 by Symfony's Service Container to manage services with minimal configuration. It
 reads the type-hints on your constructor (or other methods) and automatically
 passes the correct services to each method. It can also add
-:doc:`service tags </service_container/tags>` to the services needed them, such
+:doc:`service tags </service_container/tags>` to the services needing them, such
 as Twig extensions, event subscribers, etc.
 
 The blog application needs a utility that can transform a post title (e.g.
