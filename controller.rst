@@ -182,7 +182,7 @@ method renders a template **and** puts that content into a ``Response``
 object for you::
 
     // renders templates/lucky/number.html.twig
-    return $this->render('lucky/number.html.twig', array('name' => $name));
+    return $this->render('lucky/number.html.twig', array('number' => $number));
 
 Templating and Twig are explained more in the
 :doc:`Creating and Using Templates article </templating>`.
@@ -308,7 +308,7 @@ use:
 
     $ php bin/console make:crud Product
 
-.. versionadded::
+.. versionadded:: 1.2
     The ``make:crud`` command was introduced in MakerBundle 1.2.
 
 .. index::

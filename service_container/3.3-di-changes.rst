@@ -81,32 +81,6 @@ what the file looks like in Symfony 4):
             </services>
         </container>
 
-    .. code-block:: php
-
-        // config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        // To use as default template
-        $definition = new Definition();
-
-        $definition
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->setPublic(false)
-        ;
-
-        $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Migrations,Tests}');
-
-        // Changes default config
-        $definition
-            ->addTag('controller.service_arguments')
-        ;
-
-        // $this is a reference to the current loader
-        $this->registerClasses($definition, 'App\\Controller\\', '../src/Controller/*');
-
-        // add more services, or override services that need manual wiring
-
 This small bit of configuration contains a paradigm shift of how services
 are configured in Symfony.
 
@@ -151,22 +125,6 @@ thanks to the following config:
                 <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}" />
             </services>
         </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
-
-        // To use as default template
-        $definition = new Definition();
-
-        $definition
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->setPublic(false)
-        ;
-
-        $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Migrations,Tests}');
 
 This means that every class in ``src/`` is *available* to be used as a
 service. And thanks to the ``_defaults`` section at the top of the file, all of
@@ -503,18 +461,6 @@ inherited from an abstract definition:
                 </instanceof>
             </services>
         </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        use App\Domain\LoaderInterface;
-
-        // ...
-
-        /* This method returns a child definition to define the default
-           configuration of the given class or interface */
-        $container->registerForAutoconfiguration(LoaderInterface::class)
-            ->addTag('app.domain_loader');
 
 What about Performance
 ----------------------

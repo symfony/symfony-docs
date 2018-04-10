@@ -76,8 +76,10 @@ Thanks to Flex, after one command, you can start using Twig immediately:
 .. code-block:: diff
 
     // src/Controller/DefaultController.php
-    // ...
+    namespace App\Controller;
 
+    use Symfony\Component\Routing\Annotation\Route;
+    - use Symfony\Component\HttpFoundation\Response;
     + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     -class DefaultController
@@ -150,15 +152,26 @@ Rich API Support
 
 Are you building an API? You can already return JSON easily from any controller::
 
-    /**
-     * @Route("/api/hello/{name}")
-     */
-    public function apiExample($name)
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
+
+    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+    class DefaultController extends AbstractController
     {
-        return $this->json([
-            'name' => $name,
-            'symfony' => 'rocks',
-        ]);
+        // ...
+
+        /**
+         * @Route("/api/hello/{name}")
+         */
+        public function apiExample($name)
+        {
+            return $this->json([
+                'name' => $name,
+                'symfony' => 'rocks',
+            ]);
+        }
     }
 
 But for a *truly* rich API, try installing `Api Platform`_:
@@ -176,7 +189,7 @@ rich API for a ``product`` table? Create a ``Product`` entity and give it the
 ``@ApiResource()`` annotation::
 
     // src/Entity/Product.php
-    // ...
+    namespace App\Entity;
 
     use ApiPlatform\Core\Annotation\ApiResource;
     use Doctrine\ORM\Mapping as ORM;

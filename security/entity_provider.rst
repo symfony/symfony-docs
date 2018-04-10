@@ -130,12 +130,19 @@ with the following fields: ``id``, ``username``, ``password``,
                 $this->password,
                 // see section on salt below
                 // $this->salt
-            ) = unserialize($serialized);
+            ) = unserialize($serialized, ['allowed_classes' => false]);
         }
     }
 
 To make things shorter, some of the getter and setter methods aren't shown.
 But you can generate these manually or with your own IDE.
+
+.. caution::
+
+    In the example above, the User entity's table name is "app_users" because
+    "USER" is a SQL reserved word. If you wish to call your table name "user",
+    `it must be quoted with backticks`_ to avoid errors. The annotation should
+    look like ``@ORM\Table(name="`user`")``.
 
 Next, make sure to :ref:`create the database table <doctrine-creating-the-database-tables-schema>`:
 
@@ -544,3 +551,4 @@ or worry about it.
 
 .. _fixtures: https://symfony.com/doc/master/bundles/DoctrineFixturesBundle/index.html
 .. _FOSUserBundle: https://github.com/FriendsOfSymfony/FOSUserBundle
+.. _`it must be quoted with backticks`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words

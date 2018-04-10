@@ -16,7 +16,7 @@ template which other templates extend from):
     {% endblock %}
     {% block head_js %}
         <!-- Copy JavaScript from https://getbootstrap.com/docs/4.0/getting-started/introduction/#js -->
-    {% endblock head %}
+    {% endblock %}
 
 If your application uses modern front-end practices, it's better to use
 :doc:`Webpack Encore </frontend>` and follow :doc:`this tutorial </frontend/encore/bootstrap>`
@@ -75,7 +75,7 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
     {% block body %}
         <h1>User Sign Up:</h1>
         {{ form(form) }}
-    {% endblock body %}
+    {% endblock %}
 
 Accessibility
 -------------
