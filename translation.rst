@@ -360,6 +360,8 @@ Translation Resource/File Names and Locations
 
 Symfony looks for message files (i.e. translations) in the following default locations:
 
+* the ``translations`` directory (at the root of the project);
+
 * the ``app/Resources/translations`` directory;
 
 * the ``app/Resources/<bundle name>/translations`` directory;
