@@ -21,7 +21,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+php
 
-        <!-- templates/default/newAction.html.php -->
+        <!-- templates/default/new.html.php -->
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->errors($form) ?>
 
