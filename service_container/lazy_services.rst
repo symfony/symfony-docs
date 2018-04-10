@@ -52,8 +52,8 @@ You can mark the service as ``lazy`` by manipulating its definition:
     .. code-block:: yaml
 
         services:
-           AppBundle\Twig\AppExtension:
-             lazy:  true
+            AppBundle\Twig\AppExtension:
+                lazy:  true
 
     .. code-block:: xml
 
