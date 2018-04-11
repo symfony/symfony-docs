@@ -18,7 +18,7 @@ First, enable the JSON login under your firewall:
             firewalls:
                 main:
                     anonymous: ~
-                    json_login:
+                    json-login:
                         check_path: /login
 
     .. code-block:: xml
