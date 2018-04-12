@@ -124,8 +124,8 @@ Former Core Members
 They are no longer part of the Core Team, but we are very grateful for all their
 Symfony contributions:
 
-  * **Bernhard Schussek** (`webmozart`_);
-  * **Abdellatif AitBoudad** (`aitboudad`_).
+* **Bernhard Schussek** (`webmozart`_);
+* **Abdellatif AitBoudad** (`aitboudad`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
