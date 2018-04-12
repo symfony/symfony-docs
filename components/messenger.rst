@@ -24,16 +24,15 @@ Concepts
 .. image:: /_images/components/messenger/overview.png
 
 **Sender**:
-   Responsible for serializing and sending the message to _something_. This
+   Responsible for serializing and sending messages to _something_. This
    something can be a message broker or a third party API for example.
 
 **Receiver**:
-   Responsible for deserializing and forwarding the messages to handler(s). This
+   Responsible for deserializing and forwarding messages to handler(s). This
    can be a message queue puller or an API endpoint for example.
 
 **Handler**:
-   Given a received message, contains the user business logic related to the
-   message. In practice, that is just a PHP callable.
+   Responsible for handling messages using the business logic applicable to the messages.
 
 Bus
 ---
@@ -65,15 +64,14 @@ Example::
 
 .. note:
 
-    Every middleware need to implement the ``MiddlewareInterface`` interface.
+    Every middleware needs to implement the ``MiddlewareInterface`` interface.
 
 Handlers
 --------
 
 Once dispatched to the bus, messages will be handled by a "message handler". A
 message handler is a PHP callable (i.e. a function or an instance of a class)
-that will do the required processing for your message. It _might_ return a
-result::
+that will do the required processing for your message::
 
     namespace App\MessageHandler;
 
@@ -90,8 +88,8 @@ result::
 Adapters
 --------
 
-The communication with queuing system or third parties is delegated to
-libraries for now.
+In order to send and receive messages, you will have to configure an adapter. An
+adapter will be responsible of communicating with your message broker or 3rd parties.
 
 Your own sender
 ~~~~~~~~~~~~~~~
@@ -169,18 +167,23 @@ First, create your receiver::
            $this->filePath = $filePath;
        }
 
-       public function receive() : \Generator
+       public function receive(callable $handler) : void
        {
            $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
 
            foreach ($ordersFromCsv as $orderFromCsv) {
-               yield new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']);
+               $handler(new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']));
            }
+       }
+
+       public function stop(): void
+       {
+           // noop
        }
     }
 
-Same bus received and sender
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Receiver and Sender on the same bus
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To allow us to receive and send messages on the same bus and prevent an infinite
 loop, the message bus is equipped with the ``WrapIntoReceivedMessage`` middleware.

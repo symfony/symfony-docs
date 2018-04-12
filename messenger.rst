@@ -28,6 +28,7 @@ you need it, like in a controller::
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
+    use App\Message\SendNotification;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -91,7 +92,7 @@ the messenger component, the following configuration should have been created:
     framework:
         messenger:
             adapters:
-                default: "%env(MESSENGER_DSN)%"
+                amqp: "%env(MESSENGER_DSN)%"
 
 .. code-block:: bash
 
@@ -100,17 +101,17 @@ the messenger component, the following configuration should have been created:
     MESSENGER_DSN=amqp://guest:guest@localhost:5672/%2f/messages
     ###< symfony/messenger ###
 
-This is enough to allow you to route your message to the ``messenger.default_adapter``
-adapter. This will also configure the following for you:
+This is enough to allow you to route your message to the ``amqp``. This will also
+configure the following services for you:
 
-1. A ``messenger.default_sender`` sender to be used when routing messages
-2. A ``messenger.default_receiver`` receiver to be used when consuming messages.
+1. A ``messenger.sender.amqp`` sender to be used when routing messages.
+2. A ``messenger.receiver.amqp`` receiver to be used when consuming messages.
 
 Routing
 -------
 
 Instead of calling a handler, you have the option to route your message(s) to a
-sender. Part of an adapter, it is responsible of sending your message somewhere.
+sender. Part of an adapter, it is responsible for sending your message somewhere.
 You can configure which message is routed to which sender with the following
 configuration:
 
@@ -119,40 +120,39 @@ configuration:
     framework:
         messenger:
             routing:
-                'My\Message\Message':  messenger.default_sender # Or another sender service name
+                'My\Message\Message':  amqp # The name of the defined adapter
 
 Such configuration would only route the ``My\Message\Message`` message to be
 asynchronous, the rest of the messages would still be directly handled.
 
-If you want to do route all the messages to a queue by default, you can use such
-configuration:
+You can route all classes of message to a sender using an asterisk instead of a class name:
 
 .. code-block:: yaml
 
     framework:
         messenger:
             routing:
-                'My\Message\MessageAboutDoingOperationalWork': messenger.operations_sender
-                '*': messenger.default_sender
+                'My\Message\MessageAboutDoingOperationalWork': another_adapter
+                '*': amqp
 
-Note that you can also route a message to multiple senders at the same time:
-
-.. code-block:: yaml
-
-    framework:
-        messenger:
-            routing:
-                'My\Message\ToBeSentToTwoSenders': [messenger.default_sender, messenger.audit_sender]
-
-Last but not least you can also route a message while still calling the handler
-on your application by having a ``null`` sender:
+A class of message can also be routed to a multiple senders by specifying a list:
 
 .. code-block:: yaml
 
     framework:
         messenger:
             routing:
-                'My\Message\ThatIsGoingToBeSentAndHandledLocally': [messenger.default_sender, ~]
+                'My\Message\ToBeSentToTwoSenders': [amqp, audit]
+
+By specifying a ``null`` sender, you can also route a class of messages to a sender
+while still having them passed to their respective handler:
+
+.. code-block:: yaml
+
+    framework:
+        messenger:
+            routing:
+                'My\Message\ThatIsGoingToBeSentAndHandledLocally': [amqp, ~]
 
 Consuming messages
 ------------------
@@ -163,32 +163,16 @@ like this:
 
 .. code-block:: terminal
 
-    $ bin/console messenger:consume-messages messenger.default_receiver
+    $ bin/console messenger:consume-messages amqp
 
 The first argument is the receiver's service name. It might have been created by
 your ``adapters`` configuration or it can be your own receiver.
 
-Registering your middleware
----------------------------
-
-The message bus is based on a set of middleware. If you are un-familiar with the concept,
-look at the :doc:`Messenger component docs </components/messenger>`.
-
-To register your middleware, use the ``messenger.middleware`` tag as in the
-following example:
-
-.. code-block:: xml
-
-    <service id="Your\Own\Middleware">
-       <tag name="messenger.middleware" />
-    </service>
-
 Your own Adapters
 -----------------
 
-Learn how to build your own adapters within the Component's documentation. Once
-you have built your classes, you can register your adapter factory to be able to
-use it via a DSN in the Symfony application.
+Once you have written your adapter's sender and receiver, you can register your
+adapter factory to be able to use it via a DSN in the Symfony application.
 
 Create your adapter Factory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -196,39 +180,25 @@ Create your adapter Factory
 You need to give FrameworkBundle the opportunity to create your adapter from a
 DSN. You will need an adapter factory::
 
-    use Symfony\Component\Messenger\Adapter\Factory\AdapterInterface;
     use Symfony\Component\Messenger\Adapter\Factory\AdapterFactoryInterface;
-
-    class YourAdapterFactory implements AdapterFactoryInterface
-    {
-        public function create(string $dsn): AdapterInterface
-        {
-            return new YourAdapter(/* ... */);
-        }
-
-        public function supports(string $dsn): bool
-        {
-            return 0 === strpos($dsn, 'my-adapter://');
-        }
-    }
-
-The ``YourAdaper`` class need to implement the ``AdapterInterface``. It
-will like the following example::
-
-    use Symfony\Component\Messenger\Adapter\Factory\AdapterInterface;
     use Symfony\Component\Messenger\Transport\ReceiverInterface;
     use Symfony\Component\Messenger\Transport\SenderInterface;
 
-    class YourAdapter implements AdapterInterface
+    class YourAdapterFactory implements AdapterFactoryInterface
     {
-        public function receiver(): ReceiverInterface
+        public function createReceiver(string $dsn, array $options): ReceiverInterface
         {
             return new YourReceiver(/* ... */);
         }
 
-        public function sender(): SenderInterface
+        public function createSender(string $dsn, array $options): SenderInterface
         {
             return new YourSender(/* ... */);
+        }
+
+        public function supports(string $dsn, array $options): bool
+        {
+            return 0 === strpos($dsn, 'my-adapter://');
         }
     }
 
@@ -237,7 +207,7 @@ Register your factory
 
 .. code-block:: xml
 
-    <service id="Your\Adapter\Factory">
+    <service id="Your\Adapter\YourAdapterFactory">
        <tag name="messenger.adapter_factory" />
     </service>
 
@@ -254,10 +224,10 @@ named adapter using your own DSN:
             adapters:
                 yours: 'my-adapter://...'
 
-This will give you access to the following services:
+In addition of being able to route your messages to the ``yours`` sender, this
+will give you access to the following services:
 
-1. ``messenger.yours_adapter``: the instance of your adapter.
-2. ``messenger.yours_receiver`` and ``messenger.yours_sender``, the
-   receiver and sender created by the adapter.
+1. ``messenger.sender.hours``: the sender.
+2. ``messenger.receiver.hours``: the receiver.
 
 .. _`enqueue's adapter`: https://github.com/sroze/enqueue-bridge
