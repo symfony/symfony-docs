@@ -416,7 +416,7 @@ or perform more complex requests. Some useful examples::
         '/path/to/photo.jpg',
         'photo.jpg',
         'image/jpeg',
-        123
+        null
     );
     $client->request(
         'POST',
