@@ -1263,7 +1263,7 @@ also have to be added as regular services:
     .. code-block:: yaml
 
         services:
-            Twig_Extensions_Extension_Intl:
+            Twig\Extensions\IntlExtension:
                 tags: [twig.extension]
 
     .. code-block:: xml
@@ -1275,7 +1275,7 @@ also have to be added as regular services:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="Twig_Extensions_Extension_Intl">
+                <service id="Twig\Extensions\IntlExtension">
                     <tag name="twig.extension" />
                 </service>
             </services>
@@ -1284,7 +1284,7 @@ also have to be added as regular services:
     .. code-block:: php
 
         $container
-            ->register('Twig_Extensions_Extension_Intl')
+            ->register('Twig\Extensions\IntlExtension')
             ->addTag('twig.extension')
         ;
 
