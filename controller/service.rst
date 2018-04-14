@@ -18,8 +18,8 @@ knows to use it.
 
 Use the ``service_id::method_name`` syntax to refer to the controller method.
 If the service id is the fully-qualified class name (FQCN) of your controller,
-as Symfony recommends, then you can use something like:
-``App\Controller\HelloController::index``:
+as Symfony recommends, then the syntax is the same as if the controller was not
+a service like: ``App\Controller\HelloController::index``:
 
 .. configuration-block::
 
@@ -27,16 +27,17 @@ as Symfony recommends, then you can use something like:
 
         // src/Controller/HelloController.php
 
-        // You need to use Sensio's annotation to specify a service id
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-        // ...
+        use Symfony\Component\Routing\Annotation\Route;
 
-        /**
-         * @Route(service="App\Controller\HelloController::index")
-         */
         class HelloController
         {
-            // ...
+            /**
+             * @Route("/hello", name="hello")
+             */
+            public function index()
+            {
+                // ...
+            }
         }
 
     .. code-block:: yaml
@@ -75,7 +76,7 @@ Invokable Controllers
 
 If your controller implements the ``__invoke()`` method - popular with the
 Action-Domain-Response (ADR) pattern, you can simply refer to the service id
-(``App\Controller\HelloController`` for example).
+without the method (``App\Controller\HelloController`` for example).
 
 Alternatives to base Controller Methods
 ---------------------------------------
@@ -89,7 +90,7 @@ The base `Controller class source code`_ is a great way to see how to accomplish
 common tasks. For example, ``$this->render()`` is usually used to render a Twig
 template and return a Response. But, you can also do this directly:
 
-In a controller that's defined as a service, you can instead inject the ``templating``
+In a controller that's defined as a service, you can instead inject the ``twig``
 service and use it directly::
 
     // src/Controller/HelloController.php
