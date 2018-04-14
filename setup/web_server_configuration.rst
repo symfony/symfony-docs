@@ -153,7 +153,7 @@ listen on. Each pool can also be run under a different UID and GID:
     group = www-data
 
     ; use a unix domain socket
-    listen = /var/run/php7.1-fpm.sock
+    listen = /var/run/php/php7.1-fpm.sock
 
     ; or listen on a TCP socket
     listen = 127.0.0.1:9000
@@ -251,7 +251,7 @@ instead:
 
 .. code-block:: apache
 
-    FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -socket /var/run/php7.1-fpm.sock -pass-header Authorization
+    FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -socket /var/run/php/php7.1-fpm.sock -pass-header Authorization
 
 .. _web-server-nginx:
 
@@ -274,7 +274,7 @@ The **minimum configuration** to get your application running under Nginx is:
         # This rule should only be placed on your development environment
         # In production, don't include this and don't deploy app_dev.php or config.php
         location ~ ^/(app_dev|config)\.php(/|$) {
-            fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+            fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             # When you are using symlinks to link the document root to the
@@ -289,7 +289,7 @@ The **minimum configuration** to get your application running under Nginx is:
         }
         # PROD
         location ~ ^/app\.php(/|$) {
-            fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+            fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
             # When you are using symlinks to link the document root to the
