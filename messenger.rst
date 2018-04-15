@@ -135,7 +135,7 @@ You can route all classes of message to a sender using an asterisk instead of a 
                 'My\Message\MessageAboutDoingOperationalWork': another_adapter
                 '*': amqp
 
-A class of message can also be routed to a multiple senders by specifying a list:
+A class of message can also be routed to multiple senders by specifying a list:
 
 .. code-block:: yaml
 
