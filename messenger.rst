@@ -227,7 +227,7 @@ named adapter using your own DSN:
 In addition of being able to route your messages to the ``yours`` sender, this
 will give you access to the following services:
 
-1. ``messenger.sender.hours``: the sender.
-2. ``messenger.receiver.hours``: the receiver.
+#. ``messenger.sender.hours``: the sender.
+#. ``messenger.receiver.hours``: the receiver.
 
 .. _`enqueue's adapter`: https://github.com/sroze/enqueue-bridge
