@@ -176,7 +176,7 @@ manual steps:
    .. code-block:: terminal
 
        $ composer remove symfony/symfony
-       
+
    Now add the ``symfony/symfony`` package to the ``conflict`` section of the project's
    ``composer.json`` file as `shown in this example of the skeleton-project`_ so that
    it will not be installed again:
@@ -228,11 +228,11 @@ manual steps:
    :doc:`autowiring feature </service_container/3.3-di-changes>` you can remove
    most of the service configuration.
 
-.. note::
+   .. note::
 
-    Make sure your previous configuration files don't have ``imports`` declarations
-    pointing to same resources already loaded by ``Kernel::configureContainer()``
-    or ``Kernel::configureRoutes()`` methods.
+       Make sure that your previous configuration files don't have ``imports``
+       declarations pointing to resources already loaded by ``Kernel::configureContainer()``
+       or ``Kernel::configureRoutes()`` methods.
 
 #. Move the rest of the ``app/`` contents as follows (and after that, remove the
    ``app/`` directory):
@@ -242,8 +242,10 @@ manual steps:
    * ``app/Resources/<BundleName>/views/`` -> ``templates/bundles/<BundleName>/``
    * rest of ``app/Resources/`` files -> ``src/Resources/``
 
-#. Move the original PHP source code from ``src/AppBundle/*``, except bundle specific
-   files (like ``AppBundle``, ``DependencyInjection\``), to ``src/``. Remove ``src/AppBundle/``.
+#. Move the original PHP source code from ``src/AppBundle/*``, except bundle
+   specific files (like ``AppBundle.php`` and ``DependencyInjection/``), to
+   ``src/``. Remove ``src/AppBundle/``.
+
    In addition to moving the files, update the ``autoload`` and ``autoload-dev``
    values of the ``composer.json`` file as `shown in this example`_ to use
    ``App\`` and ``App\Tests\`` as the application namespaces (advanced IDEs can
@@ -268,12 +270,8 @@ manual steps:
 #. Update the ``bin/console`` script `copying Symfony's bin/console source`_
    and changing anything according to your original console script.
 
-#. Remove ``bin/symfony_requirements`` script. If you need a replacement for the
-   task performed by this script, use `Symfony Requirements Checker`_:
-
-   .. code-block:: terminal
-
-       $ composer require symfony/requirements-checker
+#. Remove the ``bin/symfony_requirements`` script and if you need a replacement
+   for it, use the new `Symfony Requirements Checker`_.
 
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`Symfony Installer`: https://github.com/symfony/symfony-installer
