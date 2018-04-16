@@ -363,7 +363,10 @@ The following block shows all possible configuration keys:
     to find your PostgreSQL version and ``mysql -V`` to get your MySQL
     version).
     
-    Always wrap the server version number with quotes to parse it as a string
+    If you are running a MariaDB database, you should prefix the ``server_version`` 
+    with ``mariadb-`` (e.g. ``server_version: mariadb-10.2.12``).
+    
+    Always wrap the server version number with quotes to parse it as a string
     instead of a float number. Otherwise, the floating-point representation
     issues can make your version be considered a different number (e.g. ``5.6``
     will be rounded as ``5.5999999999999996447286321199499070644378662109375``).
