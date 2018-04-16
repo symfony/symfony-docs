@@ -66,11 +66,63 @@ that you can reference it:
                 # but that service is still available as App\DecoratingMailer.inner
                 decorates: App\Mailer
 
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
+            xsd:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Mailer" />
+
+                <service id="App\DecoratingMailer"
+                    decorates="App\Mailer"
+                />
+
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use App\DecoratingMailer;
+        use App\Mailer;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->register(Mailer::class);
+
+        $container->register(DecoratingMailer::class)
+            ->setDecoratedService(Mailer::class)
+        ;
+
+The ``decorates`` option tells the container that the ``App\DecoratingMailer``
+service replaces the ``App\Mailer`` service. If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+the decorated service is automatically injected when the constructor of the
+decorating service has one argument type-hinted with the decorated service class.
+
+.. versionadded:: 4.1
+    The autowiring of the decorated service was introduced in Symfony 4.1.
+
+If you are not using autowiring or the decorating service has more than one
+constructor argument type-hinted with the decorated service class, you must
+inject the decorated service explicitly (the ID of the decorated service is
+automatically changed to ``decorating_service_id + '.inner'``):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Mailer: ~
+
+            App\DecoratingMailer:
+                decorates: App\Mailer
                 # pass the old service as an argument
                 arguments: ['@App\DecoratingMailer.inner']
-
-                # private, because usually you do not need to fetch App\DecoratingMailer directly
-                public:    false
 
     .. code-block:: xml
 
@@ -85,7 +137,6 @@ that you can reference it:
 
                 <service id="App\DecoratingMailer"
                     decorates="App\Mailer"
-                    public="false"
                 >
                     <argument type="service" id="App\DecoratingMailer.inner" />
                 </service>
@@ -105,16 +156,11 @@ that you can reference it:
         $container->register(DecoratingMailer::class)
             ->setDecoratedService(Mailer::class)
             ->addArgument(new Reference(DecoratingMailer::class.'.inner'))
-            ->setPublic(false)
         ;
-
-The ``decorates`` option tells the container that the ``App\DecoratingMailer`` service
-replaces the ``App\Mailer`` service. The old ``App\Mailer`` service is renamed to
-``App\DecoratingMailer.inner`` so you can inject it into your new service.
 
 .. tip::
 
-    The visibility (public) of the decorated ``App\Mailer`` service (which is an alias
+    The visibility of the decorated ``App\Mailer`` service (which is an alias
     for the new service) will still be the same as the original ``App\Mailer``
     visibility.
 
