@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-03-31T17:57:16Z
+
+I also think the report is legit @Lyrkan. But, what about commenting out all of the features that require extra packages so that the first build is successful? Then we can show an example of uncommenting the `enableSassLoader()` so they can see what happens in that case (we could use the `diff` file type in the docs to show that one line being uncommented). I think that would be best.
+
+---------------------------------------------------------------------------
+
+by Lyrkan at 2018-03-31T18:56:36Z
+
+@weaverryan I agree, should be better now :)
