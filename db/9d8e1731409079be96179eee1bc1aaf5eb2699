@@ -1,0 +1,54 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2018-03-23T08:21:54Z
+
+Should be updated as the component is now named Messenger.
+
+---------------------------------------------------------------------------
+
+by sroze at 2018-03-23T08:23:20Z
+
+Yep. I'll go through the PR and re-phrase a bunch of things this weekend.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2018-03-27T07:42:07Z
+
+Not sure its important, but in your PR header:
+
+```diff
+- This pull-request adds some documentation for the Message component.
++ This pull-request adds some documentation for the Messenger component.
+```
+
+---------------------------------------------------------------------------
+
+by sroze at 2018-03-27T14:21:49Z
+
+Updated based on feedbacks, split the two documentations (i.e. as a "topic" and as a "component") and added more details. And Travis is green 🎉.
+
+Can I have the honor of another round of reviews?
+
+---------------------------------------------------------------------------
+
+by sroze at 2018-03-29T08:12:44Z
+
+Ready for another round of reviews 👍
+
+---------------------------------------------------------------------------
+
+by sroze at 2018-04-12T20:36:33Z
+
+It's ready to be merged. Tweaks can follow in other PRs I suppose.
+
+---------------------------------------------------------------------------
+
+by sroze at 2018-04-15T21:15:06Z
+
+@boite thank you very much for all your reviews, much appreciated! I've updated the wording of the sentence you highlighted in your last review.
+
+---------------------------------------------------------------------------
+
+by boite at 2018-04-16T15:02:36Z
+
+Well done @sroze; this all looks good.
