@@ -148,8 +148,8 @@ so that the severity is added as an additional HTML class:
         {%- if errors|length > 0 -%}
         <ul>
             {%- for error in errors -%}
-                {% if error.cause.constraint.payload.severity is defined %}
-                    {% set severity = error.cause.constraint.payload.severity %}
+                {% if error.constraint.payload.severity is defined %}
+                    {% set severity = error.constraint.payload.severity %}
                 {% endif %}
                 <li{% if severity is defined %} class="{{ severity }}"{% endif %}>{{ error.message }}</li>
             {%- endfor -%}

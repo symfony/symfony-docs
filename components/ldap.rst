@@ -118,10 +118,10 @@ delete existing ones::
         'objectClass' => array('inetOrgPerson'),
     ));
 
-    $entityManager = $ldap->getEntryManager();
+    $entryManager = $ldap->getEntryManager();
 
     // Creating a new entry
-    $entityManager->add($entry);
+    $entryManager->add($entry);
 
     // Finding and updating an existing entry
     $query = $ldap->query('dc=symfony,dc=com', '(&(objectclass=person)(ou=Maintainers))');
@@ -129,13 +129,13 @@ delete existing ones::
     $entry = $result[0];
     $entry->setAttribute('email', array('fabpot@symfony.com'));
     $entityManager->update($entry);
-    
+
     // Adding or removing values to a multi-valued attribute is more efficient than using update()
     $entityManager->addAttributeValues($entry, 'telephoneNumber', array('+1.111.222.3333', '+1.222.333.4444'));
     $entityManager->removeAttributeValues($entry, 'telephoneNumber', array('+1.111.222.3333', '+1.222.333.4444'));
 
     // Removing an existing entry
-    $entityManager->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
+    $entryManager->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
 
 .. versionadded:: 4.1
     The ``addAttributeValues()`` and ``removeAttributeValues()`` methods
