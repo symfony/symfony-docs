@@ -316,9 +316,9 @@ Type::getBuiltInType()
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Type::getBuiltinType() <Symfony\\Component\\PropertyInfo\\Type::getBuiltinType>`
-method will return the built-in PHP data type, which can be one of 9 possible
-string values: ``array``, ``bool``, ``callable``, ``float``, ``int``, ``null``,
-``object``, ``resource`` or ``string``.
+method returns the built-in PHP data type, which can be one of these
+string values: ``array``, ``bool``, ``callable``, ``float``, ``int``,
+``iterable``, ``null``, ``object``, ``resource`` or ``string``.
 
 Constants inside the :class:`Symfony\\Component\\PropertyInfo\\Type`
 class, in the form ``Type::BUILTIN_TYPE_*``, are provided for convenience.
