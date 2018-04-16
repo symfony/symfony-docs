@@ -17,6 +17,7 @@ how the input and output of the data is handled.
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
 |             | - `grouping`_                                                       |
+|             | - `rounding_mode`_                                                  |
 |             | - `scale`_                                                          |
 +-------------+---------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                       |
@@ -78,6 +79,8 @@ value ``99``, it will be multiplied by ``100`` and ``9900`` will ultimately
 be set back on your object.
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
+
+.. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
 scale
 ~~~~~
