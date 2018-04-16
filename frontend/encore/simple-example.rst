@@ -5,7 +5,7 @@ Imagine you have a simple project with one CSS and one JS file, organized into
 an ``assets/`` directory:
 
 * ``assets/js/app.js``
-* ``assets/css/app.scss``
+* ``assets/css/app.css``
 
 With Encore, you should think of CSS as a *dependency* of your JavaScript. This means,
 you will *require* whatever CSS you need from inside JavaScript:
@@ -13,12 +13,12 @@ you will *require* whatever CSS you need from inside JavaScript:
 .. code-block:: javascript
 
     // assets/js/app.js
-    require('../css/app.scss');
+    require('../css/app.css');
 
     // ...rest of JavaScript code here
 
-With Encore, we can easily minify these files, pre-process ``app.scss``
-through Sass and a *lot* more.
+With Encore, we can easily minify these files, pre-process ``app.css``
+through PostCSS and a *lot* more.
 
 Configuring Encore/Webpack
 --------------------------
@@ -41,12 +41,10 @@ Inside, use Encore to help generate your Webpack configuration.
         // will create web/build/app.js and web/build/app.css
         .addEntry('app', './assets/js/app.js')
 
-        // allow sass/scss files to be processed
-        .enableSassLoader()
-
         // allow legacy applications to use $/jQuery as a global variable
         .autoProvidejQuery()
 
+        // enable source maps during development
         .enableSourceMaps(!Encore.isProduction())
 
         // empty the outputPath dir before each build
@@ -57,13 +55,16 @@ Inside, use Encore to help generate your Webpack configuration.
 
         // create hashed filenames (e.g. app.abc123.css)
         // .enableVersioning()
+
+        // allow sass/scss files to be processed
+        // .enableSassLoader()
     ;
 
     // export the final configuration
     module.exports = Encore.getWebpackConfig();
 
-This is already a rich setup: it outputs 2 files, uses the Sass pre-processor and
-enables source maps to help debugging.
+This is already a rich setup: it outputs 2 files and enables source maps
+to help debugging.
 
 .. _encore-build-assets:
 
@@ -89,9 +90,6 @@ To build the assets, use the ``encore`` executable:
 
     Re-run ``encore`` each time you update your ``webpack.config.js`` file.
 
-Actually, to use ``enableSassLoader()``, you'll need to install a few
-more packages. But Encore will tell you *exactly* what you need.
-
 After running one of these commands, you can now add ``script`` and ``link`` tags
 to the new, compiled assets (e.g. ``/build/app.css`` and ``/build/app.js``).
 In Symfony, use the ``asset()`` helper:
@@ -110,6 +108,35 @@ In Symfony, use the ``asset()`` helper:
             <script src="{{ asset('build/app.js') }}"></script>
         </body>
     </html>
+
+Using Sass
+----------------------------
+
+Instead of using plain CSS you can also use Sass.
+
+In order to do so, simply change the extension of the ``app.css`` file
+to ``.sass`` or ``.scss`` (based on the syntax you want to use):
+
+.. code-block:: diff
+
+    // assets/js/app.js
+    - require('../css/app.css');
+    + require('../css/app.scss');
+
+And enable the Sass pre-processor:
+
+.. code-block:: diff
+
+    // webpack.config.js
+    Encore
+        // ...
+
+        // allow sass/scss files to be processed
+    -    // .enableSassLoader()
+    +    .enableSassLoader()
+
+To use ``enableSassLoader()``, you'll also need to install a few more packages.
+But Encore will tell you *exactly* which ones when running it.
 
 Requiring JavaScript Modules
 ----------------------------
