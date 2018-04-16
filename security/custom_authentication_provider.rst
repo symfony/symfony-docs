@@ -131,17 +131,17 @@ set an authenticated token in the token storage if successful::
         {
             $request = $event->getRequest();
 
-            $wsseRegex = '/UsernameToken Username="([^"]+)", PasswordDigest="([^"]+)", Nonce="([a-zA-Z0-9+\/]+={0,2})", Created="([^"]+)"/';
+            $wsseRegex = '/UsernameToken Username="(?P<username>[^"]+)", PasswordDigest="(?P<digest>[^"]+)", Nonce="(?P<nonce>[a-zA-Z0-9+\/]+={0,2})", Created="(?P<created>[^"]+)"/';
             if (!$request->headers->has('x-wsse') || 1 !== preg_match($wsseRegex, $request->headers->get('x-wsse'), $matches)) {
                 return;
             }
 
             $token = new WsseUserToken();
-            $token->setUser($matches[1]);
+            $token->setUser($matches['username']);
 
-            $token->digest  = $matches[2];
-            $token->nonce   = $matches[3];
-            $token->created = $matches[4];
+            $token->digest  = $matches['digest'];
+            $token->nonce   = $matches['nonce'];
+            $token->created = $matches['created'];
 
             try {
                 $authToken = $this->authenticationManager->authenticate($token);
