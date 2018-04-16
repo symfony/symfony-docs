@@ -228,6 +228,12 @@ manual steps:
    :doc:`autowiring feature </service_container/3.3-di-changes>` you can remove
    most of the service configuration.
 
+.. note::
+
+    Make sure your previous configuration files don't have ``imports`` declarations
+    pointing to same resources already loaded by ``Kernel::configureContainer()``
+    or ``Kernel::configureRoutes()`` methods.
+
 #. Move the rest of the ``app/`` contents as follows (and after that, remove the
    ``app/`` directory):
 
@@ -236,8 +242,9 @@ manual steps:
    * ``app/Resources/<BundleName>/views/`` -> ``templates/bundles/<BundleName>/``
    * rest of ``app/Resources/`` files -> ``src/Resources/``
 
-#. Move the original PHP source code from ``src/AppBundle/*`` to ``src/``. In
-   addition to moving the files, update the ``autoload`` and ``autoload-dev``
+#. Move the original PHP source code from ``src/AppBundle/*``, except bundle specific
+   files (like ``AppBundle``, ``DependencyInjection\``), to ``src/``. Remove ``src/AppBundle/``.
+   In addition to moving the files, update the ``autoload`` and ``autoload-dev``
    values of the ``composer.json`` file as `shown in this example`_ to use
    ``App\`` and ``App\Tests\`` as the application namespaces (advanced IDEs can
    do this automatically).
@@ -261,6 +268,13 @@ manual steps:
 #. Update the ``bin/console`` script `copying Symfony's bin/console source`_
    and changing anything according to your original console script.
 
+#. Remove ``bin/symfony_requirements`` script. If you need a replacement for the
+   task performed by this script, use `Symfony Requirements Checker`_:
+
+   .. code-block:: terminal
+
+       $ composer require symfony/requirements-checker
+
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`Symfony Installer`: https://github.com/symfony/symfony-installer
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
@@ -272,3 +286,4 @@ manual steps:
 .. _`shown in this example of the skeleton-project`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L44-L46
 .. _`copying Symfony's index.php source`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/public/index.php
 .. _`copying Symfony's bin/console source`: https://github.com/symfony/recipes/blob/master/symfony/console/3.3/bin/console
+.. _`Symfony Requirements Checker`: https://github.com/symfony/requirements-checker
