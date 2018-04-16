@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-04-10T07:13:33Z
+
+I would also add a `versionadded` directive below to explain that these methods are new:
+
+```rst
+.. versionadded:: 4.1
+    The ``addAttributeValues()`` and ``removeAttributeValues()`` methods
+    were introduced in Symfony 4.1.
+```
+
+---------------------------------------------------------------------------
+
+by jean-gui at 2018-04-10T09:18:45Z
+
+@xabbuh Done.
