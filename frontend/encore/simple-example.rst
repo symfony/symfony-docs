@@ -110,12 +110,11 @@ In Symfony, use the ``asset()`` helper:
     </html>
 
 Using Sass
-----------------------------
+----------
 
-Instead of using plain CSS you can also use Sass.
-
-In order to do so, simply change the extension of the ``app.css`` file
-to ``.sass`` or ``.scss`` (based on the syntax you want to use):
+Instead of using plain CSS you can also use Sass. In order to do so, change the
+extension of the ``app.css`` file to ``.sass`` or ``.scss`` (based on the syntax
+you want to use):
 
 .. code-block:: diff
 
@@ -135,8 +134,8 @@ And enable the Sass pre-processor:
     -    // .enableSassLoader()
     +    .enableSassLoader()
 
-To use ``enableSassLoader()``, you'll also need to install a few more packages.
-But Encore will tell you *exactly* which ones when running it.
+Using ``enableSassLoader()`` requires to install additional packages, but Encore
+will tell you *exactly* which ones when running it.
 
 Requiring JavaScript Modules
 ----------------------------
