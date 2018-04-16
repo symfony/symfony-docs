@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-16T08:30:14Z
+
+Thanks for this contribution Juan Luis! I'm trying to verify these changes with some official resource but https://php-fpm.org/ seems to be abandoned. Can you please share some link that explains the rationale behind this change? Thanks!
+
+---------------------------------------------------------------------------
+
+by JuanLuisGarciaBorrego at 2018-04-16T14:15:22Z
+
+Hi @javiereguiluz
+
+No, I do not have any official resources, but I have checked the php-fpm config where the socket is created with:
+
+`~$ cat /etc/php/7.2/fpm/pool.d/www.conf`
+Result `listen = /run/php/php7.2-fpm.sock`
+
+`~$ cat /etc/php/7.1/fpm/pool.d/www.conf`
+Result: `listen = /run/php/php7.1-fpm.sock`
+
+The socket is saved under /var/run/php
+
+```
+~$ tree /var/run/php/
+/var/run/php/
+├── php7.*-fpm.pid
+└── php7.*-fpm.sock
+```
+
+Greetings Javier
