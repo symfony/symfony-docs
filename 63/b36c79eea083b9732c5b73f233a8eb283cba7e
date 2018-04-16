@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-16T13:03:15Z
+
+This is tricky. We did this on purpose because the `:class:` feature doesn't work with placeholders like `EXCLUDE_*`  so we decided to link to the class and append the `EXCLUDE_*` text at the end of it, so the link to Symfony API works.
+
+Maybe we can fix this with a little reword:
+
+```rst
+* A bit field of ``EXCLUDE_*`` constants from the
+  :class:`Symfony\\Component\\VarDumper\\Caster\\Caster` class.
+```
+
+---------------------------------------------------------------------------
+
+by kevin-verschaeve at 2018-04-16T13:10:16Z
+
+Oh I see.
+
+Yes we can do as you propose or keep as it is but removing some unwanted backquotes
+
+![image](https://user-images.githubusercontent.com/2345927/38810706-e24f7794-4187-11e8-81e7-23d71bdb82b6.png)
+
+See, there is twice 2 backquotes that prevent the rendering and complicate reading. We can just remove them.
+
+Tell me, what is the best, I will update the PR
+
+---------------------------------------------------------------------------
+
+by kevin-verschaeve at 2018-04-16T13:40:20Z
+
+@javiereguiluz it seems that just adding a space fix the issue :)
