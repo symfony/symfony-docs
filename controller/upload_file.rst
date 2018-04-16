@@ -195,6 +195,11 @@ There are some important things to consider in the code of the above controller:
    use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension`
    method to let Symfony guess the right extension according to the file MIME type;
 
+.. versionadded:: 4.1
+    The :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientSize`
+    method was deprecated in Symfony 4.1 and will be removed in Symfony 5.0.
+    Use ``getSize()`` instead.
+
 You can use the following code to link to the PDF brochure of a product:
 
 .. configuration-block::
