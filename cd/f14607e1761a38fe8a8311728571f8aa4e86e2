@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-05T10:44:03Z
+
+Thanks for proposing this fix! I have some questions about this:
+
+* Is this the version number used by MariaDB itself (to differentiate from MySQL) or is this just a Doctrine feature?
+* If it's a Doctrine feature, is it a temporary solution until Doctrine 3 is released or is it definitive?
+
+I ask this because, even if I disagree with lots of the decisions made by Doctrine members, I admit that they always try to do things technically correct and this solution feels a bit "hacky". My main concern is that the `$version` option now behaves differently depending on your database: most of the times is just the "version number" but other times is the "vendor name" + the "version number".
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by tristanbes at 2018-04-05T10:47:59Z
+
+The version itself (`10.2.12`) is the version from MariaDB server, but the prefix (`mariadb-`) seems to be a Doctrine feature to differentiate from MySQL.
+
+For the rest of your question I guess you'll have to ask to a Doctrine maintainer
