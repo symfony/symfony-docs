@@ -69,6 +69,7 @@ path:
         // src/AppBundle/Controller/SecurityController.php
 
         // ...
+        use Symfony\Component\HttpFoundation\JsonResponse;
         use Symfony\Component\HttpFoundation\Request;
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -79,6 +80,7 @@ path:
              */
             public function loginAction(Request $request)
             {
+                return new JsonResponse();
             }
         }
 
