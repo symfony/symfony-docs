@@ -16,7 +16,7 @@ Concrete Examples
 - Threats of violence like "The person that created this PR should be
   punched in the face"
 - Incitement of violence towards any individual, including encouraging a
-  person to commit suicide or to engage in self-harm
+  person to commit suicide or to engage in self-harm (even as a joke).
 - Sustained disruption of discussion
 - Pattern of inappropriate social contact, such as requesting/assuming
   inappropriate levels of intimacy with others
