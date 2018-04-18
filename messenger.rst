@@ -5,7 +5,7 @@ How to Use the Messenger
 ========================
 
 Symfony's Messenger provide a message bus and some routing capabilities to send
-messages within your application and through adapaters such as message queues.
+messages within your application and through adapters such as message queues.
 Before using it, read the :doc:`Messenger component docs </components/messenger>`
 to get familiar with its concepts.
 
