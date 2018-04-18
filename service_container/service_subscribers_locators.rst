@@ -1,8 +1,8 @@
 .. index::
     single: DependencyInjection; Service Subscribers
 
-Service Subscribers
-===================
+Service Subscribers & Locators
+==============================
 
 Sometimes, a service needs access to several other services without being sure
 that all of them will actually be used. In those cases, you may want the
@@ -85,7 +85,7 @@ Defining a Service Subscriber
 -----------------------------
 
 First, turn ``CommandBus`` into an implementation of :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`.
-Use its ``getSubscribedServices`` method to include as many services as needed
+Use its ``getSubscribedServices()`` method to include as many services as needed
 in the service subscriber and change the type hint of the container to
 a PSR-11 ``ContainerInterface``::
 
@@ -141,7 +141,7 @@ which implements the PSR-11 ``ContainerInterface``, but it is also a callable::
 
     return $handler->handle($command);
 
-Including services
+Including Services
 ------------------
 
 In order to add a new dependency to the service subscriber, use the
@@ -158,7 +158,7 @@ service locator::
         ];
     }
 
-Service types can also be keyed by a service name for use internally::
+Service types can also be keyed by a service name for internal use::
 
     use Psr\Log\LoggerInterface;
 
@@ -170,7 +170,7 @@ Service types can also be keyed by a service name for use internally::
         ];
     }
 
-Optional services
+Optional Services
 ~~~~~~~~~~~~~~~~~
 
 For optional dependencies, prepend the service type with a ``?`` to prevent
@@ -191,7 +191,7 @@ errors if there's no matching service found in the service container::
     Make sure an optional service exists by calling ``has()`` on the service
     locator before calling the service itself.
 
-Aliased services
+Aliased Services
 ~~~~~~~~~~~~~~~~
 
 By default, autowiring is used to match a service type to a service from the
