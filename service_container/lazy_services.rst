@@ -6,7 +6,7 @@ Lazy Services
 
 .. seealso::
 
-    Another way to inject services lazily is via a :doc:`service locator </service_container/service_locators>`.
+    Another way to inject services lazily is via a :doc:`service subscriber </service_container/service_subscribers_locators>`.
 
 Why Lazy Services?
 ------------------

@@ -1,8 +1,11 @@
 .. index::
-    single: DependencyInjection; Service Locators
+    single: DependencyInjection; Service Subscribers
 
-Service Locators
-================
+Service Subscribers & Locators
+==============================
+
+.. versionadded:: 3.3
+    Service subscribers and locators were introduced in Symfony 3.3.
 
 Sometimes, a service needs access to several other services without being sure
 that all of them will actually be used. In those cases, you may want the
@@ -77,15 +80,178 @@ However, injecting the entire container is discouraged because it gives too
 broad access to existing services and it hides the actual dependencies of the
 services.
 
-**Service Locators** are intended to solve this problem by giving access to a
-set of predefined services while instantiating them only when actually needed.
+**Service Subscribers** are intended to solve this problem by giving access to a
+set of predefined services while instantiating them only when actually needed
+through a **Service Locator**, a separate lazy-loaded container.
+
+Defining a Service Subscriber
+-----------------------------
+
+First, turn ``CommandBus`` into an implementation of :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`.
+Use its ``getSubscribedServices()`` method to include as many services as needed
+in the service subscriber and change the type hint of the container to
+a PSR-11 ``ContainerInterface``::
+
+    // src/AppBundle/CommandBus.php
+    namespace AppBundle;
+
+    use AppBundle\CommandHandler\BarHandler;
+    use AppBundle\CommandHandler\FooHandler;
+    use Psr\Container\ContainerInterface;
+    use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
+
+    class CommandBus implements ServiceSubscriberInterface
+    {
+        private $locator;
+
+        public function __construct(ContainerInterface $locator)
+        {
+            $this->locator = $locator;
+        }
+
+        public static function getSubscribedServices()
+        {
+            return [
+                'AppBundle\FooCommand' => FooHandler::class,
+                'AppBundle\BarCommand' => BarHandler::class,
+            ];
+        }
+
+        public function handle(Command $command)
+        {
+            $commandClass = get_class($command);
+
+            if ($this->locator->has($commandClass)) {
+                $handler = $this->locator->get($commandClass);
+
+                return $handler->handle($command);
+            }
+        }
+    }
+
+.. tip::
+
+    If the container does *not* contain the subscribed services, double-check
+    that you have :ref:`autoconfigure <services-autoconfigure>` enabled. You
+    can also manually add the ``container.service_subscriber`` tag.
+
+The injected service is an instance of :class:`Symfony\\Component\\DependencyInjection\\ServiceLocator`
+which implements the PSR-11 ``ContainerInterface``, but it is also a callable::
+
+    // ...
+    $locateHandler = $this->locator;
+    $handler = $locateHandler($commandClass);
+
+    return $handler->handle($command);
+
+Including Services
+------------------
+
+In order to add a new dependency to the service subscriber, use the
+``getSubscribedServices()`` method to add service types to include in the
+service locator::
+
+    use Psr\Log\LoggerInterface;
+
+    public static function getSubscribedServices()
+    {
+        return [
+            // ...
+            LoggerInterface::class,
+        ];
+    }
+
+Service types can also be keyed by a service name for internal use::
+
+    use Psr\Log\LoggerInterface;
+
+    public static function getSubscribedServices()
+    {
+        return [
+            // ...
+            'logger' => LoggerInterface::class,
+        ];
+    }
+
+Optional Services
+~~~~~~~~~~~~~~~~~
+
+For optional dependencies, prepend the service type with a ``?`` to prevent
+errors if there's no matching service found in the service container::
+
+    use Psr\Log\LoggerInterface;
+
+    public static function getSubscribedServices()
+    {
+        return [
+            // ...
+            '?'.LoggerInterface::class,
+        ];
+    }
+
+.. note::
+
+    Make sure an optional service exists by calling ``has()`` on the service
+    locator before calling the service itself.
+
+Aliased Services
+~~~~~~~~~~~~~~~~
+
+By default, autowiring is used to match a service type to a service from the
+service container. If you don't use autowiring or need to add a non-traditional
+service as a dependency, use the ``container.service_subscriber`` tag to map a
+service type to a service.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        // app/config/services.yml
+        services:
+            AppBundle\CommandBus:
+                tags:
+                    - { name: 'container.service_subscriber', key: 'logger', id: 'monolog.logger.event' }
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+
+                <service id="AppBundle\CommandBus">
+                    <tag name="container.service_subscriber" key="logger" id="monolog.logger.event" />
+                </service>
+
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use AppBundle\CommandBus;
+
+        // ...
+
+        $container
+            ->register(CommandBus::class)
+            ->addTag('container.service_subscriber', array('key' => 'logger', 'id' => 'monolog.logger.event'))
+        ;
+
+.. tip::
+
+    The ``key`` attribute can be omitted if the service name internally is the
+    same as in the service container.
 
 Defining a Service Locator
 --------------------------
 
-First, define a new service for the service locator. Use its ``arguments``
-option to include as many services as needed to it and add the
-``container.service_locator`` tag to turn it into a service locator:
+To manually define a service locator, create a new service definition and add
+the ``container.service_locator`` tag to it. Use its ``arguments`` option to
+include as many services as needed in it.
 
 .. configuration-block::
 
@@ -134,7 +300,7 @@ option to include as many services as needed to it and add the
         use Symfony\Component\DependencyInjection\ServiceLocator;
         use Symfony\Component\DependencyInjection\Reference;
 
-        //...
+        // ...
 
         $container
             ->register('app.command_handler_locator', ServiceLocator::class)
@@ -157,7 +323,7 @@ option to include as many services as needed to it and add the
     The services defined in the service locator argument must include keys,
     which later become their unique identifiers inside the locator.
 
-Now you can use the service locator injecting it in any other service:
+Now you can use the service locator by injecting it in any other service:
 
 .. configuration-block::
 
@@ -200,46 +366,5 @@ Now you can use the service locator injecting it in any other service:
 
     If the service locator is not intended to be used by multiple services, it's
     better to create and inject it as an anonymous service.
-
-Usage
------
-
-Back to the previous ``CommandBus`` example, it looks like this when using the
-service locator::
-
-    // ...
-    use Psr\Container\ContainerInterface;
-
-    class CommandBus
-    {
-        /**
-         * @var ContainerInterface
-         */
-        private $handlerLocator;
-
-        // ...
-
-        public function handle(Command $command)
-        {
-            $commandClass = get_class($command);
-
-            if (!$this->handlerLocator->has($commandClass)) {
-                return;
-            }
-
-            $handler = $this->handlerLocator->get($commandClass);
-
-            return $handler->handle($command);
-        }
-    }
-
-The injected service is an instance of :class:`Symfony\\Component\\DependencyInjection\\ServiceLocator`
-which implements the PSR-11 ``ContainerInterface``, but it is also a callable::
-
-    // ...
-    $locateHandler = $this->handlerLocator;
-    $handler = $locateHandler($commandClass);
-
-    return $handler->handle($command);
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
