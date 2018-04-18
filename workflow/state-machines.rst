@@ -205,9 +205,9 @@ you can get this state machine by injecting the Workflow registry service::
             $this->workflows = $workflows;
         }
 
-        public function someMethod()
+        public function someMethod($subject)
         {
-            $stateMachine = $this->workflows->get('pull_request');
+            $stateMachine = $this->workflows->get($subject, 'pull_request');
             // ...
         }
 
