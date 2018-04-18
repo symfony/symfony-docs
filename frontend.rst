@@ -53,7 +53,7 @@ Optimizing
 * :doc:`Versioning (and the manifest.json file) </frontend/encore/versioning>`
 * :doc:`Using A CDN </frontend/encore/cdn>`
 * :doc:`Creating a "Shared" entry for re-used modules </frontend/encore/shared-entry>`
-* :doc:`Using the URL Loader </frontend/encore/url-loader>`
+* :doc:`/frontend/encore/url-loader`
 
 Guides
 ......
