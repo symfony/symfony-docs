@@ -16,7 +16,7 @@ using an email address that already exists in the system.
 |                | - `errorPath`_                                                                      |
 |                | - `ignoreNull`_                                                                     |
 |                | - `payload`_                                                                        |
-|                | - `groups`_                                                                        |
+|                | - `groups`_                                                                         |
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
 +----------------+-------------------------------------------------------------------------------------+
@@ -285,10 +285,10 @@ If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
 
 groups
-~~~~~~~~~~
+~~~~~~
 
 **type**: ``array`` | ``string``
 
-If your object takes advantage of validation groups, you will need to specify which validation group (s) your form should use.
+It defines the validation group or groups that the form should use.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
