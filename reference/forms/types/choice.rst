@@ -329,8 +329,8 @@ trim
 
 **type**: ``boolean`` **default**: ``false``
 
-The trim is disabled by default for choices values.
-The reason is that a value must match a set of predefined one.
+Trimming is disabled by default because the selected value or values must match
+the given choice values exactly (and they could contain white spaces).
 
 Inherited Options
 -----------------
