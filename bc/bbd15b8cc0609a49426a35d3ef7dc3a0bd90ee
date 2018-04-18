@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-02-09T04:31:50Z
+
+Hey @codedmonkey!
+
+Thanks for taking this on! This is one of the best, un-documented features. I have a few big-picture things to suggest first:
+
+1) I think we need to merge this article with the one created in #7458. As was mentioned in #7740, these are really the same idea, just configured differently. I may be over-simplifying, but I think we should just have one doc page and really one example... and that example should show `ServiceSubscriberInterface` (not the `container.service_locator` tag). Then at the bottom of the page, we'd add one more section that shows how you can use that tag. If those really can't be "squeezed" into the same example, that's ok :).
+
+2) I think your example is more complex it needs to be. There's actually a *really* simple use-case for a service locator: laziness. By using the locator, any services aren't instantiated unless you ask for them. So, you could have an example where a service may need to use serviceA under some circumstances or serviceB in other circumstances. So, you use a service locator to avoid needing to instantiate both.
+
+Wdyt?
+
+---------------------------------------------------------------------------
+
+by codedmonkey at 2018-02-14T12:41:56Z
+
+> I think your example is more complex it needs to be. There's actually a really simple use-case for a service locator: laziness.
+
+@weaverryan That's exactly the right way to describe why you'd want to combine the two pages. I figured we want a more expanded example because it is a different page from https://github.com/symfony/symfony-docs/pull/7458 wgucg already explains how the Service Locators work. I'll try to combine the two.
+
+I did like this example though, as it shows how `AbstractController` uses the feature and how a developer can create a similar structure. But its ok with me if we don't include it.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-02-14T14:31:46Z
+
+Thanks @codedmonkey! Do what feels best when you update this, then we can review it again :)
+
+---------------------------------------------------------------------------
+
+by codedmonkey at 2018-02-16T02:17:16Z
+
+The result reads a lot better, so good suggestion @weaverryan! I mainly added a new segment in the middle of the old Service Locators page and renamed the page to reflect the rewrite.
+
+Other thing, somewhere in the middle I start mentioning `service types` as mentioned in the API. Is it clear to the developer what this means?
