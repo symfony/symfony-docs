@@ -4,6 +4,9 @@
 Service Subscribers & Locators
 ==============================
 
+.. versionadded:: 3.3
+    Service subscribers and locators were introduced in Symfony 3.3.
+
 Sometimes, a service needs access to several other services without being sure
 that all of them will actually be used. In those cases, you may want the
 instantiation of the services to be lazy. However, that's not possible using
@@ -110,7 +113,7 @@ a PSR-11 ``ContainerInterface``::
         {
             return [
                 'AppBundle\FooCommand' => FooHandler::class,
-                'AppBundle\BarCommand' => BarHandler::class
+                'AppBundle\BarCommand' => BarHandler::class,
             ];
         }
 
@@ -153,8 +156,8 @@ service locator::
     public static function getSubscribedServices()
     {
         return [
-            //...
-            LoggerInterface::class
+            // ...
+            LoggerInterface::class,
         ];
     }
 
@@ -165,8 +168,8 @@ Service types can also be keyed by a service name for internal use::
     public static function getSubscribedServices()
     {
         return [
-            //...
-            'logger' => LoggerInterface::class
+            // ...
+            'logger' => LoggerInterface::class,
         ];
     }
 
@@ -181,8 +184,8 @@ errors if there's no matching service found in the service container::
     public static function getSubscribedServices()
     {
         return [
-            //...
-            '?'.LoggerInterface::class
+            // ...
+            '?'.LoggerInterface::class,
         ];
     }
 
@@ -231,7 +234,7 @@ service type to a service.
         // app/config/services.php
         use AppBundle\CommandBus;
 
-        //...
+        // ...
 
         $container
             ->register(CommandBus::class)
@@ -291,7 +294,7 @@ include as many services as needed in it.
         use Symfony\Component\DependencyInjection\ServiceLocator;
         use Symfony\Component\DependencyInjection\Reference;
 
-        //...
+        // ...
 
         $container
             ->register('app.command_handler_locator', ServiceLocator::class)
