@@ -109,7 +109,7 @@ Finally, set the formatter to be used on whatever handler you want:
 
     .. code-block:: yaml
 
-        # config/packages/monolog.yaml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 main:

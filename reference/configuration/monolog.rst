@@ -14,7 +14,7 @@ Full Default Configuration
 
     .. code-block:: yaml
 
-        # config/packages/monolog.yaml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
 

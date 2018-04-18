@@ -74,7 +74,7 @@ to write logs using the :phpfunction:`syslog` function:
 
     .. code-block:: yaml
 
-        # config/packages/monolog.yaml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 # this "file_log" key could be anything
@@ -150,7 +150,7 @@ one of the messages reaches an ``action_level``. Take this example:
 
     .. code-block:: yaml
 
-        # config/packages/monolog.yaml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 filter_for_errors:
@@ -264,7 +264,7 @@ option of your handler to ``rotating_file``:
 
     .. code-block:: yaml
 
-        # config/packages/dev/monolog.yaml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 main:

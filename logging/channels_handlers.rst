@@ -31,7 +31,7 @@ from the ``security`` channel:
 
     .. code-block:: yaml
 
-        # config/packages/monolog.yaml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 security:
@@ -137,7 +137,7 @@ You can also configure additional channels without the need to tag your services
 
     .. code-block:: yaml
 
-        # config/packages/monolog.yaml
+        # config/packages/prod/monolog.yaml
         monolog:
             channels: ['foo', 'bar']
 
