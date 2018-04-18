@@ -23,7 +23,8 @@ code:
 
 .. code-block:: terminal
 
-    composer require doctrine maker
+    composer require doctrine
+    composer require maker --dev
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -69,14 +70,50 @@ Creating an Entity Class
 
 Suppose you're building an application where products need to be displayed.
 Without even thinking about Doctrine or databases, you already know that
-you need a ``Product`` object to represent those products. Use the ``make:entity``
-command to create this class for you:
+you need a ``Product`` object to represent those products.
+
+.. _doctrine-adding-mapping:
+
+You can use the ``make:entity`` command to create this class and any fields you
+need. The command will ask you some questions - answer them like done below:
 
 .. code-block:: terminal
 
-    $ php bin/console make:entity Product
+    $ php bin/console make:entity
 
-You now have a new ``src/Entity/Product.php`` file::
+    Class name of the entity to create or update:
+    > Product
+
+    New property name (press <return> to stop adding fields):
+    > name
+
+    Field type (enter ? to see all types) [string]:
+    > string
+
+    Field length [255]:
+    > 255
+
+    Can this field be null in the database (nullable) (yes/no) [no]:
+    > no
+
+    New property name (press <return> to stop adding fields):
+    > price
+
+    Field type (enter ? to see all types) [string]:
+    > integer
+
+    Can this field be null in the database (nullable) (yes/no) [no]:
+    > no
+
+    New property name (press <return> to stop adding fields):
+    >
+    (press enter again to finish)
+
+.. versionadded::
+    The interactive behavior of the ``make:entity`` command was introduced
+    in MakerBundle 1.3.
+
+Woh! You now have a new ``src/Entity/Product.php`` file::
 
     // src/Entity/Product.php
     namespace App\Entity;
@@ -95,96 +132,42 @@ You now have a new ``src/Entity/Product.php`` file::
          */
         private $id;
 
-        // add your own fields
+        /**
+         * @ORM\Column(type="string", length=255)
+         */
+        private $name;
+
+        /**
+         * @ORM\Column(type="integer")
+         */
+        private $price;
+
+        public function getId()
+        {
+            return $this->id;
+        }
+
+        // ... getter and setter methods
     }
 
-This class is called an "entity". And soon, you will be able to save and query Product
-objects to a ``product`` table in your database.
+.. note::
 
-.. _doctrine-adding-mapping:
+    Confused why the price is an integer? Don't worry: this is just an example.
+    But, storing prices as integers (e.g. 100 = $1 USD) can avoid rounding issues.
 
-Mapping More Fields / Columns
------------------------------
-
-Each property in the ``Product`` entity can be mapped to a column in the ``product``
-table. By adding some mapping configuration, Doctrine will be able to save a Product
-object to the ``product`` table *and* query from the ``product`` table and turn
-that data into ``Product`` objects:
+This class is called an "entity". And soon, you'll be able to save and query Product
+objects to a ``product`` table in your database. Each property in the ``Product``
+entity can be mapped to a column in that table. This is usually done with annotations:
+the ``@ORM\...`` comments that you see above each property:
 
 .. image:: /_images/doctrine/mapping_single_entity.png
    :align: center
 
-Let's give the ``Product`` entity class three more properties and map them to columns
-in the database. This is usually done with annotations:
+The ``make:entity`` command is a tool to make life easier. But this is *your* code:
+add/remove fields, add/remove methods or update configuration.
 
-.. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Product.php
-        // ...
-
-        // this use statement is needed for the annotations
-        use Doctrine\ORM\Mapping as ORM;
-
-        class Product
-        {
-            /**
-             * @ORM\Id
-             * @ORM\GeneratedValue
-             * @ORM\Column(type="integer")
-             */
-            private $id;
-
-            /**
-             * @ORM\Column(type="string", length=100)
-             */
-            private $name;
-
-            /**
-             * @ORM\Column(type="decimal", scale=2, nullable=true)
-             */
-            private $price;
-        }
-
-    .. code-block:: yaml
-
-        # config/doctrine/Product.orm.yml
-        App\Entity\Product:
-            type: entity
-            id:
-                id:
-                    type: integer
-                    generator: { strategy: AUTO }
-            fields:
-                name:
-                    type: string
-                    length: 100
-                price:
-                    type: decimal
-                    scale: 2
-                    nullable: true
-
-    .. code-block:: xml
-
-        <!-- config/doctrine/Product.orm.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-
-            <entity name="App\Entity\Product">
-                <id name="id" type="integer">
-                    <generator strategy="AUTO" />
-                </id>
-                <field name="name" type="string" length="100" />
-                <field name="price" type="decimal" scale="2" nullable="true" />
-            </entity>
-        </doctrine-mapping>
-
-Doctrine supports a wide variety of different field types, each with their own options.
-To see a full list of types and options, see `Doctrine's Mapping Types documentation`_.
+Doctrine supports a wide variety of field types, each with their own options.
+To see a full list, check out `Doctrine's Mapping Types documentation`_.
 If you want to use XML instead of annotations, add ``type: xml`` and
 ``dir: '%kernel.project_dir%/config/doctrine'`` to the entity mappings in your
 ``config/packages/doctrine.yaml`` file.
@@ -193,7 +176,7 @@ If you want to use XML instead of annotations, add ``type: xml`` and
 
     Be careful not to use reserved SQL keywords as your table or column names
     (e.g. ``GROUP`` or ``USER``). See Doctrine's `Reserved SQL keywords documentation`_
-    for details on how to escape these. Or, configure the table name with
+    for details on how to escape these. Or, change the table name with
     ``@ORM\Table(name="groups")`` above the class or configure the column name with
     the ``name="group_name"`` option.
 
@@ -204,17 +187,18 @@ Migrations: Creating the Database Tables/Schema
 
 The ``Product`` class is fully-configured and ready to save to a ``product`` table.
 Of course, your database doesn't actually have the ``product`` table yet. To add
-the table, you can leverage the `DoctrineMigrationsBundle`_, which is already installed:
+it, you can leverage the `DoctrineMigrationsBundle`_, which is already installed:
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:migrations:diff
+    $ php bin/console make:migration
 
 If everything worked, you should see something like this:
 
-    Generated new migration class to
-    "/path/to/project/doctrine/src/Migrations/Version20171122151511.php"
-    from schema differences.
+    SUCCESS!
+
+    Next: Review the new migration "src/Migrations/Version20180207231217.php"
+    Then: Run the migration with php bin/console doctrine:migrations:migrate
 
 If you open this file, it contains the SQL needed to update your database! To run
 that SQL, execute your migrations:
@@ -224,12 +208,38 @@ that SQL, execute your migrations:
     $ php bin/console doctrine:migrations:migrate
 
 This command executes all migration files that have not already been run against
-your database.
+your database. You should run this command on production when you deploy to keep
+your production database up-to-date.
 
 Migrations & Adding more Fields
 -------------------------------
 
 But what if you need to add a new field property to ``Product``, like a ``description``?
+It's easy to add the new property by hand. But, you can also use ``make:entity``
+again:
+
+.. code-block:: terminal
+
+    $ php bin/console make:entity
+
+    Class name of the entity to create or update
+    > Product
+
+    New property name (press <return> to stop adding fields):
+    > description
+
+    Field type (enter ? to see all types) [string]:
+    > text
+
+    Can this field be null in the database (nullable) (yes/no) [no]:
+    > no
+
+    New property name (press <return> to stop adding fields):
+    >
+    (press enter again to finish)
+
+This adds the new ``description`` property and ``getDescription()`` and ``setDescription()``
+methods:
 
 .. code-block:: diff
 
@@ -244,6 +254,8 @@ But what if you need to add a new field property to ``Product``, like a ``descri
     +      * @ORM\Column(type="text")
     +      */
     +     private $description;
+
+        // getDescription() & setDescription() were also added
     }
 
 The new property is mapped, but it doesn't exist yet in the ``product`` table. No
@@ -251,7 +263,7 @@ problem! Just generate a new migration:
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:migrations:diff
+    $ php bin/console make:migration
 
 This time, the SQL in the generated file will look like this:
 
@@ -269,7 +281,7 @@ before, execute your migrations:
 
 This will only execute the *one* new migration file, because DoctrineMigrationsBundle
 knows that the first migration was already executed earlier. Behind the scenes, it
-automatically manages a ``migration_versions`` table to track this.
+manages a ``migration_versions`` table to track this.
 
 Each time you make a change to your schema, run these two commands to generate the
 migration and then execute it. Be sure to commit the migration files and execute
@@ -277,47 +289,17 @@ them when you deploy.
 
 .. _doctrine-generating-getters-and-setters:
 
-Generating Getters and Setters
-------------------------------
-
-Doctrine now knows how to persist a ``Product`` object to the database. But the class
-itself isn't useful yet. All of the properties are ``private``, so there's no way
-to set data on them!
-
-For that reason, you should create public getters and setters for all the fields
-you need to modify from outside of the class. If you use an IDE like PhpStorm, it
-can generate these for you. In PhpStorm, put your cursor anywhere in the class,
-then go to the Code -> Generate menu and select "Getters and Setters"::
-
-    // src/Entity/Product
-    // ...
-
-    class Product
-    {
-        // all of your properties
-
-        public function getId()
-        {
-            return $this->id;
-        }
-
-        public function getName()
-        {
-            return $this->name;
-        }
-
-        public function setName($name)
-        {
-            $this->name = $name;
-        }
-
-        // ... getters & setters for price & description
-    }
-
 .. tip::
 
-    Typically you won't need a ``setId()`` method: Doctrine will set the ID
-    automatically.
+    If you prefer to add new properties manually, the ``make:entity`` command can
+    generate the getter & setter methods for you:
+
+    .. code-block:: terminal
+
+        $ php bin/console make:entity --regenerate
+
+    If you make some changes and want to regenerate *all* getter/setter methods,
+    also pass ``--overwrite``.
 
 Persisting Objects to the Database
 ----------------------------------
