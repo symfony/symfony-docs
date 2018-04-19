@@ -144,7 +144,7 @@ JSON File Manifest
 
 Use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\JsonManifestVersionStrategy`
 to take advantage of the strategy used by popular tools such as `Webpack 
-<https://webpack.js.org/>`_, which generate a JSON file mapping all source file names to their corresponding output file. For example::
+<https://webpack.js.org/>`_, which generates a JSON file mapping all source file names to their corresponding output file. For example::
 
     // rev-manifest.json
     {
