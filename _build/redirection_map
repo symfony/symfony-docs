@@ -349,6 +349,7 @@
 /form /forms
 /form/use_virtual_forms /form/inherit_data_option
 /security/target_path /security
+/service_container/service_locators /service_container/service_subscribers_locators
 /service_container/third_party /service_container
 /templating/templating_service /templates
 /testing/simulating_authentication /testing/http_authentication
