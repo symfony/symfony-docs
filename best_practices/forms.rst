@@ -159,10 +159,10 @@ remove the ``form_widget(form)`` function and render your fields individually.
 See :doc:`/form/form_customization` for more information on this and how you
 can control *how* the form renders at a global level using form theming.
 
-As the whole rendering of a form can be passed to a form theme, it can be 
-usefull to do something like that: 
+As the whole rendering of a form can be passed to a form theme, it can be
+usefull to do something like that:
 
-.. code-block:: html+twig 
+.. code-block:: html+twig
 
     <!-- templates/random.html.twig -->
     {% form_theme someform 'templates/form/themes/_someform.html.twig' %}
@@ -170,115 +170,45 @@ usefull to do something like that:
     {{ form(someform) }}
 
 This way, the entire form rendering is passed to the theme where you can
-control all field independently. 
+control all field independently.
 
 Handling Form Submits
 ---------------------
 
-Handling a form submit usually follows a similar template::
+Handling the form submission can be a tricky part of your application but
+as soon as you understand how it works, your code become suddently way easier to maintain.
+In order to ease the process, we recommend to use FormHandler for every form, this way,
+you can dispatch the logic through multiples classes and keep your controller thin.
 
-    public function new(Request $request)
-    {
-        // build the form ...
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($post);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('admin_post_show', [
-                'id' => $post->getId()
-            ]);
-        }
-
-        // render the template
-    }
-
-We recommend that you use a single action for both rendering the form and
-handling the form submit. For example, you *could* have a ``new()`` action that
-*only* renders the form and a ``create()`` action that *only* processes the form
-submit. Both those actions will be almost identical. So it's much simpler to let
-``new()`` handle everything.
-
-If you need to add more control over the form handling process, you can use a ``FormHander``
-which is responsible to handling the whole logic between the submission and the rendering part
-of the ``new()`` method. 
-So, what is a FormHandler ? 
-
-In it's purest expression, a FormHandler is a service which wait for your form and 
-call everything you need to manage the handling process, here's a exemple: 
+Here's a simple FormHandler::
 
 .. code-block:: php
 
     <?php
 
+    namespace App\Form\Handler;
+
     class PostTypeHandler
-    { 
+    {
         private $entityManager;
 
         public function __construct(EntityManagerInterface $entityManager)
         {
             $this->entityManager = $entityManager;
         }
-        
+
         public function handle(FormInterface $postType): bool
-        { 
+        {
             if ($postType->isSubmitted() && $postType->isValid()) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($post);
                 $entityManager->flush();
-                
+
                 return true;
             }
 
             return false;
-        } 
-    }
-
-Here's a simple exemple of what can do a FormHandler but you can injecte every services
-that you need. 
-Once in the controller, the logic can be simplified by the call of the PostTypeHandler: 
-
-.. code-block:: php
-
-    public function new(Request $request, PostTypeHandler $handler)
-    {
-        // build the form ...
-
-        $form->handleRequest($request);
-
-        if ($handler->handle($form)) {
-            return $this->redirectToRoute('admin_post_show', [
-                'id' => $post->getId()
-            ]);
         }
-
-        // render the template
-    }
-
-Keep in mind that a FormHandler is just a service, your controller can easily
-call it using the ``controler.service_arguments`` tag and let it handle all the 
-heavy tasks, this way, your code stay easy to test and maintain. 
-Last thing, thanks to the DIC, you can easily define a interface and call it,
-this way, you stay in line with the SOLID princiles:
-
-.. code-block:: php
-
-    public function new(Request $request, PostTypeHandlerInterface $handler)
-    {
-        // build the form ...
-
-        $form->handleRequest($request);
-
-        if ($handler->handle($form)) {
-            return $this->redirectToRoute('admin_post_show', [
-                'id' => $post->getId()
-            ]);
-        }
-
-        // render the template
     }
 
 Next: :doc:`/best_practices/i18n`
