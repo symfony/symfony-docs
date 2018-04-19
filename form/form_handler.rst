@@ -1,7 +1,7 @@
 How to work with Form Handler
 =============================
 
-Usually, handling a form submit usually follows a similar template::
+Usually, handling a form submission follows a similar template::
 
 .. code-block:: php
 
