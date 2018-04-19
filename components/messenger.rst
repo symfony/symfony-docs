@@ -61,7 +61,7 @@ Example::
         ])),
     ]);
 
-    $result = $bus->handle(new MyMessage(/* ... */));
+    $result = $bus->dispatch(new MyMessage(/* ... */));
 
 .. note:
 
