@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-16T08:41:06Z
+
+You are right about this. thanks for fixing it!
+
+However, I was checking the source code of Twig extensions (e.g. https://github.com/twigphp/Twig-extensions/blob/master/src/IntlExtension.php) and I saw that it added PHP namespaces in addition to the legacy PHP class names (the same that Twig did a while ago). So maybe a better solution could be to not add the `class` option but to use the new PHP namespaces?
+
+```diff
+         services:
+-            Twig_Extensions_Extension_Intl:
++            Twig\Extensions\IntlExtension:
+-                class: Twig_Extensions_Extension_Intl
+                 tags: [twig.extension]
+```
+
+---------------------------------------------------------------------------
+
+by florian987 at 2018-04-16T09:39:51Z
+
+I did not know about that, thanks. I updated PR accordingly
