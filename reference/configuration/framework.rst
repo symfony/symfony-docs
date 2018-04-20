@@ -128,6 +128,7 @@ Configuration
         * :ref:`name <reference-cache-pools-name>`
             * `adapter`_
             * `public`_
+            * `tags`_
             * `default_lifetime`_
             * `provider`_
             * `clearer`_
@@ -1872,6 +1873,14 @@ public
 **type**: ``boolean`` **default**: ``false``
 
 Whether your service should be public or not.
+
+tags
+""""
+
+**type**: ``boolean`` | ``string`` **default**: ``null``
+
+Whether your service should be able to handle tags or not.
+Can also be the service id of another cache pool where tags will be stored.
 
 default_lifetime
 """"""""""""""""
