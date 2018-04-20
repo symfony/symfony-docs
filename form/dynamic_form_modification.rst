@@ -212,7 +212,6 @@ Using an event listener, your form might look like this::
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\FormEvents;
     use Symfony\Component\Form\FormEvent;
-    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -231,33 +230,31 @@ Using an event listener, your form might look like this::
     }
 
 The problem is now to get the current user and create a choice field that
-contains only this user's friends.
+contains only this user's friends. This can be done injecting the ``Security``
+service into the form type so you can get the current user object::
 
-Luckily it is pretty easy to inject a service inside of the form. This can be
-done in the constructor::
+    use Symfony\Component\Security\Core\Security;
 
-    private $tokenStorage;
+    private $security;
 
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(Security $security)
     {
-        $this->tokenStorage = $tokenStorage;
+        $this->security = $security;
     }
 
 .. note::
 
-    You might wonder, now that you have access to the User (through the token
-    storage), why not just use it directly in ``buildForm()`` and omit the
-    event listener? This is because doing so in the ``buildForm()`` method
-    would result in the whole form type being modified and not just this
-    one form instance. This may not usually be a problem, but technically
-    a single form type could be used on a single request to create many forms
-    or fields.
+    You might wonder, now that you have access to the ``User`` object, why not
+    just use it directly in ``buildForm()`` and omit the event listener? This is
+    because doing so in the ``buildForm()`` method would result in the whole
+    form type being modified and not just this one form instance. This may not
+    usually be a problem, but technically a single form type could be used on a
+    single request to create many forms or fields.
 
 Customizing the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that you have all the basics in place you can take advantage of the ``TokenStorageInterface``
-and fill in the listener logic::
+Now that you have all the basics in place you can complete the listener logic::
 
     // src/Form/Type/FriendMessageFormType.php
 
@@ -266,16 +263,16 @@ and fill in the listener logic::
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use Symfony\Component\Security\Core\Security;
     // ...
 
     class FriendMessageFormType extends AbstractType
     {
-        private $tokenStorage;
+        private $security;
 
-        public function __construct(TokenStorageInterface $tokenStorage)
+        public function __construct(Security $security)
         {
-            $this->tokenStorage = $tokenStorage;
+            $this->security = $security;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -286,7 +283,7 @@ and fill in the listener logic::
             ;
 
             // grab the user, do a quick sanity check that one exists
-            $user = $this->tokenStorage->getToken()->getUser();
+            $user = $this->security->getUser();
             if (!$user) {
                 throw new \LogicException(
                     'The FriendMessageFormType cannot be used without an authenticated user!'
@@ -301,13 +298,12 @@ and fill in the listener logic::
                     $formOptions = array(
                         'class'         => User::class,
                         'choice_label'  => 'fullName',
-                        'query_builder' => function (EntityRepository $er) use ($user) {
+                        'query_builder' => function (EntityRepository $userRepository) use ($user) {
                             // build a custom query
-                            // return $er->createQueryBuilder('u')->addOrderBy('fullName', 'DESC');
+                            // return $userRepository->createQueryBuilder('u')->addOrderBy('fullName', 'DESC');
 
                             // or call a method on your repository that returns the query builder
-                            // the $er is an instance of your UserRepository
-                            // return $er->createOrderByFullNameQueryBuilder();
+                            // return $userRepository->createOrderByFullNameQueryBuilder();
                         },
                     );
 
@@ -331,11 +327,8 @@ Using the Form
 
 If you're using :ref:`autowire <services-autowire>` and
 :ref:`autoconfigure <services-autoconfigure>`, your form is ready to be used!
-
-.. tip::
-
-    If you're not using autowire and autoconfigure, see :doc:`/form/form_dependencies`
-    for how to register your form type as a service.
+Otherwise, see :doc:`/form/form_dependencies` to learn how to register your form
+type as a service.
 
 In a controller, create the form like normal::
 
