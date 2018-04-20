@@ -447,6 +447,9 @@ The script writes the modified PHPUnit it builds in a directory that can be
 configured by the ``SYMFONY_PHPUNIT_DIR`` env var, or in the same directory as
 the ``simple-phpunit`` if it is not provided.
 
+It's also possible to define the environment variable in the
+``phpunit.xml.dist`` file.
+
 If you have installed the bridge through Composer, you can run it by calling e.g.:
 
 .. code-block:: bash
@@ -458,10 +461,15 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     Set the ``SYMFONY_PHPUNIT_VERSION`` env var to e.g. ``5.5`` to change the
     base version of PHPUnit to ``5.5`` instead of the default ``5.3``.
 
+    It's also possible to define the environment variable in the
+    ``phpunit.xml.dist`` file.
+
 .. tip::
 
     If you still need to use ``prophecy`` (but not ``symfony/yaml``),
     then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
+
+    It's also possible to set this variable in the ``phpunit.xml.dist`` file.
 
 Code coverage listener
 ----------------------
