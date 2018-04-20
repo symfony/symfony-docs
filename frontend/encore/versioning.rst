@@ -59,3 +59,8 @@ like normal:
     <script src="{{ asset('build/app.js') }}"></script>
 
     <link href="{{ asset('build/dashboard.css') }}" rel="stylesheet" />
+
+Learn more
+----------
+
+* :doc:`/components/asset`
