@@ -264,7 +264,14 @@ when you installed Twig. Create a new ``templates/lucky`` directory with a new
 
     {# templates/lucky/number.html.twig #}
 
-    <h1>Your lucky number is {{ number }}</h1>
+    <html>
+      <head>
+          <title>Lucky Number</title>
+      </head>
+      <body>
+          <h1>Your lucky number is: {{ number }}</h1>
+      </body>
+    </html>
 
 The ``{{ number }}`` syntax is used to *print* variables in Twig. Refresh your browser
 to get your *new* lucky number!
