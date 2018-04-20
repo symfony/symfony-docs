@@ -79,7 +79,7 @@ Attribution
 This Code of Conduct is adapted from the `Contributor Covenant`_, version 1.4,
 available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
 
-Related documents
+Related Documents
 -----------------
 
 .. toctree::
@@ -89,4 +89,4 @@ Related documents
     enforcement_team
     concrete_example_document
 
-.. _Contributor Covenant: https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+.. _Contributor Covenant: https://www.contributor-covenant.org
