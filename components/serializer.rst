@@ -947,6 +947,7 @@ having unique identifiers::
         'child' => array(
             'id' => 2,
             'child' => '/foos/3',
+        ),
     );
     */
 
