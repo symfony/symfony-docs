@@ -134,7 +134,7 @@ can intercept the session before it is written::
 
         private function getUser()
         {
-            if (!$token = $tokenStorage->getToken()) {
+            if (!$token = $this->tokenStorage->getToken()) {
                 return;
             }
 
