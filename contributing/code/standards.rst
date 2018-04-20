@@ -254,7 +254,12 @@ Documentation
 * The ``@package`` and ``@subpackage`` annotations are not used;
 
 * Don't inline PHPDoc blocks, even when they contain just one tag (e.g. don't
-  put ``/** {@inheritdoc} */`` in a single line).
+  put ``/** {@inheritdoc} */`` in a single line);
+
+* When adding a new class or when making significant changes to an existing class,
+  an ``@author`` tag with personal contact information may be added, or expanded.
+  Please note it is possible to have the personal contact information updated or
+  removed per request to the doc:`core team </contributing/code/core_team>`.
 
 License
 ~~~~~~~
