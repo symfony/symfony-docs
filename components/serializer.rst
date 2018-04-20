@@ -704,6 +704,27 @@ always as a collection.
 .. versionadded:: 4.1
     The ``as_collection`` option was introduced in Symfony 4.1.
 
+.. tip::
+
+    Processing of XML comments can be controlled with the third constructor
+    argument:
+
+    .. code-block:: php
+
+        class XmlEncoder
+        {
+            public function __construct(
+                string $rootNodeName = 'response',
+                int $loadOptions = null,
+                array $ignoredNodeTypes = array(XML_PI_NODE, XML_COMMENT_NODE)
+            ) {
+                // ...
+            }
+        }
+
+.. versionadded:: 4.1
+    XML comments are removed by default since Symfony 4.1.
+
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
 
