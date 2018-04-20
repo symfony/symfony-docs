@@ -209,11 +209,15 @@ you switch users, add an event subscriber on this event::
     {
         public function onSwitchUser(SwitchUserEvent $event)
         {
-            $event->getRequest()->getSession()->set(
-                '_locale',
-                // assuming your User has some getLocale() method
-                $event->getTargetUser()->getLocale()
-            );
+            $request = $event->getRequest();
+
+            if ($request->hasSession() && ($session = $request->getSession)) {
+                $session->set(
+                    '_locale',
+                    // assuming your User has some getLocale() method
+                    $event->getTargetUser()->getLocale()
+                );
+            }
         }
 
         public static function getSubscribedEvents()
