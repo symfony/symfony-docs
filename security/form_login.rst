@@ -444,7 +444,9 @@ remove this variable, it's better to use the
     // ...
     use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-    $targetPath = $this->getTargetPath($request->getSession(), $providerKey);
+    $session = $request->hasSession() ? $request->getSession() : throw_no_session_exception();
+
+    $targetPath = $this->getTargetPath($session, $providerKey);
 
     // equivalent to:
-    // $targetPath = $request->getSession()->get('_security.'.$providerKey.'.target_path');
+    // $targetPath = $session->get('_security.'.$providerKey.'.target_path');
