@@ -70,7 +70,8 @@ obligated to maintain confidentiality with regard to the reporter of an incident
 Further details of specific enforcement policies may be posted separately.
 
 Enforcement team members who do not follow or enforce the Code of Conduct in good
-faith may face temporary or permanent repercussions as determined by the core team.
+faith may face temporary or permanent repercussions as determined by the
+:doc:`core team </contributing/code/core_team>`.
 
 Attribution
 -----------
