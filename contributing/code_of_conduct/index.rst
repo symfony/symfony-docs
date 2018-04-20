@@ -65,7 +65,7 @@ Instances of abusive, harassing, or otherwise unacceptable behavior
 :doc:`may be reported </contributing/code_of_conduct/reporting_guidelines>`
 by contacting the :doc:`enforcement team members </contributing/code_of_conduct/enforcement_team>`.
 All complaints will be reviewed and investigated and will result in a response that
-is deemed necessary and appropriate to the circumstances. The project team is
+is deemed necessary and appropriate to the circumstances. The enforcement team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
 Further details of specific enforcement policies may be posted separately.
 
