@@ -235,6 +235,13 @@ the
 method tells you if the request contains a session which was started in one of
 the previous requests.
 
+.. versionadded:: 4.1
+
+    Using :method:`Symfony\\Component\\HttpFoundation\\Request::getSession()` when no session
+    has been set, was deprecated in Symfony 4.1. It will throw an exception in
+    Symfony 5.0 when session is null.
+    Use :method:`Symfony\\Component\\HttpFoundation\\Request::hasSession()` instead.
+
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
