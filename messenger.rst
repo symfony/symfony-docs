@@ -158,7 +158,7 @@ Consuming messages
 ------------------
 
 Once your messages have been routed, you will like to consume your messages in most
-of the cases. Do to so, you can use the ``messenger:consume-messages`` command
+of the cases. To do so, you can use the ``messenger:consume-messages`` command
 like this:
 
 .. code-block:: terminal
@@ -227,7 +227,7 @@ named adapter using your own DSN:
 In addition of being able to route your messages to the ``yours`` sender, this
 will give you access to the following services:
 
-#. ``messenger.sender.hours``: the sender.
-#. ``messenger.receiver.hours``: the receiver.
+#. ``messenger.sender.yours``: the sender.
+#. ``messenger.receiver.yours``: the receiver.
 
 .. _`enqueue's adapter`: https://github.com/sroze/enqueue-bridge
