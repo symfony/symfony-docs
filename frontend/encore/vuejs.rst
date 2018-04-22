@@ -34,6 +34,82 @@ also configure the `vue-loader options`_ via a callback:
         };
     });
 
+Building a simple Component
+---------------------------
+
+Once Vue is installed and ``webpack.config.js`` has been updated,
+you can build your first component and display a simple ``Hello World from Vue!``.
+
+To ease the process, the usage of ``.vue`` files is recommended.
+Start by adding a ``main.js`` file inside the assets folder:
+
+.. code-block:: javascript
+
+    <!-- assets/main.js -->
+    import Vue from 'vue'
+    import Hello from './components/Hello.vue'
+
+    new Vue({
+        el: '#app',
+        render: h => h(Hello)
+    });
+
+This fill calls the `Hello` component from the `components` directory. Once the
+component is found, Vue will instantiate a new Root component and 
+attach your component to the HTML element which contain the app identifier.
+
+Now, build the ``Hello`` component:
+
+.. code-block:: html
+
+    <!-- assets/components/Hello.vue -->
+    <template>
+        <div id="app">
+            <p>{{ msg }}</p>
+        </div>
+    </template>
+
+    <script>
+        export default {
+            name: 'Hello',
+            data () {
+                return {
+                    msg: 'Hello World from Vue !'
+                }
+            }
+        }
+    </script>
+
+This component is pretty simple at this stage but once you learn more about Vue,
+you can easily integrate it into your own Twig views and logic.
+
+Now that your component is ready and that your ``Vue`` instance is configured,
+time to use Encore to build everything and call ``Vue`` inside your views,
+in order to ease the process, let's use the watcher:
+
+.. code-block:: terminal
+
+  $ ./node_modules/.bin/encore dev --watch
+
+If everything goes right, Encore should compile ``main.js`` and produce a new ``main.js`` file
+inside the ``public/build`` directory, once the file is packed into the folder,
+let's call it inside your Twig views:
+
+.. code-block:: twig
+
+    {# templates/index.html.twig #}
+    {% extends 'base.html.twig' %}
+
+    {% block body %}
+        <div id="app"></div>
+    {% endblock %}
+
+    {% block javascripts %}
+        <script src="{{ asset('build/main.js') }}"></script>
+    {% endblock %}
+
+Once the file is called, reload your webpage and the DOM should display the message ``Hello World from Vue !``.
+
 Hot Module Replacement (HMR)
 ----------------------------
 
