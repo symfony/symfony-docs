@@ -48,7 +48,7 @@ from the ``security`` channel:
 
     .. code-block:: xml
 
-        <!-- config/packages/monolog.xml-->
+        <!-- config/packages/prod/monolog.xml-->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -75,7 +75,7 @@ from the ``security`` channel:
 
     .. code-block:: php
 
-        // config/packages/monolog.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'security' => array(
@@ -143,7 +143,7 @@ You can also configure additional channels without the need to tag your services
 
     .. code-block:: xml
 
-        <!-- config/packages/monolog.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -160,7 +160,7 @@ You can also configure additional channels without the need to tag your services
 
     .. code-block:: php
 
-        // config/packages/monolog.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'channels' => array(
                 'foo',
