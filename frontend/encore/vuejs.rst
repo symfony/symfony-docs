@@ -38,9 +38,9 @@ Building a simple Component
 ---------------------------
 
 Once Vue is installed and ``webpack.config.js`` has been updated,
-you can build your first component and display a simple ``Hello World from Vue !``.
+you can build your first component and display a simple ``Hello World from Vue!``.
 
-In order to ease the process, the usage of ``.vue`` files is recommended.
+To ease the process, the usage of ``.vue`` files is recommended.
 Start by adding a ``main.js`` file inside the assets folder:
 
 .. code-block:: javascript
@@ -54,11 +54,11 @@ Start by adding a ``main.js`` file inside the assets folder:
         render: h => h(Hello)
     });
 
-First, this file's gonna call the component Hello from the components folder.
-Once the component is found, Vue gonna instantiate a new Root component and 
+This fill calls the `Hello` component from the `components` directory. Once the
+component is found, Vue will instantiate a new Root component and 
 attach your component to the HTML element which contain the app identifier.
 
-Now, let's build the Hello component:
+Now, build the ``Hello`` component:
 
 .. code-block:: html
 
@@ -80,7 +80,7 @@ Now, let's build the Hello component:
         }
     </script>
 
-This component is pretty simple at this stage but once you're aware about ``Vue`` and his internal logic,
+This component is pretty simple at this stage but once you learn more about Vue,
 you can easily integrate it into your own Twig views and logic.
 
 Now that your component is ready and that your ``Vue`` instance is configured,
