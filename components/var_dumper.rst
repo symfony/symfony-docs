@@ -84,11 +84,12 @@ current PHP SAPI:
 
 .. tip::
 
-    The VarDumper component also has a ``dd()`` helper method. This dump and die
-    functionality will call ``dump()`` and ``exit()``.
+    The VarDumper component also includes a ``dd()`` helper method. This "dump
+    and die" feature calls ``dump()`` and stops the application immediately
+    after with ``exit()``.
 
-.. versionadded:: 4.1
-    The ``dd()`` helper method was introduced in Symfony 4.1.
+    .. versionadded:: 4.1
+        The ``dd()`` helper method was introduced in Symfony 4.1.
 
 DebugBundle and Twig Integration
 --------------------------------
@@ -102,8 +103,8 @@ corrupting your view, the bundle configures the ``dump()`` function so that
 variables are dumped in the web debug toolbar.
 
 But if the toolbar cannot be displayed because you e.g. called
-``die``/``exit``/``dd`` or a fatal error occurred, then dumps are written on
-the regular output.
+``die()``/``exit()``/``dd()`` or a fatal error occurred, then dumps are written
+on the regular output.
 
 In a Twig template, two constructs are available for dumping a variable.
 Choosing between both is mostly a matter of personal taste, still:
