@@ -25,7 +25,7 @@ Concepts
 .. image:: /_images/components/messenger/overview.png
 
 **Sender**:
-   Responsible for serializing and sending messages to _something_. This
+   Responsible for serializing and sending messages to *something*. This
    something can be a message broker or a third party API for example.
 
 **Receiver**:
