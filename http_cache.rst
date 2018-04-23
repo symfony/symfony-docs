@@ -356,35 +356,27 @@ different cache strategies for specific parts of your page.
 HTTP Caching and User Sessions
 ------------------------------
 
-When you make use of sessions, HTTP caching suddenly becomes even more
-complicated than it already is. When you access the session, usually that's
-because you want to do something for the currently visiting user only.
-Examples for user related content might be displaying a shopping cart,
-user profile information when logged in etc.
-This is why Symfony automatically turns all responses into non-cacheable,
-private responses in case a session was started during the current request.
-For the majority of applications this is a good default setting. You want
-to ensure that there is absolutely no risk of caching user related information
-that is then suddenly exposed to another user eventually leading to security
-issues.
+Whenever the session is started during a request, Symfony turns the response
+into a private non-cacheable response. This is the best default behavior to not
+cache private user information (e.g. a shopping cart, a user profile details,
+etc.) and expose it to other visitors.
 
-However, just because a session is started does not automatically mean you
-cannot cache the response. For example user group related information could
-be cached for all the users belonging to the same user group. And depending
-on how complicated and resource intensive gathering this information is, it
-might well be worth caching. It just simply gets very complicated, needs a
-lot of special handling, cache invalidation, probably matching server setups
-and much more. In other words: It simply goes beyond the scope of Symfony.
-If you do want to get into this, we recommend you checkout the `FOSHttpCacheBundle`_
-that provides all sort of options and extended documentation for this use case.
+However, even requests making use of the session can be cached under some
+circumstances. For example, information related to some user group could be
+cached for all the users belonging to that group. Handling these advanced
+caching scenarios is out of the scope of Symfony, but they can be solved with
+the `FOSHttpCacheBundle`_.
 
-To disable the default behaviour of Symfony turning all responses into
-non-cacheable, private ones if a session was started, you can add an internal
-header to your response and Symfony will leave it untouched::
+In order to disable the default Symfony behavior that makes requests using the
+session uncacheable, add the following internal header to your response and
+Symfony won't modify it::
 
-  use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
+    use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
 
-  $response->headers->set(AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER, 'true');
+    $response->headers->set(AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER, 'true');
+
+.. versionadded:: 4.1
+    The ``NO_AUTO_CACHE_CONTROL_HEADER`` header was introduced in Symfony 4.1.
 
 Summary
 -------
