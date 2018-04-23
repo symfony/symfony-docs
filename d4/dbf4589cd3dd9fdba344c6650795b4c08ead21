@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-04-20T14:45:43Z
+
+~@snoek09 I would still update `form_login.rst` to check if the session actually exists.~
+
+never mind, that part would have failed previously too if there is no session
