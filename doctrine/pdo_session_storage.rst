@@ -60,7 +60,7 @@ To use it, first register a new handler service:
         $storageDefinition = $container->autowire(PdoSessionHandler::class)
             ->setArguments(array(
                 'mysql:dbname=%env(MYDATABASE_NAME)%, host=%env(MYDATABASE_HOST)%',
-                array('db_username' => '%env(MYDATABASE_USERNAME)%', 'db_password' => '%env(MYDATABASE_PASSWORD)')
+                array('db_username' => '%env(MYDATABASE_USERNAME)%', 'db_password' => '%env(MYDATABASE_PASSWORD)'),
             ))
         ;
 
@@ -161,7 +161,7 @@ a second array argument to ``PdoSessionHandler``:
                     array(
                         'db_table' => '%env(SESSIONS_TABLE)%',
                         'db_username' => '%env(MYDATABASE_USERNAME)%',
-                        'db_password' => '%env(MYDATABASE_PASSWORD)'
+                        'db_password' => '%env(MYDATABASE_PASSWORD)',
                     )
                 )
             );
