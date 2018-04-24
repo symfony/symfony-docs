@@ -161,7 +161,7 @@ a second array argument to ``PdoSessionHandler``:
                         'db_table' => '%env(SESSIONS_TABLE)%',
                         'db_username' => '%env(MYDATABASE_USERNAME)%',
                         'db_password' => '%env(MYDATABASE_PASSWORD)',
-                    )
+                    ),
                 )
             );
 
