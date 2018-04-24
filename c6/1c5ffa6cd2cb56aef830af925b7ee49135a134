@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-23T13:34:21Z
+
+@Toflar thanks a lot for this contribution! It's perfectly explained and it's easy to follow.
+
+However, I made some rewords to make the explanations more concise. We do this routinely not only for the readers, but also for us, to make contents easier to maintain. Thanks!
+
+---------------------------------------------------------------------------
+
+by Toflar at 2018-04-23T13:35:47Z
+
+It's perfectly fine. Rewording by the same people makes sure the readers have a consistent reading experience, it's perfect! Thank you very much!
+
+---------------------------------------------------------------------------
+
+by Toflar at 2018-04-24T05:59:06Z
+
+BTW: What's the policy to use `.. versionadded:: 4.1`? Should we maybe also use that here?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-24T06:17:58Z
+
+We include a `.. versionadded::` for all new features and also for deprecations. And yes, we should use it here and that's why I included at the end, just after the code example that uses the new feature 😄
+
+---------------------------------------------------------------------------
+
+by Toflar at 2018-04-24T06:19:12Z
+
+Oh man, what a morning. I miss everything 🤣 Sorry, Javier! And thanks for the patience 😃
