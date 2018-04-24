@@ -749,6 +749,16 @@ their type::
     PHP format (it converts the keys with square brackets notation - e.g.
     ``my_form[subject]`` - to PHP arrays).
 
+.. tip::
+
+    The ``submit()`` method defines a third optional argument to add custom
+    HTTP headers when submitting the form::
+
+        $client->submit($form, array(), array('HTTP_ACCEPT_LANGUAGE' => 'es'));
+
+    .. versionadded:: 4.1
+        The feature to add custom HTTP headers was introduced in Symfony 4.1.
+
 Adding and Removing Forms to a Collection
 .........................................
 
