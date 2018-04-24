@@ -335,7 +335,7 @@ and save it!
 
             $product = new Product();
             $product->setName('Keyboard');
-            $product->setPrice(19.99);
+            $product->setPrice(1999);
             $product->setDescription('Ergonomic and stylish!');
 
             // tell Doctrine you want to (eventually) save the Product (no queries yet)
@@ -441,7 +441,7 @@ Once you have a repository object, you have many helper methods::
     // or find by name and price
     $product = $repository->findOneBy([
         'name' => 'Keyboard',
-        'price' => 19.99,
+        'price' => 1999,
     ]);
 
     // look for multiple Product objects matching the name, ordered by price
@@ -624,7 +624,7 @@ This uses Doctrine's `Query Builder`_: a very powerful and user-friendly way to
 write custom queries. Now, you can call this method on the repository::
 
     // from inside a controller
-    $minPrice = 10;
+    $minPrice = 1000;
 
     $products = $this->getDoctrine()
         ->getRepository(Product::class)
@@ -654,7 +654,7 @@ In addition to the query builder, you can also query with `Doctrine Query Langua
             FROM App\Entity\Product p
             WHERE p.price > :price
             ORDER BY p.price ASC'
-        )->setParameter('price', 10);
+        )->setParameter('price', 1000);
 
         // returns an array of Product objects
         return $query->execute();
@@ -675,7 +675,7 @@ Or directly with SQL if you need to::
             ORDER BY p.price ASC
             ';
         $stmt = $conn->prepare($sql);
-        $stmt->execute(['price' => 10]);
+        $stmt->execute(['price' => 1000]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetchAll();
