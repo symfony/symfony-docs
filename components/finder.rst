@@ -168,16 +168,21 @@ Sort the result by name or by type (directories first, then files)::
 
     $finder->sortByType();
 
-.. note::
+.. tip::
 
-    Notice that the ``sort*`` methods need to get all matching elements to do
-    their jobs. For large iterators, it is slow.
+    To sort by name using `natural sort order`_ algorithm,
+    pass ``true`` as the first argument of ``sortByName()`` method.
 
 You can also define your own sorting algorithm with ``sort()`` method::
 
     $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
         return strcmp($a->getRealPath(), $b->getRealPath());
     });
+
+.. note::
+
+    Notice that the ``sort*`` methods need to get all matching elements to do
+    their jobs. For large iterators, it is slow.
 
 File Name
 ~~~~~~~~~
@@ -320,8 +325,9 @@ The contents of returned files can be read with
         // ...
     }
 
-.. _strtotime:    https://php.net/manual/en/datetime.formats.php
-.. _protocol:     https://php.net/manual/en/wrappers.php
-.. _Streams:      https://php.net/streams
-.. _IEC standard: https://physics.nist.gov/cuu/Units/binary.html
-.. _Packagist:    https://packagist.org/packages/symfony/finder
+.. _strtotime:          https://php.net/manual/en/datetime.formats.php
+.. _protocol:           https://php.net/manual/en/wrappers.php
+.. _Streams:            https://php.net/streams
+.. _IEC standard:       https://physics.nist.gov/cuu/Units/binary.html
+.. _Packagist:          https://packagist.org/packages/symfony/finder
+.. _`natural sort order`: https://en.wikipedia.org/wiki/Natural_sort_order
