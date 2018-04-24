@@ -56,7 +56,7 @@ and process the services inside the ``process()`` method::
         {
             // in this method you can manipulate the service container:
             // for example, changing some container service:
-            $container->getDefinition('app.some_private_service')->setPublic(true);
+            $container->findDefinition('app.some_private_service')->setPublic(true);
 
             // or processing tagged services:
             foreach ($container->findTaggedServiceIds('some_tag') as $id => $tags) {
