@@ -213,7 +213,7 @@ rich API for a ``product`` table? Create a ``Product`` entity and give it the
         private $name;
 
         /**
-         * @ORM\Column(type="string")
+         * @ORM\Column(type="int")
          */
         private $price;
 
