@@ -19,7 +19,7 @@ Then run this command:
 
 .. code-block:: terminal
 
-    $ php bin/console security:check
+    $ php bin/security-checker security:check
 
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. Internally,
