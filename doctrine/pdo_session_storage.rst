@@ -58,11 +58,15 @@ To use it, first register a new handler service:
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
         $storageDefinition = $container->autowire(PdoSessionHandler::class)
-            ->setArguments(array(
-                'mysql:dbname=%env(MYDATABASE_NAME)%, host=%env(MYDATABASE_HOST)%',
-                array('db_username' => '%env(MYDATABASE_USERNAME)%', 'db_password' => '%env(MYDATABASE_PASSWORD)'),
-            ))
-        ;
+            ->setArguments(
+                array(
+                    'mysql:dbname=%env(MYDATABASE_NAME)%, host=%env(MYDATABASE_HOST)%',
+                    array(
+                        'db_username' => '%env(MYDATABASE_USERNAME)%',
+                        'db_password' => '%env(MYDATABASE_PASSWORD)',
+                    ),
+                )
+            );
 
 .. note::
 
@@ -162,7 +166,7 @@ a second array argument to ``PdoSessionHandler``:
                         'db_table' => '%env(SESSIONS_TABLE)%',
                         'db_username' => '%env(MYDATABASE_USERNAME)%',
                         'db_password' => '%env(MYDATABASE_PASSWORD)',
-                    )
+                    ),
                 )
             );
 
