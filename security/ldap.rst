@@ -34,6 +34,16 @@ This means that the following scenarios will work:
 * Loading user information from an LDAP server, while using another
   authentication strategy (token-based pre-authentication, for example).
 
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the Ldap component before using it:
+
+.. code-block:: terminal
+
+    $ composer require ldap
+
 Ldap Configuration Reference
 ----------------------------
 
