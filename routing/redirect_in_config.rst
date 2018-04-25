@@ -96,7 +96,7 @@ Redirecting Using a Route
 
 Assume you are migrating your website from WordPress to Symfony, you want to
 redirect ``/wp-admin`` to the route ``sonata_admin_dashboard``. You don't know
-the path, only the route name, if you pass query parameters to this route and active the ``keepQueryParams``, it will be redirected too. This can be achieved using the
+the path, only the route name This can be achieved using the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction`
 action:
 
@@ -113,7 +113,9 @@ action:
             controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
             defaults:
                 route: sonata_admin_dashboard
+                # make a permanent redirection...
                 permanent: true
+                # ...and keep the original query string parameters
                 keepQueryParams: true
 
     .. code-block:: xml
@@ -130,7 +132,9 @@ action:
             <route id="admin" path="/wp-admin">
                 <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction</default>
                 <default key="route">sonata_admin_dashboard</default>
+                <!-- make a permanent redirection... -->
                 <default key="permanent">true</default>
+                <!-- ...and keep the original query string parameters -->
                 <default key="keepQueryParams">true</default>
             </route>
         </routes>
@@ -147,7 +151,9 @@ action:
         $collection->add('admin', new Route('/wp-admin', array(
             '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction',
             'route'       => 'sonata_admin_dashboard',
+            // make a permanent redirection...
             'permanent'   => true,
+            // ...and keep the original query string parameters
             'keepQueryParams' => true,
         )));
 
