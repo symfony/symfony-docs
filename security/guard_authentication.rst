@@ -11,6 +11,10 @@ component can make it easy... and fun!
 In this example, you'll build an API token authentication system and learn how
 to work with Guard.
 
+First, install the Security bundle:
+    composer require symfony/security-bundle
+
+
 Create a User and a User Provider
 ---------------------------------
 
