@@ -104,6 +104,10 @@ by the third boolean argument::
     // image.jpg will be overridden
     $fileSystem->copy('image-ICC.jpg', 'image.jpg', true);
 
+.. tip::
+
+    Take care remove "../" from path with PHP function "realpath" before set parameters because in some case writing get exception.
+
 touch
 ~~~~~
 
