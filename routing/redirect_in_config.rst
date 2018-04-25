@@ -96,7 +96,7 @@ Redirecting Using a Route
 
 Assume you are migrating your website from WordPress to Symfony, you want to
 redirect ``/wp-admin`` to the route ``sonata_admin_dashboard``. You don't know
-the path, only the route name This can be achieved using the
+the path, only the route name. This can be achieved using the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction`
 action:
 
