@@ -40,12 +40,12 @@ manually, but then you should just use the ``ChoiceType`` directly.
 |             | - `data`_                                                              |
 |             | - `disabled`_                                                          |
 |             | - `empty_data`_                                                        |
+|             | - `help`_                                                              |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
 |             | - `required`_                                                          |
-|             | - `help`_                                                              |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +-------------+------------------------------------------------------------------------+
@@ -103,6 +103,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
@@ -112,7 +114,5 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/help.rst.inc
 
 .. _`International Components for Unicode`: http://site.icu-project.org

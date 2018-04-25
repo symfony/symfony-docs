@@ -19,6 +19,7 @@ on all types for which ``FormType`` is the parent.
 |           | - `error_bubbling`_                                                |
 |           | - `error_mapping`_                                                 |
 |           | - `extra_fields_message`_                                          |
+|           | - `help`_                                                          |
 |           | - `inherit_data`_                                                  |
 |           | - `invalid_message`_                                               |
 |           | - `invalid_message_parameters`_                                    |
@@ -30,7 +31,6 @@ on all types for which ``FormType`` is the parent.
 |           | - `property_path`_                                                 |
 |           | - `required`_                                                      |
 |           | - `trim`_                                                          |
-|           | - `help`_                                                          |
 +-----------+--------------------------------------------------------------------+
 | Inherited | - `attr`_                                                          |
 | options   | - `auto_initialize`_                                               |
@@ -99,6 +99,8 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/extra_fields_message.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
@@ -128,8 +130,6 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
-
-.. include:: /reference/forms/types/options/help.rst.inc
 
 Inherited Options
 -----------------

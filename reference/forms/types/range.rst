@@ -16,12 +16,12 @@ The ``RangeType`` field is a slider that is rendered using the HTML5
 |             | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
+|             | - `help`_                                                           |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
 |             | - `required`_                                                       |
 |             | - `trim`_                                                           |
-|             | - `help`_                                                           |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`TextType </reference/forms/types/text>`                       |
 +-------------+---------------------------------------------------------------------+
@@ -66,6 +66,8 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
@@ -75,5 +77,3 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
-
-.. include:: /reference/forms/types/options/help.rst.inc
