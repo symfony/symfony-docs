@@ -17,6 +17,44 @@ used to return content to the user, populate email bodies, and more. You'll
 learn shortcuts, clever ways to extend templates and how to reuse template
 code.
 
+Ensure Twig is available
+------------------------
+
+If you are working through the examples in the Getting Started section you 
+will need to add the Twig Bundle to your app.
+
+.. code-block:: terminal
+
+    $ composer require twig
+
+Note: ``twig`` here is an alise to ``symfony/twig-bundle`` thanks to Flex which
+is already bundled with Symfony.
+
+.. code-block:: diff
+
+    // src/Controller/DefaultController.php
+    // ...
+
+    + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+    -class DefaultController
+    +class DefaultController extends AbstractController
+     {
+         /**
+          * @Route("/hello/{name}")
+          */
+         public function index($name)
+         {
+    -        return new Response("Hello $name!");
+    +        return $this->render('default/index.html.twig', [
+    +            'name' => $name,
+    +        ]);
+         }
+
+By extending ``AbstractController``, you now have access to a number of shortcut
+methods and tools, like ``render()``.
+
+
 .. index::
    single: Templating; What is a template?
 
