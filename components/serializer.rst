@@ -815,6 +815,7 @@ Here, we set it to 2 for the ``$child`` property:
         >
             <class name="Acme\MyObj">
                 <attribute name="foo" max-depth="2" />
+            </class>
         </serializer>
 
 The metadata loader corresponding to the chosen format must be configured in
