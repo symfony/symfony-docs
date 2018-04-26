@@ -13,6 +13,11 @@ choices when it comes to handling email during development: (a) disabling the
 sending of email altogether or (b) sending all email to a specific
 address (with optional exceptions).
 
+.. tip::
+
+    for testing emails during application development, and to make tests simple  
+    to web designers, you can use  `MailHog`_. 
+    
 Disabling Sending
 -----------------
 
@@ -241,3 +246,5 @@ the report with details of the sent emails.
     by the submit URL used on the previous request (e.g. ``/contact/handle``).
     The profiler's search feature allows you to load the profiler information
     for any past requests.
+    
+.. _`MailHog`: https://github.com/mailhog/MailHog
