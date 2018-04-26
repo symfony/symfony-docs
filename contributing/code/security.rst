@@ -11,13 +11,13 @@ Reporting a Security Issue
 If you think that you have found a security issue in Symfony, don't use the
 bug tracker and don't publish it publicly. Instead, all security issues must
 be sent to **security [at] symfony.com**. Emails sent to this address are
-forwarded to the Symfony core-team private mailing-list.
+forwarded to the Symfony core team private mailing-list.
 
 Resolving Process
 -----------------
 
 For each report, we first try to confirm the vulnerability. When it is
-confirmed, the core-team works on a solution following these steps:
+confirmed, the core team works on a solution following these steps:
 
 #. Send an acknowledgement to the reporter;
 #. Work on a patch;

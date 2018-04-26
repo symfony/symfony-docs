@@ -121,7 +121,7 @@ and increase web server performance:
         </Directory>
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
-        
+
         # optionally set the value of the environment variables used in the application
         #SetEnv APP_ENV prod
         #SetEnv APP_SECRET <app-secret-id>
@@ -176,7 +176,7 @@ listen on. Each pool can also be run under a different UID and GID:
     group = www-data
 
     ; use a unix domain socket
-    listen = /var/run/php7.1-fpm.sock
+    listen = /var/run/php/php7.1-fpm.sock
 
     ; or listen on a TCP socket
     listen = 127.0.0.1:9000
@@ -274,7 +274,7 @@ instead:
 
 .. code-block:: apache
 
-    FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -socket /var/run/php7.1-fpm.sock -pass-header Authorization
+    FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -socket /var/run/php/php7.1-fpm.sock -pass-header Authorization
 
 .. _web-server-nginx:
 
@@ -295,7 +295,7 @@ The **minimum configuration** to get your application running under Nginx is:
         }
 
         location ~ ^/index\.php(/|$) {
-            fastcgi_pass unix:/var/run/php7.1-fpm.sock;
+            fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
 

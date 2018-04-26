@@ -379,6 +379,7 @@
 /reference/configuration/assetic /frontend/assetic
 /security/target_path /security
 /security/csrf_in_login_form /security/csrf
+/service_container/service_locators /service_container/service_subscribers_locators
 /service_container/third_party /service_container
 /templating/templating_service /templates
 /testing/simulating_authentication /testing/http_authentication
