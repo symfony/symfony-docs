@@ -689,6 +689,42 @@ argument for *any* service defined in this file! You can bind arguments by name
 The ``bind`` config can be also be applied to specific services or when loading many
 services at once (i.e. :ref:`service-psr4-loader`).
 
+Getting Container Parameters as a Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.1
+    The feature to get container parameters as a service was introduced in Symfony 4.1.
+
+If some service or controller needs lots of container parameters, there's an
+easier alternative to binding all of them with the ``services._defaults.bind``
+option. Type-hint any of its constructor arguments with the
+:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBagInterface`
+or the new :class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ContainerBagInterface`
+and the service will get all container parameters in a
+:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBag` object::
+
+    // src/Service/MessageGenerator.php
+    // ...
+
+    use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
+    class MessageGenerator
+    {
+        private $params;
+
+        public function __construct(ParameterBagInterface $params)
+        {
+            $this->params = $params;
+        }
+
+        public function someMethod()
+        {
+            // get any param from $this->params, which stores all container parameters
+            $sender = $this->params->get('mailer_sender');
+            // ...
+        }
+    }
+
 .. _services-autowire:
 
 The autowire Option

@@ -359,8 +359,8 @@ returns a ``Crawler`` instance.
         )
 
     The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the ``Content-Type``,
-    ``Referer`` and ``X-Requested-With`` HTTP headers, you'd pass the following (mind
+    find in the PHP `$_SERVER`_ superglobal. For example, to set the
+    ``Content-Type`` and ``Referer`` HTTP headers, you'd pass the following (mind
     the ``HTTP_`` prefix for non standard headers)::
 
         $client->request(
@@ -369,9 +369,8 @@ returns a ``Crawler`` instance.
             array(),
             array(),
             array(
-                'CONTENT_TYPE'          => 'application/json',
-                'HTTP_REFERER'          => '/foo/bar',
-                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_REFERER' => '/foo/bar',
             )
         );
 
@@ -417,7 +416,7 @@ or perform more complex requests. Some useful examples::
         '/path/to/photo.jpg',
         'photo.jpg',
         'image/jpeg',
-        123
+        null
     );
     $client->request(
         'POST',
@@ -440,6 +439,19 @@ process to avoid any side-effects when working with several clients in the same
 script::
 
     $client->insulate();
+
+AJAX Requests
+~~~~~~~~~~~~~
+
+The Client provides a :method:`Symfony\\Component\\BrowserKit\\Client::xmlHttpRequest`
+method, which has the same arguments as the ``request()`` method, and it's a
+shortcut to make AJAX requests::
+
+    // the required HTTP_X_REQUESTED_WITH header is added automatically
+    $client->xmlHttpRequest('POST', '/submit', array('name' => 'Fabien'));
+
+.. versionadded:: 4.1
+    The ``xmlHttpRequest()`` method was introduced in Symfony 4.1.
 
 Browsing
 ~~~~~~~~
@@ -736,6 +748,16 @@ their type::
     ``getPhpFiles()`` methods also return the submitted values, but in the
     PHP format (it converts the keys with square brackets notation - e.g.
     ``my_form[subject]`` - to PHP arrays).
+
+.. tip::
+
+    The ``submit()`` method defines a third optional argument to add custom
+    HTTP headers when submitting the form::
+
+        $client->submit($form, array(), array('HTTP_ACCEPT_LANGUAGE' => 'es'));
+
+    .. versionadded:: 4.1
+        The feature to add custom HTTP headers was introduced in Symfony 4.1.
 
 Adding and Removing Forms to a Collection
 .........................................

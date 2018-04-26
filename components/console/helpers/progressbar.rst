@@ -55,9 +55,20 @@ you can also set the current progress by calling the
     accordingly. By default, when using a ``max``, the redraw frequency
     is set to *10%* of your ``max``.
 
-If you don't know the number of steps in advance, just omit the steps argument
-when creating the :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
-instance::
+If you don't know the exact number of steps in advance, set it to a reasonable
+value and then call the ``setMaxSteps()`` method to update it as needed::
+
+    // start with a 50 units progressbar
+    $progressBar = new ProgressBar($output, 50);
+
+    // a complex task has just been created: increase the progressbar to 200 units
+    $progressBar->setMaxSteps(200);
+
+.. versionadded:: 4.1
+    The ``setMaxSteps()`` method was introduced in Symfony 4.1.
+
+Another solution is to just omit the steps argument when creating the
+:class:`Symfony\\Component\\Console\\Helper\\ProgressBar` instance::
 
     $progressBar = new ProgressBar($output);
 

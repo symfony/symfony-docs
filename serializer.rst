@@ -203,7 +203,6 @@ take a look at how this bundle works.
 .. toctree::
     :maxdepth: 1
 
-    serializer/encoders
     serializer/custom_encoders
 
 .. _`APCu`: https://github.com/krakjoe/apcu

@@ -786,6 +786,48 @@ A validation rule also requires a "then" part:
 Usually, "then" is a closure. Its return value will be used as a new value
 for the node, instead of the node's original value.
 
+Configuring the Node Path Separator
+-----------------------------------
+
+.. versionadded:: 4.1
+    The option to configure the node path separator was introduced in Symfony 4.1.
+
+Consider the following config builder example::
+
+    $treeBuilder = new TreeBuilder();
+    $rootNode = $treeBuilder->root('database');
+
+    $rootNode
+        ->children()
+            ->arrayNode('connection')
+                ->children()
+                    ->scalarNode('driver')->end()
+                ->end()
+            ->end()
+        ->end()
+    ;
+
+By default, the hierarchy of nodes in a config path is defined with a dot
+character (``.``)::
+
+    // ...
+
+    $node = $treeBuilder->buildTree();
+    $children = $node->getChildren();
+    $path = $children['driver']->getPath();
+    // $path = 'database.connection.driver'
+
+Use the ``setPathSeparator()`` method on the config builder to change the path
+separator::
+
+    // ...
+
+    $treeBuilder->setPathSeparator('/');
+    $node = $treeBuilder->buildTree();
+    $children = $node->getChildren();
+    $path = $children['driver']->getPath();
+    // $path = 'database/connection/driver'
+
 Processing Configuration Values
 -------------------------------
 

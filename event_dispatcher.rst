@@ -107,19 +107,31 @@ using a special "tag":
             ->addTag('kernel.event_listener', array('event' => 'kernel.exception'))
         ;
 
+Symfony follows this logic to decide which method to execute inside the event
+listener class:
+
+#. If the ``kernel.event_listener`` tag defines the ``method`` attribute, that's
+   the name of the method to be executed;
+#. If no ``method`` attribute is defined, try to execute the method whose name
+   is ``on`` + "camel-cased event name" (e.g. ``onKernelException()`` method for
+   the ``kernel.exception`` event);
+#. If that method is not defined either, try to execute the ``__invoke()`` magic
+   method (which makes event listeners invokable);
+#. If the ``_invoke()`` method is not defined either, throw an exception.
+
+.. versionadded:: 4.1
+    The support of the ``__invoke()`` method to create invokable event listeners
+    was introduced in Symfony 4.1.
+
 .. note::
 
-    There is an optional tag attribute called ``method`` which defines which method
-    to execute when the event is triggered. By default the name of the method is
-    ``on`` + "camel-cased event name". If the event is ``kernel.exception`` the
-    method executed by default is ``onKernelException()``.
-
-    The other optional tag attribute is called  ``priority``, which defaults to
-    ``0`` and it controls the order in which listeners are executed (the highest
-    the priority, the earlier a listener is executed). This is useful when you
-    need to guarantee that one listener is executed before another. The priorities
-    of the internal Symfony listeners usually range from ``-255`` to ``255`` but
-    your own listeners can use any positive or negative integer.
+    There is an optional attribute for the ``kernel.event_listener`` tag called
+    ``priority``, which defaults to ``0`` and it controls the order in which
+    listeners are executed (the highest the priority, the earlier a listener is
+    executed). This is useful when you need to guarantee that one listener is
+    executed before another. The priorities of the internal Symfony listeners
+    usually range from ``-255`` to ``255`` but your own listeners can use any
+    positive or negative integer.
 
 .. _events-subscriber:
 

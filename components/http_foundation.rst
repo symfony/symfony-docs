@@ -235,6 +235,12 @@ the
 method tells you if the request contains a session which was started in one of
 the previous requests.
 
+.. versionadded:: 4.1
+    Using :method:`Symfony\\Component\\HttpFoundation\\Request::getSession()`
+    when no session has been set was deprecated in Symfony 4.1. It will throw
+    an exception in Symfony 5.0 when the session is ``null``. Check for an existing session
+    first by calling :method:`Symfony\\Component\\HttpFoundation\\Request::hasSession()`.
+
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -269,6 +275,19 @@ If you need to get full access to parsed data from ``Accept``, ``Accept-Language
     // Accept header items are sorted by descending quality
     $acceptHeaders = AcceptHeader::fromString($request->headers->get('Accept'))
         ->all();
+
+The default values that can be optionally included in the ``Accept-*`` headers
+are also supported::
+
+    $acceptHeader = 'text/plain;q=0.5, text/html, text/*;q=0.8, */*;q=0.3';
+    $accept = AcceptHeader::fromString($acceptHeader);
+
+    $quality = $accept->get('text/xml')->getQuality(); // $quality = 0.8
+    $quality = $accept->get('application/xml')->getQuality(); // $quality = 0.3
+
+.. versionadded:: 4.1
+    The support of default values in the ``Accept-*`` headers was introduced in
+    Symfony 4.1.
 
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -400,6 +419,13 @@ of methods to manipulate the HTTP headers related to the cache:
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`;
+
+.. note::
+
+    The methods :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`,
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified` and
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setDate` accept any
+    object that implements ``\DateTimeInterface``, including immutable date objects.
 
 The :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method
 can be used to set the most commonly used cache information in one method

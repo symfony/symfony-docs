@@ -144,6 +144,23 @@ to reset the TTL to its original value::
         $lock->release();
     }
 
+.. tip::
+
+    Another useful technique for long-running tasks is to pass a custom TTL as
+    an argument of the ``refresh()`` method to change the default lock TTL::
+
+        $lock = $factory->createLock('charts-generation', 30);
+        // ...
+        // refresh the lock for 30 seconds
+        $lock->refresh();
+        // ...
+        // refresh the lock for 600 seconds (next refresh() call will be 30 seconds again)
+        $lock->refresh(600);
+
+    .. versionadded:: 4.1
+        The feature to pass a custom TTL as an argument of the ``refresh()``
+        method was introduced in Symfony 4.1.
+
 Available Stores
 ----------------
 

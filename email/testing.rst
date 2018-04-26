@@ -73,8 +73,8 @@ Problem: The Collector Object Is ``null``
 The email collector is only available when the profiler is enabled and collects
 information, as explained in :doc:`/testing/profiling`.
 
-Problem: The Collector Doesn't Contain the E-Mail
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Problem: The Collector Doesn't Contain the Email
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a redirection is performed after sending the email (for example when you send
 an email after a form is processed and before redirecting to another page), make

@@ -128,9 +128,17 @@ delete existing ones::
     $result = $query->execute();
     $entry = $result[0];
     $entry->setAttribute('email', array('fabpot@symfony.com'));
-    $entryManager->update($entry);
+    $entityManager->update($entry);
+
+    // Adding or removing values to a multi-valued attribute is more efficient than using update()
+    $entityManager->addAttributeValues($entry, 'telephoneNumber', array('+1.111.222.3333', '+1.222.333.4444'));
+    $entityManager->removeAttributeValues($entry, 'telephoneNumber', array('+1.111.222.3333', '+1.222.333.4444'));
 
     // Removing an existing entry
     $entryManager->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
+
+.. versionadded:: 4.1
+    The ``addAttributeValues()`` and ``removeAttributeValues()`` methods
+    were introduced in Symfony 4.1.
 
 .. _Packagist: https://packagist.org/packages/symfony/ldap

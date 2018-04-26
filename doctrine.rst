@@ -109,9 +109,9 @@ need. The command will ask you some questions - answer them like done below:
     >
     (press enter again to finish)
 
-.. versionadded::
+.. versionadded:: 1.3
     The interactive behavior of the ``make:entity`` command was introduced
-    in MakerBundle 1.3.
+    in MakerBundle.
 
 Woh! You now have a new ``src/Entity/Product.php`` file::
 

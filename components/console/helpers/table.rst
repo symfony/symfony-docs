@@ -143,6 +143,48 @@ which outputs:
       80-902734-1-6   And Then There Were None   Agatha Christie
      =============== ========================== ==================
 
+You can also set the style to ``box``::
+
+    $table->setStyle('box');
+    $table->render();
+
+which outputs:
+
+.. code-block:: text
+
+    ┌───────────────┬──────────────────────────┬──────────────────┐
+    │ ISBN          │ Title                    │ Author           │
+    ├───────────────┼──────────────────────────┼──────────────────┤
+    │ 99921-58-10-7 │ Divine Comedy            │ Dante Alighieri  │
+    │ 9971-5-0210-0 │ A Tale of Two Cities     │ Charles Dickens  │
+    │ 960-425-059-0 │ The Lord of the Rings    │ J. R. R. Tolkien │
+    │ 80-902734-1-6 │ And Then There Were None │ Agatha Christie  │
+    └───────────────┴──────────────────────────┴──────────────────┘
+
+.. versionadded:: 4.1
+    The ``box`` style was introduced in Symfony 4.1.
+
+You can also set the style to ``box-double``::
+
+    $table->setStyle('box-double');
+    $table->render();
+
+which outputs:
+
+.. code-block:: text
+
+    ╔═══════════════╤══════════════════════════╤══════════════════╗
+    ║ ISBN          │ Title                    │ Author           ║
+    ╠═══════════════╪══════════════════════════╪══════════════════╣
+    ║ 99921-58-10-7 │ Divine Comedy            │ Dante Alighieri  ║
+    ║ 9971-5-0210-0 │ A Tale of Two Cities     │ Charles Dickens  ║
+    ║ 960-425-059-0 │ The Lord of the Rings    │ J. R. R. Tolkien ║
+    ║ 80-902734-1-6 │ And Then There Were None │ Agatha Christie  ║
+    ╚═══════════════╧══════════════════════════╧══════════════════╝
+
+.. versionadded:: 4.1
+    The ``box-double`` style was introduced in Symfony 4.1.
+
 If the built-in styles do not fit your need, define your own::
 
     use Symfony\Component\Console\Helper\TableStyle;
@@ -152,9 +194,9 @@ If the built-in styles do not fit your need, define your own::
 
     // customizes the style
     $tableStyle
-        ->setHorizontalBorderChar('<fg=magenta>|</>')
-        ->setVerticalBorderChar('<fg=magenta>-</>')
-        ->setCrossingChar(' ')
+        ->setDefaultCrossingChars('<fg=magenta>|</>')
+        ->setVerticalBorderChars('<fg=magenta>-</>')
+        ->setDefaultCrossingChar(' ')
     ;
 
     // uses the custom style for this table
@@ -163,13 +205,25 @@ If the built-in styles do not fit your need, define your own::
 Here is a full list of things you can customize:
 
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setPaddingChar`
-*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setHorizontalBorderChar`
-*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setVerticalBorderChar`
-*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCrossingChar`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setDefaultCrossingChars`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setVerticalBorderChars`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCrossingChars`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setDefaultCrossingChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCellHeaderFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCellRowFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setBorderFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setPadType`
+
+.. versionadded:: 4.1
+    The ``setDefaultCrossingChars`` method was introduced in Symfony 4.1.
+    It replaces the deprecated ``setHorizontalBorderChar`` method.
+
+    Also, the ``setVerticalBorderChars`` method was introduced. Use this instead
+    of the deprecated ``setVerticalBorderChar`` method.
+
+    The ``setCrossingChars()`` and ``setDefaultCrossingChar()`` methods are also
+    new. Previously you could only use the now deprecated ``setCrossingChar()``
+    method.
 
 .. tip::
 

@@ -99,6 +99,7 @@ Configuration
     * :ref:`enable_annotations <reference-validation-enable_annotations>`
     * `translation_domain`_
     * `strict_email`_
+    * `email_validation_mode`_
     * :ref:`mapping <reference-validation-mapping>`
         * :ref:`paths <reference-validation-mapping-paths>`
 * `annotations`_
@@ -207,7 +208,8 @@ ide
 Symfony turns file paths seen in variable dumps and exception messages into
 links that open those files right inside your browser. If you prefer to open
 those files in your favorite IDE or text editor, set this option to any of the
-following values: ``phpstorm``, ``sublime``, ``textmate``, ``macvim`` and ``emacs``.
+following values: ``phpstorm``, ``sublime``, ``textmate``, ``macvim``, ``emacs``
+and ``atom``.
 
 .. note::
 
@@ -1576,9 +1578,33 @@ strict_email
 
 **type**: ``Boolean`` **default**: ``false``
 
+.. versionadded:: 4.1
+    The ``strict_email`` option was deprecated in Symfony 4.1. Use the new
+    ``email_validation_mode`` option instead.
+
 If this option is enabled, the `egulias/email-validator`_ library will be
 used by the :doc:`/reference/constraints/Email` constraint validator. Otherwise,
 the validator uses a simple regular expression to validate email addresses.
+
+email_validation_mode
+.....................
+
+**type**: ``string`` **default**: ``loose``
+
+.. versionadded:: 4.1
+    The ``email_validation_mode`` option was introduced in Symfony 4.1.
+
+It controls the way email addresses are validated by the
+:doc:`/reference/constraints/Email` validator. The possible values are:
+
+* ``loose``, it uses a simple regular expression to validate the address (it
+  checks that at least one ``@`` character is present, etc.). This validation is
+  too simple and it's recommended to use the ``html5`` validation instead;
+* ``html5``, it validates email addresses using the same regular expression
+  defined in the HTML5 standard, making the backend validation consistent with
+  the one provided by browsers;
+* ``strict``, it uses the `egulias/email-validator`_ library (which you must
+  install separately) to validate the addresses according to the `RFC 5322`_.
 
 .. _reference-validation-mapping:
 
@@ -1742,6 +1768,13 @@ The cache adapter used by the ``cache.app`` service. The FrameworkBundle
 ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``,
 ``cache.adapter.system``, ``cache.adapter.filesystem``, ``cache.adapter.psr6``,
 ``cache.adapter.redis`` and ``cache.adapter.memcached``.
+
+There's also a special adapter called ``cache.adapter.array`` which stores
+contents in memory using a PHP array and it's used to disable caching (mostly on
+the ``dev`` environment).
+
+.. versionadded:: 4.1
+    The ``cache.adapter.array`` adapter was introduced in Symfony 4.1.
 
 .. tip::
 
@@ -2058,6 +2091,7 @@ Full Default Configuration
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
 .. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
+.. _`RFC 5322`: https://tools.ietf.org/html/rfc5322
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
 .. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
 .. _`blue/green deployment`: http://martinfowler.com/bliki/BlueGreenDeployment.html
