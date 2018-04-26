@@ -113,7 +113,10 @@ action:
             controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
             defaults:
                 route: sonata_admin_dashboard
+                # make a permanent redirection...
                 permanent: true
+                # ...and keep the original query string parameters
+                keepQueryParams: true
 
     .. code-block:: xml
 
@@ -129,7 +132,10 @@ action:
             <route id="admin" path="/wp-admin">
                 <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction</default>
                 <default key="route">sonata_admin_dashboard</default>
+                <!-- make a permanent redirection... -->
                 <default key="permanent">true</default>
+                <!-- ...and keep the original query string parameters -->
+                <default key="keepQueryParams">true</default>
             </route>
         </routes>
 
@@ -145,7 +151,10 @@ action:
         $routes->add('admin', new Route('/wp-admin', array(
             '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction',
             'route'       => 'sonata_admin_dashboard',
+            // make a permanent redirection...
             'permanent'   => true,
+            // ...and keep the original query string parameters
+            'keepQueryParams' => true,
         )));
 
         return $routes;
