@@ -409,9 +409,12 @@ method is just a shortcut to create a special
 :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`
 object, which ultimately triggers a 404 HTTP response inside Symfony.
 
-Of course, you're free to throw any ``Exception`` class in your controller -
-Symfony will automatically return a 500 HTTP response code::
+If you throw an exception that extends or is an instance of
+:class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`, Symfony will
+use the appropriate HTTP status code. Otherwise, the response will have a 500
+HTTP status code::
 
+    // this exception ultimately generates a 500 status error
     throw new \Exception('Something went wrong!');
 
 In every case, an error page is shown to the end user and a full debug

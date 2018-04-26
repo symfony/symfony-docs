@@ -9,7 +9,7 @@ All the Symfony Core members are long-time contributors with solid technical
 expertise and they have demonstrated a strong commitment to drive the project
 forward.
 
-This document states the rules that govern the Symfony Core team. These rules
+This document states the rules that govern the Symfony core team. These rules
 are effective upon publication of this document and all Symfony Core members
 must adhere to said rules and protocol.
 
@@ -121,7 +121,7 @@ Active Core Members
 Former Core Members
 ~~~~~~~~~~~~~~~~~~~
 
-They are no longer part of the Core Team, but we are very grateful for all their
+They are no longer part of the core team, but we are very grateful for all their
 Symfony contributions:
 
 * **Bernhard Schussek** (`webmozart`_);
