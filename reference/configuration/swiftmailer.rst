@@ -77,6 +77,13 @@ password
 
 The password when using ``smtp`` as the transport.
 
+command
+~~~~~~~~
+
+**type**: ``string``
+
+Command to be executed by ``sendmail`` transport.
+
 host
 ~~~~
 
