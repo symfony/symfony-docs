@@ -29,5 +29,12 @@ FriendsOfPHP organization.
     To enable the ``security:check`` command, make sure the
     `SensioDistributionBundle`_ is installed and enabled in your application.
 
+.. tip::
+
+    The security checker is also available as an independent console application
+    and distributed as a PHAR file so you can use it in any PHP application.
+    Check out the `Security Checker repository`_ for more details.
+
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
 .. _`SensioDistributionBundle`: https://github.com/sensiolabs/SensioDistributionBundle
+.. _`Security Checker repository`: https://github.com/sensiolabs/security-checker

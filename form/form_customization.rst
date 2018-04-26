@@ -343,7 +343,7 @@ You can also apply a form theme to a specific child of your form:
 
 .. code-block:: html+twig
 
-    {% form_theme form.child 'form/fields.html.twig' %}
+    {% form_theme form.a_child_form 'form/fields.html.twig' %}
 
 This is useful when you want to have a custom theme for a nested form that's
 different than the one of your main form. Just specify both your themes:
@@ -352,7 +352,7 @@ different than the one of your main form. Just specify both your themes:
 
     {% form_theme form 'form/fields.html.twig' %}
 
-    {% form_theme form.child 'form/fields_child.html.twig' %}
+    {% form_theme form.a_child_form 'form/fields_child.html.twig' %}
 
 Form Theming in PHP
 -------------------

@@ -21,6 +21,7 @@ update.
 .. tip::
 
     It is recommended to update to a new patch version as soon as possible, as
-    important bugs and security leaks may be fixed in these new releases.
+    important bugs and security vulnerabilities may be fixed in these new
+    releases.
 
 .. include:: /setup/_update_all_packages.rst.inc
