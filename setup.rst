@@ -17,7 +17,7 @@ Create your new project by running:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/website-skeleton my-project
+    $ composer create-project symfony/website-skeleton:^3.4 my-project
 
 This will create a new ``my-project`` directory, download some dependencies into
 it and even generate the basic directories and files you'll need to get started.
