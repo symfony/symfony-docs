@@ -5,7 +5,7 @@ Want to use `TypeScript`_? No problem! First, install the dependencies:
 
 .. code-block:: terminal
 
-    $ yarn add --dev typescript ts-loader
+    $ yarn add --dev typescript ts-loader@^3.0
 
 Then, activate the ``ts-loader`` in ``webpack.config.js``:
 
