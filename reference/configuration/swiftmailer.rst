@@ -22,6 +22,7 @@ Configuration
 * `transport`_
 * `username`_
 * `password`_
+* `command`_
 * `host`_
 * `port`_
 * `timeout`_
@@ -80,7 +81,7 @@ The password when using ``smtp`` as the transport.
 command
 ~~~~~~~~
 
-**type**: ``string``
+**type**: ``string`` **default**: ``/usr/sbin/sendmail -bs``
 
 Command to be executed by ``sendmail`` transport.
 
