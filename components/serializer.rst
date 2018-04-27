@@ -706,24 +706,12 @@ always as a collection.
 
 .. tip::
 
-    Processing of XML comments can be controlled with the third constructor
-    argument:
+    XML comments are ignored by default when decoding contents, but this
+    behavior can be changed with the optional ``$ignoredNodeTypes`` argument of
+    the ``XmlEncoder`` class constructor.
 
-    .. code-block:: php
-
-        class XmlEncoder
-        {
-            public function __construct(
-                string $rootNodeName = 'response',
-                int $loadOptions = null,
-                array $ignoredNodeTypes = array(XML_PI_NODE, XML_COMMENT_NODE)
-            ) {
-                // ...
-            }
-        }
-
-.. versionadded:: 4.1
-    XML comments are removed by default since Symfony 4.1.
+    .. versionadded:: 4.1
+        XML comments are ignored by default starting from Symfony 4.1.
 
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
