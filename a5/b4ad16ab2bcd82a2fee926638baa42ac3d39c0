@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by DonCallisto at 2018-04-26T06:50:04Z
+
+@javiereguiluz Do you thing we should also point it out [here](https://symfony.com/doc/current/service_container/3.3-di-changes.html#step-2-using-class-service-id-s)?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-26T07:08:10Z
+
+I'm afraid I don't understand you. Where exactly do you want to do the change? Thanks!
+
+---------------------------------------------------------------------------
+
+by DonCallisto at 2018-04-26T07:12:11Z
+
+I would let users aware that, when changing services id(s) from dot notation to FQCN, if any of those services are handled by a compiler pass that leverage on  `getDefinition` (that was pointed out in the old documentation so is likely that a lot of user have implemented this), they will receive an error and the solution is to change from `getDefinition` to `findDefinition`: it should be a box just to tackle this possible issue while migrating
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-27T06:51:19Z
+
+@DonCallisto thanks for explaining it! Let's do that change too then.
+
+---------------------------------------------------------------------------
+
+by DonCallisto at 2018-04-27T06:52:07Z
+
+I'll do that in the next hours
