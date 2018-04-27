@@ -115,13 +115,13 @@ For this entry, suppose that you already have a ``User`` entity inside an
         /** @see \Serializable::serialize() */
         public function serialize()
         {
-            return serialize(array(
+            return serialize([
                 $this->id,
                 $this->username,
                 $this->password,
                 // see section on salt below
                 // $this->salt,
-            ));
+            ]);
         }
 
         /** @see \Serializable::unserialize() */
