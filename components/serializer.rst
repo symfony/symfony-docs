@@ -704,6 +704,15 @@ always as a collection.
 .. versionadded:: 4.1
     The ``as_collection`` option was introduced in Symfony 4.1.
 
+.. tip::
+
+    XML comments are ignored by default when decoding contents, but this
+    behavior can be changed with the optional ``$ignoredNodeTypes`` argument of
+    the ``XmlEncoder`` class constructor.
+
+    .. versionadded:: 4.1
+        XML comments are ignored by default starting from Symfony 4.1.
+
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
 
