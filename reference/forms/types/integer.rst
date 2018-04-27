@@ -85,7 +85,10 @@ scale
 
 **type**: ``integer`` **default**: ``0``
 
-This specifies how many decimals will be allowed until the field rounds the submitted value (via ``rounding_mode``). This option inherits from :doc:`number </reference/forms/types/number>` type and is overriden to ``0`` for ``IntegerType``.
+This specifies how many decimals will be allowed until the field rounds the
+submitted value (via ``rounding_mode``). This option inherits from
+:doc:`number </reference/forms/types/number>` type and is overriden to ``0`` for
+``IntegerType``.
 
 Inherited Options
 -----------------
