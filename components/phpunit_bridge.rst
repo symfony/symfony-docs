@@ -34,6 +34,12 @@ Alternatively, you can clone the `<https://github.com/symfony/phpunit-bridge>`_ 
 
 .. include:: /components/require_autoload.rst.inc
 
+
+.. best-practice::
+
+    PHPUnit Bridge is designed to remain compatible with Symfony version 2.7 up to master,
+    so be sure to install and run the latest version.
+
 If you plan to :ref:`write-assertions-about-deprecations` and use the regular
 PHPUnit script (not the modified PHPUnit script provided by Symfony), you have
 to register a new `test listener`_ called ``SymfonyTestsListener``:
