@@ -27,7 +27,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/phpunit-bridge
+    $ composer require --dev "symfony/phpunit-bridge:*"
 
 Alternatively, you can clone the `<https://github.com/symfony/phpunit-bridge>`_ repository.
 
