@@ -28,7 +28,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require --dev symfony/phpunit-bridge
+    $ composer require --dev "symfony/phpunit-bridge:*"
 
 Alternatively, you can clone the `<https://github.com/symfony/phpunit-bridge>`_ repository.
 
@@ -37,8 +37,9 @@ Alternatively, you can clone the `<https://github.com/symfony/phpunit-bridge>`_ 
 
 .. best-practice::
 
-    PHPUnit Bridge is designed to remain compatible with Symfony version 2.7 up to master,
-    so be sure to install and run the latest version.
+    The PHPUnit bridge is designed to work with all maintained versions of Symfony components,
+    even across different major versions of them. You should always use its very latest stable
+    major version to get the most accurate deprecation report
 
 If you plan to :ref:`write-assertions-about-deprecations` and use the regular
 PHPUnit script (not the modified PHPUnit script provided by Symfony), you have
