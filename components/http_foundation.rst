@@ -259,11 +259,11 @@ this complexity and defines some methods for the most common tasks::
     // => array(array('da'), array('en-gb'), array('q', '0.8'))
 
     // Combines an array of arrays into one associative array
-    HeaderUtils::combineParts(array(array('foo', 'abc'), array('bar')))
+    HeaderUtils::combine(array(array('foo', 'abc'), array('bar')))
     // => array('foo' => 'abc', 'bar' => true)
 
     // Joins an associative array into a string for use in an HTTP header
-    HeaderUtils::joinAssoc(array('foo' => 'abc', 'bar' => true, 'baz' => 'a b c'), ',')
+    HeaderUtils::toString(array('foo' => 'abc', 'bar' => true, 'baz' => 'a b c'), ',')
     // => 'foo=bar, baz, baz="a b c"'
 
     // Encodes a string as a quoted string, if necessary
