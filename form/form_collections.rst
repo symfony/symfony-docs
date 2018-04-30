@@ -746,6 +746,89 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     you'll need to do extra work to make sure that the relationship is properly
     updated (whether you're adding new tags or removing existing tags) on
     each Tag object itself.
+    
+    You can optionnally reduce the code in your controller and make it reusable to handle other embedded form.
+    First create a helper
+    
+        // App\Helper;
+        use Doctrine\Common\Collections\ArrayCollection;
+
+        class Helper      
+
+          public function backupOriginalEntities($entities)
+          {
+            $original_entities = new ArrayCollection();
+
+                // Create an ArrayCollection of the current objects in the database
+                foreach ($entities as $entity) {
+                    $original_entities->add($entity);
+                }
+
+                return $original_entities;
+          }
+
+          //this function removes totally the entity
+          public function removeEntity($original_entities, $current_entities)
+          {
+                foreach ($original_entities as $entity) {
+                    if (false === $current_entities->contains($entity)) {
+                        $em->remove($entity);
+                    }
+                }
+          }
+
+          //this function removes only the relationship
+          public function removeRelation($original_entities, $main_entity,$current_entities, $function_name)
+          {		 
+                foreach ($original_entities as $entity) {
+                    if (false === $current_entities->contains($entity)) {
+                      $main_entity->$function_name($entity);
+                    }
+                }
+          }
+        }
+        
+   Second edit your TaskController
+   
+        // src/Controller/TaskController.php
+
+        use App\Entity\Task;
+        
+        // ...
+        public function edit($id, Request $request)
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+            $task = $entityManager->getRepository(Task::class)->find($id);
+
+            if (!$task) {
+                throw $this->createNotFoundException('No task found for id '.$id);
+            }
+            
+            $original_entities = $helper->backupOriginalEntities($event->getOrganizationTypes());
+           
+            $editForm = $this->createForm(TaskType::class, $task);
+
+            $editForm->handleRequest($request);
+
+            if ($editForm->isValid()) {
+
+                // remove the relationship between the tag and the Task
+                //depending on your needs
+                //either
+                $helper->removeRelation($original_entities,$event,$task->getTags(),'removeTag');
+                //or
+                $helper->removeEntity($original_entities,$event,$task->getTags());
+                
+                $entityManager->persist($task);
+                $entityManager->flush();
+
+                // redirect back to some edit page
+                return $this->redirectToRoute('task_edit', array('id' => $id));
+            }
+
+            // render some form template
+        }
+        
 
 .. sidebar:: Form collection jQuery plugin
 
