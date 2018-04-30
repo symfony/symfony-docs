@@ -102,7 +102,7 @@ to :doc:`customize form rendering </form/form_customization>`):
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/product/new.html.twig -->
+        <!-- app/Resources/views/product/new.html.php -->
         <h1>Adding a new product</h1>
 
         <?php echo $view['form']->start($form) ?>
