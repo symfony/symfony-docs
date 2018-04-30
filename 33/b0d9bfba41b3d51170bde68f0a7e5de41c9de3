@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by lsmith77 at 2018-03-05T20:56:26Z
+
+Great! I guess we still need https://github.com/symfony/symfony/pull/24896, just stripped down to point to this doc page.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-19T13:18:50Z
+
+I've reviewed this again and I like it a lot ... except for two phrases which in my opinion are back doors to power abuse:
+
+```
+Examples of unacceptable behavior: [...] Other conduct which could reasonably be
+considered inappropriate in a professional setting.
+
+Enforcement team members have the right [...] to ban temporarily or
+permanently any contributor for other behaviors that they deem inappropriate.
+```
+
+If we could remove the first phrase and reword the second one, I would vote 👍 on this. Thanks!
+
+---------------------------------------------------------------------------
+
+by michellesanver at 2018-04-20T08:28:38Z
+
+I disagree with your statement @javiereguiluz. It is impossible to cover all cases in a CoC, so we do need some way to catch things that may not be explicitly covered. The key to the sentence is "reasonably". This can always be argued, and since it is several enforcers and not just one person, that hopefully the community would trust makes the right judgement calls, I'd not worry. If it's one person the risk for "power abuse" might be higher.
