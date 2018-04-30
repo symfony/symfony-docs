@@ -121,8 +121,6 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 
 * Make a request;
 * Test the response;
-* Click on a link or submit a form;
-* Test the response;
 * Rinse and repeat.
 
 Before creating your first test, install these packages that provide some of the
