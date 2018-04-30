@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by michellesanver at 2018-03-06T09:31:42Z
+
+@egircys Of course! Didn't know quite where to place it. I moved it there now 👍
+
+---------------------------------------------------------------------------
+
+by greg0ire at 2018-03-06T13:43:35Z
+
+@michellesanver Travis says you should add that document to a toctree (it's unreachable otherwise).
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2018-03-06T15:42:11Z
+
+realtes to https://github.com/symfony/diversity/issues/2
+
+---------------------------------------------------------------------------
+
+by fabpot at 2018-04-30T17:12:51Z
+
+Thank you very much @michellesanver for taking the time to create the document and everybody for the constructive feedback.
