@@ -345,7 +345,7 @@ action methods, just like you can with the constructor of services. For example:
 
     class InvoiceController extends Controller
     {
-        public function listAction(LoggerInterface $logger)
+        public function list(LoggerInterface $logger)
         {
             $logger->info('A new way to access services!');
         }
@@ -707,8 +707,8 @@ code to not fetch this service directly from the container. For example:
 
 .. code-block:: diff
 
-    -     public function indexAction()
-    +     public function indexAction(GitHubNotifier $gitHubNotifier, MarkdownTransformer $markdownTransformer)
+    -     public function index()
+    +     public function index(GitHubNotifier $gitHubNotifier, MarkdownTransformer $markdownTransformer)
         {
     -         // the old way of fetching services
     -         $githubNotifier = $this->container->get('app.github_notifier');

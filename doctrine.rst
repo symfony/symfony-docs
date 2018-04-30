@@ -402,7 +402,7 @@ be able to go to ``/product/1`` to see your new product::
     /**
      * @Route("/product/{id}", name="product_show")
      */
-    public function showAction($id)
+    public function show($id)
     {
         $product = $this->getDoctrine()
             ->getRepository(Product::class)
@@ -491,7 +491,7 @@ Now, simplify your controller::
     /**
      * @Route("/product/{id}", name="product_show")
      */
-    public function showAction(Product $product)
+    public function show(Product $product)
     {
         // use the Product!
         // ...
@@ -510,7 +510,7 @@ Once you've fetched an object from Doctrine, updating it is easy::
     /**
      * @Route("/product/edit/{id}")
      */
-    public function updateAction($id)
+    public function update($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $product = $entityManager->getRepository(Product::class)->find($id);

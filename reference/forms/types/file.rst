@@ -45,7 +45,7 @@ be used to move the ``attachment`` file to a permanent location::
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-    public function uploadAction()
+    public function upload()
     {
         // ...
 

@@ -1065,7 +1065,7 @@ the User object, and use the ``isGranted()`` method (or
 
         use Symfony\Component\Security\Core\User\UserInterface\UserInterface;
 
-        public function indexAction(UserInterface $user = null)
+        public function index(UserInterface $user = null)
         {
             // $user is null when not logged-in or anon.
         }

@@ -71,7 +71,7 @@ provided by the collectors obtained through the ``$client->getProfile()`` call::
 
     class LuckyControllerTest extends WebTestCase
     {
-        public function testNumberAction()
+        public function testNumber()
         {
             $client = static::createClient();
 
