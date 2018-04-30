@@ -238,7 +238,7 @@ into the database::
         /**
          * @Route("/register", name="user_registration")
          */
-        public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+        public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
         {
             // 1) build the form
             $user = new User();

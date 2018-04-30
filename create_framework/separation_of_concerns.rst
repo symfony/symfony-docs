@@ -106,7 +106,7 @@ Move the controller to ``Calendar\Controller\LeapYearController``::
 
     class LeapYearController
     {
-        public function indexAction(Request $request, $year)
+        public function index(Request $request, $year)
         {
             $leapYear = new LeapYear();
             if ($leapYear->isLeapYear($year)) {
@@ -138,7 +138,7 @@ Don't forget to update the ``example.com/src/app.php`` file accordingly::
 
     $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', array(
         'year' => null,
-        '_controller' => 'Calendar\Controller\LeapYearController::indexAction',
+        '_controller' => 'Calendar\Controller\LeapYearController::index',
     )));
 
 To sum up, here is the new file layout:

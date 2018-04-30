@@ -54,7 +54,7 @@ PHP; it implements ``HttpKernelInterface`` and wraps another
 ``HttpKernelInterface`` instance::
 
     // example.com/web/front.php
-    
+
     // ..
 
     $framework = new Simplex\Framework($dispatcher, $matcher, $controllerResolver, $argumentResolver);
@@ -74,7 +74,7 @@ to cache a response for 10 seconds, use the ``Response::setTtl()`` method::
     // example.com/src/Calendar/Controller/LeapYearController.php
 
     // ...
-    public function indexAction(Request $request, $year)
+    public function index(Request $request, $year)
     {
         $leapYear = new LeapYear();
         if ($leapYear->isLeapYear($year)) {

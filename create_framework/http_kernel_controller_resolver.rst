@@ -10,7 +10,7 @@ class::
 
     class LeapYearController
     {
-        public function indexAction($request)
+        public function index($request)
         {
             if (is_leap_year($request->attributes->get('year'))) {
                 return new Response('Yep, this is a leap year!');
@@ -24,7 +24,7 @@ Update the route definition accordingly::
 
     $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', array(
         'year' => null,
-        '_controller' => array(new LeapYearController(), 'indexAction'),
+        '_controller' => array(new LeapYearController(), 'index'),
     )));
 
 The move is pretty straightforward and makes a lot of sense as soon as you
@@ -64,7 +64,7 @@ two colons and a method name as a valid callback, like 'class::method'::
 
     $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', array(
         'year' => null,
-        '_controller' => 'LeapYearController::indexAction',
+        '_controller' => 'LeapYearController::index',
     )));
 
 To make this code work, modify the framework code to use the controller
@@ -99,39 +99,39 @@ following interface::
         public function getArguments(Request $request, $controller);
     }
 
-The ``indexAction()`` method needs the Request object as an argument.
+The ``index()`` method needs the Request object as an argument.
 ``getArguments()`` knows when to inject it properly if it is type-hinted
 correctly::
 
-    public function indexAction(Request $request)
+    public function index(Request $request)
 
     // won't work
-    public function indexAction($request)
+    public function index($request)
 
 More interesting, ``getArguments()`` is also able to inject any Request
 attribute; the argument just needs to have the same name as the corresponding
 attribute::
 
-    public function indexAction($year)
+    public function index($year)
 
 You can also inject the Request and some attributes at the same time (as the
 matching is done on the argument name or a type hint, the arguments order does
 not matter)::
 
-    public function indexAction(Request $request, $year)
+    public function index(Request $request, $year)
 
-    public function indexAction($year, Request $request)
+    public function index($year, Request $request)
 
 Finally, you can also define default values for any argument that matches an
 optional attribute of the Request::
 
-    public function indexAction($year = 2012)
+    public function index($year = 2012)
 
 Let's just inject the ``$year`` request attribute for our controller::
 
     class LeapYearController
     {
-        public function indexAction($year)
+        public function index($year)
         {
             if (is_leap_year($year)) {
                 return new Response('Yep, this is a leap year!');

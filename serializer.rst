@@ -35,7 +35,7 @@ you need it or it can be used in a controller::
 
     class DefaultController extends Controller
     {
-        public function indexAction(SerializerInterface $serializer)
+        public function index(SerializerInterface $serializer)
         {
             // keep reading for usage examples
         }

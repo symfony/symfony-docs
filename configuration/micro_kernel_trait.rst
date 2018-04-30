@@ -55,10 +55,10 @@ Next, create an ``index.php`` file that defines the kernel class and executes it
         {
             // kernel is a service that points to this class
             // optional 3rd argument is the route name
-            $routes->add('/random/{limit}', 'kernel:randomAction');
+            $routes->add('/random/{limit}', 'kernel:random');
         }
 
-        public function randomAction($limit)
+        public function random($limit)
         {
             return new JsonResponse(array(
                 'number' => rand(0, $limit)
@@ -257,7 +257,7 @@ has one file in it::
         /**
          * @Route("/random/{limit}")
          */
-        public function randomAction($limit)
+        public function random($limit)
         {
             $number = rand(0, $limit);
 
@@ -277,7 +277,7 @@ at ``src/Resources/views/micro/random.html.twig``:
     <!DOCTYPE html>
     <html>
         <head>
-            <title>Random action</title>
+            <title>Random number</title>
         </head>
         <body>
             <p>{{ number }}</p>
