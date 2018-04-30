@@ -74,7 +74,7 @@ to write logs using the :phpfunction:`syslog` function:
 
     .. code-block:: yaml
 
-        # config/packages/monolog.yaml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 # this "file_log" key could be anything
@@ -92,7 +92,7 @@ to write logs using the :phpfunction:`syslog` function:
 
     .. code-block:: xml
 
-        <!-- config/packages/monolog.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -119,7 +119,7 @@ to write logs using the :phpfunction:`syslog` function:
 
     .. code-block:: php
 
-        // config/packages/monolog.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'file_log' => array(
@@ -150,7 +150,7 @@ one of the messages reaches an ``action_level``. Take this example:
 
     .. code-block:: yaml
 
-        # config/packages/monolog.yaml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 filter_for_errors:
@@ -171,7 +171,7 @@ one of the messages reaches an ``action_level``. Take this example:
 
     .. code-block:: xml
 
-        <!-- config/packages/monolog.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -204,7 +204,7 @@ one of the messages reaches an ``action_level``. Take this example:
 
     .. code-block:: php
 
-        // config/packages/monolog.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'filter_for_errors' => array(
@@ -264,7 +264,7 @@ option of your handler to ``rotating_file``:
 
     .. code-block:: yaml
 
-        # config/packages/dev/monolog.yaml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 main:
@@ -277,7 +277,7 @@ option of your handler to ``rotating_file``:
 
     .. code-block:: xml
 
-        <!-- config/packages/dev/monolog.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -301,7 +301,7 @@ option of your handler to ``rotating_file``:
 
     .. code-block:: php
 
-        // config/packages/dev/monolog.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'main' => array(
