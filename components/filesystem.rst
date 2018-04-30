@@ -83,7 +83,7 @@ exists
 presence of one or more files or directories and returns ``false`` if any of
 them is missing::
 
-    // this directory exists, return true
+    // if this absolute directory exists, return true
     $fileSystem->exists('/tmp/photos');
 
     // rabbit.jpg exists, bottle.png does not exist, return false
@@ -93,6 +93,10 @@ them is missing::
 
     You can pass an array or any :phpclass:`Traversable` object as the first
     argument.
+    
+.. note::
+    If you are using non-absolute paths, the paths are relative to
+    the directory where the running PHP script is stored
 
 copy
 ~~~~
