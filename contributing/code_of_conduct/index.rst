@@ -85,6 +85,8 @@ Related Documents
 .. toctree::
     :maxdepth: 1
 
+    reporting_guidelines
+    enforcement_team
     concrete_example_document
 
 .. _Contributor Covenant: https://www.contributor-covenant.org
