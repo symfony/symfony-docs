@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-22T09:04:23Z
+
+@lsmith77 about this idea:
+
+> to further simplify the use of google translate, we might want to consider to add a drop down with the lets say top 5 languages spoken in the countries that most frequently visit symfony.com .. or we might even provide a dynamic "translate" button by looking at the browser language settings.
+
+It'd be great to be 100% inclusive about language, but the truth is that having a basic English level is one of the requisites to use Symfony. Having a medium PHP level is another requisite.
+
+To make things easier for people, we're super careful to not use idioms or uncommon English words in the docs (I've asked @weaverryan several times to simplify some of the words he used in some of his contributions).
+
+If someone can't read the Symfony Docs in English, they won't be able to use Symfony: command names are in English, command help is in English, error pages are in English, the profiler and debug toolbar are in English, all foundational concepts are in English and lots of them are hard to translate to other languages: "event dispatcher", "service decoration", "message bus", "routing", etc.
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2018-04-22T09:10:44Z
+
+I am not an expert and I will try to seek some articles on this topic, but I would assume its not a “binary” thing, ie. people may need to speak a bit of english but sometimes they will struggle and then having a translation helps both to understand something but also to improve their english.
+
+as for jargo terms like “event dispatcher” .. I think those will also be learned.
+
+furthermore if we can bing down the barrier to entry we can also create motivation to learn and improve their english skills. I remember especially on IRC we had a lot of people that steadily improved their language skills over months of interacting via chat.
+
+finally such efforts are also a way that we can show that we care about people that speak other languages natively. in a way its a token of respect.
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2018-04-22T09:13:53Z
+
+so my tl;dr on this topic: lets try to do as much as we can reasonably can. so f.e. if someone implements such a translation button I don’t think it would be a burden to have it. and we could also track how often it is used to see how useful it is.
+
+---------------------------------------------------------------------------
+
+by jwage at 2018-04-24T04:31:39Z
+
+I thought this was a good idea so I implemented it on www.doctrine-project.org. Just thought I would share if you all wanted to do something similar. https://github.com/doctrine/doctrine-website/pull/141
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2018-04-24T07:40:24Z
+
+@jwage would be interesting to collect some analytics data on how often this feature is used and what languages are picked most often.
+
+---------------------------------------------------------------------------
+
+by jwage at 2018-04-24T10:47:53Z
+
+I will add some Google analytics tracking to it and report back with the results.
+
+---------------------------------------------------------------------------
+
+by jwage at 2018-04-30T19:17:49Z
+
+Here is the data after a few days. It is not very much. Only 50 attempts to translate have been recorded over the last 3 days.
+
+[doctrine-translation-events.xlsx](https://github.com/symfony/symfony-docs/files/1961885/doctrine-translation-events.xlsx)
