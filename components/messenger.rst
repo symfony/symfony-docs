@@ -105,7 +105,7 @@ First, create your sender::
     namespace App\MessageSender;
 
     use App\Message\ImportantAction;
-    use Symfony\Component\Message\SenderInterface;
+    use Symfony\Component\Messenger\Transport\SenderInterface;
 
     class ImportantActionToEmailSender implements SenderInterface
     {
@@ -154,7 +154,7 @@ First, create your receiver::
     namespace App\MessageReceiver;
 
     use App\Message\NewOrder;
-    use Symfony\Component\Message\ReceiverInterface;
+    use Symfony\Component\Messenger\Transport\ReceiverInterface;
     use Symfony\Component\Serializer\SerializerInterface;
 
     class NewOrdersFromCsvFile implements ReceiverInterface
