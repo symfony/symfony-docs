@@ -241,6 +241,39 @@ the previous requests.
     an exception in Symfony 5.0 when the session is ``null``. Check for an existing session
     first by calling :method:`Symfony\\Component\\HttpFoundation\\Request::hasSession()`.
 
+Processing HTTP Headers
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.1
+    The ``HeaderUtils`` class was introduced in Symfony 4.1.
+
+Processing HTTP headers is not a trivial task because of the escaping and white
+space handling of their contents. Symfony provides a
+:class:`Symfony\\Component\\HttpFoundation\\HeaderUtils` class that abstracts
+this complexity and defines some methods for the most common tasks::
+
+    use Symfony\Component\HttpFoundation\HeaderUtils;
+
+    // Splits an HTTP header by one or more separators
+    HeaderUtils::split('da, en-gb;q=0.8', ',;')
+    // => array(array('da'), array('en-gb'), array('q', '0.8'))
+
+    // Combines an array of arrays into one associative array
+    HeaderUtils::combine(array(array('foo', 'abc'), array('bar')))
+    // => array('foo' => 'abc', 'bar' => true)
+
+    // Joins an associative array into a string for use in an HTTP header
+    HeaderUtils::toString(array('foo' => 'abc', 'bar' => true, 'baz' => 'a b c'), ',')
+    // => 'foo=bar, baz, baz="a b c"'
+
+    // Encodes a string as a quoted string, if necessary
+    HeaderUtils::quote('foo "bar"')
+    // => 'foo \"bar\"'
+
+    // Decodes a quoted string
+    HeaderUtils::unquote('foo \"bar\"')
+    // => 'foo "bar"'
+
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
