@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-24T07:46:01Z
+
+Let's put this on hold because there's a proposal to rename some methods: https://github.com/symfony/symfony/issues/27026
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-04-30T07:02:16Z
+
+This is now ready because I've renamed the method as done in https://github.com/symfony/symfony/pull/27087
