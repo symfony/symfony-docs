@@ -98,7 +98,7 @@ to :doc:`customize form rendering </form/form_customization>`):
 
     .. code-block:: html+php
 
-        <!-- templates/product/new.html.twig -->
+        <!-- templates/product/new.html.php -->
         <h1>Adding a new product</h1>
 
         <?php echo $view['form']->start($form) ?>
