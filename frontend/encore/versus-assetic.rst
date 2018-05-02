@@ -45,7 +45,7 @@ So what are the differences between Assetic and Encore?
        images.
 
 .. [2] Assetic has outdated support for React.js only. Encore ships with modern
-       support for React.js, Vue.js, Typescript, etc.
+       support for React.js, Vue.js, TypeScript, etc.
 
 Should I Upgrade from Assetic to Encore
 ---------------------------------------
