@@ -77,9 +77,9 @@ make your error management configurable::
     $dispatcher->addSubscriber(new HttpKernel\EventListener\ExceptionListener($errorHandler));
 
 ``ExceptionListener`` gives you a ``FlattenException`` instance instead of the
-thrown ``Exception`` instance to ease exception manipulation and display. It
-can take any valid controller as an exception handler, so you can create an
-ErrorController class instead of using a Closure::
+thrown ``Exception`` or ``Error`` instance to ease exception manipulation and
+display. It can take any valid controller as an exception handler, so you can
+create an ErrorController class instead of using a Closure::
 
     $listener = new HttpKernel\EventListener\ExceptionListener(
         'Calendar\Controller\ErrorController::exceptionAction'
