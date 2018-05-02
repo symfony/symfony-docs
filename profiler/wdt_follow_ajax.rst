@@ -2,10 +2,10 @@
     single: Profiling: WDT Auto-update after AJAX Request
 
 How to Make the Web Debug Toolbar Auto-update After AJAX Requests
-================================================================
+=================================================================
 
-For single page applications it would be more convenient if the toolbar 
-showed the information for the most recent AJAX request instead of the 
+For single page applications it would be more convenient if the toolbar
+showed the information for the most recent AJAX request instead of the
 initial page load.
 
 By setting the ``Symfony-Debug-Toolbar-Replace`` header to a value of ``1`` in the
@@ -30,11 +30,12 @@ production. This can be accomplished by setting the header in a
 
 .. seealso::
 
-    Read more Symfony events :ref:`/reference/events`.
+    Read more about :doc:`Symfony events </reference/events>`.
 
-If you are using Symfony Flex, you should define your event listener service in the 
+If you are using Symfony Flex, you should define your event listener service in the
 ``config/services_dev.yml`` file so that it only exists in the ``dev`` environment.
 
 .. seealso::
 
-    Read more on creating dev only services :ref:`/configuration/configuration_organization`.
+    Read more on
+    :doc:`creating dev only services </configuration/configuration_organization>`.
