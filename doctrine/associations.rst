@@ -370,7 +370,7 @@ did before. First, fetch a ``$product`` object and then access its related
     use App\Entity\Product;
     // ...
 
-    public function showAction($id)
+    public function show($id)
     {
         $product = $this->getDoctrine()
             ->getRepository(Product::class)
@@ -400,7 +400,7 @@ the category (i.e. it's "lazily loaded").
 Because we mapped the optional ``OneToMany`` side, you can also query in the other
 direction::
 
-    public function showProductsAction($id)
+    public function showProducts($id)
     {
         $category = $this->getDoctrine()
             ->getRepository(Category::class)
@@ -481,7 +481,7 @@ This will *still* return an array of ``Product`` objects. But now, when you call
 Now, you can use this method in your controller to query for a ``Product``
 object and its related ``Category`` with just one query::
 
-    public function showAction($id)
+    public function show($id)
     {
         $product = $this->getDoctrine()
             ->getRepository(Product::class)

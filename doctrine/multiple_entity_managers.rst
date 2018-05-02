@@ -235,7 +235,7 @@ the default entity manager (i.e. ``default``) is returned::
 
     class UserController extends Controller
     {
-        public function indexAction(EntityManagerInterface $entityManager)
+        public function index(EntityManagerInterface $entityManager)
         {
             // These methods also return the default entity manager, but it's preferred
             // to get it by injecting EntityManagerInterface in the action method
@@ -261,7 +261,7 @@ The same applies to repository calls::
 
     class UserController extends Controller
     {
-        public function indexAction()
+        public function index()
         {
             // Retrieves a repository managed by the "default" em
             $products = $this->getDoctrine()
