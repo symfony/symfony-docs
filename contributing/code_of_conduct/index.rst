@@ -61,7 +61,7 @@ further defined and clarified by enforcement team members.
 Enforcement
 -----------
 
-Instances of abusive, harassing, or otherwise unacceptable behavior 
+Instances of abusive, harassing, or otherwise unacceptable behavior
 :doc:`may be reported </contributing/code_of_conduct/reporting_guidelines>`
 by contacting the :doc:`enforcement team members </contributing/code_of_conduct/enforcement_team>`.
 All complaints will be reviewed and investigated and will result in a response that
