@@ -154,8 +154,6 @@ With some validation added, your class may look something like this::
         public function eraseCredentials()
         {
         }
-
-        // other methods, including security methods like getRoles()
     }
 
 The :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` requires
