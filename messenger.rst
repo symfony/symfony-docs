@@ -168,6 +168,57 @@ like this:
 The first argument is the receiver's service name. It might have been created by
 your ``transports`` configuration or it can be your own receiver.
 
+Multiple buses
+--------------
+
+If you are interested into architectures like CQRS, you might want to have multiple
+buses within your application.
+
+You can create multiple buses (in this example, a command and an event bus) like
+this:
+
+.. code-block:: yaml
+
+    framework:
+        messenger:
+            # The bus that is going to be injected when injecting MessageBusInterface:
+            default_bus: commands
+
+            # Create buses
+            buses:
+                commands: ~
+                events: ~
+
+This will generate the ``messenger.bus.commands`` and ``messenger.bus.events`` services
+that you can inject in your services.
+
+Type-hints and auto-wiring
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Auto-wiring is a great feature that allows you to reduce the amount of configuration
+required for your service container to be created. When using multiple buses, by default,
+the auto-wiring will not work as it won't know why bus to inject in your own services.
+
+In order to clarify this, you will have to create your own decorators for your message
+buses. Let's create one for your ``CommandBus``::
+
+    namespace App;
+
+    use Symfony\Component\Messenger\AbstractMessageBusDecorator;
+
+    final class CommandBus extends AbstractMessageBusDecorator
+    {
+    }
+
+Last step is to register your service (and explicit its argument) to be able to typehint
+your ``CommandBus`` in your services:
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        App\CommandBus: ['@messenger.bus.commands']
+
 Your own Transport
 ------------------
 
