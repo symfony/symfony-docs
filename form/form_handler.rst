@@ -1,7 +1,14 @@
 How to work with Form Handler
 =============================
 
-Usually, handling a form submission follows a similar template::
+In your day to day application, you deal with controler (or action), 
+in order to ease the form handling process, it's a common practice to
+use the FormFactory service and instantiate the Form directly in the controller.
+Once the form is ready, it's common to use both isValid and isSubmitted
+methods directly in the controller, 
+as this is mainly used doesn't mean it's easy to maintain.
+
+Here's a simple example of what is common to use to handle form::
 
 .. code-block:: php
 
@@ -61,9 +68,8 @@ call everything you need to manage the handling process, here's a exemple:
         public function handle(FormInterface $postType): bool
         {
             if ($postType->isSubmitted() && $postType->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($post);
-                $entityManager->flush();
+                $this->entityManager->persist($post);
+                $this->entityManager->flush();
 
                 return true;
             }
@@ -72,8 +78,8 @@ call everything you need to manage the handling process, here's a exemple:
         }
     }
 
-Here's a simple exemple of what can do a FormHandler but you can inject every services
-that you need.
+Here, the FormHandler only wait for the EntityManager to persist the hydrated entity
+but you can call every service that you need.
 Once in the controller, the logic can be simplified by the call of the PostTypeHandler:
 
 .. code-block:: php
@@ -83,15 +89,18 @@ Once in the controller, the logic can be simplified by the call of the PostTypeH
     //...
     use App\Form\Handler\PostTypeHandler;
 
-    // ...
+    // ...        
+    
+    public function __construct(PostTypeHandler $typeHandler)
+    { 
+        $this->typeHandler = $typeHandler;
+    }
 
-    public function new(Request $request, PostTypeHandler $handler)
+    public function new(Request $request)
     {
-        // build the form ...
+        $form = $this->get('form.factory')->create(FormType::class)->handleRequest($request);
 
-        $form->handleRequest($request);
-
-        if ($handler->handle($form)) {
+        if ($this->handler->handle($form)) {
             return $this->redirectToRoute('admin_post_show', [
                 'id' => $post->getId()
             ]);
@@ -100,9 +109,13 @@ Once in the controller, the logic can be simplified by the call of the PostTypeH
         // render the template
     }
 
-Keep in mind that a FormHandler is just a service, your controller can easily
-call it using the ``controler.service_arguments`` tag and let it handle all the
-heavy tasks, this way, your code stay easy to test and maintain.
+Keep in mind that a FormHandler is just a service, the goal here
+is to keep the controller focused on what it need to do : Transform
+a Request into a Response.
+The FormHandler is not really coupled with the Form as the fact that 
+it wait for a FormInterface, if most of the FormHandler use a similar
+method signature, it can be a great idea to create a common interface
+or use a Factory and retrieve the Handler linked to the submitted form.
 
 .. tip::
 
@@ -117,14 +130,19 @@ heavy tasks, this way, your code stay easy to test and maintain.
         use App\Form\Handler\Interfaces\PostTypeHandlerInterface;
 
         // ...
+        
+        public function __construct(PostTypeHandlerInterface $typeHandler)
+        { 
+            $this->typeHandler = $typeHandler;
+        }
 
-        public function new(Request $request, PostTypeHandlerInterface $handler)
+        public function new(Request $request)
         {
             // build the form ...
 
             $form->handleRequest($request);
 
-            if ($handler->handle($form)) {
+            if ($this->handler->handle($form)) {
                 return $this->redirectToRoute('admin_post_show', [
                     'id' => $post->getId()
                 ]);
