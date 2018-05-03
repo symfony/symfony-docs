@@ -1,3 +1,10 @@
+* **Code of Conduct**
+
+  * :doc:`/contributing/code_of_conduct/code_of_conduct`
+  * :doc:`/contributing/code_of_conduct/reporting_guidelines`
+  * :doc:`/contributing/code_of_conduct/enforcement_team`
+  * :doc:`/contributing/code_of_conduct/concrete_example_document`
+
 * **Code**
 
   * :doc:`Bugs </contributing/code/bugs>`
