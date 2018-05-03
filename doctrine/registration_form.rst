@@ -87,6 +87,15 @@ With some validation added, your class may look something like this::
          * @ORM\Column(type="string", length=64)
          */
         private $password;
+        
+        /**
+         * @ORM\Column(type="array")
+         */
+        private $roles;
+
+        public function __construct() {
+            $this->roles = array('ROLE_USER');
+        }
 
         // other properties and methods
 
@@ -135,6 +144,15 @@ With some validation added, your class may look something like this::
             // The bcrypt algorithm doesn't require a separate salt.
             // You *may* need a real salt if you choose a different encoder.
             return null;
+        }
+        
+        public function getRoles()
+        {
+            return $this->roles;
+        }
+
+        public function eraseCredentials()
+        {
         }
 
         // other methods, including security methods like getRoles()
