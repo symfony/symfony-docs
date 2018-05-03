@@ -1,6 +1,6 @@
 * **Code of Conduct**
 
-  * :doc:`/code_of_conduct/conde_of_conduct`
+  * :doc:`/code_of_conduct/code_of_conduct`
   * :doc:`/code_of_conduct/reporting_guidelines`
   * :doc:`/code_of_conduct/enforcement_team`
   * :doc:`/code_of_conduct/concrete_example_document`
