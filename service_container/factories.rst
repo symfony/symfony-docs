@@ -188,7 +188,7 @@ example takes the ``templating`` service as an argument:
             # ...
 
             AppBundle\Email\NewsletterManager:
-                factory:   'AppBundle\Email\NewsletterManagerFactory:createNewsletterManager'
+                factory:   'AppBundle\Email\NewsletterManagerFactory::createNewsletterManager'
                 arguments: ['@templating']
 
     .. code-block:: xml
