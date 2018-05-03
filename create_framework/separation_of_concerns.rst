@@ -106,7 +106,7 @@ Move the controller to ``Calendar\Controller\LeapYearController``::
 
     class LeapYearController
     {
-        public function indexAction(Request $request, $year)
+        public function index(Request $request, $year)
         {
             $leapYear = new LeapYear();
             if ($leapYear->isLeapYear($year)) {

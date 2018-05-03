@@ -163,7 +163,7 @@ class with the ``name`` attribute of the ``@Route`` annotation::
         /**
          * @Route("/blog", name="index")
          */
-        public function indexAction()
+        public function index()
         {
             // ...
         }
@@ -171,7 +171,7 @@ class with the ``name`` attribute of the ``@Route`` annotation::
         /**
          * @Route("/blog/posts/{slug}", name="post")
          */
-        public function showAction(Post $post)
+        public function show(Post $post)
         {
             // ...
         }
