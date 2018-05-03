@@ -86,11 +86,11 @@ that will do the required processing for your message::
        }
     }
 
-Adapters
---------
+Transports
+----------
 
-In order to send and receive messages, you will have to configure an adapter. An
-adapter will be responsible of communicating with your message broker or 3rd parties.
+In order to send and receive messages, you will have to configure a transport. An
+transport will be responsible of communicating with your message broker or 3rd parties.
 
 Your own sender
 ~~~~~~~~~~~~~~~
@@ -190,4 +190,4 @@ To allow us to receive and send messages on the same bus and prevent an infinite
 loop, the message bus is equipped with the ``WrapIntoReceivedMessage`` middleware.
 It will wrap the received messages into ``ReceivedMessage`` objects and the
 ``SendMessageMiddleware`` middleware will know it should not route these
-messages again to an adapter.
+messages again to a transport.

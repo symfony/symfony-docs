@@ -5,7 +5,7 @@ How to Use the Messenger
 ========================
 
 Symfony's Messenger provide a message bus and some routing capabilities to send
-messages within your application and through adapters such as message queues.
+messages within your application and through transports such as message queues.
 Before using it, read the :doc:`Messenger component docs </components/messenger>`
 to get familiar with its concepts.
 
@@ -70,19 +70,19 @@ Once you've created your handler, you need to register it:
     If the message cannot be guessed from the handler's type-hint, use the
     ``handles`` attribute on the tag.
 
-Adapters
---------
+Transports
+----------
 
 The communication with queuing system or third parties is delegated to
-libraries for now. The built-in AMQP adapter allows you to communicate with
+libraries for now. The built-in AMQP transport allows you to communicate with
 most of the AMQP brokers such as RabbitMQ.
 
 .. note::
 
-    If you need more message brokers, you should have a look to `Enqueue's adapter`_
+    If you need more message brokers, you should have a look to `Enqueue's transport`_
     which supports things like Kafka, Amazon SQS or Google Pub/Sub.
 
-An adapter is registered using a "DSN", which is a string that represents the
+A transport is registered using a "DSN", which is a string that represents the
 connection credentials and configuration. By default, when you've installed
 the messenger component, the following configuration should have been created:
 
@@ -91,7 +91,7 @@ the messenger component, the following configuration should have been created:
     # config/packages/messenger.yaml
     framework:
         messenger:
-            adapters:
+            transports:
                 amqp: "%env(MESSENGER_DSN)%"
 
 .. code-block:: bash
@@ -111,7 +111,7 @@ Routing
 -------
 
 Instead of calling a handler, you have the option to route your message(s) to a
-sender. Part of an adapter, it is responsible for sending your message somewhere.
+sender. Part of a transport, it is responsible for sending your message somewhere.
 You can configure which message is routed to which sender with the following
 configuration:
 
@@ -120,7 +120,7 @@ configuration:
     framework:
         messenger:
             routing:
-                'My\Message\Message':  amqp # The name of the defined adapter
+                'My\Message\Message':  amqp # The name of the defined transport
 
 Such configuration would only route the ``My\Message\Message`` message to be
 asynchronous, the rest of the messages would still be directly handled.
@@ -132,7 +132,7 @@ You can route all classes of message to a sender using an asterisk instead of a 
     framework:
         messenger:
             routing:
-                'My\Message\MessageAboutDoingOperationalWork': another_adapter
+                'My\Message\MessageAboutDoingOperationalWork': another_transport
                 '*': amqp
 
 A class of message can also be routed to multiple senders by specifying a list:
@@ -166,25 +166,25 @@ like this:
     $ bin/console messenger:consume-messages amqp
 
 The first argument is the receiver's service name. It might have been created by
-your ``adapters`` configuration or it can be your own receiver.
+your ``transports`` configuration or it can be your own receiver.
 
-Your own Adapters
------------------
+Your own Transport
+------------------
 
-Once you have written your adapter's sender and receiver, you can register your
-adapter factory to be able to use it via a DSN in the Symfony application.
+Once you have written your transport's sender and receiver, you can register your
+transport factory to be able to use it via a DSN in the Symfony application.
 
-Create your adapter Factory
+Create your Transport Factory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You need to give FrameworkBundle the opportunity to create your adapter from a
-DSN. You will need an adapter factory::
+You need to give FrameworkBundle the opportunity to create your transport from a
+DSN. You will need an transport factory::
 
-    use Symfony\Component\Messenger\Adapter\Factory\AdapterFactoryInterface;
+    use Symfony\Component\Messenger\Transport\Factory\AdapterFactoryInterface;
     use Symfony\Component\Messenger\Transport\ReceiverInterface;
     use Symfony\Component\Messenger\Transport\SenderInterface;
 
-    class YourAdapterFactory implements AdapterFactoryInterface
+    class YourTransportFactory implements TransportFactoryInterface
     {
         public function createReceiver(string $dsn, array $options): ReceiverInterface
         {
@@ -198,7 +198,7 @@ DSN. You will need an adapter factory::
 
         public function supports(string $dsn, array $options): bool
         {
-            return 0 === strpos($dsn, 'my-adapter://');
+            return 0 === strpos($dsn, 'my-transport://');
         }
     }
 
@@ -207,22 +207,22 @@ Register your factory
 
 .. code-block:: xml
 
-    <service id="Your\Adapter\YourAdapterFactory">
-       <tag name="messenger.adapter_factory" />
+    <service id="Your\Transport\YourTransportFactory">
+       <tag name="messenger.transport_factory" />
     </service>
 
-Use your adapter
-~~~~~~~~~~~~~~~~
+Use your transport
+~~~~~~~~~~~~~~~~~~
 
-Within the ``framework.messenger.adapters.*`` configuration, create your
-named adapter using your own DSN:
+Within the ``framework.messenger.transports.*`` configuration, create your
+named transport using your own DSN:
 
 .. code-block:: yaml
 
     framework:
         messenger:
-            adapters:
-                yours: 'my-adapter://...'
+            transports:
+                yours: 'my-transport://...'
 
 In addition of being able to route your messages to the ``yours`` sender, this
 will give you access to the following services:
@@ -230,4 +230,4 @@ will give you access to the following services:
 #. ``messenger.sender.yours``: the sender.
 #. ``messenger.receiver.yours``: the receiver.
 
-.. _`enqueue's adapter`: https://github.com/sroze/enqueue-bridge
+.. _`enqueue's transport`: https://github.com/sroze/enqueue-bridge
