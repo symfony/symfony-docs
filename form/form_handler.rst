@@ -138,9 +138,7 @@ or use a Factory and retrieve the Handler linked to the submitted form.
 
         public function new(Request $request)
         {
-            // build the form ...
-
-            $form->handleRequest($request);
+            $form = $this->get('form.factory')->create(FormType::class)->handleRequest($request);
 
             if ($this->handler->handle($form)) {
                 return $this->redirectToRoute('admin_post_show', [
