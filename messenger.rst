@@ -219,6 +219,59 @@ your ``CommandBus`` in your services:
     services:
         App\CommandBus: ['@messenger.bus.commands']
 
+Middlewares
+-----------
+
+What happens when you dispatch a message to a message bus(es) depends on its
+middlewares (and their order). By default, the middlewares configured for each
+bus looks like this.
+
+1. ``logging`` middleware. Responsible of logging the beginning and the end of the
+   message within the bus.
+
+2. _Your own middlewares__
+
+3. ``route_messages`` middleware. Will route the messages your configured to their
+   corresponding sender and stop the middleware chain.
+
+4. ``call_message_handler`` middleware. Will call the message handler(s) for the
+   given message.
+
+Adding your own middlewares
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As described in the component documentation, you can add your own middlewares
+within the buses to add some extra capabilities like this:
+
+.. code-block:: yaml
+
+    framework:
+        messenger:
+            buses:
+                default:
+                    middlewares:
+                        # Works with the FQCN if the class discovery is enabled
+                        - App\\Middleware\\MyMiddleware
+
+                        # Or with some service name
+                        - app.middleware.yours
+
+Note that if the service is abstract, then a child service will be created per bus.
+
+Disabling default middlewares
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you don't want the default middlewares to be present on your bus, you can disable
+them like this:
+
+.. code-block:: yaml
+
+    framework:
+        messenger:
+            buses:
+                default:
+                    default_middlewares: false
+
 Your own Transport
 ------------------
 
