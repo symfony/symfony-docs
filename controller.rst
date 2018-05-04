@@ -616,7 +616,7 @@ Streaming File Responses
 You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
 helper to serve a file from inside a controller::
 
-    public function fileAction()
+    public function download()
     {
         // send the file contents and force the browser to download it
         return $this->file('/path/to/some_file.pdf');
@@ -627,7 +627,7 @@ The ``file()`` helper provides some arguments to configure its behavior::
     use Symfony\Component\HttpFoundation\File\File;
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
-    public function fileAction()
+    public function download()
     {
         // load the file from the filesystem
         $file = new File('/path/to/some_file.pdf');

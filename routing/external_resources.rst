@@ -214,7 +214,7 @@ a controller class or imported from a configuration file:
             /**
              * @Route("/blog", name="index")
              */
-            public function indexAction()
+            public function index()
             {
                 // ...
             }
@@ -222,7 +222,7 @@ a controller class or imported from a configuration file:
             /**
              * @Route("/blog/posts/{slug}", name="post")
              */
-            public function showAction(Post $post)
+            public function show(Post $post)
             {
                 // ...
             }

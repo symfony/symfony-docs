@@ -51,7 +51,7 @@ The Swift Mailer library works by creating, configuring and then sending
 of the message and is accessible via the ``Swift_Mailer`` service. Overall,
 sending an email is pretty straightforward::
 
-    public function indexAction($name, \Swift_Mailer $mailer)
+    public function index($name, \Swift_Mailer $mailer)
     {
         $message = (new \Swift_Message('Hello Email'))
             ->setFrom('send@example.com')

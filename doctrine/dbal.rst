@@ -47,7 +47,7 @@ object::
 
     class UserController extends Controller
     {
-        public function indexAction(Connection $connection)
+        public function index(Connection $connection)
         {
             $users = $connection->fetchAll('SELECT * FROM users');
 

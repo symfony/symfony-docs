@@ -96,7 +96,7 @@ The error controller reads as follows::
 
     class ErrorController
     {
-        public function exceptionAction(FlattenException $exception)
+        public function exception(FlattenException $exception)
         {
             $msg = 'Something went wrong! ('.$exception->getMessage().')';
 
@@ -134,7 +134,7 @@ instead of a full Response object::
 
     class LeapYearController
     {
-        public function indexAction(Request $request, $year)
+        public function index(Request $request, $year)
         {
             $leapYear = new LeapYear();
             if ($leapYear->isLeapYear($year)) {
