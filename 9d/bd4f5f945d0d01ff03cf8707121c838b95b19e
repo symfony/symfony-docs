@@ -1,0 +1,92 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-26T10:43:55Z
+
+@lsmith77 even if I appreciate your work on the diversity initiative and I sincerely want you to succeed and I want a CoC (and an enforcement group) put in place as soon as possible ... I feel this proposal goes against the values of the Symfony project because of the "full secrecy", "public lies", etc.
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2018-02-26T10:49:03Z
+
+@javiereguiluz do you disagree with the priorities of protecting people affected over transparency? If both can be done, all the better. My point is that there will be cases where transparency and protecting privacy will be at odds. And in this case I think we need to focus on protecting privacy because otherwise we fail at creating a safe environment and also we may also run into legal trouble at some point. These are lessons that other people who have worked in this area have concluded btw.
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2018-02-26T12:04:44Z
+
+@Nyholm I think it might make sense to specify the "Our Pledge" of the enforcement team. As stated above, I think they are "#1 creating a safe environment by protecting people within the community #2 helping to educate the community" .. and in that order. We have something similar in the CoC proposal https://github.com/symfony/symfony/pull/24896/files#diff-510d358f0b955588b8abd91113ae6858R3
+
+This might make it clearer under which situations which of the possible courses of action will be taken.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-26T15:23:27Z
+
+Given that Slack messages are quickly lost, and in case it's useful for this discussion, I'm pasting here some public Slack messages of users concerned about being banned for saying the wrong words:
+
+**UPDATE**: I've deleted the screenshots because a person included in them asked it.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-26T16:48:34Z
+
+In the Symfony Slack there's a very heated debate about cursing and the use of certain strong words. So maybe the CoC could clarify the position of Symfony over cursing. E.g. using words like "fuck" in GitHub comments, conference talks, Slack channels, etc.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-02-27T15:52:28Z
+
+Another question: is there a standard process to appeal decisions? If you report something as offensive but the enforcement team doesn't considers offensive, can you ask for a reconsideration? can you appeal the decision somehow or are all decisions final?
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2018-03-06T16:12:57Z
+
+FYI send a small PR with a pledge which clarifies the priorities of the enforcement team:
+https://github.com/Nyholm/symfony-docs/pull/2
+
+However I was unsure if this should be in the process or on the team page
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2018-03-15T12:25:40Z
+
+So among the more intensively discussed topics were the `public reprimand` and contacting the employer. I had some more discussions and my proposal would be to remove these points but add to that section that other types of actions may be taken in consultation with the core team.
+
+that being said, we might also need a process for such consultations. to give a practical example, one reason for a public reprimand may be that the topic is already public and there is an expectation for Symfony to make a statement what our stance is. For example lets say we have a similar case as https://en.wikipedia.org/wiki/Jacob_Appelbaum#Allegations_of_sexual_misconduct in our community. In such a scenario it would be important for the health of the community to have a process that in a *timely* manner enables a public response, which may include a reprimand.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-04-19T07:55:50Z
+
+Thank you for the reviews. I've updated the PR accordingly.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2018-04-30T17:15:30Z
+
+I need to merge this PR (right now the docs are broken in 2.7). Can we remove the placeholder text and keep the list of members empty for now?
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2018-05-03T19:23:23Z
+
+emptied the team list https://github.com/Nyholm/symfony-docs/pull/3
+
+---------------------------------------------------------------------------
+
+by lsmith77 at 2018-05-03T19:24:43Z
+
+and yeah .. the PR needs to be pointed at the 2.7 branch and rebased accordingly.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-05-04T07:55:38Z
+
+Thank you for the reviews and the fixes.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-05-04T08:52:27Z
+
+Finally! Squashed commits and rebased to 2.7
