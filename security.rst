@@ -129,6 +129,15 @@ be fooled by the "Yes" next to Authenticated, you're just an anonymous user:
 
 You'll learn later how to deny access to certain URLs or controllers.
 
+.. note::
+
+    If you do not see toolbar, make sure you installed the :doc:`profiler </profile>`
+    using this command:
+
+    .. code-block:: terminal
+
+        $ composer require profiler --dev
+
 .. tip::
 
     Security is *highly* configurable and there's a
