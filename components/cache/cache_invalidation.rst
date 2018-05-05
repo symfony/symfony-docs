@@ -48,6 +48,9 @@ you can invalidate the cached items by calling
     // if you know the cache key, you can also delete the item directly
     $cache->deleteItem('cache_key');
 
+    // If you don't remember the item key, you can use the getKey() method
+    $cache->deleteItem($item->getKey());
+
 Using tags invalidation is very useful when tracking cache keys becomes difficult.
 
 Tag Aware Adapters
