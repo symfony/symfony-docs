@@ -84,9 +84,9 @@ current PHP SAPI:
 
 .. tip::
 
-    The VarDumper component also includes a ``dd()`` helper method. This "dump
-    and die" feature calls ``dump()`` and stops the application immediately
-    after with ``exit()``.
+    The VarDumper component also provides a ``dd()`` ("dump and die") helper
+    function. This function dumps the variables using ``dump()`` and
+    immediately ends the execution of the script (using :phpfunction:`exit`).
 
     .. versionadded:: 4.1
         The ``dd()`` helper method was introduced in Symfony 4.1.
