@@ -127,6 +127,13 @@ be fooled by the "Yes" next to Authenticated, you're just an anonymous user:
 .. image:: /_images/security/anonymous_wdt.png
    :align: center
 
+.. tip::
+    If you do not see toolbar, it can be installed with :doc:`Profiler </profiler>` bundle
+
+    .. code-block:: terminal
+
+        $ composer require profiler --dev
+
 You'll learn later how to deny access to certain URLs or controllers.
 
 .. tip::
