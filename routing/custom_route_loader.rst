@@ -73,14 +73,14 @@ and configure the service and method to call:
 
     .. code-block:: yaml
 
-        # config/routing.yaml
+        # config/routes.yaml
         admin_routes:
             resource: 'admin_route_loader:loadRoutes'
             type: service
 
     .. code-block:: xml
 
-        <!-- config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -92,7 +92,7 @@ and configure the service and method to call:
 
     .. code-block:: php
 
-        // config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
 
         $routes = new RouteCollection();
@@ -306,7 +306,7 @@ configuration file - you can call the
         {
             $routes = new RouteCollection();
 
-            $resource = '@ThirdPartyBundle/Resources/config/routing.yaml';
+            $resource = '@ThirdPartyBundle/Resources/config/routes.yaml';
             $type = 'yaml';
 
             $importedRoutes = $this->import($resource, $type);
