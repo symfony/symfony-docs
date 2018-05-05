@@ -71,6 +71,13 @@ property they use to access their account via the API::
         // more getters/setters
     }
 
+.. caution::
+
+    In the example above, the table name is ``user``. This is a reserved SQL
+    keyword and `must be quoted with backticks`_ in Doctrine to avoid errors.
+    You might also change the table name (e.g. with ``app_users``) to solve
+    this issue.
+
 .. tip::
 
     This User doesn't have a password, but you can add a ``password`` property if
@@ -587,3 +594,5 @@ Frequently Asked Questions
     to actually authenticate the user. You can continue doing that (see previous
     question) or use the ``User`` object from FOSUserBundle and create your own
     authenticator(s) (just like in this article).
+
+.. _`must be quoted with backticks`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
