@@ -146,6 +146,7 @@ suppose you want to prefix all application routes with ``/site`` (e.g.
 
 The path of each route being loaded from the new routing resource will now
 be prefixed with the string ``/site``.
+When using YAML or XML routing files, you need to group them by prefix in folders.
 
 Prefixing the Names of Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
