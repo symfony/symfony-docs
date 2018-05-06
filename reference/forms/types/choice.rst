@@ -30,7 +30,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 | Overridden  | - `compound`_                                                                |
 | options     | - `empty_data`_                                                              |
 |             | - `error_bubbling`_                                                          |
-|             | - `trim`_                                                                    |
+|             | - `choice_type_trim`_                                                        |
 +-------------+------------------------------------------------------------------------------+
 | Inherited   | - `attr`_                                                                    |
 | options     | - `by_reference`_                                                            |
@@ -324,13 +324,7 @@ error_bubbling
 Set that error on this field must be attached to the field instead of
 the parent field (the form in most cases).
 
-trim
-~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-Trimming is disabled by default because the selected value or values must match
-the given choice values exactly (and they could contain white spaces).
+.. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 
 Inherited Options
 -----------------
