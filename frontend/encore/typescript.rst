@@ -9,7 +9,7 @@ Want to use `TypeScript`_? No problem! First, install the dependencies:
 
 Then, activate the ``ts-loader`` in ``webpack.config.js``:
 
-.. code-block:: diff
+.. code-block:: javascript
 
     // webpack.config.js
     // ...
@@ -48,7 +48,7 @@ process, which can speedup compile time. To enable it, install the plugin:
 
 Then enable it by calling:
 
-.. code-block:: diff
+.. code-block:: javascript
 
     // webpack.config.js
 
