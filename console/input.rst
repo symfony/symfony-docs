@@ -242,21 +242,7 @@ passing the option at all; however, the task of distinguishing between when
 the option was used without a value (``greet --yell``) or when it wasn't used 
 at all (``greet``) it's a bit impervious. 
 
-To solve this issue, you have two possible solutions: in the first case, you
-can use the ``hasParameterOption`` method::
-
-    if ($input->hasParameterOption('--yell')) {
-        $yell = true;
-        $yellLouder = $input->getOption('yell') === 'louder';
-    }
-
-.. caution::
-
-    Note that the ``hasParameterOption`` method requires prepending ``--``
-    to the option name.
-
-The second solution is to alter the option definition, setting the default value
-to ``false``::
+To solve this issue, you have to set the option's default value to ``false``::
 
     // ...
     use Symfony\Component\Console\Input\InputOption;
@@ -271,7 +257,8 @@ to ``false``::
             false // this is the new default value, instead of null
         );
 
-And then checking carefully the value of the option, minding that ``false !== null``::
+And then you just have to check carefully the value of the option, minding that
+``false !== null``::
 
     $optionValue = $input->getOptions('yell');
     $yell = ($optionValue !== false);
