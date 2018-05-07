@@ -14,7 +14,7 @@ is installed:
 
 .. code-block:: terminal
 
-    $ composer require var-dumper
+    $ composer require symfony/var-dumper
 
 This is useful, for example, inside your controller::
 

@@ -195,15 +195,15 @@ To use the web debug toolbar, just install it:
 
 .. code-block:: terminal
 
-    $ composer require --dev profiler
+    $ composer require --dev symfony/web-profiler-bundle
 
 As soon as this finishes, refresh your page. You should see a black bar along the
 bottom of the page. You'll learn more about all the information it holds along the
 way, but feel free to experiment: hover over and click the different icons to get
 information about routing, performance, logging and more.
 
-The ``profiler`` package is also a great example of Flex! After downloading the
-package, the recipe created several configuration files so that the web debug toolbar
+This is also a great example of Flex! After downloading the profiler package,
+the recipe created several configuration files so that the web debug toolbar
 worked instantly.
 
 Rendering a Template
@@ -217,7 +217,7 @@ First, install Twig:
 
 .. code-block:: terminal
 
-    $ composer require twig
+    $ composer require symfony/twig-bundle
 
 Second, make sure that ``LuckyController`` extends Symfony's base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class:

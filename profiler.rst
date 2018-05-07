@@ -12,7 +12,7 @@ install the profiler before using it:
 
 .. code-block:: terminal
 
-    $ composer require profiler --dev
+    $ composer require symfony/web-profiler-bundle --dev
 
 .. toctree::
     :maxdepth: 1

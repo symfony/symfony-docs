@@ -19,7 +19,7 @@ install the serializer before using it:
 
 .. code-block:: terminal
 
-    $ composer require serializer
+    $ composer require symfony/serializer
 
 Using the Serializer Service
 ----------------------------
@@ -123,7 +123,7 @@ To use annotations, first install the annotations package:
 
 .. code-block:: terminal
 
-    $ composer require annotations
+    $ composer require doctrine/annotations
 
 Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
 to your class and choose which groups to use when serializing::

@@ -21,7 +21,7 @@ If you want to use the PHP templating engine, first install the templating compo
 
 .. code-block:: terminal
 
-    $ composer require templating
+    $ composer require symfony/templating
 
 Next, enable the php engine:
 

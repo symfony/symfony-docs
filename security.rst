@@ -34,7 +34,7 @@ install the security feature before using it:
 
 .. code-block:: terminal
 
-    $ composer require security
+    $ composer require symfony/security-bundle
 
 .. _security-firewalls:
 .. _firewalls-authentication:
@@ -136,7 +136,7 @@ You'll learn later how to deny access to certain URLs or controllers.
 
     .. code-block:: terminal
 
-        $ composer require profiler --dev
+        $ composer require symfony/web-profiler-bundle --dev
 
 .. tip::
 

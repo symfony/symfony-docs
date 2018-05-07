@@ -23,8 +23,8 @@ code:
 
 .. code-block:: terminal
 
-    composer require doctrine
-    composer require maker --dev
+    $ composer require doctrine/doctrine-bundle
+    $ composer require symfony/maker-bundle --dev
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -468,8 +468,8 @@ the :ref:`doctrine-queries` section.
     If the number of database queries is too high, the icon will turn yellow to
     indicate that something may not be correct. Click on the icon to open the
     Symfony Profiler and see the exact queries that were executed. If you don't
-    see the web debug toolbar, try running ``composer require profiler`` to install
-    it.
+    see the web debug toolbar, try running ``composer require symfony/web-profiler-bundle``
+    to install it.
 
 Automatically Fetching Objects (ParamConverter)
 -----------------------------------------------
@@ -479,7 +479,7 @@ for you automatically! First, install the bundle in case you don't have it:
 
 .. code-block:: terminal
 
-    $ composer require annotations
+    $ composer require doctrine/annotations
 
 Now, simplify your controller::
 

@@ -17,7 +17,7 @@ requires installing the Symfony Form component):
 
 .. code-block:: terminal
 
-    $ composer require security-csrf form
+    $ composer require symfony/security-csrf symfony/form
 
 Then, enable/disable the CSRF protection with the ``csrf_protection`` option
 (see the :ref:`CSRF configuration reference <reference-framework-csrf-protection>`
