@@ -14,7 +14,7 @@ First, make sure you have all the dependencies you need installed:
 
 .. code-block:: terminal
 
-    $ composer require doctrine form security validator
+    $ composer require symfony/orm-pack symfony/form symfony/security-bundle symfony/validator
 
 .. tip::
 

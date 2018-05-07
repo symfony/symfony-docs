@@ -3,7 +3,7 @@ Internationalization
 
 Internationalization and localization adapt the applications and their contents
 to the specific region or language of the users. In Symfony this is an opt-in
-feature that needs to be installed before using it (``composer require translation``).
+feature that needs to be installed before using it (``composer require symfony/translation``).
 
 Translation Source File Location
 --------------------------------

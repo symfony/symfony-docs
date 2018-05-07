@@ -45,7 +45,7 @@ First, move into your new project and install the server:
 .. code-block:: terminal
 
     $ cd my-project
-    $ composer require server --dev
+    $ composer require symfony/web-server-bundle --dev
 
 To start the server, run:
 
@@ -115,14 +115,14 @@ few other project-specific tasks (e.g. creating database schema).
 Checking for Security Vulnerabilities
 -------------------------------------
 
-Symfony provides a utility called the "Security Checker" (or ``sec-checker``) to
-check whether your project's dependencies contain any known security
-vulnerability. Run this command to install it in your application:
+Symfony provides a utility called the "Security Checker" to check whether your
+project's dependencies contain any known security vulnerability. Run this
+command to install it in your application:
 
 .. code-block:: terminal
 
     $ cd my-project/
-    $ composer require sec-checker --dev
+    $ composer require sensiolabs/security-checker --dev
 
 From now on, this utility will be run automatically whenever you install or
 update any dependency in the application. If a dependency contains a vulnerability,

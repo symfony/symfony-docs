@@ -17,7 +17,7 @@ install the form feature before using it:
 
 .. code-block:: terminal
 
-    $ composer require form
+    $ composer require symfony/form
 
 .. note::
 
@@ -321,7 +321,7 @@ Before using validation, add support for it in your application:
 
 .. code-block:: terminal
 
-    $ composer require validator
+    $ composer require symfony/validator
 
 Validation is done by adding a set of rules (called constraints) to a class. To
 see this in action, add validation constraints so that the ``task`` field cannot
