@@ -19,15 +19,15 @@ contact, include this in your report and we will attempt to notify them.
 
 In your report please include:
 
-  * Your contact info for follow-up contact.
-  * Names (legal, nicknames, or pseudonyms) of any individuals involved.
-  * If there were other witnesses besides you, please try to include them as well.
-  * When and where the incident occurred. Please be as specific as possible.
-  * Your description of what occurred.
-  * If there is a publicly available record (e.g. a mailing list archive or a
-    public IRC or Slack log), please include a link and a screenshot.
-  * If you believe this incident is ongoing.
-  * Any other information you believe we should have.
+* Your contact info for follow-up contact.
+* Names (legal, nicknames, or pseudonyms) of any individuals involved.
+* If there were other witnesses besides you, please try to include them as well.
+* When and where the incident occurred. Please be as specific as possible.
+* Your description of what occurred.
+* If there is a publicly available record (e.g. a mailing list archive or a
+  public IRC or Slack log), please include a link and a screenshot.
+* If you believe this incident is ongoing.
+* Any other information you believe we should have.
 
 What happens after you file a report?
 -------------------------------------
@@ -38,9 +38,9 @@ acknowledging receipt as soon as possible, but within 24 hours.
 The team member receiving the report will immediately contact all or some other
 enforcement team members to review the incident and determine:
 
-  * What happened.
-  * Whether this event constitutes a Code of Conduct violation.
-  * What kind of response is appropriate.
+* What happened.
+* Whether this event constitutes a Code of Conduct violation.
+* What kind of response is appropriate.
 
 If this is determined to be an ongoing incident or a threat to physical safety,
 the team's immediate priority will be to protect everyone involved. This means
@@ -50,16 +50,16 @@ and that everyone is physically safe.
 Once the team has a complete account of the events, they will make a decision as
 to how to respond. Responses may include:
 
-  * Nothing (if we determine no Code of Conduct violation occurred).
-  * A private reprimand from the Code of Conduct response team to the individual(s)
-    involved.
-  * An imposed vacation (i.e. asking someone to "take a week off" from a mailing
-    list or Slack).
-  * A permanent or temporary ban from some or all Symfony conference/community
-    spaces (events, meetings, mailing lists, IRC, Slack, etc.)
-  * A request to engage in mediation and/or an accountability plan.
-  * On a case by case basis, other actions may be possible but will usually be
-    coordinated with the core team and the Symfony company.
+* Nothing (if we determine no Code of Conduct violation occurred).
+* A private reprimand from the Code of Conduct response team to the individual(s)
+  involved.
+* An imposed vacation (i.e. asking someone to "take a week off" from a mailing
+  list or Slack).
+* A permanent or temporary ban from some or all Symfony conference/community
+  spaces (events, meetings, mailing lists, IRC, Slack, etc.)
+* A request to engage in mediation and/or an accountability plan.
+* On a case by case basis, other actions may be possible but will usually be
+  coordinated with the core team and the Symfony company.
 
 We'll respond within one week to the person who filed the report with either a
 resolution or an explanation of why the situation is not yet resolved.
