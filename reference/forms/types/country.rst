@@ -33,7 +33,7 @@ you should just use the ``choice`` type directly.
 |             | - `multiple`_                                                         |
 |             | - `placeholder`_                                                      |
 |             | - `preferred_choices`_                                                |
-|             | - `choice_type_trim`_                                                 |
+|             | - `trim`_                                                             |
 |             |                                                                       |
 |             | from the :doc:`form </reference/forms/types/form>` type               |
 |             |                                                                       |

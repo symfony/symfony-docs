@@ -30,7 +30,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 | Overridden  | - `compound`_                                                                |
 | options     | - `empty_data`_                                                              |
 |             | - `error_bubbling`_                                                          |
-|             | - `choice_type_trim`_                                                        |
+|             | - `trim`_                                                                    |
 +-------------+------------------------------------------------------------------------------+
 | Inherited   | - `attr`_                                                                    |
 | options     | - `by_reference`_                                                            |

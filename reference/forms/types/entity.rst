@@ -32,7 +32,7 @@ objects from the database.
 |             | - `placeholder`_                                                 |
 |             | - `preferred_choices`_                                           |
 |             | - `translation_domain`_                                          |
-|             | - `choice_type_trim`_                                            |
+|             | - `trim`_                                                        |
 |             |                                                                  |
 |             | from the :doc:`form </reference/forms/types/form>` type:         |
 |             |                                                                  |
