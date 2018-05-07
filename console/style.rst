@@ -238,7 +238,7 @@ User Input Methods
     the third argument::
 
         $io->ask('Number of workers to start', 1, function ($number) {
-            if (!is_integer($number)) {
+            if (!ctype_digit($number)) {
                 throw new \RuntimeException('You must type an integer.');
             }
 
