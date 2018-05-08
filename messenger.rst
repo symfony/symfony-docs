@@ -44,7 +44,7 @@ Registering Handlers
 --------------------
 
 In order to do something when your message is dispatched, you need to create a
-message handler. It's a class with an `__invoke` method::
+message handler. It's a class with an ``__invoke`` method::
 
     // src/MessageHandler/MyMessageHandler.php
     namespace App\MessageHandler;
@@ -232,7 +232,7 @@ for each bus looks like this:
 1. ``logging`` middleware. Responsible of logging the beginning and the end of the
    message within the bus.
 
-2. _Your own collection of middleware__
+2. _Your own collection of middleware_
 
 3. ``route_messages`` middleware. Will route the messages your configured to their
    corresponding sender and stop the middleware chain.
@@ -355,4 +355,4 @@ will give you access to the following services:
 #. ``messenger.sender.yours``: the sender.
 #. ``messenger.receiver.yours``: the receiver.
 
-.. _`enqueue's transport`: https://github.com/sroze/enqueue-bridge
+.. _`enqueue's transport`: https://github.com/enqueue/messenger-adapter
