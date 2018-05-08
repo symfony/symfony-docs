@@ -109,7 +109,7 @@ configure the following services for you:
 
 .. note::
 
-    In order to use Symfony's built-in AMQP adapter, you will need the Serializer
+    In order to use Symfony's built-in AMQP transport, you will need the Serializer
     Component. Ensure that it is installed with:
 
     .. code-block:: terminal
@@ -253,8 +253,8 @@ within the buses to add some extra capabilities like this:
             buses:
                 messenger.bus.default:
                     middleware:
-                        - "App\\Middleware\\MyMiddleware"
-                        - "App\\Middleware\\AnotherMiddleware"
+                        - 'App\Middleware\MyMiddleware'
+                        - 'App\Middleware\AnotherMiddleware'
 
 Note that if the service is abstract, then a different instance of service will be
 created per bus.
