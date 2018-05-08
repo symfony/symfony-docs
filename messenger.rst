@@ -253,13 +253,11 @@ within the buses to add some extra capabilities like this:
             buses:
                 messenger.bus.default:
                     middleware:
-                        # Works with the FQCN if the class discovery is enabled
-                        - App\\Middleware\\MyMiddleware
+                        - "App\\Middleware\\MyMiddleware"
+                        - "App\\Middleware\\AnotherMiddleware"
 
-                        # Or with some service name
-                        - app.middleware.yours
-
-Note that if the service is abstract, then a child service will be created per bus.
+Note that if the service is abstract, then a different instance of service will be
+created per bus.
 
 Disabling default middleware
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
