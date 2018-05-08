@@ -107,6 +107,15 @@ configure the following services for you:
 1. A ``messenger.sender.amqp`` sender to be used when routing messages.
 2. A ``messenger.receiver.amqp`` receiver to be used when consuming messages.
 
+.. note::
+
+    In order to use Symfony's built-in AMQP adapter, you will need the Serializer
+    Component. Ensure that it is installed with:
+
+    .. code-block:: terminal
+
+        $ composer require symfony/serializer-pack
+
 Routing
 -------
 
