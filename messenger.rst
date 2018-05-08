@@ -228,17 +228,17 @@ your ``CommandBus`` in your services:
     services:
         App\CommandBus: ['@messenger.bus.commands']
 
-Middlewares
------------
+Middleware
+----------
 
 What happens when you dispatch a message to a message bus(es) depends on its
-middlewares (and their order). By default, the middlewares configured for each
-bus looks like this.
+collection of middleware (and their order). By default, the middleware configured
+for each bus looks like this:
 
 1. ``logging`` middleware. Responsible of logging the beginning and the end of the
    message within the bus.
 
-2. _Your own middlewares__
+2. _Your own collection of middleware__
 
 3. ``route_messages`` middleware. Will route the messages your configured to their
    corresponding sender and stop the middleware chain.
@@ -246,10 +246,10 @@ bus looks like this.
 4. ``call_message_handler`` middleware. Will call the message handler(s) for the
    given message.
 
-Adding your own middlewares
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Adding your own middleware
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As described in the component documentation, you can add your own middlewares
+As described in the component documentation, you can add your own middleware
 within the buses to add some extra capabilities like this:
 
 .. code-block:: yaml
@@ -258,7 +258,7 @@ within the buses to add some extra capabilities like this:
         messenger:
             buses:
                 default:
-                    middlewares:
+                    middleware:
                         # Works with the FQCN if the class discovery is enabled
                         - App\\Middleware\\MyMiddleware
 
@@ -267,11 +267,11 @@ within the buses to add some extra capabilities like this:
 
 Note that if the service is abstract, then a child service will be created per bus.
 
-Disabling default middlewares
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Disabling default middleware
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you don't want the default middlewares to be present on your bus, you can disable
-them like this:
+If you don't want the default collection of middleware to be present on your bus,
+you can disable them like this:
 
 .. code-block:: yaml
 
@@ -279,7 +279,7 @@ them like this:
         messenger:
             buses:
                 default:
-                    default_middlewares: false
+                    default_middleware: false
 
 Your own Transport
 ------------------
