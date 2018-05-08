@@ -279,30 +279,48 @@ Once you have written your transport's sender and receiver, you can register you
 transport factory to be able to use it via a DSN in the Symfony application.
 
 Create your Transport Factory
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You need to give FrameworkBundle the opportunity to create your transport from a
 DSN. You will need an transport factory::
 
-    use Symfony\Component\Messenger\Transport\Factory\AdapterFactoryInterface;
+    use Symfony\Component\Messenger\Transport\TransportFactoryInterface;
+    use Symfony\Component\Messenger\Transport\TransportInterface;
     use Symfony\Component\Messenger\Transport\ReceiverInterface;
     use Symfony\Component\Messenger\Transport\SenderInterface;
 
     class YourTransportFactory implements TransportFactoryInterface
     {
-        public function createReceiver(string $dsn, array $options): ReceiverInterface
+        public function createTransport(string $dsn, array $options): TransportInterface
         {
-            return new YourReceiver(/* ... */);
-        }
-
-        public function createSender(string $dsn, array $options): SenderInterface
-        {
-            return new YourSender(/* ... */);
+            return new YourTransport(/* ... */);
         }
 
         public function supports(string $dsn, array $options): bool
         {
             return 0 === strpos($dsn, 'my-transport://');
+        }
+    }
+
+The transport object is needs to implements the ``TransportInterface`` (which simply combine
+the ``SenderInterface`` and ``ReceiverInterface``). It will look
+like this::
+
+    class YourTransport implements TransportInterface
+    {
+        public function send($message) : void
+        {
+            // ...
+        }
+
+        public function receive(callable $handler) : void
+        {
+            // ...
+        }
+
+        public function stop() : void
+        {
+            // ...
         }
     }
 
