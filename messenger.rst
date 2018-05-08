@@ -195,8 +195,8 @@ this:
 
             # Create buses
             buses:
-                commands: ~
-                events: ~
+                messenger.bus.commands: ~
+                messenger.bus.events: ~
 
 This will generate the ``messenger.bus.commands`` and ``messenger.bus.events`` services
 that you can inject in your services.
@@ -257,7 +257,7 @@ within the buses to add some extra capabilities like this:
     framework:
         messenger:
             buses:
-                default:
+                messenger.bus.default:
                     middleware:
                         # Works with the FQCN if the class discovery is enabled
                         - App\\Middleware\\MyMiddleware
@@ -278,7 +278,7 @@ you can disable them like this:
     framework:
         messenger:
             buses:
-                default:
+                messenger.bus.default:
                     default_middleware: false
 
 Your own Transport
