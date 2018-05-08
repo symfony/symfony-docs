@@ -208,25 +208,19 @@ Auto-wiring is a great feature that allows you to reduce the amount of configura
 required for your service container to be created. When using multiple buses, by default,
 the auto-wiring will not work as it won't know why bus to inject in your own services.
 
-In order to clarify this, you will have to create your own decorators for your message
-buses. Let's create one for your ``CommandBus``::
-
-    namespace App;
-
-    use Symfony\Component\Messenger\AbstractMessageBusDecorator;
-
-    final class CommandBus extends AbstractMessageBusDecorator
-    {
-    }
-
-Last step is to register your service (and explicit its argument) to be able to typehint
-your ``CommandBus`` in your services:
+In order to clarify this, you can use the DependencyInjection's binding capabilities
+to clarify which bus will be injected based on the argument's name:
 
 .. code-block:: yaml
 
     # config/services.yaml
     services:
-        App\CommandBus: ['@messenger.bus.commands']
+        _defaults:
+            # ...
+
+            bind:
+                $commandBus: '@messenger.bus.commands'
+                $eventBus: '@messenger.bus.events'
 
 Middleware
 ----------
