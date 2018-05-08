@@ -91,7 +91,7 @@ To build the assets, use the ``encore`` executable:
     Re-run ``encore`` each time you update your ``webpack.config.js`` file.
 
 After running one of these commands, you can now add ``script`` and ``link`` tags
-to the new, compiled assets (e.g. ``/build/app.css`` and ``/build/app.js``).
+to the new, compiled assets (e.g. ``/build/css/app.css`` and ``/build/js/app.js``).
 In Symfony, use the ``asset()`` helper:
 
 .. code-block:: twig
@@ -101,11 +101,11 @@ In Symfony, use the ``asset()`` helper:
     <html>
         <head>
             <!-- ... -->
-            <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
         </head>
         <body>
             <!-- ... -->
-            <script src="{{ asset('build/app.js') }}"></script>
+            <script src="{{ asset('build/js/app.js') }}"></script>
         </body>
     </html>
 
