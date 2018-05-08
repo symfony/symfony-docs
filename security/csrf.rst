@@ -16,7 +16,7 @@ Before using the CSRF protection, install it in your project:
 
 .. code-block:: terminal
 
-    $ composer require security-csrf
+    $ composer require symfony/security-csrf
 
 Then, enable/disable the CSRF protection with the ``csrf_protection`` option
 (see the :ref:`CSRF configuration reference <reference-framework-csrf-protection>`

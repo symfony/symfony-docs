@@ -131,7 +131,7 @@ You'll learn later how to deny access to certain URLs or controllers.
 
 .. note::
 
-    If you do not see toolbar, make sure you installed the :doc:`profiler </profile>`
+    If you do not see toolbar, make sure you installed the :doc:`profiler </profiler>`
     using this command:
 
     .. code-block:: terminal
