@@ -30,6 +30,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 | Overridden  | - `compound`_                                                                |
 | options     | - `empty_data`_                                                              |
 |             | - `error_bubbling`_                                                          |
+|             | - `trim`_                                                                    |
 +-------------+------------------------------------------------------------------------------+
 | Inherited   | - `attr`_                                                                    |
 | options     | - `by_reference`_                                                            |
@@ -106,7 +107,7 @@ method::
         'choice_attr' => function($category, $key, $index) {
             return ['class' => 'category_'.strtolower($category->getName())];
         },
-        
+
         'group_by' => function($category, $key, $index) {
             // randomly assign things into 2 groups
             return rand(0, 1) == 1 ? 'Group A' : 'Group B';
@@ -322,6 +323,8 @@ error_bubbling
 
 Set that error on this field must be attached to the field instead of
 the parent field (the form in most cases).
+
+.. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 
 Inherited Options
 -----------------
