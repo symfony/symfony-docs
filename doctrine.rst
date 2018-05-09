@@ -18,12 +18,12 @@ tight integration with a third-party library called `Doctrine`_.
 Installing Doctrine
 -------------------
 
-First, install Doctrine, as well as the MakerBundle, which will help generate some
-code:
+First, install Doctrine support via the ORM pack, as well as the MakerBundle,
+which will help generate some code:
 
 .. code-block:: terminal
 
-    $ composer require doctrine/doctrine-bundle
+    $ composer require symfony/orm-pack
     $ composer require symfony/maker-bundle --dev
 
 Configuring the Database
