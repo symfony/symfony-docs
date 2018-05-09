@@ -87,6 +87,15 @@ With some validation added, your class may look something like this::
          * @ORM\Column(type="string", length=64)
          */
         private $password;
+        
+        /**
+         * @ORM\Column(type="array")
+         */
+        private $roles;
+
+        public function __construct() {
+            $this->roles = array('ROLE_USER');
+        }
 
         // other properties and methods
 
@@ -136,8 +145,15 @@ With some validation added, your class may look something like this::
             // You *may* need a real salt if you choose a different encoder.
             return null;
         }
+        
+        public function getRoles()
+        {
+            return $this->roles;
+        }
 
-        // other methods, including security methods like getRoles()
+        public function eraseCredentials()
+        {
+        }
     }
 
 The :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` requires
