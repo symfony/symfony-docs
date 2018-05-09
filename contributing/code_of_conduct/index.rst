@@ -6,5 +6,5 @@ Code of Conduct
 
     code_of_conduct
     reporting_guidelines
-    enforcement_team
+    care_team
     concrete_example_document

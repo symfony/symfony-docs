@@ -78,10 +78,11 @@ exists
 presence of one or more files or directories and returns ``false`` if any of
 them is missing::
 
-    // this directory exists, return true
+    // if this absolute directory exists, returns true
     $fileSystem->exists('/tmp/photos');
 
-    // rabbit.jpg exists, bottle.png does not exist, return false
+    // if rabbit.jpg exists and bottle.png does not exist, returns false
+    // non-absolute paths are relative to the directory where the running PHP script is stored
     $fileSystem->exists(array('rabbit.jpg', 'bottle.png'));
 
 .. note::
