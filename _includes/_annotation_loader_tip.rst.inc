@@ -1,7 +1,7 @@
 .. note::
 
     In order to use the annotation loader, you should have installed the
-    ``doctrine/annotations`` and ``doctrine/cache`` packages with Composer.
+    ``sensio/framework-extra-bundle`` and ``doctrine/cache`` packages with Composer.
 
 .. tip::
 

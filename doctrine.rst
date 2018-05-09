@@ -479,7 +479,7 @@ for you automatically! First, install the bundle in case you don't have it:
 
 .. code-block:: terminal
 
-    $ composer require doctrine/annotations
+    $ composer require sensio/framework-extra-bundle
 
 Now, simplify your controller::
 
