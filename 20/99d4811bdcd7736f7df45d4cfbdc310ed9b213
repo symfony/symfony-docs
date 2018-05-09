@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2018-05-03T14:39:25Z
+
+> This is enough to allow you to route your message to the ``amqp``.
+
+What about to add a note block before that about install/enable the Serializer component, to make AMQP transport available?
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2018-05-07T14:27:22Z
+
+Some more entries to add to the list :)
+
+1. Now that https://github.com/symfony/symfony/pull/26945 is merged, examples should be updated to reflect the new `Envelope` usage (`SenderInterface::send(Envelope $envelope)` and receivers's handler (`function (?Envelope $envelope)` instead of `function ($message)`).
+1. We can mention the `EnvelopeAwareInterface`, how to write items and how to benefit from it in custom middlewares (+ mention existing items)
+1. `middlewares` config entry is renamed `middleware` (https://github.com/symfony/symfony/pull/27177)
+1. in the config, message buses names are the full service id you'll use (https://github.com/symfony/symfony/pull/27162)
+
+---------------------------------------------------------------------------
+
+by sroze at 2018-05-08T20:00:22Z
+
+> Now that symfony/symfony#26945 is merged, examples should be updated to reflect the new Envelope usage (SenderInterface::send(Envelope $envelope) and receivers's handler (function (?Envelope $envelope) instead of function ($message)).
+> We can mention the EnvelopeAwareInterface, how to write items and how to benefit from it in custom middlewares (+ mention existing items)
+
+@ogizanagi could you send a PR for that? Has it's not been merged yet, I'd prefer to move it out of the scope of this PR.
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2018-05-08T20:12:35Z
+
+Sure I'll do once this one is merged.
+
+---------------------------------------------------------------------------
+
+by sroze at 2018-05-08T20:20:40Z
+
+@javiereguiluz @weaverryan could you have a look at this one? 🙏
