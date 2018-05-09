@@ -136,7 +136,7 @@ You'll learn later how to deny access to certain URLs or controllers.
 
     .. code-block:: terminal
 
-        $ composer require symfony/web-profiler-bundle --dev
+        $ composer require --dev symfony/profiler-pack
 
 .. tip::
 

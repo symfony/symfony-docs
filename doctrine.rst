@@ -468,7 +468,7 @@ the :ref:`doctrine-queries` section.
     If the number of database queries is too high, the icon will turn yellow to
     indicate that something may not be correct. Click on the icon to open the
     Symfony Profiler and see the exact queries that were executed. If you don't
-    see the web debug toolbar, try running ``composer require symfony/web-profiler-bundle``
+    see the web debug toolbar, try running ``composer require --dev symfony/profiler-pack``
     to install it.
 
 Automatically Fetching Objects (ParamConverter)

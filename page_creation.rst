@@ -191,11 +191,11 @@ The Web Debug Toolbar: Debugging Dream
 One of Symfony's *killer* features is the Web Debug Toolbar: a bar that displays
 a *huge* amount of debugging information along the bottom of your page while developing.
 
-To use the web debug toolbar, just install it:
+To use the web debug toolbar, install the Profiler pack first:
 
 .. code-block:: terminal
 
-    $ composer require --dev symfony/web-profiler-bundle
+    $ composer require --dev symfony/profiler-pack
 
 As soon as this finishes, refresh your page. You should see a black bar along the
 bottom of the page. You'll learn more about all the information it holds along the
