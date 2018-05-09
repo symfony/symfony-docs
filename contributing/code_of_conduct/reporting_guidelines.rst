@@ -2,7 +2,7 @@ Reporting Guidelines
 ====================
 
 If you believe someone is violating the Code of Conduct we ask that you report
-it to the :doc:`enforcement team </contributing/code_of_conduct/enforcement_team>`
+it to the :doc:`CARE team </contributing/code_of_conduct/care_team>`
 by emailing, Twitter, in person or any way you see fit.
 
 **All reports will be kept confidential.** The privacy of everyone included in
@@ -32,11 +32,11 @@ In your report please include:
 What happens after you file a report?
 -------------------------------------
 
-You will receive a reply from the :doc:`enforcement team </contributing/code_of_conduct/enforcement_team>`
+You will receive a reply from the :doc:`CARE team </contributing/code_of_conduct/care_team>`
 acknowledging receipt as soon as possible, but within 24 hours.
 
 The team member receiving the report will immediately contact all or some other
-enforcement team members to review the incident and determine:
+CARE team members to review the incident and determine:
 
 * What happened.
 * Whether this event constitutes a Code of Conduct violation.
@@ -69,20 +69,20 @@ let them know what action (if any) we'll be taking. We'll take into account feed
 from the reporter on the appropriateness of our response, but our response will be
 determined by what will be best for community safety.
 
-The enforcement team keeps a private record of all incidents. By default all reports
-are shared with the entire enforcement team unless the reporter specifically asks
-to exclude specific enforcement team members, in which case these enforcement team
+The CARE team keeps a private record of all incidents. By default all reports
+are shared with the entire CARE team unless the reporter specifically asks
+to exclude specific CARE team members, in which case these CARE team
 members will not be included in any communication on the incidents as well as records
 created related to the incidents.
 
-Enforcement team members are expected to inform the enforcement team and the reporters
+CARE team members are expected to inform the CARE team and the reporters
 in case of conflicts on interest and recuse themselves if this is deemed a problem.
 
 Appealing the response
 ----------------------
 
 Only permanent resolutions (such as bans) may be appealed. To appeal a decision
-of the working group, contact the :doc:`enforcement team </contributing/code_of_conduct/enforcement_team>`
+of the working group, contact the :doc:`CARE team </contributing/code_of_conduct/care_team>`
 with your appeal and they will review the case.
 
 Document origin
