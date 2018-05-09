@@ -32,6 +32,7 @@ objects from the database.
 |             | - `placeholder`_                                                 |
 |             | - `preferred_choices`_                                           |
 |             | - `translation_domain`_                                          |
+|             | - `trim`_                                                        |
 |             |                                                                  |
 |             | from the :doc:`FormType </reference/forms/types/form>`:          |
 |             |                                                                  |
@@ -274,6 +275,8 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
     the ``ChoiceType`` field, which requires an array of the preferred "values").
 
 .. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
+
+.. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 
 These options inherit from the :doc:`form </reference/forms/types/form>`
 type:

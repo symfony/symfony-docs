@@ -77,7 +77,7 @@ instance.
 By default, the console logger behaves like the
 :doc:`Monolog's Console Handler </logging/monolog_console>`.
 The association between the log level and the verbosity can be configured
-through the second parameter of the :class:`Symfony\\Component\\Console\\ConsoleLogger`
+through the second parameter of the :class:`Symfony\\Component\\Console\\Logger\\ConsoleLogger`
 constructor::
 
     use Psr\Log\LogLevel;
