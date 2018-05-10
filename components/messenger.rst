@@ -92,102 +92,16 @@ Transports
 In order to send and receive messages, you will have to configure a transport. An
 transport will be responsible of communicating with your message broker or 3rd parties.
 
-Your own sender
-~~~~~~~~~~~~~~~
+.. note:
 
-Using the ``SenderInterface``, you can easily create your own message sender.
-Let's say you already have an ``ImportantAction`` message going through the
-message bus and handled by a handler. Now, you also want to send this message as
-an email.
-
-First, create your sender::
-
-    namespace App\MessageSender;
-
-    use App\Message\ImportantAction;
-    use Symfony\Component\Messenger\Transport\SenderInterface;
-
-    class ImportantActionToEmailSender implements SenderInterface
-    {
-       private $toEmail;
-       private $mailer;
-
-       public function __construct(\Swift_Mailer $mailer, string $toEmail)
-       {
-           $this->mailer = $mailer;
-           $this->toEmail = $toEmail;
-       }
-
-       public function send($message)
-       {
-           if (!$message instanceof ImportantAction) {
-               throw new \InvalidArgumentException(sprintf('Producer only supports "%s" messages.', ImportantAction::class));
-           }
-
-           $this->mailer->send(
-               (new \Swift_Message('Important action made'))
-                   ->setTo($this->toEmail)
-                   ->setBody(
-                       '<h1>Important action</h1><p>Made by '.$message->getUsername().'</p>',
-                       'text/html'
-                   )
-           );
-       }
-    }
-
-Your own receiver
-~~~~~~~~~~~~~~~~~
-
-A receiver is responsible for receiving messages from a source and dispatching
-them to the application.
-
-Let's say you already processed some "orders" in your application using a
-``NewOrder`` message. Now you want to integrate with a 3rd party or a legacy
-application but you can't use an API and need to use a shared CSV file with new
-orders.
-
-You will read this CSV file and dispatch a ``NewOrder`` message. All you need to
-do is to write your custom CSV receiver and Symfony will do the rest.
-
-First, create your receiver::
-
-    namespace App\MessageReceiver;
-
-    use App\Message\NewOrder;
-    use Symfony\Component\Messenger\Transport\ReceiverInterface;
-    use Symfony\Component\Serializer\SerializerInterface;
-
-    class NewOrdersFromCsvFile implements ReceiverInterface
-    {
-       private $serializer;
-       private $filePath;
-
-       public function __construct(SerializerInteface $serializer, string $filePath)
-       {
-           $this->serializer = $serializer;
-           $this->filePath = $filePath;
-       }
-
-       public function receive(callable $handler) : void
-       {
-           $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
-
-           foreach ($ordersFromCsv as $orderFromCsv) {
-               $handler(new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']));
-           }
-       }
-
-       public function stop(): void
-       {
-           // noop
-       }
-    }
+    Check out the :doc:`Messenger transports documentation </components/messenger/transports>`.
 
 Receiver and Sender on the same bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To allow us to receive and send messages on the same bus and prevent an infinite
+In order to receive and send messages on the same bus without having an infinite
 loop, the message bus is equipped with the ``WrapIntoReceivedMessage`` middleware.
-It will wrap the received messages into ``ReceivedMessage`` objects and the
+
+This middleware wraps the received messages into ``ReceivedMessage`` objects and the
 ``SendMessageMiddleware`` middleware will know it should not route these
 messages again to a transport.
