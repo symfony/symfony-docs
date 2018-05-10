@@ -46,7 +46,7 @@ the message will be rejected from the queue.
 Retry
 ~~~~~
 
-When receiving messages from a broker, it might happen that some exceptions will
+When receiving a message from a broker, it might happen that some exceptions will
 arise. Typically, a 3rd party provider is down or your system is under heavy load
 and can't really process some messages. To handle this scenario, there is a built-in
 retry mechanism that can be enabled via your DSN::
@@ -66,13 +66,13 @@ handle this message.
 DSN configuration reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The options available to in the DSN are documented on the ``Connection`` class
+The options available in the DSN are documented on the ``Connection`` class
 in the code repository.
 
 Enqueue
 -------
 
-Probably one of the most famous PHP queue-broker libraries, Enqueue has 10+ adapters
+Probably one of the most famous PHP queue-broker libraries, Enqueue, has 10+ adapters
 with brokers like Kafka, Google Pub/Sub, AWS SQS and more. Check out the transport
 documentation in `Enqueue's official repository`_.
 
