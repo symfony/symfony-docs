@@ -5,26 +5,29 @@ Transports
 ==========
 
 To send and receive messages via message brokers, the Messenger component has
-some transports, to which you can route your message.
+"transports". Transports are responsible for routing messages to and from
+the message brokers.
 
 Every transport is configurable using a DSN. This DSN allows you to chose the
-transport layer as well as configuring it.
+transport layer as well as configure it.
 
 AMQP
 ----
 
-Very likely the most famous message broker protocol, AMQP, especially with RabbitMQ
-has a built-in support within the Messenger component.
+The most famous message broker protocol is probably AMQP, which is most
+commonly implemented with RabbitMQ. The Messenger component has built-in
+support for AMQP.
 
 How it works?
 ~~~~~~~~~~~~~
 
-The DSN protocol to use is ``amqp``. The following DSN example shows you how to
-use the adapter to connect to a local RabbitMQ with the ``user`` username and
-``password`` password. The messages will be sent to the ``messages`` exchange
-bound to the ``messages`` queue on the ``/`` vhost::
+A DSN protocol that uses ``amqp`` is recognized and sent to the built-in AMQP transport.
+For example::
 
-    amqp://user:password@localhost/%2f/messages
+    $dsn = 'amqp://user:password@localhost/%2f/messages'
+
+The messages will be sent to the ``messages`` exchange bound to the ``messages``
+queue on the ``/`` vhost (the ``%2f`` is a url-encoded ``/``).
 
 .. note:
 
