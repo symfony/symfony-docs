@@ -89,6 +89,65 @@ that will do the required processing for your message::
        }
     }
 
+Envelope
+--------
+
+The notion of an envelope is a concept that helps add context around the
+messages. An envelope is a message and a set of data. From a user's perspective, this
+allows you to set some configuration around the message. For example, to set the serialization
+groups used when the message goes through the transport layer, wrap your message
+in an ``Envelope`` and add some ``SerializerConfiguration``::
+
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Transport\Serialization\SerializerConfiguration;
+
+    $bus->dispatch(
+        (new Envelope($message))->with(new SerializerConfiguration([
+            'groups' => ['my_serialization_groups'],
+        ]))
+    );
+
+At the moment, the Symfony Messenger has the following built-in envelopes:
+
+1. :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\SerializerConfiguration`,
+   to configure the serialization groups used by the transport.
+2. :class:`Symfony\\Component\\Messenger\\Middleware\\Configuration\\ValidationConfiguration`,
+   to configure the validation groups used when the validation middleware is enabled.
+3. :class:`Symfony\\Component\\Messenger\\Asynchronous\\Transport\\ReceivedMessage`,
+   an internal item that marks the message as received from a transport.
+
+Instead of dealing directly with the messages in the middleware you can receive the
+envelope by implementing the :class:`Symfony\\Component\\Messenger\\EnvelopeAwareInterface`
+marker, like this::
+
+    use Symfony\Component\Messenger\Asynchronous\Transport\ReceivedMessage;
+    use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
+    use Symfony\Component\Messenger\EnvelopeAwareInterface;
+
+    class MyOwnMiddleware implements MiddlewareInterface, EnvelopeAwareInterface
+    {
+        public function handle($message, callable $next)
+        {
+            // $message here is an `Envelope` object, because this middleware
+            // implements the EnvelopeAwareInterface interface. Otherwise,
+            // it would be the "original" message.
+
+            if (null !== $message->get(ReceivedMessage::class)) {
+                // Message just has been received...
+
+                // You could for example add another item.
+                $message = $message->with(new AnotherEnvelopeItem(/* ... */));
+            }
+
+            return $next($message);
+        }
+    }
+
+The above example will forward the message to the next middleware with an additional
+envelope item if the message has just been received (i.e. has the `ReceivedMessage` item).
+You can create your own items by implementing the :class:`Symfony\\Component\\Messenger\\EnvelopeAwareInterface`
+interface.
+
 Transports
 ----------
 
@@ -109,6 +168,7 @@ First, create your sender::
 
     use App\Message\ImportantAction;
     use Symfony\Component\Messenger\Transport\SenderInterface;
+    use Symfony\Component\Messenger\Envelope;
 
     class ImportantActionToEmailSender implements SenderInterface
     {
@@ -121,10 +181,12 @@ First, create your sender::
            $this->toEmail = $toEmail;
        }
 
-       public function send($message)
+       public function send(Envelope $envelope)
        {
+           $message = $envelope->getMessage();
+
            if (!$message instanceof ImportantAction) {
-               throw new \InvalidArgumentException(sprintf('Producer only supports "%s" messages.', ImportantAction::class));
+               throw new \InvalidArgumentException(sprintf('This transport only supports "%s" messages.', ImportantAction::class));
            }
 
            $this->mailer->send(
@@ -159,6 +221,7 @@ First, create your receiver::
     use App\Message\NewOrder;
     use Symfony\Component\Messenger\Transport\ReceiverInterface;
     use Symfony\Component\Serializer\SerializerInterface;
+    use Symfony\Component\Messenger\Envelope;
 
     class NewOrdersFromCsvFile implements ReceiverInterface
     {
@@ -176,7 +239,9 @@ First, create your receiver::
            $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
 
            foreach ($ordersFromCsv as $orderFromCsv) {
-               $handler(new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']));
+               $order = new NewOrder($orderFromCsv['id'], $orderFromCsv['account_id'], $orderFromCsv['amount']);
+
+               $handler(new Envelope($order));
            }
        }
 
@@ -190,11 +255,9 @@ Receiver and Sender on the same Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To allow sending and receiving messages on the same bus and prevent an infinite
-loop, the message bus is equipped with the ``WrapIntoReceivedMessage`` middleware.
-It will wrap the received messages into ``ReceivedMessage`` objects and the
-``SendMessageMiddleware`` middleware will know it should not route these
-messages again to a transport.
-
+loop, the message bus will add a :class:`Symfony\\Component\\Messenger\\Asynchronous\\Transport\\ReceivedMessage`
+envelope item to the message envelopes and the :class:`Symfony\\Component\\Messenger\\Asynchronous\\Middleware\\SendMessageMiddleware`
+middleware will know it should not route these messages again to a transport.
 
 .. _blog posts about command buses: https://matthiasnoback.nl/tags/command%20bus/
 .. _SimpleBus project: http://simplebus.io
