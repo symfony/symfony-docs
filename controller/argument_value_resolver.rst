@@ -96,8 +96,11 @@ retrieved from the token storage::
     namespace AppBundle\ArgumentResolver;
 
     use AppBundle\Entity\User;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+    use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
     class UserValueResolver implements ArgumentValueResolverInterface
     {
