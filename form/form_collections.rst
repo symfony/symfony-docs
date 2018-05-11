@@ -748,22 +748,24 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     each Tag object itself.
     
     You can optionnally reduce the code in your controller and make it reusable to handle other embedded form.
-    First create a helper
+    First create a helper :
     
-        // App\Helper;
+    // App\Helper
         use Doctrine\Common\Collections\ArrayCollection;
         use Doctrine\ORM\EntityManagerInterface;
         
-        class Helper      
-          private $em;
+        class Helper
+        {
+            private $em;
 
-          public function __construct(EntityManagerInterface $em)
-          {
-            $this->em = $em;
-          }
-          public function backupOriginalEntities($entities)
-          {
-            $original_entities = new ArrayCollection();
+            public function __construct(EntityManagerInterface $em)
+            {
+                $this->em = $em;
+            }
+            
+            public function backupOriginalEntities($entities)
+            {
+                $original_entities = new ArrayCollection();
 
                 // Create an ArrayCollection of the current objects in the database
                 foreach ($entities as $entity) {
@@ -771,26 +773,26 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 }
 
                 return $original_entities;
-          }
+             }
 
-          //this function removes only the relationship, removes the entity if $remove set to true
-          public function removeRelation($original_entities, $main_entity,$current_entities, $function_name, $remove=false)
-          {		 
+            // this function removes only the relationship, removes the entity if $remove set to true
+            public function removeRelation($original_entities, $main_entity,$current_entities, $function_name, $remove=false)
+            {		 
                 foreach ($original_entities as $entity) {
                     if (false === $current_entities->contains($entity)) {
-                      $main_entity->$function_name($entity);
+                        $main_entity->$function_name($entity);
 
-                      if($remove){
-                        $this->em->remove($entity);
-                      }
+                        if($remove){
+                            $this->em->remove($entity);
+                        }
                     }
                 }
-          }
+            }
         }
         
-   Second edit your TaskController
+    Second edit your TaskController
    
-        // src/Controller/TaskController.php
+    // src/Controller/TaskController.php
 
         use App\Entity\Task;
         
@@ -804,18 +806,13 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 throw $this->createNotFoundException('No task found for id '.$id);
             }
             
-            $original_entities = $helper->backupOriginalEntities($event->getOrganizationTypes());
-           
+            $original_entities = $helper->backupOriginalEntities($event->getOrganizationTypes());           
             $editForm = $this->createForm(TaskType::class, $task);
-
             $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
-
-                // remove the relationship between the tag and the Task
-                //depending on your needs               
-                $helper->removeRelation($original_entities,$event,$task->getTags(),'removeTag',true); // or let blank if you want to keep orphan
-               
+                // remove the relationship between the tag and the Task. depending on your needs : add the parameter true to remove the entity or let blank if you want to keep an orphan
+                $helper->removeRelation($original_entities,$event,$task->getTags(),'removeTag',true); //                
                 $entityManager->persist($task);
                 $entityManager->flush();
 
