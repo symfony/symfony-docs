@@ -34,7 +34,7 @@ This method has 3 arguments:
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
     $expressionLanguage = new ExpressionLanguage();
-    $expressionLanguage->register('lowercase', function ($str) {
+    $expressionLanguage->register('lowercase', function ($arguments, $str) {
         return sprintf('(is_string(%1$s) ? strtolower(%1$s) : %1$s)', $str);
     }, function ($arguments, $str) {
         if (!is_string($str)) {
