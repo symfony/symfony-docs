@@ -31,5 +31,5 @@ Other Symfony Licenses
 Check out the :doc:`license of the Symfony documentation </contributing/documentation/license>`
 and other `Symfony licenses and trademarks`_.
 
-.. `the MIT license`: https://en.wikipedia.org/wiki/MIT_License
+.. _`the MIT license`: https://en.wikipedia.org/wiki/MIT_License
 .. _`Symfony licenses and trademarks`: https://symfony.com/license
