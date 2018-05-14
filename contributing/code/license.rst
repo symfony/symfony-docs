@@ -1,20 +1,9 @@
 .. _symfony2-license:
 
-Symfony License
-===============
+Symfony Code License
+====================
 
-Symfony is released under the MIT license.
-
-According to `Wikipedia`_:
-
-    "It is a permissive license, meaning that it permits reuse within
-    proprietary software on the condition that the license is distributed with
-    that software. The license is also GPL-compatible, meaning that the GPL
-    permits combination and redistribution with software that uses the MIT
-    License."
-
-The License
------------
+Symfony code is released under `the MIT license`_:
 
 Copyright (c) 2004-2018 Fabien Potencier
 
@@ -36,4 +25,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-.. _Wikipedia: https://en.wikipedia.org/wiki/MIT_License
+Other Symfony Licenses
+----------------------
+
+Check out the :doc:`license of the Symfony documentation </contributing/documentation/license>`
+and other `Symfony licenses and trademarks`_.
+
+.. _`the MIT license`: https://en.wikipedia.org/wiki/MIT_License
+.. _`Symfony licenses and trademarks`: https://symfony.com/license
