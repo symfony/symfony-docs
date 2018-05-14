@@ -335,7 +335,7 @@ entry_type
     The ``entry_type`` option was introduced in Symfony 2.8 and replaces
     ``type``, which is available prior to 2.8.
 
-**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **default**: Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType
+**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **default**: ``Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType``
 
 This is the field type for each item in this collection (e.g. ``TextType``,
 ``ChoiceType``, etc). For example, if you have an array of email addresses,
