@@ -187,6 +187,36 @@ the messenger component, the following configuration should have been created:
             ],
         ]);
 
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/symfony"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:transport name="amqp" dsn="%env(MESSENGER_DSN)%" />
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', array(
+            'messenger' => array(
+                'transports' => array(
+                    'amqp' => '%env(MESSENGER_DSN)%',
+                ),
+            ),
+        ));
+
 .. code-block:: bash
 
     # .env
@@ -423,6 +453,23 @@ your ``transports`` configuration or it can be your own receiver.
 It also requires a ``--bus`` option in case you have multiple buses configured,
 which is the name of the bus to which received messages should be dispatched.
 
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <defaults>
+                   <bind key="$commandBus" type="service" id="messenger.bus.commands" />
+                   <bind key="$commandBus" type="service" id="messenger.bus.events" />
+                </defaults>
+            </services>
+        </container>
+
 Middleware
 ----------
 
@@ -554,6 +601,37 @@ within the buses to add some extra capabilities like this:
 
 Note that if the service is abstract, a different instance of the service will
 be created per bus.
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <container xmlns="http://symfony.com/schema/dic/symfony"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:bus name="messenger.bus.default" default-middleware="false" />
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', array(
+            'messenger' => array(
+                'buses' => array(
+                    'messenger.bus.default' => array(
+                        'default_middleware' => false,
+                    ),
+                ),
+            ),
+        ));
 
 Using Middleware Factories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
