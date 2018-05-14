@@ -51,10 +51,9 @@ This is a human-readable summary of the `Legal Code (the full license)`_.
 Other Symfony Licenses
 ----------------------
 
-Check out the `license of the Symfony code`_ and other
-`Symfony licenses and trademarks`_.
+Check out the :doc:`license of the Symfony code </contributing/code/license>`
+and other `Symfony licenses and trademarks`_.
 
 .. _`CC BY-SA 3.0`: http://creativecommons.org/licenses/by-sa/3.0/
 .. _Legal Code (the full license): http://creativecommons.org/licenses/by-sa/3.0/legalcode
-.. _`license of the Symfony code`: https://symfony.com/doc/current/contributing/code/license.html
 .. _`Symfony licenses and trademarks`: https://symfony.com/license

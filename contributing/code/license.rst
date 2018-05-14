@@ -28,9 +28,8 @@ THE SOFTWARE.
 Other Symfony Licenses
 ----------------------
 
-Check out the `license of the Symfony documentation`_ and other
-`Symfony licenses and trademarks`_.
+Check out the :doc:`license of the Symfony documentation </contributing/documentation/license>`
+and other `Symfony licenses and trademarks`_.
 
 .. `the MIT license`: https://en.wikipedia.org/wiki/MIT_License
-.. _`license of the Symfony documentation`: https://symfony.com/doc/current/contributing/documentation/license.html
 .. _`Symfony licenses and trademarks`: https://symfony.com/license
