@@ -36,7 +36,7 @@ used separately:
 ``symfony/security-csrf``
     It provides protection against `CSRF attacks`_.
 
-``symfony/security-acl``
+``symfony/acl-bundle``
     It provides a fine grained permissions mechanism based on Access Control Lists.
 
 Learn More
