@@ -6,6 +6,12 @@
 How to Configure Monolog to Exclude 404 Errors from the Log
 ===========================================================
 
+.. tip::
+
+    Read :doc:`/logging/monolog_exclude_http_codes` to learn about a similar
+    but more generic feature that allows to exclude logs for any HTTP status
+    code and not only 404 errors.
+
 Sometimes your logs become flooded with unwanted 404 HTTP errors, for example,
 when an attacker scans your app for some well-known application paths (e.g.
 `/phpmyadmin`). When using a ``fingers_crossed`` handler, you can exclude

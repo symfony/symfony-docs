@@ -341,8 +341,13 @@ Learn more
     logging/channels_handlers
     logging/formatter
     logging/processors
-    logging/monolog_regex_based_excludes
+    logging/monolog_exclude_http_codes
     logging/monolog_console
+
+.. toctree::
+   :hidden:
+
+    logging/monolog_regex_based_excludes
 
 .. _Monolog: https://github.com/Seldaek/monolog
 .. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php
