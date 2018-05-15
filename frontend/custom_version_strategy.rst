@@ -71,10 +71,10 @@ version string::
          * @param string      $manifestPath
          * @param string|null $format
          */
-        public function __construct($manifestPath, $format = null)
+        public function __construct($manifestPath, $format = '%s?%s')
         {
             $this->manifestPath = $manifestPath;
-            $this->format = $format ?: '%s?%s';
+            $this->format = $format;
         }
 
         public function getVersion($path)
@@ -83,7 +83,7 @@ version string::
                 $this->hashes = $this->loadManifest();
             }
 
-            return isset($this->hashes[$path]) ? $this->hashes[$path] : '';
+            return $this->hashes[$path] ?? '';
         }
 
         public function applyVersion($path)
@@ -103,7 +103,7 @@ version string::
             return $versionized;
         }
 
-        private function loadManifest()
+        private function loadManifest(): array
         {
             return json_decode(file_get_contents($this->manifestPath), true);
         }
