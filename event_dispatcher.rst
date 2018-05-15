@@ -118,8 +118,8 @@ using a special "tag":
     method executed by default is ``onKernelException()``.
 
     The other optional tag attribute is called  ``priority``, which defaults to
-    ``0`` and it controls the order in which listeners are executed (the highest
-    the priority, the earlier a listener is executed). This is useful when you
+    ``0`` and it controls the order in which listeners are executed (the higher
+    the priority the earlier a listener is executed). This is useful when you
     need to guarantee that one listener is executed before another. The priorities
     of the internal Symfony listeners usually range from ``-255`` to ``255`` but
     your own listeners can use any positive or negative integer.
