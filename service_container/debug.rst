@@ -6,17 +6,17 @@ How to Debug the Service Container & List Services
 ==================================================
 
 You can find out what services are registered with the container using the
-console. To show all services and the class for each service, run:
+console. To show all services (public and private) and their PHP classes, run:
 
 .. code-block:: terminal
 
     $ php bin/console debug:container
 
-By default, only public services are shown, but you can also view private services:
+    # add this option to display "hidden services" too (those whose ID starts with a dot)
+    $ php bin/console debug:container --show-hidden
 
-.. code-block:: terminal
-
-    $ php bin/console debug:container --show-private
+.. versionadded:: 4.1
+    Hidden services and the ``--show-hidden`` option were introduced in Symfony 4.1.
 
 To see a list of all of the available types that can be used for autowiring, run:
 
