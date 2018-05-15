@@ -571,6 +571,9 @@ But, you can control this and pass in a different logger:
             # explicitly configure the service
             App\Service\MessageGenerator:
                 arguments:
+                    # the ``@`` symbol is important: that's what tells the container
+                    # you want to pass the *service* whose id is 'monolog.logger.request',
+                    # and not just the *string* 'monolog.logger.request'
                     $logger: '@monolog.logger.request'
 
     .. code-block:: xml
@@ -612,13 +615,7 @@ For a full list of *all* possible services in the container, run:
 
 .. code-block:: terminal
 
-    php bin/console debug:container --show-private
-
-.. tip::
-
-    The ``@`` symbol is important: that's what tells the container you want to pass
-    the *service* whose id is ``monolog.logger.request``, and not just the *string*
-    ``monolog.logger.request``.
+    $ php bin/console debug:container
 
 .. _services-binding:
 
