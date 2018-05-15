@@ -29,9 +29,9 @@ also contact all of them at once by emailing **coc@symfony.com**:
 
 * **Tobias Nyholm**
 
-  *E-mail*: tobias.nyholm [at] gmail.com
-  *Twitter*: `@tobiasnyholm <https://twitter.com/tobiasnyholm>`_
-  *SensioConnect*: `tobias <https://connect.sensiolabs.com/profile/tobias>`_
+  * *E-mail*: tobias.nyholm [at] gmail.com
+  * *Twitter*: `@tobiasnyholm <https://twitter.com/tobiasnyholm>`_
+  * *SensioConnect*: `tobias <https://connect.sensiolabs.com/profile/tobias>`_
 
 * **Michelle Sanver**
 
