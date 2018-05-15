@@ -33,6 +33,7 @@ Examples of unacceptable behavior by participants include:
   address, without explicit permission
 * Other conduct which could reasonably be considered inappropriate in a
   professional setting
+* Misgender other community members on purpose
 
 Our Responsibilities
 --------------------
