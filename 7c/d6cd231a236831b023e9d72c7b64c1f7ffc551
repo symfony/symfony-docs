@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-05-14T19:57:04Z
+
+Thank you for fixing this typo @SpacePossum. However, it looks like this is not present in any of the maintained branches (which are `2.7`, `2.8`, `3.4`, `4.0`, `4.1`, and `master`). Thus, I unfortunately need to close here.
+
+---------------------------------------------------------------------------
+
+by SpacePossum at 2018-05-14T20:08:33Z
+
+no worries @xabbuh , however @ https://symfony.com/doc/current/event_dispatcher.html this typo is still present
+
+---------------------------------------------------------------------------
+
+by SpacePossum at 2018-05-14T20:09:24Z
+
+i.e. https://github.com/symfony/symfony-docs/edit/4.0/event_dispatcher.rst
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-05-14T20:50:24Z
+
+Oh indeed, you are absolutely right. Sorry, I totally missed that . We'll merge it into the `2.7` branch.
