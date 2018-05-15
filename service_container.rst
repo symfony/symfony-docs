@@ -571,7 +571,7 @@ But, you can control this and pass in a different logger:
             # explicitly configure the service
             App\Service\MessageGenerator:
                 arguments:
-                    # the ``@`` symbol is important: that's what tells the container
+                    # the '@' symbol is important: that's what tells the container
                     # you want to pass the *service* whose id is 'monolog.logger.request',
                     # and not just the *string* 'monolog.logger.request'
                     $logger: '@monolog.logger.request'
