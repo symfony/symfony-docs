@@ -73,6 +73,8 @@ backward compatibility promise:
 +-----------------------------------------------+-----------------------------+
 | Add a default value to an argument            | Yes                         |
 +-----------------------------------------------+-----------------------------+
+| Add a return type to an implemented method    | Yes                         |
++-----------------------------------------------+-----------------------------+
 
 Using our Classes
 ~~~~~~~~~~~~~~~~~
@@ -164,6 +166,8 @@ Remove default value of an argument             No
 Add type hint to an argument                    No
 Remove type hint of an argument                 No
 Change argument type                            No
+Add return type                                 No
+Remove return type                              No [9]_
 Change return type                              No
 **Constants**
 Add constant                                    Yes
@@ -220,6 +224,8 @@ Remove default value of an argument                 No
 Add type hint to an argument                        No [7]_ [8]_
 Remove type hint of an argument                     No [7]_ [8]_
 Change argument type                                No [7]_ [8]_
+Add return type                                     No [7]_ [8]_
+Remove return type                                  No [7]_ [8]_ [9]_
 Change return type                                  No [7]_ [8]_
 **Protected Methods**
 Add protected method                                Yes
@@ -235,6 +241,8 @@ Remove default value of an argument                 No [7]_
 Add type hint to an argument                        No [7]_ [8]_
 Remove type hint of an argument                     No [7]_ [8]_
 Change argument type                                No [7]_ [8]_
+Add return type                                     No [7]_ [8]_
+Remove return type                                  No [7]_ [8]_ [9]_
 Change return type                                  No [7]_ [8]_
 **Private Methods**
 Add private method                                  Yes
@@ -248,6 +256,8 @@ Remove default value of an argument                 Yes
 Add type hint to an argument                        Yes
 Remove type hint of an argument                     Yes
 Change argument type                                Yes
+Add return type                                     Yes
+Remove return type                                  Yes
 Change return type                                  Yes
 **Static Methods**
 Turn non static into static                         No [7]_ [8]_
@@ -290,6 +300,8 @@ Change value of a constant                          Yes [1]_ [5]_
        next major version.
        Changing an argument type is only possible with a parent type.
        Changing a return type is only possible with a child type.
+
+.. [9] Allowed for the ``void`` return type.
 
 .. _Semantic Versioning: https://semver.org/
 .. _scalar type: https://php.net/manual/en/function.is-scalar.php
