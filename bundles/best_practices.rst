@@ -239,7 +239,7 @@ of Symfony and the latest beta release:
         # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
         - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
 
-Consider using `Travis cron`_ too to make sure your project is built even if
+Consider using the `Travis cron`_ tool to make sure your project is built even if
 there are no new pull requests or commits.
 
 Installation
