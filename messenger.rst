@@ -273,6 +273,114 @@ you can disable them like this:
                 messenger.bus.default:
                     default_middleware: false
 
+Using Middleware Factories
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some third-parties may expose you configurable middleware by using factories.
+Such factories are actually relying on the Symfony DI capabilities and consist
+of this kind of two services:
+
+.. code-block:: yaml
+
+    services:
+
+        # A factory class is registered as a service with required dependencies
+        # to instantiate a middleware:
+        doctrine.orm.messenger.middleware_factory.transaction:
+          class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddlewareFactory
+          arguments: ['@doctrine']
+
+        # An abstract definition that will call the factory with default arguments
+        # or the one provided in the middleware config:
+        messenger.middleware.doctrine_transaction_middleware:
+          class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddleware
+          factory: ['@doctrine.orm.messenger.middleware_factory.transaction', 'createMiddleware']
+          abstract: true
+          # the default arguments to use when none provided from config.
+          # i.e:
+          #   middleware:
+          #     - doctrine_transaction_middleware: ~
+          arguments: ['default']
+
+The "default" value in this example corresponds to the entity manager name to use, as expected by the
+``Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddlewareFactory::createMiddleware`` method as argument.
+
+Then you can reference and configure the ``messenger.middleware.doctrine_transaction_middleware``
+service as a middleware:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                buses:
+                    command_bus:
+                        middleware:
+                            # Using defaults:
+                            - doctrine_transaction_middleware
+                            # Using another entity manager:
+                            - doctrine_transaction_middleware: ['custom']
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <container xmlns="http://symfony.com/schema/dic/symfony"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:bus name="command_bus">
+                        <!-- Using defaults: -->
+                        <framework:middleware id="doctrine_transaction_middleware" />
+                        <!-- Using another entity manager -->
+                        <framework:middleware id="doctrine_transaction_middleware">
+                            <framework:argument>custom</framework:argument>
+                        </framework:middleware>
+                    </framework:bus>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', array(
+            'messenger' => array(
+                'buses' => array(
+                    'command_bus' => array(
+                        'middleware' => array(
+                            // Using defaults:
+                            'doctrine_transaction_middleware',
+                            // Using another entity manager
+                            array('id' => 'doctrine_transaction_middleware', 'arguments' => array('custom')),
+                        ),
+                    ),
+                ),
+            ),
+        ));
+
+.. note::
+
+    The shorthand ``doctrine_transaction_middleware`` name can be used by convention,
+    as the service id is prefixed with the ``messenger.middleware.`` namespace.
+
+.. note::
+
+    Middleware factories only allow scalar and array arguments in config (no service reference).
+    For most advanced use-cases, register a concrete definition of the middleware yourself and use its id.
+
+.. tip::
+
+    The ``doctrine_transaction_middleware`` is an existing middleware wired
+    by the DoctrineBundle if installed and the Messenger component enabled.
+
 Your own Transport
 ------------------
 
