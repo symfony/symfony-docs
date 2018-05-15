@@ -161,7 +161,7 @@ Learn more
 
 .. _`Swift Mailer`: http://swiftmailer.org/
 .. _`SwiftMailerBundle`: https://github.com/symfony/swiftmailer-bundle
-.. _`Creating Messages`: http://swiftmailer.org/docs/messages.html
+.. _`Creating Messages`: https://swiftmailer.symfony.com/docs/messages.html
 .. _`Mandrill`: https://mandrill.com/
 .. _`SendGrid`: https://sendgrid.com/
 .. _`Amazon SES`: http://aws.amazon.com/ses/

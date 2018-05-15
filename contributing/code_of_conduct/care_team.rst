@@ -17,9 +17,27 @@ the CARE team or if you prefer contact only individual members of the CARE team.
 Members
 -------
 
-Here are all the members of the Code of Conduct CARE team. You can contact
-any of them directly using the contact details below or you can also contact all of
-them at once by emailing **coc@symfony.com**.
+Here are all the members of the Code of Conduct CARE team (in alphabetic order).
+You can contact any of them directly using the contact details below or you can
+also contact all of them at once by emailing **coc@symfony.com**:
+
+* **Emilie Lorenzo**
+
+  * *E-mail*: emilie.lorenzo [at] symfony.com
+  * *Twitter*: `@EmilieLorenzo <https://twitter.com/EmilieLorenzo>`_
+  * *SensioConnect*: `emilielorenzo <https://connect.sensiolabs.com/profile/emilielorenzo>`_
+
+* **Tobias Nyholm**
+
+  *E-mail*: tobias.nyholm [at] gmail.com
+  *Twitter*: `@tobiasnyholm <https://twitter.com/tobiasnyholm>`_
+  *SensioConnect*: `tobias <https://connect.sensiolabs.com/profile/tobias>`_
+
+* **Michelle Sanver**
+
+  * *E-mail*: hello [at] michellesanver.com
+  * *Twitter*: `@michellesanver <https://twitter.com/michellesanver>`_
+  * *SensioConnect*: `michellesanver <https://connect.sensiolabs.com/profile/michellesanver>`_
 
 About the CARE Team
 -------------------
