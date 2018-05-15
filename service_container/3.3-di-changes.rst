@@ -307,6 +307,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
             AppBundle\Controller\:
                 resource: '../../src/AppBundle/Controller'
                 tags: ['controller.service_arguments']
+                public: true
 
     .. code-block:: xml
 
