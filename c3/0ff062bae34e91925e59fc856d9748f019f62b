@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-04-08T12:27:44Z
+
+Hey @simshaun! Thanks for the awesome feature - this was totally missing!
+
+To the docs! We already have an article about excluding 404’s. I think we should actually remove that article and put your new content into a new section in the main logging.rst article (you can just do the second part - we can discuss deleting that 404 article later).
+
+Also, have you considered adding this to the monolog recipe? We use exclude_404’s there currently. But I think this should completely replace that.
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-04-08T12:31:49Z
+
+Also, can you switch your branch to be against master?
+
+---------------------------------------------------------------------------
+
+by simshaun at 2018-04-17T17:55:27Z
+
+I've rebased against master & added a couple comments above.
+
+---------------------------------------------------------------------------
+
+by simshaun at 2018-04-18T18:18:33Z
+
+@weaverryan
+
+> To the docs! We already have an article about excluding 404’s. I think we should actually remove that article and put your new content into a new section in the main logging.rst article (you can just do the second part - we can discuss deleting that 404 article later).
+
+I think the current file, `monolog_regex_based_excludes.rst`, could just be updated since the filename is still relevant to this feature, no?
+
+> Also, have you considered adding this to the monolog recipe? We use exclude_404’s there currently. But I think this should completely replace that.
+
+I hadn't. That would be https://github.com/symfony/recipes/blob/master/symfony/monolog-bundle/3.1/config/packages/prod/monolog.yaml right?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-05-02T18:14:09Z
+
+> I hadn't. That would be https://github.com/symfony/recipes/blob/master/symfony/monolog-bundle/3.1/config/packages/prod/monolog.yaml right?
+
+Hmm, actually, your new feature in MonologBundle hasn't been released yet on MonologBundle. So, we need to wait for that. But then, it will probably be version 3.3 of MonologBundle. So, we would actually need to duplicate/create a new 3.3 directory from the 3.1 directory, with the new config. But that's ok (the duplication), that's just how the recipe system works.
+
+> I think the current file, monolog_regex_based_excludes.rst, could just be updated since the filename is still relevant to this feature, no?
+
+Fine by me :). Let's completely replace that document with your new documentation :)
