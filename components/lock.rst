@@ -70,6 +70,29 @@ method can be safely called repeatedly, even if the lock is already acquired.
     across several requests. To disable the automatic release behavior, set the
     third argument of the ``createLock()`` method to ``false``.
 
+Simplified Commands
+-------------------
+
+Use the LockableTrait to easily implement locking mechanism in Commands.
+
+    // ...
+    use Symfony\Component\Console\Command\LockableTrait;
+    use Symfony\Component\Console\Command\Command
+
+    class FooCommand  extends Command
+    {
+        use LockableTrait;
+        .....
+        protected function execute(InputInterface $input, OutputInterface $output)
+        {
+            if (!$this->lock()) {
+                //Manage locked command
+            }
+            .....
+            $this->release();
+        }
+    }
+
 Blocking Locks
 --------------
 
