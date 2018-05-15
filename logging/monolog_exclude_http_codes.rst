@@ -6,6 +6,10 @@
 How to Configure Monolog to Exclude Specific HTTP Codes from the Log
 ====================================================================
 
+..versionadded:: 4.1
+    The ability to exclude log messages based on their status codes was
+    introduced in Symfony 4.1 and MonologBundle 3.3.
+
 Sometimes your logs become flooded with unwanted HTTP errors, for example,
 403s and 404s. When using a ``fingers_crossed`` handler, you can exclude
 logging these HTTP codes based on the MonologBundle configuration:
