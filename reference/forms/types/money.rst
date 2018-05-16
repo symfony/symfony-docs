@@ -28,6 +28,7 @@ how the input and output of the data is handled.
 |             | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
+|             | - `help`_                                                           |
 |             | - `invalid_message`_                                                |
 |             | - `invalid_message_parameters`_                                     |
 |             | - `label`_                                                          |
@@ -117,6 +118,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 

@@ -27,6 +27,7 @@ photos).
 | options     | - `empty_data`_                                                             |
 |             | - `error_bubbling`_                                                         |
 |             | - `error_mapping`_                                                          |
+|             | - `help`_                                                                   |
 |             | - `label`_                                                                  |
 |             | - `label_attr`_                                                             |
 |             | - `label_format`_                                                           |
@@ -447,6 +448,8 @@ error_bubbling
 .. include:: /reference/forms/types/options/_error_bubbling_body.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
