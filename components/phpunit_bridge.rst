@@ -34,12 +34,12 @@ Alternatively, you can clone the `<https://github.com/symfony/phpunit-bridge>`_ 
 
 .. include:: /components/require_autoload.rst.inc
 
+.. note::
 
-.. best-practice::
-
-    The PHPUnit bridge is designed to work with all maintained versions of Symfony components,
-    even across different major versions of them. You should always use its very latest stable
-    major version to get the most accurate deprecation report.
+    The PHPUnit bridge is designed to work with all maintained versions of
+    Symfony components, even across different major versions of them. You should
+    always use its very latest stable major version to get the most accurate
+    deprecation report.
 
 If you plan to :ref:`write-assertions-about-deprecations` and use the regular
 PHPUnit script (not the modified PHPUnit script provided by Symfony), you have
