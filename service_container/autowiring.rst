@@ -365,11 +365,10 @@ Suppose you create a second class - ``UppercaseTransformer`` that implements
     }
 
 If you register this as a service, you now have *two* services that implement the
-``AppBundle\Util\TransformerInterface`` type. Autowiring subsystem can not decide which
-one to use. Remember, Autowiring isn't magic: it simply
-looks for a service whose id matches the type-hint. So you need to choose one by
-creating an alias from the type to the correct service id
-(see :ref:`autowiring-interface-alias`).
+``AppBundle\Util\TransformerInterface`` type. Autowiring subsystem can not decide
+which one to use. Remember, autowiring isn't magic; it simply looks for a service
+whose id matches the type-hint. So you need to choose one by creating an alias
+from the type to the correct service id (see :ref:`autowiring-interface-alias`).
 
 If you want ``Rot13Transformer`` to be the service that's used for autowiring, create
 that alias:
