@@ -33,6 +33,7 @@ like this:
                             - 'currentPlace'
                     supports:
                         - AppBundle\Entity\BlogPost
+                    initial_place: draft
                     places:
                         - draft
                         - review
