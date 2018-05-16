@@ -91,6 +91,34 @@ current PHP SAPI:
     .. versionadded:: 4.1
         The ``dd()`` helper method was introduced in Symfony 4.1.
 
+The Dump Server
+---------------
+
+.. versionadded:: 4.1
+    The dump server was introduced in Symfony 4.1.
+
+The ``dump()`` function outputs its contents in the same browser window or
+console terminal as your own application. Sometimes mixing the real output
+with the debug output can be confusing. That's why this component provides a
+dedicated server to collect all the dumped data.
+
+Start the server with the ``server:dump`` command and whenever you call to
+``dump()``, the dumped data is sent to a single centralized server that outputs
+it to the console or to an HTML file:
+
+.. code-block:: terminal
+
+    # displays the dumped data in the console:
+    $ ./bin/console server:dump
+      [OK] Server listening on tcp://0.0.0.0:9912
+
+    # stores the dumped data in a file using the HTML format:
+    $ ./bin/console server:dump --format=html > dump.html
+
+Inside a Symfony application, the output of the dump server is configured with
+the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
+``debug`` package.
+
 DebugBundle and Twig Integration
 --------------------------------
 
