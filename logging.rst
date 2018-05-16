@@ -345,7 +345,7 @@ Learn more
     logging/monolog_console
 
 .. toctree::
-   :hidden:
+    :hidden:
 
     logging/monolog_regex_based_excludes
 
