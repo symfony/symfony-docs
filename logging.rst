@@ -12,7 +12,7 @@ install the Monolog based logger before using it:
 
 .. code-block:: terminal
 
-    $ composer require logger
+    $ composer require symfony/monolog-bundle
 
 Logging a Message
 -----------------

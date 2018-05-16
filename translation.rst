@@ -55,7 +55,7 @@ First, run this command to install the translator before using it:
 
 .. code-block:: terminal
 
-    $ composer require translator
+    $ composer require symfony/translation
 
 Configuration
 -------------

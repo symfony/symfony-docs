@@ -19,7 +19,7 @@ install the serializer before using it:
 
 .. code-block:: terminal
 
-    $ composer require serializer
+    $ composer require symfony/serializer
 
 Using the Serializer Service
 ----------------------------
@@ -119,11 +119,11 @@ properties and setters (``setXxx()``) to change properties:
 Using Serialization Groups Annotations
 --------------------------------------
 
-To use annotations, first install the annotations package:
+To use annotations, first add support for them via the SensioFrameworkExtraBundle:
 
 .. code-block:: terminal
 
-    $ composer require annotations
+    $ composer require sensio/framework-extra-bundle
 
 Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
 to your class and choose which groups to use when serializing::
