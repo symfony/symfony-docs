@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-15T15:57:06Z
+
+I don't understand the new Travis error:
+
+> Warning, treated as error:
+/home/travis/build/symfony/symfony-docs/logging.rst:347: WARNING: toctree contains reference to nonexisting document u' logging/monolog_regex_based_excludes'
