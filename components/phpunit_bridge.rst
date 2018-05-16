@@ -27,11 +27,37 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/phpunit-bridge
+    $ composer require --dev "symfony/phpunit-bridge:*"
 
 Alternatively, you can clone the `<https://github.com/symfony/phpunit-bridge>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
+
+.. note::
+
+    The PHPUnit bridge is designed to work with all maintained versions of
+    Symfony components, even across different major versions of them. You should
+    always use its very latest stable major version to get the most accurate
+    deprecation report.
+
+If you plan to :ref:`write-assertions-about-deprecations` and use the regular
+PHPUnit script (not the modified PHPUnit script provided by Symfony), you have
+to register a new `test listener`_ called ``SymfonyTestsListener``:
+
+.. code-block:: xml
+
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        </listeners>
+    </phpunit>
+>>>>>>> Minor tweak
 
 Usage
 -----
