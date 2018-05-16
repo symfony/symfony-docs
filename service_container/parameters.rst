@@ -284,6 +284,43 @@ Setting PHP constants as parameters is also supported:
         $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
         $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
 
+Binary Values as Parameters
+---------------------------
+
+.. versionadded:: 4.1
+    The support for binary values in container parameters was introduced in
+    Symfony 4.1
+
+If the value of a container parameter is a binary value, set it as a base64
+encoded value in YAML and XML configs and use the escape sequences in PHP:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        parameters:
+            some_parameter: !!binary VGhpcyBpcyBhIEJlbGwgY2hhciAH
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="some_parameter" type="binary">VGhpcyBpcyBhIEJlbGwgY2hhciAH</parameter>
+            </parameters>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        $container->setParameter('some_parameter', 'This is a Bell char \x07');
+
 PHP Keywords in XML
 -------------------
 
