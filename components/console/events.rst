@@ -95,7 +95,7 @@ can wrap or change the exception or do anything useful before the exception is
 thrown by the application.
 
 Listeners receive a
-:class:`Symfony\\Component\\Console\\Event\\ConsoleExceptionEvent` event::
+:class:`Symfony\\Component\\Console\\Event\\ConsoleErrorEvent` event::
 
     use Symfony\Component\Console\Event\ConsoleErrorEvent;
     use Symfony\Component\Console\ConsoleEvents;
