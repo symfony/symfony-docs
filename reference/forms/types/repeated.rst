@@ -24,6 +24,7 @@ accuracy.
 +-------------+------------------------------------------------------------------------+
 | Inherited   | - `data`_                                                              |
 | options     | - `error_mapping`_                                                     |
+|             | - `help`_                                                              |
 |             | - `invalid_message`_                                                   |
 |             | - `invalid_message_parameters`_                                        |
 |             | - `mapped`_                                                            |
@@ -193,6 +194,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 

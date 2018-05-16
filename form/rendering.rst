@@ -82,12 +82,14 @@ used the ``form_row()`` helper:
                 {{ form_label(form.task) }}
                 {{ form_errors(form.task) }}
                 {{ form_widget(form.task) }}
+                {{ form_help(form.task) }}
             </div>
 
             <div>
                 {{ form_label(form.dueDate) }}
                 {{ form_errors(form.dueDate) }}
                 {{ form_widget(form.dueDate) }}
+                {{ form_help(form.dueDate) }}
             </div>
 
             <div>

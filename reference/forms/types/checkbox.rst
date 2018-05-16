@@ -20,6 +20,7 @@ true, if the box is unchecked, the value will be set to false.
 | options     | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
+|             | - `help`_                                                              |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `label_format`_                                                      |
@@ -68,6 +69,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
