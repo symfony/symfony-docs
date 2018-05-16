@@ -3,10 +3,11 @@ help
 
 **type**: ``string`` **default**: null
 
-Allows you to define extra information about the field, which will be rendered below the form field by default.
+Allows you to define a help message for the form field, which by default is
+rendered below the field.
 
 .. code-block:: php
 
-    $builder->add('name', null, array(
-        'help'   => 'My helper message.',
+    $builder->add('zip_code', null, array(
+        'help' => 'The ZIP/Postal code for your credit card\'s billing address.',
     ));
