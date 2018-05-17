@@ -353,4 +353,4 @@ will give you access to the following services:
 #. ``messenger.sender.yours``: the sender.
 #. ``messenger.receiver.yours``: the receiver.
 
-.. _`enqueue's transport`: https://github.com/enqueue/messenger-adapter
+.. _`enqueue's transport`: https://github.com/php-enqueue/messenger-adapter
