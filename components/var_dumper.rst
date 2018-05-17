@@ -100,11 +100,11 @@ The Dump Server
 The ``dump()`` function outputs its contents in the same browser window or
 console terminal as your own application. Sometimes mixing the real output
 with the debug output can be confusing. That's why this component provides a
-dedicated server to collect all the dumped data.
+server to collect all the dumped data.
 
 Start the server with the ``server:dump`` command and whenever you call to
-``dump()``, the dumped data is sent to a single centralized server that outputs
-it to the console or to an HTML file:
+``dump()``, the dumped data won't be displayed in the output but sent to that
+server, which outputs it to its own console or to an HTML file:
 
 .. code-block:: terminal
 
