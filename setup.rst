@@ -147,7 +147,7 @@ the ``create-project`` command:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/framework-standard-edition my_project_name "2.8.*"
+    $ composer create-project symfony/framework-standard-edition my_project_name "3.4.*"
 
 .. tip::
 
