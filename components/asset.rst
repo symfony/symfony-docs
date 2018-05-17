@@ -151,7 +151,7 @@ corresponding output file:
     // rev-manifest.json
     {
         "css/app.css": "build/css/app.b916426ea1d10021f3f17ce8031f93c2.css",
-        "js/app.js": "build/js/app.13630905267b809161e71d0f8a0c017b.js"
+        "js/app.js": "build/js/app.13630905267b809161e71d0f8a0c017b.js",
         "...": "..."
     }
 
