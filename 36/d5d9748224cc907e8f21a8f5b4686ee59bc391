@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-17T07:38:32Z
+
+Let's ping @vudaltsov as a Symfony Form expert to help us here. The PHPdoc of the DateTimeType class has a lot of information. Also, the ticket opened at ICU project was answered six years ago: http://icu-project.org/trac/ticket/9421  Can we review the PHPdoc of DateTimeType and see if it's still relevant or outdated? Thanks!
+
+---------------------------------------------------------------------------
+
+by elementaire at 2018-05-17T11:37:10Z
+
+The same link is used in [DateType](http://symfony.com/doc/2.7/reference/forms/types/date.html#format) and [BirthdayType](http://symfony.com/doc/2.7/reference/forms/types/birthday.html#format) docs. It comes from [this template of this documentation](https://github.com/symfony/symfony-docs/blob/master/reference/forms/types/options/date_format.rst.inc). Depends on the answer of @vudaltsov, maybe it should be updated too.
+
+---------------------------------------------------------------------------
+
+by vudaltsov at 2018-05-17T12:59:11Z
+
+@javiereguiluz , I think we should create a separate issue to see if the PHPdoc is still relevant.
+What @elementaire proposed can be done in any case.
