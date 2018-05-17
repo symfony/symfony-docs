@@ -142,9 +142,11 @@ string as the second argument of the ``StaticVersionStrategy`` constructor::
 JSON File Manifest
 ..................
 
-Use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\JsonManifestVersionStrategy`
-to take advantage of the strategy used by popular tools such as `Webpack 
-<https://webpack.js.org/>`_, which generates a JSON file mapping all source file names to their corresponding output file. For example::
+A popular strategy to manage asset versioning, which is used by tools such as
+`Webpack`_, is to generate a JSON file mapping all source file names to their
+corresponding output file:
+
+.. code-block:: json
 
     // rev-manifest.json
     {
@@ -153,6 +155,8 @@ to take advantage of the strategy used by popular tools such as `Webpack
         "...": "..."
     }
 
+In those cases, use the 
+:class:`Symfony\\Component\\Asset\\VersionStrategy\\JsonManifestVersionStrategy`::
 
     use Symfony\Component\Asset\Package;
     use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
@@ -372,3 +376,4 @@ Learn more
 ----------
 
 .. _Packagist: https://packagist.org/packages/symfony/asset
+.. _`Webpack`: https://webpack.js.org/
