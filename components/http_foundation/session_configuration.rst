@@ -99,7 +99,7 @@ It can be used to support the following workflow:
 * Switch to the migrating handler, with your new handler as the write-only one. The old handler behaves as usual and sessions get written to the new one.
 * After your session gc period, verify the data in the new handler
 * Update the migrating handler to use the old handler as the write-only one, so the sessions will now be read from the new handler. This step allows easier rollbacks.
-* After verifying everything, switch from the migrating handler to the new handler
+* After verifying the sessions in your app are working, switch from the migrating handler to the new handler.
 
 Example usage::
 
