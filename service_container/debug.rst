@@ -12,12 +12,7 @@ console. To show all services (public and private) and their PHP classes, run:
 
     $ php bin/console debug:container
 
-Hidden services, those whose ID starts with a dot character (``.``) aren't
-included by default in the output of this command. Add the ``--show-hidden``
-option to list them too:
-
-.. code-block:: terminal
-
+    # add this option to display "hidden services" too (those whose ID starts with a dot)
     $ php bin/console debug:container --show-hidden
 
 .. versionadded:: 4.1
