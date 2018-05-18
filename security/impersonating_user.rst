@@ -187,30 +187,28 @@ setting:
             ),
         ));
 
+Limiting User Switching
+-----------------------
+
 If you need more control over user switching, but don't require the complexity 
-of a full ACL implementation, you can use a security voter.  For example, you 
+of a full ACL implementation, you can use a security voter. For example, you 
 may want to allow employees to be able to impersonate a user with the 
 ``ROLE_CUSTOMER`` role without giving them the ability to impersonate a more 
 elevated user such as an administrator.
 
-First, create the voter class::
+.. versionadded:: 4.1
+    The target user was added as the voter subject parameter in Symfony 4.1.
+
+Create the voter class::
 
     namespace App\Security\Voter;
 
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-    use Symfony\Component\Security\Core\Role\RoleHierarchy;
     use Symfony\Component\Security\Core\User\UserInterface;
 
     class SwitchToCustomerVoter extends Voter
     {
-        private $roleHierarchy;
-
-        public function __construct(RoleHierarchy $roleHierarchy)
-        {
-            $this->roleHierarchy = $roleHierarchy;
-        }
-
         protected function supports($attribute, $subject)
         {
             return in_array($attribute, ['ROLE_ALLOWED_TO_SWITCH'])
@@ -235,8 +233,7 @@ First, create the voter class::
 
         private function hasSwitchToCustomerRole(TokenInterface $token)
         {
-            $roles = $this->roleHierarchy->getReachableRoles($token->getRoles());
-            foreach ($roles as $role) {
+            foreach ($token->getRoles() as $role) {
                 if ($role->getRole() === 'ROLE_SWITCH_TO_CUSTOMER') {
                     return true;
                 }
@@ -246,116 +243,8 @@ First, create the voter class::
         }
     }
 
-.. caution::
-
-    Notice that when checking for the ``ROLE_CUSTOMER`` role on the target user, only the roles 
-    explicitly assigned to the user are checked rather than checking all reachable roles from
-    the role hierarchy.  The reason for this is to avoid accidentally granting access to an 
-    elevated user that may have inherited the role via the hierarchy.  This logic is specific 
-    to the example, but keep this in mind when writing your own voter.
-
-Next, add the roles to the security configuration:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-        
-        # config/packages/security.yaml
-        security:
-            # ...
-
-            role_hierarchy:   
-                ROLE_CUSTOMER:    [ROLE_USER]
-                ROLE_EMPLOYEE:    [ROLE_USER, ROLE_SWITCH_TO_CUSTOMER]
-                ROLE_SUPER_ADMIN: [ROLE_EMPLOYEE, ROLE_ALLOWED_TO_SWITCH]
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-            <config>
-                <!-- ... -->
-
-                <role id="ROLE_CUSTOMER">ROLE_USER</role>
-                <role id="ROLE_EMPLOYEE">ROLE_USER, ROLE_SWITCH_TO_CUSTOMER</role>
-                <role id="ROLE_SUPER_ADMIN">ROLE_EMPLOYEE, ROLE_ALLOWED_TO_SWITCH</role>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-
-            'role_hierarchy' => array(
-                'ROLE_CUSTOMER'    => 'ROLE_USER',
-                'ROLE_EMPLOYEE'    => 'ROLE_USER, ROLE_SWITCH_TO_CUSTOMER',
-                'ROLE_SUPER_ADMIN' => array(
-                    'ROLE_EMPLOYEE',
-                    'ROLE_ALLOWED_TO_SWITCH',
-                ),
-            ),
-        ));
-
-Thanks to autowiring, we only need to configure the role hierarchy argument when registering 
-the voter as a service:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        // config/services.yaml
-        services:
-        # ...
-
-            App\Security\Voter\SwitchToCustomerVoter:
-                arguments:
-                    $roleHierarchy: "@security.role_hierarchy"
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">               
-
-            <services>
-                <!-- ... -->
-                <service id="App\Security\Voter\SwitchToCustomerVoter">
-                    <argument key="$roleHierarchy">"@security.role_hierarchy"</argument>
-                </service>
-            </services>
-        </container>     
-
-    .. code-block:: php
-
-        // config/services.php
-        use App\Security\Voter\SwitchToCustomerVoter;
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        // Same as before
-        $definition = new Definition();
-
-        $definition
-            ->setAutowired(true)
-            ->setAutoconfigured(true)
-            ->setPublic(false)
-        ;
-
-        $this->registerClasses($definition, 'App\\', '../src/*', '../src/{Entity,Migrations,Tests}');
-
-        // Explicitly configure the service
-        $container->getDefinition(SwitchToCustomerVoter::class)
-            ->setArgument('$roleHierarchy', new Reference('security.role_hierarchy'));   
+Thanks to service autoconfiguration and autowiring, this new voter is automatically 
+registered as a service and tagged as a security voter.
 
 Now a user who has the ``ROLE_SWITCH_TO_CUSTOMER`` role can switch to a user who explicitly has the 
 ``ROLE_CUSTOMER`` role, but not other users.
