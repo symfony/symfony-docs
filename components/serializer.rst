@@ -16,9 +16,9 @@ simple schema.
 
 .. image:: /_images/components/serializer/serializer_workflow.png
 
-As you can see in the picture above, an array is used as a man in
-the middle. This way, Encoders will only deal with turning specific
-**formats** into **arrays** and vice versa. The same way, Normalizers
+As you can see in the picture above, an array is used as an intermediary between
+objects and serialized contents. This way, encoders will only deal with turning
+specific **formats** into **arrays** and vice versa. The same way, Normalizers
 will deal with turning specific **objects** into **arrays** and vice versa.
 
 Serialization is a complex topic. This component may not cover all your use cases out of the box,
@@ -66,13 +66,13 @@ Serializing an Object
 For the sake of this example, assume the following class already
 exists in your project::
 
-    namespace Acme;
+    namespace App\Model;
 
     class Person
     {
         private $age;
         private $name;
-        private $sportsman;
+        private $sportsperson;
         private $createdAt;
 
         // Getters
@@ -92,9 +92,9 @@ exists in your project::
         }
 
         // Issers
-        public function isSportsman()
+        public function isSportsperson()
         {
-            return $this->sportsman;
+            return $this->sportsperson;
         }
 
         // Setters
@@ -108,9 +108,9 @@ exists in your project::
             $this->age = $age;
         }
 
-        public function setSportsman($sportsman)
+        public function setSportsperson($sportsperson)
         {
-            $this->sportsman = $sportsman;
+            $this->sportsperson = $sportsperson;
         }
 
         public function setCreatedAt($createdAt)
@@ -122,14 +122,14 @@ exists in your project::
 Now, if you want to serialize this object into JSON, you only need to
 use the Serializer service created before::
 
-    $person = new Acme\Person();
+    $person = new App\Model\Person();
     $person->setName('foo');
     $person->setAge(99);
-    $person->setSportsman(false);
+    $person->setSportsperson(false);
 
     $jsonContent = $serializer->serialize($person, 'json');
 
-    // $jsonContent contains {"name":"foo","age":99,"sportsman":false}
+    // $jsonContent contains {"name":"foo","age":99,"sportsperson":false}
 
     echo $jsonContent; // or return it in a Response
 
@@ -143,13 +143,13 @@ Deserializing an Object
 You'll now learn how to do the exact opposite. This time, the information
 of the ``Person`` class would be encoded in XML format::
 
-    use Acme\Person;
+    use App\Model\Person;
 
     $data = <<<EOF
     <person>
         <name>foo</name>
         <age>99</age>
-        <sportsman>false</sportsman>
+        <sportsperson>false</sportsperson>
     </person>
     EOF;
 
@@ -171,7 +171,7 @@ The serializer can also be used to update an existing object::
     $person = new Person();
     $person->setName('bar');
     $person->setAge(99);
-    $person->setSportsman(true);
+    $person->setSportsperson(true);
 
     $data = <<<EOF
     <person>
@@ -181,7 +181,7 @@ The serializer can also be used to update an existing object::
     EOF;
 
     $serializer->deserialize($data, Person::class, 'xml', array('object_to_populate' => $person));
-    // $person = Acme\Person(name: 'foo', age: '69', sportsman: true)
+    // $person = App\Model\Person(name: 'foo', age: '69', sportsperson: true)
 
 This is a common need when working with an ORM.
 
@@ -356,7 +356,7 @@ method on the normalizer definition::
     $encoder = new JsonEncoder();
 
     $serializer = new Serializer(array($normalizer), array($encoder));
-    $serializer->serialize($person, 'json'); // Output: {"name":"foo","sportsman":false}
+    $serializer->serialize($person, 'json'); // Output: {"name":"foo","sportsperson":false}
 
 Converting Property Names when Serializing and Deserializing
 ------------------------------------------------------------
@@ -474,8 +474,8 @@ Serializing Boolean Attributes
 ------------------------------
 
 If you are using isser methods (methods prefixed by ``is``, like
-``Acme\Person::isSportsman()``), the Serializer component will automatically
-detect and use it to serialize related attributes.
+``App\Model\Person::isSportsperson()``), the Serializer component will
+automatically detect and use it to serialize related attributes.
 
 The ``ObjectNormalizer`` also takes care of methods starting with ``has``, ``add``
 and ``remove``.
@@ -485,7 +485,7 @@ Using Callbacks to Serialize Properties with Object Instances
 
 When serializing, you can set a callback to format a specific object property::
 
-    use Acme\Person;
+    use App\Model\Person;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
     use Symfony\Component\Serializer\Serializer;
