@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-17T11:47:02Z
+
+Thanks for this! We are aware of how bad some words are for tech docs:
+
+- obviously
+- basically
+- simply
+- of course
+- clearly
+- just
+- as everyone knows
+- however
+- so
+- easy
+- etc.
+
+However, removing all of them from our docs is not easy at all. Please don't send PRs changing hundreds of occurrences of those words because they will be rejected. They would cause thousands of merge conflicts and we don't have time for that.
+
+We'll fix this eventually ... but we'll need to prepare for that. Thanks for understanding it.
