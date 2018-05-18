@@ -135,6 +135,10 @@ of the following:
     ``kernel.charset`` parameter). These default values are resolved when
     compiling the service container and won't change at runtime once dumped.
 
+    The values of the env vars are also exposed in the web interface of the
+    :doc:`Symfony profiler </profiler>`. In practice this shouldn't be a
+    problem because the web profiler must **never** be enabled in production.
+
 Constants
 ---------
 
