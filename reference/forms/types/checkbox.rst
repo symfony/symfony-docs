@@ -14,8 +14,8 @@ if you want to handle submitted values like "0" or "false").
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``checkbox`` field                                           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `value`_                                                             |
-|             | - `false_values`_                                                      |
+| Options     | - `false_values`_                                                      |
+|             | - `value`_                                                             |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                          |
 | options     | - `empty_data`_                                                        |
@@ -51,8 +51,8 @@ Example Usage
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/value.rst.inc
 .. include:: /reference/forms/types/options/false_values.rst.inc
+.. include:: /reference/forms/types/options/value.rst.inc
 
 Overridden Options
 ------------------
