@@ -793,7 +793,7 @@ Here, we set it to 2 for the ``$child`` property:
             /**
              * @MaxDepth(2)
              */
-            public $foo;
+            public $child;
 
             // ...
         }
@@ -802,7 +802,7 @@ Here, we set it to 2 for the ``$child`` property:
 
         Acme\MyObj:
             attributes:
-                foo:
+                child:
                     max_depth: 2
 
     .. code-block:: xml
@@ -814,7 +814,7 @@ Here, we set it to 2 for the ``$child`` property:
                 http://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
         >
             <class name="Acme\MyObj">
-                <attribute name="foo" max-depth="2" />
+                <attribute name="child" max-depth="2" />
             </class>
         </serializer>
 
