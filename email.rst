@@ -51,6 +51,7 @@ The Swift Mailer library works by creating, configuring and then sending
 of the message and is accessible via the ``Swift_Mailer`` service. Overall,
 sending an email is pretty straightforward::
 
+// Put PHP Doc here
     public function index($name, \Swift_Mailer $mailer)
     {
         $message = (new \Swift_Message('Hello Email'))
@@ -80,6 +81,8 @@ sending an email is pretty straightforward::
 
         return $this->render(...);
     }
+
+// Write an example of execution
 
 To keep things decoupled, the email body has been stored in a template and
 rendered with the ``renderView()`` method. The ``registration.html.twig``
