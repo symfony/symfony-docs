@@ -97,7 +97,7 @@ Active Core Members
   * **Tobias Nyholm** (`Nyholm`_) manages the official and contrib recipes
     repositories;
 
-  * **Samuel Rozé** (`sroze`_) can merge into Messenger_ component.
+  * **Samuel Rozé** (`sroze`_) can merge into the Messenger_ component.
 
 * **Deciders Team** (``@symfony/deciders`` on GitHub):
 
