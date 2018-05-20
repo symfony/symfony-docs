@@ -130,6 +130,10 @@ the following:
     environment variables, exposing sensitive information such as the database
     credentials.
 
+    The values of the env vars are also exposed in the web interface of the
+    :doc:`Symfony profiler </profiler>`. In practice this shouldn't be a
+    problem because the web profiler must **never** be enabled in production.
+
 Constants
 ---------
 

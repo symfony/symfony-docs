@@ -8,7 +8,7 @@ Create your First Page in Symfony
 =================================
 
 Creating a new page - whether it's an HTML page or a JSON endpoint - is a
-simple two-step process:
+two-step process:
 
 #. **Create a route**: A route is the URL (e.g. ``/about``) to your page and
    points to a controller;
