@@ -288,7 +288,7 @@ Binary Values as Parameters
 ---------------------------
 
 .. versionadded:: 4.1
-    The support of binary values in container parameters was introduced in
+    The support for binary values in container parameters was introduced in
     Symfony 4.1
 
 If the value of a container parameter is a binary value, set it as a base64
