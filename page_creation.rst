@@ -8,7 +8,7 @@ Create your First Page in Symfony
 =================================
 
 Creating a new page - whether it's an HTML page or a JSON endpoint - is a
-simple two-step process:
+two-step process:
 
 #. **Create a route**: A route is the URL (e.g. ``/about``) to your page and
    points to a controller;
@@ -191,19 +191,19 @@ The Web Debug Toolbar: Debugging Dream
 One of Symfony's *killer* features is the Web Debug Toolbar: a bar that displays
 a *huge* amount of debugging information along the bottom of your page while developing.
 
-To use the web debug toolbar, just install it:
+To use the web debug toolbar, install the Profiler pack first:
 
 .. code-block:: terminal
 
-    $ composer require --dev profiler
+    $ composer require --dev symfony/profiler-pack
 
 As soon as this finishes, refresh your page. You should see a black bar along the
 bottom of the page. You'll learn more about all the information it holds along the
 way, but feel free to experiment: hover over and click the different icons to get
 information about routing, performance, logging and more.
 
-The ``profiler`` package is also a great example of Flex! After downloading the
-package, the recipe created several configuration files so that the web debug toolbar
+This is also a great example of Flex! After downloading the profiler package,
+the recipe created several configuration files so that the web debug toolbar
 worked instantly.
 
 Rendering a Template
@@ -217,7 +217,7 @@ First, install Twig:
 
 .. code-block:: terminal
 
-    $ composer require twig
+    $ composer require symfony/twig-bundle
 
 Second, make sure that ``LuckyController`` extends Symfony's base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class:

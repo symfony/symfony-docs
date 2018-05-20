@@ -12,7 +12,7 @@ install the workflow feature before using it:
 
 .. code-block:: terminal
 
-    $ composer require workflow
+    $ composer require symfony/workflow
 
 Creating a Workflow
 -------------------

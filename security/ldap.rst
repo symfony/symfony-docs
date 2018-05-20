@@ -42,7 +42,7 @@ install the Ldap component before using it:
 
 .. code-block:: terminal
 
-    $ composer require ldap
+    $ composer require symfony/ldap
 
 Ldap Configuration Reference
 ----------------------------

@@ -139,7 +139,7 @@ First, install the BrowserKit component in your project:
 
 .. code-block:: terminal
 
-    $ composer require --dev browser-kit
+    $ composer require --dev symfony/browser-kit
 
 Functional tests are simple PHP files that typically live in the ``tests/Controller``
 directory for your bundle. If you want to test the pages handled by your
@@ -210,7 +210,7 @@ component, run:
 
 .. code-block:: terminal
 
-    $ composer require --dev css-selector
+    $ composer require --dev symfony/css-selector
 
 Now you can use CSS selectors with the crawler. To assert that the phrase
 "Hello World" is on the page at least once, you can use this assertion::

@@ -25,7 +25,7 @@ First, install the Doctrine bundle:
 
 .. code-block:: terminal
 
-    composer require doctrine/doctrine-bundle
+    $ composer require doctrine/doctrine-bundle
 
 Then configure the ``DATABASE_URL`` environment variable in ``.env``:
 

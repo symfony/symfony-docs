@@ -744,7 +744,7 @@ To use this function, install the *asset* package:
 
 .. code-block:: terminal
 
-    $ composer require asset
+    $ composer require symfony/asset
 
 You can now use the ``asset()`` function:
 

@@ -19,7 +19,7 @@ install the validator before using it:
 
 .. code-block:: terminal
 
-    $ composer require validator
+    $ composer require symfony/validator
 
 .. index::
    single: Validation; The basics

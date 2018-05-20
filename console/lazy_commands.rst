@@ -18,7 +18,7 @@ which will be responsible for returning ``Command`` instances::
     use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
 
     $commandLoader = new FactoryCommandLoader(array(
-        'app:heavy' => function () { return new HeavyCommand() },
+        'app:heavy' => function () { return new HeavyCommand(); },
     ));
 
     $application = new Application();
@@ -48,7 +48,7 @@ array of ``Command`` factories as its only constructor argument::
     use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
 
     $commandLoader = new FactoryCommandLoader(array(
-        'app:foo' => function () { return new FooCommand() },
+        'app:foo' => function () { return new FooCommand(); },
         'app:bar' => array(BarCommand::class, 'create'),
     ));
 
