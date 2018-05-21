@@ -70,11 +70,10 @@ configure the service container to use the
 
         // config/services.php
         use App\Email\NewsletterManager;
-        use App\NumberGenerator;
         use App\Email\NewsletterManagerStaticFactory;
         // ...
 
-        $container->register(NumberGenerator::class)
+        $container->register(NewsletterManager::class)
             // call the static method
             ->setFactory(array(NewsletterManagerStaticFactory::class, 'createNewsletterManager'));
 

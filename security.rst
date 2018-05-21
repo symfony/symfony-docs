@@ -1069,10 +1069,10 @@ the User object, and use the ``isGranted()`` method (or
 
     An alternative way to get the current user in a controller is to type-hint
     the controller argument with
-    :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface\\UserInterface`
+    :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
     (and default it to ``null`` if being logged-in is optional)::
 
-        use Symfony\Component\Security\Core\User\UserInterface\UserInterface;
+        use Symfony\Component\Security\Core\User\UserInterface;
 
         public function index(UserInterface $user = null)
         {
