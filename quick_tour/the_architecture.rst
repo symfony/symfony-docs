@@ -219,7 +219,7 @@ add *no* overhead! It also means that you get *great* errors: Symfony inspects a
 validates *everything* when the container is built.
 
 Now you might be wondering what happens when you update a file and the cache needs
-to rebuild? I like you're thinking! It's smart enough to rebuild on the next page
+to rebuild? I like your thinking! It's smart enough to rebuild on the next page
 load. But that's really the topic of the next section.
 
 Development Versus Production: Environments
