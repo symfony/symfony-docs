@@ -583,7 +583,7 @@ Start by updating the service ids to class names:
     To get rid of this, be sure that the Compiler Pass is using ``findDefinition()``
     instead of ``getDefinition()``. The latter won't take aliases into
     account when looking up for services.
-    Furthermore it is always recommendend to check for definition existance
+    Furthermore it is always recommended to check for definition existence
     using ``has()`` function.
 
 But, this change will break our app! The old service ids (e.g. ``app.github_notifier``)
