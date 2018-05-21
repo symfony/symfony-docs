@@ -40,8 +40,10 @@ configure the service container to use the
             # ...
 
             AppBundle\Email\NewsletterManager:
-                # call the static method
+                # call the static method that creates the object
                 factory: ['AppBundle\Email\NewsletterManagerStaticFactory', createNewsletterManager]
+                # define the class of the created object
+                class: AppBundle\Email\NewsletterManager
 
     .. code-block:: xml
 
@@ -54,8 +56,9 @@ configure the service container to use the
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Email\NewsletterManager">
-                    <!-- call the static method -->
+                <service id="AppBundle\Email\NewsletterManager"
+                         class="AppBundle\Email\NewsletterManager">
+                    <!-- call the static method that creates the object -->
                     <factory class="AppBundle\Email\NewsletterManagerStaticFactory" method="createNewsletterManager" />
 
                     <!-- starting from Symfony 3.3, if the factory class is the same as the service
@@ -72,11 +75,10 @@ configure the service container to use the
         // app/config/services.php
 
         use AppBundle\Email\NewsletterManager;
-        use AppBundle\NumberGenerator;
         use AppBundle\Email\NewsletterManagerStaticFactory;
         // ...
 
-        $container->register(NumberGenerator::class)
+        $container->register(NewsletterManager::class, NewsletterManager::class)
             // call the static method
             ->setFactory(array(NewsletterManagerStaticFactory::class, 'createNewsletterManager'));
 
@@ -109,6 +111,7 @@ Configuration of the service container then looks like this:
             AppBundle\Email\NewsletterManager:
                 # call a method on the specified factory service
                 factory: 'AppBundle\Email\NewsletterManagerFactory:createNewsletterManager'
+                class: AppBundle\Email\NewsletterManager
 
     .. code-block:: xml
 
@@ -123,7 +126,8 @@ Configuration of the service container then looks like this:
             <services>
                 <service id="AppBundle\Email\NewsletterManagerFactory" />
 
-                <service id="AppBundle\Email\NewsletterManager">
+                <service id="AppBundle\Email\NewsletterManager"
+                         class="AppBundle\Email\NewsletterManager">
                     <!-- call a method on the specified factory service -->
                     <factory service="AppBundle\Email\NewsletterManagerFactory"
                         method="createNewsletterManager"
@@ -142,7 +146,7 @@ Configuration of the service container then looks like this:
 
         $container->register(NewsletterManagerFactory::class);
 
-        $container->register(NewsletterManager::class)
+        $container->register(NewsletterManager::class, NewsletterManager::class)
             // call a method on the specified factory service
             ->setFactory(array(
                 new Reference(NewsletterManagerFactory::class),
@@ -159,6 +163,7 @@ Configuration of the service container then looks like this:
         # app/config/services.yml
 
         AppBundle\Email\NewsletterManager:
+            class: AppBundle\Email\NewsletterManager
             # new syntax
             factory: 'AppBundle\Email\NewsletterManagerFactory:createNewsletterManager'
             # old syntax
@@ -188,6 +193,7 @@ example takes the ``templating`` service as an argument:
             # ...
 
             AppBundle\Email\NewsletterManager:
+                class:     AppBundle\Email\NewsletterManager
                 factory:   'AppBundle\Email\NewsletterManagerFactory:createNewsletterManager'
                 arguments: ['@templating']
 
@@ -204,7 +210,8 @@ example takes the ``templating`` service as an argument:
             <services>
                 <!-- ... -->
 
-                <service id="AppBundle\Email\NewsletterManager">
+                <service id="AppBundle\Email\NewsletterManager"
+                         class="AppBundle\Email\NewsletterManager">
                     <factory service="AppBundle\Email\NewsletterManagerFactory" method="createNewsletterManager"/>
                     <argument type="service" id="templating"/>
                 </service>
@@ -220,7 +227,7 @@ example takes the ``templating`` service as an argument:
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->register(NewsletterManager::class)
+        $container->register(NewsletterManager::class, NewsletterManager::class)
             ->addArgument(new Reference('templating'))
             ->setFactory(array(
                 new Reference(NewsletterManagerFactory::class),
