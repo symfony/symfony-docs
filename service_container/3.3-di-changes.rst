@@ -568,6 +568,16 @@ Start by updating the service ids to class names:
     you can't redefine the service as ``Twig_Extensions_Extension_Intl: ~`` and
     you must keep the original ``class`` parameter.
 
+.. caution::
+
+    If a service is processed by a :doc:`compiler pass </service_container/compiler_passes>`,
+    you could face a  "You have requested a non-existent service" error.
+    To get rid of this, be sure that the Compiler Pass is using ``findDefinition()``
+    instead of ``getDefinition()``. The latter won't take aliases into
+    account when looking up for services.
+    Furthermore it is always recommendend to check for definition existance
+    using ``has()`` function.
+
 But, this change will break our app! The old service ids (e.g. ``app.github_notifier``)
 no longer exist. The simplest way to fix this is to find all your old service ids
 and update them to the new class id: ``app.github_notifier`` to ``App\Service\GitHubNotifier``.
