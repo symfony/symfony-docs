@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-05-16T12:15:40Z
+
+This is required on 3.4 only, not on 4.x anymore since the faulty compiler pass has been removed.
