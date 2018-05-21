@@ -113,28 +113,10 @@ needs::
         {
             $session = $this->client->getContainer()->get('session');
 
-            // the firewall context defaults to the firewall name
-            $firewallContext = 'secured_area';
-
-            $token = new UsernamePasswordToken('admin', null, $firewallContext, array('ROLE_ADMIN'));
-            $session->set('_security_'.$firewallContext, serialize($token));
-            $session->save();
-
-            $cookie = new Cookie($session->getName(), $session->getId());
-            $this->client->getCookieJar()->set($cookie);
-        }
-    }
-
-If your setup contains multiple firewalls sharing the same firewall context, you need to generate the
-*authentication token* by using one of the firewall names as provider key and set the security session
-using the firewall context name::
-
-        private function logIn()
-        {
-            $session = $this->client->getContainer()->get('session');
-
             $firewallName = 'secure_area';
-            $firewallContext = 'firewall_context';
+            // if you don't define multiple connected firewalls, the context defaults to the firewall name
+            // See https://symfony.com/doc/current/reference/configuration/security.html#firewall-context
+            $firewallContext = 'secured_area';
 
             $token = new UsernamePasswordToken('admin', null, $firewallName, array('ROLE_ADMIN'));
             $session->set('_security_'.$firewallContext, serialize($token));
@@ -143,3 +125,4 @@ using the firewall context name::
             $cookie = new Cookie($session->getName(), $session->getId());
             $this->client->getCookieJar()->set($cookie);
         }
+    }
