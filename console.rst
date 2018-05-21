@@ -101,8 +101,8 @@ messages to the console)::
             '',
         ]);
 
-        // the value returned by someMethod() can be an iterator that
-        // generates and returns the messages with the 'yield' PHP keyword
+        // the value returned by someMethod() can be an iterator (https://secure.php.net/iterator)
+        // that generates and returns the messages with the 'yield' PHP keyword
         $output->writeln($this->someMethod());
 
         // outputs a message followed by a "\n"
