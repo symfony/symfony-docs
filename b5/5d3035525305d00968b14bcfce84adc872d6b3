@@ -1,0 +1,44 @@
+---------------------------------------------------------------------------
+
+by DonCallisto at 2018-05-18T06:36:34Z
+
+@xabbuh thank you for the review. I've made changes in a separate commit so you can check only the diff.
+Moreover I would like to point out that, for consistency reason, even
+
+```
+.. _`FrameworkExtension for 3.3.0`: https://github.com/symfony/symfony/blob/7938fdeceb03cc1df277a249cf3da70f0b50eb98/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/FrameworkExtension.php#L247-L284
+```
+
+should be converted to `:doc:` reference.
+
+WDYT?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-05-18T06:41:38Z
+
+The `doc` role does not work for external links (for example, to link to code on GitHub). We can only use it for cross-references inside this documentation.
+
+---------------------------------------------------------------------------
+
+by DonCallisto at 2018-05-18T06:42:29Z
+
+Right, didn't see that was an external link.
+
+---------------------------------------------------------------------------
+
+by DonCallisto at 2018-05-18T06:44:45Z
+
+At the end will you squash commits or do you prefer me to do the squash?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-05-18T06:49:53Z
+
+Whatever you prefer :) As long as you do not push a merge commit we can easily squash your commits while merging.
+
+---------------------------------------------------------------------------
+
+by DonCallisto at 2018-05-18T06:52:02Z
+
+Ok, I have no preferences, just let me know if I need to perform other actions on this.
