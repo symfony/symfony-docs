@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by Warxcell at 2017-11-14T16:26:19Z
+
+Unfortunately I don't see anyway to change it per command basis. https://github.com/symfony/symfony/blob/3.4/src/Symfony/Component/Asset/Context/RequestStackContext.php
