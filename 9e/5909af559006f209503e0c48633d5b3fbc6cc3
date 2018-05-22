@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------
+
+by flip111 at 2017-09-04T16:03:07Z
+
+Considering putting the callable and propertypath option before the array in the sentence because:
+
+1. nicer flow of the sentence
+2. i would personally recommend it over specifying the attributes for each choice.
+
+In hindsight i prefer this
+
+> Use this to add additional HTML attributes to each choice. This can be a callable, a property path (just like `choice_label`_) or an associative array where the keys match the choice keys and the values are the options for each choice.
+
+---------------------------------------------------------------------------
+
+by flip111 at 2017-09-07T15:54:31Z
+
+I have a question which could go into an issue, but since i'm working on this part of the docs anyway i might as well put it here.
+
+if choices are like
+
+```php
+    'choices' => array(
+        'Yes' => true,
+        'No' => false,
+        'Maybe' => null,
+    ),
+```
+
+What's then `$value`, `$key`, `$index` in the callback? I guess for the first element it's
+
+```
+value -> true
+key -> Yes
+index -> Yes
+```
+
+What's the purpose of index here? whatever it is, it's not explained in the docs. I can change this part too.
+
+Another question ... also related: is it possible to get the current data here somehow? I like the attribute of one choice to depends on true/false of the other choices, more specifically i want to check if at least 1 is true.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-18T19:08:43Z
+
+@HeahDude maybe you can review this proposed change related to forms? Thanks!
