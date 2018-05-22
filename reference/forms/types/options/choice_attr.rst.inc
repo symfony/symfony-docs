@@ -6,8 +6,9 @@ choice_attr
 
 **type**: ``array``, ``callable`` or ``string`` **default**: ``array()``
 
-Use this to add additional HTML attributes to each choice. This can be an array
-of attributes (if they are the same for each choice), a callable or a property path
+Use this to add additional HTML attributes to each choice. This can be
+an associative array where the keys match the choice keys and the values
+are the options for each choice, a callable or a property path
 (just like `choice_label`_).
 
 If an array, the keys of the ``choices`` array must be used as keys::
