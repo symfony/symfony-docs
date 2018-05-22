@@ -148,6 +148,28 @@ Using custom validators is very easy, just as the ones provided by Symfony itsel
             }
         }
 
+If you are using validation groups, you need to either reference the Default group when using the constraint, or set the correct group.
+
+
+    .. code-block:: php-annotations
+
+        // src/Entity/AcmeEntity.php
+        use Symfony\Component\Validator\Constraints as Assert;
+        use App\Validator\Constraints as AcmeAssert;
+
+        class AcmeEntity
+        {
+            // ...
+
+            /**
+             * @Assert\NotBlank
+             * @AcmeAssert\ContainsAlphanumeric(groups={"default"})
+             */
+            protected $name;
+
+            // ...
+        }
+
 If your constraint contains options, then they should be public properties
 on the custom Constraint class you created earlier. These options can be
 configured like options on core Symfony constraints.
