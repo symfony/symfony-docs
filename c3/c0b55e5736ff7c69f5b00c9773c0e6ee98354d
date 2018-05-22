@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-05-15T06:59:46Z
+
+@ogizanagi You are right, we still have to add them manually.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-15T07:33:44Z
+
+We've just deployed a change to add `Messenger` to the list of guides: https://symfony.com/doc/current/index.html
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2018-05-15T07:42:48Z
+
+@javiereguiluz : Great, thank you!
+
+I think we should reference it as well in the component documentation (in the "Learn more" section like for the [Serializer component](https://symfony.com/doc/current/components/serializer.html#learn-more) or instance). It's not easily discoverable otherwise.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-18T15:29:12Z
+
+@xabbuh do you consider this PR ready and finished? Thanks!
