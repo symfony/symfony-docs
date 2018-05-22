@@ -91,3 +91,27 @@ to a :class:`Symfony\\Component\\HttpFoundation\\Response` instance::
 .. _`PSR-7`: https://www.php-fig.org/psr/psr-7/
 .. _`Zend Diactoros`: https://github.com/zendframework/zend-diactoros
 .. _`symfony/psr-http-message-bridge on Packagist`: https://packagist.org/packages/symfony/psr-http-message-bridge
+
+
+Usage in Symfony 4
+------------------
+
+In a Symfony application, enable PSR-7 support in SensioFrameworkExtraBundle package:
+
+.. configuration-block::
+    .. code-block:: yaml
+        # config/packages/sensio_framework_extra.yaml
+        sensio_framework_extra:
+            psr_message:
+                enabled: true
+
+You can then inject the factories into the appropriate services when you need them:
+
+.. configuration-block::
+    .. code-block:: yaml
+        # config/services.yaml
+        App\MyService:
+            class: App\MyService
+            arguments:
+                - "@sensio_framework_extra.psr7.http_message_factory"
+                - "@sensio_framework_extra.psr7.http_foundation_factory"
