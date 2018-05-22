@@ -694,7 +694,78 @@ service whose id is ``monolog.logger.request``.
 Binding Arguments by Name or Type
 ---------------------------------
 
-You can also use the ``bind`` keyword to bind specific arguments by name or type.
+You can also use the ``bind`` keyword to bind specific arguments by name or type:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            _defaults:
+                bind:
+                    # pass this value to any $adminEmail argument for any service
+                    # that's defined in this file (including controller arguments)
+                    $adminEmail: 'manager@example.com'
+
+                    # pass this service to any $requestLogger argument for any
+                    # service that's defined in this file
+                    $requestLogger: '@monolog.logger.request'
+
+                    # pass this service for any LoggerInterface type-hint for any
+                    # service that's defined in this file
+                    Psr\Log\LoggerInterface: '@monolog.logger.request'
+
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <defaults autowire="true" autoconfigure="true" public="false">
+                    <bind key="$adminEmail">manager@example.com</bind>
+                    <bind key="$requestLogger"
+                        type="service"
+                        id="monolog.logger.request"
+                    />
+                    <bind key="Psr\Log\LoggerInterface"
+                        type="service"
+                        id="monolog.logger.request"
+                    />
+                </defaults>
+
+                <!-- ... -->
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use App\Controller\LuckyController;
+        use Symfony\Component\DependencyInjection\Reference;
+        use Psr\Log\LoggerInterface;
+
+        $container->register(LuckyController::class)
+            ->setPublic(true)
+            ->setBindings(array(
+                '$adminEmail' => 'manager@example.com',
+                '$requestLogger' => new Reference('monolog.logger.request'),
+                LoggerInterface::class => new Reference('monolog.logger.request'),
+            ))
+        ;
+
+By putting the ``bind`` key under ``_defaults``, you can specify the value of *any*
+argument for *any* service defined in this file! You can bind arguments by name
+(e.g. ``$adminEmail``) or by type (e.g. ``Psr\Log\LoggerInterface``).
+
+The ``bind`` config can be also be applied to specific services or when loading many
+services at once (i.e. :ref:`service-psr4-loader`).
 
 .. _services-autowire:
 
