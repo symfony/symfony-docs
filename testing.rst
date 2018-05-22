@@ -39,11 +39,6 @@ Symfony application.
     Code coverage can be generated with the ``--coverage-*`` options, see the
     help information that is shown when using ``--help`` for more information.
 
-.. note::
-
-    Thanks to Symfony Flex recipes aliases, you can require ``phpunit`` instead
-    of ``symfony/phpunit-bridge``.
-
 .. index::
    single: Tests; Unit tests
 
@@ -265,16 +260,14 @@ document::
         $client->getResponse()->getContent()
     );
 
-.. note::
+.. tip::
 
-    Instead of adding each dependency individually, you can also run:
+    Instead of installing each testing dependency individually, you can use the
+    Symfony Test pack to install all those dependencies at once:
 
         .. code-block:: terminal
 
-            $ composer require --dev test
-
-    If the ``PHPUnit Bridge`` wasn't installed before, the test pack will add
-    it too.
+            $ composer require --dev symfony/test-pack
 
 .. index::
    single: Tests; Assertions
