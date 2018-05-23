@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-17T07:52:54Z
+
+I'm closing this one as a duplicate of #9786.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-05-17T11:04:13Z
+
+@javiereguiluz This PR changes a different file. :) It could be done in the same PR, but IMO it's fine this way too.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-17T11:12:07Z
+
+I'm sorry for having closed it so fast without double checking it!
