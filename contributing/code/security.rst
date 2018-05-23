@@ -37,7 +37,6 @@ confirmed, the core team works on a solution following these steps:
 #. Package new versions for all affected versions;
 #. Publish the post on the official Symfony `blog`_ (it must also be added to
    the "`Security Advisories`_" category);
-#. Update the security advisory list (see below).
 #. Update the public `security advisories database`_ maintained by the
    FriendsOfPHP organization and which is used by the ``security:check`` command.
 
