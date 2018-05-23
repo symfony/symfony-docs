@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-05-17T07:27:29Z
+
+If there is no initial marking, the behaviour will be dependent on the underlying object. IMO we can make this change to make the workflow more clear.
+
+@lyrixx What do you think?
