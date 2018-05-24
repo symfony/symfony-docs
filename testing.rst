@@ -124,6 +124,7 @@ application (from the routing to the views). They are no different from unit
 tests as far as PHPUnit is concerned, but they have a very specific workflow:
 
 * Make a request;
+* Click on a link or submit a form;
 * Test the response;
 * Rinse and repeat.
 
