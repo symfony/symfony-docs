@@ -237,6 +237,40 @@ It is also possible to combine the processors:
        auth: '%env(file:resolve:AUTH_FILE)%'
 
 
+Custom Environment Variable Processors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Its possible to add further processors for environment variables. You just need
+to add an implementation of `Symfony\Component\DependencyInjection\EnvVarProcessorInterface`.
+
+.. code-block:: php
+
+    class LowercasingEnvVarProcessor implements EnvVarProcessorInterface
+    {
+        private $container;
+
+        public function __construct(ContainerInterface $container)
+        {
+            $this->container = $container;
+        }
+
+        public function getEnv($prefix, $name, \Closure $getEnv)
+        {
+            $env = $getEnv($name);
+
+            return strtolower($env);
+        }
+
+        public static function getProvidedTypes()
+        {
+            return [
+                'lowercase' => 'string',
+            ];
+        }
+    }
+
+
+
 .. _configuration-env-var-in-prod:
 
 Configuring Environment Variables in Production
