@@ -143,11 +143,25 @@ you will want to have specific types so that they match the types expected by yo
 
 A number of different types are supported:
 
-``env(string):FOO)``
+``env(string:FOO)``
     Casts ``FOO`` to a string
+
+.. code-block:: php
+
+    parameters:
+        env(SECRET): "some_secret"
+    framework:
+       secret: '%env(string:SECRET)%'
     
 ``env(bool:FOO)``
     Casts ``FOO`` to a bool
+
+.. code-block:: php
+
+    parameters:
+        env(HTTP_METHOD_OVERRIDE): "true"
+    framework:
+       http_method_override: '%env(bool:HTTP_METHOD_OVERRIDE)%'
 
 ``env(int:FOO)``
     Casts ``FOO`` to an int
@@ -158,25 +172,69 @@ A number of different types are supported:
 ``env(const:FOO)``
     Finds the const value named in ``FOO``
 
+.. code-block:: php
+
+    parameters:
+        env(HEALTH_CHECK_METHOD): "Symfony\Component\HttpFoundation\Request:METHOD_HEAD"
+    security:
+       access_control:
+         - { path: '^/health-check$', methods: '%env(const:HEALTH_CHECK_METHOD)%' }
+
 ``env(base64:FOO)``
     Decodes ``FOO`` that is a base64 encoded string
     
 ``env(json:FOO)``
     Decodes ``FOO`` that is a json encoded string into either an array or ``null``
+
+.. code-block:: php
+
+    parameters:
+        env(TRUSTED_HOSTS): "['10.0.0.1', '10.0.0.2']"
+    framework:
+       trusted_hosts: '%env(json:TRUSTED_HOSTS)%'
     
 ``env(resolve:FOO)``
     Resolves references in the string ``FOO`` to other parameters
+
+.. code-block:: php
+
+    parameters:
+        env(HOST): '10.0.0.1'
+        env(SENTRY_DSN): "http://%env(HOST)%/project"
+    sentry:
+        dsn: '%env(resolve:SENTRY_DSN)%'
     
 ``env(csv:FOO)``
     Decodes ``FOO`` that is a single row of comma seperated values
 
+.. code-block:: php
+
+    parameters:
+        env(TRUSTED_HOSTS): "10.0.0.1, 10.0.0.2"
+    framework:
+       trusted_hosts: '%env(csv:TRUSTED_HOSTS)%'
+
 ``env(file:FOO)``
     Reads the contents of a file named in ``FOO``
+
+.. code-block:: php
+
+    parameters:
+        env(AUTH_FILE): "auth.json"
+    google:
+       auth: '%env(file:AUTH_FILE)%'
     
 It is also possible to combine the processors:
 
 ``env(json:file:FOO)``
     Reads the contents of a file named in ``FOO``, and then decode it from json, resulting in an array or ``null``
+
+.. code-block:: php
+
+    parameters:
+        env(AUTH_FILE): "%kernel.root%/auth.json"
+    google:
+       auth: '%env(file:resolve:AUTH_FILE)%'
 
 
 .. _configuration-env-var-in-prod:
