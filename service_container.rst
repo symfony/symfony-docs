@@ -641,6 +641,10 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
                     # that's defined in this file (including controller arguments)
                     $adminEmail: 'manager@example.com'
 
+                    # pass this service to any $requestLogger argument for any
+                    # service that's defined in this file
+                    $requestLogger: '@monolog.logger.request'
+
                     # pass this service for any LoggerInterface type-hint for any
                     # service that's defined in this file
                     Psr\Log\LoggerInterface: '@monolog.logger.request'
@@ -659,7 +663,11 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
             <services>
                 <defaults autowire="true" autoconfigure="true" public="false">
                     <bind key="$adminEmail">manager@example.com</bind>
-                    <bind key="$logger"
+                    <bind key="$requestLogger"
+                        type="service"
+                        id="monolog.logger.request"
+                    />
+                    <bind key="Psr\Log\LoggerInterface"
                         type="service"
                         id="monolog.logger.request"
                     />
@@ -680,6 +688,7 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
             ->setPublic(true)
             ->setBindings(array(
                 '$adminEmail' => 'manager@example.com',
+                '$requestLogger' => new Reference('monolog.logger.request'),
                 LoggerInterface::class => new Reference('monolog.logger.request'),
             ))
         ;

@@ -46,6 +46,7 @@ like this:
                             - 'currentPlace'
                     supports:
                         - App\Entity\BlogPost
+                    initial_place: draft
                     places:
                         - draft
                         - review

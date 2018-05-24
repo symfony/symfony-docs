@@ -29,7 +29,7 @@ command:
 
 .. code-block:: terminal
 
-    $ ./vendor/bin/simple-phpunit
+    $ ./bin/phpunit
 
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
@@ -101,13 +101,13 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: terminal
 
     # run all tests of the application
-    $ ./vendor/bin/simple-phpunit
+    $ ./bin/phpunit
 
     # run all tests in the Util/ directory
-    $ ./vendor/bin/simple-phpunit tests/Util
+    $ ./bin/phpunit tests/Util
 
     # run tests for the Calculator class
-    $ ./vendor/bin/simple-phpunit tests/Util/CalculatorTest.php
+    $ ./bin/phpunit tests/Util/CalculatorTest.php
 
 .. index::
    single: Tests; Functional tests
@@ -266,6 +266,15 @@ document::
         'Hello World',
         $client->getResponse()->getContent()
     );
+
+.. tip::
+
+    Instead of installing each testing dependency individually, you can use the
+    Symfony Test pack to install all those dependencies at once:
+
+        .. code-block:: terminal
+
+            $ composer require --dev symfony/test-pack
 
 .. index::
    single: Tests; Assertions
