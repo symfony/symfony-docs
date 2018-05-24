@@ -113,10 +113,12 @@ needs::
         {
             $session = $this->client->getContainer()->get('session');
 
-            // the firewall context defaults to the firewall name
+            $firewallName = 'secure_area';
+            // if you don't define multiple connected firewalls, the context defaults to the firewall name
+            // See https://symfony.com/doc/current/reference/configuration/security.html#firewall-context
             $firewallContext = 'secured_area';
 
-            $token = new UsernamePasswordToken('admin', null, $firewallContext, array('ROLE_ADMIN'));
+            $token = new UsernamePasswordToken('admin', null, $firewallName, array('ROLE_ADMIN'));
             $session->set('_security_'.$firewallContext, serialize($token));
             $session->save();
 
