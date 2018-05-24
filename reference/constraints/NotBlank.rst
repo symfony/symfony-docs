@@ -2,7 +2,7 @@ NotBlank
 ========
 
 Validates that a value is not blank - meaning not equal to a blank string,
-a blank array or ``null``::
+a blank array, ``null`` or ``false``::
 
     if (false === $value || (empty($value) && '0' != $value)) {
         // validation will fail
