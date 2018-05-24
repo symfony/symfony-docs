@@ -1831,7 +1831,7 @@ The name of the adapter to use. You could also use your own implementation.
 
 .. note::
 
-    Your service MUST implement the :class:`Psr\\Cache\\CacheItemPoolInterface` interface.
+    Your service MUST implement the ``Psr\\Cache\\CacheItemPoolInterface`` interface.
 
 public
 """"""
