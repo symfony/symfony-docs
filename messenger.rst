@@ -276,22 +276,22 @@ you can disable them like this:
 Using Middleware Factories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sometimes middleware are configurable using factories. There are two types of
-factories and they are based on Symfony's :doc:`dependency injection </service_container>`
-features:
+Some third-party bundles and libraries provide configurable middleware via
+factories. Using them requires a two-step configuration based on Symfony's
+:doc:`dependency injection </service_container>` features:
 
 .. code-block:: yaml
 
     services:
 
-        # Type 1: a factory class is registered as a service with the required
+        # Step 1: a factory class is registered as a service with the required
         # dependencies to instantiate a middleware
         doctrine.orm.messenger.middleware_factory.transaction:
             class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddlewareFactory
             arguments: ['@doctrine']
 
-        # Type 2: an abstract definition that will call the factory with default arguments
-        # or the one provided in the middleware config
+        # Step 2: an abstract definition that will call the factory with default
+        # arguments or the one provided in the middleware config
         messenger.middleware.doctrine_transaction_middleware:
             class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddleware
             factory: ['@doctrine.orm.messenger.middleware_factory.transaction', 'createMiddleware']
