@@ -6,12 +6,16 @@ CheckboxType Field
 
 Creates a single input checkbox. This should always be used for a field
 that has a boolean value: if the box is checked, the field will be set to
-true, if the box is unchecked, the value will be set to false.
+true, if the box is unchecked, the value will be set to false. Optionally
+you can specify an array of values that, if submitted, will be evaluated
+to "false" as well (this differs from what HTTP defines, but can be handy
+if you want to handle submitted values like "0" or "false").
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``checkbox`` field                                           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `value`_                                                             |
+| Options     | - `false_values`_                                                      |
+|             | - `value`_                                                             |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                          |
 | options     | - `empty_data`_                                                        |
@@ -48,6 +52,7 @@ Example Usage
 Field Options
 -------------
 
+.. include:: /reference/forms/types/options/false_values.rst.inc
 .. include:: /reference/forms/types/options/value.rst.inc
 
 Overridden Options
