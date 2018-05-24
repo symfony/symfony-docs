@@ -169,7 +169,7 @@ to authenticate, check the returned user object::
         // you can, for example, test that the returned user is an object of a
         // particular class or check for certain attributes of your user objects
         if ($user instance User) {
-            // the user was loaded from the security.yml file. Do something.
+            // the user was loaded from the main security config file. Do something.
             // ...
         }
 
