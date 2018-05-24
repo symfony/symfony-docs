@@ -467,7 +467,7 @@ it's quite easy::
     // src/AppBundle/Form/Type/TaskType.php
     namespace AppBundle\Form\Type;
 
-    use AppBundle\Form\DataTransformer\IssueToNumberTransformer;
+    use AppBundle\Form\IssueSelectorType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     // ...
 
