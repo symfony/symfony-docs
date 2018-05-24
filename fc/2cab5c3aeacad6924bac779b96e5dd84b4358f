@@ -1,0 +1,93 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-02T08:37:04Z
+
+@JeroenDeDauw thanks for proposing this change to improve Symfony Docs. However, the link you shared (http://wiki.c2.com/?ArrangeActAssert) is for unit tests and this doc is for functional tests, so I'm not sure about the proposed change.
+
+---------------------------------------------------------------------------
+
+by JeroenDeDauw at 2018-05-02T11:01:31Z
+
+Oh, I did not see this particular article is about unit tests specifically. The AAA pattern does not just apply to unit tests. The benefits are just the same for unit tests, integration tests and edge-to-edge tests like the ones this section is about.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-24T07:40:04Z
+
+I'm afraid we're going to close this without merging. I know it's sad to do that ... but the mentioned workflow is the one used throughout the docs and it's very popular among Symfony developers. I hope you understand it. Thanks!
+
+---------------------------------------------------------------------------
+
+by JeroenDeDauw at 2018-05-24T11:16:28Z
+
+If an anti-pattern is present through the documentation then it is not surprising it will be used by many developers. Not sure how the wide usage of an anti-pattern is a reason for recommending it in the documentation. I doing so is rather harmful, which is why I created this PR. I hope you reconsider.
+
+---------------------------------------------------------------------------
+
+by Ocramius at 2018-05-24T11:29:49Z
+
+This should likely be re-considered, as the AAA approach is indeed something to strive for in test automation, while multiple actions lead to quite messy test scenarios (both to be read and to be debugged). This applies to any level of testing, as it keeps pre-conditions, mutations and post-conditions atomic.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-24T14:23:46Z
+
+@JeroenDeDauw maybe I didn't fully understand your proposal. Let's talk about an specific example taken from the Symfony Demo app: https://github.com/symfony/demo/blob/master/tests/Controller/BlogControllerTest.php#L64
+
+That test follows the same workflow explained in the Symfony Docs:
+
+* Make a request;
+* Test the response;
+* Click on a link or submit a form;
+* Test the response;
+
+Now, please tell me how can we refactor that code to follow this other proposed workflow:
+
+* Make a request;
+* Test the response;
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by JeroenDeDauw at 2018-05-24T15:20:26Z
+
+I only see a single assert in that test. The name could definitely be better though. All it tells me is that the test is about new comments, without informing me what is actually tested, forcing me to look at implementation details. With such a general name it is also tempting to dump all tests related to new comments in a single test method, violating Arange-Act-Assert and making it even more difficult to figure out what the actual intent of the test is.
+
+Instead of
+
+```
+TestAllTheThings(
+    Make a request;
+    Test the response;
+    Click on a link or submit a form;
+    Test the response;
+)
+```
+
+Do
+
+```
+TestWhenFooThenBar(
+    Make a request;
+    Assert Bar;
+)
+
+TestWhenBazThenBah(
+    Make a request;
+    Click on a link or submit a form;
+    Assert Bah;
+)
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-24T15:25:47Z
+
+@JeroenDeDauw thanks for the details! I understand you now. I thought you wanted to remove the *"Click on a link or submit a form"* step ... but that's not true. You want to remove the first *"Test the response"* to not make too many things in the same test. I fully agree, so I have tweaked a bit the original pull request. Thanks!
+
+---------------------------------------------------------------------------
+
+by JeroenDeDauw at 2018-05-24T15:28:23Z
+
+Looks good! :)
