@@ -95,8 +95,8 @@ two public repositories:
 
 * `Contrib recipe repository`_, contains all the recipes created by the
   community. All of them are guaranteed to work, but their associated packages
-  could be unmaintained. Symfony Flex will ask users to confirm the installation
-  of those community-contributed recipies.
+  could be unmaintained. Symfony Flex will ask your permission before installing
+  any of these recipes.
 
 Read the `Symfony Recipes documentation`_ to learn everything about how to
 create recipes for your own packages.
