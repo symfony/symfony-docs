@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-21T15:33:55Z
+
+@koutsoumposval thanks a lot for this contribution! I'm proposing a reword to update the existing example with your own example and add some code comments to make the overall article more concise.
+
+---------------------------------------------------------------------------
+
+by koutsoumposval at 2018-05-21T17:44:54Z
+
+Makes sense @javiereguiluz! Let's merge it this way
+
+---------------------------------------------------------------------------
+
+by koutsoumposval at 2018-05-24T15:18:39Z
+
+For future reference, this example is not working when `logout_on_user_change = true` in firewall configuration, but I am not sure if my SF security configuration is causing it or it is also caused by the SF default security configuration. That is why I am not including it as a comment in the PR.
