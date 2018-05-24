@@ -95,13 +95,8 @@ two public repositories:
 
 * `Contrib recipe repository`_, contains all the recipes created by the
   community. All of them are guaranteed to work, but their associated packages
-  could be unmaintained. Symfony Flex ignores these recipes by default, but you
-  can execute this command to start using them in your project:
-
-  .. code-block:: terminal
-
-        $ cd your-project/
-        $ composer config extra.symfony.allow-contrib true
+  could be unmaintained. Symfony Flex will ask your permission before installing
+  any of these recipes.
 
 Read the `Symfony Recipes documentation`_ to learn everything about how to
 create recipes for your own packages.
