@@ -19,3 +19,11 @@ the issue.
 
 Or, you may have deeper issues where different libraries depend on conflicting
 versions of other libraries. Check your error message to debug.
+
+Another issue that may happen is that the project dependencies can be installed
+in your local computer but not on the remote server. This usually happens when
+the PHP versions are different on each machine. The solution is to add the
+`platform`_ config option in your `composer.json` file to define the highest
+PHP version allowed for the dependencies (set it to server's PHP version).
+
+.. _`platform`: https://getcomposer.org/doc/06-config.md#platform

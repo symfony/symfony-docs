@@ -1,6 +1,12 @@
 How to Use multiple User Providers
 ==================================
 
+.. note::
+
+    It's always better to use a specific user provider for each authentication
+    mechanism. Chaining user providers should be avoided in most applications
+    and used only to solve edge cases.
+
 Each authentication mechanism (e.g. HTTP Authentication, form login, etc)
 uses exactly one user provider, and will use the first declared user provider
 by default. But what if you want to specify a few users via configuration
@@ -149,6 +155,26 @@ In this example, if a user tries to log in via HTTP authentication, the authenti
 system will use the ``in_memory`` user provider. But if the user tries to
 log in via the form login, the ``user_db`` provider will be used (since it's
 the default for the firewall as a whole).
+
+If you need to check that the user being returned by  your provider is a allowed
+to authenticate, check the returned user object::
+
+    use Symfony\Component\Security\Core\User;
+    // ...
+
+    public function loadUserByUsername($username)
+    {
+        // ...
+
+        // you can, for example, test that the returned user is an object of a
+        // particular class or check for certain attributes of your user objects
+        if ($user instance User) {
+            // the user was loaded from the main security config file. Do something.
+            // ...
+        }
+
+        return $user;
+    }
 
 For more information about user provider and firewall configuration, see
 the :doc:`/reference/configuration/security`.
