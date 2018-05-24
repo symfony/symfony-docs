@@ -33,7 +33,7 @@ argument is the key of the item::
     // $cache pool object was created before
     $productsCount = $cache->getItem('stats.products_count');
 
-Then, use the :method:`Psr\\Cache\\CacheItemInterface::set` method to set
+Then, use the ``Psr\\Cache\\CacheItemInterface::set`` method to set
 the data stored in the cache item::
 
     // storing a simple integer
