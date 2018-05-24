@@ -21,8 +21,8 @@ Configuring the Request Context Globally
 
 To configure the Request Context - which is used by the URL Generator - you can
 redefine the parameters it uses as default values to change the default host
-(``localhost``) and scheme (``http``). You can also configure the base path if
-Symfony is not running in the root directory.
+(``localhost``) and scheme (``http``). You can also configure the base path (both for
+the URL generator and the assets) if Symfony is not running in the root directory.
 
 Note that this does not impact URLs generated via normal web requests, since those
 will override the defaults.
@@ -36,6 +36,8 @@ will override the defaults.
             router.request_context.host: example.org
             router.request_context.scheme: https
             router.request_context.base_url: my/path
+            asset.request_context.base_path: %router.request_context.base_url%
+            asset.request_context.secure: true
 
     .. code-block:: xml
 
@@ -48,6 +50,8 @@ will override the defaults.
                 <parameter key="router.request_context.host">example.org</parameter>
                 <parameter key="router.request_context.scheme">https</parameter>
                 <parameter key="router.request_context.base_url">my/path</parameter>
+                <parameter key="asset.request_context.base_path">%router.request_context.base_url%</parameter>
+                <parameter key="asset.request_context.secure">true</parameter>
             </parameters>
 
         </container>
@@ -58,6 +62,11 @@ will override the defaults.
         $container->setParameter('router.request_context.host', 'example.org');
         $container->setParameter('router.request_context.scheme', 'https');
         $container->setParameter('router.request_context.base_url', 'my/path');
+        $container->setParameter('asset.request_context.base_path', $container->getParameter('router.request_context.base_url'));
+        $container->setParameter('asset.request_context.secure', true);
+
+.. versionadded:: 3.4
+    The ``asset.request_context.*`` parameters were introduced in Symfony 3.4.
 
 Configuring the Request Context per Command
 -------------------------------------------
