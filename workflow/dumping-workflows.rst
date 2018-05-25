@@ -6,7 +6,7 @@ How to Dump Workflows
 
 To help you debug your workflows, you can dump a representation of your workflow
 with the use of a ``DumperInterface``. Use the ``GraphvizDumper`` to create a
-SVG image of the workflow defined above::
+PNG or SVG image of the workflow defined above::
 
     // dump-graph.php
     $dumper = new GraphvizDumper();
@@ -15,6 +15,9 @@ SVG image of the workflow defined above::
 .. code-block:: terminal
 
     $ php dump-graph.php | dot -Tsvg -o graph.svg
+
+    # run this command if you prefer PNG images:
+    # $ php dump-graph.php | dot -Tpng -o graph.png
 
 The result will look like this:
 
