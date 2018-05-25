@@ -291,7 +291,7 @@ factories. Using them requires a two-step configuration based on Symfony's
             arguments: ['@doctrine']
 
         # Step 2: an abstract definition that will call the factory with default
-        # arguments or the one provided in the middleware config
+        # arguments or the ones provided in the middleware config
         messenger.middleware.doctrine_transaction_middleware:
             class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddleware
             factory: ['@doctrine.orm.messenger.middleware_factory.transaction', 'createMiddleware']
@@ -318,9 +318,9 @@ Then you can reference and configure the
                 buses:
                     command_bus:
                         middleware:
-                            # Using defaults:
+                            # Using defaults
                             - doctrine_transaction_middleware
-                            # Using another entity manager:
+                            # Using another entity manager
                             - doctrine_transaction_middleware: ['custom']
 
     .. code-block:: xml
@@ -337,7 +337,7 @@ Then you can reference and configure the
             <framework:config>
                 <framework:messenger>
                     <framework:bus name="command_bus">
-                        <!-- Using defaults: -->
+                        <!-- Using defaults -->
                         <framework:middleware id="doctrine_transaction_middleware" />
                         <!-- Using another entity manager -->
                         <framework:middleware id="doctrine_transaction_middleware">
@@ -356,7 +356,7 @@ Then you can reference and configure the
                 'buses' => array(
                     'command_bus' => array(
                         'middleware' => array(
-                            // Using defaults:
+                            // Using defaults
                             'doctrine_transaction_middleware',
                             // Using another entity manager
                             array('id' => 'doctrine_transaction_middleware', 'arguments' => array('custom')),
