@@ -634,6 +634,93 @@ let you find out which options are defined::
         }
     }
 
+OptionResolverNested
+~~~~~~~~~~~~~~~~~~
+
+OptionResolver supports nesting. In order to allow checking multilevel arrays, you need to pass a class instance `OptionResolverNested` as a nested array::
+
+    // ...
+    class Mailer
+    {
+        // ...
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            // ...
+            $resolver->setDefaults(array(
+                'encryption' => null,
+                'recipient' => new OptionResolverNested([
+                    'name' => 'John',
+                    'mail' => 'john@example.com'
+                ]),
+                'host' => 'example.org',
+            ));
+        }
+    }
+    
+.. note::
+
+    OptionResolverNested is inherited by \ArrayObject. In case an array is passed as a nested element, then the check will go only to the key, and to the fact that the element is an array. 
+Data inside the array will not be validated.
+    
+To get access to the elements inside OptionResolverNested, you need to get the data as well as in multilevel arrays::
+
+    // ...
+    class Mailer
+    {
+        // ...
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            // ...
+            $resolver->setDefaults(array(
+                'encryption' => function (Options $options) {
+                    $options['recipient']['name']; // John
+                    $options['recipient']['mail']; // john@example.com
+                    $options['host']; // example.org
+                    
+                    return true;
+                },
+                'recipient' => new OptionResolverNested([
+                    'name' => 'John',
+                    'mail' => 'john@example.com'
+                ]),
+                'host' => 'example.org',
+            ));
+        }
+    }
+
+To access the parents from nested OptionResolverNested, it is necessary to change the closure arguments to `function (ResolveData $ data)`. In this case, in the form of $data there will be a completely assembled array of configurations starting from the root::
+
+    // ...
+    class Mailer
+    {
+        // ...
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            // ...
+            $resolver->setDefaults(array(
+                'encryption' => null,
+                'default_mail' => 'default@example.com',
+                'recipient' => new OptionResolverNested([
+                    'name' => 'John',
+                    'mail' => function(ResolveData $data){
+                        $data['encryption']; // null
+                        $data['default_mail']; // default@example.com
+                        $data['recipient']['name']; // John
+                        $data['recipient']['mail']; // \Closure
+                        
+                        return 'john@example.com';
+                    },
+                ]),
+                'host' => 'example.org',
+            ));
+        }
+    }
+
+.. caution::
+
+    The step with the transfer to the closure of `ResolveData $ data` is the most recent. Before it there are normalizers, the processing of lazy downloads and etc. 
+    In the event that this closure refers to itself, the exception will not be discarded. The closure will not be processed and will return as it was declared.
+
 Performance Tweaks
 ~~~~~~~~~~~~~~~~~~
 
