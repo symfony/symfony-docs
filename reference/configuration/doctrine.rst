@@ -389,13 +389,13 @@ If you want to configure multiple connections in YAML, put them under the
                     user:             root
                     password:         null
                     host:             localhost
-                    server_version:   5.6
+                    server_version:   '5.6'
                 customer:
                     dbname:           customer
                     user:             root
                     password:         null
                     host:             localhost
-                    server_version:   5.7
+                    server_version:   '5.7'
 
 The ``database_connection`` service always refers to the *default* connection,
 which is the first one defined or the one configured via the
