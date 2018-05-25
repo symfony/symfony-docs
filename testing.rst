@@ -271,9 +271,9 @@ document::
     Instead of installing each testing dependency individually, you can use the
     Symfony Test pack to install all those dependencies at once:
 
-        .. code-block:: terminal
+    .. code-block:: terminal
 
-            $ composer require --dev symfony/test-pack
+        $ composer require --dev symfony/test-pack
 
 .. index::
    single: Tests; Assertions
