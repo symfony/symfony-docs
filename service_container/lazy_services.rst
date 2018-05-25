@@ -26,21 +26,12 @@ until you interact with the proxy in some way.
 Installation
 ------------
 
-In order to use the lazy service instantiation, you will first need to install
-the ``ocramius/proxy-manager`` package:
+In order to use the lazy service instantiation, you will need to install the
+``symfony/proxy-manager-bridge`` package:
 
 .. code-block:: terminal
 
-    $ composer require ocramius/proxy-manager
-
-.. note::
-
-    If you're not using the full-stack framework, you also have to install the
-    `ProxyManager bridge`_
-
-    .. code-block:: terminal
-
-        $ composer require symfony/proxy-manager-bridge
+    $ composer require symfony/proxy-manager-bridge
 
 Configuration
 -------------
