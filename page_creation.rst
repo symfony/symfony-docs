@@ -100,7 +100,7 @@ routes. To do this, install the annotations package:
 
 .. code-block:: terminal
 
-    $ composer require annotations
+    $ composer require doctrine/annotations
 
 You can now add your route directly *above* the controller:
 
