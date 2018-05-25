@@ -102,8 +102,11 @@ will be used whenever the corresponding environment variable is *not* found:
 Environment Variable Processors
 -------------------------------
 
-When using environment variables they are always strings by default, but sometimes
-you will want to have specific types so that they match the types expected by your code.
+The values of the environment variables are considered strings by default.
+However, your code may expect other data types, like integers or booleans.
+Symfony solves this problem with *processors*, which modify the contents of the
+given environment variables. The following example uses the integer processor to
+turn the value of the ``HTTP_PORT`` env var into an integer:
 
 .. configuration-block::
 
@@ -141,109 +144,111 @@ you will want to have specific types so that they match the types expected by yo
             )
         ));
 
-A number of different types are supported:
+Symfony provides the following env var processors:
 
 ``env(string:FOO)``
-    Casts ``FOO`` to a string
+    Casts ``FOO`` to a string:
 
-.. code-block:: php
+    .. code-block:: yaml
 
-    parameters:
-        env(SECRET): "some_secret"
-    framework:
-       secret: '%env(string:SECRET)%'
+        parameters:
+            env(SECRET): "some_secret"
+        framework:
+           secret: '%env(string:SECRET)%'
     
 ``env(bool:FOO)``
-    Casts ``FOO`` to a bool
+    Casts ``FOO`` to a bool:
 
-.. code-block:: php
+    .. code-block:: yaml
 
-    parameters:
-        env(HTTP_METHOD_OVERRIDE): "true"
-    framework:
-       http_method_override: '%env(bool:HTTP_METHOD_OVERRIDE)%'
+        parameters:
+            env(HTTP_METHOD_OVERRIDE): "true"
+        framework:
+           http_method_override: '%env(bool:HTTP_METHOD_OVERRIDE)%'
 
 ``env(int:FOO)``
-    Casts ``FOO`` to an int
+    Casts ``FOO`` to an int.
 
 ``env(float:FOO)``
-    Casts ``FOO`` to an float
+    Casts ``FOO`` to an float.
 
 ``env(const:FOO)``
-    Finds the const value named in ``FOO``
+    Finds the const value named in ``FOO``:
 
-.. code-block:: php
+    .. code-block:: yaml
 
-    parameters:
-        env(HEALTH_CHECK_METHOD): "Symfony\Component\HttpFoundation\Request:METHOD_HEAD"
-    security:
-       access_control:
-         - { path: '^/health-check$', methods: '%env(const:HEALTH_CHECK_METHOD)%' }
+        parameters:
+            env(HEALTH_CHECK_METHOD): "Symfony\Component\HttpFoundation\Request:METHOD_HEAD"
+        security:
+           access_control:
+             - { path: '^/health-check$', methods: '%env(const:HEALTH_CHECK_METHOD)%' }
 
 ``env(base64:FOO)``
-    Decodes ``FOO`` that is a base64 encoded string
-    
+    Decodes the content of ``FOO``, which is a base64 encoded string.
+
 ``env(json:FOO)``
-    Decodes ``FOO`` that is a json encoded string into either an array or ``null``
+    Decodes the content of ``FOO``, which is a JSON encoded string. It returns
+    either an array or ``null``:
 
-.. code-block:: php
+    .. code-block:: yaml
 
-    parameters:
-        env(TRUSTED_HOSTS): "['10.0.0.1', '10.0.0.2']"
-    framework:
-       trusted_hosts: '%env(json:TRUSTED_HOSTS)%'
-    
+        parameters:
+            env(TRUSTED_HOSTS): "['10.0.0.1', '10.0.0.2']"
+        framework:
+           trusted_hosts: '%env(json:TRUSTED_HOSTS)%'
+
 ``env(resolve:FOO)``
-    Resolves references in the string ``FOO`` to other parameters
+    Replaces the string ``FOO`` by the value of a config parameter with the
+    same name:
 
-.. code-block:: php
+    .. code-block:: yaml
 
-    parameters:
-        env(HOST): '10.0.0.1'
-        env(SENTRY_DSN): "http://%env(HOST)%/project"
-    sentry:
-        dsn: '%env(resolve:SENTRY_DSN)%'
+        parameters:
+            env(HOST): '10.0.0.1'
+            env(SENTRY_DSN): "http://%env(HOST)%/project"
+        sentry:
+            dsn: '%env(resolve:SENTRY_DSN)%'
     
 ``env(csv:FOO)``
-    Decodes ``FOO`` that is a single row of comma seperated values
+    Decodes the content of ``FOO``, which is a CSV-encoded string:
 
-.. code-block:: php
+    .. code-block:: yaml
 
-    parameters:
-        env(TRUSTED_HOSTS): "10.0.0.1, 10.0.0.2"
-    framework:
-       trusted_hosts: '%env(csv:TRUSTED_HOSTS)%'
+        parameters:
+            env(TRUSTED_HOSTS): "10.0.0.1, 10.0.0.2"
+        framework:
+           trusted_hosts: '%env(csv:TRUSTED_HOSTS)%'
 
 ``env(file:FOO)``
-    Reads the contents of a file named in ``FOO``
+    Returns the contents of a file whose path is the value of the ``FOO`` env var:
 
-.. code-block:: php
+    .. code-block:: yaml
 
-    parameters:
-        env(AUTH_FILE): "auth.json"
-    google:
-       auth: '%env(file:AUTH_FILE)%'
-    
-It is also possible to combine the processors:
+        parameters:
+            env(AUTH_FILE): "../config/auth.json"
+        google:
+           auth: '%env(file:AUTH_FILE)%'
 
-``env(json:file:FOO)``
-    Reads the contents of a file named in ``FOO``, and then decode it from json, resulting in an array or ``null``
+It is also possible to combine any number of processors:
 
-.. code-block:: php
+.. code-block:: yaml
 
     parameters:
-        env(AUTH_FILE): "%kernel.root%/auth.json"
+        env(AUTH_FILE): "%kernel.project_dir%/config/auth.json"
     google:
-       auth: '%env(file:resolve:AUTH_FILE)%'
-
+        # 1. gets the value of the AUTH_FILE env var
+        # 2. replaces the values of any config param to get the config path
+        # 3. gets the content of the file stored in that path
+        # 4. JSON-decodes the content of the file and returns it
+        auth: '%env(json:file:resolve:AUTH_FILE)%'
 
 Custom Environment Variable Processors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Its possible to add further processors for environment variables. You just need
-to add an implementation of `Symfony\Component\DependencyInjection\EnvVarProcessorInterface`.
-
-.. code-block:: php
+It's also possible to add your own processors for environment variables. First,
+create a class that implements 
+:class:`Symfony\\Component\\DependencyInjection\\EnvVarProcessorInterface` and
+then, define a service for that class::
 
     class LowercasingEnvVarProcessor implements EnvVarProcessorInterface
     {
@@ -268,8 +273,6 @@ to add an implementation of `Symfony\Component\DependencyInjection\EnvVarProcess
             ];
         }
     }
-
-
 
 .. _configuration-env-var-in-prod:
 
