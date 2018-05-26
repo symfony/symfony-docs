@@ -925,6 +925,6 @@ Learn more
 * :doc:`/components/css_selector`
 
 .. _`PHPUnit`: https://phpunit.de/
-.. _`documentation`: https://phpunit.de/manual/current/en/
+.. _`documentation`: https://phpunit.readthedocs.io/en/latest/
 .. _`PHPUnit Bridge component`: https://symfony.com/components/PHPUnit%20Bridge
 .. _`$_SERVER`: https://php.net/manual/en/reserved.variables.server.php
