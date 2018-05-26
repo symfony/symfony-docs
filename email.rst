@@ -39,6 +39,7 @@ environment variable in the ``.env`` file:
 
     # use this to configure a traditional SMTP server
     MAILER_URL=smtp://localhost:25?encryption=ssl&auth_mode=login&username=&password=
+    # keep in mind that, since this is an URL, any special characters in username/password should be URL-encoded
 
 Refer to the :doc:`SwiftMailer configuration reference </reference/configuration/swiftmailer>`
 for the detailed explanation of all the available config options.
