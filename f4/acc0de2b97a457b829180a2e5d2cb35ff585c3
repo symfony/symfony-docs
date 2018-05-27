@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by frankdejonge at 2018-03-28T20:40:32Z
+
+I've chosen to use the PHP configurator DSL as the example. I hadn't seen it used previously in the examples. This might be something we'll need to look into in a broader sense.
+
+---------------------------------------------------------------------------
+
+by frankdejonge at 2018-03-28T20:45:30Z
+
+Status: Needs work
+
+---------------------------------------------------------------------------
+
+by frankdejonge at 2018-03-29T06:48:26Z
+
+@javiereguiluz the docs for the docs say the PRs get automatically built by platform.sh? Are they published somewhere too?
+
+---------------------------------------------------------------------------
+
+by DylanDelobel at 2018-04-19T07:38:43Z
+
+If this one is merged, should close #9510
+
+---------------------------------------------------------------------------
+
+by michaelperrin at 2018-04-24T13:02:52Z
+
+This paragraph should be removed with this new documentation: http://symfony.com/doc/master/routing.html#translating-routes
