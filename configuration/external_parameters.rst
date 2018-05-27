@@ -99,6 +99,181 @@ will be used whenever the corresponding environment variable is *not* found:
         // config/services.php
         $container->setParameter('env(DATABASE_HOST)', 'localhost');
 
+Environment Variable Processors
+-------------------------------
+
+The values of the environment variables are considered strings by default.
+However, your code may expect other data types, like integers or booleans.
+Symfony solves this problem with *processors*, which modify the contents of the
+given environment variables. The following example uses the integer processor to
+turn the value of the ``HTTP_PORT`` env var into an integer:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            router:
+                http_port: env(int:HTTP_PORT)
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:router http_port="%env(int:HTTP_PORT)%" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/doctrine.php
+        $container->loadFromExtension('framework', array(
+            'router' => array(
+                'http_port' => '%env(int:HTTP_PORT)%',
+            )
+        ));
+
+Symfony provides the following env var processors:
+
+``env(string:FOO)``
+    Casts ``FOO`` to a string:
+
+    .. code-block:: yaml
+
+        parameters:
+            env(SECRET): "some_secret"
+        framework:
+           secret: '%env(string:SECRET)%'
+    
+``env(bool:FOO)``
+    Casts ``FOO`` to a bool:
+
+    .. code-block:: yaml
+
+        parameters:
+            env(HTTP_METHOD_OVERRIDE): "true"
+        framework:
+           http_method_override: '%env(bool:HTTP_METHOD_OVERRIDE)%'
+
+``env(int:FOO)``
+    Casts ``FOO`` to an int.
+
+``env(float:FOO)``
+    Casts ``FOO`` to an float.
+
+``env(const:FOO)``
+    Finds the const value named in ``FOO``:
+
+    .. code-block:: yaml
+
+        parameters:
+            env(HEALTH_CHECK_METHOD): "Symfony\Component\HttpFoundation\Request:METHOD_HEAD"
+        security:
+           access_control:
+             - { path: '^/health-check$', methods: '%env(const:HEALTH_CHECK_METHOD)%' }
+
+``env(base64:FOO)``
+    Decodes the content of ``FOO``, which is a base64 encoded string.
+
+``env(json:FOO)``
+    Decodes the content of ``FOO``, which is a JSON encoded string. It returns
+    either an array or ``null``:
+
+    .. code-block:: yaml
+
+        parameters:
+            env(TRUSTED_HOSTS): "['10.0.0.1', '10.0.0.2']"
+        framework:
+           trusted_hosts: '%env(json:TRUSTED_HOSTS)%'
+
+``env(resolve:FOO)``
+    Replaces the string ``FOO`` by the value of a config parameter with the
+    same name:
+
+    .. code-block:: yaml
+
+        parameters:
+            env(HOST): '10.0.0.1'
+            env(SENTRY_DSN): "http://%env(HOST)%/project"
+        sentry:
+            dsn: '%env(resolve:SENTRY_DSN)%'
+    
+``env(csv:FOO)``
+    Decodes the content of ``FOO``, which is a CSV-encoded string:
+
+    .. code-block:: yaml
+
+        parameters:
+            env(TRUSTED_HOSTS): "10.0.0.1, 10.0.0.2"
+        framework:
+           trusted_hosts: '%env(csv:TRUSTED_HOSTS)%'
+
+``env(file:FOO)``
+    Returns the contents of a file whose path is the value of the ``FOO`` env var:
+
+    .. code-block:: yaml
+
+        parameters:
+            env(AUTH_FILE): "../config/auth.json"
+        google:
+           auth: '%env(file:AUTH_FILE)%'
+
+It is also possible to combine any number of processors:
+
+.. code-block:: yaml
+
+    parameters:
+        env(AUTH_FILE): "%kernel.project_dir%/config/auth.json"
+    google:
+        # 1. gets the value of the AUTH_FILE env var
+        # 2. replaces the values of any config param to get the config path
+        # 3. gets the content of the file stored in that path
+        # 4. JSON-decodes the content of the file and returns it
+        auth: '%env(json:file:resolve:AUTH_FILE)%'
+
+Custom Environment Variable Processors
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It's also possible to add your own processors for environment variables. First,
+create a class that implements 
+:class:`Symfony\\Component\\DependencyInjection\\EnvVarProcessorInterface` and
+then, define a service for that class::
+
+    class LowercasingEnvVarProcessor implements EnvVarProcessorInterface
+    {
+        private $container;
+
+        public function __construct(ContainerInterface $container)
+        {
+            $this->container = $container;
+        }
+
+        public function getEnv($prefix, $name, \Closure $getEnv)
+        {
+            $env = $getEnv($name);
+
+            return strtolower($env);
+        }
+
+        public static function getProvidedTypes()
+        {
+            return [
+                'lowercase' => 'string',
+            ];
+        }
+    }
+
 .. _configuration-env-var-in-prod:
 
 Configuring Environment Variables in Production
