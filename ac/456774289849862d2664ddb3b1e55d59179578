@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-27T10:04:50Z
+
+I do appreciate this kind of fixes because it's important to display the right name.
+
+I was curious about "phpspec" so I checked their website. I saw that they call themselves `phpspec` (all lowercased). See https://www.phpspec.net/en/stable/manual/introduction.html  However, on Twitter they call themselves `PhpSpec` See https://twitter.com/phpspec  So, what can we do here?
+
+---------------------------------------------------------------------------
+
+by lex111 at 2018-05-27T10:10:42Z
+
+However on the [page of their organization](https://github.com/phpspec), it's written - `PHPSpec Framework`, let's use this name, in the end it most corresponds to the language (PHP is an abbreviation).
