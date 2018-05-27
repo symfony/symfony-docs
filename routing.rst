@@ -136,6 +136,80 @@ use them later to :ref:`generate URLs <routing-generate>`.
     configure your routes in YAML, XML or PHP, that's no problem! Just create a
     new routing file (e.g. ``routes.xml``) and Symfony will automatically use it.
 
+.. _i18n-routing:
+
+Localized Routing (i18n)
+------------------------
+
+.. versionadded:: 4.1
+    The feature to localize routes was introduced in Symfony 4.1.
+
+Routes can be localized to provide unique paths per :doc:`locale </translation/locale>`.
+Symfony provides a handy way to declare localized routes without duplication.
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class CompanyController extends Controller
+        {
+            /**
+             * @Route({
+             *     "nl": "/over-ons",
+             *     "en": "/about-us"
+             * }, name="about_us")
+             */
+            public function about()
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        about_us:
+            path:
+                nl: /over-ons
+                en: /about-us
+            controller: App\Controller\CompanyController::about
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="about_us" controller="App\Controller\CompanyController::about">
+                <path locale="nl">/over-ons</path>
+                <path locale="en">/about-us</path>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
+        return function (RoutingConfigurator $routes) {
+            $routes->add('about_us', ['nl' => '/over-ons', 'en' => '/about-us'])
+                ->controller('App\Controller\CompanyController::about');
+        };
+
+When a localized route is matched Symfony automatically knows which locale
+should be used during the request. Defining routes this way also eliminated the
+need for duplicate registration of routes which minimizes the risk for any bugs
+caused by definition inconsistency.
+
 .. _routing-requirements:
 
 Adding {wildcard} Requirements
@@ -744,6 +818,18 @@ But if you pass extra ones, they will be added to the URI as a query string::
         'category' => 'Symfony',
     ));
     // /blog/2?category=Symfony
+
+Generating Localized URLs
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When a route is localized, Symfony uses by default the current request locale to
+generate the URL. In order to generate the URL for a different locale you must
+pass the ``_locale`` in the parameters array::
+
+    $this->router->generate('about_us', array(
+        '_locale' => 'nl',
+    ));
+    // generates: /over-ons
 
 Generating URLs from a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
