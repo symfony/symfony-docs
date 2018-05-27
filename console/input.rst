@@ -237,10 +237,9 @@ option definition as an example::
             'Should I yell while greeting?'
         );
 
-We want to use this option in 3 ways: ``--yell``, ``yell=louder``, and not 
-passing the option at all; however, the task of distinguishing between when 
-the option was used without a value (``greet --yell``) or when it wasn't used 
-at all (``greet``) it's a bit impervious. 
+This option can be used in 3 ways: ``--yell``, ``yell=louder``, and not passing
+the option at all. However, it's hard to distinguish between passing the option
+without a value (``greet --yell``) and not passing the option (``greet``).
 
 To solve this issue, you have to set the option's default value to ``false``::
 
