@@ -141,8 +141,11 @@ use them later to :ref:`generate URLs <routing-generate>`.
 Localized Routing (i18n)
 ------------------------
 
-Routes can be localized to provide unique paths per *locale*. Symfony provides a
-handy way to declare localized routes without duplication.
+.. versionadded:: 4.1
+    The feature to localize routes was introduced in Symfony 4.1.
+
+Routes can be localized to provide unique paths per :doc:`locale </translation/locale>`.
+Symfony provides a handy way to declare localized routes without duplication.
 
 .. configuration-block::
 
@@ -154,28 +157,16 @@ handy way to declare localized routes without duplication.
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController extends Controller
+        class CompanyController extends Controller
         {
             /**
-             * Matches /blog exactly
-             *
-             * @Route("/blog", name="blog_list")
+             * @Route({
+             *     "nl": "/over-ons",
+             *     "en": "/about-us"
+             * }, name="about_us")
              */
-            public function list()
+            public function about()
             {
-                // ...
-            }
-
-            /**
-             * Matches /blog/*
-             *
-             * @Route("/blog/{slug}", name="blog_show")
-             */
-            public function show($slug)
-            {
-                // $slug will equal the dynamic part of the URL
-                // e.g. at /blog/yay-routing, then $slug='yay-routing'
-
                 // ...
             }
         }
@@ -214,7 +205,7 @@ handy way to declare localized routes without duplication.
                 ->controller('App\Controller\CompanyController::about');
         };
 
-When a localized route is matched Symfony will automatically know which locale
+When a localized route is matched Symfony automatically knows which locale
 should be used during the request. Defining routes this way also eliminated the
 need for duplicate registration of routes which minimizes the risk for any bugs
 caused by definition inconsistency.
@@ -695,16 +686,16 @@ But if you pass extra ones, they will be added to the URI as a query string::
     // /blog/2?category=Symfony
 
 Generating Localized URLs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When you've defined localized routes Symfony will use the current request locale
-as the default when generating routes. In order to generate the route for alternative
-locale you must pass the ``_locale`` in the parameters array::
+When a route is localized, Symfony uses by default the current request locale to
+generate the URL. In order to generate the route for a different locale you must
+pass the ``_locale`` in the parameters array::
 
     $this->router->generate('about_us', array(
         '_locale' => 'nl',
     ));
-    // /over-ons
+    // generates: /over-ons
 
 Generating URLs from a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
