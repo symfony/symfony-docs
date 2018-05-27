@@ -324,3 +324,47 @@ This outputs:
 
 You can use the ``colspan`` and ``rowspan`` options at the same time which allows
 you to create any table layout you may wish.
+
+.. _console-modify-rendered-tables:
+
+Modifying Rendered Tables
+-------------------------
+
+.. versionadded:: 4.1
+    The feature to modify rendered tables was introduced in Symfony 4.1.
+
+The ``render()`` method requires passing the entire table contents. However,
+sometimes that information is not available beforehand because it's generated
+dynamically. In those cases, use the
+:method:`Symfony\\Component\\Console\\Helper\\Table::appendRow` method, which
+takes the same arguments as the ``addRow()`` method, to add rows at the bottom
+of an already rendered table.
+
+The only requirement to append rows is that the table must be rendered inside a
+:ref:`Console output section <console-output-sections>`::
+
+    use Symfony\Component\Console\Helper\Table;
+    // ...
+
+    class SomeCommand extends Command
+    {
+        public function execute(InputInterface $input, OutputInterface $output)
+        {
+            $section = $output->section();
+            $table = new Table($section);
+
+            $table->addRow(['Row 1']);
+            $table->render();
+
+            $table->addRow(['Row 2']);
+        }
+    }
+
+This will display the following table in the terminal:
+
+.. code-block:: terminal
+
+    +-------+
+    | Row 1 |
+    | Row 2 |
+    +-------+

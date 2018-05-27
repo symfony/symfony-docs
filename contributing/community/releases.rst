@@ -122,7 +122,7 @@ Version       Feature Freeze  Release  End of Maintenance        End of Life
 `2.6`_        09/2014         11/2014  07/2015 (8 months)        01/2016
 `2.7`_ (LTS)  03/2015         05/2015  05/2018 (36 months)       05/2019
 `2.8`_ (LTS)  09/2015         11/2015  11/2018 (36 months [2]_)  11/2019
-`3.0`_        09/2015         11/2015  07/2016 (8 months) [3]_)  01/2017
+`3.0`_        09/2015         11/2015  07/2016 (8 months [3]_)   01/2017
 `3.1`_        03/2016         05/2016  01/2017 (8 months)        07/2017
 `3.2`_        09/2016         11/2016  07/2017 (8 months)        01/2018
 `3.3`_        03/2017         05/2017  01/2018 (8 months)        07/2018
@@ -194,7 +194,7 @@ version is published every two years and there is a year to upgrade.
 
 .. _Semantic Versioning: https://semver.org/
 .. _Git repository: https://github.com/symfony/symfony
-.. _SensioLabs:     http://sensiolabs.com/
+.. _SensioLabs:     https://sensiolabs.com/
 .. _roadmap notification: https://symfony.com/roadmap
 .. _extended to September 2014: https://symfony.com/blog/extended-maintenance-for-symfony-2-4
 .. _timeline calculator: https://symfony.com/roadmap#checker

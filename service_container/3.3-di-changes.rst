@@ -1,7 +1,7 @@
 The Symfony 3.3 DI Container Changes Explained (autowiring, _defaults, etc)
 ===========================================================================
 
-If you look at the ``services.yaml`` file in a new Symfony 3.3 project, you'll
+If you look at the ``services.yaml`` file in a new Symfony 3.3 or newer project, you'll
 notice some big changes: ``_defaults``, ``autowiring``, ``autoconfigure`` and more.
 These features are designed to *automate* configuration and make development faster,
 without sacrificing predictability, which is very important! Another goal is to make
@@ -589,6 +589,8 @@ to the new id. Create a new ``legacy_aliases.yml`` file:
 
     # app/config/legacy_aliases.yml
     services:
+        _defaults:
+            public: true
         # aliases so that the old service ids can still be accessed
         # remove these if/when you are not fetching these directly
         # from the container via $container->get()

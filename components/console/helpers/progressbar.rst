@@ -342,3 +342,43 @@ of the custom placeholders::
         $progressBar->advance();
         // 2/100 -- Importing invoices... (client-001/invoices.xml)
     }
+
+.. _console-multiple-progress-bars:
+
+Displaying Multiple Progress Bars
+---------------------------------
+
+.. versionadded:: 4.1
+    The feature to display multiple progress bars using output sections was
+    introduced in Symfony 4.1.
+
+When using :ref:`Console output sections <console-output-sections>` it's
+possible to display multiple progress bars at the same time and change their
+progress independently::
+
+    $section1 = $output->section();
+    $section2 = $output->section();
+
+    $progress1 = new ProgressBar($section1);
+    $progress2 = new ProgressBar($section2);
+
+    $progress1->start(100);
+    $progress2->start(100);
+
+    $i = 0;
+    while (++$i < 100) {
+        $progress1->advance();
+
+        if ($i % 2 === 0) {
+            $progress2->advance(4);
+        }
+
+        usleep(50000);
+    }
+
+After a couple of iterations, the output in the terminal will look like this:
+
+.. code-block:: text
+
+    34/100 [=========>------------------]  34%
+    68/100 [===================>--------]  68%
