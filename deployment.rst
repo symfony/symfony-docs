@@ -116,11 +116,8 @@ you'll need to do:
 A) Check Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
-Check if your server meets the requirements by running:
-
-.. code-block:: terminal
-
-    $ php bin/symfony_requirements
+Use the :doc:`Symfony Requirements Checker </reference/requirements>` to check
+if your server meets the technical requirements to run Symfony applications.
 
 .. _b-configure-your-app-config-parameters-yml-file:
 

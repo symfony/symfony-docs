@@ -37,7 +37,9 @@ environment variable in the ``.env`` file:
     # use this to disable email delivery
     MAILER_URL=null://localhost
 
-    # use this to configure a traditional SMTP server
+    # use this to configure a traditional SMTP server (make sure to URL-encode the
+    # values of the username and password if they contain non-alphanumeric characters
+    # such as '+', '@', ':' and '*', which are reserved in URLs)
     MAILER_URL=smtp://localhost:25?encryption=ssl&auth_mode=login&username=&password=
 
 Refer to the :doc:`SwiftMailer configuration reference </reference/configuration/swiftmailer>`
