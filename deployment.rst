@@ -122,6 +122,8 @@ Check if your server meets the requirements by running:
 
     $ php bin/symfony_requirements
 
+If you're using :doc:`Symfony Flex </setup/flex>` the previous script is no longer exists. Use the new :doc:`Symfony Requirements Checker </reference/requirements>` instead.
+
 .. _b-configure-your-app-config-parameters-yml-file:
 
 B) Configure your Environment Variables
