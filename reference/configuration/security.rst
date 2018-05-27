@@ -72,7 +72,7 @@ Each part will be explained in the next section.
                     time_cost:            2 # Number of iterations
                     threads:              2 # Number of parallel threads
 
-            providers:            # Required
+            providers:
                 # Examples:
                 my_in_memory_provider:
                     memory:
@@ -300,6 +300,9 @@ Each part will be explained in the next section.
             role_hierarchy:
                 ROLE_ADMIN:      [ROLE_ORGANIZER, ROLE_USER]
                 ROLE_SUPERADMIN: [ROLE_ADMIN]
+
+.. versionadded:: 4.1
+    The ``providers`` option is optional starting from Symfony 4.1.
 
 .. _reference-security-firewall-form-login:
 
