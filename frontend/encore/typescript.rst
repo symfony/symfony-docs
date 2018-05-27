@@ -28,7 +28,7 @@ also configure the `ts-loader options`_ via a callback:
 
     .enableTypeScriptLoader(function (typeScriptConfigOptions) {
         typeScriptConfigOptions.transpileOnly = true;
-        typeScriptConfigOptions.configFileName = '/path/to/tsconfig.json';
+        typeScriptConfigOptions.configFile = '/path/to/tsconfig.json';
     });
 
 If React assets are enabled (``.enableReactPreset()``), any ``.tsx`` file will be
