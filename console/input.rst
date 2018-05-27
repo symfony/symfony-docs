@@ -222,8 +222,7 @@ Options with optional arguments
 -------------------------------
 
 There is nothing forbidding you to create a command with an option that
-optionally accepts a value, but it's a bit tricky. Let's use this
-option definition as an example::
+optionally accepts a value, but it's a bit tricky. Consider this example::
 
     // ...
     use Symfony\Component\Console\Input\InputOption;
@@ -256,8 +255,7 @@ To solve this issue, you have to set the option's default value to ``false``::
             false // this is the new default value, instead of null
         );
 
-And then you just have to check carefully the value of the option, minding that
-``false !== null``::
+Now check the value of the option and keep in mind that ``false !== null``::
 
     $optionValue = $input->getOptions('yell');
     $yell = ($optionValue !== false);
