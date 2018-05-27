@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-25T06:49:17Z
+
+Thanks for this Oskar. I'd need more info to review this. For example, starting from which Symfony version can we do this change? You opened this on 4.1 branch, but we support 2.7, 2.8, 3.4, 4.0, 4.1 and master. Thanks!
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2018-05-25T09:24:01Z
+
+Hey @javiereguiluz as I understood correctly, we need to merge this from 4.0 (flex) on, before you used the symfony-standard-edition which was the named `full-stack framework`
+
+//cc @xabbuh
