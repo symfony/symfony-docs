@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-23T12:49:55Z
+
+@mcfedr will you have some time before this months end to finish this PR? This is a top priority feature and we'd like to end the docs soon. It's OK if you don't have time because we can take it over for you. Cheers!
+
+---------------------------------------------------------------------------
+
+by mcfedr at 2018-05-24T17:22:00Z
+
+I have added the extra examples that were missing originally.  These mostly show examples of how it can be used.
+
+I kept to the sections using `env(FOO)` because `ENV_VAR_NAME` seems confusing,
+
+Anything you think is missing?
