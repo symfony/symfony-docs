@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2018-05-05T10:06:35Z
+
+Hi @Jean85! Thanks a lot for this PR, it seems to read nicer this way!
+
+I like your second option way more than your first one. The first one is some internal logic, which the framework wants to hide from you by providing the input options and arguments.
+
+What do you think about only documenting the second option? Giving readers a choice means we have to explain in which case to use (1) or (2), and I can't come up with a reason to use (1). :)
+
+I'm sorry to have such a delayed review of this PR. If you can comment or update the PR, please do so and otherwise I'm happy to take this PR over to make it mergable :)
+
+---------------------------------------------------------------------------
+
+by Jean85 at 2018-05-06T20:11:14Z
+
+No problem @wouterj! I've simplified my PR leaving just (2). Now it's back to you to review :wink:
