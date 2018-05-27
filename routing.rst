@@ -689,7 +689,7 @@ Generating Localized URLs
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When a route is localized, Symfony uses by default the current request locale to
-generate the URL. In order to generate the route for a different locale you must
+generate the URL. In order to generate the URL for a different locale you must
 pass the ``_locale`` in the parameters array::
 
     $this->router->generate('about_us', array(
