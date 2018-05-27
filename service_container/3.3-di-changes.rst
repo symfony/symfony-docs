@@ -1,7 +1,7 @@
 The Symfony 3.3 DI Container Changes Explained (autowiring, _defaults, etc)
 ===========================================================================
 
-If you look at the ``services.yml`` file in a new Symfony >= 3.3 project, you'll
+If you look at the ``services.yml`` file in a new Symfony 3.3 or newer project, you'll
 notice some big changes: ``_defaults``, ``autowiring``, ``autoconfigure`` and more.
 These features are designed to *automate* configuration and make development faster,
 without sacrificing predictability, which is very important! Another goal is to make
