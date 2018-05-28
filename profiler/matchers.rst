@@ -91,22 +91,22 @@ matcher::
     // src/AppBundle/Profiler/SuperAdminMatcher.php
     namespace AppBundle\Profiler;
 
-    use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+    use Symfony\Component\Security\Core\Security;
 
     class SuperAdminMatcher implements RequestMatcherInterface
     {
-        protected $authorizationChecker;
+        protected $security;
 
-        public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+        public function __construct(Security $security)
         {
-            $this->authorizationChecker = $authorizationChecker;
+            $this->security = $security;
         }
 
         public function matches(Request $request)
         {
-            return $this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN');
+            return $this->security->isGranted('ROLE_SUPER_ADMIN');
         }
     }
 
