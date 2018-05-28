@@ -22,6 +22,12 @@ Alternatively, you can clone the `<https://github.com/symfony/routing>`_ reposit
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the Routing features as an independent
+    component in any PHP application. Read the :doc:`/routing` article to learn
+    about how to use it in Symfony applications.
+
 In order to set up a basic routing system you need three parts:
 
 * A :class:`Symfony\\Component\\Routing\\RouteCollection`, which contains the route definitions (instances of the class :class:`Symfony\\Component\\Routing\\Route`)

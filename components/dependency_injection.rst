@@ -25,6 +25,12 @@ Alternatively, you can clone the `<https://github.com/symfony/dependency-injecti
 Basic Usage
 -----------
 
+.. seealso::
+
+    This article explains how to use the DependencyInjection features as an
+    independent component in any PHP application. Read the :doc:`/service_container`
+    article to learn about how to use it in Symfony applications.
+
 You might have a simple class like the following ``Mailer`` that
 you want to make available as a service::
 

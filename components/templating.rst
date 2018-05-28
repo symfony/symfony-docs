@@ -27,6 +27,12 @@ Alternatively, you can clone the `<https://github.com/symfony/templating>`_ repo
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the Templating features as an independent
+    component in any PHP application. Read the :doc:`/templating` article to
+    learn about how to work with templates in Symfony applications.
+
 The :class:`Symfony\\Component\\Templating\\PhpEngine` class is the entry point
 of the component. It needs a
 template name parser (:class:`Symfony\\Component\\Templating\\TemplateNameParserInterface`)

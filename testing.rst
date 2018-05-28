@@ -116,6 +116,8 @@ Running tests for a given file or directory is also very easy:
 .. index::
    single: Tests; Functional tests
 
+.. _functional-tests:
+
 Functional Tests
 ----------------
 
