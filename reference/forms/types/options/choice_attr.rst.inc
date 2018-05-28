@@ -23,7 +23,7 @@ If an array, the keys of the ``choices`` array must be used as keys::
             'Maybe' => null,
         ),
         'choices_as_values' => true,
-        'choice_attr' => function($val, $key, $index) {
+        'choice_attr' => function($choiceValue, $key, $value) {
             // adds a class like attending_yes, attending_no, etc
             return ['class' => 'attending_'.strtolower($key)];
         },
