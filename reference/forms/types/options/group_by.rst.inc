@@ -26,8 +26,8 @@ Take the following example::
             '1 month' => new \DateTime('+1 month'),
         ),
         'choices_as_values' => true,
-        'group_by' => function($vategory, $key, $value) {
-            if ($value <= new \DateTime('+3 days')) {
+        'group_by' => function($choiceValue, $key, $value) {
+            if ($choiceValue <= new \DateTime('+3 days')) {
                 return 'Soon';
             } else {
                 return 'Later';
