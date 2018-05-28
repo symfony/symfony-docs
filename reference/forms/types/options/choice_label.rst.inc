@@ -20,7 +20,7 @@ more control::
             'maybe' => null,
         ),
         'choices_as_values' => true,
-        'choice_label' => function ($value, $key, $index) {
+        'choice_label' => function ($category, $key, $value) {
             if ($value == true) {
                 return 'Definitely!';
             }
