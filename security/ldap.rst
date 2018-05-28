@@ -176,13 +176,12 @@ use the ``ldap`` user provider.
     
 .. caution::
 
-    It's important to note that the user you configure for the user provider
-    is only going to be retrieving data. It is a statically defined user and
-    password. If you wish to keep your password out of version control, you
-    may want to configure the password as a parameter.
+    The user configured above in the the user provider is only used to retrieve
+    data. It's a static user defined by its username and password (for improved
+    security, define the password as an environment variable).
     
-    If your ldap server allows you to retrieve information anonymously, you
-    can leave the ``search_dn`` and ``search_password`` as ``null``.
+    If your LDAP server allows to retrieve information anonymously, you can
+    set the ``search_dn`` and ``search_password`` options to ``null``.
 
 The ``ldap`` user provider supports many different configuration options:
 
