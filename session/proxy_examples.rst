@@ -110,15 +110,15 @@ can intercept the session before it is written::
 
     use AppBundle\Entity\User;
     use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;
-    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use Symfony\Component\Security\Core\Security;
 
     class ReadOnlySessionProxy extends SessionHandlerProxy
     {
-        private $tokenStorage;
+        private $security;
 
-        public function __construct(\SessionHandlerInterface $handler, TokenStorageInterface $tokenStorage)
+        public function __construct(\SessionHandlerInterface $handler, Security $security)
         {
-            $this->tokenStorage = $tokenStorage;
+            $this->security = $security;
 
             parent::__construct($handler);
         }
@@ -134,11 +134,7 @@ can intercept the session before it is written::
 
         private function getUser()
         {
-            if (!$token = $this->tokenStorage->getToken()) {
-                return;
-            }
-
-            $user = $token->getUser();
+            $user = $this->security->getUser();
             if (is_object($user)) {
                 return $user;
             }

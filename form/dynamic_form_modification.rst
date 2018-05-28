@@ -212,7 +212,6 @@ Using an event listener, your form might look like this::
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\FormEvents;
     use Symfony\Component\Form\FormEvent;
-    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -236,28 +235,30 @@ contains only this user's friends.
 Luckily it is pretty easy to inject a service inside of the form. This can be
 done in the constructor::
 
-    private $tokenStorage;
+    use Symfony\Component\Security\Core\Security;
+    // ...
 
-    public function __construct(TokenStorageInterface $tokenStorage)
+    private $security;
+
+    public function __construct(Security $security)
     {
-        $this->tokenStorage = $tokenStorage;
+        $this->security = $security;
     }
 
 .. note::
 
-    You might wonder, now that you have access to the User (through the token
-    storage), why not just use it directly in ``buildForm()`` and omit the
-    event listener? This is because doing so in the ``buildForm()`` method
-    would result in the whole form type being modified and not just this
-    one form instance. This may not usually be a problem, but technically
-    a single form type could be used on a single request to create many forms
-    or fields.
+    You might wonder, now that you have access to the User, why not just use it
+    directly in ``buildForm()`` and omit the event listener? This is because
+    doing so in the ``buildForm()`` method would result in the whole form type
+    being modified and not just this one form instance. This may not usually be
+    a problem, but technically a single form type could be used on a single
+    request to create many forms or fields.
 
 Customizing the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that you have all the basics in place you can take advantage of the ``TokenStorageInterface``
-and fill in the listener logic::
+Now that you have all the basics in place you can use the features of the
+security helper to fill in the listener logic::
 
     // src/AppBundle/Form/Type/FriendMessageFormType.php
 
@@ -266,16 +267,16 @@ and fill in the listener logic::
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use Symfony\Component\Security\Core\Security;
     // ...
 
     class FriendMessageFormType extends AbstractType
     {
-        private $tokenStorage;
+        private $security;
 
-        public function __construct(TokenStorageInterface $tokenStorage)
+        public function __construct(Security $security)
         {
-            $this->tokenStorage = $tokenStorage;
+            $this->security = $security;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -286,7 +287,7 @@ and fill in the listener logic::
             ;
 
             // grab the user, do a quick sanity check that one exists
-            $user = $this->tokenStorage->getToken()->getUser();
+            $user = $this->security->getUser();
             if (!$user) {
                 throw new \LogicException(
                     'The FriendMessageFormType cannot be used without an authenticated user!'
