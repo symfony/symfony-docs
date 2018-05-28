@@ -21,7 +21,8 @@ the ``test`` environment)::
         {
             $client = static::createClient();
 
-            // enable the profiler for the next request
+            // enable the profiler only for the next request (if you make
+            // new requests, you must call to this method again)
             // (it does nothing if the profiler is not available)
             $client->enableProfiler();
 
