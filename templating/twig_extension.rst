@@ -130,7 +130,7 @@ previous ``priceFilter()`` method::
 Register the Lazy-Loaded Extension as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Finally, register your new class as a service and tag it with ``twig.runtime``
+Assuming you have enabled ``autowire:true`` and ``autoconfigure:true`` in your services.yml file, You need to register your new class as a service and tag it with ``twig.runtime``
 (and optionally inject any service needed by the Twig extension runtime):
 
 .. configuration-block::
