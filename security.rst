@@ -832,8 +832,8 @@ You can easily deny access from inside a controller::
         // The second parameter is used to specify on what object the role is tested.
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
-        // Old way :
-        // if (false === $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        // Old way:
+        // if (false === $this->get('security.helper')->isGranted('ROLE_ADMIN')) {
         //     throw $this->createAccessDeniedException('Unable to access this page!');
         // }
 
@@ -912,9 +912,7 @@ user is logged in (you don't care about roles), then you can use
 
     public function helloAction($name)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // ...
     }
@@ -1042,6 +1040,8 @@ the User object, and use the ``isGranted()`` method (or
     if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
         throw $this->createAccessDeniedException();
     }
+    // equivalent shortcut:
+    // $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
     // boo :(. Never check for the User object to see if they're logged in
     if ($this->getUser()) {
@@ -1052,15 +1052,17 @@ the User object, and use the ``isGranted()`` method (or
 
     An alternative way to get the current user in a controller is to type-hint
     the controller argument with
-    :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
-    (and default it to ``null`` if being logged-in is optional)::
+    :class:`Symfony\\Component\\Security\\Core\\Security`::
 
-        use Symfony\Component\Security\Core\User\UserInterface;
+        use Symfony\Component\Security\Core\Security;
 
-        public function indexAction(UserInterface $user = null)
+        public function indexAction(Security $security)
         {
-            // $user is null when not logged-in or anon.
+            $user = $security->getUser();
         }
+
+    .. versionadded:: 3.4
+        The ``Security`` utility class was introduced in Symfony 3.4.
 
     This is only recommended for experienced developers who don't extend from the
     :ref:`Symfony base controller <the-base-controller-class-services>` and
