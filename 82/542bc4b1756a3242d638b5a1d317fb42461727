@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by iltar at 2018-05-28T16:13:52Z
+
+If the `UserInterface` implementation also implements the [`EquatableInterface`](https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/User/EquatableInterface.php) and this function returns false, or when the actual getter return values do not match in the [`AbstractToken`](https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/Authentication/Token/AbstractToken.php#L241).
+
+I think that was it 🤔
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-29T07:01:58Z
+
+@iltar thanks for those details! I've updated the description.
