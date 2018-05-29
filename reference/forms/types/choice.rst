@@ -107,19 +107,18 @@ method::
             new Category('Cat4'),
         ],
         'choices_as_values' => true,
-        'choice_label' => function($category, $key, $index) {
+        'choice_label' => function($category, $key, $value) {
             /** @var Category $category */
             return strtoupper($category->getName());
         },
-        'choice_attr' => function($category, $key, $index) {
+        'choice_attr' => function($category, $key, $value) {
             return ['class' => 'category_'.strtolower($category->getName())];
         },
-
-        'group_by' => function($category, $key, $index) {
+        'group_by' => function($category, $key, $value) {
             // randomly assign things into 2 groups
             return rand(0, 1) == 1 ? 'Group A' : 'Group B';
         },
-        'preferred_choices' => function($category, $key, $index) {
+        'preferred_choices' => function($category, $key, $value) {
             return $category->getName() == 'Cat2' || $category->getName() == 'Cat3';
         },
     ]);
