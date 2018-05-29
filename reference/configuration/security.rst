@@ -463,6 +463,12 @@ If ``true`` this option makes Symfony to trigger a logout when the user has
 changed. Not doing that is deprecated, so this option should be set to ``true``
 to avoid getting deprecation messages.
 
+The user is considered to have changed when the user class implements
+:class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface` and the
+``isEqualTo()`` method returns ``false``. Also, when any of the properties
+required by the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
+(like the username, password or salt) changes.
+
 .. _reference-security-ldap:
 
 LDAP functionality
