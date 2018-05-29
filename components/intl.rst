@@ -17,6 +17,12 @@ The Intl Component
     The replacement layer is limited to the locale "en". If you want to use
     other locales, you should `install the intl extension`_ instead.
 
+.. seealso::
+
+    This article explains how to use the Intl features as an independent component
+    in any PHP application. Read the :doc:`/translation` article to learn about
+    how to internationalize and manage the user locale in Symfony applications.
+
 Installation
 ------------
 

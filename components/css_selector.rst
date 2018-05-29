@@ -21,6 +21,12 @@ Alternatively, you can clone the `<https://github.com/symfony/css-selector>`_ re
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the CssSelector features as an independent
+    component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
+    article to learn about how to use it when creating Symfony tests.
+
 Why to Use CSS selectors?
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
