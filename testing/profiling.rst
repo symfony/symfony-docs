@@ -25,7 +25,7 @@ tests significantly. That's why Symfony disables it by default:
 
         # ...
         framework:
-            profiler: { collect: false }
+            profiler: { enabled: true, collect: false }
 
     .. code-block:: xml
 
