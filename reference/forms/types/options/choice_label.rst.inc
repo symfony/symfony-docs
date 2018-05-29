@@ -21,9 +21,10 @@ more control::
         ),
         'choices_as_values' => true,
         'choice_label' => function ($choiceValue, $key, $value) {
-            if ($value == true) {
+            if (true === $choiceValue) {
                 return 'Definitely!';
             }
+
             return strtoupper($key);
 
             // or if you want to translate some key

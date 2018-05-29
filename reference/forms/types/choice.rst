@@ -114,7 +114,6 @@ method::
         'choice_attr' => function($category, $key, $value) {
             return ['class' => 'category_'.strtolower($category->getName())];
         },
-
         'group_by' => function($category, $key, $value) {
             // randomly assign things into 2 groups
             return rand(0, 1) == 1 ? 'Group A' : 'Group B';
