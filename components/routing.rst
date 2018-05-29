@@ -229,6 +229,28 @@ a certain route::
     of the current :class:`Symfony\\Component\\Routing\\RequestContext` does
     not match the requirement.
 
+Check if a Route Exists
+~~~~~~~~~~~~~~~~~~~~~~~
+
+In highly dynamic applications, it may be necessary to check whether a route
+exists before using it to generate a URL. In those cases, don't use the
+:method:`Symfony\\Component\\Routing\\Router::getRouteCollection` method because
+that regenerates the routing cache and slows down the application.
+
+Instead, try to generate the URL and catch the
+:class:`Symfony\\Component\\Routing\\Exception\\RouteNotFoundException` thrown
+when the route doesn't exist::
+
+    use Symfony\Component\Routing\Exception\RouteNotFoundException;
+
+    // ...
+
+    try {
+        $url = $generator->generate($dynamicRouteName, $parameters);
+    } catch (RouteNotFoundException $e) {
+        // the route is not defined...
+    }
+
 Load Routes from a File
 ~~~~~~~~~~~~~~~~~~~~~~~
 
