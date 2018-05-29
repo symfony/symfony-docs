@@ -190,7 +190,7 @@ The :doc:`/session/locale_sticky_session` article does not update the locale
 when you impersonate a user. If you *do* want to be sure to update the locale when
 you switch users, add an event subscriber on this event::
 
-    // src/AppBundle/EventListener/SwitchUserListener.php
+    // src/AppBundle/EventListener/SwitchUserSubscriber.php
     namespace AppBundle\EventListener;
 
     use Symfony\Component\Security\Http\Event\SwitchUserEvent;
