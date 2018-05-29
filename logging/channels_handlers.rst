@@ -172,3 +172,11 @@ need to tag your services:
 
 With this, you can now send log messages to the ``foo`` channel by using
 the automatically registered logger service ``monolog.logger.foo``.
+
+.. configuration-block::
+
+    .. code-block:: php
+    
+        // src/Controller/MainController.php
+        $logger = $this->get('monolog.logger.foo');
+        $logger->info('foobar');
