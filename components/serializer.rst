@@ -711,7 +711,7 @@ Learn more
 .. seealso::
 
     A popular alternative to the Symfony Serializer Component is the third-party
-    library, `JMS serializer`_ (released under the Apache license, so incompatible with GPLv2 projects).
+    library, `JMS serializer`_ (versions before `v1.12.0` were released under the Apache license, so incompatible with GPLv2 projects).
 
 .. _`PSR-1 standard`: https://www.php-fig.org/psr/psr-1/
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
