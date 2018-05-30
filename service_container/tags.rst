@@ -17,7 +17,7 @@ example:
         services:
             AppBundle\Twig\AppExtension:
                 public: false
-                tags: [twig.extension]
+                tags: ['twig.extension']
 
     .. code-block:: xml
 
@@ -158,10 +158,10 @@ For example, you may add the following transports as services:
         services:
             Swift_SmtpTransport:
                 arguments: ['%mailer_host%']
-                tags: [app.mail_transport]
+                tags: ['app.mail_transport']
 
             Swift_SendmailTransport:
-                tags: [app.mail_transport]
+                tags: ['app.mail_transport']
 
     .. code-block:: xml
 
@@ -307,11 +307,11 @@ To answer this, change the service declaration:
             Swift_SmtpTransport:
                 arguments: ['%mailer_host%']
                 tags:
-                    - { name: app.mail_transport, alias: smtp }
+                    - { name: 'app.mail_transport', alias: 'smtp' }
 
             Swift_SendmailTransport:
                 tags:
-                    - { name: app.mail_transport, alias: sendmail }
+                    - { name: 'app.mail_transport', alias: 'sendmail' }
 
     .. code-block:: xml
 
@@ -356,13 +356,13 @@ To answer this, change the service declaration:
             # Compact syntax
             Swift_SendmailTransport:
                 class: \Swift_SendmailTransport
-                tags: [app.mail_transport]
+                tags: ['app.mail_transport']
 
             # Verbose syntax
             Swift_SendmailTransport:
                 class: \Swift_SendmailTransport
                 tags:
-                    - { name: app.mail_transport }
+                    - { name: 'app.mail_transport' }
 
     .. versionadded:: 3.3
         Support for the compact tag notation in the YAML format was introduced
@@ -420,10 +420,10 @@ first  constructor argument to the ``App\HandlerCollection`` service:
         # app/config/services.yml
         services:
             AppBundle\Handler\One:
-                tags: [app.handler]
+                tags: ['app.handler']
 
             AppBundle\Handler\Two:
-                tags: [app.handler]
+                tags: ['app.handler']
 
             AppBundle\HandlerCollection:
                 # inject all services tagged with app.handler as first argument
@@ -496,7 +496,7 @@ application handlers.
             services:
                 AppBundle\Handler\One:
                     tags:
-                        - { name: app.handler, priority: 20 }
+                        - { name: 'app.handler', priority: 20 }
 
         .. code-block:: xml
 
