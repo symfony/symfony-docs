@@ -1740,9 +1740,14 @@ php_errors
 log
 ...
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean|int`` **default**: ``false``
 
 Use the application logger instead of the PHP logger for logging PHP errors.
+When an integer value is used, it also sets the log level. Those integer
+values must be the same used in the `error_reporting PHP option`_.
+
+.. versionadded:: 4.1
+    The support for integers in the ``log`` option was introduced in Symfony 4.1.
 
 throw
 .....
@@ -2097,3 +2102,4 @@ Full Default Configuration
 .. _`blue/green deployment`: http://martinfowler.com/bliki/BlueGreenDeployment.html
 .. _`gulp-rev`: https://www.npmjs.com/package/gulp-rev
 .. _`webpack-manifest-plugin`: https://www.npmjs.com/package/webpack-manifest-plugin
+.. _`error_reporting PHP option`: https://secure.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
