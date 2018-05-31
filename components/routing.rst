@@ -22,6 +22,12 @@ Alternatively, you can clone the `<https://github.com/symfony/routing>`_ reposit
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the Routing features as an independent
+    component in any PHP application. Read the :doc:`/routing` article to learn
+    about how to use it in Symfony applications.
+
 In order to set up a basic routing system you need three parts:
 
 * A :class:`Symfony\\Component\\Routing\\RouteCollection`, which contains the route definitions (instances of the class :class:`Symfony\\Component\\Routing\\Route`)
@@ -228,6 +234,28 @@ a certain route::
     If you have defined a scheme, an absolute URL is generated if the scheme
     of the current :class:`Symfony\\Component\\Routing\\RequestContext` does
     not match the requirement.
+
+Check if a Route Exists
+~~~~~~~~~~~~~~~~~~~~~~~
+
+In highly dynamic applications, it may be necessary to check whether a route
+exists before using it to generate a URL. In those cases, don't use the
+:method:`Symfony\\Component\\Routing\\Router::getRouteCollection` method because
+that regenerates the routing cache and slows down the application.
+
+Instead, try to generate the URL and catch the
+:class:`Symfony\\Component\\Routing\\Exception\\RouteNotFoundException` thrown
+when the route doesn't exist::
+
+    use Symfony\Component\Routing\Exception\RouteNotFoundException;
+
+    // ...
+
+    try {
+        $url = $generator->generate($dynamicRouteName, $parameters);
+    } catch (RouteNotFoundException $e) {
+        // the route is not defined...
+    }
 
 Load Routes from a File
 ~~~~~~~~~~~~~~~~~~~~~~~

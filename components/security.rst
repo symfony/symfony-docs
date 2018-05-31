@@ -39,6 +39,12 @@ used separately:
 ``symfony/security-acl``
     It provides a fine grained permissions mechanism based on Access Control Lists.
 
+.. seealso::
+
+    This article explains how to use the Security features as an independent
+    component in any PHP application. Read the :doc:`/security` article to learn
+    about how to use it in Symfony applications.
+
 Learn More
 ----------
 

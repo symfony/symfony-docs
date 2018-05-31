@@ -63,6 +63,12 @@ Alternatively, you can clone the `<https://github.com/symfony/event-dispatcher>`
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the EventDispatcher features as an
+    independent component in any PHP application. Read the :doc:`/event_dispatcher`
+    article to learn about how to use it in Symfony applications.
+
 Events
 ~~~~~~
 
