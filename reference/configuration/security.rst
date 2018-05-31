@@ -123,6 +123,7 @@ Each part will be explained in the next section.
                     # See "Firewall Context" below for more details
                     context: context_key
                     stateless: false
+                    logout_on_user_change: false
                     x509:
                         provider: some_key_from_above
                     remote_user:
@@ -429,6 +430,24 @@ all the other firewalls.
 The ``invalidate_session`` option allows to redefine this behavior. Set this
 option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
+
+logout_on_user_change
+~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 3.4
+    The ``logout_on_user_change`` option was introduced in Symfony 3.4.
+
+If ``true`` this option makes Symfony to trigger a logout when the user has
+changed. Not doing that is deprecated, so this option should be set to ``true``
+to avoid getting deprecation messages.
+
+The user is considered to have changed when the user class implements
+:class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface` and the
+``isEqualTo()`` method returns ``false``. Also, when any of the properties
+required by the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
+(like the username, password or salt) changes.
 
 .. _reference-security-ldap:
 

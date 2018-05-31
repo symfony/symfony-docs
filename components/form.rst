@@ -27,10 +27,11 @@ Alternatively, you can clone the `<https://github.com/symfony/form>`_ repository
 Configuration
 -------------
 
-.. tip::
+.. seealso::
 
-    If you are working with the full-stack Symfony Framework, the Form component
-    is already configured for you. In this case, skip to :ref:`component-form-intro-create-simple-form`.
+    This article explains how to use the Form features as an independent
+    component in any PHP application. Read the :doc:`/forms` article to learn
+    about how to use it in Symfony applications.
 
 In Symfony, forms are represented by objects and these objects are built
 by using a *form factory*. Building a form factory is simple::

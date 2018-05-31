@@ -28,6 +28,12 @@ Alternatively, you can clone the `<https://github.com/symfony/browser-kit>`_ rep
 Basic Usage
 -----------
 
+.. seealso::
+
+    This article explains how to use the BrowserKit features as an independent
+    component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
+    article to learn about how to use it in Symfony applications.
+
 Creating a Client
 ~~~~~~~~~~~~~~~~~
 

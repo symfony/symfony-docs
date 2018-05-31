@@ -38,6 +38,12 @@ must also be installed.
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the Serializer features as an independent
+    component in any PHP application. Read the :doc:`/serializer` article to
+    learn about how to use it in Symfony applications.
+
 Using the Serializer component is really simple. You just need to set up
 the :class:`Symfony\\Component\\Serializer\\Serializer` specifying
 which encoders and normalizer are going to be available::
