@@ -26,6 +26,12 @@ Alternatively, you can clone the `<https://github.com/symfony/dom-crawler>`_ rep
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the DomCrawler features as an independent
+    component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
+    article to learn about how to use it when creating Symfony tests.
+
 The :class:`Symfony\\Component\\DomCrawler\\Crawler` class provides methods
 to query and manipulate HTML and XML documents.
 

@@ -22,6 +22,12 @@ Alternatively, you can clone the `<https://github.com/symfony/validator>`_ repos
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the Validator features as an independent
+    component in any PHP application. Read the :doc:`/validation` article to
+    learn about how to validate data and entities in Symfony applications.
+
 The Validator component behavior is based on two concepts:
 
 * Constraints, which define the rules to be validated;

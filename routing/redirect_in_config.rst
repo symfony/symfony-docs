@@ -159,6 +159,9 @@ action:
 
         return $routes;
 
+.. versionadded:: 4.1
+    The ``keepQueryParams`` option was introduced in Symfony 4.1.
+
 .. caution::
 
     Because you are redirecting to a route instead of a path, the required

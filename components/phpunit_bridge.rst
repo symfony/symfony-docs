@@ -62,6 +62,12 @@ to register a new `test listener`_ called ``SymfonyTestsListener``:
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the PhpUnitBridge features as an independent
+    component in any PHP application. Read the :doc:`/testing` article to learn
+    about how to use it in Symfony applications.
+
 Once the component is installed, a ``simple-phpunit`` script is created in the
 ``vendor/`` directory to run tests. This script wraps the original PHPUnit binary
 to provide more features:

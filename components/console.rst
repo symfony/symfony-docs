@@ -26,6 +26,12 @@ Alternatively, you can clone the `<https://github.com/symfony/console>`_ reposit
 Creating a Console Application
 ------------------------------
 
+.. seealso::
+
+    This article explains how to use the Console features as an independent
+    component in any PHP application. Read the :doc:`/console` article to
+    learn about how to use it in Symfony applications.
+
 First, you need to create a PHP script to define the console application::
 
     #!/usr/bin/env php

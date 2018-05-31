@@ -38,6 +38,12 @@ must also be installed.
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the Serializer features as an independent
+    component in any PHP application. Read the :doc:`/serializer` article to
+    learn about how to use it in Symfony applications.
+
 Using the Serializer component is really simple. You just need to set up
 the :class:`Symfony\\Component\\Serializer\\Serializer` specifying
 which encoders and normalizer are going to be available::
@@ -611,6 +617,14 @@ There are several types of normalizers available:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
     This normalizer converts :phpclass:`DateInterval` objects into strings.
     By default it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
+
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
+    This normalizer converts objects that implement
+    :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface`
+    into a list of errors according to the `RFC 7807`_ standard.
+
+    .. versionadded:: 4.1
+        The ``ConstraintViolationListNormalizer`` was introduced in Symfony 4.1.
 
 .. _component-serializer-encoders:
 
@@ -1256,3 +1270,4 @@ Learn more
 .. _XML: https://www.w3.org/XML/
 .. _YAML: http://yaml.org/
 .. _CSV: https://tools.ietf.org/html/rfc4180
+.. _`RFC 7807`: https://tools.ietf.org/html/rfc7807
