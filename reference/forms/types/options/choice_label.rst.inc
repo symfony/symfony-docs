@@ -16,10 +16,11 @@ more control::
             'no' => false,
             'maybe' => null,
         ),
-        'choice_label' => function ($value, $key, $index) {
-            if ($value == true) {
+        'choice_label' => function ($choiceValue, $key, $value) {
+            if ($value == choiceValue) {
                 return 'Definitely!';
             }
+
             return strtoupper($key);
 
             // or if you want to translate some key

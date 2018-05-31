@@ -25,6 +25,15 @@ Alternatively, you can clone the `<https://github.com/symfony/http-kernel>`_ rep
 The Workflow of a Request
 -------------------------
 
+.. seealso::
+
+    This article explains how to use the HttpKernel features as an independent
+    component in any PHP application. In Symfony applications everything is
+    already configured and ready to use. Read the :doc:`/controller` and
+    :doc:`/event_dispatcher` articles to learn about how to use it to create
+    controllers and define events in Symfony applications.
+
+
 Every HTTP web interaction begins with a request and ends with a response.
 Your job as a developer is to create PHP code that reads the request information
 (e.g. the URL) and creates and returns a response (e.g. an HTML page or JSON string).

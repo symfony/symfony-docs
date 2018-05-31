@@ -115,6 +115,8 @@ Running tests for a given file or directory is also very easy:
 .. index::
    single: Tests; Functional tests
 
+.. _functional-tests:
+
 Functional Tests
 ----------------
 
@@ -659,8 +661,8 @@ When calling the ``form()`` method, you can also pass an array of field values
 that overrides the default ones::
 
     $form = $buttonCrawlerNode->form(array(
-        'name'              => 'Fabien',
-        'my_form[subject]'  => 'Symfony rocks!',
+        'my_form[name]'    => 'Fabien',
+        'my_form[subject]' => 'Symfony rocks!',
     ));
 
 And if you want to simulate a specific HTTP method for the form, pass it as a
@@ -676,15 +678,15 @@ The field values can also be passed as a second argument of the ``submit()``
 method::
 
     $client->submit($form, array(
-        'name'              => 'Fabien',
-        'my_form[subject]'  => 'Symfony rocks!',
+        'my_form[name]'    => 'Fabien',
+        'my_form[subject]' => 'Symfony rocks!',
     ));
 
 For more complex situations, use the ``Form`` instance as an array to set the
 value of each field individually::
 
     // changes the value of a field
-    $form['name'] = 'Fabien';
+    $form['my_form[name]'] = 'Fabien';
     $form['my_form[subject]'] = 'Symfony rocks!';
 
 There is also a nice API to manipulate the values of the fields according to

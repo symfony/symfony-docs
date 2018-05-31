@@ -326,7 +326,7 @@ create a class which implements
             ;
 
             $listenerId = 'security.authentication.listener.wsse.'.$id;
-            $listener = $container->setDefinition($listenerId, new ChildDefinition(WsseListener::class));
+            $container->setDefinition($listenerId, new ChildDefinition(WsseListener::class));
 
             return array($providerId, $listenerId, $defaultEntryPoint);
         }

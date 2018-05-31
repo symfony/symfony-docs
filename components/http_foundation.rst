@@ -27,6 +27,13 @@ Alternatively, you can clone the `<https://github.com/symfony/http-foundation>`_
 
 .. include:: /components/require_autoload.rst.inc
 
+.. seealso::
+
+    This article explains how to use the HttpFoundation features as an
+    independent component in any PHP application. In Symfony applications
+    everything is already configured and ready to use. Read the :doc:`/controller`
+    article to learn about how to use these features when creating controllers.
+
 .. _component-http-foundation-request:
 
 Request

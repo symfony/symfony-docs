@@ -112,14 +112,14 @@ memorable name for the new branch (if you are fixing a reported issue, use
 
 .. code-block:: terminal
 
-    $ git checkout -b improve_install_article upstream/2.7
+    $ git checkout -b improve_install_article upstream/2.8
 
 In this example, the name of the branch is ``improve_install_article`` and the
-``upstream/2.7`` value tells Git to create this branch based on the ``2.7``
+``upstream/2.8`` value tells Git to create this branch based on the ``2.8``
 branch of the ``upstream`` remote, which is the original Symfony Docs repository.
 
 Fixes should always be based on the **oldest maintained branch** which contains
-the error. Nowadays this is the ``2.7`` branch. If you are instead documenting a
+the error. Nowadays this is the ``2.8`` branch. If you are instead documenting a
 new feature, switch to the first Symfony version that included it, e.g.
 ``upstream/3.1``. Not sure? That's ok! Just use the ``upstream/master`` branch.
 
@@ -155,7 +155,7 @@ changes should be applied:
    :align: center
 
 In this example, the **base fork** should be ``symfony/symfony-docs`` and
-the **base** branch should be the ``2.7``, which is the branch that you selected
+the **base** branch should be the ``2.8``, which is the branch that you selected
 to base your changes on. The **head fork** should be your forked copy
 of ``symfony-docs`` and the **compare** branch should be ``improve_install_article``,
 which is the name of the branch you created and where you made your changes.
@@ -205,7 +205,7 @@ contribution to the Symfony docs:
     # create a new branch based on the oldest maintained version
     $ cd projects/symfony-docs/
     $ git fetch upstream
-    $ git checkout -b my_changes upstream/2.7
+    $ git checkout -b my_changes upstream/2.8
 
     # ... do your changes
 
@@ -288,8 +288,8 @@ into multiple branches, corresponding to the different versions of Symfony itsel
 The ``master`` branch holds the documentation for the development branch of
 the code.
 
-Unless you're documenting a feature that was introduced after Symfony 2.7,
-your changes should always be based on the ``2.7`` branch. Documentation managers
+Unless you're documenting a feature that was introduced after Symfony 2.8,
+your changes should always be based on the ``2.8`` branch. Documentation managers
 will use the necessary Git-magic to also apply your changes to all the active
 branches of the documentation.
 
