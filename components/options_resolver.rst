@@ -634,6 +634,43 @@ let you find out which options are defined::
         }
     }
 
+Deprecating the Option
+~~~~~~~~~~~~~~~~~~~~~~
+
+Once an option is outdated or you decided not to maintain it anymore, you can deprecate it
+using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDeprecated`
+method::
+
+    $resolver
+        ->setDefined(array('hostname', 'host'))
+        // this outputs the following generic deprecation message:
+        // The option "hostname" is deprecated.
+        ->setDeprecated('hostname')
+
+        // you can also pass a custom deprecation message
+        ->setDeprecated('hostname', 'The option "hostname" is deprecated, use "host" instead.')
+    ;
+
+Instead of passing the message, you may also pass a closure which returns
+a string (the deprecation message) or an empty string to ignore the deprecation.
+This closure is specially useful to deprecate allowed types or values of the
+defined option::
+
+    $resolver
+        ->setDefault('port', null)
+        ->setAllowedTypes('port', array('null', 'int'))
+        ->setDeprecated('port', function ($value) {
+            if (null === $value) {
+                return 'Passing "null" to option "port" is deprecated, pass an integer instead.';
+            }
+
+            return '';
+        })
+    ;
+
+This closure receives as argument the value of the option after validating it
+and before normalize it when the option is being resolved.
+
 Performance Tweaks
 ~~~~~~~~~~~~~~~~~~
 
