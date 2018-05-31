@@ -210,6 +210,37 @@ should be used during the request. Defining routes this way also eliminated the
 need for duplicate registration of routes which minimizes the risk for any bugs
 caused by definition inconsistency.
 
+A common requirement for internationalized applications is to prefix all routes
+with a locale. This can be done by prefixing all your routes.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes/annotations.yaml
+        controllers:
+            resource: '../src/Controller/'
+            type: annotation
+            prefix:
+                en: '/en'
+                fr: '/fr'
+                es: '/es'
+
+You can even have your default locale unprefixed:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes/annotations.yaml
+        controllers:
+            resource: '../src/Controller/'
+            type: annotation
+            prefix:
+                en: '' # empty string (default locale)
+                fr: '/fr'
+                es: '/es'
+
 .. _routing-requirements:
 
 Adding {wildcard} Requirements
