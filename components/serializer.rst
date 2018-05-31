@@ -612,10 +612,10 @@ There are several types of normalizers available:
     This normalizer converts :phpclass:`DateInterval` objects into strings.
     By default it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
 
-:class:`Symfony\Component\Serializer\Normalizer\ConstraintViolationListNormalizer`
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
     This normalizer converts objects that implement
-    :class:`Symfony\Component\Validator\ConstraintViolationListInterface` into
-    a list of errors according to the `RFC 7807`_ standard.
+    :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface`
+    into a list of errors according to the `RFC 7807`_ standard.
 
     .. versionadded:: 4.1
         The ``ConstraintViolationListNormalizer`` was introduced in Symfony 4.1.
