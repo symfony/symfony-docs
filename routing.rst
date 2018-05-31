@@ -211,7 +211,8 @@ need for duplicate registration of routes which minimizes the risk for any bugs
 caused by definition inconsistency.
 
 A common requirement for internationalized applications is to prefix all routes
-with a locale. This can be done by prefixing all your routes.
+with a locale. This can be done by defining a different prefix for each locale
+(and setting an empty prefix for your default locale if you prefer it):
 
 .. configuration-block::
 
@@ -222,22 +223,7 @@ with a locale. This can be done by prefixing all your routes.
             resource: '../src/Controller/'
             type: annotation
             prefix:
-                en: '/en'
-                fr: '/fr'
-                es: '/es'
-
-You can even have your default locale unprefixed:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/routes/annotations.yaml
-        controllers:
-            resource: '../src/Controller/'
-            type: annotation
-            prefix:
-                en: '' # empty string (default locale)
+                en: '' # don't prefix URLs for English, the default locale
                 fr: '/fr'
                 es: '/es'
 
