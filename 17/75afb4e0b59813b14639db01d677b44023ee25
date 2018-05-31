@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2018-05-28T15:34:14Z
+
+I don't think a single page for every polyfill is a good idea as it'll create many almost similar files without good overview.
+
+What about a single package (e.g. Polyfill(s)) with one single usage instruction and an overview of all polyfill packages with the php functions they provide?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-28T15:39:55Z
+
+@wouterj but that would result in a huge single-page documentation (and we plan to keep adding polyfills, so it will become bigger and bigger). Wouldn't that be a problem?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-29T08:16:15Z
+
+I've added some more docs (all except the `php-*` polyfills) to have a better overview of the resulting docs.
