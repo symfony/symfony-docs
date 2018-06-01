@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-31T07:31:12Z
+
+It's not strictly necessary ... but I like it! @xabbuh what do you think about this proposal? Thanks!
+
+---------------------------------------------------------------------------
+
+by ScullWM at 2018-05-31T07:35:52Z
+
+Thanks @javiereguiluz
+I've seen this in some other YAML configuration snippets (https://github.com/symfony/symfony-docs/blob/master/service_container/3.3-di-changes.rst#the-new-default-servicesyaml-file)
