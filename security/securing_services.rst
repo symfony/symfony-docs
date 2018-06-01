@@ -41,27 +41,27 @@ Before you add security, the class looks something like this::
     }
 
 Your goal is to check the user's role when the ``sendNewsletter()`` method is
-called. The first step towards this is to inject the ``security.authorization_checker``
-service into the object::
+called. The first step towards this is to inject the ``security.helper`` service
+using the :class:`Symfony\\Component\\Security\\Core\\Security` class::
 
     // src/AppBundle/Newsletter/NewsletterManager.php
 
     // ...
-    use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    use Symfony\Component\Security\Core\Security;
 
     class NewsletterManager
     {
-        protected $authorizationChecker;
+        protected $security;
 
-        public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+        public function __construct(Security $security)
         {
-            $this->authorizationChecker = $authorizationChecker;
+            $this->security = $security;
         }
 
         public function sendNewsletter()
         {
-            if (!$this->authorizationChecker->isGranted('ROLE_NEWSLETTER_ADMIN')) {
+            if (!$this->security->isGranted('ROLE_NEWSLETTER_ADMIN')) {
                 throw new AccessDeniedException();
             }
 
@@ -72,8 +72,8 @@ service into the object::
     }
 
 If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
-Symfony will automatically pass the ``security.authorization_checker`` to your service
-thanks to autowiring and the ``AuthorizationCheckerInterface`` type-hint.
+Symfony will automatically pass the ``security.helper`` to your service
+thanks to autowiring and the ``Security`` type-hint.
 
 If the current user does not have the ``ROLE_NEWSLETTER_ADMIN``, they will
 be prompted to log in.

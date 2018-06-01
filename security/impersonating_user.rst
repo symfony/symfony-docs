@@ -111,15 +111,29 @@ user rather than the impersonated user. Use the following snippet to iterate
 over the user's roles until you find one that a ``SwitchUserRole`` object::
 
     use Symfony\Component\Security\Core\Role\SwitchUserRole;
+    use Symfony\Component\Security\Core\Security;
+    // ...
 
-    $authorizationChecker = $this->get('security.authorization_checker');
-    $tokenStorage = $this->get('security.token_storage');
+    public class SomeService
+    {
+        private $security;
 
-    if ($authorizationChecker->isGranted('ROLE_PREVIOUS_ADMIN')) {
-        foreach ($tokenStorage->getToken()->getRoles() as $role) {
-            if ($role instanceof SwitchUserRole) {
-                $impersonatorUser = $role->getSource()->getUser();
-                break;
+        public function __construct(Security $security)
+        {
+            $this->security = $security;
+        }
+
+        public function someMethod()
+        {
+            // ...
+
+            if ($this->security->isGranted('ROLE_PREVIOUS_ADMIN')) {
+                foreach ($this->security->getToken()->getRoles() as $role) {
+                    if ($role instanceof SwitchUserRole) {
+                        $impersonatorUser = $role->getSource()->getUser();
+                        break;
+                    }
+                }
             }
         }
     }
