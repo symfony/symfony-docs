@@ -91,16 +91,15 @@ retrieved from the token storage::
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
     use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
-    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Security;
 
     class UserValueResolver implements ArgumentValueResolverInterface
     {
-        private $tokenStorage;
+        private $security;
 
-        public function __construct(TokenStorageInterface $tokenStorage)
+        public function __construct(Security $security)
         {
-            $this->tokenStorage = $tokenStorage;
+            $this->security = $security;
         }
 
         public function supports(Request $request, ArgumentMetadata $argument)
@@ -109,18 +108,12 @@ retrieved from the token storage::
                 return false;
             }
 
-            $token = $this->tokenStorage->getToken();
-
-            if (!$token instanceof TokenInterface) {
-                return false;
-            }
-
-            return $token->getUser() instanceof User;
+            return $this->security->getUser() instanceof User;
         }
 
         public function resolve(Request $request, ArgumentMetadata $argument)
         {
-            yield $this->tokenStorage->getToken()->getUser();
+            yield $this->security->getUser();
         }
     }
 
@@ -128,8 +121,7 @@ In order to get the actual ``User`` object in your argument, the given value
 must fulfill the following requirements:
 
 * An argument must be type-hinted as ``User`` in your action method signature;
-* A security token must be present;
-* The value must be an instance of the ``User``.
+* The value must be an instance of the ``User`` class.
 
 When all those requirements are met and ``true`` is returned, the
 ``ArgumentResolver`` calls ``resolve()`` with the same values as it called
