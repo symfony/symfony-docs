@@ -135,7 +135,7 @@ use the Serializer service created before::
 
     $jsonContent = $serializer->serialize($person, 'json');
 
-    // $jsonContent contains {"name":"foo","age":99,"sportsperson":false}
+    // $jsonContent contains {"name":"foo","age":99,"sportsperson":false,"createdAt":null}
 
     echo $jsonContent; // or return it in a Response
 
