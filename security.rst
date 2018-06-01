@@ -1069,15 +1069,17 @@ the User object, and use the ``isGranted()`` method (or
 
     An alternative way to get the current user in a controller is to type-hint
     the controller argument with
-    :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
-    (and default it to ``null`` if being logged-in is optional)::
+    :class:`Symfony\\Component\\Security\\Core\\Security`::
 
-        use Symfony\Component\Security\Core\User\UserInterface;
+        use Symfony\Component\Security\Core\Security;
 
-        public function index(UserInterface $user = null)
+        public function indexAction(Security $security)
         {
-            // $user is null when not logged-in or anon.
+            $user = $security->getUser();
         }
+
+    .. versionadded:: 3.4
+        The ``Security`` utility class was introduced in Symfony 3.4.
 
     This is only recommended for experienced developers who don't extend from the
     :ref:`Symfony base controller <the-base-controller-class-services>` and
