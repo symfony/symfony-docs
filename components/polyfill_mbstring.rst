@@ -3,8 +3,8 @@
     single: Mbstring
     single: Components; Polyfill
 
-The Symfony Polyfill / Intl Mbstring Component
-==============================================
+The Symfony Polyfill / Mbstring Component
+=========================================
 
     This component provides a partial, native PHP implementation for the
     ``mbstring`` PHP extension.
