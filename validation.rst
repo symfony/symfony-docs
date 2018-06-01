@@ -113,6 +113,11 @@ following:
     Protected and private properties can also be validated, as well as "getter"
     methods (see :ref:`validator-constraint-targets`).
 
+.. caution::
+    
+    If you're using the YAML or XML formats, the ``config/validator`` folder 
+    structure should be respected !  
+
 .. index::
    single: Validation; Using the validator
 
