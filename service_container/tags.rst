@@ -17,7 +17,7 @@ example:
         services:
             App\Twig\AppExtension:
                 public: false
-                tags: [twig.extension]
+                tags: ['twig.extension']
 
     .. code-block:: xml
 
@@ -162,10 +162,10 @@ For example, you may add the following transports as services:
         services:
             Swift_SmtpTransport:
                 arguments: ['%mailer_host%']
-                tags: [app.mail_transport]
+                tags: ['app.mail_transport']
 
             Swift_SendmailTransport:
-                tags: [app.mail_transport]
+                tags: ['app.mail_transport']
 
     .. code-block:: xml
 
@@ -317,11 +317,11 @@ To answer this, change the service declaration:
             Swift_SmtpTransport:
                 arguments: ['%mailer_host%']
                 tags:
-                    - { name: app.mail_transport, alias: smtp }
+                    - { name: 'app.mail_transport', alias: 'smtp' }
 
             Swift_SendmailTransport:
                 tags:
-                    - { name: app.mail_transport, alias: sendmail }
+                    - { name: 'app.mail_transport', alias: 'sendmail' }
 
     .. code-block:: xml
 
@@ -368,13 +368,13 @@ To answer this, change the service declaration:
             # Compact syntax
             Swift_SendmailTransport:
                 class: \Swift_SendmailTransport
-                tags: [app.mail_transport]
+                tags: ['app.mail_transport']
 
             # Verbose syntax
             Swift_SendmailTransport:
                 class: \Swift_SendmailTransport
                 tags:
-                    - { name: app.mail_transport }
+                    - { name: 'app.mail_transport' }
 
 Notice that you've added a generic ``alias`` key to the tag. To actually
 use this, update the compiler::
@@ -424,10 +424,10 @@ first  constructor argument to the ``App\HandlerCollection`` service:
         # config/services.yaml
         services:
             App\Handler\One:
-                tags: [app.handler]
+                tags: ['app.handler']
 
             App\Handler\Two:
-                tags: [app.handler]
+                tags: ['app.handler']
 
             App\HandlerCollection:
                 # inject all services tagged with app.handler as first argument
@@ -500,7 +500,7 @@ application handlers.
             services:
                 App\Handler\One:
                     tags:
-                        - { name: app.handler, priority: 20 }
+                        - { name: 'app.handler', priority: 20 }
 
         .. code-block:: xml
 

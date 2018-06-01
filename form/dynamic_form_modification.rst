@@ -234,6 +234,7 @@ contains only this user's friends. This can be done injecting the ``Security``
 service into the form type so you can get the current user object::
 
     use Symfony\Component\Security\Core\Security;
+    // ...
 
     private $security;
 
@@ -254,7 +255,8 @@ service into the form type so you can get the current user object::
 Customizing the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that you have all the basics in place you can complete the listener logic::
+Now that you have all the basics in place you can use the features of the
+security helper to fill in the listener logic::
 
     // src/Form/Type/FriendMessageFormType.php
 
