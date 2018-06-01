@@ -170,8 +170,13 @@ Sort the result by name or by type (directories first, then files)::
 
 .. tip::
 
-    To sort by name using `natural sort order`_ algorithm,
-    pass ``true`` as the first argument of ``sortByName()`` method.
+    By default, the ``sortByName()`` method uses the :phpfunction:`strcmp` PHP
+    function (e.g. ``file1.txt``, ``file10.txt``, ``file2.txt``). Pass ``true``
+    as its argument to use PHP's `natural sort order`_ algorithm instead (e.g.
+    ``file1.txt``, ``file2.txt``, ``file10.txt``).
+
+    .. versionadded:: 4.2
+        The option to use the natural sort order was introduced in Symfony 4.2.
 
 You can also define your own sorting algorithm with ``sort()`` method::
 
