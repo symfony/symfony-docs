@@ -1254,6 +1254,14 @@ In the above configuration, users with ``ROLE_ADMIN`` role will also have the
 ``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``
 and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
 
+.. note::
+
+    The role hierarchy defined in the ``role_hierarchy`` option is static and
+    you cannot override it for example to store a dynamic role hierarchy in
+    the database. If you need that, define a custom
+    :doc:`security voter </security/voters>` that looks for the user roles in
+    the database.
+
 Final Words
 -----------
 
