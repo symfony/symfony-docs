@@ -247,6 +247,16 @@ Symfony provides the following env var processors:
         sentry:
             dsn: '%env(resolve:SENTRY_DSN)%'
 
+``env(csv:FOO)``
+    Decodes the content of ``FOO``, which is a CSV-encoded string:
+
+    .. code-block:: yaml
+
+        parameters:
+            env(TRUSTED_HOSTS): "10.0.0.1, 10.0.0.2"
+        framework:
+           trusted_hosts: '%env(csv:TRUSTED_HOSTS)%'
+
 ``env(file:FOO)``
     Returns the contents of a file whose path is the value of the ``FOO`` env var:
 
