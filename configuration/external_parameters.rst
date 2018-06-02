@@ -257,6 +257,9 @@ Symfony provides the following env var processors:
         framework:
            trusted_hosts: '%env(csv:TRUSTED_HOSTS)%'
 
+    .. versionadded:: 4.1
+        The ``csv`` processor was introduced in Symfony 4.1.
+
 ``env(file:FOO)``
     Returns the contents of a file whose path is the value of the ``FOO`` env var:
 
