@@ -1168,8 +1168,8 @@ serialize and deserialize these objects using a *"discriminator class mapping"*.
 
 The discriminator is the field (in the serialized string) used to differentiate
 between the possible objects. In practice, when using the Serializer component,
-pass the :class:`Symfony\\Component\\Serializer\\Mapping\\ClassDiscriminatorResolver`
-to the :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`.
+pass a :class:`Symfony\\Component\\Serializer\\Mapping\\ClassDiscriminatorResolverInterface`
+implementation to the :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`.
 
 Consider an application that defines an abstract ``CodeRepository`` class
 extended by ``GitHubCodeRepository`` and ``BitBucketCodeRepository`` classes.
@@ -1178,18 +1178,20 @@ This example shows how to serialize and deserialize those objects::
     // ...
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Mapping\ClassDiscriminatorMapping;
-    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorResolver;
+    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorFromClassMetadata;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
-    $discriminator = new ClassDiscriminatorResolver();
+    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+
+    $discriminator = new ClassDiscriminatorFromClassMetadata($classMetadataFactory);
     $discriminator->addClassMapping(CodeRepository::class, new ClassDiscriminatorMapping('type', [
         'github' => GitHubCodeRepository::class,
         'bitbucket' => BitBucketCodeRepository::class,
     ]));
 
     $serializer = new Serializer(
-        array(new ObjectNormalizer(null, null, null, null, $discriminator)),
+        array(new ObjectNormalizer($classMetadataFactory, null, null, null, $discriminator)),
         array('json' => new JsonEncoder())
     );
 
