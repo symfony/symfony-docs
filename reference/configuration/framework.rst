@@ -1879,6 +1879,9 @@ tags
 
 **type**: ``boolean`` | ``string`` **default**: ``null``
 
+.. versionadded:: 4.2
+    The ``tags`` option was introduced in Symfony 4.2.
+
 Whether your service should be able to handle tags or not.
 Can also be the service id of another cache pool where tags will be stored.
 
