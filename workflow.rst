@@ -1,7 +1,7 @@
 Workflow
 ========
 
-A workflow is a model of a process in your application. It may be the process
+Hi Sweta... A workflow is a model of a process in your application. It may be the process
 of how a blog post goes from draft, review and publish. Another example is when
 a user submits a series of different forms to complete a task. Such processes are
 best kept away from your models and should be defined in configuration.
