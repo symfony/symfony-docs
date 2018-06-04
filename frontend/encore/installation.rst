@@ -25,6 +25,13 @@ Then, install Encore into your project with Yarn:
 
         $ composer require encore
         $ yarn install
+        
+    Else, if you are not using flex
+    
+    .. code-block:: terminal
+
+        $ composer require symfony/webpack-encore-pack
+        $ yarn install
 
     This will create a ``webpack.config.js`` file, add the ``assets/`` directory, and add ``node_modules/`` to
     ``.gitignore``.
