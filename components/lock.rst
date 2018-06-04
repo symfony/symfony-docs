@@ -173,6 +173,7 @@ Store                                         Scope   Blocking  Expiring
 ============================================  ======  ========  ========
 :ref:`FlockStore <lock-store-flock>`          local   yes       no
 :ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes
+:ref:`PdoStore <lock-store-pdo>`              remote  no        yes
 :ref:`RedisStore <lock-store-redis>`          remote  no        yes
 :ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no
 ============================================  ======  ========  ========
@@ -195,7 +196,7 @@ PHP process is terminated::
 
     Beware that some file systems (such as some types of NFS) do not support
     locking. In those cases, it's better to use a directory on a local disk
-    drive or a remote store based on Redis or Memcached.
+    drive or a remote store based on Pdo, Redis or Memcached.
 
 .. _lock-store-memcached:
 
@@ -216,6 +217,46 @@ support blocking, and expects a TTL to avoid stalled locks::
 .. note::
 
     Memcached does not support TTL lower than 1 second.
+
+.. _lock-store-pdo:
+
+PdoStore
+~~~~~~~~
+
+
+The PdoStore saves locks in an SQL database, it requires a `PDO`_,
+`Doctrine DBAL Connection`_, or `Data Source Name (DSN)`_. This store does not
+support blocking, and expects a TTL to avoid stalled locks::
+
+    use Symfony\Component\Lock\Store\PdoStore;
+
+
+    // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
+    $databaseConnectionOrDSN = 'mysql:host=127.0.0.1;dbname=lock';
+    $store = new PdoStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
+
+.. note::
+
+    This store does not support TTL lower than 1 second.
+
+Before storing locks in the database, you must create the table that stores
+the information. The store provides a method called
+:method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable`
+to set up this table for you according to the database engine used::
+
+    try {
+        $store->createTable();
+    } catch (\PDOException $exception) {
+        // the table could not be created for some reason
+    }
+
+A great way to set up the table on production is to call the method on a dev
+enviroment, then generate a migration:
+
+.. code-block:: terminal
+
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
 
 .. _lock-store-redis:
 
@@ -290,11 +331,11 @@ the component is used in the following way.
 Remote Stores
 ~~~~~~~~~~~~~
 
-Remote stores (:ref:`MemcachedStore <lock-store-memcached>` and
-:ref:`RedisStore <lock-store-redis>`) use an unique token to recognize the true
-owner of the lock. This token is stored in the
-:class:`Symfony\\Component\\Lock\\Key` object and is used internally by the
-``Lock``, therefore this key must not be shared between processes (session,
+Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
+:ref:`PdoStore <lock-store-pdo>` and :ref:`RedisStore <lock-store-redis>`) use
+an unique token to recognize the true owner of the lock. This token is stored
+in the :class:`Symfony\\Component\\Lock\\Key` object and is used internally by
+the ``Lock``, therefore this key must not be shared between processes (session,
 caching, fork, ...).
 
 .. caution::
@@ -313,11 +354,11 @@ different machines may allow two different processes to acquire the same ``Lock`
 Expiring Stores
 ~~~~~~~~~~~~~~~
 
-Expiring stores (:ref:`MemcachedStore <lock-store-memcached>` and
-:ref:`RedisStore <lock-store-redis>`) guarantee that the lock is acquired
-only for the defined duration of time. If the task takes longer to be
-accomplished, then the lock can be released by the store and acquired by
-someone else.
+Expiring stores (:ref:`MemcachedStore <lock-store-memcached>`,
+:ref:`PdoStore <lock-store-pdo>` and :ref:`RedisStore <lock-store-redis>`)
+guarantee that the lock is acquired only for the defined duration of time. If
+the task takes longer to be accomplished, then the lock can be released by the
+store and acquired by someone else.
 
 The ``Lock`` provides several methods to check its health. The ``isExpired()``
 method checks whether or not it lifetime is over and the ``getRemainingLifetime()``
@@ -431,6 +472,30 @@ method uses the Memcached's ``flush()`` method which purges and removes everythi
     The method ``flush()`` must not be called, or locks should be stored in a
     dedicated Memcached service away from Cache.
 
+PdoStore
+~~~~~~~~~~
+
+Pdo stores rely on the `ACID`_ properties of the SQL engine.
+
+.. caution::
+
+    In a cluster configured with multiple master, ensure writes are
+    synchronously propaged to every nodes, or always use the same node.
+
+.. caution::
+
+    Some SQL engine like MySQL allows to disable unique constraint check.
+    Ensure that this is not the case ``SET unique_checks=1;``.
+
+In order to purge old lock, this store use a current datetime to define a
+expiration date reference. This mechanism relies on all client and server nodes
+to have synchronized clock.
+
+.. caution::
+
+    To ensure locks don't expire prematurely; the ttl's should be set with
+    enough extra time to account for any clock drift between nodes.
+
 RedisStore
 ~~~~~~~~~~
 
@@ -501,6 +566,7 @@ instance, during the deployment of a new version. Processes with new
 configuration must not be started while old processes with old configuration
 are still running.
 
+.. _`ACID`: https://en.wikipedia.org/wiki/ACID
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
 .. _Packagist: https://packagist.org/packages/symfony/lock
 .. _`PHP semaphore functions`: http://php.net/manual/en/book.sem.php
