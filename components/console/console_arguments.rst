@@ -1,12 +1,14 @@
 .. index::
     single: Console; Console arguments
 
-Understanding how Console Arguments Are Handled
-===============================================
+Understanding how Console Arguments and Options Are Handled
+===========================================================
 
-It can be difficult to understand the way arguments are handled by the console application.
-The Symfony Console application, like many other CLI utility tools, follows the behavior
-described in the `docopt`_ standards.
+Symfony Console applications follow the same `docopt`_ standard used in most
+CLI utility tools. This article explains how to handle edge-cases when the
+commands define options with required values, without values, etc. Read
+:doc:`this other article </console/input>` to learn about using arguments and
+options inside Symfony Console commands.
 
 Have a look at the following command that has three options::
 
