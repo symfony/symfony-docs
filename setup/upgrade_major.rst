@@ -1,7 +1,7 @@
 .. index::
     single: Upgrading; Major Version
 
-Upgrading a Major Version (e.g. 3.4.0 to 4.0.0)
+Upgrading a Major Version (e.g. 3.4.0 to 4.1.0)
 ===============================================
 
 Every two years, Symfony releases a new major version release (the first number
@@ -30,7 +30,7 @@ backwards incompatible changes. To accomplish this, the "old" (e.g. functions,
 classes, etc) code still works, but is marked as *deprecated*, indicating that
 it will be removed/changed in the future and that you should stop using it.
 
-When the major version is released (e.g. 4.0.0), all deprecated features and
+When the major version is released (e.g. 4.1.0), all deprecated features and
 functionality are removed. So, as long as you've updated your code to stop
 using these deprecated features in the last version before the major (e.g.
 3.4.*), you should be able to upgrade without a problem.
@@ -128,7 +128,7 @@ Composer by modifying your ``composer.json`` file:
         "...": "...",
 
         "require": {
-            "symfony/symfony": "^4.0",
+            "symfony/symfony": "^4.1",
         },
         "...": "..."
     }
