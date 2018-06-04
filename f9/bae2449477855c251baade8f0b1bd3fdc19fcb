@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-01T15:27:48Z
+
+@Guikingone thanks for this! Do you know which is the first Symfony version that supported this? We'll need to merge this in 2.8 or 3.4 or 4.0. Thanks!
+
+---------------------------------------------------------------------------
+
+by Guikingone at 2018-06-01T15:29:01Z
+
+@javiereguiluz The `config` folder appears in the 3.4 via Flex but only 4.0 was really used via Flex.
