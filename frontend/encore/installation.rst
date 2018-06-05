@@ -23,13 +23,6 @@ Then, install Encore into your project with Yarn:
 
     .. code-block:: terminal
 
-        $ composer require encore
-        $ yarn install
-        
-    Else, if you are not using flex
-    
-    .. code-block:: terminal
-
         $ composer require symfony/webpack-encore-pack
         $ yarn install
 
