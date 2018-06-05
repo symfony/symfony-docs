@@ -257,7 +257,7 @@ To solve this issue, you have to set the option's default value to ``false``::
 
 Now check the value of the option and keep in mind that ``false !== null``::
 
-    $optionValue = $input->getOptions('yell');
+    $optionValue = $input->getOption('yell');
     $yell = ($optionValue !== false);
     $yellLouder = ($optionValue === 'louder');
 
