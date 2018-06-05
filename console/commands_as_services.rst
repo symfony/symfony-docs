@@ -25,7 +25,7 @@ with ``console.command``:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/services.yml
         services:
             app.command.my_command:
                 class: AppBundle\Command\MyCommand
