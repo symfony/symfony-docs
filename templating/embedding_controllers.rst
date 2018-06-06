@@ -4,14 +4,13 @@
 How to Embed Controllers in a Template
 ======================================
 
-In some cases, you need to do more than include a simple template. Suppose
-you have a sidebar in your layout that contains the three most recent articles.
-Retrieving the three articles may include querying the database or performing
-other heavy logic that can't be done from within a template.
+Including template fragments is a simple way to reuse common contents among
+templates. However, the contents of the included templates are static, so you
+can't use them to implement features like displaying in a sidebar the most
+recent articles (which require making a database query).
 
-The solution is to simply embed the result of an entire controller from your
-template. First, create a controller that renders a certain number of recent
-articles::
+The solution is to call a controller from the template and output its result.
+First, create a controller that renders a certain number of recent articles::
 
     // src/AppBundle/Controller/ArticleController.php
     namespace AppBundle\Controller;
@@ -33,7 +32,8 @@ articles::
         }
     }
 
-The ``recent_list`` template is perfectly straightforward:
+Then, create a ``recent_list`` template fragment to list the articles given by
+the controller:
 
 .. configuration-block::
 
@@ -41,7 +41,7 @@ The ``recent_list`` template is perfectly straightforward:
 
         {# app/Resources/views/article/recent_list.html.twig #}
         {% for article in articles %}
-            <a href="/article/{{ article.slug }}">
+            <a href="{{ path('article_show', {slug: article.slug}) }}">
                 {{ article.title }}
             </a>
         {% endfor %}
@@ -50,19 +50,15 @@ The ``recent_list`` template is perfectly straightforward:
 
         <!-- app/Resources/views/article/recent_list.html.php -->
         <?php foreach ($articles as $article): ?>
-            <a href="/article/<?php echo $article->getSlug() ?>">
+            <a href="<?php echo $view['router']->path('article_show', array(
+            'slug' => $article->getSlug(),
+            )) ?>">
                 <?php echo $article->getTitle() ?>
             </a>
         <?php endforeach ?>
 
-.. note::
-
-    Notice that the article URL is hardcoded in this example
-    (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
-    you'll learn how to do this correctly.
-
-To include the controller, you'll need to refer to it using the standard
-string syntax for controllers (i.e. **bundle**:**controller**:**action**):
+Finally, call the controller from any template using the ``render()`` function
+and the common syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
 .. configuration-block::
 
