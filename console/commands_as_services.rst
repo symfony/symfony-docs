@@ -34,7 +34,7 @@ with ``console.command``:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- app/config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -52,7 +52,7 @@ with ``console.command``:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // app/config/services.php
         use AppBundle\Command\MyCommand;
 
         $container
