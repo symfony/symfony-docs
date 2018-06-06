@@ -263,7 +263,7 @@ Available Options
     small outgoing messages and sending them all at once.
 
 ``use_udp`` (type: ``bool``, default: ``false``)
-    Enables or disabled the use of `User Datagram Protocol (UDP)`_ mode (instead
+    Enables or disables the use of `User Datagram Protocol (UDP)`_ mode (instead
     of `Transmission Control Protocol (TCP)`_ mode), where all operations are
     executed in a "fire-and-forget" manner; no attempt to ensure the operation
     has been received or acted on will be made once the client has executed it.

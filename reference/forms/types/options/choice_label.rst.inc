@@ -17,7 +17,7 @@ more control::
             'maybe' => null,
         ),
         'choice_label' => function ($choiceValue, $key, $value) {
-            if ($value == choiceValue) {
+            if ($value == $choiceValue) {
                 return 'Definitely!';
             }
 

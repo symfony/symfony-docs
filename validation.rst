@@ -43,8 +43,9 @@ So far, this is just an ordinary class that serves some purpose inside your
 application. The goal of validation is to tell you if the data
 of an object is valid. For this to work, you'll configure a list of rules
 (called :ref:`constraints <validation-constraints>`) that the object must
-follow in order to be valid. These rules can be specified via a number of
-different formats (YAML, XML, annotations, or PHP).
+follow in order to be valid. These rules are usually defined using PHP code or
+annotations but they can also be defined as a ``validation.yaml`` or
+``validation.xml`` file inside the ``config/validator/`` directory:
 
 For example, to guarantee that the ``$name`` property is not empty, add the
 following:
