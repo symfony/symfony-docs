@@ -159,7 +159,7 @@ extensively to modify the information before displaying it to the user:
 Don't forget to check out the official `Twig documentation`_ to learn everything
 about filters, functions and tags.
 
-.. including-other-templates:
+.. _including-other-templates:
 
 Including other Templates
 -------------------------
