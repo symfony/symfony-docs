@@ -416,7 +416,7 @@ Symfony provides the following env var processors:
             parameters:
                 env(AUTH_FILE): '../config/auth.json'
             google:
-               auth: '%env(file:AUTH_FILE)%'
+                auth: '%env(file:AUTH_FILE)%'
 
         .. code-block:: xml
 
