@@ -4,12 +4,20 @@
 How to Embed Controllers in a Template
 ======================================
 
-Including template fragments is a simple way to reuse common contents among
-templates. However, the contents of the included templates are static, so you
-can't use them to implement features like displaying in a sidebar the most
-recent articles (which require making a database query).
+:ref:`Including template fragments <including-other-templates>` is useful to
+reuse the same content on several pages. However, this technique is not the best
+solution in some cases.
 
-The solution is to call a controller from the template and output its result.
+Consider a website that displays on its sidebar the most recently published
+articles. This list of articles is dynamic and it's probably the result of a
+database query. In other words, the controller of any page that displays that
+sidebar must make the same database query and pass the list of articles to the
+included template fragment.
+
+The alternative solution proposed by Symfony is to create a controller that only
+displays the list of recent articles and then call to that controller from any
+template that needs to display that content.
+
 First, create a controller that renders a certain number of recent articles::
 
     // src/AppBundle/Controller/ArticleController.php
@@ -90,6 +98,5 @@ and the common syntax for controllers (i.e. **bundle**:**controller**:**action**
 
 Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
-Controllers are fast to execute and promote good code organization and reuse.
-Of course, like all controllers, they should ideally be "skinny", meaning
-that as much code as possible lives in reusable :doc:`services </service_container>`.
+Make sure that embedded controllers are fast to execute to not hurt performance
+and that they follow Symfony's :doc:`best practices for controllers </best_practices/controllers>`.
