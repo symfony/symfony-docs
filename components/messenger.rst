@@ -8,6 +8,9 @@ The Messenger Component
     The Messenger component helps applications send and receive messages to/from
     other applications or via message queues.
 
+    The component is greatly inspired by Matthias Noback's series of `blog posts
+    about command buses`_ and the `SimpleBus project`_.
+
 Installation
 ------------
 
@@ -191,3 +194,7 @@ loop, the message bus is equipped with the ``WrapIntoReceivedMessage`` middlewar
 It will wrap the received messages into ``ReceivedMessage`` objects and the
 ``SendMessageMiddleware`` middleware will know it should not route these
 messages again to a transport.
+
+
+.. _blog posts about command buses: https://matthiasnoback.nl/tags/command%20bus/
+.. _SimpleBus project: http://simplebus.io
