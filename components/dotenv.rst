@@ -69,9 +69,6 @@ You should never store a ``.env`` file in your code repository as it might
 contain sensitive information; create a ``.env.dist`` file with sensible
 defaults instead.
 
-Symfony Dotenv should only be used in development/testing/staging environments.
-For production environments, use "real" environment variables.
-
 As a ``.env`` file is a regular shell script, you can ``source`` it in your own
 shell scripts:
 
