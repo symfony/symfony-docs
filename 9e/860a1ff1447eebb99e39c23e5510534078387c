@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-08T06:48:47Z
+
+If I'm right, we need to merge this in 4.0 branch instead of master. 4.0 is the first branch where we use Flex and this change will be released with the next version of Flex, which will be used by any project created with Flex.
+
+---------------------------------------------------------------------------
+
+by Pierstoval at 2018-06-08T07:40:54Z
+
+@javiereguiluz I changed the base & rebased my commits :)
