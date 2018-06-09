@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-09T08:28:54Z
+
+@sbol-coolblue this is a really nice proposal. I like it a lot! In case we're worried because `random_int()` is for PHP 7.0+ only ... according to [latest Composer stats](https://seld.be/notes/php-versions-stats-2018-1-edition) 80% of developers use PHP 7.0+ versions. Also, [PHP 7.0 polyfill](https://symfony.com/doc/current/components/polyfill_php70.html) provides this function.
+
+So I propose to merge this in 2.8 branch. There's no need for you to rebase or change anything. We can change it when merging. Thanks!
