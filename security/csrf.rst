@@ -60,7 +60,7 @@ CSRF Protection in Symfony Forms
 --------------------------------
 
 Forms created with the Symfony Form component include CSRF tokens by default
-and Symfony checks them automatically, so you don't have to anything to be
+and Symfony checks them automatically, so you don't have to do anything to be
 protected against CSRF attacks.
 
 .. _form-csrf-customization:
