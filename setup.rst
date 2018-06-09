@@ -77,12 +77,12 @@ by pressing ``Ctrl+C`` from your terminal.
 Storing your Project in git
 ---------------------------
 
-Storing your project in services like GitHub, GitLab and Bitbucket is easy! New
-Symfony projects include an empty Git repository, so you can add everything and
-commit:
+Storing your project in services like GitHub, GitLab and Bitbucket is easy! Init
+a new repository with ``Git`` and you are ready to push to your remote:
 
 .. code-block:: terminal
 
+    $ git init
     $ git add .
     $ git commit -m "Initial commit"
 
