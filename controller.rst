@@ -68,7 +68,7 @@ class::
          */
         public function numberAction($max)
         {
-            $number = mt_rand(0, $max);
+            $number = random_int(0, $max);
 
             return new Response(
                 '<html><body>Lucky number: '.$number.'</body></html>'

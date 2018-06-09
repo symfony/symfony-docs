@@ -53,7 +53,7 @@ random) number and prints it. To do that, create a "Controller class" and a
          */
         public function numberAction()
         {
-            $number = mt_rand(0, 100);
+            $number = random_int(0, 100);
 
             return new Response(
                 '<html><body>Lucky number: '.$number.'</body></html>'
@@ -123,7 +123,7 @@ variable so we can render that::
          */
         public function numberAction()
         {
-            $number = mt_rand(0, 100);
+            $number = random_int(0, 100);
 
             return $this->render('lucky/number.html.twig', array(
                 'number' => $number,
