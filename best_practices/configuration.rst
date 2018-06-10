@@ -6,58 +6,64 @@ and security credentials) and different environments (development, production).
 That's why Symfony recommends that you split the application configuration into
 three parts.
 
+.. _config-parameters.yml:
+
 Infrastructure-Related Configuration
 ------------------------------------
 
+These are the options that change from one machine to another (e.g. from your
+development machine to the production server) but which don't change the
+application behavior.
+
 .. best-practice::
 
-    Define the infrastructure-related configuration options in the
-    ``app/config/parameters.yml`` file.
+    Define the infrastructure-related configuration options as environment
+    variables. During development, use the ``.env`` file at the root of your
+    project to set these.
 
-The default ``parameters.yml`` file follows this recommendation and defines the
-options related to the database and mail server infrastructure:
+By default, Symfony adds these types of options to the ``.env`` file when
+installing new dependencies in the app:
 
-.. code-block:: yaml
+.. code-block:: bash
 
-    # app/config/parameters.yml
-    parameters:
-        database_driver:   pdo_mysql
-        database_host:     127.0.0.1
-        database_port:     ~
-        database_name:     symfony
-        database_user:     root
-        database_password: ~
+    # .env
+    ###> doctrine/doctrine-bundle ###
+    DATABASE_URL=sqlite:///%kernel.project_dir%/var/data/blog.sqlite
+    ###< doctrine/doctrine-bundle ###
 
-        mailer_transport:  smtp
-        mailer_host:       127.0.0.1
-        mailer_user:       ~
-        mailer_password:   ~
+    ###> symfony/swiftmailer-bundle ###
+    MAILER_URL=smtp://localhost?encryption=ssl&auth_mode=login&username=&password=
+    ###< symfony/swiftmailer-bundle ###
 
-        # ...
+    # ...
 
-These options aren't defined inside the ``app/config/config.yml`` file because
+These options aren't defined inside the ``config/services.yaml`` file because
 they have nothing to do with the application's behavior. In other words, your
 application doesn't care about the location of your database or the credentials
 to access to it, as long as the database is correctly configured.
+
+.. caution::
+
+    Beware that dumping the contents of the ``$_SERVER`` and ``$_ENV`` variables
+    or outputting the ``phpinfo()`` contents will display the values of the
+    environment variables, exposing sensitive information such as the database
+    credentials.
+
+.. _best-practices-canonical-parameters:
 
 Canonical Parameters
 ~~~~~~~~~~~~~~~~~~~~
 
 .. best-practice::
 
-    Define all your application's parameters in the
-    ``app/config/parameters.yml.dist`` file.
+    Define all your application's env vars in the ``.env.dist`` file.
 
-Since version 2.3, Symfony includes a configuration file called ``parameters.yml.dist``,
-which stores the canonical list of configuration parameters for the application.
+Symfony includes a configuration file called ``.env.dist`` at the project root,
+which stores the canonical list of environment variables for the application.
 
-Whenever a new configuration parameter is defined for the application, you
-should also add it to this file and submit the changes to your version control
-system. Then, whenever a developer updates the project or deploys it to a server,
-Symfony will check if there is any difference between the canonical
-``parameters.yml.dist`` file and your local ``parameters.yml`` file. If there
-is a difference, Symfony will ask you to provide a value for the new parameter
-and it will add it to your local ``parameters.yml`` file.
+Whenever a new env var is defined for the application, you should also add it to
+this file and submit the changes to your version control system so your
+workmates can update their ``.env`` files.
 
 Application-Related Configuration
 ---------------------------------
@@ -65,17 +71,17 @@ Application-Related Configuration
 .. best-practice::
 
     Define the application behavior related configuration options in the
-    ``app/config/config.yml`` file.
+    ``config/services.yaml`` file.
 
-The ``config.yml`` file contains the options used by the application to modify
-its behavior, such as the sender of email notifications, or the enabled
-`feature toggles`_. Defining these values in ``parameters.yml`` file would
-add an extra layer of configuration that's not needed because you don't need
-or want these configuration values to change on each server.
+The ``services.yaml`` file contains the options used by the application to
+modify its behavior, such as the sender of email notifications, or the enabled
+`feature toggles`_. Defining these values in ``.env`` file would add an extra
+layer of configuration that's not needed because you don't need or want these
+configuration values to change on each server.
 
-The configuration options defined in the ``config.yml`` file usually vary from
-one :doc:`environment </cookbook/configuration/environments>` to another. That's
-why Symfony already includes ``app/config/config_dev.yml`` and ``app/config/config_prod.yml``
+The configuration options defined in the ``services.yaml`` may vary from one
+:doc:`environment </configuration/environments>` to another. That's why Symfony
+supports defining ``config/services_dev.yaml`` and ``config/services_prod.yaml``
 files so that you can override specific values for each environment.
 
 Constants vs Configuration Options
@@ -95,24 +101,22 @@ to control the number of posts to display on the blog homepage:
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/services.yaml
     parameters:
-        homepage.num_items: 10
+        homepage.number_of_items: 10
 
-If you ask yourself when the last time was that you changed the value of
-*any* option like this, odds are that you *never* have. Creating a configuration
+If you've done something like this in the past, it's likely that you've in fact
+*never* actually needed to change that value. Creating a configuration
 option for a value that you are never going to configure just isn't necessary.
 Our recommendation is to define these values as constants in your application.
-You could, for example, define a ``NUM_ITEMS`` constant in the ``Post`` entity:
+You could, for example, define a ``NUMBER_OF_ITEMS`` constant in the ``Post`` entity::
 
-.. code-block:: php
-
-    // src/AppBundle/Entity/Post.php
-    namespace AppBundle\Entity;
+    // src/Entity/Post.php
+    namespace App\Entity;
 
     class Post
     {
-        const NUM_ITEMS = 10;
+        const NUMBER_OF_ITEMS = 10;
 
         // ...
     }
@@ -122,27 +126,25 @@ everywhere in your application. When using parameters, they are only available
 from places with access to the Symfony container.
 
 Constants can be used for example in your Twig templates thanks to the
-``constant()`` function:
+`constant() function`_:
 
-.. code-block:: html+jinja
+.. code-block:: html+twig
 
     <p>
-        Displaying the {{ constant('NUM_ITEMS', post) }} most recent results.
+        Displaying the {{ constant('NUMBER_OF_ITEMS', post) }} most recent results.
     </p>
 
 And Doctrine entities and repositories can now easily access these values,
-whereas they cannot access the container parameters:
+whereas they cannot access the container parameters::
 
-.. code-block:: php
+    namespace App\Repository;
 
-    namespace AppBundle\Repository;
-
+    use App\Entity\Post;
     use Doctrine\ORM\EntityRepository;
-    use AppBundle\Entity\Post;
 
     class PostRepository extends EntityRepository
     {
-        public function findLatest($limit = Post::NUM_ITEMS)
+        public function findLatest($limit = Post::NUMBER_OF_ITEMS)
         {
             // ...
         }
@@ -151,30 +153,34 @@ whereas they cannot access the container parameters:
 The only notable disadvantage of using constants for this kind of configuration
 values is that you cannot redefine them easily in your tests.
 
-Semantic Configuration: Don't Do It
------------------------------------
+Parameter Naming
+----------------
 
 .. best-practice::
 
-    Don't define a semantic dependency injection configuration for your bundles.
+    The name of your configuration parameters should be as short as possible and
+    should include a common prefix for the entire application.
 
-As explained in :doc:`/cookbook/bundles/extension` article, Symfony bundles
-have two choices on how to handle configuration: normal service configuration
-through the ``services.yml`` file and semantic configuration through a special
-``*Extension`` class.
+Using ``app.`` as the prefix of your parameters is a common practice to avoid
+collisions with Symfony and third-party bundles/libraries parameters. Then, use
+just one or two words to describe the purpose of the parameter:
 
-Although semantic configuration is much more powerful and provides nice features
-such as configuration validation, the amount of work needed to define that
-configuration isn't worth it for bundles that aren't meant to be shared as
-third-party bundles.
+.. code-block:: yaml
 
-Moving Sensitive Options Outside of Symfony Entirely
-----------------------------------------------------
+    # config/services.yaml
+    parameters:
+        # don't do this: 'dir' is too generic and it doesn't convey any meaning
+        app.dir: '...'
+        # do this: short but easy to understand names
+        app.contents_dir: '...'
+        # it's OK to use dots, underscores, dashes or nothing, but always
+        # be consistent and use the same format for all the parameters
+        app.dir.contents: '...'
+        app.contents-dir: '...'
 
-When dealing with sensitive options, like database credentials, we also recommend
-that you store them outside the Symfony project and make them available
-through environment variables. Learn how to do it in the following article:
-:doc:`/cookbook/configuration/external_parameters`
+----
 
-.. _`feature toggles`: http://en.wikipedia.org/wiki/Feature_toggle
+Next: :doc:`/best_practices/business-logic`
+
+.. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html

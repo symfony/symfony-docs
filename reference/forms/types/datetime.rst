@@ -1,21 +1,22 @@
 .. index::
-   single: Forms; Fields; datetime
+   single: Forms; Fields; DateTimeType
 
-datetime Field Type
-===================
+DateTimeType Field
+==================
 
 This field type allows the user to modify data that represents a specific
 date and time (e.g. ``1984-06-05 12:15:30``).
 
-Can be rendered as a text input or select tags. The underlying format of the
-data can be a ``DateTime`` object, a string, a timestamp or an array.
+Can be rendered as a text input or select tags. The underlying format of
+the data can be a ``DateTime`` object, a string, a timestamp or an array.
 
 +----------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
 +----------------------+-----------------------------------------------------------------------------+
 | Rendered as          | single text box or three select fields                                      |
 +----------------------+-----------------------------------------------------------------------------+
-| Options              | - `date_format`_                                                            |
+| Options              | - `choice_translation_domain`_                                              |
+|                      | - `date_format`_                                                            |
 |                      | - `date_widget`_                                                            |
 |                      | - `days`_                                                                   |
 |                      | - `placeholder`_                                                            |
@@ -34,15 +35,20 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `with_seconds`_                                                           |
 |                      | - `years`_                                                                  |
 +----------------------+-----------------------------------------------------------------------------+
+| Overridden options   | - `by_reference`_                                                           |
+|                      | - `compound`_                                                               |
+|                      | - `data_class`_                                                             |
+|                      | - `error_bubbling`_                                                         |
++----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `data`_                                                                   |
 | options              | - `disabled`_                                                               |
+|                      | - `help`_                                                                   |
 |                      | - `inherit_data`_                                                           |
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
 |                      | - `mapped`_                                                                 |
-|                      | - `read_only`_                                                              |
 +----------------------+-----------------------------------------------------------------------------+
-| Parent type          | :doc:`form </reference/forms/types/form>`                                   |
+| Parent type          | :doc:`FormType </reference/forms/types/form>`                               |
 +----------------------+-----------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateTimeType`      |
 +----------------------+-----------------------------------------------------------------------------+
@@ -50,25 +56,50 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 Field Options
 -------------
 
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
+
 date_format
 ~~~~~~~~~~~
 
 **type**: ``integer`` or ``string`` **default**: ``IntlDateFormatter::MEDIUM``
 
 Defines the ``format`` option that will be passed down to the date field.
-See the :ref:`date type's format option <reference-forms-type-date-format>`
+See the :ref:`DateType's format option <reference-forms-type-date-format>`
 for more details.
 
 date_widget
 ~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``choice``
-
-Defines the ``widget`` option for the :doc:`date </reference/forms/types/date>` type
+.. include:: /reference/forms/types/options/date_widget_description.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
-.. include:: /reference/forms/types/options/placeholder.rst.inc
+placeholder
+~~~~~~~~~~~
+
+**type**: ``string`` | ``array``
+
+If your widget option is set to ``choice``, then this field will be represented
+as a series of ``select`` boxes. When the placeholder value is a string,
+it will be used as the **blank value** of all select boxes::
+
+    use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
+    $builder->add('startDateTime', DateTimeType::class, array(
+        'placeholder' => 'Select a value',
+    ));
+
+Alternatively, you can use an array that configures different placeholder
+values for the year, month, day, hour, minute and second fields::
+
+    use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
+    $builder->add('startDateTime', DateTimeType::class, array(
+        'placeholder' => array(
+            'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
+            'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
+        )
+    ));
 
 format
 ~~~~~~
@@ -79,7 +110,8 @@ If the ``widget`` option is set to ``single_text``, this option specifies
 the format of the input, i.e. how Symfony will interpret the given input
 as a datetime string. It defaults to the `RFC 3339`_ format which is used
 by the HTML5 ``datetime`` field. Keeping the default value will cause the
-field to be rendered as an ``input`` field with ``type="datetime"``.
+field to be rendered as an ``input`` field with ``type="datetime"``. For
+more information on valid formats, see `Date/Time Format Syntax`_.
 
 .. include:: /reference/forms/types/options/hours.rst.inc
 
@@ -90,11 +122,12 @@ input
 
 **type**: ``string`` **default**: ``datetime``
 
-The format of the *input* data - i.e. the format that the date is stored on
-your underlying object. Valid values are:
+The format of the *input* data - i.e. the format that the date is stored
+on your underlying object. Valid values are:
 
 * ``string`` (e.g. ``2011-06-05 12:15:00``)
 * ``datetime`` (a ``DateTime`` object)
+* ``datetime_immutable`` (a ``DateTimeImmutable`` object)
 * ``array`` (e.g. ``array(2011, 06, 05, 12, 15, 0)``)
 * ``timestamp`` (e.g. ``1307276100``)
 
@@ -116,7 +149,7 @@ time_widget
 
 **type**: ``string`` **default**: ``choice``
 
-Defines the ``widget`` option for the :doc:`time </reference/forms/types/time>` type
+Defines the ``widget`` option for the :doc:`TimeType </reference/forms/types/time>`.
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
@@ -125,9 +158,9 @@ widget
 
 **type**: ``string`` **default**: ``null``
 
-Defines the ``widget`` option for both the :doc:`date </reference/forms/types/date>`
-type and :doc:`time </reference/forms/types/time>` type. This can be overridden with
-the `date_widget`_ and `time_widget`_ options.
+Defines the ``widget`` option for both the :doc:`DateType </reference/forms/types/date>`
+and :doc:`TimeType </reference/forms/types/time>`. This can be overridden
+with the `date_widget`_ and `time_widget`_ options.
 
 .. include:: /reference/forms/types/options/with_minutes.rst.inc
 
@@ -135,14 +168,35 @@ the `date_widget`_ and `time_widget`_ options.
 
 .. include:: /reference/forms/types/options/years.rst.inc
 
+Overridden Options
+------------------
+
+by_reference
+~~~~~~~~~~~~
+
+**default**: ``false``
+
+The ``DateTime`` classes are treated as immutable objects.
+
+.. include:: /reference/forms/types/options/compound_type.rst.inc
+
+.. include:: /reference/forms/types/options/data_class_date.rst.inc
+
+error_bubbling
+~~~~~~~~~~~~~~
+
+**default**: ``false``
+
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
@@ -151,8 +205,6 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 Field Variables
 ---------------
@@ -166,4 +218,5 @@ Field Variables
 |          |            | contains the input type to use (``datetime``, ``date`` or ``time``). |
 +----------+------------+----------------------------------------------------------------------+
 
-.. _`RFC 3339`: http://tools.ietf.org/html/rfc3339
+.. _`RFC 3339`: https://tools.ietf.org/html/rfc3339
+.. _`Date/Time Format Syntax`: http://userguide.icu-project.org/formatparse/datetime#TOC-Date-Time-Format-Syntax

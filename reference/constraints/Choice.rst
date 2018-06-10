@@ -5,24 +5,25 @@ This constraint is used to ensure that the given value is one of a given
 set of *valid* choices. It can also be used to validate that each item in
 an array of items is one of those valid choices.
 
-+----------------+-----------------------------------------------------------------------+
-| Applies to     | :ref:`property or method <validation-property-target>`                |
-+----------------+-----------------------------------------------------------------------+
-| Options        | - `choices`_                                                          |
-|                | - `callback`_                                                         |
-|                | - `multiple`_                                                         |
-|                | - `min`_                                                              |
-|                | - `max`_                                                              |
-|                | - `message`_                                                          |
-|                | - `multipleMessage`_                                                  |
-|                | - `minMessage`_                                                       |
-|                | - `maxMessage`_                                                       |
-|                | - `strict`_                                                           |
-+----------------+-----------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Choice`           |
-+----------------+-----------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\ChoiceValidator`  |
-+----------------+-----------------------------------------------------------------------+
++----------------+----------------------------------------------------------------------+
+| Applies to     | :ref:`property or method <validation-property-target>`               |
++----------------+----------------------------------------------------------------------+
+| Options        | - `choices`_                                                         |
+|                | - `callback`_                                                        |
+|                | - `multiple`_                                                        |
+|                | - `min`_                                                             |
+|                | - `max`_                                                             |
+|                | - `message`_                                                         |
+|                | - `multipleMessage`_                                                 |
+|                | - `minMessage`_                                                      |
+|                | - `maxMessage`_                                                      |
+|                | - `strict`_                                                          |
+|                | - `payload`_                                                         |
++----------------+----------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Choice`          |
++----------------+----------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\ChoiceValidator` |
++----------------+----------------------------------------------------------------------+
 
 Basic Usage
 -----------
@@ -36,47 +37,61 @@ If your valid choice list is simple, you can pass them in directly via the
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                gender:
-                    - Choice:
-                        choices:  [male, female]
-                        message:  Choose a valid gender.
-
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
             /**
-             * @Assert\Choice(choices = {"male", "female"}, message = "Choose a valid gender.")
+             * @Assert\Choice({"New York", "Berlin", "Tokyo"})
              */
-            protected $gender;
+            protected $city;
+
+            /**
+             * @Assert\Choice(choices={"fiction", "non-fiction"}, message="Choose a valid genre.")
+             */
+            protected $genre;
         }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Author:
+            properties:
+                city:
+                    - Choice: [New York, Berlin, Tokyo]
+                genre:
+                    - Choice:
+                        choices:  [fiction, non-fiction]
+                        message:  Choose a valid genre.
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
-                <property name="gender">
+            <class name="App\Entity\Author">
+                <property name="city">
+                    <constraint name="Choice">
+                        <value>New York</value>
+                        <value>Berlin</value>
+                        <value>Tokyo</value>
+                    </constraint>
+                </property>
+                <property name="genre">
                     <constraint name="Choice">
                         <option name="choices">
-                            <value>male</value>
-                            <value>female</value>
+                            <value>fiction</value>
+                            <value>non-fiction</value>
                         </option>
-                        <option name="message">Choose a valid gender.</option>
+                        <option name="message">Choose a valid genre.</option>
                     </constraint>
                 </property>
             </class>
@@ -84,21 +99,26 @@ If your valid choice list is simple, you can pass them in directly via the
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/EntityAuthor.php
-        namespace Acme\BlogBundle\Entity;
+        // src/EntityAuthor.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
-            protected $gender;
+            protected $genre;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
-                    'choices' => array('male', 'female'),
-                    'message' => 'Choose a valid gender.',
+                $metadata->addPropertyConstraint(
+                    'city',
+                     new Assert\Choice(array('New York', 'Berlin', 'Tokyo'))
+                 );
+
+                $metadata->addPropertyConstraint('genre', new Assert\Choice(array(
+                    'choices' => array('fiction', 'non-fiction'),
+                    'message' => 'Choose a valid genre.',
                 )));
             }
         }
@@ -109,18 +129,16 @@ Supplying the Choices with a Callback Function
 You can also use a callback function to specify your options. This is useful
 if you want to keep your choices in some central location so that, for example,
 you can easily access those choices for validation or for building a select
-form element.
+form element::
 
-.. code-block:: php
-
-    // src/Acme/BlogBundle/Entity/Author.php
-    namespace Acme\BlogBundle\Entity;
+    // src/Entity/Author.php
+    namespace App\Entity;
 
     class Author
     {
-        public static function getGenders()
+        public static function getGenres()
         {
-            return array('male', 'female');
+            return array('fiction', 'non-fiction');
         }
     }
 
@@ -129,41 +147,41 @@ constraint.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                gender:
-                    - Choice: { callback: getGenders }
-
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
             /**
-             * @Assert\Choice(callback = "getGenders")
+             * @Assert\Choice(callback="getGenres")
              */
-            protected $gender;
+            protected $genre;
         }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Author:
+            properties:
+                genre:
+                    - Choice: { callback: getGenres }
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
-                <property name="gender">
+            <class name="App\Entity\Author">
+                <property name="genre">
                     <constraint name="Choice">
-                        <option name="callback">getGenders</option>
+                        <option name="callback">getGenres</option>
                     </constraint>
                 </property>
             </class>
@@ -171,66 +189,66 @@ constraint.
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/EntityAuthor.php
-        namespace Acme\BlogBundle\Entity;
+        // src/EntityAuthor.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
-            protected $gender;
+            protected $genre;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
-                    'callback' => 'getGenders',
+                $metadata->addPropertyConstraint('genre', new Assert\Choice(array(
+                    'callback' => 'getGenres',
                 )));
             }
         }
 
-If the static callback is stored in a different class, for example ``Util``,
+If the callback is stored in a different class and is static, for example ``Util``,
 you can pass the class name and the method as an array.
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                gender:
-                    - Choice: { callback: [Util, getGenders] }
-
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
             /**
-             * @Assert\Choice(callback = {"Util", "getGenders"})
+             * @Assert\Choice(callback={"Util", "getGenres"})
              */
-            protected $gender;
+            protected $genre;
         }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Author:
+            properties:
+                genre:
+                    - Choice: { callback: [Util, getGenres] }
 
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
-                <property name="gender">
+            <class name="App\Entity\Author">
+                <property name="genre">
                     <constraint name="Choice">
                         <option name="callback">
                             <value>Util</value>
-                            <value>getGenders</value>
+                            <value>getGenres</value>
                         </option>
                     </constraint>
                 </property>
@@ -239,20 +257,20 @@ you can pass the class name and the method as an array.
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/EntityAuthor.php
-        namespace Acme\BlogBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
-            protected $gender;
+            protected $genre;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('gender', new Assert\Choice(array(
-                    'callback' => array('Util', 'getGenders'),
+                $metadata->addPropertyConstraint('genre', new Assert\Choice(array(
+                    'callback' => array('Util', 'getGenres'),
                 )));
             }
         }
@@ -275,13 +293,13 @@ callback
 **type**: ``string|array|Closure``
 
 This is a callback method that can be used instead of the `choices`_ option
-to return the choices array. See `Supplying the Choices with a Callback Function`_
-for details on its usage.
+to return the choices array. See
+`Supplying the Choices with a Callback Function`_ for details on its usage.
 
 multiple
 ~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 If this option is true, the input value is expected to be an array instead
 of a single, scalar value. The constraint will check that each value of
@@ -313,16 +331,17 @@ message
 
 **type**: ``string`` **default**: ``The value you selected is not a valid choice.``
 
-This is the message that you will receive if the ``multiple`` option is set
-to ``false``, and the underlying value is not in the valid array of choices.
+This is the message that you will receive if the ``multiple`` option is
+set to ``false`` and the underlying value is not in the valid array of
+choices.
 
 multipleMessage
 ~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``One or more of the given values is invalid.``
 
-This is the message that you will receive if the ``multiple`` option is set
-to ``true``, and one of the values on the underlying array being checked
+This is the message that you will receive if the ``multiple`` option is
+set to ``true`` and one of the values on the underlying array being checked
 is not in the array of valid choices.
 
 minMessage
@@ -344,8 +363,10 @@ too many options per the `max`_ option.
 strict
 ~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true``
 
-If true, the validator will also check the type of the input value. Specifically,
-this value is passed to as the third argument to the PHP :phpfunction:`in_array` method
-when checking to see if a value is in the valid choices array.
+The validator will also check the type of the input value. Specifically,
+this value is passed to as the third argument to the PHP :phpfunction:`in_array`
+method when checking to see if a value is in the valid choices array.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

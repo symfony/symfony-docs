@@ -2,96 +2,33 @@ Web Assets
 ==========
 
 Web assets are things like CSS, JavaScript and image files that make the
-frontend of your site look and work great. Symfony developers have traditionally
-stored these assets in the ``Resources/public/`` directory of each bundle.
+frontend of your site look and work great.
 
 .. best-practice::
 
-    Store your assets in the ``web/`` directory.
+    Store your assets in the ``assets/`` directory at the root of your project.
 
-Scattering your web assets across tens of different bundles makes it more
-difficult to manage them. Your designers' lives will be much easier if all
-the application assets are in one location.
-
-Templates also benefit from centralizing your assets, because the links are
-much more concise:
-
-.. code-block:: html+jinja
-
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
-
-    {# ... #}
-
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-
-.. note::
-
-    Keep in mind that ``web/`` is a public directory and that anything stored
-    here will be publicly accessible. For that reason, you should put your
-    compiled web assets here, but not their source files (e.g. SASS files).
-
-Using Assetic
--------------
-
-These days, you probably can't simply create static CSS and JavaScript files
-and include them in your template. Instead, you'll probably want to combine
-and minify these to improve client-side performance. You may also want to
-use LESS or Sass (for example), which means you'll need some way to process
-these into CSS files.
-
-A lot of tools exist to solve these problems, including pure-frontend (non-PHP)
-tools like GruntJS.
+Your designers' and front-end developers' lives will be much easier if all the
+application assets are in one central location.
 
 .. best-practice::
 
-    Use Assetic to compile, combine and minimize web assets, unless you're
-    comfortable with frontend tools like GruntJS.
+    Use `Webpack Encore`_ to compile, combine and minimize web assets.
 
-:doc:`Assetic </cookbook/assetic/asset_management>` is an asset manager capable
-of compiling assets developed with a lot of different frontend technologies
-like LESS, Sass and CoffeeScript.
-Combining all your assets with Assetic is a matter of wrapping all the assets
-with a single Twig tag:
+`Webpack`_ is the leading JavaScript module bundler that compiles, transforms
+and packages assets for usage in a browser. Webpack Encore is a JavaScript
+library that gets rid of most of Webpack complexity without hiding any of its
+features or distorting its usage and philosophy.
 
-.. code-block:: html+jinja
-
-    {% stylesheets
-        'css/bootstrap.min.css'
-        'css/main.css'
-        filter='cssrewrite' output='css/compiled/all.css' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-
-    {# ... #}
-
-    {% javascripts
-        'js/jquery.min.js'
-        'js/bootstrap.min.js'
-        output='js/compiled/all.js' %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-
-Frontend-Based Applications
----------------------------
-
-Recently, frontend technologies like AngularJS have become pretty popular
-for developing frontend web applications that talk to an API.
-
-If you are developing an application like this, you should use the tools
-that are recommended by the technology, such as Bower and GruntJS. You should
-develop your frontend application separately from your Symfony backend (even
-separating the repositories if you want).
-
-Learn More about Assetic
-------------------------
-
-Assetic can also minimize CSS and JavaScript assets
-:doc:`using UglifyCSS/UglifyJS </cookbook/assetic/uglifyjs>` to speed up your
-websites. You can even :doc:`compress images </cookbook/assetic/jpeg_optimize>`
-with Assetic to reduce their size before serving them to the user. Check out
-the `official Assetic documentation`_ to learn more about all the available
+Webpack Encore was designed to bridge the gap between Symfony applications and
+the JavaScript-based tools used in modern web applications. Check out the
+`official Webpack Encore documentation`_ to learn more about all the available
 features.
 
-.. _`official Assetic documentation`: https://github.com/kriswallsmith/assetic
+----
+
+Next: :doc:`/best_practices/tests`
+
+.. _`Webpack Encore`: https://github.com/symfony/webpack-encore
+.. _`Webpack`: https://webpack.js.org/
+.. _`official Webpack Encore documentation`: https://symfony.com/doc/current/frontend.html

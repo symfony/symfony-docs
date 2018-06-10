@@ -1,9 +1,6 @@
 GreaterThanOrEqual
 ==================
 
-.. versionadded:: 2.3
-    The ``GreaterThanOrEqual`` constraint was introduced in Symfony 2.3.
-
 Validates that a value is greater than or equal to another value, defined in
 the options. To force that a value is greater than another value, see
 :doc:`/reference/constraints/GreaterThan`.
@@ -13,6 +10,8 @@ the options. To force that a value is greater than another value, see
 +----------------+----------------------------------------------------------------------------------+
 | Options        | - `value`_                                                                       |
 |                | - `message`_                                                                     |
+|                | - `payload`_                                                                     |
+|                | - `propertyPath`_                                                                |
 +----------------+----------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanOrEqual`          |
 +----------------+----------------------------------------------------------------------------------+
@@ -22,29 +21,27 @@ the options. To force that a value is greater than another value, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is greater than
-or equal to ``18``, you could do the following:
+The following constraints ensure that:
+
+* the number of ``siblings`` of a ``Person`` is greater than or equal to ``5``
+* the ``age`` of a ``Person`` class is greater than or equal to ``18``
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/SocialBundle/Resources/config/validation.yml
-        Acme\SocialBundle\Entity\Person:
-            properties:
-                age:
-                    - GreaterThanOrEqual:
-                        value: 18
-
     .. code-block:: php-annotations
 
-        // src/Acme/SocialBundle/Entity/Person.php
-        namespace Acme\SocialBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Person
         {
+            /**
+             * @Assert\GreaterThanOrEqual(5)
+             */
+            protected $siblings;
+
             /**
              * @Assert\GreaterThanOrEqual(
              *     value = 18
@@ -53,15 +50,31 @@ or equal to ``18``, you could do the following:
             protected $age;
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Person:
+            properties:
+                siblings:
+                    - GreaterThanOrEqual: 5
+                age:
+                    - GreaterThanOrEqual:
+                        value: 18
+
     .. code-block:: xml
 
-        <!-- src/Acme/SocialBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\SocialBundle\Entity\Person">
+            <class name="App\Entity\Person">
+                <property name="siblings">
+                    <constraint name="GreaterThanOrEqual">
+                        <value>5</value>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="GreaterThanOrEqual">
                         <option name="value">18</option>
@@ -72,8 +85,8 @@ or equal to ``18``, you could do the following:
 
     .. code-block:: php
 
-        // src/Acme/SocialBundle/Entity/Person.php
-        namespace Acme\SocialBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -82,9 +95,193 @@ or equal to ``18``, you could do the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('siblings', new Assert\GreaterThanOrEqual(5));
+
                 $metadata->addPropertyConstraint('age', new Assert\GreaterThanOrEqual(array(
                     'value' => 18,
                 )));
+            }
+        }
+
+Comparing Dates
+---------------
+
+This constraint can be used to compare ``DateTime`` objects against any date
+string `accepted by the DateTime constructor`_. For example, you could check
+that a date must at least be the current day:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            /**
+             * @Assert\GreaterThanOrEqual("today")
+             */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Order:
+            properties:
+                deliveryDate:
+                    - GreaterThanOrEqual: today
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Order">
+                <property name="deliveryDate">
+                    <constraint name="GreaterThanOrEqual">today</constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThanOrEqual('today'));
+            }
+        }
+
+Be aware that PHP will use the server's configured timezone to interpret these
+dates. If you want to fix the timezone, append it to the date string:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            /**
+             * @Assert\GreaterThanOrEqual("today UTC")
+             */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Order:
+            properties:
+                deliveryDate:
+                    - GreaterThanOrEqual: today UTC
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Order">
+                <property name="deliveryDate">
+                    <constraint name="GreaterThanOrEqual">today UTC</constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThanOrEqual('today UTC'));
+            }
+        }
+
+The ``DateTime`` class also accepts relative dates or times. For example, you
+can check that the above delivery date starts at least five hours after the
+current time:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            /**
+             * @Assert\GreaterThanOrEqual("+5 hours")
+             */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Order:
+            properties:
+                deliveryDate:
+                    - GreaterThanOrEqual: +5 hours
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Order">
+                <property name="deliveryDate">
+                    <constraint name="GreaterThanOrEqual">+5 hours</constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThanOrEqual('+5 hours'));
             }
         }
 
@@ -100,3 +297,9 @@ message
 
 This is the message that will be shown if the value is not greater than or equal
 to the comparison value.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
+
+.. include:: /reference/constraints/_comparison-propertypath-option.rst.inc
+
+.. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php

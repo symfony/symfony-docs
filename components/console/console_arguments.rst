@@ -1,12 +1,14 @@
 .. index::
     single: Console; Console arguments
 
-Understanding how Console Arguments Are Handled
-===============================================
+Understanding how Console Arguments and Options Are Handled
+===========================================================
 
-It can be difficult to understand the way arguments are handled by the console application.
-The Symfony Console application, like many other CLI utility tools, follows the behavior
-described in the `docopt`_ standards.
+Symfony Console applications follow the same `docopt`_ standard used in most
+CLI utility tools. This article explains how to handle edge-cases when the
+commands define options with required values, without values, etc. Read
+:doc:`this other article </console/input>` to learn about using arguments and
+options inside Symfony Console commands.
 
 Have a look at the following command that has three options::
 
@@ -14,6 +16,7 @@ Have a look at the following command that has three options::
 
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputArgument;
+    use Symfony\Component\Console\Input\InputDefinition;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Input\InputOption;
     use Symfony\Component\Console\Output\OutputInterface;
@@ -48,18 +51,18 @@ is required. It can be separated from the option name either by spaces or
 except that it doesn't require a value. Have a look at the following table
 to get an overview of the possible ways to pass options:
 
-===================== ========= =========== ============
-Input                 ``foo``   ``bar``     ``cat``
-===================== ========= =========== ============
-``--bar=Hello``       ``false`` ``"Hello"`` ``null``
-``--bar Hello``       ``false`` ``"Hello"`` ``null``
-``-b=Hello``          ``false`` ``"Hello"`` ``null``
-``-b Hello``          ``false`` ``"Hello"`` ``null``
-``-bHello``           ``false`` ``"Hello"`` ``null``
-``-fcWorld -b Hello`` ``true``  ``"Hello"`` ``"World"``
-``-cfWorld -b Hello`` ``false`` ``"Hello"`` ``"fWorld"``
-``-cbWorld``          ``false`` ``null``    ``"bWorld"``
-===================== ========= =========== ============
+=====================  =========  ============  ============
+Input                  ``foo``    ``bar``       ``cat``
+=====================  =========  ============  ============
+``--bar=Hello``        ``false``  ``"Hello"``   ``null``
+``--bar Hello``        ``false``  ``"Hello"``   ``null``
+``-b=Hello``           ``false``  ``"=Hello"``  ``null``
+``-b Hello``           ``false``  ``"Hello"``   ``null``
+``-bHello``            ``false``  ``"Hello"``   ``null``
+``-fcWorld -b Hello``  ``true``   ``"Hello"``   ``"World"``
+``-cfWorld -b Hello``  ``false``  ``"Hello"``   ``"fWorld"``
+``-cbWorld``           ``false``  ``null``      ``"bWorld"``
+=====================  =========  ============  ============
 
 Things get a little bit more tricky when the command also accepts an optional
 argument::
@@ -76,15 +79,15 @@ arguments. Have a look at the fifth example in the following table where it
 is used to tell the command that ``World`` is the value for ``arg`` and not
 the value of the optional ``cat`` option:
 
-============================== ================= =========== ===========
-Input                          ``bar``           ``cat``     ``arg``
-============================== ================= =========== ===========
-``--bar Hello``                ``"Hello"``       ``null``    ``null``
-``--bar Hello World``          ``"Hello"``       ``null``    ``"World"``
-``--bar "Hello World"``        ``"Hello World"`` ``null``    ``null``
-``--bar Hello --cat World``    ``"Hello"``       ``"World"`` ``null``
-``--bar Hello --cat -- World`` ``"Hello"``       ``null``    ``"World"``
-``-b Hello -c World``          ``"Hello"``       ``"World"`` ``null``
-============================== ================= =========== ===========
+==============================  =================  ===========  ===========
+Input                           ``bar``            ``cat``      ``arg``
+==============================  =================  ===========  ===========
+``--bar Hello``                 ``"Hello"``        ``null``     ``null``
+``--bar Hello World``           ``"Hello"``        ``null``     ``"World"``
+``--bar "Hello World"``         ``"Hello World"``  ``null``     ``null``
+``--bar Hello --cat World``     ``"Hello"``        ``"World"``  ``null``
+``--bar Hello --cat -- World``  ``"Hello"``        ``null``     ``"World"``
+``-b Hello -c World``           ``"Hello"``        ``"World"``  ``null``
+==============================  =================  ===========  ===========
 
 .. _docopt: http://docopt.org/

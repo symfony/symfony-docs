@@ -4,16 +4,11 @@
 The YAML Format
 ===============
 
-According to the official `YAML`_ website, YAML is "a human friendly data
-serialization standard for all programming languages".
-
-Even if the YAML format can describe complex nested data structure, this
-chapter only describes the minimum set of features needed to use YAML as a
-configuration file format.
-
-YAML is a simple language that describes data. As PHP, it has a syntax for
-simple types like strings, booleans, floats, or integers. But unlike PHP, it
-makes a difference between arrays (sequences) and hashes (mappings).
+According to the official `YAML website`_, YAML is "a human friendly data
+serialization standard for all programming languages". The Symfony Yaml
+component implements a subset of the `YAML specification`_. Specifically, it
+implements the minimum set of features needed to use YAML as a configuration
+file format.
 
 Scalars
 -------
@@ -50,7 +45,7 @@ can use double quotes, for these characters it is more convenient to use single
 quotes, which avoids having to escape any backslash ``\``:
 
 * ``:``, ``{``, ``}``, ``[``, ``]``, ``,``, ``&``, ``*``, ``#``, ``?``, ``|``,
-  ``-``, ``<``, ``>``, ``=``, ``!``, ``%``, ``@``, ``\```
+  ``-``, ``<``, ``>``, ``=``, ``!``, ``%``, ``@``, `````
 
 The double-quoted style provides a way to express arbitrary strings, by
 using ``\`` to escape characters and sequences. For instance, it is very useful
@@ -158,19 +153,21 @@ YAML uses the ISO-8601 standard to express dates:
 
 .. code-block:: yaml
 
-    2001-12-14t21:59:43.10-05:00
+    2001-12-14T21:59:43.10-05:00
 
 .. code-block:: yaml
 
     # simple date
     2002-12-14
 
+.. _yaml-format-collections:
+
 Collections
 -----------
 
 A YAML file is rarely used to describe a simple scalar. Most of the time, it
-describes a collection. A collection can be a sequence or a mapping of
-elements. Both sequences and mappings are converted to PHP arrays.
+describes a collection. YAML collections can be a sequence (indexed arrays in PHP)
+or a mapping of elements (associative arrays in PHP).
 
 Sequences use a dash followed by a space:
 
@@ -180,9 +177,7 @@ Sequences use a dash followed by a space:
     - Perl
     - Python
 
-The previous YAML file is equivalent to the following PHP code:
-
-.. code-block:: php
+The previous YAML file is equivalent to the following PHP code::
 
     array('PHP', 'Perl', 'Python');
 
@@ -194,9 +189,7 @@ Mappings use a colon followed by a space (``:`` ) to mark each key/value pair:
     MySQL: 5.1
     Apache: 2.2.20
 
-which is equivalent to this PHP code:
-
-.. code-block:: php
+which is equivalent to this PHP code::
 
     array('PHP' => 5.2, 'MySQL' => 5.1, 'Apache' => '2.2.20');
 
@@ -216,31 +209,29 @@ YAML uses indentation with one or more spaces to describe nested collections:
 
 .. code-block:: yaml
 
-    "symfony 1.0":
+    'symfony 1.0':
       PHP:    5.0
       Propel: 1.2
-    "symfony 1.2":
+    'symfony 1.2':
       PHP:    5.2
       Propel: 1.3
 
-The following YAML is equivalent to the following PHP code:
-
-.. code-block:: php
+The above YAML is equivalent to the following PHP code::
 
     array(
-      'symfony 1.0' => array(
-        'PHP'    => 5.0,
-        'Propel' => 1.2,
-      ),
-      'symfony 1.2' => array(
-        'PHP'    => 5.2,
-        'Propel' => 1.3,
-      ),
+        'symfony 1.0' => array(
+            'PHP'    => 5.0,
+            'Propel' => 1.2,
+        ),
+        'symfony 1.2' => array(
+            'PHP'    => 5.2,
+            'Propel' => 1.3,
+        ),
     );
 
 There is one important thing you need to remember when using indentation in a
 YAML file: *Indentation must be done with one or more spaces, but never with
-tabulations*.
+tabulators*.
 
 You can nest sequences and mappings as you like:
 
@@ -279,8 +270,8 @@ You can mix and match styles to achieve a better readability:
 
 .. code-block:: yaml
 
-    "symfony 1.0": { PHP: 5.0, Propel: 1.2 }
-    "symfony 1.2": { PHP: 5.2, Propel: 1.3 }
+    'symfony 1.0': { PHP: 5.0, Propel: 1.2 }
+    'symfony 1.2': { PHP: 5.2, Propel: 1.3 }
 
 Comments
 --------
@@ -298,4 +289,43 @@ Comments can be added in YAML by prefixing them with a hash mark (``#``):
     Comments are simply ignored by the YAML parser and do not need to be
     indented according to the current level of nesting in a collection.
 
+Explicit Typing
+---------------
+
+The YAML specification defines some tags to set the type of any data explicitly:
+
+.. code-block:: yaml
+
+    data:
+        # this value is parsed as a string (it's not transformed into a DateTime)
+        start_date: !!str 2002-12-14
+
+        # this value is parsed as a float number (it will be 3.0 instead of 3)
+        price: !!float 3
+
+        # this value is parsed as binary data encoded in base64
+        picture: !!binary |
+            R0lGODlhDAAMAIQAAP//9/X
+            17unp5WZmZgAAAOfn515eXv
+            Pz7Y6OjuDg4J+fn5OTk6enp
+            56enmleECcgggoBADs=
+
 .. _YAML: http://yaml.org/
+
+Unsupported YAML Features
+-------------------------
+
+The following YAML features are not supported by the Symfony Yaml component:
+
+* Multi-documents (``---`` and ``...`` markers);
+* Complex mapping keys and complex values starting with ``?``;
+* Tagged values as keys;
+* The following tags and types: `!!set`, `!!omap`, `!!pairs`, `!!set`, `!!seq`,
+  `!!bool`, `!!int`, `!!merge`, `!!null`, `!!timestamp`, `!!value`, `!!yaml`;
+* Tags (``TAG`` directive; example: ``%TAG ! tag:example.com,2000:app/``)
+  and tag references (example: ``!<tag:example.com,2000:app/foo>``);
+* Using sequence-like syntax for mapping elements (example: ``{foo, bar}``; use
+  ``{foo: ~, bar: ~}`` instead).
+
+.. _`YAML website`: http://yaml.org/
+.. _`YAML specification`: http://www.yaml.org/spec/1.2/spec.html

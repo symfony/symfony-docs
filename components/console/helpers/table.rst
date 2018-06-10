@@ -21,18 +21,25 @@ To display a table, use :class:`Symfony\\Component\\Console\\Helper\\Table`,
 set the headers, set the rows and then render the table::
 
     use Symfony\Component\Console\Helper\Table;
+    // ...
 
-    $table = new Table($output);
-    $table
-        ->setHeaders(array('ISBN', 'Title', 'Author'))
-        ->setRows(array(
-            array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
-            array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens'),
-            array('960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'),
-            array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
-        ))
-    ;
-    $table->render();
+    class SomeCommand extends Command
+    {
+        public function execute(InputInterface $input, OutputInterface $output)
+        {
+            $table = new Table($output);
+            $table
+                ->setHeaders(array('ISBN', 'Title', 'Author'))
+                ->setRows(array(
+                    array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
+                    array('9971-5-0210-0', 'A Tale of Two Cities', 'Charles Dickens'),
+                    array('960-425-059-0', 'The Lord of the Rings', 'J. R. R. Tolkien'),
+                    array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
+                ))
+            ;
+            $table->render();
+        }
+    }
 
 You can add a table separator anywhere in the output by passing an instance of
 :class:`Symfony\\Component\\Console\\Helper\\TableSeparator` as a row::
@@ -58,6 +65,45 @@ You can add a table separator anywhere in the output by passing an instance of
     | 960-425-059-0 | The Lord of the Rings    | J. R. R. Tolkien |
     | 80-902734-1-6 | And Then There Were None | Agatha Christie  |
     +---------------+--------------------------+------------------+
+
+By default the width of the columns is calculated automatically based on their
+contents. Use the :method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidths`
+method to set the column widths explicitly::
+
+    // ...
+    $table->setColumnWidths(array(10, 0, 30));
+    $table->render();
+
+In this example, the first column width will be ``10``, the last column width
+will be ``30`` and the second column width will be calculated automatically
+because of the ``0`` value. The output of this command will be:
+
+.. code-block:: text
+
+    +---------------+--------------------------+--------------------------------+
+    | ISBN          | Title                    | Author                         |
+    +---------------+--------------------------+--------------------------------+
+    | 99921-58-10-7 | Divine Comedy            | Dante Alighieri                |
+    | 9971-5-0210-0 | A Tale of Two Cities     | Charles Dickens                |
+    +---------------+--------------------------+--------------------------------+
+    | 960-425-059-0 | The Lord of the Rings    | J. R. R. Tolkien               |
+    | 80-902734-1-6 | And Then There Were None | Agatha Christie                |
+    +---------------+--------------------------+--------------------------------+
+
+Note that the defined column widths are always considered as the minimum column
+widths. If the contents don't fit, the given column width is increased up to the
+longest content length. That's why in the previous example the first column has
+a ``13`` character length although the user defined ``10`` as its width.
+
+You can also set the width individually for each column with the
+:method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidth` method.
+Its first argument is the column index (starting from ``0``) and the second
+argument is the column width::
+
+    // ...
+    $table->setColumnWidth(0, 10);
+    $table->setColumnWidth(2, 30);
+    $table->render();
 
 The table style can be changed to any built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::
@@ -97,42 +143,228 @@ which outputs:
       80-902734-1-6   And Then There Were None   Agatha Christie
      =============== ========================== ==================
 
+You can also set the style to ``box``::
+
+    $table->setStyle('box');
+    $table->render();
+
+which outputs:
+
+.. code-block:: text
+
+    ┌───────────────┬──────────────────────────┬──────────────────┐
+    │ ISBN          │ Title                    │ Author           │
+    ├───────────────┼──────────────────────────┼──────────────────┤
+    │ 99921-58-10-7 │ Divine Comedy            │ Dante Alighieri  │
+    │ 9971-5-0210-0 │ A Tale of Two Cities     │ Charles Dickens  │
+    │ 960-425-059-0 │ The Lord of the Rings    │ J. R. R. Tolkien │
+    │ 80-902734-1-6 │ And Then There Were None │ Agatha Christie  │
+    └───────────────┴──────────────────────────┴──────────────────┘
+
+.. versionadded:: 4.1
+    The ``box`` style was introduced in Symfony 4.1.
+
+You can also set the style to ``box-double``::
+
+    $table->setStyle('box-double');
+    $table->render();
+
+which outputs:
+
+.. code-block:: text
+
+    ╔═══════════════╤══════════════════════════╤══════════════════╗
+    ║ ISBN          │ Title                    │ Author           ║
+    ╠═══════════════╪══════════════════════════╪══════════════════╣
+    ║ 99921-58-10-7 │ Divine Comedy            │ Dante Alighieri  ║
+    ║ 9971-5-0210-0 │ A Tale of Two Cities     │ Charles Dickens  ║
+    ║ 960-425-059-0 │ The Lord of the Rings    │ J. R. R. Tolkien ║
+    ║ 80-902734-1-6 │ And Then There Were None │ Agatha Christie  ║
+    ╚═══════════════╧══════════════════════════╧══════════════════╝
+
+.. versionadded:: 4.1
+    The ``box-double`` style was introduced in Symfony 4.1.
+
 If the built-in styles do not fit your need, define your own::
 
     use Symfony\Component\Console\Helper\TableStyle;
 
     // by default, this is based on the default style
-    $style = new TableStyle();
+    $tableStyle = new TableStyle();
 
-    // customize the style
-    $style
-        ->setHorizontalBorderChar('<fg=magenta>|</>')
-        ->setVerticalBorderChar('<fg=magenta>-</>')
-        ->setCrossingChar(' ')
+    // customizes the style
+    $tableStyle
+        ->setDefaultCrossingChars('<fg=magenta>|</>')
+        ->setVerticalBorderChars('<fg=magenta>-</>')
+        ->setDefaultCrossingChar(' ')
     ;
 
-    // use the style for this table
-    $table->setStyle($style);
+    // uses the custom style for this table
+    $table->setStyle($tableStyle);
 
 Here is a full list of things you can customize:
 
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setPaddingChar`
-*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setHorizontalBorderChar`
-*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setVerticalBorderChar`
-*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCrossingChar`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setDefaultCrossingChars`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setVerticalBorderChars`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCrossingChars`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setDefaultCrossingChar`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCellHeaderFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCellRowFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setBorderFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setPadType`
 
+.. versionadded:: 4.1
+    The ``setDefaultCrossingChars`` method was introduced in Symfony 4.1.
+    It replaces the deprecated ``setHorizontalBorderChar`` method.
+
+    Also, the ``setVerticalBorderChars`` method was introduced. Use this instead
+    of the deprecated ``setVerticalBorderChar`` method.
+
+    The ``setCrossingChars()`` and ``setDefaultCrossingChar()`` methods are also
+    new. Previously you could only use the now deprecated ``setCrossingChar()``
+    method.
+
 .. tip::
 
     You can also register a style globally::
 
-        // register the style under the colorful name
-        Table::setStyleDefinition('colorful', $style);
+        // registers the style under the colorful name
+        Table::setStyleDefinition('colorful', $tableStyle);
 
-        // use it for a table
+        // applies the custom style for the given table
         $table->setStyle('colorful');
 
     This method can also be used to override a built-in style.
+
+Spanning Multiple Columns and Rows
+----------------------------------
+
+To make a table cell that spans multiple columns you can use a :class:`Symfony\\Component\\Console\\Helper\\TableCell`::
+
+    use Symfony\Component\Console\Helper\Table;
+    use Symfony\Component\Console\Helper\TableSeparator;
+    use Symfony\Component\Console\Helper\TableCell;
+
+    $table = new Table($output);
+    $table
+        ->setHeaders(array('ISBN', 'Title', 'Author'))
+        ->setRows(array(
+            array('99921-58-10-7', 'Divine Comedy', 'Dante Alighieri'),
+            new TableSeparator(),
+            array(new TableCell('This value spans 3 columns.', array('colspan' => 3))),
+        ))
+    ;
+    $table->render();
+
+This results in:
+
+.. code-block:: text
+
+    +---------------+---------------+-----------------+
+    | ISBN          | Title         | Author          |
+    +---------------+---------------+-----------------+
+    | 99921-58-10-7 | Divine Comedy | Dante Alighieri |
+    +---------------+---------------+-----------------+
+    | This value spans 3 columns.                     |
+    +---------------+---------------+-----------------+
+
+.. tip::
+
+    You can create a multiple-line page title using a header cell that spans
+    the entire table width::
+
+        $table->setHeaders(array(
+            array(new TableCell('Main table title', array('colspan' => 3))),
+            array('ISBN', 'Title', 'Author'),
+        ))
+        // ...
+
+    This generates:
+
+    .. code-block:: text
+
+        +-------+-------+--------+
+        | Main table title       |
+        +-------+-------+--------+
+        | ISBN  | Title | Author |
+        +-------+-------+--------+
+        | ...                    |
+        +-------+-------+--------+
+
+In a similar way you can span multiple rows::
+
+    use Symfony\Component\Console\Helper\Table;
+    use Symfony\Component\Console\Helper\TableCell;
+
+    $table = new Table($output);
+    $table
+        ->setHeaders(array('ISBN', 'Title', 'Author'))
+        ->setRows(array(
+            array(
+                '978-0521567817',
+                'De Monarchia',
+                new TableCell("Dante Alighieri\nspans multiple rows", array('rowspan' => 2)),
+            ),
+            array('978-0804169127', 'Divine Comedy'),
+        ))
+    ;
+    $table->render();
+
+This outputs:
+
+.. code-block:: text
+
+    +----------------+---------------+---------------------+
+    | ISBN           | Title         | Author              |
+    +----------------+---------------+---------------------+
+    | 978-0521567817 | De Monarchia  | Dante Alighieri     |
+    | 978-0804169127 | Divine Comedy | spans multiple rows |
+    +----------------+---------------+---------------------+
+
+You can use the ``colspan`` and ``rowspan`` options at the same time which allows
+you to create any table layout you may wish.
+
+.. _console-modify-rendered-tables:
+
+Modifying Rendered Tables
+-------------------------
+
+.. versionadded:: 4.1
+    The feature to modify rendered tables was introduced in Symfony 4.1.
+
+The ``render()`` method requires passing the entire table contents. However,
+sometimes that information is not available beforehand because it's generated
+dynamically. In those cases, use the
+:method:`Symfony\\Component\\Console\\Helper\\Table::appendRow` method, which
+takes the same arguments as the ``addRow()`` method, to add rows at the bottom
+of an already rendered table.
+
+The only requirement to append rows is that the table must be rendered inside a
+:ref:`Console output section <console-output-sections>`::
+
+    use Symfony\Component\Console\Helper\Table;
+    // ...
+
+    class SomeCommand extends Command
+    {
+        public function execute(InputInterface $input, OutputInterface $output)
+        {
+            $section = $output->section();
+            $table = new Table($section);
+
+            $table->addRow(['Row 1']);
+            $table->render();
+
+            $table->addRow(['Row 2']);
+        }
+    }
+
+This will display the following table in the terminal:
+
+.. code-block:: terminal
+
+    +-------+
+    | Row 1 |
+    | Row 2 |
+    +-------+

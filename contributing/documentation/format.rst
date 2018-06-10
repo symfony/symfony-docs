@@ -1,8 +1,8 @@
 Documentation Format
 ====================
 
-The Symfony documentation uses reStructuredText_ as its markup language and
-Sphinx_ for generating the documentation in the formats read by the end users,
+The Symfony documentation uses `reStructuredText`_ as its markup language and
+`Sphinx`_ for generating the documentation in the formats read by the end users,
 such as HTML and PDF.
 
 reStructuredText
@@ -11,6 +11,7 @@ reStructuredText
 reStructuredText is a plaintext markup syntax similar to Markdown, but much
 stricter with its syntax. If you are new to reStructuredText, take some time to
 familiarize with this format by reading the existing `Symfony documentation`_
+source code.
 
 If you want to learn more about this format, check out the `reStructuredText Primer`_
 tutorial and the `reStructuredText Reference`_.
@@ -26,7 +27,7 @@ tutorial and the `reStructuredText Reference`_.
 Sphinx
 ------
 
-Sphinx is a build system that provides tools to create documentation from
+Sphinx_ is a build system that provides tools to create documentation from
 reStructuredText documents. As such, it adds new directives and interpreted text
 roles to the standard reST markup. Read more about the `Sphinx Markup Constructs`_.
 
@@ -98,8 +99,8 @@ Markup Format        Use It to Display
 ``xml``              XML
 ``php``              PHP
 ``yaml``             YAML
-``jinja``            Pure Twig markup
-``html+jinja``       Twig markup blended with HTML
+``twig``             Pure Twig markup
+``html+twig``        Twig markup blended with HTML
 ``html+php``         PHP code blended with HTML
 ``ini``              INI
 ``php-annotations``  PHP Annotations
@@ -119,18 +120,18 @@ The page name should not include the file extension (``.rst``). For example:
 
 .. code-block:: rst
 
-    :doc:`/book/controller`
+    :doc:`/controller`
 
-    :doc:`/components/event_dispatcher/introduction`
+    :doc:`/components/event_dispatcher`
 
-    :doc:`/cookbook/configuration/environments`
+    :doc:`/configuration/environments`
 
 The title of the linked page will be automatically used as the text of the link.
 If you want to modify that title, use this alternative syntax:
 
 .. code-block:: rst
 
-    :doc:`Spooling Email </cookbook/email/spool>`
+    :doc:`Spooling Email </email/spool>`
 
 .. note::
 
@@ -142,7 +143,7 @@ If you want to modify that title, use this alternative syntax:
 
         :doc:`controller`
 
-        :doc:`event_dispatcher/introduction`
+        :doc:`event_dispatcher`
 
         :doc:`environments`
 
@@ -176,40 +177,26 @@ Symfony, you should precede your description of the change with a
 
 .. code-block:: rst
 
-    .. versionadded:: 2.3
-        The ``askHiddenResponse`` method was introduced in Symfony 2.3.
+    .. versionadded:: 2.7
+        The ``askHiddenResponse()`` method was introduced in Symfony 2.7.
 
     You can also ask a question and hide the response. This is particularly [...]
 
 If you're documenting a behavior change, it may be helpful to *briefly* describe
-how the behavior has changed.
+how the behavior has changed:
 
 .. code-block:: rst
 
-    .. versionadded:: 2.3
+    .. versionadded:: 2.7
         The ``include()`` function is a new Twig feature that's available in
-        Symfony 2.3. Prior, the ``{% include %}`` tag was used.
+        Symfony 2.7. Prior, the ``{% include %}`` tag was used.
 
 Whenever a new minor version of Symfony is released (e.g. 2.4, 2.5, etc),
 a new branch of the documentation is created from the ``master`` branch.
 At this point, all the ``versionadded`` tags for Symfony versions that have
-reached end-of-life will be removed. For example, if Symfony 2.5 were released
-today, and 2.2 had recently reached its end-of-life, the 2.2 ``versionadded``
-tags would be removed from the new ``2.5`` branch.
-
-Testing Documentation
-~~~~~~~~~~~~~~~~~~~~~
-
-When submitting a new content to the documentation repository or when changing
-any existing resource, an automatic process will check if your documentation is
-free of syntax errors and is ready to be reviewed.
-
-Nevertheless, if you prefer to do this check locally on your own machine before
-submitting your documentation, follow these steps:
-
-* Install Sphinx_;
-* Install the Sphinx extensions using git submodules: ``$ git submodule update --init``;
-* Run ``make html`` and view the generated HTML in the ``build/`` directory.
+reached end-of-maintenance will be removed. For example, if Symfony 2.5 were
+released today, and 2.2 had recently reached its end-of-maintenance, the 2.2
+``versionadded`` tags would be removed from the new ``2.5`` branch.
 
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Sphinx: http://sphinx-doc.org/

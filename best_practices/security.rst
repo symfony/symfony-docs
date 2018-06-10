@@ -5,11 +5,10 @@ Authentication and Firewalls (i.e. Getting the User's Credentials)
 ------------------------------------------------------------------
 
 You can configure Symfony to authenticate your users using any method you
-want and to load user information from any source. This is a complex topic,
-but the :doc:`Security Cookbook Section </cookbook/security/index>` has a
-lot of information about this.
+want and to load user information from any source. This is a complex topic, but
+the :doc:`Security guide </security>` has a lot of information about this.
 
-Regardless of your needs, authentication is configured in ``security.yml``,
+Regardless of your needs, authentication is configured in ``security.yaml``,
 primarily under the ``firewalls`` key.
 
 .. best-practice::
@@ -30,35 +29,42 @@ site (or maybe nearly *all* sections), use the ``access_control`` area.
 
 .. best-practice::
 
-    Use the ``bcrypt`` encoder for encoding your users' passwords.
+    Use the ``bcrypt`` encoder for hashing your users' passwords.
 
-If your users have a password, then we recommend encoding it using the ``bcrypt``
+If your users have a password, then we recommend hashing it using the ``bcrypt``
 encoder, instead of the traditional SHA-512 hashing encoder. The main advantages
 of ``bcrypt`` are the inclusion of a *salt* value to protect against rainbow
 table attacks, and its adaptive nature, which allows to make it slower to
 remain resistant to brute-force search attacks.
+
+.. note::
+
+    :ref:`Argon2i <reference-security-argon2i>` is the hashing algorithm as
+    recommended by industry standards, but this won't be available to you unless
+    you are using PHP 7.2+ or have the `libsodium`_ extension installed.
+    ``bcrypt`` is sufficient for most applications.
 
 With this in mind, here is the authentication setup from our application,
 which uses a login form to load users from the database:
 
 .. code-block:: yaml
 
-    # app/config/security.yml
+    # config/packages/security.yaml
     security:
         encoders:
-            AppBundle\Entity\User: bcrypt
+            App\Entity\User: bcrypt
 
         providers:
             database_users:
-                entity: { class: AppBundle:User, property: username }
+                entity: { class: App\Entity\User, property: username }
 
         firewalls:
             secured_area:
                 pattern: ^/
                 anonymous: true
                 form_login:
-                    check_path: security_login_check
-                    login_path: security_login_form
+                    check_path: login
+                    login_path: login
 
                 logout:
                     path: security_logout
@@ -74,7 +80,7 @@ Authorization (i.e. Denying Access)
 -----------------------------------
 
 Symfony gives you several ways to enforce authorization, including the ``access_control``
-configuration in :doc:`security.yml </reference/configuration/security>`, the
+configuration in :doc:`security.yaml </reference/configuration/security>`, the
 :ref:`@Security annotation <best-practices-security-annotation>` and using
 :ref:`isGranted <best-practices-directly-isGranted>` on the ``security.authorization_checker``
 service directly.
@@ -83,17 +89,15 @@ service directly.
 
     * For protecting broad URL patterns, use ``access_control``;
     * Whenever possible, use the ``@Security`` annotation;
-    * Check security directly on the ``security.authorization_checker`` service whenever
-      you have a more complex situation.
+    * Check security directly on the ``security.authorization_checker`` service
+      whenever you have a more complex situation.
 
 There are also different ways to centralize your authorization logic, like
-with a custom security voter or with ACL.
+with a custom security voter:
 
 .. best-practice::
 
-    * For fine-grained restrictions, define a custom security voter;
-    * For restricting access to *any* object by *any* user via an admin
-      interface, use the Symfony ACL.
+    Define a custom security voter to implement fine-grained restrictions.
 
 .. _best-practices-security-annotation:
 
@@ -109,8 +113,8 @@ Using ``@Security``, this looks like:
 
 .. code-block:: php
 
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     /**
@@ -119,7 +123,7 @@ Using ``@Security``, this looks like:
      * @Route("/new", name="admin_post_new")
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function newAction()
+    public function new()
     {
         // ...
     }
@@ -127,22 +131,20 @@ Using ``@Security``, this looks like:
 Using Expressions for Complex Security Restrictions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your security logic is a little bit more complex, you can use an `expression`_
+If your security logic is a little bit more complex, you can use an :doc:`expression </components/expression_language>`
 inside ``@Security``. In the following example, a user can only access the
-controller if their email matches the value returned by the ``getAuthorEmail``
-method on the ``Post`` object:
+controller if their email matches the value returned by the ``getAuthorEmail()``
+method on the ``Post`` object::
 
-.. code-block:: php
-
-    use AppBundle\Entity\Post;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use App\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      * @Security("user.getEmail() == post.getAuthorEmail()")
      */
-    public function editAction(Post $post)
+    public function edit(Post $post)
     {
         // ...
     }
@@ -163,11 +165,9 @@ need to repeat the expression code using Twig syntax:
     {% endif %}
 
 The easiest solution - if your logic is simple enough - is to add a new method
-to the ``Post`` entity that checks if a given user is its author:
+to the ``Post`` entity that checks if a given user is its author::
 
-.. code-block:: php
-
-    // src/AppBundle/Entity/Post.php
+    // src/Entity/Post.php
     // ...
 
     class Post
@@ -181,22 +181,21 @@ to the ``Post`` entity that checks if a given user is its author:
          */
         public function isAuthor(User $user = null)
         {
-            return $user && $user->getEmail() == $this->getAuthorEmail();
+            return $user && $user->getEmail() === $this->getAuthorEmail();
         }
     }
 
-Now you can reuse this method both in the template and in the security expression:
+Now you can reuse this method both in the template and in the security expression::
 
-.. code-block:: php
-
-    use AppBundle\Entity\Post;
+    use App\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      * @Security("post.isAuthor(user)")
      */
-    public function editAction(Post $post)
+    public function edit(Post $post)
     {
         // ...
     }
@@ -216,17 +215,16 @@ Checking Permissions without @Security
 
 The above example with ``@Security`` only works because we're using the
 :ref:`ParamConverter <best-practices-paramconverter>`, which gives the expression
-access to the a ``post`` variable. If you don't use this, or have some other
-more advanced use-case, you can always do the same security check in PHP:
-
-.. code-block:: php
+access to the ``post`` variable. If you don't use this, or have some other
+more advanced use-case, you can always do the same security check in PHP::
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
-    public function editAction($id)
+    public function edit($id)
     {
-        $post = $this->getDoctrine()->getRepository('AppBundle:Post')
+        $post = $this->getDoctrine()
+            ->getRepository(Post::class)
             ->find($id);
 
         if (!$post) {
@@ -234,109 +232,148 @@ more advanced use-case, you can always do the same security check in PHP:
         }
 
         if (!$post->isAuthor($this->getUser())) {
-            throw $this->createAccessDeniedException();
+            $this->denyAccessUnlessGranted('edit', $post);
         }
-
+        // equivalent code without using the "denyAccessUnlessGranted()" shortcut:
+        //
+        // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+        // use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+        //
+        // ...
+        //
+        // public function __construct(AuthorizationCheckerInterface $authorizationChecker) {
+        //      $this->authorizationChecker = $authorizationChecker;
+        // }
+        //
+        // ...
+        //
+        // if (!$this->authorizationChecker->isGranted('edit', $post)) {
+        //    throw $this->createAccessDeniedException();
+        // }
+        //
         // ...
     }
 
 Security Voters
 ---------------
 
-If your security logic is complex and can't be centralized into a method
-like ``isAuthor()``, you should leverage custom voters. These are an order
-of magnitude easier than :doc:`ACLs </cookbook/security/acl>` and will give
-you the flexibility you need in almost all cases.
+If your security logic is complex and can't be centralized into a method like
+``isAuthor()``, you should leverage custom voters. These are much easier than
+:doc:`ACLs </security/acl>` and will give you the flexibility you need in almost
+all cases.
 
 First, create a voter class. The following example shows a voter that implements
-the same ``getAuthorEmail`` logic you used above:
+the same ``getAuthorEmail()`` logic you used above::
 
-.. code-block:: php
+    namespace App\Security;
 
-    namespace AppBundle\Security;
-
-    use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
+    use App\Entity\Post;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
     use Symfony\Component\Security\Core\User\UserInterface;
 
-    // AbstractVoter class requires Symfony 2.6 or higher version
-    class PostVoter extends AbstractVoter
+    class PostVoter extends Voter
     {
         const CREATE = 'create';
         const EDIT   = 'edit';
 
-        protected function getSupportedAttributes()
+        private $decisionManager;
+
+        public function __construct(AccessDecisionManagerInterface $decisionManager)
         {
-            return array(self::CREATE, self::EDIT);
+            $this->decisionManager = $decisionManager;
         }
 
-        protected function getSupportedClasses()
+        protected function supports($attribute, $subject)
         {
-            return array('AppBundle\Entity\Post');
+            if (!in_array($attribute, [self::CREATE, self::EDIT])) {
+                return false;
+            }
+
+            if (!$subject instanceof Post) {
+                return false;
+            }
+
+            return true;
         }
 
-        protected function isGranted($attribute, $post, $user = null)
+        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
         {
+            $user = $token->getUser();
+            /** @var Post */
+            $post = $subject; // $subject must be a Post instance, thanks to the supports method
+
             if (!$user instanceof UserInterface) {
                 return false;
             }
 
-            if ($attribute === self::CREATE && in_array('ROLE_ADMIN', $user->getRoles(), true)) {
-                return true;
-            }
+            switch ($attribute) {
+                // if the user is an admin, allow them to create new posts
+                case self::CREATE:
+                    if ($this->decisionManager->decide($token, ['ROLE_ADMIN'])) {
+                        return true;
+                    }
 
-            if ($attribute === self::EDIT && $user->getEmail() === $post->getAuthorEmail()) {
-                return true;
+                    break;
+
+                // if the user is the author of the post, allow them to edit the posts
+                case self::EDIT:
+                    if ($user->getEmail() === $post->getAuthorEmail()) {
+                        return true;
+                    }
+
+                    break;
             }
 
             return false;
         }
     }
 
-To enable the security voter in the application, define a new service:
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+your application will :ref:`autoconfigure <services-autoconfigure>` your security
+voter and inject an ``AccessDecisionManagerInterface`` instance into it thanks to
+:doc:`autowiring </service_container/autowiring>`.
 
-.. code-block:: yaml
-
-    # app/config/services.yml
-    services:
-        # ...
-        post_voter:
-            class:      AppBundle\Security\PostVoter
-            public:     false
-            tags:
-               - { name: security.voter }
-
-Now, you can use the voter with the ``@Security`` annotation:
-
-.. code-block:: php
+Now, you can use the voter with the ``@Security`` annotation::
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      * @Security("is_granted('edit', post)")
      */
-    public function editAction(Post $post)
+    public function edit(Post $post)
     {
         // ...
     }
 
 You can also use this directly with the ``security.authorization_checker`` service or
-via the even easier shortcut in a controller:
-
-.. code-block:: php
+via the even easier shortcut in a controller::
 
     /**
      * @Route("/{id}/edit", name="admin_post_edit")
      */
-    public function editAction($id)
+    public function edit($id)
     {
-        $post = // query for the post ...
+        $post = ...; // query for the post
 
         $this->denyAccessUnlessGranted('edit', $post);
 
-        // or without the shortcut:
+        // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+        // use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
         //
-        // if (!$this->get('security.authorization_checker')->isGranted('edit', $post)) {
+        // ...
+        //
+        // public function __construct(AuthorizationCheckerInterface $authorizationChecker) {
+        //      $this->authorizationChecker = $authorizationChecker;
+        // }
+        //
+        // ...
+        //
+        // if (!$this->authorizationChecker->isGranted('edit', $post)) {
         //    throw $this->createAccessDeniedException();
         // }
+        //
+        // ...
     }
 
 Learn More
@@ -346,18 +383,22 @@ The `FOSUserBundle`_, developed by the Symfony community, adds support for a
 database-backed user system in Symfony. It also handles common tasks like
 user registration and forgotten password functionality.
 
-Enable the :doc:`Remember Me feature </cookbook/security/remember_me>` to
+Enable the :doc:`Remember Me feature </security/remember_me>` to
 allow your users to stay logged in for a long period of time.
 
 When providing customer support, sometimes it's necessary to access the application
 as some *other* user so that you can reproduce the problem. Symfony provides
-the ability to :doc:`impersonate users </cookbook/security/impersonating_user>`.
+the ability to :doc:`impersonate users </security/impersonating_user>`.
 
 If your company uses a user login method not supported by Symfony, you can
-develop :doc:`your own user provider </cookbook/security/custom_provider>` and
-:doc:`your own authentication provider </cookbook/security/custom_authentication_provider>`.
+develop :doc:`your own user provider </security/custom_provider>` and
+:doc:`your own authentication provider </security/custom_authentication_provider>`.
 
-.. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`@Security annotation`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
-.. _`expression`: http://symfony.com/doc/current/components/expression_language/introduction.html
+----
+
+Next: :doc:`/best_practices/web-assets`
+
+.. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`@Security annotation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
+.. _`libsodium`: https://pecl.php.net/package/libsodium

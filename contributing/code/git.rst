@@ -37,6 +37,6 @@ your ``.git/config`` file:
 After a fetch, getting the GitHub discussion for a commit is then a matter of
 adding ``--show-notes=github-comments`` to the ``git show`` command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git show HEAD --show-notes=github-comments

@@ -10,42 +10,87 @@ The Process Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/process`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/Process).
+    $ composer require symfony/process
+
+Alternatively, you can clone the `<https://github.com/symfony/process>`_ repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 Usage
 -----
 
-The :class:`Symfony\\Component\\Process\\Process` class allows you to execute
-a command in a sub-process::
+The :class:`Symfony\\Component\\Process\\Process` class executes a command in a
+sub-process, taking care of the differences between operating system and
+escaping arguments to prevent security issues. It replaces PHP functions like
+:phpfunction:`exec`, :phpfunction:`passthru`, :phpfunction:`shell_exec` and
+:phpfunction:`system`::
 
     use Symfony\Component\Process\Process;
+    use Symfony\Component\Process\Exception\ProcessFailedException;
 
     $process = new Process('ls -lsa');
     $process->run();
 
     // executes after the command finishes
     if (!$process->isSuccessful()) {
-        throw new \RuntimeException($process->getErrorOutput());
+        throw new ProcessFailedException($process);
     }
 
     echo $process->getOutput();
 
-The component takes care of the subtle differences between the different platforms
-when executing the command.
+.. tip::
 
-The ``getOutput()`` method always return the whole content of the standard
+    In addition to passing the command binary and its arguments as a string, you
+    can also pass them as an array, which is useful when building a complex
+    command programmatically::
+
+        // traditional string based commands
+        $builder = new Process('ls -lsa');
+        // same example but using an array
+        $builder = new Process(array('ls', '-lsa'));
+        // the array can contain any number of arguments and options
+        $builder = new Process(array('ls', '-l', '-s', '-a'));
+
+The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
 output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
-methods returns the new outputs since the last call.
+methods return the new output since the last call.
 
 The :method:`Symfony\\Component\\Process\\Process::clearOutput` method clears
 the contents of the output and
 :method:`Symfony\\Component\\Process\\Process::clearErrorOutput` clears
 the contents of the error output.
+
+You can also use the :class:`Symfony\\Component\\Process\\Process` class with the
+foreach construct to get the output while it is generated. By default, the loop waits
+for new output before going to the next iteration::
+
+    $process = new Process('ls -lsa');
+    $process->start();
+
+    foreach ($process as $type => $data) {
+        if ($process::OUT === $type) {
+            echo "\nRead from stdout: ".$data;
+        } else { // $process::ERR === $type
+            echo "\nRead from stderr: ".$data;
+        }
+    }
+
+.. tip::
+
+    The Process component internally uses a PHP iterator to get the output while
+    it is generated. That iterator is exposed via the ``getIterator()`` method
+    to allow customizing its behavior::
+
+        $process = new Process('ls -lsa');
+        $process->start();
+        $iterator = $process->getIterator($process::ITER_SKIP_ERR | $process::ITER_KEEP_OUTPUT);
+        foreach ($iterator as $data) {
+            echo $data."\n";
+        }
 
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
 a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
@@ -61,8 +106,8 @@ with a non-zero code)::
         $process->mustRun();
 
         echo $process->getOutput();
-    } catch (ProcessFailedException $e) {
-        echo $e->getMessage();
+    } catch (ProcessFailedException $exception) {
+        echo $exception->getMessage();
     }
 
 Getting real-time Process Output
@@ -111,6 +156,43 @@ are done doing other stuff::
 
     // ... do other things
 
+    $process->wait();
+
+    // ... do things after the process has finished
+
+.. note::
+
+    The :method:`Symfony\\Component\\Process\\Process::wait` method is blocking,
+    which means that your code will halt at this line until the external
+    process is completed.
+
+.. note::
+
+    If a ``Response`` is sent **before** a child process had a chance to complete,
+    the server process will be killed (depending on your OS). It means that
+    your task will be stopped right away. Running an asynchronous process
+    is not the same as running a process that survives its parent process.
+
+    If you want your process to survive the request/response cycle, you can
+    take advantage of the ``kernel.terminate`` event, and run your command
+    **synchronously** inside this event. Be aware that ``kernel.terminate``
+    is called only if you use PHP-FPM.
+
+.. caution::
+
+    Beware also that if you do that, the said PHP-FPM process will not be
+    available to serve any new request until the subprocess is finished. This
+    means you can quickly block your FPM pool if you're not careful enough.
+    That is why it's generally way better not to do any fancy things even
+    after the request is sent, but to use a job queue instead.
+
+:method:`Symfony\\Component\\Process\\Process::wait` takes one optional argument:
+a callback that is called repeatedly whilst the process is still running, passing
+in the output and its type::
+
+    $process = new Process('ls -lsa');
+    $process->start();
+
     $process->wait(function ($type, $buffer) {
         if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
@@ -119,21 +201,75 @@ are done doing other stuff::
         }
     });
 
-.. note::
+Streaming to the Standard Input of a Process
+--------------------------------------------
 
-    The :method:`Symfony\\Component\\Process\\Process::wait` method is blocking,
-    which means that your code will halt at this line until the external
-    process is completed.
+Before a process is started, you can specify its standard input using either the
+:method:`Symfony\\Component\\Process\\Process::setInput` method or the 4th argument
+of the constructor. The provided input can be a string, a stream resource or a
+Traversable object::
+
+    $process = new Process('cat');
+    $process->setInput('foobar');
+    $process->run();
+
+When this input is fully written to the subprocess standard input, the corresponding
+pipe is closed.
+
+In order to write to a subprocess standard input while it is running, the component
+provides the :class:`Symfony\\Component\\Process\\InputStream` class::
+
+    $input = new InputStream();
+    $input->write('foo');
+
+    $process = new Process('cat');
+    $process->setInput($input);
+    $process->start();
+
+    // ... read process output or do other things
+
+    $input->write('bar');
+    $input->close();
+
+    $process->wait();
+
+    // will echo: foobar
+    echo $process->getOutput();
+
+The :method:`Symfony\\Component\\Process\\InputStream::write` method accepts scalars,
+stream resources or Traversable objects as argument. As shown in the above example,
+you need to explicitly call the :method:`Symfony\\Component\\Process\\InputStream::close`
+method when you are done writing to the standard input of the subprocess.
+
+Using PHP Streams as the Standard Input of a Process
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The input of a process can also be defined using `PHP streams`_::
+
+    $stream = fopen('php://temporary', 'w+');
+
+    $process = new Process('cat');
+    $process->setInput($stream);
+    $process->start();
+
+    fwrite($stream, 'foo');
+
+    // ... read process output or do other things
+
+    fwrite($stream, 'bar');
+    fclose($stream);
+
+    $process->wait();
+
+    // will echo: 'foobar'
+    echo $process->getOutput();
 
 Stopping a Process
 ------------------
 
-.. versionadded:: 2.3
-    The ``signal`` parameter of the ``stop`` method was introduced in Symfony 2.3.
-
 Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
-two arguments : a timeout and a signal. Once the timeout is reached, the signal
+two arguments: a timeout and a signal. Once the timeout is reached, the signal
 is sent to the running process. The default signal sent to a process is ``SIGKILL``.
 Please read the :ref:`signal documentation below<reference-process-signal>`
 to find out more about signal handling in the Process component::
@@ -159,42 +295,6 @@ instead::
     );
     $process->run();
 
-To make your code work better on all platforms, you might want to use the
-:class:`Symfony\\Component\\Process\\ProcessBuilder` class instead::
-
-    use Symfony\Component\Process\ProcessBuilder;
-
-    $builder = new ProcessBuilder(array('ls', '-lsa'));
-    $builder->getProcess()->run();
-
-.. versionadded:: 2.3
-    The :method:`ProcessBuilder::setPrefix<Symfony\\Component\\Process\\ProcessBuilder::setPrefix>`
-    method was introduced in Symfony 2.3.
-
-In case you are building a binary driver, you can use the
-:method:`Symfony\\Component\\Process\\Process::setPrefix` method to prefix all
-the generated process commands.
-
-The following example will generate two process commands for a tar binary
-adapter::
-
-    use Symfony\Component\Process\ProcessBuilder;
-
-    $builder = new ProcessBuilder();
-    $builder->setPrefix('/usr/bin/tar');
-
-    // '/usr/bin/tar' '--list' '--file=archive.tar.gz'
-    echo $builder
-        ->setArguments(array('--list', '--file=archive.tar.gz'))
-        ->getProcess()
-        ->getCommandLine();
-
-    // '/usr/bin/tar' '-xzf' 'archive.tar.gz'
-    echo $builder
-        ->setArguments(array('-xzf', 'archive.tar.gz'))
-        ->getProcess()
-        ->getCommandLine();
-
 Process Timeout
 ---------------
 
@@ -208,7 +308,7 @@ timeout (in seconds)::
     $process->run();
 
 If the timeout is reached, a
-:class:`Symfony\\Process\\Exception\\RuntimeException` is thrown.
+:class:`Symfony\\Component\\Process\\Exception\\RuntimeException` is thrown.
 
 For long running commands, it is your responsibility to perform the timeout
 check regularly::
@@ -233,12 +333,12 @@ Process Idle Timeout
 In contrast to the timeout of the previous paragraph, the idle timeout only
 considers the time since the last output was produced by the process::
 
-   use Symfony\Component\Process\Process;
+    use Symfony\Component\Process\Process;
 
-   $process = new Process('something-with-variable-runtime');
-   $process->setTimeout(3600);
-   $process->setIdleTimeout(60);
-   $process->run();
+    $process = new Process('something-with-variable-runtime');
+    $process->setTimeout(3600);
+    $process->setIdleTimeout(60);
+    $process->run();
 
 In the case above, a process is considered timed out, when either the total runtime
 exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
@@ -246,10 +346,7 @@ exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
 Process Signals
 ---------------
 
-.. versionadded:: 2.3
-    The ``signal`` method was introduced in Symfony 2.3.
-
-When running a program asynchronously, you can send it posix signals with the
+When running a program asynchronously, you can send it POSIX signals with the
 :method:`Symfony\\Component\\Process\\Process::signal` method::
 
     use Symfony\Component\Process\Process;
@@ -272,13 +369,8 @@ When running a program asynchronously, you can send it posix signals with the
 Process Pid
 -----------
 
-.. versionadded:: 2.3
-    The ``getPid`` method was introduced in Symfony 2.3.
-
 You can access the `pid`_ of a running process with the
-:method:`Symfony\\Component\\Process\\Process::getPid` method.
-
-.. code-block:: php
+:method:`Symfony\\Component\\Process\\Process::getPid` method::
 
     use Symfony\Component\Process\Process;
 
@@ -309,16 +401,47 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
 
 .. caution::
 
-    You can not enable or disable the output while the process is running.
+    You cannot enable or disable the output while the process is running.
 
-    If you disable the output, you cannot access ``getOutput``,
-    ``getIncrementalOutput``, ``getErrorOutput`` or ``getIncrementalErrorOutput``.
-    Moreover, you could not pass a callback to the ``start``, ``run`` or ``mustRun``
-    methods or use ``setIdleTimeout``.
+    If you disable the output, you cannot access ``getOutput()``,
+    ``getIncrementalOutput()``, ``getErrorOutput()``, ``getIncrementalErrorOutput()`` or
+    ``setIdleTimeout()``.
+
+    However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
+    methods to handle process output in a streaming fashion.
+
+Finding the Executable PHP Binary
+---------------------------------
+
+This component also provides a utility class called
+:class:`Symfony\\Component\\Process\\PhpExecutableFinder` which returns the
+absolute path of the executable PHP binary available on your server::
+
+    use Symfony\Component\Process\PhpExecutableFinder;
+
+    $phpBinaryFinder = new PhpExecutableFinder();
+    $phpBinaryPath = $phpBinaryFinder->find();
+    // $phpBinaryPath = '/usr/local/bin/php' (the result will be different on your computer)
+
+Checking for TTY Support
+------------------------
+
+Another utility provided by this component is a method called
+:method:`Symfony\\Component\\Process\\Process::isTtySupported` which returns
+whether `TTY`_ is supported on the current operating system::
+
+    use Symfony\Component\Process\Process;
+
+    $process = (new Process())->setTty(Process::isTtySupported());
+
+.. versionadded:: 4.1
+    The ``isTtySupported()`` method was introduced in Symfony 4.1.
 
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
-.. _`exec`: http://en.wikipedia.org/wiki/Exec_(operating_system)
-.. _`pid`: http://en.wikipedia.org/wiki/Process_identifier
-.. _`PHP Documentation`: http://php.net/manual/en/pcntl.constants.php
+.. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
+.. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
+.. _`PHP Documentation`: https://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process
+.. _`PHP streams`: http://www.php.net/manual/en/book.stream.php
+.. _`TTY`: https://en.wikipedia.org/wiki/Tty_(unix)

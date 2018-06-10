@@ -4,6 +4,9 @@
 MonologBundle Configuration ("monolog")
 =======================================
 
+For a full list of handler types and related configuration
+options, see `Monolog Configuration`_.
+
 Full Default Configuration
 --------------------------
 
@@ -11,6 +14,7 @@ Full Default Configuration
 
     .. code-block:: yaml
 
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
 
@@ -24,7 +28,9 @@ Full Default Configuration
                 main:
                     type:                fingers_crossed
                     action_level:        WARNING
-                    buffer_size:         30
+                    # By default, buffer_size is unlimited (0), which could
+                    # generate huge logs.
+                    buffer_size:         0
                     handler:             custom
                 console:
                     type:                console
@@ -39,7 +45,7 @@ Full Default Configuration
 
                 # Default options and values for some "my_custom_handler"
                 # Note: many of these options are specific to the "type".
-                # For example, the "service" type doesn't use any options
+                # For example, the 'service' type doesn't use any options
                 # except id and channels
                 my_custom_handler:
                     type:                 ~ # Required
@@ -47,7 +53,7 @@ Full Default Configuration
                     priority:             0
                     level:                DEBUG
                     bubble:               true
-                    path:                 "%kernel.logs_dir%/%kernel.environment%.log"
+                    path:                 '%kernel.logs_dir%/%kernel.environment%.log'
                     ident:                false
                     facility:             user
                     max_files:            0
@@ -68,19 +74,22 @@ Full Default Configuration
                         id:                   ~ # Required (when the email_prototype is used)
                         method:               ~
                     formatter:            ~
+            # Set to false to use seconds (instead of microseconds) in
+            # the logs (gives a small performance boost).
+            use_microseconds:             true
 
     .. code-block:: xml
 
+        <!-- config/packages/prod/monolog.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/monolog
-                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
-        >
+                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
-            <monolog:config>
+            <monolog:config use-microseconds="true">
                 <monolog:handler
                     name="syslog"
                     type="stream"
@@ -89,16 +98,22 @@ Full Default Configuration
                     bubble="false"
                     formatter="my_formatter"
                 />
+
+                <!-- By default, buffer-size is unlimited (0), which could
+                     generate huge logs. -->
                 <monolog:handler
                     name="main"
                     type="fingers_crossed"
                     action-level="warning"
                     handler="custom"
+                    buffer-size="0"
                 />
+
                 <monolog:handler
                     name="console"
                     type="console"
                 />
+
                 <monolog:handler
                     name="custom"
                     type="service"
@@ -112,3 +127,5 @@ Full Default Configuration
     When the profiler is enabled, a handler is added to store the logs'
     messages in the profiler. The profiler uses the name "debug" so it
     is reserved and cannot be used in the configuration.
+
+.. _`Monolog Configuration`: https://github.com/symfony/monolog-bundle/blob/master/DependencyInjection/Configuration.php

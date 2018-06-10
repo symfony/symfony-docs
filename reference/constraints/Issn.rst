@@ -1,10 +1,8 @@
 Issn
 ====
 
-.. versionadded:: 2.3
-    The Issn constraint was introduced in Symfony 2.3.
-
-Validates that a value is a valid `International Standard Serial Number (ISSN)`_.
+Validates that a value is a valid
+`International Standard Serial Number (ISSN)`_.
 
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                 |
@@ -12,6 +10,7 @@ Validates that a value is a valid `International Standard Serial Number (ISSN)`_
 | Options        | - `message`_                                                          |
 |                | - `caseSensitive`_                                                    |
 |                | - `requireHyphen`_                                                    |
+|                | - `payload`_                                                          |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Issn`             |
 +----------------+-----------------------------------------------------------------------+
@@ -23,18 +22,10 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/JournalBundle/Resources/config/validation.yml
-        Acme\JournalBundle\Entity\Journal:
-            properties:
-                issn:
-                    - Issn: ~
-
     .. code-block:: php-annotations
 
-        // src/Acme/JournalBundle/Entity/Journal.php
-        namespace Acme\JournalBundle\Entity;
+        // src/Entity/Journal.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -46,15 +37,23 @@ Basic Usage
              protected $issn;
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Journal:
+            properties:
+                issn:
+                    - Issn: ~
+
     .. code-block:: xml
 
-        <!-- src/Acme/JournalBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\JournalBundle\Entity\Journal">
+            <class name="App\Entity\Journal">
                 <property name="issn">
                     <constraint name="Issn" />
                 </property>
@@ -63,8 +62,8 @@ Basic Usage
 
     .. code-block:: php
 
-        // src/Acme/JournalBundle/Entity/Journal.php
-        namespace Acme\JournalBundle\Entity;
+        // src/Entity/Journal.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -90,7 +89,7 @@ The message shown if the given value is not a valid ISSN.
 caseSensitive
 ~~~~~~~~~~~~~
 
-**type**: ``Boolean`` default: ``false``
+**type**: ``boolean`` default: ``false``
 
 The validator will allow ISSN values to end with a lower case 'x' by default.
 When switching this to ``true``, the validator requires an upper case 'X'.
@@ -98,10 +97,11 @@ When switching this to ``true``, the validator requires an upper case 'X'.
 requireHyphen
 ~~~~~~~~~~~~~
 
-**type**: ``Boolean`` default: ``false``
+**type**: ``boolean`` default: ``false``
 
 The validator will allow non hyphenated ISSN values by default. When switching
 this to ``true``, the validator requires a hyphenated ISSN value.
 
-.. _`International Standard Serial Number (ISSN)`: http://en.wikipedia.org/wiki/Issn
+.. include:: /reference/constraints/_payload-option.rst.inc
 
+.. _`International Standard Serial Number (ISSN)`: https://en.wikipedia.org/wiki/Issn

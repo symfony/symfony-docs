@@ -20,7 +20,7 @@ like this::
     use Symfony\Component\VarDumper\Dumper\CliDumper;
     use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
-    VarDumper::setHandler(function($var) {
+    VarDumper::setHandler(function ($var) {
         $cloner = new VarCloner();
         $dumper = 'cli' === PHP_SAPI ? new CliDumper() : new HtmlDumper();
 
@@ -34,8 +34,7 @@ A cloner is used to create an intermediate representation of any PHP variable.
 Its output is a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
 object that wraps this representation.
 
-You can create a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
-object this way::
+You can create a ``Data`` object this way::
 
     use Symfony\Component\VarDumper\Cloner\VarCloner;
 
@@ -45,39 +44,54 @@ object this way::
     // see the example at the top of this page
     // $dumper->dump($data);
 
-A cloner also applies limits when creating the representation, so that the
-corresponding Data object could represent only a subset of the cloned variable.
+Whatever the cloned data structure, resulting ``Data`` objects are always
+serializable.
+
+A cloner applies limits when creating the representation, so that one
+can represent only a subset of the cloned variable.
 Before calling :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::cloneVar`,
 you can configure these limits:
 
-* :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxItems`
-  configures the maximum number of items that will be cloned
-  *past the first nesting level*. Items are counted using a breadth-first
-  algorithm so that lower level items have higher priority than deeply nested
-  items;
-* :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxString`
-  configures the maximum number of characters that will be cloned before
-  cutting overlong strings;
-* in both cases, specifying `-1` removes any limit.
+:method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxItems`
+    Configures the maximum number of items that will be cloned
+    *past the minimum nesting depth*. Items are counted using a breadth-first
+    algorithm so that lower level items have higher priority than deeply nested
+    items. Specifying ``-1`` removes the limit.
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMinDepth`
+    Configures the minimum tree depth where we are guaranteed to clone
+    all the items. After this depth is reached, only ``setMaxItems``
+    items will be cloned. The default value is ``1``, which is consistent
+    with older Symfony versions.
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxString`
+    Configures the maximum number of characters that will be cloned before
+    cutting overlong strings.  Specifying ``-1`` removes the limit.
 
 Before dumping it, you can further limit the resulting
-:class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object by calling its
-:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::getLimitedClone`
-method:
+:class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object using the following methods:
 
-* the first ``$maxDepth`` argument allows limiting dumps in the depth dimension,
-* the second ``$maxItemsPerDepth`` limits the number of items per depth level,
-* and the last ``$useRefHandles`` defaults to ``true``, but allows removing
-  internal objects' handles for sparser output,
-* but unlike the previous limits on cloners that remove data on purpose,
-  these can be changed back and forth before dumping since they do not affect
-  the intermediate representation internally.
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withMaxDepth`
+    Limits dumps in the depth dimension.
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withMaxItemsPerDepth`
+    Limits the number of items per depth level.
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::withRefHandles`
+    Removes internal objects' handles for sparser output (useful for tests).
+
+:method:`Symfony\\Component\\VarDumper\\Cloner\\Data::seek`
+    Selects only subparts of already cloned arrays, objects or resources.
+
+Unlike the previous limits on cloners that remove data on purpose, these can
+be changed back and forth before dumping since they do not affect the
+intermediate representation internally.
 
 .. note::
 
     When no limit is applied, a :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
     object is as accurate as the native :phpfunction:`serialize` function,
-    and thus could be for purposes beyond dumping for debugging.
+    and thus could be used for purposes beyond debugging.
 
 Dumpers
 -------
@@ -140,15 +154,22 @@ Another option for doing the same could be::
     use Symfony\Component\VarDumper\Cloner\VarCloner;
     use Symfony\Component\VarDumper\Dumper\CliDumper;
 
-    cloner = new VarCloner();
+    $cloner = new VarCloner();
     $dumper = new CliDumper();
     $output = fopen('php://memory', 'r+b');
 
     $dumper->dump($cloner->cloneVar($variable), $output);
-    rewind($output);
-    $output = stream_get_contents($output);
+    $output = stream_get_contents($output, -1, 0);
 
     // $output is now populated with the dump representation of $variable
+
+.. tip::
+
+    You can pass ``true`` to the second argument of the
+    :method:`Symfony\\Component\\VarDumper\\Dumper\\AbstractDumper::dump`
+    method to make it return the dump as a string::
+
+        $output = $dumper->dump($cloner->cloneVar($variable), true);
 
 Dumpers implement the :class:`Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface`
 interface that specifies the
@@ -158,12 +179,104 @@ method. They also typically implement the
 them from re-implementing the logic required to walk through a
 :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object's internal structure.
 
+The :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper` limits string
+length and nesting depth of the output to make it more readable. These options
+can be overriden by the third optional parameter of the
+:method:`dump(Data $data) <Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface::dump>`
+method::
+
+    use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+
+    $output = fopen('php://memory', 'r+b');
+
+    $dumper = new HtmlDumper();
+    $dumper->dump($var, $output, array(
+        // 1 and 160 are the default values for these options
+        'maxDepth' => 1,
+        'maxStringLength' => 160
+    ));
+
+The output format of a dumper can be fine tuned by the two flags
+``DUMP_STRING_LENGTH`` and ``DUMP_LIGHT_ARRAY`` which are passed as a bitmap
+in the third constructor argument. They can also be set via environment
+variables when using
+:method:`assertDumpEquals($dump, $data, $filter, $message) <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpEquals>`
+during unit testing.
+
+The ``$filter`` argument of ``assertDumpEquals()`` can be used to pass a
+bit field of ``Caster::EXCLUDE_*`` constants and influences the expected
+output produced by the different casters.
+
+If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed
+next to its content:
+
+.. code-block:: php
+
+    use Symfony\Component\VarDumper\Dumper\AbstractDumper;
+    use Symfony\Component\VarDumper\Dumper\CliDumper;
+
+    $var = array('test');
+    $dumper = new CliDumper();
+    echo $dumper->dump($var, true);
+
+    // array:1 [
+    //   0 => "test"
+    // ]
+
+    $dumper = new CliDumper(null, null, AbstractDumper::DUMP_STRING_LENGTH);
+    echo $dumper->dump($var, true);
+
+    // (added string length before the string)
+    // array:1 [
+    //   0 => (4) "test"
+    // ]
+
+If ``DUMP_LIGHT_ARRAY`` is set, then arrays are dumped in a shortened format
+similar to PHP's short array notation:
+
+.. code-block:: php
+
+    use Symfony\Component\VarDumper\Dumper\AbstractDumper;
+    use Symfony\Component\VarDumper\Dumper\CliDumper;
+
+    $var = array('test');
+    $dumper = new CliDumper();
+    echo $dumper->dump($var, true);
+
+    // array:1 [
+    //   0 => "test"
+    // ]
+
+    $dumper = new CliDumper(null, null, AbstractDumper::DUMP_LIGHT_ARRAY);
+    echo $dumper->dump($var, true);
+
+    // (no more array:1 prefix)
+    // [
+    //   0 => "test"
+    // ]
+
+If you would like to use both options, then you can just    combine them by
+using a the logical OR operator ``|``:
+
+.. code-block:: php
+
+    use Symfony\Component\VarDumper\Dumper\AbstractDumper;
+    use Symfony\Component\VarDumper\Dumper\CliDumper;
+
+    $var = array('test');
+    $dumper = new CliDumper(null, null, AbstractDumper::DUMP_STRING_LENGTH | AbstractDumper::DUMP_LIGHT_ARRAY);
+    echo $dumper->dump($var, true);
+
+    // [
+    //   0 => (4) "test"
+    // ]
+
 Casters
 -------
 
 Objects and resources nested in a PHP variable are "cast" to arrays in the
 intermediate :class:`Symfony\\Component\\VarDumper\\Cloner\\Data`
-representation. You can tweak the array representation for each object/resource
+representation. You can customize the array representation for each object/resource
 by hooking a Caster into this process. The component already includes many
 casters for base PHP classes and other common classes.
 
@@ -199,17 +312,21 @@ can also be registered for the same resource type/class/interface.
 They are called in registration order.
 
 Casters are responsible for returning the properties of the object or resource
-being cloned in an array. They are callables that accept four arguments:
+being cloned in an array. They are callables that accept five arguments:
 
-* the object or resource being casted,
-* an array modelled for objects after PHP's native ``(array)`` cast operator,
+* the object or resource being casted;
+* an array modelled for objects after PHP's native ``(array)`` cast operator;
 * a :class:`Symfony\\Component\\VarDumper\\Cloner\\Stub` object
-  representing the main properties of the object (class, type, etc.),
-* true/false when the caster is called nested in a structure or not.
+  representing the main properties of the object (class, type, etc.);
+* true/false when the caster is called nested in a structure or not;
+* A bit field of :class:`Symfony\\Component\\VarDumper\\Caster\\Caster` ``::EXCLUDE_*``
+  constants.
 
 Here is a simple caster not doing anything::
 
-    function myCaster($object, $array, $stub, $isNested)
+    use Symfony\Component\VarDumper\Cloner\Stub;
+
+    function myCaster($object, $array, Stub $stub, $isNested, $filter)
     {
         // ... populate/alter $array to your needs
 
@@ -236,3 +353,45 @@ properties not in the class declaration).
 .. tip::
 
     Before writing your own casters, you should check the existing ones.
+
+Adding Semantics with Metadata
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Since casters are hooked on specific classes or interfaces, they know about the
+objects they manipulate. By altering the ``$stub`` object (the third argument of
+any caster), one can transfer this knowledge to the resulting ``Data`` object,
+thus to dumpers. To help you do this (see the source code for how it works),
+the component comes with a set of wrappers for common additional semantics. You
+can use:
+
+* :class:`Symfony\\Component\\VarDumper\\Caster\\ConstStub` to wrap a value that is
+  best represented by a PHP constant;
+* :class:`Symfony\\Component\\VarDumper\\Caster\\ClassStub` to wrap a PHP identifier
+  (*i.e.* a class name, a method name, an interface, *etc.*);
+* :class:`Symfony\\Component\\VarDumper\\Caster\\CutStub` to replace big noisy
+  objects/strings/*etc.* by ellipses;
+* :class:`Symfony\\Component\\VarDumper\\Caster\\CutArrayStub` to keep only some
+  useful keys of an array;
+* :class:`Symfony\\Component\\VarDumper\\Caster\\EnumStub` to wrap a set of virtual
+  values (*i.e.* values that do not exist as properties in the original PHP data
+  structure, but are worth listing alongside with real ones);
+* :class:`Symfony\\Component\\VarDumper\\Caster\\LinkStub` to wrap strings that can
+  be turned into links by dumpers;
+* :class:`Symfony\\Component\\VarDumper\\Caster\\TraceStub` and their
+* :class:`Symfony\\Component\\VarDumper\\Caster\\FrameStub` and
+* :class:`Symfony\\Component\\VarDumper\\Caster\\ArgsStub` relatives to wrap PHP
+  traces (used by :class:`Symfony\\Component\\VarDumper\\Caster\\ExceptionCaster`).
+
+For example, if you know that your ``Product`` objects have a ``brochure`` property
+that holds a file name or a URL, you can wrap them in a ``LinkStub`` to tell
+``HtmlDumper`` to make them clickable::
+
+    use Symfony\Component\VarDumper\Caster\LinkStub;
+    use Symfony\Component\VarDumper\Cloner\Stub;
+
+    function ProductCaster(Product $object, $array, Stub $stub, $isNested, $filter = 0)
+    {
+        $array['brochure'] = new LinkStub($array['brochure']);
+
+        return $array;
+    }

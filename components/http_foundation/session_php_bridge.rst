@@ -16,9 +16,9 @@ However when there really are circumstances where this is not possible, you
 can use a special storage bridge
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\PhpBridgeSessionStorage`
 which is designed to allow Symfony to work with a session started outside of
-the Symfony Session framework. You are warned that things can interrupt this
-use-case unless you are careful: for example the legacy application erases
-``$_SESSION``.
+the Symfony HttpFoundation component. You are warned that things can interrupt
+this use-case unless you are careful: for example the legacy application
+erases ``$_SESSION``.
 
 A typical use of this might look like this::
 

@@ -14,15 +14,20 @@ Before working on Symfony, setup a friendly environment with the following
 software:
 
 * Git;
-* PHP version 5.5.9 or above;
-* `PHPUnit`_ 4.2 or above.
+* PHP version 5.5.9 or above.
+
+.. caution::
+
+    Before Symfony 2.7, the minimal PHP version was 5.3.3. Before Symfony 3.0,
+    minimal version was 5.3.9. Please keep this in mind, if you are working on a
+    bug fix for earlier versions of Symfony.
 
 Configure Git
 ~~~~~~~~~~~~~
 
 Set up your user information with your real name and a working email address:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git config --global user.name "Your Name"
     $ git config --global user.email you@example.com
@@ -48,14 +53,14 @@ Set up your user information with your real name and a working email address:
     repository. If you have already installed Git, you can check the value of
     this setting by typing:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ git config core.autocrlf
 
     This will return either "false", "input" or "true"; "true" and "false" being
     the wrong values. Change it to "input" by typing:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ git config --global core.autocrlf input
 
@@ -74,13 +79,13 @@ Get the Symfony source code:
 * After the "forking action" has completed, clone your fork locally
   (this will create a ``symfony`` directory):
 
-.. code-block:: bash
+.. code-block:: terminal
 
       $ git clone git@github.com:USERNAME/symfony.git
 
 * Add the upstream repository as a remote:
 
-.. code-block:: bash
+.. code-block:: terminal
 
       $ cd symfony
       $ git remote add upstream git://github.com/symfony/symfony.git
@@ -107,17 +112,18 @@ Choose the right Branch
 Before working on a patch, you must determine on which branch you need to
 work:
 
-* ``2.3``, if you are fixing a bug for an existing feature (you may have
-  to choose a higher branch if the feature you are fixing was introduced
-  in a later version);
-* ``2.7``, if you are adding a new feature which is backward compatible;
-* ``master``, if you are adding a new and backward incompatible feature.
+* ``2.7``, if you are fixing a bug for an existing feature or want to make a
+  change that falls into the :doc:`list of acceptable changes in patch versions
+  </contributing/code/maintenance>` (you may have to choose a higher branch if
+  the feature you are fixing was introduced in a later version);
+
+ * ``master``, if you are adding a new feature.
 
 .. note::
 
     All bug fixes merged into maintenance branches are also merged into more
     recent branches on a regular basis. For instance, if you submit a patch
-    for the ``2.3`` branch, the patch will also be applied by the core team on
+    for the ``2.7`` branch, the patch will also be applied by the core team on
     the ``master`` branch.
 
 Create a Topic Branch
@@ -126,22 +132,22 @@ Create a Topic Branch
 Each time you want to work on a patch for a bug or on an enhancement, create a
 topic branch:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git checkout -b BRANCH_NAME master
 
-Or, if you want to provide a bugfix for the ``2.3`` branch, first track the remote
-``2.3`` branch locally:
+Or, if you want to provide a bugfix for the ``2.7`` branch, first track the remote
+``2.7`` branch locally:
 
-.. code-block:: bash
+.. code-block:: terminal
 
-    $ git checkout -t origin/2.3
+    $ git checkout -t origin/2.7
 
-Then create a new branch off the ``2.3`` branch to work on the bugfix:
+Then create a new branch off the ``2.7`` branch to work on the bugfix:
 
-.. code-block:: bash
+.. code-block:: terminal
 
-    $ git checkout -b BRANCH_NAME 2.3
+    $ git checkout -b BRANCH_NAME 2.7
 
 .. tip::
 
@@ -150,6 +156,22 @@ Then create a new branch off the ``2.3`` branch to work on the bugfix:
 
 The above checkout commands automatically switch the code to the newly created
 branch (check the branch you are working on with ``git branch``).
+
+Use your Branch in an Existing Project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to test your code in an existing project that uses ``symfony/symfony``
+or Symfony components, you can use the ``link`` utility provided in the Git repository
+you cloned previously.
+This tool scans the ``vendor/`` directory of your project, finds Symfony packages it
+uses, and replaces them by symbolic links to the ones in the Git repository.
+
+.. code-block:: terminal
+
+    $ php link /path/to/your/project
+
+Before running the ``link`` command, be sure that the dependencies of the project you
+want to debug are installed by running ``composer install`` inside it.
 
 Work on your Patch
 ~~~~~~~~~~~~~~~~~~
@@ -170,9 +192,6 @@ in mind the following:
 
 * Do atomic and logically separate commits (use the power of ``git rebase`` to
   have a clean and logical history);
-
-* Squash irrelevant commits that are just about fixing coding standards or
-  fixing typos in your own code;
 
 * Never fix coding standards in some existing code as it makes the code review
   more difficult;
@@ -222,7 +241,7 @@ Rebase your Patch
 Before submitting your patch, update your branch (needed if it takes you a
 while to finish your changes):
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git checkout master
     $ git fetch upstream
@@ -232,23 +251,25 @@ while to finish your changes):
 
 .. tip::
 
-    Replace ``master`` with the branch you selected previously (e.g. ``2.3``)
+    Replace ``master`` with the branch you selected previously (e.g. ``2.7``)
     if you are working on a bugfix
 
 When doing the ``rebase`` command, you might have to fix merge conflicts.
 ``git status`` will show you the *unmerged* files. Resolve all the conflicts,
 then continue the rebase:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git add ... # add resolved files
     $ git rebase --continue
 
 Check that all tests still pass and push your branch remotely:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git push --force origin BRANCH_NAME
+
+.. _contributing-code-pull-request:
 
 Make a Pull Request
 ~~~~~~~~~~~~~~~~~~~
@@ -257,8 +278,8 @@ You can now make a pull request on the ``symfony/symfony`` GitHub repository.
 
 .. tip::
 
-    Take care to point your pull request towards ``symfony:2.3`` if you want
-    the core team to pull a bugfix based on the ``2.3`` branch.
+    Take care to point your pull request towards ``symfony:2.7`` if you want
+    the core team to pull a bugfix based on the ``2.7`` branch.
 
 To ease the core team work, always include the modified components in your
 pull request message, like in:
@@ -268,49 +289,10 @@ pull request message, like in:
     [Yaml] fixed something
     [Form] [Validator] [FrameworkBundle] added something
 
-The pull request description must include the following checklist at the top
-to ensure that contributions may be reviewed without needless feedback
-loops and that your contributions can be included into Symfony as quickly as
-possible:
-
-.. code-block:: text
-
-    | Q             | A
-    | ------------- | ---
-    | Bug fix?      | [yes|no]
-    | New feature?  | [yes|no]
-    | BC breaks?    | [yes|no]
-    | Deprecations? | [yes|no]
-    | Tests pass?   | [yes|no]
-    | Fixed tickets | [comma separated list of tickets fixed by the PR]
-    | License       | MIT
-    | Doc PR        | [The reference to the documentation PR if any]
-
-An example submission could now look as follows:
-
-.. code-block:: text
-
-    | Q             | A
-    | ------------- | ---
-    | Bug fix?      | no
-    | New feature?  | no
-    | BC breaks?    | no
-    | Deprecations? | no
-    | Tests pass?   | yes
-    | Fixed tickets | #12, #43
-    | License       | MIT
-    | Doc PR        | symfony/symfony-docs#123
-
-The whole table must be included (do **not** remove lines that you think are
-not relevant). For simple typos, minor changes in the PHPDocs, or changes in
-translation files, use the shorter version of the check-list:
-
-.. code-block:: text
-
-    | Q             | A
-    | ------------- | ---
-    | Fixed tickets | [comma separated list of tickets fixed by the PR]
-    | License       | MIT
+The default pull request description contains a table which you must fill in
+with the appropriate answers. This ensures that contributions may be reviewed
+without needless feedback loops and that your contributions can be included into
+Symfony as quickly as possible.
 
 Some answers to the questions trigger some more requirements:
 
@@ -368,9 +350,9 @@ Rework your Patch
 
 Based on the feedback on the pull request, you might need to rework your
 patch. Before re-submitting the patch, rebase with ``upstream/master`` or
-``upstream/2.3``, don't merge; and force the push to the origin:
+``upstream/2.7``, don't merge; and force the push to the origin:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ git rebase -f upstream/master
     $ git push --force origin BRANCH_NAME
@@ -381,38 +363,20 @@ patch. Before re-submitting the patch, rebase with ``upstream/master`` or
     to avoid messing other branches in the repo (``--force`` tells Git that
     you really want to mess with things so do it carefully).
 
-Often, moderators will ask you to "squash" your commits. This means you will
-convert many commits to one commit. To do this, use the rebase command:
+Moderators earlier asked you to "squash" your commits. This means you will
+convert many commits to one commit. This is no longer necessary today, because
+Symfony project uses a proprietary tool which automatically squashes all commits
+before merging.
 
-.. code-block:: bash
-
-    $ git rebase -i upstream/master
-    $ git push --force origin BRANCH_NAME
-
-After you type this command, an editor will popup showing a list of commits:
-
-.. code-block:: text
-
-    pick 1a31be6 first commit
-    pick 7fc64b4 second commit
-    pick 7d33018 third commit
-
-To squash all commits into the first one, remove the word ``pick`` before the
-second and the last commits, and replace it by the word ``squash`` or just
-``s``. When you save, Git will start rebasing, and if successful, will ask
-you to edit the commit message, which by default is a listing of the commit
-messages of all the commits. When you are finished, execute the push command.
-
-.. _ProGit:                                http://git-scm.com/book
-.. _GitHub:                                https://github.com/signup/free
-.. _`GitHub's Documentation`:              https://help.github.com/articles/ignoring-files
-.. _Symfony repository:                    https://github.com/symfony/symfony
-.. _dev mailing-list:                      http://groups.google.com/group/symfony-devs
-.. _travis-ci.org:                         https://travis-ci.org/
-.. _`travis-ci.org status icon`:           http://about.travis-ci.org/docs/user/status-images/
-.. _`travis-ci.org Getting Started Guide`: http://about.travis-ci.org/docs/user/getting-started/
-.. _`documentation repository`:            https://github.com/symfony/symfony-docs
-.. _`fabbot`:                              http://fabbot.io
-.. _`PSR-1`:                               http://www.php-fig.org/psr/psr-1/
-.. _`PSR-2`:                               http://www.php-fig.org/psr/psr-2/
-.. _PHPUnit:                               https://phpunit.de/manual/current/en/installation.html
+.. _ProGit: https://git-scm.com/book
+.. _GitHub: https://github.com/join
+.. _`GitHub's Documentation`: https://help.github.com/articles/ignoring-files
+.. _Symfony repository: https://github.com/symfony/symfony
+.. _dev mailing-list: https://groups.google.com/group/symfony-devs
+.. _travis-ci.org: https://travis-ci.org/
+.. _`travis-ci.org status icon`: https://about.travis-ci.com/docs/user/status-images/
+.. _`travis-ci.org Getting Started Guide`: https://about.travis-ci.com/docs/user/getting-started/
+.. _`documentation repository`: https://github.com/symfony/symfony-docs
+.. _`fabbot`: https://fabbot.io
+.. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
+.. _`PSR-2`: https://www.php-fig.org/psr/psr-2/

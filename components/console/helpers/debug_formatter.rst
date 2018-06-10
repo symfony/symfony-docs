@@ -4,16 +4,13 @@
 Debug Formatter Helper
 ======================
 
-.. versionadded:: 2.6
-    The Debug Formatter helper was introduced in Symfony 2.6.
-
 The :class:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper` provides
 functions to output debug information when running an external program, for
 instance a process or HTTP request. For example, if you used it to output
 the results of running ``ls -la`` on a UNIX system, it might output something
 like this:
 
-.. image:: /images/components/console/debug_formatter.png
+.. image:: /_images/components/console/debug_formatter.png
    :align: center
 
 Using the debug_formatter
@@ -36,7 +33,7 @@ multiple programs at the same time. When using the
 .. tip::
 
     This information is often too verbose to be shown by default. You can use
-    :ref:`verbosity levels <verbosity-levels>` to only show it when in
+    :doc:`verbosity levels </console/verbosity>` to only show it when in
     debugging mode (``-vvv``).
 
 Starting a Program
@@ -51,8 +48,8 @@ display information that the program is started::
 
     $output->writeln($debugFormatter->start(
         spl_object_hash($process),
-        'Some process description')
-    );
+        'Some process description'
+    ));
 
     $process->run();
 
@@ -68,7 +65,7 @@ You can tweak the prefix using the third argument::
         spl_object_hash($process),
         'Some process description',
         'STARTED'
-    );
+    ));
     // will output:
     //  STARTED Some process description
 
@@ -117,7 +114,7 @@ Stopping a Program
 ------------------
 
 When a program is stopped, you can use
-:method:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper::run` to
+:method:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper::stop` to
 notify this to the users::
 
     // ...
@@ -125,7 +122,7 @@ notify this to the users::
         $debugFormatter->stop(
             spl_object_hash($process),
             'Some command description',
-            $process->isSuccessfull()
+            $process->isSuccessful()
         )
     );
 

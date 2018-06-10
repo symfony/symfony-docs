@@ -3,13 +3,13 @@ File
 
 Validates that a value is a valid "file", which can be one of the following:
 
-* A string (or object with a ``__toString()`` method) path to an existing file;
-
+* A string (or object with a ``__toString()`` method) path to an existing
+  file;
 * A valid :class:`Symfony\\Component\\HttpFoundation\\File\\File` object
   (including objects of class :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`).
 
-This constraint is commonly used in forms with the :doc:`file </reference/forms/types/file>`
-form type.
+This constraint is commonly used in forms with the :doc:`FileType </reference/forms/types/file>`
+form field.
 
 .. tip::
 
@@ -30,6 +30,7 @@ form type.
 |                | - `uploadIniSizeErrorMessage`_                                      |
 |                | - `uploadFormSizeErrorMessage`_                                     |
 |                | - `uploadErrorMessage`_                                             |
+|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\File`           |
 +----------------+---------------------------------------------------------------------+
@@ -40,13 +41,13 @@ Basic Usage
 -----------
 
 This constraint is most commonly used on a property that will be rendered
-in a form as a :doc:`file </reference/forms/types/file>` form type. For example,
-suppose you're creating an author form where you can upload a "bio" PDF for
-the author. In your form, the ``bioFile`` property would be a ``file`` type.
-The ``Author`` class might look as follows::
+in a form as a :doc:`FileType </reference/forms/types/file>` field. For
+example, suppose you're creating an author form where you can upload a "bio"
+PDF for the author. In your form, the ``bioFile`` property would be a ``file``
+type. The ``Author`` class might look as follows::
 
-    // src/Acme/BlogBundle/Entity/Author.php
-    namespace Acme\BlogBundle\Entity;
+    // src/Entity/Author.php
+    namespace App\Entity;
 
     use Symfony\Component\HttpFoundation\File\File;
 
@@ -65,26 +66,15 @@ The ``Author`` class might look as follows::
         }
     }
 
-To guarantee that the ``bioFile`` ``File`` object is valid, and that it is
+To guarantee that the ``bioFile`` ``File`` object is valid and that it is
 below a certain file size and a valid PDF, add the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author:
-            properties:
-                bioFile:
-                    - File:
-                        maxSize: 1024k
-                        mimeTypes: [application/pdf, application/x-pdf]
-                        mimeTypesMessage: Please upload a valid PDF
-
     .. code-block:: php-annotations
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -100,15 +90,26 @@ below a certain file size and a valid PDF, add the following:
             protected $bioFile;
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Author:
+            properties:
+                bioFile:
+                    - File:
+                        maxSize: 1024k
+                        mimeTypes: [application/pdf, application/x-pdf]
+                        mimeTypesMessage: Please upload a valid PDF
+
     .. code-block:: xml
 
-        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\BlogBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="bioFile">
                     <constraint name="File">
                         <option name="maxSize">1024k</option>
@@ -124,8 +125,8 @@ below a certain file size and a valid PDF, add the following:
 
     .. code-block:: php
 
-        // src/Acme/BlogBundle/Entity/Author.php
-        namespace Acme\BlogBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -155,13 +156,11 @@ Options
 maxSize
 ~~~~~~~
 
-.. versionadded:: 2.6
-    The suffixes ``Ki`` and ``Mi`` were introduced in Symfony 2.6.
-
 **type**: ``mixed``
 
-If set, the size of the underlying file must be below this file size in order
-to be valid. The size of the file can be given in one of the following formats:
+If set, the size of the underlying file must be below this file size in
+order to be valid. The size of the file can be given in one of the following
+formats:
 
 +--------+-----------+-----------------+------+
 | Suffix | Unit Name |      value      | e.g. |
@@ -182,9 +181,6 @@ see `Wikipedia: Binary prefix`_.
 
 binaryFormat
 ~~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``binaryFormat`` option was introduced in Symfony 2.6.
 
 **type**: ``boolean`` **default**: ``null``
 
@@ -225,10 +221,6 @@ per the `mimeTypes`_ option.
 disallowEmptyMessage
 ~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.6
-    The ``disallowEmptyMessage`` option was introduced in Symfony 2.6. Prior to 2.6,
-    if the user uploaded an empty file, no validation error occurred.
-
 **type**: ``string`` **default**: ``An empty file is not allowed.``
 
 This constraint checks if the uploaded file is empty (i.e. 0 bytes). If it is,
@@ -248,7 +240,7 @@ notReadableMessage
 
 **type**: ``string`` **default**: ``The file is not readable.``
 
-The message displayed if the file exists, but the PHP ``is_readable`` function
+The message displayed if the file exists, but the PHP ``is_readable()`` function
 fails when passed the path to the file.
 
 uploadIniSizeErrorMessage
@@ -273,9 +265,10 @@ uploadErrorMessage
 **type**: ``string`` **default**: ``The file could not be uploaded.``
 
 The message that is displayed if the uploaded file could not be uploaded
-for some unknown reason, such as the file upload failed or it couldn't be written
-to disk.
+for some unknown reason, such as the file upload failed or it couldn't be
+written to disk.
 
+.. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/index.html
 .. _`Wikipedia: Binary prefix`: http://en.wikipedia.org/wiki/Binary_prefix

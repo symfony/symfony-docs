@@ -12,8 +12,10 @@ using an email address that already exists in the system.
 |                | - `message`_                                                                        |
 |                | - `em`_                                                                             |
 |                | - `repositoryMethod`_                                                               |
+|                | - `entityClass`_                                                                    |
 |                | - `errorPath`_                                                                      |
 |                | - `ignoreNull`_                                                                     |
+|                | - `payload`_                                                                        |
 +----------------+-------------------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`            |
 +----------------+-------------------------------------------------------------------------------------+
@@ -23,27 +25,16 @@ using an email address that already exists in the system.
 Basic Usage
 -----------
 
-Suppose you have an AcmeUserBundle bundle with a ``User`` entity that has an
-``email`` field. You can use the ``UniqueEntity`` constraint to guarantee that
-the ``email`` field remains unique between all of the constraints in your user
-table:
+Suppose you have a ``User`` entity that has an ``email`` field. You can use the
+``UniqueEntity`` constraint to guarantee that the ``email`` field remains unique
+between all of the constraints in your user table:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/UserBundle/Resources/config/validation.yml
-        Acme\UserBundle\Entity\Author:
-            constraints:
-                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
-            properties:
-                email:
-                    - Email: ~
-
     .. code-block:: php-annotations
 
-        // Acme/UserBundle/Entity/Author.php
-        namespace Acme\UserBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
         use Doctrine\ORM\Mapping as ORM;
@@ -68,15 +59,25 @@ table:
             // ...
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Author:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+            properties:
+                email:
+                    - Email: ~
+
     .. code-block:: xml
 
-        <!-- src/Acme/AdministrationBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\UserBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
                     <option name="fields">email</option>
                 </constraint>
@@ -88,9 +89,8 @@ table:
 
     .. code-block:: php
 
-
-        // Acme/UserBundle/Entity/User.php
-        namespace Acme\UserBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -120,7 +120,7 @@ fields
 This required option is the field (or list of fields) on which this entity
 should be unique. For example, if you specified both the ``email`` and ``name``
 field in a single ``UniqueEntity`` constraint, then it would enforce that
-the combination value where unique (e.g. two users could have the same email,
+the combination value is unique (e.g. two users could have the same email,
 as long as they don't have the same name also).
 
 If you need to require two fields to be individually unique (e.g. a unique
@@ -132,54 +132,62 @@ message
 
 **type**: ``string`` **default**: ``This value is already used.``
 
-The message that's displayed when this constraint fails.
+The message that's displayed when this constraint fails. This message is always
+mapped to the first field causing the violation, even when using multiple fields
+in the constraint.
+
+Messages can include the ``{{ value }}`` placeholder to display a string
+representation of the invalid entity. If the entity doesn't define the
+``__toString()`` method, the following generic value will be used: *"Object of
+class __CLASS__ identified by <comma separated IDs>"*
 
 em
 ~~
 
 **type**: ``string``
 
-The name of the entity manager to use for making the query to determine the
-uniqueness. If it's left blank, the correct entity manager will be determined
-for this class. For that reason, this option should probably not need to be
-used.
+The name of the entity manager to use for making the query to determine
+the uniqueness. If it's left blank, the correct entity manager will be
+determined for this class. For that reason, this option should probably
+not need to be used.
 
 repositoryMethod
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``findBy``
+**type**: ``string`` **default**: ``findBy()``
 
-The name of the repository method to use for making the query to determine the
-uniqueness. If it's left blank, the ``findBy`` method will be used. This
-method should return a countable result.
+The name of the repository method to use for making the query to determine
+the uniqueness. If it's left blank, the ``findBy()`` method will be used.
+This method should return a countable result.
+
+entityClass
+~~~~~~~~~~~
+
+**type**: ``string``
+
+By default, the query performed to ensure the uniqueness uses the repository of
+the current class instance. However, in some cases, such as when using Doctrine
+inheritance mapping, you need to execute the query in a different repository.
+Use this option to define the fully-qualified class name (FQCN) of the Doctrine
+entity associated with the repository you want to use.
 
 errorPath
 ~~~~~~~~~
 
 **type**: ``string`` **default**: The name of the first field in `fields`_
 
-If the entity violates the constraint the error message is bound to the first
-field in `fields`_. If there is more than one field, you may want to map
-the error message to another field.
+If the entity violates the constraint the error message is bound to the
+first field in `fields`_. If there is more than one field, you may want
+to map the error message to another field.
 
 Consider this example:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/AdministrationBundle/Resources/config/validation.yml
-        Acme\AdministrationBundle\Entity\Service:
-            constraints:
-                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-                    fields: [host, port]
-                    errorPath: port
-                    message: 'This port is already in use on that host.'
-
     .. code-block:: php-annotations
 
-        // src/Acme/AdministrationBundle/Entity/Service.php
-        namespace Acme\AdministrationBundle\Entity;
+        // src/Entity/Service.php
+        namespace App\Entity;
 
         use Doctrine\ORM\Mapping as ORM;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -205,15 +213,25 @@ Consider this example:
             public $port;
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Service:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                    fields: [host, port]
+                    errorPath: port
+                    message: 'This port is already in use on that host.'
+
     .. code-block:: xml
 
-        <!-- src/Acme/AdministrationBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\AdministrationBundle\Entity\Service">
+            <class name="App\Entity\Service">
                 <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
                     <option name="fields">
                         <value>host</value>
@@ -228,8 +246,8 @@ Consider this example:
 
     .. code-block:: php
 
-        // src/Acme/AdministrationBundle/Entity/Service.php
-        namespace Acme\AdministrationBundle\Entity;
+        // src/Entity/Service.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -254,9 +272,11 @@ Now, the message would be bound to the ``port`` field with this configuration.
 ignoreNull
 ~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If this option is set to ``true``, then the constraint will allow multiple
 entities to have a ``null`` value for a field without failing validation.
 If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
+
+.. include:: /reference/constraints/_payload-option.rst.inc

@@ -29,11 +29,6 @@ An authorization decision will always be based on a few things:
     Any object for which access control needs to be checked, like
     an article or a comment object.
 
-.. versionadded:: 2.6
-    The ``TokenStorageInterface`` was introduced in Symfony 2.6. Prior, you
-    had to use the ``setToken()`` method of the
-    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
-
 .. _components-security-access-decision-manager:
 
 Access Decision Manager
@@ -46,7 +41,7 @@ the votes (either positive, negative or neutral) it has received. It
 recognizes several strategies:
 
 ``affirmative`` (default)
-    grant access as soon as any voter returns an affirmative response;
+    grant access as soon as there is one voter granting access;
 
 ``consensus``
     grant access if there are more voters granting access than there are denying;
@@ -90,13 +85,6 @@ of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterf
 which means they have to implement a few methods which allows the decision
 manager to use them:
 
-``supportsAttribute($attribute)``
-    will be used to check if the voter knows how to handle the given attribute;
-
-``supportsClass($class)``
-    will be used to check if the voter is able to grant or deny access for
-    an object of the given class;
-
 ``vote(TokenInterface $token, $object, array $attributes)``
     this method will do the actual voting and return a value equal to one
     of the class constants of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
@@ -118,11 +106,10 @@ on a "remember-me" cookie, or even authenticated anonymously?
 .. code-block:: php
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
+    use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+    use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 
-    $anonymousClass = 'Symfony\Component\Security\Core\Authentication\Token\AnonymousToken';
-    $rememberMeClass = 'Symfony\Component\Security\Core\Authentication\Token\RememberMeToken';
-
-    $trustResolver = new AuthenticationTrustResolver($anonymousClass, $rememberMeClass);
+    $trustResolver = new AuthenticationTrustResolver(AnonymousToken::class, RememberMeToken::class);
 
     $authenticatedVoter = new AuthenticatedVoter($trustResolver);
 
@@ -132,7 +119,7 @@ on a "remember-me" cookie, or even authenticated anonymously?
     // any object
     $object = ...;
 
-    $vote = $authenticatedVoter->vote($token, $object, array('IS_AUTHENTICATED_FULLY');
+    $vote = $authenticatedVoter->vote($token, $object, array('IS_AUTHENTICATED_FULLY'));
 
 RoleVoter
 ~~~~~~~~~
@@ -182,7 +169,7 @@ Roles
 
 Roles are objects that give expression to a certain right the user has.
 The only requirement is that they implement :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`,
-which means they should also have a :method:`Symfony\\Component\\Security\\Core\\Role\\Role\\RoleInterface::getRole`
+which means they should also have a :method:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface::getRole`
 method that returns a string representation of the role itself. The default
 :class:`Symfony\\Component\\Security\\Core\\Role\\Role` simply returns its
 first constructor argument::
@@ -191,8 +178,8 @@ first constructor argument::
 
     $role = new Role('ROLE_ADMIN');
 
-    // will echo 'ROLE_ADMIN'
-    echo $role->getRole();
+    // shows 'ROLE_ADMIN'
+    var_dump($role->getRole());
 
 .. note::
 
@@ -253,3 +240,4 @@ decision manager::
     if (!$authorizationChecker->isGranted('ROLE_ADMIN')) {
         throw new AccessDeniedException();
     }
+

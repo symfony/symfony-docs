@@ -1,11 +1,11 @@
-Our backwards Compatibility Promise
-===================================
+Our Backward Compatibility Promise
+==================================
 
 Ensuring smooth upgrades of your projects is our first priority. That's why
-we promise you backwards compatibility (BC) for all minor Symfony releases.
+we promise you backward compatibility (BC) for all minor Symfony releases.
 You probably recognize this strategy as `Semantic Versioning`_. In short,
 Semantic Versioning means that only major releases (such as 2.0, 3.0 etc.) are
-allowed to break backwards compatibility. Minor releases (such as 2.5, 2.6 etc.)
+allowed to break backward compatibility. Minor releases (such as 2.5, 2.6 etc.)
 may introduce new features, but must do so without breaking the existing API of
 that release branch (2.x in the previous example).
 
@@ -14,7 +14,7 @@ that release branch (2.x in the previous example).
     This promise was introduced with Symfony 2.3 and does not apply to previous
     versions of Symfony.
 
-However, backwards compatibility comes in many different flavors. In fact, almost
+However, backward compatibility comes in many different flavors. In fact, almost
 every change that we make to the framework can potentially break an application.
 For example, if we add a new method to a class, this will break an application
 which extended this class and added the same method, but with a different
@@ -31,6 +31,15 @@ upgrading to a newer version of the same major release branch.
 The second section, "Working on Symfony Code", is targeted at Symfony
 contributors. This section lists detailed rules that every contributor needs to
 follow to ensure smooth upgrades for our users.
+
+.. warning::
+
+    :doc:`Experimental Features </contributing/code/experimental>` and code
+    marked with the ``@internal`` tags are excluded from our Backward
+    Compatibility promise.
+
+    Also note that backward compatibility breaks are tolerated if they are
+    required to fix a security issue.
 
 Using Symfony Code
 ------------------
@@ -51,55 +60,30 @@ sticks to these rules.
     The exception to this rule are interfaces tagged with ``@internal``. Such
     interfaces should not be used or implemented.
 
-If you want to implement an interface, you should first make sure that the
-interface is an API interface. You can recognize API interfaces by the ``@api``
-tag in their source code::
-
-    /**
-     * HttpKernelInterface handles a Request to convert it to a Response.
-     *
-     * @author Fabien Potencier <fabien@symfony.com>
-     *
-     * @api
-     */
-    interface HttpKernelInterface
-    {
-        // ...
-    }
-
-If you implement an API interface, we promise that we won't ever break your
-code. Regular interfaces, by contrast, may be extended between minor releases,
-for example by adding a new method. Be prepared to upgrade your code manually
-if you implement a regular interface.
-
-.. note::
-
-    Even if we do changes that require manual upgrades, we limit ourselves to
-    changes that can be upgraded easily. We will always document the precise
-    upgrade instructions in the UPGRADE file in Symfony's root directory.
+If you implement an interface, we promise that we won't ever break your code.
 
 The following table explains in detail which use cases are covered by our
-backwards compatibility promise:
+backward compatibility promise:
 
-+-----------------------------------------------+---------------+---------------+
-| Use Case                                      | Regular       | API           |
-+===============================================+===============+===============+
-| **If you...**                                 | **Then we guarantee BC...**   |
-+-----------------------------------------------+---------------+---------------+
-| Type hint against the interface               | Yes           | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Call a method                                 | Yes           | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| **If you implement the interface and...**     | **Then we guarantee BC...**   |
-+-----------------------------------------------+---------------+---------------+
-| Implement a method                            | No [1]_       | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Add an argument to an implemented method      | No [1]_       | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Add a default value to an argument            | Yes           | Yes           |
-+-----------------------------------------------+---------------+---------------+
-
-.. include:: _api_tagging.rst.inc
++-----------------------------------------------+-----------------------------+
+| Use Case                                      | Backward Compatibility      |
++===============================================+=============================+
+| **If you...**                                 | **Then we guarantee BC...** |
++-----------------------------------------------+-----------------------------+
+| Type hint against the interface               | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Call a method                                 | Yes                         |
++-----------------------------------------------+-----------------------------+
+| **If you implement the interface and...**     | **Then we guarantee BC...** |
++-----------------------------------------------+-----------------------------+
+| Implement a method                            | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Add an argument to an implemented method      | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Add a default value to an argument            | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Add a return type to an implemented method    | Yes                         |
++-----------------------------------------------+-----------------------------+
 
 Using our Classes
 ~~~~~~~~~~~~~~~~~
@@ -114,84 +98,50 @@ public methods and properties.
     exception to this rule. They are meant for internal use only and should
     not be accessed by your own code.
 
-Just like with interfaces, we also distinguish between regular and API classes.
-Like API interfaces, API classes are marked with an ``@api`` tag::
-
-    /**
-     * Request represents an HTTP request.
-     *
-     * @author Fabien Potencier <fabien@symfony.com>
-     *
-     * @api
-     */
-    class Request
-    {
-        // ...
-    }
-
-The difference between regular and API classes is that we guarantee full
-backwards compatibility if you extend an API class and override its methods. We
-can't give the same promise for regular classes, because there we may, for
-example, add an optional argument to a method. Consequently, the signature of
-your overridden method wouldn't match anymore and generate a fatal error.
-
-.. note::
-
-    As with interfaces, we limit ourselves to changes that can be upgraded
-    easily. We will document the precise upgrade instructions in the UPGRADE
-    file in Symfony's root directory.
-
-In some cases, only specific properties and methods are tagged with the ``@api``
-tag, even though their class is not. In these cases, we guarantee full backwards
-compatibility for the tagged properties and methods (as indicated in the column
-"API" below), but not for the rest of the class.
-
 To be on the safe side, check the following table to know which use cases are
-covered by our backwards compatibility promise:
+covered by our backward compatibility promise:
 
-+-----------------------------------------------+---------------+---------------+
-| Use Case                                      | Regular       | API           |
-+===============================================+===============+===============+
-| **If you...**                                 | **Then we guarantee BC...**   |
-+-----------------------------------------------+---------------+---------------+
-| Type hint against the class                   | Yes           | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Create a new instance                         | Yes           | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Extend the class                              | Yes           | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Access a public property                      | Yes           | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Call a public method                          | Yes           | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| **If you extend the class and...**            | **Then we guarantee BC...**   |
-+-----------------------------------------------+---------------+---------------+
-| Access a protected property                   | No [1]_       | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Call a protected method                       | No [1]_       | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Override a public property                    | Yes           | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Override a protected property                 | No [1]_       | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Override a public method                      | No [1]_       | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Override a protected method                   | No [1]_       | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Add a new property                            | No            | No            |
-+-----------------------------------------------+---------------+---------------+
-| Add a new method                              | No            | No            |
-+-----------------------------------------------+---------------+---------------+
-| Add an argument to an overridden method       | No [1]_       | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Add a default value to an argument            | Yes           | Yes           |
-+-----------------------------------------------+---------------+---------------+
-| Call a private method (via Reflection)        | No            | No            |
-+-----------------------------------------------+---------------+---------------+
-| Access a private property (via Reflection)    | No            | No            |
-+-----------------------------------------------+---------------+---------------+
-
-.. include:: _api_tagging.rst.inc
++-----------------------------------------------+-----------------------------+
+| Use Case                                      | Backward Compatibility      |
++===============================================+=============================+
+| **If you...**                                 | **Then we guarantee BC...** |
++-----------------------------------------------+-----------------------------+
+| Type hint against the class                   | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Create a new instance                         | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Extend the class                              | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Access a public property                      | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Call a public method                          | Yes                         |
++-----------------------------------------------+-----------------------------+
+| **If you extend the class and...**            | **Then we guarantee BC...** |
++-----------------------------------------------+-----------------------------+
+| Access a protected property                   | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Call a protected method                       | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Override a public property                    | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Override a protected property                 | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Override a public method                      | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Override a protected method                   | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Add a new property                            | No                          |
++-----------------------------------------------+-----------------------------+
+| Add a new method                              | No                          |
++-----------------------------------------------+-----------------------------+
+| Add an argument to an overridden method       | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Add a default value to an argument            | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Call a private method (via Reflection)        | No                          |
++-----------------------------------------------+-----------------------------+
+| Access a private property (via Reflection)    | No                          |
++-----------------------------------------------+-----------------------------+
 
 Working on Symfony Code
 -----------------------
@@ -205,28 +155,34 @@ Changing Interfaces
 This table tells you which changes you are allowed to do when working on
 Symfony's interfaces:
 
-==============================================  ==============  ==============
-Type of Change                                  Regular         API
-==============================================  ==============  ==============
-Remove entirely                                 No              No
-Change name or namespace                        No              No
-Add parent interface                            Yes [2]_        Yes [3]_
-Remove parent interface                         No              No
+==============================================  ==============
+Type of Change                                  Change Allowed
+==============================================  ==============
+Remove entirely                                 No
+Change name or namespace                        No
+Add parent interface                            Yes [2]_
+Remove parent interface                         No
 **Methods**
-Add method                                      Yes [2]_        No
-Remove method                                   No              No
-Change name                                     No              No
-Move to parent interface                        Yes             Yes
-Add argument without a default value            No              No
-Add argument with a default value               Yes [2]_        No
-Remove argument                                 Yes [4]_        Yes [4]_
-Add default value to an argument                Yes [2]_        No
-Remove default value of an argument             No              No
-Add type hint to an argument                    No              No
-Remove type hint of an argument                 Yes [2]_        No
-Change argument type                            Yes [2]_ [5]_   No
-Change return type                              Yes [2]_ [6]_   No
-==============================================  ==============  ==============
+Add method                                      No
+Remove method                                   No
+Change name                                     No
+Move to parent interface                        Yes
+Add argument without a default value            No
+Add argument with a default value               No
+Remove argument                                 Yes [3]_
+Add default value to an argument                No
+Remove default value of an argument             No
+Add type hint to an argument                    No
+Remove type hint of an argument                 No
+Change argument type                            No
+Add return type                                 No
+Remove return type                              No [9]_
+Change return type                              No
+**Constants**
+Add constant                                    Yes
+Remove constant                                 No
+Change value of a constant                      Yes [1]_ [5]_
+==============================================  ==============
 
 Changing Classes
 ~~~~~~~~~~~~~~~~
@@ -234,137 +190,131 @@ Changing Classes
 This table tells you which changes you are allowed to do when working on
 Symfony's classes:
 
-==================================================  ==============  ==============
-Type of Change                                      Regular         API
-==================================================  ==============  ==============
-Remove entirely                                     No              No
-Make final                                          No              No
-Make abstract                                       No              No
-Change name or namespace                            No              No
-Change parent class                                 Yes [7]_        Yes [7]_
-Add interface                                       Yes             Yes
-Remove interface                                    No              No
+==================================================  ==============
+Type of Change                                      Change Allowed
+==================================================  ==============
+Remove entirely                                     No
+Make final                                          No [6]_
+Make abstract                                       No
+Change name or namespace                            No
+Change parent class                                 Yes [4]_
+Add interface                                       Yes
+Remove interface                                    No
 **Public Properties**
-Add public property                                 Yes             Yes
-Remove public property                              No              No
-Reduce visibility                                   No              No
-Move to parent class                                Yes             Yes
+Add public property                                 Yes
+Remove public property                              No
+Reduce visibility                                   No
+Move to parent class                                Yes
 **Protected Properties**
-Add protected property                              Yes             Yes
-Remove protected property                           Yes [2]_        No
-Reduce visibility                                   Yes [2]_        No
-Move to parent class                                Yes             Yes
+Add protected property                              Yes
+Remove protected property                           No [7]_
+Reduce visibility                                   No [7]_
+Move to parent class                                Yes
 **Private Properties**
-Add private property                                Yes             Yes
-Remove private property                             Yes             Yes
+Add private property                                Yes
+Remove private property                             Yes
 **Constructors**
-Add constructor without mandatory arguments         Yes [2]_        Yes [2]_
-Remove constructor                                  Yes [2]_        No
-Reduce visibility of a public constructor           No              No
-Reduce visibility of a protected constructor        Yes [2]_        No
-Move to parent class                                Yes             Yes
+Add constructor without mandatory arguments         Yes [1]_
+Remove constructor                                  No
+Reduce visibility of a public constructor           No
+Reduce visibility of a protected constructor        No [7]_
+Move to parent class                                Yes
 **Public Methods**
-Add public method                                   Yes             Yes
-Remove public method                                No              No
-Change name                                         No              No
-Reduce visibility                                   No              No
-Move to parent class                                Yes             Yes
-Add argument without a default value                No              No
-Add argument with a default value                   Yes [2]_        No
-Remove argument                                     Yes [4]_        Yes [4]_
-Add default value to an argument                    Yes [2]_        No
-Remove default value of an argument                 No              No
-Add type hint to an argument                        Yes [8]_        No
-Remove type hint of an argument                     Yes [2]_        No
-Change argument type                                Yes [2]_ [5]_   No
-Change return type                                  Yes [2]_ [6]_   No
+Add public method                                   Yes
+Remove public method                                No
+Change name                                         No
+Reduce visibility                                   No
+Move to parent class                                Yes
+Add argument without a default value                No
+Add argument with a default value                   No [7]_ [8]_
+Remove argument                                     Yes [3]_
+Add default value to an argument                    No [7]_ [8]_
+Remove default value of an argument                 No
+Add type hint to an argument                        No [7]_ [8]_
+Remove type hint of an argument                     No [7]_ [8]_
+Change argument type                                No [7]_ [8]_
+Add return type                                     No [7]_ [8]_
+Remove return type                                  No [7]_ [8]_ [9]_
+Change return type                                  No [7]_ [8]_
 **Protected Methods**
-Add protected method                                Yes             Yes
-Remove protected method                             Yes [2]_        No
-Change name                                         No              No
-Reduce visibility                                   Yes [2]_        No
-Move to parent class                                Yes             Yes
-Add argument without a default value                Yes [2]_        No
-Add argument with a default value                   Yes [2]_        No
-Remove argument                                     Yes [4]_        Yes [4]_
-Add default value to an argument                    Yes [2]_        No
-Remove default value of an argument                 Yes [2]_        No
-Add type hint to an argument                        Yes [2]_        No
-Remove type hint of an argument                     Yes [2]_        No
-Change argument type                                Yes [2]_ [5]_   No
-Change return type                                  Yes [2]_ [6]_   No
+Add protected method                                Yes
+Remove protected method                             No [7]_
+Change name                                         No [7]_
+Reduce visibility                                   No [7]_
+Move to parent class                                Yes
+Add argument without a default value                No [7]_
+Add argument with a default value                   No [7]_ [8]_
+Remove argument                                     Yes [3]_
+Add default value to an argument                    No [7]_ [8]_
+Remove default value of an argument                 No [7]_
+Add type hint to an argument                        No [7]_ [8]_
+Remove type hint of an argument                     No [7]_ [8]_
+Change argument type                                No [7]_ [8]_
+Add return type                                     No [7]_ [8]_
+Remove return type                                  No [7]_ [8]_ [9]_
+Change return type                                  No [7]_ [8]_
 **Private Methods**
-Add private method                                  Yes             Yes
-Remove private method                               Yes             Yes
-Change name                                         Yes             Yes
-Reduce visibility                                   Yes             Yes
-Add argument without a default value                Yes             Yes
-Add argument with a default value                   Yes             Yes
-Remove argument                                     Yes             Yes
-Add default value to an argument                    Yes             Yes
-Remove default value of an argument                 Yes             Yes
-Add type hint to an argument                        Yes             Yes
-Remove type hint of an argument                     Yes             Yes
-Change argument type                                Yes             Yes
-Change return type                                  Yes             Yes
+Add private method                                  Yes
+Remove private method                               Yes
+Change name                                         Yes
+Add argument without a default value                Yes
+Add argument with a default value                   Yes
+Remove argument                                     Yes
+Add default value to an argument                    Yes
+Remove default value of an argument                 Yes
+Add type hint to an argument                        Yes
+Remove type hint of an argument                     Yes
+Change argument type                                Yes
+Add return type                                     Yes
+Remove return type                                  Yes
+Change return type                                  Yes
 **Static Methods**
-Turn non static into static                         No              No
-Turn static into non static                         No              No
-==================================================  ==============  ==============
+Turn non static into static                         No [7]_ [8]_
+Turn static into non static                         No
+**Constants**
+Add constant                                        Yes
+Remove constant                                     No
+Change value of a constant                          Yes [1]_ [5]_
+==================================================  ==============
 
-.. [1] Your code may be broken by changes in the Symfony code. Such changes will
-       however be documented in the UPGRADE file.
-
-.. [2] Should be avoided. When done, this change must be documented in the
+.. [1] Should be avoided. When done, this change must be documented in the
        UPGRADE file.
 
-.. [3] The added parent interface must not introduce any new methods that don't
+.. [2] The added parent interface must not introduce any new methods that don't
        exist in the interface already.
 
-.. [4] Only the last argument(s) of a method may be removed, as PHP does not
+.. [3] Only the last argument(s) of a method may be removed, as PHP does not
        care about additional arguments that you pass to a method.
 
-.. [5] The argument type may only be changed to a compatible or less specific
-       type. The following type changes are allowed:
-
-       ===================  ==================================================================
-       Original Type        New Type
-       ===================  ==================================================================
-       boolean              any `scalar type`_ with equivalent `boolean values`_
-       string               any `scalar type`_ or object with equivalent `string values`_
-       integer              any `scalar type`_ with equivalent `integer values`_
-       float                any `scalar type`_ with equivalent `float values`_
-       class ``<C>``        any superclass or interface of ``<C>``
-       interface ``<I>``    any superinterface of ``<I>``
-       ===================  ==================================================================
-
-.. [6] The return type may only be changed to a compatible or more specific
-       type. The following type changes are allowed:
-
-       ===================  ==================================================================
-       Original Type        New Type
-       ===================  ==================================================================
-       boolean              any `scalar type`_ with equivalent `boolean values`_
-       string               any `scalar type`_ or object with equivalent `string values`_
-       integer              any `scalar type`_ with equivalent `integer values`_
-       float                any `scalar type`_ with equivalent `float values`_
-       array                instance of ``ArrayAccess``, ``Traversable`` and ``Countable``
-       ``ArrayAccess``      array
-       ``Traversable``      array
-       ``Countable``        array
-       class ``<C>``        any subclass of ``<C>``
-       interface ``<I>``    any subinterface or implementing class of ``<I>``
-       ===================  ==================================================================
-
-.. [7] When changing the parent class, the original parent class must remain an
+.. [4] When changing the parent class, the original parent class must remain an
        ancestor of the class.
 
-.. [8] A type hint may only be added if passing a value with a different type
-       previously generated a fatal error.
+.. [5] The value of a constant may only be changed when the constants aren't
+       used in configuration (e.g. Yaml and XML files), as these do not support
+       constants and have to hardcode the value. For instance, event name
+       constants can't change the value without introducing a BC break.
+       Additionally, if a constant will likely be used in objects that are
+       serialized, the value of a constant should not be changed.
 
-.. _Semantic Versioning: http://semver.org/
-.. _scalar type: http://php.net/manual/en/function.is-scalar.php
-.. _boolean values: http://php.net/manual/en/function.boolval.php
-.. _string values: http://www.php.net/manual/en/function.strval.php
-.. _integer values: http://www.php.net/manual/en/function.intval.php
-.. _float values: http://www.php.net/manual/en/function.floatval.php
+.. [6] Allowed using the ``@final`` annotation.
+
+.. [7] Allowed if the class is final. Classes that received the ``@final``
+       annotation after their first release are considered final in their
+       next major version.
+       Changing an argument type is only possible with a parent type.
+       Changing a return type is only possible with a child type.
+
+.. [8] Allowed if the method is final. Methods that received the ``@final``
+       annotation after their first release are considered final in their
+       next major version.
+       Changing an argument type is only possible with a parent type.
+       Changing a return type is only possible with a child type.
+
+.. [9] Allowed for the ``void`` return type.
+
+.. _Semantic Versioning: https://semver.org/
+.. _scalar type: https://php.net/manual/en/function.is-scalar.php
+.. _boolean values: https://php.net/manual/en/function.boolval.php
+.. _string values: https://php.net/manual/en/function.strval.php
+.. _integer values: https://php.net/manual/en/function.intval.php
+.. _float values: https://php.net/manual/en/function.floatval.php

@@ -190,8 +190,12 @@ data is an array, for example a set of tokens. In this case, managing the array
 becomes a burden because you have to retrieve the array then process it and
 store it again::
 
-    $tokens = array('tokens' => array('a' => 'a6c1e0b6',
-                                      'b' => 'f4a7b1f3'));
+    $tokens = array(
+        'tokens' => array(
+            'a' => 'a6c1e0b6',
+            'b' => 'f4a7b1f3',
+        ),
+    );
 
 So any processing of this might quickly get ugly, even simply adding a token to
 the array::
@@ -201,7 +205,7 @@ the array::
     $session->set('tokens', $tokens);
 
 With structured namespacing, the key can be translated to the array
-structure like this using a namespace character (defaults to `/`)::
+structure like this using a namespace character (defaults to ``/``)::
 
     $session->set('tokens/c', $value);
 
@@ -221,9 +225,6 @@ has a simple API
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::has`
     Returns true if the attribute exists.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::keys`
-    Returns an array of stored attribute keys.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::replace`
     Sets multiple attributes at once: takes a keyed array and sets each key => value pair.

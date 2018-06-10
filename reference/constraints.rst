@@ -8,9 +8,9 @@ Validation Constraints Reference
    constraints/NotBlank
    constraints/Blank
    constraints/NotNull
-   constraints/Null
-   constraints/True
-   constraints/False
+   constraints/IsNull
+   constraints/IsTrue
+   constraints/IsFalse
    constraints/Type
 
    constraints/Email
@@ -50,6 +50,7 @@ Validation Constraints Reference
    constraints/Currency
    constraints/Luhn
    constraints/Iban
+   constraints/Bic
    constraints/Isbn
    constraints/Issn
 

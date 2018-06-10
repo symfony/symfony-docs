@@ -4,7 +4,7 @@
 The Symfony Framework Best Practices
 ====================================
 
-The Symfony framework is well-known for being *really* flexible and is used
+The Symfony Framework is well-known for being *really* flexible and is used
 to build micro-sites, enterprise applications that handle billions of connections
 and even as the basis for *other* frameworks. Since its release in July 2011,
 the community has learned a lot about what's possible and how to do things *best*.
@@ -19,7 +19,7 @@ What is this Guide About?
 -------------------------
 
 This guide aims to fix that by describing the **best practices for developing
-web apps with the Symfony full-stack framework**. These are best practices that
+web apps with the Symfony full-stack Framework**. These are best practices that
 fit the philosophy of the framework as envisioned by its original creator
 `Fabien Potencier`_.
 
@@ -32,7 +32,7 @@ fit the philosophy of the framework as envisioned by its original creator
 
 This guide is **specially suited** for:
 
-* Websites and web applications developed with the full-stack Symfony framework.
+* Websites and web applications developed with the full-stack Symfony Framework.
 
 For other situations, this guide might be a good **starting point** that you can
 then **extend and fit to your specific needs**:
@@ -58,34 +58,38 @@ Who this Book Is for (Hint: It's not a Tutorial)
 
 Any Symfony developer, whether you are an expert or a newcomer, can read this
 guide. But since this isn't a tutorial, you'll need some basic knowledge of
-Symfony to follow everything. If you are totally new to Symfony, welcome!
-Start with :doc:`The Quick Tour </quick_tour/the_big_picture>` tutorial first.
+Symfony to follow everything. If you are totally new to Symfony, welcome! and
+read the :doc:`Getting Started guides </setup>` first.
 
 We've deliberately kept this guide short. We won't repeat explanations that
-you can find in the vast Symfony documentation, like discussions about dependency
-injection or front controllers. We'll solely focus on explaining how to do
+you can find in the vast Symfony documentation, like discussions about Dependency
+Injection or front controllers. We'll solely focus on explaining how to do
 what you already know.
 
 The Application
 ---------------
 
-In addition to this guide, you'll find a sample application developed with
-all these best practices in mind. **The application is a simple blog engine**,
-because that will allow us to focus on the Symfony concepts and features without
-getting buried in difficult details.
+In addition to this guide, a sample application called `Symfony Demo`_ has been
+developed with all these best practices in mind. Execute this command to download
+the demo application:
 
-Instead of developing the application step by step in this guide, you'll find
-selected snippets of code through the chapters. Please refer to the last chapter
-of this guide to find more details about this application and the instructions
-to install it.
+.. code-block:: terminal
+
+    $ composer create-project symfony/symfony-demo
+
+**The demo application is a simple blog engine**, because that will allow us to
+focus on the Symfony concepts and features without getting buried in difficult
+implementation details. Instead of developing the application step by step in
+this guide, you'll find selected snippets of code through the chapters.
 
 Don't Update Your Existing Applications
 ---------------------------------------
 
 After reading this handbook, some of you may be considering refactoring your
-existing Symfony applications. Our recommendation is sound and clear: **you
-should not refactor your existing applications to comply with these best
-practices**. The reasons for not doing it are various:
+existing Symfony applications. Our recommendation is sound and clear: you may
+use these best practices for **new applications** but **you should not refactor
+your existing applications to comply with these best practices**. The reasons
+for not doing it are various:
 
 * Your existing applications are not wrong, they just follow another set of
   guidelines;
@@ -94,4 +98,9 @@ practices**. The reasons for not doing it are various:
 * The amount of work spent on this could be better dedicated to improving
   your tests or adding features that provide real value to the end users.
 
+----
+
+Next: :doc:`/best_practices/creating-the-project`
+
 .. _`Fabien Potencier`: https://connect.sensiolabs.com/profile/fabpot
+.. _`Symfony Demo`: https://github.com/symfony/demo

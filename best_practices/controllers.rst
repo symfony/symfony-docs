@@ -5,16 +5,15 @@ Symfony follows the philosophy of *"thin controllers and fat models"*. This
 means that controllers should hold just the thin layer of *glue-code*
 needed to coordinate the different parts of the application.
 
-As a rule of thumb, you should follow the 5-10-20 rule, where controllers should
-only define 5 variables or less, contain 10 actions or less and include 20 lines
-of code or less in each action. This isn't an exact science, but it should
-help you realize when code should be refactored out of the controller and
-into a service.
+Your controller methods should just call to other services, trigger some events
+if needed and then return a response, but they should not contain any actual
+business logic. If they do, refactor it out of the controller and into a service.
 
 .. best-practice::
 
-    Make your controller extend the FrameworkBundle base controller and use
-    annotations to configure routing, caching and security whenever possible.
+    Make your controller extend the ``AbstractController`` base controller
+    provided by Symfony and use annotations to configure routing, caching and
+    security whenever possible.
 
 Coupling the controllers to the underlying framework allows you to leverage
 all of its features and increases your productivity.
@@ -33,6 +32,18 @@ Overall, this means you should aggressively decouple your business logic
 from the framework while, at the same time, aggressively coupling your controllers
 and routing *to* the framework in order to get the most out of it.
 
+Controller Action Naming
+------------------------
+
+.. best-practice::
+
+    Don't add the ``Action`` suffix to the methods of the controller actions.
+
+The first Symfony versions required that controller method names ended in
+``Action`` (e.g. ``newAction()``, ``showAction()``). This suffix became optional
+when annotations were introduced for controllers. In modern Symfony applications
+this suffix is neither required nor recommended, so you can safely remove it.
+
 Routing Configuration
 ---------------------
 
@@ -41,84 +52,92 @@ configuration to the main routing configuration file:
 
 .. code-block:: yaml
 
-    # app/config/routing.yml
-    app:
-        resource: "@AppBundle/Controller/"
+    # config/routes.yaml
+    controllers:
+        resource: '../src/Controller/'
         type:     annotation
 
 This configuration will load annotations from any controller stored inside the
-``src/AppBundle/Controller/`` directory and even from its subdirectories.
-So if your application defines lots of controllers, it's perfectly ok to
-reorganize them into subdirectories:
+``src/Controller/`` directory and even from its subdirectories. So if your application
+defines lots of controllers, it's perfectly ok to reorganize them into subdirectories:
 
 .. code-block:: text
 
     <your-project>/
     ├─ ...
     └─ src/
-       └─ AppBundle/
+       ├─ ...
+       └─ Controller/
+          ├─ DefaultController.php
           ├─ ...
-          └─ Controller/
-             ├─ DefaultController.php
+          ├─ Api/
+          │  ├─ ...
+          │  └─ ...
+          └─ Backend/
              ├─ ...
-             ├─ Api/
-             │  ├─ ...
-             │  └─ ...
-             └─ Backend/
-                ├─ ...
-                └─ ...
+             └─ ...
 
 Template Configuration
 ----------------------
 
 .. best-practice::
 
-    Don't use the ``@Template()`` annotation to configure the template used by
+    Don't use the ``@Template`` annotation to configure the template used by
     the controller.
 
-The ``@Template`` annotation is useful, but also involves some magic. For
-that reason, we don't recommend using it.
+The ``@Template`` annotation is useful, but also involves some magic. We
+don't think its benefit is worth the magic, and so recommend against using
+it.
 
 Most of the time, ``@Template`` is used without any parameters, which makes
 it more difficult to know which template is being rendered. It also makes
 it less obvious to beginners that a controller should always return a Response
 object (unless you're using a view layer).
 
-Lastly, the ``@Template`` annotation uses a ``TemplateListener`` class that hooks
-into the ``kernel.view`` event dispatched by the framework. This listener introduces
-a measurable performance impact. In the sample blog application, rendering the
-homepage took 5 milliseconds using the ``$this->render()`` method and 26 milliseconds
-using the ``@Template`` annotation.
+What does the Controller look like
+----------------------------------
 
-How the Controller Looks
-------------------------
+Considering all this, here is an example of what the controller should look like
+for the homepage of our app::
 
-Considering all this, here is an example of how the controller should look
-for the homepage of our app:
+    namespace App\Controller;
 
-.. code-block:: php
+    use App\Entity\Post;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Routing\Annotation\Route;
 
-    namespace AppBundle\Controller;
-
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
-    class DefaultController extends Controller
+    class DefaultController extends AbstractController
     {
         /**
          * @Route("/", name="homepage")
          */
-        public function indexAction()
+        public function index()
         {
             $posts = $this->getDoctrine()
-                ->getRepository('AppBundle:Post')
+                ->getRepository(Post::class)
                 ->findLatest();
 
-            return $this->render('default/index.html.twig', array(
-                'posts' => $posts
-            ));
+            return $this->render('default/index.html.twig', [
+                'posts' => $posts,
+            ]);
         }
     }
+
+Fetching Services
+-----------------
+
+If you extend the base ``AbstractController`` class, you can't access services
+directly from the container via ``$this->container->get()`` or ``$this->get()``.
+Instead, you must use dependency injection to fetch services: most easily done by
+:ref:`type-hinting action method arguments <controller-accessing-services>`:
+
+.. best-practice::
+
+    Don't use ``$this->get()`` or ``$this->container->get()`` to fetch services
+    from the container. Instead, use dependency injection.
+
+By not fetching services directly from the container, you can make your services
+*private*, which has :ref:`several advantages <services-why-private>`.
 
 .. _best-practices-paramconverter:
 
@@ -133,50 +152,47 @@ to automatically query for an entity and pass it as an argument to your controll
     Use the ParamConverter trick to automatically query for Doctrine entities
     when it's simple and convenient.
 
-For example:
+For example::
 
-.. code-block:: php
-
-    use AppBundle\Entity\Post;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use App\Entity\Post;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/{id}", name="admin_post_show")
      */
-    public function showAction(Post $post)
+    public function show(Post $post)
     {
         $deleteForm = $this->createDeleteForm($post);
 
-        return $this->render('admin/post/show.html.twig', array(
-            'post'        => $post,
+        return $this->render('admin/post/show.html.twig', [
+            'post' => $post,
             'delete_form' => $deleteForm->createView(),
-        ));
+        ]);
     }
 
-Normally, you'd expect a ``$id`` argument to ``showAction``. Instead, by
-creating a new argument (``$post``) and type-hinting it with the ``Post``
-class (which is a Doctrine entity), the ParamConverter automatically queries
-for an object whose ``$id`` property matches the ``{id}`` value. It will
-also show a 404 page if no ``Post`` can be found.
+Normally, you'd expect a ``$id`` argument to ``show()``. Instead, by creating a
+new argument (``$post``) and type-hinting it with the ``Post`` class (which is a
+Doctrine entity), the ParamConverter automatically queries for an object whose
+``$id`` property matches the ``{id}`` value. It will also show a 404 page if no
+``Post`` can be found.
 
 When Things Get More Advanced
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This works without any configuration because the wildcard name ``{id}`` matches
-the name of the property on the entity. If this isn't true, or if you have
-even more complex logic, the easiest thing to do is just query for the entity
-manually. In our application, we have this situation in ``CommentController``:
-
-.. code-block:: php
+The above example works without any configuration because the wildcard name
+``{id}`` matches the name of the property on the entity. If this isn't true, or
+if you have even more complex logic, the easiest thing to do is just query for
+the entity manually. In our application, we have this situation in
+``CommentController``::
 
     /**
-     * @Route("/comment/{postSlug}/new", name = "comment_new")
+     * @Route("/comment/{postSlug}/new", name="comment_new")
      */
-    public function newAction(Request $request, $postSlug)
+    public function new(Request $request, $postSlug)
     {
         $post = $this->getDoctrine()
-            ->getRepository('AppBundle:Post')
-            ->findOneBy(array('slug' => $postSlug));
+            ->getRepository(Post::class)
+            ->findOneBy(['slug' => $postSlug]);
 
         if (!$post) {
             throw $this->createNotFoundException();
@@ -186,20 +202,18 @@ manually. In our application, we have this situation in ``CommentController``:
     }
 
 You can also use the ``@ParamConverter`` configuration, which is infinitely
-flexible:
+flexible::
 
-.. code-block:: php
-
-    use AppBundle\Entity\Post;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use App\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
-     * @Route("/comment/{postSlug}/new", name = "comment_new")
-     * @ParamConverter("post", options={"mapping": {"postSlug": "slug"}})
+     * @Route("/comment/{postSlug}/new", name="comment_new")
+     * @ParamConverter("post", options={"mapping"={"postSlug"="slug"}})
      */
-    public function newAction(Request $request, Post $post)
+    public function new(Request $request, Post $post)
     {
         // ...
     }
@@ -213,6 +227,10 @@ Pre and Post Hooks
 
 If you need to execute some code before or after the execution of your controllers,
 you can use the EventDispatcher component to
-:doc:`set up before and after filters </cookbook/event_dispatcher/before_after_filters>`.
+:doc:`set up before and after filters </event_dispatcher/before_after_filters>`.
 
-.. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+----
+
+Next: :doc:`/best_practices/templates`
+
+.. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html

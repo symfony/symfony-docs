@@ -7,11 +7,11 @@ Reference Documents
     configuration/framework
     configuration/doctrine
     configuration/security
-    configuration/assetic
     configuration/swiftmailer
     configuration/twig
     configuration/monolog
     configuration/web_profiler
+    configuration/debug
 
     configuration/kernel
 
@@ -22,6 +22,7 @@ Reference Documents
     twig_reference
 
     dic_tags
+    events
     requirements
 
 .. include:: /reference/map.rst.inc

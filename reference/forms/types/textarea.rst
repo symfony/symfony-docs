@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; textarea
+   single: Forms; Fields; TextareaType
 
-textarea Field Type
-===================
+TextareaType Field
+==================
 
 Renders a ``textarea`` HTML element.
 
@@ -15,23 +15,29 @@ Renders a ``textarea`` HTML element.
 |             | - `empty_data`_                                                        |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
+|             | - `help`_                                                              |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
+|             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
-|             | - `max_length`_ (deprecated as of 2.5)                                 |
-|             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
 |             | - `trim`_                                                              |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`text </reference/forms/types/text>`                              |
+| Parent type | :doc:`TextType </reference/forms/types/text>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TextareaType` |
 +-------------+------------------------------------------------------------------------+
 
+.. tip::
+
+    If you prefer to use an **advanced WYSIWYG editor** instead of a plain
+    textarea, consider using the IvoryCKEditorBundle community bundle. Read
+    `its documentation`_ to learn how to integrate it in your Symfony application.
+
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>` type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/attr.rst.inc
 
@@ -51,16 +57,18 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/max_length.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
+
+.. _`its documentation`: https://symfony.com/doc/current/bundles/IvoryCKEditorBundle/index.html

@@ -20,6 +20,18 @@ The component supports:
 * **booleans** - ``true`` and ``false``
 * **null** - ``null``
 
+.. caution::
+
+    A backslash (``\``) must be escaped by 4 backslashes (``\\\\``) in a string
+    and 8 backslashes (``\\\\\\\\``) in a regex::
+
+        echo $expressionLanguage->evaluate('"\\\\"'); // prints \
+        $expressionLanguage->evaluate('"a\\\\b" matches "/^a\\\\\\\\b$/"'); // returns true
+
+    Control characters (e.g. ``\n``) in expressions are replaced with
+    whitespace. To avoid this, escape the sequence with a single backslash
+    (e.g.  ``\\n``).
+
 .. _component-expression-objects:
 
 Working with Objects
@@ -42,12 +54,12 @@ to JavaScript::
     $apple = new Apple();
     $apple->variety = 'Honeycrisp';
 
-    echo $language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'fruit.variety',
         array(
             'fruit' => $apple,
         )
-    );
+    ));
 
 This will print out ``Honeycrisp``.
 
@@ -72,12 +84,12 @@ JavaScript::
 
     $robot = new Robot();
 
-    echo $language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'robot.sayHi(3)',
         array(
             'robot' => $robot,
         )
-    );
+    ));
 
 This will print out ``Hi Hi Hi!``.
 
@@ -93,9 +105,9 @@ constant::
 
     define('DB_USER', 'root');
 
-    echo $language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'constant("DB_USER")'
-    );
+    ));
 
 This will print out ``root``.
 
@@ -114,12 +126,12 @@ array keys, similar to JavaScript::
 
     $data = array('life' => 10, 'universe' => 10, 'everything' => 22);
 
-    echo $language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'data["life"] + data["universe"] + data["everything"]',
         array(
             'data' => $data,
         )
-    );
+    ));
 
 This will print out ``42``.
 
@@ -140,14 +152,14 @@ Arithmetic Operators
 
 For example::
 
-    echo $language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'life + universe + everything',
         array(
             'life' => 10,
             'universe' => 10,
             'everything' => 22,
         )
-    );
+    ));
 
 This will print out ``42``.
 
@@ -176,14 +188,14 @@ Comparison Operators
     To test if a string does *not* match a regex, use the logical ``not``
     operator in combination with the ``matches`` operator::
 
-        $language->evaluate('not ("foo" matches "/bar/")'); // returns true
+        $expressionLanguage->evaluate('not ("foo" matches "/bar/")'); // returns true
 
     You must use parenthesis because the unary operator ``not`` has precedence
     over the binary operator ``matches``.
 
 Examples::
 
-    $ret1 = $language->evaluate(
+    $ret1 = $expressionLanguage->evaluate(
         'life == everything',
         array(
             'life' => 10,
@@ -192,7 +204,7 @@ Examples::
         )
     );
 
-    $ret2 = $language->evaluate(
+    $ret2 = $expressionLanguage->evaluate(
         'life > everything',
         array(
             'life' => 10,
@@ -212,7 +224,7 @@ Logical Operators
 
 For example::
 
-    $ret = $language->evaluate(
+    $ret = $expressionLanguage->evaluate(
         'life < universe or life < everything',
         array(
             'life' => 10,
@@ -230,13 +242,13 @@ String Operators
 
 For example::
 
-    echo $language->evaluate(
+    var_dump($expressionLanguage->evaluate(
         'firstName~" "~lastName',
         array(
             'firstName' => 'Arthur',
             'lastName' => 'Dent',
         )
-    );
+    ));
 
 This would print out ``Arthur Dent``.
 
@@ -256,10 +268,10 @@ For example::
     $user = new User();
     $user->group = 'human_resources';
 
-    $inGroup = $language->evaluate(
+    $inGroup = $expressionLanguage->evaluate(
         'user.group in ["human_resources", "marketing"]',
         array(
-            'user' => $user
+            'user' => $user,
         )
     );
 
@@ -280,7 +292,7 @@ For example::
     $user = new User();
     $user->age = 34;
 
-    $language->evaluate(
+    $expressionLanguage->evaluate(
         'user.age in 18..45',
         array(
             'user' => $user,

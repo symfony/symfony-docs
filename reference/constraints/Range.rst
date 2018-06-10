@@ -11,6 +11,7 @@ Validates that a given number is *between* some minimum and maximum number.
 |                | - `minMessage`_                                                     |
 |                | - `maxMessage`_                                                     |
 |                | - `invalidMessage`_                                                 |
+|                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Range`          |
 +----------------+---------------------------------------------------------------------+
@@ -20,27 +21,15 @@ Validates that a given number is *between* some minimum and maximum number.
 Basic Usage
 -----------
 
-To verify that the "height" field of a class is between "120" and "180", you might add
-the following:
+To verify that the "height" field of a class is between "120" and "180",
+you might add the following:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/Acme/EventBundle/Resources/config/validation.yml
-        Acme\EventBundle\Entity\Participant:
-            properties:
-                height:
-                    - Range:
-                        min: 120
-                        max: 180
-                        minMessage: You must be at least {{ limit }}cm tall to enter
-                        maxMessage: You cannot be taller than {{ limit }}cm to enter
-
     .. code-block:: php-annotations
 
-        // src/Acme/EventBundle/Entity/Participant.php
-        namespace Acme\EventBundle\Entity;
+        // src/Entity/Participant.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -57,15 +46,27 @@ the following:
              protected $height;
         }
 
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Participant:
+            properties:
+                height:
+                    - Range:
+                        min: 120
+                        max: 180
+                        minMessage: You must be at least {{ limit }}cm tall to enter
+                        maxMessage: You cannot be taller than {{ limit }}cm to enter
+
     .. code-block:: xml
 
-        <!-- src/Acme/EventBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="Acme\EventBundle\Entity\Participant">
+            <class name="App\Entity\Participant">
                 <property name="height">
                     <constraint name="Range">
                         <option name="min">120</option>
@@ -79,8 +80,8 @@ the following:
 
     .. code-block:: php
 
-        // src/Acme/EventBundle/Entity/Participant.php
-        namespace Acme\EventBundle\Entity;
+        // src/Entity/Participant.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -94,6 +95,221 @@ the following:
                     'max'        => 180,
                     'minMessage' => 'You must be at least {{ limit }}cm tall to enter',
                     'maxMessage' => 'You cannot be taller than {{ limit }}cm to enter',
+                )));
+            }
+        }
+
+Date Ranges
+-----------
+
+This constraint can be used to compare ``DateTime`` objects against date ranges.
+The minimum and maximum date of the range should be given as any date string
+`accepted by the DateTime constructor`_. For example, you could check that a
+date must lie within the current year like this:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/Event.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            /**
+             * @Assert\Range(
+             *      min = "first day of January",
+             *      max = "first day of January next year"
+             * )
+             */
+            protected $startDate;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Event:
+            properties:
+                startDate:
+                    - Range:
+                        min: first day of January
+                        max: first day of January next year
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Event">
+                <property name="startDate">
+                    <constraint name="Range">
+                        <option name="min">first day of January</option>
+                        <option name="max">first day of January next year</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Event.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('startDate', new Assert\Range(array(
+                    'min' => 'first day of January',
+                    'max' => 'first day of January next year',
+                )));
+            }
+        }
+
+Be aware that PHP will use the server's configured timezone to interpret these
+dates. If you want to fix the timezone, append it to the date string:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/Event.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            /**
+             * @Assert\Range(
+             *      min = "first day of January UTC",
+             *      max = "first day of January next year UTC"
+             * )
+             */
+            protected $startDate;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Event:
+            properties:
+                startDate:
+                    - Range:
+                        min: first day of January UTC
+                        max: first day of January next year UTC
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Event">
+                <property name="startDate">
+                    <constraint name="Range">
+                        <option name="min">first day of January UTC</option>
+                        <option name="max">first day of January next year UTC</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('startDate', new Assert\Range(array(
+                    'min' => 'first day of January UTC',
+                    'max' => 'first day of January next year UTC',
+                )));
+            }
+        }
+
+The ``DateTime`` class also accepts relative dates or times. For example, you
+can check that a delivery date starts within the next five hours like this:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            /**
+             * @Assert\Range(
+             *      min = "now",
+             *      max = "+5 hours"
+             * )
+             */
+            protected $deliveryDate;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Order:
+            properties:
+                deliveryDate:
+                    - Range:
+                        min: now
+                        max: +5 hours
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Order">
+                <property name="deliveryDate">
+                    <constraint name="Range">
+                        <option name="min">now</option>
+                        <option name="max">+5 hours</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Order
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('deliveryDate', new Assert\Range(array(
+                    'min' => 'now',
+                    'max' => '+5 hours',
                 )));
             }
         }
@@ -122,16 +338,16 @@ minMessage
 
 **type**: ``string`` **default**: ``This value should be {{ limit }} or more.``
 
-The message that will be shown if the underlying value is less than the `min`_
-option.
+The message that will be shown if the underlying value is less than the
+`min`_ option.
 
 maxMessage
 ~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be {{ limit }} or less.``
 
-The message that will be shown if the underlying value is more than the `max`_
-option.
+The message that will be shown if the underlying value is more than the
+`max`_ option.
 
 invalidMessage
 ~~~~~~~~~~~~~~
@@ -141,4 +357,7 @@ invalidMessage
 The message that will be shown if the underlying value is not a number (per
 the `is_numeric`_ PHP function).
 
-.. _`is_numeric`: http://www.php.net/manual/en/function.is-numeric.php
+.. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _`is_numeric`: https://php.net/manual/en/function.is-numeric.php
+.. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php
