@@ -54,19 +54,17 @@ render
     **type**: ``array`` **default**: ``[]``
 
 Makes a request to the given internal URI or controller and returns the result.
-It's commonly used to include in a template the result of executing a controller
-(using the `controller`_ function) as explained in
-:doc:`this article </templating/embedding_controllers>`.
+It's commonly used to :doc:`embed controllers in templates </templating/embedding_controllers>`.
 
 .. code-block:: twig
 
-    {# if the controller is associated with a route, you can use it in
-       path() or url() to generate the URI used by render() #}
+    {# if the controller is associated with a route, use the path() or
+       url() functions to generate the URI used by render() #}
     {{ render(path('latest_articles', {num: 5})) }}
     {{ render(url('latest_articles', {num: 5})) }}
 
-    {# if you don't want to expose the controller with a public URL,
-       use the controller() function to define the executed controller #}
+    {# if you don't want to expose the controller with a public URL, use
+       the controller() function to define the controller to be executed #}
     {{ render(controller('App:Default:latestArticles', {num: 5})) }}
 
 The render strategy can be specified in the ``strategy`` key of the options.
@@ -86,8 +84,8 @@ render_esi
     **type**: ``array`` **default**: ``[]``
 
 It's similar to the `render`_ function and defines the same arguments. However,
-it generates an ESI tag when possible or falls back to the behavior of `render`_
-function when the app doesn't have :doc:`ESI support </http_cache/esi>`.
+it generates an ESI tag when :doc:`ESI support </http_cache/esi>` is enabled or
+falls back to the behavior of `render`_ otherwise.
 
 .. tip::
 
