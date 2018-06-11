@@ -189,7 +189,12 @@ each time you ask for it.
     .. tip::
 
         The value of the ``resource`` and ``exclude`` options can be any valid
-        `glob pattern`_.
+        `glob pattern`_. The value of the ``exclude`` option can also be an
+        array of glob patterns.
+
+        .. versionadded:: 4.2
+            The feature to pass arrays of glob patterns to the ``exclude``
+            option was introduced in Symfony 4.2.
 
     Thanks to this configuration, you can automatically use any classes from the
     ``src/`` directory as a service, without needing to manually configure

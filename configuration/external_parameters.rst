@@ -140,7 +140,7 @@ Environment Variable Processors
 .. versionadded:: 3.4
     Environment variable processors were introduced in Symfony 3.4.
 
-The values of the environment variables are considered strings by default.
+The values of environment variables are considered strings by default.
 However, your code may expect other data types, like integers or booleans.
 Symfony solves this problem with *processors*, which modify the contents of the
 given environment variables. The following example uses the integer processor to
@@ -159,7 +159,6 @@ turn the value of the ``HTTP_PORT`` env var into an integer:
 
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
@@ -169,17 +168,17 @@ turn the value of the ``HTTP_PORT`` env var into an integer:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:router http_port="%env(int:HTTP_PORT)%" />
+                <framework:router http-port="%env(int:HTTP_PORT)%" />
             </framework:config>
         </container>
 
     .. code-block:: php
 
-        // config/packages/doctrine.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'router' => array(
                 'http_port' => '%env(int:HTTP_PORT)%',
-            )
+            ),
         ));
 
 Symfony provides the following env var processors:
@@ -187,39 +186,134 @@ Symfony provides the following env var processors:
 ``env(string:FOO)``
     Casts ``FOO`` to a string:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        parameters:
-            env(SECRET): "some_secret"
-        framework:
-           secret: '%env(string:SECRET)%'
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(SECRET): 'some_secret'
+            framework:
+               secret: '%env(string:SECRET)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(SECRET)">some_secret</parameter>
+                </parameters>
+
+                <framework:config secret="%env(string:SECRET)%" />
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            $container->setParameter('env(SECRET)', 'some_secret');
+            $container->loadFromExtension('framework', array(
+                'secret' => '%env(string:SECRET)%',
+            ));
 
 ``env(bool:FOO)``
     Casts ``FOO`` to a bool:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        parameters:
-            env(HTTP_METHOD_OVERRIDE): "true"
-        framework:
-           http_method_override: '%env(bool:HTTP_METHOD_OVERRIDE)%'
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(HTTP_METHOD_OVERRIDE): 'true'
+            framework:
+               http_method_override: '%env(bool:HTTP_METHOD_OVERRIDE)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(HTTP_METHOD_OVERRIDE)">true</parameter>
+                </parameters>
+
+                <framework:config http-methode-override="%env(bool:HTTP_METHOD_OVERRIDE)%" />
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
+            $container->loadFromExtension('framework', array(
+                'http_method_override' => '%env(bool:HTTP_METHOD_OVERRIDE)%',
+            ));
 
 ``env(int:FOO)``
     Casts ``FOO`` to an int.
 
 ``env(float:FOO)``
-    Casts ``FOO`` to an float.
+    Casts ``FOO`` to a float.
 
 ``env(const:FOO)``
     Finds the const value named in ``FOO``:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        parameters:
-            env(HEALTH_CHECK_METHOD): "Symfony\Component\HttpFoundation\Request:METHOD_HEAD"
-        security:
-           access_control:
-             - { path: '^/health-check$', methods: '%env(const:HEALTH_CHECK_METHOD)%' }
+        .. code-block:: yaml
+
+            # config/packages/security.yaml
+            parameters:
+                env(HEALTH_CHECK_METHOD): 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD'
+            security:
+               access_control:
+                 - { path: '^/health-check$', methods: '%env(const:HEALTH_CHECK_METHOD)%' }
+
+        .. code-block:: xml
+
+            <!-- config/packages/security.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:security="http://symfony.com/schema/dic/security"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(HEALTH_CHECK_METHOD)">Symfony\Component\HttpFoundation\Request::METHOD_HEAD</parameter>
+                </parameters>
+
+                <security:config>
+                    <rule path="^/health-check$" methods="%env(const:HEALTH_CHECK_METHOD)%" />
+                </security:config>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/security.php
+            $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
+            $container->loadFromExtension('security', array(
+                'access_control' => array(
+                    array(
+                        'path' => '^/health-check$',
+                        'methods' => '%env(const:HEALTH_CHECK_METHOD)%',
+                    ),
+                ),
+            ));
 
 ``env(base64:FOO)``
     Decodes the content of ``FOO``, which is a base64 encoded string.
@@ -228,24 +322,83 @@ Symfony provides the following env var processors:
     Decodes the content of ``FOO``, which is a JSON encoded string. It returns
     either an array or ``null``:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        parameters:
-            env(TRUSTED_HOSTS): "['10.0.0.1', '10.0.0.2']"
-        framework:
-           trusted_hosts: '%env(json:TRUSTED_HOSTS)%'
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(TRUSTED_HOSTS): '["10.0.0.1", "10.0.0.2"]'
+            framework:
+               trusted_hosts: '%env(json:TRUSTED_HOSTS)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(TRUSTED_HOSTS)">["10.0.0.1", "10.0.0.2"]</parameter>
+                </parameters>
+
+                <framework:config trusted-hosts="%env(json:TRUSTED_HOSTS)%" />
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
+            $container->loadFromExtension('framework', array(
+                'trusted_hosts' => '%env(json:TRUSTED_HOSTS)%',
+            ));
 
 ``env(resolve:FOO)``
     Replaces the string ``FOO`` by the value of a config parameter with the
     same name:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        parameters:
-            env(HOST): '10.0.0.1'
-            env(SENTRY_DSN): "http://%env(HOST)%/project"
-        sentry:
-            dsn: '%env(resolve:SENTRY_DSN)%'
+        .. code-block:: yaml
+
+            # config/packages/sentry.yaml
+            parameters:
+                env(HOST): '10.0.0.1'
+                env(SENTRY_DSN): 'http://%env(HOST)%/project'
+            sentry:
+                dsn: '%env(resolve:SENTRY_DSN)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/sentry.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(HOST)">10.0.0.1</parameter>
+                    <parameter key="env(SENTRY_DSN)">http://%env(HOST)%/project</parameter>
+                </parameters>
+
+                <sentry:config dsn="%env(resolve:SENTRY_DSN)%" />
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/sentry.php
+            $container->setParameter('env(HOST)', '10.0.0.1');
+            $container->setParameter('env(SENTRY_DSN)', 'http://%env(HOST)%/project');
+            $container->loadFromExtension('sentry', array(
+                'dsn' => '%env(resolve:SENTRY_DSN)%',
+            ));
 
 ``env(csv:FOO)``
     Decodes the content of ``FOO``, which is a CSV-encoded string:
@@ -263,12 +416,42 @@ Symfony provides the following env var processors:
 ``env(file:FOO)``
     Returns the contents of a file whose path is the value of the ``FOO`` env var:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        parameters:
-            env(AUTH_FILE): "../config/auth.json"
-        google:
-           auth: '%env(file:AUTH_FILE)%'
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(AUTH_FILE): '../config/auth.json'
+            google:
+                auth: '%env(file:AUTH_FILE)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(AUTH_FILE)">../config/auth.json</parameter>
+                </parameters>
+
+                <google auth="%env(file:AUTH_FILE)%" />
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            $container->setParameter('env(AUTH_FILE)', '../config/auth.json');
+            $container->loadFromExtension('google', array(
+                'auth' => '%env(file:AUTH_FILE)%',
+            ));
 
 It is also possible to combine any number of processors:
 

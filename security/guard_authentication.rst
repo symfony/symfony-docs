@@ -530,6 +530,75 @@ service to be passed) and add the following logic::
         // ...
     }
 
+Avoid Authenticating the Browser on Every Request
+-------------------------------------------------
+
+If you create a Guard login system that's used by a browser and you're experiencing
+problems with your session or CSRF tokens, the cause could be bad behavior by your
+authenticator. When a Guard authenticator is meant to be used by a browser, you
+should *not* authenticate the user on *every* request. In other words, you need to
+make sure the ``supports()`` method *only* returns ``true`` when
+you actually *need* to authenticate the user. Why? Because, when ``supports()``
+returns true (and authentication is ultimately successful), for security purposes,
+the user's session is "migrated" to a new session id.
+
+This is an edge-case, and unless you're having session or CSRF token issues, you
+can ignore this. Here is an example of good and bad behavior::
+
+    public function supports(Request $request)
+    {
+        // GOOD behavior: only authenticate on a specific route
+        if ($request->attributes->get('_route') !== 'login_route' || !$request->isMethod('POST')) {
+            return true;
+        }
+
+        // e.g. your login system authenticates by the user's IP address
+        // BAD behavior: So, you decide to *always* return true so that
+        // you can check the user's IP address on every request
+        return true;
+    }
+
+The problem occurs when your browser-based authenticator tries to authenticate
+the user on *every* request - like in the IP address-based example above. There
+are two possible fixes:
+
+1) If you do *not* need authentication to be stored in the session, set ``stateless: true``
+under your firewall.
+
+2) Update your authenticator to avoid authentication if the user is already authenticated:
+
+.. code-block:: diff
+
+    // src/Security/MyIpAuthenticator.php
+    // ...
+
+    + use Symfony\Component\Security\Core\Security;
+
+    class MyIpAuthenticator
+    {
+    +     private $security;
+
+    +     public function __construct(Security $security)
+    +     {
+    +         $this->security = $security;
+    +     }
+
+        public function supports(Request $request)
+        {
+    +         // if there is already an authenticated user (likely due to the session)
+    +         // then return null and skip authentication: there is no need.
+    +         if ($this->security->getUser()) {
+    +             return false;
+    +         }
+
+    +         // the user is not logged in, so the authenticator should continue
+    +         return true;
+        }
+    }
+
+If you use autowiring, the ``Security``  service will automatically be passed to
+your authenticator.
+
 Frequently Asked Questions
 --------------------------
 

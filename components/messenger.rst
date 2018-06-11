@@ -41,7 +41,7 @@ Concepts
 Bus
 ---
 
-The bus is used to dispatch messages. The behaviour of the bus is in its ordered
+The bus is used to dispatch messages. The behavior of the bus is in its ordered
 middleware stack. The component comes with a set of middleware that you can use.
 
 When using the message bus with Symfony's FrameworkBundle, the following middleware
@@ -66,9 +66,9 @@ Example::
 
     $result = $bus->dispatch(new MyMessage(/* ... */));
 
-.. note:
+.. note::
 
-    Every middleware needs to implement the ``MiddlewareInterface`` interface.
+    Every middleware needs to implement the ``MiddlewareInterface``.
 
 Handlers
 --------
@@ -92,16 +92,16 @@ that will do the required processing for your message::
 Transports
 ----------
 
-In order to send and receive messages, you will have to configure a transport. An
-transport will be responsible of communicating with your message broker or 3rd parties.
+In order to send and receive messages, you will have to configure a transport. A
+transport will be responsible for communicating with your message broker or 3rd parties.
 
-Your own sender
+Your own Sender
 ~~~~~~~~~~~~~~~
 
 Using the ``SenderInterface``, you can easily create your own message sender.
-Let's say you already have an ``ImportantAction`` message going through the
-message bus and handled by a handler. Now, you also want to send this message as
-an email.
+Imagine that you already have an ``ImportantAction`` message going through the
+message bus and being handled by a handler. Now, you also want to send this
+message as an email.
 
 First, create your sender::
 
@@ -138,13 +138,13 @@ First, create your sender::
        }
     }
 
-Your own receiver
+Your own Receiver
 ~~~~~~~~~~~~~~~~~
 
 A receiver is responsible for receiving messages from a source and dispatching
 them to the application.
 
-Let's say you already processed some "orders" in your application using a
+Imagine you already processed some "orders" in your application using a
 ``NewOrder`` message. Now you want to integrate with a 3rd party or a legacy
 application but you can't use an API and need to use a shared CSV file with new
 orders.
@@ -186,10 +186,10 @@ First, create your receiver::
        }
     }
 
-Receiver and Sender on the same bus
+Receiver and Sender on the same Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To allow us to receive and send messages on the same bus and prevent an infinite
+To allow sending and receiving messages on the same bus and prevent an infinite
 loop, the message bus is equipped with the ``WrapIntoReceivedMessage`` middleware.
 It will wrap the received messages into ``ReceivedMessage`` objects and the
 ``SendMessageMiddleware`` middleware will know it should not route these
