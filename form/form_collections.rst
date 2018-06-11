@@ -23,8 +23,8 @@ that Task, right inside the same form.
 First, suppose that each ``Task`` belongs to multiple ``Tag`` objects. Start
 by creating a simple ``Task`` class::
 
-    // src/AppBundle/Entity/Task.php
-    namespace AppBundle\Entity;
+    // src/Entity/Task.php
+    namespace App\Entity;
 
     use Doctrine\Common\Collections\ArrayCollection;
 
@@ -64,8 +64,8 @@ by creating a simple ``Task`` class::
 Now, create a ``Tag`` class. As you saw above, a ``Task`` can have many ``Tag``
 objects::
 
-    // src/AppBundle/Entity/Tag.php
-    namespace AppBundle\Entity;
+    // src/Entity/Tag.php
+    namespace App\Entity;
 
     class Tag
     {
@@ -84,10 +84,10 @@ objects::
 
 Then, create a form class so that a ``Tag`` object can be modified by the user::
 
-    // src/AppBundle/Form/Type/TagType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/TagType.php
+    namespace App\Form\Type;
 
-    use AppBundle\Entity\Tag;
+    use App\Entity\Tag;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -105,11 +105,6 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
                 'data_class' => Tag::class,
             ));
         }
-
-        public function getName()
-        {
-            return 'tag';
-        }
     }
 
 With this, you have enough to render a tag form by itself. But since the end
@@ -117,15 +112,16 @@ goal is to allow the tags of a ``Task`` to be modified right inside the task
 form itself, create a form for the ``Task`` class.
 
 Notice that you embed a collection of ``TagType`` forms using the
-:doc:`collection </reference/forms/types/collection>` field type::
+:doc:`CollectionType </reference/forms/types/collection>` field::
 
-    // src/AppBundle/Form/Type/TaskType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/TaskType.php
+    namespace App\Form\Type;
 
-    use AppBundle\Entity\Task;
+    use App\Entity\Task;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
     class TaskType extends AbstractType
     {
@@ -133,9 +129,9 @@ Notice that you embed a collection of ``TagType`` forms using the
         {
             $builder->add('description');
 
-            $builder->add('tags', 'collection', array(
-                'type' => new TagType(),
-                'options' => array('label' => false),
+            $builder->add('tags', CollectionType::class, array(
+                'entry_type' => TagType::class,
+                'entry_options' => array('label' => false),
             ));
         }
 
@@ -145,27 +141,22 @@ Notice that you embed a collection of ``TagType`` forms using the
                 'data_class' => Task::class,
             ));
         }
-
-        public function getName()
-        {
-            return 'task';
-        }
     }
 
-In your controller, you'll now initialize a new instance of ``TaskType``::
+In your controller, you'll create a new form from the ``TaskType``::
 
-    // src/AppBundle/Controller/TaskController.php
-    namespace AppBundle\Controller;
+    // src/Controller/TaskController.php
+    namespace App\Controller;
 
-    use AppBundle\Entity\Task;
-    use AppBundle\Entity\Tag;
-    use AppBundle\Form\Type\TaskType;
+    use App\Entity\Task;
+    use App\Entity\Tag;
+    use App\Form\Type\TaskType;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
     class TaskController extends Controller
     {
-        public function newAction(Request $request)
+        public function new(Request $request)
         {
             $task = new Task();
 
@@ -179,7 +170,7 @@ In your controller, you'll now initialize a new instance of ``TaskType``::
             $task->getTags()->add($tag2);
             // end dummy code
 
-            $form = $this->createForm(new TaskType(), $task);
+            $form = $this->createForm(TaskType::class, $task);
 
             $form->handleRequest($request);
 
@@ -203,7 +194,7 @@ zero tags when first created).
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/task/new.html.twig #}
+        {# templates/task/new.html.twig #}
 
         {# ... #}
 
@@ -224,7 +215,7 @@ zero tags when first created).
 
     .. code-block:: html+php
 
-        <!-- src/AppBundle/Resources/views/Task/new.html.php -->
+        <!-- templates/task/new.html.php -->
 
         <!-- ... -->
 
@@ -266,7 +257,7 @@ great, your user can't actually add any new tags yet.
     rendering the form in the template if you render the whole form at
     once (e.g ``form_widget(form)``). To fix this you can set this directive
     to a higher value (either via a ``php.ini`` file or via :phpfunction:`ini_set`,
-    for example in ``app/autoload.php``) or render each form field by hand
+    for example in ``public/index.php``) or render each form field by hand
     using ``form_row()``.
 
 .. _form-collections-new-prototype:
@@ -285,7 +276,7 @@ type expects to receive exactly two, otherwise an error will be thrown:
 ``This form should not contain extra fields``. To make this flexible,
 add the ``allow_add`` option to your collection field::
 
-    // src/AppBundle/Form/Type/TaskType.php
+    // src/Form/Type/TaskType.php
 
     // ...
     use Symfony\Component\Form\FormBuilderInterface;
@@ -294,10 +285,10 @@ add the ``allow_add`` option to your collection field::
     {
         $builder->add('description');
 
-        $builder->add('tags', 'collection', array(
-            'type'         => new TagType(),
-            'options'      => array('label' => false),
-            'allow_add'    => true,
+        $builder->add('tags', CollectionType::class, array(
+            'entry_type' => TagType::class,
+            'entry_options' => array('label' => false),
+            'allow_add' => true,
         ));
     }
 
@@ -362,8 +353,8 @@ will be show next):
     var $collectionHolder;
 
     // setup an "add a tag" link
-    var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
-    var $newLinkLi = $('<li></li>').append($addTagLink);
+    var $addTagButton = $('<button type="button" class="add_tag_link">Add a tag</a>');
+    var $newLinkLi = $('<li></li>').append($addTagButton);
 
     jQuery(document).ready(function() {
         // Get the ul that holds the collection of tags
@@ -376,10 +367,7 @@ will be show next):
         // index when inserting a new item (e.g. 2)
         $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
-        $addTagLink.on('click', function(e) {
-            // prevent the link from creating a "#" on the URL
-            e.preventDefault();
-
+        $addTagButton.on('click', function(e) {
             // add a new tag form (see next code block)
             addTagForm($collectionHolder, $newLinkLi);
         });
@@ -442,8 +430,8 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
 
-    // src/AppBundle/Entity/Task.php
-    namespace AppBundle\Entity;
+    // src/Entity/Task.php
+    namespace App\Entity;
 
     // ...
     class Task
@@ -463,14 +451,14 @@ for the tags in the ``Task`` class::
 
 Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false``::
 
-    // src/AppBundle/Form/Type/TaskType.php
+    // src/Form/Type/TaskType.php
 
     // ...
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
-        $builder->add('tags', 'collection', array(
+        $builder->add('tags', CollectionType::class, array(
             // ...
             'by_reference' => false,
         ));
@@ -497,7 +485,7 @@ you will learn about next!).
     Doctrine:
 
         A new entity was found through the relationship
-        ``AppBundle\Entity\Task#tags`` that was not configured to
+        ``App\Entity\Task#tags`` that was not configured to
         cascade persist operations for entity...
 
     To fix this, you may choose to "cascade" the persist operation automatically
@@ -508,7 +496,7 @@ you will learn about next!).
 
         .. code-block:: php-annotations
 
-            // src/AppBundle/Entity/Task.php
+            // src/Entity/Task.php
 
             // ...
 
@@ -519,8 +507,8 @@ you will learn about next!).
 
         .. code-block:: yaml
 
-            # src/AppBundle/Resources/config/doctrine/Task.orm.yml
-            AppBundle\Entity\Task:
+            # src/Resources/config/doctrine/Task.orm.yml
+            App\Entity\Task:
                 type: entity
                 # ...
                 oneToMany:
@@ -530,14 +518,14 @@ you will learn about next!).
 
         .. code-block:: xml
 
-            <!-- src/AppBundle/Resources/config/doctrine/Task.orm.xml -->
+            <!-- src/Resources/config/doctrine/Task.orm.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                 http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-                <entity name="AppBundle\Entity\Task">
+                <entity name="App\Entity\Task">
                     <!-- ... -->
                     <one-to-many field="tags" target-entity="Tag">
                         <cascade>
@@ -559,7 +547,7 @@ you will learn about next!).
     which is called by the form type since ``by_reference`` is set to
     ``false``::
 
-        // src/AppBundle/Entity/Task.php
+        // src/Entity/Task.php
 
         public function addTag(Tag $tag)
         {
@@ -575,7 +563,7 @@ you will learn about next!).
     If you're going for ``addTask()``, just make sure you have an appropriate method
     that looks something like this::
 
-        // src/AppBundle/Entity/Tag.php
+        // src/Entity/Tag.php
 
         // ...
         public function addTask(Task $task)
@@ -588,21 +576,21 @@ you will learn about next!).
 .. _form-collections-remove:
 
 Allowing Tags to be Removed
-----------------------------
+---------------------------
 
 The next step is to allow the deletion of a particular item in the collection.
 The solution is similar to allowing tags to be added.
 
 Start by adding the ``allow_delete`` option in the form Type::
 
-    // src/AppBundle/Form/Type/TaskType.php
+    // src/Form/Type/TaskType.php
 
     // ...
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
-        $builder->add('tags', 'collection', array(
+        $builder->add('tags', CollectionType::class, array(
             // ...
             'allow_delete' => true,
         ));
@@ -610,7 +598,7 @@ Start by adding the ``allow_delete`` option in the form Type::
 
 Now, you need to put some code into the ``removeTag()`` method of ``Task``::
 
-    // src/AppBundle/Entity/Task.php
+    // src/Entity/Task.php
 
     // ...
     class Task
@@ -628,7 +616,7 @@ Template Modifications
 
 The ``allow_delete`` option means that if an item of a collection
 isn't sent on submission, the related data is removed from the collection
-on the server. In order for this to work in an HTML form, you must remove 
+on the server. In order for this to work in an HTML form, you must remove
 the DOM element for the collection item to be removed, before submitting
 the form.
 
@@ -660,13 +648,10 @@ The ``addTagFormDeleteLink()`` function will look something like this:
 .. code-block:: javascript
 
     function addTagFormDeleteLink($tagFormLi) {
-        var $removeFormA = $('<a href="#">delete this tag</a>');
-        $tagFormLi.append($removeFormA);
+        var $removeFormButton = $('<button type="button">Delete this tag</a>');
+        $tagFormLi.append($removeFormButton);
 
-        $removeFormA.on('click', function(e) {
-            // prevent the link from creating a "#" on the URL
-            e.preventDefault();
-
+        $removeFormButton.on('click', function(e) {
             // remove the li for the tag form
             $tagFormLi.remove();
         });
@@ -693,16 +678,16 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     you'll need to do more work for the removed tags to persist correctly.
 
     In this case, you can modify the controller to remove the relationship
-    on the removed tag. This assumes that you have some ``editAction()`` which
+    on the removed tag. This assumes that you have some ``edit()`` action which
     is handling the "update" of your Task::
 
-        // src/AppBundle/Controller/TaskController.php
+        // src/Controller/TaskController.php
 
-        use AppBundle\Entity\Task;
+        use App\Entity\Task;
         use Doctrine\Common\Collections\ArrayCollection;
 
         // ...
-        public function editAction($id, Request $request)
+        public function edit($id, Request $request)
         {
             $entityManager = $this->getDoctrine()->getManager();
             $task = $entityManager->getRepository(Task::class)->find($id);
@@ -718,7 +703,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                 $originalTags->add($tag);
             }
 
-            $editForm = $this->createForm(new TaskType(), $task);
+            $editForm = $this->createForm(TaskType::class, $task);
 
             $editForm->handleRequest($request);
 

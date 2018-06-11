@@ -4,26 +4,22 @@
 Switching the Profiler Storage
 ==============================
 
-By default the profile stores the collected data in files in the ``%kernel.cache_dir%/profiler/`` directory.
-You can control the storage being used through the ``dsn``, ``username``,
-``password`` and ``lifetime`` options. For example, the following configuration
-uses MySQL as the storage for the profiler with a lifetime of one hour:
+The profiler stores the collected data in the ``%kernel.cache_dir%/profiler/``
+directory. If you want to use another location to store the profiles, define the
+``dsn`` option of the ``framework.profiler``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/dev/web_profiler.yaml
         framework:
             profiler:
-                dsn:      'mysql:host=localhost;dbname=%database_name%'
-                username: '%database_user%'
-                password: '%database_password%'
-                lifetime: 3600
+                dsn: 'file:/tmp/symfony/profiler'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/dev/web_profiler.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -34,36 +30,21 @@ uses MySQL as the storage for the profiler with a lifetime of one hour:
                 http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:profiler
-                    dsn="mysql:host=localhost;dbname=%database_name%"
-                    username="%database_user%"
-                    password="%database_password%"
-                    lifetime="3600"
-                />
+                <framework:profiler dsn="file:/tmp/symfony/profiler" />
             </framework:config>
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/dev/web_profiler.php
 
         // ...
         $container->loadFromExtension('framework', array(
             'profiler' => array(
-                'dsn' => 'mysql:host=localhost;dbname=%database_name%',
-                'username' => '%database_user',
-                'password' => '%database_password%',
-                'lifetime' => 3600,
+                'dsn' => 'file:/tmp/symfony/profiler',
             ),
         ));
 
-The :doc:`HttpKernel component </components/http_kernel>` currently
-supports the following profiler storage drivers:
-
-* file
-* sqlite
-* mysql
-* mongodb
-* memcache
-* memcached
-* redis
+You can also create your own profile storage service implementing the
+:class:`Symfony\\Component\\HttpKernel\\Profiler\\ProfilerStorageInterface` and
+overriding the ``profiler.storage`` service.

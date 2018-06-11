@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; locale
+   single: Forms; Fields; LocaleType
 
-locale Field Type
-=================
+LocaleType Field
+================
 
-The ``locale`` type is a subset of the ``ChoiceType`` that allows the user
+The ``LocaleType`` is a subset of the ``ChoiceType`` that allows the user
 to select from a large list of locales (language+country). As an added bonus,
 the locale names are displayed in the language of the user.
 
@@ -17,18 +17,19 @@ for French/France).
 
     The locale of your user is guessed using :phpmethod:`Locale::getDefault`
 
-Unlike the ``choice`` type, you don't need to specify a ``choices`` or
-``choice_list`` option as the field type automatically uses a large list
-of locales. You *can* specify either of these options manually, but then
-you should just use the ``choice`` type directly.
+Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
+field type automatically uses a large list of locales. You *can* specify these options
+manually, but then you should just use the ``ChoiceType`` directly.
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
+| Options     | - `choice_translation_locale`_                                         |
++-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
 | options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
+| Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
@@ -38,22 +39,27 @@ you should just use the ``choice`` type directly.
 |             | - `preferred_choices`_                                                 |
 |             | - `trim`_                                                              |
 |             |                                                                        |
-|             | from the :doc:`form </reference/forms/types/form>` type                |
+|             | from the :doc:`FormType </reference/forms/types/form>`                 |
 |             |                                                                        |
 |             | - `data`_                                                              |
 |             | - `disabled`_                                                          |
 |             | - `empty_data`_                                                        |
+|             | - `help`_                                                              |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
-|             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`choice </reference/forms/types/choice>`                          |
+| Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\LocaleType`   |
 +-------------+------------------------------------------------------------------------+
+
+Field Options
+-------------
+
+.. include:: /reference/forms/types/options/choice_translation_locale.rst.inc
 
 Overridden Options
 ------------------
@@ -66,11 +72,15 @@ choices
 The choices option defaults to all locales. It uses the default locale to
 specify the language.
 
+.. caution::
+
+    If you want to override the built-in choices of the locale type, you
+    will also have to set the ``choice_loader`` option to ``null``.
+
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`choice </reference/forms/types/choice>`
-type:
+These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
@@ -86,8 +96,7 @@ type:
 
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -105,6 +114,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
@@ -112,8 +123,6 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

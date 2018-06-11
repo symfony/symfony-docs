@@ -4,11 +4,6 @@
 Authentication
 ==============
 
-.. versionadded:: 2.6
-    The ``TokenStorageInterface`` was introduced in Symfony 2.6. Prior, you
-    had to use the ``getToken()`` method of the
-    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
-
 When a request points to a secured area, and one of the listeners from the
 firewall map is able to extract the user's credentials from the current
 :class:`Symfony\\Component\\HttpFoundation\\Request` object, it should create
@@ -311,7 +306,7 @@ logged into your website.  It is important to distinguish this action from
 non-interactive authentication methods, such as:
 
 * authentication based on your session.
-* authentication using a HTTP basic or HTTP digest header.
+* authentication using a HTTP basic header.
 
 You could listen on the ``security.interactive_login`` event, for example, in
 order to give your user a welcome flash message every time they log in.

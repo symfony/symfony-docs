@@ -1,17 +1,21 @@
 .. index::
-   single: Forms; Fields; checkbox
+   single: Forms; Fields; CheckboxType
 
-checkbox Field Type
-===================
+CheckboxType Field
+==================
 
 Creates a single input checkbox. This should always be used for a field
 that has a boolean value: if the box is checked, the field will be set to
-true, if the box is unchecked, the value will be set to false.
+true, if the box is unchecked, the value will be set to false. Optionally
+you can specify an array of values that, if submitted, will be evaluated
+to "false" as well (this differs from what HTTP defines, but can be handy
+if you want to handle submitted values like "0" or "false").
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``checkbox`` field                                           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `value`_                                                             |
+| Options     | - `false_values`_                                                      |
+|             | - `value`_                                                             |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                          |
 | options     | - `empty_data`_                                                        |
@@ -20,14 +24,14 @@ true, if the box is unchecked, the value will be set to false.
 | options     | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
+|             | - `help`_                                                              |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
-|             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                              |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |
 +-------------+------------------------------------------------------------------------+
@@ -37,13 +41,23 @@ Example Usage
 
 .. code-block:: php
 
-    $builder->add('public', 'checkbox', array(
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    // ...
+
+    $builder->add('public', CheckboxType::class, array(
         'label'    => 'Show this entry publicly?',
         'required' => false,
     ));
 
 Field Options
 -------------
+
+false_values
+~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``array(null)``
+
+An array of values to be interpreted as ``false``.
 
 .. include:: /reference/forms/types/options/value.rst.inc
 
@@ -57,8 +71,7 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -68,6 +81,8 @@ type:
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
@@ -75,8 +90,6 @@ type:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

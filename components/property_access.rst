@@ -32,10 +32,6 @@ default configuration::
 
     $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-.. versionadded:: 2.3
-    The :method:`Symfony\\Component\\PropertyAccess\\PropertyAccess::createPropertyAccessor`
-    method was introduced in Symfony 2.3. Previously, it was called ``getPropertyAccessor()``.
-
 Reading from Arrays
 -------------------
 
@@ -215,9 +211,6 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
         ->getPropertyAccessor();
 
     var_dump($propertyAccessor->getValue($person, 'wouter')); // array(...)
-
-.. versionadded:: 2.3
-    The use of magic ``__call()`` method was introduced in Symfony 2.3.
 
 .. caution::
 

@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; integer
+   single: Forms; Fields; IntegerType
 
-integer Field Type
-==================
+IntegerType Field
+=================
 
 Renders an input "number" field. Basically, this is a text field that's
 good at handling data that's in an integer form. The input ``number`` field
@@ -27,16 +27,16 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 |             | - `empty_data`_                                                       |
 |             | - `error_bubbling`_                                                   |
 |             | - `error_mapping`_                                                    |
+|             | - `help`_                                                             |
 |             | - `invalid_message`_                                                  |
 |             | - `invalid_message_parameters`_                                       |
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
 |             | - `label_format`_                                                     |
 |             | - `mapped`_                                                           |
-|             | - `read_only`_                                                        |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                             |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                         |
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\IntegerType` |
 +-------------+-----------------------------------------------------------------------+
@@ -93,8 +93,7 @@ submitted value (via ``rounding_mode``). This option inherits from
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -112,6 +111,8 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
@@ -123,7 +124,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

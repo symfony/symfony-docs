@@ -43,7 +43,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php app/console debug:event-dispatcher kernel.request
+    $ php bin/console debug:event-dispatcher kernel.request
 
 ``kernel.controller``
 ~~~~~~~~~~~~~~~~~~~~~
@@ -74,7 +74,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php app/console debug:event-dispatcher kernel.controller
+    $ php bin/console debug:event-dispatcher kernel.controller
 
 ``kernel.view``
 ~~~~~~~~~~~~~~~
@@ -108,7 +108,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php app/console debug:event-dispatcher kernel.view
+    $ php bin/console debug:event-dispatcher kernel.view
 
 ``kernel.response``
 ~~~~~~~~~~~~~~~~~~~
@@ -135,7 +135,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php app/console debug:event-dispatcher kernel.response
+    $ php bin/console debug:event-dispatcher kernel.response
 
 ``kernel.finish_request``
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -162,7 +162,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php app/console debug:event-dispatcher kernel.finish_request
+    $ php bin/console debug:event-dispatcher kernel.finish_request
 
 ``kernel.terminate``
 ~~~~~~~~~~~~~~~~~~~~
@@ -183,7 +183,7 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php app/console debug:event-dispatcher kernel.terminate
+    $ php bin/console debug:event-dispatcher kernel.terminate
 
 .. _kernel-kernel.exception:
 
@@ -217,22 +217,35 @@ sent as response::
     that forwards the ``Request`` to a given controller defined by the
     ``exception_listener.controller`` parameter.
 
+Symfony uses the following logic to determine the HTTP status code of the
+response:
+
+* If :method:`Symfony\\Component\\HttpFoundation\\Response::isClientError`,
+  :method:`Symfony\\Component\\HttpFoundation\\Response::isServerError` or
+  :method:`Symfony\\Component\\HttpFoundation\\Response::isRedirect` is true,
+  then the status code on your ``Response`` object is used;
+
+* If the original exception implements
+  :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
+  then ``getStatusCode()`` is called on the exception and used (the headers
+  from ``getHeaders()`` are also added);
+
+* If both of the above aren't true, then a 500 status code is used.
+
 .. note::
 
-    Symfony uses the following logic to determine the HTTP status code of the
-    response:
+    If you want to overwrite the status code of the exception response, which
+    you should not without a good reason, call
+    ``GetResponseForExceptionEvent::allowCustomResponseCode()`` first and then
+    set the status code on the response::
 
-    * If :method:`Symfony\\Component\\HttpFoundation\\Response::isClientError`,
-      :method:`Symfony\\Component\\HttpFoundation\\Response::isServerError` or
-      :method:`Symfony\\Component\\HttpFoundation\\Response::isRedirect` is true,
-      then the status code on your ``Response`` object is used;
+        $event->allowCustomResponseCode();
+        $response = new Response('No Content', 204);
+        $event->setResponse($response);
 
-    * If the original exception implements
-      :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpExceptionInterface`,
-      then ``getStatusCode()`` is called on the exception and used (the headers
-      from ``getHeaders()`` are also added);
-
-    * If both of the above aren't true, then a 500 status code is used.
+    The status code sent to the client in the above example will be ``204``. If
+    ``$event->allowCustomResponseCode()`` is omitted, then the kernel will set
+    an appropriate status code based on the type of exception thrown.
 
 .. seealso::
 
@@ -243,6 +256,6 @@ their priorities:
 
 .. code-block:: terminal
 
-    $ php app/console debug:event-dispatcher kernel.exception
+    $ php bin/console debug:event-dispatcher kernel.exception
 
 .. _`param converters`: https://symfony.com/doc/master/bundles/SensioFrameworkExtraBundle/annotations/converters.html

@@ -28,6 +28,7 @@ The following configuration code shows how you can configure two entity managers
 
     .. code-block:: yaml
 
+        # config/packages/doctrine.yaml
         doctrine:
             dbal:
                 default_connection: default
@@ -55,15 +56,25 @@ The following configuration code shows how you can configure two entity managers
                     default:
                         connection: default
                         mappings:
-                            AppBundle:  ~
-                            AcmeStoreBundle: ~
+                            Main:
+                                is_bundle: false
+                                type: annotation
+                                dir: '%kernel.project_dir%/src/Entity/Main'
+                                prefix: 'App\Entity\Main'
+                                alias: Main
                     customer:
                         connection: customer
                         mappings:
-                            AcmeCustomerBundle: ~
+                            Customer:
+                                is_bundle: false
+                                type: annotation
+                                dir: '%kernel.project_dir%/src/Entity/Customer'
+                                prefix: 'App\Entity\Customer'
+                                alias: Customer
 
     .. code-block:: xml
 
+        <!-- config/packages/doctrine.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -98,12 +109,25 @@ The following configuration code shows how you can configure two entity managers
 
                 <doctrine:orm default-entity-manager="default">
                     <doctrine:entity-manager name="default" connection="default">
-                        <doctrine:mapping name="AppBundle" />
-                        <doctrine:mapping name="AcmeStoreBundle" />
+                        <doctrine:mapping
+                            name="Main"
+                            is_bundle="false"
+                            type="annotation"
+                            dir="%kernel.project_dir%/src/Entity/Main"
+                            prefix="App\Entity\Main"
+                            alias="Main"
+                        />
                     </doctrine:entity-manager>
 
                     <doctrine:entity-manager name="customer" connection="customer">
-                        <doctrine:mapping name="AcmeCustomerBundle" />
+                        <doctrine:mapping
+                            name="Customer"
+                            is_bundle="false"
+                            type="annotation"
+                            dir="%kernel.project_dir%/src/Entity/Customer"
+                            prefix="App\Entity\Customer"
+                            alias="Customer"
+                        />
                     </doctrine:entity-manager>
                 </doctrine:orm>
             </doctrine:config>
@@ -111,6 +135,7 @@ The following configuration code shows how you can configure two entity managers
 
     .. code-block:: php
 
+        // config/packages/doctrine.php
         $container->loadFromExtension('doctrine', array(
             'dbal' => array(
                 'default_connection' => 'default',
@@ -142,14 +167,25 @@ The following configuration code shows how you can configure two entity managers
                     'default' => array(
                         'connection' => 'default',
                         'mappings'   => array(
-                            'AppBundle'  => null,
-                            'AcmeStoreBundle' => null,
+                            'Main'  => array(
+                                is_bundle => false,
+                                type => 'annotation',
+                                dir => '%kernel.project_dir%/src/Entity/Main',
+                                prefix => 'App\Entity\Main',
+                                alias => 'Main',
+                            )
                         ),
                     ),
                     'customer' => array(
                         'connection' => 'customer',
                         'mappings'   => array(
-                            'AcmeCustomerBundle' => null,
+                            'Customer'  => array(
+                                is_bundle => false,
+                                type => 'annotation',
+                                dir => '%kernel.project_dir%/src/Entity/Customer',
+                                prefix => 'App\Entity\Customer',
+                                alias => 'Customer',
+                            )
                         ),
                     ),
                 ),
@@ -158,8 +194,8 @@ The following configuration code shows how you can configure two entity managers
 
 In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
-AppBundle and AcmeStoreBundle, while the ``customer`` entity manager manages
-entities in the AcmeCustomerBundle. You've also defined two connections, one
+``src/Entity/Main`` directory, while the ``customer`` entity manager manages
+entities in ``src/Entity/Customer``. You've also defined two connections, one
 for each entity manager.
 
 .. note::
@@ -173,35 +209,42 @@ When working with multiple connections to create your databases:
 .. code-block:: terminal
 
     # Play only with "default" connection
-    $ php app/console doctrine:database:create
+    $ php bin/console doctrine:database:create
 
     # Play only with "customer" connection
-    $ php app/console doctrine:database:create --connection=customer
+    $ php bin/console doctrine:database:create --connection=customer
 
-When working with multiple entity managers to update your schema:
+When working with multiple entity managers to generate migrations:
 
 .. code-block:: terminal
 
     # Play only with "default" mappings
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
 
     # Play only with "customer" mappings
-    $ php app/console doctrine:schema:update --force --em=customer
+    $ php bin/console doctrine:migrations:diff --em=customer
+    $ php bin/console doctrine:migrations:migrate --em=customer
 
 If you *do* omit the entity manager's name when asking for it,
 the default entity manager (i.e. ``default``) is returned::
 
+    // ...
+
+    use Doctrine\ORM\EntityManagerInterface;
+
     class UserController extends Controller
     {
-        public function indexAction()
+        public function index(EntityManagerInterface $entityManager)
         {
-            // All three return the "default" entity manager
-            $entityManager = $this->get('doctrine')->getManager();
-            $entityManager = $this->get('doctrine')->getManager('default');
+            // These methods also return the default entity manager, but it's preferred
+            // to get it by injecting EntityManagerInterface in the action method
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->getDoctrine()->getManager('default');
             $entityManager = $this->get('doctrine.orm.default_entity_manager');
 
             // Both of these return the "customer" entity manager
-            $customerEntityManager = $this->get('doctrine')->getManager('customer');
+            $customerEntityManager = $this->getDoctrine()->getManager('customer');
             $customerEntityManager = $this->get('doctrine.orm.customer_entity_manager');
         }
     }
@@ -214,25 +257,26 @@ The same applies to repository calls::
 
     use AcmeStoreBundle\Entity\Customer;
     use AcmeStoreBundle\Entity\Product;
+    // ...
 
     class UserController extends Controller
     {
-        public function indexAction()
+        public function index()
         {
             // Retrieves a repository managed by the "default" em
-            $products = $this->get('doctrine')
+            $products = $this->getDoctrine()
                 ->getRepository(Product::class)
                 ->findAll()
             ;
 
             // Explicit way to deal with the "default" em
-            $products = $this->get('doctrine')
+            $products = $this->getDoctrine()
                 ->getRepository(Product::class, 'default')
                 ->findAll()
             ;
 
             // Retrieves a repository managed by the "customer" em
-            $customers = $this->get('doctrine')
+            $customers = $this->getDoctrine()
                 ->getRepository(Customer::class, 'customer')
                 ->findAll()
             ;

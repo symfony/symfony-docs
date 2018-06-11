@@ -10,9 +10,6 @@ Symfony full-stack framework and can be configured under the ``debug`` key
 in your application configuration. When using XML, you must use the
 ``http://symfony.com/schema/dic/debug`` namespace.
 
-.. versionadded:: 2.6
-    The DebugBundle was introduced in Symfony 2.6.
-
 .. tip::
 
    The XSD schema is available at
@@ -22,6 +19,7 @@ Configuration
 -------------
 
 * `max_items`_
+* `min_depth`_
 * `max_string_length`_
 * `dump_destination`_
 
@@ -33,6 +31,16 @@ max_items
 This is the maximum number of items to dump. Setting this option to ``-1``
 disables the limit.
 
+min_depth
+~~~~~~~~~
+
+**type**: ``integer`` **default**: ``1``
+
+Configures the minimum tree depth until which all items are guaranteed to
+be cloned. After this depth is reached, only ``max_items`` items will be
+cloned. The default value is ``1``, which is consistent with older Symfony
+versions.
+
 max_string_length
 ~~~~~~~~~~~~~~~~~
 
@@ -40,6 +48,8 @@ max_string_length
 
 This option configures the maximum string length before truncating the
 string. The default value (``-1``) means that strings are never truncated.
+
+.. _configuration-debug-dump_destination:
 
 dump_destination
 ~~~~~~~~~~~~~~~~
@@ -56,13 +66,13 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/debug.yaml
         debug:
            dump_destination: php://stderr
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/debug.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/debug"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -76,7 +86,7 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/debug.php
         $container->loadFromExtension('debug', array(
            'dump_destination' => 'php://stderr',
         ));

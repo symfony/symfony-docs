@@ -4,21 +4,10 @@
 Best Practices for Reusable Bundles
 ===================================
 
-There are two types of bundles:
-
-* Application-specific bundles: only used to build your application;
-* Reusable bundles: meant to be shared across many projects.
-
 This article is all about how to structure your **reusable bundles** so that
-they're easy to configure and extend. Many of these recommendations do not
-apply to application bundles because you'll want to keep those as simple
-as possible. For application bundles, just follow the practices shown throughout
-the guides.
-
-.. seealso::
-
-    The best practices for application-specific bundles are discussed in
-    :doc:`/best_practices/introduction`.
+they're easy to configure and extend. Reusable bundles are those meant to be
+shared privately across many company projects or publicly so any Symfony project
+can install them.
 
 .. index::
    pair: Bundle; Naming conventions
@@ -28,10 +17,10 @@ the guides.
 Bundle Name
 -----------
 
-A bundle is also a PHP namespace. The namespace must follow the `PSR-0`_ or
-`PSR-4`_ interoperability standards for PHP namespaces and class names: it starts
-with a vendor segment, followed by zero or more category segments, and it ends
-with the namespace short name, which must end with ``Bundle``.
+A bundle is also a PHP namespace. The namespace must follow the `PSR-4`_
+interoperability standard for PHP namespaces and class names: it starts with a
+vendor segment, followed by zero or more category segments, and it ends with the
+namespace short name, which must end with ``Bundle``.
 
 A namespace becomes a bundle as soon as you add a bundle class to it. The
 bundle class name must follow these simple rules:
@@ -124,8 +113,8 @@ Service Container Extensions                         ``DependencyInjection/``
 Doctrine ORM entities (when not using annotations)   ``Entity/``
 Doctrine ODM documents (when not using annotations)  ``Document/``
 Event Listeners                                      ``EventListener/``
-Configuration                                        ``Resources/config/``
-Web Resources (CSS, JS, images)                      ``Resources/public/``
+Configuration (routes, services, etc.)               ``Resources/config/``
+Web Assets (CSS, JS, images)                         ``Resources/public/``
 Translation files                                    ``Resources/translations/``
 Validation (when not using annotations)              ``Resources/config/validation/``
 Serialization (when not using annotations)           ``Resources/config/serialization/``
@@ -177,6 +166,92 @@ the ``Tests/`` directory. Tests should follow the following principles:
     A test suite must not contain ``AllTests.php`` scripts, but must rely on the
     existence of a ``phpunit.xml.dist`` file.
 
+Continuous Integration
+----------------------
+
+Testing bundle code continuously, including all its commits and pull requests,
+is a good practice called Continuous Integration. There are several services
+providing this feature for free for open source projects. The most popular
+service for Symfony bundles is called `Travis CI`_.
+
+Here is the recommended configuration file (``.travis.yml``) for Symfony bundles,
+which test the two latest :doc:`LTS versions </contributing/community/releases>`
+of Symfony and the latest beta release:
+
+.. code-block:: yaml
+
+    language: php
+    sudo: false
+    cache:
+        directories:
+            - $HOME/.composer/cache/files
+            - $HOME/symfony-bridge/.phpunit
+
+    env:
+        global:
+            - PHPUNIT_FLAGS="-v"
+            - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
+
+    matrix:
+        fast_finish: true
+        include:
+              # Minimum supported dependencies with the latest and oldest PHP version
+            - php: 7.2
+              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
+            - php: 7.0
+              env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
+
+              # Test the latest stable release
+            - php: 7.0
+            - php: 7.1
+            - php: 7.2
+              env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+
+              # Test LTS versions. This makes sure we do not use Symfony packages with version greater
+              # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
+            - php: 7.2
+              env: DEPENDENCIES="symfony/lts:^2"
+            - php: 7.2
+              env: DEPENDENCIES="symfony/lts:^3"
+
+              # Latest commit to master
+            - php: 7.2
+              env: STABILITY="dev"
+
+        allow_failures:
+              # Dev-master is allowed to fail.
+            - env: STABILITY="dev"
+
+    before_install:
+        - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+        - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
+        - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+
+    install:
+        # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
+        - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
+        - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
+        - ./vendor/bin/simple-phpunit install
+
+    script:
+        - composer validate --strict --no-check-lock
+        # simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
+        # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
+        - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
+
+Consider using the `Travis cron`_ tool to make sure your project is built even if
+there are no new pull requests or commits.
+
+Installation
+------------
+
+Bundles should set ``"type": "symfony-bundle"`` in their ``composer.json`` file.
+With this, :doc:`Symfony Flex </setup/flex>` will be able to automatically
+enable your bundle when it's installed.
+
+If your bundle requires any setup (e.g. configuration, new files, changes to
+`.gitignore`, etc), then you should create a `Symfony Flex recipe`_.
+
 Documentation
 -------------
 
@@ -203,22 +278,32 @@ following standardized instructions in your ``README.md`` file.
         Installation
         ============
 
-        Step 1: Download the Bundle
-        ---------------------------
+        Applications that use Symfony Flex
+        ----------------------------------
+
+        Open a command console, enter your project directory and execute:
+
+        ```console
+        $ composer require <package-name>
+        ```
+
+        Applications that don't use Symfony Flex
+        ----------------------------------------
+
+        ### Step 1: Download the Bundle
 
         Open a command console, enter your project directory and execute the
         following command to download the latest stable version of this bundle:
 
         ```console
-        $ composer require <package-name> "~1"
+        $ composer require <package-name>
         ```
 
         This command requires you to have Composer installed globally, as explained
         in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
         of the Composer documentation.
 
-        Step 2: Enable the Bundle
-        -------------------------
+        ### Step 2: Enable the Bundle
 
         Then, enable the bundle by adding it to the list of registered bundles
         in the `app/AppKernel.php` file of your project:
@@ -249,21 +334,33 @@ following standardized instructions in your ``README.md`` file.
         Installation
         ============
 
+        Applications that use Symfony Flex
+        ----------------------------------
+
+        Open a command console, enter your project directory and execute:
+
+        .. code-block:: bash
+
+            $ composer require <package-name>
+
+        Applications that don't use Symfony Flex
+        ----------------------------------------
+
         Step 1: Download the Bundle
-        ---------------------------
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         Open a command console, enter your project directory and execute the
         following command to download the latest stable version of this bundle:
 
         .. code-block:: terminal
 
-            $ composer require <package-name> "~1"
+            $ composer require <package-name>
 
         This command requires you to have Composer installed globally, as explained
         in the `installation chapter`_ of the Composer documentation.
 
         Step 2: Enable the Bundle
-        -------------------------
+        ~~~~~~~~~~~~~~~~~~~~~~~~~
 
         Then, enable the bundle by adding it to the list of registered bundles
         in the ``app/AppKernel.php`` file of your project:
@@ -342,13 +439,13 @@ The end user can provide values in any configuration file:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/services.yaml
         parameters:
             acme_blog.author.email: 'fabien@example.com'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -363,7 +460,7 @@ The end user can provide values in any configuration file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/services.php
         $container->setParameter('acme_blog.author.email', 'fabien@example.com');
 
 Retrieve the configuration parameters in your code from the container::
@@ -385,7 +482,14 @@ If the bundle defines services, they must be prefixed with the bundle alias.
 For example, AcmeBlogBundle services must be prefixed with ``acme_blog``.
 
 In addition, services not meant to be used by the application directly, should
-be :ref:`defined as private <container-private-services>`.
+be :ref:`defined as private <container-private-services>`. For public services,
+:ref:`aliases should be created <service-autowiring-alias>` from the interface/class
+to the service id. For example, in MonologBundle, an alias is created from
+``Psr\Log\LoggerInterface`` to ``logger`` so that the ``LoggerInterface`` type-hint
+can be used for autowiring.
+
+Services should not use autowiring or autoconfiguration. Instead, all services should
+be defined explicitly.
 
 .. seealso::
 
@@ -415,68 +519,18 @@ The ``composer.json`` file should include at least the following metadata:
     a string (or array of strings) with a `valid license identifier`_, such as ``MIT``.
 
 ``autoload``
-    This information is used by Symfony to load the classes of the bundle. The
-    `PSR-4`_ autoload standard is recommended for modern bundles, but `PSR-0`_
-    standard is also supported.
+    This information is used by Symfony to load the classes of the bundle. It's
+    recommended to use the `PSR-4`_ autoload standard.
 
 In order to make it easier for developers to find your bundle, register it on
 `Packagist`_, the official repository for Composer packages.
-
-Custom Validation Constraints
------------------------------
-
-Starting with Symfony 2.5, a new Validation API was introduced. In fact,
-there are 3 modes, which the user can configure in their project:
-
-* 2.4: the original 2.4 and earlier validation API;
-* 2.5: the new 2.5 and later validation API;
-* 2.5-BC: the new 2.5 API with a backwards-compatible layer so that the
-  2.4 API still works. This is only available in PHP 5.3.9+.
-
-.. note::
-
-    Starting with Symfony 2.7, the support for the 2.4 API has been
-    dropped and the minimal PHP version required for Symfony was
-    increased to 5.3.9. If your bundles requires Symfony >=2.7, you
-    don't need to take care about the 2.4 API anymore.
-
-As a bundle author, you'll want to support *both* API's, since some users
-may still be using the 2.4 API. Specifically, if your bundle adds a violation
-directly to the :class:`Symfony\\Component\\Validator\\Context\\ExecutionContext`
-(e.g. like in a custom validation constraint), you'll need to check for which
-API is being used. The following code, would work for *all* users::
-
-    use Symfony\Component\Validator\ConstraintValidator;
-    use Symfony\Component\Validator\Constraint;
-    use Symfony\Component\Validator\Context\ExecutionContextInterface;
-    // ...
-
-    class ContainsAlphanumericValidator extends ConstraintValidator
-    {
-        public function validate($value, Constraint $constraint)
-        {
-            if ($this->context instanceof ExecutionContextInterface) {
-                // the 2.5 API
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('%string%', $value)
-                    ->addViolation()
-                ;
-            } else {
-                // the 2.4 API
-                $this->context->addViolation(
-                    $constraint->message,
-                    array('%string%' => $value)
-                );
-            }
-        }
-    }
 
 Resources
 ---------
 
 If the bundle references any resources (config files, translation files, etc.),
 don't use physical paths (e.g. ``__DIR__/config/services.xml``) but logical
-paths (e.g. ``@AppBundle/Resources/config/services.xml``).
+paths (e.g. ``@FooBundle/Resources/config/services.xml``).
 
 The logical paths are required because of the bundle overriding mechanism that
 lets you override any resource/file of any bundle. See :ref:`http-kernel-resource-locator`
@@ -484,7 +538,7 @@ for more details about transforming physical paths into logical paths.
 
 Beware that templates use a simplified version of the logical path shown above.
 For example, an ``index.html.twig`` template located in the ``Resources/views/Default/``
-directory of the AppBundle, is referenced as ``@App/Default/index.html.twig``.
+directory of the FooBundle, is referenced as ``@Foo/Default/index.html.twig``.
 
 Learn more
 ----------
@@ -492,9 +546,11 @@ Learn more
 * :doc:`/bundles/extension`
 * :doc:`/bundles/configuration`
 
-.. _`PSR-0`: https://www.php-fig.org/psr/psr-0/
 .. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
+.. _`Symfony Flex recipe`: https://github.com/symfony/recipes
 .. _`Semantic Versioning Standard`: https://semver.org/
 .. _`Packagist`: https://packagist.org/
 .. _`choose any license`: https://choosealicense.com/
 .. _`valid license identifier`: https://spdx.org/licenses/
+.. _`Travis CI`: https://travis-ci.org/
+.. _`Travis Cron`: https://docs.travis-ci.com/user/cron-jobs/

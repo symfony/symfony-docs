@@ -25,14 +25,13 @@ Switching a Channel to a different Handler
 
 Now, suppose you want to log the ``security`` channel to a different file.
 To do this, just create a new handler and configure it to log only messages
-from the ``security`` channel. You might add this in ``config.yml`` to log
-in all environments, or just ``config_prod.yml`` to happen only in ``prod``:
+from the ``security`` channel:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 security:
@@ -49,7 +48,7 @@ in all environments, or just ``config_prod.yml`` to happen only in ``prod``:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/prod/monolog.xml-->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -76,7 +75,7 @@ in all environments, or just ``config_prod.yml`` to happen only in ``prod``:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'security' => array(
@@ -132,20 +131,19 @@ specified.
 Configure Additional Channels without Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-With MonologBundle 2.4 you can configure additional channels without the
-need to tag your services:
+You can also configure additional channels without the need to tag your services:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/prod/monolog.yaml
         monolog:
             channels: ['foo', 'bar']
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -162,7 +160,7 @@ need to tag your services:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'channels' => array(
                 'foo',

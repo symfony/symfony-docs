@@ -9,23 +9,78 @@ you write functional tests that monitor your production servers, you might
 want to write tests on the profiling data as it gives you a great way to check
 various things and enforce some metrics.
 
-:doc:`The Symfony Profiler </profiler>` gathers a lot of data for
-each request. Use this data to check the number of database calls, the time
-spent in the framework, etc. But before writing assertions, enable the profiler
-and check that the profiler is indeed available (it is enabled by default in
-the ``test`` environment)::
+.. _speeding-up-tests-by-not-collecting-profiler-data:
 
-    class HelloControllerTest extends WebTestCase
+Enabling the Profiler in Tests
+------------------------------
+
+Collecting data with :doc:`the Symfony Profiler </profiler>` can slow down your
+tests significantly. That's why Symfony disables it by default:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/test/web_profiler.yaml
+
+        # ...
+        framework:
+            profiler: { enabled: true, collect: false }
+
+    .. code-block:: xml
+
+        <!-- config/packages/test/web_profiler.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                        http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+
+            <framework:config>
+                <framework:profiler enabled="true" collect="false" />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/test/web_profiler.php
+
+        // ...
+        $container->loadFromExtension('framework', array(
+            // ...
+            'profiler' => array(
+                'enabled' => true,
+                'collect' => false,
+            ),
+        ));
+
+Setting ``collect`` to ``true`` enables the profiler for all tests. However, if
+you need the profiler just in a few tests, you can keep it disabled globally and
+enable the profiler individually on each test by calling
+``$client->enableProfiler()``.
+
+Testing the Profiler Information
+--------------------------------
+
+The data collected by the Symfony Profiler can be used to check the number of
+database calls, the time spent in the framework, etc. All this information is
+provided by the collectors obtained through the ``$client->getProfile()`` call::
+
+    class LuckyControllerTest extends WebTestCase
     {
-        public function testIndex()
+        public function testRandomNumber()
         {
             $client = static::createClient();
 
-            // enable the profiler for the next request
+            // enable the profiler only for the next request (if you make
+            // new requests, you must call to this method again)
             // (it does nothing if the profiler is not available)
             $client->enableProfiler();
 
-            $crawler = $client->request('GET', '/hello/Fabien');
+            $crawler = $client->request('GET', '/lucky/number');
 
             // ... write some assertions about the Response
 
@@ -59,12 +114,6 @@ finish. It's easy to achieve if you embed the token in the error message::
         )
     );
 
-.. caution::
-
-    The profiler store can be different depending on the environment
-    (especially if you use the SQLite store, which is the default configured
-    one).
-
 .. note::
 
     The profiler information is available even if you :doc:`insulate the client </testing/insulating_clients>`
@@ -74,52 +123,3 @@ finish. It's easy to achieve if you embed the token in the error message::
 
     Read the API for built-in :doc:`data collectors </profiler/data_collector>`
     to learn more about their interfaces.
-
-Speeding up Tests by not Collecting Profiler Data
--------------------------------------------------
-
-To avoid collecting data in each test you can set the ``collect`` parameter
-to false:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config_test.yml
-
-        # ...
-        framework:
-            profiler:
-                enabled: true
-                collect: false
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
-                        http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <!-- ... -->
-
-            <framework:config>
-                <framework:profiler enabled="true" collect="false" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-
-        // ...
-        $container->loadFromExtension('framework', array(
-            'profiler' => array(
-                'enabled' => true,
-                'collect' => false,
-            ),
-        ));
-
-In this way only tests that call ``$client->enableProfiler()`` will collect data.

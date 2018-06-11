@@ -1,16 +1,6 @@
 Isbn
 ====
 
-.. versionadded:: 2.3
-    The Isbn constraint was introduced in Symfony 2.3.
-
-.. caution::
-
-    The ``isbn10`` and ``isbn13`` options are deprecated since Symfony 2.5
-    and will be removed in Symfony 3.0. Use the ``type`` option instead.
-    Furthermore, when using the ``type`` option, lowercase characters are no
-    longer supported starting in Symfony 2.5, as they are not allowed in ISBNs.
-
 This constraint validates that an `International Standard Book Number (ISBN)`_
 is either a valid ISBN-10 or a valid ISBN-13.
 
@@ -39,8 +29,8 @@ on an object that will contain an ISBN.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Book.php
-        namespace AppBundle\Entity;
+        // src/Entity/Book.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -57,8 +47,8 @@ on an object that will contain an ISBN.
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Book:
+        # config/validator/validation.yaml
+        App\Entity\Book:
             properties:
                 isbn:
                     - Isbn:
@@ -67,13 +57,13 @@ on an object that will contain an ISBN.
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Book">
+            <class name="App\Entity\Book">
                 <property name="isbn">
                     <constraint name="Isbn">
                         <option name="type">isbn10</option>
@@ -85,8 +75,8 @@ on an object that will contain an ISBN.
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Book.php
-        namespace AppBundle\Entity;
+        // src/Entity/Book.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

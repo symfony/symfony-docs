@@ -36,23 +36,27 @@ And the new front controller::
     // example.com/web/front.php
     require_once __DIR__.'/../vendor/autoload.php';
 
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing;
-    use Symfony\Component\HttpKernel;
     use Symfony\Component\EventDispatcher\EventDispatcher;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\RequestStack;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel;
+    use Symfony\Component\Routing;
 
     $request = Request::createFromGlobals();
+    $requestStack = new RequestStack();
     $routes = include __DIR__.'/../src/app.php';
 
     $context = new Routing\RequestContext();
     $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
-    $resolver = new HttpKernel\Controller\ControllerResolver();
+
+    $controllerResolver = new HttpKernel\Controller\ControllerResolver();
+    $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
 
     $dispatcher = new EventDispatcher();
-    $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher));
+    $dispatcher->addSubscriber(new HttpKernel\EventListener\RouterListener($matcher, $requestStack));
 
-    $framework = new Simplex\Framework($dispatcher, $resolver);
+    $framework = new Simplex\Framework($dispatcher, $controllerResolver, $requestStack, $argumentResolver);
 
     $response = $framework->handle($request);
     $response->send();
@@ -73,9 +77,9 @@ make your error management configurable::
     $dispatcher->addSubscriber(new HttpKernel\EventListener\ExceptionListener($errorHandler));
 
 ``ExceptionListener`` gives you a ``FlattenException`` instance instead of the
-thrown ``Exception`` instance to ease exception manipulation and display. It
-can take any valid controller as an exception handler, so you can create an
-ErrorController class instead of using a Closure::
+thrown ``Exception`` or ``Error`` instance to ease exception manipulation and
+display. It can take any valid controller as an exception handler, so you can
+create an ErrorController class instead of using a Closure::
 
     $listener = new HttpKernel\EventListener\ExceptionListener(
         'Calendar\Controller\ErrorController::exceptionAction'
@@ -92,7 +96,7 @@ The error controller reads as follows::
 
     class ErrorController
     {
-        public function exceptionAction(FlattenException $exception)
+        public function exception(FlattenException $exception)
         {
             $msg = 'Something went wrong! ('.$exception->getMessage().')';
 
@@ -130,7 +134,7 @@ instead of a full Response object::
 
     class LeapYearController
     {
-        public function indexAction(Request $request, $year)
+        public function index(Request $request, $year)
         {
             $leapYear = new LeapYear();
             if ($leapYear->isLeapYear($year)) {
@@ -150,9 +154,8 @@ only if needed::
     namespace Simplex;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-    use Symfony\Component\HttpKernel\KernelEvents;
+    use Symfony\Component\HttpFoundation\Response;
 
     class StringResponseListener implements EventSubscriberInterface
     {
@@ -167,7 +170,7 @@ only if needed::
 
         public static function getSubscribedEvents()
         {
-            return array(KernelEvents::VIEW => 'onView');
+            return array('kernel.view' => 'onView');
         }
     }
 

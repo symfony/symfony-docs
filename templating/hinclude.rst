@@ -23,8 +23,11 @@ tags:
             array('renderer' => 'hinclude')
         ) ?>
 
+        <!-- The url() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate() with UrlGeneratorInterface::ABSOLUTE_URL
+             passed as the third argument. -->
         <?php echo $view['actions']->render(
-            $view['router']->generate('...'),
+            $view['router']->url('...'),
             array('renderer' => 'hinclude')
         ) ?>
 
@@ -41,14 +44,14 @@ tags:
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/packages/framework.yaml
             framework:
                 # ...
                 fragments: { path: /_fragment }
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- config/packages/framework.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -65,7 +68,7 @@ tags:
 
         .. code-block:: php
 
-            // app/config/config.php
+            // config/packages/framework.php
             $container->loadFromExtension('framework', array(
                 // ...
                 'fragments' => array('path' => '/_fragment'),
@@ -78,7 +81,7 @@ in your application configuration:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             templating:
@@ -86,7 +89,7 @@ in your application configuration:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -103,7 +106,7 @@ in your application configuration:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'templating' => array(

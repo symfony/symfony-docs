@@ -11,7 +11,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/default/new.html.twig #}
+        {# templates/default/new.html.twig #}
         {{ form_start(form) }}
             {{ form_errors(form) }}
 
@@ -21,7 +21,7 @@ of code. Of course, you'll usually need much more flexibility when rendering:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/default/new.html.php -->
+        <!-- templates/default/new.html.php -->
         <?php echo $view['form']->start($form) ?>
             <?php echo $view['form']->errors($form) ?>
 
@@ -60,7 +60,7 @@ output can be customized on many different levels.
             <?php echo $form->vars['value']->getTask() ?>
 
 .. index::
-    single: Forms; Rendering each field by hand
+   single: Forms; Rendering each field by hand
 
 Rendering each Field by Hand
 ----------------------------
@@ -82,12 +82,14 @@ used the ``form_row()`` helper:
                 {{ form_label(form.task) }}
                 {{ form_errors(form.task) }}
                 {{ form_widget(form.task) }}
+                {{ form_help(form.task) }}
             </div>
 
             <div>
                 {{ form_label(form.dueDate) }}
                 {{ form_errors(form.dueDate) }}
                 {{ form_widget(form.dueDate) }}
+                {{ form_help(form.dueDate) }}
             </div>
 
             <div>

@@ -12,19 +12,10 @@ you how to load your users from the database via a Doctrine entity.
 Introduction
 ------------
 
-.. tip::
-
-    Before you start, you should check out `FOSUserBundle`_. This external
-    bundle allows you to load users from the database (like you'll learn here)
-    *and* gives you built-in routes & controllers for things like login,
-    registration and forgot password. But, if you need to heavily customize
-    your user system *or* if you want to learn how things work, this tutorial
-    is even better.
-
 Loading users via a Doctrine entity has 2 basic steps:
 
 #. :ref:`Create your User entity <security-crete-user-entity>`
-#. :ref:`Configure security.yml to load from your entity <security-config-entity-provider>`
+#. :ref:`Configure security.yaml to load from your entity <security-config-entity-provider>`
 
 Afterwards, you can learn more about :ref:`forbidding inactive users <security-advanced-user-interface>`,
 :ref:`using a custom query <authenticating-someone-with-a-custom-entity-provider>`
@@ -36,19 +27,25 @@ and :ref:`user serialization to the session <security-serialize-equatable>`
 1) Create your User Entity
 --------------------------
 
-For this entry, suppose that you already have a ``User`` entity inside an
-``AppBundle`` with the following fields: ``id``, ``username``, ``password``,
+Before you begin, run this command to add support for the Symfony security:
+
+.. code-block:: terminal
+
+    $ composer require symfony/security-bundle
+
+For this entry, suppose that you already have a ``User`` entity
+with the following fields: ``id``, ``username``, ``password``,
 ``email`` and ``isActive``::
 
-    // src/AppBundle/Entity/User.php
-    namespace AppBundle\Entity;
+    // src/Entity/User.php
+    namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\UserInterface;
 
     /**
      * @ORM\Table(name="app_users")
-     * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+     * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
      */
     class User implements UserInterface, \Serializable
     {
@@ -151,7 +148,8 @@ Next, make sure to :ref:`create the database table <doctrine-creating-the-databa
 
 .. code-block:: terminal
 
-    $ php app/console doctrine:schema:update --force
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
 
 What's this UserInterface?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -182,10 +180,9 @@ What do the serialize and unserialize Methods do?
 At the end of each request, the User object is serialized to the session.
 On the next request, it's unserialized. To help PHP do this correctly, you
 need to implement ``Serializable``. But you don't need to serialize everything:
-you only need a few fields (the ones shown above plus a few extra if you
-decide to implement :ref:`AdvancedUserInterface <security-advanced-user-interface>`).
-On each request, the ``id`` is used to query for a fresh ``User`` object
-from the database.
+you only need a few fields (the ones shown above plus a few extra if you added
+other important fields to your user entity). On each request, the ``id`` is used
+to query for a fresh ``User`` object from the database.
 
 Want to know more? See :ref:`security-serialize-equatable`.
 
@@ -196,7 +193,7 @@ Want to know more? See :ref:`security-serialize-equatable`.
 ----------------------------------------------
 
 Now that you have a ``User`` entity that implements ``UserInterface``, you
-just need to tell Symfony's security system about it in ``security.yml``.
+just need to tell Symfony's security system about it in ``security.yaml``.
 
 In this example, the user will enter their username and password via HTTP
 basic authentication. Symfony will query for a ``User`` entity matching
@@ -206,10 +203,10 @@ the username and then check the password (more on passwords in a moment):
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             encoders:
-                AppBundle\Entity\User:
+                App\Entity\User:
                     algorithm: bcrypt
 
             # ...
@@ -217,7 +214,7 @@ the username and then check the password (more on passwords in a moment):
             providers:
                 our_db_provider:
                     entity:
-                        class: AppBundle:User
+                        class: App\Entity\User
                         property: username
                         # if you're using multiple entity managers
                         # manager_name: customer
@@ -232,7 +229,7 @@ the username and then check the password (more on passwords in a moment):
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -241,14 +238,14 @@ the username and then check the password (more on passwords in a moment):
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <encoder class="AppBundle\Entity\User" algorithm="bcrypt" />
+                <encoder class="App\Entity\User" algorithm="bcrypt" />
 
                 <!-- ... -->
 
                 <provider name="our_db_provider">
                     <!-- if you're using multiple entity managers, add:
                          manager-name="customer" -->
-                    <entity class="AppBundle:User" property="username" />
+                    <entity class="App\Entity\User" property="username" />
                 </provider>
 
                 <firewall name="main" pattern="^/" provider="our_db_provider">
@@ -261,8 +258,8 @@ the username and then check the password (more on passwords in a moment):
 
     .. code-block:: php
 
-        // app/config/security.php
-        use AppBundle\Entity\User;
+        // config/packages/security.php
+        use App\Entity\User;
 
         $container->loadFromExtension('security', array(
             'encoders' => array(
@@ -276,7 +273,7 @@ the username and then check the password (more on passwords in a moment):
             'providers' => array(
                 'our_db_provider' => array(
                     'entity' => array(
-                        'class'    => 'AppBundle:User',
+                        'class'    => User::class,
                         'property' => 'username',
                     ),
                 ),
@@ -295,12 +292,10 @@ the username and then check the password (more on passwords in a moment):
 First, the ``encoders`` section tells Symfony to expect that the passwords
 in the database will be encoded using ``bcrypt``. Second, the ``providers``
 section creates a "user provider" called ``our_db_provider`` that knows to
-query from your ``AppBundle:User`` entity by the ``username`` property. The
+query from your ``App\Entity\User`` entity by the ``username`` property. The
 name ``our_db_provider`` isn't important: it just needs to match the value
 of the ``provider`` key under your firewall. Or, if you don't set the ``provider``
 key under your firewall, the first "user provider" is automatically used.
-
-.. include:: /security/_ircmaxwell_password-compat.rst.inc
 
 Creating your First User
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -325,17 +320,23 @@ and password ``admin`` (which has been encoded).
 
 .. sidebar:: Do you need to use a Salt property?
 
-    If you use ``bcrypt``, no. Otherwise, yes. All passwords must be hashed
-    with a salt, but ``bcrypt`` does this internally. Since this tutorial
-    *does* use ``bcrypt``, the ``getSalt()`` method in ``User`` can just
-    return ``null`` (it's not used). If you use a different algorithm, you'll
-    need to uncomment the ``salt`` lines in the ``User`` entity and add a
-    persisted ``salt`` property.
+    If you use ``bcrypt`` or ``argon2i``, no. Otherwise, yes. All passwords must
+    be hashed with a salt, but ``bcrypt`` and ``argon2i`` do this internally.
+    Since this tutorial *does* use ``bcrypt``, the ``getSalt()`` method in
+    ``User`` can just return ``null`` (it's not used). If you use a different
+    algorithm, you'll need to uncomment the ``salt`` lines in the ``User``
+    entity and add a persisted ``salt`` property.
 
 .. _security-advanced-user-interface:
 
 Forbid Inactive Users (AdvancedUserInterface)
 ---------------------------------------------
+
+.. versionadded:: 4.1
+    The ``AdvancedUserInterface`` class was deprecated in Symfony 4.1 and no
+    alternative is provided. If you need this functionality in your application,
+    implement :doc:`a custom user checker </security/user_checkers>` that
+    performs the needed checks.
 
 If a User's ``isActive`` property is set to ``false`` (i.e. ``is_active``
 is 0 in the database), the user will still be able to login to the site
@@ -346,7 +347,7 @@ To exclude inactive users, change your ``User`` class to implement
 This extends :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`,
 so you only need the new interface::
 
-    // src/AppBundle/Entity/User.php
+    // src/Entity/User.php
 
     use Symfony\Component\Security\Core\User\AdvancedUserInterface;
     // ...
@@ -433,19 +434,16 @@ both are unique in the database. Unfortunately, the native entity provider
 is only able to handle querying via a single property on the user.
 
 To do this, make your ``UserRepository`` implement a special
-:class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`. This
-interface requires three methods: ``loadUserByUsername($username)``,
-``refreshUser(UserInterface $user)``, and ``supportsClass($class)``::
+:class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`. This
+interface only requires one method: ``loadUserByUsername($username)``::
 
-    // src/AppBundle/Repository/UserRepository.php
-    namespace AppBundle\Repository;
+    // src/Repository/UserRepository.php
+    namespace App\Repository;
 
-    use Symfony\Component\Security\Core\User\UserInterface;
-    use Symfony\Component\Security\Core\User\UserProviderInterface;
-    use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+    use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
     use Doctrine\ORM\EntityRepository;
 
-    class UserRepository extends EntityRepository implements UserProviderInterface
+    class UserRepository extends EntityRepository implements UserLoaderInterface
     {
         public function loadUserByUsername($username)
         {
@@ -456,55 +454,27 @@ interface requires three methods: ``loadUserByUsername($username)``,
                 ->getQuery()
                 ->getOneOrNullResult();
         }
-
-        public function refreshUser(UserInterface $user)
-        {
-            $class = get_class($user);
-            if (!$this->supportsClass($class)) {
-                throw new UnsupportedUserException(
-                    sprintf(
-                        'Instances of "%s" are not supported.',
-                        $class
-                    )
-                );
-            }
-
-            return $this->find($user->getId());
-        }
-
-        public function supportsClass($class)
-        {
-            return $this->getEntityName() === $class
-                || is_subclass_of($class, $this->getEntityName());
-        }
     }
 
-For more details on these methods, see :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`.
-
-.. tip::
-
-    Don't forget to add the repository class to the
-    :doc:`mapping definition of your entity </doctrine/repository>`.
-
 To finish this, just remove the ``property`` key from the user provider in
-``security.yml``:
+``security.yaml``:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
             providers:
                 our_db_provider:
                     entity:
-                        class: AppBundle:User
+                        class: App\Entity\User
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -516,21 +486,23 @@ To finish this, just remove the ``property`` key from the user provider in
                 <!-- ... -->
 
                 <provider name="our_db_provider">
-                    <entity class="AppBundle:User" />
+                    <entity class="App\Entity\User" />
                 </provider>
             </config>
         </srv:container>
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
+        use App\Entity\User;
+
         $container->loadFromExtension('security', array(
             // ...
 
             'providers' => array(
                 'our_db_provider' => array(
                     'entity' => array(
-                        'class' => 'AppBundle:User',
+                        'class' => User::class,
                     ),
                 ),
             ),

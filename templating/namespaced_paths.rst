@@ -4,48 +4,43 @@
 How to Use and Register Namespaced Twig Paths
 =============================================
 
-Usually, when you refer to a template, you'll use the Twig namespaced paths, which
-are automatically registered for your bundles:
+Usually, when you refer to a template, you'll use the relative path from the
+main ``templates/`` dir at the root of the project:
 
 .. code-block:: twig
 
-    {% extends "@App/layout.html.twig" %}
-    {{ include('@App/Foo/bar.html.twig') }}
+    {# this template is located in templates/layout.html.twig #}
+    {% extends "layout.html.twig" %}
 
-.. note::
+    {# this template is located in templates/user/profile.html.twig #}
+    {{ include('user/profile.html.twig') }}
 
-    In the past, Symfony used a different syntax to refer to templates. This
-    format, which uses colons (``:``) to separate each template path section, is
-    less consistent and has worse performance than the Twig syntax. For reference
-    purposes, this is the equivalent notation of the previous example:
-
-    .. code-block:: twig
-
-        {# the following template syntax is no longer recommended #}
-        {% extends "AppBundle::layout.html.twig" %}
-        {{ include('AppBundle:Foo:bar.html.twig') }}
+If the application defines lots of templates and stores them in deep nested
+directories, you may consider using **Twig namespaces**, which create shortcuts
+to template directories.
 
 Registering your own Namespaces
 -------------------------------
 
-You can also register your own custom namespaces. Suppose that you're using
-some third-party library that includes Twig templates that live in
-``vendor/acme/foo-bar/templates``. First, register a namespace for this
-directory:
+Suppose that you're using some third-party library that includes Twig templates
+that live in ``vendor/acme/foo-bar/templates/``. This path is too long, so you
+can define a ``foo_bar`` Twig namespace as a shortcut.
+
+First, register a namespace for this directory:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             # ...
             paths:
-                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': foo_bar
+                '%kernel.project_dir%/vendor/acme/foo-bar/templates': foo_bar
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -54,29 +49,23 @@ directory:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%">
-                <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
+                <twig:path namespace="foo_bar">%kernel.project_dir%/vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'paths' => array(
-                '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar',
+                '%kernel.project_dir%/vendor/acme/foo-bar/templates' => 'foo_bar',
             ),
         ));
 
-.. caution::
-
-    Prior to 2.8, templates in custom namespaces are not pre-compiled by
-    Symfony's cache warmup process. They are compiled on demand. This may
-    cause problems if two simultaneous requests are trying to use the
-    template for the first time.
-
-The registered namespace is called ``foo_bar``, which refers to the
-``vendor/acme/foo-bar/templates`` directory. Assuming there's a file
-called ``sidebar.twig`` in that directory, you can use it easily:
+The registered namespace is called ``foo_bar``, but you must prefix the ``@``
+character when using it in templates (that's how Twig can differentiate
+namespaces from regular paths). Assuming there's a file called ``sidebar.twig``
+in the ``vendor/acme/foo-bar/templates/`` directory, you can refer to it as:
 
 .. code-block:: twig
 
@@ -85,7 +74,7 @@ called ``sidebar.twig`` in that directory, you can use it easily:
 Multiple Paths per Namespace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also assign several paths to the same template namespace. The order in
+A single Twig namespace can be associated with multiple paths. The order in
 which paths are configured is very important, because Twig will always load
 the first template that exists, starting from the first configured path. This
 feature can be used as a fallback mechanism to load generic templates when the
@@ -95,17 +84,17 @@ specific template doesn't exist.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             # ...
             paths:
-                '%kernel.root_dir%/../vendor/acme/themes/theme1': theme
-                '%kernel.root_dir%/../vendor/acme/themes/theme2': theme
-                '%kernel.root_dir%/../vendor/acme/themes/common': theme
+                '%kernel.project_dir%/vendor/acme/themes/theme1': theme
+                '%kernel.project_dir%/vendor/acme/themes/theme2': theme
+                '%kernel.project_dir%/vendor/acme/themes/common': theme
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -114,20 +103,20 @@ specific template doesn't exist.
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <twig:config debug="%kernel.debug%" strict-variables="%kernel.debug%">
-                <twig:path namespace="theme">%kernel.root_dir%/../vendor/acme/themes/theme1</twig:path>
-                <twig:path namespace="theme">%kernel.root_dir%/../vendor/acme/themes/theme2</twig:path>
-                <twig:path namespace="theme">%kernel.root_dir%/../vendor/acme/themes/common</twig:path>
+                <twig:path namespace="theme">%kernel.project_dir%/vendor/acme/themes/theme1</twig:path>
+                <twig:path namespace="theme">%kernel.project_dir%/vendor/acme/themes/theme2</twig:path>
+                <twig:path namespace="theme">%kernel.project_dir%/vendor/acme/themes/common</twig:path>
             </twig:config>
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'paths' => array(
-                '%kernel.root_dir%/../vendor/acme/themes/theme1' => 'theme',
-                '%kernel.root_dir%/../vendor/acme/themes/theme2' => 'theme',
-                '%kernel.root_dir%/../vendor/acme/themes/common' => 'theme',
+                '%kernel.project_dir%/vendor/acme/themes/theme1' => 'theme',
+                '%kernel.project_dir%/vendor/acme/themes/theme2' => 'theme',
+                '%kernel.project_dir%/vendor/acme/themes/common' => 'theme',
             ),
         ));
 

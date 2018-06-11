@@ -21,17 +21,14 @@ The process to achieve this behavior consists of two steps:
 1. Assigning the Error Level
 ----------------------------
 
-.. versionadded:: 2.6
-    The ``payload`` option was introduced in Symfony 2.6.
-
 Use the ``payload`` option to configure the error level for each constraint:
 
 .. configuration-block::
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -55,8 +52,8 @@ Use the ``payload`` option to configure the error level for each constraint:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\User:
+        # config/validator/validation.yaml
+        App\Entity\User:
             properties:
                 username:
                     - NotBlank:
@@ -73,13 +70,13 @@ Use the ``payload`` option to configure the error level for each constraint:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\User">
+            <class name="App\Entity\User">
                 <property name="username">
                     <constraint name="NotBlank">
                         <option name="payload">
@@ -106,8 +103,8 @@ Use the ``payload`` option to configure the error level for each constraint:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -130,10 +127,6 @@ Use the ``payload`` option to configure the error level for each constraint:
 
 2. Customize the Error Message Template
 ---------------------------------------
-
-.. versionadded:: 2.6
-    The ``getConstraint()`` method in the ``ConstraintViolation`` class was
-    introduced in Symfony 2.6.
 
 When validation of the ``User`` object fails, you can retrieve the constraint
 that caused a particular failure using the

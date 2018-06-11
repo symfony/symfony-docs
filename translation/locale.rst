@@ -9,7 +9,7 @@ via the ``Request`` object::
 
     use Symfony\Component\HttpFoundation\Request;
 
-    public function indexAction(Request $request)
+    public function index(Request $request)
     {
         $locale = $request->getLocale();
     }
@@ -25,6 +25,13 @@ it::
             // some logic to determine the $locale
             $request->setLocale($locale);
         }
+
+.. note::
+
+    The custom listener must be called **before** ``LocaleListener``, which
+    initializes the locale based on the current request. To do so, set your
+    listener priority to a higher value than ``LocaleListener`` priority (which
+    you can obtain running the ``debug:event kernel.request`` command).
 
 Read :doc:`/session/locale_sticky_session` for more information on making
 the user's locale "sticky" to their session.
@@ -59,16 +66,16 @@ by the routing system using the special ``_locale`` parameter:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         contact:
-            path:     /{_locale}/contact
-            defaults: { _controller: AppBundle:Contact:index }
+            path:       /{_locale}/contact
+            controller: App\Controller\ContactController::index
             requirements:
                 _locale: en|fr|de
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -76,22 +83,23 @@ by the routing system using the special ``_locale`` parameter:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="contact" path="/{_locale}/contact">
-                <default key="_controller">AppBundle:Contact:index</default>
+                <default key="_controller">App\Controller\ContactContorller::index</default>
                 <requirement key="_locale">en|fr|de</requirement>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
+        use App\Controller\ContactController;
 
         $routes = new RouteCollection();
         $routes->add('contact', new Route(
             '/{_locale}/contact',
             array(
-                '_controller' => 'AppBundle:Contact:index',
+                '_controller' => array(ContactController::class, 'index']),
             ),
             array(
                 '_locale' => 'en|fr|de',
@@ -130,13 +138,13 @@ the framework:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/translation.yaml
         framework:
             default_locale: en
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/translation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -151,7 +159,7 @@ the framework:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/translation.php
         $container->loadFromExtension('framework', array(
             'default_locale' => 'en',
         ));

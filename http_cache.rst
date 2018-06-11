@@ -77,22 +77,32 @@ but is a great way to start.
 
     For details on setting up Varnish, see :doc:`/http_cache/varnish`.
 
-Enabling the proxy is easy: each application comes with a caching kernel (``AppCache``)
-that wraps the default one (``AppKernel``). The caching Kernel *is* the reverse
-proxy.
+To enable the proxy, first create a caching kernel::
 
-To enable caching, modify the code of your front controller. You can also make these
-changes to ``app_dev.php`` to add caching to the ``dev`` environment::
+    // src/CacheKernel.php
+    namespace App;
 
-    // web/app.php
+    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+
+    class CacheKernel extends HttpCache
+    {
+    }
+
+Modify the code of your front controller to wrap the default kernel into the
+caching kernel:
+
+.. code-block:: diff
+
+    // public/index.php
+
+    use App\Kernel;
+    + use App\CacheKernel;
+
     // ...
+    $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev')));
 
-    $kernel = new AppKernel('prod', false);
-    $kernel->loadClassCache();
-
-    // add (or uncomment) this new line!
-    // wrap the default AppKernel with the AppCache one
-    $kernel = new AppCache($kernel);
+    + // Wrap the default Kernel with the CacheKernel one
+    + $kernel = new CacheKernel($kernel);
 
     $request = Request::createFromGlobals();
     // ...
@@ -114,15 +124,17 @@ from your application and returning them to the client.
 
         error_log($kernel->getLog());
 
-The ``AppCache`` object has a sensible default configuration, but it can be
+The ``CacheKernel`` object has a sensible default configuration, but it can be
 finely tuned via a set of options you can set by overriding the
 :method:`Symfony\\Bundle\\FrameworkBundle\\HttpCache\\HttpCache::getOptions`
 method::
 
-    // app/AppCache.php
+    // src/CacheKernel.php
+    namespace App;
+
     use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
-    class AppCache extends HttpCache
+    class CacheKernel extends HttpCache
     {
         protected function getOptions()
         {
@@ -136,10 +148,9 @@ method::
 For a full list of the options and their meaning, see the
 :method:`HttpCache::__construct() documentation <Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache::__construct>`.
 
-When you're in debug mode (either because your booting a ``debug`` kernel, like
-in ``app_dev.php`` *or* you manually set the ``debug`` option to true), Symfony
-automatically adds an ``X-Symfony-Cache`` header to the response. Use this to get
-information about cache hits and misses.
+When you're in debug mode (the second argument of ``Kernel`` constructor in the
+front controller is ``true``), Symfony automatically adds an ``X-Symfony-Cache``
+header to the response. Use this to get information about cache hits and misses.
 
 .. _http-cache-symfony-versus-varnish:
 
@@ -209,11 +220,11 @@ Expiration Caching
 
 The *easiest* way to cache a response is by caching it for a specific amount of time::
 
-    // src/AppBundle/Controller/BlogController.php
+    // src/Controller/BlogController.php
     use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    public function indexAction()
+    public function index()
     {
         // somehow create a Response object, like by rendering a template
         $response = $this->render('blog/index.html.twig', []);
@@ -341,6 +352,31 @@ Using Edge Side Includes
 When pages contain dynamic parts, you may not be able to cache entire pages,
 but only parts of it. Read :doc:`/http_cache/esi` to find out how to configure
 different cache strategies for specific parts of your page.
+
+HTTP Caching and User Sessions
+------------------------------
+
+Whenever the session is started during a request, Symfony turns the response
+into a private non-cacheable response. This is the best default behavior to not
+cache private user information (e.g. a shopping cart, a user profile details,
+etc.) and expose it to other visitors.
+
+However, even requests making use of the session can be cached under some
+circumstances. For example, information related to some user group could be
+cached for all the users belonging to that group. Handling these advanced
+caching scenarios is out of the scope of Symfony, but they can be solved with
+the `FOSHttpCacheBundle`_.
+
+In order to disable the default Symfony behavior that makes requests using the
+session uncacheable, add the following internal header to your response and
+Symfony won't modify it::
+
+    use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
+
+    $response->headers->set(AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER, 'true');
+
+.. versionadded:: 4.1
+    The ``NO_AUTO_CACHE_CONTROL_HEADER`` header was introduced in Symfony 4.1.
 
 Summary
 -------

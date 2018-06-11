@@ -1,18 +1,29 @@
 Logging with Monolog
 ====================
 
-Symfony comes with an outside library - called Monolog_ - that allows you to create
-logs that can be stored in a variety of different places.
+Symfony integrates seamlessly with `Monolog`_, the most popular PHP logging
+library, to create and store log messages in a variety of different places.
+
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the Monolog based logger before using it:
+
+.. code-block:: terminal
+
+    $ composer require symfony/monolog-bundle
 
 Logging a Message
 -----------------
 
-To log a message, fetch the ``logger`` service from the container in
-your controller::
+If the application uses the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+you can get the logger service injecting the ``LoggerInterface`` class::
 
-    public function indexAction()
+    use Psr\Log\LoggerInterface;
+
+    public function index(LoggerInterface $logger)
     {
-        $logger = $this->get('logger');
         $logger->info('I just got the logger');
         $logger->error('An error occurred');
 
@@ -24,7 +35,7 @@ your controller::
         // ...
     }
 
-The ``logger`` service has different methods for different logging levels/priorities.
+The logger service has different methods for different logging levels/priorities.
 You can configure the logger to do different things based on the *level* of a message
 (e.g. :doc:`send an email when an error occurs </logging/monolog_email>`).
 
@@ -33,12 +44,8 @@ See LoggerInterface_ for a list of all of the methods on the logger.
 Where Logs are Stored
 ---------------------
 
-The configuration for *where* logs are stored lives in the specific
-:doc:`environment </configuration/environments>` configuration files: ``config_dev.yml``
-and ``config_prod.yml``.
-
-By default, log entries are written to the ``app/logs/dev.log`` file when you're in
-the ``dev`` environment. In the ``prod`` environment, logs are written to ``app/logs/prod.log``,
+By default, log entries are written to the ``var/log/dev.log`` file when you're in
+the ``dev`` environment. In the ``prod`` environment, logs are written to ``var/log/prod.log``,
 but *only* during a request where an error or high-priority log entry was made
 (i.e. ``error()`` , ``critical()``, ``alert()`` or ``emergency()``).
 
@@ -57,8 +64,8 @@ to different locations (e.g. files, database, Slack, etc).
     channel can have its *own* handlers, which means you can store different log
     messages in different places. See :doc:`/logging/channels_handlers`.
 
-Symfony pre-configures some basic handlers in the ``config_dev.yml`` and ``config_prod.yml``
-files. Check these out for some real-world examples.
+Symfony pre-configures some basic handlers in the default ``monolog.yaml``
+config files. Check these out for some real-world examples.
 
 This example uses *two* handlers: ``stream`` (to write to a file) and ``syslog``
 to write logs using the :phpfunction:`syslog` function:
@@ -67,13 +74,13 @@ to write logs using the :phpfunction:`syslog` function:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 # this "file_log" key could be anything
                 file_log:
                     type: stream
-                    # log to app/logs/(environment).log
+                    # log to var/log/(environment).log
                     path: "%kernel.logs_dir%/%kernel.environment%.log"
                     # log *all* messages (debug is lowest level)
                     level: debug
@@ -85,7 +92,7 @@ to write logs using the :phpfunction:`syslog` function:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -112,7 +119,7 @@ to write logs using the :phpfunction:`syslog` function:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'file_log' => array(
@@ -143,7 +150,7 @@ one of the messages reaches an ``action_level``. Take this example:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 filter_for_errors:
@@ -164,7 +171,7 @@ one of the messages reaches an ``action_level``. Take this example:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -197,7 +204,7 @@ one of the messages reaches an ``action_level``. Take this example:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'filter_for_errors' => array(
@@ -257,7 +264,7 @@ option of your handler to ``rotating_file``:
 
     .. code-block:: yaml
 
-        # app/config/config_dev.yml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 main:
@@ -270,7 +277,7 @@ option of your handler to ``rotating_file``:
 
     .. code-block:: xml
 
-        <!-- app/config/config_dev.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -294,7 +301,7 @@ option of your handler to ``rotating_file``:
 
     .. code-block:: php
 
-        // app/config/config_dev.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'main' => array(
@@ -311,8 +318,7 @@ option of your handler to ``rotating_file``:
 Using a Logger inside a Service
 -------------------------------
 
-To use a logger in your own services, add the ``@logger`` service as an argument
-of those services. If you want to use a pre-configured logger which uses a
+If you want to use in your own services a pre-configured logger which uses a
 specific channel (``app`` by default), use the ``monolog.logger`` tag  with the
 ``channel`` property as explained in the
 :ref:`Dependency Injection reference <dic_tags-monolog>`.
@@ -330,9 +336,18 @@ Learn more
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
-    logging/*
+    logging/monolog_email
+    logging/channels_handlers
+    logging/formatter
+    logging/processors
+    logging/monolog_exclude_http_codes
+    logging/monolog_console
+
+.. toctree::
+    :hidden:
+
+    logging/monolog_regex_based_excludes
 
 .. _Monolog: https://github.com/Seldaek/monolog
 .. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php

@@ -14,7 +14,7 @@ it is broken down.
 
     .. code-block:: yaml
 
-        # app/config/config_prod.yml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 mail:
@@ -42,7 +42,7 @@ it is broken down.
 
     .. code-block:: xml
 
-        <!-- app/config/config_prod.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -93,7 +93,7 @@ it is broken down.
 
     .. code-block:: php
 
-        // app/config/config_prod.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'mail' => array(
@@ -149,7 +149,7 @@ You can adjust the time period using the ``time`` option:
 
     .. code-block:: yaml
 
-        # app/config/config_prod.yml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 # ...
@@ -161,7 +161,7 @@ You can adjust the time period using the ``time`` option:
 
     .. code-block:: xml
 
-        <!-- app/config/config_prod.xml -->
+        <!-- config/packages/prod/monolog.xml -->
 
         <!-- time: the time in seconds during which duplicate entries are discarded (default: 60) -->
         <monolog:handler name="deduplicated"
@@ -171,7 +171,7 @@ You can adjust the time period using the ``time`` option:
 
     .. code-block:: php
 
-        // app/config/config_prod.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 // ...
@@ -194,7 +194,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: yaml
 
-        # app/config/config_prod.yml
+        # config/packages/prod/monolog.yaml
         monolog:
             handlers:
                 main:
@@ -222,7 +222,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: xml
 
-        <!-- app/config/config_prod.xml -->
+        <!-- config/packages/prod/monolog.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -277,7 +277,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: php
 
-        // app/config/config_prod.php
+        // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
                 'main' => array(

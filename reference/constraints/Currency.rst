@@ -1,9 +1,6 @@
 Currency
 ========
 
-.. versionadded:: 2.3
-    The ``Currency`` constraint was introduced in Symfony 2.3.
-
 Validates that a value is a valid `3-letter ISO 4217`_ currency name.
 
 +----------------+---------------------------------------------------------------------------+
@@ -27,8 +24,8 @@ a valid currency, you could do the following:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -42,21 +39,21 @@ a valid currency, you could do the following:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Order:
+        # config/validator/validation.yaml
+        App\Entity\Order:
             properties:
                 currency:
                     - Currency: ~
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Order">
+            <class name="App\Entity\Order">
                 <property name="currency">
                     <constraint name="Currency" />
                 </property>
@@ -65,8 +62,8 @@ a valid currency, you could do the following:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

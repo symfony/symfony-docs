@@ -2,10 +2,8 @@ How to Make Service Arguments/References Optional
 =================================================
 
 Sometimes, one of your services may have an optional dependency, meaning
-that the dependency is not required for your service to work properly. In
-the example above, the ``app.mailer`` service *must* exist, otherwise an exception
-will be thrown. By modifying the ``app.newsletter_manager`` service definition,
-you can make this reference optional, there are two strategies for doing this.
+that the dependency is not required for your service to work properly. You can
+configure the container to not throw an error in this case.
 
 Setting Missing Dependencies to null
 ------------------------------------
@@ -17,7 +15,7 @@ if the service does not exist:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -25,28 +23,26 @@ if the service does not exist:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.mailer">
                 <!-- ... -->
-                </service>
 
-                <service id="app.newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
-                    <argument type="service" id="app.mailer" on-invalid="null" />
+                <service id="App\Newsletter\NewsletterManager">
+                    <argument type="service" id="logger" on-invalid="null" />
                 </service>
             </services>
         </container>
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\Newsletter\NewsletterManager;
+        // config/services.php
+        use App\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
-        $container->register('app.mailer', ...);
+        // ...
 
-        $container->register('app.newsletter_manager', NewsletterManager::class)
+        $container->register(NewsletterManager::class)
             ->addArgument(new Reference(
-                'app.mailer',
+                'logger',
                 ContainerInterface::NULL_ON_INVALID_REFERENCE
             ));
 
@@ -68,16 +64,16 @@ call if the service exists and remove the method call if it does not:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             app.newsletter_manager:
-                class: AppBundle\Newsletter\NewsletterManager
+                class: App\Newsletter\NewsletterManager
                 calls:
-                    - [setMailer, ['@?app.mailer']]
+                    - [setLogger, ['@?logger']]
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -89,9 +85,9 @@ call if the service exists and remove the method call if it does not:
                 <!-- ... -->
                 </service>
 
-                <service id="app.newsletter_manager" class="AppBundle\Newsletter\NewsletterManager">
-                    <call method="setMailer">
-                        <argument type="service" id="app.mailer" on-invalid="ignore"/>
+                <service id="App\Newsletter\NewsletterManager">
+                    <call method="setLogger">
+                        <argument type="service" id="logger" on-invalid="ignore"/>
                     </call>
                 </service>
             </services>
@@ -99,28 +95,32 @@ call if the service exists and remove the method call if it does not:
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\Newsletter\NewsletterManager;
+        // config/services.php
+        use App\Newsletter\NewsletterManager;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
-        $container->register('app.mailer', ...);
-
         $container
-            ->register('app.newsletter_manager', NewsletterManager::class)
-            ->addMethodCall('setMailer', array(
+            ->register(NewsletterManager::class)
+            ->addMethodCall('setLogger', array(
                 new Reference(
-                    'app.mailer',
+                    'logger',
                     ContainerInterface::IGNORE_ON_INVALID_REFERENCE
                 ),
             ))
         ;
 
+.. note::
+
+    If the argument to the method call is a collection of arguments and any of
+    them is missing, those elements are removed but the method call is still
+    made with the remaining elements of the collection.
+
 In YAML, the special ``@?`` syntax tells the service container that the dependency
 is optional. Of course, the ``NewsletterManager`` must also be rewritten by
-adding a ``setMailer()`` method::
+adding a ``setLogger()`` method::
 
-        public function setMailer(Mailer $mailer)
+        public function setLogger(LoggerInterface $logger)
         {
             // ...
         }

@@ -103,7 +103,7 @@ to get this information output:
 
     Acme Console Application version 1.2
 
-If you do not provide both arguments then it will just output:
+If you do not provide a console name then it will just output:
 
 .. code-block:: text
 
@@ -147,6 +147,11 @@ can run it with:
 .. code-block:: terminal
 
     $ php application.php d:g Fabien
+
+    # as long as it's unambiguous, you can also mix upper and lower case
+    # php application.php Demo:g Fabien
+    # php application.php de:Gr Fabien
+    # php application.php DE:Gre Fabien
 
 If you enter a short command that's ambiguous (i.e. there are more than one
 command that match), then no command will be run and some suggestions of

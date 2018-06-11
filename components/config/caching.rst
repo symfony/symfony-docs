@@ -32,14 +32,14 @@ should be regenerated::
     $userMatcherCache = new ConfigCache($cachePath, true);
 
     if (!$userMatcherCache->isFresh()) {
-        // fill this with an array of 'users.yml' file paths
+        // fill this with an array of 'users.yaml' file paths
         $yamlUserFiles = ...;
 
         $resources = array();
 
         foreach ($yamlUserFiles as $yamlUserFile) {
-            // see the previous article "Loading resources" to
-            // see where $delegatingLoader comes from
+            // see the article "Loading resources" to
+            // know where $delegatingLoader comes from
             $delegatingLoader->load($yamlUserFile);
             $resources[] = new FileResource($yamlUserFile);
         }

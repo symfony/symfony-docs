@@ -1,9 +1,6 @@
 NotIdenticalTo
 ==============
 
-.. versionadded:: 2.3
-    The ``NotIdenticalTo`` constraint was introduced in Symfony 2.3.
-
 Validates that a value is **not** identical to another value, defined in
 the options. To force that a value is identical, see
 :doc:`/reference/constraints/IdenticalTo`.
@@ -20,6 +17,7 @@ the options. To force that a value is identical, see
 | Options        | - `value`_                                                                  |
 |                | - `message`_                                                                |
 |                | - `payload`_                                                                |
+|                | - `propertyPath`_                                                           |
 +----------------+-----------------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\NotIdenticalTo`         |
 +----------------+-----------------------------------------------------------------------------+
@@ -38,8 +36,8 @@ The following constraints ensure that:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Person.php
-        namespace AppBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -60,8 +58,8 @@ The following constraints ensure that:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Person:
+        # config/validator/validation.yaml
+        App\Entity\Person:
             properties:
                 firstName:
                     - NotIdenticalTo: Mary
@@ -71,13 +69,13 @@ The following constraints ensure that:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Person">
+            <class name="App\Entity\Person">
             <property name="firstName">
                     <constraint name="NotIdenticalTo">
                         <value>Mary</value>
@@ -93,8 +91,8 @@ The following constraints ensure that:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Person.php
-        namespace AppBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -124,3 +122,5 @@ message
 This is the message that will be shown if the value is identical.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. include:: /reference/constraints/_comparison-propertypath-option.rst.inc

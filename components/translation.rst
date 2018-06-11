@@ -19,6 +19,13 @@ Alternatively, you can clone the `<https://github.com/symfony/translation>`_ rep
 
 .. include:: /components/require_autoload.rst.inc
 
+.. seealso::
+
+    This article explains how to use the Translation features as an independent
+    component in any PHP application. Read the :doc:`/translation` article to
+    learn about how to internationalize and manage the user locale in Symfony
+    applications.
+
 Constructing the Translator
 ---------------------------
 
@@ -126,7 +133,7 @@ file as the second argument, instead of an array::
 
     // ...
     $translator->addLoader('yaml', new YamlFileLoader());
-    $translator->addResource('yaml', 'path/to/messages.fr.yml', 'fr_FR');
+    $translator->addResource('yaml', 'path/to/messages.fr.yaml', 'fr_FR');
 
 The Translation Process
 -----------------------

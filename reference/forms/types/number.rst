@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; number
+   single: Forms; Fields; NumberType
 
-number Field Type
-=================
+NumberType Field
+================
 
 Renders an input text field and specializes in handling number input. This
 type offers different options for the scale, rounding and grouping
@@ -23,16 +23,16 @@ that you want to use for your number.
 |             | - `empty_data`_                                                      |
 |             | - `error_bubbling`_                                                  |
 |             | - `error_mapping`_                                                   |
+|             | - `help`_                                                            |
 |             | - `invalid_message`_                                                 |
 |             | - `invalid_message_parameters`_                                      |
 |             | - `label`_                                                           |
 |             | - `label_attr`_                                                      |
 |             | - `label_format`_                                                    |
 |             | - `mapped`_                                                          |
-|             | - `read_only`_                                                       |
 |             | - `required`_                                                        |
 +-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                            |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                        |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType` |
 +-------------+----------------------------------------------------------------------+
@@ -56,34 +56,7 @@ the submitted value (via ``rounding_mode``). For example, if ``scale`` is set
 to ``2``, a submitted value of ``20.123`` will be rounded to, for example,
 ``20.12`` (depending on your `rounding_mode`_).
 
-rounding_mode
-~~~~~~~~~~~~~
-
-**type**: ``integer`` **default**: ``NumberToLocalizedStringTransformer::ROUND_HALF_UP``
-
-If a submitted number needs to be rounded (based on the `scale`_
-option), you have several configurable options for that rounding. Each
-option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`:
-
-* ``NumberToLocalizedStringTransformer::ROUND_DOWN`` Round towards zero.
-
-* ``NumberToLocalizedStringTransformer::ROUND_FLOOR`` Round towards negative
-  infinity.
-
-* ``NumberToLocalizedStringTransformer::ROUND_UP`` Round away from zero.
-
-* ``NumberToLocalizedStringTransformer::ROUND_CEILING`` Round towards
-  positive infinity.
-
-* ``NumberToLocalizedStringTransformer::ROUND_HALF_DOWN`` Round towards the
-  "nearest neighbor". If both neighbors are equidistant, round down.
-
-* ``NumberToLocalizedStringTransformer::ROUND_HALF_EVEN`` Round towards the
-  "nearest neighbor". If both neighbors are equidistant, round towards the
-  even neighbor.
-
-* ``NumberToLocalizedStringTransformer::ROUND_HALF_UP`` Round towards the
-  "nearest neighbor". If both neighbors are equidistant, round up.
+.. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
 Overridden Options
 ------------------
@@ -93,8 +66,7 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -112,6 +84,8 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
@@ -123,7 +97,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

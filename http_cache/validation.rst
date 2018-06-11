@@ -59,14 +59,14 @@ each ``ETag`` must be unique across all representations of the same resource.
 
 To see a simple implementation, generate the ETag as the md5 of the content::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Request;
 
     class DefaultController extends Controller
     {
-        public function homepageAction(Request $request)
+        public function homepage(Request $request)
         {
             $response = $this->render('static/homepage.html.twig');
             $response->setEtag(md5($response->getContent()));
@@ -121,17 +121,17 @@ For instance, you can use the latest update date for all the objects needed to
 compute the resource representation as the value for the ``Last-Modified``
 header value::
 
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\Request;
-    use AppBundle\Entity\Article;
+    use App\Entity\Article;
 
     class ArticleController extends Controller
     {
-        public function showAction(Article $article, Request $request)
+        public function show(Article $article, Request $request)
         {
             $author = $article->getAuthor();
 
@@ -181,8 +181,8 @@ Put another way, the less you do in your application to return a 304 response,
 the better. The ``Response::isNotModified()`` method does exactly that by
 exposing a simple and efficient pattern::
 
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
@@ -190,7 +190,7 @@ exposing a simple and efficient pattern::
 
     class ArticleController extends Controller
     {
-        public function showAction($articleSlug, Request $request)
+        public function show($articleSlug, Request $request)
         {
             // Get the minimum information to compute
             // the ETag or the Last-Modified value

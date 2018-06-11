@@ -7,19 +7,25 @@
 How to Dump Debug Information in Twig Templates
 ===============================================
 
-When using PHP, you can use the
+When using PHP templates, you can use the
 :ref:`dump() function from the VarDumper component <components-var-dumper-dump>`
-if you need to quickly find the value of a variable passed. This is useful,
-for example, inside your controller::
+if you need to quickly find the value of a variable passed. First, make sure it
+is installed:
 
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
+.. code-block:: terminal
+
+    $ composer require symfony/var-dumper
+
+This is useful, for example, inside your controller::
+
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
 
     // ...
 
     class ArticleController extends Controller
     {
-        public function recentListAction()
+        public function recentList()
         {
             $articles = ...;
             dump($articles);
@@ -44,7 +50,7 @@ In a Twig template, you can use the ``dump`` utility as a function or a tag:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/article/recent_list.html.twig #}
+    {# templates/article/recent_list.html.twig #}
     {# the contents of this variable are sent to the Web Debug Toolbar #}
     {% dump articles %}
 

@@ -4,9 +4,6 @@
 Process Helper
 ==============
 
-.. versionadded:: 2.6
-    The Process Helper was introduced in Symfony 2.6.
-
 The Process Helper shows processes as they're running and reports
 useful information about process status.
 
@@ -14,10 +11,10 @@ To display process details, use the :class:`Symfony\\Component\\Console\\Helper\
 and run your command with verbosity. For example, running the following code with
 a very verbose verbosity (e.g. -vv)::
 
-    use Symfony\Component\Process\ProcessBuilder;
+    use Symfony\Component\Process\Process;
 
     $helper = $this->getHelper('process');
-    $process = ProcessBuilder::create(array('figlet', 'Symfony'))->getProcess();
+    $process = new Process(array('figlet', 'Symfony'));
 
     $helper->run($output, $process);
 
@@ -55,10 +52,10 @@ There are three ways to use the process helper:
 
 * Passing a :class:`Symfony\\Component\\Process\\Process` instance::
 
-    use Symfony\Component\Process\ProcessBuilder;
+    use Symfony\Component\Process\Process;
 
     // ...
-    $process = ProcessBuilder::create(array('figlet', 'Symfony'))->getProcess();
+    $process = new Process(array('figlet', 'Symfony'));
 
     $helper->run($output, $process);
 

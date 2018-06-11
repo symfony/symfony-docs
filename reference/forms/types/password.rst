@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; password
+   single: Forms; Fields; PasswordType
 
-password Field Type
-===================
+PasswordType Field
+==================
 
-The ``password`` field renders an input password text box.
+The ``PasswordType`` field renders an input password text box.
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``password`` field                                           |
@@ -18,15 +18,14 @@ The ``password`` field renders an input password text box.
 | options     | - `empty_data`_                                                        |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
+|             | - `help`_                                                              |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
-|             | - `max_length`_ (deprecated as of 2.5)                                 |
-|             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`text </reference/forms/types/text>`                              |
+| Parent type | :doc:`TextType </reference/forms/types/text>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType` |
 +-------------+------------------------------------------------------------------------+
@@ -55,7 +54,7 @@ trim
 
 **type**: ``boolean`` **default**: ``false``
 
-Unlike the rest of form types, the ``password`` type doesn't apply the
+Unlike the rest of form types, the ``PasswordType`` doesn't apply the
 :phpfunction:`trim` function to the value submitted by the user. This ensures that
 the password is merged back onto the underlying object exactly as it was typed
 by the user.
@@ -63,8 +62,7 @@ by the user.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
@@ -80,6 +78,8 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
@@ -87,9 +87,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/max_length.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

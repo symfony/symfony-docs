@@ -56,19 +56,6 @@ immediately::
 
     // ...
 
-Using all of the Components
----------------------------
-
-If you want to use all of the Symfony Components, then instead of adding
-them one by one, you can include the ``symfony/symfony`` package:
-
-.. code-block:: terminal
-
-    $ composer require symfony/symfony
-
-This will also include the Bundle and Bridge libraries, which you may or
-may not actually need.
-
 Now what?
 ---------
 

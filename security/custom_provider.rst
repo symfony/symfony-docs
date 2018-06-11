@@ -9,10 +9,10 @@ When a user submits a username and password, the authentication layer asks
 the configured user provider to return a user object for a given username.
 Symfony then checks whether the password of this user is correct and generates
 a security token so the user stays authenticated during the current session.
-Out of the box, Symfony has an "memory" and an "entity" user provider.
-In this entry you'll see how you can create your own user provider, which
-could be useful if your users are accessed via a custom database, a file,
-or - as shown in this example - a web service.
+Out of the box, Symfony has four user providers: ``memory``, ``entity``,
+``ldap`` and ``chain``. In this entry you'll see how you can create your
+own user provider, which could be useful if your users are accessed via a
+custom database, a file, or - as shown in this example - a web service.
 
 Create a User Class
 -------------------
@@ -35,8 +35,8 @@ method.
 
 This is how your ``WebserviceUser`` class looks in action::
 
-    // src/AppBundle/Security/User/WebserviceUser.php
-    namespace AppBundle\Security\User;
+    // src/Security/User/WebserviceUser.php
+    namespace App\Security\User;
 
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -120,10 +120,10 @@ more details, see :class:`Symfony\\Component\\Security\\Core\\User\\UserProvider
 
 Here's an example of how this might look::
 
-    // src/AppBundle/Security/User/WebserviceUserProvider.php
-    namespace AppBundle\Security\User;
+    // src/Security/User/WebserviceUserProvider.php
+    namespace App\Security\User;
 
-    use AppBundle\Security\User\WebserviceUser;
+    use App\Security\User\WebserviceUser;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -170,68 +170,32 @@ Here's an example of how this might look::
 Create a Service for the User Provider
 --------------------------------------
 
-Now you make the user provider available as a service:
+Now you make the user provider available as a service. If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+this happens automatically.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.webservice_user_provider:
-                class: AppBundle\Security\User\WebserviceUserProvider
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.webservice_user_provider"
-                    class="AppBundle\Security\User\WebserviceUserProvider"
-                />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Security\User\WebserviceUserProvider;
-
-        $container->register('app.webservice_user_provider', WebserviceUserProvider::class);
-
-.. tip::
-
-    The real implementation of the user provider will probably have some
-    dependencies or configuration options or other services. Add these as
-    arguments in the service definition.
-
-Modify ``security.yml``
------------------------
+Modify ``security.yaml``
+------------------------
 
 Everything comes together in your security configuration. Add the user provider
-to the list of providers in the "security" section. Choose a name for the user provider
+to the list of providers in the "security" config. Choose a name for the user provider
 (e.g. "webservice") and mention the ``id`` of the service you just defined.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
             providers:
                 webservice:
-                    id: app.webservice_user_provider
+                    id: App\Security\User\WebserviceUserProvider
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -242,19 +206,21 @@ to the list of providers in the "security" section. Choose a name for the user p
             <config>
                 <!-- ... -->
 
-                <provider name="webservice" id="app.webservice_user_provider" />
+                <provider name="webservice" id="App\Security\User\WebserviceUserProvider" />
             </config>
         </srv:container>
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
+        use App\Security\User\WebserviceUserProvider;
+
         $container->loadFromExtension('security', array(
             // ...
 
             'providers' => array(
                 'webservice' => array(
-                    'id' => 'app.webservice_user_provider',
+                    'id' => WebserviceUserProvider::class,
                 ),
             ),
         ));
@@ -267,16 +233,16 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
             encoders:
-                AppBundle\Security\User\WebserviceUser: bcrypt
+                App\Security\User\WebserviceUser: bcrypt
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -287,15 +253,15 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
             <config>
                 <!-- ... -->
 
-                <encoder class="AppBundle\Security\User\WebserviceUser"
+                <encoder class="App\Security\User\WebserviceUser"
                     algorithm="bcrypt" />
             </config>
         </srv:container>
 
     .. code-block:: php
 
-        // app/config/security.php
-        use AppBundle\Security\User\WebserviceUser;
+        // config/packages/security.php
+        use App\Security\User\WebserviceUser;
 
         $container->loadFromExtension('security', array(
             // ...
@@ -316,7 +282,7 @@ is compared to the hashed password returned by your ``getPassword()`` method.
     Symfony uses a specific method to combine the salt and encode the password
     before comparing it to your encoded password. If ``getSalt()`` returns
     nothing, then the submitted password is simply encoded using the algorithm
-    you specify in ``security.yml``. If a salt *is* specified, then the following
+    you specify in ``security.yaml``. If a salt *is* specified, then the following
     value is created and *then* hashed via the algorithm::
 
         $password.'{'.$salt.'}'
@@ -335,18 +301,18 @@ is compared to the hashed password returned by your ``getPassword()`` method.
 
         .. code-block:: yaml
 
-            # app/config/security.yml
+            # config/packages/security.yaml
             security:
                 # ...
 
                 encoders:
-                    AppBundle\Security\User\WebserviceUser:
+                    App\Security\User\WebserviceUser:
                         algorithm: bcrypt
                         cost: 12
 
         .. code-block:: xml
 
-            <!-- app/config/security.xml -->
+            <!-- config/packages/security.xml -->
             <?xml version="1.0" encoding="UTF-8"?>
             <srv:container xmlns="http://symfony.com/schema/dic/security"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -357,7 +323,7 @@ is compared to the hashed password returned by your ``getPassword()`` method.
                 <config>
                     <!-- ... -->
 
-                    <encoder class="AppBundle\Security\User\WebserviceUser"
+                    <encoder class="App\Security\User\WebserviceUser"
                         algorithm="bcrypt"
                         cost="12" />
                 </config>
@@ -365,8 +331,8 @@ is compared to the hashed password returned by your ``getPassword()`` method.
 
         .. code-block:: php
 
-            // app/config/security.php
-            use AppBundle\Security\User\WebserviceUser;
+            // config/packages/security.php
+            use App\Security\User\WebserviceUser;
 
             $container->loadFromExtension('security', array(
                 // ...

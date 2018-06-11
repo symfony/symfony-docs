@@ -5,8 +5,9 @@
 The DependencyInjection Component
 =================================
 
-    The DependencyInjection component allows you to standardize and centralize
-    the way objects are constructed in your application.
+    The DependencyInjection component implements a `PSR-11`_ compatible service
+    container that allows you to standardize and centralize the way objects are
+    constructed in your application.
 
 For an introduction to Dependency Injection and service containers see
 :doc:`/service_container`.
@@ -24,6 +25,12 @@ Alternatively, you can clone the `<https://github.com/symfony/dependency-injecti
 
 Basic Usage
 -----------
+
+.. seealso::
+
+    This article explains how to use the DependencyInjection features as an
+    independent component in any PHP application. Read the :doc:`/service_container`
+    article to learn about how to use it in Symfony applications.
 
 You might have a simple class like the following ``Mailer`` that
 you want to make available as a service::
@@ -209,12 +216,21 @@ Loading a YAML config file::
 
     $containerBuilder = new ContainerBuilder();
     $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
-    $loader->load('services.yml');
+    $loader->load('services.yaml');
 
 .. note::
 
     If you want to load YAML config files then you will also need to install
     :doc:`the Yaml component </components/yaml>`.
+
+.. tip::
+
+    If your application uses unconventional file extensions (for example, your
+    XML files have a ``.config`` extension) you can pass the file type as the
+    second optional parameter of the ``load()`` method::
+
+        // ...
+        $loader->load('services.config', 'xml');
 
 If you *do* want to use PHP to create the services then you can move this
 into a separate config file and load it in a similar way::
@@ -296,4 +312,5 @@ Learn More
     /components/dependency_injection/*
     /service_container/*
 
+.. _`PSR-11`: http://www.php-fig.org/psr/psr-11/
 .. _Packagist: https://packagist.org/packages/symfony/dependency-injection

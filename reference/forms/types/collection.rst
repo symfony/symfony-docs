@@ -1,39 +1,40 @@
 .. index::
-   single: Forms; Fields; collection
+   single: Forms; Fields; CollectionType
 
-collection Field Type
-=====================
+CollectionType Field
+====================
 
 This field type is used to render a "collection" of some field or form.
-In the easiest sense, it could be an array of ``text`` fields that populate
-an array ``emails`` field. In more complex examples, you can embed entire
+In the easiest sense, it could be an array of ``TextType`` fields that populate
+an array ``emails`` values. In more complex examples, you can embed entire
 forms, which is useful when creating forms that expose one-to-many
 relationships (e.g. a product from where you can manage many related product
 photos).
 
 +-------------+-----------------------------------------------------------------------------+
-| Rendered as | depends on the `type`_ option                                               |
+| Rendered as | depends on the `entry_type`_ option                                         |
 +-------------+-----------------------------------------------------------------------------+
 | Options     | - `allow_add`_                                                              |
 |             | - `allow_delete`_                                                           |
 |             | - `delete_empty`_                                                           |
-|             | - `options`_                                                                |
+|             | - `entry_options`_                                                          |
+|             | - `entry_type`_                                                             |
 |             | - `prototype`_                                                              |
+|             | - `prototype_data`_                                                         |
 |             | - `prototype_name`_                                                         |
-|             | - `type`_                                                                   |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `by_reference`_                                                           |
-| options     | - `cascade_validation`_                                                     |
-|             | - `empty_data`_                                                             |
+| options     | - `empty_data`_                                                             |
 |             | - `error_bubbling`_                                                         |
 |             | - `error_mapping`_                                                          |
+|             | - `help`_                                                                   |
 |             | - `label`_                                                                  |
 |             | - `label_attr`_                                                             |
 |             | - `label_format`_                                                           |
 |             | - `mapped`_                                                                 |
 |             | - `required`_                                                               |
 +-------------+-----------------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                                   |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                               |
 +-------------+-----------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType`    |
 +-------------+-----------------------------------------------------------------------------+
@@ -53,11 +54,15 @@ in a form. For example, suppose you have an ``emails`` field that corresponds
 to an array of email addresses. In the form, you want to expose each email
 address as its own input text box::
 
-    $builder->add('emails', 'collection', array(
-        // each item in the array will be an "email" field
-        'type'   => 'email',
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    // ...
+
+    $builder->add('emails', CollectionType::class, array(
+        // each entry in the array will be an "email" field
+        'entry_type' => EmailType::class,
         // these options are passed to each "email" type
-        'options'  => array(
+        'entry_options' => array(
             'attr' => array('class' => 'email-box'),
         ),
     ));
@@ -163,7 +168,6 @@ you need is this JavaScript code:
     // add-collection-widget.js
     jQuery(document).ready(function () {
         jQuery('.add-another-collection-widget').click(function (e) {
-            e.preventDefault();
             var list = jQuery(jQuery(this).attr('data-list'));
             // Try to find the counter of the list
             var counter = list.data('widget-counter') | list.children().length;
@@ -206,7 +210,7 @@ And update the template as follows:
         {% endfor %}
         </ul>
 
-        <a href="#"
+        <button type="button"
             class="add-another-collection-widget"
             data-list="#email-fields-list">Add another email</a>
 
@@ -275,45 +279,77 @@ For more information, see :ref:`form-collections-remove`.
 delete_empty
 ~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``Boolean`` or ``callable`` **default**: ``false``
 
 If you want to explicitly remove entirely empty collection entries from your
-form you have to set this option to true. However, existing collection entries
+form you have to set this option to ``true``. However, existing collection entries
 will only be deleted if you have the allow_delete_ option enabled. Otherwise
 the empty values will be kept.
 
 .. caution::
 
     The ``delete_empty`` option only removes items when the normalized value is
-    ``null``. If the nested `type`_ is a compound form type, you must either set
-    the ``required`` option to ``false`` or set the ``empty_data`` option to
-    ``null``. Both of these options can be set inside `options`_. Read about
-    the :ref:`form's empty_data option <reference-form-option-empty-data>`
+    ``null``. If the nested `entry_type`_ is a compound form type, you must
+    either set the ``required`` option to ``false`` or set the ``empty_data``
+    option to ``null``. Both of these options can be set inside `entry_options`_.
+    Read about the :ref:`form's empty_data option <reference-form-option-empty-data>`
     to learn why this is necessary.
 
-options
-~~~~~~~
+A value is deleted from the collection only if the normalized value is ``null``.
+However, you can also set the option value to a callable, which will be executed
+for each value in the submitted collection. If the callable returns ``true``,
+the value is removed from the collection. For example::
+
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    // ...
+
+    $builder->add('users', CollectionType::class, array(
+        // ...
+        'delete_empty' => function (User $user = null) {
+            return null === $user || empty($user->getFirstName());
+        },
+    ));
+
+Using a callable is particularly useful in case of compound form types, which
+may define complex conditions for considering them empty.
+
+entry_options
+~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``array()``
 
-This is the array that's passed to the form type specified in the `type`_
-option. For example, if you used the :doc:`choice </reference/forms/types/choice>`
-type as your `type`_ option (e.g. for a collection of drop-down menus),
+This is the array that's passed to the form type specified in the `entry_type`_
+option. For example, if you used the :doc:`ChoiceType </reference/forms/types/choice>`
+as your `entry_type`_ option (e.g. for a collection of drop-down menus),
 then you'd need to at least pass the ``choices`` option to the underlying
 type::
 
-    $builder->add('favorite_cities', 'collection', array(
-        'type'   => 'choice',
-        'options'  => array(
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('favorite_cities', CollectionType::class, array(
+        'entry_type'   => ChoiceType::class,
+        'entry_options'  => array(
             'choices'  => array(
                 'Nashville' => 'nashville',
                 'Paris'     => 'paris',
                 'Berlin'    => 'berlin',
                 'London'    => 'london',
             ),
-            'choices_as_values' => true,
         ),
     ));
+
+entry_type
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType``
+
+This is the field type for each item in this collection (e.g. ``TextType``,
+``ChoiceType``, etc). For example, if you have an array of email addresses,
+you'd use the :doc:`EmailType </reference/forms/types/email>`. If you want
+to embed a collection of some other form, pass the form type class as this
+option (e.g. ``MyFormType::class``).
 
 prototype
 ~~~~~~~~~
@@ -354,6 +390,28 @@ rendering your form, having the entire "form row" may be easier for you.
 For details on how to actually use this option, see the above example as
 well as :ref:`form-collections-new-prototype`.
 
+prototype_data
+~~~~~~~~~~~~~~
+
+**type**: ``mixed`` **default**: ``null``
+
+Allows you to define specific data for the prototype. Each new row added will
+initially contain the data set by this option. By default, the data configured
+for all entries with the `entry_options`_ option will be used.
+
+.. code-block:: php
+
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    // ...
+
+    $builder->add('tags', CollectionType::class, array(
+        'entry_type' => TextType::class,
+        'allow_add' => true,
+        'prototype' => true,
+        'prototype_data' => 'New Tag Placeholder',
+    ));
+
 prototype_name
 ~~~~~~~~~~~~~~
 
@@ -363,29 +421,15 @@ If you have several collections in your form, or worse, nested collections
 you may want to change the placeholder so that unrelated placeholders are
 not replaced with the same value.
 
-type
-~~~~
-
-**type**: ``string`` or :class:`Symfony\\Component\\Form\\FormTypeInterface` **default**: ``text``
-
-This is the field type for each item in this collection (e.g. ``text``,
-``choice``, etc). For example, if you have an array of email addresses,
-you'd use the :doc:`email </reference/forms/types/email>` type. If you want
-to embed a collection of some other form, create a new instance of your
-form type and pass it as this option.
-
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type. Not all options are listed here - only the most applicable to this
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`.
+Not all options are listed here - only the most applicable to this type:
 
 .. _reference-form-types-by-reference:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
-
-.. include:: /reference/forms/types/options/cascade_validation.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER
@@ -403,6 +447,8 @@ error_bubbling
 .. include:: /reference/forms/types/options/_error_bubbling_body.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 

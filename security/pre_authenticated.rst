@@ -32,7 +32,7 @@ Enable the x509 authentication for a particular firewall in the security configu
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -44,7 +44,7 @@ Enable the x509 authentication for a particular firewall in the security configu
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -63,7 +63,7 @@ Enable the x509 authentication for a particular firewall in the security configu
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -100,9 +100,6 @@ in the x509 firewall configuration respectively.
 REMOTE_USER Based Authentication
 --------------------------------
 
-.. versionadded:: 2.6
-    REMOTE_USER pre authenticated firewall was introduced in Symfony 2.6.
-
 A lot of authentication modules, like ``auth_kerb`` for Apache provide the username
 using the ``REMOTE_USER`` environment variable. This variable can be trusted by
 the application since the authentication happened before the request reached it.
@@ -114,7 +111,7 @@ corresponding firewall in your security configuration:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             firewalls:
                 secured_area:
@@ -124,7 +121,7 @@ corresponding firewall in your security configuration:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services">
@@ -138,7 +135,7 @@ corresponding firewall in your security configuration:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(

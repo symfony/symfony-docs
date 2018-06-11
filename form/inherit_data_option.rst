@@ -4,16 +4,12 @@
 How to Reduce Code Duplication with "inherit_data"
 ==================================================
 
-.. versionadded:: 2.3
-    This ``inherit_data`` option was introduced in Symfony 2.3. Before, it
-    was known as ``virtual``.
-
 The ``inherit_data`` form field option can be very useful when you have some
 duplicated fields in different entities. For example, imagine you have two
 entities, a ``Company`` and a ``Customer``::
 
-    // src/AppBundle/Entity/Company.php
-    namespace AppBundle\Entity;
+    // src/Entity/Company.php
+    namespace App\Entity;
 
     class Company
     {
@@ -28,8 +24,8 @@ entities, a ``Company`` and a ``Customer``::
 
 .. code-block:: php
 
-    // src/AppBundle/Entity/Customer.php
-    namespace AppBundle\Entity;
+    // src/Entity/Customer.php
+    namespace App\Entity;
 
     class Customer
     {
@@ -47,37 +43,39 @@ As you can see, each entity shares a few of the same fields: ``address``,
 
 Start with building two forms for these entities, ``CompanyType`` and ``CustomerType``::
 
-    // src/AppBundle/Form/Type/CompanyType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/CompanyType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     class CompanyType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('name', 'text')
-                ->add('website', 'text');
+                ->add('name', TextType::class)
+                ->add('website', TextType::class);
         }
     }
 
 .. code-block:: php
 
-    // src/AppBundle/Form/Type/CustomerType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/CustomerType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     class CustomerType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('firstName', 'text')
-                ->add('lastName', 'text');
+                ->add('firstName', TextType::class)
+                ->add('lastName', TextType::class);
         }
     }
 
@@ -85,22 +83,24 @@ Instead of including the duplicated fields ``address``, ``zipcode``, ``city``
 and ``country`` in both of these forms, create a third form called ``LocationType``
 for that::
 
-    // src/AppBundle/Form/Type/LocationType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/LocationType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
 
     class LocationType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
-                ->add('address', 'textarea')
-                ->add('zipcode', 'text')
-                ->add('city', 'text')
-                ->add('country', 'text');
+                ->add('address', TextareaType::class)
+                ->add('zipcode', TextType::class)
+                ->add('city', TextType::class)
+                ->add('country', TextType::class);
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -108,11 +108,6 @@ for that::
             $resolver->setDefaults(array(
                 'inherit_data' => true,
             ));
-        }
-
-        public function getName()
-        {
-            return 'location';
         }
     }
 
@@ -130,30 +125,30 @@ access the properties of the ``Customer`` instance instead. Easy, eh?
 
 Finally, make this work by adding the location form to your two original forms::
 
-    // src/AppBundle/Form/Type/CompanyType.php
-    use AppBundle\Entity\Company;
+    // src/Form/Type/CompanyType.php
+    use App\Entity\Company;
     // ...
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
-        $builder->add('foo', new LocationType(), array(
+        $builder->add('foo', LocationType::class, array(
             'data_class' => Company::class,
         ));
     }
 
 .. code-block:: php
 
-    // src/AppBundle/Form/Type/CustomerType.php
-    use AppBundle\Entity\Customer;
+    // src/Form/Type/CustomerType.php
+    use App\Entity\Customer;
     // ...
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
-        $builder->add('bar', new LocationType(), array(
+        $builder->add('bar', LocationType::class, array(
             'data_class' => Customer::class,
         ));
     }

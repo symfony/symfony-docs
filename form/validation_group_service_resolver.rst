@@ -6,8 +6,8 @@ can't be determined by a simple callback, you can use a service. Create a
 service that implements ``__invoke()`` which accepts a ``FormInterface`` as a
 parameter::
 
-    // src/AppBundle/Validation/ValidationGroupResolver.php
-    namespace AppBundle\Validation;
+    // src/Validation/ValidationGroupResolver.php
+    namespace App\Validation;
 
     use Symfony\Component\Form\FormInterface;
 
@@ -39,10 +39,10 @@ parameter::
 
 Then in your form, inject the resolver and set it as the ``validation_groups``::
 
-    // src/AppBundle/Form/MyClassType.php;
-    namespace AppBundle\Form;
+    // src/Form/MyClassType.php;
+    namespace App\Form;
 
-    use AppBundle\Validator\ValidationGroupResolver;
+    use App\Validator\ValidationGroupResolver;
     use Symfony\Component\Form\AbstractType
     use Symfony\Component\OptionsResolver\OptionsResolver;
 

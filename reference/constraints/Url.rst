@@ -11,6 +11,7 @@ Validates that a value is a valid URL string.
 |                | - `payload`_                                                        |
 |                | - `checkDNS`_                                                       |
 |                | - `dnsMessage`_                                                     |
+|                | - `relativeProtocol`_                                               |
 +----------------+---------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Url`            |
 +----------------+---------------------------------------------------------------------+
@@ -24,8 +25,8 @@ Basic Usage
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -39,21 +40,21 @@ Basic Usage
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 bioUrl:
                     - Url: ~
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="bioUrl">
                     <constraint name="Url" />
                 </property>
@@ -62,8 +63,8 @@ Basic Usage
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -90,8 +91,8 @@ This message is shown if the URL is invalid.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -107,8 +108,8 @@ This message is shown if the URL is invalid.
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 bioUrl:
                     - Url:
@@ -116,13 +117,13 @@ This message is shown if the URL is invalid.
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="bioUrl">
                     <constraint name="Url">
                         <option name="message">The url "{{ value }}" is not a valid url.</option>
@@ -133,8 +134,8 @@ This message is shown if the URL is invalid.
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -162,8 +163,8 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -179,21 +180,21 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 bioUrl:
                     - Url: { protocols: [http, https, ftp] }
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="bioUrl">
                     <constraint name="Url">
                         <option name="protocols">
@@ -208,8 +209,8 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -229,21 +230,25 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 checkDNS
 ~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``checkDNS`` option was introduced in Symfony 2.7.
-
 **type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 4.1
+    This option was deprecated in Symfony 4.1 and will be removed in Symfony 5.0,
+    because checking the DNS records is not reliable enough to validate the
+    existence of the host. Use the :phpfunction:`checkdnsrr` PHP function if you
+    still want to use this kind of validation.
 
 By default, this constraint just validates the syntax of the given URL. If you
 also need to check whether the associated host exists, set the ``checkDNS``
-option to ``true``:
+option to the value of any of the ``CHECK_DNS_TYPE_*`` constants in the
+:class:`Symfony\\Component\\Validator\\Constraints\\Url` class:
 
 .. configuration-block::
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -251,7 +256,7 @@ option to ``true``:
         {
             /**
              * @Assert\Url(
-             *    checkDNS = true
+             *    checkDNS = "ANY"
              * )
              */
              protected $bioUrl;
@@ -259,24 +264,24 @@ option to ``true``:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 bioUrl:
-                    - Url: { checkDNS: true }
+                    - Url: { checkDNS: 'ANY' }
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="bioUrl">
                     <constraint name="Url">
-                        <option name="checkDNS">true</option>
+                        <option name="checkDNS">ANY</option>
                     </constraint>
                 </property>
             </class>
@@ -284,8 +289,8 @@ option to ``true``:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -295,21 +300,24 @@ option to ``true``:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
-                    'checkDNS'  => true,
+                    'checkDNS'  => Assert\Url::CHECK_DNS_TYPE_ANY,
                 )));
             }
         }
 
 This option uses the :phpfunction:`checkdnsrr` PHP function to check the validity
-of the ``ANY`` DNS record corresponding to the host associated with the given URL.
+of the DNS record corresponding to the host associated with the given URL.
 
 dnsMessage
 ~~~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``dnsMessage`` option was introduced in Symfony 2.7.
-
 **type**: ``string`` **default**: ``The host could not be resolved.``
+
+.. versionadded:: 4.1
+    This option was deprecated in Symfony 4.1 and will be removed in Symfony 5.0,
+    because checking the DNS records is not reliable enough to validate the
+    existence of the host. Use the :phpfunction:`checkdnsrr` PHP function if you
+    still want to use this kind of validation.
 
 This message is shown when the ``checkDNS`` option is set to ``true`` and the
 DNS check failed.
@@ -318,8 +326,8 @@ DNS check failed.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -335,21 +343,21 @@ DNS check failed.
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 bioUrl:
                     - Url: { dnsMessage: 'The host "{{ value }}" could not be resolved.' }
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="bioUrl">
                     <constraint name="Url">
                         <option name="dnsMessage">The host "{{ value }}" could not be resolved.</option>
@@ -360,8 +368,8 @@ DNS check failed.
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -372,6 +380,80 @@ DNS check failed.
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
                      'dnsMessage' => 'The host "{{ value }}" could not be resolved.',
+                )));
+            }
+        }
+
+relativeProtocol
+~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 4.1
+    The ``relativeProtocol`` option was introduced in Symfony 4.1.
+
+If ``true``, the protocol is considered optional when validating the syntax of
+the given URL. This means that both ``http://`` and ``https://`` are valid but
+also relative URLs that contain no protocol (e.g. ``//example.com``).
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @Assert\Url(
+             *    relativeProtocol = true
+             * )
+             */
+             protected $bioUrl;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Author:
+            properties:
+                bioUrl:
+                    - Url: { relativeProtocol: true }
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Author">
+                <property name="bioUrl">
+                    <constraint name="Url">
+                        <option name="relativeProtocol">true</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
+                    'relativeProtocol'  => true,
                 )));
             }
         }

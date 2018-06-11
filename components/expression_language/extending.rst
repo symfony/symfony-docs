@@ -56,9 +56,6 @@ evaluating or the "names" if compiling).
 Using Expression Providers
 --------------------------
 
-.. versionadded:: 2.6
-    Expression providers were introduced in Symfony 2.6.
-
 When you use the ``ExpressionLanguage`` class in your library, you often want
 to add custom functions. To do so, you can create a new expression provider by
 creating a class that implements
@@ -91,6 +88,18 @@ register::
         }
     }
 
+.. tip::
+
+    To create an expression function from a PHP function with the
+    :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction::fromPhp` static method::
+
+        ExpressionFunction::fromPhp('strtoupper');
+
+    Namespaced functions are supported, but they require a second argument to
+    define the name of the expression::
+
+        ExpressionFunction::fromPhp('My\strtoupper', 'my_strtoupper');
+
 You can register providers using
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::registerProvider`
 or by using the second argument of the constructor::
@@ -111,12 +120,12 @@ or by using the second argument of the constructor::
     It is recommended to create your own ``ExpressionLanguage`` class in your
     library. Now you can add the extension by overriding the constructor::
 
+        use Psr\Cache\CacheItemPoolInterface;
         use Symfony\Component\ExpressionLanguage\ExpressionLanguage as BaseExpressionLanguage;
-        use Symfony\Component\ExpressionLanguage\ParserCache\ParserCacheInterface;
 
         class ExpressionLanguage extends BaseExpressionLanguage
         {
-            public function __construct(ParserCacheInterface $parser = null, array $providers = array())
+            public function __construct(CacheItemPoolInterface $parser = null, array $providers = array())
             {
                 // prepends the default provider to let users override it easily
                 array_unshift($providers, new StringExpressionLanguageProvider());

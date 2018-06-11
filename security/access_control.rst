@@ -23,7 +23,7 @@ access control should be used on this request. The following ``access_control``
 options are used for matching:
 
 * ``path``
-* ``ip`` or ``ips``
+* ``ip`` or ``ips`` (netmasks are also supported)
 * ``host``
 * ``methods``
 
@@ -33,7 +33,7 @@ Take the following ``access_control`` entries as an example:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:
@@ -44,7 +44,7 @@ Take the following ``access_control`` entries as an example:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -63,7 +63,7 @@ Take the following ``access_control`` entries as an example:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
             'access_control' => array(
@@ -131,9 +131,12 @@ Once Symfony has decided which ``access_control`` entry matches (if any),
 it then *enforces* access restrictions based on the ``roles``, ``allow_if`` and ``requires_channel``
 options:
 
-* ``roles`` If the user does not have the given role(s), then access is denied
+* ``roles`` If the user does not have the given role, then access is denied
   (internally, an :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-  is thrown);
+  is thrown). If this value is an array of multiple roles, the user must have
+  at least one of them (when using the default ``affirmative`` strategy in the
+  :ref:`Access Decision Manager <components-security-access-decision-manager>`)
+  or all of them when using the ``unanimous`` strategy;
 
 * ``allow_if`` If the expression returns false, then access is denied;
 
@@ -171,17 +174,18 @@ pattern so that it is only accessible by requests from the local server itself:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:
                 #
-                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1] }
+                # the 'ips' option supports IP addresses and subnet masks
+                - { path: ^/internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1, 192.168.0.1/24] }
                 - { path: ^/internal, roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -191,6 +195,8 @@ pattern so that it is only accessible by requests from the local server itself:
 
             <config>
                 <!-- ... -->
+
+                <!-- the 'ips' option supports IP addresses and subnet masks -->
                 <rule path="^/internal" role="IS_AUTHENTICATED_ANONYMOUSLY">
                     <ip>127.0.0.1</ip>
                     <ip>::1</ip>
@@ -202,13 +208,14 @@ pattern so that it is only accessible by requests from the local server itself:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
             'access_control' => array(
                 array(
                     'path' => '^/internal',
                     'role' => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                    // the 'ips' option supports IP addresses and subnet masks
                     'ips' => array('127.0.0.1', '::1'),
                 ),
                 array(
@@ -252,7 +259,7 @@ key:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:
@@ -297,6 +304,15 @@ and functions including ``request``, which is the Symfony
 For a list of the other functions and variables, see
 :ref:`functions and variables <security-expression-variables>`.
 
+.. tip::
+
+    The ``allow_if`` expressions can also contain custom functions registered
+    with :ref:`expression providers <components-expression-language-provider>`.
+
+    .. versionadded:: 4.1
+        The feature to use custom functions inside ``allow_if`` expressions was
+        introduced in Symfony 4.1.
+
 Forcing a Channel (http, https)
 -------------------------------
 
@@ -309,7 +325,7 @@ the user will be redirected to ``https``:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:
@@ -317,7 +333,7 @@ the user will be redirected to ``https``:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -333,7 +349,7 @@ the user will be redirected to ``https``:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'access_control' => array(
                 array(

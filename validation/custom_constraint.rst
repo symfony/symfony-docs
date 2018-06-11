@@ -14,8 +14,8 @@ Creating the Constraint Class
 
 First you need to create a Constraint class and extend :class:`Symfony\\Component\\Validator\\Constraint`::
 
-    // src/AppBundle/Validator/Constraints/ContainsAlphanumeric.php
-    namespace AppBundle\Validator\Constraints;
+    // src/Validator/Constraints/ContainsAlphanumeric.php
+    namespace App\Validator\Constraints;
 
     use Symfony\Component\Validator\Constraint;
 
@@ -54,8 +54,8 @@ when actually performing the validation.
 
 The validator class is also simple, and only has one required method ``validate()``::
 
-    // src/AppBundle/Validator/Constraints/ContainsAlphanumericValidator.php
-    namespace AppBundle\Validator\Constraints;
+    // src/Validator/Constraints/ContainsAlphanumericValidator.php
+    namespace App\Validator\Constraints;
 
     use Symfony\Component\Validator\Constraint;
     use Symfony\Component\Validator\ConstraintValidator;
@@ -65,18 +65,9 @@ The validator class is also simple, and only has one required method ``validate(
         public function validate($value, Constraint $constraint)
         {
             if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
-                // If you're using the new 2.5 validation API (you probably are!)
                 $this->context->buildViolation($constraint->message)
                     ->setParameter('{{ string }}', $value)
                     ->addViolation();
-
-                // If you're using the old 2.4 validation API
-                /*
-                $this->context->addViolation(
-                    $constraint->message,
-                    array('{{ string }}' => $value)
-                );
-                */
             }
         }
     }
@@ -97,9 +88,9 @@ Using custom validators is very easy, just as the ones provided by Symfony itsel
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/AcmeEntity.php
+        // src/Entity/AcmeEntity.php
         use Symfony\Component\Validator\Constraints as Assert;
-        use AppBundle\Validator\Constraints as AcmeAssert;
+        use App\Validator\Constraints as AcmeAssert;
 
         class AcmeEntity
         {
@@ -116,35 +107,35 @@ Using custom validators is very easy, just as the ones provided by Symfony itsel
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\AcmeEntity:
+        # config/validator/validation.yaml
+        App\Entity\AcmeEntity:
             properties:
                 name:
                     - NotBlank: ~
-                    - AppBundle\Validator\Constraints\ContainsAlphanumeric: ~
+                    - App\Validator\Constraints\ContainsAlphanumeric: ~
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\AcmeEntity">
+            <class name="App\Entity\AcmeEntity">
                 <property name="name">
                     <constraint name="NotBlank" />
-                    <constraint name="AppBundle\Validator\Constraints\ContainsAlphanumeric" />
+                    <constraint name="App\Validator\Constraints\ContainsAlphanumeric" />
                 </property>
             </class>
         </constraint-mapping>
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/AcmeEntity.php
+        // src/Entity/AcmeEntity.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
-        use AppBundle\Validator\Constraints\ContainsAlphanumeric;
+        use App\Validator\Constraints\ContainsAlphanumeric;
 
         class AcmeEntity
         {
@@ -164,56 +155,10 @@ configured like options on core Symfony constraints.
 Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If your constraint validator has dependencies, such as a database connection,
-it will need to be configured as a service in the Dependency Injection
-Container. This service must include the ``validator.constraint_validator``
-tag so that the validation system knows about it:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.contains_alphanumeric_validator:
-                class: AppBundle\Validator\Constraints\ContainsAlphanumericValidator
-                tags:
-                    - { name: validator.constraint_validator }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.contains_alphanumeric_validator" class="AppBundle\Validator\Constraints\ContainsAlphanumericValidator">
-                    <argument type="service" id="doctrine.orm.default_entity_manager" />
-                    <tag name="validator.constraint_validator" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Validator\Constraints\ContainsAlphanumericValidator;
-
-        $container
-            ->register('app.contains_alphanumeric_validator', ContainsAlphanumericValidator::class)
-            ->addTag('validator.constraint_validator');
-
-Now, when Symfony looks for the ``ContainsAlphanumericValidator`` validator, it will
-load this service from the container.
-
-.. note::
-
-    In earlier versions of Symfony, the tag required an ``alias`` key (usually
-    set to the class name). This ``alias`` is now optional, but if you define
-    it, your constraint's ``validatedBy()`` method must return the same value.
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+then your validator is already registered as a service and :doc:`tagged </service_container/tags>`
+with the necessary ``validator.constraint_validator``. This means you can
+:ref:`inject services or configuration <services-constructor-injection>` like any other service.
 
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -233,20 +178,9 @@ With this, the validator ``validate()`` method gets an object as its first argum
         public function validate($protocol, Constraint $constraint)
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
-                // If you're using the new 2.5 validation API (you probably are!)
                 $this->context->buildViolation($constraint->message)
                     ->atPath('foo')
                     ->addViolation();
-
-                // If you're using the old 2.4 validation API
-                /*
-                $this->context->addViolationAt(
-                    'foo',
-                    $constraint->message,
-                    array(),
-                    null
-                );
-                */
             }
         }
     }
@@ -268,14 +202,14 @@ not to the property:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\AcmeEntity:
+        # config/validator/validation.yaml
+        App\Entity\AcmeEntity:
             constraints:
-                - AppBundle\Validator\Constraints\ContainsAlphanumeric: ~
+                - App\Validator\Constraints\ContainsAlphanumeric: ~
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
-        <class name="AppBundle\Entity\AcmeEntity">
-            <constraint name="AppBundle\Validator\Constraints\ContainsAlphanumeric" />
+        <!-- config/validator/validation.xml -->
+        <class name="App\Entity\AcmeEntity">
+            <constraint name="App\Validator\Constraints\ContainsAlphanumeric" />
         </class>

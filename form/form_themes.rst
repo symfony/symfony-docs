@@ -28,20 +28,21 @@ do this, create a new template file that will store the new markup:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/form/fields.html.twig #}
+        {# templates/form/fields.html.twig #}
         {% block form_row %}
         {% spaceless %}
             <div class="form_row">
                 {{ form_label(form) }}
                 {{ form_errors(form) }}
                 {{ form_widget(form) }}
+                {{ form_help(form) }}
             </div>
         {% endspaceless %}
         {% endblock form_row %}
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/form/form_row.html.php -->
+        <!-- src/Resources/form_row.html.php -->
         <div class="form_row">
             <?php echo $view['form']->label($form, $label) ?>
             <?php echo $view['form']->errors($form) ?>
@@ -57,7 +58,7 @@ renders the form:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/default/new.html.twig #}
+        {# templates/default/new.html.twig #}
         {% form_theme form 'form/fields.html.twig' %}
 
         {# or if you want to use multiple themes #}
@@ -67,7 +68,7 @@ renders the form:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/default/new.html.php -->
+        <!-- templates/default/new.html.php -->
         <?php $view['form']->setTheme($form, array('form')) ?>
 
         <!-- or if you want to use multiple themes -->
@@ -95,7 +96,7 @@ the next section.
 For a more extensive discussion, see :doc:`/form/form_customization`.
 
 .. index::
-    single: Forms; Template fragment naming
+   single: Forms; Template fragment naming
 
 .. _form-template-blocks:
 
@@ -135,6 +136,8 @@ are 4 possible *parts* of a form that can be rendered:
 +-------------+----------------------------+---------------------------------------------------------+
 | ``errors``  | (e.g. ``form_errors()``)   | renders the field's errors                              |
 +-------------+----------------------------+---------------------------------------------------------+
+| ``help``    | (e.g. ``form_help()``)     | renders the field's help                                |
++-------------+----------------------------+---------------------------------------------------------+
 | ``row``     | (e.g. ``form_row()``)      | renders the field's entire row (label, widget & errors) |
 +-------------+----------------------------+---------------------------------------------------------+
 
@@ -148,7 +151,7 @@ customize (e.g. ``widget``), you can construct the fragment name that needs
 to be overridden (e.g. ``textarea_widget``).
 
 .. index::
-    single: Forms; Template fragment inheritance
+   single: Forms; Template fragment inheritance
 
 Template Fragment Inheritance
 -----------------------------
@@ -175,7 +178,7 @@ override the default error rendering for *all* fields, copy and customize the
     :doc:`form type reference </reference/forms/types>` for each field type.
 
 .. index::
-    single: Forms; Global Theming
+   single: Forms; Global Theming
 
 .. _forms-theming-global:
 
@@ -189,7 +192,7 @@ to import form customizations across your entire project.
 .. _forms-theming-twig:
 
 Twig
-~~~
+....
 
 To automatically include the customized blocks from the ``fields.html.twig``
 template created earlier in *all* templates, modify your application configuration
@@ -199,7 +202,7 @@ file:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             form_themes:
                 - 'form/fields.html.twig'
@@ -207,7 +210,7 @@ file:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -224,7 +227,7 @@ file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 'form/fields.html.twig',
@@ -270,9 +273,9 @@ to define form output.
         must point ``form_theme`` to a separate template.
 
 PHP
-~~~
+...
 
-To automatically include the customized templates from the ``app/Resources/views/form``
+To automatically include the customized templates from the ``templates/form``
 directory created earlier in *all* templates, modify your application configuration
 file:
 
@@ -280,7 +283,7 @@ file:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             templating:
                 form:
@@ -290,7 +293,7 @@ file:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -311,7 +314,7 @@ file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'templating' => array(
                 'form' => array(
@@ -323,7 +326,7 @@ file:
             // ...
         ));
 
-Any fragments inside the ``app/Resources/views/form`` directory are now used
+Any fragments inside the ``templates/form`` directory are now used
 globally to define form output.
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

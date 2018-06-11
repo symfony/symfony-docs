@@ -39,9 +39,9 @@ brevity) to explain how to set up and use the ``ResolveTargetEntityListener``.
 
 A Customer entity::
 
-    // src/AppBundle/Entity/Customer.php
+    // src/Entity/Customer.php
 
-    namespace AppBundle\Entity;
+    namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Acme\CustomerBundle\Entity\Customer as BaseCustomer;
@@ -112,17 +112,17 @@ about the replacement:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/doctrine.yaml
         doctrine:
             # ...
             orm:
                 # ...
                 resolve_target_entities:
-                    Acme\InvoiceBundle\Model\InvoiceSubjectInterface: AppBundle\Entity\Customer
+                    Acme\InvoiceBundle\Model\InvoiceSubjectInterface: App\Entity\Customer
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/doctrine.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -135,16 +135,16 @@ about the replacement:
             <doctrine:config>
                 <doctrine:orm>
                     <!-- ... -->
-                    <doctrine:resolve-target-entity interface="Acme\InvoiceBundle\Model\InvoiceSubjectInterface">AppBundle\Entity\Customer</doctrine:resolve-target-entity>
+                    <doctrine:resolve-target-entity interface="Acme\InvoiceBundle\Model\InvoiceSubjectInterface">App\Entity\Customer</doctrine:resolve-target-entity>
                 </doctrine:orm>
             </doctrine:config>
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/doctrine.php
         use Acme\InvoiceBundle\Model\InvoiceSubjectInterface;
-        use AppBundle\Entity\Customer;
+        use App\Entity\Customer;
 
         $container->loadFromExtension('doctrine', array(
             'orm' => array(

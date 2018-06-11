@@ -1,27 +1,29 @@
 .. index::
-   single: Forms; Fields; timezone
+   single: Forms; Fields; TimezoneType
 
-timezone Field Type
-===================
+TimezoneType Field
+==================
 
-The ``timezone`` type is a subset of the ``ChoiceType`` that allows the
+The ``TimezoneType`` is a subset of the ``ChoiceType`` that allows the
 user to select from all possible timezones.
 
 The "value" for each timezone is the full timezone name, such as ``America/Chicago``
 or ``Europe/Istanbul``.
 
-Unlike the ``choice`` type, you don't need to specify a ``choices`` or
-``choice_list`` option as the field type automatically uses a large list
-of timezones. You *can* specify either of these options manually, but then
-you should just use the ``choice`` type directly.
+Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
+field type automatically uses a large list of timezones. You *can* specify the option
+manually, but then you should just use the ``ChoiceType`` directly.
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
+| Options     | - `input`_                                                             |
+|             | - `regions`_                                                           |
++-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
 | options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
-| Inherited   | from the :doc:`choice </reference/forms/types/choice>` type            |
+| Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
 | options     |                                                                        |
 |             | - `expanded`_                                                          |
 |             | - `multiple`_                                                          |
@@ -29,24 +31,45 @@ you should just use the ``choice`` type directly.
 |             | - `preferred_choices`_                                                 |
 |             | - `trim`_                                                              |
 |             |                                                                        |
-|             | from the :doc:`form </reference/forms/types/form>` type                |
+|             | from the :doc:`FormType </reference/forms/types/form>`                 |
 |             |                                                                        |
 |             | - `data`_                                                              |
 |             | - `disabled`_                                                          |
 |             | - `empty_data`_                                                        |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
+|             | - `help`_                                                              |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
-|             | - `read_only`_                                                         |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
-| Parent type | :doc:`choice </reference/forms/types/choice>`                          |
+| Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
 +-------------+------------------------------------------------------------------------+
+
+Field Options
+-------------
+
+input
+~~~~~
+
+**type**: ``string`` **default**: ``string``
+
+The format of the *input* data - i.e. the format that the timezone is stored
+on your underlying object. Valid values are:
+
+* ``string`` (e.g. ``America/New_York``)
+* ``datetimezone`` (a ``DateTimeZone`` object)
+
+regions
+~~~~~~~
+
+**type**: ``int`` **default**: ``\DateTimeZone::ALL``
+
+The available regions in the timezone choice list. For example: ``DateTimeZone::AMERICA | DateTimeZone::EUROPE``
 
 Overridden Options
 ------------------
@@ -54,16 +77,20 @@ Overridden Options
 choices
 ~~~~~~~
 
-**default**: :class:`Symfony\\Component\\Form\\Extension\\Core\\ChoiceList\\TimezoneChoiceList`
+**default**: An array of timezones.
 
 The Timezone type defaults the choices to all timezones returned by
 :phpmethod:`DateTimeZone::listIdentifiers`, broken down by continent.
 
+.. caution::
+
+    If you want to override the built-in choices of the timezone type, you
+    will also have to set the ``choice_loader`` option to ``null``.
+
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`choice </reference/forms/types/choice>`
-type:
+These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
@@ -75,8 +102,7 @@ type:
 
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -98,6 +124,8 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
@@ -105,7 +133,5 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

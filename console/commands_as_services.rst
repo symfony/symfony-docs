@@ -4,181 +4,128 @@
 How to Define Commands as Services
 ==================================
 
-By default, Symfony will take a look in the ``Command`` directory of each
-bundle and automatically register your commands. If a command extends the
-:class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`,
-Symfony will even inject the container.
-While making life easier, this has some limitations:
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+your command classes are already registered as services. Great! This is the
+recommended setup.
 
-* Your command must live in the ``Command`` directory;
-* There's no way to conditionally register your command based on the environment
-  or availability of some dependencies;
-* You can't access the container in the ``configure()`` method (because
-  ``setContainer()`` hasn't been called yet);
-* You can't use the same class to create many commands (i.e. each with
-  different configuration).
+.. note::
 
-To solve these problems, you can register your command as a service and tag it
-with ``console.command``:
+    You can also manually register your command as a service by configuring the service
+    and :doc:`tagging it </service_container/tags>` with ``console.command``.
 
-.. configuration-block::
+In either case, if your class extends :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`,
+you can access public services via ``$this->getContainer()->get('SERVICE_ID')``.
 
-    .. code-block:: yaml
+But if your class is registered as a service, you can instead access services by
+using normal :ref:`dependency injection <services-constructor-injection>`.
 
-        # app/config/config.yml
-        services:
-            app.command.my_command:
-                class: AppBundle\Command\MyCommand
-                tags:
-                    - { name: console.command }
+For example, suppose you want to log something from within your command::
 
-    .. code-block:: xml
+    namespace App\Command;
 
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.command.my_command"
-                    class="AppBundle\Command\MyCommand">
-                    <tag name="console.command" />
-                </service>
-            </services>
-
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use AppBundle\Command\MyCommand;
-
-        $container
-            ->register('app.command.my_command', MyCommand::class)
-            ->addTag('console.command')
-        ;
-
-Using Dependencies and Parameters to Set Default Values for Options
--------------------------------------------------------------------
-
-Imagine you want to provide a default value for the ``name`` option. You could
-pass one of the following as the 5th argument of ``addOption()``:
-
-* a hardcoded string;
-* a container parameter (e.g. something from ``parameters.yml``);
-* a value computed by a service (e.g. a repository).
-
-By extending ``ContainerAwareCommand``, only the first is possible, because you
-can't access the container inside the ``configure()`` method. Instead, inject
-any parameter or service you need into the constructor. For example, suppose you
-store the default value in some ``%command.default_name%`` parameter::
-
-    // src/AppBundle/Command/GreetCommand.php
-    namespace AppBundle\Command;
-
+    use Psr\Log\LoggerInterface;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
-    use Symfony\Component\Console\Input\InputOption;
     use Symfony\Component\Console\Output\OutputInterface;
 
-    class GreetCommand extends Command
+    class SunshineCommand extends Command
     {
-        protected $defaultName;
+        private $logger;
 
-        public function __construct($defaultName)
+        public function __construct(LoggerInterface $logger)
         {
-            $this->defaultName = $defaultName;
+            $this->logger = $logger;
 
+            // you *must* call the parent constructor
             parent::__construct();
         }
 
         protected function configure()
         {
-            // try to avoid work here (e.g. database query)
-            // this method is *always* called - see warning below
-            $defaultName = $this->defaultName;
-
             $this
-                ->setName('demo:greet')
-                ->setDescription('Greet someone')
-                ->addOption(
-                    'name',
-                    '-n',
-                    InputOption::VALUE_REQUIRED,
-                    'Who do you want to greet?',
-                    $defaultName
-                )
-            ;
+                ->setName('app:sunshine')
+                ->setDescription('Good morning!');
         }
 
         protected function execute(InputInterface $input, OutputInterface $output)
         {
-            $name = $input->getOption('name');
-
-            $output->writeln($name);
+            $this->logger->info('Waking up the sun');
+            // ...
         }
     }
 
-Now, just update the arguments of your service configuration like normal to
-inject the ``command.default_name`` parameter:
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+the command class will automatically be registered as a service and passed the ``$logger``
+argument (thanks to autowiring). In other words, *just* by creating this class, everything
+works! You can call the ``app:sunshine`` command and start logging.
+
+.. caution::
+
+    You *do* have access to services in ``configure()``. However, if your command is
+    not :ref:`lazy <console-command-service-lazy-loading>`, try to avoid doing any
+    work (e.g. making database queries), as that code will be run, even if you're using
+    the console to execute a different command.
+
+.. _console-command-service-lazy-loading:
+
+Lazy Loading
+------------
+
+To make your command lazily loaded, either define its ``$defaultName`` static property::
+
+    class SunshineCommand extends Command
+    {
+        protected static $defaultName = 'app:sunshine';
+
+        // ...
+    }
+
+Or set the ``command`` attribute on the ``console.command`` tag in your service definition:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
-        parameters:
-            command.default_name: Javier
-
+        # config/services.yaml
         services:
-            app.command.my_command:
-                class: AppBundle\Command\MyCommand
-                arguments: ["%command.default_name%"]
+            App\Command\SunshineCommand:
                 tags:
-                    - { name: console.command }
+                    - { name: 'console.command', command: 'app:sunshine' }
+                # ...
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <parameter key="command.default_name">Javier</parameter>
-            </parameters>
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.command.my_command"
-                    class="AppBundle\Command\MyCommand">
-                    <argument>%command.default_name%</argument>
-                    <tag name="console.command" />
+                <service id="App\Command\SunshineCommand">
+                     <tag name="console.command" command="app:sunshine" />
                 </service>
             </services>
-
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
-        use AppBundle\Command\MyCommand;
-
-        $container->setParameter('command.default_name', 'Javier');
+        // config/services.php
+        use App\Command\SunshineCommand;
+        //...
 
         $container
-            ->register('app.command.my_command', MyCommand::class)
-            ->setArguments(array('%command.default_name%'))
-            ->addTag('console.command')
+            ->register(SunshineCommand::class)
+            ->addTag('console.command', array('command' => 'app:sunshine'))
         ;
 
-Great, you now have a dynamic default value!
+That's it. One way or another, the ``SunshineCommand`` will be instantiated
+only when the ``app:sunshine`` command is actually called.
+
+.. note::
+
+    You don't need to call ``setName()`` for configuring the command when it is lazy.
 
 .. caution::
 
-    Be careful not to actually do any work in ``configure`` (e.g. make database
-    queries), as your code will be run, even if you're using the console to
-    execute a different command.
+    Calling the ``list`` command will instantiate all commands, including lazy commands.

@@ -15,21 +15,24 @@ form, you can use ``setAction()`` and ``setMethod()``:
 
     .. code-block:: php-symfony
 
-        // AppBundle/Controller/DefaultController.php
-        namespace AppBundle\Controller;
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
         class DefaultController extends Controller
         {
-            public function newAction()
+            public function new()
             {
                 $form = $this->createFormBuilder($task)
                     ->setAction($this->generateUrl('target_route'))
                     ->setMethod('GET')
-                    ->add('task', 'text')
-                    ->add('dueDate', 'date')
-                    ->add('save', 'submit')
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
+                    ->add('save', SubmitType::class)
                     ->getForm();
 
                 // ...
@@ -39,6 +42,10 @@ form, you can use ``setAction()`` and ``setMethod()``:
     .. code-block:: php-standalone
 
         use Symfony\Component\Form\Forms;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+        use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
         // ...
 
@@ -48,12 +55,12 @@ form, you can use ``setAction()`` and ``setMethod()``:
 
         $formFactory = $formFactoryBuilder->getFormFactory();
 
-        $form = $formFactory->createBuilder('form', $task)
+        $form = $formFactory->createBuilder(FormType::class, $task)
             ->setAction('...')
             ->setMethod('GET')
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
-            ->add('save', 'submit')
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
+            ->add('save', SubmitType::class)
             ->getForm();
 
 .. note::
@@ -68,19 +75,19 @@ options:
 
     .. code-block:: php-symfony
 
-        // AppBundle/Controller/DefaultController.php
-        namespace AppBundle\Controller;
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
 
+        use App\Form\TaskType;
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use AppBundle\Form\TaskType;
 
         class DefaultController extends Controller
         {
-            public function newAction()
+            public function new()
             {
                 // ...
 
-                $form = $this->createForm(new TaskType(), $task, array(
+                $form = $this->createForm(TaskType::class, $task, array(
                     'action' => $this->generateUrl('target_route'),
                     'method' => 'GET',
                 ));
@@ -91,8 +98,8 @@ options:
 
     .. code-block:: php-standalone
 
+        use App\Form\TaskType;
         use Symfony\Component\Form\Forms;
-        use AppBundle\Form\TaskType;
 
         $formFactoryBuilder = Forms::createFormFactoryBuilder();
 
@@ -100,7 +107,7 @@ options:
 
         $formFactory = $formFactoryBuilder->getFormFactory();
 
-        $form = $formFactory->create(new TaskType(), $task, array(
+        $form = $formFactory->create(TaskType::class, $task, array(
             'action' => '...',
             'method' => 'GET',
         ));
@@ -112,14 +119,14 @@ to the ``form()`` or the ``form_start()`` helper functions:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/default/new.html.twig #}
+        {# templates/default/new.html.twig #}
         {{ form_start(form, {'action': path('target_route'), 'method': 'GET'}) }}
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/default/new.html.php -->
+        <!-- templates/default/new.html.php -->
         <?php echo $view['form']->start($form, array(
-            'action' => $view['router']->generate('target_route'),
+            'action' => $view['router']->path('target_route'),
             'method' => 'GET',
         )) ?>
 

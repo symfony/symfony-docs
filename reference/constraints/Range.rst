@@ -28,8 +28,8 @@ you might add the following:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Participant.php
-        namespace AppBundle\Entity;
+        // src/Entity/Participant.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -48,8 +48,8 @@ you might add the following:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Participant:
+        # config/validator/validation.yaml
+        App\Entity\Participant:
             properties:
                 height:
                     - Range:
@@ -60,13 +60,13 @@ you might add the following:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Participant">
+            <class name="App\Entity\Participant">
                 <property name="height">
                     <constraint name="Range">
                         <option name="min">120</option>
@@ -80,8 +80,8 @@ you might add the following:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Participant.php
-        namespace AppBundle\Entity;
+        // src/Entity/Participant.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -111,8 +111,8 @@ date must lie within the current year like this:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Event.php
-        namespace AppBundle\Entity;
+        // src/Entity/Event.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -129,8 +129,8 @@ date must lie within the current year like this:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Event:
+        # config/validator/validation.yaml
+        App\Entity\Event:
             properties:
                 startDate:
                     - Range:
@@ -139,13 +139,13 @@ date must lie within the current year like this:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Event">
+            <class name="App\Entity\Event">
                 <property name="startDate">
                     <constraint name="Range">
                         <option name="min">first day of January</option>
@@ -157,8 +157,8 @@ date must lie within the current year like this:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Event.php
-        namespace AppBundle\Entity;
+        // src/Entity/Event.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -181,8 +181,8 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Event.php
-        namespace AppBundle\Entity;
+        // src/Entity/Event.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -199,8 +199,8 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Event:
+        # config/validator/validation.yaml
+        App\Entity\Event:
             properties:
                 startDate:
                     - Range:
@@ -209,13 +209,13 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Event">
+            <class name="App\Entity\Event">
                 <property name="startDate">
                     <constraint name="Range">
                         <option name="min">first day of January UTC</option>
@@ -227,8 +227,8 @@ dates. If you want to fix the timezone, append it to the date string:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Person.php
-        namespace AppBundle\Entity;
+        // src/Entity/Person.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -251,8 +251,8 @@ can check that a delivery date starts within the next five hours like this:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -269,8 +269,8 @@ can check that a delivery date starts within the next five hours like this:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Order:
+        # config/validator/validation.yaml
+        App\Entity\Order:
             properties:
                 deliveryDate:
                     - Range:
@@ -279,13 +279,13 @@ can check that a delivery date starts within the next five hours like this:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Order">
+            <class name="App\Entity\Order">
                 <property name="deliveryDate">
                     <constraint name="Range">
                         <option name="min">now</option>
@@ -297,8 +297,8 @@ can check that a delivery date starts within the next five hours like this:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Order.php
-        namespace AppBundle\Entity;
+        // src/Entity/Order.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

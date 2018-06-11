@@ -12,6 +12,7 @@ using an email address that already exists in the system.
 |                | - `message`_                                                                        |
 |                | - `em`_                                                                             |
 |                | - `repositoryMethod`_                                                               |
+|                | - `entityClass`_                                                                    |
 |                | - `errorPath`_                                                                      |
 |                | - `ignoreNull`_                                                                     |
 |                | - `payload`_                                                                        |
@@ -24,17 +25,16 @@ using an email address that already exists in the system.
 Basic Usage
 -----------
 
-Suppose you have an AppBundle bundle with a ``User`` entity that has
-an ``email`` field. You can use the ``UniqueEntity`` constraint to guarantee
-that the ``email`` field remains unique between all of the constraints in
-your user table:
+Suppose you have a ``User`` entity that has an ``email`` field. You can use the
+``UniqueEntity`` constraint to guarantee that the ``email`` field remains unique
+between all of the constraints in your user table:
 
 .. configuration-block::
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
         use Doctrine\ORM\Mapping as ORM;
@@ -61,8 +61,8 @@ your user table:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             constraints:
                 - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
             properties:
@@ -71,13 +71,13 @@ your user table:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
                     <option name="fields">email</option>
                 </constraint>
@@ -89,8 +89,8 @@ your user table:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -132,7 +132,14 @@ message
 
 **type**: ``string`` **default**: ``This value is already used.``
 
-The message that's displayed when this constraint fails.
+The message that's displayed when this constraint fails. This message is always
+mapped to the first field causing the violation, even when using multiple fields
+in the constraint.
+
+Messages can include the ``{{ value }}`` placeholder to display a string
+representation of the invalid entity. If the entity doesn't define the
+``__toString()`` method, the following generic value will be used: *"Object of
+class __CLASS__ identified by <comma separated IDs>"*
 
 em
 ~~
@@ -153,6 +160,17 @@ The name of the repository method to use for making the query to determine
 the uniqueness. If it's left blank, the ``findBy()`` method will be used.
 This method should return a countable result.
 
+entityClass
+~~~~~~~~~~~
+
+**type**: ``string``
+
+By default, the query performed to ensure the uniqueness uses the repository of
+the current class instance. However, in some cases, such as when using Doctrine
+inheritance mapping, you need to execute the query in a different repository.
+Use this option to define the fully-qualified class name (FQCN) of the Doctrine
+entity associated with the repository you want to use.
+
 errorPath
 ~~~~~~~~~
 
@@ -168,8 +186,8 @@ Consider this example:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Service.php
-        namespace AppBundle\Entity;
+        // src/Entity/Service.php
+        namespace App\Entity;
 
         use Doctrine\ORM\Mapping as ORM;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -197,8 +215,8 @@ Consider this example:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Service:
+        # config/validator/validation.yaml
+        App\Entity\Service:
             constraints:
                 - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
                     fields: [host, port]
@@ -207,13 +225,13 @@ Consider this example:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Service">
+            <class name="App\Entity\Service">
                 <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
                     <option name="fields">
                         <value>host</value>
@@ -228,8 +246,8 @@ Consider this example:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Service.php
-        namespace AppBundle\Entity;
+        // src/Entity/Service.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;

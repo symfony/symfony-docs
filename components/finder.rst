@@ -76,7 +76,9 @@ the Finder instance.
 Criteria
 --------
 
-There are lots of ways to filter and sort your results.
+There are lots of ways to filter and sort your results. You can also use the
+:method:`Symfony\\Component\\Finder\\Finder::hasResults` method to check if
+there's any file or directory matching the search criteria.
 
 Location
 ~~~~~~~~
@@ -106,10 +108,6 @@ Exclude directories from matching with the
 
     // directories passed as argument must be relative to the ones defined with the in() method
     $finder->in(__DIR__)->exclude('ruby');
-
-.. versionadded:: 2.3
-   The :method:`Symfony\\Component\\Finder\\Finder::ignoreUnreadableDirs`
-   method was introduced in Symfony 2.3.
 
 It's also possible to ignore directories that you don't have permission to read::
 
@@ -170,16 +168,26 @@ Sort the result by name or by type (directories first, then files)::
 
     $finder->sortByType();
 
-.. note::
+.. tip::
 
-    Notice that the ``sort*`` methods need to get all matching elements to do
-    their jobs. For large iterators, it is slow.
+    By default, the ``sortByName()`` method uses the :phpfunction:`strcmp` PHP
+    function (e.g. ``file1.txt``, ``file10.txt``, ``file2.txt``). Pass ``true``
+    as its argument to use PHP's `natural sort order`_ algorithm instead (e.g.
+    ``file1.txt``, ``file2.txt``, ``file10.txt``).
+
+    .. versionadded:: 4.2
+        The option to use the natural sort order was introduced in Symfony 4.2.
 
 You can also define your own sorting algorithm with ``sort()`` method::
 
     $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
         return strcmp($a->getRealPath(), $b->getRealPath());
     });
+
+.. note::
+
+    Notice that the ``sort*`` methods need to get all matching elements to do
+    their jobs. For large iterators, it is slow.
 
 File Name
 ~~~~~~~~~
@@ -322,8 +330,9 @@ The contents of returned files can be read with
         // ...
     }
 
-.. _strtotime:    https://php.net/manual/en/datetime.formats.php
-.. _protocol:     https://php.net/manual/en/wrappers.php
-.. _Streams:      https://php.net/streams
-.. _IEC standard: https://physics.nist.gov/cuu/Units/binary.html
-.. _Packagist:    https://packagist.org/packages/symfony/finder
+.. _strtotime:          https://php.net/manual/en/datetime.formats.php
+.. _protocol:           https://php.net/manual/en/wrappers.php
+.. _Streams:            https://php.net/streams
+.. _IEC standard:       https://physics.nist.gov/cuu/Units/binary.html
+.. _Packagist:          https://packagist.org/packages/symfony/finder
+.. _`natural sort order`: https://en.wikipedia.org/wiki/Natural_sort_order

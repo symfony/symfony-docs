@@ -23,7 +23,7 @@ matches the configured ``pattern``.
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
 
         # ...
         security:
@@ -34,7 +34,7 @@ matches the configured ``pattern``.
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -52,7 +52,7 @@ matches the configured ``pattern``.
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         $container->loadFromExtension('security', array(
@@ -80,7 +80,7 @@ only initialize if the host from the request matches against the configuration.
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
 
         # ...
         security:
@@ -91,7 +91,7 @@ only initialize if the host from the request matches against the configuration.
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -109,7 +109,7 @@ only initialize if the host from the request matches against the configuration.
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         $container->loadFromExtension('security', array(
@@ -138,7 +138,7 @@ the provided HTTP methods.
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
 
         # ...
         security:
@@ -149,7 +149,7 @@ the provided HTTP methods.
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -167,7 +167,7 @@ the provided HTTP methods.
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         $container->loadFromExtension('security', array(

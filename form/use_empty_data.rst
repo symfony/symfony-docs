@@ -7,19 +7,19 @@ How to Configure empty Data for a Form Class
 The ``empty_data`` option allows you to specify an empty data set for your
 form class. This empty data set would be used if you submit your form, but
 haven't called ``setData()`` on your form or passed in data when you created
-your form. For example::
+your form. For example, in a controller::
 
-    public function indexAction()
+    public function index()
     {
         $blog = ...;
 
         // $blog is passed in as the data, so the empty_data
         // option is not needed
-        $form = $this->createForm(new BlogType(), $blog);
+        $form = $this->createForm(BlogType::class, $blog);
 
         // no data is passed in, so empty_data is
         // used to get the "starting data"
-        $form = $this->createForm(new BlogType());
+        $form = $this->createForm(BlogType::class);
     }
 
 By default, ``empty_data`` is set to ``null``. Or, if you have specified
@@ -43,11 +43,11 @@ One reason you might use this option is if you want to use a constructor
 that takes arguments. Remember, the default ``data_class`` option calls
 that constructor with no arguments::
 
-    // src/AppBundle/Form/Type/BlogType.php
+    // src/Form/Type/BlogType.php
 
     // ...
     use Symfony\Component\Form\AbstractType;
-    use AppBundle\Entity\Blog;
+    use App\Entity\Blog;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     class BlogType extends AbstractType
@@ -68,10 +68,14 @@ that constructor with no arguments::
         }
     }
 
-You can instantiate your class however you want. In this example, we pass
-some dependency into the ``BlogType`` when we instantiate it, then use that
-to instantiate the ``Blog`` class. The point is, you can set ``empty_data``
-to the exact "new" object that you want to use.
+You can instantiate your class however you want. In this example, you pass
+some dependency into the ``BlogType`` then use that to instantiate the ``Blog`` class.
+The point is, you can set ``empty_data`` to the exact "new" object that you want to use.
+
+.. tip::
+
+    In order to pass arguments to the ``BlogType`` constructor, you'll need to
+    :doc:`register it as a service and tag with form.type </form/form_dependencies>`.
 
 Option 2: Provide a Closure
 ---------------------------

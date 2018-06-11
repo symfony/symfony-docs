@@ -12,8 +12,8 @@ the URI scheme via schemes:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
-        namespace AppBundle\Controller;
+        // src/Controller/MainController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -23,7 +23,7 @@ the URI scheme via schemes:
             /**
              * @Route("/secure", name="secure", schemes={"https"})
              */
-            public function secureAction()
+            public function secure()
             {
                 // ...
             }
@@ -31,15 +31,15 @@ the URI scheme via schemes:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         secure:
-            path:     /secure
-            defaults: { _controller: AppBundle:Main:secure }
-            schemes:  [https]
+            path:       /secure
+            controller: App\Controller\MainController::secure
+            schemes:    [https]
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://symfony.com/schema/routing"
@@ -47,19 +47,19 @@ the URI scheme via schemes:
             xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="secure" path="/secure" schemes="https">
-                <default key="_controller">AppBundle:Main:secure</default>
+                <default key="_controller">App\Controller\MainController::secure</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
         $routes->add('secure', new Route('/secure', array(
-            '_controller' => 'AppBundle:Main:secure',
+            '_controller' => 'App\Controller\MainController::secure',
         ), array(), array(), '', array('https')));
 
         return $routes;

@@ -24,25 +24,25 @@ action to redirect to this new url:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
 
         # load some routes - one should ultimately have the path "/app"
-        AppBundle:
-            resource: '@AppBundle/Controller/'
+        controllers:
+            resource: ../src/Controller/
             type:     annotation
             prefix:   /app
 
-        # redirecting the root
-        root:
+        # redirecting the homepage
+        homepage:
             path: /
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
             defaults:
-                _controller: FrameworkBundle:Redirect:urlRedirect
                 path: /app
                 permanent: true
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -50,14 +50,14 @@ action to redirect to this new url:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <!-- load some routes - one should ultimately have the path "/app" -->
-            <import resource="@AppBundle/Controller/"
+            <import resource="../src/Controller/"
                 type="annotation"
                 prefix="/app"
             />
 
-            <!-- redirecting the root -->
-            <route id="root" path="/">
-                <default key="_controller">FrameworkBundle:Redirect:urlRedirect</default>
+            <!-- redirecting the homepage -->
+            <route id="homepage" path="/">
+                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction</default>
                 <default key="path">/app</default>
                 <default key="permanent">true</default>
             </route>
@@ -65,21 +65,21 @@ action to redirect to this new url:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
 
         // load some routes - one should ultimately have the path "/app"
-        $appRoutes = $loader->import("@AppBundle/Controller/", "annotation");
+        $appRoutes = $loader->import("../src/Controller/", "annotation");
         $appRoutes->setPrefix('/app');
 
         $routes->addCollection($appRoutes);
 
-        // redirecting the root
-        $routes->add('root', new Route('/', array(
-            '_controller' => 'FrameworkBundle:Redirect:urlRedirect',
+        // redirecting the homepage
+        $routes->add('homepage', new Route('/', array(
+            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
             'path'        => '/app',
             'permanent'   => true,
         )));
@@ -104,21 +104,23 @@ action:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
 
         # ...
 
-        # redirecting the admin home
-        root:
+        admin:
             path: /wp-admin
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
             defaults:
-                _controller: FrameworkBundle:Redirect:redirect
                 route: sonata_admin_dashboard
+                # make a permanent redirection...
                 permanent: true
+                # ...and keep the original query string parameters
+                keepQueryParams: true
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -127,34 +129,136 @@ action:
 
             <!-- ... -->
 
-            <!-- redirecting the admin home -->
-            <route id="root" path="/wp-admin">
-                <default key="_controller">FrameworkBundle:Redirect:redirect</default>
+            <route id="admin" path="/wp-admin">
+                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction</default>
                 <default key="route">sonata_admin_dashboard</default>
+                <!-- make a permanent redirection... -->
                 <default key="permanent">true</default>
+                <!-- ...and keep the original query string parameters -->
+                <default key="keepQueryParams">true</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
         // ...
 
-        // redirecting the root
-        $routes->add('root', new Route('/wp-admin', array(
-            '_controller' => 'FrameworkBundle:Redirect:redirect',
+        $routes->add('admin', new Route('/wp-admin', array(
+            '_controller' => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction',
             'route'       => 'sonata_admin_dashboard',
+            // make a permanent redirection...
             'permanent'   => true,
+            // ...and keep the original query string parameters
+            'keepQueryParams' => true,
         )));
 
         return $routes;
+
+.. versionadded:: 4.1
+    The ``keepQueryParams`` option was introduced in Symfony 4.1.
 
 .. caution::
 
     Because you are redirecting to a route instead of a path, the required
     option is called ``route`` in the ``redirect()`` action, instead of ``path``
     in the ``urlRedirect()`` action.
+
+Keeping the Request Method when Redirecting
+-------------------------------------------
+
+The redirections performed in the previous examples use the ``301`` and ``302``
+HTTP status codes. For legacy reasons, these HTTP redirections change the method
+of ``POST`` requests to ``GET`` (because redirecting a ``POST`` request didn't
+work well in old browsers).
+
+However, in some scenarios it's either expected or required that the redirection
+request uses the same HTTP method. That's why the HTTP standard defines two
+additional status codes (``307`` and ``308``) to perform temporary/permanent
+redirects that maintain the original request method.
+
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::urlRedirectAction`
+and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction`
+methods accept an additional argument called ``keepRequestMethod``. When it's
+set to ``true``, temporary redirects use ``307`` code instead of ``302`` and
+permanent redirects use ``308`` code instead of ``301``::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+
+        # redirects with the 308 status code
+        route_foo:
+            # ...
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+            defaults:
+                # ...
+                permanent: true
+                keepRequestMethod: true
+
+        # redirects with the 307 status code
+        route_bar:
+            # ...
+            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+            defaults:
+                # ...
+                permanent: false
+                keepRequestMethod: true
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <!-- redirects with the 308 status code -->
+            <route id="route_foo" path="...">
+                <!-- ... -->
+                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction</default>
+                <default key="permanent">true</default>
+                <default key="keepRequestMethod">true</default>
+            </route>
+
+            <!-- redirects with the 307 status code -->
+            <route id="route_bar" path="...">
+                <!-- ... -->
+                <default key="_controller">Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction</default>
+                <default key="permanent">false</default>
+                <default key="keepRequestMethod">true</default>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+
+        $collection = new RouteCollection();
+
+        // redirects with the 308 status code
+        $collection->add('route_foo', new Route('...', array(
+            // ...
+            '_controller'       => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
+            'permanent'         => true,
+            'keepRequestMethod' => true,
+        )));
+
+        // redirects with the 307 status code
+        $collection->add('route_bar', new Route('...', array(
+            // ...
+            '_controller'       => 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction',
+            'permanent'         => false,
+            'keepRequestMethod' => true,
+        )));
+
+        return $collection;

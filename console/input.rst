@@ -54,10 +54,10 @@ The command can now be used in either of the following ways:
 
 .. code-block:: terminal
 
-    $ php app/console app:greet Fabien
+    $ php bin/console app:greet Fabien
     Hi Fabien!
 
-    $ php app/console app:greet Fabien Potencier
+    $ php bin/console app:greet Fabien Potencier
     Hi Fabien Potencier!
 
 It is also possible to let an argument take a list of values (imagine you want
@@ -75,7 +75,7 @@ To use this, just specify as many names as you want:
 
 .. code-block:: terminal
 
-    $ php app/console app:greet Fabien Ryan Bernhard
+    $ php bin/console app:greet Fabien Ryan Bernhard
 
 You can access the ``names`` argument as an array::
 
@@ -144,10 +144,10 @@ flag:
 .. code-block:: terminal
 
     # no --iterations provided, the default (1) is used
-    $ php app/console app:greet Fabien
+    $ php bin/console app:greet Fabien
     Hi Fabien!
 
-    $ php app/console app:greet Fabien --iterations=5
+    $ php bin/console app:greet Fabien --iterations=5
     Hi Fabien
     Hi Fabien
     Hi Fabien
@@ -155,9 +155,9 @@ flag:
     Hi Fabien
 
     # the order of options isn't important
-    $ php app/console app:greet Fabien --iterations=5 --yell
-    $ php app/console app:greet Fabien --yell --iterations=5
-    $ php app/console app:greet --yell --iterations=5 Fabien
+    $ php bin/console app:greet Fabien --iterations=5 --yell
+    $ php bin/console app:greet Fabien --yell --iterations=5
+    $ php bin/console app:greet --yell --iterations=5 Fabien
 
 .. tip::
 
@@ -178,6 +178,15 @@ Note that to comply with the `docopt standard`_, long options can specify their
 values after a white space or an ``=`` sign (e.g. ``--iterations 5`` or
 ``--iterations=5``), but short options can only use white spaces or no
 separation at all (e.g. ``-i 5`` or ``-i5``).
+
+.. caution::
+
+    While it is possible to separate an option from its value with a white space,
+    using this form leads to an ambiguity should the option appear before the
+    command name. For example, ``php app/console --iterations 5 app:greet Fabien``
+    is ambiguous; Symfony would interpret ``5`` as the command name. To avoid
+    this situation, always place options after the command name, or avoid using
+    a space to separate the option name from its value.
 
 There are four option variants you can use:
 
@@ -209,25 +218,53 @@ You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
             array('blue', 'red')
         );
 
-.. tip::
+Options with optional arguments
+-------------------------------
 
-    There is nothing forbidding you to create a command with an option that
-    optionally accepts a value. However, there is no way you can distinguish
-    when the option was used without a value (``command --language``) or when
-    it wasn't used at all (``command``). In both cases, the value retrieved for
-    the option will be ``null``.
+There is nothing forbidding you to create a command with an option that
+optionally accepts a value, but it's a bit tricky. Consider this example::
 
-    Similarly, due to a PHP limitation, there is no way to pass an empty string
-    as the value of an option. In ``command --prefix`` and ``command --prefix=''``
-    cases, the value of the ``prefix`` option will be ``null``.
+    // ...
+    use Symfony\Component\Console\Input\InputOption;
+
+    $this
+        // ...
+        ->addOption(
+            'yell',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'Should I yell while greeting?'
+        );
+
+This option can be used in 3 ways: ``--yell``, ``yell=louder``, and not passing
+the option at all. However, it's hard to distinguish between passing the option
+without a value (``greet --yell``) and not passing the option (``greet``).
+
+To solve this issue, you have to set the option's default value to ``false``::
+
+    // ...
+    use Symfony\Component\Console\Input\InputOption;
+
+    $this
+        // ...
+        ->addOption(
+            'yell',
+            null,
+            InputOption::VALUE_OPTIONAL,
+            'Should I yell while greeting?',
+            false // this is the new default value, instead of null
+        );
+
+Now check the value of the option and keep in mind that ``false !== null``::
+
+    $optionValue = $input->getOption('yell');
+    $yell = ($optionValue !== false);
+    $yellLouder = ($optionValue === 'louder');
 
 .. caution::
 
-    While it is possible to separate an option from its value with a white space,
-    using this form leads to an ambiguity should the option appear before the
-    command name. For example, ``php app/console --iterations 5 app:greet Fabien``
-    is ambiguous; Symfony would interpret ``5`` as the command name. To avoid
-    this situation, always place options after the command name, or avoid using
-    a space to separate the option name from its value.
+    Due to a PHP limitation, passing an empty string is indistinguishable from
+    not passing any value at all. In ``command --prefix`` and ``command --prefix=''``
+    cases, the value of the ``prefix`` option will be ``null``.
 
 .. _`docopt standard`: http://docopt.org/

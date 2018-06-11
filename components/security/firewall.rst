@@ -34,11 +34,6 @@ certain action or resource of the application::
         throw new AccessDeniedException();
     }
 
-.. versionadded:: 2.6
-    As of Symfony 2.6, the :class:`Symfony\\Component\\Security\\Core\\SecurityContext` class was split
-    in the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationChecker` and
-    :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorage` classes.
-
 .. note::
 
     Read the dedicated sections to learn more about :doc:`/components/security/authentication`
@@ -92,6 +87,18 @@ The firewall is registered to listen to the ``kernel.request`` event that
 will be dispatched by the HttpKernel at the beginning of each request
 it processes. This way, the firewall may prevent the user from going any
 further than allowed.
+
+Firewall Config
+~~~~~~~~~~~~~~~
+
+The information about a given firewall, such as its name, provider, context,
+entry point and access denied URL, is provided by instances of the
+:class:`Symfony\\Bundle\\SecurityBundle\\Security\\FirewallConfig` class.
+
+This object can be accessed through the ``getFirewallConfig(Request $request)``
+method of the :class:`Symfony\\Component\\Security\\Http\\FirewallMap` class and
+through the ``getConfig()``  method of the
+:class:`Symfony\\Bundle\\SecurityBundle\\Security\\FirewallContext` class.
 
 .. _firewall_listeners:
 

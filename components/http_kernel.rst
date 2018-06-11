@@ -25,6 +25,15 @@ Alternatively, you can clone the `<https://github.com/symfony/http-kernel>`_ rep
 The Workflow of a Request
 -------------------------
 
+.. seealso::
+
+    This article explains how to use the HttpKernel features as an independent
+    component in any PHP application. In Symfony applications everything is
+    already configured and ready to use. Read the :doc:`/controller` and
+    :doc:`/event_dispatcher` articles to learn about how to use it to create
+    controllers and define events in Symfony applications.
+
+
 Every HTTP web interaction begins with a request and ends with a response.
 Your job as a developer is to create PHP code that reads the request information
 (e.g. the URL) and creates and returns a response (e.g. an HTML page or JSON string).
@@ -90,13 +99,15 @@ Framework - works.
 Initially, using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`
 is really simple and involves creating an
 :doc:`event dispatcher </components/event_dispatcher>` and a
-:ref:`controller resolver <component-http-kernel-resolve-controller>` (explained
-below). To complete your working kernel, you'll add more event listeners
-to the events discussed below::
+:ref:`controller and argument resolver <component-http-kernel-resolve-controller>`
+(explained below). To complete your working kernel, you'll add more event
+listeners to the events discussed below::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\HttpKernel;
     use Symfony\Component\EventDispatcher\EventDispatcher;
+    use Symfony\Component\HttpFoundation\RequestStack;
+    use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
     use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 
     // create the Request object
@@ -105,10 +116,12 @@ to the events discussed below::
     $dispatcher = new EventDispatcher();
     // ... add some event listeners
 
-    // create your controller resolver
-    $resolver = new ControllerResolver();
+    // create your controller and argument resolvers
+    $controllerResolver = new ControllerResolver();
+    $argumentResolver = new ArgumentResolver();
+
     // instantiate the kernel
-    $kernel = new HttpKernel($dispatcher, $resolver);
+    $kernel = new HttpKernel($dispatcher, $controllerResolver, new RequestStack(), $argumentResolver);
 
     // actually execute the kernel, which turns the request into a response
     // by dispatching events, calling a controller, and returning the response
@@ -124,6 +137,13 @@ See ":ref:`http-kernel-working-example`" for a more concrete implementation.
 
 For general information on adding listeners to the events below, see
 :ref:`http-kernel-creating-listener`.
+
+.. caution::
+
+    As of 3.1 the :class:`Symfony\\Component\\HttpKernel\\HttpKernel` accepts a
+    fourth argument, which must be an instance of
+    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolverInterface`.
+    In 4.0 this argument will become mandatory.
 
 .. seealso::
 
@@ -199,7 +219,7 @@ the next step in HttpKernel is to determine and prepare (i.e. resolve) the
 controller. The controller is the part of the end-application's code that
 is responsible for creating and returning the ``Response`` for a specific page.
 The only requirement is that it is a PHP callable - i.e. a function, method
-on an object, or a ``Closure``.
+on an object or a ``Closure``.
 
 But *how* you determine the exact controller for a request is entirely up
 to your application. This is the job of the "controller resolver" - a class
@@ -207,8 +227,8 @@ that implements :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerRe
 and is one of the constructor arguments to ``HttpKernel``.
 
 Your job is to create a class that implements the interface and fill in its
-two methods: ``getController()`` and ``getArguments()``. In fact, one default
-implementation already exists, which you can use directly or learn from:
+method: ``getController()``. In fact, one default implementation already
+exists, which you can use directly or learn from:
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`.
 This implementation is explained more in the sidebar below::
 
@@ -219,8 +239,6 @@ This implementation is explained more in the sidebar below::
     interface ControllerResolverInterface
     {
         public function getController(Request $request);
-
-        public function getArguments(Request $request, $controller);
     }
 
 Internally, the ``HttpKernel::handle()`` method first calls
@@ -228,9 +246,6 @@ Internally, the ``HttpKernel::handle()`` method first calls
 on the controller resolver. This method is passed the ``Request`` and is responsible
 for somehow determining and returning a PHP callable (the controller) based
 on the request's information.
-
-The second method, :method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`,
-will be called after another event - ``kernel.controller`` - is dispatched.
 
 .. sidebar:: Resolving the Controller in the Symfony Framework
 
@@ -247,11 +262,11 @@ will be called after another event - ``kernel.controller`` - is dispatched.
     information is typically placed on the ``Request`` via the ``RouterListener``).
     This string is then transformed into a PHP callable by doing the following:
 
-    a) The ``AcmeDemoBundle:Default:index`` format of the ``_controller`` key
-       is changed to another string that contains the full class and method
-       name of the controller by following the convention used in Symfony - e.g.
-       ``Acme\DemoBundle\Controller\DefaultController::indexAction``. This transformation
-       is specific to the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
+    a) If the ``_controller`` key doesn't follow the recommended PHP namespace
+       format (e.g. ``App\Controller\DefaultController::index``) its format is
+       transformed into it. For example, the legacy ``FooBundle:Default:index``
+       format would be changed to ``Acme\FooBundle\Controller\DefaultController::indexAction``.
+       This transformation is specific to the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
        sub-class used by the Symfony Framework.
 
     b) A new instance of your controller class is instantiated with no
@@ -288,11 +303,10 @@ on the event object that's passed to listeners on this event.
     the Symfony Framework, and many deal with collecting profiler data when
     the profiler is enabled.
 
-    One interesting listener comes from the `SensioFrameworkExtraBundle`_,
-    which is packaged with the Symfony Standard Edition. This listener's
-    `@ParamConverter`_ functionality allows you to pass a full object (e.g. a
-    ``Post`` object) to your controller instead of a scalar value (e.g. an
-    ``id`` parameter that was on your route). The listener -
+    One interesting listener comes from the `SensioFrameworkExtraBundle`_. This
+    listener's `@ParamConverter`_ functionality allows you to pass a full object
+    (e.g. a ``Post`` object) to your controller instead of a scalar value (e.g.
+    an ``id`` parameter that was on your route). The listener -
     ``ParamConverterListener`` - uses reflection to look at each of the
     arguments of the controller and tries to use different methods to convert
     those to objects, which are then stored in the ``attributes`` property of
@@ -302,11 +316,11 @@ on the event object that's passed to listeners on this event.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, ``HttpKernel::handle()`` calls
-:method:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface::getArguments`.
+:method:`ArgumentResolverInterface::getArguments() <Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolverInterface::getArguments>`.
 Remember that the controller returned in ``getController()`` is a callable.
 The purpose of ``getArguments()`` is to return the array of arguments that
 should be passed to that controller. Exactly how this is done is completely
-up to your design, though the built-in :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`
+up to your design, though the built-in :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver`
 is a good example.
 
 At this point the kernel has a PHP callable (the controller) and an array
@@ -315,20 +329,32 @@ of arguments that should be passed when executing that callable.
 .. sidebar:: Getting the Controller Arguments in the Symfony Framework
 
     Now that you know exactly what the controller callable (usually a method
-    inside a controller object) is, the ``ControllerResolver`` uses `reflection`_
+    inside a controller object) is, the ``ArgumentResolver`` uses `reflection`_
     on the callable to return an array of the *names* of each of the arguments.
     It then iterates over each of these arguments and uses the following tricks
     to determine which value should be passed for each argument:
 
     a) If the ``Request`` attributes bag contains a key that matches the name
        of the argument, that value is used. For example, if the first argument
-       to a controller is ``$slug``, and there is a ``slug`` key in the ``Request``
+       to a controller is ``$slug`` and there is a ``slug`` key in the ``Request``
        ``attributes`` bag, that value is used (and typically this value came
        from the ``RouterListener``).
 
     b) If the argument in the controller is type-hinted with Symfony's
-       :class:`Symfony\\Component\\HttpFoundation\\Request` object, then the
-       ``Request`` is passed in as the value.
+       :class:`Symfony\\Component\\HttpFoundation\\Request` object, the
+       ``Request`` is passed in as the value. If you have a custom ``Request``
+       class, it will be injected as long as you extend the Symfony ``Request``.
+
+    c) If the function or method argument is `variadic`_ and the ``Request``
+       ``attributes`` bag contains an array for that argument, they will all be
+       available through the `variadic`_ argument.
+
+    This functionality is provided by resolvers implementing the
+    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`.
+    There are four implementations which provide the default behavior of
+    Symfony but customization is the key here. By implementing the
+    ``ArgumentValueResolverInterface`` yourself and passing this to the
+    ``ArgumentResolver``, you can extend this functionality.
 
 .. _component-http-kernel-calling-controller:
 
@@ -387,12 +413,11 @@ return a ``Response``.
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
     There is no default listener inside the Symfony Framework for the ``kernel.view``
-    event. However, one core bundle - `SensioFrameworkExtraBundle`_ - *does*
-    add a listener to this event. If your controller returns an array,
-    and you place the `@Template`_ annotation above the controller, then this
-    listener renders a template, passes the array you returned from your
-    controller to that template, and creates a ``Response`` containing the
-    returned content from that template.
+    event. However, `SensioFrameworkExtraBundle`_ *does* add a listener to this
+    event. If your controller returns an array, and you place the `@Template`_
+    annotation above the controller, then this listener renders a template,
+    passes the array you returned from your controller to that template, and
+    creates a ``Response`` containing the returned content from that template.
 
     Additionally, a popular community bundle `FOSRestBundle`_ implements
     a listener on this event which aims to give you a robust view layer
@@ -478,9 +503,9 @@ as possible to the client (e.g. sending emails).
 
 .. sidebar:: ``kernel.terminate`` in the Symfony Framework
 
-    If you use the SwiftmailerBundle with Symfony and use ``memory`` spooling,
-    then the `EmailSenderListener`_ is activated, which actually delivers
-    any emails that you scheduled to send during the request.
+    If you use the :ref:`memory spooling <email-spool-memory>` option of the
+    default Symfony mailer, then the `EmailSenderListener`_ is activated, which
+    actually delivers any emails that you scheduled to send during the request.
 
 .. _component-http-kernel-kernel-exception:
 
@@ -541,9 +566,16 @@ below for more details).
        then ``getStatusCode()`` and ``getHeaders()`` are called on the exception
        and used to populate the headers and status code of the ``FlattenException``
        object. The idea is that these are used in the next step when creating
-       the final response.
+       the final response. If you want to set custom HTTP headers, you can always
+       use the ``setHeaders()`` method on exceptions derived from the
+       :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException` class.
 
-    3) A controller is executed and passed the flattened exception. The exact
+    3) If the original exception implements
+       :class:`Symfony\\Component\\HttpFoundation\\Exception\\RequestExceptionInterface`,
+       then the status code of the ``FlattenException`` object is populated with
+       ``400`` and no other headers are modified.
+
+    4) A controller is executed and passed the flattened exception. The exact
        controller to render is passed as a constructor argument to this listener.
        This controller will return the final ``Response`` for this error page.
 
@@ -591,30 +623,33 @@ A full Working Example
 ----------------------
 
 When using the HttpKernel component, you're free to attach any listeners
-to the core events and use any controller resolver that implements the
-:class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface`.
-However, the HttpKernel component comes with some built-in listeners and
-a built-in ControllerResolver that can be used to create a working example::
+to the core events, use any controller resolver that implements the
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface` and
+use any argument resolver that implements the
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolverInterface`.
+However, the HttpKernel component comes with some built-in listeners and everything
+else that can be used to create a working example::
 
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpKernel\HttpKernel;
     use Symfony\Component\EventDispatcher\EventDispatcher;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\RequestStack;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
     use Symfony\Component\HttpKernel\Controller\ControllerResolver;
     use Symfony\Component\HttpKernel\EventListener\RouterListener;
-    use Symfony\Component\Routing\RouteCollection;
-    use Symfony\Component\Routing\Route;
+    use Symfony\Component\HttpKernel\HttpKernel;
     use Symfony\Component\Routing\Matcher\UrlMatcher;
     use Symfony\Component\Routing\RequestContext;
+    use Symfony\Component\Routing\Route;
+    use Symfony\Component\Routing\RouteCollection;
 
     $routes = new RouteCollection();
     $routes->add('hello', new Route('/hello/{name}', array(
-            '_controller' => function (Request $request) {
-                return new Response(
-                    sprintf("Hello %s", $request->get('name'))
-                );
-            }
-        )
+        '_controller' => function (Request $request) {
+            return new Response(
+                sprintf("Hello %s", $request->get('name'))
+            );
+        })
     ));
 
     $request = Request::createFromGlobals();
@@ -622,10 +657,12 @@ a built-in ControllerResolver that can be used to create a working example::
     $matcher = new UrlMatcher($routes, new RequestContext());
 
     $dispatcher = new EventDispatcher();
-    $dispatcher->addSubscriber(new RouterListener($matcher));
+    $dispatcher->addSubscriber(new RouterListener($matcher, new RequestStack()));
 
-    $resolver = new ControllerResolver();
-    $kernel = new HttpKernel($dispatcher, $resolver);
+    $controllerResolver = new ControllerResolver();
+    $argumentResolver = new ArgumentResolver();
+
+    $kernel = new HttpKernel($dispatcher, $controllerResolver, new RequestStack(), $argumentResolver);
 
     $response = $kernel->handle($request);
     $response->send();
@@ -698,10 +735,10 @@ translation files, etc.)
 
 This overriding mechanism works because resources are referenced not by their
 physical path but by their logical path. For example, the ``services.xml`` file
-stored in the ``Resources/config/`` directory of a bundle called AppBundle is
-referenced as ``@AppBundle/Resources/config/services.xml``. This logical path
+stored in the ``Resources/config/`` directory of a bundle called FooBundle is
+referenced as ``@FooBundle/Resources/config/services.xml``. This logical path
 will work when the application overrides that file and even if you change the
-directory of AppBundle.
+directory of FooBundle.
 
 The HttpKernel component provides a method called :method:`Symfony\\Component\\HttpKernel\\Kernel::locateResource`
 which can be used to transform logical paths into physical paths::
@@ -710,7 +747,7 @@ which can be used to transform logical paths into physical paths::
 
     // ...
     $kernel = new HttpKernel($dispatcher, $resolver);
-    $path = $kernel->locateResource('@AppBundle/Resources/config/services.xml');
+    $path = $kernel->locateResource('@FooBundle/Resources/config/services.xml');
 
 Learn more
 ----------
@@ -730,3 +767,4 @@ Learn more
 .. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
 .. _`EmailSenderListener`: https://github.com/symfony/swiftmailer-bundle/blob/master/EventListener/EmailSenderListener.php
+.. _variadic: http://php.net/manual/en/functions.arguments.php

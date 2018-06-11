@@ -29,7 +29,7 @@ several ways.
     Sometimes, redirecting to the originally requested page can cause problems,
     like if a background Ajax request "appears" to be the last visited URL,
     causing the user to be redirected there. For information on controlling this
-    behavior, see :doc:`/security/target_path`.
+    behavior, see :doc:`/security`.
 
 Changing the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -42,7 +42,7 @@ a relative/absolute URL or a Symfony route name:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -54,7 +54,7 @@ a relative/absolute URL or a Symfony route name:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -73,7 +73,7 @@ a relative/absolute URL or a Symfony route name:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -99,7 +99,7 @@ previously requested URL and always redirect to the default page:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -111,7 +111,7 @@ previously requested URL and always redirect to the default page:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -131,7 +131,7 @@ previously requested URL and always redirect to the default page:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -168,7 +168,7 @@ Defining the redirect URL via POST using a hidden form field:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/security/login.html.twig #}
+        {# templates/security/login.html.twig #}
         <form action="{{ path('login') }}" method="post">
             {# ... #}
 
@@ -178,11 +178,11 @@ Defining the redirect URL via POST using a hidden form field:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/security/login.html.php -->
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <!-- templates/security/login.html.php -->
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             // ...
 
-            <input type="hidden" name="_target_path" value="<?php echo $view['router']->generate('account') ?>" />
+            <input type="hidden" name="_target_path" value="<?php echo $view['router']->path('account') ?>" />
             <input type="submit" name="login" />
         </form>
 
@@ -198,7 +198,7 @@ parameter is included in the request, you may use the value of the
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -211,7 +211,7 @@ parameter is included in the request, you may use the value of the
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -231,7 +231,7 @@ parameter is included in the request, you may use the value of the
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -264,7 +264,7 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -277,7 +277,7 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -297,7 +297,7 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -322,7 +322,7 @@ This option can also be set via the ``_failure_path`` request parameter:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/security/login.html.twig #}
+        {# templates/security/login.html.twig #}
         <form action="{{ path('login') }}" method="post">
             {# ... #}
 
@@ -332,11 +332,11 @@ This option can also be set via the ``_failure_path`` request parameter:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/security/login.html.php -->
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <!-- templates/security/login.html.php -->
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <!-- ... -->
 
-            <input type="hidden" name="_failure_path" value="<?php echo $view['router']->generate('forgot_password') ?>" />
+            <input type="hidden" name="_failure_path" value="<?php echo $view['router']->path('forgot_password') ?>" />
             <input type="submit" name="login" />
         </form>
 
@@ -351,7 +351,7 @@ redirects can be customized using the  ``target_path_parameter`` and
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -364,7 +364,7 @@ redirects can be customized using the  ``target_path_parameter`` and
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -385,7 +385,7 @@ redirects can be customized using the  ``target_path_parameter`` and
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -411,7 +411,7 @@ are now fully customized:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/security/login.html.twig #}
+        {# templates/security/login.html.twig #}
         <form action="{{ path('login') }}" method="post">
             {# ... #}
 
@@ -422,11 +422,29 @@ are now fully customized:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/security/login.html.php -->
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <!-- templates/security/login.html.php -->
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <!-- ... -->
 
-            <input type="hidden" name="go_to" value="<?php echo $view['router']->generate('dashboard') ?>" />
-            <input type="hidden" name="back_to" value="<?php echo $view['router']->generate('forgot_password') ?>" />
+            <input type="hidden" name="go_to" value="<?php echo $view['router']->path('dashboard') ?>" />
+            <input type="hidden" name="back_to" value="<?php echo $view['router']->path('forgot_password') ?>" />
             <input type="submit" name="login" />
         </form>
+
+Redirecting to the Last Accessed Page with ``TargetPathTrait``
+--------------------------------------------------------------
+
+The last request URI is stored in a session variable named
+``_security.<your providerKey>.target_path`` (e.g. ``_security.main.target_path``
+if the name of your firewall is ``main``). Most of the times you don't have to
+deal with this low level session variable. However, if you ever need to get or
+remove this variable, it's better to use the
+:class:`Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait` utility::
+
+    // ...
+    use Symfony\Component\Security\Http\Util\TargetPathTrait;
+
+    $targetPath = $this->getTargetPath($request->getSession(), $providerKey);
+
+    // equivalent to:
+    // $targetPath = $request->getSession()->get('_security.'.$providerKey.'.target_path');

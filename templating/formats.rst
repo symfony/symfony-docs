@@ -23,14 +23,14 @@ different formats based on the "request format". For that reason, a common
 pattern is to do the following::
 
     // ...
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class ArticleController extends Controller
     {
         /**
          * @Route("/{slug}")
          */
-        public function showAction(Request $request, $slug)
+        public function show(Request $request, $slug)
         {
             // retrieve the article based on $slug
             $article = ...;
@@ -53,7 +53,7 @@ special ``_format`` placeholder in your route definition::
     /**
      * @Route("/{slug}.{_format}", defaults={"_format"="html"})
      */
-    public function showAction(Request $request, $slug)
+    public function show(Request $request, $slug)
     {
         // ...
     }
@@ -71,7 +71,9 @@ format:
 
     .. code-block:: html+php
 
-        <a href="<?php echo $view['router']->generate('article_show', array(
+        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
+             had to use generate(). -->
+        <a href="<?php echo $view['router']->path('article_show', array(
             'slug' => 'about-us',
             '_format' => 'xml',
         )) ?>">

@@ -6,11 +6,6 @@ The Filesystem Component
 
     The Filesystem component provides basic utilities for the filesystem.
 
-.. tip::
-
-    The lock handler feature was introduced in symfony 2.6.
-    :doc:`See the documentation for more information </components/filesystem/lock_handler>`.
-
 Installation
 ------------
 
@@ -34,7 +29,7 @@ endpoint for filesystem operations::
     $fileSystem = new Filesystem();
 
     try {
-        $fileSystem->mkdir('/tmp/random/dir/'.mt_rand());
+        $fileSystem->mkdir(sys_get_temp_dir().'/'.random_int(0, 1000));
     } catch (IOExceptionInterface $exception) {
         echo "An error occurred while creating your directory at ".$exception->getPath();
     }
@@ -214,6 +209,37 @@ support symbolic links, a third boolean argument is available::
     // does not support symbolic links
     $fileSystem->symlink('/path/to/source', '/path/to/destination', true);
 
+readlink
+~~~~~~~~
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` read links targets.
+
+PHP's ``readlink()`` function returns the target of a symbolic link. However, its behavior
+is completely different under Windows and Unix. On Windows systems, ``readlink()``
+resolves recursively the children links of a link until a final target is found. On
+Unix-based systems ``readlink()`` only resolves the next link.
+
+The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method provided
+by the Filesystem component always behaves in the same way::
+
+    // returns the next direct target of the link without considering the existence of the target
+    $fileSystem->readlink('/path/to/link');
+
+    // returns its absolute fully resolved final version of the target (if there are nested links, they are resolved)
+    $fileSystem->readlink('/path/to/link', true);
+
+Its behavior is the following::
+
+    public function readlink($path, $canonicalize = false)
+
+* When ``$canonicalize`` is ``false``:
+    * if ``$path`` does not exist or is not a link, it returns ``null``.
+    * if ``$path`` is a link, it returns the next direct target of the link without considering the existence of the target.
+
+* When ``$canonicalize`` is ``true``:
+    * if ``$path`` does not exist, it returns null.
+    * if ``$path`` exists, it returns its absolute fully resolved final version.
+
 makePathRelative
 ~~~~~~~~~~~~~~~~
 
@@ -256,9 +282,6 @@ isAbsolutePath
 dumpFile
 ~~~~~~~~
 
-.. versionadded:: 2.3
-    The ``dumpFile()`` was introduced in Symfony 2.3.
-
 :method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` saves the given
 contents into a file. It does this in an atomic manner: it writes a temporary
 file first and then moves it to the new file location when it's finished.
@@ -268,6 +291,17 @@ complete new file (but never a partially-written file)::
     $fileSystem->dumpFile('file.txt', 'Hello World');
 
 The ``file.txt`` file contains ``Hello World`` now.
+
+appendToFile
+~~~~~~~~~~~~
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile` adds new
+contents at the end of some file::
+
+    $fileSystem->appendToFile('logs.txt', 'Email sent to user@example.com');
+
+If either the file or its containing directory doesn't exist, this method
+creates them before appending the contents.
 
 Error Handling
 --------------
@@ -280,15 +314,6 @@ Whenever something wrong happens, an exception implementing
 
     An :class:`Symfony\\Component\\Filesystem\\Exception\\IOException` is
     thrown if directory creation fails.
-
-Learn More
-----------
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    filesystem/*
 
 .. _`Packagist`: https://packagist.org/packages/symfony/filesystem
 .. _`umask`: https://en.wikipedia.org/wiki/Umask

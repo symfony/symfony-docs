@@ -8,14 +8,16 @@ The Intl Component
     A PHP replacement layer for the C `intl extension`_ that also provides
     access to the localization data of the `ICU library`_.
 
-.. versionadded:: 2.3
-    The Intl component was introduced in Symfony 2.3. In earlier versions of Symfony,
-    you should use the Locale component instead.
-
 .. caution::
 
     The replacement layer is limited to the locale "en". If you want to use
     other locales, you should `install the intl extension`_ instead.
+
+.. seealso::
+
+    This article explains how to use the Intl features as an independent component
+    in any PHP application. Read the :doc:`/translation` article to learn about
+    how to internationalize and manage the user locale in Symfony applications.
 
 Installation
 ------------
@@ -51,17 +53,6 @@ replace the intl classes:
 * :class:`Symfony\\Component\\Intl\\Globals\\IntlGlobals`
 
 Composer automatically exposes these classes in the global namespace.
-
-If you don't use Composer but the
-:doc:`Symfony ClassLoader component </components/class_loader>`,
-you need to expose them manually by adding the following lines to your autoload
-code::
-
-    if (!function_exists('intl_is_failure')) {
-        require '/path/to/Icu/Resources/stubs/functions.php';
-
-        $loader->registerPrefixFallback('/path/to/Icu/Resources/stubs');
-    }
 
 Writing and Reading Resource Bundles
 ------------------------------------

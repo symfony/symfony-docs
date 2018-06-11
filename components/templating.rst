@@ -27,6 +27,12 @@ Alternatively, you can clone the `<https://github.com/symfony/templating>`_ repo
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the Templating features as an independent
+    component in any PHP application. Read the :doc:`/templating` article to
+    learn about how to work with templates in Symfony applications.
+
 The :class:`Symfony\\Component\\Templating\\PhpEngine` class is the entry point
 of the component. It needs a
 template name parser (:class:`Symfony\\Component\\Templating\\TemplateNameParserInterface`)
@@ -140,18 +146,17 @@ Helpers
 
 The Templating component can be easily extended via helpers. Helpers are PHP objects that
 provide features useful in a template context. The component has
-2 built-in helpers:
+one built-in helper:
 
-* :doc:`/components/templating/assetshelper`
 * :doc:`/components/templating/slotshelper`
 
 Before you can use these helpers, you need to register them using
 :method:`Symfony\\Component\\Templating\\PhpEngine::set`::
 
-    use Symfony\Component\Templating\Helper\AssetsHelper;
+    use Symfony\Component\Templating\Helper\SlotsHelper;
     // ...
 
-    $templating->set(new AssetsHelper());
+    $templating->set(new SlotsHelper());
 
 Custom Helpers
 ~~~~~~~~~~~~~~

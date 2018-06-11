@@ -10,7 +10,7 @@ class::
 
     class LeapYearController
     {
-        public function indexAction($request)
+        public function index($request)
         {
             if (is_leap_year($request->attributes->get('year'))) {
                 return new Response('Yep, this is a leap year!');
@@ -43,19 +43,17 @@ component:
 
     $ composer require symfony/http-kernel
 
-The HttpKernel component has many interesting features, but the one we need
-right now is the *controller resolver*. A controller resolver knows how to
-determine the controller to execute and the arguments to pass to it, based on
-a Request object. All controller resolvers implement the following interface::
+The HttpKernel component has many interesting features, but the ones we need
+right now are the *controller resolver* and *argument resolver*. A controller resolver knows how to
+determine the controller to execute and the argument resolver determines the arguments to pass to it,
+based on a Request object. All controller resolvers implement the following interface::
 
     namespace Symfony\Component\HttpKernel\Controller;
 
     // ...
     interface ControllerResolverInterface
     {
-        function getController(Request $request);
-
-        function getArguments(Request $request, $controller);
+        public function getController(Request $request);
     }
 
 The ``getController()`` method relies on the same convention as the one we
@@ -74,10 +72,11 @@ resolver from HttpKernel::
 
     use Symfony\Component\HttpKernel;
 
-    $resolver = new HttpKernel\Controller\ControllerResolver();
+    $controllerResolver = new HttpKernel\Controller\ControllerResolver();
+    $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
 
-    $controller = $resolver->getController($request);
-    $arguments = $resolver->getArguments($request, $controller);
+    $controller = $controllerResolver->getController($request);
+    $arguments = $argumentResolver->getArguments($request, $controller);
 
     $response = call_user_func_array($controller, $arguments);
 
@@ -89,41 +88,50 @@ resolver from HttpKernel::
 
 Now, let's see how the controller arguments are guessed. ``getArguments()``
 introspects the controller signature to determine which arguments to pass to
-it by using the native PHP `reflection`_.
+it by using the native PHP `reflection`_. This method is defined in the
+following interface::
 
-The ``indexAction()`` method needs the Request object as an argument.
+    namespace Symfony\Component\HttpKernel\Controller;
+
+    // ...
+    interface ArgumentResolverInterface
+    {
+        public function getArguments(Request $request, $controller);
+    }
+
+The ``index()`` method needs the Request object as an argument.
 ``getArguments()`` knows when to inject it properly if it is type-hinted
 correctly::
 
-    public function indexAction(Request $request)
+    public function index(Request $request)
 
     // won't work
-    public function indexAction($request)
+    public function index($request)
 
 More interesting, ``getArguments()`` is also able to inject any Request
 attribute; the argument just needs to have the same name as the corresponding
 attribute::
 
-    public function indexAction($year)
+    public function index($year)
 
 You can also inject the Request and some attributes at the same time (as the
 matching is done on the argument name or a type hint, the arguments order does
 not matter)::
 
-    public function indexAction(Request $request, $year)
+    public function index(Request $request, $year)
 
-    public function indexAction($year, Request $request)
+    public function index($year, Request $request)
 
 Finally, you can also define default values for any argument that matches an
 optional attribute of the Request::
 
-    public function indexAction($year = 2012)
+    public function index($year = 2012)
 
 Let's just inject the ``$year`` request attribute for our controller::
 
     class LeapYearController
     {
-        public function indexAction($year)
+        public function index($year)
         {
             if (is_leap_year($year)) {
                 return new Response('Yep, this is a leap year!');
@@ -133,21 +141,19 @@ Let's just inject the ``$year`` request attribute for our controller::
         }
     }
 
-The controller resolver also takes care of validating the controller callable
-and its arguments. In case of a problem, it throws an exception with a nice
-message explaining the problem (the controller class does not exist, the
-method is not defined, an argument has no matching attribute, ...).
+The resolvers also take care of validating the controller callable and its
+arguments. In case of a problem, it throws an exception with a nice message
+explaining the problem (the controller class does not exist, the method is not
+defined, an argument has no matching attribute, ...).
 
 .. note::
 
-    With the great flexibility of the default controller resolver, you might
-    wonder why someone would want to create another one (why would there be an
-    interface if not?). Two examples: in Symfony, ``getController()`` is
-    enhanced to support
-    :doc:`controllers as services </controller/service>`; and in
-    `FrameworkExtraBundle`_, ``getArguments()`` is enhanced to support
-    parameter converters, where request attributes are converted to objects
-    automatically.
+    With the great flexibility of the default controller resolver and argument
+    resolver, you might wonder why someone would want to create another one
+    (why would there be an interface if not?). Two examples: in Symfony,
+    ``getController()`` is enhanced to support :doc:`controllers as services </controller/service>`;
+    and ``getArguments()`` provides an extension point to alter or enhance
+    the resolving of arguments.
 
 Let's conclude with the new version of our framework::
 
@@ -174,13 +180,15 @@ Let's conclude with the new version of our framework::
     $context = new Routing\RequestContext();
     $context->fromRequest($request);
     $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
-    $resolver = new HttpKernel\Controller\ControllerResolver();
+
+    $controllerResolver = new HttpKernel\Controller\ControllerResolver();
+    $argumentResolver = new HttpKernel\Controller\ArgumentResolver();
 
     try {
         $request->attributes->add($matcher->match($request->getPathInfo()));
 
-        $controller = $resolver->getController($request);
-        $arguments = $resolver->getArguments($request, $controller);
+        $controller = $controllerResolver->getController($request);
+        $arguments = $argumentResolver->getArguments($request, $controller);
 
         $response = call_user_func_array($controller, $arguments);
     } catch (Routing\Exception\ResourceNotFoundException $exception) {
@@ -192,7 +200,7 @@ Let's conclude with the new version of our framework::
     $response->send();
 
 Think about it once more: our framework is more robust and more flexible than
-ever and it still has less than 40 lines of code.
+ever and it still has less than 50 lines of code.
 
 .. _`reflection`: https://php.net/reflection
 .. _`FrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html

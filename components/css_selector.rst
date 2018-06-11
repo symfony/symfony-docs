@@ -21,6 +21,12 @@ Alternatively, you can clone the `<https://github.com/symfony/css-selector>`_ re
 Usage
 -----
 
+.. seealso::
+
+    This article explains how to use the CssSelector features as an independent
+    component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
+    article to learn about how to use it when creating Symfony tests.
+
 Why to Use CSS selectors?
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -48,11 +54,12 @@ The CssSelector Component
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The component's only goal is to convert CSS selectors to their XPath
-equivalents::
+equivalents, using :method:`Symfony\\Component\\CssSelector\\CssSelectorConverter::toXPath`::
 
-    use Symfony\Component\CssSelector\CssSelector;
+    use Symfony\Component\CssSelector\CssSelectorConverter;
 
-    var_dump(CssSelector::toXPath('div.item > h4 > a'));
+    $converter = new CssSelectorConverter();
+    var_dump($converter->toXPath('div.item > h4 > a'));
 
 This gives the following output:
 

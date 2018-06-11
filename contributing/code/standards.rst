@@ -231,13 +231,19 @@ Naming Conventions
 Service Naming Conventions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-* A service name contains groups, separated by dots;
+* A service name must be the same as the fully qualified class name (FQCN) of
+  its class (e.g. ``App\EventSubscriber\UserSubscriber``);
 
-* The DI alias of the bundle is the first group (e.g. ``fos_user``);
+* If there are multiple services for the same class, use the FQCN for the main
+  service and use lowercased and underscored names for the rest of services.
+  Optionally divide them in groups separated with dots (e.g.
+  ``something.service_name``, ``fos_user.something.service_name``);
 
-* Use lowercase letters for service and parameter names;
+* Use lowercase letters for parameter names (except when referring
+  to environment variables with the ``%env(VARIABLE_NAME)%`` syntax);
 
-* A group name uses the underscore notation.
+* Add class aliases for public services (e.g. alias ``Symfony\Component\Something\ClassName``
+  to ``something.service_name``).
 
 Documentation
 ~~~~~~~~~~~~~

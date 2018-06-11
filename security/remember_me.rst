@@ -14,7 +14,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -22,7 +22,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 main:
                     # ...
                     remember_me:
-                        key:      '%secret%'
+                        secret:   '%kernel.secret%'
                         lifetime: 604800 # 1 week in seconds
                         path:     /
                         # by default, the feature is enabled by checking a
@@ -32,7 +32,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="utf-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -48,7 +48,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
                     <!-- 604800 is 1 week in seconds -->
                     <remember-me
-                        key="%secret%"
+                        secret="%kernel.secret%"
                         lifetime="604800"
                         path="/" />
                     <!-- by default, the feature is enabled by checking a checkbox
@@ -60,7 +60,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -68,7 +68,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 'main' => array(
                     // ...
                     'remember_me' => array(
-                        'key'      => '%secret%',
+                        'secret'   => '%kernel.secret%',
                         'lifetime' => 604800, // 1 week in seconds
                         'path'     => '/',
                         // by default, the feature is enabled by checking a
@@ -82,9 +82,9 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
 
 The ``remember_me`` firewall defines the following configuration options:
 
-``key`` (**required**)
+``secret`` (**required**)
     The value used to encrypt the cookie's content. It's common to use the
-    ``secret`` value defined in the ``app/config/parameters.yml`` file.
+    ``secret`` value defined in the ``APP_SECRET`` environment variable.
 
 ``name`` (default value: ``REMEMBERME``)
     The name of the cookie used to keep the user logged in. If you enable the
@@ -147,7 +147,7 @@ this:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/security/login.html.twig #}
+        {# templates/security/login.html.twig #}
         {% if error %}
             <div>{{ error.message }}</div>
         {% endif %}
@@ -167,12 +167,12 @@ this:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/security/login.html.php -->
+        <!-- templates/security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username"
                    name="_username" value="<?php echo $last_username ?>" />
@@ -242,14 +242,14 @@ In the following example, the action is only allowed if the user has the
     use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
     // ...
-    public function editAction()
+    public function edit()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // ...
     }
 
-If your application is based on the Symfony Standard Edition, you can also secure
+If you have installed `SensioFrameworkExtraBundle`_ in your application, you can also secure
 your controller using annotations::
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -257,7 +257,7 @@ your controller using annotations::
     /**
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
-    public function editAction($name)
+    public function edit($name)
     {
         // ...
     }
@@ -274,13 +274,15 @@ your controller using annotations::
     * Once the user has entered their username and password, assuming the
       user receives the ``ROLE_USER`` role per your configuration, the user
       will have the ``IS_AUTHENTICATED_FULLY`` role and be able to access
-      any page in the account section, including the ``editAction()`` controller.
+      any page in the account section, including the ``edit()`` controller.
 
     * If the user's session ends, when the user returns to the site, they will
       be able to access every account page - except for the edit page - without
       being forced to re-authenticate. However, when they try to access the
-      ``editAction()`` controller, they will be forced to re-authenticate, since
+      ``edit()`` controller, they will be forced to re-authenticate, since
       they are not, yet, fully authenticated.
 
 For more information on securing services or methods in this way,
 see :doc:`/security/securing_services`.
+
+.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html

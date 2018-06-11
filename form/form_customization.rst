@@ -36,6 +36,7 @@ You can also render each of the three parts of the field individually:
             {{ form_label(form.age) }}
             {{ form_errors(form.age) }}
             {{ form_widget(form.age) }}
+            {{ form_help(form.age) }}
         </div>
 
     .. code-block:: php
@@ -101,7 +102,7 @@ rendering a form. In other words, if you want to customize one portion of
 how a form is rendered, you'll import a *theme* which contains a customization
 of the appropriate form fragments.
 
-Symfony comes with four **built-in form themes** that define each and every
+Symfony comes with some **built-in form themes** that define each and every
 fragment needed to render every part of a form:
 
 * `form_div_layout.html.twig`_, wraps each form field inside a ``<div>`` element.
@@ -113,12 +114,23 @@ fragment needed to render every part of a form:
 * `bootstrap_3_horizontal_layout.html.twig`_, it's similar to the previous theme,
   but the CSS classes applied are the ones used to display the forms horizontally
   (i.e. the label and the widget in the same row).
+* `bootstrap_4_layout.html.twig`_, same as ``bootstrap_3_layout.html.twig``, but
+  updated for `Bootstrap 4 CSS framework`_ styles.
+* `bootstrap_4_horizontal_layout.html.twig`_, same as ``bootstrap_3_horizontal_layout.html.twig``
+  but updated for Bootstrap 4 styles.
+* `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>`` element
+  with the appropriate CSS classes to apply the default `Foundation CSS framework`_
+  styles.
 
 .. caution::
 
     When you use the Bootstrap form themes and render the fields manually,
     calling ``form_label()`` for a checkbox/radio field doesn't show anything.
     Due to Bootstrap internals, the label is already shown by ``form_widget()``.
+
+.. tip::
+
+    Read more about the :doc:`Bootstrap 4 form theme </form/bootstrap4>`.
 
 In the next section you will learn how to customize a theme by overriding
 some or all of its fragments.
@@ -209,6 +221,9 @@ this folder.
     you want to override the HTML ``widget`` for all ``integer`` field types. If
     you need to customize ``textarea`` fields, you would customize ``textarea_widget``.
 
+    The ``integer`` part comes from the class name: ``IntegerType`` becomes ``integer``,
+    based on a standard.
+
     As you can see, the fragment name is a combination of the field type and
     which part of the field is being rendered (e.g. ``widget``, ``label``,
     ``errors``, ``row``). As such, to customize how errors are rendered for
@@ -293,7 +308,7 @@ can now re-use the form customization across many templates:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/form/fields.html.twig #}
+    {# templates/form/fields.html.twig #}
     {% block integer_widget %}
         <div class="integer_widget">
             {% set type = type|default('number') %}
@@ -330,6 +345,37 @@ name of all the templates as an array using the ``with`` keyword:
 The templates can also be located in different bundles, use the Twig namespaced
 path to reference these templates, e.g. ``@AcmeFormExtra/form/fields.html.twig``.
 
+Disabling usage of globally defined themes
+..........................................
+
+Sometimes you may want to disable the use of the globally defined form themes in order
+to have more control over rendering of a form. You might want this, for example,
+when creating an admin interface for a bundle which can be installed on a wide range
+of Symfony apps (and so you can't control what themes are defined globally).
+
+You can do this by including the ``only`` keyword after the list form themes:
+
+.. code-block:: html+twig
+
+    {% form_theme form with ['common.html.twig', 'form/fields.html.twig'] only %}
+
+    {# ... #}
+
+.. caution::
+
+    When using the ``only`` keyword, none of Symfony's built-in form themes
+    (``form_div_layout.html.twig``, etc.) will be applied. In order to render
+    your forms correctly, you need to either provide a fully-featured form theme
+    yourself, or extend one of the built-in form themes with Twig's ``use``
+    keyword instead of ``extends`` to re-use the original theme contents.
+
+    .. code-block:: html+twig
+
+        {# templates/form/common.html.twig #}
+        {% use "form_div_layout.html.twig" %}
+
+        {# ... #}
+
 Child Forms
 ...........
 
@@ -360,7 +406,7 @@ file in order to customize the ``integer_widget`` fragment.
 
 .. code-block:: html+php
 
-    <!-- app/Resources/views/form/integer_widget.html.php -->
+    <!-- src/Resources/integer_widget.html.php -->
     <div class="integer_widget">
         <?php echo $view['form']->block(
             $form,
@@ -390,7 +436,7 @@ method::
 
     The ``:form`` syntax is based on the functional names for templates:
     ``Bundle:Directory``. As the form directory lives in the
-    ``app/Resources/views`` directory, the ``Bundle`` part is empty, resulting
+    ``templates/`` directory, the ``Bundle`` part is empty, resulting
     in ``:form``.
 
 Referencing base Form Blocks (Twig specific)
@@ -435,7 +481,7 @@ the base block by using the ``parent()`` Twig function:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/form/fields.html.twig #}
+    {# templates/form/fields.html.twig #}
     {% extends 'form_div_layout.html.twig' %}
 
     {% block integer_widget %}
@@ -468,7 +514,7 @@ rendered.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             form_themes:
                 - 'form/fields.html.twig'
@@ -476,7 +522,7 @@ rendered.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -494,7 +540,7 @@ rendered.
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 'form/fields.html.twig',
@@ -511,7 +557,7 @@ resource to use such a layout:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             form_themes:
                 - 'form_table_layout.html.twig'
@@ -519,7 +565,7 @@ resource to use such a layout:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -537,7 +583,7 @@ resource to use such a layout:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 'form_table_layout.html.twig',
@@ -560,24 +606,24 @@ PHP
 ~~~
 
 By using the following configuration, any customized form fragments inside the
-``app/Resources/views/Form`` folder will be used globally when a
+``templates/form`` folder will be used globally when a
 form is rendered.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             templating:
                 form:
                     resources:
-                        - 'AppBundle:Form'
+                        - 'App:Form'
             # ...
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -590,7 +636,7 @@ form is rendered.
             <framework:config>
                 <framework:templating>
                     <framework:form>
-                        <framework:resource>AppBundle:Form</framework:resource>
+                        <framework:resource>App:Form</framework:resource>
                     </framework:form>
                 </framework:templating>
                 <!-- ... -->
@@ -599,13 +645,13 @@ form is rendered.
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         // PHP
         $container->loadFromExtension('framework', array(
             'templating' => array(
                 'form' => array(
                     'resources' => array(
-                        'AppBundle:Form',
+                        'App:Form',
                     ),
                 ),
              ),
@@ -621,7 +667,7 @@ resource to use such a layout:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             templating:
                 form:
@@ -630,7 +676,7 @@ resource to use such a layout:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -652,7 +698,7 @@ resource to use such a layout:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'templating' => array(
                 'form' => array(
@@ -707,7 +753,7 @@ customize the ``name`` field only:
 
         <?php echo $view['form']->widget($form['name']); ?>
 
-        <!-- app/Resources/views/form/_product_name_widget.html.php -->
+        <!-- src/Resources/_product_name_widget.html.php -->
         <div class="text_widget">
             <?php echo $view['form']->block('form_widget_simple') ?>
         </div>
@@ -727,12 +773,13 @@ field whose *id* is ``product_name`` (and name is ``product[name]``).
     form type::
 
         use Symfony\Component\Form\FormBuilderInterface;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             // ...
 
-            $builder->add('name', 'text', array(
+            $builder->add('name', TextType::class, array(
                 'block_name' => 'custom_name',
             ));
         }
@@ -752,6 +799,7 @@ You can also override the markup for an entire field row using the same method:
                 {{ form_label(form) }}
                 {{ form_errors(form) }}
                 {{ form_widget(form) }}
+                {{ form_help(form) }}
             </div>
         {% endblock %}
 
@@ -764,7 +812,7 @@ You can also override the markup for an entire field row using the same method:
 
         <?php echo $view['form']->row($form['name']); ?>
 
-        <!-- app/Resources/views/form/_product_name_row.html.php -->
+        <!-- src/Resources/_product_name_row.html.php -->
         <div class="name_row">
             <?php echo $view['form']->label($form) ?>
             <?php echo $view['form']->errors($form) ?>
@@ -796,7 +844,7 @@ will be able to change the widget for each task as follows:
 
     .. code-block:: html+php
 
-        <!-- src/AppBundle/Resources/views/Form/_tasks_entry_widget.html.php -->
+        <!-- src/Resources/views/Form/_tasks_entry_widget.html.php -->
         <tr>
             <td><?php echo $view['form']->widget($form->task) ?></td>
             <td><?php echo $view['form']->widget($form->dueDate) ?></td>
@@ -980,6 +1028,7 @@ class to the ``div`` element around each row:
                 {{ form_label(form) }}
                 {{ form_errors(form) }}
                 {{ form_widget(form) }}
+                {{ form_help(form) }}
             </div>
         {% endblock form_row %}
 
@@ -1165,4 +1214,9 @@ more details about this concept in Twig, see :ref:`twig-reference-form-variables
 .. _`form_table_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_table_layout.html.twig
 .. _`bootstrap_3_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_layout.html.twig
 .. _`bootstrap_3_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_horizontal_layout.html.twig
-.. _`Bootstrap 3 CSS framework`: http://getbootstrap.com/
+.. _`bootstrap_4_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_layout.html.twig
+.. _`bootstrap_4_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_horizontal_layout.html.twig
+.. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.3/
+.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.0/
+.. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
+.. _`Foundation CSS framework`: http://foundation.zurb.com/

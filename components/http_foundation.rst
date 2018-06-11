@@ -27,6 +27,13 @@ Alternatively, you can clone the `<https://github.com/symfony/http-foundation>`_
 
 .. include:: /components/require_autoload.rst.inc
 
+.. seealso::
+
+    This article explains how to use the HttpFoundation features as an
+    independent component in any PHP application. In Symfony applications
+    everything is already configured and ready to use. Read the :doc:`/controller`
+    article to learn about how to use these features when creating controllers.
+
 .. _component-http-foundation-request:
 
 Request
@@ -129,9 +136,6 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getBoolean`
     Returns the parameter value converted to boolean;
 
-    .. versionadded:: 2.6
-        The ``getBoolean()`` method was introduced in Symfony 2.6.
-
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
     Returns the digits of the parameter value;
 
@@ -141,39 +145,35 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
 
-All getters take up to three arguments: the first one is the parameter name
+All getters take up to two arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
 exist::
 
     // the query string is '?foo=bar'
 
     $request->query->get('foo');
-    // returns bar
+    // returns 'bar'
 
     $request->query->get('bar');
     // returns null
 
-    $request->query->get('bar', 'bar');
-    // returns 'bar'
+    $request->query->get('bar', 'baz');
+    // returns 'baz'
 
 When PHP imports the request query, it handles request parameters like
-``foo[bar]=bar`` in a special way as it creates an array. So you can get the
-``foo`` parameter and you will get back an array with a ``bar`` element. But
-sometimes, you might want to get the value for the "original" parameter name:
-``foo[bar]``. This is possible with all the ``ParameterBag`` getters like
-:method:`Symfony\\Component\\HttpFoundation\\Request::get` via the third
-argument::
+``foo[bar]=baz`` in a special way as it creates an array. So you can get the
+``foo`` parameter and you will get back an array with a ``bar`` element::
 
-    // the query string is '?foo[bar]=bar'
+    // the query string is '?foo[bar]=baz'
 
     $request->query->get('foo');
-    // returns array('bar' => 'bar')
+    // returns array('bar' => 'baz')
 
     $request->query->get('foo[bar]');
     // returns null
 
-    $request->query->get('foo[bar]', null, true);
-    // returns 'bar'
+    $request->query->get('foo')['bar'];
+    // returns 'baz'
 
 .. _component-foundation-attributes:
 
@@ -242,6 +242,45 @@ the
 method tells you if the request contains a session which was started in one of
 the previous requests.
 
+.. versionadded:: 4.1
+    Using :method:`Symfony\\Component\\HttpFoundation\\Request::getSession()`
+    when no session has been set was deprecated in Symfony 4.1. It will throw
+    an exception in Symfony 5.0 when the session is ``null``. Check for an existing session
+    first by calling :method:`Symfony\\Component\\HttpFoundation\\Request::hasSession()`.
+
+Processing HTTP Headers
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.1
+    The ``HeaderUtils`` class was introduced in Symfony 4.1.
+
+Processing HTTP headers is not a trivial task because of the escaping and white
+space handling of their contents. Symfony provides a
+:class:`Symfony\\Component\\HttpFoundation\\HeaderUtils` class that abstracts
+this complexity and defines some methods for the most common tasks::
+
+    use Symfony\Component\HttpFoundation\HeaderUtils;
+
+    // Splits an HTTP header by one or more separators
+    HeaderUtils::split('da, en-gb;q=0.8', ',;')
+    // => array(array('da'), array('en-gb'), array('q', '0.8'))
+
+    // Combines an array of arrays into one associative array
+    HeaderUtils::combine(array(array('foo', 'abc'), array('bar')))
+    // => array('foo' => 'abc', 'bar' => true)
+
+    // Joins an associative array into a string for use in an HTTP header
+    HeaderUtils::toString(array('foo' => 'abc', 'bar' => true, 'baz' => 'a b c'), ',')
+    // => 'foo=bar, baz, baz="a b c"'
+
+    // Encodes a string as a quoted string, if necessary
+    HeaderUtils::quote('foo "bar"')
+    // => 'foo \"bar\"'
+
+    // Decodes a quoted string
+    HeaderUtils::unquote('foo \"bar\"')
+    // => 'foo "bar"'
+
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -277,6 +316,19 @@ If you need to get full access to parsed data from ``Accept``, ``Accept-Language
     $acceptHeaders = AcceptHeader::fromString($request->headers->get('Accept'))
         ->all();
 
+The default values that can be optionally included in the ``Accept-*`` headers
+are also supported::
+
+    $acceptHeader = 'text/plain;q=0.5, text/html, text/*;q=0.8, */*;q=0.3';
+    $accept = AcceptHeader::fromString($acceptHeader);
+
+    $quality = $accept->get('text/xml')->getQuality(); // $quality = 0.8
+    $quality = $accept->get('application/xml')->getQuality(); // $quality = 0.3
+
+.. versionadded:: 4.1
+    The support of default values in the ``Accept-*`` headers was introduced in
+    Symfony 4.1.
+
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -293,7 +345,7 @@ represents an HTTP message. But when moving from a legacy system, adding
 methods or changing some default behavior might help. In that case, register a
 PHP callable that is able to create an instance of your ``Request`` class::
 
-    use AppBundle\Http\SpecialRequest;
+    use App\Http\SpecialRequest;
     use Symfony\Component\HttpFoundation\Request;
 
     Request::setFactory(function (
@@ -386,6 +438,10 @@ method takes an instance of
 You can clear a cookie via the
 :method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::clearCookie` method.
 
+Note you can create a
+:class:`Symfony\\Component\\HttpFoundation\\Cookie` object from a raw header
+value using :method:`Symfony\\Component\\HttpFoundation\\Cookie::fromString`.
+
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -403,6 +459,13 @@ of methods to manipulate the HTTP headers related to the cache:
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`;
+
+.. note::
+
+    The methods :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`,
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified` and
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setDate` accept any
+    object that implements ``\DateTimeInterface``, including immutable date objects.
 
 The :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method
 can be used to set the most commonly used cache information in one method
@@ -527,12 +590,20 @@ or change its ``Content-Disposition``::
         'filename.txt'
     );
 
-.. versionadded:: 2.6
-    The ``deleteFileAfterSend()`` method was introduced in Symfony 2.6.
-
 It is possible to delete the file after the request is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
+
+If the size of the served file is unknown (e.g. because it's being generated on the fly,
+or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``
+instance to ``BinaryFileResponse``. This will disable ``Range`` and ``Content-Length``
+handling, switching to chunked encoding instead::
+
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
+    use Symfony\Component\HttpFoundation\File\Stream;
+
+    $stream  = new Stream('path/to/stream');
+    $response = new BinaryFileResponse($stream);
 
 .. note::
 
@@ -563,13 +634,19 @@ class, which can make this even easier::
 
     use Symfony\Component\HttpFoundation\JsonResponse;
 
-    $response = new JsonResponse();
-    $response->setData(array(
-        'data' => 123,
-    ));
+    // if you know the data to send when creating the response
+    $response = new JsonResponse(array('data' => 123));
 
-This encodes your array of data to JSON and sets the ``Content-Type`` header
-to ``application/json``.
+    // if you don't know the data to send when creating the response
+    $response = new JsonResponse();
+    // ...
+    $response->setData(array('data' => 123));
+
+    // if the data to send is already encoded in JSON
+    $response = JsonResponse::fromJsonString('{ "data": 123 }');
+
+The ``JsonResponse`` class sets the ``Content-Type`` header to
+``application/json`` and encodes your data to JSON when needed.
 
 .. caution::
 

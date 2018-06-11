@@ -59,7 +59,7 @@ transport
 The exact transport method to use to deliver emails. Valid values are:
 
 * smtp
-* gmail (see :doc:`/email/gmail`)
+* gmail (see :ref:`email-using-gmail`)
 * mail (deprecated in SwiftMailer since version 5.4.5)
 * sendmail
 * null (same as setting `disable_delivery`_ to ``true``)
@@ -201,10 +201,11 @@ delivery_addresses
 
     In previous versions, this option was called ``delivery_address``.
 
-If set, all email messages will be sent to these addresses instead of being
-sent to their actual recipients. This is often useful when developing. For
-example, by setting this in the ``config_dev.yml`` file, you can guarantee
-that all emails sent during development go to one or more some specific accounts.
+If set, all email messages will be sent to these addresses instead of being sent
+to their actual recipients. This is often useful when developing. For example,
+by setting this in the ``config/packages/dev/swiftmailer.yaml`` file, you can
+guarantee that all emails sent during development go to one or more some
+specific accounts.
 
 This uses ``Swift_Plugins_RedirectingPlugin``. Original recipients are available
 on the ``X-Swift-To``, ``X-Swift-Cc`` and ``X-Swift-Bcc`` headers.
@@ -240,7 +241,8 @@ the information will be available in the profiler.
 
     The following options can be set via environment variables using the
     ``%env()%`` syntax: ``url``, ``transport``, ``username``, ``password``,
-    ``host``, ``port``, ``timeout``, ``source_ip``, ``local_domain``.
+    ``host``, ``port``, ``timeout``, ``source_ip``, ``local_domain``,
+    ``encryption``, ``auth_mode``.
     For details, see the :doc:`/configuration/external_parameters` article.
 
 Full Default Configuration
@@ -350,7 +352,7 @@ key (the default mailer is identified by the ``default_mailer`` option):
             ),
         ));
 
-Each mailer is registered as a service::
+Each mailer is registered automatically as a service with these IDs::
 
     // ...
 
@@ -368,3 +370,70 @@ Each mailer is registered as a service::
     When configuring multiple mailers, options must be placed under the
     appropriate mailer key of the configuration instead of directly under the
     ``swiftmailer`` key.
+
+When using :ref:`autowiring <services-autowire>` only the default mailer is
+injected when type-hinting some argument with the ``\Swift_Mailer`` class. If
+you need to inject a different mailer in some service, use any of these
+alternatives based on the :ref:`service binding <services-binding>` feature:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            _defaults:
+                bind:
+                    # this injects the second mailer when type-hinting constructor arguments with \Swift_Mailer
+                    \Swift_Mailer: '@swiftmailer.mailer.second_mailer'
+                    # this injects the second mailer when a service constructor argument is called $specialMailer
+                    $specialMailer: '@swiftmailer.mailer.second_mailer'
+
+            App\Some\Service:
+                # this injects the second mailer only for this argument of this service
+                $differentMailer: '@swiftmailer.mailer.second_mailer'
+
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <defaults autowire="true" autoconfigure="true" public="false">
+                    <!-- this injects the second mailer when type-hinting constructor arguments with \Swift_Mailer -->
+                    <bind key="\Swift_Mailer">@swiftmailer.mailer.second_mailer</bind>
+                    <!-- this injects the second mailer when a service constructor argument is called $specialMailer -->
+                    <bind key="$specialMailer">@swiftmailer.mailer.second_mailer</bind>
+                </defaults>
+
+                <service id="App\Some\Service">
+                    <!-- this injects the second mailer only for this argument of this service -->
+                    <argument key="$differentMailer">@swiftmailer.mailer.second_mailer</argument>
+                </service>
+
+                <!-- ... -->
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use App\Some\Service;
+        use Symfony\Component\DependencyInjection\Reference;
+        use Psr\Log\LoggerInterface;
+
+        $container->register(Service::class)
+            ->setPublic(true)
+            ->setBindings(array(
+                // this injects the second mailer when this service type-hints constructor arguments with \Swift_Mailer
+                \Swift_Mailer => '@swiftmailer.mailer.second_mailer',
+                // this injects the second mailer when this service has a constructor argument called $specialMailer
+                '$specialMailer' => '@swiftmailer.mailer.second_mailer',
+            ))
+        ;

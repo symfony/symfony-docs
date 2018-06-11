@@ -4,41 +4,49 @@
 How to Write a custom Twig Extension
 ====================================
 
-The main motivation for writing an extension is to move often used code
-into a reusable class like adding support for internationalization.
-An extension can define tags, filters, tests, operators, global variables,
-functions, and node visitors.
-
-Creating an extension also makes for a better separation of code that is
-executed at compilation time and code needed at runtime. As such, it makes
-your code faster.
+If you need to create custom Twig functions, filters, tests or more, you'll need
+to create a Twig extension. You can read more about `Twig Extensions`_ in the Twig
+documentation.
 
 .. tip::
 
-    Before writing your own extensions, have a look at the
-    `Twig official extension repository`_.
+    Before writing your own Twig extension, check if the filter/function that
+    you need is already implemented in the :doc:`Symfony Twig extensions </reference/twig_reference>`.
+    Check also the `official Twig extensions`_, which can be installed in your
+    application as follows:
+
+    .. code-block:: terminal
+
+        $ composer require twig/extensions
 
 Create the Extension Class
 --------------------------
 
-.. note::
+Suppose you want to create a new filter called ``price`` that formats a number into
+money:
 
-    This article describes how to write a custom Twig extension as of
-    Twig 1.12. If you are using an older version, please read
-    `Twig extensions documentation legacy`_.
+.. code-block:: twig
 
-To get your custom functionality you must first create a Twig Extension class.
-As an example you'll create a price filter to format a given number into price::
+    {{ product.price|price }}
 
-    // src/AppBundle/Twig/AppExtension.php
-    namespace AppBundle\Twig;
+    {# pass in the 3 optional arguments #}
+    {{ product.price|price(2, ',', '.') }}
 
-    class AppExtension extends \Twig_Extension
+Create a class that extends the ``AbstractExtension`` class defined by Twig and
+fill in the logic::
+
+    // src/Twig/AppExtension.php
+    namespace App\Twig;
+
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
+
+    class AppExtension extends AbstractExtension
     {
         public function getFilters()
         {
             return array(
-                new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
+                new TwigFilter('price', array($this, 'priceFilter')),
             );
         }
 
@@ -51,89 +59,87 @@ As an example you'll create a price filter to format a given number into price::
         }
     }
 
-.. note::
-
-    Prior to Twig 1.26, your extension had to define an additional ``getName()``
-    method that returned a string with the extension's internal name (e.g.
-    ``app.my_extension``). When your extension needs to be compatible with Twig
-    versions before 1.26, include this method which is omitted in the example
-    above.
-
 .. tip::
 
     Along with custom filters, you can also add custom `functions`_ and register
     `global variables`_.
 
 Register an Extension as a Service
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now you must let the Service Container know about your newly created Twig Extension:
+Next, register your class as a service and tag it with ``twig.extension``. If you're
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+you're done! Symfony will automatically know about your new service and add the tag.
 
-.. configuration-block::
+You can now start using your filter in any Twig template.
 
-    .. code-block:: yaml
+Creating Lazy-Loaded Twig Extensions
+------------------------------------
 
-        # app/config/services.yml
-        services:
-            app.twig_extension:
-                class: AppBundle\Twig\AppExtension
-                public: false
-                tags:
-                    - { name: twig.extension }
+.. versionadded:: 1.26
+    Support for lazy-loaded extensions was introduced in Twig 1.26.
 
-    .. code-block:: xml
+Including the code of the custom filters/functions in the Twig extension class
+is the simplest way to create extensions. However, Twig must initialize all
+extensions before rendering any template, even if the template doesn't use an
+extension.
 
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+If extensions don't define dependencies (i.e. if you don't inject services in
+them) performance is not affected. However, if extensions define lots of complex
+dependencies (e.g. those making database connections), the performance loss can
+be significant.
 
-            <services>
-                <service id="app.twig_extension"
-                    class="AppBundle\Twig\AppExtension"
-                    public="false">
-                    <tag name="twig.extension" />
-                </service>
-            </services>
-        </container>
+That's why Twig allows to decouple the extension definition from its
+implementation. Following the same example as before, the first change would be
+to remove the ``priceFilter()`` method from the extension and update the PHP
+callable defined in ``getFilters()``::
 
-    .. code-block:: php
+    // src/Twig/AppExtension.php
+    namespace App\Twig;
 
-        // app/config/services.php
-        use AppBundle\Twig\AppExtension;
+    use App\Twig\AppRuntime;
 
-        $container
-            ->register('app.twig_extension', AppExtension::class)
-            ->setPublic(false)
-            ->addTag('twig.extension');
+    class AppExtension extends \Twig_Extension
+    {
+        public function getFilters()
+        {
+            return array(
+                // the logic of this filter is now implemented in a different class
+                new \Twig_SimpleFilter('price', array(AppRuntime::class, 'priceFilter')),
+            );
+        }
+    }
 
-Using the custom Extension
---------------------------
+Then, create the new ``AppRuntime`` class (it's not required but these classes
+are suffixed with ``Runtime`` by convention) and include the logic of the
+previous ``priceFilter()`` method::
 
-Using your newly created Twig Extension is no different than any other:
+    // src/Twig/AppRuntime.php
+    namespace App\Twig;
 
-.. code-block:: twig
+    class AppRuntime
+    {
+        public function __construct()
+        {
+            // this simple example doesn't define any dependency, but in your own
+            // extensions, you'll need to inject services using this constructor
+        }
 
-    {# outputs $5,500.00 #}
-    {{ '5500'|price }}
+        public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        {
+            $price = number_format($number, $decimals, $decPoint, $thousandsSep);
+            $price = '$'.$price;
 
-Passing other arguments to your filter:
+            return $price;
+        }
+    }
 
-.. code-block:: twig
+If you're using the default ``services.yaml`` configuration, this will already
+work! Otherwise, :ref:`create a service <service-container-creating-service>`
+for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
 
-    {# outputs $5500,2516 #}
-    {{ '5500.25155'|price(4, ',', '') }}
-
-Learning further
-----------------
-
-For a more in-depth look into Twig Extensions, please take a look at the
-`Twig extensions documentation`_.
-
-.. _`Twig official extension repository`: https://github.com/twigphp/Twig-extensions
+.. _`official Twig extensions`: https://github.com/twigphp/Twig-extensions
 .. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
 .. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
 .. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2
-.. _`Twig extensions documentation legacy`: http://twig.sensiolabs.org/doc/advanced_legacy.html#creating-an-extension
+.. _`Twig Extensions`: https://twig.sensiolabs.org/doc/2.x/advanced.html#creating-an-extension

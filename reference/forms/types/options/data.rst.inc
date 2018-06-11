@@ -9,7 +9,10 @@ the form). If you want to override this initial value for the form or
 an individual field, you can set it in the data option::
 
 
-    $builder->add('token', 'hidden', array(
+    use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+    // ...
+
+    $builder->add('token', HiddenType::class, array(
         'data' => 'abcdef',
     ));
 

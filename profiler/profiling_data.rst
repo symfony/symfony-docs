@@ -21,7 +21,7 @@ Using this token, you can access the profile of any past response thanks to the
 :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::loadProfile` method::
 
     $token = $response->headers->get('X-Debug-Token');
-    $profile = $container->get('profiler')->loadProfile($token);
+    $profile = $profiler->loadProfile($token);
 
 .. tip::
 
@@ -34,29 +34,13 @@ The ``profiler`` service also provides the
 look for tokens based on some criteria::
 
     // gets the latest 10 tokens
-    $tokens = $container->get('profiler')->find('', '', 10, '', '', '');
+    $tokens = $profiler->find('', '', 10, '', '', '');
 
     // gets the latest 10 tokens for all URL containing /admin/
-    $tokens = $container->get('profiler')->find('', '/admin/', 10, '', '', '');
+    $tokens = $profiler->find('', '/admin/', 10, '', '', '');
 
     // gets the latest 10 tokens for local POST requests
-    $tokens = $container->get('profiler')->find('127.0.0.1', '', 10, 'POST', '', '');
+    $tokens = $profiler->find('127.0.0.1', '', 10, 'POST', '', '');
 
     // gets the latest 10 tokens for requests that happened between 2 and 4 days ago
-    $tokens = $container->get('profiler')
-        ->find('', '', 10, '', '4 days ago', '2 days ago');
-
-Lastly, if you want to manipulate profiling data on a different machine than the
-one where the information was generated, use the ``profiler:export`` and
-``profiler:import`` commands:
-
-.. code-block:: terminal
-
-    # on the production machine
-    $ php app/console profiler:export > profile.data
-
-    # on the development machine
-    $ php app/console profiler:import /path/to/profile.data
-
-    # you can also pipe from the STDIN
-    $ cat /path/to/profile.data | php app/console profiler:import
+    $tokens = $profiler->find('', '', 10, '', '4 days ago', '2 days ago');

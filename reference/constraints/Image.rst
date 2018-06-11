@@ -24,6 +24,7 @@ of the documentation on this constraint.
 |                | - `allowSquare`_                                                      |
 |                | - `allowLandscape`_                                                   |
 |                | - `allowPortrait`_                                                    |
+|                | - `detectCorrupted`_                                                  |
 |                | - `mimeTypesMessage`_                                                 |
 |                | - `sizeNotDetectedMessage`_                                           |
 |                | - `maxWidthMessage`_                                                  |
@@ -35,6 +36,7 @@ of the documentation on this constraint.
 |                | - `allowSquareMessage`_                                               |
 |                | - `allowLandscapeMessage`_                                            |
 |                | - `allowPortraitMessage`_                                             |
+|                | - `corruptedMessage`_                                                 |
 |                | - See :doc:`File </reference/constraints/File>` for inherited options |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Image`            |
@@ -46,13 +48,13 @@ Basic Usage
 -----------
 
 This constraint is most commonly used on a property that will be rendered
-in a form as a :doc:`file </reference/forms/types/file>` form type. For
+in a form as a :doc:`FileType </reference/forms/types/file>` field. For
 example, suppose you're creating an author form where you can upload a
 "headshot" image for the author. In your form, the ``headshot`` property
 would be a ``file`` type. The ``Author`` class might look as follows::
 
-    // src/AppBundle/Entity/Author.php
-    namespace AppBundle\Entity;
+    // src/Entity/Author.php
+    namespace App\Entity;
 
     use Symfony\Component\HttpFoundation\File\File;
 
@@ -78,8 +80,8 @@ that it is between a certain size, add the following:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -98,8 +100,8 @@ that it is between a certain size, add the following:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 headshot:
                     - Image:
@@ -110,13 +112,13 @@ that it is between a certain size, add the following:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="headshot">
                     <constraint name="Image">
                         <option name="minWidth">200</option>
@@ -130,8 +132,8 @@ that it is between a certain size, add the following:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -160,8 +162,8 @@ following code:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -178,8 +180,8 @@ following code:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 headshot:
                     - Image:
@@ -188,8 +190,8 @@ following code:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
-        <class name="AppBundle\Entity\Author">
+        <!-- config/validator/validation.xml -->
+        <class name="App\Entity\Author">
             <property name="headshot">
                 <constraint name="Image">
                     <option name="allowLandscape">false</option>
@@ -200,8 +202,8 @@ following code:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -272,6 +274,22 @@ maxHeight
 If set, the height of the image file must be less than or equal to this
 value in pixels.
 
+minPixels
+~~~~~~~~~
+
+**type**: ``integer``
+
+If set, the amount of pixels of the image file must be greater than or equal to this
+value.
+
+maxPixels
+~~~~~~~~~
+
+**type**: ``integer``
+
+If set, the amount of pixels of the image file must be less than or equal to this
+value.
+
 maxRatio
 ~~~~~~~~
 
@@ -310,6 +328,15 @@ allowPortrait
 **type**: ``Boolean`` **default**: ``true``
 
 If this option is false, the image cannot be portrait oriented.
+
+detectCorrupted
+~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If this option is true, the image contents are validated to ensure that the
+image is not corrupted. This validation is done with PHP's :phpfunction:`imagecreatefromstring`
+function, which requires the `PHP GD extension`_ to be enabled.
 
 sizeNotDetectedMessage
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -352,6 +379,22 @@ Minimum height expected is {{ min_height }}px.``
 
 The error message if the height of the image is less than `minHeight`_.
 
+maxPixelsMessage
+~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The image has to many pixels ({{ pixels }} pixels).
+Maximum amount expected is {{ max_pixels }} pixels.``
+
+The error message if the amount of pixels of the image exceeds `maxPixels`_.
+
+minPixelsMessage
+~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The image has to few pixels ({{ pixels }} pixels).
+Minimum amount expected is {{ min_pixels }} pixels.``
+
+The error message if the amount of pixels of the image is less than `minPixels`_.
+
 maxRatioMessage
 ~~~~~~~~~~~~~~~
 
@@ -392,4 +435,13 @@ Portrait oriented images are not allowed``
 
 The error message if the image is portrait oriented and you set `allowPortrait`_ to ``false``.
 
+corruptedMessage
+~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The image file is corrupted.``
+
+The error message when the `detectCorrupted`_ option is enabled and the image
+is corrupted.
+
 .. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html
+.. _`PHP GD extension`: http://php.net/manual/en/book.image.php

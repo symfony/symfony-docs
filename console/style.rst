@@ -4,17 +4,14 @@
 How to Style a Console Command
 ==============================
 
-.. versionadded:: 2.7
-    Symfony Styles for console commands were introduced in Symfony 2.7.
-
 One of the most boring tasks when creating console commands is to deal with the
 styling of the command's input and output. Displaying titles and tables or asking
 questions to the user involves a lot of repetitive code.
 
 Consider for example the code used to display the title of the following command::
 
-    // src/AppBundle/Command/GreetCommand.php
-    namespace AppBundle\Command;
+    // src/Command/GreetCommand.php
+    namespace App\Command;
 
     use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
     use Symfony\Component\Console\Input\InputInterface;
@@ -53,8 +50,8 @@ class and pass the ``$input`` and ``$output`` variables as its arguments. Then,
 you can start using any of its helpers, such as ``title()``, which displays the
 title of the command::
 
-    // src/AppBundle/Command/GreetCommand.php
-    namespace AppBundle\Command;
+    // src/Command/GreetCommand.php
+    namespace App\Command;
 
     use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
     use Symfony\Component\Console\Style\SymfonyStyle;
@@ -342,7 +339,7 @@ If you don't like the design of the commands that use the Symfony Style, you can
 define your own set of console styles. Just create a class that implements the
 :class:`Symfony\\Component\\Console\\Style\\StyleInterface`::
 
-    namespace AppBundle\Console;
+    namespace App\Console;
 
     use Symfony\Component\Console\Style\StyleInterface;
 
@@ -355,9 +352,9 @@ Then, instantiate this custom class instead of the default ``SymfonyStyle`` in
 your commands. Thanks to the ``StyleInterface`` you won't need to change the code
 of your commands to change their appearance::
 
-    namespace AppBundle\Console;
+    namespace App\Console;
 
-    use AppBundle\Console\CustomStyle;
+    use App\Console\CustomStyle;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
@@ -375,3 +372,35 @@ of your commands to change their appearance::
             // ...
         }
     }
+
+Writing to the error output
+---------------------------
+
+If you reuse the output of a command as the input of other commands or dump it
+into a file for later reuse, you probably want to exclude progress bars, notes
+and other output that provides no real value.
+
+Commands can output information in two different streams: ``stdout`` (standard
+output) is the stream where the real contents should be output and ``stderr``
+(standard error) is the stream where the errors and the debugging messages
+should be output.
+
+The :class:`Symfony\\Component\\Console\\Style\\SymfonyStyle` class provides a
+convenient method called :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::getErrorStyle`
+to switch between both streams. This method returns a new ``SymfonyStyle``
+instance which makes use of the error output::
+
+    $io = new SymfonyStyle($input, $output);
+
+    // Write to the standard output
+    $io->write('Reusable information');
+
+    // Write to the error output
+    $io->getErrorStyle()->warning('Debugging information or errors');
+
+.. note::
+
+    If you create a ``SymfonyStyle`` instance with an ``OutputInterface`` object
+    that is not an instance of :class:`Symfony\\Component\\Console\\Output\\ConsoleOutputInterface`,
+    the ``getErrorStyle()`` method will have no effect and the returned object
+    will still write to the standard output instead of the error output.

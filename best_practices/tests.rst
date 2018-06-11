@@ -1,10 +1,11 @@
 Tests
 =====
 
-Roughly speaking, there are two types of test. Unit testing allows you to
-test the input and output of specific functions. Functional testing allows
-you to command a "browser" where you browse to pages on your site, click
-links, fill out forms and assert that you see certain things on the page.
+Of all the different types of test available, these best practices focus solely
+on unit and functional tests. Unit testing allows you to test the input and
+output of specific functions. Functional testing allows you to command a
+"browser" where you browse to pages on your site, click links, fill out forms
+and assert that you see certain things on the page.
 
 Unit Tests
 ----------
@@ -12,7 +13,7 @@ Unit Tests
 Unit tests are used to test your "business logic", which should live in classes
 that are independent of Symfony. For that reason, Symfony doesn't really
 have an opinion on what tools you use for unit testing. However, the most
-popular tools are `PhpUnit`_ and `PhpSpec`_.
+popular tools are `PHPUnit`_ and `PHPSpec`_.
 
 Functional Tests
 ----------------
@@ -28,8 +29,8 @@ functional tests, you can quickly spot any big errors before you deploy them:
 
 A functional test can be as easy as this::
 
-    // src/AppBundle/Tests/ApplicationAvailabilityFunctionalTest.php
-    namespace AppBundle\Tests;
+    // tests/ApplicationAvailabilityFunctionalTest.php
+    namespace App\Tests;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -48,14 +49,12 @@ A functional test can be as easy as this::
 
         public function urlProvider()
         {
-            return array(
-                array('/'),
-                array('/posts'),
-                array('/post/fixture-post-1'),
-                array('/blog/category/fixture-category'),
-                array('/archives'),
-                // ...
-            );
+            yield ['/'];
+            yield ['/posts'];
+            yield ['/post/fixture-post-1'];
+            yield ['/blog/category/fixture-category'];
+            yield ['/archives'];
+            // ...
         }
     }
 
@@ -82,10 +81,13 @@ generator service:
 Consider the following functional test that uses the ``router`` service to
 generate the URL of the tested page::
 
+    // ...
+    private $router; // consider that this holds the Symfony router service
+
     public function testBlogArchives()
     {
         $client = self::createClient();
-        $url = $client->getContainer()->get('router')->generate('blog_archives');
+        $url = $this->router->generate('blog_archives');
         $client->request('GET', $url);
 
         // ...
@@ -103,7 +105,7 @@ The built-in functional testing client is great, but it can't be used to
 test any JavaScript behavior on your pages. If you need to test this, consider
 using the `Mink`_ library from within PHPUnit.
 
-Of course, if you have a heavy JavaScript frontend, you should consider using
+Of course, if you have a heavy JavaScript front-end, you should consider using
 pure JavaScript-based testing tools.
 
 Learn More about Functional Tests
@@ -112,8 +114,8 @@ Learn More about Functional Tests
 Consider using the `HautelookAliceBundle`_ to generate real-looking data for
 your test fixtures using `Faker`_ and `Alice`_.
 
-.. _`PhpUnit`: https://phpunit.de/
-.. _`PhpSpec`: http://www.phpspec.net/
+.. _`PHPUnit`: https://phpunit.de/
+.. _`PHPSpec`: https://www.phpspec.net/
 .. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)
 .. _`Mink`: http://mink.behat.org
 .. _`HautelookAliceBundle`: https://github.com/hautelook/AliceBundle

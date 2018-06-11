@@ -4,9 +4,6 @@
 How to Disable the Validation of Submitted Data
 ===============================================
 
-.. versionadded:: 2.3
-    The ability to set ``validation_groups`` to false was introduced in Symfony 2.3.
-
 Sometimes it is useful to suppress the validation of a form altogether. For
 these cases you can set the ``validation_groups`` option to ``false``::
 

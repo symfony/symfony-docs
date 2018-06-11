@@ -5,12 +5,9 @@
 The VarDumper Component
 =======================
 
-    The VarDumper component provides mechanisms for walking through any
-    arbitrary PHP variable. Built on top, it provides a better ``dump()``
-    function that you can use instead of :phpfunction:`var_dump`.
-
-.. versionadded:: 2.6
-    The VarDumper component was introduced in Symfony 2.6.
+    The VarDumper component provides mechanisms for extracting the state out of
+    any PHP variables. Built on top, it provides a better ``dump()`` function
+    that you can use instead of :phpfunction:`var_dump`.
 
 Installation
 ------------
@@ -25,8 +22,8 @@ Alternatively, you can clone the `<https://github.com/symfony/var-dumper>`_ repo
 
 .. note::
 
-    If using it inside a Symfony application, make sure that the
-    DebugBundle is enabled in your ``app/AppKernel.php`` file.
+    If using it inside a Symfony application, make sure that the DebugBundle has
+    been installed (or run ``composer require symfony/debug-bundle`` to install it).
 
 .. _components-var-dumper-dump:
 
@@ -56,6 +53,9 @@ For example::
 
     dump($someVar);
 
+    // dump() returns the passed value, so you can dump an object and keep using it
+    dump($someObject)->someMethod();
+
 By default, the output format and destination are selected based on your
 current PHP SAPI:
 
@@ -82,20 +82,57 @@ current PHP SAPI:
     #. From time to time, run ``composer global update symfony/var-dumper``
        to have the latest bug fixes.
 
+.. tip::
+
+    The VarDumper component also provides a ``dd()`` ("dump and die") helper
+    function. This function dumps the variables using ``dump()`` and
+    immediately ends the execution of the script (using :phpfunction:`exit`).
+
+    .. versionadded:: 4.1
+        The ``dd()`` helper method was introduced in Symfony 4.1.
+
+The Dump Server
+---------------
+
+.. versionadded:: 4.1
+    The dump server was introduced in Symfony 4.1.
+
+The ``dump()`` function outputs its contents in the same browser window or
+console terminal as your own application. Sometimes mixing the real output
+with the debug output can be confusing. That's why this component provides a
+server to collect all the dumped data.
+
+Start the server with the ``server:dump`` command and whenever you call to
+``dump()``, the dumped data won't be displayed in the output but sent to that
+server, which outputs it to its own console or to an HTML file:
+
+.. code-block:: terminal
+
+    # displays the dumped data in the console:
+    $ ./bin/console server:dump
+      [OK] Server listening on tcp://0.0.0.0:9912
+
+    # stores the dumped data in a file using the HTML format:
+    $ ./bin/console server:dump --format=html > dump.html
+
+Inside a Symfony application, the output of the dump server is configured with
+the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
+``debug`` package.
+
 DebugBundle and Twig Integration
 --------------------------------
 
-The DebugBundle allows greater integration of the component into the Symfony
-full-stack framework. It is enabled by default in the *dev* and *test*
-environment of the standard edition since version 2.6.
+The DebugBundle allows greater integration of this component into Symfony
+applications.
 
 Since generating (even debug) output in the controller or in the model
 of your application may just break it by e.g. sending HTTP headers or
 corrupting your view, the bundle configures the ``dump()`` function so that
 variables are dumped in the web debug toolbar.
 
-But if the toolbar cannot be displayed because you e.g. called ``die``/``exit``
-or a fatal error occurred, then dumps are written on the regular output.
+But if the toolbar cannot be displayed because you e.g. called
+``die()``/``exit()``/``dd()`` or a fatal error occurred, then dumps are written
+on the regular output.
 
 In a Twig template, two constructs are available for dumping a variable.
 Choosing between both is mostly a matter of personal taste, still:
@@ -111,12 +148,17 @@ This behavior can be changed by configuring the ``debug.dump_destination``
 option. Read more about this and other options in
 :doc:`the DebugBundle configuration reference </reference/configuration/debug>`.
 
+.. tip::
+
+    If the dumped contents are complex, consider using the local search box to
+    look for specific variables or values. First, click anywhere on the dumped
+    contents and then press :kbd:`Ctrl. + F` or :kbd:`Cmd. + F` to make the local
+    search box appear. All the common shortcuts to navigate the search results
+    are supported (:kbd:`Ctrl. + G` or :kbd:`Cmd. + G`, :kbd:`F3`, etc.) When
+    finished, press :kbd:`Esc.` to hide the box again.
+
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------
-
-.. versionadded:: 2.7
-    The :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait` was
-    introduced in Symfony 2.7.
 
 The VarDumper component provides
 :class:`a trait <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait>`
@@ -126,7 +168,7 @@ This will provide you with two new assertions:
 
 :method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpEquals`
     verifies that the dump of the variable given as the second argument matches
-    the expected dump provided as a string in the first argument.
+    the expected dump provided as the first argument.
 
 :method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::assertDumpMatchesFormat`
     is like the previous method but accepts placeholders in the expected dump,
@@ -151,14 +193,18 @@ Example::
     ]
     EOTXT;
 
+            // if the first argument is a string, it must be the whole expected dump
             $this->assertDumpEquals($expectedDump, $testedVar);
+
+            // if the first argument is not a string, assertDumpEquals() dumps it
+            // and compares it with the dump of the second argument
+            $this->assertDumpEquals($testedVar, $testedVar);
         }
     }
 
-.. tip::
-
-    If you still use PHP 5.3, you can extend the
-    :class:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestClass` instead.
+.. versionadded:: 4.1
+    The possibility of passing non-string variables as the first argument of
+    ``assertDumpEquals()`` was introduced in Symfony 4.1.
 
 Dump Examples and Output
 ------------------------

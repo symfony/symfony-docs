@@ -18,7 +18,7 @@ First, enable form login under your firewall:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -31,7 +31,7 @@ First, enable form login under your firewall:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -49,7 +49,7 @@ First, enable form login under your firewall:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array(
@@ -72,8 +72,8 @@ Now, when the security system initiates the authentication process, it will
 redirect the user to the login form ``/login``. Implementing this login form
 is your job. First, create a new ``SecurityController`` inside a bundle::
 
-    // src/AppBundle/Controller/SecurityController.php
-    namespace AppBundle\Controller;
+    // src/Controller/SecurityController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -88,32 +88,32 @@ configuration (``login``):
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/SecurityController.php
+        // src/Controller/SecurityController.php
 
         // ...
         use Symfony\Component\HttpFoundation\Request;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class SecurityController extends Controller
         {
             /**
              * @Route("/login", name="login")
              */
-            public function loginAction(Request $request)
+            public function login(Request $request)
             {
             }
         }
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         login:
-            path:     /login
-            defaults: { _controller: AppBundle:Security:login }
+            path:       /login
+            controller: App\Controller\SecurityController::login
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -121,31 +121,31 @@ configuration (``login``):
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="login" path="/login">
-                <default key="_controller">AppBundle:Security:login</default>
+                <default key="_controller">App\Controller\SecurityController::login</default>
             </route>
         </routes>
 
     ..  code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
+        use App\Controller\SecurityController;
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
         $routes->add('login', new Route('/login', array(
-            '_controller' => 'AppBundle:Security:login',
+            '_controller' => array(SecurityController::class, 'login'),
         )));
 
         return $routes;
 
-Great! Next, add the logic to ``loginAction()`` that displays the login form::
+Great! Next, add the logic to ``login()`` that displays the login form::
 
-    // src/AppBundle/Controller/SecurityController.php
+    // src/Controller/SecurityController.php
+    use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-    public function loginAction(Request $request)
+    public function login(Request $request, AuthenticationUtils $authenticationUtils)
     {
-        $authenticationUtils = $this->get('security.authentication_utils');
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
@@ -158,10 +158,12 @@ Great! Next, add the logic to ``loginAction()`` that displays the login form::
         ));
     }
 
-.. versionadded:: 2.6
-    The ``security.authentication_utils`` service and the
-    :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationUtils`
-    class were introduced in Symfony 2.6.
+.. note::
+
+    If you get an error that the ``$authenticationUtils`` argument is missing,
+    it's probably because the controllers of your application are not defined as
+    services and tagged with the ``controller.service_arguments`` tag, as done
+    in the :ref:`default services.yaml configuration <service-container-services-load-example>`.
 
 Don't let this controller confuse you. As you'll see in a moment, when the
 user submits the form, the security system automatically handles the form
@@ -179,7 +181,7 @@ Finally, create the template:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/security/login.html.twig #}
+        {# templates/security/login.html.twig #}
         {# ... you will probably extend your base template, like base.html.twig #}
 
         {% if error %}
@@ -204,12 +206,12 @@ Finally, create the template:
 
     .. code-block:: html+php
 
-        <!-- src/AppBundle/Resources/views/Security/login.html.php -->
+        <!-- src/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif ?>
 
-        <form action="<?php echo $view['router']->generate('login') ?>" method="post">
+        <form action="<?php echo $view['router']->path('login') ?>" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="_username" value="<?php echo $last_username ?>" />
 
@@ -235,7 +237,7 @@ Finally, create the template:
 The form can look like anything, but it usually follows some conventions:
 
 * The ``<form>`` element sends a ``POST`` request to the ``login`` route, since
-  that's what you configured under the ``form_login`` key in ``security.yml``;
+  that's what you configured under the ``form_login`` key in ``security.yaml``;
 * The username field has the name ``_username`` and the password field has the
   name ``_password``.
 
@@ -247,8 +249,7 @@ The form can look like anything, but it usually follows some conventions:
 .. caution::
 
     This login form is currently not protected against CSRF attacks. Read
-    :doc:`/security/csrf_in_login_form` on how to protect your login
-    form.
+    :doc:`/security/csrf` on how to protect your login form.
 
 And that's it! When you submit the form, the security system will automatically
 check the user's credentials and either authenticate the user or send the
@@ -305,7 +306,7 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
 
         # ...
         access_control:
@@ -313,7 +314,7 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -329,7 +330,7 @@ all URLs (including the ``/login`` URL), will cause a redirect loop:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         'access_control' => array(
@@ -343,7 +344,7 @@ fixes the problem:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
 
         # ...
         access_control:
@@ -352,7 +353,7 @@ fixes the problem:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -369,7 +370,7 @@ fixes the problem:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
         'access_control' => array(

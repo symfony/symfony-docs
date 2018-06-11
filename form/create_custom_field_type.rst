@@ -6,10 +6,9 @@ How to Create a Custom Form Field Type
 
 Symfony comes with a bunch of core field types available for building forms.
 However there are situations where you may want to create a custom form field
-type for a specific purpose. This recipe assumes you need a field definition
+type for a specific purpose. This article assumes you need a field definition
 that holds a shipping option, based on the existing choice field. This section
-explains how the field is defined, how you can customize its layout and finally,
-how you can register it for use in your application.
+explains how the field is defined and how you can customize its layout.
 
 Defining the Field Type
 -----------------------
@@ -17,14 +16,15 @@ Defining the Field Type
 In order to create the custom field type, first you have to create the class
 representing the field. In this situation the class holding the field type
 will be called ``ShippingType`` and the file will be stored in the default location
-for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
+for form fields, which is ``App\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
 
-    // src/AppBundle/Form/Type/ShippingType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/ShippingType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
     class ShippingType extends AbstractType
     {
@@ -36,18 +36,12 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
                     'Expedited Shipping' => 'expedited',
                     'Priority Shipping' => 'priority',
                 ),
-                'choices_as_values' => true,
             ));
         }
 
         public function getParent()
         {
-            return 'choice';
-        }
-
-        public function getName()
-        {
-            return 'app_shipping';
+            return ChoiceType::class;
         }
     }
 
@@ -57,10 +51,12 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
     is just a convention.
 
 Here, the return value of the ``getParent()`` function indicates that you're
-extending the ``choice`` field type. This means that, by default, you inherit
+extending the ``ChoiceType`` field. This means that, by default, you inherit
 all of the logic and rendering of that field type. To see some of the logic,
 check out the `ChoiceType`_ class. There are three methods that are particularly
 important:
+
+.. _form-type-methods-explanation:
 
 ``buildForm()``
     Each field type has a ``buildForm()`` method, which is where
@@ -73,10 +69,6 @@ important:
     a ``multiple`` variable is set and used in the template to set (or not
     set) the ``multiple`` attribute on the ``select`` field. See
     `Creating a Template for the Field`_ for more details.
-
-.. versionadded:: 2.7
-    The ``configureOptions()`` method was introduced in Symfony 2.7. Previously,
-    the method was called ``setDefaultOptions()``.
 
 ``configureOptions()``
     This defines options for your form type that
@@ -91,10 +83,6 @@ important:
     Also, if you need to modify the "view" of any of your child types from
     your parent type, use the ``finishView()`` method.
 
-The ``getName()`` method returns an identifier which should be unique in
-your application. This is used in various places, such as when customizing
-how your form type will be rendered.
-
 The goal of this field was to extend the choice type to enable selection of the
 shipping type. This is achieved by fixing the ``choices`` to a list of available
 shipping options.
@@ -102,13 +90,27 @@ shipping options.
 Creating a Template for the Field
 ---------------------------------
 
-Each field type is rendered by a template fragment, which is determined in
-part by the value of your ``getName()`` method. For more information, see
-:ref:`form-customization-form-themes`.
+Each field type is rendered by a template fragment, which is determined in part by
+the class name of your type. For more information, see :ref:`form-customization-form-themes`.
 
-In this case, since the parent field is ``choice``, you don't *need* to do
-any work as the custom field type will automatically be rendered like a ``choice``
-type. But for the sake of this example, suppose that when your field is "expanded"
+.. note::
+
+    The first part of the prefix (e.g. ``shipping``) comes from the class name
+    (``ShippingType`` -> ``shipping``). This can be controlled by overriding ``getBlockPrefix()``
+    in ``ShippingType``.
+
+.. caution::
+
+    When the name of your form class matches any of the built-in field types,
+    your form might not be rendered correctly. A form type named
+    ``App\Form\PasswordType`` will have the same block name as the
+    built-in ``PasswordType`` and won't be rendered correctly. Override the
+    ``getBlockPrefix()`` method to return a unique block prefix (e.g.
+    ``app_password``) to avoid collisions.
+
+In this case, since the parent field is ``ChoiceType``, you don't *need* to do
+any work as the custom field type will automatically be rendered like a ``ChoiceType``.
+But for the sake of this example, suppose that when your field is "expanded"
 (i.e. radio buttons or checkboxes, instead of a select field), you want to
 always render it in a ``ul`` element. In your form theme template (see above
 link for details), create a ``shipping_widget`` block to handle this:
@@ -117,7 +119,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/form/fields.html.twig #}
+        {# templates/form/fields.html.twig #}
         {% block shipping_widget %}
             {% spaceless %}
                 {% if expanded %}
@@ -138,7 +140,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/form/shipping_widget.html.php -->
+        <!-- src/Resources/shipping_widget.html.php -->
         <?php if ($expanded) : ?>
             <ul <?php $view['form']->block($form, 'widget_container_attributes') ?>>
             <?php foreach ($form as $child) : ?>
@@ -164,7 +166,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 .. note::
 
     Make sure the correct widget prefix is used. In this example the name should
-    be ``shipping_widget``, according to the value returned by ``getName()``.
+    be ``shipping_widget`` (see :ref:`form-customization-form-themes`).
     Further, the main config file should point to the custom form template
     so that it's used when rendering all forms.
 
@@ -174,14 +176,14 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/packages/twig.yaml
             twig:
                 form_themes:
                     - 'form/fields.html.twig'
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- config/packages/twig.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -198,7 +200,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: php
 
-            // app/config/config.php
+            // config/packages/twig.php
             $container->loadFromExtension('twig', array(
                 'form_themes' => array(
                     'form/fields.html.twig',
@@ -211,7 +213,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/packages/framework.yaml
             framework:
                 templating:
                     form:
@@ -220,7 +222,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- config/packages/framework.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -239,7 +241,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: php
 
-            // app/config/config.php
+            // config/packages/framework.php
             $container->loadFromExtension('framework', array(
                 'templating' => array(
                     'form' => array(
@@ -256,17 +258,18 @@ Using the Field Type
 You can now use your custom field type immediately, simply by creating a
 new instance of the type in one of your forms::
 
-    // src/AppBundle/Form/Type/AuthorType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/OrderType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
+    use App\Form\Type\ShippingType;
 
     class OrderType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
-            $builder->add('shipping_code', new ShippingType(), array(
+            $builder->add('shipping_code', ShippingType::class, array(
                 'placeholder' => 'Choose a delivery option',
             ));
         }
@@ -276,164 +279,43 @@ But this only works because the ``ShippingType()`` is very simple. What if
 the shipping codes were stored in configuration or in a database? The next
 section explains how more complex field types solve this problem.
 
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
-    ``empty_value``, which is available prior to 2.6.
-
 .. _form-field-service:
+.. _creating-your-field-type-as-a-service:
 
-Creating your Field Type as a Service
--------------------------------------
+Accessing Services and Config
+-----------------------------
 
-So far, this entry has assumed that you have a very simple custom field type.
-But if you need access to configuration, a database connection, or some other
-service, then you'll want to register your custom type as a service. For
-example, suppose that you're storing the shipping parameters in configuration:
+If you need to access :doc:`services </service_container>` from your form class,
+add a ``__construct()`` method like normal::
 
-.. configuration-block::
+    // src/Form/Type/ShippingType.php
+    namespace App\Form\Type;
 
-    .. code-block:: yaml
+    // ...
+    use Doctrine\ORM\EntityManagerInterface;
 
-        # app/config/config.yml
-        parameters:
-            shipping_options:
-                standard: Standard Shipping
-                expedited: Expedited Shipping
-                priority: Priority Shipping
+    class ShippingType extends AbstractType
+    {
+        private $entityManager;
 
-    .. code-block:: xml
+        public function __construct(EntityManagerInterface $entityManager)
+        {
+            $this->entityManager = $entityManager;
+        }
 
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+        // use $this->entityManager down anywhere you want ...
+    }
 
-            <parameters>
-                <parameter key="shipping_options" type="collection">
-                    <parameter key="standard">Standard Shipping</parameter>
-                    <parameter key="expedited">Expedited Shipping</parameter>
-                    <parameter key="priority">Priority Shipping</parameter>
-                </parameter>
-            </parameters>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->setParameter('shipping_options', array(
-            'standard' => 'Standard Shipping',
-            'expedited' => 'Expedited Shipping',
-            'priority' => 'Priority Shipping',
-        ));
-
-To use the parameter, define your custom field type as a service, injecting the
-``shipping_options`` parameter value as the first argument to its to-be-created
-``__construct()`` function:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/services.yml
-        services:
-            app.form.type.shipping:
-                class: AppBundle\Form\Type\ShippingType
-                arguments:
-                    - '%shipping_options%'
-                tags:
-                    - { name: form.type, alias: app_shipping }
-
-    .. code-block:: xml
-
-        <!-- src/AppBundle/Resources/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.form.type.shipping" class="AppBundle\Form\Type\ShippingType">
-                    <argument>%shipping_options%</argument>
-                    <tag name="form.type" alias="app_shipping" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // src/AppBundle/Resources/config/services.php
-        use AppBundle\Form\Type\ShippingType;
-
-        $container->register('app.form.type.shipping', ShippingType::class)
-            ->addArgument('%shipping_options%')
-            ->addTag('form.type', array(
-                'alias' => 'app_shipping',
-            ));
+If you're using the default ``services.yaml`` configuration (i.e. services from the
+``Form/`` are loaded and ``autoconfigure`` is enabled), this will already work!
+See :ref:`service-container-creating-service` for more details.
 
 .. tip::
 
-    Make sure the services file is being imported. See :ref:`service-container-imports-directive`
-    for details.
+    If you're not using :ref:`autoconfigure <services-autoconfigure>`, make sure
+    to :doc:`tag </service_container/tags>` your service with ``form.type``.
 
-Be sure that the ``alias`` attribute of the tag corresponds with the value
-returned by the ``getName()`` method defined earlier. You'll see the importance
-of this in a moment when you use the custom field type. But first, add a ``__construct``
-method to ``ShippingType``, which receives the shipping configuration::
-
-    // src/AppBundle/Form/Type/ShippingType.php
-    namespace AppBundle\Form\Type;
-
-    use Symfony\Component\OptionsResolver\OptionsResolver;
-
-    // ...
-
-    // ...
-    class ShippingType extends AbstractType
-    {
-        private $shippingOptions;
-
-        public function __construct(array $shippingOptions)
-        {
-            $this->shippingOptions = $shippingOptions;
-        }
-
-        public function configureOptions(OptionsResolver $resolver)
-        {
-            $resolver->setDefaults(array(
-                'choices' => array_flip($this->shippingOptions),
-                'choices_as_values' => true,
-            ));
-        }
-
-        // ...
-    }
-
-Great! The ``ShippingType`` is now fueled by the configuration parameters and
-registered as a service. Additionally, because you used the ``form.type`` tag in its
-configuration, using the field is now much easier::
-
-    // src/AppBundle/Form/Type/OrderType.php
-    namespace AppBundle\Form\Type;
-
-    use Symfony\Component\Form\FormBuilderInterface;
-
-    // ...
-
-    class OrderType extends AbstractType
-    {
-        public function buildForm(FormBuilderInterface $builder, array $options)
-        {
-            $builder->add('shipping_code', 'app_shipping', array(
-                'placeholder' => 'Choose a delivery option',
-            ));
-        }
-    }
-
-Notice that instead of instantiating a new instance, you can just refer to
-it by the alias used in your service configuration, ``app_shipping``. Have fun!
+Have fun!
 
 .. _`ChoiceType`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/Type/ChoiceType.php
 .. _`FieldType`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/Type/FieldType.php

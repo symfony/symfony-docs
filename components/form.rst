@@ -27,10 +27,11 @@ Alternatively, you can clone the `<https://github.com/symfony/form>`_ repository
 Configuration
 -------------
 
-.. tip::
+.. seealso::
 
-    If you are working with the full-stack Symfony Framework, the Form component
-    is already configured for you. In this case, skip to :ref:`component-form-intro-create-simple-form`.
+    This article explains how to use the Form features as an independent
+    component in any PHP application. Read the :doc:`/forms` article to learn
+    about how to use it in Symfony applications.
 
 In Symfony, forms are represented by objects and these objects are built
 by using a *form factory*. Building a form factory is simple::
@@ -67,9 +68,6 @@ factory.
 
 Request Handling
 ~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    The ``handleRequest()`` method was introduced in Symfony 2.3.
 
 To process form data, you'll need to call the :method:`Symfony\\Component\\Form\\Form::handleRequest`
 method::
@@ -178,7 +176,7 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
 
     use Symfony\Component\Form\Forms;
     use Symfony\Bridge\Twig\Extension\FormExtension;
-    use Symfony\Bridge\Twig\Form\TwigRenderer;
+    use Symfony\Component\Form\FormRenderer;
     use Symfony\Bridge\Twig\Form\TwigRendererEngine;
 
     // the Twig file that holds all the default markup for rendering forms
@@ -197,20 +195,25 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
         $viewsDirectory,
         $vendorTwigBridgeDirectory.'/Resources/views/Form',
     )));
-    $formEngine = new TwigRendererEngine(array($defaultFormTheme));
-    $formEngine->setEnvironment($twig);
+    $formEngine = new TwigRendererEngine(array($defaultFormTheme), $twig);
+    $twig->addRuntimeLoader(new \Twig_FactoryRuntimeLoader(array(
+        FormRenderer::class => function () use ($formEngine, $csrfManager) {
+            return new FormRenderer($formEngine, $csrfManager);
+        },
+    )));
 
     // ... (see the previous CSRF Protection section for more information)
 
     // adds the FormExtension to Twig
-    $twig->addExtension(
-        new FormExtension(new TwigRenderer($formEngine, $csrfManager))
-    );
+    $twig->addExtension(new FormExtension());
 
     // creates a form factory
     $formFactory = Forms::createFormFactoryBuilder()
         // ...
         ->getFormFactory();
+
+.. versionadded:: 1.30
+    The ``Twig_FactoryRuntimeLoader`` was introduced in Twig 1.30.
 
 The exact details of your `Twig Configuration`_ will vary, but the goal is
 always to add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`
@@ -307,7 +310,7 @@ Your integration with the Validation component will look something like this::
     use Symfony\Component\Validator\Validation;
 
     $vendorDirectory = realpath(__DIR__.'/../vendor');
-    $vendorFormDirectory = $vendorDir.'/symfony/form';
+    $vendorFormDirectory = $vendorDirectory.'/symfony/form';
     $vendorValidatorDirectory = $vendorDirectory.'/symfony/validator';
 
     // creates the validator - details will vary
@@ -381,9 +384,14 @@ is created from the form factory.
 
     .. code-block:: php-standalone
 
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+        // ...
+
         $form = $formFactory->createBuilder()
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
             ->getForm();
 
         var_dump($twig->render('new.html.twig', array(
@@ -392,24 +400,27 @@ is created from the form factory.
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/TaskController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-        class DefaultController extends Controller
+        class TaskController extends Controller
         {
-            public function newAction(Request $request)
+            public function new(Request $request)
             {
                 // createFormBuilder is a shortcut to get the "form factory"
                 // and then call "createBuilder()" on it
+
                 $form = $this->createFormBuilder()
-                    ->add('task', 'text')
-                    ->add('dueDate', 'date')
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
                     ->getForm();
 
-                return $this->render('@AcmeTask/Default/new.html.twig', array(
+                return $this->render('task/new.html.twig', array(
                     'form' => $form->createView(),
                 ));
             }
@@ -417,8 +428,8 @@ is created from the form factory.
 
 As you can see, creating a form is like writing a recipe: you call ``add()``
 for each new field you want to create. The first argument to ``add()`` is the
-name of your field, and the second is the field "type". The Form component
-comes with a lot of :doc:`built-in types </reference/forms/types>`.
+name of your field, and the second is the fully qualified class name. The Form
+component comes with a lot of :doc:`built-in types </reference/forms/types>`.
 
 Now that you've built your form, learn how to :ref:`render <component-form-intro-rendering-form>`
 it and :ref:`process the form submission <component-form-intro-handling-submission>`.
@@ -434,33 +445,41 @@ builder:
 
     .. code-block:: php-standalone
 
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+        // ...
+
         $defaults = array(
             'dueDate' => new \DateTime('tomorrow'),
         );
 
-        $form = $formFactory->createBuilder('form', $defaults)
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
+        $form = $formFactory->createBuilder(FormType::class, $defaults)
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
             ->getForm();
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
 
         class DefaultController extends Controller
         {
-            public function newAction(Request $request)
+            public function new(Request $request)
             {
                 $defaults = array(
                     'dueDate' => new \DateTime('tomorrow'),
                 );
 
                 $form = $this->createFormBuilder($defaults)
-                    ->add('task', 'text')
-                    ->add('dueDate', 'date')
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
                     ->getForm();
 
                 // ...
@@ -503,10 +522,6 @@ to do that in the ":doc:`/form/rendering`" section.
 Changing a Form's Method and Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 2.3
-    The ability to configure the form method and action was introduced in
-    Symfony 2.3.
-
 By default, a form is submitted to the same URI that rendered the form with
 an HTTP POST request. This behavior can be changed using the :ref:`form-option-action`
 and :ref:`form-option-method` options (the ``method`` option is also used
@@ -516,7 +531,11 @@ by ``handleRequest()`` to determine whether a form has been submitted):
 
     .. code-block:: php-standalone
 
-        $formBuilder = $formFactory->createBuilder('form', null, array(
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+
+        // ...
+
+        $formBuilder = $formFactory->createBuilder(FormType::class, null, array(
             'action' => '/search',
             'method' => 'GET',
         ));
@@ -525,15 +544,15 @@ by ``handleRequest()`` to determine whether a form has been submitted):
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Form\Extension\Core\Type\FormType;
 
         class DefaultController extends Controller
         {
-            public function searchAction()
+            public function search()
             {
                 $formBuilder = $this->createFormBuilder(null, array(
                     'action' => '/search',
@@ -558,10 +577,14 @@ method:
 
         use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\HttpFoundation\RedirectResponse;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+
+        // ...
 
         $form = $formFactory->createBuilder()
-            ->add('task', 'text')
-            ->add('dueDate', 'date')
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
             ->getForm();
 
         $request = Request::createFromGlobals();
@@ -583,18 +606,20 @@ method:
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/TaskController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-        class DefaultController extends Controller
+        class TaskController extends Controller
         {
-            public function newAction(Request $request)
+            public function new(Request $request)
             {
                 $form = $this->createFormBuilder()
-                    ->add('task', 'text')
-                    ->add('dueDate', 'date')
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
                     ->getForm();
 
                 $form->handleRequest($request);
@@ -640,12 +665,14 @@ option when building each field:
 
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
 
         $form = $formFactory->createBuilder()
-            ->add('task', 'text', array(
+            ->add('task', TextType::class, array(
                 'constraints' => new NotBlank(),
             ))
-            ->add('dueDate', 'date', array(
+            ->add('dueDate', DateType::class, array(
                 'constraints' => array(
                     new NotBlank(),
                     new Type(\DateTime::class),
@@ -655,22 +682,24 @@ option when building each field:
 
     .. code-block:: php-symfony
 
-        // src/Acme/TaskBundle/Controller/DefaultController.php
-        namespace Acme\TaskBundle\Controller;
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
         class DefaultController extends Controller
         {
-            public function newAction(Request $request)
+            public function new(Request $request)
             {
                 $form = $this->createFormBuilder()
-                    ->add('task', 'text', array(
+                    ->add('task', TextType::class, array(
                         'constraints' => new NotBlank(),
                     ))
-                    ->add('dueDate', 'date', array(
+                    ->add('dueDate', DateType::class, array(
                         'constraints' => array(
                             new NotBlank(),
                             new Type(\DateTime::class),
@@ -714,17 +743,6 @@ method to access the list of errors. It returns a
 
     // a FormErrorIterator instance representing the form tree structure
     $errors = $form->getErrors(true, false);
-
-.. tip::
-
-    In older Symfony versions, ``getErrors()`` returned an array. To use the
-    errors the same way in Symfony 2.5 or newer, you have to pass them to
-    PHP's :phpfunction:`iterator_to_array` function::
-
-        $errorsAsArray = iterator_to_array($form->getErrors());
-
-    This is useful, for example, if you want to use PHP's ``array_*()`` function
-    on the form errors.
 
 Learn more
 ----------

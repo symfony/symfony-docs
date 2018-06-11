@@ -253,10 +253,18 @@ all the forms as a string separated by a pipe (``|``)::
 To translate pluralized messages, use the
 :method:`Symfony\\Component\\Translation\\Translator::transChoice` method::
 
+    // the %count% placeholder is assigned to the second argument...
     $translator->transChoice(
         'There is one apple|There are %count% apples',
+        10
+    );
+
+    // ...but you can define more placeholders if needed
+    $translator->transChoice(
+        'Hurry up %name%! There is one apple left.|There are %count% apples left.',
         10,
-        array('%count%' => 10)
+        // no need to include %count% here; Symfony does that for you
+        array('%name%' => $user->getName())
     );
 
 The second argument (``10`` in this example) is the *number* of objects being
@@ -366,10 +374,24 @@ use for translation::
     $translator->transChoice(
         '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
-        array('%count%' => 10),
+        array(),
         'messages',
         'fr_FR'
     );
+
+.. note::
+
+    Starting from Symfony 3.2, the third argument of ``transChoice()`` is
+    optional when the only placeholder in use is ``%count%``. In previous
+    Symfony versions you needed to always define it::
+
+        $translator->transChoice(
+            '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
+            10,
+            array('%count%' => 10),
+            'messages',
+            'fr_FR'
+        );
 
 Retrieving the Message Catalogue
 --------------------------------
@@ -378,7 +400,11 @@ In case you want to use the same translation catalogue outside your application
 (e.g. use translation on the client side), it's possible to fetch raw translation
 messages. Just specify the required locale::
 
-    $messages = $translator->getMessages('fr_FR');
+    $catalogue = $translator->getCatalogue('fr_FR');
+    $messages = $catalogue->all();
+    while ($catalogue = $catalogue->getFallbackCatalogue()) {
+        $messages = array_replace_recursive($catalogue->all(), $messages);
+    }
 
 The ``$messages`` variable will have the following structure::
 
@@ -391,6 +417,60 @@ The ``$messages`` variable will have the following structure::
             'Value is too long' => 'Valeur est trop long',
         ),
     );
+
+Adding Notes to Translation Contents
+------------------------------------
+
+Sometimes translators need additional context to better decide how to translate
+some content. This context can be provided with notes, which are a collection of
+comments used to store end user readable information. The only format that
+supports loading and dumping notes is XLIFF version 2.0.
+
+If the XLIFF 2.0 document contains ``<notes>`` nodes, they are automatically
+loaded/dumped when using this component inside a Symfony application:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
+           srcLang="fr-FR" trgLang="en-US">
+      <file id="messages.en_US">
+        <unit id="LCa0a2j" name="original-content">
+          <notes>
+            <note category="state">new</note>
+            <note category="approved">true</note>
+            <note category="section" priority="1">user login</note>
+          </notes>
+          <segment>
+            <source>original-content</source>
+            <target>translated-content</target>
+          </segment>
+        </unit>
+      </file>
+    </xliff>
+
+When using the standalone Translation component, call the ``setMetadata()``
+method of the catalogue and pass the notes as arrays. This is for example the
+code needed to generate the previous XLIFF file::
+
+    use Symfony\Component\Translation\MessageCatalogue;
+    use Symfony\Component\Translation\Dumper\XliffFileDumper;
+
+    $catalogue = new MessageCatalogue('en_US');
+    $catalogue->add([
+        'original-content' => 'translated-content',
+    ]);
+    $catalogue->setMetadata('original-content', ['notes' => [
+        ['category' => 'state', 'content' => 'new'],
+        ['category' => 'approved', 'content' => 'true'],
+        ['category' => 'section', 'content' => 'user login', 'priority' => '1'],
+    ]]);
+
+    $dumper = new XliffFileDumper();
+    $dumper->formatCatalogue($catalogue, 'messages', [
+        'default_locale' => 'fr_FR',
+        'xliff_version' => '2.0'
+    ]);
 
 .. _`L10n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ISO 31-11`: https://en.wikipedia.org/wiki/Interval_(mathematics)#Notations_for_intervals

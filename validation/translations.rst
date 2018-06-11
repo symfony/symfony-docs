@@ -11,8 +11,8 @@ the error messages is easy: simply create a translation resource for the
 To start, suppose you've created a plain-old-PHP object that you need to
 use somewhere in your application::
 
-    // src/AppBundle/Entity/Author.php
-    namespace AppBundle\Entity;
+    // src/Entity/Author.php
+    namespace App\Entity;
 
     class Author
     {
@@ -27,7 +27,7 @@ property is not empty, add the following:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -40,22 +40,22 @@ property is not empty, add the following:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 name:
                     - NotBlank: { message: 'author.name.not_blank' }
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="name">
                     <constraint name="NotBlank">
                         <option name="message">author.name.not_blank</option>
@@ -66,7 +66,7 @@ property is not empty, add the following:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -84,13 +84,13 @@ property is not empty, add the following:
             }
         }
 
-Now, create a ``validators`` catalog file in the ``app/Resources/translations`` directory:
+Now, create a ``validators`` catalog file in the ``translations/`` directory:
 
 .. configuration-block::
 
     .. code-block:: xml
 
-        <!-- app/Resources/translations/validators.en.xlf -->
+        <!-- translations/validators.en.xlf -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -105,12 +105,12 @@ Now, create a ``validators`` catalog file in the ``app/Resources/translations`` 
 
     .. code-block:: yaml
 
-        # app/Resources/translations/validators.en.yml
+        # translations/validators.en.yaml
         author.name.not_blank: Please enter an author name.
 
     .. code-block:: php
 
-        // app/Resources/translations/validators.en.php
+        // translations/validators.en.php
         return array(
             'author.name.not_blank' => 'Please enter an author name.',
         );

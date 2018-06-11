@@ -35,18 +35,16 @@ number of units, and advance the progress as the command executes::
     // ensures that the progress bar is at 100%
     $progressBar->finish();
 
+.. tip::
+
+    You can also regress the progress bar (i.e. step backwards) by calling
+    ``$progress->advance()`` with a negative value. For example, if you call
+    ``$progress->advance(-2)`` then it will regress the progress bar 2 steps.
+
 Instead of advancing the bar by a number of steps (with the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::advance` method),
 you can also set the current progress by calling the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setProgress` method.
-
-.. versionadded:: 2.6
-    The ``setProgress()`` method was called ``setCurrent()`` prior to Symfony 2.6.
-
-.. caution::
-
-    Prior to version 2.6, the progress bar only works if your platform
-    supports ANSI codes; on other platforms, no output is generated.
 
 .. tip::
 
@@ -57,12 +55,20 @@ you can also set the current progress by calling the
     accordingly. By default, when using a ``max``, the redraw frequency
     is set to *10%* of your ``max``.
 
-    .. versionadded:: 2.6
-        The ``setRedrawFrequency()`` method was introduced in Symfony 2.6.
+If you don't know the exact number of steps in advance, set it to a reasonable
+value and then call the ``setMaxSteps()`` method to update it as needed::
 
-If you don't know the number of steps in advance, just omit the steps argument
-when creating the :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
-instance::
+    // start with a 50 units progressbar
+    $progressBar = new ProgressBar($output, 50);
+
+    // a complex task has just been created: increase the progressbar to 200 units
+    $progressBar->setMaxSteps(200);
+
+.. versionadded:: 4.1
+    The ``setMaxSteps()`` method was introduced in Symfony 4.1.
+
+Another solution is to just omit the steps argument when creating the
+:class:`Symfony\\Component\\Console\\Helper\\ProgressBar` instance::
 
     $progressBar = new ProgressBar($output);
 
@@ -293,9 +299,6 @@ that displays the number of remaining steps::
         }
     );
 
-.. versionadded:: 2.6
-    The ``getProgress()`` method was called ``getStep()`` prior to Symfony 2.6.
-
 Custom Messages
 ~~~~~~~~~~~~~~~
 
@@ -339,3 +342,43 @@ of the custom placeholders::
         $progressBar->advance();
         // 2/100 -- Importing invoices... (client-001/invoices.xml)
     }
+
+.. _console-multiple-progress-bars:
+
+Displaying Multiple Progress Bars
+---------------------------------
+
+.. versionadded:: 4.1
+    The feature to display multiple progress bars using output sections was
+    introduced in Symfony 4.1.
+
+When using :ref:`Console output sections <console-output-sections>` it's
+possible to display multiple progress bars at the same time and change their
+progress independently::
+
+    $section1 = $output->section();
+    $section2 = $output->section();
+
+    $progress1 = new ProgressBar($section1);
+    $progress2 = new ProgressBar($section2);
+
+    $progress1->start(100);
+    $progress2->start(100);
+
+    $i = 0;
+    while (++$i < 100) {
+        $progress1->advance();
+
+        if ($i % 2 === 0) {
+            $progress2->advance(4);
+        }
+
+        usleep(50000);
+    }
+
+After a couple of iterations, the output in the terminal will look like this:
+
+.. code-block:: text
+
+    34/100 [=========>------------------]  34%
+    68/100 [===================>--------]  68%

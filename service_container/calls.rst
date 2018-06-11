@@ -4,11 +4,16 @@
 Service Method Calls and Setter Injection
 =========================================
 
+.. tip::
+
+    If you're using autowiring, you can use ``@required`` to
+    :ref:`automatically configure method calls <autowiring-calls>`.
+
 Usually, you'll want to inject your dependencies via the constructor. But sometimes,
 especially if a dependency is optional, you may want to use "setter injection". For
 example::
 
-    namespace AppBundle\Service;
+    namespace App\Service;
 
     use Psr\Log\LoggerInterface;
 
@@ -30,9 +35,9 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
-            app.message_generator:
+            App\Service\MessageGenerator:
                 # ...
                 calls:
                     - method: setLogger
@@ -41,7 +46,7 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -49,7 +54,7 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="app.message_generator" class="AppBundle\Service\MessageGenerator">
+                <service id="App\Service\MessageGenerator">
                     <!-- ... -->
                     <call method="setLogger">
                         <argument type="service" id="logger" />
@@ -60,9 +65,9 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\Service\MessageGenerator;
+        // config/services.php
+        use App\Service\MessageGenerator;
         use Symfony\Component\DependencyInjection\Reference;
 
-        $container->register('app.message_generator', 'AppBundle\Service\MessageGenerator')
+        $container->register(MessageGenerator::class)
             ->addMethodCall('setLogger', array(new Reference('logger')));

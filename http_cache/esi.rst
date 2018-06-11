@@ -62,14 +62,14 @@ First, to use ESI, be sure to enable it in your application configuration:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             esi: { enabled: true }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/symfony"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -87,7 +87,7 @@ First, to use ESI, be sure to enable it in your application configuration:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'esi' => array('enabled' => true),
@@ -97,12 +97,12 @@ Now, suppose you have a page that is relatively static, except for a news
 ticker at the bottom of the content. With ESI, you can cache the news ticker
 independent of the rest of the page::
 
-    // src/AppBundle/Controller/DefaultController.php
+    // src/Controller/DefaultController.php
 
     // ...
     class DefaultController extends Controller
     {
-        public function aboutAction()
+        public function about()
         {
             $response = $this->render('static/about.html.twig');
             // sets the shared max age - which also marks the response as public
@@ -124,38 +124,32 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
     .. code-block:: twig
 
-        {# app/Resources/views/static/about.html.twig #}
+        {# templates/static/about.html.twig #}
 
         {# you can use a controller reference #}
-        {{ render_esi(controller('AppBundle:News:latest', { 'maxPerPage': 5 })) }}
+        {{ render_esi(controller('App\\Controller\\NewsController::latest', { 'maxPerPage': 5 })) }}
 
         {# ... or a URL #}
         {{ render_esi(url('latest_news', { 'maxPerPage': 5 })) }}
 
     .. code-block:: html+php
 
-        <!-- app/Resources/views/static/about.html.php -->
-        <?php
-        // you can use a controller reference
-        use Symfony\Component\HttpKernel\Controller\ControllerReference;
-        ?>
+        <!-- templates/static/about.html.php -->
+
+        <!-- you can use a controller reference -->
         <?php echo $view['actions']->render(
-            new ControllerReference(
-                'AppBundle:News:latest',
+            new Symfony\Component\HttpKernel\Controller\ControllerReference(
+                'App\\Controller\\NewsController::latest',
                 array('maxPerPage' => 5)
             ),
             array('strategy' => 'esi')
         ) ?>
 
-        <?php
-        // ... or a URL
-        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-        ?>
+        <!-- ... or a URL -->
         <?php echo $view['actions']->render(
-            $view['router']->generate(
+            $view['router']->path(
                 'latest_news',
-                array('maxPerPage' => 5),
-                UrlGeneratorInterface::ABSOLUTE_URL
+                array('maxPerPage' => 5)
             ),
             array('strategy' => 'esi')
         ) ?>
@@ -191,13 +185,13 @@ used ``render()``.
 The embedded action can now specify its own caching rules, entirely independent
 of the master page::
 
-    // src/AppBundle/Controller/NewsController.php
-    namespace AppBundle\Controller;
+    // src/Controller/NewsController.php
+    namespace App\Controller;
 
     // ...
     class NewsController extends Controller
     {
-        public function latestAction($maxPerPage)
+        public function latest($maxPerPage)
         {
             // ...
             $response->setSharedMaxAge(60);
@@ -222,14 +216,14 @@ that must be enabled in your configuration:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             fragments: { path: /_fragment }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -247,7 +241,7 @@ that must be enabled in your configuration:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'fragments' => array('path' => '/_fragment'),

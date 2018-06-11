@@ -25,9 +25,8 @@ from within the ``Kernel`` class::
     }
 
 Services that are set at runtime are called *synthetic services*. This service
-has to be configured in the container, so the container knows the service does
-exist during compilation (otherwise, services depending on this ``kernel``
-service will get a "service does not exist" error).
+has to be configured so the container knows the service exists during compilation
+(otherwise, services depending on ``kernel`` will get a "service does not exist" error).
 
 In order to do so, mark the service as synthetic in your service definition
 configuration:
@@ -36,14 +35,15 @@ configuration:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
-
             # synthetic services don't specify a class
             app.synthetic_service:
                 synthetic: true
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -60,6 +60,7 @@ configuration:
 
     .. code-block:: php
 
+        // config/services.php
         // synthetic services don't specify a class
         $container->register('app.synthetic_service')
             ->setSynthetic(true)

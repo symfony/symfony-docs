@@ -24,20 +24,20 @@ Imagine you want to send spooled Swift Mailer messages by
 :doc:`using the swiftmailer:spool:send command </email/spool>`.
 Run this command from inside your controller via::
 
-    // src/AppBundle/Controller/SpoolController.php
-    namespace AppBundle\Controller;
+    // src/Controller/SpoolController.php
+    namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Console\Input\ArrayInput;
     use Symfony\Component\Console\Output\BufferedOutput;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\KernelInterface;
 
     class SpoolController extends Controller
     {
-        public function sendSpoolAction($messages = 10)
+        public function sendSpool($messages = 10, KernelInterface $kernel)
         {
-            $kernel = $this->get('kernel');
             $application = new Application($kernel);
             $application->setAutoExit(false);
 
@@ -76,8 +76,8 @@ First, require the package:
 
 Now, use it in your controller::
 
-    // src/AppBundle/Controller/SpoolController.php
-    namespace AppBundle\Controller;
+    // src/Controller/SpoolController.php
+    namespace App\Controller;
 
     use SensioLabs\AnsiConverter\AnsiToHtmlConverter;
     use Symfony\Component\Console\Output\BufferedOutput;
@@ -87,7 +87,7 @@ Now, use it in your controller::
 
     class SpoolController extends Controller
     {
-        public function sendSpoolAction($messages = 10)
+        public function sendSpool($messages = 10)
         {
             // ...
             $output = new BufferedOutput(

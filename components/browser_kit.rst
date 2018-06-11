@@ -28,6 +28,12 @@ Alternatively, you can clone the `<https://github.com/symfony/browser-kit>`_ rep
 Basic Usage
 -----------
 
+.. seealso::
+
+    This article explains how to use the BrowserKit features as an independent
+    component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
+    article to learn about how to use it in Symfony applications.
+
 Creating a Client
 ~~~~~~~~~~~~~~~~~
 
@@ -74,6 +80,19 @@ The value returned by the ``request()`` method is an instance of the
 :class:`Symfony\\Component\\DomCrawler\\Crawler` class, provided by the
 :doc:`DomCrawler component </components/dom_crawler>`, which allows accessing
 and traversing HTML elements programmatically.
+
+The :method:`Symfony\\Component\\BrowserKit\\Client::xmlHttpRequest` method,
+which defines the same arguments as the ``request()`` method, is a shortcut to
+make AJAX requests::
+
+    use Acme\Client;
+
+    $client = new Client();
+    // the required HTTP_X_REQUESTED_WITH header is added automatically
+    $crawler = $client->xmlHttpRequest('GET', '/');
+
+.. versionadded:: 4.1
+    The ``xmlHttpRequest()`` method was introduced in Symfony 4.1.
 
 Clicking Links
 ~~~~~~~~~~~~~~
@@ -149,6 +168,7 @@ retrieve any cookie while making requests with the client::
     $expires    = $cookie->getExpiresTime();
     $path       = $cookie->getPath();
     $domain     = $cookie->getDomain();
+    $sameSite   = $cookie->getSameSite();
 
 .. note::
 
