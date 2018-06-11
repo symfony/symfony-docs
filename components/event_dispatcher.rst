@@ -25,7 +25,7 @@ before or after a method is executed, without interfering with other plugins.
 This is not an easy problem to solve with single inheritance, and even if
 multiple inheritance was possible with PHP, it comes with its own drawbacks.
 
-The Symfony EventDispatcher component implements the `Observer`_ pattern
+The Symfony EventDispatcher component implements the `Observer` pattern
 in a simple and effective way to make all these things possible and to make
 your projects truly extensible.
 
@@ -516,7 +516,7 @@ Learn More
 * :ref:`The kernel.event_listener tag <dic-tags-kernel-event-listener>`
 * :ref:`The kernel.event_subscriber tag <dic-tags-kernel-event-subscriber>`
 
-.. _Mediator: https://en.wikipedia.org/wiki/Mediator_pattern
+.. _Observer: https://en.wikipedia.org/wiki/Observer_pattern
 .. _Closures: https://php.net/manual/en/functions.anonymous.php
 .. _PHP callable: https://php.net/manual/en/language.pseudo-types.php#language.types.callback
 .. _Packagist: https://packagist.org/packages/symfony/event-dispatcher
