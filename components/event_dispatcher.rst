@@ -25,7 +25,7 @@ before or after a method is executed, without interfering with other plugins.
 This is not an easy problem to solve with single inheritance, and even if
 multiple inheritance was possible with PHP, it comes with its own drawbacks.
 
-The Symfony EventDispatcher component implements the `Mediator`_ pattern
+The Symfony EventDispatcher component implements the `Observer`_ pattern
 in a simple and effective way to make all these things possible and to make
 your projects truly extensible.
 
