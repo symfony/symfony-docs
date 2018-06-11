@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2018-05-31T13:25:18Z
+
+Looks good to me, very clear and easy to understand.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-31T15:11:55Z
+
+@weaverryan just asking: is this also related to this old pending issue? https://github.com/symfony/symfony-docs/issues/5534
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-06-08T13:39:19Z
+
+Hmm, it's not unfortunately :/
+
+Let's merge this PR once the code PR's are merged, as this PR mentions changing your firewall to "stateless" to avoid this issue, which isn't actually true yet in the code.
