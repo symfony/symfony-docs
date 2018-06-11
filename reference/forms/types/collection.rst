@@ -212,7 +212,7 @@ And update the template as follows:
 
         <button type="button"
             class="add-another-collection-widget"
-            data-list="#email-fields-list">Add another email</a>
+            data-list="#email-fields-list">Add another email</button>
 
         {# ... #}
     {{ form_end(form) }}
