@@ -4,14 +4,21 @@
 How to Embed Controllers in a Template
 ======================================
 
-In some cases, you need to do more than include a simple template. Suppose
-you have a sidebar in your layout that contains the three most recent articles.
-Retrieving the three articles may include querying the database or performing
-other heavy logic that can't be done from within a template.
+:ref:`Including template fragments <including-other-templates>` is useful to
+reuse the same content on several pages. However, this technique is not the best
+solution in some cases.
 
-The solution is to simply embed the result of an entire controller from your
-template. First, create a controller that renders a certain number of recent
-articles::
+Consider a website that displays on its sidebar the most recently published
+articles. This list of articles is dynamic and it's probably the result of a
+database query. In other words, the controller of any page that displays that
+sidebar must make the same database query and pass the list of articles to the
+included template fragment.
+
+The alternative solution proposed by Symfony is to create a controller that only
+displays the list of recent articles and then call to that controller from any
+template that needs to display that content.
+
+First, create a controller that renders a certain number of recent articles::
 
     // src/AppBundle/Controller/ArticleController.php
     namespace AppBundle\Controller;
@@ -33,7 +40,8 @@ articles::
         }
     }
 
-The ``recent_list`` template is perfectly straightforward:
+Then, create a ``recent_list`` template fragment to list the articles given by
+the controller:
 
 .. configuration-block::
 
@@ -41,7 +49,7 @@ The ``recent_list`` template is perfectly straightforward:
 
         {# app/Resources/views/article/recent_list.html.twig #}
         {% for article in articles %}
-            <a href="/article/{{ article.slug }}">
+            <a href="{{ path('article_show', {slug: article.slug}) }}">
                 {{ article.title }}
             </a>
         {% endfor %}
@@ -50,19 +58,15 @@ The ``recent_list`` template is perfectly straightforward:
 
         <!-- app/Resources/views/article/recent_list.html.php -->
         <?php foreach ($articles as $article): ?>
-            <a href="/article/<?php echo $article->getSlug() ?>">
+            <a href="<?php echo $view['router']->path('article_show', array(
+            'slug' => $article->getSlug(),
+            )) ?>">
                 <?php echo $article->getTitle() ?>
             </a>
         <?php endforeach ?>
 
-.. note::
-
-    Notice that the article URL is hardcoded in this example
-    (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
-    you'll learn how to do this correctly.
-
-To include the controller, you'll need to refer to it using the standard
-string syntax for controllers (i.e. **bundle**:**controller**:**action**):
+Finally, call the controller from any template using the ``render()`` function
+and the common syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
 .. configuration-block::
 
@@ -94,6 +98,5 @@ string syntax for controllers (i.e. **bundle**:**controller**:**action**):
 
 Whenever you find that you need a variable or a piece of information that
 you don't have access to in a template, consider rendering a controller.
-Controllers are fast to execute and promote good code organization and reuse.
-Of course, like all controllers, they should ideally be "skinny", meaning
-that as much code as possible lives in reusable :doc:`services </service_container>`.
+Make sure that embedded controllers are fast to execute to not hurt performance
+and that they follow Symfony's :doc:`best practices for controllers </best_practices/controllers>`.
