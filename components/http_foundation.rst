@@ -271,7 +271,7 @@ this complexity and defines some methods for the most common tasks::
 
     // Joins an associative array into a string for use in an HTTP header
     HeaderUtils::toString(array('foo' => 'abc', 'bar' => true, 'baz' => 'a b c'), ',')
-    // => 'foo=bar, baz, baz="a b c"'
+    // => 'foo=abc, bar, baz="a b c"'
 
     // Encodes a string as a quoted string, if necessary
     HeaderUtils::quote('foo "bar"')
