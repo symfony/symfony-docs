@@ -353,7 +353,7 @@ will be show next):
     var $collectionHolder;
 
     // setup an "add a tag" link
-    var $addTagButton = $('<button type="button" class="add_tag_link">Add a tag</a>');
+    var $addTagButton = $('<button type="button" class="add_tag_link">Add a tag</button>');
     var $newLinkLi = $('<li></li>').append($addTagButton);
 
     jQuery(document).ready(function() {
@@ -648,7 +648,7 @@ The ``addTagFormDeleteLink()`` function will look something like this:
 .. code-block:: javascript
 
     function addTagFormDeleteLink($tagFormLi) {
-        var $removeFormButton = $('<button type="button">Delete this tag</a>');
+        var $removeFormButton = $('<button type="button">Delete this tag</button>');
         $tagFormLi.append($removeFormButton);
 
         $removeFormButton.on('click', function(e) {
