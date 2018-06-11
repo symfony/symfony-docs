@@ -744,6 +744,11 @@ method to access the list of errors. It returns a
     // a FormErrorIterator instance representing the form tree structure
     $errors = $form->getErrors(true, false);
 
+Clearing Form Errors
+~~~~~~~~~~~~~~~~~~~~
+
+Any errors can be manually cleared using the :method:`Symfony\\Component\\Form\\ClearableErrorsInterface::clearErrors` method. This is useful when you'd like to validate the form without showing validation errors to the user (i.e. during a partial AJAX submission or :doc:`dynamic form modification </form/dynamic_form_modification>`).
+
 Learn more
 ----------
 
