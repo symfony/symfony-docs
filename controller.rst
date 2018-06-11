@@ -26,7 +26,7 @@ This renders a page that prints a lucky (random) number::
          */
         public function numberAction()
         {
-            $number = mt_rand(0, 100);
+            $number = random_int(0, 100);
 
             return new Response(
                 '<html><body>Lucky number: '.$number.'</body></html>'
@@ -68,7 +68,7 @@ class::
          */
         public function numberAction($max)
         {
-            $number = mt_rand(0, $max);
+            $number = random_int(0, $max);
 
             return new Response(
                 '<html><body>Lucky number: '.$number.'</body></html>'

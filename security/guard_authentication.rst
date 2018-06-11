@@ -536,6 +536,103 @@ and add the following logic::
         // ...
     }
 
+Avoid Authenticating the Browser on Every Request
+-------------------------------------------------
+
+If you create a Guard login system that's used by a browser and you're experiencing
+problems with your session or CSRF tokens, the cause could be bad behavior by your
+authenticator. When a Guard authenticator is meant to be used by a browser, you
+should *not* authenticate the user on *every* request. In other words, you need to
+make sure the ``getCredentials()`` method *only* returns a non-null value when
+you actually *need* to authenticate the user. Why? Because, when ``getCredentials()``
+returns a non-null value, for security purposes, the user's session is "migrated"
+to a new session id.
+
+This is an edge-case, and unless you're having session or CSRF token issues, you
+can ignore this. Here is an example of good and bad behavior::
+
+    public function getCredentials(Request $request)
+    {
+        // GOOD behavior: only authenticate on a specific route
+        if ($request->attributes->get('_route') !== 'login_route' || !$request->isMethod('POST')) {
+            return null;
+        }
+
+        // e.g. your login system authenticates by the user's IP address
+        // BAD behavior: authentication will now execute on every request
+        // even if the user is already authenticated (due to the session)
+        return array('ip' => $request->getClientIp());
+    }
+
+The problem occurs when your browser-based authenticator tries to authenticate
+the user on *every* request - like in the IP address-based example above. There
+are two possible fixes:
+
+1) If you do *not* need authentication to be stored in the session, set ``stateless: true``
+under your firewall.
+
+2) Update your authenticator to avoid authentication if the user is already authenticated:
+
+.. code-block:: diff
+
+    // src/Security/MyIpAuthenticator.php
+    // ...
+
+    + use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
+    class MyIpAuthenticator
+    {
+    +     private $tokenStorage;
+
+    +     public function __construct(TokenStorageInterface $tokenStorage)
+    +     {
+    +         $this->tokenStorage = $tokenStorage;
+    +     }
+
+        public function getCredentials(Request $request)
+        {
+    +         // if there is already an authenticated user (likely due to the session)
+    +         // then return null and skip authentication: there is no need.
+    +         $user = $this->tokenStorage->getToken() ? $this->tokenStorage->getToken()->getUser() : null;
+    +         if (is_object($user)) {
+    +             return null;
+    +         }
+
+            return array('ip' => $request->getClientIp());
+        }
+    }
+
+You'll also need to update your service configuration to pass the token storage:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            app.token_authenticator:
+                class: AppBundle\Security\TokenAuthenticator
+                arguments: ['@security.token_storage']
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <services>
+            <service id="app.token_authenticator" class="AppBundle\Security\TokenAuthenticator">
+                <argument type="service" id="security.token_storage" />
+            </service>
+        </services>
+
+    .. code-block:: php
+
+        // app/config/services.php
+        use AppBundle\Security\TokenAuthenticator;
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container->register('app.token_authenticator', TokenAuthenticator::class)
+            ->addArgument(new Reference('security.token_storage'));
+
 Frequently Asked Questions
 --------------------------
 
