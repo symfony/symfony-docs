@@ -368,3 +368,99 @@ Now you can use the service locator by injecting it in any other service:
     better to create and inject it as an anonymous service.
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
+
+Service Subscriber Trait
+------------------------
+
+.. versionadded:: 4.2
+    The :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberTrait`
+    was introduced in Symfony 4.2.
+
+The :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberTrait`
+provides an implementation for
+:class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`
+that looks through all methods in your class that have no arguments and a return
+type. It provides a ``ServiceLocator`` for the services of those return types.
+The service id is ``__METHOD__``. This allows you to easily add dependencies
+to your services based on type-hinted helper methods::
+
+    // src/Service/MyService.php
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
+    use Symfony\Component\DependencyInjection\ServiceSubscriberTrait;
+    use Symfony\Component\Routing\RouterInterface;
+
+    class MyService implements ServiceSubscriberInterface
+    {
+        use ServiceSubscriberTrait;
+
+        public function doSomething()
+        {
+            // $this->router() ...
+            // $this->logger() ...
+        }
+
+        private function router(): RouterInterface
+        {
+            return $this->container->get(__METHOD__);
+        }
+
+        private function logger(): LoggerInterface
+        {
+            return $this->container->get(__METHOD__);
+        }
+    }
+
+This  allows you to create helper traits like RouterAware, LoggerAware, etc...
+and compose your services with them::
+
+    // src/Service/LoggerAware.php
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+
+    trait LoggerAware
+    {
+        private function logger(): LoggerInterface
+        {
+            return $this->container->get(__CLASS__.'::'.__FUNCTION__);
+        }
+    }
+
+    // src/Service/RouterAware.php
+    namespace App\Service;
+
+    use Symfony\Component\Routing\RouterInterface;
+
+    trait RouterAware
+    {
+        private function router(): RouterInterface
+        {
+            return $this->container->get(__CLASS__.'::'.__FUNCTION__);
+        }
+    }
+
+    // src/Service/MyService.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
+    use Symfony\Component\DependencyInjection\ServiceSubscriberTrait;
+
+    class MyService implements ServiceSubscriberInterface
+    {
+        use ServiceSubscriberTrait, LoggerAware, RouterAware;
+
+        public function doSomething()
+        {
+            // $this->router() ...
+            // $this->logger() ...
+        }
+    }
+
+.. caution::
+
+    When creating these helper traits, the service id cannot be ``__METHOD__``
+    as this will include the trait name, not the class name. Instead, use
+    ``__CLASS__.'::'.__FUNCTION__`` as the service id.
