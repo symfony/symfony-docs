@@ -129,6 +129,42 @@ This means that when using the container directly, you can access the
             # ...
             app.mailer: '@app.phpmailer'
 
+Anonymous Services
+--------------------
+
+.. note::
+
+    Anonymous services are currently only supported by the XML configuration format.
+
+In some cases, you may want to limit access to a service outside of its
+intended scope. This is useful when you want to prevent other services from
+using the service as their own dependency. This can be achieved by creating an
+*anonymous service*.
+
+For Symfony, an anonymous service is nothing more than a service without a
+identifying name which is defined directly in its use context. The following
+example shows how an anonymous service can be injected into another service:
+
+.. configuration-block::
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="AppBundle\Foo">
+                    <argument type="service">
+                        <service class="AppBundle\AnonymousBar" />
+                    </argument>
+                </service>
+            </services>
+        </container>
+
 Deprecating Services
 --------------------
 
