@@ -53,7 +53,7 @@ random) number and prints it. To do that, create a "Controller class" and a
     {
         public function number()
         {
-            $number = mt_rand(0, 100);
+            $number = random_int(0, 100);
 
             return new Response(
                 '<html><body>Lucky number: '.$number.'</body></html>'
@@ -248,7 +248,7 @@ variable so you can use it in Twig::
          */
         public function number()
         {
-            $number = mt_rand(0, 100);
+            $number = random_int(0, 100);
 
             return $this->render('lucky/number.html.twig', array(
                 'number' => $number,

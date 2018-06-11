@@ -29,7 +29,7 @@ endpoint for filesystem operations::
     $fileSystem = new Filesystem();
 
     try {
-        $fileSystem->mkdir('/tmp/random/dir/'.mt_rand());
+        $fileSystem->mkdir(sys_get_temp_dir().'/'.random_int(0, 1000));
     } catch (IOExceptionInterface $exception) {
         echo "An error occurred while creating your directory at ".$exception->getPath();
     }
