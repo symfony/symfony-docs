@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-05-27T21:32:37Z
+
+What about adding a sentence to tell why this is nice? (Autocompletion mostly isn't it?)
+
+---------------------------------------------------------------------------
+
+by kbond at 2018-05-31T13:30:57Z
+
+I added an example showing how to create composable traits and a note about not using `__METHOD__` in this case.
