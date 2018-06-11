@@ -460,6 +460,7 @@ few more.
    single: Templating; Including other templates
 
 .. _including-templates:
+.. _including-other-templates:
 
 Including other Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
