@@ -42,12 +42,13 @@ with the following fields: ``id``, ``username``, ``password``,
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\UserInterface;
+    use Symfony\Component\Security\Core\User\EquatableInterface;
 
     /**
      * @ORM\Table(name="app_users")
      * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
      */
-    class User implements UserInterface, \Serializable
+    class User implements UserInterface, EquatableInterface
     {
         /**
          * @ORM\Column(type="integer")
@@ -109,28 +110,26 @@ with the following fields: ``id``, ``username``, ``password``,
         {
         }
 
-        /** @see \Serializable::serialize() */
-        public function serialize()
+        /**
+         * The equality comparison should neither be done by referential equality
+         * nor by comparing identities (i.e. getId() === getId()).
+         *
+         * However, you do not need to compare every attribute, but only those that
+         * are relevant for assessing whether re-authentication is required.
+         *
+         * @return bool
+         */
+        public function isEqualTo(UserInterface $user)
         {
-            return serialize(array(
-                $this->id,
-                $this->username,
-                $this->password,
-                // see section on salt below
-                // $this->salt,
-            ));
-        }
+            if ($this->password !== $user->getPassword()) {
+                return false;
+            }
 
-        /** @see \Serializable::unserialize() */
-        public function unserialize($serialized)
-        {
-            list (
-                $this->id,
-                $this->username,
-                $this->password,
-                // see section on salt below
-                // $this->salt
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+            if ($this->email !== $user->getUsername()) {
+                return false;
+            }
+
+            return true;
         }
     }
 
