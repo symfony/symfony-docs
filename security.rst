@@ -26,8 +26,8 @@ These are followed by a number of small (but still captivating) sections,
 like :ref:`logging out <security-logging-out>` and
 :doc:`encoding user passwords </security/password_encoding>`.
 
-Installation
-------------
+1) Installation
+---------------
 
 In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
 install the security feature before using it:
@@ -40,7 +40,7 @@ install the security feature before using it:
 .. _firewalls-authentication:
 .. _initial-security-yml-setup-authentication:
 
-1) Initial security.yaml Setup (Authentication)
+2) Initial security.yaml Setup (Authentication)
 -----------------------------------------------
 
 The security system is configured in ``config/packages/security.yaml``. The
@@ -638,7 +638,7 @@ Your next steps depend on your setup:
 
 .. _`security-authorization`:
 
-2) Denying Access, Roles and other Authorization
+3) Denying Access, Roles and other Authorization
 ------------------------------------------------
 
 Users can now login to your app using ``http_basic`` or some other method.
@@ -1012,7 +1012,7 @@ security systems.
 
 If you still prefer to use traditional ACLs, refer to the `Symfony ACL bundle`_.
 
-3) Retrieving the User Object
+4) Retrieving the User Object
 -----------------------------
 
 After authentication, the ``User`` object of the current user can be accessed
