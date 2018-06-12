@@ -10,7 +10,7 @@ Using FontAwesome 5
     $ npm install @fortawesome/fontawesome-free-webfonts --save-dev
 
 Importing FontAwesome Sass
-------------------------
+----------------------------
 
 Now that ``@fortawesome`` lives in your ``node_modules`` directory, you can
 import it from any Sass or JavaScript file. For example, if you already have
