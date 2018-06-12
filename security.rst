@@ -892,7 +892,7 @@ using annotations::
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function hello($name)
     {
