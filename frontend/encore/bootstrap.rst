@@ -1,5 +1,5 @@
 Using Bootstrap 4 CSS & JS
-========================
+============================
 
 Want to use Bootstrap (or something similar) in your project? No problem!
 First, install it. To be able to customize things further, we'll install
@@ -41,7 +41,7 @@ file into ``global.scss``. You can even customize the Bootstrap variables first!
     in the ``bootstrap`` directory instead - e.g. ``~bootstrap/scss/alert``.
 
 Importing Bootstrap JavaScript
-------------------------------
+---------------------------------
 
 Bootstrap JavaScript requires jQuery, so make sure you have this installed:
 
