@@ -42,13 +42,14 @@ with the following fields: ``id``, ``username``, ``password``,
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\UserInterface;
+    use Serializable;
     use Symfony\Component\Security\Core\User\EquatableInterface;
 
     /**
      * @ORM\Table(name="app_users")
      * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
      */
-    class User implements UserInterface, EquatableInterface
+    class User implements UserInterface, Serializable, EquatableInterface
     {
         /**
          * @ORM\Column(type="integer")
@@ -109,8 +110,34 @@ with the following fields: ``id``, ``username``, ``password``,
         public function eraseCredentials()
         {
         }
+        
+        /** @see \Serializable::serialize() */
+        public function serialize()
+        {
+            return serialize(array(
+                $this->id,
+                $this->username, // you should use $this->email if you don't use username but email to log user
+                $this->password,
+                // see section on salt below
+                // $this->salt,
+            ));
+        }
+
+        /** @see \Serializable::unserialize() */
+        public function unserialize($serialized)
+        {
+            list (
+                $this->id,
+                $this->username, // you should use $this->email if you don't use username but email to log user
+                $this->password,
+                // see section on salt below
+                // $this->salt
+                ) = unserialize($serialized, ['allowed_classes' => false]);
+        }
 
         /**
+         * if you want to keep the control on what attributes are are compared at each request to know if user have changed,
+         * you can implement Equatable interface and the method isEqualTo and add all attributes you want compare.
          * The equality comparison should neither be done by referential equality
          * nor by comparing identities (i.e. getId() === getId()).
          *
@@ -125,7 +152,7 @@ with the following fields: ``id``, ``username``, ``password``,
                 return false;
             }
 
-            if ($this->email !== $user->getUsername()) {
+            if ($this->username !== $user->getUsername()) {
                 return false;
             }
 
