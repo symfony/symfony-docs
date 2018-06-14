@@ -200,9 +200,9 @@ This ``ManyToOne`` mapping is required. It tells Doctrine to use the ``category_
 column on the ``product`` table to relate each record in that table with
 a record in the ``category`` table.
 
-Next, since a *one* ``Category`` object will relate to *many* ``Product`` objects,
+Next, since *one* ``Category`` object will relate to *many* ``Product`` objects,
 the ``make:entity`` command *also* added a ``products`` property to the ``Category``
-class that will hold these objects::
+class that will hold these objects:
 
 .. configuration-block::
 
