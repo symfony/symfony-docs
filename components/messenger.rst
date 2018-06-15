@@ -165,7 +165,7 @@ First, create your receiver::
        private $serializer;
        private $filePath;
 
-       public function __construct(SerializerInteface $serializer, string $filePath)
+       public function __construct(SerializerInterface $serializer, string $filePath)
        {
            $this->serializer = $serializer;
            $this->filePath = $filePath;
