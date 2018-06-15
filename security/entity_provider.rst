@@ -136,7 +136,7 @@ with the following fields: ``id``, ``username``, ``password``,
         }
 
         /**
-         * if you want to keep the control on what attributes are are compared at each request to know if user have changed,
+         * if you want to keep the control on what attributes are compared at each request to know if user have changed,
          * you can implement Equatable interface and the method isEqualTo and add all attributes you want compare.
          * The equality comparison should neither be done by referential equality
          * nor by comparing identities (i.e. getId() === getId()).
