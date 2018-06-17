@@ -163,7 +163,7 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
     // assets/js/app.js
 
     // loads the jquery package from node_modules
-    var $ = require('jquery');
+    const $ = require('jquery');
 
     // import the function from greet.js (the .js extension is optional)
     // ./ (or ../) means to look for a local file
