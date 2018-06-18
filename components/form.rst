@@ -749,6 +749,8 @@ Clearing Form Errors
 
 Any errors can be manually cleared using the :method:`Symfony\\Component\\Form\\ClearableErrorsInterface::clearErrors` method. This is useful when you'd like to validate the form without showing validation errors to the user (i.e. during a partial AJAX submission or :doc:`dynamic form modification </form/dynamic_form_modification>`).
 
+Because clearing the errors makes the form valid,  ``clearErrors()`` should only be called after testing whether the form is valid.
+
 Learn more
 ----------
 
