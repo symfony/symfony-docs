@@ -95,14 +95,19 @@ caching kernel:
 
     // public/index.php
 
-    use App\Kernel;
     + use App\CacheKernel;
+    use App\Kernel;
 
     // ...
-    $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev')));
+    $env = $_SERVER['APP_ENV'] ?? 'dev';
+    $debug = (bool) ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env));
+    // ...
+    $kernel = new Kernel($env, $debug);
 
-    + // Wrap the default Kernel with the CacheKernel one
-    + $kernel = new CacheKernel($kernel);
+    + // Wrap the default Kernel with the CacheKernel one in 'prod' environment
+    + if ('prod' === $env) {
+    +     $kernel = new CacheKernel($kernel);
+    + }
 
     $request = Request::createFromGlobals();
     // ...
