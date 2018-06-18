@@ -111,4 +111,3 @@ see :doc:`/routing/scheme` for more details.
     Forcing HTTPS while using a reverse proxy or load balancer requires a proper
     configuration to avoid infinite redirect loops; see :doc:`/deployment/proxies`
     for more details.
-
