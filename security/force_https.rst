@@ -106,4 +106,9 @@ role:
 It is also possible to specify using HTTPS in the routing configuration,
 see :doc:`/routing/scheme` for more details.
 
-Forcing HTTPS while using a reverse proxy or load balancer may cause infinite redirect loops if Symfony is not configured properly; see :doc:`/deployment/proxies` for more details.
+.. note::
+
+    Forcing HTTPS while using a reverse proxy or load balancer requires a proper
+    configuration to avoid infinite redirect loops; see :doc:`/deployment/proxies`
+    for more details.
+
