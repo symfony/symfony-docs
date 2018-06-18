@@ -19,7 +19,7 @@ Using Libraries that Expect jQuery to be Global
 Some legacy JavaScript applications use programming practices that don't play
 well with the new practices promoted by Webpack. The most common of these
 problems is using code (e.g. jQuery plugins) that assume that jQuery is already
-available via the the ``$`` or ``jQuery`` global variables. If those variables
+available via the ``$`` or ``jQuery`` global variables. If those variables
 are not defined, you'll get these errors:
 
 .. code-block:: text
