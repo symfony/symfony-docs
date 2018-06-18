@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-11T08:44:39Z
+
+I'm not sure about this change. The reason is that we're always hesitant to include too specific info like mentioning Debian as one of the OS that do this. The problem of doing that is that it forces us to check every current and future version of Debian to see if that statement is still true. But let's wait to read more opinions about this. Thanks!
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2018-06-11T10:09:25Z
+
+I committed this PR primarily cause I had this message several times in my nginx error log, and it was hard to find out what the reason is:
+
+> PHP message: PHP Notice:  SessionHandler::gc(): ps_files_cleanup_dir: opendir(/var/lib/php/sessions) failed: Permission denied (13)
+
+So what I'm really suggesting would be two things:
+
+* Include this error message on the page too, to have people find it when they search for it. I could do this.
+
+* Explain *why* Symfony is doing this at all! I can't do this, since I don't know :-(
+
+The "Debian" question is less important. And I certainly see your point. What about something like "some versions of Debian"? Making an exception for Debian is justified, I would say, since it's (a) (probably) the most widely used OS on webservers, and (b) many other Linux distros depend on it.
+
+But, again, the other two points are far more important!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-12T07:23:55Z
+
+I think we need help from someone who knows this well (@Tobion, @stof, @nicolas-grekas, ...) so they can explain to us why does Symfony do this. Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-12T09:11:42Z
+
+@nicolas-grekas thanks for reviewing! We'd also need your help to understand this:
+
+> Explain why Symfony is doing this at all! I can't do this, since I don't know :-(
+
+Symfony knows better than Debian and overrides this setting silently? Thanks!
+
+---------------------------------------------------------------------------
+
+by stof at 2018-06-12T11:16:23Z
+
+@javiereguiluz as soon as you configure a session save path in the Symfony config (rather than using the one from php.ini), relying on the Debian cron job does not work at all (as the cron job will clean a different location than the one used when saving).
