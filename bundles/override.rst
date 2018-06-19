@@ -16,6 +16,8 @@ features of a bundle.
     and call the :ref:`locateResource() method <http-kernel-resource-locator>`
     to turn them into physical paths when needed.
 
+.. _override-templates:
+
 Templates
 ---------
 
