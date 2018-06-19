@@ -149,7 +149,7 @@ instead of the original ones.
 Translations
 ------------
 
-Translations are not related to bundles, but to :doc:`translation domains <using-message-domains>`.
+Translations are not related to bundles, but to :ref:`translation domains <using-message-domains>`.
 For this reason, you can override any bundle translation file from the main
 ``translations/`` directory, as long as the new file uses the same domain.
 
