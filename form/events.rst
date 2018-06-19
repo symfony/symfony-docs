@@ -252,9 +252,9 @@ Name                    ``FormEvents`` Constant        Event's Data
 ======================  =============================  ===============
 ``form.pre_set_data``   ``FormEvents::PRE_SET_DATA``   Model data
 ``form.post_set_data``  ``FormEvents::POST_SET_DATA``  Model data
-``form.pre_bind``       ``FormEvents::PRE_SUBMIT``     Request data
-``form.bind``           ``FormEvents::SUBMIT``         Normalized data
-``form.post_bind``      ``FormEvents::POST_SUBMIT``    View data
+``form.pre_submit``     ``FormEvents::PRE_SUBMIT``     Request data
+``form.submit``         ``FormEvents::SUBMIT``         Normalized data
+``form.post_submit``    ``FormEvents::POST_SUBMIT``    View data
 ======================  =============================  ===============
 
 Event Listeners
