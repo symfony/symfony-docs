@@ -5,7 +5,7 @@ How to Use the Serializer
 =========================
 
 Symfony provides a serializer to serialize/deserialize to and from objects and
-different formats (e.g. JSON or XML). Before using it, read the
+different formats (e.g. JSON, XML, CSV or YAML). Before using it, read the
 :doc:`Serializer component docs </components/serializer>` to get familiar with
 its philosophy and the normalizers and encoders terminology.
 
@@ -23,9 +23,30 @@ install the serializer before using it:
 
 Using the Serializer Service
 ----------------------------
+The serializer's constructor takes two arguments:
 
-Once enabled, the serializer service can be injected in any service where
-you need it or it can be used in a controller::
+* an array of :ref:`normalizers <component-serializer-normalizers>`
+* an array of :ref:`encoders <component-serializer-encoders>`
+
+You can either instantiate the serializer directly:
+
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
+    
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+    use Symfony\Component\Serializer\Encoder\CsvEncoder;
+
+    class DefaultController extends Controller
+    {
+        public function index()
+        {
+            $serializer = new Serializer(array(new DateTimeNormalizer('Y-m-d')), array(new CsvEncoder()));
+        }
+    }
+
+Or you can use dependency injection:
 
     // src/Controller/DefaultController.php
     namespace App\Controller;
@@ -37,23 +58,10 @@ you need it or it can be used in a controller::
     {
         public function index(SerializerInterface $serializer)
         {
-            // keep reading for usage examples
         }
     }
 
-Adding Normalizers and Encoders
--------------------------------
-
-Once enabled, the ``serializer`` service will be available in the container.
-It comes with a set of useful :ref:`encoders <component-serializer-encoders>`
-and :ref:`normalizers <component-serializer-normalizers>`.
-
-Encoders supporting the following formats are enabled:
-
-* JSON: :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`
-* XML: :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`
-
-As well as the following normalizers:
+The following normalizers are loaded automatically:
 
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` to
   handle typical data objects
@@ -66,16 +74,31 @@ As well as the following normalizers:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
   denormalize arrays of objects using a format like `MyObject[]` (note the `[]` suffix)
 
+As well as the following encoders:
+
+* JSON: :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`
+* XML: :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`
+
+These normalizers need to be loaded manually:
+
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer` a
+faster alternative to the `ObjectNormalizer` when data objects always use
+getters (``getXxx()``), issers (``isXxx()``) or hassers (``hasXxx()``) to read
+properties and setters (``setXxx()``) to change properties
+
+And these encoders:
+
+* CSV: :class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`
+* YAML: :class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder`
+
+After everything is set up, the actual encoding is done in one line:
+
+    $csv = $serializer->serialize($data, 'csv');
+
 Custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
 :ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It's also
 possible to set the priority of the tag in order to decide the matching order.
-
-Here is an example on how to load the
-:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
-faster alternative to the `ObjectNormalizer` when data objects always use
-getters (``getXxx()``), issers (``isXxx()``) or hassers (``hasXxx()``) to read
-properties and setters (``setXxx()``) to change properties:
 
 .. configuration-block::
 
@@ -118,6 +141,9 @@ properties and setters (``setXxx()``) to change properties:
 
 Using Serialization Groups Annotations
 --------------------------------------
+
+The ``@Groups`` annotation is a way to exclude certain properties when an entity
+is serialized.
 
 To use annotations, first add support for them via the SensioFrameworkExtraBundle:
 
