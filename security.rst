@@ -26,6 +26,8 @@ These are followed by a number of small (but still captivating) sections,
 like :ref:`logging out <security-logging-out>` and
 :doc:`encoding user passwords </security/password_encoding>`.
 
+.. _installation:
+
 1) Installation
 ---------------
 
@@ -39,6 +41,7 @@ install the security feature before using it:
 .. _security-firewalls:
 .. _firewalls-authentication:
 .. _initial-security-yml-setup-authentication:
+.. _initial-security-yaml-setup-authentication:
 
 2) Initial security.yaml Setup (Authentication)
 -----------------------------------------------
@@ -637,6 +640,7 @@ Your next steps depend on your setup:
   :ref:`Authorization <security-authorization>` section.
 
 .. _`security-authorization`:
+.. _denying-access-roles-and-other-authorization:
 
 3) Denying Access, Roles and other Authorization
 ------------------------------------------------
@@ -1011,6 +1015,8 @@ That's why voters are officially recommended by Symfony to create ACL-like
 security systems.
 
 If you still prefer to use traditional ACLs, refer to the `Symfony ACL bundle`_.
+
+.. _retrieving-the-user-object:
 
 4) Retrieving the User Object
 -----------------------------
