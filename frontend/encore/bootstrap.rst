@@ -1,19 +1,13 @@
-Using Bootstrap 4 CSS & JS
+Using Bootstrap CSS & JS
 ============================
 
 Want to use Bootstrap (or something similar) in your project? No problem!
 First, install it. To be able to customize things further, we'll install
-``bootstrap`` and popper.js:
+``bootstrap``:
 
 .. code-block:: terminal
 
-    $ yarn add bootstrap popper.js --dev
-
-or if you prefer to use npm:
-
-.. code-block:: terminal
-
-    $ npm install bootstrap popper.js --save-dev
+    $ yarn add bootstrap --dev
     
 Importing Bootstrap 4
 ------------------------
@@ -48,10 +42,6 @@ Bootstrap JavaScript requires jQuery, so make sure you have this installed:
 .. code-block:: terminal
 
     $ yarn add jquery --dev
-    
-.. code-block:: terminal
-
-    $ npm install jquery --save-dev
 
 Next, make sure to call ``.autoProvidejQuery()`` in your ``webpack.config.js`` file:
 
