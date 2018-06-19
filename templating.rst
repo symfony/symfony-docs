@@ -360,8 +360,7 @@ By default, templates can live in two different locations:
 ``templates/``
     The application's ``views`` directory can contain application-wide base templates
     (i.e. your application's layouts and templates of the application bundle) as
-    well as templates that override third party bundle templates
-    (see :doc:`/templating/overriding`).
+    well as templates that :ref:`override third party bundle templates <override-templates>`.
 
 ``vendor/path/to/CoolBundle/Resources/views/``
     Each third party bundle houses its templates in its ``Resources/views/``
@@ -405,10 +404,9 @@ for several types of templates, each which lives in a specific location:
   is missing (e.g. ``Blog``), the template lives at
   ``Resources/views/layout.html.twig`` inside AcmeBlogBundle.
 
-In the :doc:`/templating/overriding` section, you'll find out how each
-template living inside the AcmeBlogBundle, for example, can be overridden
-by placing a template of the same name in the ``templates/bundles/AcmeBlogBundle/``
-directory. This gives the power to override templates from any vendor bundle.
+Using this namespaced syntax instead of their real file paths to refer to bundle
+templates is part of the bundle overriding mechanism. This allows applications
+to :ref:`override templates that live inside any bundle <override-templates>`.
 
 Template Suffix
 ~~~~~~~~~~~~~~~
