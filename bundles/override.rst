@@ -16,10 +16,33 @@ features of a bundle.
     and call the :ref:`locateResource() method <http-kernel-resource-locator>`
     to turn them into physical paths when needed.
 
+.. _override-templates:
+
 Templates
 ---------
 
-See :doc:`/templating/overriding`.
+Third-party bundle templates can be overridden in the
+``<your-project>/templates/bundles/<bundle-name>/`` directory. The new templates
+must use the same name and path (relative to ``<bundle>/Resources/views/``) as
+the original templates.
+
+For example, to override the ``Resources/views/Registration/confirmed.html.twig``
+template from the FOSUserBundle, create this template:
+``<your-project>/templates/bundles/FOSUserBundle/Registration/confirmed.html.twig``
+
+.. caution::
+
+    If you add a template in a new location, you *may* need to clear your
+    cache (``php bin/console cache:clear``), even if you are in debug mode.
+
+.. _templating-overriding-core-templates:
+
+.. tip::
+
+    Symfony internals use some bundles too, so you can apply the same technique
+    to override the core Symfony templates. For example, you can
+    :doc:`customize error pages </controller/error_pages>` overriding TwigBundle
+    templates.
 
 Routing
 -------
