@@ -290,6 +290,21 @@ by using the following methods:
 :method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`
     Returns the list of accepted content types ordered by descending quality.
 
+:method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableFormats`
+    Returns the list of accepted client formats associated with the request.
+
+Note that
+:method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableFormats`
+will use the data from
+:method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`
+and return the client acceptable formats::
+
+    $request->getAcceptableContentTypes();
+    // returns ['text/html', 'application/xhtml+xml', 'application/xml', '*/*']
+
+    $request->getAcceptableFormats();
+    // returns ['html', 'xml']
+
 :method:`Symfony\\Component\\HttpFoundation\\Request::getLanguages`
     Returns the list of accepted languages ordered by descending quality.
 
