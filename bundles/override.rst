@@ -149,8 +149,12 @@ instead of the original ones.
 Translations
 ------------
 
-Translations are not related to bundles, but to domains. That means that you
-can override the translations from any translation file, as long as it is in
-:ref:`the correct domain <using-message-domains>`.
+Translations are not related to bundles, but to :ref:`translation domains <using-message-domains>`.
+For this reason, you can override any bundle translation file from the main
+``translations/`` directory, as long as the new file uses the same domain.
+
+For example, to override the translations defined in the
+``Resources/translations/FOSUserBundle.es.yml`` file of the FOSUserBundle,
+create a``<your-project>/translations/FOSUserBundle.es.yml`` file.
 
 .. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides
