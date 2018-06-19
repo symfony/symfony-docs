@@ -96,11 +96,13 @@ all services are private by default.
 Service Format: YAML
 --------------------
 
-In the previous section, YAML was used to define the service.
+If you use the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+most services will be configured automatically. However, in some edge cases
+you'll need to configure services (or parts of them) manually.
 
 .. best-practice::
 
-    Use the YAML format to define your own services.
+    Use the YAML format to configure your own services.
 
 This is controversial, and in our experience, YAML and XML usage is evenly
 distributed among developers, with a slight preference towards YAML.
