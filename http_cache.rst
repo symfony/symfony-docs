@@ -99,10 +99,13 @@ caching kernel:
     use App\Kernel;
 
     // ...
-    $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev')));
+    $env = $_SERVER['APP_ENV'] ?? 'dev';
+    $debug = (bool) ($_SERVER['APP_DEBUG'] ?? ('prod' !== $env));
+    // ...
+    $kernel = new Kernel($env, $debug);
 
     + // Wrap the default Kernel with the CacheKernel one in 'prod' environment
-    + if ('prod' === ($_SERVER['APP_ENV'] ?? 'dev')) {
+    + if ('prod' === $env) {
     +     $kernel = new CacheKernel($kernel);
     + }
 
