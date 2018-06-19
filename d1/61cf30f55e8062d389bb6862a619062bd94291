@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-13T07:07:49Z
+
+@OskarStark thanks for updating this! I found other occurrences. Could you please change them in this PR too?
+
+* `security.rst` line 895: `@Security("has_role('ROLE_ADMIN')")`
+* `best_practices/security.rst` line 124: `@Security("has_role('ROLE_ADMIN')")`
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2018-06-13T07:28:44Z
+
+sure thing 👍
