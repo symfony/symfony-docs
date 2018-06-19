@@ -2117,8 +2117,8 @@ Full Default Configuration
 
             # cache configuration
             cache:
-                app: cache.app
-                system: cache.system
+                app: cache.adapter.filesystem
+                system: cache.adapter.system
                 directory: '%kernel.cache_dir%/pools'
                 default_doctrine_provider: ~
                 default_psr6_provider: ~
