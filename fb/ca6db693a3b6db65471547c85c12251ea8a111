@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-08T06:52:52Z
+
+@AndreiIgna thanks for making this contribution! I like it ... and I like your proposal too. We don't want to document lots of internal details about these methods, but your explanation is concise and it's essential to understand the subtle differences between these methods. Let's do it!
+
+---------------------------------------------------------------------------
+
+by AndreiIgna at 2018-06-09T14:47:10Z
+
+@javiereguiluz added that note, tried to keep it short and with a small code example.
+It's my first contribution to docs, please let me know if looks okay, placement and wording
