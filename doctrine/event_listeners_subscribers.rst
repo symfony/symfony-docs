@@ -271,3 +271,55 @@ to the tag like so:
 
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
 .. _`the Doctrine Documentation`: https://symfony.com/doc/current/bundles/DoctrineBundle/entity-listeners.html
+
+
+Priorities for Event Listeners
+--------------------------------
+
+In case you have multiple listeners for the same event you can control the order in which they are invoked using the `priority` attribute on the tag. Listeners with a higher priority are invoked first.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            my.listener.with_high_priority:
+                class: AppBundle\EventListener\MyHighPriorityListener
+                tags:
+                    - { name: doctrine.event_listener, event: postPersist, priority: 10 }
+
+            my.listener.with_low_priority:
+                class: AppBundle\EventListener\MyLowPriorityListener
+                tags:
+                    - { name: doctrine.event_listener, event: postPersist, priority: 1 }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
+
+            <services>
+                <service id="my.listener.with_high_priority" class="AppBundle\EventListener\MyHighPriorityListener">
+                    <tag name="doctrine.event_listener" event="postPersist" priority="10" />
+                </service>
+                <service id="my.listener.with_low_priority" class="AppBundle\EventListener\MyLowPriorityListener">
+                    <tag name="doctrine.event_listener" event="postPersist" priority="1" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use AppBundle\EventListener\MyHighPriorityListener;
+        use AppBundle\EventListener\MyLowPriorityListener;
+
+        $container
+            ->register('my.listener.with_high_priority', MyHighPriorityListener::class)
+            ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'priority' => 10))
+        ;
+
+        $container
+            ->register('my.listener.with_low_priority', MyLowPriorityListener::class)
+            ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'priority' => 1))
+        ;
