@@ -46,7 +46,7 @@ slowest storage engines, :class:`Symfony\\Component\\Cache\\Adapter\\ApcuAdapter
     ));
 
 When calling this adapter's :method:`Symfony\\Component\\Cache\\ChainAdapter::prune` method,
-the call is deligated to all its compatibe cache adapters. It is safe to mix both adapters
+the call is delegated to all its compatible cache adapters. It is safe to mix both adapters
 that *do* and do *not* implement :class:`Symfony\\Component\\Cache\\PruneableInterface`, as
 incompatible adapters are silently ignored::
 

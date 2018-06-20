@@ -26,8 +26,10 @@ These are followed by a number of small (but still captivating) sections,
 like :ref:`logging out <security-logging-out>` and
 :doc:`encoding user passwords </security/password_encoding>`.
 
-Installation
-------------
+.. _installation:
+
+1) Installation
+---------------
 
 In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
 install the security feature before using it:
@@ -39,8 +41,9 @@ install the security feature before using it:
 .. _security-firewalls:
 .. _firewalls-authentication:
 .. _initial-security-yml-setup-authentication:
+.. _initial-security-yaml-setup-authentication:
 
-1) Initial security.yaml Setup (Authentication)
+2) Initial security.yaml Setup (Authentication)
 -----------------------------------------------
 
 The security system is configured in ``config/packages/security.yaml``. The
@@ -637,8 +640,9 @@ Your next steps depend on your setup:
   :ref:`Authorization <security-authorization>` section.
 
 .. _`security-authorization`:
+.. _denying-access-roles-and-other-authorization:
 
-2) Denying Access, Roles and other Authorization
+3) Denying Access, Roles and other Authorization
 ------------------------------------------------
 
 Users can now login to your app using ``http_basic`` or some other method.
@@ -980,7 +984,7 @@ You can also use expressions inside your templates:
     .. code-block:: html+jinja
 
         {% if is_granted(expression(
-            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+            '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
         )) %}
             <a href="...">Delete</a>
         {% endif %}
@@ -988,7 +992,7 @@ You can also use expressions inside your templates:
     .. code-block:: html+php
 
         <?php if ($view['security']->isGranted(new Expression(
-            '"ROLE_ADMIN" in roles or (user and user.isSuperAdmin())'
+            '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
         ))): ?>
             <a href="...">Delete</a>
         <?php endif; ?>
@@ -1012,7 +1016,9 @@ security systems.
 
 If you still prefer to use traditional ACLs, refer to the `Symfony ACL bundle`_.
 
-3) Retrieving the User Object
+.. _retrieving-the-user-object:
+
+4) Retrieving the User Object
 -----------------------------
 
 After authentication, the ``User`` object of the current user can be accessed
