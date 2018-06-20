@@ -21,7 +21,7 @@ that's included on every page:
 
             // you can also extract CSS - this will create a 'vendor.css' file
             // this CSS will *not* be included in page1.css or page2.css anymore
-            'bootstrap-sass/assets/stylesheets/_bootstrap.scss'
+            'bootstrap/scss/bootstrap.scss'
         ])
 
 As soon as you make this change, you need to include two extra JavaScript files
