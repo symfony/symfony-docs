@@ -637,8 +637,11 @@ let you find out which options are defined::
 Deprecating the Option
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Once an option is outdated or you decided not to maintain it anymore, you can deprecate it
-using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDeprecated`
+.. versionadded:: 4.2
+    The ``setDeprecated()`` method was introduced in Symfony 4.2.
+
+Once an option is outdated or you decided not to maintain it anymore, you can
+deprecate it using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDeprecated`
 method::
 
     $resolver
@@ -653,8 +656,8 @@ method::
 
 Instead of passing the message, you may also pass a closure which returns
 a string (the deprecation message) or an empty string to ignore the deprecation.
-This closure is specially useful to deprecate allowed types or values of the
-defined option::
+This closure is useful to only deprecate some of the allowed types or values of
+the option::
 
     $resolver
         ->setDefault('port', null)
@@ -669,7 +672,7 @@ defined option::
     ;
 
 This closure receives as argument the value of the option after validating it
-and before normalize it when the option is being resolved.
+and before normalizing it when the option is being resolved.
 
 Performance Tweaks
 ~~~~~~~~~~~~~~~~~~
