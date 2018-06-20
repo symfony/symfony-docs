@@ -404,8 +404,7 @@ for several types of templates, each which lives in a specific location:
   is missing (e.g. ``Blog``), the template lives at
   ``Resources/views/layout.html.twig`` inside AcmeBlogBundle.
 
-Using this namespaced syntax instead of their real file paths to refer to bundle
-templates is part of the bundle overriding mechanism. This allows applications
+Using this namespaced syntax instead of the real file paths allows applications
 to :ref:`override templates that live inside any bundle <override-templates>`.
 
 Template Suffix
