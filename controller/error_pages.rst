@@ -65,8 +65,8 @@ logic to determine the template filename:
 
 .. _overriding-or-adding-templates:
 
-To override these templates, simply rely on the standard Symfony method for
-:doc:`overriding templates that live inside a bundle </templating/overriding>`:
+To override these templates, rely on the standard Symfony method for
+:ref:`overriding templates that live inside a bundle <override-templates>` and
 put them in the ``templates/bundles/TwigBundle/Exception/`` directory.
 
 A typical project that returns HTML and JSON pages, might look like this:
