@@ -170,9 +170,10 @@ needs three parameters:
     in Symfony 3.3.
 
 By default, additional attributes that are not mapped to the denormalized
-object will be ignored by the Serializer component. Set the ``allow_extra_attributes``
-key of the deserialization context to ``false`` to let the serializer throw
-an exception when additional attributes are passed::
+object will be ignored by the Serializer component. Include a
+ClassMetadataFactory when constructing the normalizer and set the
+``allow_extra_attributes`` key of the deserialization context to ``false`` to
+let the serializer throw an exception when additional attributes are passed::
 
     $data = <<<EOF
     <person>
@@ -184,6 +185,9 @@ an exception when additional attributes are passed::
 
     // this will throw a Symfony\Component\Serializer\Exception\ExtraAttributesException
     // because "city" is not an attribute of the Person class
+    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $normalizer = new ObjectNormalizer($classMetadataFactory);
+    $serializer = new Serializer(array($normalizer));
     $person = $serializer->deserialize($data, 'Acme\Person', 'xml', array(
         'allow_extra_attributes' => false,
     ));
