@@ -171,7 +171,7 @@ needs three parameters:
 
 By default, additional attributes that are not mapped to the denormalized
 object will be ignored by the Serializer component. Include a
-ClassMetadataFactory when constructing the normalizer and set the
+``ClassMetadataFactory`` when constructing the normalizer and set the
 ``allow_extra_attributes`` key of the deserialization context to ``false`` to
 let the serializer throw an exception when additional attributes are passed::
 
