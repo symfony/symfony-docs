@@ -146,18 +146,18 @@ Pruning Cache Items
 -------------------
 
 Some cache pools do not include an automated mechanism for pruning expired cache items.
-For example, the :ref:`FilesystemAdaper <component-cache-filesystem-adapter>` cache
+For example, the :ref:`FilesystemAdapter <component-cache-filesystem-adapter>` cache
 does not remove expired cache items *until an item is explicitly requested and determined to
 be expired*, for example, via a call to ``Psr\\Cache\\CacheItemPoolInterface::getItem``.
 Under certain workloads, this can cause stale cache entries to persist well past their
 expiration, resulting in a sizable consumption of wasted disk or memory space from excess,
 expired cache items.
 
-This shortcomming has been solved through the introduction of
+This shortcoming has been solved through the introduction of
 :class:`Symfony\\Component\\Cache\\PruneableInterface`, which defines the abstract method
 :method:`Symfony\\Component\\Cache\\PruneableInterface::prune`. The
 :ref:`ChainAdapter <component-cache-chain-adapter>`,
-:ref:`FilesystemAdaper <component-cache-filesystem-adapter>`,
+:ref:`FilesystemAdapter <component-cache-filesystem-adapter>`,
 :ref:`PdoAdapter <pdo-doctrine-adapter>`, and
 :ref:`PhpFilesAdapter <component-cache-files-adapter>` all implement this new interface,
 allowing manual removal of stale cache items::
@@ -171,7 +171,7 @@ allowing manual removal of stale cache items::
 The :ref:`ChainAdapter <component-cache-chain-adapter>` implementation does not directly
 contain any pruning logic itself. Instead, when calling the chain adapter's
 :method:`Symfony\\Component\\Cache\\ChainAdapter::prune` method, the call is delegated to all
-its compatibe cache adapters (and those that do not implement ``PruneableInterface`` are
+its compatible cache adapters (and those that do not implement ``PruneableInterface`` are
 silently ignored)::
 
     use Symfony\Component\Cache\Adapter\ApcuAdapter;

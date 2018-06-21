@@ -12,7 +12,6 @@ A submit button.
 | Inherited            | - `attr`_                                                            |
 | options              | - `disabled`_                                                        |
 |                      | - `label`_                                                           |
-|                      | - `label_attr`_                                                      |
 |                      | - `label_format`_                                                    |
 |                      | - `translation_domain`_                                              |
 |                      | - `validation_groups`_                                               |
@@ -53,8 +52,6 @@ as a key. This can be useful when you need to set a custom class for the button:
 .. include:: /reference/forms/types/options/button_disabled.rst.inc
 
 .. include:: /reference/forms/types/options/button_label.rst.inc
-
-.. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

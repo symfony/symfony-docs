@@ -353,8 +353,8 @@ will be show next):
     var $collectionHolder;
 
     // setup an "add a tag" link
-    var $addTagLink = $('<a href="#" class="add_tag_link">Add a tag</a>');
-    var $newLinkLi = $('<li></li>').append($addTagLink);
+    var $addTagButton = $('<button type="button" class="add_tag_link">Add a tag</button>');
+    var $newLinkLi = $('<li></li>').append($addTagButton);
 
     jQuery(document).ready(function() {
         // Get the ul that holds the collection of tags
@@ -367,10 +367,7 @@ will be show next):
         // index when inserting a new item (e.g. 2)
         $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
-        $addTagLink.on('click', function(e) {
-            // prevent the link from creating a "#" on the URL
-            e.preventDefault();
-
+        $addTagButton.on('click', function(e) {
             // add a new tag form (see next code block)
             addTagForm($collectionHolder, $newLinkLi);
         });
@@ -619,7 +616,7 @@ Template Modifications
 
 The ``allow_delete`` option means that if an item of a collection
 isn't sent on submission, the related data is removed from the collection
-on the server. In order for this to work in an HTML form, you must remove 
+on the server. In order for this to work in an HTML form, you must remove
 the DOM element for the collection item to be removed, before submitting
 the form.
 
@@ -651,13 +648,10 @@ The ``addTagFormDeleteLink()`` function will look something like this:
 .. code-block:: javascript
 
     function addTagFormDeleteLink($tagFormLi) {
-        var $removeFormA = $('<a href="#">delete this tag</a>');
-        $tagFormLi.append($removeFormA);
+        var $removeFormButton = $('<button type="button">Delete this tag</button>');
+        $tagFormLi.append($removeFormButton);
 
-        $removeFormA.on('click', function(e) {
-            // prevent the link from creating a "#" on the URL
-            e.preventDefault();
-
+        $removeFormButton.on('click', function(e) {
             // remove the li for the tag form
             $tagFormLi.remove();
         });

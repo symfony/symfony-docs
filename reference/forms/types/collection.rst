@@ -167,7 +167,6 @@ you need is this JavaScript code:
     // add-collection-widget.js
     jQuery(document).ready(function () {
         jQuery('.add-another-collection-widget').click(function (e) {
-            e.preventDefault();
             var list = jQuery(jQuery(this).attr('data-list'));
             // Try to find the counter of the list
             var counter = list.data('widget-counter') | list.children().length;
@@ -210,9 +209,9 @@ And update the template as follows:
         {% endfor %}
         </ul>
 
-        <a href="#"
+        <button type="button"
             class="add-another-collection-widget"
-            data-list="#email-fields-list">Add another email</a>
+            data-list="#email-fields-list">Add another email</button>
 
         {# ... #}
     {{ form_end(form) }}
