@@ -388,3 +388,4 @@
 /quick_tour/the_controller /quick_tour/the_big_picture
 /quick_tour/the_view /quick_tour/flex_recipes
 /service_container/service_locators /service_container/service_subscribers_locators
+/templating/overriding /bundles/override

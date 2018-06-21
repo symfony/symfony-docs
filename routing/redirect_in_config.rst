@@ -185,7 +185,7 @@ The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::u
 and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\RedirectController::redirectAction`
 methods accept an additional argument called ``keepRequestMethod``. When it's
 set to ``true``, temporary redirects use ``307`` code instead of ``302`` and
-permanent redirects use ``308`` code instead of ``301``::
+permanent redirects use ``308`` code instead of ``301``:
 
 .. configuration-block::
 
