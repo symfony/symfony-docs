@@ -155,7 +155,7 @@ the ``Product`` entity (and getter & setter methods):
                 return $this->category;
             }
 
-            public function setCategory(?Category $category): self
+            public function setCategory(Category $category): self
             {
                 $this->category = $category;
 
