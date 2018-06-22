@@ -533,7 +533,7 @@ represented by a PHP callable instead of a string::
 
     Additionally, PHP isn't the only layer that can buffer output. Your web
     server might also buffer based on its configuration. Some servers, such as
-    Nginx, let you disable buffering at config level or adding a special HTTP
+    Nginx, let you disable buffering at the config level or by adding a special HTTP
     header in the response::
 
         // disables FastCGI buffering in Nginx only for this response
