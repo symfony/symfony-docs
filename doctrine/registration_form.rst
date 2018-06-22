@@ -93,7 +93,8 @@ With some validation added, your class may look something like this::
          */
         private $roles;
 
-        public function __construct() {
+        public function __construct()
+        {
             $this->roles = array('ROLE_USER');
         }
 
