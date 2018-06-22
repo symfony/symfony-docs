@@ -171,6 +171,10 @@ action:
 Keeping the Request Method when Redirecting
 -------------------------------------------
 
+.. versionadded:: 4.1
+    The feature to keep the request method when redirecting was introduced in
+    Symfony 4.1.
+
 The redirections performed in the previous examples use the ``301`` and ``302``
 HTTP status codes. For legacy reasons, these HTTP redirections change the method
 of ``POST`` requests to ``GET`` (because redirecting a ``POST`` request didn't
