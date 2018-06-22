@@ -293,7 +293,8 @@ For more information about services, see the :doc:`/service_container` article.
 Generating Controllers
 ----------------------
 
-To save time, you can install `Symfony Maker`_ and tell Symfony to generate a new controller class:
+To save time, you can install `Symfony Maker`_ and tell Symfony to generate a
+new controller class:
 
 .. code-block:: terminal
 
