@@ -26,7 +26,7 @@ When an object has a "main" many relation with related "things"
 * ``count()``
 * ``keys()``
 
-The usage of these methods are only allowed when it is clear that there
+The usage of these methods is only allowed when it is clear that there
 is a main relation:
 
 * a ``CookieJar`` has many ``Cookie`` objects;
