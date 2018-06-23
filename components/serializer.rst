@@ -1140,7 +1140,7 @@ parameter of the ``ObjectNormalizer``::
         public $bar;
     }
 
-    $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor());
+    $normalizer = new ObjectNormalizer(null, null, new ReflectionExtractor());
     $serializer = new Serializer(array(new DateTimeNormalizer(), $normalizer));
 
     $obj = $serializer->denormalize(
