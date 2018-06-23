@@ -17,7 +17,7 @@ it is broken down.
         # app/config/config_prod.yml
         monolog:
             handlers:
-                mail:
+                main:
                     type:         fingers_crossed
                     # 500 errors are logged at the critical level
                     action_level: critical
