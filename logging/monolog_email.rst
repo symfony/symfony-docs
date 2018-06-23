@@ -17,7 +17,7 @@ it is broken down.
         # config/packages/prod/monolog.yaml
         monolog:
             handlers:
-                mail:
+                main:
                     type:         fingers_crossed
                     # 500 errors are logged at the critical level
                     action_level: critical
