@@ -1,0 +1,132 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-11T18:51:06Z
+
+@ruff3d thanks for proposing this improvement. Let me ask @hhamon, who is an expert in both Symfony and design patterns, to see if he can verify this change. Thanks!
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2018-06-22T09:39:51Z
+
+The EventDispatcher is a clever mix of both, but the Mediator is more suited if we had to choose one.
+
+---------------------------------------------------------------------------
+
+by Pierstoval at 2018-06-22T09:40:10Z
+
+Both actually: https://stackoverflow.com/questions/9226479/mediator-vs-observer-object-oriented-design-patterns
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2018-06-22T09:40:59Z
+
+Because the actual observers are registered listeners.
+
+---------------------------------------------------------------------------
+
+by jakzal at 2018-06-22T09:45:55Z
+
+re #2817
+
+To me it always seemed like it implements none of the two.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2018-06-22T09:48:58Z
+
+EventDispatcher implements the Mediator pattern. See also the detailed PR description in https://github.com/symfony/symfony-docs/pull/2817
+
+In Observer, a subject class keeps track of it's own observers and notifies them. It would look like:
+```php
+class UpdateBlogPostHandler implements SubjectInterface
+{
+    use SubjectTrait;
+
+    public function handle(UpdateBlogPost $command)
+    {
+        // ... update blog post
+
+        $this->notify(new BlogPostUpdated($command->getId(), $command->getNewBody());
+    }
+}
+```
+
+Whereas the Mediator pattern uses a "god class" that keeps track of all subjects and all observers (like Symfony's `EventDispatcher`):
+```php
+class UpdateBlogPostHandler
+{
+    private $mediator;
+
+    public function __construct(EventDispatcherInterface $mediator)
+    {
+        $this->mediator = $mediator;
+    }
+
+    public function handle(UpdateBlogPost $command)
+    {
+        // ... update blog post
+
+        $this->mediator->notify(new BlogPostUpdated($command->getId(), $command->getNewBody());
+    }
+}
+```
+
+---------------------------------------------------------------------------
+
+by Pierstoval at 2018-06-22T09:49:53Z
+
+Change in docs can mention `a mix of Observer and Mediator patterns` with both links, WDYT?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-22T09:55:50Z
+
+The replies so far are: Mediator, Both and None ... so this is getting more and more complicated to decide 😱
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2018-06-22T09:57:37Z
+
+The Mediator is the simplest way to define what the dispatcher is. The docs should be about its usage, not about going deep in its internal architecture conception explanation, IMHO we'd better keep the docs as is.
+
+---------------------------------------------------------------------------
+
+by Toflar at 2018-06-22T12:15:57Z
+
+To me, the Symfony `EventDispatcher` clearly represents the `Mediator` pattern. The `Observer` pattern does not have any mediator class. You'd have many producers and the consumers register directly to the correct producer instead of having the mediator figure out which consumer needs to be called based on what producer dispatched an event. However, I feel like that these pattern names are used interchangeably. I would keep the docs as is though because imho it's technically correct.
+
+---------------------------------------------------------------------------
+
+by Pierstoval at 2018-06-22T13:40:36Z
+
+> I feel like that these pattern names are used interchangeably
+
+No, they're not, but for the case of the Event Dispatcher, it kinda implements both patterns, that's all 😉
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-25T06:56:39Z
+
+Most of you mentioned that the component implements the two patterns. Could we reword this as follows then?
+
+Original:
+
+```
+The Symfony EventDispatcher component implements the `Mediator`_ pattern
+in a simple and effective way to make all these things possible and to make
+your projects truly extensible.
+```
+
+Proposal:
+
+```
+The Symfony EventDispatcher component implements the `Mediator`_ and `Observer`_
+design patterns to make all these things possible and to make your projects
+truly extensible.
+```
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2018-06-25T09:11:57Z
+
+Sounds good to me.
