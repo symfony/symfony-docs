@@ -17,7 +17,7 @@ it is broken down.
         # config/packages/prod/monolog.yaml
         monolog:
             handlers:
-                mail:
+                main:
                     type:         fingers_crossed
                     # 500 errors are logged at the critical level
                     action_level: critical
@@ -60,7 +60,7 @@ it is broken down.
                 <monolog:excluded-404>^/</monolog:excluded-404>
                 -->
                 <monolog:handler
-                    name="mail"
+                    name="main"
                     type="fingers_crossed"
                     action-level="critical"
                     handler="deduplicated"
@@ -96,7 +96,7 @@ it is broken down.
         // config/packages/prod/monolog.php
         $container->loadFromExtension('monolog', array(
             'handlers' => array(
-                'mail' => array(
+                'main' => array(
                     'type'         => 'fingers_crossed',
                     // 500 errors are logged at the critical level
                     'action_level' => 'critical',
@@ -125,7 +125,7 @@ it is broken down.
             ),
         ));
 
-The ``mail`` handler is a ``fingers_crossed`` handler which means that
+The ``main`` handler is a ``fingers_crossed`` handler which means that
 it is only triggered when the action level, in this case ``critical`` is reached.
 The ``critical`` level is only triggered for 5xx HTTP code errors. If this level
 is reached once, the ``fingers_crossed`` handler will log all messages
