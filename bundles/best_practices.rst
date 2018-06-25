@@ -381,13 +381,17 @@ Bundles must be versioned following the `Semantic Versioning Standard`_.
 Services
 --------
 
-If the bundle defines services, they must be prefixed with the bundle alias.
-For example, AcmeBlogBundle services must be prefixed with ``acme_blog``.
+If the bundle defines services, they should use the FQCN of the
+underlying class as an ID. If they cannot, or if the class is defined in
+another vendor, they must be prefixed with the bundle alias.
+
+For example, AcmeBlogBundle services created from classes defined in the
+``AnotherVendor`` namespace must be prefixed with ``acme_blog``.
 
 In addition, services not meant to be used by the application directly, should
 be :ref:`defined as private <container-private-services>`. For public services,
 :ref:`aliases should be created <service-autowiring-alias>` from the interface/class
-to the service id. For example, in MonologBundle, an alias is created from
+to the service id when applicable. For example, in MonologBundle, an alias is created from
 ``Psr\Log\LoggerInterface`` to ``logger`` so that the ``LoggerInterface`` type-hint
 can be used for autowiring.
 
