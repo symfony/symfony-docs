@@ -1,11 +1,27 @@
 .. index::
     single: Configuration reference; WebProfiler
 
-WebProfilerBundle Configuration ("web_profiler")
-================================================
+Profiler Configuration Reference (WebProfilerBundle)
+====================================================
 
 The WebProfilerBundle provides detailed technical information about each request
-execution and displays it in both the web debug toolbar and the profiler.
+execution and displays it in both the web debug toolbar and the
+:doc:`profiler </profiler>`. All these options are configured under the
+``web_profiler`` key in your application configuration.
+
+.. code-block:: terminal
+
+    # displays the default config values defined by Symfony
+    $ php app/console config:dump web_profiler
+
+    # displays the actual config values used by your application
+    $ php app/console debug:config web_profiler
+
+.. note::
+
+    When using XML, you must use the ``http://symfony.com/schema/dic/webprofiler``
+    namespace and the related XSD schema is available at:
+    ``http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd``
 
 .. caution::
 
@@ -68,40 +84,3 @@ verbose
 
 This option is **deprecated** and has no effect on the toolbar or the profiler,
 so you can safely remove it from your configuration.
-
-Full Default Configuration
---------------------------
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        web_profiler:
-            toolbar:              false
-            position:             bottom
-            intercept_redirects:  false
-            excluded_ajax_paths:  ^/(app(_[\\w]+)?\\.php/)?_wdt
-
-            # DEPRECATED, it can be removed safely from your configuration
-            verbose:              true
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/webprofiler
-                http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd">
-
-            <web-profiler:config
-                toolbar="false"
-                verbose="true"
-                intercept-redirects="false"
-                excluded-ajax-paths="^/(app(_[\\w]+)?\\.php/)?_wdt"
-            />
-        </container>

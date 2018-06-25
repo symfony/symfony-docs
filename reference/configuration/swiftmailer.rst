@@ -1,19 +1,26 @@
 .. index::
     single: Configuration reference; Swift Mailer
 
-SwiftmailerBundle Configuration ("swiftmailer")
-===============================================
+Mailer Configuration Reference (SwiftmailerBundle)
+==================================================
 
-This reference document is a work in progress. It should be accurate, but
-all options are not yet fully covered. For a full list of the default configuration
-options, see `Full Default Configuration`_
+The SwiftmailerBundle integrates the Swiftmailer library in Symfony applications
+to :doc:`send emails </email>`. All these options are configured under the
+``swiftmailer`` key in your application configuration.
 
-The ``swiftmailer`` key configures Symfony's integration with Swift Mailer,
-which is responsible for creating and delivering email messages.
+.. code-block:: terminal
 
-The following section lists all options that are available to configure
-a mailer. It is also possible to configure several mailers (see
-`Using Multiple Mailers`_).
+    # displays the default config values defined by Symfony
+    $ php app/console config:dump swiftmailer
+
+    # displays the actual config values used by your application
+    $ php app/console debug:config swiftmailer
+
+.. note::
+
+    When using XML, you must use the ``http://symfony.com/schema/dic/swiftmailer``
+    namespace and the related XSD schema is available at:
+    ``http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd``
 
 Configuration
 -------------
@@ -242,64 +249,6 @@ the information will be available in the profiler.
     ``%env()%`` syntax: ``url``, ``transport``, ``username``, ``password``,
     ``host``, ``port``, ``timeout``, ``source_ip``, ``local_domain``.
     For details, see the :doc:`/configuration/external_parameters` article.
-
-Full Default Configuration
---------------------------
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        swiftmailer:
-            transport:            smtp
-            username:             ~
-            password:             ~
-            host:                 localhost
-            port:                 false
-            encryption:           ~
-            auth_mode:            ~
-            spool:
-                type:                 file
-                path:                 '%kernel.cache_dir%/swiftmailer/spool'
-            sender_address:       ~
-            antiflood:
-                threshold:            99
-                sleep:                0
-            delivery_addresses:   []
-            disable_delivery:     ~
-            logging:              '%kernel.debug%'
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
-
-            <swiftmailer:config
-                transport="smtp"
-                username=""
-                password=""
-                host="localhost"
-                port="false"
-                encryption=""
-                auth-mode=""
-                sender-address=""
-                disable-delivery=""
-                logging="%kernel.debug%"
-                >
-                <swiftmailer:spool
-                    path="%kernel.cache_dir%/swiftmailer/spool"
-                    type="file" />
-
-                <swiftmailer:antiflood
-                    sleep="0"
-                    threshold="99" />
-            </swiftmailer:config>
-        </container>
 
 Using Multiple Mailers
 ----------------------

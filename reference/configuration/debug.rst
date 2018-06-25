@@ -1,19 +1,26 @@
 .. index::
     single: Configuration reference; Framework
 
-DebugBundle Configuration ("debug")
-===================================
+Debug Configuration Reference (DebugBundle)
+===========================================
 
-The DebugBundle allows greater integration of the
-:doc:`VarDumper component </components/var_dumper>` in the
-Symfony full-stack framework and can be configured under the ``debug`` key
-in your application configuration. When using XML, you must use the
-``http://symfony.com/schema/dic/debug`` namespace.
+The DebugBundle integrates the :doc:`VarDumper component </components/var_dumper>`
+in Symfony applications. All these options are configured under the ``debug``
+key in your application configuration.
 
-.. tip::
+.. code-block:: terminal
 
-   The XSD schema is available at
-   ``http://symfony.com/schema/dic/debug/debug-1.0.xsd``.
+    # displays the default config values defined by Symfony
+    $ php app/console config:dump debug
+
+    # displays the actual config values used by your application
+    $ php app/console debug:config debug
+
+.. note::
+
+    When using XML, you must use the ``http://symfony.com/schema/dic/debug``
+    namespace and the related XSD schema is available at:
+    ``http://symfony.com/schema/dic/debug/debug-1.0.xsd``
 
 Configuration
 -------------

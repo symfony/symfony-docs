@@ -1,8 +1,8 @@
 .. index::
     single: Configuration reference; Framework
 
-FrameworkBundle Configuration ("framework")
-===========================================
+Framework Configuration Reference (FrameworkBundle)
+===================================================
 
 The FrameworkBundle defines the main framework configuration, from sessions and
 translations to forms, validation, routing and more. All these options are
