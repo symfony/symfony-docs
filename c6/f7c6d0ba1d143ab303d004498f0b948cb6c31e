@@ -1,0 +1,60 @@
+---------------------------------------------------------------------------
+
+by ryancastle at 2018-06-09T13:23:54Z
+
+Agree. The documentation as it stands sends devs on a totally unnecessary search for the "right" way to create environment variables on Apache. .env in production isn't just reasonable, in many cases it is the best option available.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-11T08:34:31Z
+
+@bobvandevijver thanks for this improvement! Instead of removing the old note, I propose to reword it to explain the drawbacks of using this in prod. Thanks!
+
+---------------------------------------------------------------------------
+
+by bobvandevijver at 2018-06-11T18:45:36Z
+
+Actually, I disagree with the text you've added @javiereguiluz... It now states one case in which it **might** be a drawback, but that is not given fact. For example, using dotenv is probably faster than enabling .htaccess, less error prone and it gives you more flexibility and equality in the web/console environments (no need to manually load your env file, keep it in sync with your Apache/nginx configuration, reloading Apache/nginx on every change).
+
+If we want to add such a note, I suggest adding a list (or maybe a table) on the pros and cons for every environment, such that the developers can actually make and educated decision.
+
+---------------------------------------------------------------------------
+
+by ryancastle at 2018-06-11T20:06:06Z
+
+In my testing the performance penalty is negligible. Delays of much less than 1ms with a typical .env file.
+
+Perhaps we could make a comment that "for very high performance requirements" using dotenv may become a bottleneck.
+
+Perhaps it would also be worth stating our assumptions. While the 12 factor app recommendations suggest avoiding .env-type configuration files, the practical alternatives are not always an improvement. An implied requirement of the 12 factor app is also a load balancer (because app server restarts are necessary). So if developers are not at the point of requiring or wanting to setup a load balancer then a .env file may be the best option.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-25T15:13:10Z
+
+@bobvandevijver about these things you said:
+
+> It now states one case in which it might be a drawback, but that is not given fact.
+
+Reading one file, parsing it and creating the env vars for each request received in the app is going to introduce some penalty. I'm sure this is something we all can agree on.
+
+> For example, using dotenv is probably faster than enabling .htaccess
+
+You are right. We never recommend to use .htaccess but do the config in the web server itself.
+
+@ryancastle thanks for benchmarking this:
+
+> In my testing the performance penalty is negligible. Delays of much less than 1ms with a typical .env file.
+
+We should factor in the concurrency. What if the app receives peaks with 200 requests per second? What if the underlying operating system (including the restrictive OS used by Cloud providers) doesn't like (or even disables) so many concurrent file reads?
+
+For these reasons I'm merging the current pull request. It literally says:
+
+> However, in production it's recommended to configure real environment variables to avoid the performance overhead of parsing the ``.env`` file for every request.
+
+So:
+
+1) We "recommend", but not "force" you, to not use this in production.
+2) We explain why: parsing a file for each request introduces a "performance overhead". Without giving specific numbers because they depend on multiple details.
+
+@bobvandevijver I hope you understand the given reasons to merge this. Thanks!
