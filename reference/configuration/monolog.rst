@@ -11,7 +11,7 @@ in your application configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php app/console config:dump monolog
+    $ php app/console config:dump-reference monolog
 
     # displays the actual config values used by your application
     $ php app/console debug:config monolog

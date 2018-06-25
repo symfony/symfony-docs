@@ -12,7 +12,7 @@ execution and displays it in both the web debug toolbar and the
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php app/console config:dump web_profiler
+    $ php app/console config:dump-reference web_profiler
 
     # displays the actual config values used by your application
     $ php app/console debug:config web_profiler

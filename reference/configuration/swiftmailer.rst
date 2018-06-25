@@ -11,7 +11,7 @@ to :doc:`send emails </email>`. All these options are configured under the
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php app/console config:dump swiftmailer
+    $ php app/console config:dump-reference swiftmailer
 
     # displays the actual config values used by your application
     $ php app/console debug:config swiftmailer

@@ -13,7 +13,7 @@ configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php app/console config:dump doctrine
+    $ php app/console config:dump-reference doctrine
 
     # displays the actual config values used by your application
     $ php app/console debug:config doctrine

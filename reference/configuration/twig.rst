@@ -11,7 +11,7 @@ the ``twig`` key in your application configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php app/console config:dump twig
+    $ php app/console config:dump-reference twig
 
     # displays the actual config values used by your application
     $ php app/console debug:config twig

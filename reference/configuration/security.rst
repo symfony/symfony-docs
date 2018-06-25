@@ -11,7 +11,7 @@ key in your application configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php app/console config:dump security
+    $ php app/console config:dump-reference security
 
     # displays the actual config values used by your application
     $ php app/console debug:config security
