@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by apfelbox at 2018-06-23T11:58:53Z
+
+I actually think, that the previous version is correct. In the end, the top-level `fingers_crossed` handler is wrapping swift, so it is indeed a "mail" handler.
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2018-06-23T12:07:18Z
+
+Yes but the convention is to have a `fingers_crossed` called `main` https://github.com/symfony/symfony-standard/blob/3.4/app/config/config_prod.yml#L12, so I do think it is typo too.
+
+---------------------------------------------------------------------------
+
+by apfelbox at 2018-06-23T12:13:57Z
+
+@HeahDude ah, didn't know that. Nevermind then 😉
