@@ -25,9 +25,9 @@ before or after a method is executed, without interfering with other plugins.
 This is not an easy problem to solve with single inheritance, and even if
 multiple inheritance was possible with PHP, it comes with its own drawbacks.
 
-The Symfony EventDispatcher component implements the `Mediator`_ pattern
-in a simple and effective way to make all these things possible and to make
-your projects truly extensible.
+The Symfony EventDispatcher component implements the `Mediator`_ and `Observer`_
+design patterns to make all these things possible and to make your projects
+truly extensible.
 
 Take a simple example from :doc:`the HttpKernel component </components/http_kernel>`.
 Once a ``Response`` object has been created, it may be useful to allow other
@@ -517,6 +517,7 @@ Learn More
 * :ref:`The kernel.event_subscriber tag <dic-tags-kernel-event-subscriber>`
 
 .. _Mediator: https://en.wikipedia.org/wiki/Mediator_pattern
+.. _Observer: https://en.wikipedia.org/wiki/Observer_pattern
 .. _Closures: https://php.net/manual/en/functions.anonymous.php
 .. _PHP callable: https://php.net/manual/en/language.pseudo-types.php#language.types.callback
 .. _Packagist: https://packagist.org/packages/symfony/event-dispatcher
