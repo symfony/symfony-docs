@@ -240,8 +240,7 @@ choice_loader
 ~~~~~~~~~~~~~
 
 .. versionadded:: 2.7
-
-    The ``choice_loader`` option was added in Symfony 2.7.
+    The ``choice_loader`` option was introduced in Symfony 2.7.
 
 **type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
 
@@ -261,7 +260,6 @@ choices_as_values
 **type**: ``boolean`` **default**: false
 
 .. versionadded:: 2.7
-
     The ``choices_as_values`` option was introduced in Symfony 2.7.
 
 The ``choices_as_values`` option was added to keep backward compatibility with the
