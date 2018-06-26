@@ -6,7 +6,7 @@ Doctrine Configuration Reference (DoctrineBundle)
 =================================================
 
 The DoctrineBundle integrates both the :doc:`DBAL </doctrine/dbal>` and
-:doc:`ORM </doctrine>` Doctrine projects into Symfony applications. All these
+:doc:`ORM </doctrine>` Doctrine projects in Symfony applications. All these
 options are configured under the ``doctrine`` key in your application
 configuration.
 
