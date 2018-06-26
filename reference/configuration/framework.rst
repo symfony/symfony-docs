@@ -1566,7 +1566,7 @@ for translation files.
 default_path
 .....
 
-**type**: ``string`` **default**: ``[]``
+**type**: ``string`` **default**: ``%kernel.project_dir%/translations``
 
 This option allows to define a path where the component will write
 the translation files.
