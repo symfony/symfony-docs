@@ -1,11 +1,27 @@
 .. index::
     single: Configuration reference; WebProfiler
 
-WebProfilerBundle Configuration ("web_profiler")
-================================================
+Profiler Configuration Reference (WebProfilerBundle)
+====================================================
 
 The WebProfilerBundle provides detailed technical information about each request
-execution and displays it in both the web debug toolbar and the profiler.
+execution and displays it in both the web debug toolbar and the
+:doc:`profiler </profiler>`. All these options are configured under the
+``web_profiler`` key in your application configuration.
+
+.. code-block:: terminal
+
+    # displays the default config values defined by Symfony
+    $ php bin/console config:dump-reference web_profiler
+
+    # displays the actual config values used by your application
+    $ php bin/console debug:config web_profiler
+
+.. note::
+
+    When using XML, you must use the ``http://symfony.com/schema/dic/webprofiler``
+    namespace and the related XSD schema is available at:
+    ``http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd``
 
 .. caution::
 
@@ -50,35 +66,3 @@ When the toolbar logs Ajax requests, it matches their URLs against this regular
 expression. If the URL matches, the request is not displayed in the toolbar. This
 is useful when the application makes lots of Ajax requests or they are heavy and
 you want to exclude some of them.
-
-Full Default Configuration
---------------------------
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/dev/web_profiler.yaml
-        web_profiler:
-            toolbar:              false
-            intercept_redirects:  false
-            excluded_ajax_paths:  ^/((index|app(_[\w]+)?)\.php/)?_wdt
-
-    .. code-block:: xml
-
-        <!-- config/packages/dev/web_profiler.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:webprofiler="http://symfony.com/schema/dic/webprofiler"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/webprofiler
-                http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd">
-
-            <web-profiler:config
-                toolbar="false"
-                intercept-redirects="false"
-                excluded-ajax-paths="^/((index|app(_[\w]+)?)\.php/)?_wdt"
-            />
-        </container>
