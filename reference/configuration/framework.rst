@@ -94,6 +94,7 @@ Configuration
     * `fallbacks`_
     * `logging`_
     * :ref:`paths <reference-translator-paths>`
+    * :ref:`default_path <reference-translator-default_path>`
 * `property_access`_
     * `magic_call`_
     * `throw_exception_on_invalid_index`_
@@ -1559,6 +1560,16 @@ paths
 
 This option allows to define an array of paths where the component will look
 for translation files.
+
+.. _reference-translator-default_path:
+
+default_path
+.....
+
+**type**: ``string`` **default**: ``[]``
+
+This option allows to define a path where the component will write
+the translation files.
 
 property_access
 ~~~~~~~~~~~~~~~
