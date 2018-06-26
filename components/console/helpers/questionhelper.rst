@@ -382,3 +382,9 @@ This way you can test any user interaction (even complex ones) by passing the ap
     The :class:`Symfony\\Component\\Console\\Tester\\CommandTester` automatically
     simulates a user hitting ``ENTER`` after each input, no need for passing
     an additional input.
+
+.. caution::
+
+    On Windows systems Symfony uses a special binary to implement hidden
+    questions. This means that those questions don't use the default ``Input``
+    console object and therefore you can't test them on Windows.

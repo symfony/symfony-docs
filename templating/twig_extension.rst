@@ -21,17 +21,20 @@ money:
     {# pass in the 3 optional arguments #}
     {{ product.price|price(2, ',', '.') }}
 
-Create a class that extends ``\Twig_Extension`` and fill in the logic::
+Create a class that extends ``AbstractExtension`` and fill in the logic::
 
     // src/AppBundle/Twig/AppExtension.php
     namespace AppBundle\Twig;
 
-    class AppExtension extends \Twig_Extension
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
+
+    class AppExtension extends AbstractExtension
     {
         public function getFilters()
         {
             return array(
-                new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
+                new TwigFilter('price', array($this, 'priceFilter')),
             );
         }
 
@@ -91,14 +94,16 @@ callable defined in ``getFilters()``::
     namespace AppBundle\Twig;
 
     use AppBundle\Twig\AppRuntime;
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
 
-    class AppExtension extends \Twig_Extension
+    class AppExtension extends AbstractExtension
     {
         public function getFilters()
         {
             return array(
                 // the logic of this filter is now implemented in a different class
-                new \Twig_SimpleFilter('price', array(AppRuntime::class, 'priceFilter')),
+                new TwigFilter('price', array(AppRuntime::class, 'priceFilter')),
             );
         }
     }
@@ -110,7 +115,9 @@ previous ``priceFilter()`` method::
     // src/AppBundle/Twig/AppRuntime.php
     namespace AppBundle\Twig;
 
-    class AppRuntime
+    use Twig\Extension\RuntimeExtensionInterface;
+
+    class AppRuntime implements RuntimeExtensionInterface
     {
         public function __construct()
         {
@@ -127,53 +134,13 @@ previous ``priceFilter()`` method::
         }
     }
 
-Register the Lazy-Loaded Extension as a Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. versionadded:: 3.4
+    The ``RuntimeExtensionInterface`` was introduced in Symfony 3.4.
 
-Finally, register your new class as a service and tag it with ``twig.runtime``
-(and optionally inject any service needed by the Twig extension runtime):
+If you're using the default ``services.yaml`` configuration, this will already
+work! Otherwise, :ref:`create a service <service-container-creating-service>`
+for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.twig_runtime:
-                class: AppBundle\Twig\AppRuntime
-                public: false
-                tags:
-                    - { name: twig.runtime }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.twig_runtime"
-                    class="AppBundle\Twig\AppRuntime"
-                    public="false">
-                    <tag name="twig.runtime" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Twig\AppExtension;
-
-        $container
-            ->register('app.twig_runtime', AppRuntime::class)
-            ->setPublic(false)
-            ->addTag('twig.runtime');
-
-.. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-.. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
-.. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2
-.. _`Twig Extensions`: https://twig.sensiolabs.org/doc/2.x/advanced.html#creating-an-extension
+.. _`global variables`: https://twig.symfony.com/doc/2.x/advanced.html#id1
+.. _`functions`: https://twig.symfony.com/doc/2.x/advanced.html#id2
+.. _`Twig Extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension

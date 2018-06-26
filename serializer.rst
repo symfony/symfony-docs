@@ -229,48 +229,9 @@ Enabling the Metadata Cache
 ---------------------------
 
 Metadata used by the Serializer component such as groups can be cached to
-enhance application performance. Any service implementing the ``Doctrine\Common\Cache\Cache``
-interface can be used.
-
-A service leveraging `APCu`_ (and APC for PHP < 5.5) is built-in.
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config_prod.yml
-        framework:
-            # ...
-            serializer:
-                cache: serializer.mapping.cache.apc
-
-    .. code-block:: xml
-
-        <!-- app/config/config_prod.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- ... -->
-                <framework:serializer cache="serializer.mapping.cache.apc" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config_prod.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'serializer' => array(
-                'cache' => 'serializer.mapping.cache.apc',
-            ),
-        ));
+enhance application performance. By default, the serializer uses the ``cache.system``
+cache pool which is configured using the :ref:`cache.system <reference-cache-systen>`
+option.
 
 Enabling a Name Converter
 -------------------------

@@ -876,19 +876,11 @@ Access Control in Templates
 If you want to check if the current user has a role inside a template, use
 the built-in ``is_granted()`` helper function:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% if is_granted('ROLE_ADMIN') %}
-            <a href="...">Delete</a>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
-            <a href="...">Delete</a>
-        <?php endif ?>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="...">Delete</a>
+    {% endif %}
 
 Securing other Services
 .......................
@@ -1075,19 +1067,11 @@ Retrieving the User in a Template
 In a Twig Template this object can be accessed via the :ref:`app.user <reference-twig-global-app>`
 key:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <p>Username: {{ app.user.username }}</p>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <?php if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')): ?>
-            <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
-        <?php endif; ?>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <p>Username: {{ app.user.username }}</p>
+    {% endif %}
 
 .. _security-logging-out:
 
@@ -1258,6 +1242,13 @@ rules by creating a role hierarchy:
 In the above configuration, users with ``ROLE_ADMIN`` role will also have the
 ``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``
 and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
+
+.. note::
+
+    The value of the ``role_hierarchy`` option is defined statically, so you
+    can't for example store the role hierarchy in a database. If you need that,
+    create a custom :doc:`security voter </security/voters>` that looks for the
+    user roles in the database.
 
 Final Words
 -----------

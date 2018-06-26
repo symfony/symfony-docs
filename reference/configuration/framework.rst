@@ -27,116 +27,164 @@ configured under the ``framework`` key in your application configuration.
 Configuration
 -------------
 
-* `secret`_
+.. class:: list-config-options list-config-options--complex
+
+* `annotations`_
+
+  * :ref:`cache <reference-annotations-cache>`
+  * `debug`_
+  * `file_cache_dir`_
+
+* `assets`_
+
+  * `base_path`_
+  * `base_urls`_
+  * `json_manifest_path`_
+  * `packages`_
+  * `version_format`_
+  * `version_strategy`_
+  * `version`_
+
+* :ref:`cache <reference-cache>`
+
+  * :ref:`app <reference-cache-app>`
+  * `default_doctrine_provider`_
+  * `default_memcached_provider`_
+  * `default_psr6_provider`_
+  * `default_redis_provider`_
+  * `directory`_
+  * `pools`_
+
+    * :ref:`name <reference-cache-pools-name>`
+
+      * `adapter`_
+      * `clearer`_
+      * `default_lifetime`_
+      * `provider`_
+      * `public`_
+
+  * `prefix_seed`_
+  * `system`_
+
+* `csrf_protection`_
+
+  * :ref:`enabled <reference-csrf_protection-enabled>`
+
+* `default_locale`_
+* `esi`_
+
+  * :ref:`enabled <reference-esi-enabled>`
+
+* :ref:`form <reference-framework-form>`
+
+  * :ref:`enabled <reference-form-enabled>`
+
+* `fragments`_
+
+  * :ref:`enabled <reference-fragments-enabled>`
+  * :ref:`path <reference-fragments-path>`
+
 * `http_method_override`_
 * `ide`_
-* `test`_
-* `default_locale`_
-* `trusted_hosts`_
-* :ref:`form <reference-framework-form>`
-    * :ref:`enabled <reference-form-enabled>`
-* `csrf_protection`_
-    * :ref:`enabled <reference-csrf_protection-enabled>`
-* `esi`_
-    * :ref:`enabled <reference-esi-enabled>`
-* `fragments`_
-    * :ref:`enabled <reference-fragments-enabled>`
-    * :ref:`path <reference-fragments-path>`
-* `profiler`_
-    * :ref:`enabled <reference-profiler-enabled>`
-    * `collect`_
-    * `only_exceptions`_
-    * `only_master_requests`_
-    * `dsn`_
-    * `matcher`_
-        * `ip`_
-        * :ref:`path <reference-profiler-matcher-path>`
-        * `service`_
-* `request`_:
-    * `formats`_
-* `router`_
-    * `resource`_
-    * `type`_
-    * `http_port`_
-    * `https_port`_
-    * `strict_requirements`_
-* `session`_
-    * `storage_id`_
-    * `handler_id`_
-    * `name`_
-    * `cookie_lifetime`_
-    * `cookie_path`_
-    * `cookie_domain`_
-    * `cookie_secure`_
-    * `cookie_httponly`_
-    * `gc_divisor`_
-    * `gc_probability`_
-    * `gc_maxlifetime`_
-    * `save_path`_
-    * `metadata_update_threshold`_
-* `assets`_
-    * `base_path`_
-    * `base_urls`_
-    * `packages`_
-    * `version_strategy`_
-    * `version`_
-    * `version_format`_
-    * `json_manifest_path`_
-* `templating`_
-    * `hinclude_default_template`_
-    * :ref:`form <reference-templating-form>`
-        * `resources`_
-    * :ref:`cache <reference-templating-cache>`
-    * `engines`_
-    * `loaders`_
-* `translator`_
-    * :ref:`enabled <reference-translator-enabled>`
-    * `fallbacks`_
-    * `logging`_
-    * :ref:`paths <reference-translator-paths>`
-* `property_access`_
-    * `magic_call`_
-    * `throw_exception_on_invalid_index`_
-* `validation`_
-    * :ref:`enabled <reference-validation-enabled>`
-    * :ref:`cache <reference-validation-cache>`
-    * :ref:`enable_annotations <reference-validation-enable_annotations>`
-    * `translation_domain`_
-    * `strict_email`_
-    * :ref:`mapping <reference-validation-mapping>`
-        * :ref:`paths <reference-validation-mapping-paths>`
-* `annotations`_
-    * :ref:`cache <reference-annotations-cache>`
-    * `file_cache_dir`_
-    * `debug`_
-* `serializer`_
-    * :ref:`enabled <reference-serializer-enabled>`
-    * :ref:`cache <reference-serializer-cache>`
-    * :ref:`enable_annotations <reference-serializer-enable_annotations>`
-    * :ref:`name_converter <reference-serializer-name_converter>`
-    * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
-    * :ref:`mapping <reference-serializer-mapping>`
-        * :ref:`paths <reference-serializer-mapping-paths>`
-* `php_errors`_
-    * `log`_
-    * `throw`_
-* :ref:`cache <reference-cache>`
-    * :ref:`app <reference-cache-app>`
-    * `system`_
-    * `directory`_
-    * `default_doctrine_provider`_
-    * `default_psr6_provider`_
-    * `default_redis_provider`_
-    * `default_memcached_provider`_
-    * `pools`_
-        * :ref:`name <reference-cache-pools-name>`
-            * `adapter`_
-            * `public`_
-            * `default_lifetime`_
-            * `provider`_
-            * `clearer`_
-    * `prefix_seed`_
 * :ref:`lock <reference-lock>`
+* `php_errors`_
+
+  * `log`_
+  * `throw`_
+
+* `profiler`_
+
+  * `collect`_
+  * `dsn`_
+  * :ref:`enabled <reference-profiler-enabled>`
+  * `matcher`_
+
+    * `ip`_
+    * :ref:`path <reference-profiler-matcher-path>`
+    * `service`_
+
+  * `only_exceptions`_
+  * `only_master_requests`_
+
+* `property_access`_
+
+  * `magic_call`_
+  * `throw_exception_on_invalid_index`_
+
+* `request`_:
+
+  * `formats`_
+
+* `router`_
+
+  * `http_port`_
+  * `https_port`_
+  * `resource`_
+  * `strict_requirements`_
+  * `type`_
+
+* `secret`_
+* `serializer`_
+
+  * :ref:`cache <reference-serializer-cache>`
+  * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
+  * :ref:`enable_annotations <reference-serializer-enable_annotations>`
+  * :ref:`enabled <reference-serializer-enabled>`
+  * :ref:`mapping <reference-serializer-mapping>`
+
+    * :ref:`paths <reference-serializer-mapping-paths>`
+
+  * :ref:`name_converter <reference-serializer-name_converter>`
+
+* `session`_
+
+  * `cookie_domain`_
+  * `cookie_httponly`_
+  * `cookie_lifetime`_
+  * `cookie_path`_
+  * `cookie_secure`_
+  * `gc_divisor`_
+  * `gc_maxlifetime`_
+  * `gc_probability`_
+  * `handler_id`_
+  * `metadata_update_threshold`_
+  * `name`_
+  * `save_path`_
+  * `storage_id`_
+
+* `templating`_
+
+  * :ref:`cache <reference-templating-cache>`
+  * `engines`_
+  * :ref:`form <reference-templating-form>`
+
+    * `resources`_
+
+  * `hinclude_default_template`_
+  * `loaders`_
+
+* `test`_
+* `translator`_
+
+  * :ref:`enabled <reference-translator-enabled>`
+  * `fallbacks`_
+  * `logging`_
+  * :ref:`paths <reference-translator-paths>`
+  * :ref:`default_path <reference-translator-default_path>`
+
+* `trusted_hosts`_
+* `trusted_proxies`_
+* `validation`_
+
+  * :ref:`cache <reference-validation-cache>`
+  * :ref:`enable_annotations <reference-validation-enable_annotations>`
+  * :ref:`enabled <reference-validation-enabled>`
+  * :ref:`mapping <reference-validation-mapping>`
+
+    * :ref:`paths <reference-validation-mapping-paths>`
+
+  * `strict_email`_
+  * `translation_domain`_
 
 secret
 ~~~~~~
@@ -1059,15 +1107,9 @@ You can group assets into packages, to specify different base URLs for them:
 
 Now you can use the ``avatars`` package in your templates:
 
-.. configuration-block:: php
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <img src="{{ asset('...', 'avatars') }}">
-
-    .. code-block:: html+php
-
-        <img src="<?php echo $view['assets']->getUrl('...', 'avatars') ?>">
+    <img src="{{ asset('...', 'avatars') }}">
 
 Each package can configure the following options:
 
@@ -1093,15 +1135,9 @@ equivalent) as well as assets rendered with Assetic.
 
 For example, suppose you have the following:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
-
-    .. code-block:: php
-
-        <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
+    <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
 
 By default, this will render a path to your image such as ``/images/logo.png``.
 Now, activate the ``version`` option:
@@ -1560,6 +1596,19 @@ paths
 This option allows to define an array of paths where the component will look
 for translation files.
 
+.. _reference-translator-default_path:
+
+default_path
+............
+
+.. versionadded:: 3.4
+    The ``default_path`` option was introduced in Symfony 3.4.
+
+**type**: ``string`` **default**: ``%kernel.project_dir%/translations``
+
+This option allows to define the path where the application translations files
+are stored.
+
 property_access
 ~~~~~~~~~~~~~~~
 
@@ -1825,6 +1874,8 @@ ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``
     given the adapter they are based on. Internally, a pool wraps the definition
     of an adapter.
 
+.. _reference-cache-systen:
+
 system
 ......
 
@@ -1970,176 +2021,6 @@ lock
 
 The default lock adapter. If not defined, the value is set to ``semaphore`` when
 available, or to ``flock`` otherwise. Store's DSN are also allowed.
-
-Full Default Configuration
---------------------------
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        framework:
-            secret:               ~
-            http_method_override: true
-            trusted_proxies:      []
-            ide:                  ~
-            test:                 ~
-            default_locale:       en
-
-            csrf_protection:
-                enabled:              false
-
-            # form configuration
-            form:
-                enabled:              false
-                csrf_protection:
-                    enabled:          true
-                    field_name:       ~
-
-            # esi configuration
-            esi:
-                enabled:              false
-
-            # fragments configuration
-            fragments:
-                enabled:              false
-                path:                 /_fragment
-
-            # profiler configuration
-            profiler:
-                enabled:              false
-                collect:              true
-                only_exceptions:      false
-                only_master_requests: false
-                dsn:                  file:%kernel.cache_dir%/profiler
-                matcher:
-                    ip:                   ~
-
-                    # use the urldecoded format
-                    path:                 ~ # Example: ^/path to resource/
-                    service:              ~
-
-            # router configuration
-            router:
-                resource:             ~ # Required
-                type:                 ~
-                http_port:            80
-                https_port:           443
-
-                # * set to true to throw an exception when a parameter does not
-                #   match the requirements
-                # * set to false to disable exceptions when a parameter does not
-                #   match the requirements (and return null instead)
-                # * set to null to disable parameter checks against requirements
-                #
-                # 'true' is the preferred configuration in development mode, while
-                # 'false' or 'null' might be preferred in production
-                strict_requirements:  true
-
-            # session configuration
-            session:
-                storage_id:           session.storage.native
-                handler_id:           session.handler.native_file
-                name:                 ~
-                cookie_lifetime:      ~
-                cookie_path:          ~
-                cookie_domain:        ~
-                cookie_secure:        ~
-                cookie_httponly:      ~
-                gc_divisor:           ~
-                gc_probability:       ~
-                gc_maxlifetime:       ~
-                save_path:            '%kernel.cache_dir%/sessions'
-
-            # serializer configuration
-            serializer:
-               enabled:                   false
-               cache:                      ~
-               name_converter:             ~
-               circular_reference_handler: ~
-
-            # assets configuration
-            assets:
-                base_path:          ~
-                base_urls:          []
-                version:            ~
-                version_format:     '%%s?%%s'
-                packages:
-
-                    # Prototype
-                    name:
-                        base_path:            ~
-                        base_urls:            []
-                        version:              ~
-                        version_format:       '%%s?%%s'
-
-            # templating configuration
-            templating:
-                hinclude_default_template:  ~
-                form:
-                    resources:
-
-                        # Default:
-                        - FrameworkBundle:Form
-                cache:                ~
-                engines:              # Required
-
-                    # Example:
-                    - twig
-                loaders:              []
-
-            # translator configuration
-            translator:
-                enabled:              false
-                fallbacks:            [en]
-                logging:              "%kernel.debug%"
-                paths:                []
-
-            # validation configuration
-            validation:
-                enabled:              false
-                cache:                ~
-                enable_annotations:   false
-                translation_domain:   validators
-                mapping:
-                    paths:            []
-
-            # annotation configuration
-            annotations:
-                cache:                file
-                file_cache_dir:       '%kernel.cache_dir%/annotations'
-                debug:                '%kernel.debug%'
-
-            # PHP errors handling configuration
-            php_errors:
-                log:                  false
-                throw:                '%kernel.debug%'
-
-            # cache configuration
-            cache:
-                app: cache.adapter.filesystem
-                system: cache.adapter.system
-                directory: '%kernel.cache_dir%/pools'
-                default_doctrine_provider: ~
-                default_psr6_provider: ~
-                default_redis_provider: 'redis://localhost'
-                default_memcached_provider: 'memcached://localhost'
-                pools:
-                    # Prototype
-                    name:
-                        adapter: cache.app
-                        public: false
-                        default_lifetime: ~
-                        provider: ~
-                        clearer: ~
-
-            # lock configuration
-            lock:
-                invoice: 'redis://localhost'
-                report: semaphore
-            # lock: ~
-            # lock: 'flock'
-            # lock: ['semaphore', 'redis://localhost']
 
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
