@@ -356,3 +356,9 @@ By setting the input stream of the ``QuestionHelper``, you imitate what the
 console would do internally with all user input through the CLI. This way
 you can test any user interaction (even complex ones) by passing an appropriate
 input stream.
+
+.. caution::
+
+    On Windows systems Symfony uses a special binary to implement hidden
+    questions. This means that those questions don't use the default ``Input``
+    console object and therefore you can't test them on Windows.
