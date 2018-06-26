@@ -450,7 +450,7 @@ routes with UTF-8 characters:
             array(
                 'utf8' => true,
             )
-        );
+        ));
 
         // ...
 
@@ -533,7 +533,7 @@ You can also include UTF-8 strings as routing requirements:
             array(
                 'utf8' => true,
             )
-        );
+        ));
 
         // ...
 
