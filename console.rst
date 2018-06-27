@@ -61,6 +61,34 @@ method. Then you can optionally define a help message and the
         ;
     }
 
+The ``configure()`` command is called automatically at the end of the command
+constructor. If your command defines its own constructor, set the properties
+first and then call to the parent constructor, to make those properties
+available in the ``configure()`` method::
+
+    class CreateUserCommand extends Command
+    {
+        // ...
+
+        public function __construct(bool $requirePassword = false)
+        {
+            // best practices recommend to call the parent constructor first and
+            // then set your own properties. That wouldn't work in this case
+            // because configure() needs the properties set in this constructor
+            $this->requirePassword = $requirePassword;
+
+            parent::__construct();
+        }
+
+        public function configure()
+        {
+            $this
+                // ...
+                ->addArgument('password', $this->requirePassword ? InputArgument::OPTIONAL : InputArgument::REQUIRED, 'User password')
+            ;
+        }
+    }
+
 Registering the Command
 -----------------------
 
