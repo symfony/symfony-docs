@@ -170,9 +170,9 @@ The following example shows how to inject an anonymous service into another serv
             http://symfony.com/schema/dic/services/services-1.0.xsd">
 
         <services>
-            <service id="foo" class="AppBundle\Foo">
+            <service id="foo" class="App\Foo">
                 <argument type="service">
-                    <service class="AppBundle\AnonymousBar" />
+                    <service class="App\AnonymousBar" />
                 </argument>
             </service>
         </services>
