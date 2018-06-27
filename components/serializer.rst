@@ -1092,7 +1092,10 @@ These are the options available:
 Handling Constructor Arguments
 ------------------------------
 
-If the constructor of a class defines arguments, as usually happens with
+.. versionadded:: 4.1
+    The ``default_constructor_arguments`` option was introduced in Symfony 4.1.
+
+If the class constructor defines arguments, as usually happens with
 `Value Objects`_, the serializer won't be able to create the object if some
 arguments are missing. In those cases, use the ``default_constructor_arguments``
 context option::
