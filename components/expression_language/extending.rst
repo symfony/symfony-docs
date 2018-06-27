@@ -34,7 +34,7 @@ This method has 3 arguments:
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
     $expressionLanguage = new ExpressionLanguage();
-    $expressionLanguage->register('lowercase', function ($arguments, $str) {
+    $expressionLanguage->register('lowercase', function ($str) {
         return sprintf('(is_string(%1$s) ? strtolower(%1$s) : %1$s)', $str);
     }, function ($arguments, $str) {
         if (!is_string($str)) {
@@ -45,11 +45,11 @@ This method has 3 arguments:
     });
 
     var_dump($expressionLanguage->evaluate('lowercase("HELLO")'));
+    // this will print: hello
 
-This will print ``hello``. Both the **compiler** and **evaluator** are passed
-an ``arguments`` variable as their first argument, which is equal to the
-second argument to ``evaluate()`` or ``compile()`` (e.g. the "values" when
-evaluating or the "names" if compiling).
+In addition to the custom function arguments, the **evaluator** is passed an
+``arguments`` variable as its first argument, which is equal to the second
+argument of ``compile()`` (e.g. the "values" when evaluating an expression).
 
 .. _components-expression-language-provider:
 
