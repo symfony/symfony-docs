@@ -1089,6 +1089,41 @@ These are the options available:
 ``remove_empty_tags``
     If set to true, removes all empty tags in the generated XML.
 
+Handling Constructor Arguments
+------------------------------
+
+If the constructor of a class defines arguments, as usually happens with
+`Value Objects`_, the serializer won't be able to create the object if some
+arguments are missing. In those cases, use the ``default_constructor_arguments``
+context option::
+
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+    class MyObj
+    {
+        private $foo;
+        private $bar;
+
+        public function __construct($foo, $bar)
+        {
+            $this->foo = $foo;
+            $this->bar = $bar;
+        }
+    }
+
+    $normalizer = new ObjectNormalizer($classMetadataFactory);
+    $serializer = new Serializer(array($normalizer));
+
+    $data = $serializer->denormalize(
+        array('foo' => 'Hello'),
+        'MyObj',
+        array('default_constructor_arguments' => array(
+            'MyObj' => array('foo' => '', 'bar' => ''),
+        )
+    ));
+    // $data = new MyObj('Hello', '');
+
 Recursive Denormalization and Type Safety
 -----------------------------------------
 
@@ -1273,3 +1308,4 @@ Learn more
 .. _YAML: http://yaml.org/
 .. _CSV: https://tools.ietf.org/html/rfc4180
 .. _`RFC 7807`: https://tools.ietf.org/html/rfc7807
+.. _`Value Objects`: https://en.wikipedia.org/wiki/Value_object
