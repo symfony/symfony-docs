@@ -1256,13 +1256,10 @@ and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
 
 .. note::
 
-    The role hierarchy defined in the ``role_hierarchy`` option is static and
-    you cannot override it dynamically (for example to store the role hierarchy
-    in a database). If you need that, create a custom
-    :doc:`security voter </security/voters>` that looks for the user roles in
-    the database. Another solution is to create a service that implements the
-    ``RoleHierarchyInterface`` and inject it into your own ``RoleHierarchyVoter``
-    service.
+    The value of the ``role_hierarchy`` option is defined statically, so you
+    can't for example store the role hierarchy in a database. If you need that,
+    create a custom :doc:`security voter </security/voters>` that looks for the
+    user roles in the database.
 
 Final Words
 -----------
