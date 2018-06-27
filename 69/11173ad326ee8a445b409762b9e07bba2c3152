@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-05-24T07:44:49Z
+
+It's hard for me to review this because there are no many examples of `register()` ... neither in community blog posts or our own code, tests and examples. In fact, this is the only occurrence in tests:
+
+```php
+    protected function registerFunctions()
+    {
+        $this->register('constant', function ($constant) {
+            return sprintf('constant(%s)', $constant);
+        }, function (array $values, $constant) {
+            return constant($constant);
+        });
+    }
+```
+
+As you can see, the first anonymous function passed to `register()` only takes one argument 😕
+
+---------------------------------------------------------------------------
+
+by wouterj at 2018-05-24T08:24:46Z
+
+@javiereguiluz All `ExpressionFunction` instances in Symfony source can be used here.
+
+If we look at [one such example](https://github.com/symfony/symfony/blob/948a50aa18bd61f96a44280006ccbea18c76f68a/src/Symfony/Component/Security/Core/Authorization/ExpressionLanguageProvider.php#L45-L49):
+
+```php
+            new ExpressionFunction('is_granted', function ($attributes, $object = 'null') {
+                return sprintf('$auth_checker->isGranted(%s, %s)', $attributes, $object);
+            }, function (array $variables, $attributes, $object = null) {
+                return $variables['auth_checker']->isGranted($attributes, $object);
+            }),
+```
+
+It is clear that the compiler doesn't get the arguments. It has to reference these as normal PHP variables.
+
+This is also logical, as the compiler transforms an expression to PHP code and this PHP code will be run later on with some variables (Arguments). These arguments are not yet known when the compiler function is run, so the arguments cannot be provided as argument to the compiler function.
+
+So instead of update the code, can you please update the incorrect description below? Thanks for finding & trying to fix bugs in the Symfony docs!
