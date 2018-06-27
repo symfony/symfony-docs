@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by greg0ire at 2018-06-19T08:55:00Z
+
+Are you sure it only works for XML: https://github.com/symfony/symfony/pull/21970 ?
+
+---------------------------------------------------------------------------
+
+by codedmonkey at 2018-06-19T19:47:47Z
+
+Yes, I should've been clear, since support for anonymous services was added to other formats in later versions, they need to be added in other branches and thus require a seperate PR, which I'll submit as soon as this one is approved by a qualified person.
