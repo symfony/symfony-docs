@@ -26,17 +26,14 @@ class SensioHTMLTranslator(HTMLTranslator):
         self.highlightlinenothreshold = 0
 
     def visit_literal(self, node):
-        self.body.append(self.starttag(node, 'tt', '', CLASS='docutils literal'))
-        self.body.append('<code>')
+        self.body.append(self.starttag(node, 'code', '', CLASS='docutils literal notranslate'))
 
     def depart_literal(self, node):
         self.body.append('</code>')
-        self.body.append('</tt>')
 
     def visit_admonition(self, node, name=''):
         self.body.append(self.starttag(node, 'div', CLASS=('admonition-wrapper')))
-        self.body.append('<div class="' + name + '"></div>')
-        self.body.append('<div class="admonition admonition-' + name + '">')
+        self.body.append('<div class="admonition ' + name + '">')
         if name and name != 'seealso':
             node.insert(0, nodes.title(name, customadmonitionlabels[name]))
         self.set_first_last(node)
@@ -46,7 +43,6 @@ class SensioHTMLTranslator(HTMLTranslator):
 
     def visit_sidebar(self, node):
         self.body.append(self.starttag(node, 'div', CLASS=('admonition-wrapper')))
-        self.body.append('<div class="sidebar"></div>')
         self.body.append('<div class="admonition admonition-sidebar">')
         self.set_first_last(node)
         self.in_sidebar = 1
