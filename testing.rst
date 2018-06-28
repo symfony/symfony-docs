@@ -508,17 +508,29 @@ You can also get the objects related to the latest request::
 Accessing the Container
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 4.1
+
+    The ``self::$container`` property was introduced in Symfony 4.1.
+
 It's highly recommended that a functional test only tests the response. But
 under certain very rare circumstances, you might want to access some internal
-objects to write assertions. In such cases, you can access the Dependency
-Injection Container::
+objects to write assertions. In such cases, you can access your services via
+a special property on the test class. Because services are private by default,
+this property holds a special container, which allows fetching public and all
+non-removed private services::
 
-    // will be the same container used in your test, unless you're using
+    // gives access to the same services used in your test, unless you're using
     // $client->insulate() or using real HTTP requests to test your application
-    $container = $client->getContainer();
+    $container = self::$container;
 
 For a list of services available in your application, use the ``debug:container``
 command.
+
+.. tip::
+
+    The special container that gives access to private services exists only in
+    the ``test`` environment and is itself a service that you can accessed from
+    the real container using the ``test.service_container`` id.
 
 .. tip::
 
