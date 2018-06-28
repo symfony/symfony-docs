@@ -241,7 +241,7 @@ And that's all!
     ``time()`` you will use the mock instead of the default one.
 
 
-.. code-block::
+.. code-block:: php
 
     namespace App;
 
@@ -253,7 +253,7 @@ And that's all!
         }
     }
 
-.. code-block::
+.. code-block:: php
 
     namespace App\Tests;
 
