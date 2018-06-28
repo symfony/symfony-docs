@@ -12,11 +12,6 @@ make any changes to your application's code at all. There are two main
 choices when it comes to handling email during development: (a) disabling the
 sending of email altogether or (b) sending all email to a specific
 address (with optional exceptions).
-
-.. tip::
-
-    for testing emails during application development, and to make tests simple  
-    to web designers, you can use  `MailHog`_. 
     
 Disabling Sending
 -----------------
@@ -246,5 +241,12 @@ the report with details of the sent emails.
     by the submit URL used on the previous request (e.g. ``/contact/handle``).
     The profiler's search feature allows you to load the profiler information
     for any past requests.
-    
+
+.. tip::
+
+    In addition to the features provided by Symfony, there are applications that
+    can help you test emails during application development, like `MailCatcher`_
+    and `MailHog`_.
+
+.. _`MailCatcher`: https://github.com/sj26/mailcatcher
 .. _`MailHog`: https://github.com/mailhog/MailHog
