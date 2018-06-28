@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-27T13:15:14Z
+
+I've never used this tool before. Before merging this, we'd need to hear opinions about this tool from Symfony developers who have used it. Thanks!
+
+---------------------------------------------------------------------------
+
+by kiler129 at 2018-06-27T13:23:47Z
+
+What's is the advantage over https://mailcatcher.me recommended by SwiftMailer docs?
+
+---------------------------------------------------------------------------
+
+by ChangePlaces at 2018-06-27T13:24:45Z
+
+Surely this is just spam
+
+---------------------------------------------------------------------------
+
+by ping-localhost at 2018-06-27T13:25:02Z
+
+I'm all for recommending MailHog. I've used it for at least three years now, as it's easy to setup, has a good UI and just works.
+
+---------------------------------------------------------------------------
+
+by zairigimad at 2018-06-27T13:25:13Z
+
+@kiler129  Mailhog is an alternative for Mailcatcher that doesnt require any special dependencies like Ruby, so installation is very fast! Just download the binary and run it.
+
+---------------------------------------------------------------------------
+
+by jewome62 at 2018-06-27T13:32:42Z
+
+In all the projects I could see, when the mail was not disabled, it was mailcatcher that was used.
+With most of the time, use the lib to do behat tests with: https://github.com/alexandresalome/mailcatcher
+since most of the time we use docker, this is an image to use simply
+
+---------------------------------------------------------------------------
+
+by artemzi at 2018-06-27T13:33:31Z
+
+@zairigimad are You sure that project is live? the latest commit was a year ago and there is a lot of issues there. I prefer to use mailtrap.io
+
+---------------------------------------------------------------------------
+
+by Pierstoval at 2018-06-27T15:49:33Z
+
+Mailcatcher is really easy to set up, especially in docker (just create a compose service based on mailcatcher & share networks and that's all), what are the benefits of MailHog? What's the difference?
