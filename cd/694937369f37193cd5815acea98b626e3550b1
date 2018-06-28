@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------
+
+by dmaicher at 2018-06-01T09:46:48Z
+
+@javiereguiluz seems good. Just wondering if we should also include the info that it might be possible to re-use existing Symfony classes for it?
+
+Here https://github.com/symfony/symfony/issues/21853#issuecomment-284025699 one only needs a custom `RoleHierarchyInterface` implementation and its possible to re-use Symfony's `RoleHierarchyVoter`.
+
+Edit: or maybe that would be too detailed and then better to create a separate how-to page for it?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-01T14:44:13Z
+
+Thanks for the review! I've reworded according to your comments. Is it OK now?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-04T07:33:39Z
+
+To be completely honest, I don't understand this phrase:
+
+> Another solution is to create a service that implements the ``RoleHierarchyInterface`` and inject it into your own ``RoleHierarchyVoter`` service.
+
+What is this solution saying? Are we decorating the existing RoleHierarchyVoter? Are we replacing the original RoleHierarchyVoter provided by Symfony?
+
+---------------------------------------------------------------------------
+
+by dmaicher at 2018-06-04T07:43:43Z
+
+@javiereguiluz
+> What is this solution saying? Are we decorating the existing RoleHierarchyVoter? Are we replacing the original RoleHierarchyVoter provided by Symfony?
+
+The problem in https://github.com/symfony/symfony/issues/21853 is that Symfony's `RoleHierarchyVoter` service is removed in a compiler pass (when there is no `security.role_hierarchy` configured). So in that case you can just register your own `RoleHierarchyVoter` service.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-07T07:03:19Z
+
+I'm afraid I still don't understand this 😓 Maybe @xabbuh or someone else can try to explain this differently? Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-06-27T13:11:08Z
+
+@dmaicher after thinking a lot about this, I propose to remove the second solution proposed and leave just the first one. This way we explain the problem and provide our preferred solution based on voters. Is this OK to you? Thanks!
