@@ -12,7 +12,7 @@ make any changes to your application's code at all. There are two main
 choices when it comes to handling email during development: (a) disabling the
 sending of email altogether or (b) sending all email to a specific
 address (with optional exceptions).
-    
+
 Disabling Sending
 -----------------
 
