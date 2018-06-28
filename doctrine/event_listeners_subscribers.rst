@@ -186,12 +186,17 @@ interface and have an event method for each event it subscribes to::
 
 For a full reference, see chapter `The Event System`_ in the Doctrine documentation.
 
-Performance considerations
---------------------------------
+Performance Considerations
+--------------------------
 
-One subtle difference between listeners and subscribers is that Symfony will load
-entity listeners lazily by default as of Symfony 4.2. This means that your listener class will only be fetched
-from the service container (and thus be instantiated) once the event it is linked
-to actually fires.
+One important difference between listeners and subscribers is that Symfony loads
+entity listeners lazily. This means that the listener classes are only fetched
+from the service container (and instantiated) if the related event is actually
+fired.
 
-So whenever possible it is preferable to use entity listeners instead of subscribers.
+That's why it is preferable to use entity listeners instead of subscribers
+whenever possible.
+
+.. versionadded:: 4.2
+    The default lazy behavior of Doctrine entity listeners was introduced in
+    Symfony 4.2.
