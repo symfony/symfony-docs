@@ -241,3 +241,12 @@ the report with details of the sent emails.
     by the submit URL used on the previous request (e.g. ``/contact/handle``).
     The profiler's search feature allows you to load the profiler information
     for any past requests.
+
+.. tip::
+
+    In addition to the features provided by Symfony, there are applications that
+    can help you test emails during application development, like `MailCatcher`_
+    and `MailHog`_.
+
+.. _`MailCatcher`: https://github.com/sj26/mailcatcher
+.. _`MailHog`: https://github.com/mailhog/MailHog

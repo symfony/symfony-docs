@@ -129,7 +129,7 @@ format
 The format used by the ``date`` filter to display values when no specific format
 is passed as argument.
 
-internal_format
+interval_format
 ...............
 
 **type**: ``string`` **default**: ``%d days``
