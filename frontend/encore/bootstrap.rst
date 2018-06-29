@@ -8,11 +8,11 @@ First, install it. To be able to customize things further, we'll install
 .. code-block:: terminal
 
     $ yarn add bootstrap --dev
-    
-Importing Bootstrap 4
-------------------------
 
-Now that ``bootstrap`` lives in your ``node_modules`` directory, you can
+Importing Bootstrap Styles
+--------------------------
+
+Now that ``bootstrap`` lives in your ``node_modules/`` directory, you can
 import it from any Sass or JavaScript file. For example, if you already have
 a ``global.scss`` file, import it from there:
 
@@ -35,7 +35,7 @@ file into ``global.scss``. You can even customize the Bootstrap variables first!
     in the ``bootstrap`` directory instead - e.g. ``~bootstrap/scss/alert``.
 
 Importing Bootstrap JavaScript
----------------------------------
+------------------------------
 
 Bootstrap JavaScript requires jQuery, so make sure you have this installed:
 
@@ -85,5 +85,3 @@ plugins in a similar way:
     // require 2 CSS files needed
     require('bootstrap-star-rating/css/star-rating.css');
     require('bootstrap-star-rating/themes/krajee-svg/theme.css');
-
-.. _`Problems with url()`: https://github.com/webpack-contrib/sass-loader#problems-with-url
