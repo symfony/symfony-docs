@@ -186,57 +186,17 @@ interface and have an event method for each event it subscribes to::
 
 For a full reference, see chapter `The Event System`_ in the Doctrine documentation.
 
-Lazy loading for Event Listeners
---------------------------------
+Performance Considerations
+--------------------------
 
-One subtle difference between listeners and subscribers is that Symfony can load
-entity listeners lazily. This means that your listener class will only be fetched
-from the service container (and thus be instantiated) once the event it is linked
-to actually fires.
+One important difference between listeners and subscribers is that Symfony loads
+entity listeners lazily. This means that the listener classes are only fetched
+from the service container (and instantiated) if the related event is actually
+fired.
 
-Lazy loading might give you a slight performance improvement when your listener
-runs for events that rarely fire. Also, it can help you when you run into
-*circular dependency issues* that may occur when your listener service in turn
-depends on the DBAL connection.
+That's why it is preferable to use entity listeners instead of subscribers
+whenever possible.
 
-To mark a listener service as lazily loaded, just add the ``lazy`` attribute
-to the tag like so:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        services:
-            App\EventListener\SearchIndexer:
-                tags:
-                    - { name: doctrine.event_listener, event: postPersist, lazy: true }
-
-    .. code-block:: xml
-
-        <?xml version="1.0" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-
-            <services>
-                <service id="App\EventListener\SearchIndexer" autowire="true">
-                    <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        use App\EventListener\SearchIndexer;
-
-        $container
-            ->autowire(SearchIndexer::class)
-            ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'lazy' => 'true'))
-        ;
-
-.. note::
-
-    Marking an event listener as ``lazy`` has nothing to do with lazy service
-    definitions which are described :doc:`in their own section </service_container/lazy_services>`
-
-.. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
-.. _`the Doctrine Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#entity-listeners
+.. versionadded:: 4.2
+    Starting from Symfony 4.2, Doctrine entity listeners are always lazy. In
+    previous Symfony versions this behavior was configurable.
