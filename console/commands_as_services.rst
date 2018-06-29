@@ -119,6 +119,12 @@ Or set the ``command`` attribute on the ``console.command`` tag in your service 
             ->addTag('console.command', array('command' => 'app:sunshine'))
         ;
 
+.. note::
+
+    If the command defines aliases (using the
+    :method:`Symfony\\Component\\Console\\Command\\Command::getAliases` method)
+    you must add one ``console.command`` tag per alias.
+
 That's it. One way or another, the ``SunshineCommand`` will be instantiated
 only when the ``app:sunshine`` command is actually called.
 
