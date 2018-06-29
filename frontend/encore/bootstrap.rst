@@ -1,18 +1,18 @@
 Using Bootstrap CSS & JS
 ========================
 
-Want to use Bootstrap (or something similar) in your project? No problem!
+Want to use Bootstrap v4.x (or something similar) in your project? No problem!
 First, install it. To be able to customize things further, we'll install
-``bootstrap-sass``:
+``bootstrap``:
 
 .. code-block:: terminal
 
-    $ yarn add bootstrap-sass --dev
+    $ yarn add bootstrap --dev
 
 Importing Bootstrap Sass
 ------------------------
 
-Now that ``bootstrap-sass`` lives in your ``node_modules`` directory, you can
+Now that ``bootstrap`` lives in your ``node_modules`` directory, you can
 import it from any Sass or JavaScript file. For example, if you already have
 a ``global.scss`` file, import it from there:
 
@@ -24,17 +24,17 @@ a ``global.scss`` file, import it from there:
     $brand-primary: darken(#428bca, 20%);
 
     // the ~ allows you to reference things in node_modules
-    @import '~bootstrap-sass/assets/stylesheets/bootstrap';
+    @import '~bootstrap/scss/bootstrap.scss';
 
-That's it! This imports the ``node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss``
+That's it! This imports the ``node_modules/bootstrap/scss/bootstrap.scss``
 file into ``global.scss``. You can even customize the Bootstrap variables first!
 
 .. tip::
 
     If you don't need *all* of Bootstrap's features, you can include specific files
-    in the ``bootstrap`` directory instead - e.g. ``~bootstrap-sass/assets/stylesheets/bootstrap/alerts``.
+    in the ``bootstrap`` directory instead - e.g. ``~bootstrap/scss/_alert.scss``.
 
-After including ``bootstrap-sass``, your Webpack builds might become slow. To fix
+After including ``bootstrap``, your Webpack builds might become slow. To fix
 this, you can use the ``resolveUrlLoader`` option:
 
 .. code-block:: diff
@@ -49,18 +49,6 @@ this, you can use the ``resolveUrlLoader`` option:
 This disables the ``resolve-url-loader`` in Webpack, which means that any
 ``url()`` paths in your Sass files must now be relative to the original source
 entry file instead of whatever file you're inside of (see `Problems with url()`_).
-To load Bootstrap, you'll need to override the path to its icons:
-
-.. code-block:: diff
-
-    // assets/css/global.scss
-
-    + $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-
-    + // set if you're also including font-awesome
-    + // $fa-font-path: "~font-awesome/fonts";
-
-    @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 
 Importing Bootstrap JavaScript
 ------------------------------
@@ -91,11 +79,11 @@ variable. Now, require bootstrap from any of your JavaScript files:
     var $ = require('jquery');
     // JS is equivalent to the normal "bootstrap" package
     // no need to set this to a variable, just require it
-    require('bootstrap-sass');
+    require('bootstrap');
 
     // or you can include specific pieces
-    // require('bootstrap-sass/javascripts/bootstrap/tooltip');
-    // require('bootstrap-sass/javascripts/bootstrap/popover');
+    // require('bootstrap/js/dist/tooltip');
+    // require('bootstrap/js/dist/popover');
 
     $(document).ready(function() {
         $('[data-toggle="popover"]').popover();
