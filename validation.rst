@@ -489,7 +489,7 @@ options can be specified in this way.
 This is purely meant to make the configuration of the most common option of
 a constraint shorter and quicker.
 
-If you're ever unsure of how to specify an option, either check the API documentation
+If you're ever unsure of how to specify an option, either check :namespace:`Symfony\\Component\\Validator\\Constraints`
 for the constraint or play it safe by always passing in an array of options
 (the first method shown above).
 
