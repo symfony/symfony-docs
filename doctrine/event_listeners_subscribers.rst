@@ -200,3 +200,6 @@ whenever possible.
 .. versionadded:: 4.2
     Starting from Symfony 4.2, Doctrine entity listeners are always lazy. In
     previous Symfony versions this behavior was configurable.
+
+.. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
+.. _`the Doctrine Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#entity-listeners
