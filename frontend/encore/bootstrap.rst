@@ -1,5 +1,5 @@
 Using Bootstrap CSS & JS
-============================
+========================
 
 Want to use Bootstrap (or something similar) in your project? No problem!
 First, install it. To be able to customize things further, we'll install
