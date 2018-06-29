@@ -198,4 +198,5 @@ That's why it is preferable to use entity listeners instead of subscribers
 whenever possible.
 
 .. versionadded:: 4.2
-    Starting from Symfony 4.2, Doctrine entity listeners are lazy by default.
+    Starting from Symfony 4.2, Doctrine entity listeners are always lazy. In
+    previous Symfony versions this behavior was configurable.
