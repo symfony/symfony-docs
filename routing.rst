@@ -20,12 +20,6 @@ the change is simple.
 Creating Routes
 ---------------
 
-First, add support for annotations via the SensioFrameworkExtraBundle:
-
-.. code-block:: terminal
-
-    $ composer require sensio/framework-extra-bundle
-
 A *route* is a map from a URL path to a controller. Suppose you want one route that
 matches ``/blog`` exactly and another more dynamic route that can match *any* URL
 like ``/blog/my-post`` or ``/blog/all-about-symfony``:
