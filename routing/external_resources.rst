@@ -98,7 +98,7 @@ suppose you want to prefix all routes in the AppBundle with ``/site`` (e.g.
 
     .. code-block:: php-annotations
 
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         /**
          * @Route("/site")
