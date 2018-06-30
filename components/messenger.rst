@@ -89,14 +89,13 @@ that will do the required processing for your message::
        }
     }
 
-Envelope
---------
+Adding Metadata to Messages (Envelopes)
+---------------------------------------
 
-The notion of an envelope is a concept that helps add context around the
-messages. An envelope is a message and a set of data. From a user's perspective, this
-allows you to set some configuration around the message. For example, to set the serialization
-groups used when the message goes through the transport layer, wrap your message
-in an ``Envelope`` and add some ``SerializerConfiguration``::
+If you need to add metadata or some configuration to a message, wrap it with the
+:class:`Symfony\\Component\\Messenger\\Envelope` class. For example, to set the
+serialization groups used when the message goes through the transport layer, use
+the ``SerializerConfiguration`` envelope::
 
     use Symfony\Component\Messenger\Envelope;
     use Symfony\Component\Messenger\Transport\Serialization\SerializerConfiguration;
@@ -129,8 +128,7 @@ marker, like this::
         public function handle($message, callable $next)
         {
             // $message here is an `Envelope` object, because this middleware
-            // implements the EnvelopeAwareInterface interface. Otherwise,
-            // it would be the "original" message.
+            // implements the EnvelopeAwareInterface interface.
 
             if (null !== $message->get(ReceivedMessage::class)) {
                 // Message just has been received...
