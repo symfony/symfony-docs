@@ -37,11 +37,12 @@ file into ``global.scss``. You can even customize the Bootstrap variables first!
 Importing Bootstrap JavaScript
 ------------------------------
 
-Bootstrap JavaScript requires jQuery, so make sure you have this installed:
+Bootstrap JavaScript requires jQuery and popper, so make sure you have this installed:
 
 .. code-block:: terminal
 
     $ yarn add jquery --dev
+    $ yarn add popper --dev
 
 Next, make sure to call ``.autoProvidejQuery()`` in your ``webpack.config.js`` file:
 
