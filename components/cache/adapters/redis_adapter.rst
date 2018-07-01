@@ -96,9 +96,11 @@ array of ``key => value`` pairs representing option names and their respective v
 
         // associative array of configuration options
         array(
+            'compression' => true,
             'lazy' => false,
             'persistent' => 0,
             'persistent_id' => null,
+            'tcp_keepalive' => 0,
             'timeout' => 30,
             'read_timeout' => 0,
             'retry_interval' => 0,
@@ -113,6 +115,10 @@ Available Options
     Specifies the connection library to return, either ``\Redis`` or ``\Predis\Client``.
     If none is specified, it will return ``\Redis`` if the ``redis`` extension is
     available, and ``\Predis\Client`` otherwise.
+
+``compression`` (type: ``bool``, default: ``true``)
+    Enables or disables compression of items. This requires phpredis v4 or higher with
+    LZF support enabled.
 
 ``lazy`` (type: ``bool``, default: ``false``)
     Enables or disables lazy connections to the backend. It's ``false`` by
@@ -134,6 +140,10 @@ Available Options
     Specifies the delay (in milliseconds) between reconnection attempts in case the client
     loses connection with the server.
 
+``tcp_keepalive`` (type: ``int``, default: ``0``)
+    Specifies the TCP-keepalive timeout (in seconds) of the connection. This requires
+    phpredis v4 or higher and a TCP-keepalive enabled server.
+
 ``timeout`` (type: ``int``, default: ``30``)
     Specifies the time (in seconds) used to connect to a Redis server before the
     connection attempt times out.
@@ -149,3 +159,4 @@ Available Options
 .. _`RedisCluster`: https://github.com/phpredis/phpredis/blob/master/cluster.markdown#readme
 .. _`Predis`: https://packagist.org/packages/predis/predis
 .. _`Predis Connection Parameters`: https://github.com/nrk/predis/wiki/Connection-Parameters#list-of-connection-parameters
+.. _`TCP-keepalive`: https://redis.io/topics/clients#tcp-keepalive
