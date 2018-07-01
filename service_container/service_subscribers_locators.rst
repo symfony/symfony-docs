@@ -13,7 +13,11 @@ instantiation of the services to be lazy. However, that's not possible using
 the explicit dependency injection since services are not all meant to
 be ``lazy`` (see :doc:`/service_container/lazy_services`).
 
-A real-world example are applications that implement the `Command pattern`_
+This can typically be the case in your controllers, where only one action is
+usually called per request, and where services are used conditionnally in each
+of them.
+
+Another example are applications that implement the `Command pattern`_
 using a CommandBus to map command handlers by Command class names and use them
 to handle their respective command when it is asked for::
 
@@ -50,35 +54,12 @@ to handle their respective command when it is asked for::
 
 Considering that only one command is handled at a time, instantiating all the
 other command handlers is unnecessary. A possible solution to lazy-load the
-handlers could be to inject the whole dependency injection container::
-
-    // ...
-    use Symfony\Component\DependencyInjection\ContainerInterface;
-
-    class CommandBus
-    {
-        private $container;
-
-        public function __construct(ContainerInterface $container)
-        {
-            $this->container = $container;
-        }
-
-        public function handle(Command $command)
-        {
-            $commandClass = get_class($command);
-
-            if ($this->container->has($commandClass)) {
-                $handler = $this->container->get($commandClass);
-
-                return $handler->handle($command);
-            }
-        }
-    }
+handlers could be to inject the main dependency injection container.
 
 However, injecting the entire container is discouraged because it gives too
 broad access to existing services and it hides the actual dependencies of the
-services.
+services. Doing so also requires services to be made public, which isn't the
+case by default since Symfony version 4.0.
 
 **Service Subscribers** are intended to solve this problem by giving access to a
 set of predefined services while instantiating them only when actually needed
@@ -139,8 +120,7 @@ The injected service is an instance of :class:`Symfony\\Component\\DependencyInj
 which implements the PSR-11 ``ContainerInterface``, but it is also a callable::
 
     // ...
-    $locateHandler = $this->locator;
-    $handler = $locateHandler($commandClass);
+    $handler = ($this->locator)($commandClass);
 
     return $handler->handle($command);
 
@@ -171,6 +151,24 @@ Service types can also be keyed by a service name for internal use::
             // ...
             'logger' => LoggerInterface::class,
         ];
+    }
+
+When extending a class that also implements ``ServiceSubscriberInterface``,
+it's your responsibility to call the parent when overriding the method. This
+typically happens when extending ``AbstractController``::
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+    class MyController extends AbstractController
+    {
+        public static function getSubscribedServices()
+        {
+            return array_merge(parent::getSubscribedServices(), [
+                // ...
+                'logger' => LoggerInterface::class,
+            ]);
+        }
     }
 
 Optional Services
