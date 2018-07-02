@@ -634,6 +634,100 @@ let you find out which options are defined::
         }
     }
 
+Nested Option
+~~~~~~~~~~~~~
+
+.. versionadded:: 4.2
+    This feature was introduced in Symfony 4.2.
+
+Suppose you have an option named ``spool`` which has two sub-options ``type``
+and ``path``. Instead of defining it as a simple array of values, you can pass
+a closure as the default value of the ``spool`` option with a :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver`
+argument. Based on this instance, you can define the options under ``spool`` and its desired default
+value::
+
+    class Mailer
+    {
+        // ...
+
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver) {
+                $spoolResolver->setDefaults(array(
+                    'type' => 'file',
+                    'path' => '/path/to/spool',
+                ));
+                $spoolResolver->setAllowedValues('type', array('file', 'memory'));
+                $spoolResolver->setAllowedTypes('path', 'string');
+            });
+        }
+
+        public function sendMail($from, $to)
+        {
+            if ('memory' === $this->options['spool']['type']) {
+                // ...
+            }
+        }
+    }
+
+    $mailer = new Mailer(array(
+        'spool' => array(
+            'type' => 'memory',
+        ),
+    ));
+
+Also you can define required options, validation (type, value) and normalization of these
+nested options.
+
+If the default value of a child option depend on another option defined in parent level,
+adds a second ``Options`` argument to the closure for access to them::
+
+    class Mailer
+    {
+        // ...
+
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefault('sandbox', false);
+            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver, Options $parent) {
+                $spoolResolver->setDefaults(array(
+                    'type' => $parent['sandbox'] ? 'memory' : 'file',
+                    // ...
+                ));
+            });
+        }
+    }
+
+.. caution::
+
+    The arguments of the closure must be type hinted as ``OptionsResolver`` and ``Options`` respectively.
+    Otherwise, the closure itself is considered as the default value of the option.
+
+In same way, parent options can access to the child option as normal array::
+
+    class Mailer
+    {
+        // ...
+
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver) {
+                $spoolResolver->setDefaults(array(
+                    'type' => 'file',
+                    // ...
+                ));
+            });
+            $resolver->setDefault('profiling', function (Options $options) {
+                return 'file' === $options['spool']['type'];
+            });
+        }
+    }
+
+.. note::
+
+    The fact that an option is defined as nested means that you must pass
+    an array of values to resolve it at runtime.
+
 Deprecating the Option
 ~~~~~~~~~~~~~~~~~~~~~~
 
