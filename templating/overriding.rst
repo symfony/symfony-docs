@@ -19,10 +19,11 @@ from the bundle to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
 (the ``app/Resources/AcmeBlogBundle`` directory won't exist, so you'll need
 to create it). You're now free to customize the template.
 
-If you don't want to override the entire template but instead just want to 
-override a block, as of Symfony 3.4 you can now do with by extending the original
-template using the "!" prefix. For example:
-``{% extends "@!AcmeBlogBundle/layout.html.twig" %}``
+.. versionadded:: 3.4
+  
+  Instead of overridding an entire template, you may just want to override one or more blocks. You can do that by extending the original
+  template using the "!" prefix. For example:
+  ``{% extends "@!AcmeBlogBundle/layout.html.twig" %}``
 
 .. caution::
 
