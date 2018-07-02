@@ -115,8 +115,9 @@ Available Options
     available, and ``\Predis\Client`` otherwise.
 
 ``lazy`` (type: ``bool``, default: ``false``)
-    Enables or disables lazy connections to the backend. Already set to ``true`` by default
-    when configuring Redis pools via FrameworkBundle.
+    Enables or disables lazy connections to the backend. It's ``false`` by
+    default when using this as a stand-alone component and ``true`` by default
+    when using it inside a Symfony application.
 
 ``persistent`` (type: ``int``, default: ``0``)
     Enables or disables use of persistent connections. A value of ``0`` disables persistent
