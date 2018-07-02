@@ -146,14 +146,13 @@ and many others that you'll learn about next.
 
 .. tip::
 
-    What's the difference between ``Controller`` or ``AbstractController``? Both
-    provide the same helper methods, but ``AbstractController`` is more strict: it
-    forces you to explicitly declare your dependencies before you can fetch them using
-    ``$this->get()`` or ``$this->container->get()``. This is considered a best practice
-    as ``Controller`` requires services to be public to do the same. But if you do 
-    need direct access to the container, using Controller is fine. Learn more about 
-    how to subscribe your services in the 
-    :doc:`/service_container/service_subscribers_locators` article.
+    You can extend either ``Controller`` or ``AbstractController``. The
+    difference is that ``AbstractController`` is more strict and doesn't let you
+    access services via ``$this->get()`` or ``$this->container->get()``.
+    Instead, you must declare your dependencies explicitly with
+    :doc:`service locators </service_container/service_subscribers_locators>`.
+    Using ``AbstractController`` is considered a best practice but if you do
+    need direct access to the container, using ``Controller`` is fine.
 
 .. versionadded:: 3.3
     The ``AbstractController`` class was added in Symfony 3.3.
