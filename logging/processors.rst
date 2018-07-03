@@ -159,6 +159,28 @@ If you use several handlers, you can also register a processor at the
 handler level or at the channel level instead of registering it globally
 (see the following sections).
 
+.. tip::
+
+    .. versionadded:: 4.2
+        Processors can be autoconfigured since Symfony 4.2.
+
+    Processors implementing :class:`Symfony\\Bridge\\Monolog\\Processor\\ProcessorInterface`
+    can have their ``monolog.processor`` tag added for you by Symfony when autoconfiguration
+    is enabled. In this situation, this means creating a processor class might be all you
+    need do to to have it up and running. It also means enabling the
+    :class:`Symfony\\Bridge\\Monolog\\Processor\\TokenProcessor` or the
+    :class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor` in your Flex-enabled app is a
+    one-liner:
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # Adds the current security token to log entries
+            Symfony\Bridge\Monolog\Processor\TokenProcessor: ~
+            # Adds the real client IP to log entries
+            Symfony\Bridge\Monolog\Processor\WebProcessor: ~
+
 Registering Processors per Handler
 ----------------------------------
 
