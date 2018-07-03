@@ -27,116 +27,162 @@ configured under the ``framework`` key in your application configuration.
 Configuration
 -------------
 
-* `secret`_
+.. class:: list-config-options list-config-options--complex
+
+* `annotations`_
+
+  * :ref:`cache <reference-annotations-cache>`
+  * `debug`_
+  * `file_cache_dir`_
+
+* `assets`_
+
+  * `base_path`_
+  * `base_urls`_
+  * `json_manifest_path`_
+  * `packages`_
+  * `version_format`_
+  * `version_strategy`_
+  * `version`_
+
+* :ref:`cache <reference-cache>`
+
+  * :ref:`app <reference-cache-app>`
+  * `default_doctrine_provider`_
+  * `default_memcached_provider`_
+  * `default_psr6_provider`_
+  * `default_redis_provider`_
+  * `directory`_
+  * `pools`_
+  * `prefix_seed`_
+  * `system`_
+
+    * :ref:`name <reference-cache-pools-name>`
+
+      * `adapter`_
+      * `clearer`_
+      * `default_lifetime`_
+      * `provider`_
+      * `public`_
+
+* `csrf_protection`_
+
+  * :ref:`enabled <reference-csrf_protection-enabled>`
+
+* `default_locale`_
+* `esi`_
+
+  * :ref:`enabled <reference-esi-enabled>`
+
+* :ref:`form <reference-framework-form>`
+
+  * :ref:`enabled <reference-form-enabled>`
+
+* `fragments`_
+
+  * :ref:`enabled <reference-fragments-enabled>`
+  * :ref:`path <reference-fragments-path>`
+
 * `http_method_override`_
 * `ide`_
-* `test`_
-* `default_locale`_
-* `trusted_hosts`_
-* :ref:`form <reference-framework-form>`
-    * :ref:`enabled <reference-form-enabled>`
-* `csrf_protection`_
-    * :ref:`enabled <reference-csrf_protection-enabled>`
-* `esi`_
-    * :ref:`enabled <reference-esi-enabled>`
-* `fragments`_
-    * :ref:`enabled <reference-fragments-enabled>`
-    * :ref:`path <reference-fragments-path>`
-* `profiler`_
-    * :ref:`enabled <reference-profiler-enabled>`
-    * `collect`_
-    * `only_exceptions`_
-    * `only_master_requests`_
-    * `dsn`_
-    * `matcher`_
-        * `ip`_
-        * :ref:`path <reference-profiler-matcher-path>`
-        * `service`_
-* `request`_:
-    * `formats`_
-* `router`_
-    * `resource`_
-    * `type`_
-    * `http_port`_
-    * `https_port`_
-    * `strict_requirements`_
-* `session`_
-    * `storage_id`_
-    * `handler_id`_
-    * `name`_
-    * `cookie_lifetime`_
-    * `cookie_path`_
-    * `cookie_domain`_
-    * `cookie_secure`_
-    * `cookie_httponly`_
-    * `gc_divisor`_
-    * `gc_probability`_
-    * `gc_maxlifetime`_
-    * `save_path`_
-    * `metadata_update_threshold`_
-* `assets`_
-    * `base_path`_
-    * `base_urls`_
-    * `packages`_
-    * `version_strategy`_
-    * `version`_
-    * `version_format`_
-    * `json_manifest_path`_
-* `templating`_
-    * `hinclude_default_template`_
-    * :ref:`form <reference-templating-form>`
-        * `resources`_
-    * :ref:`cache <reference-templating-cache>`
-    * `engines`_
-    * `loaders`_
-* `translator`_
-    * :ref:`enabled <reference-translator-enabled>`
-    * `fallbacks`_
-    * `logging`_
-    * :ref:`paths <reference-translator-paths>`
-* `property_access`_
-    * `magic_call`_
-    * `throw_exception_on_invalid_index`_
-* `validation`_
-    * :ref:`enabled <reference-validation-enabled>`
-    * :ref:`cache <reference-validation-cache>`
-    * :ref:`enable_annotations <reference-validation-enable_annotations>`
-    * `translation_domain`_
-    * `strict_email`_
-    * :ref:`mapping <reference-validation-mapping>`
-        * :ref:`paths <reference-validation-mapping-paths>`
-* `annotations`_
-    * :ref:`cache <reference-annotations-cache>`
-    * `file_cache_dir`_
-    * `debug`_
-* `serializer`_
-    * :ref:`enabled <reference-serializer-enabled>`
-    * :ref:`cache <reference-serializer-cache>`
-    * :ref:`enable_annotations <reference-serializer-enable_annotations>`
-    * :ref:`name_converter <reference-serializer-name_converter>`
-    * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
-    * :ref:`mapping <reference-serializer-mapping>`
-        * :ref:`paths <reference-serializer-mapping-paths>`
-* `php_errors`_
-    * `log`_
-    * `throw`_
-* :ref:`cache <reference-cache>`
-    * :ref:`app <reference-cache-app>`
-    * `system`_
-    * `directory`_
-    * `default_doctrine_provider`_
-    * `default_psr6_provider`_
-    * `default_redis_provider`_
-    * `default_memcached_provider`_
-    * `pools`_
-        * :ref:`name <reference-cache-pools-name>`
-            * `adapter`_
-            * `public`_
-            * `default_lifetime`_
-            * `provider`_
-            * `clearer`_
-    * `prefix_seed`_
 * :ref:`lock <reference-lock>`
+* `php_errors`_
+
+  * `log`_
+  * `throw`_
+
+* `profiler`_
+
+  * `collect`_
+  * `dsn`_
+  * :ref:`enabled <reference-profiler-enabled>`
+  * `matcher`_
+
+    * `ip`_
+    * :ref:`path <reference-profiler-matcher-path>`
+    * `service`_
+
+  * `only_exceptions`_
+  * `only_master_requests`_
+
+* `property_access`_
+
+  * `magic_call`_
+  * `throw_exception_on_invalid_index`_
+
+* `request`_:
+
+  * `formats`_
+
+* `router`_
+
+  * `http_port`_
+  * `https_port`_
+  * `resource`_
+  * `strict_requirements`_
+  * `type`_
+
+* `secret`_
+* `serializer`_
+
+  * :ref:`cache <reference-serializer-cache>`
+  * :ref:`circular_reference_handler <reference-serializer-circular_reference_handler>`
+  * :ref:`enable_annotations <reference-serializer-enable_annotations>`
+  * :ref:`enabled <reference-serializer-enabled>`
+  * :ref:`mapping <reference-serializer-mapping>`
+
+    * :ref:`paths <reference-serializer-mapping-paths>`
+
+  * :ref:`name_converter <reference-serializer-name_converter>`
+
+* `session`_
+
+  * `cookie_domain`_
+  * `cookie_httponly`_
+  * `cookie_lifetime`_
+  * `cookie_path`_
+  * `cookie_secure`_
+  * `gc_divisor`_
+  * `gc_maxlifetime`_
+  * `gc_probability`_
+  * `handler_id`_
+  * `metadata_update_threshold`_
+  * `name`_
+  * `save_path`_
+  * `storage_id`_
+
+* `templating`_
+
+  * :ref:`cache <reference-templating-cache>`
+  * `engines`_
+  * :ref:`form <reference-templating-form>`
+
+    * `resources`_
+
+  * `hinclude_default_template`_
+  * `loaders`_
+
+* `test`_
+* `translator`_
+
+  * :ref:`enabled <reference-translator-enabled>`
+  * `fallbacks`_
+  * `logging`_
+  * :ref:`paths <reference-translator-paths>`
+
+* `trusted_hosts`_
+* `trusted_proxies`_
+* `validation`_
+
+  * :ref:`cache <reference-validation-cache>`
+  * :ref:`enable_annotations <reference-validation-enable_annotations>`
+  * :ref:`enabled <reference-validation-enabled>`
+  * :ref:`mapping <reference-validation-mapping>`
+
+    * :ref:`paths <reference-validation-mapping-paths>`
+
+  * `strict_email`_
+  * `translation_domain`_
 
 secret
 ~~~~~~
