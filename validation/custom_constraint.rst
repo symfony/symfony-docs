@@ -69,6 +69,10 @@ The validator class is also simple, and only has one required method ``validate(
                 throw new UnexpectedTypeException($value, 'string');
             }
 
+            if ('' === $value) {
+                return;
+            }
+
             if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
                 // If you're using the new 2.5 validation API (you probably are!)
                 $this->context->buildViolation($constraint->message)
