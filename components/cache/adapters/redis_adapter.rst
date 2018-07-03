@@ -96,6 +96,7 @@ array of ``key => value`` pairs representing option names and their respective v
 
         // associative array of configuration options
         array(
+            'lazy' => false,
             'persistent' => 0,
             'persistent_id' => null,
             'timeout' => 30,
@@ -112,6 +113,11 @@ Available Options
     Specifies the connection library to return, either ``\Redis`` or ``\Predis\Client``.
     If none is specified, it will return ``\Redis`` if the ``redis`` extension is
     available, and ``\Predis\Client`` otherwise.
+
+``lazy`` (type: ``bool``, default: ``false``)
+    Enables or disables lazy connections to the backend. It's ``false`` by
+    default when using this as a stand-alone component and ``true`` by default
+    when using it inside a Symfony application.
 
 ``persistent`` (type: ``int``, default: ``0``)
     Enables or disables use of persistent connections. A value of ``0`` disables persistent

@@ -60,8 +60,8 @@ Autoconfiguring Tags
 
 If you enable :ref:`autoconfigure <services-autoconfigure>`, then some tags are
 automatically applied for you. That's true for the ``twig.extension`` tag: the
-container sees that your class extends ``Twig_Extension`` (or more accurately,
-that it implements ``Twig_ExtensionInterface``) and adds the tag for you.
+container sees that your class extends ``AbstractExtension`` (or more accurately,
+that it implements ``ExtensionInterface``) and adds the tag for you.
 
 .. tip::
 
