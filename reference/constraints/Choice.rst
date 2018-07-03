@@ -17,7 +17,6 @@ an array of items is one of those valid choices.
 |                | - `multipleMessage`_                                                 |
 |                | - `minMessage`_                                                      |
 |                | - `maxMessage`_                                                      |
-|                | - `strict`_                                                          |
 |                | - `payload`_                                                         |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Choice`          |
@@ -359,14 +358,5 @@ maxMessage
 
 This is the validation error message that's displayed when the user chooses
 too many options per the `max`_ option.
-
-strict
-~~~~~~
-
-**type**: ``boolean`` **default**: ``true``
-
-The validator will also check the type of the input value. Specifically,
-this value is passed to as the third argument to the PHP :phpfunction:`in_array`
-method when checking to see if a value is in the valid choices array.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
