@@ -65,12 +65,12 @@ The validator class is also simple, and only has one required method ``validate(
     {
         public function validate($value, Constraint $constraint)
         {
-            if (!is_string($value) && !(is_object($value) && method_exists($value, '__toString'))) {
-                throw new UnexpectedTypeException($value, 'string');
+            if (null === $value || '' === $value) {
+                return;
             }
 
-            if ('' === $value) {
-                return;
+            if (!is_string($value)) {
+                throw new UnexpectedTypeException($value, 'string');
             }
 
             if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
