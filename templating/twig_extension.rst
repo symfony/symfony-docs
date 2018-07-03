@@ -117,8 +117,10 @@ previous ``priceFilter()`` method::
 
     // src/Twig/AppRuntime.php
     namespace App\Twig;
+    
+    use Twig\Extension\RuntimeExtensionInterface;
 
-    class AppRuntime
+    class AppRuntime implements RuntimeExtensionInterface
     {
         public function __construct()
         {
