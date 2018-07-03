@@ -25,96 +25,98 @@ configured under the ``framework`` key in your application configuration.
 Configuration
 -------------
 
-* `secret`_
-* `http_method_override`_
-* `trusted_proxies`_
-* `ide`_
-* `test`_
-* `default_locale`_
-* `trusted_hosts`_
-* :ref:`form <reference-framework-form>`
-    * :ref:`enabled <reference-form-enabled>`
-* `csrf_protection`_
-    * :ref:`enabled <reference-csrf_protection-enabled>`
-    * `field_name`_ (deprecated since 2.4)
-* `esi`_
-    * :ref:`enabled <reference-esi-enabled>`
-* `fragments`_
-    * :ref:`enabled <reference-fragments-enabled>`
-    * :ref:`path <reference-fragments-path>`
-* `profiler`_
-    * :ref:`enabled <reference-profiler-enabled>`
-    * `collect`_
-    * `only_exceptions`_
-    * `only_master_requests`_
-    * `dsn`_
-    * `username`_ (deprecated since 2.8)
-    * `password`_ (deprecated since 2.8)
-    * `lifetime`_ (deprecated since 2.8)
-    * `matcher`_
-        * `ip`_
-        * :ref:`path <reference-profiler-matcher-path>`
-        * `service`_
-* `request`_:
-    * `formats`_
-* `router`_
-    * `resource`_
-    * `type`_
-    * `http_port`_
-    * `https_port`_
-    * `strict_requirements`_
-* `session`_
-    * `storage_id`_
-    * `handler_id`_
-    * `name`_
-    * `cookie_lifetime`_
-    * `cookie_path`_
-    * `cookie_domain`_
-    * `cookie_secure`_
-    * `cookie_httponly`_
-    * `gc_divisor`_
-    * `gc_probability`_
-    * `gc_maxlifetime`_
-    * `use_strict_mode`_
-    * `save_path`_
-    * `metadata_update_threshold`_
-* `assets`_
-    * `base_path`_
-    * `base_urls`_
-    * `packages`_
-    * `version`_
-    * `version_format`_
-* `templating`_
-    * `hinclude_default_template`_
-    * :ref:`form <reference-templating-form>`
-        * `resources`_
-    * :ref:`cache <reference-templating-cache>`
-    * `engines`_
-    * `loaders`_
-* `translator`_
-    * :ref:`enabled <reference-translator-enabled>`
-    * `fallbacks`_
-    * `logging`_
-    * :ref:`paths <reference-translator-paths>`
-* `property_access`_
-    * `magic_call`_
-    * `throw_exception_on_invalid_index`_
-* `validation`_
-    * :ref:`enabled <reference-validation-enabled>`
-    * :ref:`cache <reference-validation-cache>`
-    * :ref:`enable_annotations <reference-validation-enable_annotations>`
-    * `translation_domain`_
-    * `strict_email`_
-    * `api`_
+.. class:: list-config-options list-config-options--complex
+
 * `annotations`_
-    * :ref:`cache <reference-annotations-cache>`
-    * `file_cache_dir`_
-    * `debug`_
+  * :ref:`cache <reference-annotations-cache>`
+  * `debug`_
+  * `file_cache_dir`_
+* `assets`_
+  * `base_path`_
+  * `base_urls`_
+  * `packages`_
+  * `version_format`_
+  * `version`_
+* `csrf_protection`_
+  * :ref:`enabled <reference-csrf_protection-enabled>`
+  * `field_name`_ (deprecated since 2.4)
+* `default_locale`_
+* `esi`_
+  * :ref:`enabled <reference-esi-enabled>`
+* :ref:`form <reference-framework-form>`
+  * :ref:`enabled <reference-form-enabled>`
+* `fragments`_
+  * :ref:`enabled <reference-fragments-enabled>`
+  * :ref:`path <reference-fragments-path>`
+* `http_method_override`_
+* `ide`_
+* `profiler`_
+  * `collect`_
+  * `dsn`_
+  * :ref:`enabled <reference-profiler-enabled>`
+  * `lifetime`_ (deprecated since 2.8)
+  * `matcher`_
+    * `ip`_
+    * `service`_
+    * :ref:`path <reference-profiler-matcher-path>`
+  * `only_exceptions`_
+  * `only_master_requests`_
+  * `password`_ (deprecated since 2.8)
+  * `username`_ (deprecated since 2.8)
+* `property_access`_
+  * `magic_call`_
+  * `throw_exception_on_invalid_index`_
+* `request`_:
+  * `formats`_
+* `router`_
+  * `http_port`_
+  * `https_port`_
+  * `resource`_
+  * `strict_requirements`_
+  * `type`_
+* `secret`_
 * `serializer`_
-    * :ref:`enabled <reference-serializer-enabled>`
-    * :ref:`cache <reference-serializer-cache>`
-    * :ref:`enable_annotations <reference-serializer-enable_annotations>`
-    * :ref:`name_converter <reference-serializer-name_converter>`
+  * :ref:`cache <reference-serializer-cache>`
+  * :ref:`enable_annotations <reference-serializer-enable_annotations>`
+  * :ref:`enabled <reference-serializer-enabled>`
+  * :ref:`name_converter <reference-serializer-name_converter>`
+* `session`_
+  * `cookie_domain`_
+  * `cookie_httponly`_
+  * `cookie_lifetime`_
+  * `cookie_path`_
+  * `cookie_secure`_
+  * `gc_divisor`_
+  * `gc_maxlifetime`_
+  * `gc_probability`_
+  * `handler_id`_
+  * `metadata_update_threshold`_
+  * `name`_
+  * `save_path`_
+  * `storage_id`_
+  * `use_strict_mode`_
+* `templating`_
+  * :ref:`cache <reference-templating-cache>`
+  * `engines`_
+  * :ref:`form <reference-templating-form>`
+    * `resources`_
+  * `hinclude_default_template`_
+  * `loaders`_
+* `test`_
+* `translator`_
+  * :ref:`enabled <reference-translator-enabled>`
+  * `fallbacks`_
+  * `logging`_
+  * :ref:`paths <reference-translator-paths>`
+* `trusted_hosts`_
+* `trusted_proxies`_
+* `validation`_
+  * `api`_
+  * :ref:`cache <reference-validation-cache>`
+  * :ref:`enable_annotations <reference-validation-enable_annotations>`
+  * :ref:`enabled <reference-validation-enabled>`
+  * `strict_email`_
+  * `translation_domain`_
 
 secret
 ~~~~~~
