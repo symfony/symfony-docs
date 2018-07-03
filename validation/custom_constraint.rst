@@ -65,6 +65,8 @@ The validator class is also simple, and only has one required method ``validate(
     {
         public function validate($value, Constraint $constraint)
         {
+            // custom constraints should ignore null and empty values to allow
+            // other constraints (NotBlank, NotNull, etc.) take care of that
             if (null === $value || '' === $value) {
                 return;
             }
