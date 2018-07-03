@@ -71,8 +71,8 @@ Configuration
   * `matcher`_
 
     * `ip`_
-    * `service`_
     * :ref:`path <reference-profiler-matcher-path>`
+    * `service`_
 
   * `only_exceptions`_
   * `only_master_requests`_
