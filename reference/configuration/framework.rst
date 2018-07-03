@@ -54,8 +54,6 @@ Configuration
   * `default_redis_provider`_
   * `directory`_
   * `pools`_
-  * `prefix_seed`_
-  * `system`_
 
     * :ref:`name <reference-cache-pools-name>`
 
@@ -64,6 +62,9 @@ Configuration
       * `default_lifetime`_
       * `provider`_
       * `public`_
+
+  * `prefix_seed`_
+  * `system`_
 
 * `csrf_protection`_
 
