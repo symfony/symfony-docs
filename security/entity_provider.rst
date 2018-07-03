@@ -130,7 +130,7 @@ with the following fields: ``id``, ``username``, ``password``,
                 $this->password,
                 // see section on salt below
                 // $this->salt
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+            ) = unserialize($serialized, array('allowed_classes' => false));
         }
     }
 
