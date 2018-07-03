@@ -115,13 +115,13 @@ For this entry, suppose that you already have a ``User`` entity inside an
         /** @see \Serializable::serialize() */
         public function serialize()
         {
-            return serialize([
+            return serialize(array(
                 $this->id,
                 $this->username,
                 $this->password,
                 // see section on salt below
                 // $this->salt,
-            ]);
+            ));
         }
 
         /** @see \Serializable::unserialize() */
@@ -133,7 +133,7 @@ For this entry, suppose that you already have a ``User`` entity inside an
                 $this->password,
                 // see section on salt below
                 // $this->salt
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+            ) = unserialize($serialized, array('allowed_classes' => false));
         }
     }
 
