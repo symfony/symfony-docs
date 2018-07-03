@@ -199,7 +199,7 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
         $vendorTwigBridgeDirectory.'/Resources/views/Form',
     )));
     $formEngine = new TwigRendererEngine(array($defaultFormTheme), $twig);
-    $twig->addRuntimeLoader(new \Twig_FactoryRuntimeLoader(array(
+    $twig->addRuntimeLoader(new FactoryRuntimeLoader(array(
         FormRenderer::class => function () use ($formEngine, $csrfManager) {
             return new FormRenderer($formEngine, $csrfManager);
         },
@@ -216,7 +216,7 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
         ->getFormFactory();
 
 .. versionadded:: 1.30
-    The ``Twig_FactoryRuntimeLoader`` was introduced in Twig 1.30.
+    The ``Twig\\RuntimeLoader\\FactoryRuntimeLoader`` was introduced in Twig 1.30.
 
 The exact details of your `Twig Configuration`_ will vary, but the goal is
 always to add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`

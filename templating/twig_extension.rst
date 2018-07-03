@@ -21,7 +21,7 @@ money:
     {# pass in the 3 optional arguments #}
     {{ product.price|price(2, ',', '.') }}
 
-Create a class that extends ``\Twig_Extension`` and fill in the logic::
+Create a class that extends ``AbstractExtension`` and fill in the logic::
 
     // src/AppBundle/Twig/AppExtension.php
     namespace AppBundle\Twig;
@@ -94,14 +94,16 @@ callable defined in ``getFilters()``::
     namespace AppBundle\Twig;
 
     use AppBundle\Twig\AppRuntime;
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
 
-    class AppExtension extends \Twig_Extension
+    class AppExtension extends AbstractExtension
     {
         public function getFilters()
         {
             return array(
                 // the logic of this filter is now implemented in a different class
-                new \Twig_SimpleFilter('price', array(AppRuntime::class, 'priceFilter')),
+                new TwigFilter('price', array(AppRuntime::class, 'priceFilter')),
             );
         }
     }
