@@ -77,7 +77,7 @@ security.authorization_checker  ``Symfony\Component\Security\Core\Authorization\
 security.password_encoder       ``Symfony\Component\Security\Core\Encoder\UserPasswordEncoder``
 session                         ``Symfony\Component\HttpFoundation\Session\Session``
 translator                      ``Symfony\Component\Translation\DataCollectorTranslator``
-twig                            ``Twig_Environment``
+twig                            ``Twig\Environment``
 validator                       ``Symfony\Component\Validator\Validator\ValidatorInterface``
 =============================== =======================================================================
 

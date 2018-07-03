@@ -112,14 +112,16 @@ Markdown content into HTML::
     }
 
 Next, create a new Twig extension and define a new filter called ``md2html``
-using the ``Twig_SimpleFilter`` class. Inject the newly defined ``markdown``
+using the ``Twig\TwigFilter`` class. Inject the newly defined ``markdown``
 service in the constructor of the Twig extension::
 
     namespace AppBundle\Twig;
 
     use AppBundle\Utils\Markdown;
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
 
-    class AppExtension extends \Twig_Extension
+    class AppExtension extends AbstractExtension
     {
         private $parser;
 
@@ -131,7 +133,7 @@ service in the constructor of the Twig extension::
         public function getFilters()
         {
             return array(
-                new \Twig_SimpleFilter(
+                new TwigFilter(
                     'md2html',
                     array($this, 'markdownToHtml'),
                     array('is_safe' => array('html'), 'pre_escape' => 'html')

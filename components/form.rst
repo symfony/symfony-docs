@@ -183,7 +183,6 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     use Symfony\Bridge\Twig\Form\TwigRendererEngine;
     use Twig\Environment;
     use Twig\Loader\FilesystemLoader;
-    use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
     // the Twig file that holds all the default markup for rendering forms
     // this file comes with TwigBridge
