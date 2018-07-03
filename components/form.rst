@@ -178,6 +178,9 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     use Symfony\Bridge\Twig\Extension\FormExtension;
     use Symfony\Component\Form\FormRenderer;
     use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+    use Twig\Environment;
+    use Twig\Loader\FilesystemLoader;
+    use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
     // the Twig file that holds all the default markup for rendering forms
     // this file comes with TwigBridge
@@ -191,12 +194,12 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     // the path to your other templates
     $viewsDirectory = realpath(__DIR__.'/../views');
 
-    $twig = new Twig_Environment(new Twig_Loader_Filesystem(array(
+    $twig = new Environment(new FilesystemLoader(array(
         $viewsDirectory,
         $vendorTwigBridgeDirectory.'/Resources/views/Form',
     )));
     $formEngine = new TwigRendererEngine(array($defaultFormTheme), $twig);
-    $twig->addRuntimeLoader(new \Twig_FactoryRuntimeLoader(array(
+    $twig->addRuntimeLoader(new FactoryRuntimeLoader(array(
         FormRenderer::class => function () use ($formEngine, $csrfManager) {
             return new FormRenderer($formEngine, $csrfManager);
         },
@@ -213,7 +216,7 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
         ->getFormFactory();
 
 .. versionadded:: 1.30
-    The ``Twig_FactoryRuntimeLoader`` was introduced in Twig 1.30.
+    The ``Twig\\RuntimeLoader\\FactoryRuntimeLoader`` was introduced in Twig 1.30.
 
 The exact details of your `Twig Configuration`_ will vary, but the goal is
 always to add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`
@@ -253,7 +256,7 @@ installed:
     $ composer require symfony/translation symfony/config
 
 Next, add the :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension`
-to your ``Twig_Environment`` instance::
+to your ``Twig\\Environment`` instance::
 
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Translation\Translator;
