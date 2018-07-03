@@ -35,15 +35,19 @@ Configuration
 * `cache`_
 * `charset`_
 * `date`_
+
   * `format`_
   * `interval_format`_
   * `timezone`_
+
 * `debug`_
 * `exception_controller`_
 * `number_format`_
+
   * `decimals`_
   * `decimal_point`_
   * `thousands_separator`_
+
 * `optimizations`_
 * `paths`_
 * `strict_variables`_

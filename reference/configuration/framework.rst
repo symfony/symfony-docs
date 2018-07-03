@@ -28,59 +28,84 @@ Configuration
 .. class:: list-config-options list-config-options--complex
 
 * `annotations`_
+
   * :ref:`cache <reference-annotations-cache>`
   * `debug`_
   * `file_cache_dir`_
+
 * `assets`_
+
   * `base_path`_
   * `base_urls`_
   * `packages`_
   * `version_format`_
   * `version`_
+
 * `csrf_protection`_
+
   * :ref:`enabled <reference-csrf_protection-enabled>`
   * `field_name`_ (deprecated since 2.4)
+
 * `default_locale`_
 * `esi`_
+
   * :ref:`enabled <reference-esi-enabled>`
+
 * :ref:`form <reference-framework-form>`
+
   * :ref:`enabled <reference-form-enabled>`
+
 * `fragments`_
+
   * :ref:`enabled <reference-fragments-enabled>`
   * :ref:`path <reference-fragments-path>`
+
 * `http_method_override`_
 * `ide`_
 * `profiler`_
+
   * `collect`_
   * `dsn`_
   * :ref:`enabled <reference-profiler-enabled>`
   * `lifetime`_ (deprecated since 2.8)
   * `matcher`_
+
     * `ip`_
     * `service`_
     * :ref:`path <reference-profiler-matcher-path>`
+
   * `only_exceptions`_
   * `only_master_requests`_
   * `password`_ (deprecated since 2.8)
   * `username`_ (deprecated since 2.8)
+
 * `property_access`_
+
   * `magic_call`_
   * `throw_exception_on_invalid_index`_
+
 * `request`_:
+
   * `formats`_
+
 * `router`_
+
   * `http_port`_
   * `https_port`_
   * `resource`_
   * `strict_requirements`_
   * `type`_
+
 * `secret`_
 * `serializer`_
+
   * :ref:`cache <reference-serializer-cache>`
   * :ref:`enable_annotations <reference-serializer-enable_annotations>`
   * :ref:`enabled <reference-serializer-enabled>`
   * :ref:`name_converter <reference-serializer-name_converter>`
+
 * `session`_
+
   * `cookie_domain`_
   * `cookie_httponly`_
   * `cookie_lifetime`_
@@ -95,22 +120,30 @@ Configuration
   * `save_path`_
   * `storage_id`_
   * `use_strict_mode`_
+
 * `templating`_
+
   * :ref:`cache <reference-templating-cache>`
   * `engines`_
   * :ref:`form <reference-templating-form>`
+
     * `resources`_
+
   * `hinclude_default_template`_
   * `loaders`_
+
 * `test`_
 * `translator`_
+
   * :ref:`enabled <reference-translator-enabled>`
   * `fallbacks`_
   * `logging`_
   * :ref:`paths <reference-translator-paths>`
+
 * `trusted_hosts`_
 * `trusted_proxies`_
 * `validation`_
+
   * `api`_
   * :ref:`cache <reference-validation-cache>`
   * :ref:`enable_annotations <reference-validation-enable_annotations>`

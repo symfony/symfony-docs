@@ -28,8 +28,10 @@ Configuration
 .. class:: list-config-options list-config-options--complex
 
 * `antiflood`_
+
   * `threshold`_
   * `sleep`_
+
 * `auth_mode`_
 * `command`_
 * `delivery_addresses`_
@@ -44,8 +46,10 @@ Configuration
 * `sender_address`_
 * `source_ip`_
 * `spool`_
+
   * `type`_
   * `path`_
+
 * `timeout`_
 * `transport`_
 * `url`_
