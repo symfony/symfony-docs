@@ -25,9 +25,11 @@ key in your application configuration.
 Configuration
 -------------
 
+.. class:: list-config-options
+
+* `dump_destination`_
 * `max_items`_
 * `max_string_length`_
-* `dump_destination`_
 
 max_items
 ~~~~~~~~~
