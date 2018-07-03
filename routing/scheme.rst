@@ -16,7 +16,7 @@ the URI scheme via schemes:
         namespace AppBundle\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class MainController extends Controller
         {
