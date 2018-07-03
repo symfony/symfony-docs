@@ -95,11 +95,11 @@ Configuration
 
 * `profiler`_
 
-    * `collect`_
-    * `dsn`_
-    * :ref:`enabled <reference-profiler-enabled>`
-    * `only_exceptions`_
-    * `only_master_requests`_
+  * `collect`_
+  * `dsn`_
+  * :ref:`enabled <reference-profiler-enabled>`
+  * `only_exceptions`_
+  * `only_master_requests`_
 
 * `property_access`_
 
