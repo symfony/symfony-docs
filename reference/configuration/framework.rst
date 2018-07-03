@@ -169,16 +169,16 @@ Configuration
 * `trusted_proxies`_
 * `validation`_
 
-    * :ref:`cache <reference-validation-cache>`
-    * `email_validation_mode`_
-    * :ref:`enable_annotations <reference-validation-enable_annotations>`
-    * :ref:`enabled <reference-validation-enabled>`
-    * :ref:`mapping <reference-validation-mapping>`
+  * :ref:`cache <reference-validation-cache>`
+  * `email_validation_mode`_
+  * :ref:`enable_annotations <reference-validation-enable_annotations>`
+  * :ref:`enabled <reference-validation-enabled>`
+  * :ref:`mapping <reference-validation-mapping>`
 
-        * :ref:`paths <reference-validation-mapping-paths>`
+    * :ref:`paths <reference-validation-mapping-paths>`
 
-    * `strict_email`_
-    * `translation_domain`_
+  * `strict_email`_
+  * `translation_domain`_
 
 secret
 ~~~~~~
