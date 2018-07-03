@@ -112,13 +112,13 @@ with the following fields: ``id``, ``username``, ``password``,
         /** @see \Serializable::serialize() */
         public function serialize()
         {
-            return serialize([
+            return serialize(array(
                 $this->id,
                 $this->username,
                 $this->password,
                 // see section on salt below
                 // $this->salt,
-            ]);
+            ));
         }
 
         /** @see \Serializable::unserialize() */
@@ -130,7 +130,7 @@ with the following fields: ``id``, ``username``, ``password``,
                 $this->password,
                 // see section on salt below
                 // $this->salt
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+            ) = unserialize($serialized, array('allowed_classes' => false));
         }
     }
 
