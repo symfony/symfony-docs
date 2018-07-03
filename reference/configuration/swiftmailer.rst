@@ -29,8 +29,8 @@ Configuration
 
 * `antiflood`_
 
-  * `threshold`_
   * `sleep`_
+  * `threshold`_
 
 * `auth_mode`_
 * `command`_
@@ -47,8 +47,8 @@ Configuration
 * `source_ip`_
 * `spool`_
 
-  * `type`_
   * `path`_
+  * `type`_
 
 * `timeout`_
 * `transport`_
