@@ -453,6 +453,18 @@ Symfony provides the following env var processors:
                 'auth' => '%env(file:AUTH_FILE)%',
             ));
 
+``env(key:FOO:BAR)``
+    Retrieves key ``FOO`` from array value ``BAR``:
+
+    .. code-block:: yaml
+
+        parameters:
+            env(APP_SECRETS): "{\"database_password\": \"secret\"}"
+            database_password: '%env(key:database_password:json:APP_SECRETS)%'
+
+    .. versionadded:: 4.2
+        The ``key`` processor was introduced in Symfony 4.2.
+
 It is also possible to combine any number of processors:
 
 .. code-block:: yaml
