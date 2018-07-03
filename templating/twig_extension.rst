@@ -33,12 +33,15 @@ As an example you'll create a price filter to format a given number into price::
     // src/AppBundle/Twig/AppExtension.php
     namespace AppBundle\Twig;
 
-    class AppExtension extends \Twig_Extension
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
+
+    class AppExtension extends AbstractExtension
     {
         public function getFilters()
         {
             return array(
-                new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
+                new TwigFilter('price', array($this, 'priceFilter')),
             );
         }
 
