@@ -326,7 +326,7 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
         $this->registerClasses($definition, 'App\\Controller\\', '../src/Controller/*');
 
 But, you might not even notice this. First, your controllers *can* still extend
-the same base ``Controller`` class or a new :ref:`AbstractController <controller-abstract-versus-controller>`.
+the same base controller class (``AbstractController``).
 This means you have access to all of the same shortcuts as before. Additionally,
 the ``@Route`` annotation and ``_controller`` syntax (e.g. ``App:Default:homepage``)
 used in routing will automatically use your controller as a service (as long as its
