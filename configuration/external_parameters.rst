@@ -454,13 +454,42 @@ Symfony provides the following env var processors:
             ));
 
 ``env(key:FOO:BAR)``
-    Retrieves key ``FOO`` from array value ``BAR``:
+    Retrieves the value associated with the key ``FOO`` from the array whose
+    contents are stored in the ``BAR`` env var:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        parameters:
-            env(APP_SECRETS): "{\"database_password\": \"secret\"}"
-            database_password: '%env(key:database_password:json:APP_SECRETS)%'
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                env(SECRETS_FILE): '/opt/application/.secrets.json'
+                database_password: '%env(key:database_password:json:file:SECRETS_FILE)%'
+                # if SECRETS_FILE contents are: {"database_password": "secret"} it returns "secret"
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(SECRETS_FILE)">/opt/application/.secrets.json</parameter>
+                    <parameter key="database_password">%env(key:database_password:json:file:SECRETS_FILE)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('env(SECRETS_FILE)', '/opt/application/.secrets.json');
+            $container->setParameter('database_password', '%env(key:database_password:json:file:SECRETS_FILE)%');
 
     .. versionadded:: 4.2
         The ``key`` processor was introduced in Symfony 4.2.
