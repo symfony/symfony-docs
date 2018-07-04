@@ -83,25 +83,11 @@ During impersonation, the user is provided with a special role called
 ``ROLE_PREVIOUS_ADMIN``. In a template, for instance, this role can be used
 to show a link to exit impersonation:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-            <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <?php if ($view['security']->isGranted('ROLE_PREVIOUS_ADMIN')): ?>
-            <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
-                had to use generate(). -->
-            <a href="<?php echo $view['router']->path('homepage', array(
-                '_switch_user' => '_exit',
-            )) ?>">
-                Exit impersonation
-            </a>
-        <?php endif ?>
+    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+        <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
+    {% endif %}
 
 In some cases you may need to get the object that represents the impersonator
 user rather than the impersonated user. Use the following snippet to iterate

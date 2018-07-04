@@ -164,27 +164,15 @@ Defining the redirect URL via GET using a query string parameter:
 
 Defining the redirect URL via POST using a hidden form field:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# app/Resources/views/security/login.html.twig #}
+    <form action="{{ path('login') }}" method="post">
+        {# ... #}
 
-        {# app/Resources/views/security/login.html.twig #}
-        <form action="{{ path('login') }}" method="post">
-            {# ... #}
-
-            <input type="hidden" name="_target_path" value="{{ path('account') }}" />
-            <input type="submit" name="login" />
-        </form>
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/security/login.html.php -->
-        <form action="<?php echo $view['router']->path('login') ?>" method="post">
-            // ...
-
-            <input type="hidden" name="_target_path" value="<?php echo $view['router']->path('account') ?>" />
-            <input type="submit" name="login" />
-        </form>
+        <input type="hidden" name="_target_path" value="{{ path('account') }}" />
+        <input type="submit" name="login" />
+    </form>
 
 Using the Referring URL
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -318,27 +306,15 @@ This option can also be set via the ``_failure_path`` request parameter:
 
     http://example.com/some/path?_failure_path=/forgot-password
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# app/Resources/views/security/login.html.twig #}
+    <form action="{{ path('login') }}" method="post">
+        {# ... #}
 
-        {# app/Resources/views/security/login.html.twig #}
-        <form action="{{ path('login') }}" method="post">
-            {# ... #}
-
-            <input type="hidden" name="_failure_path" value="{{ path('forgot_password') }}" />
-            <input type="submit" name="login" />
-        </form>
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/security/login.html.php -->
-        <form action="<?php echo $view['router']->path('login') ?>" method="post">
-            <!-- ... -->
-
-            <input type="hidden" name="_failure_path" value="<?php echo $view['router']->path('forgot_password') ?>" />
-            <input type="submit" name="login" />
-        </form>
+        <input type="hidden" name="_failure_path" value="{{ path('forgot_password') }}" />
+        <input type="submit" name="login" />
+    </form>
 
 Customizing the Target and Failure Request Parameters
 -----------------------------------------------------
@@ -407,26 +383,15 @@ are now fully customized:
 
     http://example.com/some/path?go_to=/dashboard&back_to=/forgot-password
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# app/Resources/views/security/login.html.twig #}
+    <form action="{{ path('login') }}" method="post">
+        {# ... #}
 
-        {# app/Resources/views/security/login.html.twig #}
-        <form action="{{ path('login') }}" method="post">
-            {# ... #}
+        <input type="hidden" name="go_to" value="{{ path('dashboard') }}" />
+        <input type="hidden" name="back_to" value="{{ path('forgot_password') }}" />
+        <input type="submit" name="login" />
+    </form>
 
-            <input type="hidden" name="go_to" value="{{ path('dashboard') }}" />
-            <input type="hidden" name="back_to" value="{{ path('forgot_password') }}" />
-            <input type="submit" name="login" />
-        </form>
 
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/security/login.html.php -->
-        <form action="<?php echo $view['router']->path('login') ?>" method="post">
-            <!-- ... -->
-
-            <input type="hidden" name="go_to" value="<?php echo $view['router']->path('dashboard') ?>" />
-            <input type="hidden" name="back_to" value="<?php echo $view['router']->path('forgot_password') ?>" />
-            <input type="submit" name="login" />
-        </form>
