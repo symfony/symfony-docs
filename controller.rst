@@ -85,6 +85,7 @@ For more information on routing, see :doc:`/routing`.
 .. index::
    single: Controller; Base controller class
 
+.. _the-base-controller-class-services:
 .. _the-base-controller-classes-services:
 
 The Base Controller Class & Services
