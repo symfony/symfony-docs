@@ -13,10 +13,8 @@ instantiation of the services to be lazy. However, that's not possible using
 the explicit dependency injection since services are not all meant to
 be ``lazy`` (see :doc:`/service_container/lazy_services`).
 
-This can typically be the case in your controllers, where only one action is
-usually called per request, and where services are used conditionnally in each
-of them.
-
+This can typically be the case in your controllers, where you may inject several
+services in the constructor, but the action executed only uses some of them.
 Another example are applications that implement the `Command pattern`_
 using a CommandBus to map command handlers by Command class names and use them
 to handle their respective command when it is asked for::
@@ -59,7 +57,7 @@ handlers could be to inject the main dependency injection container.
 However, injecting the entire container is discouraged because it gives too
 broad access to existing services and it hides the actual dependencies of the
 services. Doing so also requires services to be made public, which isn't the
-case by default since Symfony version 4.0.
+case by default in Symfony applications.
 
 **Service Subscribers** are intended to solve this problem by giving access to a
 set of predefined services while instantiating them only when actually needed
