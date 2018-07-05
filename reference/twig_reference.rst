@@ -760,8 +760,9 @@ rootform
 ``form``
     **type**: ``FormView``
 
-Checks for sure if the current ``form`` does not have a parent form view. Using
-this test is the safest way if your form contains a ``parent`` field.
+Checks if the given ``form`` does not have a parent form view. This is the only
+safe way of testing it because checking if the form contains a field called
+``parent`` is not reliable.
 
 Global Variables
 ----------------
