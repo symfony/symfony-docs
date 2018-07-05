@@ -61,24 +61,11 @@ special ``_format`` placeholder in your route definition::
 Now, include the ``_format`` placeholder when generating a route for another
 format:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <a href="{{ path('article_show', {'slug': 'about-us', '_format': 'xml'}) }}">
-            View as XML
-        </a>
-
-    .. code-block:: html+php
-
-        <!-- The path() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate(). -->
-        <a href="<?php echo $view['router']->path('article_show', array(
-            'slug' => 'about-us',
-            '_format' => 'xml',
-        )) ?>">
-            View as XML
-        </a>
+    <a href="{{ path('article_show', {'slug': 'about-us', '_format': 'xml'}) }}">
+        View as XML
+    </a>
 
 .. seealso::
 

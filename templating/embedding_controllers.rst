@@ -49,55 +49,26 @@ First, create a controller that renders a certain number of recent articles::
 Then, create a ``recent_list`` template fragment to list the articles given by
 the controller:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {# templates/article/recent_list.html.twig #}
-        {% for article in articles %}
-            <a href="{{ path('article_show', {slug: article.slug}) }}">
-                {{ article.title }}
-            </a>
-        {% endfor %}
-
-    .. code-block:: html+php
-
-        <!-- templates/article/recent_list.html.php -->
-        <?php foreach ($articles as $article): ?>
-            <a href="<?php echo $view['router']->path('article_show', array(
-            'slug' => $article->getSlug(),
-            )) ?>">
-                <?php echo $article->getTitle() ?>
-            </a>
-        <?php endforeach ?>
+    {# templates/article/recent_list.html.twig #}
+    {% for article in articles %}
+        <a href="{{ path('article_show', {slug: article.slug}) }}">
+            {{ article.title }}
+        </a>
+    {% endfor %}
 
 Finally, call the controller from any template using the ``render()`` function
 and the standard string syntax for controllers (i.e. **controllerNamespace**::**action**):
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# templates/base.html.twig #}
 
-        {# templates/base.html.twig #}
-
-        {# ... #}
-        <div id="sidebar">
-            {{ render(controller(
-                'App\\Controller\\ArticleController::recentArticles',
-                { 'max': 3 }
-            )) }}
-        </div>
-
-    .. code-block:: html+php
-
-        <!-- templates/base.html.php -->
-
-        <!-- ... -->
-        <div id="sidebar">
-            <?php echo $view['actions']->render(
-                new \Symfony\Component\HttpKernel\Controller\ControllerReference(
-                    'App\\Controller\\ArticleController::recentArticles',
-                    array('max' => 3)
-                )
-            ) ?>
-        </div>
+    {# ... #}
+    <div id="sidebar">
+        {{ render(controller(
+            'App\\Controller\\ArticleController::recentArticles',
+            { 'max': 3 }
+        )) }}
+    </div>

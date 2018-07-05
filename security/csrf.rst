@@ -179,37 +179,20 @@ token and store it as a hidden field of the form. By default, the HTML field
 must be called ``_csrf_token`` and the string used to generate the value must
 be ``authenticate``:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# templates/security/login.html.twig #}
 
-        {# templates/security/login.html.twig #}
+    {# ... #}
+    <form action="{{ path('login') }}" method="post">
+        {# ... the login fields #}
 
-        {# ... #}
-        <form action="{{ path('login') }}" method="post">
-            {# ... the login fields #}
+        <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+        >
 
-            <input type="hidden" name="_csrf_token"
-                value="{{ csrf_token('authenticate') }}"
-            >
-
-            <button type="submit">login</button>
-        </form>
-
-    .. code-block:: html+php
-
-        <!-- templates/security/login.html.php -->
-
-        <!-- ... -->
-        <form action="<?php echo $view['router']->path('login') ?>" method="post">
-            <!-- ... the login fields -->
-
-            <input type="hidden" name="_csrf_token"
-                value="<?php echo $view['form']->csrfToken('authenticate') ?>"
-            >
-
-            <button type="submit">login</button>
-        </form>
+        <button type="submit">login</button>
+    </form>
 
 After this, you have protected your login form against CSRF attacks.
 

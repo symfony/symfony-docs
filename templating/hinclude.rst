@@ -9,27 +9,10 @@ As the embedded content comes from another page (or controller for that matter),
 Symfony uses a version of the standard ``render()`` function to configure ``hinclude``
 tags:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {{ render_hinclude(controller('...')) }}
-        {{ render_hinclude(url('...')) }}
-
-    .. code-block:: php
-
-        <?php echo $view['actions']->render(
-            new ControllerReference('...'),
-            array('renderer' => 'hinclude')
-        ) ?>
-
-        <!-- The url() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate() with UrlGeneratorInterface::ABSOLUTE_URL
-             passed as the third argument. -->
-        <?php echo $view['actions']->render(
-            $view['router']->url('...'),
-            array('renderer' => 'hinclude')
-        ) ?>
+    {{ render_hinclude(controller('...')) }}
+    {{ render_hinclude(url('...')) }}
 
 .. note::
 
@@ -119,40 +102,16 @@ in your application configuration:
 You can define default templates per ``render()`` function (which will override
 any global default template that is defined):
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {{ render_hinclude(controller('...'),  {
-            'default': 'default/content.html.twig'
-        }) }}
-
-    .. code-block:: php
-
-        <?php echo $view['actions']->render(
-            new ControllerReference('...'),
-            array(
-                'renderer' => 'hinclude',
-                'default'  => 'default/content.html.twig',
-            )
-        ) ?>
+    {{ render_hinclude(controller('...'),  {
+        'default': 'default/content.html.twig'
+    }) }}
 
 Or you can also specify a string to display as the default content:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {{ render_hinclude(controller('...'), {'default': 'Loading...'}) }}
-
-    .. code-block:: php
-
-        <?php echo $view['actions']->render(
-            new ControllerReference('...'),
-            array(
-                'renderer' => 'hinclude',
-                'default'  => 'Loading...',
-            )
-        ) ?>
+    {{ render_hinclude(controller('...'), {'default': 'Loading...'}) }}
 
 .. _`hinclude.js`: http://mnot.github.io/hinclude/
