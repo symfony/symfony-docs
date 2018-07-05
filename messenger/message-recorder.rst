@@ -4,15 +4,15 @@
 Record Events Produced by a Handler
 ===================================
 
-In a example application there is a command (a CQRS message) named ``CreateUser``.
-That command is handled by the ``CreateUserHandler``. The command handler creates
+In an example application there is a command (a CQRS message) named ``CreateUser``.
+That command is handled by the ``CreateUserHandler`` which creates
 a ``User`` object, stores that object to a database and dispatches an ``UserCreatedEvent``.
 That event is also a normal message but is handled by an *event* bus.
 
 There are many subscribers to the ``UserCreatedEvent``, one subscriber may send
 a welcome email to the new user. Since we are using the ``DoctrineTransactionMiddleware``
 we wrap all database queries in one database transaction and rollback that transaction
-if an exception is thrown. That would mean that if an exception is thrown when sending
+if an exception is thrown. That means that if an exception is thrown when sending
 the welcome email, then the user will not be created.
 
 The solution to this issue is to not dispatch the ``UserCreatedEvent`` in the
@@ -27,7 +27,7 @@ in the middleware chain.
 
     .. code-block:: yaml
 
-        # config/packages/workflow.yaml
+        # config/packages/messenger.yaml
         framework:
             messenger:
                 default_bus: messenger.bus.command
@@ -45,6 +45,11 @@ in the middleware chain.
 
 .. code-block:: php
 
+    namespace App\Messenger\CommandHandler;
+
+    use App\Entity\User;
+    use App\Messenger\Command\CreateUser;
+    use App\Messenger\Event\UserCreatedEvent;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\Messenger\MessageRecorderInterface;
 
