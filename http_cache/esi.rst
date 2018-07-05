@@ -120,39 +120,15 @@ for more details).
 As the embedded content comes from another page (or controller for that
 matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
+    {# templates/static/about.html.twig #}
 
-        {# templates/static/about.html.twig #}
+    {# you can use a controller reference #}
+    {{ render_esi(controller('App\\Controller\\NewsController::latest', { 'maxPerPage': 5 })) }}
 
-        {# you can use a controller reference #}
-        {{ render_esi(controller('App\\Controller\\NewsController::latest', { 'maxPerPage': 5 })) }}
-
-        {# ... or a URL #}
-        {{ render_esi(url('latest_news', { 'maxPerPage': 5 })) }}
-
-    .. code-block:: html+php
-
-        <!-- templates/static/about.html.php -->
-
-        <!-- you can use a controller reference -->
-        <?php echo $view['actions']->render(
-            new Symfony\Component\HttpKernel\Controller\ControllerReference(
-                'App\\Controller\\NewsController::latest',
-                array('maxPerPage' => 5)
-            ),
-            array('strategy' => 'esi')
-        ) ?>
-
-        <!-- ... or a URL -->
-        <?php echo $view['actions']->render(
-            $view['router']->path(
-                'latest_news',
-                array('maxPerPage' => 5)
-            ),
-            array('strategy' => 'esi')
-        ) ?>
+    {# ... or a URL #}
+    {{ render_esi(url('latest_news', { 'maxPerPage': 5 })) }}
 
 By using the ``esi`` renderer (via the ``render_esi()`` Twig function), you
 tell Symfony that the action should be rendered as an ESI tag. You might be

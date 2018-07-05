@@ -93,7 +93,7 @@ With some validation added, your class may look something like this::
          * @ORM\Column(type="string", length=64)
          */
         private $password;
-        
+
         /**
          * @ORM\Column(type="array")
          */
@@ -152,7 +152,7 @@ With some validation added, your class may look something like this::
             // You *may* need a real salt if you choose a different encoder.
             return null;
         }
-        
+
         public function getRoles()
         {
             return $this->roles;
