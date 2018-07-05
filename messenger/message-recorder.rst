@@ -6,7 +6,7 @@ Record Events Produced by a Handler
 
 In an example application there is a command (a CQRS message) named ``CreateUser``.
 That command is handled by the ``CreateUserHandler`` which creates
-a ``User`` object, stores that object to a database and dispatches an ``UserCreatedEvent``.
+a ``User`` object, stores that object to a database and dispatches a ``UserCreatedEvent``.
 That event is also a normal message but is handled by an *event* bus.
 
 There are many subscribers to the ``UserCreatedEvent``, one subscriber may send
