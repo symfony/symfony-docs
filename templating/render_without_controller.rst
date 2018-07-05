@@ -59,24 +59,9 @@ within a template is typically to prepare some data in a custom controller,
 this is probably only useful if you'd like to cache this page partial (see
 :ref:`templating-no-controller-caching`).
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {{ render(url('acme_privacy')) }}
-
-    .. code-block:: html+php
-
-        <?php
-        use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-        ?>
-
-        <!-- The url() method was introduced in Symfony 2.8. Prior to 2.8, you
-             had to use generate() with UrlGeneratorInterface::ABSOLUTE_URL
-             passed as the third argument. -->
-        <?php echo $view['actions']->render(
-            $view['router']->url('acme_privacy', array())
-        ) ?>
+    {{ render(url('acme_privacy')) }}
 
 .. _templating-no-controller-caching:
 

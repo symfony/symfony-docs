@@ -120,41 +120,15 @@ for more details).
 As the embedded content comes from another page (or controller for that
 matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
+    {# app/Resources/views/static/about.html.twig #}
 
-        {# app/Resources/views/static/about.html.twig #}
+    {# you can use a controller reference #}
+    {{ render_esi(controller('AppBundle:News:latest', { 'maxPerPage': 5 })) }}
 
-        {# you can use a controller reference #}
-        {{ render_esi(controller('AppBundle:News:latest', { 'maxPerPage': 5 })) }}
-
-        {# ... or a URL #}
-        {{ render_esi(url('latest_news', { 'maxPerPage': 5 })) }}
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/static/about.html.php -->
-
-        <!-- you can use a controller reference -->
-        <?php echo $view['actions']->render(
-            new Symfony\Component\HttpKernel\Controller\ControllerReference(
-                'AppBundle:News:latest',
-                array('maxPerPage' => 5)
-            ),
-            array('strategy' => 'esi')
-        ) ?>
-
-        <!-- ... or a URL -->
-        <?php echo $view['actions']->render(
-            // The url() method was introduced in Symfony 2.8. Prior to 2.8,
-            // you had to use generate($name, $parameters, UrlGeneratorInterface::ABSOLUTE_URL)
-            $view['router']->path(
-                'latest_news',
-                array('maxPerPage' => 5)
-            ),
-            array('strategy' => 'esi')
-        ) ?>
+    {# ... or a URL #}
+    {{ render_esi(url('latest_news', { 'maxPerPage': 5 })) }}
 
 By using the ``esi`` renderer (via the ``render_esi()`` Twig function), you
 tell Symfony that the action should be rendered as an ESI tag. You might be
