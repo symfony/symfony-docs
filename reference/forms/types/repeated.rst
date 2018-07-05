@@ -68,30 +68,17 @@ The repeated field type is actually two underlying fields, which you can
 render all at once, or individually. To render all at once, use something
 like:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {{ form_row(form.password) }}
-
-    .. code-block:: php
-
-        <?php echo $view['form']->row($form['password']) ?>
+    {{ form_row(form.password) }}
 
 To render each field individually, use something like this:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {# .first and .second may vary in your use - see the note below #}
-        {{ form_row(form.password.first) }}
-        {{ form_row(form.password.second) }}
-
-    .. code-block:: php
-
-        <?php echo $view['form']->row($form['password']['first']) ?>
-        <?php echo $view['form']->row($form['password']['second']) ?>
+    {# .first and .second may vary in your use - see the note below #}
+    {{ form_row(form.password.first) }}
+    {{ form_row(form.password.second) }}
 
 .. note::
 
