@@ -609,7 +609,7 @@ Using Middleware Factories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Some third-party bundles and libraries provide configurable middleware via
-factories. Using them requires a two-step configuration based on Symfony's
+factories. Defining such requires a two-step configuration based on Symfony's
 :doc:`dependency injection </service_container>` features:
 
 .. code-block:: yaml
