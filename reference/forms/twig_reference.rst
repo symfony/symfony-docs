@@ -217,6 +217,30 @@ array).
 
     <option {% if choice is selectedchoice(value) %} selected="selected"{% endif %} ...>
 
+.. _form-twig-rootform:
+
+rootform
+~~~~~~~~
+
+This test will check for sure if the current ``form`` does not have a parent form view.
+It would avoid collision and odd behavior when your form has defined a ``parent`` field.
+
+Wrong example if your form has a field named ``parent``:
+
+.. code-block:: jinja
+
+    {% if form.parent is null %}
+        {{ form_errors(form) }}
+    {% endif %}
+
+Correct example, this will check for the parent form view rather than its ``parent`` field:
+
+.. code-block:: jinja
+
+    {% if form is rootform %}
+        {{ form_errors(form) }}
+    {% endif %}
+
 .. _`twig-reference-form-variables`:
 
 More about Form Variables
