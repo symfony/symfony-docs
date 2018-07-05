@@ -97,12 +97,7 @@ and increase web server performance:
             Order Allow,Deny
             Allow from All
 
-            <IfModule mod_rewrite.c>
-                Options -MultiViews
-                RewriteEngine On
-                RewriteCond %{REQUEST_FILENAME} !-f
-                RewriteRule ^(.*)$ index.php [QSA,L]
-            </IfModule>
+            FallbackResource /index.php
         </Directory>
 
         # uncomment the following lines if you install assets as symlinks
@@ -111,13 +106,11 @@ and increase web server performance:
         #     Options FollowSymlinks
         # </Directory>
 
-        # optionally disable the RewriteEngine for the asset directories
-        # which will allow apache to simply reply with a 404 when files are
-        # not found instead of passing the request into the full symfony stack
+        # optionally disable the fallback resource for the asset directories
+        # which will allow Apache to return a 404 error when files are
+        # not found instead of passing the request to Symfony
         <Directory /var/www/project/public/bundles>
-            <IfModule mod_rewrite.c>
-                RewriteEngine Off
-            </IfModule>
+            FallbackResource disabled
         </Directory>
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
