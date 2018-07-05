@@ -253,7 +253,7 @@ installed:
     $ composer require symfony/translation symfony/config
 
 Next, add the :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension`
-to your ``Twig\\Environment`` instance::
+to your ``Twig\Environment`` instance::
 
     use Symfony\Component\Form\Forms;
     use Symfony\Component\Translation\Translator;
