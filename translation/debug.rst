@@ -10,25 +10,16 @@ When maintaining an application or bundle, you may add or remove translation
 messages and forget to update the message catalogues. The ``debug:translation``
 command helps you to find these missing or unused translation messages templates:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
+    {# messages can be found when using the trans/transchoice filters and tags #}
+    {% trans %}Symfony is great{% endtrans %}
 
-        {# messages can be found when using the trans/transchoice filters and tags #}
-        {% trans %}Symfony is great{% endtrans %}
+    {{ 'Symfony is great'|trans }}
 
-        {{ 'Symfony is great'|trans }}
+    {{ 'Symfony is great'|transchoice(1) }}
 
-        {{ 'Symfony is great'|transchoice(1) }}
-
-        {% transchoice 1 %}Symfony is great{% endtranschoice %}
-
-    .. code-block:: php
-
-        // messages can be found when using the trans() and transChoice() methods
-        $view['translator']->trans("Symfony is great");
-
-        $view['translator']->transChoice('Symfony is great', 1);
+    {% transchoice 1 %}Symfony is great{% endtranschoice %}
 
 .. caution::
 
