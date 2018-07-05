@@ -297,21 +297,12 @@ reference the variables on the ``name`` field, accessing the variables is
 done by using a public ``vars`` property on the
 :class:`Symfony\\Component\\Form\\FormView` object:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <label for="{{ form.name.vars.id }}"
-            class="{{ form.name.vars.required ? 'required' : '' }}">
-            {{ form.name.vars.label }}
-        </label>
-
-    .. code-block:: html+php
-
-        <label for="<?php echo $view['form']->get('name')->vars['id'] ?>"
-            class="<?php echo $view['form']->get('name')->vars['required'] ? 'required' : '' ?>">
-            <?php echo $view['form']->get('name')->vars['label'] ?>
-        </label>
+    <label for="{{ form.name.vars.id }}"
+        class="{{ form.name.vars.required ? 'required' : '' }}">
+        {{ form.name.vars.label }}
+    </label>
 
 +------------------------+-------------------------------------------------------------------------------------+
 | Variable               | Usage                                                                               |
