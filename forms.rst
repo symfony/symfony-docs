@@ -139,21 +139,12 @@ done by passing a special form "view" object to your template (notice the
 ``$form->createView()`` in the controller above) and using a set of form
 helper functions:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {# app/Resources/views/default/new.html.twig #}
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/default/new.html.php -->
-        <?php echo $view['form']->start($form) ?>
-        <?php echo $view['form']->widget($form) ?>
-        <?php echo $view['form']->end($form) ?>
+    {# app/Resources/views/default/new.html.twig #}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 
 .. image:: /_images/form/simple-form.png
     :align: center
@@ -413,21 +404,12 @@ Validation is a very powerful feature of Symfony and has its own
     but are being prevented by your browser from, for example, submitting
     blank fields.
 
-    .. configuration-block::
+.. code-block:: html+twig
 
-        .. code-block:: html+twig
-
-            {# app/Resources/views/default/new.html.twig #}
-            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
-
-        .. code-block:: html+php
-
-            <!-- app/Resources/views/default/new.html.php -->
-            <?php echo $view['form']->start($form, array('attr' => array('novalidate' => 'novalidate') ?>
-            <?php echo $view['form']->widget($form) ?>
-            <?php echo $view['form']->end($form) ?>
+    {# app/Resources/views/default/new.html.twig #}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 
 .. index::
    single: Forms; Built-in field types

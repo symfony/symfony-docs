@@ -1106,15 +1106,9 @@ You can group assets into packages, to specify different base URLs for them:
 
 Now you can use the ``avatars`` package in your templates:
 
-.. configuration-block:: php
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <img src="{{ asset('...', 'avatars') }}">
-
-    .. code-block:: html+php
-
-        <img src="<?php echo $view['assets']->getUrl('...', 'avatars') ?>">
+    <img src="{{ asset('...', 'avatars') }}">
 
 Each package can configure the following options:
 
@@ -1140,15 +1134,9 @@ equivalent) as well as assets rendered with Assetic.
 
 For example, suppose you have the following:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
-
-    .. code-block:: php
-
-        <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" alt="Symfony!" />
+    <img src="{{ asset('images/logo.png') }}" alt="Symfony!" />
 
 By default, this will render a path to your image such as ``/images/logo.png``.
 Now, activate the ``version`` option:
