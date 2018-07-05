@@ -81,9 +81,9 @@ without the method (``App\Controller\HelloController`` for example).
 Alternatives to base Controller Methods
 ---------------------------------------
 
-When using a controller defined as a service, you can still extend any of the
-:ref:`normal base controller <the-base-controller-class-services>` classes and
-use their shortcuts. But, you don't need to! You can choose to extend *nothing*,
+When using a controller defined as a service, you can still extend the
+:ref:`AbstractController base controller <the-base-controller-class-services>`
+and use its shortcuts. But, you don't need to! You can choose to extend *nothing*,
 and use dependency injection to access different services.
 
 The base `Controller class source code`_ is a great way to see how to accomplish
