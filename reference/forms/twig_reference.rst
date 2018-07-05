@@ -222,20 +222,18 @@ array).
 rootform
 ~~~~~~~~
 
-This test will check for sure if the current ``form`` does not have a parent form view.
-It would avoid collision and odd behavior when your form has defined a ``parent`` field.
+This test will check if the current ``form`` does not have a parent form view.
 
-Wrong example if your form has a field named ``parent``:
+.. code-block:: twig
 
-.. code-block:: jinja
+    {# DON'T DO THIS: this code will fail when the form doesn't have a parent
+       but it defines a normal form field called 'parent' #}
 
     {% if form.parent is null %}
         {{ form_errors(form) }}
     {% endif %}
 
-Correct example, this will check for the parent form view rather than its ``parent`` field:
-
-.. code-block:: jinja
+    {# DO THIS: this code will always work, regardless of the form field names #}
 
     {% if form is rootform %}
         {{ form_errors(form) }}
