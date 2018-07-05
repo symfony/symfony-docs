@@ -913,19 +913,11 @@ Access Control in Templates
 If you want to check if the current user has a role inside a template, use
 the built-in ``is_granted()`` helper function:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% if is_granted('ROLE_ADMIN') %}
-            <a href="...">Delete</a>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <?php if ($view['security']->isGranted('ROLE_ADMIN')): ?>
-            <a href="...">Delete</a>
-        <?php endif ?>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="...">Delete</a>
+    {% endif %}
 
 Securing other Services
 .......................
@@ -1098,19 +1090,11 @@ Retrieving the User in a Template
 In a Twig Template this object can be accessed via the :ref:`app.user <reference-twig-global-app>`
 key:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <p>Username: {{ app.user.username }}</p>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <?php if ($view['security']->isGranted('IS_AUTHENTICATED_FULLY')): ?>
-            <p>Username: <?php echo $app->getUser()->getUsername() ?></p>
-        <?php endif; ?>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <p>Username: {{ app.user.username }}</p>
+    {% endif %}
 
 .. _security-logging-out:
 

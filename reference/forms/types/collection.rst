@@ -68,47 +68,25 @@ address as its own input text box::
 
 The simplest way to render this is all at once:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {{ form_row(form.emails) }}
-
-    .. code-block:: php
-
-        <?php echo $view['form']->row($form['emails']) ?>
+    {{ form_row(form.emails) }}
 
 A much more flexible method would look like this:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {{ form_label(form.emails) }}
+    {{ form_errors(form.emails) }}
 
-        {{ form_label(form.emails) }}
-        {{ form_errors(form.emails) }}
-
-        <ul>
-        {% for emailField in form.emails %}
-            <li>
-                {{ form_errors(emailField) }}
-                {{ form_widget(emailField) }}
-            </li>
-        {% endfor %}
-        </ul>
-
-    .. code-block:: html+php
-
-        <?php echo $view['form']->label($form['emails']) ?>
-        <?php echo $view['form']->errors($form['emails']) ?>
-
-        <ul>
-        <?php foreach ($form['emails'] as $emailField): ?>
-            <li>
-                <?php echo $view['form']->errors($emailField) ?>
-                <?php echo $view['form']->widget($emailField) ?>
-            </li>
-        <?php endforeach ?>
-        </ul>
+    <ul>
+    {% for emailField in form.emails %}
+        <li>
+            {{ form_errors(emailField) }}
+            {{ form_widget(emailField) }}
+        </li>
+    {% endfor %}
+    </ul>
 
 In both cases, no input fields would render unless your ``emails`` data
 array already contained some emails.
@@ -367,15 +345,9 @@ be added to your underlying array due to the `allow_add`_ option.
 The prototype field can be rendered via the ``prototype`` variable in the
 collection field:
 
-.. configuration-block::
+.. code-block:: twig
 
-    .. code-block:: twig
-
-        {{ form_row(form.emails.vars.prototype) }}
-
-    .. code-block:: php
-
-        <?php echo $view['form']->row($form['emails']->vars['prototype']) ?>
+    {{ form_row(form.emails.vars.prototype) }}
 
 Note that all you really need is the "widget", but depending on how you're
 rendering your form, having the entire "form row" may be easier for you.
