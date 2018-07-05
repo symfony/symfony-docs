@@ -184,27 +184,15 @@ You could also pass the collection of errors into a template::
 
 Inside the template, you can output the list of errors exactly as needed:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        {# templates/author/validation.html.twig #}
-        <h3>The author has the following errors</h3>
-        <ul>
-        {% for error in errors %}
-            <li>{{ error.message }}</li>
-        {% endfor %}
-        </ul>
-
-    .. code-block:: html+php
-
-        <!-- templates/author/validation.html.php -->
-        <h3>The author has the following errors</h3>
-        <ul>
-        <?php foreach ($errors as $error): ?>
-            <li><?php echo $error->getMessage() ?></li>
-        <?php endforeach ?>
-        </ul>
+    {# templates/author/validation.html.twig #}
+    <h3>The author has the following errors</h3>
+    <ul>
+    {% for error in errors %}
+        <li>{{ error.message }}</li>
+    {% endfor %}
+    </ul>
 
 .. note::
 
