@@ -363,34 +363,18 @@ the :ref:`user password encoding <security-encoding-user-password>` article.
 
 Next, create the template:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
+    {# app/Resources/views/registration/register.html.twig #}
 
-        {# app/Resources/views/registration/register.html.twig #}
+    {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
 
-        {{ form_start(form) }}
-            {{ form_row(form.username) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.plainPassword.first) }}
-            {{ form_row(form.plainPassword.second) }}
-
-            <button type="submit">Register!</button>
-        {{ form_end(form) }}
-
-    .. code-block:: html+php
-
-        <!-- app/Resources/views/registration/register.html.php -->
-
-        <?php echo $view['form']->start($form) ?>
-            <?php echo $view['form']->row($form['username']) ?>
-            <?php echo $view['form']->row($form['email']) ?>
-
-            <?php echo $view['form']->row($form['plainPassword']['first']) ?>
-            <?php echo $view['form']->row($form['plainPassword']['second']) ?>
-
-            <button type="submit">Register!</button>
-        <?php echo $view['form']->end($form) ?>
+        <button type="submit">Register!</button>
+    {{ form_end(form) }}
 
 See :doc:`/form/form_customization` for more details.
 
