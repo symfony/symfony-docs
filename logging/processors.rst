@@ -162,15 +162,15 @@ handler level or at the channel level instead of registering it globally
 .. tip::
 
     .. versionadded:: 4.2
-        Processors can be autoconfigured since Symfony 4.2.
+        The autoconfiguration of Monolog processors was introduced in Symfony 4.2.
 
-    Processors implementing :class:`Symfony\\Bridge\\Monolog\\Processor\\ProcessorInterface`
-    can have their ``monolog.processor`` tag added for you by Symfony when autoconfiguration
-    is enabled. In this situation, this means creating a processor class might be all you
-    need do to to have it up and running. It also means enabling the
-    :class:`Symfony\\Bridge\\Monolog\\Processor\\TokenProcessor` or the
-    :class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor` in your Flex-enabled app is a
-    one-liner:
+    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+    processors implementing :class:`Symfony\\Bridge\\Monolog\\Processor\\ProcessorInterface`
+    are automatically registered as services and tagged with ``monolog.processor``,
+    so you can use them without adding any configuration. The same applies to the
+    built-in :class:`Symfony\\Bridge\\Monolog\\Processor\\TokenProcessor` and
+    :class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor` processors, which
+    can be enabled as follows:
 
     .. code-block:: yaml
 
