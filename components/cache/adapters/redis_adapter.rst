@@ -141,8 +141,8 @@ Available Options
     loses connection with the server.
 
 ``tcp_keepalive`` (type: ``int``, default: ``0``)
-    Specifies the TCP-keepalive timeout (in seconds) of the connection. This requires
-    phpredis v4 or higher and a TCP-keepalive enabled server.
+    Specifies the `TCP-keepalive`_ timeout (in seconds) of the connection. This
+    requires phpredis v4 or higher and a TCP-keepalive enabled server.
 
 ``timeout`` (type: ``int``, default: ``30``)
     Specifies the time (in seconds) used to connect to a Redis server before the
