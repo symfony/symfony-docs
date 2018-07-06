@@ -226,14 +226,14 @@ This test will check if the current ``form`` does not have a parent form view.
 
 .. code-block:: twig
 
-    {# DON'T DO THIS: this code will fail when the form doesn't have a parent
-       but it defines a normal form field called 'parent' #}
+    {# DON'T DO THIS: this simple check can't differentiate between a form having
+       a parent form view and a form defining a normal form field called 'parent' #}
 
     {% if form.parent is null %}
         {{ form_errors(form) }}
     {% endif %}
 
-    {# DO THIS: this code will always work, regardless of the form field names #}
+   {# DO THIS: this check is always reliable, even if the form defines a field called 'parent' #}
 
     {% if form is rootform %}
         {{ form_errors(form) }}
