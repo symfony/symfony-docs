@@ -117,8 +117,10 @@ previous ``priceFilter()`` method::
 
     // src/Twig/AppRuntime.php
     namespace App\Twig;
+    
+    use Twig\Extension\RuntimeExtensionInterface;
 
-    class AppRuntime
+    class AppRuntime implements RuntimeExtensionInterface
     {
         public function __construct()
         {
@@ -134,6 +136,9 @@ previous ``priceFilter()`` method::
             return $price;
         }
     }
+
+ .. versionadded:: 3.4
+     The ``RuntimeExtensionInterface`` was introduced in Symfony 3.4.
 
 If you're using the default ``services.yaml`` configuration, this will already
 work! Otherwise, :ref:`create a service <service-container-creating-service>`
