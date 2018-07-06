@@ -137,6 +137,9 @@ previous ``priceFilter()`` method::
         }
     }
 
+ .. versionadded:: 3.4
+     The ``RuntimeExtensionInterface`` was introduced in Symfony 3.4.
+
 If you're using the default ``services.yaml`` configuration, this will already
 work! Otherwise, :ref:`create a service <service-container-creating-service>`
 for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
