@@ -11,6 +11,12 @@ The Messenger Component
     The component is greatly inspired by Matthias Noback's series of `blog posts
     about command buses`_ and the `SimpleBus project`_.
 
+.. seealso::
+
+    This article explains how to use the Messenger features as an independent
+    component in any PHP application. Read the :doc:`/messenger` article to
+    learn about how to use it in Symfony applications.
+
 Installation
 ------------
 
@@ -199,10 +205,10 @@ Learn More
 ----------
 
 .. toctree::
-:maxdepth: 1
-      :glob:
+    :maxdepth: 1
+    :glob:
 
-      /messenger
+    /messenger/*
 
 .. _blog posts about command buses: https://matthiasnoback.nl/tags/command%20bus/
 .. _SimpleBus project: http://simplebus.io
