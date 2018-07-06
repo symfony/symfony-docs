@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2018-07-06T06:44:52Z
+
+Thank you
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-06T06:46:19Z
+
+@Nyholm in all the old (2.8) components we added this warning at the top of the article to end the confusion of readers thinking that the "component article" is the article explaining how to use the component inside a Symfony app. So we can do the same here ... and add your `Learn More` section too. Thanks!
