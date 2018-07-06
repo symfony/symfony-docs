@@ -750,6 +750,20 @@ selectedchoice
 Checks if ``selectedValue`` was checked for the provided choice field. Using
 this test is the most effective way.
 
+rootform
+~~~~~~~~
+
+.. code-block:: twig
+
+    {% if form is rootform %}
+
+``form``
+    **type**: ``FormView``
+
+Checks if the given ``form`` does not have a parent form view. This is the only
+safe way of testing it because checking if the form contains a field called
+``parent`` is not reliable.
+
 Global Variables
 ----------------
 
