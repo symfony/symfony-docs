@@ -227,10 +227,10 @@ Second, make sure that ``LuckyController`` extends Symfony's base
     // src/Controller/LuckyController.php
 
     // ...
-    + use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     - class LuckyController
-    + class LuckyController extends Controller
+    + class LuckyController extends AbstractController
     {
         // ...
     }
@@ -241,7 +241,7 @@ variable so you can use it in Twig::
     // src/Controller/LuckyController.php
 
     // ...
-    class LuckyController extends Controller
+    class LuckyController extends AbstractController
     {
         /**
          * @Route("/lucky/number")
