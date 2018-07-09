@@ -263,6 +263,6 @@ Go Deeper with HTTP & Framework Fundamentals
 
     introduction/*
 
-.. _`Twig`: http://twig.sensiolabs.org
+.. _`Twig`: https://twig.symfony.com
 .. _`Composer`: https://getcomposer.org
 .. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony/first-page
