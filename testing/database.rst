@@ -15,6 +15,14 @@ your test always has the same data to work with.
 
     If you want to test your queries directly, see :doc:`/testing/doctrine`.
 
+.. tip::
+
+    A popular technique to improve the performance of tests that interact with
+    the database is to begin a transaction before every test and roll it back
+    after the test has finished. This makes it unnecessary to recreate the
+    database or reload fixtures before every test. A community bundle called
+    `DoctrineTestBundle`_ provides this feature.
+
 Mocking the ``Repository`` in a Unit Test
 -----------------------------------------
 
@@ -125,3 +133,5 @@ To do this, you can override the value of the ``DATABASE_URL`` env var in the
         </php>
         <!-- ... -->
     </phpunit>
+
+.. _`DoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle

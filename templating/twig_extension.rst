@@ -118,7 +118,9 @@ previous ``priceFilter()`` method::
     // src/Twig/AppRuntime.php
     namespace App\Twig;
 
-    class AppRuntime
+    use Twig\Extension\RuntimeExtensionInterface;
+
+    class AppRuntime implements RuntimeExtensionInterface
     {
         public function __construct()
         {
@@ -138,51 +140,14 @@ previous ``priceFilter()`` method::
 Register the Lazy-Loaded Extension as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Finally, register your new class as a service and tag it with ``twig.runtime``
-(and optionally inject any service needed by the Twig extension runtime):
+ .. versionadded:: 3.4
+     The ``RuntimeExtensionInterface`` was introduced in Symfony 3.4.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.twig_runtime:
-                class: App\Twig\AppRuntime
-                public: false
-                tags:
-                    - { name: twig.runtime }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.twig_runtime"
-                    class="App\Twig\AppRuntime"
-                    public="false">
-                    <tag name="twig.runtime" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use App\Twig\AppExtension;
-
-        $container
-            ->register('app.twig_runtime', AppRuntime::class)
-            ->setPublic(false)
-            ->addTag('twig.runtime');
+If you're using the default ``services.yaml`` configuration, this will already
+work! Otherwise, :ref:`create a service <service-container-creating-service>`
+for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
 
 .. _`official Twig extensions`: https://github.com/twigphp/Twig-extensions
-.. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-.. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
-.. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2
-.. _`Twig Extensions`: https://twig.sensiolabs.org/doc/2.x/advanced.html#creating-an-extension
+.. _`global variables`: https://twig.symfony.com/doc/2.x/advanced.html#id1
+.. _`functions`: https://twig.symfony.com/doc/2.x/advanced.html#id2
+.. _`Twig Extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
