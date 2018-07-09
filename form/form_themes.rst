@@ -24,18 +24,18 @@ To understand how this works, customize the ``form_row`` fragment and
 add a class attribute to the ``div`` element that surrounds each row. To
 do this, create a new template file that will store the new markup:
 
-    .. code-block:: html+twig
+.. code-block:: html+twig
 
-        {# templates/form/fields.html.twig #}
-        {% block form_row %}
-        {% spaceless %}
-            <div class="form_row">
-                {{ form_label(form) }}
-                {{ form_errors(form) }}
-                {{ form_widget(form) }}
-            </div>
-        {% endspaceless %}
-        {% endblock form_row %}
+    {# templates/form/fields.html.twig #}
+    {% block form_row %}
+    {% spaceless %}
+	<div class="form_row">
+	    {{ form_label(form) }}
+	    {{ form_errors(form) }}
+	    {{ form_widget(form) }}
+	</div>
+    {% endspaceless %}
+    {% endblock form_row %}
 
 The ``form_row`` form fragment is used when rendering most fields via the
 ``form_row()`` function. To tell the Form component to use your new ``form_row``
