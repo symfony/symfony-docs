@@ -288,7 +288,7 @@ component is the start of better interoperability between all frameworks and
 applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 3`_, `ezPublish
 5`_, `Laravel`_, `Silex`_ and `more`_).
 
-.. _`Twig`: http://twig.sensiolabs.org/
+.. _`Twig`: https://twig.symfony.com/
 .. _`HTTP specification`: https://tools.ietf.org/wg/httpbis/
 .. _`audited`: https://symfony.com/blog/symfony2-security-audit
 .. _`Symfony`: https://symfony.com/

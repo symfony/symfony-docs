@@ -795,7 +795,7 @@ Those bundles can have other Twig extensions:
   ``{% image %}`` tags. You can read more about them in
   :doc:`the Assetic Documentation </frontend/assetic/asset_management>`.
 
-.. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
+.. _`Twig Reference`: https://twig.symfony.com/doc/2.x/#reference
 .. _`Twig Extensions repository`: https://github.com/twigphp/Twig-extensions
 .. _`Twig Extensions documentation`: http://twig-extensions.readthedocs.io/en/latest/
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig/Extension

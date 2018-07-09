@@ -408,4 +408,4 @@ done by using a public ``vars`` property on the
 +------------------------+-------------------------------------------------------------------------------------+
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
-.. _`the Twig documentation`: http://twig.sensiolabs.org/doc/templates.html#test-operator
+.. _`the Twig documentation`: https://twig.symfony.com/doc/2.x/templates.html#test-operator

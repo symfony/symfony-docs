@@ -206,4 +206,4 @@ through environment variables. Learn how to do it in the following article:
 Next: :doc:`/best_practices/business-logic`
 
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
-.. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html
+.. _`constant() function`: https://twig.symfony.com/doc/2.x/functions/constant.html

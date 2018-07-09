@@ -170,5 +170,5 @@ name is irrelevant because you never use it in your own code):
 
 Next: :doc:`/best_practices/forms`
 
-.. _`Twig`: http://twig.sensiolabs.org/
+.. _`Twig`: https://twig.symfony.com/
 .. _`Parsedown`: http://parsedown.org/
