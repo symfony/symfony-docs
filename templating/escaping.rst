@@ -88,4 +88,4 @@ in a JavaScript string, use the ``js`` context:
     var myMsg = 'Hello <?php echo $view->escape($name, 'js') ?>';
 
 .. _`Cross Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
-.. _`Output Escaping`: http://twig.sensiolabs.org/doc/api.html#escaper-extension
+.. _`Output Escaping`: https://twig.symfony.com/doc/2.x/api.html#escaper-extension

@@ -820,11 +820,11 @@ Learn more
 
     /templating/*
 
-.. _`Twig`: http://twig.sensiolabs.org
-.. _`tags`: http://twig.sensiolabs.org/doc/tags/index.html
-.. _`filters`: http://twig.sensiolabs.org/doc/filters/index.html
-.. _`functions`: http://twig.sensiolabs.org/doc/functions/index.html
-.. _`add your own extensions`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-.. _`with_context`: http://twig.sensiolabs.org/doc/functions/include.html
-.. _`include() function`: http://twig.sensiolabs.org/doc/functions/include.html
-.. _`{% include %} tag`: http://twig.sensiolabs.org/doc/tags/include.html
+.. _`Twig`: https://twig.symfony.com
+.. _`tags`: https://twig.symfony.com/doc/2.x/tags/index.html
+.. _`filters`: https://twig.symfony.com/doc/2.x/filters/index.html
+.. _`functions`: https://twig.symfony.com/doc/2.x/functions/index.html
+.. _`add your own extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
+.. _`with_context`: https://twig.symfony.com/doc/2.x/functions/include.html
+.. _`include() function`: https://twig.symfony.com/doc/2.x/functions/include.html
+.. _`{% include %} tag`: https://twig.symfony.com/doc/2.x/tags/include.html

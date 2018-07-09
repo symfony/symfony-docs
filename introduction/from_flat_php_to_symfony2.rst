@@ -760,5 +760,5 @@ A good selection of `Symfony community tools`_ can be found on GitHub.
 .. _`download Composer`: https://getcomposer.org/download/
 .. _`Validator`: https://github.com/symfony/validator
 .. _`Varnish`: https://www.varnish-cache.org/
-.. _`Twig`: http://twig.sensiolabs.org
+.. _`Twig`: https://twig.symfony.com
 .. _`Symfony community tools`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories

@@ -176,7 +176,7 @@ In addition, documentation follows these rules:
   * himself or herself, use themselves
 
 .. _`the Sphinx documentation`: http://sphinx-doc.org/rest.html#source-code
-.. _`Twig Coding Standards`: http://twig.sensiolabs.org/doc/coding_standards.html
+.. _`Twig Coding Standards`: https://twig.symfony.com/doc/2.x/coding_standards.html
 .. _`reserved by the IANA`: http://tools.ietf.org/html/rfc2606#section-3
 .. _`American English`: https://en.wikipedia.org/wiki/American_English
 .. _`American English Oxford Dictionary`: http://en.oxforddictionaries.com/definition/american_english/

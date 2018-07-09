@@ -136,7 +136,7 @@ For a more in-depth look into Twig Extensions, please take a look at the
 `Twig extensions documentation`_.
 
 .. _`Twig official extension repository`: https://github.com/twigphp/Twig-extensions
-.. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-.. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
-.. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2
-.. _`Twig extensions documentation legacy`: http://twig.sensiolabs.org/doc/advanced_legacy.html#creating-an-extension
+.. _`Twig extensions documentation`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
+.. _`global variables`: https://twig.symfony.com/doc/2.x/advanced.html#id1
+.. _`functions`: https://twig.symfony.com/doc/2.x/advanced.html#id2
+.. _`Twig extensions documentation legacy`: https://twig.symfony.com/doc/2.x/advanced_legacy.html#creating-an-extension

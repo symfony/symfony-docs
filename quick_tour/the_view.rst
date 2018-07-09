@@ -287,5 +287,5 @@ But I'm getting ahead of myself. First, you need to learn more about the
 controller and that's exactly the topic of the :doc:`next part of this tutorial
 <the_controller>`. Ready for another 10 minutes with Symfony?
 
-.. _`Twig`: http://twig.sensiolabs.org/
-.. _`Twig documentation`: http://twig.sensiolabs.org/documentation
+.. _`Twig`: https://twig.symfony.com/
+.. _`Twig documentation`: https://twig.symfony.com/doc/2.x/

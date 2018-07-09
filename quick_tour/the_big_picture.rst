@@ -258,4 +258,4 @@ how Symfony makes it really easy to implement web sites better and faster.
 If you are eager to learn more about Symfony, dive into the next section:
 ":doc:`The View <the_view>`".
 
-.. _`Twig`: http://twig.sensiolabs.org/
+.. _`Twig`: https://twig.symfony.com/

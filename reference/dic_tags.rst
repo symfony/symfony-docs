@@ -1452,8 +1452,8 @@ Then, tag it with the ``validator.initializer`` tag (it has no options).
 For an example, see the ``DoctrineInitializer`` class inside the Doctrine
 Bridge.
 
-.. _`Twig's documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
+.. _`Twig's documentation`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
 .. _`Twig official extension repository`: https://github.com/fabpot/Twig-extensions
 .. _`KernelEvents`: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpKernel/KernelEvents.php
 .. _`SwiftMailer's Plugin Documentation`: http://swiftmailer.org/docs/plugins.html
-.. _`Twig Loader`: http://twig.sensiolabs.org/doc/api.html#loaders
+.. _`Twig Loader`: https://twig.symfony.com/doc/2.x/api.html#loaders
