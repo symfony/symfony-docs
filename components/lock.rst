@@ -196,7 +196,7 @@ PHP process is terminated::
 
     Beware that some file systems (such as some types of NFS) do not support
     locking. In those cases, it's better to use a directory on a local disk
-    drive or a remote store based on Pdo, Redis or Memcached.
+    drive or a remote store based on PDO, Redis or Memcached.
 
 .. _lock-store-memcached:
 
@@ -222,6 +222,9 @@ support blocking, and expects a TTL to avoid stalled locks::
 
 PdoStore
 ~~~~~~~~
+
+.. versionadded:: 4.2
+    The PdoStore was introduced Symfony 4.2.
 
 
 The PdoStore saves locks in an SQL database, it requires a `PDO`_,
@@ -475,12 +478,12 @@ method uses the Memcached's ``flush()`` method which purges and removes everythi
 PdoStore
 ~~~~~~~~~~
 
-Pdo stores rely on the `ACID`_ properties of the SQL engine.
+The PdoStore rely on the `ACID`_ properties of the SQL engine.
 
 .. caution::
 
     In a cluster configured with multiple master, ensure writes are
-    synchronously propaged to every nodes, or always use the same node.
+    synchronously propagated to every nodes, or always use the same node.
 
 .. caution::
 
@@ -488,8 +491,8 @@ Pdo stores rely on the `ACID`_ properties of the SQL engine.
     Ensure that this is not the case ``SET unique_checks=1;``.
 
 In order to purge old lock, this store use a current datetime to define a
-expiration date reference. This mechanism relies on all client and server nodes
-to have synchronized clock.
+expiration date reference. This mechanism relies on all server nodes to
+have synchronized clock.
 
 .. caution::
 
