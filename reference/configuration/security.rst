@@ -195,6 +195,9 @@ You can authenticate to an LDAP server using the LDAP variants of the
 ``form_login_ldap``, ``http_basic_ldap`` and ``json_login_ldap``, which will attempt to
 ``bind`` against a LDAP server instead of using password comparison.
 
+.. versionadded:: 4.2
+    The ``json_login_ldap`` authentication provider was introduced in Symfony 4.2.
+
 Both authentication providers have the same arguments as their normal
 counterparts, with the addition of two configuration keys:
 
