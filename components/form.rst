@@ -772,5 +772,5 @@ Learn more
     /form/*
 
 .. _Packagist: https://packagist.org/packages/symfony/form
-.. _Twig: http://twig.sensiolabs.org
-.. _`Twig Configuration`: http://twig.sensiolabs.org/doc/intro.html
+.. _Twig: https://twig.symfony.com
+.. _`Twig Configuration`: https://twig.symfony.com/doc/2.x/intro.html

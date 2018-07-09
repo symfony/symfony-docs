@@ -118,7 +118,9 @@ previous ``priceFilter()`` method::
     // src/Twig/AppRuntime.php
     namespace App\Twig;
 
-    class AppRuntime
+    use Twig\Extension\RuntimeExtensionInterface;
+
+    class AppRuntime implements RuntimeExtensionInterface
     {
         public function __construct()
         {
@@ -135,12 +137,17 @@ previous ``priceFilter()`` method::
         }
     }
 
+Register the Lazy-Loaded Extension as a Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ .. versionadded:: 3.4
+     The ``RuntimeExtensionInterface`` was introduced in Symfony 3.4.
+
 If you're using the default ``services.yaml`` configuration, this will already
 work! Otherwise, :ref:`create a service <service-container-creating-service>`
 for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
 
 .. _`official Twig extensions`: https://github.com/twigphp/Twig-extensions
-.. _`Twig extensions documentation`: http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension
-.. _`global variables`: http://twig.sensiolabs.org/doc/advanced.html#id1
-.. _`functions`: http://twig.sensiolabs.org/doc/advanced.html#id2
-.. _`Twig Extensions`: https://twig.sensiolabs.org/doc/2.x/advanced.html#creating-an-extension
+.. _`global variables`: https://twig.symfony.com/doc/2.x/advanced.html#id1
+.. _`functions`: https://twig.symfony.com/doc/2.x/advanced.html#id2
+.. _`Twig Extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
