@@ -118,5 +118,5 @@ be used as a Twig extension.
 
 Next: :doc:`/best_practices/forms`
 
-.. _`Twig`: http://twig.sensiolabs.org/
+.. _`Twig`: https://twig.symfony.com/
 .. _`Parsedown`: http://parsedown.org/

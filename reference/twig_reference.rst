@@ -735,6 +735,20 @@ selectedchoice
 Checks if ``selectedValue`` was checked for the provided choice field. Using
 this test is the most effective way.
 
+rootform
+~~~~~~~~
+
+.. code-block:: twig
+
+    {% if form is rootform %}
+
+``form``
+    **type**: ``FormView``
+
+Checks if the given ``form`` does not have a parent form view. This is the only
+safe way of testing it because checking if the form contains a field called
+``parent`` is not reliable.
+
 Global Variables
 ----------------
 
@@ -758,7 +772,7 @@ The available attributes are:
   object representing the security token
 * ``app.flashes``, returns flash messages from the session
 
-.. _`Twig Reference`: http://twig.sensiolabs.org/documentation#reference
+.. _`Twig Reference`: https://twig.symfony.com/doc/2.x/#reference
 .. _`Twig Extensions repository`: https://github.com/twigphp/Twig-extensions
 .. _`Twig Extensions documentation`: http://twig-extensions.readthedocs.io/en/latest/
 .. _`Twig Bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig/Extension

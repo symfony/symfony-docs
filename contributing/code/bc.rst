@@ -143,6 +143,41 @@ covered by our backward compatibility promise:
 | Access a private property (via Reflection)    | No                          |
 +-----------------------------------------------+-----------------------------+
 
+Using our Traits
+~~~~~~~~~~~~~~~~
+
+All traits provided by Symfony may be used in your classes.
+
+.. caution::
+
+    The exception to this rule are traits tagged with ``@internal``. Such
+    traits should not be used.
+
+To be on the safe side, check the following table to know which use cases are
+covered by our backward compatibility promise:
+
++-----------------------------------------------+-----------------------------+
+| Use Case                                      | Backward Compatibility      |
++===============================================+=============================+
+| **If you...**                                 | **Then we guarantee BC...** |
++-----------------------------------------------+-----------------------------+
+| Use a trait                                   | Yes                         |
++-----------------------------------------------+-----------------------------+
+| **If you use the trait and...**               | **Then we guarantee BC...** |
++-----------------------------------------------+-----------------------------+
+| Use it to implement an interface              | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Use it to implement an abstract method        | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Use it to extend a parent class               | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Use it to define an abstract class            | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Use a public, protected or private property   | Yes                         |
++-----------------------------------------------+-----------------------------+
+| Use a public, protected or private method     | Yes                         |
++-----------------------------------------------+-----------------------------+
+
 Working on Symfony Code
 -----------------------
 
@@ -178,6 +213,9 @@ Change argument type                            No
 Add return type                                 No
 Remove return type                              No [9]_
 Change return type                              No
+**Static Methods**
+Turn non static into static                     No
+Turn static into non static                     No
 **Constants**
 Add constant                                    Yes
 Remove constant                                 No
@@ -209,9 +247,11 @@ Move to parent class                                Yes
 Add protected property                              Yes
 Remove protected property                           No [7]_
 Reduce visibility                                   No [7]_
+Make public                                         No [7]_
 Move to parent class                                Yes
 **Private Properties**
 Add private property                                Yes
+Make public or protected                            Yes
 Remove private property                             Yes
 **Constructors**
 Add constructor without mandatory arguments         Yes [1]_
@@ -219,11 +259,16 @@ Remove constructor                                  No
 Reduce visibility of a public constructor           No
 Reduce visibility of a protected constructor        No [7]_
 Move to parent class                                Yes
+**Destructors**
+Add destructor                                      Yes
+Remove destructor                                   No
+Move to parent class                                Yes
 **Public Methods**
 Add public method                                   Yes
 Remove public method                                No
 Change name                                         No
 Reduce visibility                                   No
+Make final                                          No [6]_
 Move to parent class                                Yes
 Add argument without a default value                No
 Add argument with a default value                   No [7]_ [8]_
@@ -241,6 +286,8 @@ Add protected method                                Yes
 Remove protected method                             No [7]_
 Change name                                         No [7]_
 Reduce visibility                                   No [7]_
+Make final                                          No [6]_
+Make public                                         No [7]_ [8]_
 Move to parent class                                Yes
 Add argument without a default value                No [7]_
 Add argument with a default value                   No [7]_ [8]_
@@ -257,6 +304,7 @@ Change return type                                  No [7]_ [8]_
 Add private method                                  Yes
 Remove private method                               Yes
 Change name                                         Yes
+Make public or protected                            Yes
 Add argument without a default value                Yes
 Add argument with a default value                   Yes
 Remove argument                                     Yes
@@ -268,13 +316,98 @@ Change argument type                                Yes
 Add return type                                     Yes
 Remove return type                                  Yes
 Change return type                                  Yes
-**Static Methods**
+**Static Methods and Properties**
 Turn non static into static                         No [7]_ [8]_
 Turn static into non static                         No
 **Constants**
 Add constant                                        Yes
 Remove constant                                     No
 Change value of a constant                          Yes [1]_ [5]_
+==================================================  ==============
+
+Changing Traits
+~~~~~~~~~~~~~~~
+
+This table tells you which changes you are allowed to do when working on
+Symfony's traits:
+
+==================================================  ==============
+Type of Change                                      Change Allowed
+==================================================  ==============
+Remove entirely                                     No
+Change name or namespace                            No
+Use another trait                                   Yes
+**Public Properties**
+Add public property                                 Yes
+Remove public property                              No
+Reduce visibility                                   No
+Move to a used trait                                Yes
+**Protected Properties**
+Add protected property                              Yes
+Remove protected property                           No
+Reduce visibility                                   No
+Make public                                         No
+Move to a used trait                                Yes
+**Private Properties**
+Add private property                                Yes
+Remove private property                             No
+Make public or protected                            Yes
+Move to a used trait                                Yes
+**Constructors and destructors**
+Have constructor or destructor                      No
+**Public Methods**
+Add public method                                   Yes
+Remove public method                                No
+Change name                                         No
+Reduce visibility                                   No
+Make final                                          No [6]_
+Move to used trait                                  Yes
+Add argument without a default value                No
+Add argument with a default value                   No
+Remove argument                                     No
+Add default value to an argument                    No
+Remove default value of an argument                 No
+Add type hint to an argument                        No
+Remove type hint of an argument                     No
+Change argument type                                No
+Change return type                                  No
+**Protected Methods**
+Add protected method                                Yes
+Remove protected method                             No
+Change name                                         No
+Reduce visibility                                   No
+Make final                                          No [6]_
+Make public                                         No [8]_
+Move to used trait                                  Yes
+Add argument without a default value                No
+Add argument with a default value                   No
+Remove argument                                     No
+Add default value to an argument                    No
+Remove default value of an argument                 No
+Add type hint to an argument                        No
+Remove type hint of an argument                     No
+Change argument type                                No
+Change return type                                  No
+**Private Methods**
+Add private method                                  Yes
+Remove private method                               No
+Change name                                         No
+Make public or protected                            Yes
+Move to used trait                                  Yes
+Add argument without a default value                No
+Add argument with a default value                   No
+Remove argument                                     No
+Add default value to an argument                    No
+Remove default value of an argument                 No
+Add type hint to an argument                        No
+Remove type hint of an argument                     No
+Change argument type                                No
+Add return type                                     No
+Remove return type                                  No
+Change return type                                  No
+**Static Methods and Properties**
+Turn non static into static                         No
+Turn static into non static                         No
 ==================================================  ==============
 
 .. [1] Should be avoided. When done, this change must be documented in the
