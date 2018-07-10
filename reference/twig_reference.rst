@@ -65,7 +65,7 @@ It's commonly used to :doc:`embed controllers in templates </templating/embeddin
 
     {# if you don't want to expose the controller with a public URL, use
        the controller() function to define the controller to be executed #}
-    {{ render(controller('AppBundle:Default:latestArticles', {num: 5})) }}
+    {{ render(controller('App\\Controller\\DefaultController::latestArticles', {num: 5})) }}
 
 The render strategy can be specified in the ``strategy`` key of the options.
 
