@@ -37,10 +37,10 @@ like ``/blog/my-post`` or ``/blog/all-about-symfony``:
         // src/Controller/BlogController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             /**
              * Matches /blog exactly
@@ -154,10 +154,10 @@ Symfony provides a handy way to declare localized routes without duplication.
         // src/Controller/BlogController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class CompanyController extends Controller
+        class CompanyController extends AbstractController
         {
             /**
              * @Route({
@@ -252,10 +252,10 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
         // src/Controller/BlogController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             /**
              * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
@@ -340,10 +340,10 @@ concise, but it can decrease route readability when requirements are complex:
         // src/Controller/BlogController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             /**
              * @Route("/blog/{page<\d+>}", name="blog_list")
@@ -416,10 +416,10 @@ So how can you make ``blog_list`` once again match when the user visits
         // src/Controller/BlogController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             /**
              * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
@@ -500,10 +500,10 @@ placeholder:
         // src/Controller/BlogController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             /**
              * @Route("/blog/{page<\d+>?1}", name="blog_list")
@@ -596,7 +596,7 @@ With all of this in mind, check out this advanced example:
         // src/Controller/ArticleController.php
 
         // ...
-        class ArticleController extends Controller
+        class ArticleController extends AbstractController
         {
             /**
              * @Route(
@@ -781,7 +781,7 @@ To generate a URL, you need to specify the name of the route (e.g. ``blog_show``
 and any wildcards (e.g. ``slug = my-blog-post``) used in the path for that
 route. With this information, any URL can easily be generated::
 
-    class MainController extends Controller
+    class MainController extends AbstractController
     {
         public function show($slug)
         {

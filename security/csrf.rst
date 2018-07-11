@@ -279,7 +279,7 @@ token and store it as a hidden field of the form:
     </form>
 
 Then, get the value of the CSRF token in the controller action and use the
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::isCsrfTokenValid`
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::isCsrfTokenValid`
 to check its validity::
 
     use Symfony\Component\HttpFoundation\Request;

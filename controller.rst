@@ -120,7 +120,7 @@ and many others that you'll learn about next.
 Generating URLs
 ~~~~~~~~~~~~~~~
 
-The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerTrait::generateUrl`
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::generateUrl`
 method is just a helper method that generates the URL for a given route::
 
     $url = $this->generateUrl('app_lucky_number', array('max' => 10));
@@ -328,7 +328,7 @@ special type of exception::
         return $this->render(...);
     }
 
-The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerTrait::createNotFoundException`
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::createNotFoundException`
 method is just a shortcut to create a special
 :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`
 object, which ultimately triggers a 404 HTTP response inside Symfony.
@@ -581,7 +581,7 @@ the :phpfunction:`json_encode` function is used.
 Streaming File Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
+You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::file`
 helper to serve a file from inside a controller::
 
     public function download()

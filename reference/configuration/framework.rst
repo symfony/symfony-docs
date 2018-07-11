@@ -1822,6 +1822,8 @@ the ``dev`` environment).
     given the adapter they are based on. Internally, a pool wraps the definition
     of an adapter.
 
+.. _reference-cache-systen:
+
 system
 ......
 

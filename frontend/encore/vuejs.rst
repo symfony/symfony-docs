@@ -5,7 +5,7 @@ Want to use `Vue.js`_? No problem! First, install Vue and some dependencies:
 
 .. code-block:: terminal
 
-    $ yarn add --dev vue vue-loader vue-template-compiler
+    $ yarn add --dev vue vue-loader@^14 vue-template-compiler
 
 Then, activate the ``vue-loader`` in ``webpack.config.js``:
 
