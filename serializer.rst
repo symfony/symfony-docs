@@ -147,8 +147,10 @@ stored in one of the following locations:
 Configuring the Metadata Cache
 ------------------------------
 
-The metadata for the serializer is automatically cached. To configure the cache,
-configure the ``framework.cache.pools`` key in ``config/packages/framework.yaml``.
+The metadata for the serializer is automatically cached to enhance application
+performance. By default, the serializer uses the ``cache.system`` cache pool
+which is configured using the :ref:`cache.system <reference-cache-systen>`
+option.
 
 Enabling a Name Converter
 -------------------------

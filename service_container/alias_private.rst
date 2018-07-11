@@ -151,7 +151,10 @@ Anonymous Services
 
 .. note::
 
-    Anonymous services are only supported by the XML configuration format.
+    Anonymous services are only supported by the XML and YAML configuration formats.
+
+.. versionadded:: 3.3
+    The feature to configure anonymous services in YAML was introduced in Symfony 3.3.
 
 In some cases, you may want to prevent a service being used as a dependency of
 other services. This can be achieved by creating an anonymous service. These
@@ -160,23 +163,63 @@ created where they are used.
 
 The following example shows how to inject an anonymous service into another service:
 
-.. code-block:: xml
+.. configuration-block::
 
-    <!-- app/config/services.xml -->
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd">
+    .. code-block:: yaml
 
-        <services>
-            <service id="foo" class="App\Foo">
-                <argument type="service">
-                    <service class="App\AnonymousBar" />
-                </argument>
-            </service>
-        </services>
-    </container>
+        # app/config/services.yaml
+        services:
+            App\Foo:
+                arguments:
+                    - !service
+                        class: App\AnonymousBar
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="App\Foo">
+                    <argument type="service">
+                        <service class="App\AnonymousBar" />
+                    </argument>
+                </service>
+            </services>
+        </container>
+
+Using an anonymous service as a factory looks like this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/services.yaml
+        services:
+            App\Foo:
+                factory: [ !service { class: App\FooFactory }, 'constructFoo' ]
+
+    .. code-block:: xml
+
+        <!-- app/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="foo" class="App\Foo">
+                    <factory method="constructFoo">
+                        <service class="App\FooFactory"/>
+                    </factory>
+                </service>
+            </services>
+        </container>
 
 Deprecating Services
 --------------------
