@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-07-10T12:01:48Z
+
+At the end of the document we have this:
+
+```rst
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    frontend/*
+```
+
+This will include the `frontend/assetic.rst` file too. We should remove that too. Is it possible to exclude a file from the toctree? Otherwise, we will need to list all files to be actually included explicitly.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-10T15:57:14Z
+
+Try this, but I haven't tested it myself:
+
+```rst
+.. toctree::
+    :hidden:
+
+    frontend/assetic.rst
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    frontend/*
+```
