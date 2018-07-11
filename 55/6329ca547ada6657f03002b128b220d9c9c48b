@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-07-10T10:32:09Z
+
+We *could* also talk about the `cache.serializer` service and that you could register an alias to let it point to a different cache pool. But IMO it's an absolute edge case to use a cache pool for the serializer that is different from the system cache pool and documenting it here would be more confusing than helping at all.
