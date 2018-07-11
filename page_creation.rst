@@ -220,7 +220,7 @@ First, install Twig:
     $ composer require symfony/twig-bundle
 
 Second, make sure that ``LuckyController`` extends Symfony's base
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class:
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController` class:
 
 .. code-block:: diff
 
