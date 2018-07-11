@@ -31,7 +31,7 @@ the original service is lost:
             <services>
                 <service id="App\Mailer" />
 
-                <!-- this replaces the old AppBundle\Mailer definition with the new
+                <!-- this replaces the old App\Mailer definition with the new
                      one, the old definition is lost -->
                 <service id="App\Mailer" class="App\DecoratingMailer" />
             </services>
@@ -45,7 +45,7 @@ the original service is lost:
 
         $container->register(Mailer::class);
 
-        // this replaces the old AppBundle\Mailer definition with the new one, the
+        // this replaces the old App\Mailer definition with the new one, the
         // old definition is lost
         $container->register(Mailer::class, DecoratingMailer::class);
 

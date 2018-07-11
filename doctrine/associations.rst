@@ -146,7 +146,6 @@ the ``Product`` entity (and getter & setter methods):
 
             /**
              * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
-             * @ORM\JoinColumn(nullable=false)
              */
             private $category;
 
@@ -155,7 +154,7 @@ the ``Product`` entity (and getter & setter methods):
                 return $this->category;
             }
 
-            public function setCategory(Category $category): self
+            public function setCategory(?Category $category): self
             {
                 $this->category = $category;
 

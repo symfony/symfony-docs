@@ -71,11 +71,11 @@ Use its ``getSubscribedServices()`` method to include as many services as needed
 in the service subscriber and change the type hint of the container to
 a PSR-11 ``ContainerInterface``::
 
-    // src/AppBundle/CommandBus.php
-    namespace AppBundle;
+    // src/CommandBus.php
+    namespace App;
 
-    use AppBundle\CommandHandler\BarHandler;
-    use AppBundle\CommandHandler\FooHandler;
+    use App\CommandHandler\BarHandler;
+    use App\CommandHandler\FooHandler;
     use Psr\Container\ContainerInterface;
     use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
 
@@ -91,8 +91,8 @@ a PSR-11 ``ContainerInterface``::
         public static function getSubscribedServices()
         {
             return [
-                'AppBundle\FooCommand' => FooHandler::class,
-                'AppBundle\BarCommand' => BarHandler::class,
+                'App\FooCommand' => FooHandler::class,
+                'App\BarCommand' => BarHandler::class,
             ];
         }
 
@@ -204,7 +204,7 @@ service type to a service.
 
         // app/config/services.yml
         services:
-            AppBundle\CommandBus:
+            App\CommandBus:
                 tags:
                     - { name: 'container.service_subscriber', key: 'logger', id: 'monolog.logger.event' }
 
@@ -218,7 +218,7 @@ service type to a service.
 
             <services>
 
-                <service id="AppBundle\CommandBus">
+                <service id="App\CommandBus">
                     <tag name="container.service_subscriber" key="logger" id="monolog.logger.event" />
                 </service>
 
@@ -228,7 +228,7 @@ service type to a service.
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\CommandBus;
+        use App\CommandBus;
 
         // ...
 
