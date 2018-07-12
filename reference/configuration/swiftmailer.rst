@@ -25,29 +25,35 @@ to :doc:`send emails </email>`. All these options are configured under the
 Configuration
 -------------
 
-* `url`_
-* `transport`_
-* `username`_
-* `password`_
-* `command`_
-* `host`_
-* `port`_
-* `timeout`_
-* `source_ip`_
-* `local_domain`_
-* `encryption`_
-* `auth_mode`_
-* `spool`_
-    * `type`_
-    * `path`_
-* `sender_address`_
+.. class:: list-config-options list-config-options--complex
+
 * `antiflood`_
-    * `threshold`_
-    * `sleep`_
+
+  * `sleep`_
+  * `threshold`_
+
+* `auth_mode`_
+* `command`_
 * `delivery_addresses`_
 * `delivery_whitelist`_
 * `disable_delivery`_
+* `encryption`_
+* `host`_
+* `local_domain`_
 * `logging`_
+* `password`_
+* `port`_
+* `sender_address`_
+* `source_ip`_
+* `spool`_
+
+  * `path`_
+  * `type`_
+
+* `timeout`_
+* `transport`_
+* `url`_
+* `username`_
 
 url
 ~~~

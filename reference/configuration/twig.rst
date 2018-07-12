@@ -25,6 +25,33 @@ the ``twig`` key in your application configuration.
 Configuration
 -------------
 
+.. class:: list-config-options list-config-options--complex
+
+* `auto_reload`_
+* `autoescape`_
+* `autoescape_service`_
+* `autoescape_service_method`_
+* `base_template_class`_
+* `cache`_
+* `charset`_
+* `date`_
+
+  * `format`_
+  * `interval_format`_
+  * `timezone`_
+
+* `debug`_
+* `exception_controller`_
+* `number_format`_
+
+  * `decimals`_
+  * `decimal_point`_
+  * `thousands_separator`_
+
+* `optimizations`_
+* `paths`_
+* `strict_variables`_
+
 auto_reload
 ~~~~~~~~~~~
 
@@ -84,7 +111,7 @@ called to determine the default escaping applied to the template.
 base_template_class
 ~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'Twig_Template'``
+**type**: ``string`` **default**: ``'Twig\\Template'``
 
 Twig templates are compiled into PHP classes before using them to render
 contents. This option defines the base class from which all the template classes
@@ -339,4 +366,4 @@ If set to ``true``, Symfony shows an exception whenever a Twig variable,
 attribute or method doesn't exist. If set to ``false`` these errors are ignored
 and the non-existing values are replaced by ``null``.
 
-.. _`the optimizer extension`: http://twig.sensiolabs.org/doc/api.html#optimizer-extension
+.. _`the optimizer extension`: https://twig.symfony.com/doc/2.x/api.html#optimizer-extension

@@ -74,7 +74,7 @@ to define one single method to transform Markdown content into HTML::
     }
 
 Next, create a new Twig extension and define a filter called ``md2html`` using
-the ``TwigFilter`` class. Inject the newly defined ``Markdown`` class in the
+the ``Twig\TwigFilter`` class. Inject the newly defined ``Markdown`` class in the
 constructor of the Twig extension::
 
     namespace App\Twig;
@@ -118,5 +118,5 @@ be used as a Twig extension.
 
 Next: :doc:`/best_practices/forms`
 
-.. _`Twig`: http://twig.sensiolabs.org/
+.. _`Twig`: https://twig.symfony.com/
 .. _`Parsedown`: http://parsedown.org/

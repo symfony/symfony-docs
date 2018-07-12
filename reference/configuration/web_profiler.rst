@@ -30,9 +30,11 @@ execution and displays it in both the web debug toolbar and the
 Configuration
 -------------
 
-* `toolbar`_
-* `intercept_redirects`_
+.. class:: list-config-options
+
 * `excluded_ajax_paths`_
+* `intercept_redirects`_
+* `toolbar`_
 
 toolbar
 ~~~~~~~

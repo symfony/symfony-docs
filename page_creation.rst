@@ -220,17 +220,17 @@ First, install Twig:
     $ composer require symfony/twig-bundle
 
 Second, make sure that ``LuckyController`` extends Symfony's base
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` class:
+:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController` class:
 
 .. code-block:: diff
 
     // src/Controller/LuckyController.php
 
     // ...
-    + use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     - class LuckyController
-    + class LuckyController extends Controller
+    + class LuckyController extends AbstractController
     {
         // ...
     }
@@ -241,7 +241,7 @@ variable so you can use it in Twig::
     // src/Controller/LuckyController.php
 
     // ...
-    class LuckyController extends Controller
+    class LuckyController extends AbstractController
     {
         /**
          * @Route("/lucky/number")
@@ -352,7 +352,7 @@ Go Deeper with HTTP & Framework Fundamentals
 
     introduction/*
 
-.. _`Twig`: http://twig.sensiolabs.org
+.. _`Twig`: https://twig.symfony.com
 .. _`Composer`: https://getcomposer.org
 .. _`Stellar Development with Symfony`: https://knpuniversity.com/screencast/symfony/setup
 .. _`symfony.sh`: https://symfony.sh/

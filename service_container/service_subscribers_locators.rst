@@ -13,7 +13,9 @@ instantiation of the services to be lazy. However, that's not possible using
 the explicit dependency injection since services are not all meant to
 be ``lazy`` (see :doc:`/service_container/lazy_services`).
 
-A real-world example are applications that implement the `Command pattern`_
+This can typically be the case in your controllers, where you may inject several
+services in the constructor, but the action executed only uses some of them.
+Another example are applications that implement the `Command pattern`_
 using a CommandBus to map command handlers by Command class names and use them
 to handle their respective command when it is asked for::
 
@@ -50,35 +52,12 @@ to handle their respective command when it is asked for::
 
 Considering that only one command is handled at a time, instantiating all the
 other command handlers is unnecessary. A possible solution to lazy-load the
-handlers could be to inject the whole dependency injection container::
-
-    // ...
-    use Symfony\Component\DependencyInjection\ContainerInterface;
-
-    class CommandBus
-    {
-        private $container;
-
-        public function __construct(ContainerInterface $container)
-        {
-            $this->container = $container;
-        }
-
-        public function handle(Command $command)
-        {
-            $commandClass = get_class($command);
-
-            if ($this->container->has($commandClass)) {
-                $handler = $this->container->get($commandClass);
-
-                return $handler->handle($command);
-            }
-        }
-    }
+handlers could be to inject the main dependency injection container.
 
 However, injecting the entire container is discouraged because it gives too
 broad access to existing services and it hides the actual dependencies of the
-services.
+services. Doing so also requires services to be made public, which isn't the
+case by default in Symfony applications.
 
 **Service Subscribers** are intended to solve this problem by giving access to a
 set of predefined services while instantiating them only when actually needed
@@ -92,11 +71,11 @@ Use its ``getSubscribedServices()`` method to include as many services as needed
 in the service subscriber and change the type hint of the container to
 a PSR-11 ``ContainerInterface``::
 
-    // src/AppBundle/CommandBus.php
-    namespace AppBundle;
+    // src/CommandBus.php
+    namespace App;
 
-    use AppBundle\CommandHandler\BarHandler;
-    use AppBundle\CommandHandler\FooHandler;
+    use App\CommandHandler\BarHandler;
+    use App\CommandHandler\FooHandler;
     use Psr\Container\ContainerInterface;
     use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
 
@@ -112,8 +91,8 @@ a PSR-11 ``ContainerInterface``::
         public static function getSubscribedServices()
         {
             return [
-                'AppBundle\FooCommand' => FooHandler::class,
-                'AppBundle\BarCommand' => BarHandler::class,
+                'App\FooCommand' => FooHandler::class,
+                'App\BarCommand' => BarHandler::class,
             ];
         }
 
@@ -139,8 +118,7 @@ The injected service is an instance of :class:`Symfony\\Component\\DependencyInj
 which implements the PSR-11 ``ContainerInterface``, but it is also a callable::
 
     // ...
-    $locateHandler = $this->locator;
-    $handler = $locateHandler($commandClass);
+    $handler = ($this->locator)($commandClass);
 
     return $handler->handle($command);
 
@@ -171,6 +149,24 @@ Service types can also be keyed by a service name for internal use::
             // ...
             'logger' => LoggerInterface::class,
         ];
+    }
+
+When extending a class that also implements ``ServiceSubscriberInterface``,
+it's your responsibility to call the parent when overriding the method. This
+typically happens when extending ``AbstractController``::
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+    class MyController extends AbstractController
+    {
+        public static function getSubscribedServices()
+        {
+            return array_merge(parent::getSubscribedServices(), [
+                // ...
+                'logger' => LoggerInterface::class,
+            ]);
+        }
     }
 
 Optional Services
@@ -208,7 +204,7 @@ service type to a service.
 
         // app/config/services.yml
         services:
-            AppBundle\CommandBus:
+            App\CommandBus:
                 tags:
                     - { name: 'container.service_subscriber', key: 'logger', id: 'monolog.logger.event' }
 
@@ -222,7 +218,7 @@ service type to a service.
 
             <services>
 
-                <service id="AppBundle\CommandBus">
+                <service id="App\CommandBus">
                     <tag name="container.service_subscriber" key="logger" id="monolog.logger.event" />
                 </service>
 
@@ -232,7 +228,7 @@ service type to a service.
     .. code-block:: php
 
         // app/config/services.php
-        use AppBundle\CommandBus;
+        use App\CommandBus;
 
         // ...
 
@@ -362,9 +358,24 @@ Now you can use the service locator by injecting it in any other service:
             ->setArguments(array(new Reference('app.command_handler_locator')))
         ;
 
-.. tip::
+In :doc:`compiler passes </service_container/compiler_passes>` it's recommended
+to use the :method:`Symfony\\Component\\DependencyInjection\\Compiler\\ServiceLocatorTagPass::register`
+method to create the service locators. This will save you some boilerplate and
+will share identical locators amongst all the services referencing them::
 
-    If the service locator is not intended to be used by multiple services, it's
-    better to create and inject it as an anonymous service.
+    use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+    public function process(ContainerBuilder $container)
+    {
+        //...
+
+        $locateableServices = array(
+            //...
+            'logger' => new Reference('logger'),
+        );
+
+        $myService->addArgument(ServiceLocatorTagPass::register($locateableServices));
+    }
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern

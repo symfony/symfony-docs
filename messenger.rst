@@ -609,29 +609,86 @@ Using Middleware Factories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Some third-party bundles and libraries provide configurable middleware via
-factories. Using them requires a two-step configuration based on Symfony's
+factories. Defining such requires a two-step configuration based on Symfony's
 :doc:`dependency injection </service_container>` features:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    services:
+    .. code-block:: yaml
 
-        # Step 1: a factory class is registered as a service with the required
-        # dependencies to instantiate a middleware
-        doctrine.orm.messenger.middleware_factory.transaction:
-            class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddlewareFactory
-            arguments: ['@doctrine']
+        # config/services.yaml
+        services:
 
-        # Step 2: an abstract definition that will call the factory with default
-        # arguments or the ones provided in the middleware config
-        messenger.middleware.doctrine_transaction_middleware:
-            class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddleware
-            factory: ['@doctrine.orm.messenger.middleware_factory.transaction', 'createMiddleware']
-            abstract: true
-            # the default arguments to use when none provided from config. Example:
-            # middleware:
-            #     - doctrine_transaction_middleware: ~
-            arguments: ['default']
+            # Step 1: a factory class is registered as a service with the required
+            # dependencies to instantiate a middleware
+            doctrine.orm.messenger.middleware_factory.transaction:
+                class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddlewareFactory
+                arguments: ['@doctrine']
+
+            # Step 2: an abstract definition that will call the factory with default
+            # arguments or the ones provided in the middleware config
+            messenger.middleware.doctrine_transaction_middleware:
+                class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddleware
+                factory: 'doctrine.orm.messenger.middleware_factory.transaction:createMiddleware'
+                abstract: true
+                # the default arguments to use when none provided from config. Example:
+                # middleware:
+                #     - doctrine_transaction_middleware: ~
+                arguments: ['default']
+
+    .. code-block:: xml
+
+        <!-- cconfig/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- Step 1: a factory class is registered as a service with the required
+                     dependencies to instantiate a middleware -->
+                <service id="doctrine.orm.messenger.middleware_factory.transaction"
+                    class="Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddlewareFactory">
+
+                    <argument type="service" id="doctrine" />
+                </service>
+
+                <!-- Step 2: an abstract definition that will call the factory with default
+                     arguments or the ones provided in the middleware config -->
+                <service id="messenger.middleware.doctrine_transaction_middleware"
+                    class="Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddleware"
+                    abstract="true">
+
+                    <factory service="doctrine.orm.messenger.middleware_factory.transaction"
+                        method="createMiddleware" />
+                    <argument>default</argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddleware;
+        use Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddlewareFactory;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        // Step 1: a factory class is registered as a service with the required
+        // dependencies to instantiate a middleware
+        $container
+            ->register('doctrine.orm.messenger.middleware_factory.transaction', DoctrineTransactionMiddlewareFactory::class)
+            ->setArguments(array(new Reference('doctrine')));
+
+        // Step 2: an abstract definition that will call the factory with default
+        // arguments or the ones provided in the middleware config
+        $container->register('messenger.middleware.doctrine_transaction_middleware', DoctrineTransactionMiddleware::class)
+            ->setFactory(array(
+                new Reference('doctrine.orm.messenger.middleware_factory.transaction'),
+                'createMiddleware'
+            ))
+            ->setAbstract(true)
+            ->setArguments(array('default'));
 
 The "default" value in this example is the name of the entity manager to use,
 which is the argument expected by the
