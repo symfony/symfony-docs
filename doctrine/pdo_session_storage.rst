@@ -24,7 +24,7 @@ To use it, first register a new handler service:
             Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
                 public:    false
                 arguments:
-                    - 'mysql:dbname=mydatabase'
+                    - 'mysql:dbname=mydatabase, host=myhost'
                     - { db_username: myuser, db_password: mypassword }
 
     .. code-block:: xml
@@ -40,7 +40,7 @@ To use it, first register a new handler service:
 
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                    <argument>mysql:dbname=mydatabase</argument>
+                    <argument>mysql:dbname=mydatabase, host=myhost</argument>
                     <argument type="collection">
                         <argument key="db_username">myuser</argument>
                         <argument key="db_password">mypassword</argument>
@@ -56,10 +56,16 @@ To use it, first register a new handler service:
 
         $storageDefinition = $container->register(PdoSessionHandler::class)
             ->setArguments(array(
-                'mysql:dbname=mydatabase',
-                array('db_username' => 'myuser', 'db_password' => 'mypassword')
+                'mysql:dbname=mydatabase, host=myhost',
+                array('db_username' => 'myuser', 'db_password' => 'mypassword'),
             ))
         ;
+
+.. tip::
+
+    Configure the database credentials as
+    :doc:`parameters defined with environment variables </configuration/external_parameters>`
+    to make your application more secure.
 
 Next, tell Symfony to use your service as the session handler:
 
@@ -113,8 +119,8 @@ a second array argument to ``PdoSessionHandler``:
             Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
                 public:    false
                 arguments:
-                    - 'mysql:dbname=mydatabase'
-                    - { db_table: sessions, db_username: myuser, db_password: mypassword }
+                    - 'mysql:dbname=mydatabase, host=myhost'
+                    - { db_table: 'sessions', db_username: 'myuser', db_password: 'mypassword' }
 
     .. code-block:: xml
 
@@ -127,7 +133,7 @@ a second array argument to ``PdoSessionHandler``:
 
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                    <argument>mysql:dbname=mydatabase</argument>
+                    <argument>mysql:dbname=mydatabase, host=myhost</argument>
                     <argument type="collection">
                         <argument key="db_table">sessions</argument>
                         <argument key="db_username">myuser</argument>
@@ -146,7 +152,7 @@ a second array argument to ``PdoSessionHandler``:
 
         $container->register(PdoSessionHandler::class)
             ->setArguments(array(
-                'mysql:dbname=mydatabase',
+                'mysql:dbname=mydatabase, host=myhost',
                 array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword')
             ))
         ;
