@@ -131,26 +131,25 @@ marker, like this::
 
     class MyOwnMiddleware implements MiddlewareInterface, EnvelopeAwareInterface
     {
-        public function handle($message, callable $next)
+        public function handle($envelope, callable $next)
         {
-            // $message here is an `Envelope` object, because this middleware
+            // $envelope here is an `Envelope` object, because this middleware
             // implements the EnvelopeAwareInterface interface.
 
-            if (null !== $message->get(ReceivedMessage::class)) {
+            if (null !== $envelope->get(ReceivedMessage::class)) {
                 // Message just has been received...
 
                 // You could for example add another item.
-                $message = $message->with(new AnotherEnvelopeItem(/* ... */));
+                $envelope = $envelope->with(new AnotherEnvelopeItem(/* ... */));
             }
 
-            return $next($message);
+            return $next($envelope);
         }
     }
 
 The above example will forward the message to the next middleware with an additional
-envelope item if the message has just been received (i.e. has the `ReceivedMessage` item).
-You can create your own items by implementing the :class:`Symfony\\Component\\Messenger\\EnvelopeAwareInterface`
-interface.
+envelope item *if* the message has just been received (i.e. has the `ReceivedMessage` item).
+You can create your own items by implementing :class:`Symfony\\Component\\Messenger\\EnvelopeAwareInterface`.
 
 Transports
 ----------
