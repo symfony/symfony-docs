@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-12T09:36:58Z
+
+@pueppiblue thanks a lot for this contribution. I totally agree with the addition of the missing `host` option. Thanks for that!
+
+However, I've reverted the other changes mainly for two reasons:
+
+* To not duplicate the explanation about env vars of the `/configuration/external_parameters.rst` article that you linked here.
+* Because it's not that simple to do now that Symfony promotes the use of database DSNs in the `DATABASE_URL` env var. We no longer have individual env vars for database name, host, use, etc.
+
+In any case, thanks for your contribution and we've merged it in 3.4 (later we'll merge it in the other branches). Congrats on your Symfony Docs contribution!
