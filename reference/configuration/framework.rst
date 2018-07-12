@@ -1821,7 +1821,7 @@ log
 .. versionadded:: 3.2
     The ``log`` option was introduced in Symfony 3.2.
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 Use the application logger instead of the PHP logger for logging PHP errors.
 
