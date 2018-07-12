@@ -174,7 +174,6 @@ The following example shows how to inject an anonymous service into another serv
                 arguments:
                     - !service
                         class: AppBundle\AnonymousBar
-                        autowire: true
 
     .. code-block:: xml
 
