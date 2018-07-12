@@ -168,8 +168,8 @@ Roles
 -----
 
 Roles are objects that give expression to a certain right the user has.
-The only requirement is that they implement :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`,
-which means they should also have a :method:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface::getRole`
+The only requirement is that they extend :class:`Symfony\\Component\\Security\\Core\\Role\\Role`,
+which means they have a :method:`Symfony\\Component\\Security\\Core\\Role\\Role::getRole`
 method that returns a string representation of the role itself. The default
 :class:`Symfony\\Component\\Security\\Core\\Role\\Role` simply returns its
 first constructor argument::
