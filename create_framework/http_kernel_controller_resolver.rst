@@ -24,7 +24,7 @@ Update the route definition accordingly::
 
     $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', array(
         'year' => null,
-        '_controller' => array(new LeapYearController(), 'indexAction'),
+        '_controller' => array(new LeapYearController(), 'index'),
     )));
 
 The move is pretty straightforward and makes a lot of sense as soon as you
@@ -64,7 +64,7 @@ two colons and a method name as a valid callback, like 'class::method'::
 
     $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', array(
         'year' => null,
-        '_controller' => 'LeapYearController::indexAction',
+        '_controller' => 'LeapYearController::index',
     )));
 
 To make this code work, modify the framework code to use the controller
