@@ -147,15 +147,11 @@ For example, as AWS Elastic Load Balancing provide standard header but no X-Forw
 
         // ...
         $request = Request::createFromGlobals();
-        + Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR'))); //be very carefully with this line, see the above chapter "But what if the IP of my Reverse Proxy Changes Constantly!"
+        + Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR'))); //be very careful with this line, see the above chapter "But what if the IP of my Reverse Proxy Changes Constantly!"
         + 
-        + Request::setTrustedHeaderName(Request::HEADER_CLIENT_HOST, '');// AWS ELB doesn't send X-Forwarded-Host
-        + Request::setTrustedHeaderName(Request::HEADER_FORWARDED, '');// AWS ELB doesn't use RFC 7239
-        + Request::setTrustedProxies(
-        +     // trust *all* requests
-        +     array('127.0.0.1', $request->server->get('REMOTE_ADDR'))
-        + );
-
+        + Request::setTrustedHeaderName(Request::HEADER_CLIENT_HOST, null);// AWS ELB doesn't send X-Forwarded-Host
+        + Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);// AWS ELB doesn't use RFC 7239
+        
         // ...
         
 
