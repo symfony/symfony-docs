@@ -347,4 +347,220 @@ instance, to output something in a JavaScript script, use the ``js`` context::
 
     <?php echo $view->escape($var, 'js') ?>
 
+Form Theming in PHP
+-------------------
+
+When using PHP as a templating engine, the only method to customize a fragment
+is to create a new template file - this is similar to the second method used by
+Twig.
+
+The template file must be named after the fragment. You must create a ``integer_widget.html.php``
+file in order to customize the ``integer_widget`` fragment.
+
+.. code-block:: html+php
+
+    <!-- src/Resources/integer_widget.html.php -->
+    <div class="integer_widget">
+        <?php echo $view['form']->block(
+            $form,
+            'form_widget_simple',
+            array('type' => isset($type) ? $type : "number")
+        ) ?>
+    </div>
+
+Now that you've created the customized form template, you need to tell Symfony
+to use it. Inside the template where you're actually rendering your form,
+tell Symfony to use the theme via the ``setTheme()`` helper method::
+
+    <?php $view['form']->setTheme($form, array(':form')); ?>
+
+    <?php $view['form']->widget($form['age']) ?>
+
+When the ``form.age`` widget is rendered, Symfony will use the customized
+``integer_widget.html.php`` template and the ``input`` tag will be wrapped in
+the ``div`` element.
+
+If you want to apply a theme to a specific child form, pass it to the ``setTheme()``
+method::
+
+    <?php $view['form']->setTheme($form['child'], ':form'); ?>
+
+.. note::
+
+    The ``:form`` syntax is based on the functional names for templates:
+    ``Bundle:Directory``. As the form directory lives in the
+    ``templates/`` directory, the ``Bundle`` part is empty, resulting
+    in ``:form``.
+
+Making Application-wide Customizations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you'd like a certain form customization to be global to your application,
+you can accomplish this by making the form customizations in an external
+template and then importing it inside your application configuration.
+
+By using the following configuration, any customized form fragments inside the
+``templates/form`` folder will be used globally when a
+form is rendered.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            templating:
+                form:
+                    resources:
+                        - 'App:Form'
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:templating>
+                    <framework:form>
+                        <framework:resource>App:Form</framework:resource>
+                    </framework:form>
+                </framework:templating>
+                <!-- ... -->
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        // PHP
+        $container->loadFromExtension('framework', array(
+            'templating' => array(
+                'form' => array(
+                    'resources' => array(
+                        'App:Form',
+                    ),
+                ),
+             ),
+
+             // ...
+        ));
+
+By default, the PHP engine uses a *div* layout when rendering forms. Some people,
+however, may prefer to render forms in a *table* layout. Use the ``FrameworkBundle:FormTable``
+resource to use such a layout:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            templating:
+                form:
+                    resources:
+                        - 'FrameworkBundle:FormTable'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:templating>
+                    <framework:form>
+                        <resource>FrameworkBundle:FormTable</resource>
+                    </framework:form>
+                </framework:templating>
+                <!-- ... -->
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', array(
+            'templating' => array(
+                'form' => array(
+                    'resources' => array(
+                        'FrameworkBundle:FormTable',
+                    ),
+                ),
+            ),
+
+             // ...
+        ));
+
+If you only want to make the change in one template, add the following line to
+your template file rather than adding the template as a resource:
+
+.. code-block:: html+php
+
+    <?php $view['form']->setTheme($form, array('FrameworkBundle:FormTable')); ?>
+
+Note that the ``$form`` variable in the above code is the form view variable
+that you passed to your template.
+
+Adding a "Required" Asterisk to Field Labels
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to denote all of your required fields with a required asterisk
+(``*``), you can do this by customizing the ``form_label`` fragment.
+
+When using PHP as a templating engine you have to copy the content from the
+original template:
+
+.. code-block:: html+php
+
+    <!-- form_label.html.php -->
+
+    <!-- original content -->
+    <?php if ($required) { $label_attr['class'] = trim((isset($label_attr['class']) ? $label_attr['class'] : '').' required'); } ?>
+    <?php if (!$compound) { $label_attr['for'] = $id; } ?>
+    <?php if (!$label) { $label = $view['form']->humanize($name); } ?>
+    <label <?php foreach ($label_attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?php echo $view->escape($view['translator']->trans($label, array(), $translation_domain)) ?></label>
+
+    <!-- customization -->
+    <?php if ($required) : ?>
+        <span class="required" title="This field is required">*</span>
+    <?php endif ?>
+
+Adding "help" Messages
+~~~~~~~~~~~~~~~~~~~~~~
+
+You can also customize your form widgets to have an optional "help" message.
+
+When using PHP as a templating engine you have to copy the content from the
+original template:
+
+.. code-block:: html+php
+
+    <!-- form_widget_simple.html.php -->
+
+    <!-- Original content -->
+    <input
+        type="<?php echo isset($type) ? $view->escape($type) : 'text' ?>"
+        <?php if (!empty($value)): ?>value="<?php echo $view->escape($value) ?>"<?php endif ?>
+        <?php echo $view['form']->block($form, 'widget_attributes') ?>
+    />
+
+    <!-- Customization -->
+    <?php if (isset($help)) : ?>
+        <span class="help"><?php echo $view->escape($help) ?></span>
+    <?php endif ?>
+
 .. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view
