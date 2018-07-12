@@ -423,6 +423,20 @@ absolute path of the executable PHP binary available on your server::
     $phpBinaryPath = $phpBinaryFinder->find();
     // $phpBinaryPath = '/usr/local/bin/php' (the result will be different on your computer)
 
+Checking for TTY Support
+------------------------
+
+Another utility provided by this component is a method called
+:method:`Symfony\\Component\\Process\\Process::isTtySupported` which returns
+whether `TTY`_ is supported on the current operating system::
+
+    use Symfony\Component\Process\Process;
+
+    $process = (new Process())->setTty(Process::isTtySupported());
+
+.. versionadded:: 4.1
+    The ``isTtySupported()`` method was introduced in Symfony 4.1.
+
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
 .. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
@@ -430,3 +444,4 @@ absolute path of the executable PHP binary available on your server::
 .. _`PHP Documentation`: https://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process
 .. _`PHP streams`: http://www.php.net/manual/en/book.stream.php
+.. _`TTY`: https://en.wikipedia.org/wiki/Tty_(unix)

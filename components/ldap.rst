@@ -128,9 +128,49 @@ delete existing ones::
     $result = $query->execute();
     $entry = $result[0];
     $entry->setAttribute('email', array('fabpot@symfony.com'));
-    $entryManager->update($entry);
+    $entityManager->update($entry);
+
+    // Adding or removing values to a multi-valued attribute is more efficient than using update()
+    $entityManager->addAttributeValues($entry, 'telephoneNumber', array('+1.111.222.3333', '+1.222.333.4444'));
+    $entityManager->removeAttributeValues($entry, 'telephoneNumber', array('+1.111.222.3333', '+1.222.333.4444'));
 
     // Removing an existing entry
     $entryManager->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
+
+
+Batch Updating
+______________
+
+Use the entry manager's :method:`Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\EntryManager::applyOperations`
+method to update multiple attributes at once::
+
+    use Symfony\Component\Ldap\Ldap;
+    use Symfony\Component\Ldap\Entry;
+    // ...
+
+    $entry = new Entry('cn=Fabien Potencier,dc=symfony,dc=com', array(
+        'sn' => array('fabpot'),
+        'objectClass' => array('inetOrgPerson'),
+    ));
+
+    $entryManager = $ldap->getEntryManager();
+
+    // Adding multiple email adresses at once
+    $entryManager->applyOperations($entry->getDn(), array(
+        new UpdateOpteration(LDAP_MODIFY_BATCH_ADD, 'mail', 'new1@example.com'),
+        new UpdateOpteration(LDAP_MODIFY_BATCH_ADD, 'mail', 'new2@example.com'),
+    ));
+
+Possible operation types are ``LDAP_MODIFY_BATCH_ADD``, ``LDAP_MODIFY_BATCH_REMOVE``,
+``LDAP_MODIFY_BATCH_REMOVE_ALL``, ``LDAP_MODIFY_BATCH_REPLACE``. Parameter
+``$values`` must be ``NULL`` when using ``LDAP_MODIFY_BATCH_REMOVE_ALL``
+operation type.
+
+.. versionadded:: 4.2
+    The ``applyOperations()`` method was introduced in Symfony 4.2.
+    
+.. versionadded:: 4.1
+    The ``addAttributeValues()`` and ``removeAttributeValues()`` methods
+    were introduced in Symfony 4.1.
 
 .. _Packagist: https://packagist.org/packages/symfony/ldap

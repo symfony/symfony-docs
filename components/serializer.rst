@@ -618,12 +618,38 @@ There are several types of normalizers available:
     This normalizer converts :phpclass:`DateInterval` objects into strings.
     By default it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
+    This normalizer converts objects that implement
+    :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface`
+    into a list of errors according to the `RFC 7807`_ standard.
+
+    .. versionadded:: 4.1
+        The ``ConstraintViolationListNormalizer`` was introduced in Symfony 4.1.
+
 .. _component-serializer-encoders:
 
 Encoders
 --------
 
-The Serializer component supports many formats out of the box:
+Encoders turn **arrays** into **formats** and vice versa. They implement
+:class:`Symfony\\Component\\Serializer\\Encoder\\EncoderInterface`
+for encoding (array to format) and
+:class:`Symfony\\Component\\Serializer\\Encoder\\DecoderInterface` for decoding
+(format to array).
+
+You can add new encoders to a Serializer instance by using its second constructor argument::
+
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+
+    $encoders = array(new XmlEncoder(), new JsonEncoder());
+    $serializer = new Serializer(array(), $encoders);
+
+Built-in Encoders
+~~~~~~~~~~~~~~~~~
+
+The Serializer component provides several built-in encoders:
 
 :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`
     This class encodes and decodes data in JSON_.
@@ -640,6 +666,73 @@ The Serializer component supports many formats out of the box:
 
 All these encoders are enabled by default when using the Symfony Standard Edition
 with the serializer enabled.
+
+The ``JsonEncoder``
+~~~~~~~~~~~~~~~~~~~
+
+The ``JsonEncoder`` encodes to and decodes from JSON strings, based on the PHP
+:phpfunction:`json_encode` and :phpfunction:`json_decode` functions.
+
+The ``CsvEncoder``
+~~~~~~~~~~~~~~~~~~~
+
+The ``CsvEncoder`` encodes to and decodes from CSV.
+
+You can pass the context key ``as_collection`` in order to have the results
+always as a collection.
+
+.. versionadded:: 4.1
+    The ``as_collection`` option was introduced in Symfony 4.1.
+
+The ``XmlEncoder``
+~~~~~~~~~~~~~~~~~~
+
+This encoder transforms arrays into XML and vice versa.
+
+For example, take an object normalized as following::
+
+    array('foo' => array(1, 2), 'bar' => true);
+
+The ``XmlEncoder`` will encode this object like that::
+
+    <?xml version="1.0"?>
+    <response>
+        <foo>1</foo>
+        <foo>2</foo>
+        <bar>1</bar>
+    </response>
+
+Be aware that this encoder will consider keys beginning with ``@`` as attributes::
+
+    $encoder = new XmlEncoder();
+    $encoder->encode(array('foo' => array('@bar' => 'value')));
+    // will return:
+    // <?xml version="1.0"?>
+    // <response>
+    //     <foo bar="value" />
+    // </response>
+
+You can pass the context key ``as_collection`` in order to have the results
+always as a collection.
+
+.. versionadded:: 4.1
+    The ``as_collection`` option was introduced in Symfony 4.1.
+
+.. tip::
+
+    XML comments are ignored by default when decoding contents, but this
+    behavior can be changed with the optional ``$ignoredNodeTypes`` argument of
+    the ``XmlEncoder`` class constructor.
+
+    .. versionadded:: 4.1
+        XML comments are ignored by default starting from Symfony 4.1.
+
+The ``YamlEncoder``
+~~~~~~~~~~~~~~~~~~~
+
+This encoder requires the :doc:`Yaml Component </components/yaml>` and
+transforms from and to Yaml.
+
 
 .. _component-serializer-handling-circular-references:
 
@@ -829,6 +922,60 @@ because it is deeper than the configured maximum depth of 2::
     );
     */
 
+Instead of throwing an exception, a custom callable can be executed when the
+maximum depth is reached. This is especially useful when serializing entities
+having unique identifiers::
+
+    use Doctrine\Common\Annotations\AnnotationReader;
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Annotation\MaxDepth;
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+    class Foo
+    {
+        public $id;
+
+        /**
+         * @MaxDepth(1)
+         */
+        public $child;
+    }
+
+    $level1 = new Foo();
+    $level1->id = 1;
+
+    $level2 = new Foo();
+    $level2->id = 2;
+    $level1->child = $level2;
+
+    $level3 = new Foo();
+    $level3->id = 3;
+    $level2->child = $level3;
+
+    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $normalizer = new ObjectNormalizer($classMetadataFactory);
+    $normalizer->setMaxDepthHandler(function ($foo) {
+        return '/foos/'.$foo->id;
+    });
+
+    $serializer = new Serializer(array($normalizer));
+
+    $result = $serializer->normalize($level1, null, array(ObjectNormalizer::ENABLE_MAX_DEPTH => true));
+    /*
+    $result = array(
+        'id' => 1,
+        'child' => array(
+            'id' => 2,
+            'child' => '/foos/3',
+        ),
+    );
+    */
+
+.. versionadded:: 4.1
+    The ``setMaxDepthHandler()`` method was introduced in Symfony 4.1.
+
 Handling Arrays
 ---------------
 
@@ -942,6 +1089,44 @@ These are the options available:
 ``remove_empty_tags``
     If set to true, removes all empty tags in the generated XML.
 
+Handling Constructor Arguments
+------------------------------
+
+.. versionadded:: 4.1
+    The ``default_constructor_arguments`` option was introduced in Symfony 4.1.
+
+If the class constructor defines arguments, as usually happens with
+`Value Objects`_, the serializer won't be able to create the object if some
+arguments are missing. In those cases, use the ``default_constructor_arguments``
+context option::
+
+    use Symfony\Component\Serializer\Serializer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+    class MyObj
+    {
+        private $foo;
+        private $bar;
+
+        public function __construct($foo, $bar)
+        {
+            $this->foo = $foo;
+            $this->bar = $bar;
+        }
+    }
+
+    $normalizer = new ObjectNormalizer($classMetadataFactory);
+    $serializer = new Serializer(array($normalizer));
+
+    $data = $serializer->denormalize(
+        array('foo' => 'Hello'),
+        'MyObj',
+        array('default_constructor_arguments' => array(
+            'MyObj' => array('foo' => '', 'bar' => ''),
+        )
+    ));
+    // $data = new MyObj('Hello', '');
+
 Recursive Denormalization and Type Safety
 -----------------------------------------
 
@@ -1012,6 +1197,96 @@ will be thrown. The type enforcement of the properties can be disabled by settin
 the serializer context option ``ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT``
 to ``true``.
 
+Serializing Interfaces and Abstract Classes
+-------------------------------------------
+
+When dealing with objects that are fairly similar or share properties, you may
+use interfaces or abstract classes. The Serializer component allows you to
+serialize and deserialize these objects using a *"discriminator class mapping"*.
+
+The discriminator is the field (in the serialized string) used to differentiate
+between the possible objects. In practice, when using the Serializer component,
+pass a :class:`Symfony\\Component\\Serializer\\Mapping\\ClassDiscriminatorResolverInterface`
+implementation to the :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`.
+
+Consider an application that defines an abstract ``CodeRepository`` class
+extended by ``GitHubCodeRepository`` and ``BitBucketCodeRepository`` classes.
+This example shows how to serialize and deserialize those objects::
+
+    // ...
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorMapping;
+    use Symfony\Component\Serializer\Mapping\ClassDiscriminatorFromClassMetadata;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+
+    $discriminator = new ClassDiscriminatorFromClassMetadata($classMetadataFactory);
+    $discriminator->addClassMapping(CodeRepository::class, new ClassDiscriminatorMapping('type', [
+        'github' => GitHubCodeRepository::class,
+        'bitbucket' => BitBucketCodeRepository::class,
+    ]));
+
+    $serializer = new Serializer(
+        array(new ObjectNormalizer($classMetadataFactory, null, null, null, $discriminator)),
+        array('json' => new JsonEncoder())
+    );
+
+    $serialized = $serializer->serialize(new GitHubCodeRepository());
+    // {"type": "github"}
+
+    $repository = $serializer->unserialize($serialized, CodeRepository::class, 'json');
+    // instanceof GitHubCodeRepository
+
+If the class metadata factory is enabled as explained in the
+:ref:`Attributes Groups section <component-serializer-attributes-groups>`, you
+can use this simpler configuration:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        namespace App;
+
+        use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
+
+        /**
+         * @DiscriminatorMap(typeProperty="type", mapping={
+         *    "github"="App\GitHubCodeRepository",
+         *    "bitbucket"="App\BitBucketCodeRepository"
+         * })
+         */
+        interface CodeRepository
+        {
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        App\CodeRepository:
+            discriminator_map:
+                type_property: type
+                mapping:
+                    github: 'App\GitHubCodeRepository'
+                    bitbucket: 'App\BitBucketCodeRepository'
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                http://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="App\CodeRepository">
+                <discriminator-map type-property="type">
+                    <mapping type="github" class="App\GitHubCodeRepository" />
+                    <mapping type="bitbucket" class="App\BitBucketCodeRepository" />
+                </discriminator-map>
+            </class>
+        </serializer>
+
 Learn more
 ----------
 
@@ -1024,7 +1299,8 @@ Learn more
 .. seealso::
 
     A popular alternative to the Symfony Serializer Component is the third-party
-    library, `JMS serializer`_ (versions before `v1.12.0` were released under the Apache license, so incompatible with GPLv2 projects).
+    library, `JMS serializer`_ (versions before ``v1.12.0`` were released under
+    the Apache license, so incompatible with GPLv2 projects).
 
 .. _`PSR-1 standard`: https://www.php-fig.org/psr/psr-1/
 .. _`JMS serializer`: https://github.com/schmittjoh/serializer
@@ -1034,3 +1310,5 @@ Learn more
 .. _XML: https://www.w3.org/XML/
 .. _YAML: http://yaml.org/
 .. _CSV: https://tools.ietf.org/html/rfc4180
+.. _`RFC 7807`: https://tools.ietf.org/html/rfc7807
+.. _`Value Objects`: https://en.wikipedia.org/wiki/Value_object

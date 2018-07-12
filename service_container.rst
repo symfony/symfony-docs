@@ -189,7 +189,12 @@ each time you ask for it.
     .. tip::
 
         The value of the ``resource`` and ``exclude`` options can be any valid
-        `glob pattern`_.
+        `glob pattern`_. The value of the ``exclude`` option can also be an
+        array of glob patterns.
+
+        .. versionadded:: 4.2
+            The feature to pass arrays of glob patterns to the ``exclude``
+            option was introduced in Symfony 4.2.
 
     Thanks to this configuration, you can automatically use any classes from the
     ``src/`` directory as a service, without needing to manually configure
@@ -571,6 +576,9 @@ But, you can control this and pass in a different logger:
             # explicitly configure the service
             App\Service\MessageGenerator:
                 arguments:
+                    # the '@' symbol is important: that's what tells the container
+                    # you want to pass the *service* whose id is 'monolog.logger.request',
+                    # and not just the *string* 'monolog.logger.request'
                     $logger: '@monolog.logger.request'
 
     .. code-block:: xml
@@ -612,13 +620,7 @@ For a full list of *all* possible services in the container, run:
 
 .. code-block:: terminal
 
-    php bin/console debug:container --show-private
-
-.. tip::
-
-    The ``@`` symbol is important: that's what tells the container you want to pass
-    the *service* whose id is ``monolog.logger.request``, and not just the *string*
-    ``monolog.logger.request``.
+    $ php bin/console debug:container
 
 .. _services-binding:
 
@@ -697,6 +699,42 @@ argument for *any* service defined in this file! You can bind arguments by name
 
 The ``bind`` config can also be applied to specific services or when loading many
 services at once (i.e. :ref:`service-psr4-loader`).
+
+Getting Container Parameters as a Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.1
+    The feature to get container parameters as a service was introduced in Symfony 4.1.
+
+If some service or controller needs lots of container parameters, there's an
+easier alternative to binding all of them with the ``services._defaults.bind``
+option. Type-hint any of its constructor arguments with the
+:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBagInterface`
+or the new :class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ContainerBagInterface`
+and the service will get all container parameters in a
+:class:`Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBag` object::
+
+    // src/Service/MessageGenerator.php
+    // ...
+
+    use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
+    class MessageGenerator
+    {
+        private $params;
+
+        public function __construct(ParameterBagInterface $params)
+        {
+            $this->params = $params;
+        }
+
+        public function someMethod()
+        {
+            // get any param from $this->params, which stores all container parameters
+            $sender = $this->params->get('mailer_sender');
+            // ...
+        }
+    }
 
 .. _services-autowire:
 

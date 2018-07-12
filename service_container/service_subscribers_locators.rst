@@ -257,11 +257,13 @@ include as many services as needed in it.
         services:
             app.command_handler_locator:
                 class: Symfony\Component\DependencyInjection\ServiceLocator
-                tags: ['container.service_locator']
                 arguments:
                     -
                         App\FooCommand: '@app.command_handler.foo'
                         App\BarCommand: '@app.command_handler.bar'
+                # if you are not using the default service autoconfiguration,
+                # add the following tag to the service definition:
+                # tags: ['container.service_locator']
 
     .. code-block:: xml
 
@@ -278,7 +280,11 @@ include as many services as needed in it.
                         <argument key="App\FooCommand" type="service" id="app.command_handler.foo" />
                         <argument key="App\BarCommand" type="service" id="app.command_handler.bar" />
                     </argument>
-                    <tag name="container.service_locator" />
+                    <!--
+                        if you are not using the default service autoconfiguration,
+                        add the following tag to the service definition:
+                        <tag name="container.service_locator" />
+                    -->
                 </service>
 
             </services>
@@ -294,12 +300,19 @@ include as many services as needed in it.
 
         $container
             ->register('app.command_handler_locator', ServiceLocator::class)
-            ->addTag('container.service_locator')
             ->setArguments(array(array(
                 'App\FooCommand' => new Reference('app.command_handler.foo'),
                 'App\BarCommand' => new Reference('app.command_handler.bar'),
             )))
+            // if you are not using the default service autoconfiguration,
+            // add the following tag to the service definition:
+            // ->addTag('container.service_locator')
         ;
+
+.. versionadded:: 4.1
+    The service locator autoconfiguration was introduced in Symfony 4.1. In
+    previous Symfony versions you always needed to add the
+    ``container.service_locator`` tag explicitly.
 
 .. note::
 
@@ -366,3 +379,99 @@ will share identical locators amongst all the services referencing them::
     }
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
+
+Service Subscriber Trait
+------------------------
+
+.. versionadded:: 4.2
+    The :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberTrait`
+    was introduced in Symfony 4.2.
+
+The :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberTrait`
+provides an implementation for
+:class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`
+that looks through all methods in your class that have no arguments and a return
+type. It provides a ``ServiceLocator`` for the services of those return types.
+The service id is ``__METHOD__``. This allows you to easily add dependencies
+to your services based on type-hinted helper methods::
+
+    // src/Service/MyService.php
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
+    use Symfony\Component\DependencyInjection\ServiceSubscriberTrait;
+    use Symfony\Component\Routing\RouterInterface;
+
+    class MyService implements ServiceSubscriberInterface
+    {
+        use ServiceSubscriberTrait;
+
+        public function doSomething()
+        {
+            // $this->router() ...
+            // $this->logger() ...
+        }
+
+        private function router(): RouterInterface
+        {
+            return $this->container->get(__METHOD__);
+        }
+
+        private function logger(): LoggerInterface
+        {
+            return $this->container->get(__METHOD__);
+        }
+    }
+
+This  allows you to create helper traits like RouterAware, LoggerAware, etc...
+and compose your services with them::
+
+    // src/Service/LoggerAware.php
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+
+    trait LoggerAware
+    {
+        private function logger(): LoggerInterface
+        {
+            return $this->container->get(__CLASS__.'::'.__FUNCTION__);
+        }
+    }
+
+    // src/Service/RouterAware.php
+    namespace App\Service;
+
+    use Symfony\Component\Routing\RouterInterface;
+
+    trait RouterAware
+    {
+        private function router(): RouterInterface
+        {
+            return $this->container->get(__CLASS__.'::'.__FUNCTION__);
+        }
+    }
+
+    // src/Service/MyService.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
+    use Symfony\Component\DependencyInjection\ServiceSubscriberTrait;
+
+    class MyService implements ServiceSubscriberInterface
+    {
+        use ServiceSubscriberTrait, LoggerAware, RouterAware;
+
+        public function doSomething()
+        {
+            // $this->router() ...
+            // $this->logger() ...
+        }
+    }
+
+.. caution::
+
+    When creating these helper traits, the service id cannot be ``__METHOD__``
+    as this will include the trait name, not the class name. Instead, use
+    ``__CLASS__.'::'.__FUNCTION__`` as the service id.

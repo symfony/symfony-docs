@@ -115,9 +115,13 @@ After configuring and registering the command, you can execute it in the termina
     $ php bin/console app:create-user
 
 As you might expect, this command will do nothing as you didn't write any logic
-yet. Add your own logic inside the ``execute()`` method, which has access to the
-input stream (e.g. options and arguments) and the output stream (to write
-messages to the console)::
+yet. Add your own logic inside the ``execute()`` method.
+
+Console Output
+--------------
+
+The ``execute()`` method has access to the output stream to write messages to
+the console::
 
     // ...
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -129,6 +133,10 @@ messages to the console)::
             '',
         ]);
 
+        // the value returned by someMethod() can be an iterator (https://secure.php.net/iterator)
+        // that generates and returns the messages with the 'yield' PHP keyword
+        $output->writeln($this->someMethod());
+
         // outputs a message followed by a "\n"
         $output->writeln('Whoa!');
 
@@ -136,6 +144,10 @@ messages to the console)::
         $output->write('You are about to ');
         $output->write('create a user.');
     }
+
+.. versionadded:: 4.1
+    The support of PHP iterators in the ``write()`` and ``writeln()`` methods
+    was introduced in Symfony 4.1.
 
 Now, try executing the command:
 
@@ -147,6 +159,57 @@ Now, try executing the command:
 
     Whoa!
     You are about to create a user.
+
+.. _console-output-sections:
+
+Output Sections
+~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.1
+    Output sections were introduced in Symfony 4.1.
+
+The regular console output can be divided into multiple independent regions
+called "output sections". Create one or more of these sections when you need to
+clear and overwrite the output information.
+
+Sections are created with the
+:method:`Symfony\\Component\\Console\\Output\\ConsoleOutput::section` method,
+which returns an instance of
+:class:`Symfony\\Component\\Console\\Output\\ConsoleSectionOutput`::
+
+    class MyCommand extends Command
+    {
+        protected function execute(InputInterface $input, OutputInterface $output)
+        {
+            $section1 = $output->section();
+            $section2 = $output->section();
+            $section1->writeln('Hello');
+            $section2->writeln('World!');
+            // Output displays "Hello\nWorld!\n"
+
+            // overwrite() replaces all the existing section contents with the given content
+            $section1->overwrite('Goodbye');
+            // Output now displays "Goodbye\nWorld!\n"
+
+            // clear() deletes all the section contents...
+            $section2->clear();
+            // Output now displays "Goodbye\n"
+
+            // ...but you can also delete a given number of lines
+            // (this example deletes the last two lines of the section)
+            $section1->clear(2);
+            // Output is now completely empty!
+        }
+    }
+
+.. note::
+
+    A new line is appended automatically when displaying information in a section.
+
+Output sections let you manipulate the Console output in advanced ways, such as
+:ref:`displaying multiple progress bars <console-multiple-progress-bars>` which
+are updated independently and :ref:`appending rows to tables <console-modify-rendered-tables>`
+that have already been rendered.
 
 Console Input
 -------------

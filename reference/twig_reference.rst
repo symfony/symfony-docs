@@ -235,6 +235,18 @@ form_label
 Renders the label for the given field, more information in
 :ref:`the Twig Form reference <reference-forms-twig-label>`.
 
+form_help
+~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ form_help(view) }}
+
+``view``
+    **type**: ``FormView``
+
+Renders the help text for the given field.
+
 form_row
 ~~~~~~~~
 

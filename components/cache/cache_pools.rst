@@ -127,8 +127,19 @@ when all items are successfully deleted)::
 .. tip::
 
     If the cache component is used inside a Symfony application, you can remove
-    *all items* from the *given pool(s)* using the following command (which resides within
+    items from cache pools using the following commands (which reside within
     the :ref:`framework bundle <framework-bundle-configuration>`):
+
+    To remove *one specific item* from the *given pool*:
+
+    .. code-block:: terminal
+
+        $ php bin/console cache:pool:delete <cache-pool-name> <cache-key-name>
+
+        # deletes the "cache_key" item from the "cache.app" pool
+        $ php bin/console cache:pool:delete cache.app cache_key
+
+    You can also remove *all items* from the *given pool(s)*:
 
     .. code-block:: terminal
 
@@ -139,6 +150,9 @@ when all items are successfully deleted)::
 
         # clears the "cache.validation" and "cache.app" pool
         $ php bin/console cache:pool:clear cache.validation cache.app
+
+.. versionadded:: 4.1
+    The ``cache:pool:delete`` command was introduced in Symfony 4.1.
 
 .. _component-cache-cache-pool-prune:
 

@@ -358,6 +358,31 @@ When pages contain dynamic parts, you may not be able to cache entire pages,
 but only parts of it. Read :doc:`/http_cache/esi` to find out how to configure
 different cache strategies for specific parts of your page.
 
+HTTP Caching and User Sessions
+------------------------------
+
+Whenever the session is started during a request, Symfony turns the response
+into a private non-cacheable response. This is the best default behavior to not
+cache private user information (e.g. a shopping cart, a user profile details,
+etc.) and expose it to other visitors.
+
+However, even requests making use of the session can be cached under some
+circumstances. For example, information related to some user group could be
+cached for all the users belonging to that group. Handling these advanced
+caching scenarios is out of the scope of Symfony, but they can be solved with
+the `FOSHttpCacheBundle`_.
+
+In order to disable the default Symfony behavior that makes requests using the
+session uncacheable, add the following internal header to your response and
+Symfony won't modify it::
+
+    use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
+
+    $response->headers->set(AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER, 'true');
+
+.. versionadded:: 4.1
+    The ``NO_AUTO_CACHE_CONTROL_HEADER`` header was introduced in Symfony 4.1.
+
 Summary
 -------
 

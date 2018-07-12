@@ -159,6 +159,28 @@ If you use several handlers, you can also register a processor at the
 handler level or at the channel level instead of registering it globally
 (see the following sections).
 
+.. tip::
+
+    .. versionadded:: 4.2
+        The autoconfiguration of Monolog processors was introduced in Symfony 4.2.
+
+    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+    processors implementing :class:`Symfony\\Bridge\\Monolog\\Processor\\ProcessorInterface`
+    are automatically registered as services and tagged with ``monolog.processor``,
+    so you can use them without adding any configuration. The same applies to the
+    built-in :class:`Symfony\\Bridge\\Monolog\\Processor\\TokenProcessor` and
+    :class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor` processors, which
+    can be enabled as follows:
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # Adds the current security token to log entries
+            Symfony\Bridge\Monolog\Processor\TokenProcessor: ~
+            # Adds the real client IP to log entries
+            Symfony\Bridge\Monolog\Processor\WebProcessor: ~
+
 Registering Processors per Handler
 ----------------------------------
 

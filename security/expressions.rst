@@ -61,9 +61,11 @@ Additionally, you have access to a number of functions inside the expression:
     Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``, see below.
 ``is_fully_authenticated``
     Similar, but not equal to ``IS_AUTHENTICATED_FULLY``, see below.
-``has_role``
-    Checks to see if the user has the given role - equivalent to an expression like
-    ``'ROLE_ADMIN' in roles``.
+``is_granted``
+    Checks if the user has the given permission. Optionally accepts a second argument
+    with the object where permission is checked on. It's equivalent to using
+    the :doc:`isGranted() method </security/securing_services>` from the authorization
+    checker service.
 
 .. sidebar:: ``is_remember_me`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
 

@@ -400,6 +400,19 @@ Symfony provides the following env var processors:
                 'dsn' => '%env(resolve:SENTRY_DSN)%',
             ));
 
+``env(csv:FOO)``
+    Decodes the content of ``FOO``, which is a CSV-encoded string:
+
+    .. code-block:: yaml
+
+        parameters:
+            env(TRUSTED_HOSTS): "10.0.0.1, 10.0.0.2"
+        framework:
+           trusted_hosts: '%env(csv:TRUSTED_HOSTS)%'
+
+    .. versionadded:: 4.1
+        The ``csv`` processor was introduced in Symfony 4.1.
+
 ``env(file:FOO)``
     Returns the contents of a file whose path is the value of the ``FOO`` env var:
 
@@ -439,6 +452,47 @@ Symfony provides the following env var processors:
             $container->loadFromExtension('google', array(
                 'auth' => '%env(file:AUTH_FILE)%',
             ));
+
+``env(key:FOO:BAR)``
+    Retrieves the value associated with the key ``FOO`` from the array whose
+    contents are stored in the ``BAR`` env var:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                env(SECRETS_FILE): '/opt/application/.secrets.json'
+                database_password: '%env(key:database_password:json:file:SECRETS_FILE)%'
+                # if SECRETS_FILE contents are: {"database_password": "secret"} it returns "secret"
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(SECRETS_FILE)">/opt/application/.secrets.json</parameter>
+                    <parameter key="database_password">%env(key:database_password:json:file:SECRETS_FILE)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('env(SECRETS_FILE)', '/opt/application/.secrets.json');
+            $container->setParameter('database_password', '%env(key:database_password:json:file:SECRETS_FILE)%');
+
+    .. versionadded:: 4.2
+        The ``key`` processor was introduced in Symfony 4.2.
 
 It is also possible to combine any number of processors:
 

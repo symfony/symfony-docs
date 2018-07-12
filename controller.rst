@@ -86,14 +86,14 @@ For more information on routing, see :doc:`/routing`.
    single: Controller; Base controller class
 
 .. _the-base-controller-class-services:
+.. _the-base-controller-classes-services:
 
-The Base Controller Classes & Services
---------------------------------------
+The Base Controller Class & Services
+------------------------------------
 
-To make life nicer, Symfony comes with two optional base
-:class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` and
+To make life nicer, Symfony comes with an optional base controller class called
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`.
-You can extend either to get access to some `helper methods`_.
+You can extend it to get access to some `helper methods`_.
 
 Add the ``use`` statement atop your controller class and then modify
 ``LuckyController`` to extend it:
@@ -103,10 +103,10 @@ Add the ``use`` statement atop your controller class and then modify
     // src/Controller/LuckyController.php
     namespace App\Controller;
 
-    + use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     - class LuckyController
-    + class LuckyController extends Controller
+    + class LuckyController extends AbstractController
     {
         // ...
     }
@@ -114,24 +114,13 @@ Add the ``use`` statement atop your controller class and then modify
 That's it! You now have access to methods like :ref:`$this->render() <controller-rendering-templates>`
 and many others that you'll learn about next.
 
-.. _controller-abstract-versus-controller:
-
-.. tip::
-
-    What's the difference between ``Controller`` or ``AbstractController``? Not much:
-    both are identical, except that ``AbstractController`` is more restrictive: it
-    does not allow you to access services directly via ``$this->get()`` or
-    ``$this->container->get()``. This forces you to write more robust code to access
-    services. But if you *do* need direct access to the container, using ``Controller``
-    is fine.
-
 .. index::
    single: Controller; Redirecting
 
 Generating URLs
 ~~~~~~~~~~~~~~~
 
-The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::generateUrl`
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::generateUrl`
 method is just a helper method that generates the URL for a given route::
 
     $url = $this->generateUrl('app_lucky_number', array('max' => 10));
@@ -241,6 +230,8 @@ the argument by its name:
                 bind:
                     # for any $logger argument, pass this specific service
                     $logger: '@monolog.logger.doctrine'
+                    # for any $projectDir argument, pass this parameter value
+                    $projectDir: '%kernel.project_dir%'
 
     .. code-block:: xml
 
@@ -260,6 +251,7 @@ the argument by its name:
                         type="service"
                         id="monolog.logger.doctrine"
                     />
+                    <bind key="$projectDir">%kernel.project_dir%</bind>
                 </service>
             </services>
         </container>
@@ -274,19 +266,16 @@ the argument by its name:
             ->setPublic(true)
             ->setBindings(array(
                 '$logger' => new Reference('monolog.logger.doctrine'),
+                '$projectDir' => '%kernel.project_dir%'
             ))
         ;
 
 You can of course also use normal :ref:`constructor injection <services-constructor-injection>`
 in your controllers.
 
-.. caution::
-
-    You can *only* pass *services* to your controller arguments in this way. It's not
-    possible, for example, to pass a service parameter as a controller argument,
-    even by using ``bind``. If you need a parameter, use the ``$this->getParameter('kernel.debug')``
-    shortcut or pass the value through your controller's ``__construct()`` method
-    and specify its value with ``bind``.
+.. versionadded:: 4.1
+    The ability to bind scalar values to controller arguments was introduced in
+    Symfony 4.1. Previously you could only bind services.
 
 For more information about services, see the :doc:`/service_container` article.
 
@@ -339,7 +328,7 @@ special type of exception::
         return $this->render(...);
     }
 
-The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerTrait::createNotFoundException`
+The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::createNotFoundException`
 method is just a shortcut to create a special
 :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`
 object, which ultimately triggers a 404 HTTP response inside Symfony.
@@ -592,7 +581,7 @@ the :phpfunction:`json_encode` function is used.
 Streaming File Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::file`
+You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::file`
 helper to serve a file from inside a controller::
 
     public function download()
@@ -628,7 +617,7 @@ contains the logic for that page. In Symfony, this is called a controller,
 and it's a PHP function where you can do anything in order to return the
 final ``Response`` object that will be returned to the user.
 
-To make life easier, you'll probably extend the base ``Controller`` class because
+To make life easier, you'll probably extend the base ``AbstractController`` class because
 this gives access to shortcut methods (like ``render()`` and ``redirectToRoute()``).
 
 In other articles, you'll learn how to use specific services from inside your controller

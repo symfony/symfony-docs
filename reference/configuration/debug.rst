@@ -58,6 +58,8 @@ max_string_length
 This option configures the maximum string length before truncating the
 string. The default value (``-1``) means that strings are never truncated.
 
+.. _configuration-debug-dump_destination:
+
 dump_destination
 ~~~~~~~~~~~~~~~~
 

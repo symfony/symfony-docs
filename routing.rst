@@ -37,10 +37,10 @@ like ``/blog/my-post`` or ``/blog/all-about-symfony``:
         // src/Controller/BlogController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             /**
              * Matches /blog exactly
@@ -136,6 +136,97 @@ use them later to :ref:`generate URLs <routing-generate>`.
     configure your routes in YAML, XML or PHP, that's no problem! Just create a
     new routing file (e.g. ``routes.xml``) and Symfony will automatically use it.
 
+.. _i18n-routing:
+
+Localized Routing (i18n)
+------------------------
+
+.. versionadded:: 4.1
+    The feature to localize routes was introduced in Symfony 4.1.
+
+Routes can be localized to provide unique paths per :doc:`locale </translation/locale>`.
+Symfony provides a handy way to declare localized routes without duplication.
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class CompanyController extends AbstractController
+        {
+            /**
+             * @Route({
+             *     "nl": "/over-ons",
+             *     "en": "/about-us"
+             * }, name="about_us")
+             */
+            public function about()
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        about_us:
+            path:
+                nl: /over-ons
+                en: /about-us
+            controller: App\Controller\CompanyController::about
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="about_us" controller="App\Controller\CompanyController::about">
+                <path locale="nl">/over-ons</path>
+                <path locale="en">/about-us</path>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
+        return function (RoutingConfigurator $routes) {
+            $routes->add('about_us', ['nl' => '/over-ons', 'en' => '/about-us'])
+                ->controller('App\Controller\CompanyController::about');
+        };
+
+When a localized route is matched Symfony automatically knows which locale
+should be used during the request. Defining routes this way also eliminated the
+need for duplicate registration of routes which minimizes the risk for any bugs
+caused by definition inconsistency.
+
+A common requirement for internationalized applications is to prefix all routes
+with a locale. This can be done by defining a different prefix for each locale
+(and setting an empty prefix for your default locale if you prefer it):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes/annotations.yaml
+        controllers:
+            resource: '../src/Controller/'
+            type: annotation
+            prefix:
+                en: '' # don't prefix URLs for English, the default locale
+                fr: '/fr'
+                es: '/es'
+
 .. _routing-requirements:
 
 Adding {wildcard} Requirements
@@ -161,10 +252,10 @@ To fix this, add a *requirement* that the ``{page}`` wildcard can *only* match n
         // src/Controller/BlogController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             /**
              * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
@@ -238,6 +329,72 @@ URL                       Route          Parameters
 ``/blog/yay-routing``     ``blog_show``  ``$slug`` = ``yay-routing``
 ========================  =============  ===============================
 
+If you prefer, requirements can be inlined in each placeholder using the syntax
+``{placeholder_name<requirements>}``. This feature makes configuration more
+concise, but it can decrease route readability when requirements are complex:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
+        {
+            /**
+             * @Route("/blog/{page<\d+>}", name="blog_list")
+             */
+            public function list($page)
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        blog_list:
+            path:      /blog/{page<\d+>}
+            controller: App\Controller\BlogController::list
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_list" path="/blog/{page<\d+>}"
+                   controller="App\Controller\BlogController::list" />
+
+            <!-- ... -->
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+        use App\Controller\BlogController;
+
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog/{page<\d+>}', array(
+            '_controller' => [BlogController::class, 'list'],
+        )));
+
+        // ...
+
+        return $routes;
+
+.. versionadded:: 4.1
+    The feature to inline requirements was introduced in Symfony 4.1.
+
 To learn about other route requirements - like HTTP method, hostname and dynamic
 expressions - see :doc:`/routing/requirements`.
 
@@ -259,10 +416,10 @@ So how can you make ``blog_list`` once again match when the user visits
         // src/Controller/BlogController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             /**
              * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
@@ -331,6 +488,78 @@ So how can you make ``blog_list`` once again match when the user visits
 Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 ``$page`` will default to a value of ``1``.
 
+As it happens with requirements, default values can also be inlined in each
+placeholder using the syntax ``{placeholder_name?default_value}``. This feature
+is compatible with inlined requirements, so you can inline both in a single
+placeholder:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
+        {
+            /**
+             * @Route("/blog/{page<\d+>?1}", name="blog_list")
+             */
+            public function list($page)
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        blog_list:
+            path:      /blog/{page<\d+>?1}
+            controller: App\Controller\BlogController::list
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_list" path="/blog/{page <\d+>?1}"
+                   controller="App\Controller\BlogController::list" />
+
+            <!-- ... -->
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\RouteCollection;
+        use Symfony\Component\Routing\Route;
+        use App\Controller\BlogController;
+
+        $routes = new RouteCollection();
+        $routes->add('blog_list', new Route('/blog/{page<\d+>?1}', array(
+            '_controller' => [BlogController::class, 'list'],
+        )));
+
+        // ...
+
+        return $routes;
+
+.. tip::
+
+    To give a ``null`` default value to any placeholder, add nothing after the
+    ``?`` character (e.g. ``/blog/{page?}``).
+
+.. versionadded:: 4.1
+    The feature to inline default values was introduced in Symfony 4.1.
+
 Listing all of your Routes
 --------------------------
 
@@ -367,7 +596,7 @@ With all of this in mind, check out this advanced example:
         // src/Controller/ArticleController.php
 
         // ...
-        class ArticleController extends Controller
+        class ArticleController extends AbstractController
         {
             /**
              * @Route(
@@ -489,6 +718,8 @@ that are special: each adds a unique piece of functionality inside your applicat
 ``_locale``
     Used to set the locale on the request (:ref:`read more <translation-locale-url>`).
 
+.. _routing-trailing-slash-redirection:
+
 Redirecting URLs with Trailing Slashes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -503,15 +734,20 @@ slashes (but only for ``GET`` and ``HEAD`` requests):
 
 ==========  ========================================  ==========================================
 Route path  If the requested URL is ``/foo``          If the requested URL is ``/foo/``
-==========  ========================================  ==========================================
-``/foo``    It matches (``200`` status response)      It doesn't match (``404`` status response)
+----------  ----------------------------------------  ------------------------------------------
+``/foo``    It matches (``200`` status response)      It makes a ``301`` redirect to ``/foo``
 ``/foo/``   It makes a ``301`` redirect to ``/foo/``  It matches (``200`` status response)
 ==========  ========================================  ==========================================
 
-In summary, adding a trailing slash in the route path is the best way to ensure
-that both URLs work. Read the :doc:`/routing/redirect_trailing_slash` article to
-learn how to avoid the ``404`` error when the request URL contains a trailing
-slash and the route path does not.
+.. note::
+
+    If your application defines different routes for each path (``/foo`` and
+    ``/foo/``) this automatic redirection doesn't take place and the right
+    route is always matched.
+
+.. versionadded:: 4.1
+    The automatic ``301`` redirection from ``/foo/`` to ``/foo`` was introduced
+    in Symfony 4.1. In previous Symfony versions this results in a ``404`` response.
 
 .. index::
    single: Routing; Controllers
@@ -523,8 +759,6 @@ Controller Naming Pattern
 -------------------------
 
 The ``controller`` value in your routes has a very simple format ``CONTROLLER_CLASS::METHOD``.
-If your controller is registered as a service, you can also use just one colon separator
-(e.g. ``service_name:index``).
 
 .. tip::
 
@@ -547,7 +781,7 @@ To generate a URL, you need to specify the name of the route (e.g. ``blog_show``
 and any wildcards (e.g. ``slug = my-blog-post``) used in the path for that
 route. With this information, any URL can easily be generated::
 
-    class MainController extends Controller
+    class MainController extends AbstractController
     {
         public function show($slug)
         {
@@ -601,6 +835,18 @@ But if you pass extra ones, they will be added to the URI as a query string::
         'category' => 'Symfony',
     ));
     // /blog/2?category=Symfony
+
+Generating Localized URLs
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When a route is localized, Symfony uses by default the current request locale to
+generate the URL. In order to generate the URL for a different locale you must
+pass the ``_locale`` in the parameters array::
+
+    $this->router->generate('about_us', array(
+        '_locale' => 'nl',
+    ));
+    // generates: /over-ons
 
 Generating URLs from a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -662,15 +908,6 @@ route::
 
     // or, in Twig
     // {{ path('blog_show', {'slug': 'slug-value'}) }}
-
-Translating Routes
-------------------
-
-Symfony doesn't support defining routes with different contents depending on the
-user language. In those cases, you can define multiple routes per controller,
-one for each supported language; or use any of the bundles created by the
-community to implement this feature, such as `JMSI18nRoutingBundle`_ and
-`BeSimpleI18nRoutingBundle`_.
 
 Keep Going!
 -----------

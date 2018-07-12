@@ -6,12 +6,16 @@ CheckboxType Field
 
 Creates a single input checkbox. This should always be used for a field
 that has a boolean value: if the box is checked, the field will be set to
-true, if the box is unchecked, the value will be set to false.
+true, if the box is unchecked, the value will be set to false. Optionally
+you can specify an array of values that, if submitted, will be evaluated
+to "false" as well (this differs from what HTTP defines, but can be handy
+if you want to handle submitted values like "0" or "false").
 
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``checkbox`` field                                           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `value`_                                                             |
+| Options     | - `false_values`_                                                      |
+|             | - `value`_                                                             |
 +-------------+------------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                          |
 | options     | - `empty_data`_                                                        |
@@ -20,6 +24,7 @@ true, if the box is unchecked, the value will be set to false.
 | options     | - `disabled`_                                                          |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
+|             | - `help`_                                                              |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `label_format`_                                                      |
@@ -47,6 +52,13 @@ Example Usage
 Field Options
 -------------
 
+false_values
+~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``array(null)``
+
+An array of values to be interpreted as ``false``.
+
 .. include:: /reference/forms/types/options/value.rst.inc
 
 Overridden Options
@@ -68,6 +80,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 

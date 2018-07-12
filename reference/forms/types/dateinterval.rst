@@ -39,6 +39,7 @@ or an array (see `input`_).
 +----------------------+----------------------------------------------------------------------------------+
 | Inherited            | - `data`_                                                                        |
 | options              | - `disabled`_                                                                    |
+|                      | - `help`_                                                                        |
 |                      | - `inherit_data`_                                                                |
 |                      | - `invalid_message`_                                                             |
 |                      | - `invalid_message_parameters`_                                                  |
@@ -306,6 +307,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 

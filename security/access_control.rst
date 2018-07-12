@@ -265,7 +265,7 @@ key:
             access_control:
                 -
                     path: ^/_internal/secure
-                    allow_if: "'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')"
+                    allow_if: "'127.0.0.1' == request.getClientIp() or is_granted('ROLE_ADMIN')"
 
     .. code-block:: xml
 
@@ -279,7 +279,7 @@ key:
 
             <config>
                 <rule path="^/_internal/secure"
-                    allow-if="'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')" />
+                    allow-if="'127.0.0.1' == request.getClientIp() or is_granted('ROLE_ADMIN')" />
             </config>
         </srv:container>
 
@@ -288,7 +288,7 @@ key:
             'access_control' => array(
                 array(
                     'path' => '^/_internal/secure',
-                    'allow_if' => '"127.0.0.1" == request.getClientIp() or has_role("ROLE_ADMIN")',
+                    'allow_if' => '"127.0.0.1" == request.getClientIp() or is_granted("ROLE_ADMIN")',
                 ),
             ),
 
@@ -303,6 +303,15 @@ and functions including ``request``, which is the Symfony
 
 For a list of the other functions and variables, see
 :ref:`functions and variables <security-expression-variables>`.
+
+.. tip::
+
+    The ``allow_if`` expressions can also contain custom functions registered
+    with :ref:`expression providers <components-expression-language-provider>`.
+
+    .. versionadded:: 4.1
+        The feature to use custom functions inside ``allow_if`` expressions was
+        introduced in Symfony 4.1.
 
 Forcing a Channel (http, https)
 -------------------------------

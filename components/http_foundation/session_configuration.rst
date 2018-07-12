@@ -73,6 +73,8 @@ easily serve as examples if you wish to write your own.
 
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`
+* :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MigratingSessionHandler`
+* :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\RedisSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MongoDbSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\NullSessionHandler`
 
@@ -85,6 +87,32 @@ Example usage::
     $pdo = new \PDO(...);
     $sessionStorage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
     $session = new Session($sessionStorage);
+
+Migrating Between Save Handlers
+-------------------------------
+
+.. versionadded:: 4.1
+    The ``MigratingSessionHandler`` class was introduced in Symfony 4.1.
+
+If your application changes the way sessions are stored, use the
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MigratingSessionHandler`
+to migrate between old and new save handlers without losing session data.
+
+This is the recommended migration workflow:
+
+#. Switch to the migrating handler, with your new handler as the write-only one.
+   The old handler behaves as usual and sessions get written to the new one::
+
+       $sessionStorage = new MigratingSessionHandler($oldSessionStorage, $newSessionStorage);
+
+#. After your session gc period, verify that the data in the new handler is correct.
+#. Update the migrating handler to use the old handler as the write-only one, so
+   the sessions will now be read from the new handler. This step allows easier rollbacks::
+
+       $sessionStorage = new MigratingSessionHandler($newSessionStorage, $oldSessionStorage);
+
+#. After verifying that the sessions in your application are working, switch
+   from the migrating handler to the new handler.
 
 Configuring PHP Sessions
 ~~~~~~~~~~~~~~~~~~~~~~~~

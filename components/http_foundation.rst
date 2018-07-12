@@ -242,6 +242,45 @@ the
 method tells you if the request contains a session which was started in one of
 the previous requests.
 
+.. versionadded:: 4.1
+    Using :method:`Symfony\\Component\\HttpFoundation\\Request::getSession()`
+    when no session has been set was deprecated in Symfony 4.1. It will throw
+    an exception in Symfony 5.0 when the session is ``null``. Check for an existing session
+    first by calling :method:`Symfony\\Component\\HttpFoundation\\Request::hasSession()`.
+
+Processing HTTP Headers
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.1
+    The ``HeaderUtils`` class was introduced in Symfony 4.1.
+
+Processing HTTP headers is not a trivial task because of the escaping and white
+space handling of their contents. Symfony provides a
+:class:`Symfony\\Component\\HttpFoundation\\HeaderUtils` class that abstracts
+this complexity and defines some methods for the most common tasks::
+
+    use Symfony\Component\HttpFoundation\HeaderUtils;
+
+    // Splits an HTTP header by one or more separators
+    HeaderUtils::split('da, en-gb;q=0.8', ',;')
+    // => array(array('da'), array('en-gb'), array('q', '0.8'))
+
+    // Combines an array of arrays into one associative array
+    HeaderUtils::combine(array(array('foo', 'abc'), array('bar')))
+    // => array('foo' => 'abc', 'bar' => true)
+
+    // Joins an associative array into a string for use in an HTTP header
+    HeaderUtils::toString(array('foo' => 'abc', 'bar' => true, 'baz' => 'a b c'), ',')
+    // => 'foo=abc, bar, baz="a b c"'
+
+    // Encodes a string as a quoted string, if necessary
+    HeaderUtils::quote('foo "bar"')
+    // => 'foo \"bar\"'
+
+    // Decodes a quoted string
+    HeaderUtils::unquote('foo \"bar\"')
+    // => 'foo "bar"'
+
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -250,6 +289,21 @@ by using the following methods:
 
 :method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`
     Returns the list of accepted content types ordered by descending quality.
+
+:method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableFormats`
+    Returns the list of accepted client formats associated with the request.
+
+Note that
+:method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableFormats`
+will use the data from
+:method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`
+and return the client acceptable formats::
+
+    $request->getAcceptableContentTypes();
+    // returns ['text/html', 'application/xhtml+xml', 'application/xml', '*/*']
+
+    $request->getAcceptableFormats();
+    // returns ['html', 'xml']
 
 :method:`Symfony\\Component\\HttpFoundation\\Request::getLanguages`
     Returns the list of accepted languages ordered by descending quality.
@@ -276,6 +330,19 @@ If you need to get full access to parsed data from ``Accept``, ``Accept-Language
     // Accept header items are sorted by descending quality
     $acceptHeaders = AcceptHeader::fromString($request->headers->get('Accept'))
         ->all();
+
+The default values that can be optionally included in the ``Accept-*`` headers
+are also supported::
+
+    $acceptHeader = 'text/plain;q=0.5, text/html, text/*;q=0.8, */*;q=0.3';
+    $accept = AcceptHeader::fromString($acceptHeader);
+
+    $quality = $accept->get('text/xml')->getQuality(); // $quality = 0.8
+    $quality = $accept->get('application/xml')->getQuality(); // $quality = 0.3
+
+.. versionadded:: 4.1
+    The support of default values in the ``Accept-*`` headers was introduced in
+    Symfony 4.1.
 
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -407,6 +474,13 @@ of methods to manipulate the HTTP headers related to the cache:
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`;
+
+.. note::
+
+    The methods :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`,
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified` and
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setDate` accept any
+    object that implements ``\DateTimeInterface``, including immutable date objects.
 
 The :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method
 can be used to set the most commonly used cache information in one method

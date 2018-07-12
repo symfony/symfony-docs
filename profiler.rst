@@ -21,3 +21,4 @@ install the profiler before using it:
     profiler/profiling_data
     profiler/matchers
     profiler/storage
+    profiler/wdt_follow_ajax

@@ -58,14 +58,8 @@ the controller:
         </a>
     {% endfor %}
 
-.. note::
-
-    Notice that the article URL is hardcoded in this example
-    (e.g. ``/article/*slug*``). This is a bad practice. In the next section,
-    you'll learn how to do this correctly.
-
-To include the controller, you'll need to refer to it using the standard
-string syntax for controllers (i.e. **controllerNamespace**::**action**):
+Finally, call the controller from any template using the ``render()`` function
+and the standard string syntax for controllers (i.e. **controllerNamespace**::**action**):
 
 .. code-block:: html+twig
 

@@ -22,6 +22,9 @@ key in your application configuration.
     namespace and the related XSD schema is available at:
     ``http://symfony.com/schema/dic/services/services-1.0.xsd``
 
+.. versionadded:: 4.1
+    The ``providers`` option is optional starting from Symfony 4.1.
+
 .. _reference-security-firewall-form-login:
 
 Form Login Configuration
@@ -179,7 +182,7 @@ LDAP functionality
 ------------------
 
 There are several options for connecting against an LDAP server,
-using the ``form_login_ldap`` and ``http_basic_ldap`` authentication
+using the ``form_login_ldap``, ``http_basic_ldap`` and ``json_login_ldap`` authentication
 providers or the ``ldap`` user provider.
 
 For even more details, see :doc:`/security/ldap`.
@@ -188,9 +191,12 @@ Authentication
 ~~~~~~~~~~~~~~
 
 You can authenticate to an LDAP server using the LDAP variants of the
-``form_login`` and ``http_basic`` authentication providers. Simply use
-``form_login_ldap`` and ``http_basic_ldap``, which will attempt to
+``form_login``, ``http_basic`` and ``json_login`` authentication providers. Simply use
+``form_login_ldap``, ``http_basic_ldap`` and ``json_login_ldap``, which will attempt to
 ``bind`` against a LDAP server instead of using password comparison.
+
+.. versionadded:: 4.2
+    The ``json_login_ldap`` authentication provider was introduced in Symfony 4.2.
 
 Both authentication providers have the same arguments as their normal
 counterparts, with the addition of two configuration keys:
@@ -228,8 +234,8 @@ User provider
 
 Users will still be fetched from the configured user provider. If you
 wish to fetch your users from a LDAP server, you will need to use the
-``ldap`` user provider, in addition to one of the two authentication
-providers (``form_login_ldap`` or ``http_basic_ldap``).
+``ldap`` user provider, in addition to one of the three authentication
+providers (``form_login_ldap`` or ``http_basic_ldap`` or ``json-login-ldap``).
 
 .. configuration-block::
 
@@ -369,6 +375,9 @@ Using the Argon2i Password Encoder
             encoders:
                 Symfony\Component\Security\Core\User\User:
                     algorithm: argon2i
+                    memory_cost:          16384 # Amount in KiB. 16 MiB
+                    time_cost:            2 # Number of iterations
+                    threads:              4 # Number of parallel threads
 
     .. code-block:: xml
 
@@ -378,6 +387,9 @@ Using the Argon2i Password Encoder
             <encoder
                 class="Symfony\Component\Security\Core\User\User"
                 algorithm="argon2i"
+                memory_cost="16384"
+                time_cost="2"
+                threads="4"
             />
         </config>
 
@@ -391,6 +403,9 @@ Using the Argon2i Password Encoder
             'encoders' => array(
                 User::class => array(
                     'algorithm' => 'argon2i',
+                    'memory_cost' => 16384,
+                    'time_cost' => 2,
+                    'threads' => 4,
                 ),
             ),
         ));

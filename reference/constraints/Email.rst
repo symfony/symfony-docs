@@ -7,7 +7,7 @@ cast to a string before being validated.
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
 +----------------+---------------------------------------------------------------------+
-| Options        | - `strict`_                                                         |
+| Options        | - `mode`_                                                           |
 |                | - `message`_                                                        |
 |                | - `checkMX`_                                                        |
 |                | - `checkHost`_                                                      |
@@ -91,14 +91,34 @@ Basic Usage
 Options
 -------
 
+mode
+~~~~
+
+**type**: ``string`` **default**: ``loose``
+
+This option is optional and defines the pattern the email address is validated against.
+Valid values are:
+
+* ``loose``
+* ``strict``
+* ``html5``
+
+loose
+.....
+
+A simple regular expression. Allows all values with an "@" symbol in, and a "."
+in the second host part of the email address.
+
 strict
-~~~~~~
+......
 
-**type**: ``boolean`` **default**: ``false``
+Uses the `egulias/email-validator`_ library to perform an RFC compliant
+validation. You will need to install that library to use this mode.
 
-When false, the email will be validated against a simple regular expression.
-If true, then the `egulias/email-validator`_ library is required to perform
-an RFC compliant validation.
+html5
+.....
+
+This matches the pattern used for the `HTML5 email input element`_.
 
 message
 ~~~~~~~
@@ -127,3 +147,4 @@ of the given email.
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _egulias/email-validator: https://packagist.org/packages/egulias/email-validator
+.. _HTML5 email input element: https://www.w3.org/TR/html5/sec-forms.html#email-state-typeemail
