@@ -23,8 +23,8 @@ To use it, first register a new handler service:
 
             Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
                 arguments:
-                    - 'mysql:dbname=%env(MYDATABASE_NAME)%, host=%env(MYDATABASE_HOST)%'
-                    - { db_username: '%env(MYDATABASE_USERNAME)%', db_password: '%env(MYDATABASE_PASSWORD)%' }
+                    - 'mysql:dbname=mydatabase, host=myhost'
+                    - { db_username: myuser, db_password: mypassword }
 
                     # If you're using Doctrine & want to re-use that connection, then:
                     # comment-out the above 2 lines and uncomment the line below
@@ -43,10 +43,10 @@ To use it, first register a new handler service:
 
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                    <argument>mysql:dbname=%env(MYDATABASE_NAME)%, host=%env(MYDATABASE_HOST)%</argument>
+                    <argument>mysql:dbname=mydatabase, host=myhost</argument>
                     <argument type="collection">
-                        <argument key="db_username">%env(MYDATABASE_USERNAME)%</argument>
-                        <argument key="db_password">%env(MYDATABASE_PASSWORD)%</argument>
+                        <argument key="db_username">myuser</argument>
+                        <argument key="db_password">mypassword</argument>
                     </argument>
                 </service>
             </services>
@@ -60,21 +60,16 @@ To use it, first register a new handler service:
         $storageDefinition = $container->autowire(PdoSessionHandler::class)
             ->setArguments(
                 array(
-                    'mysql:dbname=%env(MYDATABASE_NAME)%, host=%env(MYDATABASE_HOST)%',
-                    array(
-                        'db_username' => '%env(MYDATABASE_USERNAME)%',
-                        'db_password' => '%env(MYDATABASE_PASSWORD)',
-                    ),
+                    'mysql:dbname=mydatabase, host=myhost',
+                    array('db_username' => 'myuser', 'db_password' => 'mypassword'),
                 )
             );
 
-.. note::
+.. tip::
 
-    Ideally you want to reuse your database information from your environment variables.
-    These variables can be referenced in the service configuration using ``%env(PARAMETER_NAME)%``.
-    Do not forget to wrap these with single or double quotes in yaml.
-
-    See :doc:`/configuration/external_parameters`.
+    Configure the database credentials as
+    :doc:`parameters defined with environment variables </configuration/external_parameters>`
+    to make your application more secure.
 
 Next, tell Symfony to use your service as the session handler:
 
@@ -127,8 +122,8 @@ a second array argument to ``PdoSessionHandler``:
 
             Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
                 arguments:
-                    - 'mysql:dbname=%env(MYDATABASE_NAME)%, host=%env(MYDATABASE_HOST)%'
-                    - { db_table: '%env(SESSIONS_TABLE)%, db_username: '%env(MYDATABASE_USERNAME)%', db_password: '%env(MYDATABASE_PASSWORD)%' }
+                    - 'mysql:dbname=mydatabase, host=myhost'
+                    - { db_table: 'sessions', db_username: 'myuser', db_password: 'mypassword' }
 
     .. code-block:: xml
 
@@ -141,11 +136,11 @@ a second array argument to ``PdoSessionHandler``:
 
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                    <argument>mysql:dbname=%env(MYDATABASE_NAME)%, host=%env(MYDATABASE_HOST)%</argument>
+                    <argument>mysql:dbname=mydatabase, host=myhost</argument>
                     <argument type="collection">
-                        <argument key="db_username">%env(MYDATABASE_USERNAME)%</argument>
-                        <argument key="db_password">%env(MYDATABASE_PASSWORD)%</argument>
-                        <argument key="db_table">%env(SESSIONS_TABLE)%</argument>
+                        <argument key="db_table">sessions</argument>
+                        <argument key="db_username">myuser</argument>
+                        <argument key="db_password">mypassword</argument>
                     </argument>
                 </service>
             </services>
@@ -159,16 +154,11 @@ a second array argument to ``PdoSessionHandler``:
         // ...
 
         $container->autowire(PdoSessionHandler::class)
-            ->setArguments(
-                array(
-                    'mysql:dbname=%env(MYDATABASE_NAME)%, host=%env(MYDATABASE_HOST)%',
-                    array(
-                        'db_table' => '%env(SESSIONS_TABLE)%',
-                        'db_username' => '%env(MYDATABASE_USERNAME)%',
-                        'db_password' => '%env(MYDATABASE_PASSWORD)',
-                    ),
-                )
-            );
+            ->setArguments(array(
+                'mysql:dbname=mydatabase, host=myhost',
+                array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword')
+            ))
+        ;
 
 These are parameters that you can configure:
 
