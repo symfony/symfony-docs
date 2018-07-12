@@ -58,12 +58,11 @@ To use it, first register a new handler service:
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
         $storageDefinition = $container->autowire(PdoSessionHandler::class)
-            ->setArguments(
-                array(
-                    'mysql:dbname=mydatabase, host=myhost',
-                    array('db_username' => 'myuser', 'db_password' => 'mypassword'),
-                )
-            );
+            ->setArguments(array(
+                'mysql:dbname=mydatabase, host=myhost',
+                array('db_username' => 'myuser', 'db_password' => 'mypassword')
+            ))
+        ;
 
 .. tip::
 
