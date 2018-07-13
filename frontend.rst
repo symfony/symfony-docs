@@ -77,8 +77,6 @@ Full API
 
 * `Full API`_: https://github.com/symfony/webpack-encore/blob/master/index.js
 
-For more about Assetic, see :doc:`/frontend/assetic`.
-
 Other Front-End Articles
 ------------------------
 
@@ -86,7 +84,7 @@ Other Front-End Articles
     :hidden:
     :glob:
 
-    frontend/assetic
+    frontend/assetic/index
     frontend/encore/installation
     frontend/encore/simple-example
     frontend/encore/*
