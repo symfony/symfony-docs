@@ -972,7 +972,7 @@ admin email. In this case, each needs to have a unique service id:
                     <argument>contact@example.com</argument>
                 </service>
 
-                <alias id="App\Updates\SiteUpdateManager" service="site_update_manager.superadmin" />
+                <service id="App\Updates\SiteUpdateManager" alias="site_update_manager.superadmin" />
             </services>
         </container>
 
