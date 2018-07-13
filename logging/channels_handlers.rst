@@ -168,5 +168,7 @@ You can also configure additional channels without the need to tag your services
             ),
         ));
 
-With this, you can now send log messages to the ``foo`` channel by using
-the automatically registered logger service ``monolog.logger.foo``.
+Symfony automatically registers one service per channel (in this example, the
+channel ``foo`` creates a service called ``monolog.logger.foo``). In order to
+inject this service into others, you must update the service configuration to
+:ref:`choose the specific service to inject <services-wire-specific-service>`.

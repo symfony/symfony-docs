@@ -66,31 +66,12 @@ before the bundle one).
 Services & Configuration
 ------------------------
 
-If you want to modify service definitions of another bundle, you can use a compiler
-pass to change the class of the service or to modify method calls. In the following
-example, the implementing class for the ``original-service-id`` is changed to
-``App\YourService``:
+If you want to modify the services created by a bundle, you can use
+:doc:`service decoration </service_container/service_decoration>`.
 
-.. code-block:: diff
-
-    // src/Kernel.php
-    namespace App;
-
-    // ...
-    + use App\Service\YourService;
-    + use Symfony\Component\DependencyInjection\ContainerBuilder;
-    + use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-
-    class Kernel extends BaseKernel implements CompilerPassInterface
-    {
-    +     public function process(ContainerBuilder $container)
-    +     {
-    +         $definition = $container->findDefinition('original-service-id');
-    +         $definition->setClass(YourService::class);
-    +     }
-    }
-
-For more information on compiler passes, see :doc:`/service_container/compiler_passes`.
+If you want to do more advanced manipulations, like removing services created by
+other bundles, you must work with :doc:`service definitions </service_container/definitions>`
+inside a :doc:`compiler pass </service_container/compiler_passes>`.
 
 Entities & Entity Mapping
 -------------------------
