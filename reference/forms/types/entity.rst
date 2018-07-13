@@ -32,6 +32,7 @@ objects from the database.
 |             | - `placeholder`_                                                 |
 |             | - `preferred_choices`_                                           |
 |             | - `translation_domain`_                                          |
+|             | - `translation_parameters`_                                      |
 |             | - `trim`_                                                        |
 |             |                                                                  |
 |             | from the :doc:`FormType </reference/forms/types/form>`:          |
@@ -306,6 +307,8 @@ when rendering the field:
     {{ form_widget(form.publishAt, { 'separator': '=====' }) }}
 
 .. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
+
+.. include:: /reference/forms/types/options/entity_type_translation_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 

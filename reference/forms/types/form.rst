@@ -42,6 +42,7 @@ on all types for which ``FormType`` is the parent.
 |           | - `disabled`_                                                      |
 |           | - `label`_                                                         |
 |           | - `translation_domain`_                                            |
+|           | - `translation_parameters`_                                        |
 +-----------+--------------------------------------------------------------------+
 | Parent    | none                                                               |
 +-----------+--------------------------------------------------------------------+
@@ -167,3 +168,5 @@ of the form type tree (i.e. it cannot be used as a form type on its own).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/translation_domain.rst.inc
+
+.. include:: /reference/forms/types/options/translation_parameters.rst.inc

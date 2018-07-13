@@ -45,6 +45,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |             | - `mapped`_                                                                  |
 |             | - `required`_                                                                |
 |             | - `translation_domain`_                                                      |
+|             | - `translation_parameters`_                                                  |
 +-------------+------------------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                                |
 +-------------+------------------------------------------------------------------------------+
@@ -296,6 +297,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
+
+.. include:: /reference/forms/types/options/choice_type_translation_parameters.rst.inc
 
 Field Variables
 ---------------

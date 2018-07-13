@@ -14,6 +14,7 @@ A submit button.
 |                      | - `label`_                                                           |
 |                      | - `label_format`_                                                    |
 |                      | - `translation_domain`_                                              |
+|                      | - `translation_parameters`_                                          |
 |                      | - `validation_groups`_                                               |
 +----------------------+----------------------------------------------------------------------+
 | Parent type          | :doc:`ButtonType</reference/forms/types/button>`                     |
@@ -58,6 +59,8 @@ as a key. This can be useful when you need to set a custom class for the button:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
+
+.. include:: /reference/forms/types/options/submit_translation_parameters.rst.inc
 
 validation_groups
 ~~~~~~~~~~~~~~~~~
