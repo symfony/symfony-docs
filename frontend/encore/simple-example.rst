@@ -202,4 +202,4 @@ If those entries include CSS/Sass files (e.g. ``homepage.js`` requires
 Keep Going!
 -----------
 
-Go back to the :ref:`Encore Toc List <encore-toc>` to learn more and add new features.
+Go back to the :ref:`List of Encore Articles <encore-toc>` to learn more and add new features.
