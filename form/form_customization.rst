@@ -223,8 +223,6 @@ directly in the template that's actually rendering the form.
 
     {% extends 'base.html.twig' %}
 
-    {% form_theme form _self %}
-
     {% block integer_widget %}
         <div class="integer_widget">
             {% set type = type|default('number') %}
@@ -233,6 +231,8 @@ directly in the template that's actually rendering the form.
     {% endblock %}
 
     {% block content %}
+        {% form_theme form _self %}
+
         {# ... render the form #}
 
         {{ form_row(form.age) }}
