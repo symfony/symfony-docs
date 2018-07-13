@@ -158,7 +158,7 @@ Here's an example of how this might look::
                 );
             }
 
-            return $this->loadUserByUsername($user->getUsername());
+            return $user;
         }
 
         public function supportsClass($class)
