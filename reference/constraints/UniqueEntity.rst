@@ -110,6 +110,13 @@ your user table:
             }
         }
 
+.. caution::
+
+    This constraint doesn't provide any protection against `race conditions`_.
+    They may occur when another entity is persisted by an external process after
+    this validation has passed and before this entity is actually persisted in
+    the database.
+
 Options
 -------
 
@@ -284,3 +291,5 @@ If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _`race conditions`: https://en.wikipedia.org/wiki/Race_condition
