@@ -125,6 +125,7 @@ datatypes as determined by PHP's ``is_()`` functions.
 * :phpfunction:`double <is_double>`
 * :phpfunction:`int <is_int>`
 * :phpfunction:`integer <is_integer>`
+* :phpfunction:`iterable <is_iterable>`
 * :phpfunction:`long <is_long>`
 * :phpfunction:`null <is_null>`
 * :phpfunction:`numeric <is_numeric>`

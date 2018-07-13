@@ -5,7 +5,7 @@ Want to use `Vue.js`_? No problem! First, install Vue and some dependencies:
 
 .. code-block:: terminal
 
-    $ yarn add --dev vue vue-loader vue-template-compiler
+    $ yarn add --dev vue vue-loader@^14 vue-template-compiler
 
 Then, activate the ``vue-loader`` in ``webpack.config.js``:
 
@@ -27,7 +27,7 @@ also configure the `vue-loader options`_ via a callback:
 .. code-block:: javascript
 
     .enableVueLoader(function(options) {
-        // https://vue-loader.vuejs.org/en/configurations/advanced.html
+        // https://vue-loader.vuejs.org/options.html
 
         options.preLoaders = {
             js: '/path/to/custom/loader'
@@ -53,4 +53,4 @@ See :doc:`/frontend/encore/dev-server` for more details.
 
 .. _`babel-preset-react`: https://babeljs.io/docs/plugins/preset-react/
 .. _`Vue.js`: https://vuejs.org/
-.. _`vue-loader options`: https://vue-loader.vuejs.org/en/configurations/advanced.html
+.. _`vue-loader options`: https://vue-loader.vuejs.org/options.html

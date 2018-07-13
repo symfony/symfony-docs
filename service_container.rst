@@ -71,7 +71,7 @@ security.authorization_checker  ``Symfony\Component\Security\Core\Authorization\
 security.password_encoder       ``Symfony\Component\Security\Core\Encoder\UserPasswordEncoder``
 session                         ``Symfony\Component\HttpFoundation\Session\Session``
 translator                      ``Symfony\Component\Translation\DataCollectorTranslator``
-twig                            ``Twig_Environment``
+twig                            ``Twig\Environment``
 validator                       ``Symfony\Component\Validator\Validator\ValidatorInterface``
 =============================== =======================================================================
 
@@ -837,7 +837,7 @@ But, with ``autoconfigure: true``, you don't need the tag. In fact, if you're us
 the :ref:`Symfony Standard Edition services.yml config <service-container-services-load-example>`,
 you don't need to do *anything*: the service will be automatically loaded. Then,
 ``autoconfigure`` will add the ``twig.extension`` tag *for* you, because your class
-implements ``Twig_ExtensionInterface``. And thanks to ``autowire``, you can even add
+implements ``Twig\\Extension\\ExtensionInterface``. And thanks to ``autowire``, you can even add
 constructor arguments without any configuration.
 
 Of course, you can still :ref:`manually configure the service <services-manually-wire-args>`

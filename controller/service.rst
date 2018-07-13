@@ -101,12 +101,13 @@ service and use it directly::
     namespace AppBundle\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
+    use Twig\Environment;
 
     class HelloController
     {
         private $twig;
 
-        public function __construct(\Twig_Environment $twig)
+        public function __construct(Environment $twig)
         {
             $this->twig = $twig;
         }

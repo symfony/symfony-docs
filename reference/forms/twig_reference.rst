@@ -199,6 +199,28 @@ array).
 
     <option {% if choice is selectedchoice(value) %} selected="selected"{% endif %} ...>
 
+.. _form-twig-rootform:
+
+rootform
+~~~~~~~~
+
+This test will check if the current ``form`` does not have a parent form view.
+
+.. code-block:: twig
+
+    {# DON'T DO THIS: this simple check can't differentiate between a form having
+       a parent form view and a form defining a normal form field called 'parent' #}
+
+    {% if form.parent is null %}
+        {{ form_errors(form) }}
+    {% endif %}
+
+   {# DO THIS: this check is always reliable, even if the form defines a field called 'parent' #}
+
+    {% if form is rootform %}
+        {{ form_errors(form) }}
+    {% endif %}
+
 .. _`twig-reference-form-variables`:
 
 More about Form Variables
@@ -297,21 +319,12 @@ reference the variables on the ``name`` field, accessing the variables is
 done by using a public ``vars`` property on the
 :class:`Symfony\\Component\\Form\\FormView` object:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <label for="{{ form.name.vars.id }}"
-            class="{{ form.name.vars.required ? 'required' : '' }}">
-            {{ form.name.vars.label }}
-        </label>
-
-    .. code-block:: html+php
-
-        <label for="<?php echo $view['form']->get('name')->vars['id'] ?>"
-            class="<?php echo $view['form']->get('name')->vars['required'] ? 'required' : '' ?>">
-            <?php echo $view['form']->get('name')->vars['label'] ?>
-        </label>
+    <label for="{{ form.name.vars.id }}"
+        class="{{ form.name.vars.required ? 'required' : '' }}">
+        {{ form.name.vars.label }}
+    </label>
 
 +------------------------+-------------------------------------------------------------------------------------+
 | Variable               | Usage                                                                               |
@@ -368,4 +381,4 @@ done by using a public ``vars`` property on the
 +------------------------+-------------------------------------------------------------------------------------+
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
-.. _`the Twig documentation`: http://twig.sensiolabs.org/doc/templates.html#test-operator
+.. _`the Twig documentation`: https://twig.symfony.com/doc/2.x/templates.html#test-operator
