@@ -246,7 +246,7 @@ For example, if the following deprecation notice is thrown::
 
 Running the following command will display the full stack trace::
 
-    SYMFONY_DEPRECATIONS_HELPER='/Doctrine\\Common\\ClassLoader is deprecated\./' ./phpunit src/Symfony/Bridge/Doctrine
+    SYMFONY_DEPRECATIONS_HELPER='/Doctrine\\Common\\ClassLoader is deprecated\./' ./vendor/bin/simple-phpunit
 
 Time-sensitive Tests
 --------------------
