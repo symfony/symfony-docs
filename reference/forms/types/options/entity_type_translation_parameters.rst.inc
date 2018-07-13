@@ -3,7 +3,7 @@ translation_parameters
 
 **type**: ``array`` **default**: ``array()``
 
-Translated `label`_, `help`_ and some attr_ (``title``, ``placeholder``) can
+Translated `label`_, `help`_ and some ``attr`` (``title``, ``placeholder``) can
 contain :ref:`placeholders <component-translation-placeholders>`.
 This option allows you to pass an array of parameters in order to replace
 placeholders with actual values.
