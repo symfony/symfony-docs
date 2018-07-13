@@ -17,9 +17,9 @@ application behavior.
 
 .. best-practice::
 
-    Define the infrastructure-related configuration options as environment
-    variables. During development, use the ``.env`` file at the root of your
-    project to set these.
+    Define the infrastructure-related configuration options as
+    :doc:`environment variables </configuration/external_parameters>`. During
+    development, use the ``.env`` file at the root of your project to set these.
 
 By default, Symfony adds these types of options to the ``.env`` file when
 installing new dependencies in the app:
