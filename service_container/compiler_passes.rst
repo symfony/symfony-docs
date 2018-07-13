@@ -5,10 +5,10 @@
 How to Work with Compiler Passes
 ================================
 
-Compiler passes give you an opportunity to manipulate other service
-definitions that have been registered with the service container. You
-can read about how to create them in the components section
-":ref:`components-di-separate-compiler-passes`".
+Compiler passes give you an opportunity to manipulate other
+:doc:`service definitions </service_container/definitions>` that have been
+registered with the service container. You can read about how to create them in
+the components section ":ref:`components-di-separate-compiler-passes`".
 
 Compiler passes are registered in the ``build()`` method of the application kernel::
 
@@ -89,8 +89,8 @@ method in the extension)::
         }
     }
 
-If you are using custom service tags in a bundle then by convention, tag names
-consist of the name of the bundle (lowercase, underscores as separators),
-followed by a dot, and finally the "real" name. For example, if you want to
-introduce some sort of "transport" tag in your AcmeMailerBundle, you should call
-it ``acme_mailer.transport``.
+If you are using custom :doc:`service tags </service_container/tags>` in a
+bundle then by convention, tag names consist of the name of the bundle
+(lowercase, underscores as separators), followed by a dot, and finally the
+"real" name. For example, if you want to introduce some sort of "transport" tag
+in your AcmeMailerBundle, you should call it ``acme_mailer.transport``.
