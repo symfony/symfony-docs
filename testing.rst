@@ -387,21 +387,17 @@ returns a ``Crawler`` instance.
 Use the crawler to find DOM elements in the response. These elements can then
 be used to click on links and submit forms::
 
-    $link = $crawler->selectLink('Go elsewhere...')->link();
-    $crawler = $client->click($link);
+    $crawler = $client->clickLink('Go elsewhere...');
 
-    $form = $crawler->selectButton('validate')->form();
-    $crawler = $client->submit($form, array('name' => 'Fabien'));
+    $crawler = $client->submitForm('validate', array('name' => 'Fabien'));
 
-The ``click()`` and ``submit()`` methods both return a ``Crawler`` object.
+The ``clickLink()`` and ``submitForm()`` methods both return a ``Crawler`` object.
 These methods are the best way to browse your application as it takes care
 of a lot of things for you, like detecting the HTTP method from a form and
 giving you a nice API for uploading files.
 
-.. tip::
-
-    You will learn more about the ``Link`` and ``Form`` objects in the
-    :ref:`Crawler <testing-crawler>` section below.
+.. versionadded:: 4.2
+    The ``clickLink()`` and ``submitForm()`` methods were introduced in Symfony 4.2.
 
 The ``request()`` method can also be used to simulate form submissions directly
 or perform more complex requests. Some useful examples::
@@ -676,14 +672,16 @@ This selects all links that contain the given text, or clickable images for
 which the ``alt`` attribute contains the given text. Like the other filtering
 methods, this returns another ``Crawler`` object.
 
-Once you've selected a link, you have access to a special ``Link`` object,
-which has helpful methods specific to links (such as ``getMethod()`` and
-``getUri()``). To click on the link, use the Client's ``click()`` method
-and pass it a ``Link`` object::
+Once you've selected a link, you have access to a special
+:class:`Symfony\\Component\\DomCrawler\\Link` object, which has helpful methods
+specific to links (such as ``getMethod()`` and ``getUri()``). To click on the
+link, use the Client's ``click()`` method and pass it a ``Link`` object::
 
     $link = $crawler->selectLink('Click here')->link();
-
     $client->click($link);
+
+    // equivalent code when you don't need access to the Link object:
+    // $client->clickLink('Click here');
 
 Forms
 ~~~~~
@@ -707,7 +705,8 @@ tags. It uses several parts of the buttons to find them:
 * The ``id`` or ``name`` attribute value for ``button`` tags.
 
 Once you have a Crawler representing a button, call the ``form()`` method
-to get a ``Form`` instance for the form wrapping the button node::
+to get a :class:`Symfony\\Component\\DomCrawler\\Form` instance for the form
+wrapping the button node::
 
     $form = $buttonCrawlerNode->form();
 
@@ -735,6 +734,12 @@ method::
         'my_form[name]'    => 'Fabien',
         'my_form[subject]' => 'Symfony rocks!',
     ));
+
+    // equivalent code when you don't need access to the Form object:
+    // $client->submitForm('submit', array(
+    //    'my_form[name]'    => 'Fabien',
+    //    'my_form[subject]' => 'Symfony rocks!',
+    // ));
 
 For more complex situations, use the ``Form`` instance as an array to set the
 value of each field individually::
