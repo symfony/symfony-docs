@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-12T11:03:52Z
+
+@apodgorbunschih will you have some time to make the suggested changes and fix the merge conflicts? Please note: because of the way Symfony does things, those conflicts can't be solved with the `Resolve conflicts` button of GitHub. They must be solved in your local computer. If this is too much, you can create a new pull request or ask us to take over this. Thanks!
+
+---------------------------------------------------------------------------
+
+by apodgorbunschih at 2018-07-12T11:29:17Z
+
+@javiereguiluz thanks for feedback, sorry for long delay, i will try to fix the conflicts today or tomorrow.
