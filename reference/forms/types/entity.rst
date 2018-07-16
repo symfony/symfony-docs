@@ -275,12 +275,33 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
-.. include:: /reference/forms/types/options/preferred_choices.rst.inc
+preferred_choices
+~~~~~~~~~~~~~~~~~
 
-.. note::
+**type**: ``array`` or ``callable`` **default**: ``array()``
 
-    This option expects an array of entity objects (that's actually the same as with
-    the ``ChoiceType`` field, which requires an array of the preferred "values").
+This option allows you to move certain choices to the top of your list with a visual
+separator between them and the rest of the options. This option expects an array
+of entity objects::
+
+    use AppBundle\Entity\User;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    // ...
+
+    $builder->add('users', EntityType::class, array(
+        'class' => User::class,
+        // this method must return an array of User entities
+        'preferred_choices' => $group->getPreferredUsers(),
+    ));
+
+The preferred choices are only meaningful when rendering a ``select`` element
+(i.e. ``expanded`` false). The preferred choices and normal choices are separated
+visually by a set of dotted lines (i.e. ``-------------------``). This can be customized
+when rendering the field:
+
+.. code-block:: twig
+
+    {{ form_widget(form.publishAt, { 'separator': '=====' }) }}
 
 .. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 
