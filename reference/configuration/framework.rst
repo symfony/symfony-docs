@@ -171,6 +171,7 @@ Configuration
   * `fallbacks`_
   * `logging`_
   * :ref:`paths <reference-translator-paths>`
+  * :ref:`default_path <reference-translator-default_path>`
 
 * `trusted_hosts`_
 * `trusted_proxies`_
