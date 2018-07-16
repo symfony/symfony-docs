@@ -154,7 +154,7 @@ can automatically generate an empty ``test_project`` database for you:
         MySQL sets a `limit of 767 bytes for the index key prefix`_. When using
         ``utf8mb4``, string columns with 255 character length surpass that limit.
         This means that any column of type ``string`` and ``unique=true`` must
-        set its ``length`` to ``190``. Otherwise, you'll see this error:
+        set its maximum ``length`` to ``190``. Otherwise, you'll see this error:
         *"[PDOException] SQLSTATE[42000]: Syntax error or access violation:
         1071 Specified key was too long; max key length is 767 bytes"*.
 
