@@ -123,6 +123,7 @@ Configuration
   * `strict_requirements`_
   * `type`_
   * `utf8`_
+  * `query_encoding_type`_
 
 * `secret`_
 * `serializer`_
@@ -757,6 +758,21 @@ If the charset of your application is UTF-8 (as defined in the
 :ref:`getCharset() method <configuration-kernel-charset>` of your kernel) it's
 recommended to set it to ``true``. This will make non-UTF8 URLs to generate 404
 errors.
+
+query_encoding_type
+...................
+
+**type**: ``string`` **default**: ``'!php/const PHP_QUERY_RFC3986'``
+
+Determines how the routing generator encodes spaces in query strings.
+
+The value can either:
+
+``'!php/const PHP_QUERY_RFC1738'``
+    Encode spaces as ``+`` according to `RFC 1738`_
+``'!php/const PHP_QUERY_RFC3986'``
+    Encode spaces as ``%20`` according to `RFC 3986`_
+
 
 .. _config-framework-session:
 
@@ -2167,6 +2183,8 @@ available, or to ``flock`` otherwise. Store's DSN are also allowed.
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`Doctrine Cache`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
 .. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
+.. _`RFC 1738`: https://tools.ietf.org/html/rfc1738
+.. _`RFC 3986`: https://tools.ietf.org/html/rfc3986
 .. _`RFC 5322`: https://tools.ietf.org/html/rfc5322
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
 .. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
