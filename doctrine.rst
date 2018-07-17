@@ -194,6 +194,15 @@ can automatically generate an empty ``test_project`` database for you:
     support 4-byte unicode characters, and strings containing them will be
     truncated. This is fixed by the `newer utf8mb4 character set`_.
 
+    .. caution::
+
+        MySQL sets a `limit of 767 bytes for the index key prefix`_. When using
+        ``utf8mb4``, string columns with 255 character length surpass that limit.
+        This means that any column of type ``string`` and ``unique=true`` must
+        set its maximum ``length`` to ``190``. Otherwise, you'll see this error:
+        *"[PDOException] SQLSTATE[42000]: Syntax error or access violation:
+        1071 Specified key was too long; max key length is 767 bytes"*.
+
 .. note::
 
     If you want to use SQLite as your database, you need to set the path
@@ -885,3 +894,4 @@ Learn more
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`newer utf8mb4 character set`: https://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html
 .. _`Transactions and Concurrency`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/transactions-and-concurrency.html
+.. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-restrictions.html
