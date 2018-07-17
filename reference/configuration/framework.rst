@@ -159,6 +159,7 @@ Configuration
 * `test`_
 * `translator`_
 
+  * :ref:`default_path <reference-translator-default_path>`
   * :ref:`enabled <reference-translator-enabled>`
   * `fallbacks`_
   * `logging`_
@@ -1539,6 +1540,19 @@ paths
 This option allows to define an array of paths where the component will look
 for translation files.
 
+.. _reference-translator-default_path:
+
+default_path
+............
+
+.. versionadded:: 3.4
+    The ``default_path`` option was introduced in Symfony 3.4.
+
+**type**: ``string`` **default**: ``%kernel.project_dir%/translations``
+
+This option allows to define the path where the application translations files
+are stored.
+
 property_access
 ~~~~~~~~~~~~~~~
 
@@ -1747,7 +1761,7 @@ php_errors
 log
 ...
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 Use the application logger instead of the PHP logger for logging PHP errors.
 

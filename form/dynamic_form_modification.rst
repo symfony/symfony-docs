@@ -243,15 +243,6 @@ service into the form type so you can get the current user object::
         $this->security = $security;
     }
 
-.. note::
-
-    You might wonder, now that you have access to the ``User`` object, why not
-    just use it directly in ``buildForm()`` and omit the event listener? This is
-    because doing so in the ``buildForm()`` method would result in the whole
-    form type being modified and not just this one form instance. This may not
-    usually be a problem, but technically a single form type could be used on a
-    single request to create many forms or fields.
-
 Customizing the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -292,28 +283,28 @@ security helper to fill in the listener logic::
                 );
             }
 
-            $builder->addEventListener(
-                FormEvents::PRE_SET_DATA,
-                function (FormEvent $event) use ($user) {
-                    $form = $event->getForm();
-
-                    $formOptions = array(
-                        'class'         => User::class,
-                        'choice_label'  => 'fullName',
-                        'query_builder' => function (EntityRepository $userRepository) use ($user) {
-                            // build a custom query
-                            // return $userRepository->createQueryBuilder('u')->addOrderBy('fullName', 'DESC');
-
-                            // or call a method on your repository that returns the query builder
-                            // return $userRepository->createOrderByFullNameQueryBuilder();
-                        },
-                    );
-
-                    // create the field, this is similar the $builder->add()
-                    // field name, field type, data, options
-                    $form->add('friend', EntityType::class, $formOptions);
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($user) {
+                if (null !== $event->getData()->getFriend()) {
+                    // we don't need to add the friend field because
+                    // the message will be addressed to a fixed friend
+                    return;
                 }
-            );
+
+                $form = $event->getForm();
+
+                $formOptions = array(
+                    'class' => User::class,
+                    'choice_label' => 'fullName',
+                    'query_builder' => function (UserRepository $userRepository) use ($user) {
+                        // call a method on your repository that returns the query builder
+                        // return $userRepository->createFriendsQueryBuilder($user);
+                    },
+                );
+
+                // create the field, this is similar the $builder->add()
+                // field name, field type, field options
+                $form->add('friend', EntityType::class, $formOptions);
+            });
         }
 
         // ...
@@ -321,8 +312,12 @@ security helper to fill in the listener logic::
 
 .. note::
 
-    The ``multiple`` and ``expanded`` form options will default to false
-    because the type of the friend field is ``EntityType::class``.
+    You might wonder, now that you have access to the ``User`` object, why not
+    just use it directly in ``buildForm()`` and omit the event listener? This is
+    because doing so in the ``buildForm()`` method would result in the whole
+    form type being modified and not just this one form instance. This may not
+    usually be a problem, but technically a single form type could be used on a
+    single request to create many forms or fields.
 
 Using the Form
 ~~~~~~~~~~~~~~
