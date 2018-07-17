@@ -8,15 +8,7 @@ When a new patch version is released (only the last number changed), it is a
 release that only contains bug fixes. This means that upgrading to a new patch
 version is *really* easy:
 
-.. code-block:: terminal
-
-    $ composer update "symfony/*"
-
-That's it! You should not encounter any backwards-compatibility breaks or
-need to change anything else in your code. That's because when you started
-your project, your ``composer.json`` included Symfony using a constraint
-like ``^4.1``, where only the *last* version number will change when you
-update.
+To upgrade to a new "patch" release, see the :doc:Upgrading a Minor Version </setup/upgrade_minor> documentation. Thanks to Symfony's backwards compatibility promise, it's always safe to upgrade to the latest "minor" version.
 
 .. tip::
 

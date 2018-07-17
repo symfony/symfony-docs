@@ -21,8 +21,7 @@ There are two steps to upgrading a minor version:
 1) Update the Symfony Library via Composer
 ------------------------------------------
 
-First, you need to update all Symfony packages by modifying your ``composer.json`` file
-to use the new version (the list of packages may vary depending on what you've installed):
+Your composer.json file should already be configured to allow your Symfony packages to be upgraded minor versions. But, if a package was not upgraded that should have been, check your ``composer.json`` file.
 
 .. code-block:: json
 
@@ -30,17 +29,17 @@ to use the new version (the list of packages may vary depending on what you've i
         "...": "...",
 
         "require": {
-            "symfony/asset": "^4.1",
-            "symfony/console": "^4.1",
-            "symfony/expression-language": "^4.1",
-            "symfony/form": "^4.1",
-            "symfony/framework-bundle": "^4.1",
-            "symfony/process": "^4.1",
-            "symfony/security-bundle": "^4.1",
-            "symfony/twig-bundle": "^4.1",
-            "symfony/validator": "^4.1",
-            "symfony/web-link": "^4.1",
-            "symfony/yaml": "^4.1"
+            "symfony/asset": "^4.0",
+            "symfony/console": "^4.0",
+            "symfony/expression-language": "^4.0",
+            "symfony/form": "^4.0",
+            "symfony/framework-bundle": "^4.0",
+            "symfony/process": "^4.0",
+            "symfony/security-bundle": "^4.0",
+            "symfony/twig-bundle": "^4.0",
+            "symfony/validator": "^4.0",
+            "symfony/web-link": "^4.0",
+            "symfony/yaml": "^4.0"
         },
         "...": "...",
     }
@@ -49,7 +48,7 @@ Next, use Composer to download new versions of the libraries:
 
 .. code-block:: terminal
 
-    $ composer update "symfony/*"
+    $ composer update "symfony/*" --with-all-dependencies
 
 .. include:: /setup/_update_dep_errors.rst.inc
 
