@@ -155,6 +155,15 @@ Woh! You now have a new ``src/Entity/Product.php`` file::
     Confused why the price is an integer? Don't worry: this is just an example.
     But, storing prices as integers (e.g. 100 = $1 USD) can avoid rounding issues.
 
+.. caution::
+
+    MySQL sets a `limit of 767 bytes for the index key prefix`_. When using
+    ``utf8mb4``, string columns with 255 character length surpass that limit.
+    This means that any column of type ``string`` and ``unique=true`` must
+    set its maximum ``length`` to ``190``. Otherwise, you'll see this error:
+    *"[PDOException] SQLSTATE[42000]: Syntax error or access violation:
+    1071 Specified key was too long; max key length is 767 bytes"*.
+
 This class is called an "entity". And soon, you'll be able to save and query Product
 objects to a ``product`` table in your database. Each property in the ``Product``
 entity can be mapped to a column in that table. This is usually done with annotations:
@@ -741,3 +750,4 @@ Learn more
 .. _`NativeQuery`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/native-sql.html
 .. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-restrictions.html
