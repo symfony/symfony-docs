@@ -172,7 +172,7 @@ needs three parameters:
 By default, additional attributes that are not mapped to the denormalized object
 will be ignored by the Serializer component. If you prefer to throw an exception
 when this happens, set the ``allow_extra_attributes`` context option to
-``false`` and provide an object that implements ``ClassMetadataFactoryInterface`
+``false`` and provide an object that implements ``ClassMetadataFactoryInterface``
 when constructing the normalizer::
 
     $data = <<<EOF
