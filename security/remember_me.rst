@@ -114,6 +114,10 @@ The ``remember_me`` firewall defines the following configuration options:
     through the HTTP protocol. This means that the cookie won't be accessible
     by scripting languages, such as JavaScript.
 
+``samesite`` (default value: ``null``)
+    If set to ``strict``, the cookie associated with this feature will not
+    be send along with cross-site requests, even when following a regular link.
+
 ``remember_me_parameter`` (default value: ``_remember_me``)
     The name of the form field checked to decide if the "Remember Me" feature
     should be enabled or not. Keep reading this article to know how to enable
