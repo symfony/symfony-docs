@@ -8,7 +8,7 @@ How to Create and Store a Symfony Project in Git
 
 .. tip::
 
-    Though this entry is specifically about Git, the same generic principles
+    Though this article is specifically about Git, the same generic principles
     will apply if you're storing your project in Subversion.
 
 Once you've read through :doc:`/page_creation` and become familiar with
