@@ -33,9 +33,9 @@ will override the defaults.
 
         # app/config/parameters.yml
         parameters:
-            router.request_context.host: example.org
-            router.request_context.scheme: https
-            router.request_context.base_url: my/path
+            router.request_context.host: 'example.org'
+            router.request_context.scheme: 'https'
+            router.request_context.base_url: 'my/path'
 
     .. code-block:: xml
 
