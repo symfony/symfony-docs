@@ -17,7 +17,7 @@ The **key** of a cache item is a plain string which acts as its
 identifier, so it must be unique for each cache pool. You can freely choose the
 keys, but they should only contain letters (A-Z, a-z), numbers (0-9) and the
 ``_`` and ``.`` symbols. Other common symbols (such as ``{``, ``}``, ``(``,
-``)``, ``/``, ``\`` and ``@``) are reserved by the PSR-6 standard for future
+``)``, ``/``, ``\``, ``@`` and ``:``) are reserved by the PSR-6 standard for future
 uses.
 
 The **value** of a cache item can be any data represented by a type which is
