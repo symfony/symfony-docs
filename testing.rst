@@ -387,21 +387,17 @@ returns a ``Crawler`` instance.
 Use the crawler to find DOM elements in the response. These elements can then
 be used to click on links and submit forms::
 
-    $link = $crawler->selectLink('Go elsewhere...')->link();
-    $crawler = $client->click($link);
+    $crawler = $client->clickLink('Go elsewhere...');
 
-    $form = $crawler->selectButton('validate')->form();
-    $crawler = $client->submit($form, array('name' => 'Fabien'));
+    $crawler = $client->submitForm('validate', array('name' => 'Fabien'));
 
-The ``click()`` and ``submit()`` methods both return a ``Crawler`` object.
+The ``clickLink()`` and ``submitForm()`` methods both return a ``Crawler`` object.
 These methods are the best way to browse your application as it takes care
 of a lot of things for you, like detecting the HTTP method from a form and
 giving you a nice API for uploading files.
 
-.. tip::
-
-    You will learn more about the ``Link`` and ``Form`` objects in the
-    :ref:`Crawler <testing-crawler>` section below.
+.. versionadded:: 4.2
+    The ``clickLink()`` and ``submitForm()`` methods were introduced in Symfony 4.2.
 
 The ``request()`` method can also be used to simulate form submissions directly
 or perform more complex requests. Some useful examples::
@@ -667,31 +663,39 @@ The Crawler can extract information from the nodes::
 Links
 ~~~~~
 
-To select links, you can use the traversing methods above or the convenient
-``selectLink()`` shortcut::
+Use the ``clickLink()`` method to click on the first link that contains the
+given text (or the first clickable image with that ``alt`` attribute)::
 
-    $crawler->selectLink('Click here');
+    $client = static::createClient();
+    $client->request('GET', '/post/hello-world');
 
-This selects all links that contain the given text, or clickable images for
-which the ``alt`` attribute contains the given text. Like the other filtering
-methods, this returns another ``Crawler`` object.
+    $client->clickLink('Click here');
 
-Once you've selected a link, you have access to a special ``Link`` object,
-which has helpful methods specific to links (such as ``getMethod()`` and
-``getUri()``). To click on the link, use the Client's ``click()`` method
-and pass it a ``Link`` object::
+If you need access to the :class:`Symfony\\Component\\DomCrawler\\Link` object
+that provides helpful methods specific to links (such as ``getMethod()`` and
+``getUri()``), use the ``selectLink()`` method instead:
+
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/post/hello-world');
 
     $link = $crawler->selectLink('Click here')->link();
-
     $client->click($link);
 
 Forms
 ~~~~~
 
-Forms can be selected using their buttons, which can be selected with the
-``selectButton()`` method, just like links::
+Use the ``submitForm()`` method to submit the form that contains the given button::
 
-    $buttonCrawlerNode = $crawler->selectButton('submit');
+    $client = static::createClient();
+    $client->request('GET', '/post/hello-world');
+
+    $crawler = $client->submitForm('Add comment', array(
+       'comment_form[content]' => '...',
+    ));
+
+The first argument of ``submitForm()`` is the text content, ``id``, ``value`` or
+``name`` of any ``<button>`` or ``<input type="submit">`` included in the form.
+The second optional argument is used to override the default form field values.
 
 .. note::
 
@@ -699,33 +703,28 @@ Forms can be selected using their buttons, which can be selected with the
     buttons; if you use the traversing API, keep in mind that you must look for a
     button.
 
-The ``selectButton()`` method can select ``button`` tags and submit ``input``
-tags. It uses several parts of the buttons to find them:
+If you need access to the :class:`Symfony\\Component\\DomCrawler\\Form` object
+that provides helpful methods specific to forms (such as ``getUri()``,
+``getValues()`` and ``getFields()``) use the ``selectButton()`` method instead::
 
-* The ``value`` attribute value;
-* The ``id`` or ``alt`` attribute value for images;
-* The ``id`` or ``name`` attribute value for ``button`` tags.
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/post/hello-world');
 
-Once you have a Crawler representing a button, call the ``form()`` method
-to get a ``Form`` instance for the form wrapping the button node::
+    $buttonCrawlerNode = $crawler->selectButton('submit');
 
+    // select the form that contains this button
     $form = $buttonCrawlerNode->form();
 
-When calling the ``form()`` method, you can also pass an array of field values
-that overrides the default ones::
-
+    // you can also pass an array of field values that overrides the default ones
     $form = $buttonCrawlerNode->form(array(
         'my_form[name]'    => 'Fabien',
         'my_form[subject]' => 'Symfony rocks!',
     ));
 
-And if you want to simulate a specific HTTP method for the form, pass it as a
-second argument::
-
+    // you can pass a second argument to override the form HTTP method
     $form = $buttonCrawlerNode->form(array(), 'DELETE');
 
-The Client can submit ``Form`` instances::
-
+    // submit the Form object
     $client->submit($form);
 
 The field values can also be passed as a second argument of the ``submit()``
@@ -771,10 +770,11 @@ their type::
 
 .. tip::
 
-    The ``submit()`` method defines a third optional argument to add custom
-    HTTP headers when submitting the form::
+    The ``submit()`` and ``submitForm()`` methods define optional arguments to
+    add custom server parameters and HTTP headers when submitting the form::
 
         $client->submit($form, array(), array('HTTP_ACCEPT_LANGUAGE' => 'es'));
+        $client->submitForm($button, array(), 'POST', array('HTTP_ACCEPT_LANGUAGE' => 'es'));
 
     .. versionadded:: 4.1
         The feature to add custom HTTP headers was introduced in Symfony 4.1.
