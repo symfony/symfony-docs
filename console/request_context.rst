@@ -33,10 +33,10 @@ will override the defaults.
 
         # config/services.yaml
         parameters:
-            router.request_context.host: example.org
-            router.request_context.scheme: https
-            router.request_context.base_url: my/path
-            asset.request_context.base_path: %router.request_context.base_url%
+            router.request_context.host: 'example.org'
+            router.request_context.scheme: 'https'
+            router.request_context.base_url: 'my/path'
+            asset.request_context.base_path: '%router.request_context.base_url%'
             asset.request_context.secure: true
 
     .. code-block:: xml
