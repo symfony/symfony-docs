@@ -880,10 +880,10 @@ for classes under the same namespace:
 
 .. code-block:: yaml
 
-    # app/config/services.yml
+    # config/services.yaml
     services:
         App\Domain\:
-            resource: '../../src/Domain/*'
+            resource: '../src/Domain/*'
             # ...
 
 In order to have multiple definitions, add the ``namespace`` option and use any
@@ -891,16 +891,16 @@ unique string as the key of each service config:
 
 .. code-block:: yaml
 
-    # app/config/services.yml
+    # config/services.yaml
     services:
         command_handlers:
             namespace: App\Domain\
-            resource: '../../src/Domain/*/CommandHandler'
+            resource: '../src/Domain/*/CommandHandler'
             tags: [command_handler]
 
         event_subscribers:
             namespace: App\Domain\
-            resource: '../../src/Domain/*/EventSubscriber'
+            resource: '../src/Domain/*/EventSubscriber'
             tags: [event_subscriber]
 
 .. _services-explicitly-configure-wire-services:
