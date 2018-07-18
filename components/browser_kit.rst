@@ -136,7 +136,7 @@ field values, etc.) before submitting it::
     // 'Log in' can be the text content, id, value or name of a <button> or <input type="submit">
     $client->submitForm('Log in');
 
-    // same as above, but override the default form field values
+    // the second optional argument lets you override the default form field values
     $client->submitForm('Log in', array(
         'login' => 'my_user',
         'password' => 'my_pass',
@@ -144,19 +144,15 @@ field values, etc.) before submitting it::
         'file' => __FILE__,
     ));
 
-    // same as above, but also override the default form HTTP method
-    $client->submitForm('Log in', array(
-        'login' => 'my_user',
-        'password' => 'my_pass',
-    ), 'PUT');
-
-    // same as above, but also override some $_SERVER parameters (e.g. HTTP headers)
-    $client->submitForm('Log in', array(
-        'login' => 'my_user',
-        'password' => 'my_pass',
-    ), 'PUT', array(
-        'HTTP_ACCEPT_LANGUAGE' => 'es',
-    ));
+    // you can override other form options too
+    $client->submitForm(
+        'Log in',
+        array('login' => 'my_user', 'password' => 'my_pass'),
+        // override the default form HTTP method
+        'PUT',
+        // override some $_SERVER parameters (e.g. HTTP headers)
+        array('HTTP_ACCEPT_LANGUAGE' => 'es')
+    );
 
 .. versionadded:: 4.2
     The ``submitForm()`` method was introduced in Symfony 4.2.
