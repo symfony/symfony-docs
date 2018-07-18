@@ -86,7 +86,7 @@ Configuration
 
 * `property_info`_
 
-  * `enabled`_
+  * :ref:`enabled <reference-property-info-enabled>`
 
 * `request`_:
 
@@ -1484,6 +1484,8 @@ try to access an invalid index of an array.
 
 property_info
 ~~~~~~~~~~~~~
+
+.. _reference-property-info-enabled:
 
 enabled
 .......
