@@ -101,7 +101,7 @@ The ``Client`` object is capable of simulating link clicks. Pass the text
 content of the link and the client will perform the needed HTTP GET request to
 simulate the link click::
 
-   use Acme\Client;
+    use Acme\Client;
 
     $client = new Client();
     $client->request('GET', '/product/123');
@@ -125,7 +125,7 @@ Submitting Forms
 
 The ``Client`` object is also capable of submitting forms. First, select the
 form using any of its buttons and then override any of its properties (method,
-field values, etc.) before submitting it:
+field values, etc.) before submitting it::
 
     use Acme\Client;
 
@@ -163,7 +163,7 @@ field values, etc.) before submitting it:
 
 If you need the :class:`Symfony\\Component\\DomCrawler\\Form` object that
 provides access to the form properties (e.g. ``$form->getUri()``,
-``$form->getValues()``, ``$form->getFields()``), use this other method:
+``$form->getValues()``, ``$form->getFields()``), use this other method::
 
     // ...
 
