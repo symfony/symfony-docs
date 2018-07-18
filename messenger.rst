@@ -160,6 +160,10 @@ the messenger component, the following configuration should have been created:
     MESSENGER_DSN=amqp://guest:guest@localhost:5672/%2f/messages
     ###< symfony/messenger ###
 
+.. note::
+
+    Transport doesn't have to be set if you don't need asynchronous messaging.
+
 This is enough to allow you to route your message to the ``amqp`` transport.
 This will also configure the following services for you:
 
