@@ -1588,7 +1588,7 @@ property_info
 enabled
 .......
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
 validation
 ~~~~~~~~~~
