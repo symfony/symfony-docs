@@ -29,7 +29,7 @@ command:
 
 .. code-block:: terminal
 
-    $ ./bin/phpunit
+    $ ./vendor/bin/simple-phpunit
 
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
