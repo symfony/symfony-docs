@@ -116,7 +116,7 @@ The ``remember_me`` firewall defines the following configuration options:
 
 ``samesite`` (default value: ``null``)
     If set to ``strict``, the cookie associated with this feature will not
-    be send along with cross-site requests, even when following a regular link.
+    be sent along with cross-site requests, even when following a regular link.
 
 ``remember_me_parameter`` (default value: ``_remember_me``)
     The name of the form field checked to decide if the "Remember Me" feature
