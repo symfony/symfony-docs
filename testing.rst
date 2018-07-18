@@ -663,33 +663,39 @@ The Crawler can extract information from the nodes::
 Links
 ~~~~~
 
-To select links, you can use the traversing methods above or the convenient
-``selectLink()`` shortcut::
+Use the ``clickLink()`` method to click on the first link that contains the
+given text (or the first clickable image with that ``alt`` attribute)::
 
-    $crawler->selectLink('Click here');
+    $client = static::createClient();
+    $client->request('GET', '/post/hello-world');
 
-This selects all links that contain the given text, or clickable images for
-which the ``alt`` attribute contains the given text. Like the other filtering
-methods, this returns another ``Crawler`` object.
+    $client->clickLink('Click here');
 
-Once you've selected a link, you have access to a special
-:class:`Symfony\\Component\\DomCrawler\\Link` object, which has helpful methods
-specific to links (such as ``getMethod()`` and ``getUri()``). To click on the
-link, use the Client's ``click()`` method and pass it a ``Link`` object::
+If you need access to the :class:`Symfony\\Component\\DomCrawler\\Link` object
+that provides helpful methods specific to links (such as ``getMethod()`` and
+``getUri()``), use the ``selectLink()`` method instead:
+
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/post/hello-world');
 
     $link = $crawler->selectLink('Click here')->link();
     $client->click($link);
 
-    // equivalent code when you don't need access to the Link object:
-    // $client->clickLink('Click here');
-
 Forms
 ~~~~~
 
-Forms can be selected using their buttons, which can be selected with the
-``selectButton()`` method, just like links::
+Use the ``submitForm()`` method to submit the form that contains the given button::
 
-    $buttonCrawlerNode = $crawler->selectButton('submit');
+    $client = static::createClient();
+    $client->request('GET', '/post/hello-world');
+
+    $crawler = $client->submitForm('Add comment', array(
+       'comment_form[content]' => '...',
+    ));
+
+The first argument of ``submitForm()`` is the text content, ``id``, ``value`` or
+``name`` of any ``<button>`` or ``<input type="submit">`` included in the form.
+The second optional argument is used to override the default form field values.
 
 .. note::
 
@@ -697,34 +703,28 @@ Forms can be selected using their buttons, which can be selected with the
     buttons; if you use the traversing API, keep in mind that you must look for a
     button.
 
-The ``selectButton()`` method can select ``button`` tags and submit ``input``
-tags. It uses several parts of the buttons to find them:
+If you need access to the :class:`Symfony\\Component\\DomCrawler\\Form` object
+that provides helpful methods specific to forms (such as ``getUri()``,
+``getValues()`` and ``getFields()``) use the ``selectButton()`` method instead::
 
-* The ``value`` attribute value;
-* The ``id`` or ``alt`` attribute value for images;
-* The ``id`` or ``name`` attribute value for ``button`` tags.
+    $client = static::createClient();
+    $crawler = $client->request('GET', '/post/hello-world');
 
-Once you have a Crawler representing a button, call the ``form()`` method
-to get a :class:`Symfony\\Component\\DomCrawler\\Form` instance for the form
-wrapping the button node::
+    $buttonCrawlerNode = $crawler->selectButton('submit');
 
+    // select the form that contains this button
     $form = $buttonCrawlerNode->form();
 
-When calling the ``form()`` method, you can also pass an array of field values
-that overrides the default ones::
-
+    // you can also pass an array of field values that overrides the default ones
     $form = $buttonCrawlerNode->form(array(
         'my_form[name]'    => 'Fabien',
         'my_form[subject]' => 'Symfony rocks!',
     ));
 
-And if you want to simulate a specific HTTP method for the form, pass it as a
-second argument::
-
+    // you can pass a second argument to override the form HTTP method
     $form = $buttonCrawlerNode->form(array(), 'DELETE');
 
-The Client can submit ``Form`` instances::
-
+    // submit the Form object
     $client->submit($form);
 
 The field values can also be passed as a second argument of the ``submit()``
@@ -734,12 +734,6 @@ method::
         'my_form[name]'    => 'Fabien',
         'my_form[subject]' => 'Symfony rocks!',
     ));
-
-    // equivalent code when you don't need access to the Form object:
-    // $client->submitForm('submit', array(
-    //    'my_form[name]'    => 'Fabien',
-    //    'my_form[subject]' => 'Symfony rocks!',
-    // ));
 
 For more complex situations, use the ``Form`` instance as an array to set the
 value of each field individually::
