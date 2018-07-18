@@ -201,7 +201,7 @@ you can get this state machine by injecting the Workflow registry service::
     {
         private $workflows;
 
-        public function __constructor(Registry $workflows)
+        public function __construct(Registry $workflows)
         {
             $this->workflows = $workflows;
         }

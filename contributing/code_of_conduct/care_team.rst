@@ -27,17 +27,17 @@ also contact all of them at once by emailing **coc@symfony.com**:
   * *Twitter*: `@EmilieLorenzo <https://twitter.com/EmilieLorenzo>`_
   * *SensioConnect*: `emilielorenzo <https://connect.sensiolabs.com/profile/emilielorenzo>`_
 
-* **Tobias Nyholm**
-
-  * *E-mail*: tobias.nyholm [at] gmail.com
-  * *Twitter*: `@tobiasnyholm <https://twitter.com/tobiasnyholm>`_
-  * *SensioConnect*: `tobias <https://connect.sensiolabs.com/profile/tobias>`_
-
 * **Michelle Sanver**
 
   * *E-mail*: hello [at] michellesanver.com
   * *Twitter*: `@michellesanver <https://twitter.com/michellesanver>`_
   * *SensioConnect*: `michellesanver <https://connect.sensiolabs.com/profile/michellesanver>`_
+
+* **Tobias Nyholm**
+
+  * *E-mail*: tobias.nyholm [at] gmail.com
+  * *Twitter*: `@tobiasnyholm <https://twitter.com/tobiasnyholm>`_
+  * *SensioConnect*: `tobias <https://connect.sensiolabs.com/profile/tobias>`_
 
 About the CARE Team
 -------------------
