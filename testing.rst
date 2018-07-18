@@ -776,10 +776,11 @@ their type::
 
 .. tip::
 
-    The ``submit()`` method defines a third optional argument to add custom
-    HTTP headers when submitting the form::
+    The ``submit()`` and ``submitForm()`` methods define optional arguments to
+    add custom server parameters and HTTP headers when submitting the form::
 
         $client->submit($form, array(), array('HTTP_ACCEPT_LANGUAGE' => 'es'));
+        $client->submitForm($button, array(), 'POST', array('HTTP_ACCEPT_LANGUAGE' => 'es'));
 
     .. versionadded:: 4.1
         The feature to add custom HTTP headers was introduced in Symfony 4.1.

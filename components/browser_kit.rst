@@ -109,6 +109,15 @@ performs the needed HTTP GET request to simulate the link click::
     $link = $crawler->selectLink('Go elsewhere...')->link();
     $client->click($link);
 
+If you don't need the low level ``Link`` object, you can use the ``clickLink()``
+shortcut to click links more easily::
+
+    // ...
+    $client->clickLink('Go elsewhere...');
+
+.. versionadded:: 4.2
+    The ``clickLink()`` method was introduced in Symfony 4.2.
+
 Submitting Forms
 ~~~~~~~~~~~~~~~~
 
@@ -135,6 +144,19 @@ method (which makes the needed HTTP POST request to submit the form contents)::
 
     // submit that form
     $crawler = $client->submit($form);
+
+If you don't need the low level ``Form`` object, you can use the
+``submitForm()`` shortcut to submit the form more easily::
+
+    // ...
+    $client->submitForm('Log in', [
+        'login' => 'symfonyfan',
+        'password' => 'anypass',
+        'file' => __FILE__,
+    ]);
+
+.. versionadded:: 4.2
+    The ``submitForm()`` method was introduced in Symfony 4.2.
 
 Cookies
 -------
