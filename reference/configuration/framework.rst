@@ -84,6 +84,10 @@ Configuration
   * `magic_call`_
   * `throw_exception_on_invalid_index`_
 
+* `property_info`_
+
+  * `enabled`_
+
 * `request`_:
 
   * `formats`_
@@ -1477,6 +1481,14 @@ throw_exception_on_invalid_index
 
 When enabled, the ``property_accessor`` service throws an exception when you
 try to access an invalid index of an array.
+
+property_info
+~~~~~~~~~~~~~
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
 
 validation
 ~~~~~~~~~~
