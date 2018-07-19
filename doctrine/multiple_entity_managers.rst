@@ -32,9 +32,6 @@ The following configuration code shows how you can configure two entity managers
         doctrine:
             dbal:
                 default_connection: default
-
-
-
                 connections:
                     default:
                         # configure these for your database server
