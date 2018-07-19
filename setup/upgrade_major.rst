@@ -73,7 +73,7 @@ All you need to do is install the PHPUnit bridge:
 
 Now, you can start fixing the notices:
 
-.. code-block:: text
+.. code-block:: terminal
 
     # this command is available after running "composer require --dev symfony/phpunit-bridge"
     $ ./bin/phpunit
