@@ -569,8 +569,6 @@ As your app grows, you'll eventually have a *lot* of routes! To see them all, ru
 
     $ php bin/console debug:router
 
-.. code-block:: text
-
     ------------------------------ -------- -------------------------------------
      Name                           Method   Path
     ------------------------------ -------- -------------------------------------

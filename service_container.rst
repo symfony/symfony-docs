@@ -42,18 +42,19 @@ What other services are available? Find out by running:
 
 .. code-block:: terminal
 
-     $ php bin/console debug:autowiring
+    $ php bin/console debug:autowiring
 
-=============================================================== =====================================
-Class/Interface Type                                            Alias Service ID
-=============================================================== =====================================
-``Psr\Cache\CacheItemPoolInterface``                            alias for "cache.app.recorder"
-``Psr\Log\LoggerInterface``                                     alias for "monolog.logger"
-``Symfony\Component\EventDispatcher\EventDispatcherInterface``  alias for "debug.event_dispatcher"
-``Symfony\Component\HttpFoundation\RequestStack``               alias for "request_stack"
-``Symfony\Component\HttpFoundation\Session\SessionInterface``   alias for "session"
-``Symfony\Component\Routing\RouterInterface``                   alias for "router.default"
-=============================================================== =====================================
+    # this is just a *small* sample of the output...
+    =============================================================== =====================================
+    Class/Interface Type                                            Alias Service ID
+    =============================================================== =====================================
+    ``Psr\Cache\CacheItemPoolInterface``                            alias for "cache.app.recorder"
+    ``Psr\Log\LoggerInterface``                                     alias for "monolog.logger"
+    ``Symfony\Component\EventDispatcher\EventDispatcherInterface``  alias for "debug.event_dispatcher"
+    ``Symfony\Component\HttpFoundation\RequestStack``               alias for "request_stack"
+    ``Symfony\Component\HttpFoundation\Session\SessionInterface``   alias for "session"
+    ``Symfony\Component\Routing\RouterInterface``                   alias for "router.default"
+    =============================================================== =====================================
 
 When you use these type-hints in your controller methods or inside your
 :ref:`own services <service-container-creating-service>`, Symfony will automatically
@@ -918,10 +919,10 @@ for classes under the same namespace:
 
 .. code-block:: yaml
 
-    # app/config/services.yml
+    # config/services.yaml
     services:
         App\Domain\:
-            resource: '../../src/Domain/*'
+            resource: '../src/Domain/*'
             # ...
 
 In order to have multiple definitions, add the ``namespace`` option and use any
@@ -929,16 +930,16 @@ unique string as the key of each service config:
 
 .. code-block:: yaml
 
-    # app/config/services.yml
+    # config/services.yaml
     services:
         command_handlers:
             namespace: App\Domain\
-            resource: '../../src/Domain/*/CommandHandler'
+            resource: '../src/Domain/*/CommandHandler'
             tags: [command_handler]
 
         event_subscribers:
             namespace: App\Domain\
-            resource: '../../src/Domain/*/EventSubscriber'
+            resource: '../src/Domain/*/EventSubscriber'
             tags: [event_subscriber]
 
 .. _services-explicitly-configure-wire-services:

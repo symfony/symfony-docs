@@ -10,7 +10,7 @@ How to Create a Custom Form Password Authenticator
     flexible way to accomplish custom authentication tasks like this.
 
 Imagine you want to allow access to your website only between 2pm and 4pm
-UTC. In this entry, you'll learn how to do this for a login form (i.e. where
+UTC. In this article, you'll learn how to do this for a login form (i.e. where
 your user submits their username and password).
 
 The Password Authenticator
