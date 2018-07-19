@@ -6,7 +6,7 @@ Table
 
 When building a console application it may be useful to display tabular data:
 
-.. code-block:: text
+.. code-block:: terminal
 
     +---------------+--------------------------+------------------+
     | ISBN          | Title                    | Author           |
@@ -54,7 +54,7 @@ You can add a table separator anywhere in the output by passing an instance of
         array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
     ));
 
-.. code-block:: text
+.. code-block:: terminal
 
     +---------------+--------------------------+------------------+
     | ISBN          | Title                    | Author           |
@@ -78,7 +78,7 @@ In this example, the first column width will be ``10``, the last column width
 will be ``30`` and the second column width will be calculated automatically
 because of the ``0`` value. The output of this command will be:
 
-.. code-block:: text
+.. code-block:: terminal
 
     +---------------+--------------------------+--------------------------------+
     | ISBN          | Title                    | Author                         |
@@ -117,7 +117,7 @@ The table style can be changed to any built-in styles via
 
 This code results in:
 
-.. code-block:: text
+.. code-block:: terminal
 
      ISBN          Title                    Author
      99921-58-10-7 Divine Comedy            Dante Alighieri
@@ -132,7 +132,7 @@ You can also set the style to ``borderless``::
 
 which outputs:
 
-.. code-block:: text
+.. code-block:: terminal
 
      =============== ========================== ==================
       ISBN            Title                      Author
@@ -205,7 +205,7 @@ To make a table cell that spans multiple columns you can use a :class:`Symfony\\
 
 This results in:
 
-.. code-block:: text
+.. code-block:: terminal
 
     +---------------+---------------+-----------------+
     | ISBN          | Title         | Author          |
@@ -228,7 +228,7 @@ This results in:
 
     This generates:
 
-    .. code-block:: text
+    .. code-block:: terminal
 
         +-------+-------+--------+
         | Main table title       |
@@ -259,7 +259,7 @@ In a similar way you can span multiple rows::
 
 This outputs:
 
-.. code-block:: text
+.. code-block:: terminal
 
     +----------------+---------------+---------------------+
     | ISBN           | Title         | Author              |

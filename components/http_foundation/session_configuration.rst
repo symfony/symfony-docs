@@ -5,7 +5,7 @@
 Configuring Sessions and Save Handlers
 ======================================
 
-This section deals with how to configure session management and fine tune it
+This article deals with how to configure session management and fine tune it
 to your specific needs. This documentation covers save handlers, which
 store and retrieve session data, and configuring session behavior.
 

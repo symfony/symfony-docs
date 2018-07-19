@@ -33,7 +33,7 @@ Before you begin, run this command to add support for the Symfony security:
 
     $ composer require symfony/security-bundle
 
-For this entry, suppose that you already have a ``User`` entity
+For this article, suppose that you already have a ``User`` entity
 with the following fields: ``id``, ``username``, ``password``,
 ``email`` and ``isActive``::
 

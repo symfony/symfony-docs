@@ -236,7 +236,7 @@ to the tag like so:
 .. note::
 
     Marking an event listener as ``lazy`` has nothing to do with lazy service
-    definitions which are described :doc:`in their own section </service_container/lazy_services>`
+    definitions which are described :doc:`in their own article </service_container/lazy_services>`
 
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
 .. _`the Doctrine Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#entity-listeners

@@ -5,7 +5,7 @@
 Php Array Cache Adapter
 =======================
 
-This adapter is a highly performant way to cache static data (e.g. application configuration)
+This adapter is a high performance cache for static data (e.g. application configuration)
 that is optimized and preloaded into OPcache memory storage::
 
     use Symfony\Component\Cache\Adapter\PhpArrayAdapter;

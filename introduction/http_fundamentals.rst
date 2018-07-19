@@ -78,7 +78,7 @@ resource - the most common HTTP methods are:
     Delete the resource from the server (used by APIs).
 
 With this in mind, you can imagine what an HTTP request might look like to
-delete a specific blog entry, for example:
+delete a specific blog post, for example:
 
 .. code-block:: text
 

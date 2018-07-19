@@ -6,7 +6,7 @@ How to Create a custom Authentication Provider
 
 .. tip::
 
-    Creating a custom authentication system is hard, and this entry will walk
+    Creating a custom authentication system is hard, and this article will walk
     you through that process. But depending on your needs, you may be able
     to solve your problem in a simpler manner, or via a community bundle:
 

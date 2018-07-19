@@ -111,9 +111,9 @@ To inspect all messages in the ``fr`` locale for the application, run:
     +----------+------------------+----------------------+-------------------------------+
 
     Legend:
-      x Missing message
-      o Unused message
-      = Same as the fallback message
+      x  Missing message
+      o  Unused message
+      =  Same as the fallback message
 
 It shows you a table with the result when translating the message in the ``fr``
 locale and the result when the fallback locale ``en`` would be used. On top
@@ -136,9 +136,9 @@ output:
     +----------+------------------+----------------------+-------------------------------+
 
     Legend:
-      x Missing message
-      o Unused message
-      = Same as the fallback message
+      x  Missing message
+      o  Unused message
+      =  Same as the fallback message
 
 The state is empty which means the message is translated in the ``fr`` locale
 and used in one or more templates.
@@ -157,9 +157,9 @@ for the ``fr`` locale and run the command, you will get:
     +----------+------------------+----------------------+-------------------------------+
 
     Legend:
-      x Missing message
-      o Unused message
-      = Same as the fallback message
+      x  Missing message
+      o  Unused message
+      =  Same as the fallback message
 
 The state indicates the message is missing because it is not translated in
 the ``fr`` locale but it is still used in the template. Moreover, the message
@@ -181,9 +181,9 @@ translation file in the ``fr`` locale and run the command, you will get:
     +----------+------------------+----------------------+-------------------------------+
 
     Legend:
-      x Missing message
-      o Unused message
-      = Same as the fallback message
+      x  Missing message
+      o  Unused message
+      =  Same as the fallback message
 
 You can see that the translations of the message are identical in the ``fr``
 and ``en`` locales which means this message was probably copied from French
