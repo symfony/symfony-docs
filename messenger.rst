@@ -100,9 +100,11 @@ Once you've created your handler, you need to register it:
 Transports
 ----------
 
-The communication with queuing systems or third parties is delegated to
-libraries for now. The built-in AMQP transport allows you to communicate with
-most of the AMQP brokers such as RabbitMQ.
+By default, messages are processed as soon as they are dispatched. If you prefer
+to process messages asynchronously, you must configure a transport. These
+transports communicate your application with queuing systems or third parties.
+The built-in AMQP transport allows you to communicate with most of the AMQP
+brokers such as RabbitMQ.
 
 .. note::
 
@@ -159,10 +161,6 @@ the messenger component, the following configuration should have been created:
     ###> symfony/messenger ###
     MESSENGER_DSN=amqp://guest:guest@localhost:5672/%2f/messages
     ###< symfony/messenger ###
-
-.. note::
-
-    Transport doesn't have to be set if you don't need asynchronous messaging.
 
 This is enough to allow you to route your message to the ``amqp`` transport.
 This will also configure the following services for you:
