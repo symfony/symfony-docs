@@ -102,7 +102,7 @@ Transports
 
 By default, messages are processed as soon as they are dispatched. If you prefer
 to process messages asynchronously, you must configure a transport. These
-transports communicate your application with queuing systems or third parties.
+transports communicate with your application via queuing systems or third parties.
 The built-in AMQP transport allows you to communicate with most of the AMQP
 brokers such as RabbitMQ.
 
