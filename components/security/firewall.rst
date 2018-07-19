@@ -36,7 +36,7 @@ certain action or resource of the application::
 
 .. note::
 
-    Read the dedicated sections to learn more about :doc:`/components/security/authentication`
+    Read the dedicated articles to learn more about :doc:`/components/security/authentication`
     and :doc:`/components/security/authorization`.
 
 .. _firewall:
@@ -163,5 +163,5 @@ context works:
 #. Once a user is authenticated, you'll use :doc:`/components/security/authorization`
    to deny access to certain resources.
 
-Read the next sections to find out more about :doc:`/components/security/authentication`
+Read the next articles to find out more about :doc:`/components/security/authentication`
 and :doc:`/components/security/authorization`.

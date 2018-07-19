@@ -10,7 +10,7 @@ the configured user provider to return a user object for a given username.
 Symfony then checks whether the password of this user is correct and generates
 a security token so the user stays authenticated during the current session.
 Out of the box, Symfony has four user providers: ``memory``, ``entity``,
-``ldap`` and ``chain``. In this entry you'll see how you can create your
+``ldap`` and ``chain``. In this article you'll see how you can create your
 own user provider, which could be useful if your users are accessed via a
 custom database, a file, or - as shown in this example - a web service.
 
@@ -294,7 +294,7 @@ is compared to the hashed password returned by your ``getPassword()`` method.
 
     If your external users have their passwords salted via a different method,
     then you'll need to do a bit more work so that Symfony properly encodes
-    the password. That is beyond the scope of this entry, but would include
+    the password. That is beyond the scope of this article, but would include
     sub-classing ``MessageDigestPasswordEncoder`` and overriding the
     ``mergePasswordAndSalt()`` method.
 

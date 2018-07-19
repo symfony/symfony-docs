@@ -29,7 +29,7 @@ Routing Examples
 
 A *route* is a map from a URL path to a controller. For example, suppose
 you want to match any URL like ``/blog/my-post`` or ``/blog/all-about-symfony``
-and send it to a controller that can look up and render that blog entry.
+and send it to a controller that can look up and render that blog post.
 The route is simple:
 
 .. configuration-block::

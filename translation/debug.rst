@@ -113,10 +113,16 @@ To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
 
     $ php bin/console debug:translation fr AcmeDemoBundle
 
-You will get this output:
+    +----------+-------------------+----------------------+-------------------------------+
+    | State(s) | Id                | Message Preview (fr) | Fallback Message Preview (en) |
+    +----------+-------------------+----------------------+-------------------------------+
+    | o        | Symfony2 is great | J'aime Symfony2      | Symfony2 is great             |
+    +----------+-------------------+----------------------+-------------------------------+
 
-.. image:: /_images/translation/debug_1.png
-    :align: center
+    Legend:
+      x  Missing message
+      o  Unused message
+      =  Same as the fallback message
 
 It shows you a table with the result when translating the message in the ``fr``
 locale and the result when the fallback locale ``en`` would be used. On top
@@ -128,8 +134,20 @@ because it is translated, but you haven't used it anywhere yet.
 Now, if you translate the message in one of your templates, you will get this
 output:
 
-.. image:: /_images/translation/debug_2.png
-    :align: center
+.. code-block:: terminal
+
+    $ php app/console debug:translation fr AcmeDemoBundle
+
+    +----------+-------------------+----------------------+-------------------------------+
+    | State(s) | Id                | Message Preview (fr) | Fallback Message Preview (en) |
+    +----------+-------------------+----------------------+-------------------------------+
+    |          | Symfony2 is great | J'aime Symfony2      | Symfony2 is great             |
+    +----------+-------------------+----------------------+-------------------------------+
+
+    Legend:
+      x  Missing message
+      o  Unused message
+      =  Same as the fallback message
 
 The state is empty which means the message is translated in the ``fr`` locale
 and used in one or more templates.
@@ -137,8 +155,20 @@ and used in one or more templates.
 If you delete the message ``Symfony is great`` from your translation file
 for the ``fr`` locale and run the command, you will get:
 
-.. image:: /_images/translation/debug_3.png
-    :align: center
+.. code-block:: terminal
+
+    $ php app/console debug:translation fr AcmeDemoBundle
+
+    +----------+-------------------+----------------------+-------------------------------+
+    | State(s) | Id                | Message Preview (fr) | Fallback Message Preview (en) |
+    +----------+-------------------+----------------------+-------------------------------+
+    | x =      | Symfony2 is great | J'aime Symfony2      | Symfony2 is great             |
+    +----------+-------------------+----------------------+-------------------------------+
+
+    Legend:
+      x  Missing message
+      o  Unused message
+      =  Same as the fallback message
 
 The state indicates the message is missing because it is not translated in
 the ``fr`` locale but it is still used in the template. Moreover, the message
@@ -149,8 +179,20 @@ the ``en`` locale.
 If you copy the content of the translation file in the ``en`` locale, to the
 translation file in the ``fr`` locale and run the command, you will get:
 
-.. image:: /_images/translation/debug_4.png
-    :align: center
+.. code-block:: terminal
+
+    $ php app/console debug:translation fr AcmeDemoBundle
+
+    +----------+-------------------+----------------------+-------------------------------+
+    | State(s) | Id                | Message Preview (fr) | Fallback Message Preview (en) |
+    +----------+-------------------+----------------------+-------------------------------+
+    | =        | Symfony2 is great | J'aime Symfony2      | Symfony2 is great             |
+    +----------+-------------------+----------------------+-------------------------------+
+
+    Legend:
+      x  Missing message
+      o  Unused message
+      =  Same as the fallback message
 
 You can see that the translations of the message are identical in the ``fr``
 and ``en`` locales which means this message was probably copied from French

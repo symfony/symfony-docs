@@ -4,14 +4,14 @@
 How to Embed a Collection of Forms
 ==================================
 
-In this entry, you'll learn how to create a form that embeds a collection
+In this article, you'll learn how to create a form that embeds a collection
 of many other forms. This could be useful, for example, if you had a ``Task``
 class and you wanted to edit/create/remove many ``Tag`` objects related to
 that Task, right inside the same form.
 
 .. note::
 
-    In this entry, it's loosely assumed that you're using Doctrine as your
+    In this article, it's loosely assumed that you're using Doctrine as your
     database store. But if you're not using Doctrine (e.g. Propel or just
     a database connection), it's all very similar. There are only a few parts
     of this tutorial that really care about "persistence".
@@ -224,7 +224,7 @@ great, your user can't actually add any new tags yet.
 
 .. caution::
 
-    In this entry, you embed only one collection, but you are not limited
+    In this article, you embed only one collection, but you are not limited
     to this. You can also embed nested collection as many levels down as you
     like. But if you use Xdebug in your development setup, you may receive
     a ``Maximum function nesting level of '100' reached, aborting!`` error.

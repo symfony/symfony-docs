@@ -410,7 +410,7 @@ to store authentication in the session, keep reading!
 Storing Authentication in the Session
 -------------------------------------
 
-So far, this entry has described a situation where some sort of authentication
+So far, this article has described a situation where some sort of authentication
 token is sent on every request. But in some situations (like an OAuth flow),
 the token may be sent on only *one* request. In this case, you will want to
 authenticate the user and store that authentication in the session so that
@@ -569,7 +569,7 @@ of the user to make sure it's not out-of-date. But regardless of your requiremen
 Only Authenticating for Certain URLs
 ------------------------------------
 
-This entry has assumed that you want to look for the ``apikey`` authentication
+This article has assumed that you want to look for the ``apikey`` authentication
 on *every* request. But in some situations (like an OAuth flow), you only
 really need to look for authentication information once the user has reached
 a certain URL (e.g. the redirect URL in OAuth).

@@ -79,7 +79,23 @@ to provide more features:
 
 After running your PHPUnit tests, you will get a report similar to this one:
 
-.. image:: /_images/components/phpunit_bridge/report.png
+.. code-block:: terminal
+
+    $ phpunit -c app
+      PHPUnit by Sebastian Bergmann.
+
+      Configuration read from <your-project>/app/phpunit.xml.dist
+      .................
+
+      Time: 1.77 seconds, Memory: 5.75Mb
+
+      OK (17 tests, 21 assertions)
+
+      Remaining deprecation notices (2)
+
+      getEntityManager is deprecated since Symfony 2.1. Use getManager instead: 2x
+        1x in DefaultControllerTest::testPublicUrls from AppBundle\Tests\Controller
+        1x in BlogControllerTest::testIndex from AppBundle\Tests\Controller
 
 The summary includes:
 

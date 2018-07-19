@@ -21,7 +21,7 @@ the ACL system comes in.
     :doc:`voters </security/voters>`. A voter is passed the object
     being voted on, which you can use to make complex decisions and effectively
     implement your own ACL. Enforcing authorization (e.g. the ``isGranted()``
-    part) will look similar to what you see in this entry, but your voter
+    part) will look similar to what you see in this article, but your voter
     class will handle the logic behind the scenes, instead of the ACL system.
 
 Imagine you are designing a blog system where your users can comment on your
