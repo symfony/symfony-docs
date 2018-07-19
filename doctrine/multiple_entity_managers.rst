@@ -32,23 +32,22 @@ The following configuration code shows how you can configure two entity managers
         doctrine:
             dbal:
                 default_connection: default
+
+
+
                 connections:
                     default:
-                        driver:   pdo_mysql
-                        host:     '%database_host%'
-                        port:     '%database_port%'
-                        dbname:   '%database_name%'
-                        user:     '%database_user%'
-                        password: '%database_password%'
-                        charset:  UTF8
+                        # configure these for your database server
+                        url: '%env(DATABASE_URL)%'
+                        driver: 'pdo_mysql'
+                        server_version: '5.7'
+                        charset: utf8mb4
                     customer:
-                        driver:   pdo_mysql
-                        host:     '%database_host2%'
-                        port:     '%database_port2%'
-                        dbname:   '%database_name2%'
-                        user:     '%database_user2%'
-                        password: '%database_password2%'
-                        charset:  UTF8
+                        # configure these for your database server
+                        url: '%env(DATABASE_CUSTOMER_URL)%'
+                        driver: 'pdo_mysql'
+                        server_version: '5.7'
+                        charset: utf8mb4
 
             orm:
                 default_entity_manager: default
@@ -86,24 +85,20 @@ The following configuration code shows how you can configure two entity managers
 
             <doctrine:config>
                 <doctrine:dbal default-connection="default">
+                    <!-- configure these for your database server -->
                     <doctrine:connection name="default"
+                        url="%env(DATABASE_URL)%"
                         driver="pdo_mysql"
-                        host="%database_host%"
-                        port="%database_port%"
-                        dbname="%database_name%"
-                        user="%database_user%"
-                        password="%database_password%"
-                        charset="UTF8"
+                        server_version="5.7"
+                        charset="utf8mb4"
                     />
 
+                    <!-- configure these for your database server -->
                     <doctrine:connection name="customer"
+                        url="%env(DATABASE_CUSTOMER_URL)%"
                         driver="pdo_mysql"
-                        host="%database_host2%"
-                        port="%database_port2%"
-                        dbname="%database_name2%"
-                        user="%database_user2%"
-                        password="%database_password2%"
-                        charset="UTF8"
+                        server_version="5.7"
+                        charset="utf8mb4"
                     />
                 </doctrine:dbal>
 
@@ -140,23 +135,19 @@ The following configuration code shows how you can configure two entity managers
             'dbal' => array(
                 'default_connection' => 'default',
                 'connections' => array(
+                    // configure these for your database server
                     'default' => array(
-                        'driver'   => 'pdo_mysql',
-                        'host'     => '%database_host%',
-                        'port'     => '%database_port%',
-                        'dbname'   => '%database_name%',
-                        'user'     => '%database_user%',
-                        'password' => '%database_password%',
-                        'charset'  => 'UTF8',
+                        'url'            => '%env(DATABASE_URL)%',
+                        'driver'         => 'pdo_mysql',
+                        'server_version' => '5.7',
+                        'charset'        => 'utf8mb4',
                     ),
+                    // configure these for your database server
                     'customer' => array(
-                        'driver'   => 'pdo_mysql',
-                        'host'     => '%database_host2%',
-                        'port'     => '%database_port2%',
-                        'dbname'   => '%database_name2%',
-                        'user'     => '%database_user2%',
-                        'password' => '%database_password2%',
-                        'charset'  => 'UTF8',
+                        'url'            => '%env(DATABASE_CUSTOMER_URL)%',
+                        'driver'         => 'pdo_mysql',
+                        'server_version' => '5.7',
+                        'charset'        => 'utf8mb4',
                     ),
                 ),
             ),
