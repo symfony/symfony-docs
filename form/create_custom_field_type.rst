@@ -273,7 +273,7 @@ section explains how more complex field types solve this problem.
 Creating your Field Type as a Service
 -------------------------------------
 
-So far, this entry has assumed that you have a very simple custom field type.
+So far, this article has assumed that you have a very simple custom field type.
 But if you need access to configuration, a database connection, or some other
 service, then you'll want to register your custom type as a service. For
 example, suppose that you're storing the shipping parameters in configuration:

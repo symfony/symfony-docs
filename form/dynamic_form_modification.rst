@@ -4,7 +4,7 @@
 How to Dynamically Modify Forms Using Form Events
 =================================================
 
-Often times, a form can't be created statically. In this entry, you'll learn
+Often times, a form can't be created statically. In this article, you'll learn
 how to customize your form based on three common use-cases:
 
 1) :ref:`form-events-underlying-data`
@@ -74,7 +74,7 @@ Suppose now, that you don't want the user to be able to change the ``name`` valu
 once the object has been created. To do this, you can rely on Symfony's
 :doc:`EventDispatcher component </components/event_dispatcher>`
 system to analyze the data on the object and modify the form based on the
-Product object's data. In this entry, you'll learn how to add this level of
+Product object's data. In this article, you'll learn how to add this level of
 flexibility to your forms.
 
 Adding an Event Listener to a Form Class
