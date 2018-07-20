@@ -51,7 +51,23 @@ method. This is done using the index notation that is used in PHP::
     var_dump($propertyAccessor->getValue($person, '[first_name]')); // 'Wouter'
     var_dump($propertyAccessor->getValue($person, '[age]')); // null
 
-As you can see, the method will return ``null`` if the index does not exists.
+As you can see, the method will return ``null`` if the index does not exist.
+But you can change this behavior with the
+:method:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableExceptionOnInvalidIndex`
+method::
+
+    // ...
+    $propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
+        ->enableExceptionOnInvalidIndex()
+        ->getPropertyAccessor();
+
+    $person = array(
+        'first_name' => 'Wouter',
+    );
+
+    // instead of returning null, the code now throws an exception of type
+    // Symfony\Component\PropertyAccess\Exception\NoSuchIndexException
+    $value = $propertyAccessor->getValue($person, '[age]');
 
 You can also use multi dimensional arrays::
 
