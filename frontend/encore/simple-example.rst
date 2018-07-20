@@ -13,7 +13,7 @@ you will *require* whatever CSS you need from inside JavaScript:
 .. code-block:: javascript
 
     // assets/js/app.js
-    require('../css/app.css');
+    require('../js/app.js');
 
     // ...rest of JavaScript code here
 
