@@ -53,7 +53,7 @@ It's a way for a library to automatically configure itself by adding and modifyi
 files. Thanks to recipes, adding features is seamless and automated: install a package
 and you're done!
 
-You can find a full list of recipes and aliases by going to `https://symfony.sh`_.
+You can find a full list of recipes and aliases by going to `https://flex.symfony.com`_.
 
 What did this recipe do? In addition to automatically enabling the feature in
 ``config/bundles.php``, it added 3 things:
@@ -258,6 +258,6 @@ and it's the most important yet. I want to show you how Symfony empowers you to 
 build features *without* sacrificing code quality or performance. It's all about
 the service container, and it's Symfony's super power. Read on: about :doc:`/quick_tour/the_architecture`.
 
-.. _`https://symfony.sh`: https://symfony.sh
+.. _`https://flex.symfony.com`: https://flex.symfony.com
 .. _`Api Platform`: https://api-platform.com/
 .. _`Twig`: https://twig.symfony.com/
