@@ -9,8 +9,9 @@ The TextType field represents the most basic input text field.
 +-------------+--------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                           |
 +-------------+--------------------------------------------------------------------+
-| Inherited   | - `data`_                                                          |
-| options     | - `disabled`_                                                      |
+| Inherited   | - `attr`_                                                          |
+| options     | - `data`_                                                          |
+|             | - `disabled`_                                                      |
 |             | - `empty_data`_                                                    |
 |             | - `error_bubbling`_                                                |
 |             | - `error_mapping`_                                                 |
@@ -34,6 +35,8 @@ Inherited Options
 -----------------
 
 These options inherit from the :doc:`FormType </reference/forms/types/form>`:
+
+.. include:: /reference/forms/types/options/attr.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
