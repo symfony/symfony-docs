@@ -121,13 +121,13 @@ application harder to maintain.
 cache
 ~~~~~
 
-**type**: ``string`` **default**: ``'%kernel.cache_dir%/twig'``
+**type**: ``string`` | ``false`` | ``Twig\Cache\CacheInterface`` **default**: ``'%kernel.cache_dir%/twig'``
 
 Before using the Twig templates to render some contents, they are compiled into
 regular PHP code. Compilation is a costly process, so the result is cached in
 the directory defined by this configuration option.
 
-Set this option to ``null`` to disable Twig template compilation. However, this
+Set this option to ``false`` to disable Twig template compilation. However, this
 is not recommended; not even in the ``dev`` environment, because the
 ``auto_reload`` option ensures that cached templates which have changed get
 compiled again.
