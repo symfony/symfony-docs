@@ -45,10 +45,9 @@ Symfony ships with five value resolvers in the HttpKernel component:
 Adding a Custom Value Resolver
 ------------------------------
 
-Adding a new value resolver requires creating one class and one service
-definition. In the next example, you'll create a value resolver to inject the
-``User`` object from the security system. Given you write the following
-controller::
+In the next example, you'll create a value resolver to inject the object that
+represents the current user whenever a controller method type-hints an argument
+with the ``User`` class::
 
     namespace App\Controller;
 
@@ -63,10 +62,30 @@ controller::
         }
     }
 
-Somehow you will have to get the ``User`` object and inject it into the controller.
-This can be done by implementing the
-:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`.
-This interface specifies that you have to implement two methods:
+Beware that this feature is already provided by the `@ParamConverter`_
+annotation from the SensioFrameworkExtraBundle. If you have that bundle
+installed in your project, add this config to disable the auto-conversion of
+type-hinted method arguments:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # app/config/config.yml
+        sensio_framework_extra:
+            request:
+                converters: true
+                auto_convert: false
+
+    .. code-block:: xml
+
+        <sensio-framework-extra:config>
+            <request converters="true" auto-convert="true" />
+        </sensio-framework-extra:config>
+
+Adding a new value resolver requires creating a class that implements
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`
+and defining a service for it. The interface defines two methods:
 
 ``supports()``
     This method is used to check whether the value resolver supports the
@@ -193,4 +212,5 @@ subrequests.
     $user = null``). The ``DefaultValueResolver`` is executed as the last
     resolver and will use the default value if no value was already resolved.
 
+.. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`yield`: http://php.net/manual/en/language.generators.syntax.php
