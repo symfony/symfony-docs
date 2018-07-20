@@ -368,7 +368,7 @@ Using the Argon2i Password Encoder
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -381,7 +381,7 @@ Using the Argon2i Password Encoder
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <config>
             <!-- ... -->
             <encoder
@@ -395,7 +395,7 @@ Using the Argon2i Password Encoder
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use Symfony\Component\Security\Core\User\User;
 
         $container->loadFromExtension('security', array(
