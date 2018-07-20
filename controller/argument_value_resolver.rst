@@ -71,7 +71,7 @@ type-hinted method arguments:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/sensio_framework_extra.yaml
         sensio_framework_extra:
             request:
                 converters: true
@@ -79,6 +79,7 @@ type-hinted method arguments:
 
     .. code-block:: xml
 
+        <!-- config/packages/sensio_framework_extra.xml -->
         <sensio-framework-extra:config>
             <request converters="true" auto-convert="true" />
         </sensio-framework-extra:config>
