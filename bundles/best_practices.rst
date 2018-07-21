@@ -451,7 +451,11 @@ Services
 --------
 
 If the bundle defines services, they must be prefixed with the bundle alias.
-For example, AcmeBlogBundle services must be prefixed with ``acme_blog``.
+For example, AcmeBlogBundle services must be prefixed with ``acme_blog``
+instead of using fully qualified class names like in a project. This is
+because a bundle should not pollute the list of autowireable types with
+its own services, and to avoid service ids collisions with projects or
+other bundles that might do so.
 
 In addition, services not meant to be used by the application directly, should
 be :ref:`defined as private <container-private-services>`. For public services,
