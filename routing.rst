@@ -210,6 +210,17 @@ should be used during the request. Defining routes this way also eliminated the
 need for duplicate registration of routes which minimizes the risk for any bugs
 caused by definition inconsistency.
 
+.. tip::
+
+    If you use full locales (language + territory) in your application (e.g. `fr_FR`),
+    you can use the language part only in your routes configurations (e.g. `fr`).
+
+    It also prevents you from repeating yourself when you want to use the same route path
+    for several full locales that share the same language (e.g. `fr_FR` and `fr_BE`).
+
+.. versionadded:: 4.2
+    The feature to fall back on the language part only was introduced in Symfony 4.2.
+
 A common requirement for internationalized applications is to prefix all routes
 with a locale. This can be done by defining a different prefix for each locale
 (and setting an empty prefix for your default locale if you prefer it):
