@@ -144,6 +144,8 @@ Here's an example of how this might look::
                 );
             }
 
+            $username = $user->getUsername();
+
             return $this->fetchUser($username);
         }
 
