@@ -50,6 +50,7 @@ Configuration
   * :ref:`app <reference-cache-app>`
   * `default_doctrine_provider`_
   * `default_memcached_provider`_
+  * `default_pdo_provider`_
   * `default_psr6_provider`_
   * `default_redis_provider`_
   * `directory`_
@@ -1834,7 +1835,7 @@ app
 The cache adapter used by the ``cache.app`` service. The FrameworkBundle
 ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``,
 ``cache.adapter.system``, ``cache.adapter.filesystem``, ``cache.adapter.psr6``,
-``cache.adapter.redis`` and ``cache.adapter.memcached``.
+``cache.adapter.redis``, ``cache.adapter.memcached`` and ``cache.adapter.pdo``.
 
 There's also a special adapter called ``cache.adapter.array`` which stores
 contents in memory using a PHP array and it's used to disable caching (mostly on
@@ -1899,6 +1900,14 @@ default_memcached_provider
 
 The DSN to use by the Memcached provider. The provider is available as the ``cache.memcached``
 service.
+
+default_pdo_provider
+..........................
+
+**type**: ``string`` **default**: ``doctrine.dbal.default_connection``
+
+The service id of the database connection, which should be either a PDO or a
+Doctrine DBAL instance.
 
 pools
 .....
