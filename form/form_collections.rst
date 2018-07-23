@@ -660,7 +660,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
             if (null === $task = $entityManager->getRepository(Task::class)->find($id)) {
                 throw $this->createNotFoundException('No task found for id '.$id);
             }
-    
+
             $originalTags = new ArrayCollection();
 
             // Create an ArrayCollection of the current Tag objects in the database
