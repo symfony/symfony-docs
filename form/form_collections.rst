@@ -655,8 +655,12 @@ the relationship between the removed ``Tag`` and ``Task`` object.
         use Doctrine\Common\Collections\ArrayCollection;
 
         // ...
-        public function edit(Task $task, Request $request, EntityManagerInterface $entityManager)
+        public function edit($id, Request $request, EntityManagerInterface $entityManager)
         {
+            if (null === $task = $entityManager->getRepository(Task::class)->find($id)) {
+                throw $this->createNotFoundException('No task found for id '.$id);
+            }
+    
             $originalTags = new ArrayCollection();
 
             // Create an ArrayCollection of the current Tag objects in the database
@@ -669,7 +673,6 @@ the relationship between the removed ``Tag`` and ``Task`` object.
             $editForm->handleRequest($request);
 
             if ($editForm->isSubmitted() && $editForm->isValid()) {
-
                 // remove the relationship between the tag and the Task
                 foreach ($originalTags as $tag) {
                     if (false === $task->getTags()->contains($tag)) {
