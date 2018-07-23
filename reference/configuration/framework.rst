@@ -1902,7 +1902,7 @@ The DSN to use by the Memcached provider. The provider is available as the ``cac
 service.
 
 default_pdo_provider
-..........................
+....................
 
 **type**: ``string`` **default**: ``doctrine.dbal.default_connection``
 
