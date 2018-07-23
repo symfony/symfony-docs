@@ -31,7 +31,7 @@ third, and forth parameters::
         // until the database table is truncated or its rows are otherwise deleted)
         $defaultLifetime = 0,
 
-        // an array of options for configuring the database connection
+        // an array of options for configuring the database table and connection
         $options = array()
     );
 
