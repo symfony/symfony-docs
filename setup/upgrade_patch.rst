@@ -6,9 +6,12 @@ Upgrading a Patch Version (e.g. 4.1.0 to 4.1.1)
 
 When a new patch version is released (only the last number changed), it is a
 release that only contains bug fixes. This means that upgrading to a new patch
-version is *really* easy:
+version is *really* easy.
 
-To upgrade to a new "patch" release, see the :doc:Upgrading a Minor Version </setup/upgrade_minor> documentation. Thanks to Symfony's backwards compatibility promise, it's always safe to upgrade to the latest "minor" version.
+To upgrade to a new "patch" release, read the
+:doc:`Upgrading a Minor Version </setup/upgrade_minor>` article. Thanks to
+Symfony's :doc`backwards compatibility promise </contributing/code/bc>`, it's
+always safe to upgrade to the latest "minor" version.
 
 .. tip::
 
