@@ -192,6 +192,21 @@ has a simple API
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`
     Deletes all attributes.
 
+Example::
+
+    use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
+    $session = new Session(new NativeSessionStorage(), new AttributeBag());
+    $session->set('token', 'a6c1e0b6');
+    // ...
+    $token = $session->get('token');
+    // if the attribute may or may not exist, you can define a default value for it
+    $token = $session->get('attribute-name', 'default-attribute-value');
+    // ...
+    $session->clear();
+
 Namespaced Attributes
 .....................
 
@@ -221,20 +236,11 @@ the array::
 With structured namespacing, the key can be translated to the array
 structure like this using a namespace character (which defaults to ``/``)::
 
+    // ...
+    use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
+
+    $session = new Session(new NativeSessionStorage(), new NamespacedAttributeBag());
     $session->set('tokens/c', $value);
-
-To activate namespaced attributes, add this to your ``services.yml``::
-
-    # app/config/services.yml
-    services:
-        session:
-            class: Symfony\Component\HttpFoundation\Session\Session
-            arguments:
-                - @session.storage
-                - @app.session.attribute_bag # this service id is defined below
-                - @session.flash_bag
-        app.session.attribute_bag:
-            class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
 
 Flash Messages
 ~~~~~~~~~~~~~~
