@@ -318,7 +318,7 @@ Go Deeper with Setup
     setup/composer
     setup/*
 
-.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony
+.. _`Joyful Development with Symfony`: https://knpuniversity.com/screencast/symfony3
 .. _`Composer`: https://getcomposer.org/
 .. _`Phar extension`: https://php.net/manual/en/intro.phar.php
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard

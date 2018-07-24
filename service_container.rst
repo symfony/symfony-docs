@@ -1185,4 +1185,4 @@ Learn more
 .. _`service-oriented architecture`: https://en.wikipedia.org/wiki/Service-oriented_architecture
 .. _`Symfony Standard Edition (version 3.3) services.yml`: https://github.com/symfony/symfony-standard/blob/3.3/app/config/services.yml
 .. _`glob pattern`: https://en.wikipedia.org/wiki/Glob_(programming)
-.. _`Symfony Fundamentals screencast series`: https://knpuniversity.com/screencast/symfony-fundamentals
+.. _`Symfony Fundamentals screencast series`: https://knpuniversity.com/screencast/symfony3-fundamentals

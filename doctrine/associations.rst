@@ -419,4 +419,4 @@ Doctrine's `Association Mapping Documentation`_.
 
 .. _`Association Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
 .. _`Association Updates`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
-.. _`Mastering Doctrine Relations`: https://knpuniversity.com/screencast/doctrine-relations
+.. _`Mastering Doctrine Relations`: https://knpuniversity.com/screencast/symfony3-doctrine-relations

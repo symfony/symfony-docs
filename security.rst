@@ -1325,4 +1325,4 @@ Other Security Related Topics
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
-.. _`Symfony Security screencast series`: https://knpuniversity.com/screencast/symfony-security
+.. _`Symfony Security screencast series`: https://knpuniversity.com/screencast/symfony3-security

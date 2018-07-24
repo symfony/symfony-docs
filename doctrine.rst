@@ -900,4 +900,4 @@ Learn more
 .. _`newer utf8mb4 character set`: https://dev.mysql.com/doc/refman/5.5/en/charset-unicode-utf8mb4.html
 .. _`Transactions and Concurrency`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/transactions-and-concurrency.html
 .. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-restrictions.html
-.. _`Doctrine screencast series`: https://knpuniversity.com/screencast/symfony-doctrine
+.. _`Doctrine screencast series`: https://knpuniversity.com/screencast/symfony3-doctrine

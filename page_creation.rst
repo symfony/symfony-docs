@@ -266,4 +266,4 @@ Go Deeper with HTTP & Framework Fundamentals
 
 .. _`Twig`: https://twig.symfony.com
 .. _`Composer`: https://getcomposer.org
-.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony/first-page
+.. _`Joyful Development with Symfony`: https://knpuniversity.com/screencast/symfony3
