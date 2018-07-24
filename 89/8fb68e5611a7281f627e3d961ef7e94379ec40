@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-06-27T17:40:34Z
+
+After a bit of chatting about this, we should completely "erase" the contents of `upgrade_patch.rst`, and replace it with a message like:
+
+> To upgrade to a new "patch" release, see the :doc:`Upgrading a Minor Version </setup/upgrade_minor>` documentation. Thanks to Symfony's backwards compatibility promise, it's always safe to upgrade to the latest "minor" version.
+
+So, in Symfony 4, there is no point to upgrading *only* a patch version. Of course, a user can choose to control their dependencies in a more custom, tighter way. But the official recommendation is just to allow your minor versions to upgrade - it's safe. It should simplify things :)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-12T11:02:19Z
+
+@martijnhartlief will you be able to make the changes asked for by Ryan? Thanks!
+
+---------------------------------------------------------------------------
+
+by pbowyer at 2018-07-16T21:09:26Z
+
+I tested these instructions updating from 4.0 to 4.1. Worked very well, look forward to them being merged!
+
+---------------------------------------------------------------------------
+
+by martijnhartlief at 2018-07-17T08:59:00Z
+
+@javiereguiluz @weaverryan I hope the changes are correctly added now.
