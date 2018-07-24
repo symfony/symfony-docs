@@ -637,6 +637,27 @@ file_link
 Generates a link to the provided file and line number using
 a preconfigured scheme.
 
+file_relative
+~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ file|file_relative }}
+
+``file``
+    **type**: ``string``
+
+Returns the relative path from the passed absolute file path. For example,
+assume you've a project in the following directory: ``/var/www/blog/``.
+
+.. code-block:: twig
+
+    {{ '/var/www/blog/templates/admin/index.html.twig'|file_relative }}
+    {# templates/admin/index.html.twig #}
+
+If the passed path doesn't match the project directory, a ``null`` value
+will be returned.
+
 .. _reference-twig-tags:
 
 Tags
