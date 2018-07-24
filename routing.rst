@@ -20,15 +20,19 @@ the change is simple.
 Creating Routes
 ---------------
 
-First, add support for annotations via the SensioFrameworkExtraBundle:
+A *route* is a map from a URL path to a controller. Suppose you want one route that
+matches ``/blog`` exactly and another more dynamic route that can match *any* URL
+like ``/blog/my-post`` or ``/blog/all-about-symfony``.
+
+Routes can be configured in YAML, XML and PHP. All formats provide the same
+features and performance, so choose the one you prefer. If you choose PHP
+annotations, run this command once in your app to add support for them:
 
 .. code-block:: terminal
 
-    $ composer require sensio/framework-extra-bundle
+    $ composer require annotations
 
-A *route* is a map from a URL path to a controller. Suppose you want one route that
-matches ``/blog`` exactly and another more dynamic route that can match *any* URL
-like ``/blog/my-post`` or ``/blog/all-about-symfony``:
+Now you can configure the routes:
 
 .. configuration-block::
 

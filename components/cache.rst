@@ -10,8 +10,9 @@ The Cache Component
 
     The Cache component provides an extended `PSR-6`_ implementation as well as
     a `PSR-16`_ "Simple Cache" implementation for adding cache to your applications.
-    It is designed to have a low overhead and it ships with ready to use adapters
-    for the most common caching backends.
+    It is designed for performance and resiliency, and ships with ready to use
+    adapters for the most common caching backends, including proxies for adapting
+    from/to `Doctrine Cache`_.
 
 Installation
 ------------
@@ -189,4 +190,4 @@ Advanced Usage (PSR-6)
 
 .. _`PSR-6`: http://www.php-fig.org/psr/psr-6/
 .. _`PSR-16`: http://www.php-fig.org/psr/psr-16/
-.. _Packagist: https://packagist.org/packages/symfony/cache
+.. _Doctrine Cache: https://www.doctrine-project.org/projects/cache.html
