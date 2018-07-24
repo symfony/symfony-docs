@@ -118,6 +118,8 @@ needs::
             // See https://symfony.com/doc/current/reference/configuration/security.html#firewall-context
             $firewallContext = 'secured_area';
 
+            // you may need to use a different token class depending on your application.
+            // for example, when using Guard authentication you must instantiate PostAuthenticationGuardToken
             $token = new UsernamePasswordToken('admin', null, $firewallName, array('ROLE_ADMIN'));
             $session->set('_security_'.$firewallContext, serialize($token));
             $session->save();

@@ -94,29 +94,12 @@ Session Workflow
 Session Attributes
 ..................
 
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::set`
-    Sets an attribute by key.
+The session attributes are stored internally in a "Bag", a PHP object that acts
+like an array. They can be set, removed, checked, etc. using the methods
+explained later in this article for the ``AttributeBagInterface`` class. See
+:ref:`attribute-bag-interface`.
 
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::get`
-    Gets an attribute by key.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::all`
-    Gets all attributes as an array of key => value.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::has`
-    Returns true if the attribute exists.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::replace`
-    Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::remove`
-    Deletes an attribute by key.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Session::clear`
-    Clear all attributes.
-
-The attributes are stored internally in a "Bag", a PHP object that acts like
-an array. A few methods exist for "Bag" management:
+In addition, a few methods exist for "Bag" management:
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Session::registerBag`
     Registers a :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface`.
@@ -168,18 +151,64 @@ the following API which is intended mainly for internal purposes:
 :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::getName`
     Returns the name of the session bag.
 
+.. _attribute-bag-interface:
+
 Attributes
 ~~~~~~~~~~
 
 The purpose of the bags implementing the :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface`
 is to handle session attribute storage. This might include things like user ID,
-and remember me login settings or other user based state information.
+and "Remember Me" login settings or other user based state information.
 
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
     This is the standard default implementation.
 
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
     This implementation allows for attributes to be stored in a structured namespace.
+
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface`
+has a simple API
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::set`
+    Sets an attribute by name (``set('name', 'value')``).
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::get`
+    Gets an attribute by name (``get('name')``) and can define a default
+    value when the attribute doesn't exist (``get('name', 'default_value')``).
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::all`
+    Gets all attributes as an associative array of ``name => value``.
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::has`
+    Returns ``true`` if the attribute exists.
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::replace`
+    Sets multiple attributes at once using an associative array (``name => value``).
+    If the attributes existed, they are replaced; if not, they are created.
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::remove`
+    Deletes an attribute by name and returns its value.
+
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`
+    Deletes all attributes.
+
+Example::
+
+    use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
+    $session = new Session(new NativeSessionStorage(), new AttributeBag());
+    $session->set('token', 'a6c1e0b6');
+    // ...
+    $token = $session->get('token');
+    // if the attribute may or may not exist, you can define a default value for it
+    $token = $session->get('attribute-name', 'default-attribute-value');
+    // ...
+    $session->clear();
+
+Namespaced Attributes
+.....................
 
 Any plain key-value storage system is limited in the extent to which
 complex data can be stored since each key must be unique. You can achieve
@@ -205,35 +234,13 @@ the array::
     $session->set('tokens', $tokens);
 
 With structured namespacing, the key can be translated to the array
-structure like this using a namespace character (defaults to ``/``)::
+structure like this using a namespace character (which defaults to ``/``)::
 
+    // ...
+    use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
+
+    $session = new Session(new NativeSessionStorage(), new NamespacedAttributeBag());
     $session->set('tokens/c', $value);
-
-This way you can easily access a key within the stored array directly and easily.
-
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface`
-has a simple API
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::set`
-    Sets an attribute by key.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::get`
-    Gets an attribute by key.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::all`
-    Gets all attributes as an array of key => value.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::has`
-    Returns true if the attribute exists.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::replace`
-    Sets multiple attributes at once: takes a keyed array and sets each key => value pair.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::remove`
-    Deletes an attribute by key.
-
-:method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::clear`
-    Clear the bag.
 
 Flash Messages
 ~~~~~~~~~~~~~~

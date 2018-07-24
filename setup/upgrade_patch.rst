@@ -1,22 +1,17 @@
 .. index::
     single: Upgrading; Patch Version
 
-Upgrading a Patch Version (e.g. 3.3.2 to 3.3.3)
+Upgrading a Patch Version (e.g. 4.1.0 to 4.1.1)
 ===============================================
 
 When a new patch version is released (only the last number changed), it is a
 release that only contains bug fixes. This means that upgrading to a new patch
-version is *really* easy:
+version is *really* easy.
 
-.. code-block:: terminal
-
-    $ composer update symfony/symfony
-
-That's it! You should not encounter any backwards-compatibility breaks or
-need to change anything else in your code. That's because when you started
-your project, your ``composer.json`` included Symfony using a constraint
-like ``3.3.*``, where only the *last* version number will change when you
-update.
+To upgrade to a new "patch" release, read the
+:doc:`Upgrading a Minor Version </setup/upgrade_minor>` article. Thanks to
+Symfony's :doc`backwards compatibility promise </contributing/code/bc>`, it's
+always safe to upgrade to the latest "minor" version.
 
 .. tip::
 

@@ -1,7 +1,7 @@
 .. index::
     single: Upgrading; Minor Version
 
-Upgrading a Minor Version (e.g. 3.3.3 to 3.4.0)
+Upgrading a Minor Version (e.g. 4.0.0 to 4.1.0)
 ===============================================
 
 If you're upgrading a minor version (where the middle number changes), then
@@ -21,8 +21,9 @@ There are two steps to upgrading a minor version:
 1) Update the Symfony Library via Composer
 ------------------------------------------
 
-First, you need to update Symfony by modifying your ``composer.json`` file
-to use the new version:
+Your ``composer.json`` file should already be configured to allow your Symfony
+packages to be upgraded to minor versions. But, if a package was not upgraded,
+check that the version constrains of your Symfony dependencies are like this:
 
 .. code-block:: json
 
@@ -30,7 +31,13 @@ to use the new version:
         "...": "...",
 
         "require": {
-            "symfony/symfony": "3.4.*",
+            "symfony/cache": "^4.0",
+            "symfony/config": "^4.0",
+            "symfony/console": "^4.0",
+            "symfony/debug": "^4.0",
+            "symfony/dependency-injection": "^4.0",
+            "symfony/dotenv": "^4.0",
+            "...": "..."
         },
         "...": "...",
     }
@@ -39,7 +46,7 @@ Next, use Composer to download new versions of the libraries:
 
 .. code-block:: terminal
 
-    $ composer update symfony/symfony
+    $ composer update "symfony/*" --with-all-dependencies
 
 .. include:: /setup/_update_dep_errors.rst.inc
 
@@ -55,7 +62,7 @@ to your code to get everything working. Additionally, some features you're
 using might still work, but might now be deprecated. While that's just fine,
 if you know about these deprecations, you can start to fix them over time.
 
-Every version of Symfony comes with an UPGRADE file (e.g. `UPGRADE-3.4.md`_)
+Every version of Symfony comes with an UPGRADE file (e.g. `UPGRADE-4.1.md`_)
 included in the Symfony directory that describes these changes. If you follow
 the instructions in the document and update your code accordingly, it should be
 safe to update in the future.
@@ -63,4 +70,4 @@ safe to update in the future.
 These documents can also be found in the `Symfony Repository`_.
 
 .. _`Symfony Repository`: https://github.com/symfony/symfony
-.. _`UPGRADE-3.4.md`: https://github.com/symfony/symfony/blob/3.4/UPGRADE-3.4.md
+.. _`UPGRADE-4.1.md`: https://github.com/symfony/symfony/blob/4.1/UPGRADE-4.1.md

@@ -12,7 +12,7 @@ several cached items, keeping them in sync can be difficult.
 
 The Symfony Cache component provides two mechanisms to help solving this problem:
 
-* :ref:`Tags based invalidation <cache-component-tags>` for managing data dependencies;
+* :ref:`Tags-based invalidation <cache-component-tags>` for managing data dependencies;
 * :ref:`Expiration based invalidation <cache-component-expiration>` for time related dependencies.
 
 .. _cache-component-tags:
@@ -20,7 +20,7 @@ The Symfony Cache component provides two mechanisms to help solving this problem
 Using Cache Tags
 ----------------
 
-To benefit from tags based invalidation, you need to attach the proper tags to
+To benefit from tags-based invalidation, you need to attach the proper tags to
 each cached item. Each tag is a plain string identifier that you can use at any
 time to trigger the removal of all items associated with this tag.
 
