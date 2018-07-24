@@ -28,6 +28,7 @@ the user::
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+    use Symfony\Component\Security\Core\Exception\BadCredentialsException;
     use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
     use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -52,7 +53,20 @@ the user::
                 throw new CustomUserMessageAuthenticationException('Invalid username or password');
             }
 
-            $isPasswordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
+            $currentUser = $token->getUser();
+
+            if ($currentUser instanceof UserInterface) {
+                if ($currentUser->getPassword() !== $user->getPassword()) {
+                    throw new BadCredentialsException('The credentials were changed from another session.');
+                }
+            } else {
+                if ('' === ($givenPassword = $token->getCredentials())) {
+                    throw new BadCredentialsException('The given password cannot be empty.');
+                }
+                if (!$this->encoderFactory->getEncoder($user)->isPasswordValid($user->getPassword(), $givenPassword, $user->getSalt())) {
+                    throw new BadCredentialsException('The given password is invalid.');
+                }
+            }
 
             if ($isPasswordValid) {
                 $currentHour = date('G');
