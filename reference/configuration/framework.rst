@@ -161,14 +161,7 @@ Configuration
   * `loaders`_
 
 * `test`_
-* `translator`_
-
-  * :ref:`default_path <reference-translator-default_path>`
-  * :ref:`enabled <reference-translator-enabled>`
-  * `fallbacks`_
-  * `logging`_
-  * :ref:`paths <reference-translator-paths>`
-
+* :doc:`translator </reference/configuration/translation>`
 * `trusted_hosts`_
 * `trusted_proxies`_
 * `validation`_
@@ -1496,67 +1489,6 @@ templating loaders. Templating loaders are used to find and load templates
 from a resource (e.g. a filesystem or database). Templating loaders must
 implement :class:`Symfony\\Component\\Templating\\Loader\\LoaderInterface`.
 
-translator
-~~~~~~~~~~
-
-.. _reference-translator-enabled:
-
-enabled
-.......
-
-**type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
-
-Whether or not to enable the ``translator`` service in the service container.
-
-.. _fallback:
-
-fallbacks
-.........
-
-**type**: ``string|array`` **default**: ``array('en')``
-
-This option is used when the translation key for the current locale wasn't
-found.
-
-.. seealso::
-
-    For more details, see :doc:`/translation`.
-
-.. _reference-framework-translator-logging:
-
-logging
-.......
-
-**default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
-
-When ``true``, a log entry is made whenever the translator cannot find a translation
-for a given key. The logs are made to the ``translation`` channel and at the
-``debug`` for level for keys where there is a translation in the fallback
-locale and the ``warning`` level if there is no translation to use at all.
-
-.. _reference-translator-paths:
-
-paths
-.....
-
-**type**: ``array`` **default**: ``[]``
-
-This option allows to define an array of paths where the component will look
-for translation files.
-
-.. _reference-translator-default_path:
-
-default_path
-............
-
-.. versionadded:: 3.4
-    The ``default_path`` option was introduced in Symfony 3.4.
-
-**type**: ``string`` **default**: ``%kernel.project_dir%/translations``
-
-This option allows to define the path where the application translations files
-are stored.
-
 property_access
 ~~~~~~~~~~~~~~~
 
@@ -1952,6 +1884,15 @@ lock
 
 The default lock adapter. If not defined, the value is set to ``semaphore`` when
 available, or to ``flock`` otherwise. Store's DSN are also allowed.
+
+.. _reference-translator-enabled:
+.. _reference-framework-translator-logging:
+.. _reference-translator-default_path:
+
+translator
+~~~~~~~~~~
+
+This configuration was moved :doc:`to this other page </reference/configuration/translation>`.
 
 .. _`HTTP Host header attacks`: http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
