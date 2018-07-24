@@ -332,6 +332,41 @@ document::
         // ...or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
 
+.. _testing-data-providers:
+
+Testing against Different Sets of Data
+--------------------------------------
+
+It's common to have to execute the same test against different sets of data to
+check the multiple conditions code must handle. This is solved with PHPUnit's
+`data providers`_, which work both for unit and functional tests.
+
+First, add one or more arguments to your test method and use them inside the
+test code. Then, define another method which returns a nested array with the
+arguments to use on each test run. Lastly, add the ``@dataProvider`` annotation
+to associate both methods::
+
+    /**
+     * @dataProvider provideUrls
+     */
+    public function testPageIsSuccessful($url)
+    {
+        $client = self::createClient();
+        $client->request('GET', $url);
+
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    public function provideUrls()
+    {
+        return array(
+            array('/'),
+            array('/blog'),
+            array('/contact'),
+            // ...
+        );
+    }
+
 .. index::
    single: Tests; Client
 
@@ -974,3 +1009,4 @@ Learn more
 .. _`documentation`: https://phpunit.de/manual/current/en/
 .. _`PHPUnit Bridge component`: https://symfony.com/components/PHPUnit%20Bridge
 .. _`$_SERVER`: https://php.net/manual/en/reserved.variables.server.php
+.. _`data providers`: https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers

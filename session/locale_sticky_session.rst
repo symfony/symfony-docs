@@ -171,19 +171,50 @@ event::
                 $this->session->set('_locale', $user->getLocale());
             }
         }
-
-        public static function getSubscribedEvents()
-        {
-            return array(
-                SecurityEvents::INTERACTIVE_LOGIN => array(array('onInteractiveLogin', 15)),
-            );
-        }
     }
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-you're done! Symfony will automatically know about the event subscriber will pass
-your the ``session`` service. Now, when you login, the user's locale will be set
-into the session.
+Then register the listener:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\EventListener\UserLocaleListener:
+                tags:
+                    - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin, priority: 15 }
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\EventListener\UserLocaleListener">
+                    <tag name="kernel.event_listener"
+                        event="security.interactive_login"
+                        method="onInteractiveLogin" priority=15 />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use AppBundle\EventListener\UserLocaleListener;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        $container
+            ->register(UserLocaleListener::class)
+            ->addTag(
+                'kernel.event_listener',
+                array('event' => 'security.interactive_login', 'method' => 'onInteractiveLogin', 'priority' => 15)
+            );
 
 .. caution::
 

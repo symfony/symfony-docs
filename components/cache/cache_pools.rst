@@ -170,7 +170,7 @@ allowing manual removal of stale cache items::
 
 The :ref:`ChainAdapter <component-cache-chain-adapter>` implementation does not directly
 contain any pruning logic itself. Instead, when calling the chain adapter's
-:method:`Symfony\\Component\\Cache\\ChainAdapter::prune` method, the call is delegated to all
+:method:`Symfony\\Component\\Cache\\Adapter\\ChainAdapter::prune` method, the call is delegated to all
 its compatible cache adapters (and those that do not implement ``PruneableInterface`` are
 silently ignored)::
 
