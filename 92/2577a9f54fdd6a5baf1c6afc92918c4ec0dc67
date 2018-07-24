@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-03-18T12:04:10Z
+
+I was going to merge this ... but then I realized that the first part of the article explains a subscriber and the second part a listener. I think this is very confusing. Shouldn't we just use one subscriber and add more subscribed events as the article needs it? Let's ask to some doc maintainers: @wouterj and @xabbuh Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-03-21T14:56:24Z
+
+If I remember correctly, we decided to always use event subscribers which by the way plays nicely with the autoconfiguration of services with Symfony 3.4+.
+
+---------------------------------------------------------------------------
+
+by bricelalu at 2018-03-28T10:05:15Z
+
+Hi @xabbuh and @javiereguiluz,
+
+Is it ok if I update this PR and replace the event listener with event subscriber, similarly to what you've done on the 3.4 version of this doc?
