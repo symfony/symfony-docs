@@ -132,7 +132,6 @@ event::
     // src/AppBundle/EventListener/UserLocaleListener.php
     namespace AppBundle\EventListener;
 
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpFoundation\Session\Session;
     use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
     use Symfony\Component\Security\Http\SecurityEvents;
@@ -164,13 +163,6 @@ event::
                 $this->session->set('_locale', $user->getLocale());
             }
         }
-
-        public static function getSubscribedEvents()
-        {
-            return array(
-                SecurityEvents::INTERACTIVE_LOGIN => array(array('onInteractiveLogin', 15)),
-            );
-        }
     }
 
 Then register the listener:
@@ -185,7 +177,7 @@ Then register the listener:
                 class: AppBundle\EventListener\UserLocaleListener
                 arguments: ['@session']
                 tags:
-                    - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin }
+                    - { name: kernel.event_listener, event: security.interactive_login, method: onInteractiveLogin, priority: 15 }
 
     .. code-block:: xml
 
@@ -204,7 +196,7 @@ Then register the listener:
 
                     <tag name="kernel.event_listener"
                         event="security.interactive_login"
-                        method="onInteractiveLogin" />
+                        method="onInteractiveLogin" priority=15 />
                 </service>
             </services>
         </container>
@@ -220,7 +212,7 @@ Then register the listener:
             ->addArgument(new Reference('session'))
             ->addTag(
                 'kernel.event_listener',
-                array('event' => 'security.interactive_login', 'method' => 'onInteractiveLogin')
+                array('event' => 'security.interactive_login', 'method' => 'onInteractiveLogin', 'priority' => 15)
             );
 
 .. caution::
