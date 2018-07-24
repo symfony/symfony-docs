@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by drupol at 2017-10-23T12:08:29Z
+
+Hi,
+
+I would rather use a valid syntax example for `config.yml`:
+
+```yaml
+services:
+    session:
+      class: Symfony\Component\HttpFoundation\Session\Session
+      arguments: ["@session.storage", "@session.namespacedattributebag", "@session.flash_bag"]
+
+    session.namespacedattributebag:
+      class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
+```
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2017-10-23T12:45:46Z
+
+Sorry, don't know what you mean - can't remember all details half a year later....
+
+Do you want to *add* something, or do you want me to *change* something?
