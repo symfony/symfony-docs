@@ -18,10 +18,11 @@ two-step process:
    create a Symfony ``Response`` object, which can hold HTML content, a JSON
    string or even a binary file like an image or PDF.
 
-.. seealso::
+.. admonition:: Screencast
+    :class: screencast
 
     Do you prefer video tutorials? Check out the `Stellar Development with Symfony`_
-    screencast series from KnpUniversity.
+    screencast series.
 
 .. seealso::
 
