@@ -640,7 +640,7 @@ a preconfigured scheme.
 file_relative
 ~~~~~~~~~~~~~
 
-.. versionadded::
+.. versionadded:: 4.2
     The ``file_relative`` filter was introduced in Symfony 4.2.
 
 .. code-block:: twig
