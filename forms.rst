@@ -4,6 +4,11 @@
 Forms
 =====
 
+.. admonition:: Screencast
+    :class: screencast
+
+    Do you prefer video tutorials? Check out the `Symfony Forms screencast series`_.
+
 Dealing with HTML forms is one of the most common - and challenging - tasks for
 a web developer. Symfony integrates a Form component that makes dealing with
 forms easy. In this article, you'll build a complex form from the ground up,
@@ -714,3 +719,4 @@ Learn more
 
 .. _`Symfony Form component`: https://github.com/symfony/form
 .. _`DateTime`: https://php.net/manual/en/class.datetime.php
+.. _`Symfony Forms screencast series`: https://knpuniversity.com/screencast/symfony-forms

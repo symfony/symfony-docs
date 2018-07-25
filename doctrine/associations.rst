@@ -4,6 +4,12 @@
 How to Work with Doctrine Associations / Relations
 ==================================================
 
+.. admonition:: Screencast
+    :class: screencast
+
+    Do you prefer video tutorials? Check out the `Mastering Doctrine Relations`_
+    screencast series.
+
 There are **two** main relationship/association types:
 
 ``ManyToOne`` / ``OneToMany``
@@ -588,3 +594,4 @@ Doctrine's `Association Mapping Documentation`_.
 
 .. _`Association Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
 .. _`orphanRemoval`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/working-with-associations.html#orphan-removal
+.. _`Mastering Doctrine Relations`: https://knpuniversity.com/screencast/doctrine-relations
