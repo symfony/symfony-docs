@@ -82,7 +82,7 @@ display. It can take any valid controller as an exception handler, so you can
 create an ErrorController class instead of using a Closure::
 
     $listener = new HttpKernel\EventListener\ExceptionListener(
-        'Calendar\Controller\ErrorController::exceptionAction'
+        'Calendar\Controller\ErrorController::exception'
     );
     $dispatcher->addSubscriber($listener);
 
