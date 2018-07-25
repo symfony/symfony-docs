@@ -637,6 +637,30 @@ file_link
 Generates a link to the provided file and line number using
 a preconfigured scheme.
 
+file_relative
+~~~~~~~~~~~~~
+
+.. versionadded::
+    The ``file_relative`` filter was introduced in Symfony 4.2.
+
+.. code-block:: twig
+
+    {{ file|file_relative }}
+
+``file``
+    **type**: ``string``
+
+It transforms the given absolute file path into a new file path relative to
+project's root directory:
+
+.. code-block:: twig
+
+    {{ '/var/www/blog/templates/admin/index.html.twig'|file_relative }}
+    {# if project root dir is '/var/www/blog/', it returns 'templates/admin/index.html.twig' #}
+
+If the given file path is out of the project directory, a ``null`` value
+will be returned.
+
 .. _reference-twig-tags:
 
 Tags
