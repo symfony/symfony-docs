@@ -197,11 +197,12 @@ Restrict files by name with the
 
     $finder->files()->name('*.php');
 
-The ``name()`` method accepts globs, strings, regexes or an array of globs, strings or regexes::
+The ``name()`` method accepts globs, strings, regexes or an array of globs,
+strings or regexes::
 
     $finder->files()->name('/\.php$/');
 
-Multiple files names can be defined by chaining calls or using an array as parameter::
+Multiple files names can be defined by chaining calls or passing an array::
 
     $finder->files()->name('*.php')->name('*.twig');
 
@@ -212,7 +213,7 @@ The ``notName()`` method excludes files matching a pattern::
 
     $finder->files()->notName('*.rb');
 
-Multiple files names can be excluded by chaining calls or using an array as parameter::
+Multiple files names can be excluded by chaining calls or passing an array::
 
     $finder->files()->notName('*.rb')->notName('*.py');
 
@@ -220,7 +221,8 @@ Multiple files names can be excluded by chaining calls or using an array as para
     $finder->files()->notName(array('*.rb', '*.py'));
 
 .. versionadded:: 4.2
-    Passing an array as parameter for method ``name()`` and ``notName()`` was introduced in Symfony 4.2
+    Passing an array as parameter for method ``name()`` and ``notName()`` was
+    introduced in Symfony 4.2
 
 File Contents
 ~~~~~~~~~~~~~
@@ -251,12 +253,13 @@ Restrict files and directories by path with the
 
 On all platforms slash (i.e. ``/``) should be used as the directory separator.
 
-The ``path()`` method accepts a string, a regular expression or an array of strings or regulars expressions::
+The ``path()`` method accepts a string, a regular expression or an array of
+strings or regulars expressions::
 
     $finder->path('foo/bar');
     $finder->path('/^foo\/bar/');
 
-Multiple paths can be defined by chaining calls or using an array as parameter::
+Multiple paths can be defined by chaining calls or passing an array::
 
     $finder->path('data')->path('foo/bar');
 
@@ -264,7 +267,8 @@ Multiple paths can be defined by chaining calls or using an array as parameter::
     $finder->path(array('data', 'foo/bar'));
 
 .. versionadded:: 4.2
-    Passing an array as parameter for method ``path()`` and ``notPath()`` was introduced in Symfony 4.2
+    Passing an array as parameter for method ``path()`` and ``notPath()`` was
+    introduced in Symfony 4.2
 
 Internally, strings are converted into regular expressions by escaping slashes
 and adding delimiters:
@@ -278,7 +282,7 @@ The :method:`Symfony\\Component\\Finder\\Finder::notPath` method excludes files 
 
     $finder->notPath('other/dir');
 
-Multiple paths can be excluded by chaining calls or using an array as parameter::
+Multiple paths can be excluded by chaining calls or passing an array::
 
     $finder->notPath('first/dir')->notPath('other/dir');
 
@@ -296,7 +300,7 @@ Restrict files by size with the
 
     $finder->files()->size('< 1.5K');
 
-Restrict by a size range by chaining calls or using an array as argument::
+Restrict by a size range by chaining calls or passing an array::
 
     $finder->files()->size('>= 1K')->size('<= 2K');
 
@@ -321,7 +325,7 @@ Restrict files by last modified dates with the
 
     $finder->date('since yesterday');
 
-Restrict by a date range by chaining calls or using an array as argument::
+Restrict by a date range by chaining calls or passing an array::
 
     $finder->date('>= 2018-01-01')->size('<= 2018-12-31');
 
@@ -346,7 +350,7 @@ traversing with :method:`Symfony\\Component\\Finder\\Finder::depth`::
     $finder->depth('== 0');
     $finder->depth('< 3');
 
-Restrict by a depth range by chaining calls or using an array as argument::
+Restrict by a depth range by chaining calls or passing an array::
 
     $finder->depth('> 2')->depth('< 5');
 
