@@ -650,7 +650,7 @@ file_relative
 ``file``
     **type**: ``string``
 
-It transforms the given absolute file path into a relative file path from the
+It transforms the given absolute file path into a new file path relative to
 project's root directory:
 
 .. code-block:: twig
