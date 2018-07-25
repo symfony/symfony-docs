@@ -640,6 +640,9 @@ a preconfigured scheme.
 file_relative
 ~~~~~~~~~~~~~
 
+.. versionadded::
+    The ``file_relative`` filter was introduced in Symfony 4.2.
+
 .. code-block:: twig
 
     {{ file|file_relative }}
@@ -647,15 +650,15 @@ file_relative
 ``file``
     **type**: ``string``
 
-Returns the relative path from the passed absolute file path. For example,
-assume you've a project in the following directory: ``/var/www/blog/``.
+It transforms the given absolute file path into a relative file path from the
+project's root directory:
 
 .. code-block:: twig
 
     {{ '/var/www/blog/templates/admin/index.html.twig'|file_relative }}
-    {# templates/admin/index.html.twig #}
+    {# if project root dir is '/var/www/blog/', it returns 'templates/admin/index.html.twig' #}
 
-If the passed path doesn't match the project directory, a ``null`` value
+If the given file path is out of the project directory, a ``null`` value
 will be returned.
 
 .. _reference-twig-tags:
