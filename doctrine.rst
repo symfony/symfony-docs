@@ -4,6 +4,11 @@
 Databases and the Doctrine ORM
 ==============================
 
+.. admonition:: Screencast
+    :class: screencast
+
+    Do you prefer video tutorials? Check out the `Doctrine screencast series`_.
+
 Symfony doesn't provide a component to work with the database, but it *does* provide
 tight integration with a third-party library called `Doctrine`_.
 
@@ -751,3 +756,4 @@ Learn more
 .. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-restrictions.html
+.. _`Doctrine screencast series`: https://knpuniversity.com/screencast/symfony-doctrine

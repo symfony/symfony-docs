@@ -4,10 +4,11 @@
 Installing & Setting up the Symfony Framework
 =============================================
 
-.. seealso::
+.. admonition:: Screencast
+    :class: screencast
 
     Do you prefer video tutorials? Check out the `Stellar Development with Symfony`_
-    screencast series from KnpUniversity.
+    screencast series.
 
 To create your new Symfony application, first make sure you're using PHP 7.1 or higher
 and have `Composer`_ installed. If you don't, start by :doc:`installing Composer globally </setup/composer>`
