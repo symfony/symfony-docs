@@ -4,6 +4,12 @@
 How to Work with Doctrine Associations / Relations
 ==================================================
 
+.. admonition:: Screencast
+    :class: screencast
+
+    Do you prefer video tutorials? Check out the `Mastering Doctrine Relations`_
+    screencast series.
+
 Suppose that each product in your application belongs to exactly one category.
 In this case, you'll need a ``Category`` class, and a way to relate a
 ``Product`` object to a ``Category`` object.
@@ -413,3 +419,4 @@ Doctrine's `Association Mapping Documentation`_.
 
 .. _`Association Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
 .. _`Association Updates`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
+.. _`Mastering Doctrine Relations`: https://knpuniversity.com/screencast/symfony3-doctrine-relations

@@ -4,6 +4,11 @@
 Security
 ========
 
+.. admonition:: Screencast
+    :class: screencast
+
+    Do you prefer video tutorials? Check out the `Symfony Security screencast series`_.
+
 Symfony's security system is incredibly powerful, but it can also be confusing
 to set up. In this article you'll learn how to set up your application's security
 step-by-step, from configuring your firewall and how you load users, to denying
@@ -1320,3 +1325,4 @@ Other Security Related Topics
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
+.. _`Symfony Security screencast series`: https://knpuniversity.com/screencast/symfony3-security

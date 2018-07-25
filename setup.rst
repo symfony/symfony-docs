@@ -7,10 +7,11 @@ Installing & Setting up the Symfony Framework
 This article explains how to install Symfony in different ways and how to solve
 the most common issues that may appear during the installation process.
 
-.. seealso::
+.. admonition:: Screencast
+    :class: screencast
 
     Do you prefer video tutorials? Check out the `Joyful Development with Symfony`_
-    screencast series from KnpUniversity.
+    screencast series.
 
 Creating Symfony Applications
 -----------------------------
@@ -317,7 +318,7 @@ Go Deeper with Setup
     setup/composer
     setup/*
 
-.. _`Joyful Development with Symfony`: http://knpuniversity.com/screencast/symfony
+.. _`Joyful Development with Symfony`: https://knpuniversity.com/screencast/symfony3
 .. _`Composer`: https://getcomposer.org/
 .. _`Phar extension`: https://php.net/manual/en/intro.phar.php
 .. _`Symfony Standard Edition`: https://github.com/symfony/symfony-standard
