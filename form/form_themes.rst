@@ -179,6 +179,7 @@ file:
         # app/config/config.yml
         twig:
             form_themes:
+                - '...'
                 - 'form/fields.html.twig'
             # ...
 
@@ -194,6 +195,7 @@ file:
                 http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
+                <twig:theme>...</twig:theme>
                 <twig:theme>form/fields.html.twig</twig:theme>
                 <!-- ... -->
             </twig:config>
@@ -204,10 +206,16 @@ file:
         // app/config/config.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
+                '...',
                 'form/fields.html.twig',
             ),
             // ...
         ));
+
+.. note::
+
+    Add your custom theme at the end of the ``form_themes`` list because each
+    theme overrides all the previous themes.
 
 Any blocks inside the ``fields.html.twig`` template are now used globally
 to define form output.
