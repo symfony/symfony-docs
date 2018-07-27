@@ -91,7 +91,6 @@ configuration (``login``):
         // src/AppBundle/Controller/SecurityController.php
 
         // ...
-        use Symfony\Component\HttpFoundation\Request;
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
         class SecurityController extends Controller
@@ -99,7 +98,7 @@ configuration (``login``):
             /**
              * @Route("/login", name="login")
              */
-            public function loginAction(Request $request)
+            public function loginAction()
             {
             }
         }
@@ -142,7 +141,7 @@ Great! Next, add the logic to ``loginAction()`` that displays the login form::
 
     // src/AppBundle/Controller/SecurityController.php
 
-    public function loginAction(Request $request)
+    public function loginAction()
     {
         $authenticationUtils = $this->get('security.authentication_utils');
 
