@@ -27,6 +27,7 @@ like this:
             workflows:
                 blog_publishing:
                     type: 'workflow' # or 'state_machine'
+                    audit_trail: 'enabled'
                     marking_store:
                         type: 'multiple_state' # or 'single_state'
                         arguments:
@@ -62,7 +63,7 @@ like this:
         >
 
             <framework:config>
-                <framework:workflow name="blog_publishing" type="workflow">
+                <framework:workflow name="blog_publishing" type="workflow" audit_trail="enabled">
                     <framework:marking-store type="single_state">
                       <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
@@ -106,6 +107,7 @@ like this:
             'workflows' => array(
                 'blog_publishing' => array(
                     'type' => 'workflow', // or 'state_machine'
+                    'audit_trail' => 'enabled',
                     'marking_store' => array(
                         'type' => 'multiple_state', // or 'single_state'
                         'arguments' => array('currentPlace')
@@ -156,6 +158,14 @@ like this:
     The ``type`` (default value ``single_state``) and ``arguments`` (default value ``marking``)
     attributes of the ``marking_store`` option are optional. If omitted, their default values
     will be used.
+
+.. tip::
+
+    Setting the ``audit_trail`` option to ``enabled`` makes the application
+    generate detailed log messages for the workflow activity.
+
+    .. versionadded:: 3.3
+        The ``audit_trail`` option was introduced in Symfony 3.3.
 
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions are allowed on a blog post::
@@ -241,10 +251,10 @@ order:
     * ``workflow.entered``
     * ``workflow.[workflow name].entered``
     * ``workflow.[workflow name].entered.[place name]``
-    
+
 ``workflow.completed``
     The object has completed this transition.
-    
+
     The three events being dispatched are:
 
     * ``workflow.completed``
