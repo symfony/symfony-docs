@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-26T08:49:33Z
+
+A person commented on Slack:
+
+> I'm not sure if locking the whole table is a good thing performance wise, but it might solve the problem from a theoretical perspective
+> I guess it's better to use Redis anyway
