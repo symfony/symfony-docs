@@ -162,12 +162,16 @@ Fallback Locales
 
 If the message is not located in the catalog of the specific locale, the
 translator will look into the catalog of one or more fallback locales. For
-example, assume you're trying to translate into the ``fr_FR`` locale:
+example, assume you're trying to translate into the ``es_AR`` locale:
 
-#. First, the translator looks for the translation in the ``fr_FR`` locale;
+#. First, the translator looks for the translation in the ``es_AR``
+   (Argentinean Spanish) locale;
 
-#. If it wasn't found, the translator looks for the translation in the ``fr``
-   locale;
+#. If it wasn't found, the translator looks for the translation in the
+   ``es_419`` (Latin American Spanish) locale;
+
+#. If it wasn't found, the translator looks for the translation in the ``es``
+   (Spanish) locale;
 
 #. If the translation still isn't found, the translator uses the one or more
    fallback locales set explicitly on the translator.
