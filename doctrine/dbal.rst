@@ -21,11 +21,11 @@ makes it easy to execute queries and perform other database actions.
     Read the official Doctrine `DBAL Documentation`_ to learn all the details
     and capabilities of Doctrine's DBAL library.
 
-First, install the Doctrine bundle:
+First, install the Doctrine ORM pack:
 
 .. code-block:: terminal
 
-    $ composer require doctrine/doctrine-bundle
+    $ composer require symfony/orm-pack
 
 Then configure the ``DATABASE_URL`` environment variable in ``.env``:
 
