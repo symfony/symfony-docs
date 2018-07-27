@@ -402,7 +402,7 @@ Take a look at the previous example in more detail:
     is thrown. See `Transactions and Concurrency`_.
 
 Whether you're creating or updating objects, the workflow is always the same: Doctrine
-is smart enough to know if it should INSERT of UPDATE your entity.
+is smart enough to know if it should INSERT or UPDATE your entity.
 
 Fetching Objects from the Database
 ----------------------------------
