@@ -1,30 +1,38 @@
-First Example
-=============
+Encore: Setting up your Project
+===============================
 
-Imagine you have a simple project with one CSS and one JS file, organized into
-an ``assets/`` directory:
+After :doc:`installing Encore </frontend/encore/installation>`, your app already has one
+CSS and one JS file, organized into an ``assets/`` directory:
 
 * ``assets/js/app.js``
 * ``assets/css/app.css``
 
-With Encore, you should think of CSS as a *dependency* of your JavaScript. This means,
-you will *require* whatever CSS you need from inside JavaScript:
+With Encore, think of your ``app.js`` file as a standalone JavaScript
+application: it will *require* all of the dependencies it needs (e.g. jQuery),
+*including* any CSS. Your ``app.js`` file is already doing this with a special
+``require`` function:
 
 .. code-block:: javascript
 
     // assets/js/app.js
+    // ...
+
+    // var $ = require('jquery');
+
     require('../css/app.css');
 
-    // ...rest of JavaScript code here
+    // ... the rest of your JavaScript...
 
-With Encore, we can easily minify these files, pre-process ``app.css``
-through PostCSS and a *lot* more.
+Encore's job is simple: to read *all* of ``require`` statements and create one
+final ``app.js`` (and ``app.css``) that contain *everything* your app needs. Of
+course, Encore can do a lot more: minify files, pre-process Sass/LESS, support
+ReactVue.js and a *lot* more.
 
 Configuring Encore/Webpack
 --------------------------
 
-Create a new file called ``webpack.config.js`` at the root of your project.
-Inside, use Encore to help generate your Webpack configuration.
+Everything in Encore is configured via a ``webpack.config.js`` file at the root
+of your project. It already holds the basic config you need:
 
 .. code-block:: javascript
 
@@ -32,71 +40,49 @@ Inside, use Encore to help generate your Webpack configuration.
     var Encore = require('@symfony/webpack-encore');
 
     Encore
-        // the project directory where all compiled assets will be stored
+        // directory where compiled assets will be stored
         .setOutputPath('web/build/')
-
-        // the public path used by the web server to access the previous directory
+        // public path used by the web server to access the output path
         .setPublicPath('/build')
 
-        // will create web/build/app.js and web/build/app.css
         .addEntry('app', './assets/js/app.js')
 
-        // allow legacy applications to use $/jQuery as a global variable
-        .autoProvidejQuery()
-
-        // enable source maps during development
-        .enableSourceMaps(!Encore.isProduction())
-
-        // empty the outputPath dir before each build
-        .cleanupOutputBeforeBuild()
-
-        // show OS notifications when builds finish/fail
-        .enableBuildNotifications()
-
-        // create hashed filenames (e.g. app.abc123.css)
-        // .enableVersioning()
-
-        // allow sass/scss files to be processed
-        // .enableSassLoader()
+        // ...
     ;
 
-    // export the final configuration
-    module.exports = Encore.getWebpackConfig();
+    // ...
 
-This is already a rich setup: it outputs 2 files and enables source maps
-to help debugging.
+They *key* part is ``addEntry()``: this tells Encore to load the ``assets/js/app.js``
+file and follow *all* of the ``require`` statements. It will then package everything
+together and - thanks to the first ``app`` argument - output final ``app.js`` and
+``app.css`` files into the ``public/build`` directory.
 
 .. _encore-build-assets:
 
-To build the assets, use the ``encore`` executable:
+To build the assets, run:
 
 .. code-block:: terminal
 
     # compile assets once
-    $ ./node_modules/.bin/encore dev
+    $ yarn encore dev
 
-    # recompile assets automatically when files change
-    $ ./node_modules/.bin/encore dev --watch
+    # or, recompile assets automatically when files change
+    $ yarn encore dev --watch
 
-    # compile assets, but also minify & optimize them
-    $ ./node_modules/.bin/encore production
-
-    # shorter version of the above 3 commands
-    $ yarn run encore dev
-    $ yarn run encore dev --watch
-    $ yarn run encore production
+    # on deploy, create a production build
+    $ yarn encore production
 
 .. note::
 
-    Re-run ``encore`` each time you update your ``webpack.config.js`` file.
+    Stop and restart ``encore`` each time you update your ``webpack.config.js`` file.
 
-After running one of these commands, you can now add ``script`` and ``link`` tags
-to the new, compiled assets (e.g. ``/build/app.css`` and ``/build/app.js``).
-In Symfony, use the ``asset()`` helper:
+Congrats! You now have two new files! Next, add a ``script`` and ``link`` tag
+to the new, compiled assets (e.g. ``/build/app.css`` and ``/build/app.js``) to
+your layout. In Symfony, use the ``asset()`` helper:
 
 .. code-block:: twig
 
-    {# base.html.twig #}
+    {# templates/base.html.twig #}
     <!DOCTYPE html>
     <html>
         <head>
@@ -108,34 +94,6 @@ In Symfony, use the ``asset()`` helper:
             <script src="{{ asset('build/app.js') }}"></script>
         </body>
     </html>
-
-Using Sass
-----------
-
-Instead of using plain CSS you can also use Sass. In order to do so, change the
-extension of the ``app.css`` file to ``.sass`` or ``.scss`` (based on the syntax
-you want to use):
-
-.. code-block:: diff
-
-    // assets/js/app.js
-    - require('../css/app.css');
-    + require('../css/app.scss');
-
-And enable the Sass pre-processor:
-
-.. code-block:: diff
-
-    // webpack.config.js
-    Encore
-        // ...
-
-        // allow sass/scss files to be processed
-    -    // .enableSassLoader()
-    +    .enableSassLoader()
-
-Using ``enableSassLoader()`` requires to install additional packages, but Encore
-will tell you *exactly* which ones when running it.
 
 Requiring JavaScript Modules
 ----------------------------
@@ -163,7 +121,7 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
     // assets/js/app.js
 
     // loads the jquery package from node_modules
-    const $ = require('jquery');
+    var $ = require('jquery');
 
     // import the function from greet.js (the .js extension is optional)
     // ./ (or ../) means to look for a local file
@@ -174,30 +132,116 @@ Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
     });
 
 That's it! When you build your assets, jQuery and ``greet.js`` will automatically
-be added to the output file (``app.js``). For common libraries like jQuery, you
-may want to :doc:`create a shared entry </frontend/encore/shared-entry>` for better
-performance.
+be added to the output file (``app.js``).
 
-Multiple JavaScript Entries
----------------------------
+The import and export Statements
+--------------------------------
 
-The previous example is the best way to deal with SPA (Single Page Applications)
-and very simple applications. However, as your app grows, you may want to have
-page-specific JavaScript or CSS (e.g. homepage, blog, store, etc.). To handle this,
-add a new "entry" for each page that needs custom JavaScript or CSS:
+Instead of using ``require`` and ``module.exports`` like shown above, JavaScript
+has an alternate syntax, which is a more accepted standard. Choose whichever you
+want: they funtion identically:
 
-.. code-block:: javascript
+To export values, use ``exports``:
+
+.. code-block:: diff
+
+    // assets/js/greet.js
+    - module.exports = function(name) {
+    + export default function(name) {
+        return `Yo yo ${name} - welcome to Encore!`;
+    };
+
+To import values, use ``import``:
+
+.. code-block:: diff
+
+    // assets/js/app.js
+    - var $ = require('jquery');
+    + import $ from 'jquery';
+    
+    - require('../css/app.css');    
+    + import '../css/app.css';
+
+.. _multiple-javascript-entries:
+
+Page-Specific JavaScript or CSS (Multiple Entries)
+--------------------------------------------------
+
+So far, you only have one final JavaScript file: ``app.js``. For simple apps or
+SPA's (Single Page Applications), that might be fine! However, as your app grows,
+you may want to have page-specific JavaScript or CSS (e.g. homepage, blog, store,
+etc.). To handle this, add a new "entry" for each page that needs custom JavaScript
+or CSS:
+
+.. code-block:: diff
 
     Encore
         // ...
-        .addEntry('homepage', './assets/js/homepage.js')
-        .addEntry('blog', './assets/js/blog.js')
-        .addEntry('store', './assets/js/store.js')
+        .addEntry('app', './assets/js/app.js')
+    +     .addEntry('homepage', './assets/js/homepage.js')
+    +     .addEntry('blog', './assets/js/blog.js')
+    +     .addEntry('store', './assets/js/store.js')
+        // ...
+
+Encore will now render new ``homepage.js``, ``blog.js`` and ``store.js`` files.
+Add a ``script`` tag to each of these only on the page where they are needed.
+
+.. tip::
+
+    Remember to restart Encore each time you update your ``webpack.config.js`` file.
+
+If any entry requires CSS/Sass files (e.g. ``homepage.js`` requires
+``assets/css/homepage.scss``), a CSS file will *also* be output (e.g. ``build/homepage.css``).
+Add a ``link`` to the page where that CSS is needed.
+
+To avoid duplicating the same code in different entry files, see
+:doc:`create a shared entry </frontend/encore/shared-entry>`.
+
+Using Sass
+----------
+
+Instead of using plain CSS you can also use Sass. To use Sass, rename
+the ``app.css`` file to ``app.scss``. Update the ``require`` statement:
+
+.. code-block:: diff
+
+    // assets/js/app.js
+    - require('../css/app.css');
+    + require('../css/app.scss');
+
+Then, tell Enecore to enable the Sass pre-processor:
+
+.. code-block:: diff
+
+    // webpack.config.js
+    Encore
+        // ...
+
+    +    .enableSassLoader()
     ;
 
-If those entries include CSS/Sass files (e.g. ``homepage.js`` requires
-``assets/css/homepage.scss``), two files will be generated for each:
-(e.g. ``build/homepage.js`` and ``build/homepage.css``).
+Using ``enableSassLoader()`` requires to install additional packages, but Encore
+will tell you *exactly* which ones when running it. Encore also supports
+LESS and Stylus. See :doc:`/frontend/encore/css-preprocessors`.
+
+Compiling Only a CSS File
+-------------------------
+
+To compile CSS together, you should generally follow the pattern above: use ``addEntry()``
+to point to a JavaScript file, then require the CSS needed from inside of that.
+However, *if* you want to only compile a CSS file, that's also possible via
+``addStyleEntry()``:
+
+.. code-block:: javascript
+
+    // webpack/config.js
+    Encore
+        // ...
+
+        .addStyleEntry('some_page', './assets/css/some_page.css')
+    ;
+
+This will output a new ``some_page.css``.
 
 Keep Going!
 -----------
