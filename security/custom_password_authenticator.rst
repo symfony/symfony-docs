@@ -69,7 +69,7 @@ the user::
                 if ('' === ($givenPassword = $token->getCredentials())) {
                     throw new BadCredentialsException('The given password cannot be empty.');
                 }
-                if (!$this->encoderFactory->getEncoder($user)->isPasswordValid($user->getPassword(), $givenPassword, $user->getSalt())) {
+                if (!$this->encoder->isPasswordValid($user->getPassword(), $givenPassword, $user->getSalt())) {
                     throw new BadCredentialsException('The given password is invalid.');
                 }
             }
