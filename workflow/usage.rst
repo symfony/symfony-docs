@@ -40,6 +40,7 @@ like this:
             workflows:
                 blog_publishing:
                     type: 'workflow' # or 'state_machine'
+                    audit_trail: 'enabled'
                     marking_store:
                         type: 'multiple_state' # or 'single_state'
                         arguments:
@@ -75,7 +76,7 @@ like this:
         >
 
             <framework:config>
-                <framework:workflow name="blog_publishing" type="workflow">
+                <framework:workflow name="blog_publishing" type="workflow" audit_trail="enabled">
                     <framework:marking-store type="single_state">
                       <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
@@ -119,6 +120,7 @@ like this:
             'workflows' => array(
                 'blog_publishing' => array(
                     'type' => 'workflow', // or 'state_machine'
+                    'audit_trail' => 'enabled',
                     'marking_store' => array(
                         'type' => 'multiple_state', // or 'single_state'
                         'arguments' => array('currentPlace')
@@ -169,6 +171,11 @@ like this:
     The ``type`` (default value ``single_state``) and ``arguments`` (default
     value ``marking``) attributes of the ``marking_store`` option are optional.
     If omitted, their default values will be used.
+
+.. tip::
+
+    Setting the ``audit_trail`` option to ``enabled`` makes the application
+    generate detailed log messages for the workflow activity.
 
 Using a Workflow
 ----------------

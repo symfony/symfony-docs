@@ -123,7 +123,7 @@ the messenger component, the following configuration should have been created:
         framework:
             messenger:
                 transports:
-                    amqp: "%env(MESSENGER_DSN)%"
+                    amqp: "%env(MESSENGER_TRANSPORT_DSN)%"
 
     .. code-block:: xml
 
@@ -139,7 +139,7 @@ the messenger component, the following configuration should have been created:
 
             <framework:config>
                 <framework:messenger>
-                    <framework:transport name="amqp" dsn="%env(MESSENGER_DSN)%" />
+                    <framework:transport name="amqp" dsn="%env(MESSENGER_TRANSPORT_DSN)%" />
                 </framework:messenger>
             </framework:config>
         </container>
@@ -150,7 +150,7 @@ the messenger component, the following configuration should have been created:
         $container->loadFromExtension('framework', array(
             'messenger' => array(
                 'transports' => array(
-                    'amqp' => '%env(MESSENGER_DSN)%',
+                    'amqp' => '%env(MESSENGER_TRANSPORT_DSN)%',
                 ),
             ),
         ));
