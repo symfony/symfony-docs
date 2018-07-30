@@ -29,6 +29,8 @@ To use it, first register a new handler service:
                     # If you're using Doctrine & want to re-use that connection, then:
                     # comment-out the above 2 lines and uncomment the line below
                     # - !service { class: PDO, factory: 'database_connection:getWrappedConnection' }
+                    # If you get transaction issues (e.g. after login) uncomment the line below
+                    # - { lock_mode: 1 }
 
     .. code-block:: xml
 
