@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-19T08:59:36Z
+
+@l-vo thanks for your contribution. Sadly I'm having some problems trying to understand the issue here. Are you saying that the current code won't work? That the current code is unnecessary? thanks!
+
+---------------------------------------------------------------------------
+
+by l-vo at 2018-07-19T10:59:00Z
+
+@javiereguiluz I think this code won't work in most cases. When the second argument of register isn't set, it's the compiler pass `ResolveClassPass` which inject the right class if the service id matchs with a class name. The problem is that `ResolveClassPass`  is processed very early in the container compilation (see `Symfony\Component\DependencyInjection\Compiler\PassConfig`).
+
+If I use `$container->register(\AppBundle\NumberGenerator::class);` in a compiler pass, `ResolveClassPass` is processed before my own compiler pass and my service class stay not resolved.
+
+Is it clearer ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-24T08:52:10Z
+
+@l-vo it's more clear now. Thanks!
+
+But before merging, let me ask our biggest expert in Dependency Injection to verify this change: @nicolas-grekas Thanks!
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-07-24T09:00:28Z
+
+I'm fine with this change, calling register can also be done in regular php definition of services, but nobody does that, so that the most common place to do this is in a compiler pass indeed.
