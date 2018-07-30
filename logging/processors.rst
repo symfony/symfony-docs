@@ -30,7 +30,7 @@ using a processor::
             $this->session = $session;
         }
 
-        public function processRecord(array $record)
+        public function __invoke(array $record)
         {
             if (!$this->session->isStarted()) {
                 return $record;
@@ -63,7 +63,7 @@ information:
             AppBundle\Logger\SessionRequestProcessor:
                 autowire: true
                 tags:
-                    - { name: monolog.processor, method: processRecord }
+                    - { name: monolog.processor }
 
     .. code-block:: xml
 
@@ -85,7 +85,7 @@ information:
                 </service>
 
                 <service id="AppBundle\Logger\SessionRequestProcessor" autowire="true">
-                    <tag name="monolog.processor" method="processRecord" />
+                    <tag name="monolog.processor" />
                 </service>
             </services>
         </container>
@@ -175,7 +175,7 @@ the ``monolog.processor`` tag:
             AppBundle\Logger\SessionRequestProcessor:
                 autowire: true
                 tags:
-                    - { name: monolog.processor, method: processRecord, handler: main }
+                    - { name: monolog.processor, handler: main }
 
     .. code-block:: xml
 
@@ -191,7 +191,7 @@ the ``monolog.processor`` tag:
 
             <services>
                 <service id="AppBundle\Logger\SessionRequestProcessor" autowire="true">
-                    <tag name="monolog.processor" method="processRecord" handler="main" />
+                    <tag name="monolog.processor" handler="main" />
                 </service>
             </services>
         </container>
@@ -203,7 +203,7 @@ the ``monolog.processor`` tag:
         // ...
         $container
             ->autowire(SessionRequestProcessor::class)
-            ->addTag('monolog.processor', array('method' => 'processRecord', 'handler' => 'main'));
+            ->addTag('monolog.processor', array('handler' => 'main'));
 
 Registering Processors per Channel
 ----------------------------------
@@ -220,7 +220,7 @@ the ``monolog.processor`` tag:
             AppBundle\Logger\SessionRequestProcessor:
                 autowire: true
                 tags:
-                    - { name: monolog.processor, method: processRecord, channel: main }
+                    - { name: monolog.processor, channel: main }
 
     .. code-block:: xml
 
@@ -236,7 +236,7 @@ the ``monolog.processor`` tag:
 
             <services>
                 <service id="AppBundle\Logger\SessionRequestProcessor" autowire="true">
-                    <tag name="monolog.processor" method="processRecord" channel="main" />
+                    <tag name="monolog.processor" channel="main" />
                 </service>
             </services>
         </container>
@@ -248,4 +248,4 @@ the ``monolog.processor`` tag:
         // ...
         $container
             ->autowire(SessionRequestProcessor::class)
-            ->addTag('monolog.processor', array('method' => 'processRecord', 'channel' => 'main'));
+            ->addTag('monolog.processor', array('channel' => 'main'));

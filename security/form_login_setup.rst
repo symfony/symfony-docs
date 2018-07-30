@@ -91,7 +91,6 @@ configuration (``login``):
         // src/AppBundle/Controller/SecurityController.php
 
         // ...
-        use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\Routing\Annotation\Route;
 
         class SecurityController extends Controller
@@ -99,7 +98,7 @@ configuration (``login``):
             /**
              * @Route("/login", name="login")
              */
-            public function loginAction(Request $request)
+            public function login()
             {
             }
         }
@@ -143,7 +142,7 @@ Great! Next, add the logic to ``loginAction()`` that displays the login form::
     // src/AppBundle/Controller/SecurityController.php
     use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-    public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
+    public function login(AuthenticationUtils $authenticationUtils)
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
