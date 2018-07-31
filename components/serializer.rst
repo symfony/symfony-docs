@@ -1244,7 +1244,7 @@ This example shows how to serialize and deserialize those objects::
     $serialized = $serializer->serialize(new GitHubCodeRepository());
     // {"type": "github"}
 
-    $repository = $serializer->unserialize($serialized, CodeRepository::class, 'json');
+    $repository = $serializer->deserialize($serialized, CodeRepository::class, 'json');
     // instanceof GitHubCodeRepository
 
 If the class metadata factory is enabled as explained in the
