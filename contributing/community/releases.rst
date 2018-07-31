@@ -1,17 +1,25 @@
 The Release Process
 ===================
 
-This document explains the **release process** of the Symfony project (i.e. the
-code hosted on the main ``symfony/symfony`` `Git repository`_).
+This document explains the process followed by the Symfony project to develop,
+release and maintain its different versions.
 
-Symfony manages its releases through a *time-based model* and follows the
-`Semantic Versioning`_ strategy:
+Symfony releases follow the `semantic versioning`_ strategy and they are
+published through a *time-based model*:
 
-* A new Symfony minor version (e.g. 2.8, 3.2, 4.1) comes out every *six months*:
-  one in *May* and one in *November*;
-* A new Symfony major version (e.g., 3.0, 4.0) comes out every *two years* and
-  it's released at the same time of the last minor version of the previous major
-  version.
+* A new **Symfony patch version** (e.g. 2.8.15, 4.1.7) comes out roughly every
+  month. It only contains bug fixes, so you can safely upgrade your apps;
+* A new **Symfony minor version** (e.g. 2.8, 3.2, 4.1) comes out every *six months*:
+  one in *May* and one in *November*. It contains bug fixes and new features, but
+  it doesn't include any breaking change, so you can safely upgrade your apps;
+* A new **Symfony major version** (e.g. 3.0, 4.0) comes out every *two years*.
+  It can contain breaking changes, so you may need to do some changes in your
+  apps before upgrading.
+
+.. tip::
+
+    `Subscribe to Symfony Roadmap notifications`_ to receive an email when a new
+    Symfony version is published or when a Symfony version reaches its end of life.
 
 .. _contributing-release-development:
 
@@ -32,113 +40,36 @@ During the development phase, any new feature can be reverted if it won't be
 finished in time or if it won't be stable enough to be included in the current
 final release.
 
+.. tip::
+
+    Check out the `Symfony Roadmap`_ to learn more about any specific version.
+
 .. _contributing-release-maintenance:
+.. _symfony-versions:
+.. _releases-lts:
 
 Maintenance
 -----------
 
-Each Symfony version is maintained for a fixed period of time, depending on the
-type of the release. This maintenance is divided into:
+Starting from the Symfony 3.x branch, the number of minor versions is limited to
+five per branch (X.0, X.1, X.2, X.3 and X.4). The last minor version of a branch
+(e.g. 3.4, 4.4, 5.4) is considered a **long-term support version** and the other
+ones are considered **standard versions**:
 
-* *Bug fixes and security fixes*: During this period, all issues can be fixed.
-  The end of this period is referenced as being the *end of maintenance* of a
-  release.
-
-* *Security fixes only*: During this period, only security related issues can
-  be fixed. The end of this period is referenced as being the *end of life* of
-  a release.
-
-.. note::
-
-    The :doc:`maintenance document </contributing/code/maintenance>` describes
-    the boundaries of acceptable changes during maintenance.
-
-Symfony Versions
-----------------
-
-Standard Versions
-~~~~~~~~~~~~~~~~~
-
-A **Standard Minor Version** is maintained for an *eight month* period for bug
-fixes, and for a *fourteen month* period for security issue fixes.
-
-In Symfony 2.x branch, the number of minor versions wasn't constrained, so that
-branch ended up with nine minor versions (from 2.0 to 2.8). Starting from
-3.x branch, the number of minor versions is limited to five (from X.0 to X.4).
-
-.. _releases-lts:
-
-Long Term Support Versions
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Every two years, a new **Long Term Support Version** (usually abbreviated as "LTS")
-is published. Each LTS version is supported for a *three year* period for bug
-fixes, and for a *four year* period for security issue fixes.
+=======================  =====================  ================================
+Version Type             Bugs are fixed for...  Security issues are fixed for...
+=======================  =====================  ================================
+Standard                 8 months               14 months
+Long-Term Support (LTS)  3 years                4 years
+=======================  =====================  ================================
 
 .. note::
 
-    Paid support after the three year support provided by the community can
-    also be bought from `SensioLabs`_.
+    After the active maintenance of a Symfony version has ended, you can get
+    `professional Symfony support`_ from SensioLabs, the company which sponsors
+    the Symfony project.
 
-In the Symfony 2.x branch, the LTS versions are 2.3, 2.7 and 2.8. Starting from the 3.x
-branch, only the last minor version of each branch is considered LTS (e.g. 3.4,
-4.4, 5.4, etc.)
-
-Schedule
---------
-
-Below is the schedule for the first few versions that use this release model:
-
-.. image:: /_images/contributing/release-process.jpg
-   :align: center
-
-* **Yellow** represents the Development phase
-* **Blue** represents the Stabilization phase
-* **Green** represents the Maintenance period
-
-.. tip::
-
-    If you want to learn more about the timeline of any given Symfony version,
-    use the online `timeline calculator`_.
-
-.. tip::
-
-    Whenever an important event related to Symfony versions happens (a version
-    reaches end of maintenance or a new patch version is released for
-    instance), you can automatically receive an email notification if you
-    subscribed on the `roadmap notification`_ page.
-
-.. _version-history:
-
-============  ==============  =======  ========================  ===========
-Version       Feature Freeze  Release  End of Maintenance        End of Life
-============  ==============  =======  ========================  ===========
-`2.0`_        05/2011         07/2011  03/2013 (20 months)       09/2013
-`2.1`_        07/2012         09/2012  05/2013 (9 months)        11/2013
-`2.2`_        01/2013         03/2013  11/2013 (8 months)        05/2014
-`2.3`_ (LTS)  03/2013         05/2013  05/2016 (36 months)       05/2017
-`2.4`_        09/2013         11/2013  09/2014 (10 months [1]_)  01/2015
-`2.5`_        03/2014         05/2014  01/2015 (8 months)        07/2015
-`2.6`_        09/2014         11/2014  07/2015 (8 months)        01/2016
-`2.7`_ (LTS)  03/2015         05/2015  05/2018 (36 months)       05/2019
-`2.8`_ (LTS)  09/2015         11/2015  11/2018 (36 months [2]_)  11/2019
-`3.0`_        09/2015         11/2015  07/2016 (8 months [3]_)   01/2017
-`3.1`_        03/2016         05/2016  01/2017 (8 months)        07/2017
-`3.2`_        09/2016         11/2016  07/2017 (8 months)        01/2018
-`3.3`_        03/2017         05/2017  01/2018 (8 months)        07/2018
-`3.4`_ (LTS)  09/2017         11/2017  11/2020 (36 months)       11/2021
-`4.0`_        09/2017         11/2017  07/2018 (8 months)        01/2019
-`4.1`_        03/2018         05/2018  01/2019 (8 months)        07/2019
-`4.2`_        09/2018         11/2018  07/2019 (8 months)        01/2020
-`4.3`_        03/2019         05/2019  01/2020 (8 months)        07/2020
-`4.4`_ (LTS)  09/2019         11/2019  11/2022 (36 months)       11/2023
-`5.0`_        09/2019         11/2019  07/2020 (8 months)        01/2021
-...           ...             ...      ...                       ...
-============  ==============  =======  ========================  ===========
-
-.. [1] Symfony 2.4 maintenance has been `extended to September 2014`_.
-.. [2] Symfony 2.8 is the last version of the Symfony 2.x branch.
-.. [3] Symfony 3.0 is the first version to use the new release process based on five minor releases.
+.. _deprecations:
 
 Backward Compatibility
 ----------------------
@@ -147,20 +78,9 @@ Our :doc:`Backward Compatibility Promise </contributing/code/bc>` is very
 strict and allows developers to upgrade with confidence from one minor version
 of Symfony to the next one.
 
-Whenever keeping backward compatibility is not possible, the feature, the
-enhancement or the bug fix will be scheduled for the next major version.
-
-However, :doc:`Experimental Features </contributing/code/experimental>` are
-**not** part of the backward compatibility promise and their APIs can change
-from one minor version to the next. The changelog must explain the changes and
-how to upgrade.
-
-Deprecations
-------------
-
 When a feature implementation cannot be replaced with a better one without
-breaking backward compatibility, there is still the possibility to deprecate
-the old implementation and add a new preferred one along side. Read the
+breaking backward compatibility, Symfony deprecates the old implementation and
+adds a new preferred one along side. Read the
 :ref:`conventions <contributing-code-conventions-deprecations>` document to
 learn more about how deprecations are handled in Symfony.
 
@@ -179,7 +99,9 @@ This release process was adopted to give more *predictability* and
 * Coordinate the Symfony timeline with popular PHP projects that work well
   with Symfony and with projects using Symfony;
 * Give time to the Symfony ecosystem to catch up with the new versions
-  (bundle authors, documentation writers, translators, ...).
+  (bundle authors, documentation writers, translators, ...);
+* Give companies a strict and predictable timeline they can rely on to plan
+  their own projects development.
 
 The six month period was chosen as two releases fit in a year. It also allows
 for plenty of time to work on new features and it allows for non-ready
@@ -192,29 +114,7 @@ version: a new version is published every six months, and there is a two months
 period to upgrade. Companies wanting more stability use the LTS versions: a new
 version is published every two years and there is a year to upgrade.
 
-.. _Semantic Versioning: https://semver.org/
-.. _Git repository: https://github.com/symfony/symfony
-.. _SensioLabs:     https://sensiolabs.com/
-.. _roadmap notification: https://symfony.com/roadmap
-.. _extended to September 2014: https://symfony.com/blog/extended-maintenance-for-symfony-2-4
-.. _timeline calculator: https://symfony.com/roadmap#checker
-.. _`2.0`: https://symfony.com/roadmap?version=2.0
-.. _`2.1`: https://symfony.com/roadmap?version=2.1
-.. _`2.2`: https://symfony.com/roadmap?version=2.2
-.. _`2.3`: https://symfony.com/roadmap?version=2.3
-.. _`2.4`: https://symfony.com/roadmap?version=2.4
-.. _`2.5`: https://symfony.com/roadmap?version=2.5
-.. _`2.6`: https://symfony.com/roadmap?version=2.6
-.. _`2.7`: https://symfony.com/roadmap?version=2.7
-.. _`2.8`: https://symfony.com/roadmap?version=2.8
-.. _`3.0`: https://symfony.com/roadmap?version=3.0
-.. _`3.1`: https://symfony.com/roadmap?version=3.1
-.. _`3.2`: https://symfony.com/roadmap?version=3.2
-.. _`3.3`: https://symfony.com/roadmap?version=3.3
-.. _`3.4`: https://symfony.com/roadmap?version=3.4
-.. _`4.0`: https://symfony.com/roadmap?version=4.0
-.. _`4.1`: https://symfony.com/roadmap?version=4.1
-.. _`4.2`: https://symfony.com/roadmap?version=4.2
-.. _`4.3`: https://symfony.com/roadmap?version=4.3
-.. _`4.4`: https://symfony.com/roadmap?version=4.4
-.. _`5.0`: https://symfony.com/roadmap?version=5.0
+.. _`semantic versioning`: https://semver.org/
+.. _`Subscribe to Symfony Roadmap notifications`: https://symfony.com/account
+.. _`Symfony Roadmap`: https://symfony.com/roadmap#checker
+.. _`professional Symfony support`: https://sensiolabs.com/
