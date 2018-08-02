@@ -416,7 +416,7 @@ the application won't respond and the user will receive a 400 response.
         ));
 
 Hosts can also be configured to respond to any subdomain, via
-``^(.+\.)?example\.com$`` for isntance.
+``^(.+\.)?example\.com$`` for instance.
 
 In addition, you can also set the trusted hosts in the front controller
 using the ``Request::setTrustedHosts()`` method::
