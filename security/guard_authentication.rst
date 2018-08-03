@@ -555,7 +555,7 @@ can ignore this. Here is an example of good and bad behavior::
     {
         // GOOD behavior: only authenticate on a specific route
         if ($request->attributes->get('_route') !== 'login_route' || !$request->isMethod('POST')) {
-            return true;
+            return false;
         }
 
         // e.g. your login system authenticates by the user's IP address
