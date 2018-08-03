@@ -10,7 +10,7 @@ version is *really* easy.
 
 To upgrade to a new "patch" release, read the
 :doc:`Upgrading a Minor Version </setup/upgrade_minor>` article. Thanks to
-Symfony's :doc`backwards compatibility promise </contributing/code/bc>`, it's
+Symfony's :doc:`backwards compatibility promise </contributing/code/bc>`, it's
 always safe to upgrade to the latest "minor" version.
 
 .. tip::
