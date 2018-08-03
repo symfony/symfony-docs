@@ -29,7 +29,6 @@ in the ``Product`` entity::
          * @ORM\Column(type="string")
          *
          * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
-         * @Assert\File(mimeTypes={ "application/pdf" })
          */
         private $brochure;
 
@@ -167,8 +166,8 @@ controller to specify the directory in which the brochures should be stored:
 
 There are some important things to consider in the code of the above controller:
 
-#. When the form is uploaded, the ``brochure`` property contains the whole PDF
-   file contents. Since this property stores just the file name, you must set
+#. When the form is uploaded, the ``brochure`` property contains the full temporary path
+   to the file. Once you define the definitive file name ( line 123 above )you must set
    its new value before persisting the changes of the entity;
 #. In Symfony applications, uploaded files are objects of the
    :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile` class. This class
