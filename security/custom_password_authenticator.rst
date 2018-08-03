@@ -54,16 +54,16 @@ the user::
             }
 
             $currentUser = $token->getUser();
-
+            
             if ($currentUser instanceof UserInterface) {
-                if ($currentUser->getPassword() !== $user->getPassword()) {
+                if ($isPasswordValid = $currentUser->getPassword() !== $user->getPassword()) {
                     throw new BadCredentialsException('The credentials were changed from another session.');
                 }
             } else {
                 if ('' === ($givenPassword = $token->getCredentials())) {
                     throw new BadCredentialsException('The given password cannot be empty.');
                 }
-                if (!$this->encoder->isPasswordValid($user->getPassword(), $givenPassword, $user->getSalt())) {
+                if (!$isPasswordValid=$this->encoder->isPasswordValid($user, $givenPassword, $user->getSalt())) {
                     throw new BadCredentialsException('The given password is invalid.');
                 }
             }
