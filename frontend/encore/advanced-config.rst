@@ -51,7 +51,7 @@ state of the current configuration to build a new one:
 
     // define the first configuration
     Encore
-        .setOutputPath('web/build/')
+        .setOutputPath('public/build/')
         .setPublicPath('/build')
         .addEntry('app', './assets/js/main.js')
         .addStyleEntry('global', './assets/css/global.scss')
@@ -71,7 +71,7 @@ state of the current configuration to build a new one:
 
     // define the second configuration
     Encore
-        .setOutputPath('web/build/')
+        .setOutputPath('public/build/')
         .setPublicPath('/build')
         .addEntry('mobile', './assets/js/mobile.js')
         .addStyleEntry('mobile', './assets/css/mobile.less')
