@@ -42,14 +42,13 @@ with the following fields: ``id``, ``username``, ``password``,
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\UserInterface;
-    use Serializable;
     use Symfony\Component\Security\Core\User\EquatableInterface;
 
     /**
      * @ORM\Table(name="app_users")
      * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
      */
-    class User implements UserInterface, Serializable, EquatableInterface
+    class User implements UserInterface, \Serializable, EquatableInterface
     {
         /**
          * @ORM\Column(type="integer")
@@ -116,7 +115,7 @@ with the following fields: ``id``, ``username``, ``password``,
         {
             return serialize(array(
                 $this->id,
-                $this->username, // you should use $this->email if you don't use username but email to log user
+                $this->username,
                 $this->password,
                 // see section on salt below
                 // $this->salt,
@@ -128,7 +127,7 @@ with the following fields: ``id``, ``username``, ``password``,
         {
             list (
                 $this->id,
-                $this->username, // you should use $this->email if you don't use username but email to log user
+                $this->username,
                 $this->password,
                 // see section on salt below
                 // $this->salt
@@ -149,10 +148,6 @@ with the following fields: ``id``, ``username``, ``password``,
         public function isEqualTo(UserInterface $user)
         {
             if ($this->password !== $user->getPassword()) {
-                return false;
-            }
-
-            if ($this->username !== $user->getUsername()) {
                 return false;
             }
 
