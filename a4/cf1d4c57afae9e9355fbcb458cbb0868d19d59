@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by hackzilla at 2018-08-04T07:39:15Z
+
+I've amended the PR to ```composer create-project symfony/skeleton:3.4.* my-project```.
+Whilst I like the idea of getting the latest version, the issue I have is, is it right to install a later version?
+Specifically when 4.2 comes out, the 4.1 documentation will no longer install 4.1
