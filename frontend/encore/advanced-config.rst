@@ -51,7 +51,7 @@ state of the current configuration to build a new one:
 
     // define the first configuration
     Encore
-        .setOutputPath('web/build/')
+        .setOutputPath('public/build/')
         .setPublicPath('/build')
         .addEntry('app', './assets/js/main.js')
         .addStyleEntry('global', './assets/css/global.scss')
@@ -71,7 +71,7 @@ state of the current configuration to build a new one:
 
     // define the second configuration
     Encore
-        .setOutputPath('web/build/')
+        .setOutputPath('public/build/')
         .setPublicPath('/build')
         .addEntry('mobile', './assets/js/mobile.js')
         .addStyleEntry('mobile', './assets/css/mobile.less')
@@ -93,7 +93,7 @@ prefer to build configs separately, pass the ``--config-name`` option:
 
 .. code-block:: terminal
 
-    $ yarn run encore dev --config-name firstConfig
+    $ yarn encore dev --config-name firstConfig
 
 .. _`configuration options`: https://webpack.js.org/configuration/
 .. _`Webpack's watchOptions`: https://webpack.js.org/configuration/watch/#watchoptions
