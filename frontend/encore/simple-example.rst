@@ -26,7 +26,7 @@ application: it will *require* all of the dependencies it needs (e.g. jQuery),
 Encore's job is simple: to read *all* of ``require`` statements and create one
 final ``app.js`` (and ``app.css``) that contain *everything* your app needs. Of
 course, Encore can do a lot more: minify files, pre-process Sass/LESS, support
-ReactVue.js and a *lot* more.
+React, Vue.js and a *lot* more.
 
 Configuring Encore/Webpack
 --------------------------
@@ -139,7 +139,7 @@ The import and export Statements
 
 Instead of using ``require`` and ``module.exports`` like shown above, JavaScript
 has an alternate syntax, which is a more accepted standard. Choose whichever you
-want: they funtion identically:
+want: they function identically:
 
 To export values, use ``exports``:
 
@@ -209,7 +209,7 @@ the ``app.css`` file to ``app.scss``. Update the ``require`` statement:
     - require('../css/app.css');
     + require('../css/app.scss');
 
-Then, tell Enecore to enable the Sass pre-processor:
+Then, tell Encore to enable the Sass pre-processor:
 
 .. code-block:: diff
 
