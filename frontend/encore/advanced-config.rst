@@ -93,7 +93,7 @@ prefer to build configs separately, pass the ``--config-name`` option:
 
 .. code-block:: terminal
 
-    $ yarn run encore dev --config-name firstConfig
+    $ yarn encore dev --config-name firstConfig
 
 .. _`configuration options`: https://webpack.js.org/configuration/
 .. _`Webpack's watchOptions`: https://webpack.js.org/configuration/watch/#watchoptions
