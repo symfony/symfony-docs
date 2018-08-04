@@ -193,9 +193,11 @@ For example, if the following deprecation notice is thrown::
     1x: Doctrine\Common\ClassLoader is deprecated.
       1x in EntityTypeTest::setUp from Symfony\Bridge\Doctrine\Tests\Form\Type
 
-Running the following command will display the full stack trace::
+Running the following command will display the full stack trace:
 
-    SYMFONY_DEPRECATIONS_HELPER='/Doctrine\\Common\\ClassLoader is deprecated\./' ./vendor/bin/simple-phpunit
+.. code-block:: terminal
+
+    $ SYMFONY_DEPRECATIONS_HELPER='/Doctrine\\Common\\ClassLoader is deprecated\./' ./vendor/bin/simple-phpunit
 
 Time-sensitive Tests
 ---------------------
