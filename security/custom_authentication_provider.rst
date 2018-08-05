@@ -322,7 +322,7 @@ create a class which implements
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
                 ->setDefinition($providerId, new ChildDefinition(WsseProvider::class))
-                ->replaceArgument(0, new Reference($userProvider))
+                ->setArgument(0, new Reference($userProvider))
             ;
 
             $listenerId = 'security.authentication.listener.wsse.'.$id;
