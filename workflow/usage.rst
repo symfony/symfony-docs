@@ -63,7 +63,7 @@ like this:
         >
 
             <framework:config>
-                <framework:workflow name="blog_publishing" type="workflow" audit_trail="enabled">
+                <framework:workflow name="blog_publishing" type="workflow" audit-trail="enabled">
                     <framework:marking-store type="single_state">
                       <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
