@@ -259,7 +259,7 @@ Now, you can pass the username to the command:
 Getting Services from the Service Container
 -------------------------------------------
 
-To actually create a new user, the command has to access to some
+To actually create a new user, the command has to access some
 :doc:`services </service_container>`. Since your command is already registered
 as a service, you can use normal dependency injection. Imagine you have a
 ``App\Service\UserManager`` service that you want to access::
