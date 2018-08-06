@@ -1,7 +1,7 @@
 Encore Installation (without Symfony Flex)
 ==========================================
 
-.. tip:
+.. tip::
 
     If your project uses Symfony Flex, read :doc:`/frontend/encore/installation`
     for easier instructions.
