@@ -111,7 +111,7 @@ Symfony application by executing the following command:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/skeleton my-project
+    $ composer create-project symfony/skeleton:3.4.* my-project
 
 .. note::
 
