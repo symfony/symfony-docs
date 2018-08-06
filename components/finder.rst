@@ -267,8 +267,7 @@ Multiple paths can be defined by chaining calls or passing an array::
     $finder->path(array('data', 'foo/bar'));
 
 .. versionadded:: 4.2
-    Passing an array as parameter for method ``path()`` and ``notPath()`` was
-    introduced in Symfony 4.2
+    Support for passing arrays to ``path()`` was introduced in Symfony 4.2
 
 Internally, strings are converted into regular expressions by escaping slashes
 and adding delimiters:
@@ -290,7 +289,8 @@ Multiple paths can be excluded by chaining calls or passing an array::
     $finder->notPath(array('first/dir', 'other/dir'));
 
 .. versionadded:: 4.2
-    Passing an array as method parameter was introduced in Symfony 4.2
+    Support for passing arrays to ``notPath()`` was introduced in Symfony
+    4.2
 
 File Size
 ~~~~~~~~~
@@ -308,7 +308,7 @@ Restrict by a size range by chaining calls or passing an array::
     $finder->files()->size(array('>= 1K', '<= 2K'));
 
 .. versionadded:: 4.2
-    Passing an array as method parameter was introduced in Symfony 4.2
+    Support for passing arrays to ``size()`` was introduced in Symfony 4.2
 
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
 ``==``, ``!=``.
@@ -333,7 +333,7 @@ Restrict by a date range by chaining calls or passing an array::
     $finder->date(array('>= 2018-01-01', '<= 2018-12-31'));
 
 .. versionadded:: 4.2
-    Passing an array as method parameter was introduced in Symfony 4.2
+    Support for passing arrays to ``date()`` was introduced in Symfony 4.2
 
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
 ``==``. You can also use ``since`` or ``after`` as an alias for ``>``, and
@@ -358,7 +358,7 @@ Restrict by a depth range by chaining calls or passing an array::
     $finder->depth(array('> 2', '< 5'));
 
 .. versionadded:: 4.2
-    Passing an array as method parameter was introduced in Symfony 4.2
+    Support for passing arrays to ``depth()`` was introduced in Symfony 4.2
 
 Custom Filtering
 ~~~~~~~~~~~~~~~~
