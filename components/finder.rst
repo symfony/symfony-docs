@@ -202,7 +202,7 @@ strings or regexes::
 
     $finder->files()->name('/\.php$/');
 
-Multiple files names can be defined by chaining calls or passing an array::
+Multiple filenames can be defined by chaining calls or passing an array::
 
     $finder->files()->name('*.php')->name('*.twig');
 
@@ -213,7 +213,7 @@ The ``notName()`` method excludes files matching a pattern::
 
     $finder->files()->notName('*.rb');
 
-Multiple files names can be excluded by chaining calls or passing an array::
+Multiple filenames can be excluded by chaining calls or passing an array::
 
     $finder->files()->notName('*.rb')->notName('*.py');
 
@@ -221,8 +221,8 @@ Multiple files names can be excluded by chaining calls or passing an array::
     $finder->files()->notName(array('*.rb', '*.py'));
 
 .. versionadded:: 4.2
-    Passing an array as parameter for method ``name()`` and ``notName()`` was
-    introduced in Symfony 4.2
+    Support for passing arrays to ``name()`` and ``notName()`` was introduced
+    in Symfony 4.2
 
 File Contents
 ~~~~~~~~~~~~~
