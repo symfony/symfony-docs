@@ -12,7 +12,7 @@ published through a *time-based model*:
 * A new **Symfony minor version** (e.g. 2.8, 3.2, 4.1) comes out every *six months*:
   one in *May* and one in *November*. It contains bug fixes and new features, but
   it doesn't include any breaking change, so you can safely upgrade your apps;
-* A new **Symfony major version** (e.g., 3.0, 4.0) comes out every *two years*.
+* A new **Symfony major version** (e.g. 3.0, 4.0) comes out every *two years*.
   It can contain breaking changes, so you may need to do some changes in your
   apps before upgrading.
 
@@ -51,7 +51,7 @@ final release.
 Maintenance
 -----------
 
-Starting from Symfony 3.x branch, the number of minor versions is limited to
+Starting from the Symfony 3.x branch, the number of minor versions is limited to
 five per branch (X.0, X.1, X.2, X.3 and X.4). The last minor version of a branch
 (e.g. 3.4, 4.4, 5.4) is considered a **long-term support version** and the other
 ones are considered **standard versions**:
@@ -99,7 +99,7 @@ This release process was adopted to give more *predictability* and
 * Coordinate the Symfony timeline with popular PHP projects that work well
   with Symfony and with projects using Symfony;
 * Give time to the Symfony ecosystem to catch up with the new versions
-  (bundle authors, documentation writers, translators, ...).
+  (bundle authors, documentation writers, translators, ...);
 * Give companies a strict and predictable timeline they can rely on to plan
   their own projects development.
 
