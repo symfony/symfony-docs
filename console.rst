@@ -61,7 +61,7 @@ method. Then you can optionally define a help message and the
         ;
     }
 
-The ``configure()`` command is called automatically at the end of the command
+The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
 first and then call to the parent constructor, to make those properties
 available in the ``configure()`` method::
