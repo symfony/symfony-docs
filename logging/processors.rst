@@ -172,14 +172,44 @@ handler level or at the channel level instead of registering it globally
     :class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor` processors, which
     can be enabled as follows:
 
-    .. code-block:: yaml
+    .. configuration-block::
 
-        # config/services.yaml
-        services:
-            # Adds the current security token to log entries
-            Symfony\Bridge\Monolog\Processor\TokenProcessor: ~
-            # Adds the real client IP to log entries
-            Symfony\Bridge\Monolog\Processor\WebProcessor: ~
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                # Adds the current security token to log entries
+                Symfony\Bridge\Monolog\Processor\TokenProcessor: ~
+                # Adds the real client IP to log entries
+                Symfony\Bridge\Monolog\Processor\WebProcessor: ~
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <!-- Adds the current security token to log entries -->
+                    <service id="Symfony\Bridge\Monolog\Processor\TokenProcessor" />
+                    <!-- Adds the real client IP to log entries -->
+                    <service id="Symfony\Bridge\Monolog\Processor\WebProcessor" />
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            use Symfony\Bridge\Monolog\Processor\TokenProcessor;
+            use Symfony\Bridge\Monolog\Processor\WebProcessor;
+
+            // Adds the current security token to log entries
+            $container->register(TokenProcessor::class);
+            // Adds the real client IP to log entries
+            $container->register(WebProcessor::class);
 
 Registering Processors per Handler
 ----------------------------------
