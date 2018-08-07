@@ -112,8 +112,8 @@ with a non-zero code)::
 
         $process = new Process(array('/path/command', '--flag', 'arg 1', 'etc.'));
 
-    If you need use stream redirections, conditional execution, or any other
-    features provided by the shell of your operating system, you can also define
+    If you need to use stream redirections, conditional execution, or any other
+    feature provided by the shell of your operating system, you can also define
     commands as strings.
 
     Please note that each OS provides a different syntax for their command-lines
