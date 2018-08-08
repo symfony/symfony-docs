@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-08-06T16:58:50Z
+
+For the `2.8` branch?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-08-06T17:27:41Z
+
+I wondered the same ... but I ultimately chose 3.4 because 2.8 still talks about some 2.x quirks ... so we can leave that for historical reasons.
