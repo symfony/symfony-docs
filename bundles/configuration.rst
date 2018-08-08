@@ -92,6 +92,13 @@ bundle configuration would look like:
             'client_secret' => 'your_secret',
         ));
 
+
+.. tip::
+
+    The root node of your bundle configuration must match the name of your 
+    bundle without the 'Bundle' suffix in camel case. For example 
+    ``AcmeSocialBundle`` becomes ``acme_social``.
+
 .. seealso::
 
     Read more about the extension in :doc:`/bundles/extension`.
