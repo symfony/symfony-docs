@@ -390,8 +390,8 @@ method might be vulnerable to some of these attacks because it depends on
 the configuration of your web server. One simple solution to avoid these
 attacks is to whitelist the hosts that your Symfony application can respond
 to. That's the purpose of this ``trusted_hosts`` option. If the incoming
-request's hostname doesn't match one in this list, the application won't
-respond and the user will receive a 400 response.
+request's hostname doesn't match one of the regular expressions in this list,
+the application won't respond and the user will receive a 400 response.
 
 .. configuration-block::
 
@@ -399,7 +399,7 @@ respond and the user will receive a 400 response.
 
         # app/config/config.yml
         framework:
-            trusted_hosts:  ['example.com', 'example.org']
+            trusted_hosts:  ['^example\.com$', '^example\.org$']
 
     .. code-block:: xml
 
@@ -413,8 +413,8 @@ respond and the user will receive a 400 response.
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:trusted-host>example.com</framework:trusted-host>
-                <framework:trusted-host>example.org</framework:trusted-host>
+                <framework:trusted-host>^example\.com$</framework:trusted-host>
+                <framework:trusted-host>^example\.org$</framework:trusted-host>
                 <!-- ... -->
             </framework:config>
         </container>
@@ -423,17 +423,17 @@ respond and the user will receive a 400 response.
 
         // app/config/config.php
         $container->loadFromExtension('framework', array(
-            'trusted_hosts' => array('example.com', 'example.org'),
+            'trusted_hosts' => array('^example\.com$', '^example\.org$'),
         ));
 
-Hosts can also be configured using regular expressions (e.g.  ``^(.+\.)?example.com$``),
-which make it easier to respond to any subdomain.
+Hosts can also be configured to respond to any subdomain, via
+``^(.+\.)?example\.com$`` for instance.
 
 In addition, you can also set the trusted hosts in the front controller
 using the ``Request::setTrustedHosts()`` method::
 
     // web/app.php
-    Request::setTrustedHosts(array('^(.+\.)?example.com$', '^(.+\.)?example.org$'));
+    Request::setTrustedHosts(array('^(.+\.)?example\.com$', '^(.+\.)?example\.org$'));
 
 The default value for this option is an empty array, meaning that the application
 can respond to any given host.
