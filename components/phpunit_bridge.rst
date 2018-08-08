@@ -248,6 +248,24 @@ times (order matters)::
         @trigger_error('The second argument of the "Bar" method is deprecated.', E_USER_DEPRECATED);
     }
 
+Display the Full Stack Trace
+----------------------------
+
+By default, the PHPUnit Bridge displays only deprecation messages.
+To show the full stack trace related to a deprecation, set the value of ``SYMFONY_DEPRECATIONS_HELPER``
+to a regular expression matching the deprecation message.
+
+For example, if the following deprecation notice is thrown::
+
+    1x: Doctrine\Common\ClassLoader is deprecated.
+      1x in EntityTypeTest::setUp from Symfony\Bridge\Doctrine\Tests\Form\Type
+
+Running the following command will display the full stack trace:
+
+.. code-block:: terminal
+
+    $ SYMFONY_DEPRECATIONS_HELPER='/Doctrine\\Common\\ClassLoader is deprecated\./' ./vendor/bin/simple-phpunit
+
 Time-sensitive Tests
 --------------------
 

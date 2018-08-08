@@ -40,7 +40,8 @@ like this:
             workflows:
                 blog_publishing:
                     type: 'workflow' # or 'state_machine'
-                    audit_trail: 'enabled'
+                    audit_trail:
+                        enabled: true
                     marking_store:
                         type: 'multiple_state' # or 'single_state'
                         arguments:
@@ -76,7 +77,9 @@ like this:
         >
 
             <framework:config>
-                <framework:workflow name="blog_publishing" type="workflow" audit_trail="enabled">
+                <framework:workflow name="blog_publishing" type="workflow">
+                    <framework:audit_trail enabled="true" />
+
                     <framework:marking-store type="single_state">
                       <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
@@ -120,7 +123,9 @@ like this:
             'workflows' => array(
                 'blog_publishing' => array(
                     'type' => 'workflow', // or 'state_machine'
-                    'audit_trail' => 'enabled',
+                    'audit_trail' => array(
+                        'enabled' => true
+                    ),
                     'marking_store' => array(
                         'type' => 'multiple_state', // or 'single_state'
                         'arguments' => array('currentPlace')
@@ -174,7 +179,7 @@ like this:
 
 .. tip::
 
-    Setting the ``audit_trail`` option to ``enabled`` makes the application
+    Setting the ``audit_trail.enabled`` option to ``true`` makes the application
     generate detailed log messages for the workflow activity.
 
 Using a Workflow

@@ -80,9 +80,27 @@ type-hinted method arguments:
     .. code-block:: xml
 
         <!-- config/packages/sensio_framework_extra.xml -->
-        <sensio-framework-extra:config>
-            <request converters="true" auto-convert="true" />
-        </sensio-framework-extra:config>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:sensio-framework-extra="http://symfony.com/schema/dic/symfony_extra"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <sensio-framework-extra:config>
+                <request converters="true" auto-convert="false" />
+            </sensio-framework-extra:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/sensio_framework_extra.php
+        $container->loadFromExtension('sensio_framework_extra', array(
+            'request' => array(
+                'converters' => true,
+                'auto_convert' => false,
+            ),
+        ));
 
 Adding a new value resolver requires creating a class that implements
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`
