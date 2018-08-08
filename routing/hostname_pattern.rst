@@ -13,10 +13,10 @@ You can also match on the HTTP *host* of the incoming request.
         // src/Controller/MainController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class MainController extends Controller
+        class MainController extends AbstractController
         {
             /**
              * @Route("/", name="mobile_homepage", host="m.example.com")
@@ -98,10 +98,10 @@ you can use placeholders in your hostname:
         // src/Controller/MainController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class MainController extends Controller
+        class MainController extends AbstractController
         {
             /**
              * @Route("/", name="projects_homepage", host="{project_name}.example.com")
@@ -178,10 +178,10 @@ instance, if you want to match both ``m.example.com`` and
         // src/Controller/MainController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class MainController extends Controller
+        class MainController extends AbstractController
         {
             /**
              * @Route(
@@ -274,10 +274,10 @@ instance, if you want to match both ``m.example.com`` and
             // src/Controller/MainController.php
             namespace App\Controller;
 
-            use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+            use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
             use Symfony\Component\Routing\Annotation\Route;
 
-            class MainController extends Controller
+            class MainController extends AbstractController
             {
                 /**
                  * @Route(
@@ -378,13 +378,13 @@ You can also set the host option on imported routes:
         // src/Controller/MainController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
         /**
          * @Route(host="hello.example.com")
          */
-        class MainController extends Controller
+        class MainController extends AbstractController
         {
             // ...
         }
