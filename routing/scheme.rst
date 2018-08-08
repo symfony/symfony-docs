@@ -15,10 +15,10 @@ the URI scheme via schemes:
         // src/Controller/MainController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class MainController extends Controller
+        class MainController extends AbstractController
         {
             /**
              * @Route("/secure", name="secure", schemes={"https"})
