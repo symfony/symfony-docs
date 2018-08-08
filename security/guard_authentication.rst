@@ -562,10 +562,10 @@ The problem occurs when your browser-based authenticator tries to authenticate
 the user on *every* request - like in the IP address-based example above. There
 are two possible fixes:
 
-1) If you do *not* need authentication to be stored in the session, set ``stateless: true``
-under your firewall.
-
-2) Update your authenticator to avoid authentication if the user is already authenticated:
+1. If you do *not* need authentication to be stored in the session, set
+   ``stateless: true`` under your firewall.
+2. Update your authenticator to avoid authentication if the user is already
+   authenticated:
 
 .. code-block:: diff
 

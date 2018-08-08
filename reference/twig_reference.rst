@@ -765,6 +765,8 @@ rootform
 .. code-block:: twig
 
     {% if form is rootform %}
+        {# ... #}
+    {% endif %}
 
 ``form``
     **type**: ``FormView``

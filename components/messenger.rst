@@ -114,11 +114,11 @@ the ``SerializerConfiguration`` envelope::
 
 At the moment, the Symfony Messenger has the following built-in envelopes:
 
-1. :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\SerializerConfiguration`,
+#. :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\SerializerConfiguration`,
    to configure the serialization groups used by the transport.
-2. :class:`Symfony\\Component\\Messenger\\Middleware\\Configuration\\ValidationConfiguration`,
+#. :class:`Symfony\\Component\\Messenger\\Middleware\\Configuration\\ValidationConfiguration`,
    to configure the validation groups used when the validation middleware is enabled.
-3. :class:`Symfony\\Component\\Messenger\\Asynchronous\\Transport\\ReceivedMessage`,
+#. :class:`Symfony\\Component\\Messenger\\Asynchronous\\Transport\\ReceivedMessage`,
    an internal item that marks the message as received from a transport.
 
 Instead of dealing directly with the messages in the middleware you can receive the
