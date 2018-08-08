@@ -14,7 +14,7 @@ Update your code to use ``createSharedEntry()``:
     Encore
         // ...
     -     .addEntry('app', 'assets/js/app.js')
-    +     .createSharedEntry('app', 'assets/js/app.js')
+    +     .createSharedEntry('app', ['assets/js/app.js', 'assets/js/vendor.js])
         .addEntry('homepage', './assets/js/homepage.js')
         .addEntry('blog', './assets/js/blog.js')
         .addEntry('store', './assets/js/store.js')
