@@ -411,3 +411,25 @@ remove this variable, it's better to use the
 
     // equivalent to:
     // $targetPath = $request->getSession()->get('_security.'.$providerKey.'.target_path');
+
+.. versionadded:: 4.2
+    The ``TargetPathHelper`` class was introduced in Symfony 4.2.
+
+You can also use the ``TargetPathHelper`` service in the same::
+
+    // ... for example: from inside the controller
+    use Symfony\Bundle\SecurityBundle\Security\TargetPathHelper;
+    // ...
+
+    public function register(Request $request, TargetPathHelper $targetPathHelper)
+    {
+        // the user clicked to register: save the previous URL
+        if ($request->isMethod('GET') && !$targetPathHelper->getPath()) {
+            // redirect to the Referer, or the homepage if none
+            $target = $request->headers->get('Referer', $this->generateUrl('homepage');
+            $targetPathHelper->savePath($target);
+        }
+
+        // later, after a successful registration POST submit
+        return $this->redirect($targetPathHelper->getPath());
+    }
