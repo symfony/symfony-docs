@@ -221,7 +221,7 @@ the default entity manager (i.e. ``default``) is returned::
 
     use Doctrine\ORM\EntityManagerInterface;
 
-    class UserController extends Controller
+    class UserController extends AbstractController
     {
         public function index(EntityManagerInterface $entityManager)
         {
@@ -247,7 +247,7 @@ The same applies to repository calls::
     use AcmeStoreBundle\Entity\Product;
     // ...
 
-    class UserController extends Controller
+    class UserController extends AbstractController
     {
         public function index()
         {

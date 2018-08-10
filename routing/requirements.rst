@@ -15,10 +15,10 @@ a routing ``{wildcard}`` to only match some regular expression:
         // src/Controller/BlogController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             /**
              * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
@@ -94,7 +94,7 @@ URL:
         // src/Controller/MainController.php
 
         // ...
-        class MainController extends Controller
+        class MainController extends AbstractController
         {
             /**
              * @Route("/{_locale}", defaults={"_locale"="en"}, requirements={
@@ -196,7 +196,7 @@ accomplished with the following route configuration:
 
         // ...
 
-        class BlogApiController extends Controller
+        class BlogApiController extends AbstractController
         {
             /**
              * @Route("/api/posts/{id}", methods={"GET","HEAD"})

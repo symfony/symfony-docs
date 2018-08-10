@@ -152,9 +152,9 @@ In your controller, you'll create a new form from the ``TaskType``::
     use App\Entity\Tag;
     use App\Form\Type\TaskType;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    class TaskController extends Controller
+    class TaskController extends AbstractController
     {
         public function new(Request $request)
         {

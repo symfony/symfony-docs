@@ -30,10 +30,10 @@ you need it or it can be used in a controller::
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Serializer\SerializerInterface;
 
-    class DefaultController extends Controller
+    class DefaultController extends AbstractController
     {
         public function index(SerializerInterface $serializer)
         {

@@ -100,7 +100,7 @@ independent of the rest of the page::
     // src/Controller/DefaultController.php
 
     // ...
-    class DefaultController extends Controller
+    class DefaultController extends AbstractController
     {
         public function about()
         {
@@ -165,7 +165,7 @@ of the master page::
     namespace App\Controller;
 
     // ...
-    class NewsController extends Controller
+    class NewsController extends AbstractController
     {
         public function latest($maxPerPage)
         {
