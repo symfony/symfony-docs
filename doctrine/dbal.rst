@@ -36,9 +36,9 @@ Then configure the ``DATABASE_URL`` environment variable in ``.env``:
     # customize this line!
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 
-Further things can be configured in ``config/packages/doctrine.yaml``. For the full
-DBAL configuration options, or to learn how to configure multiple connections,
-see :ref:`reference-dbal-configuration`.
+Further things can be configured in ``config/packages/doctrine.yaml`` - see
+:ref:`reference-dbal-configuration`. You remove the ``orm`` key in that file
+if you *don't* want to use the Doctrine ORM.
 
 You can then access the Doctrine DBAL connection by autowiring the ``Connection``
 object::
