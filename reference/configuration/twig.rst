@@ -121,7 +121,7 @@ application harder to maintain.
 cache
 ~~~~~
 
-**type**: ``string`` | ``false`` | ``Twig\Cache\CacheInterface`` **default**: ``'%kernel.cache_dir%/twig'``
+**type**: ``string`` | ``false`` **default**: ``'%kernel.cache_dir%/twig'``
 
 Before using the Twig templates to render some contents, they are compiled into
 regular PHP code. Compilation is a costly process, so the result is cached in

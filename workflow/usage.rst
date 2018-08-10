@@ -78,7 +78,7 @@ like this:
 
             <framework:config>
                 <framework:workflow name="blog_publishing" type="workflow">
-                    <framework:audit_trail enabled="true" />
+                    <framework:audit-trail enabled="true" />
 
                     <framework:marking-store type="single_state">
                       <framework:argument>currentPlace</framework:argument>

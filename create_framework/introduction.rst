@@ -41,13 +41,6 @@ a fully-featured full-stack web framework.
 And of course, each step will be the occasion to learn more about some of the
 Symfony Components.
 
-.. tip::
-
-    If you don't have time to read the whole book, or if you want to get
-    started fast, you can also have a look at `Silex`_, a micro-framework
-    based on the Symfony Components. The code is rather slim and it leverages
-    many aspects of the Symfony Components.
-
 Many modern web frameworks advertize themselves as being MVC frameworks. This
 tutorial won't talk about the MVC pattern, as the Symfony Components are able to
 create any type of frameworks, not just the ones that follow the MVC
@@ -121,5 +114,4 @@ In the :doc:`next chapter </create_framework/http_foundation>`, we are going to
 introduce the HttpFoundation Component and see what it brings us.
 
 .. _`Symfony`: https://symfony.com/
-.. _`Silex`: http://silex.sensiolabs.org/
 .. _`Composer`: http://packagist.org/about-composer
