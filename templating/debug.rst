@@ -23,7 +23,7 @@ This is useful, for example, inside your controller::
 
     // ...
 
-    class ArticleController extends Controller
+    class ArticleController extends AbstractController
     {
         public function recentList()
         {

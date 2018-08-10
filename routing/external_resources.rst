@@ -209,7 +209,7 @@ a controller class or imported from a configuration file:
         /**
          * @Route(name="blog_")
          */
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             /**
              * @Route("/blog", name="index")

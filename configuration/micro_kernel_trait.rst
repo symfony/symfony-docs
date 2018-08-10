@@ -249,10 +249,10 @@ has one file in it::
     // src/Controller/MicroController.php
     namespace App\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class MicroController extends Controller
+    class MicroController extends AbstractController
     {
         /**
          * @Route("/random/{limit}")

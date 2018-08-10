@@ -543,9 +543,9 @@ them for you. Here's the same sample application, now built in Symfony::
     namespace App\Controller;
 
     use App\Entity\Post;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    class BlogController extends Controller
+    class BlogController extends AbstractController
     {
         public function list()
         {

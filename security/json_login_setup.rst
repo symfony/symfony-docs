@@ -69,11 +69,11 @@ path:
         // src/Controller/SecurityController.php
 
         // ...
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class SecurityController extends Controller
+        class SecurityController extends AbstractController
         {
             /**
              * @Route("/login", name="login")

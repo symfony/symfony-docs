@@ -31,7 +31,7 @@ First, create a controller that renders a certain number of recent articles::
 
     // ...
 
-    class ArticleController extends Controller
+    class ArticleController extends AbstractController
     {
         public function recentArticles($max = 3)
         {

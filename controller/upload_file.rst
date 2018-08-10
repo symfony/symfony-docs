@@ -99,13 +99,13 @@ Finally, you need to update the code of the controller that handles the form::
     // src/Controller/ProductController.php
     namespace App\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
     use App\Entity\Product;
     use App\Form\ProductType;
 
-    class ProductController extends Controller
+    class ProductController extends AbstractController
     {
         /**
          * @Route("/product/new", name="app_product_new")
