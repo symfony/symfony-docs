@@ -64,7 +64,7 @@ escaped with double quotes:
   ``\x19``, ``\x1a``, ``\e``, ``\x1c``, ``\x1d``, ``\x1e``, ``\x1f``, ``\N``,
   ``\_``, ``\L``, ``\P``
 
-Finally, there are other cases when the strings must be quoted, no matter if
+Finally, there are other cases when the strings must not be quoted, no matter if
 you're using single or double quotes:
 
 * When the string is ``true`` or ``false`` (otherwise, it would be treated as a
