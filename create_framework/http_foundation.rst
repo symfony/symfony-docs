@@ -285,18 +285,18 @@ the wheel.
 
 I've almost forgot to talk about one added benefit: using the HttpFoundation
 component is the start of better interoperability between all frameworks and
-applications using it (like `Symfony`_, `Drupal 8`_, `phpBB 3`_, `ezPublish
-5`_, `Laravel`_, `Silex`_ and `more`_).
+`applications using it`_ (like `Symfony`_, `Drupal 8`_, `phpBB 3`_, `ezPublish
+5`_, `Laravel`_ and `more`_).
 
 .. _`Twig`: https://twig.symfony.com/
 .. _`HTTP specification`: https://tools.ietf.org/wg/httpbis/
 .. _`audited`: https://symfony.com/blog/symfony2-security-audit
+.. _`applications using it`: https://symfony.com/components/HttpFoundation
 .. _`Symfony`: https://symfony.com/
 .. _`Drupal 8`: https://drupal.org/
 .. _`phpBB 3`: https://www.phpbb.com/
 .. _`ezPublish 5`: https://ez.no/
 .. _`Laravel`: https://laravel.com/
-.. _`Silex`: https://silex.sensiolabs.org/
 .. _`Midgard CMS`: http://www.midgard-project.org/
 .. _`Zikula`: https://zikula.org/
 .. _`autoloaded`: https://php.net/autoload
