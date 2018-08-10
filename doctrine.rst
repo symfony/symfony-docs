@@ -336,7 +336,7 @@ and save it!
     // ...
     use App\Entity\Product;
 
-    class ProductController extends Controller
+    class ProductController extends AbstractController
     {
         /**
          * @Route("/product", name="product")

@@ -18,12 +18,12 @@ form, you can use ``setAction()`` and ``setMethod()``:
         // src/Controller/DefaultController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\SubmitType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-        class DefaultController extends Controller
+        class DefaultController extends AbstractController
         {
             public function new()
             {
@@ -79,9 +79,9 @@ options:
         namespace App\Controller;
 
         use App\Form\TaskType;
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-        class DefaultController extends Controller
+        class DefaultController extends AbstractController
         {
             public function new()
             {

@@ -265,7 +265,7 @@ key:
             access_control:
                 -
                     path: ^/_internal/secure
-                    allow_if: "'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')"
+                    allow_if: "'127.0.0.1' == request.getClientIp() or is_granted('ROLE_ADMIN')"
 
     .. code-block:: xml
 
@@ -279,7 +279,7 @@ key:
 
             <config>
                 <rule path="^/_internal/secure"
-                    allow-if="'127.0.0.1' == request.getClientIp() or has_role('ROLE_ADMIN')" />
+                    allow-if="'127.0.0.1' == request.getClientIp() or is_granted('ROLE_ADMIN')" />
             </config>
         </srv:container>
 
@@ -288,7 +288,7 @@ key:
             'access_control' => array(
                 array(
                     'path' => '^/_internal/secure',
-                    'allow_if' => '"127.0.0.1" == request.getClientIp() or has_role("ROLE_ADMIN")',
+                    'allow_if' => '"127.0.0.1" == request.getClientIp() or is_granted("ROLE_ADMIN")',
                 ),
             ),
 

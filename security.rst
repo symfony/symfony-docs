@@ -216,11 +216,11 @@ example, if you use annotations, create something like this::
     // src/Controller/DefaultController.php
     // ...
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class DefaultController extends Controller
+    class DefaultController extends AbstractController
     {
         /**
          * @Route("/admin")
@@ -901,7 +901,7 @@ using annotations::
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function hello($name)
     {

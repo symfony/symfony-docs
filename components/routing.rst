@@ -393,10 +393,10 @@ routes with UTF-8 characters:
 
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class DefaultController extends Controller
+        class DefaultController extends AbstractController
         {
             /**
              * @Route("/category/{name}", name="route1", options={"utf8": true})
@@ -462,10 +462,10 @@ You can also include UTF-8 strings as routing requirements:
 
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class DefaultController extends Controller
+        class DefaultController extends AbstractController
         {
             /**
              * @Route(

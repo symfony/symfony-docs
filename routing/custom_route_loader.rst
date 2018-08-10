@@ -174,9 +174,9 @@ have to create an ``extra()`` method in the ``ExtraController``::
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    class ExtraController extends Controller
+    class ExtraController extends AbstractController
     {
         public function extra($parameter)
         {
