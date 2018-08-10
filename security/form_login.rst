@@ -24,13 +24,6 @@ in the session (perhaps the user went directly to the login page), then the user
 is redirected to ``/`` (i.e. the homepage). You can change this behavior in
 several ways.
 
-.. note::
-
-    Sometimes, redirecting to the originally requested page can cause problems,
-    like if a background Ajax request "appears" to be the last visited URL,
-    causing the user to be redirected there. For information on controlling this
-    behavior, see :doc:`/security`.
-
 Changing the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
