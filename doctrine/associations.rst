@@ -316,7 +316,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
     use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
 
-    class ProductController extends Controller
+    class ProductController extends AbstractController
     {
         /**
          * @Route("/product", name="product")

@@ -45,7 +45,7 @@ object::
 
     use Doctrine\DBAL\Driver\Connection;
 
-    class UserController extends Controller
+    class UserController extends AbstractController
     {
         public function index(Connection $connection)
         {

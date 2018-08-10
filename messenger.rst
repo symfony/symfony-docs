@@ -29,10 +29,10 @@ you need it, like in a controller::
     namespace App\Controller;
 
     use App\Message\SendNotification;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Messenger\MessageBusInterface;
 
-    class DefaultController extends Controller
+    class DefaultController extends AbstractController
     {
         public function index(MessageBusInterface $bus)
         {

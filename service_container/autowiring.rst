@@ -125,10 +125,10 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
     namespace App\Controller;
 
     use App\Service\TwitterClient;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class DefaultController extends Controller
+    class DefaultController extends AbstractController
     {
         /**
          * @Route("/tweet")

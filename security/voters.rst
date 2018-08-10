@@ -54,7 +54,7 @@ code like this::
     // src/Controller/PostController.php
     // ...
 
-    class PostController extends Controller
+    class PostController extends AbstractController
     {
         /**
          * @Route("/posts/{id}", name="post_show")

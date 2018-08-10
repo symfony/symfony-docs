@@ -406,12 +406,12 @@ is created from the form factory.
         // src/Controller/TaskController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-        class TaskController extends Controller
+        class TaskController extends AbstractController
         {
             public function new(Request $request)
             {
@@ -468,11 +468,11 @@ builder:
         // src/Controller/DefaultController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-        class DefaultController extends Controller
+        class DefaultController extends AbstractController
         {
             public function new(Request $request)
             {
@@ -550,10 +550,10 @@ by ``handleRequest()`` to determine whether a form has been submitted):
         // src/Controller/DefaultController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Form\Extension\Core\Type\FormType;
 
-        class DefaultController extends Controller
+        class DefaultController extends AbstractController
         {
             public function search()
             {
@@ -612,11 +612,11 @@ method:
         // src/Controller/TaskController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-        class TaskController extends Controller
+        class TaskController extends AbstractController
         {
             public function new(Request $request)
             {
@@ -688,13 +688,13 @@ option when building each field:
         // src/Controller/DefaultController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-        class DefaultController extends Controller
+        class DefaultController extends AbstractController
         {
             public function new(Request $request)
             {

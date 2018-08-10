@@ -25,7 +25,7 @@ pattern is to do the following::
     // ...
     use Symfony\Component\Routing\Annotation\Route;
 
-    class ArticleController extends Controller
+    class ArticleController extends AbstractController
     {
         /**
          * @Route("/{slug}")

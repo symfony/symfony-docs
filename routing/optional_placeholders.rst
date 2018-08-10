@@ -14,7 +14,7 @@ the available blog posts for this imaginary blog application:
         // src/Controller/BlogController.php
 
         // ...
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             // ...
 
