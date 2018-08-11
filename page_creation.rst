@@ -237,9 +237,9 @@ variable so you can use it in Twig::
         {
             $number = random_int(0, 100);
 
-            return $this->render('lucky/number.html.twig', array(
+            return $this->render('lucky/number.html.twig', [
                 'number' => $number,
-            ));
+            ]);
         }
     }
 
