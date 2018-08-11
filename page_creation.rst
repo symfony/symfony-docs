@@ -206,13 +206,7 @@ If you're returning HTML from your controller, you'll probably want to render
 a template. Fortunately, Symfony comes with `Twig`_: a templating language that's
 easy, powerful and actually quite fun.
 
-First, install Twig:
-
-.. code-block:: terminal
-
-    $ composer require symfony/twig-bundle
-
-Second, make sure that ``LuckyController`` extends Symfony's base
+Make sure that ``LuckyController`` extends Symfony's base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController` class:
 
 .. code-block:: diff
