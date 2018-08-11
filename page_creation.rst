@@ -91,6 +91,14 @@ to creating a page?
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
    in their own section, including how to return JSON responses.
 
+.. tip::
+
+    To create controllers faster, let Symfony generate it for you:
+
+    .. code-block:: terminal
+
+        $ php bin/console make:controller
+
 .. _annotation-routes:
 
 Annotation Routes
@@ -125,14 +133,6 @@ You can now add your route directly *above* the controller:
 
 That's it! The page - ``http://localhost:8000/lucky/number`` will work exactly
 like before! Annotations are the recommended way to configure routes.
-
-.. tip::
-
-    To create controllers faster, let Symfony generate it for you:
-
-    .. code-block:: terminal
-
-        $ php bin/console make:controller
 
 .. _flex-quick-intro:
 
