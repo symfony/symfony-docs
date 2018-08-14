@@ -262,7 +262,7 @@ then the lock is considered as acquired; otherwise as not acquired::
 
     $stores = [];
     foreach (array('server1', 'server2', 'server3') as $server) {
-        $redis= new \Redis();
+        $redis = new \Redis();
         $redis->connect($server);
 
         $stores[] = new RedisStore($redis);
