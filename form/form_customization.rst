@@ -20,7 +20,7 @@ method:
 
     {{ form_row(form.age) }}
 
-You can also render each of the three parts of the field individually:
+You can also render each of the four parts of the field individually:
 
 .. code-block:: html+twig
 
