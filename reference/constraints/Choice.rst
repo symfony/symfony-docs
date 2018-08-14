@@ -46,7 +46,7 @@ If your valid choice list is simple, you can pass them in directly via the
         class Author
         {
             /**
-             * @Assert\Choice({"New York", "Berlin", "Tokyo"})
+             * @Assert\Choice(choices={"New York", "Berlin", "Tokyo"})
              */
             protected $city;
 
