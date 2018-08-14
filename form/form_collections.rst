@@ -314,82 +314,62 @@ On the rendered page, the result will look something like this:
     In this case the ``data-prototype`` attribute is automatically added to the containing ``div``,
     and you need to adjust the following JavaScript accordingly.
 
-The goal of this section will be to use JavaScript to read this attribute
-and dynamically add new tag forms when the user clicks a "Add a tag" link.
-To make things simple, this example uses jQuery and assumes you have it included
-somewhere on your page.
+Now we need some JavaScript to read this attribute and dynamically add new tag forms
+when the user clicks an "Add a tag" link. To make things simple, this example uses `jQuery`_.
 
-Add a ``script`` tag somewhere on your page so you can start writing some JavaScript.
+First, add the link somewhere in your template:
 
-First, add a link to the bottom of the "tags" list via JavaScript. Second,
-bind to the "click" event of that link so you can add a new tag form (``addTagForm()``
-will be show next):
+.. code-block:: html+twig
+
+    {# app/Resources/views/task/new.html.twig #}
+    
+    {# ... #}
+    
+    {{ form_start(form) }}
+    
+        {# ... #}
+
+        <a href="#" class="add_tag_link">Add a tag</a>
+        
+    {{ form_end(form) }}
+
+    {# ... #}
+
+Now add the required functionality with JavaScript:
 
 .. code-block:: javascript
 
-    var $collectionHolder;
+    // JavaScript
 
-    // setup an "add a tag" link
-    var $addTagButton = $('<button type="button" class="add_tag_link">Add a tag</button>');
-    var $newLinkLi = $('<li></li>').append($addTagButton);
-
-    jQuery(document).ready(function() {
-        // Get the ul that holds the collection of tags
-        $collectionHolder = $('ul.tags');
-
-        // add the "add a tag" anchor and li to the tags ul
-        $collectionHolder.append($newLinkLi);
-
-        // count the current form inputs we have (e.g. 2), use that as the new
-        // index when inserting a new item (e.g. 2)
-        $collectionHolder.data('index', $collectionHolder.find(':input').length);
-
-        $addTagButton.on('click', function(e) {
-            // add a new tag form (see next code block)
-            addTagForm($collectionHolder, $newLinkLi);
+    $(document).ready(function() {
+        $('.add_tag_link').click(function() {
+            addTagForm();
         });
     });
+    
+    function addTagForm() {
+        var collectionHolder = 'ul.tags';
+        // Set up a new `li` with the contents of the prototype:
+        var newForm = '<li>' + $(collectionHolder).data('prototype') + '</li>';
 
-The ``addTagForm()`` function's job will be to use the ``data-prototype`` attribute
-to dynamically add a new form when this link is clicked. The ``data-prototype``
-HTML contains the tag ``text`` input element with a name of ``task[tags][__name__][name]``
-and id of ``task_tags___name___name``. The ``__name__`` is a little "placeholder",
-which you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``).
+        // Get the index of the new `li`:
+        var index = $(collectionHolder + ' li').length;
 
-The actual code needed to make this all work can vary quite a bit, but here's
-one example:
+        // Replace `__name__` in the prototype's HTML with the current index:
+        newForm = newForm.replace(/__name__/g, index);
 
-.. code-block:: javascript
-
-    function addTagForm($collectionHolder, $newLinkLi) {
-        // Get the data-prototype explained earlier
-        var prototype = $collectionHolder.data('prototype');
-
-        // get the new index
-        var index = $collectionHolder.data('index');
-
-        var newForm = prototype;
         // You need this only if you didn't set 'label' => false in your tags field in TaskType
         // Replace '__name__label__' in the prototype's HTML to
         // instead be a number based on how many items we have
         // newForm = newForm.replace(/__name__label__/g, index);
 
-        // Replace '__name__' in the prototype's HTML to
-        // instead be a number based on how many items we have
-        newForm = newForm.replace(/__name__/g, index);
-
-        // increase the index with one for the next item
-        $collectionHolder.data('index', index + 1);
-
-        // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormLi = $('<li></li>').append(newForm);
-        $newLinkLi.before($newFormLi);
+        $(collectionHolder).append(newForm);        
     }
 
-.. note::
-
-    It is better to separate your JavaScript in real JavaScript files than
-    to write it inside the HTML as is done here.
+The ``data-prototype`` HTML contains the tag ``text`` input element with a name of
+``task[tags][__name__][name]`` and id of ``task_tags___name___name``. The ``__name__``
+is a little "placeholder", which is replaced with a unique, incrementing number
+(e.g. ``task[tags][3][name]``).
 
 Now, each time a user clicks the ``Add a tag`` link, a new sub form will
 appear on the page. When the form is submitted, any new tag forms will be converted
@@ -726,5 +706,6 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     an element in the collection and customizing the buttons is also possible.
 
 .. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
+.. _`jQuery`: http://jquery.com/
 .. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
