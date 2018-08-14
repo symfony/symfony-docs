@@ -290,11 +290,11 @@ change to the existing ``<ul>`` in your template:
 
     {# ... #}
 
-.. note::
+On the rendered page, the result will look something like this:
 
-    If you render your whole "tags" sub-form at once (e.g. ``form_row(form.tags)``),
-    then the prototype is automatically available on the outer ``div`` as
-    the ``data-prototype`` attribute, similar to what you see above.
+.. code-block:: html
+
+    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
 
 .. tip::
 
@@ -308,11 +308,11 @@ change to the existing ``<ul>`` in your template:
 
         {{ form_widget(form.tags.vars.prototype.name)|e }}
 
-On the rendered page, the result will look something like this:
+.. note::
 
-.. code-block:: html
-
-    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+    You can also render the entire "tags" sub-form at once (e.g. ``form_row(form.tags)``).
+    In this case the ``data-prototype`` attribute is automatically added to the containing ``div``,
+    and you need to adjust the following JavaScript accordingly.
 
 The goal of this section will be to use JavaScript to read this attribute
 and dynamically add new tag forms when the user clicks a "Add a tag" link.
