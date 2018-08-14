@@ -246,40 +246,49 @@ Allowing "new" Tags with the "Prototype"
 Allowing the user to dynamically add new tags means that you'll need to
 use some JavaScript. Previously you added two tags to your form in the controller.
 Now let the user add as many tag forms as they need directly in the browser.
-This will be done through a bit of JavaScript.
 
 The first thing you need to do is to let the form collection know that it will
 receive an unknown number of tags. So far you've added two tags and the form
-type expects to receive exactly two, otherwise an error will be thrown:
-``This form should not contain extra fields``. To make this flexible,
+type expects to receive exactly two, if it gets more, the following error will be
+thrown: ``This form should not contain extra fields``. To make the number flexible,
 add the ``allow_add`` option to your collection field::
 
     // src/AppBundle/Form/Type/TaskType.php
 
     // ...
-    use Symfony\Component\Form\FormBuilderInterface;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('description');
+        // ...
 
         $builder->add('tags', CollectionType::class, array(
-            'entry_type' => TagType::class,
-            'entry_options' => array('label' => false),
+            // ...
             'allow_add' => true,
         ));
     }
 
 In addition to telling the field to accept any number of submitted objects, the
-``allow_add`` also makes a *"prototype"* variable available to you. This "prototype"
-is a little "template" that contains all the HTML to be able to render any
-new "tag" forms. To render it, make the following change to your template:
+``allow_add`` option also makes a ``prototype`` variable available to you. This
+"prototype" is a little "template" that contains all the HTML needed to dynamically
+render any new "tag" forms with JavaScript. To render the prototype, make the following
+change to the existing ``<ul>`` in your template:
 
 .. code-block:: html+twig
 
-    <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
-        ...
-    </ul>
+    {# app/Resources/views/task/new.html.twig #}
+    
+    {# ... #}
+    
+    {{ form_start(form) }}
+    
+        {# ... #}
+
+        <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
+            {# ... #}
+        </ul>
+    {{ form_end(form) }}
+
+    {# ... #}
 
 .. note::
 
