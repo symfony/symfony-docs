@@ -51,6 +51,10 @@ in your ``script`` and ``link`` tags. If you're using Symfony, just activate the
             # feature is supported in Symfony 3.3 and higher
             json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
 
+.. tip::
+
+    If your project uses Symfony Flex, a file called ``assets.yaml`` is created upon installation of Webpack Encore containing the lines above, so you don't have to manually add them to ``framework.yaml``.
+
 That's it! Just be sure to wrap each path in the Twig ``asset()`` function
 like normal:
 
