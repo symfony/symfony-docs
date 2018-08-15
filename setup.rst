@@ -41,7 +41,7 @@ On production, you should use a web server like Nginx or Apache
 (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
 But for development, it's even easier to use the :doc:`Symfony PHP web server <setup/built_in_web_server>`.
 
-First, move into your new project and install the server:
+If you have downloaded the skeleton version, move into your new project and install the server:
 
 .. code-block:: terminal
 
