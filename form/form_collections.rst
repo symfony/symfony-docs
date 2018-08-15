@@ -12,13 +12,13 @@ that Task, right inside the same form.
 .. note::
 
     In this article, it's loosely assumed that you're using Doctrine as your
-    database store. But if you're not using Doctrine (e.g. Propel or just
-    a database connection), it's all very similar. There are only a few parts
-    of this tutorial that really care about "persistence".
+    database store. But if you're not using Doctrine, it's all very similar.
+    There are only a few parts of this tutorial that really care about
+    persistence.
 
     If you *are* using Doctrine, you'll need to add the Doctrine metadata,
-    including the ``ManyToMany`` association mapping definition on the Task's
-    ``tags`` property.
+    including the ``ManyToMany`` association mapping definition on the
+    ``tags`` property of ``Task``.
 
 First, suppose that each ``Task`` belongs to multiple ``Tag`` objects. Start
 by creating a simple ``Task`` class::
@@ -186,9 +186,9 @@ In your controller, you'll create a new form from the ``TaskType``::
 
 The corresponding template is now able to render both the ``description``
 field for the task form as well as all the ``TagType`` forms for any tags
-that are already related to this ``Task``. In the above controller, I added
-some dummy code so that you can see this in action (since a ``Task`` has
-zero tags when first created).
+that are already related to this ``Task``. The above controller has some
+dummy code so that you can see this in action (since a newly created ``Task``
+has zero tags).
 
 .. code-block:: html+twig
 
@@ -211,7 +211,7 @@ zero tags when first created).
 
     {# ... #}
 
-When the user submits the form, the submitted data for the ``tags`` field are
+When the user submits the form, the submitted data for the ``tags`` field is
 used to construct an ``ArrayCollection`` of ``Tag`` objects, which is then set
 on the ``tag`` field of the ``Task`` instance.
 
@@ -220,12 +220,12 @@ and can be persisted to the database or used however you need.
 
 So far, this works great, but this doesn't allow you to dynamically add new
 tags or delete existing tags. So, while editing existing tags will work
-great, your user can't actually add any new tags yet.
+great, your users can't actually add any new tags yet.
 
 .. caution::
 
     In this article, you embed only one collection, but you are not limited
-    to this. You can also embed nested collection as many levels down as you
+    to this. You can also embed nested collections as many levels down as you
     like. But if you use Xdebug in your development setup, you may receive
     a ``Maximum function nesting level of '100' reached, aborting!`` error.
     This is due to the ``xdebug.max_nesting_level`` PHP setting, which defaults
@@ -245,33 +245,31 @@ Allowing "new" Tags with the "Prototype"
 
 Allowing the user to dynamically add new tags means that you'll need to
 use some JavaScript. Previously you added two tags to your form in the controller.
-Now let the user add as many tag forms as they need directly in the browser.
+Now let the users add as many tag forms as they need directly in the browser.
 
 The first thing you need to do is to let the form collection know that it will
 receive an unknown number of tags. So far you've added two tags and the form
-type expects to receive exactly two, if it gets more, the following error will be
+type expects to receive exactly two. If it gets more, the following error will be
 thrown: ``This form should not contain extra fields``. To make the number flexible,
 add the ``allow_add`` option to your collection field::
 
     // src/AppBundle/Form/Type/TaskType.php
 
     // ...
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
-
         $builder->add('tags', CollectionType::class, array(
             // ...
             'allow_add' => true,
         ));
     }
 
-In addition to telling the field to accept any number of submitted objects, the
-``allow_add`` option also makes a ``prototype`` variable available to you. This
+In addition to telling the field to accept any number of submitted objects,
+``allow_add`` also makes a ``prototype`` variable available to you. This
 "prototype" is a little "template" that contains all the HTML needed to dynamically
 render any new "tag" forms with JavaScript. To render the prototype, make the following
-change to the existing ``<ul>`` in your template:
+change to the existing ``<ul>`` in your template::
 
 .. code-block:: html+twig
 
@@ -295,6 +293,12 @@ On the rendered page, the result will look something like this:
 .. code-block:: html
 
     <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+
+
+.. seealso::
+
+    If you want to customize the HTML code in the prototype, see
+    :ref:`form-custom-prototype`.
 
 .. tip::
 
@@ -342,7 +346,8 @@ Now add the required functionality with JavaScript:
     // JavaScript
 
     $(document).ready(function() {
-        $('.add_tag_link').click(function() {
+        $('.add_tag_link').click(function(e) {
+            e.preventDefault();
             addTagForm();
         });
     });
@@ -362,8 +367,10 @@ Now add the required functionality with JavaScript:
         // Replace '__name__label__' in the prototype's HTML to
         // instead be a number based on how many items we have
         // newForm = newForm.replace(/__name__label__/g, index);
-
-        $(collectionHolder).append(newForm);        
+        
+        // Convert the HTML string to a jQuery object. This is needed later, when we add a "delete this tag" link:
+        var $newForm = $(newForm);
+        $(collectionHolder).append($newForm);        
     }
 
 The ``data-prototype`` HTML contains the tag ``text`` input element with a name of
@@ -371,30 +378,23 @@ The ``data-prototype`` HTML contains the tag ``text`` input element with a name 
 is a little "placeholder", which is replaced with a unique, incrementing number
 (e.g. ``task[tags][3][name]``).
 
-Now, each time a user clicks the ``Add a tag`` link, a new sub form will
-appear on the page. When the form is submitted, any new tag forms will be converted
-into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` object.
-
 .. seealso::
 
     You can find a working example in this `JSFiddle`_.
 
-.. seealso::
-
-    If you want to customize the HTML code in the prototype, read
-    :ref:`form-custom-prototype`.
+Now, each time a user clicks the ``Add a tag`` link, a new sub form will
+appear on the page. When the form is submitted, any new tag forms will be converted
+into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` object.
 
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
 
     // src/AppBundle/Entity/Task.php
-    namespace AppBundle\Entity;
 
     // ...
     class Task
     {
         // ...
-
         public function addTag(Tag $tag)
         {
             $this->tags->add($tag);
@@ -402,7 +402,7 @@ for the tags in the ``Task`` class::
 
         public function removeTag(Tag $tag)
         {
-            // ...
+            // empty for now
         }
     }
 
@@ -414,7 +414,6 @@ Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false`
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
-
         $builder->add('tags', CollectionType::class, array(
             // ...
             'by_reference' => false,
@@ -494,12 +493,12 @@ you will learn about next!).
 
     A second potential issue deals with the `Owning Side and Inverse Side`_
     of Doctrine relationships. In this example, if the "owning" side of the
-    relationship is "Task", then persistence will work fine as the tags are
-    properly added to the Task. However, if the owning side is on "Tag", then
+    relationship is ``Task``, then persistence will work fine as the tags are
+    properly added to the task. However, if the owning side is on ``Tag``, then
     you'll need to do a little bit more work to ensure that the correct side
     of the relationship is modified.
 
-    The trick is to make sure that the single "Task" is set on each "Tag".
+    The trick is to make sure that the single ``Task`` is set on each ``Tag``.
     One easy way to do this is to add some extra logic to ``addTag()``,
     which is called by the form type since ``by_reference`` is set to
     ``false``::
@@ -532,11 +531,10 @@ you will learn about next!).
 
 .. _form-collections-remove:
 
-Allowing Tags to be Removed
+Allowing Tags to Be Removed
 ---------------------------
 
 The next step is to allow the deletion of a particular item in the collection.
-The solution is similar to allowing tags to be added.
 
 Start by adding the ``allow_delete`` option in the form Type::
 
@@ -546,7 +544,6 @@ Start by adding the ``allow_delete`` option in the form Type::
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
-
         $builder->add('tags', CollectionType::class, array(
             // ...
             'allow_delete' => true,
@@ -561,15 +558,11 @@ Now, you need to put some code into the ``removeTag()`` method of ``Task``::
     class Task
     {
         // ...
-
         public function removeTag(Tag $tag)
         {
             $this->tags->removeElement($tag);
         }
     }
-
-Template Modifications
-~~~~~~~~~~~~~~~~~~~~~~
 
 The ``allow_delete`` option means that if an item of a collection
 isn't sent on submission, the related data is removed from the collection
@@ -577,44 +570,45 @@ on the server. In order for this to work in an HTML form, you must remove
 the DOM element for the collection item to be removed, before submitting
 the form.
 
-First, add a "delete this tag" link to each tag form:
+First, prepare a JavaScript function that adds a "delete this tag" link::
 
 .. code-block:: javascript
 
-    jQuery(document).ready(function() {
-        // Get the ul that holds the collection of tags
-        $collectionHolder = $('ul.tags');
-
-        // add a delete link to all of the existing tag form li elements
-        $collectionHolder.find('li').each(function() {
-            addTagFormDeleteLink($(this));
-        });
-
-        // ... the rest of the block from above
-    });
-
-    function addTagForm() {
-        // ...
-
-        // add a delete link to the new form
-        addTagFormDeleteLink($newFormLi);
-    }
-
-The ``addTagFormDeleteLink()`` function will look something like this:
-
-.. code-block:: javascript
-
-    function addTagFormDeleteLink($tagFormLi) {
-        var $removeFormButton = $('<button type="button">Delete this tag</button>');
+    function addDeleteLink($tagFormLi) {
+        var $removeFormButton = $('<a href="#">Delete this tag</a>');
         $tagFormLi.append($removeFormButton);
 
-        $removeFormButton.on('click', function(e) {
-            // remove the li for the tag form
+        $removeFormButton.click(function(e) {
+            e.preventDefault();
             $tagFormLi.remove();
         });
     }
 
-When a tag form is removed from the DOM and submitted, the removed ``Tag`` object
+Now call this function in ``addTagForm()`` function from above:
+
+.. code-block:: javascript
+
+    function addTagForm() {
+        // ...
+        addDeleteLink($newForm);
+    }
+
+This adds the "delete" link to all tag forms that were created by JavaScript
+(i.e. after the user clicked the "add new tag" link from above). But what
+about any tags that already existed on the server? You could easily add the
+"delete" link inside the ``for`` loop of your Twig template, but you'd have
+to adjust the JavaScript a little. Or you can just create them with JavaScript
+too:
+
+.. code-block:: javascript
+
+    $(document).ready(function() {
+        $('ul.tags').find('li').each(function() {
+            addDeleteLink($(this));
+        });
+    });
+
+When a tag form is removed from the DOM on submission, the removed ``Tag`` object
 will not be included in the collection passed to ``setTags()``. Depending on
 your persistence layer, this may or may not be enough to actually remove
 the relationship between the removed ``Tag`` and ``Task`` object.
