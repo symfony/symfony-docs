@@ -41,6 +41,7 @@ Tag Name                                  Usage
 `translation.dumper`_                     Register a custom service that dumps translation messages
 `twig.extension`_                         Register a custom Twig Extension
 `twig.loader`_                            Register a custom service that loads Twig templates
+`twig.runtime`_                           Register a lazy-loaded Twig Extension
 `validator.constraint_validator`_         Create your own custom validation constraint
 `validator.initializer`_                  Register a service that initializes objects before validation
 ========================================  ========================================================================
@@ -1174,6 +1175,55 @@ also register it manually:
 
     The ``priority`` value is optional and defaults to ``0``.
     The higher priority loaders are tried first.
+
+.. _reference-dic-tags-twig-runtime:
+
+twig.runtime
+--------------
+
+**Purpose**: To register a custom Lazy-Loaded Twig Extension
+
+To enable a Lazy Loaded Twig extension, add it as a regular service in one of your
+configuration and tag it with ``twig.runtime``. If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+the service is auto-registered and auto-tagged. But, you can also register it manually:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\Twig\AppExtension:
+                tags: [twig.runtime]
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Twig\AppExtension">
+                    <tag name="twig.runtime" />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use App\Twig\AppExtension;
+        use App\Twig\AnotherExtension;
+
+        $container
+            ->register(AppExtension::class)
+            ->addTag('twig.runtime')
+        ;
+       
+For information on how to create the actual Runtime Twig Extension class, see
+`Twig's documentation`_ on the topic or read the
+:doc:`/templating/twig_extension#creating-lazy-loaded-twig-extensions` article.
 
 validator.constraint_validator
 ------------------------------
