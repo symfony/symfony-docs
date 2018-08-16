@@ -435,10 +435,9 @@ you will learn about next!).
 
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
 
-    To save the new tags with Doctrine, you need to consider a couple more
-    things. First, unless you iterate over all of the new ``Tag`` objects and
-    call ``$entityManager->persist($tag)`` on each, you'll receive an error from
-    Doctrine:
+    To save the new tags with Doctrine, you need to consider two more things. First,
+    unless you iterate over all of the new ``Tag`` objects and call
+    ``$entityManager->persist($tag)`` on each, you'll receive this error from Doctrine:
 
         A new entity was found through the relationship
         ``AppBundle\Entity\Task#tags`` that was not configured to
@@ -446,7 +445,7 @@ you will learn about next!).
 
     To fix this, you may choose to "cascade" the persist operation automatically
     from the ``Task`` object to any related tags. To do this, add the ``cascade``
-    option to your ``ManyToMany`` metadata:
+    option to your mapping:
 
     .. configuration-block::
 
@@ -491,17 +490,16 @@ you will learn about next!).
                 </entity>
             </doctrine-mapping>
 
-    A second potential issue deals with the `Owning Side and Inverse Side`_
-    of Doctrine relationships. In this example, if the "owning" side of the
-    relationship is ``Task``, then persistence will work fine as the tags are
-    properly added to the task. However, if the owning side is on ``Tag``, then
-    you'll need to do a little bit more work to ensure that the correct side
-    of the relationship is modified.
-
-    The trick is to make sure that the single ``Task`` is set on each ``Tag``.
-    One easy way to do this is to add some extra logic to ``addTag()``,
-    which is called by the form type since ``by_reference`` is set to
-    ``false``::
+    The second potential issue deals with the `Owning Side and Inverse Side`_
+    of Doctrine relationships. In the many-to-many association of this example,
+    if the "owning" side of the relationship is ``Task``, then persistence will
+    work fine as the tags are properly added to the task.
+    
+    However, if you have a **one-to-many** association, the owning side is always the
+    "many" side (``Tag`` in our example). In this case you have to make sure that
+    the ``Task`` is set on each ``Tag``. This can be done by adding a single line
+    to the "adder" we created above, which is called by the form type since
+    ``by_reference`` is set to ``false``::
 
         // src/AppBundle/Entity/Task.php
 
@@ -513,15 +511,14 @@ you will learn about next!).
             // for a many-to-one association:
             $tag->setTask($this);
 
-            $this->tags->add($tag);
+            // ...
         }
 
-    If you're going for ``addTask()``, just make sure you have an appropriate method
-    that looks something like this::
+    In case of the many-to-many association, just make sure you have an appropriate
+    method inside ``Tag`` that looks something like this::
 
         // src/AppBundle/Entity/Tag.php
 
-        // ...
         public function addTask(Task $task)
         {
             if (!$this->tasks->contains($task)) {
