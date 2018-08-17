@@ -156,9 +156,8 @@ entity), you should check for the entity's class type in your method
 .. tip::
 
     In Doctrine 2.4, a feature called Entity Listeners was introduced.
-    It is a lifecycle listener class used for an entity. See
-    https://symfony.com/doc/current/bundles/DoctrineBundle/entity-listeners.html
-    
+    It is a lifecycle listener class used for an entity. You can read
+    about it in `the Doctrine Documentation`_.
 
 Creating the Subscriber Class
 -----------------------------
@@ -270,3 +269,4 @@ to the tag like so:
     definitions which are described :doc:`in their own article </service_container/lazy_services>`
 
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
+.. _`the Doctrine Documentation`: https://symfony.com/doc/current/bundles/DoctrineBundle/entity-listeners.html
