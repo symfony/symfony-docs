@@ -91,6 +91,14 @@ to creating a page?
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
    in their own section, including how to return JSON responses.
 
+.. tip::
+
+    To create controllers faster, let Symfony generate it for you:
+
+    .. code-block:: terminal
+
+        $ php bin/console make:controller
+
 .. _annotation-routes:
 
 Annotation Routes
@@ -125,14 +133,6 @@ You can now add your route directly *above* the controller:
 
 That's it! The page - ``http://localhost:8000/lucky/number`` will work exactly
 like before! Annotations are the recommended way to configure routes.
-
-.. tip::
-
-    To create controllers faster, let Symfony generate it for you:
-
-    .. code-block:: terminal
-
-        $ php bin/console make:controller
 
 .. _flex-quick-intro:
 
@@ -176,7 +176,7 @@ To get a list of *all* of the routes in your system, use the ``debug:router`` co
 
     $ php bin/console debug:router
 
-You should see your *one* route so far:
+You should see your `app_lucky_number` route at the very top:
 
 ================== ======== ======== ====== ===============
  Name               Method   Scheme   Host   Path
@@ -184,28 +184,20 @@ You should see your *one* route so far:
  app_lucky_number   ANY      ANY      ANY    /lucky/number
 ================== ======== ======== ====== ===============
 
+You will also see debugging routes below `app_lucky_number` -- more on the debugging routes in the next section.
+
 You'll learn about many more commands as you continue!
 
 The Web Debug Toolbar: Debugging Dream
 --------------------------------------
 
 One of Symfony's *killer* features is the Web Debug Toolbar: a bar that displays
-a *huge* amount of debugging information along the bottom of your page while developing.
+a *huge* amount of debugging information along the bottom of your page while developing. This is all
+included out of the box using a package called ``symfony/profiler-pack``.
 
-To use the web debug toolbar, install the Profiler pack first:
-
-.. code-block:: terminal
-
-    $ composer require --dev symfony/profiler-pack
-
-As soon as this finishes, refresh your page. You should see a black bar along the
-bottom of the page. You'll learn more about all the information it holds along the
-way, but feel free to experiment: hover over and click the different icons to get
-information about routing, performance, logging and more.
-
-This is also a great example of Flex! After downloading the profiler package,
-the recipe created several configuration files so that the web debug toolbar
-worked instantly.
+You will see a black bar along the bottom of the page. You'll learn more about all the information it holds 
+along the way, but feel free to experiment: hover over and click 
+the different icons to get information about routing, performance, logging and more.
 
 Rendering a Template
 --------------------
@@ -214,13 +206,7 @@ If you're returning HTML from your controller, you'll probably want to render
 a template. Fortunately, Symfony comes with `Twig`_: a templating language that's
 easy, powerful and actually quite fun.
 
-First, install Twig:
-
-.. code-block:: terminal
-
-    $ composer require symfony/twig-bundle
-
-Second, make sure that ``LuckyController`` extends Symfony's base
+Make sure that ``LuckyController`` extends Symfony's base
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController` class:
 
 .. code-block:: diff
@@ -251,9 +237,9 @@ variable so you can use it in Twig::
         {
             $number = random_int(0, 100);
 
-            return $this->render('lucky/number.html.twig', array(
+            return $this->render('lucky/number.html.twig', [
                 'number' => $number,
-            ));
+            ]);
         }
     }
 
