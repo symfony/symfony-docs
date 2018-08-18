@@ -493,7 +493,7 @@ configuration:
         // ...
         use Symfony\Component\Routing\Annotation\Route;
 
-        class WelcomeController extends Controller
+        class WelcomeController extends AbstractController
         {
             /**
              * @Route("/", name="welcome")
@@ -556,7 +556,7 @@ route:
         // ...
         use Symfony\Component\Routing\Annotation\Route;
 
-        class ArticleController extends Controller
+        class ArticleController extends AbstractController
         {
             /**
              * @Route("/article/{slug}", name="article_show")

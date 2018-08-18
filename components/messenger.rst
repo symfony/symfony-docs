@@ -61,7 +61,7 @@ Example::
 
     use App\Message\MyMessage;
     use Symfony\Component\Messenger\MessageBus;
-    use Symfony\Component\Messenger\HandlerLocator;
+    use Symfony\Component\Messenger\Handler\Locator\HandlerLocator;
     use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
 
     $bus = new MessageBus([

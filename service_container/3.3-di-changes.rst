@@ -343,7 +343,7 @@ action methods, just like you can with the constructor of services. For example:
 
     use Psr\Log\LoggerInterface;
 
-    class InvoiceController extends Controller
+    class InvoiceController extends AbstractController
     {
         public function listInvoices(LoggerInterface $logger)
         {

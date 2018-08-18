@@ -92,9 +92,9 @@ A controller that implements this interface simply looks like this::
     namespace App\Controller;
 
     use App\Controller\TokenAuthenticatedController;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    class FooController extends Controller implements TokenAuthenticatedController
+    class FooController extends AbstractController implements TokenAuthenticatedController
     {
         // An action that needs authentication
         public function bar()

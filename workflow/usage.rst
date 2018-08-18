@@ -193,10 +193,10 @@ you can get the workflow by injecting the Workflow registry service::
     // ...
     use Symfony\Component\Workflow\Registry;
     use App\Entity\BlogPost;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Workflow\Exception\TransitionException;
 
-    class BlogController extends Controller
+    class BlogController extends AbstractController
     {
         public function edit(Registry $workflows)
         {

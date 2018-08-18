@@ -329,9 +329,9 @@ type as a service.
 
 In a controller, create the form like normal::
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-    class FriendMessageController extends Controller
+    class FriendMessageController extends AbstractController
     {
         public function new(Request $request)
         {
@@ -504,13 +504,13 @@ your application. Assume that you have a sport meetup creation controller::
     // src/Controller/MeetupController.php
     namespace App\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use App\Entity\SportMeetup;
     use App\Form\Type\SportMeetupType;
     // ...
 
-    class MeetupController extends Controller
+    class MeetupController extends AbstractController
     {
         public function create(Request $request)
         {

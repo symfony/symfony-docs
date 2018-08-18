@@ -64,7 +64,7 @@ To see a simple implementation, generate the ETag as the md5 of the content::
 
     use Symfony\Component\HttpFoundation\Request;
 
-    class DefaultController extends Controller
+    class DefaultController extends AbstractController
     {
         public function homepage(Request $request)
         {
@@ -129,7 +129,7 @@ header value::
     use Symfony\Component\HttpFoundation\Request;
     use App\Entity\Article;
 
-    class ArticleController extends Controller
+    class ArticleController extends AbstractController
     {
         public function show(Article $article, Request $request)
         {
@@ -188,7 +188,7 @@ exposing a simple and efficient pattern::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\Request;
 
-    class ArticleController extends Controller
+    class ArticleController extends AbstractController
     {
         public function show($articleSlug, Request $request)
         {

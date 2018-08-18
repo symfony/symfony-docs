@@ -39,7 +39,7 @@ in your layout, *before* ``app.js``:
 
 Before making this change, if both ``app.js`` and ``store.js`` require ``jquery``,
 then ``jquery`` would be packaged into *both* files, which is wasteful. By making
-``app.js`` your "shard" entry, *any* code required by ``app.js`` (like jQuery) will
+``app.js`` your "shared" entry, *any* code required by ``app.js`` (like jQuery) will
 *no longer* be packaged into any other files. The same is true for any CSS.
 
 Because ``app.js`` contains all the common code that other entry files depend on,

@@ -104,10 +104,10 @@ some developers configure form buttons in the controller::
     use App\Entity\Post;
     use App\Form\PostType;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-    class PostController extends Controller
+    class PostController extends AbstractController
     {
         // ...
 
