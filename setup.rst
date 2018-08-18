@@ -34,6 +34,10 @@ In other words, your new app is ready!
 
         $ composer create-project symfony/skeleton my-project
 
+        # optional: install the web server bundle (explained next)
+        $ cd my-project
+        $ composer require symfony/web-server-bundle --dev
+
 Running your Symfony Application
 --------------------------------
 
@@ -41,17 +45,11 @@ On production, you should use a web server like Nginx or Apache
 (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
 But for development, it's even easier to use the :doc:`Symfony PHP web server <setup/built_in_web_server>`.
 
-If you have downloaded the skeleton version, move into your new project and install the server:
+Move into your new project and start the server:
 
 .. code-block:: terminal
 
     $ cd my-project
-    $ composer require symfony/web-server-bundle --dev
-
-To start the server, run:
-
-.. code-block:: terminal
-
     $ php bin/console server:run
 
 Open your browser and navigate to ``http://localhost:8000/``. If everything is working,
