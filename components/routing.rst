@@ -255,6 +255,28 @@ out here.
 
 .. include:: /_includes/_annotation_loader_tip.rst.inc
 
+Some final example to use routes as annotations::
+
+    \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader([$loader, 'loadClass']);
+
+    use Symfony\Component\Routing\Matcher\UrlMatcher;
+    use Symfony\Component\Routing\RequestContext;
+
+    $loader = new \Symfony\Component\Routing\Loader\AnnotationDirectoryLoader(
+        new \Symfony\Component\Config\FileLocator(__DIR__.'/app/controllers/'),
+        new \Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader(
+            new \Doctrine\Common\Annotations\AnnotationReader()
+        )
+    );
+
+    $routes = $loader->load(__DIR__.'/app/controllers/');
+
+    $context = new RequestContext('/');
+
+    $matcher = new UrlMatcher($routes, $context);
+
+    $parameters = $matcher->match($_SERVER['REQUEST_URI']);
+
 The all-in-one Router
 ~~~~~~~~~~~~~~~~~~~~~
 
