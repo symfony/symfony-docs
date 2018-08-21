@@ -170,6 +170,14 @@ Sort the result by name or by type (directories first, then files)::
 
     $finder->sortByType();
 
+Sort the files and directories by the last accessed, changed or modified time::
+
+    $finder->sortByAccessedTime();
+
+    $finder->sortByChangedTime();
+
+    $finder->sortByModifiedTime();
+
 .. note::
 
     Notice that the ``sort*`` methods need to get all matching elements to do
