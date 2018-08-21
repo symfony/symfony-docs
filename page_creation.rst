@@ -176,7 +176,7 @@ To get a list of *all* of the routes in your system, use the ``debug:router`` co
 
     $ php bin/console debug:router
 
-You should see your `app_lucky_number` route at the very top:
+You should see your ``app_lucky_number`` route at the very top:
 
 ================== ======== ======== ====== ===============
  Name               Method   Scheme   Host   Path
@@ -184,7 +184,8 @@ You should see your `app_lucky_number` route at the very top:
  app_lucky_number   ANY      ANY      ANY    /lucky/number
 ================== ======== ======== ====== ===============
 
-You will also see debugging routes below `app_lucky_number` -- more on the debugging routes in the next section.
+You will also see debugging routes below ``app_lucky_number`` -- more on
+the debugging routes in the next section.
 
 You'll learn about many more commands as you continue!
 
