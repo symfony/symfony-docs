@@ -7,18 +7,122 @@
 Doctrine Event Listeners and Subscribers
 ========================================
 
-Doctrine packages have a rich event system that fires events when almost anything
-happens inside the system. For you, this means that you can create arbitrary
-:doc:`services </service_container>` and tell Doctrine to notify those
-objects whenever a certain action (e.g. ``prePersist()``) happens within Doctrine.
-This could be useful, for example, to create an independent search index
-whenever an object in your database is saved.
+Doctrine has a rich event system that fires when almost anything happens
+inside the system. This means that you can create arbitrary
+:doc:`services </service_container>` and configure Doctrine to call those
+whenever a certain action occurs (e.g. an entity gets persisted).
+So instead of having to call some service *every single time* whenever
+you're doing something in the database ...
 
-Doctrine defines two types of objects that can listen to Doctrine events:
-listeners and subscribers. Both are very similar, but listeners are a bit
+    $userService->doWhateverPrePersist();
+    $em->persist($user);
+
+... you could easily set up `doWhateverPrePersist()` as a listener and
+then just call `$em->persist($user);` in your main code.
+
+As a first step, you should decide which event you want to listen for. Here
+are some popular events - for a full list see `Doctrine's Lifecycle Events`_:
+
+* `prePersist` and `postPersist`
+* `preUpdate` and `postUpdate`
+* `preRemove` and `postRemove`
+* `preFlush` and `postFlush`
+
+The second question would be:
+
+* Should your service only listen for a *specific* entity? Then go for
+  Entity Listeners
+* Or should your service be called for *all* entities (or at least
+  *several* entities)? Then go for Event Listeners or Event Subscribers
+  
+Entity Listeners
+----------------
+
+To set up an entity listener, start by creating a listener class:
+
+.. code-block:: php
+
+    // src/EventListener/UserListener
+    namespace App\EventListener;
+
+    use Doctrine\ORM\Event\LifecycleEventArgs;
+    use App\Entity\User;
+
+    class UserListener
+    {    
+        public function prePersist(User $user, LifecycleEventArgs $event)
+        {
+            // ...
+        }
+    }
+
+Next, you have to register the class as a listener. There are two ways to
+achieve this:
+
+You can either do the registration in your entity like this:
+
+.. code-block:: php
+
+    // src/Entity/User.php
+    namespace App\Entity\User;
+
+    use Doctrine\ORM\Mapping as ORM;
+
+    /**
+     * @ORM\Entity
+     * @ORM\EntityListeners({"App\EventListener\UserListener"})
+     */
+    class User
+    {
+        // ...
+    }
+
+This works fine, but your event listener will not be registered as a service
+(even if you have ``autowire: true`` in your ``services.yaml``). So to register
+it as a service, you have to add this to your ``services.yaml``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\EventListener\UserListener:
+                tags:
+                    - { name: doctrine.orm.entity_listener }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+            <services>
+                <service id="App\EventListener\UserListener">
+                    <tag name="doctrine.orm.entity_listener" />
+                </service>
+            </services>
+        </container>
+
+Alternatively, you could do the entire configuration in ``services.yaml`` and
+omit the ``@ORM\EntityListeners`` annotation in the entity:
+
+.. code-block:: yaml
+
+    services:
+        App\EventListener\UserListener:
+            tags:
+                - { name: doctrine.orm.entity_listener, entity: App\Entity\User, event: prePersist }
+
+To register the listener for a custom entity manager, just add the ``entity_manager`` attribute.
+
+For more info on entity listeners, see `Entity Listeners`_
+
+Event Listeners and Event Subscribers
+-------------------------------------
+
+Event listeners and subscribers are very similar, but listeners are a bit
 more straightforward. For more, see `The Event System`_ on Doctrine's website.
-
-The Doctrine website also explains all existing events that can be listened to.
 
 Configuring the Listener/Subscriber
 -----------------------------------
@@ -268,5 +372,7 @@ to the tag like so:
     Marking an event listener as ``lazy`` has nothing to do with lazy service
     definitions which are described :doc:`in their own article </service_container/lazy_services>`
 
+.. _`Doctrine's Lifecycle Events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#lifecycle-events
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
 .. _`the Doctrine Documentation`: https://symfony.com/doc/current/bundles/DoctrineBundle/entity-listeners.html
+.. _`Entity Listeners`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#entity-listeners
