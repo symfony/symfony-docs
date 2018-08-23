@@ -138,9 +138,9 @@ Finally, you need to update the code of the controller that handles the form::
                 return $this->redirect($this->generateUrl('app_product_list'));
             }
 
-            return $this->render('product/new.html.twig', array(
+            return $this->render('product/new.html.twig', [
                 'form' => $form->createView(),
-            ));
+            ]);
         }
 
         /**

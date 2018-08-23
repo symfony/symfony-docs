@@ -397,9 +397,9 @@ is created from the form factory.
             ->add('dueDate', DateType::class)
             ->getForm();
 
-        var_dump($twig->render('new.html.twig', array(
+        var_dump($twig->render('new.html.twig', [
             'form' => $form->createView(),
-        )));
+        ]));
 
     .. code-block:: php-symfony
 
@@ -423,9 +423,9 @@ is created from the form factory.
                     ->add('dueDate', DateType::class)
                     ->getForm();
 
-                return $this->render('task/new.html.twig', array(
+                return $this->render('task/new.html.twig', [
                     'form' => $form->createView(),
-                ));
+                ]);
             }
         }
 

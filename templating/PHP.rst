@@ -76,9 +76,9 @@ below renders the ``index.html.php`` template::
     public function index($name)
     {
         // template is stored in src/Resources/views/hello/index.html.php
-        return $this->render('hello/index.html.php', array(
+        return $this->render('hello/index.html.php', [
             'name' => $name
-        ));
+        ]);
     }
 
 .. caution::
@@ -230,7 +230,7 @@ And change the ``index.html.php`` template to include it:
     <!-- src/Resources/views/hello/index.html.php -->
     <?php $view->extend('layout.html.php') ?>
 
-    <?php echo $view->render('hello/hello.html.php', array('name' => $name)) ?>
+    <?php echo $view->render('hello/hello.html.php', ['name' => $name]) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).

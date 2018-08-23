@@ -49,7 +49,7 @@ which uses the template reference to actually find and load the template::
 
     $templating = new PhpEngine(new TemplateNameParser(), $filesystemLoader);
 
-    echo $templating->render('hello.php', array('firstname' => 'Fabien'));
+    echo $templating->render('hello.php', ['firstname' => 'Fabien']);
 
 .. code-block:: html+php
 
@@ -85,7 +85,7 @@ to render the template originally) inside the template to render another templat
 
     <?php $names = array('Fabien', ...) ?>
     <?php foreach ($names as $name) : ?>
-        <?php echo $view->render('hello.php', array('firstname' => $name)) ?>
+        <?php echo $view->render('hello.php', ['firstname' => $name]) ?>
     <?php endforeach ?>
 
 Global Variables

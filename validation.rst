@@ -177,9 +177,9 @@ will appear.
 You could also pass the collection of errors into a template::
 
     if (count($errors) > 0) {
-        return $this->render('author/validation.html.twig', array(
+        return $this->render('author/validation.html.twig', [
             'errors' => $errors,
-        ));
+        ]);
     }
 
 Inside the template, you can output the list of errors exactly as needed:

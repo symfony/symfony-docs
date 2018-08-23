@@ -37,9 +37,9 @@ pattern is to do the following::
 
             $format = $request->getRequestFormat();
 
-            return $this->render('article/show.'.$format.'.twig', array(
+            return $this->render('article/show.'.$format.'.twig', [
                 'article' => $article,
-            ));
+            ]);
         }
     }
 
