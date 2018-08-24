@@ -206,7 +206,6 @@ the ``PasswordDigest`` header value matches with the user's password::
     use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
-    use Symfony\Component\Security\Core\Exception\NonceExpiredException;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use App\Security\Authentication\Token\WsseUserToken;
 
@@ -259,7 +258,9 @@ the ``PasswordDigest`` header value matches with the user's password::
             // Validate that the nonce is *not* in cache
             // if it is, this could be a replay attack
             if ($cacheItem->isHit()) {
-                throw new NonceExpiredException('Previously used nonce detected');
+                // In a real world application you should throw a custom
+                // exception extending the AuthenticationException
+                throw new AuthenticationException('Previously used nonce detected');
             }
 
             // Store the item in cache for 5 minutes
