@@ -78,12 +78,14 @@ router service and override its settings::
     use Symfony\Component\Routing\RouterInterface;
     // ...
 
-    class DemoCommand extends ContainerAwareCommand
+    class DemoCommand extends Command
     {
         private $router;
 
         public function __construct(RouterInterface $router)
         {
+            parent::__construct();
+        
             $this->router = $router;
         }
 
