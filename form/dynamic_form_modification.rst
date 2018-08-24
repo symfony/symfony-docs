@@ -523,7 +523,7 @@ your application. Assume that you have a sport meetup creation controller::
 
             return $this->render(
                 'meetup/create.html.twig',
-                array('form' => $form->createView())
+                ['form' => $form->createView()]
             );
         }
 

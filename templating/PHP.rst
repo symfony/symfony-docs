@@ -254,10 +254,10 @@ If you create a ``fancy`` action, and want to include it into the
     <?php echo $view['actions']->render(
         new \Symfony\Component\HttpKernel\Controller\ControllerReference(
             'App\Controller\HelloController::fancy',
-            array(
+            [
                 'name'  => $name,
                 'color' => 'green',
-            )
+            ]
         )
     ) ?>
 
