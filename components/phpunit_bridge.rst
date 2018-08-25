@@ -473,6 +473,13 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
             </listener>
         </listeners>
     </phpunit>
+    
+Under the hood, this component defines time and dns functions in the tested
+class namespace when the annotated test is run. Because of a PHP unexpected
+behavior (see https://bugs.php.net/bug.php?id=64346), a test may pass when
+run alone but fail when run in a tests suite if the tested class is used
+before these time and dns functions are defined. Configuring the mocked
+namespaces in the ``phpunit.xml`` file may solve this issue too.
 
 Modified PHPUnit script
 -----------------------
