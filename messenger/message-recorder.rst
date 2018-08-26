@@ -1,21 +1,23 @@
 .. index::
     single: Messenger; Record messages
 
-Record Events Produced by a Handler
-===================================
+Events Recorder: Handle Events After CommandHandler Is Done
+===========================================================
 
-In an example application there is a command (a CQRS message) named ``CreateUser``.
-That command is handled by the ``CreateUserHandler`` which creates
-a ``User`` object, stores that object to a database and dispatches a ``UserCreatedEvent``.
+Let's take the example of an application that has a command (a CQRS message) named
+``CreateUser``. That command is handled by the ``CreateUserHandler`` which creates
+a ``User`` object, stores that object to a database and dispatches a ``UserCreated`` event.
 That event is also a normal message but is handled by an *event* bus.
 
-There are many subscribers to the ``UserCreatedEvent``, one subscriber may send
-a welcome email to the new user. Since we are using the ``DoctrineTransactionMiddleware``
-we wrap all database queries in one database transaction and rollback that transaction
-if an exception is thrown. That means that if an exception is thrown when sending
-the welcome email, then the user will not be created.
+There are many subscribers to the ``UserCreated`` event, one subscriber may send
+a welcome email to the new user. We are using the ``DoctrineTransactionMiddleware``
+to wrap all database queries in one database transaction.
 
-The solution to this issue is to not dispatch the ``UserCreatedEvent`` in the
+**Problem:** If an exception is thrown when sending the welcome email, then the user
+will not be created because the ``DoctrineTransactionMiddleware`` will rollback the
+Doctrine transaction, in which the user has been created.
+
+**Solution:** The solution is to not dispatch the ``UserCreated`` event in the
 ``CreateUserHandler`` but to just "record" the events. The recorded events will
 be dispatched after ``DoctrineTransactionMiddleware`` has committed the transaction.
 
@@ -69,6 +71,7 @@ in the middleware chain.
             $user = new User($command->getUuid(), $command->getName(), $command->getEmail());
             $this->em->persist($user);
 
+            // "Record" this event to be processed later by "handles_recorded_messages".
             $this->eventRecorder->record(new UserCreatedEvent($command->getUuid());
         }
     }
