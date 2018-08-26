@@ -1223,7 +1223,7 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
        
 For information on how to create the actual Runtime Twig Extension class, see
 `Twig's documentation`_ on the topic or read the
-:doc:`/templating/twig_extension#creating-lazy-loaded-twig-extensions` article.
+:ref:`Creating Lazy-Loaded Twig Extensions <lazy-loaded-twig-extensions>` article.
 
 validator.constraint_validator
 ------------------------------
