@@ -110,6 +110,14 @@ type-hinted method arguments:
             ),
         ));
 
+
+.. tip::
+    To keep Doctrine's `@ParamConverter` enabled, simply use an interface instead of an object.
+    
+    For example, using a `App\Interface\CustomUserInterface` instead of your `App\Entity\User`
+    will allow you to inject the interface while still using `@ParamConverter` for entities.
+
+
 Adding a new value resolver requires creating a class that implements
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`
 and defining a service for it. The interface defines two methods:
