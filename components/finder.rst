@@ -178,6 +178,14 @@ Sort the result by name or by type (directories first, then files)::
     .. versionadded:: 4.2
         The option to use the natural sort order was introduced in Symfony 4.2.
 
+Sort the files and directories by the last accessed, changed or modified time::
+
+    $finder->sortByAccessedTime();
+
+    $finder->sortByChangedTime();
+
+    $finder->sortByModifiedTime();
+
 You can also define your own sorting algorithm with ``sort()`` method::
 
     $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
