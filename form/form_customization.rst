@@ -755,7 +755,7 @@ form, modify the ``use`` tag and add the following:
     {% block form_label %}
         {{ block('base_form_label') }}
 
-        {% if required %}
+        {% if label is not same as(false) and required %}
             <span class="required" title="This field is required">*</span>
         {% endif %}
     {% endblock %}
@@ -770,7 +770,7 @@ the following:
     {% block form_label %}
         {{ parent() }}
 
-        {% if required %}
+        {% if label is not same as(false) and required %}
             <span class="required" title="This field is required">*</span>
         {% endif %}
     {% endblock %}

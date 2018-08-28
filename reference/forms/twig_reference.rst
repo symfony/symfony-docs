@@ -322,7 +322,7 @@ done by using a public ``vars`` property on the
 .. code-block:: html+twig
 
     <label for="{{ form.name.vars.id }}"
-        class="{{ form.name.vars.required ? 'required' : '' }}">
+        class="{{ form.name.vars.required ? 'required' }}">
         {{ form.name.vars.label }}
     </label>
 
