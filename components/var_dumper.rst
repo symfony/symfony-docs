@@ -119,7 +119,7 @@ Inside a Symfony application, the output of the dump server is configured with
 the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
 ``debug`` package.
 
-Outside a Symfony application, one is required to use the ServerDumper class:
+Outside a Symfony application, use the ``ServerDumper`` class:
 
     require __DIR__.'/vendor/autoload.php';
     
