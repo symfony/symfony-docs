@@ -250,32 +250,24 @@ Annotation Routing Loaders
 Last but not least there are
 :class:`Symfony\\Component\\Routing\\Loader\\AnnotationDirectoryLoader` and
 :class:`Symfony\\Component\\Routing\\Loader\\AnnotationFileLoader` to load
-route definitions from class annotations. The specific details are left
-out here.
+route definitions from class annotations::
 
-.. include:: /_includes/_annotation_loader_tip.rst.inc
+    use Doctrine\Common\Annotations\AnnotationReader;
+    use Symfony\Component\Config\FileLocator;
+    use Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader;
+    use Symfony\Component\Routing\Loader\AnnotationDirectoryLoader;
 
-Some final example to use routes as annotations::
-
-    \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader([$loader, 'loadClass']);
-
-    use Symfony\Component\Routing\Matcher\UrlMatcher;
-    use Symfony\Component\Routing\RequestContext;
-
-    $loader = new \Symfony\Component\Routing\Loader\AnnotationDirectoryLoader(
-        new \Symfony\Component\Config\FileLocator(__DIR__.'/app/controllers/'),
-        new \Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader(
-            new \Doctrine\Common\Annotations\AnnotationReader()
+    $loader = new AnnotationDirectoryLoader(
+        new FileLocator(__DIR__.'/app/controllers/'),
+        new AnnotatedRouteControllerLoader(
+            new AnnotationReader()
         )
     );
 
     $routes = $loader->load(__DIR__.'/app/controllers/');
+    // ...
 
-    $context = new RequestContext('/');
-
-    $matcher = new UrlMatcher($routes, $context);
-
-    $parameters = $matcher->match($_SERVER['REQUEST_URI']);
+.. include:: /_includes/_annotation_loader_tip.rst.inc
 
 The all-in-one Router
 ~~~~~~~~~~~~~~~~~~~~~
