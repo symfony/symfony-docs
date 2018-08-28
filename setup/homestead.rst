@@ -75,5 +75,5 @@ developing your Symfony application!
 .. _Homestead: https://laravel.com/docs/homestead
 .. _Vagrant: https://www.vagrantup.com/
 .. _the Homestead documentation: https://laravel.com/docs/homestead#installation-and-setup
-.. _Daily Usage: https://laravel.com/docs/5.1/homestead#daily-usage
+.. _Daily Usage: https://laravel.com/docs/homestead#daily-usage
 .. _this blog post: https://www.whitewashing.de/2013/08/19/speedup_symfony2_on_vagrant_boxes.html

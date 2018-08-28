@@ -119,6 +119,20 @@ Inside a Symfony application, the output of the dump server is configured with
 the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
 ``debug`` package.
 
+Outside a Symfony application, use the ``ServerDumper`` class:
+
+    require __DIR__.'/vendor/autoload.php';
+    
+    use Symfony\Component\VarDumper\VarDumper;
+    use Symfony\Component\VarDumper\Cloner\VarCloner;
+    use Symfony\Component\VarDumper\Dumper\ServerDumper;
+    
+    VarDumper::setHandler(function ($var) {
+      $cloner = new VarCloner();
+      $dumper = new ServerDumper('tcp://127.0.0.1:9912');     
+      $dumper->dump($cloner->cloneVar($var));
+    });
+
 DebugBundle and Twig Integration
 --------------------------------
 

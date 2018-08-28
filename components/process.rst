@@ -241,7 +241,7 @@ Before a process is started, you can specify its standard input using either the
 of the constructor. The provided input can be a string, a stream resource or a
 Traversable object::
 
-    $process = new Process('cat']);
+    $process = new Process('cat');
     $process->setInput('foobar');
     $process->run();
 
