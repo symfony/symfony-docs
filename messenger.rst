@@ -48,8 +48,10 @@ message handler. It's a class with an ``__invoke`` method::
 
     // src/MessageHandler/MyMessageHandler.php
     namespace App\MessageHandler;
+    
+    use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-    class MyMessageHandler
+    class MyMessageHandler implements MessageHandlerInterface
     {
         public function __invoke(MyMessage $message)
         {
@@ -57,7 +59,7 @@ message handler. It's a class with an ``__invoke`` method::
         }
     }
 
-Once you've created your handler, you need to register it:
+Once you've created your handler, you need to register it (this is done automatically if you have implemented the MessageHandlerInterface):
 
 .. configuration-block::
 
