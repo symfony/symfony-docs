@@ -9,7 +9,7 @@ The Security Component
     authentication, interactive form login or X.509 certificate login, but also
     allows you to implement your own authentication strategies. Furthermore, the
     component provides ways to authorize authenticated users based on their
-    roles, and it contains an advanced ACL system.
+    roles.
 
 Installation
 ------------
@@ -35,9 +35,6 @@ used separately:
 
 ``symfony/security-csrf``
     It provides protection against `CSRF attacks`_.
-
-``symfony/security-acl``
-    It provides a fine grained permissions mechanism based on Access Control Lists.
 
 .. seealso::
 
