@@ -121,7 +121,7 @@ command to install it in your application:
 .. code-block:: terminal
 
     $ cd my-project/
-    $ composer require sensiolabs/security-checker --dev
+    $ composer require security-checker --dev
 
 From now on, this utility will be run automatically whenever you install or
 update any dependency in the application. If a dependency contains a vulnerability,
