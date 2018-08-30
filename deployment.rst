@@ -114,7 +114,7 @@ Common Pre-Deployment Tasks
 Before deploying your Symfony project, there are a number of common tasks you might need to do:
 
 A) Building and Minifying your Assets
-~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Follow these steps to get started building and minifying your assets: :ref:`how-do-i-deploy-my-encore-assets`.
 
