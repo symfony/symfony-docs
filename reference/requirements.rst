@@ -13,7 +13,7 @@ your system meets all those requirements. Run this command to install the tool:
 .. code-block:: terminal
 
     $ cd your-project/
-    $ composer require requirements-checker
+    $ composer require req-check
 
 Beware that PHP can define a different configuration for the command console and
 the web server, so you need to check requirements in both environments.
@@ -31,7 +31,7 @@ to avoid leaking internal information about your application to visitors:
 .. code-block:: terminal
 
     $ cd your-project/
-    $ composer remove requirements-checker
+    $ composer remove req-check
 
 Checking Requirements for the Command Console
 ---------------------------------------------
