@@ -108,6 +108,16 @@ Basic scripting
     You can of course use shell, `Ant`_ or any other build tool to script
     the deploying of your project.
 
+Common Pre-Deployment Tasks
+----------------------------
+
+Before deploying your Symfony project, there are a number of common tasks you might need to do:
+
+A) Building and Minifying your Assets
+~~~~~~~~~~~~~~~~~~~~
+
+Follow these steps to get started building and minifying your assets: :ref:`how-do-i-deploy-my-encore-assets`.
+
 Common Post-Deployment Tasks
 ----------------------------
 
@@ -177,16 +187,7 @@ Make sure you clear and warm-up your Symfony cache:
 
     $ php bin/console cache:clear --env=prod --no-debug
 
-E) Dump your Assetic Assets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you're using Assetic, you'll also want to dump your assets:
-
-.. code-block:: terminal
-
-    $ php bin/console assetic:dump --env=prod --no-debug
-
-F) Other Things!
+E) Other Things!
 ~~~~~~~~~~~~~~~~
 
 There may be lots of other things that you need to do, depending on your
@@ -194,7 +195,6 @@ setup:
 
 * Running any database migrations
 * Clearing your APC cache
-* Running ``assets:install`` (already taken care of in ``composer install``)
 * Add/edit CRON jobs
 * Pushing assets to a CDN
 * ...
