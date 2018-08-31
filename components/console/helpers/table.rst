@@ -353,10 +353,10 @@ The only requirement to append rows is that the table must be rendered inside a
             $section = $output->section();
             $table = new Table($section);
 
-            $table->addRow(['Row 1']);
+            $table->addRow(['Love']);
             $table->render();
 
-            $table->addRow(['Row 2']);
+            $table->appendRow(['Symfony']);
         }
     }
 
@@ -364,7 +364,7 @@ This will display the following table in the terminal:
 
 .. code-block:: terminal
 
-    +-------+
-    | Row 1 |
-    | Row 2 |
-    +-------+
+    +---------+
+    | Love    |
+    | Symfony |
+    +---------+
