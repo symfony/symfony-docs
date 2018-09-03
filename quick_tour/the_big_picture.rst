@@ -59,7 +59,7 @@ Try your new app by going to ``http://localhost:8000`` in a browser!
 Fundamentals: Route, Controller, Response
 -----------------------------------------
 
-Our project only has about 15 files, but it's ready to become an sleek API, a robust
+Our project only has about 15 files, but it's ready to become a sleek API, a robust
 web app, or a microservice. Symfony starts small, but scales with you.
 
 But before we go too far, let's dig into the fundamentals by building our first page.
