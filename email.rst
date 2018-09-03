@@ -17,7 +17,7 @@ install the Swift Mailer based mailer before using it:
 
 .. code-block:: terminal
 
-    $ composer require symfony/swiftmailer-bundle
+    $ composer require mail
 
 If your application doesn't use Symfony Flex, follow the installation
 instructions on `SwiftMailerBundle`_.
