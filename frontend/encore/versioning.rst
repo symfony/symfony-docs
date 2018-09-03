@@ -44,9 +44,9 @@ in your ``script`` and ``link`` tags. If you're using Symfony, just activate the
 
 .. code-block:: yaml
 
-    # config/packages/framework.yaml
+    # this file is added automatically when installing Encore with Symfony Flex
+    # config/packages/assets.yaml
     framework:
-        # ...
         assets:
             # feature is supported in Symfony 3.3 and higher
             json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
