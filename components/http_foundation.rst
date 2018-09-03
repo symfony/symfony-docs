@@ -616,7 +616,7 @@ Learn More
     /http_cache/*
 
 .. _Packagist: https://packagist.org/packages/symfony/http-foundation
-.. _Nginx: http://wiki.nginx.org/XSendfile
+.. _Nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
 .. _Apache: https://tn123.org/mod_xsendfile/
 .. _`JSON Hijacking`: http://haacked.com/archive/2009/06/25/json-hijacking.aspx
 .. _OWASP guidelines: https://www.owasp.org/index.php/OWASP_AJAX_Security_Guidelines#Always_return_JSON_with_an_Object_on_the_outside
