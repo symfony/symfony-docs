@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-08-30T20:50:55Z
+
+Can you point me in the direction where they are deprecated?
+
+---------------------------------------------------------------------------
+
+by aequasi at 2018-08-30T20:58:01Z
+
+https://github.com/doctrine/persistence/blob/master/lib/Doctrine/Common/Persistence/Event/LifecycleEventArgs.php#L32
+
+---------------------------------------------------------------------------
+
+by aequasi at 2018-08-30T20:59:05Z
+
+Updated a reference to use the Common lib's LifecycleEventArgs, as i believe thats the standard now.
