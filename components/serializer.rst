@@ -1217,9 +1217,14 @@ between the possible objects. In practice, when using the Serializer component,
 pass a :class:`Symfony\\Component\\Serializer\\Mapping\\ClassDiscriminatorResolverInterface`
 implementation to the :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`.
 
-Consider an application that defines an abstract ``CodeRepository`` class
-extended by ``GitHubCodeRepository`` and ``BitBucketCodeRepository`` classes.
-This example shows how to serialize and deserialize those objects::
+The Serializer component provides an implementation of ``ClassDiscriminatorResolverInterface``
+called :class:`Symfony\\Component\\Serializer\\Mapping\\ClassDiscriminatorFromClassMetadata`
+which uses the class metadata factory and a mapping configuration to serialize
+and deserialize objects of the correct class.
+
+When using the Symfony Standard Edition and the class metadata factory is enabled
+as explained in the :ref:`Attributes Groups section <component-serializer-attributes-groups>`,
+this is already set up and you only need to provide the configuration. Otherwise::
 
     // ...
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -1237,15 +1242,9 @@ This example shows how to serialize and deserialize those objects::
         array('json' => new JsonEncoder())
     );
 
-    $serialized = $serializer->serialize(new GitHubCodeRepository());
-    // {"type": "github"}
-
-    $repository = $serializer->deserialize($serialized, CodeRepository::class, 'json');
-    // instanceof GitHubCodeRepository
-
-If the class metadata factory is enabled as explained in the
-:ref:`Attributes Groups section <component-serializer-attributes-groups>`, you
-can use this simpler configuration:
+Now configure your discriminator class mapping. Consider an application that
+defines an abstract ``CodeRepository`` class extended by ``GitHubCodeRepository``
+and ``BitBucketCodeRepository`` classes:
 
 .. configuration-block::
 
@@ -1290,6 +1289,16 @@ can use this simpler configuration:
                 </discriminator-map>
             </class>
         </serializer>
+
+
+Once configured, the serializer uses the mapping to pick the correct class::
+
+    $serialized = $serializer->serialize(new GitHubCodeRepository());
+    // {"type": "github"}
+
+    $repository = $serializer->deserialize($serialized, CodeRepository::class, 'json');
+    // instanceof GitHubCodeRepository
+
 
 Learn more
 ----------
