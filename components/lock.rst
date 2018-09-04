@@ -233,7 +233,6 @@ support blocking, and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\PdoStore;
 
-
     // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
     $databaseConnectionOrDSN = 'mysql:host=127.0.0.1;dbname=lock';
     $store = new PdoStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
@@ -336,7 +335,7 @@ Remote Stores
 
 Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
 :ref:`PdoStore <lock-store-pdo>` and :ref:`RedisStore <lock-store-redis>`) use
-an unique token to recognize the true owner of the lock. This token is stored
+a unique token to recognize the true owner of the lock. This token is stored
 in the :class:`Symfony\\Component\\Lock\\Key` object and is used internally by
 the ``Lock``, therefore this key must not be shared between processes (session,
 caching, fork, ...).
@@ -478,25 +477,25 @@ method uses the Memcached's ``flush()`` method which purges and removes everythi
 PdoStore
 ~~~~~~~~~~
 
-The PdoStore rely on the `ACID`_ properties of the SQL engine.
+The PdoStore relies on the `ACID`_ properties of the SQL engine.
 
 .. caution::
 
-    In a cluster configured with multiple master, ensure writes are
+    In a cluster configured with multiple primaries, ensure writes are
     synchronously propagated to every nodes, or always use the same node.
 
 .. caution::
 
-    Some SQL engine like MySQL allows to disable unique constraint check.
+    Some SQL engines like MySQL allow to disable the unique constraint check.
     Ensure that this is not the case ``SET unique_checks=1;``.
 
-In order to purge old lock, this store use a current datetime to define a
+In order to purge old locks, this store uses a current datetime to define an
 expiration date reference. This mechanism relies on all server nodes to
-have synchronized clock.
+have synchronized clocks.
 
 .. caution::
 
-    To ensure locks don't expire prematurely; the ttl's should be set with
+    To ensure locks don't expire prematurely; the TTLs should be set with
     enough extra time to account for any clock drift between nodes.
 
 RedisStore
