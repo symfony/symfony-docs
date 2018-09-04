@@ -274,9 +274,11 @@ to the tag like so:
 
 
 Priorities for Event Listeners
---------------------------------
+------------------------------
 
-In case you have multiple listeners for the same event you can control the order in which they are invoked using the `priority` attribute on the tag. Listeners with a higher priority are invoked first.
+In case you have multiple listeners for the same event you can control the order
+in which they are invoked using the ``priority`` attribute on the tag.
+Listeners with a higher priority are invoked first.
 
 .. configuration-block::
 
