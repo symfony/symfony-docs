@@ -959,7 +959,7 @@ Learn more
 * :doc:`/components/css_selector`
 
 .. _`PHPUnit`: https://phpunit.de/
-.. _`documentation`: https://phpunit.de/documentation.html
+.. _`documentation`: https://phpunit.readthedocs.io/
 .. _`PHPUnit Bridge component`: https://symfony.com/components/PHPUnit%20Bridge
 .. _`$_SERVER`: https://php.net/manual/en/reserved.variables.server.php
 .. _`data providers`: https://phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers
