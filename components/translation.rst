@@ -167,14 +167,18 @@ example, assume you're trying to translate into the ``es_AR`` locale:
 #. First, the translator looks for the translation in the ``es_AR``
    (Argentinean Spanish) locale;
 
-#. If it wasn't found, the translator looks for the translation in the
-   ``es_419`` (Latin American Spanish) locale;
+#. If it wasn't found, the translator looks for the translation in the parent
+   locale, which is automatically defined only for some locales. In this
+   example, the parent locale is ``es_419`` (Latin American Spanish);
 
 #. If it wasn't found, the translator looks for the translation in the ``es``
    (Spanish) locale;
 
 #. If the translation still isn't found, the translator uses the one or more
    fallback locales set explicitly on the translator.
+
+.. versionadded:: 4.2
+    The use of parent locales was introduced in Symfony 4.2.
 
 For (3), the fallback locales can be set by calling
 :method:`Symfony\\Component\\Translation\\Translator::setFallbackLocales`::
