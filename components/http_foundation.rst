@@ -262,23 +262,23 @@ this complexity and defines some methods for the most common tasks::
     use Symfony\Component\HttpFoundation\HeaderUtils;
 
     // Splits an HTTP header by one or more separators
-    HeaderUtils::split('da, en-gb;q=0.8', ',;')
-    // => array(array('da'), array('en-gb'), array('q', '0.8'))
+    HeaderUtils::split('da, en-gb;q=0.8', ',;');
+    // => array(array('da'), array('en-gb','q=0.8'))
 
     // Combines an array of arrays into one associative array
-    HeaderUtils::combine(array(array('foo', 'abc'), array('bar')))
+    HeaderUtils::combine(array(array('foo', 'abc'), array('bar')));
     // => array('foo' => 'abc', 'bar' => true)
 
     // Joins an associative array into a string for use in an HTTP header
-    HeaderUtils::toString(array('foo' => 'abc', 'bar' => true, 'baz' => 'a b c'), ',')
+    HeaderUtils::toString(array('foo' => 'abc', 'bar' => true, 'baz' => 'a b c'), ',');
     // => 'foo=abc, bar, baz="a b c"'
 
     // Encodes a string as a quoted string, if necessary
-    HeaderUtils::quote('foo "bar"')
-    // => 'foo \"bar\"'
+    HeaderUtils::quote('foo "bar"');
+    // => '"foo \"bar\""'
 
     // Decodes a quoted string
-    HeaderUtils::unquote('foo \"bar\"')
+    HeaderUtils::unquote('"foo \"bar\""');
     // => 'foo "bar"'
 
 Accessing ``Accept-*`` Headers Data
@@ -708,7 +708,7 @@ Learn More
     /http_cache/*
 
 .. _Packagist: https://packagist.org/packages/symfony/http-foundation
-.. _Nginx: http://wiki.nginx.org/XSendfile
+.. _Nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
 .. _Apache: https://tn123.org/mod_xsendfile/
 .. _`JSON Hijacking`: http://haacked.com/archive/2009/06/25/json-hijacking.aspx
 .. _OWASP guidelines: https://www.owasp.org/index.php/OWASP_AJAX_Security_Guidelines#Always_return_JSON_with_an_Object_on_the_outside
