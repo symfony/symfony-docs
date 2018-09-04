@@ -58,8 +58,14 @@ Access the value with ``getenv()`` in your code::
     $dbUser = getenv('DB_USER');
     // you can also use ``$_ENV`` or ``$_SERVER``
 
+The ``load()`` method never overwrites existing environment variables. Use the
+``overload()`` method if you need to overwrite them::
+
+    // ...
+    $dotenv->overload(__DIR__.'/.env');
+
 .. versionadded:: 4.2
-    Passing ``$overrideExistingVars`` as ``true`` in ``Dotenv::populate()`` or calling ``Dotenv::overload()`` instead of ``Dotenv::load()`` allow you to overwrite existing environment variables.
+    The ``Dotenv::overload()`` method was introduced in Symfony 4.2.
 
 You should never store a ``.env`` file in your code repository as it might
 contain sensitive information; create a ``.env.dist`` file with sensible
