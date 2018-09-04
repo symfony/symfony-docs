@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-04T13:12:56Z
+
+@royklutman thanks for removing the obsolete Assetic stuff. I agree adding a link to building assets with Webpack Encore ... but I prefer to not create a new section called *"Things to do before deploying"*.
+
+The reason is that there are multiple things that you can do before the actual deployment ... or after deploying but before publishing the app ... it all depends on your setup and deployment strategy. So, let's keep a single general list of things to do and people should figure out the details.
+
+Thanks!
