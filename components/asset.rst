@@ -355,7 +355,7 @@ they all have different base paths::
         'doc' => new PathPackage('/somewhere/deep/for/documents', $versionStrategy),
     );
 
-    $packages = new Packages($defaultPackage, $namedPackages)
+    $packages = new Packages($defaultPackage, $namedPackages);
 
 The ``Packages`` class allows to define a default package, which will be applied
 to assets that don't define the name of package to use. In addition, this
