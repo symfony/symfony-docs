@@ -108,16 +108,6 @@ Basic scripting
     You can of course use shell, `Ant`_ or any other build tool to script
     the deploying of your project.
 
-Common Pre-Deployment Tasks
-----------------------------
-
-Before deploying your Symfony project, there are a number of common tasks you might need to do:
-
-A) Building and Minifying your Assets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Follow these steps to get started building and minifying your assets: :ref:`how-do-i-deploy-my-encore-assets`.
-
 Common Post-Deployment Tasks
 ----------------------------
 
@@ -196,6 +186,7 @@ setup:
 * Running any database migrations
 * Clearing your APC cache
 * Add/edit CRON jobs
+* ref:`Building and minifying your assets <how-do-i-deploy-my-encore-assets>` with Webpack Encore
 * Pushing assets to a CDN
 * ...
 
