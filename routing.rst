@@ -212,11 +212,10 @@ caused by definition inconsistency.
 
 .. tip::
 
-    If you use full locales (language + territory) in your application (e.g. `fr_FR`),
-    you can use the language part only in your routes configurations (e.g. `fr`).
-
-    It also prevents you from repeating yourself when you want to use the same route path
-    for several full locales that share the same language (e.g. `fr_FR` and `fr_BE`).
+    If the application uses full language + territory locales (e.g. ``fr_FR``,
+    ``fr_BE``), you can use the language part only in your routes (e.g. ``fr``).
+    This prevents having to define multiple paths when you want to use the same
+    route path for locales that share the same language.
 
 .. versionadded:: 4.2
     The feature to fall back on the language part only was introduced in Symfony 4.2.
