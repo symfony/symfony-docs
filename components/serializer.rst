@@ -1231,10 +1231,6 @@ This example shows how to serialize and deserialize those objects::
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
     $discriminator = new ClassDiscriminatorFromClassMetadata($classMetadataFactory);
-    $discriminator->addClassMapping(CodeRepository::class, new ClassDiscriminatorMapping('type', [
-        'github' => GitHubCodeRepository::class,
-        'bitbucket' => BitBucketCodeRepository::class,
-    ]));
 
     $serializer = new Serializer(
         array(new ObjectNormalizer($classMetadataFactory, null, null, null, $discriminator)),
