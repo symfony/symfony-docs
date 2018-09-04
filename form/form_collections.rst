@@ -567,7 +567,7 @@ on the server. In order for this to work in an HTML form, you must remove
 the DOM element for the collection item to be removed, before submitting
 the form.
 
-First, prepare a JavaScript function that adds a "delete this tag" link::
+First, prepare a JavaScript function that adds a "delete this tag" link:
 
 .. code-block:: javascript
 
