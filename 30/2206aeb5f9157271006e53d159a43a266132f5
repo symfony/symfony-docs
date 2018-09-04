@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by fmata at 2018-09-04T15:44:58Z
+
+Code merged, doc ready.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-04T15:57:43Z
+
+@fmata thanks a lot for this contribution! Another lovely addition to Symfony 4.2.
+
+I reworded the doc a bit to not mention `populate()` because we never mention that method in the docs. Thanks!
