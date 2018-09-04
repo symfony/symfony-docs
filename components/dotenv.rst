@@ -59,7 +59,7 @@ Access the value with ``getenv()`` in your code::
     // you can also use ``$_ENV`` or ``$_SERVER``
 
 .. versionadded:: 4.2
-    Passing ``true`` in ``Dotenv()`` constructor allow you to overwrite existing environment variables.
+    Passing ``$overrideExistingVars`` as ``true`` in ``Dotenv::populate()`` or calling ``Dotenv::overload()`` instead of ``Dotenv::load()`` allow you to overwrite existing environment variables.
 
 You should never store a ``.env`` file in your code repository as it might
 contain sensitive information; create a ``.env.dist`` file with sensible
