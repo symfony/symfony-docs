@@ -1245,6 +1245,11 @@ and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
     create a custom :doc:`security voter </security/voters>` that looks for the
     user roles in the database.
 
+Custom Roles
+------------------
+
+When creating custom roles, ensure that the role names are prefixed by ``ROLE_`` otherwise they will be ignored.
+
 Final Words
 -----------
 
