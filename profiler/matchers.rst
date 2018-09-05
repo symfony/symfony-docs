@@ -24,8 +24,8 @@ class in your controllers to manage the profiler programmatically::
         public function someMethod(?Profiler $profiler)
         {
             // $profiler won't be set if your environment doesn't have the profiler (like prod, by default)
-            if ($profiler !== null) {
-                // for this particular controller action, the profiler is disabled
+            if (null !== $profiler) {
+                // if it exists, disable the profiler for this particular controller action
                 $profiler->disable();
             }
 
@@ -40,13 +40,13 @@ create an alias pointing to the existing ``profiler`` service:
 
     .. code-block:: yaml
 
-        # config/dev/services.yaml
+        # config/services_dev.yaml
         services:
             Symfony\Component\HttpKernel\Profiler\Profiler: '@profiler'
 
     .. code-block:: xml
 
-        <!-- config/dev/services.xml -->
+        <!-- config/services_dev.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -60,7 +60,7 @@ create an alias pointing to the existing ``profiler`` service:
 
     .. code-block:: php
 
-        // config/dev/services.php
+        // config/services_dev.php
         use Symfony\Component\HttpKernel\Profiler\Profiler;
 
         $container->setAlias(Profiler::class, 'profiler');
