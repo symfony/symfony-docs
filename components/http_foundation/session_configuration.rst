@@ -153,6 +153,20 @@ be securely controlled from the server side.
     with an expiry time of ``time()`` + ``cookie_lifetime`` where the time is taken
     from the server.
 
+Session Cookie SameSite
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.2
+    The option to use SameSite cookies for session was introduced in 4.2.
+
+SameSite cookies are a measure to protect against Cross Site Forgery Request (CSRF) attacks by preventing the cookies to be sent to the server if a request was not originated from the domain the cookies are for.
+
+There are two modes, ``lax`` and ``strict``. When set to ``strict`` cookies will never be sent along with the request, whereas with ``lax`` the cookies will be sent with HTTP GET requests, but not with HTTP POST requests.
+
+This option can be set with the ``cookie_samesite`` setting.
+
+This option will be available for sessions in PHP as of version 7.3, but Symfony has a polyfill for older versions of PHP, so it can also be used in PHP version lower than 7.3 as well.
+
 Configuring Garbage Collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
