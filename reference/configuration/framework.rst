@@ -141,6 +141,7 @@ Configuration
   * `cookie_httponly`_
   * `cookie_lifetime`_
   * `cookie_path`_
+  * `cookie_samesite`_
   * `cookie_secure`_
   * `gc_divisor`_
   * `gc_maxlifetime`_
@@ -813,6 +814,40 @@ cookie_domain
 This determines the domain to set in the session cookie. By default it's
 blank, meaning the host name of the server which generated the cookie according
 to the cookie specification.
+
+cookie_samesite
+...............
+
+**type**: ``string`` or ``null`` **default**: ``'lax'``
+
+. versionadded:: 4.2
+    The ``cookie_samesite`` option was introduced in Symfony 4.2.
+
+It controls they way cookies are sent when the HTTP request was not originated
+from the same domain the cookies are associated to. Setting this option is
+recommended to mitigate `CSRF security attacks`_.
+
+By default, browsers send all cookies related to the domain of the HTTP request.
+This may be a problem for example when you visit a forum and some malicious
+comment includes a link like ``https://some-bank.com/?send_money_to=attacker&amount=1000``.
+If you were previously logged into your bank website, the browser will send all
+those cookies when making that HTTP request.
+
+The possible values for this option are:
+
+* ``null``, use it to disable this protection. Same behavior as in older Symfony
+  versions.
+* ``'strict'`` (or the ``Cookie::SAMESITE_STRICT`` constant), use it to never
+  send any cookie when the HTTP request is not originated from the same domain.
+* ``'lax'`` (or the ``Cookie::SAMESITE_LAX`` constant), use it to allow sending
+  cookies when the request originated from a different domain, but only when the
+  user consciously made the request (by clicking a link or submitting a form
+  with the ``GET`` method).
+
+.. note::
+
+    This option is available starting from PHP 7.3, but Symfony has a polyfill
+    so you can use it with any older PHP version as well.
 
 cookie_secure
 .............
@@ -2023,3 +2058,4 @@ available, or to ``flock`` otherwise. Store's DSN are also allowed.
 .. _`gulp-rev`: https://www.npmjs.com/package/gulp-rev
 .. _`webpack-manifest-plugin`: https://www.npmjs.com/package/webpack-manifest-plugin
 .. _`error_reporting PHP option`: https://secure.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
+.. _`CSRF security attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
