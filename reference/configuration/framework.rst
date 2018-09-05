@@ -818,7 +818,7 @@ to the cookie specification.
 cookie_samesite
 ...............
 
-**type**: ``string`` or ``null`` **default**: ``'lax'``
+**type**: ``string`` or ``null`` **default**: ``null``
 
 . versionadded:: 4.2
     The ``cookie_samesite`` option was introduced in Symfony 4.2.
