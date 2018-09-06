@@ -182,8 +182,6 @@ you can dispatch the logic through multiples classes and keep your controller th
 
 Here's a simple FormHandler::
 
-.. code-block:: php
-
     <?php
 
     namespace App\Form\Handler;
