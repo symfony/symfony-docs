@@ -237,7 +237,7 @@ First, create your receiver::
            $this->filePath = $filePath;
        }
 
-       public function receive(callable $handler) : void
+       public function receive(callable $handler): void
        {
            $ordersFromCsv = $this->serializer->deserialize(file_get_contents($this->filePath), 'csv');
 
