@@ -70,6 +70,12 @@ Next, register your class as a service and tag it with ``twig.extension``. If yo
 using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you're done! Symfony will automatically know about your new service and add the tag.
 
+Execute this command to verify if your new filter was successfully registered:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:twig --filter=price
+
 You can now start using your filter in any Twig template.
 
 Creating Lazy-Loaded Twig Extensions
