@@ -208,7 +208,7 @@ Here's a simple FormHandler::
             }
 
             return false;
-        }
-    }
+         }
+     }
 
 Next: :doc:`/best_practices/i18n`
