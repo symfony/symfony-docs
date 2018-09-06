@@ -809,17 +809,17 @@ the ``SenderInterface`` and ``ReceiverInterface``). It will look like this::
 
     class YourTransport implements TransportInterface
     {
-        public function send($message) : void
+        public function send($message): void
         {
             // ...
         }
 
-        public function receive(callable $handler) : void
+        public function receive(callable $handler): void
         {
             // ...
         }
 
-        public function stop() : void
+        public function stop(): void
         {
             // ...
         }
