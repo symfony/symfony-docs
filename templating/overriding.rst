@@ -28,7 +28,6 @@ extend from the original template, not from the overridden one:
 .. code-block:: twig
 
     {# app/Resources/AcmeBlogBundle/views/Blog/index.html.twig #}
-
     {# the special '!' prefix avoids errors when extending from an overridden template #}
     {% extends "@!AcmeBlogBundle/index.html.twig" %}
 
