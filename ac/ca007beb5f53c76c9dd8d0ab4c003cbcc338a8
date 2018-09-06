@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by colinodell at 2018-08-10T12:30:18Z
+
+The constraint has been renamed, so I've updated the documentation accordingly.
+
+---------------------------------------------------------------------------
+
+by colinodell at 2018-09-04T18:33:52Z
+
+Thanks for the heads-up @javiereguiluz! Looks like the `Range` constraint was being added in the same spot in the docs :upside_down_face:  I have squashed my two commits together and rebased them on top of `master`.
