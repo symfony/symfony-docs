@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2017-11-28T18:57:51Z
+
+@silverbackdan thanks for worrying about this! :)
+
+---------------------------------------------------------------------------
+
+by silverbackdan at 2017-11-28T22:02:10Z
+
+No probs, just stumbled across the merged PR and then the docs PR when looking for the answer. If I do this in future, is 1 PR sufficient until approved in master and then PR for the other versions? Didn't really think about it before submitting them all.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-07-01T08:09:21Z
+
+should we take over this PR? or are you ok to finish it @silverbackdan ?
+
+---------------------------------------------------------------------------
+
+by silverbackdan at 2018-07-02T08:50:49Z
+
+@nicolas-grekas I'm sorry for leaving this - I've made the update to use the versionadd block now. I updated the wording on that file too.
