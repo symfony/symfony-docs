@@ -367,9 +367,6 @@ for several types of templates, each which lives in a specific location:
 Using this namespaced syntax instead of the real file paths allows applications
 to :ref:`override templates that live inside any bundle <override-templates>`.
 
-If you have overridden a template, you can use the "!" prefix to refer to the original bundle's
-template. E.g. ``@!AcmeBlog/layout.html.twig``
-
 Template Suffix
 ~~~~~~~~~~~~~~~
 
