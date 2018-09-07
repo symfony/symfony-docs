@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------
+
+by GuilhemN at 2018-08-05T11:46:23Z
+
+Maybe it would be simpler to cherry pick #8016?
+
+Some changes are missing imo, like https://github.com/symfony/symfony-docs/pull/8016/files#diff-8dd5da38c8cf3dec783e2e5247682043L130, https://github.com/symfony/symfony-docs/pull/8016/files#diff-54df5b9457e71c9f4a6cd1e3522a12c1R194, but globally this is a good move :+1:
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-08-07T10:45:03Z
+
+@GuilhemN Ah, I forgot that we already made the change for the 3.4 docs in the past.
+
+@HeahDude @javiereguiluz @weaverryan @wouterj Do you agree with backporting #8016?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-08-07T10:59:39Z
+
+I don't remember why we didn't that change in 2.8. Maybe the merge was too conflicting or maybe we prefer to keep that old doc related to the old SensioFrameworkExtraBundles? After all, if you are reading Symfony 2.8 docs today, you are probably working on a legacy app, so I'm not sure if the new ExtraBundle version is going to be available.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-08-07T13:24:34Z
+
+The only use case where you need the `@Route` annotation from FrameworkExtraBundle` with Symfony 2.8 is when configuring controllers as services. But in http://symfony.com/doc/2.8/controller/service.html we even do not show such an example. Though we could expand the tipp there if we decide to backport #8016.
+
+I think the reason we did this change only for 3.4+ was that this was the first version where even using controllers as services with the built-in `@Route` annotation was easily doable.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-08-10T22:19:43Z
+
+I'm confused: in #8016, we made the change because this was a new feature added to Symfony 3.4. Does it work on 2.8?
+
+Also, in the original issue - #10142, the user IS using Symfony 3.4. The real problem was that the deprecation notice wasn't obvious:
+
+> User Deprecated: The "Sensio\Bundle\FrameworkExtraBundle\Configuration\Method" annotation is deprecated since version 5.2. Use "Symfony\Component\Routing\Annotation\Route" instead.
+
+The user wasn't sure what happened to `@Method` and how to make it work with the new `@Route`.
+
+Or, did I miss something? :)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-09-03T10:13:34Z
+
+I was confused too so I took another look. We can indeed not use the `@Route` annotation from the component in Symfony 2.8 as there is no class able to load the routes. But we could indeed remove the `@Method` annotation IMO. I am going to update the PR later today.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-09-07T08:02:30Z
+
+updated here to only replace usages of the `@Method` annotation
