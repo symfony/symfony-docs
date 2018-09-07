@@ -1,6 +1,8 @@
 FAQ and Common Issues
 =====================
 
+.. _how-do-i-deploy-my-encore-assets:
+
 How do I deploy my Encore Assets?
 ---------------------------------
 

@@ -129,7 +129,7 @@ the messenger component, the following configuration should have been created:
 
         <!-- config/packages/messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/symfony"
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
@@ -199,7 +199,7 @@ configuration:
 
         <!-- config/packages/messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/symfony"
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
@@ -248,7 +248,7 @@ instead of a class name:
 
         <!-- config/packages/messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/symfony"
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
@@ -295,7 +295,8 @@ A class of messages can also be routed to multiple senders by specifying a list:
     .. code-block:: xml
 
         <!-- config/packages/messenger.xml -->
-        <container xmlns="http://symfony.com/schema/dic/symfony"
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
@@ -340,7 +341,8 @@ while still having them passed to their respective handler:
     .. code-block:: xml
 
         <!-- config/packages/messenger.xml -->
-        <container xmlns="http://symfony.com/schema/dic/symfony"
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
@@ -410,7 +412,8 @@ this:
     .. code-block:: xml
 
         <!-- config/packages/messenger.xml -->
-        <container xmlns="http://symfony.com/schema/dic/symfony"
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
@@ -522,7 +525,8 @@ within the buses to add some extra capabilities like this:
     .. code-block:: xml
 
         <!-- config/packages/messenger.xml -->
-        <container xmlns="http://symfony.com/schema/dic/symfony"
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
@@ -579,7 +583,8 @@ you can disable them like this:
     .. code-block:: xml
 
         <!-- config/packages/messenger.xml -->
-        <container xmlns="http://symfony.com/schema/dic/symfony"
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
@@ -717,7 +722,8 @@ Then you can reference and configure the
     .. code-block:: xml
 
         <!-- config/packages/messenger.xml -->
-        <container xmlns="http://symfony.com/schema/dic/symfony"
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
@@ -809,17 +815,17 @@ the ``SenderInterface`` and ``ReceiverInterface``). It will look like this::
 
     class YourTransport implements TransportInterface
     {
-        public function send($message) : void
+        public function send($message): void
         {
             // ...
         }
 
-        public function receive(callable $handler) : void
+        public function receive(callable $handler): void
         {
             // ...
         }
 
-        public function stop() : void
+        public function stop(): void
         {
             // ...
         }
@@ -881,7 +887,7 @@ named transport using your own DSN:
 
         <!-- config/packages/messenger.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/symfony"
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
