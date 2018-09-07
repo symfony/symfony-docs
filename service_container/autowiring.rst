@@ -106,7 +106,6 @@ Here is a typical controller using the ``twitter_client`` service::
     namespace Acme\Controller;
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -115,8 +114,7 @@ Here is a typical controller using the ``twitter_client`` service::
     class DefaultController extends Controller
     {
         /**
-         * @Route("/tweet")
-         * @Method("POST")
+         * @Route("/tweet", methods={"POST"})
          */
         public function tweetAction(Request $request)
         {
@@ -259,7 +257,6 @@ transformer::
     namespace Acme\Controller;
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -268,8 +265,7 @@ transformer::
     class DefaultController extends Controller
     {
         /**
-         * @Route("/tweet")
-         * @Method("POST")
+         * @Route("/tweet", methods={"POST"})
          */
         public function tweetAction(Request $request)
         {
@@ -277,8 +273,7 @@ transformer::
         }
 
         /**
-         * @Route("/tweet-uppercase")
-         * @Method("POST")
+         * @Route("/tweet-uppercase", methods={"POST"})
          */
         public function tweetUppercaseAction(Request $request)
         {
