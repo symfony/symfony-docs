@@ -852,9 +852,14 @@ The possible values for this option are:
 cookie_secure
 .............
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` or ``string`` **default**: ``'auto'``
 
-This determines whether cookies should only be sent over secure connections.
+This determines whether cookies should only be sent over secure connections. The
+default value is ``auto``, which means ``true`` for HTTPS requests and ``false``
+for HTTP requests.
+
+.. versionadded:: 4.2
+    The ``auto`` value was introduced in Symfony 4.2.
 
 cookie_httponly
 ...............
