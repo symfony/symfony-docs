@@ -207,7 +207,7 @@ accomplished with the following route configuration:
             }
 
             /**
-             * @Route("/api/posts/{id}", methods="PUT")
+             * @Route("/api/posts/{id}", methods={"PUT"})
              */
             public function edit($id)
             {
