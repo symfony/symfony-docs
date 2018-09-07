@@ -35,6 +35,22 @@ template from the FOSUserBundle, create this template:
     If you add a template in a new location, you *may* need to clear your
     cache (``php bin/console cache:clear``), even if you are in debug mode.
 
+Instead of overriding an entire template, you may just want to override one or
+more blocks. However, since you are overriding the template you want to extend
+from, you would end up in an infinite loop error. The solution is to use the
+special ``!`` prefix in the template name to tell Symfony that you want to
+extend from the original template, not from the overridden one:
+
+.. code-block:: twig
+
+    {# templates/bundles/FOSUserBundle/Registration/confirmed.html.twig #}
+    {# the special '!' prefix avoids errors when extending from an overridden template #}
+    {% extends "@!FOSUserBundle/Registration/confirmed.html.twig" %}
+
+    {% block some_block %}
+        ...
+    {% endblock %}
+
 .. _templating-overriding-core-templates:
 
 .. tip::
