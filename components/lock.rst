@@ -226,9 +226,8 @@ PdoStore
 .. versionadded:: 4.2
     The PdoStore was introduced Symfony 4.2.
 
-
-The PdoStore saves locks in an SQL database, it requires a `PDO`_,
-`Doctrine DBAL Connection`_, or `Data Source Name (DSN)`_. This store does not
+The PdoStore saves locks in an SQL database. It requires a `PDO`_ connection, a
+`Doctrine DBAL Connection`_, or a `Data Source Name (DSN)`_. This store does not
 support blocking, and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\PdoStore;
@@ -252,8 +251,9 @@ to set up this table for you according to the database engine used::
         // the table could not be created for some reason
     }
 
-A great way to set up the table on production is to call the method on a dev
-enviroment, then generate a migration:
+A great way to set up the table in production is to call the ``createTable()``
+method in your local computer and then generate a
+:ref:`database migration <doctrine-creating-the-database-tables-schema>`:
 
 .. code-block:: terminal
 
@@ -572,3 +572,4 @@ are still running.
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
 .. _Packagist: https://packagist.org/packages/symfony/lock
 .. _`PHP semaphore functions`: http://php.net/manual/en/book.sem.php
+.. _`PDO`: https://php.net/pdo
