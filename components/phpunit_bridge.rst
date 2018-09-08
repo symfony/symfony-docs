@@ -135,7 +135,7 @@ There are three ways to mark a test as legacy:
 .. note::
 
     If your data provider calls code that would usually trigger a deprecation,
-    you can prefix its name with ``provideLegacy`` or ``getLegacy`` to silent
+    you can prefix its name with ``provideLegacy`` or ``getLegacy`` to silence
     these deprecations. If your data provider does not execute deprecated
     code, it is not required to choose a special naming just because the
     test being fed by the data provider is marked as legacy.
