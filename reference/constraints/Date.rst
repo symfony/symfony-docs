@@ -1,9 +1,8 @@
 Date
 ====
 
-Validates that a value is a valid date, meaning either a ``DateTime`` object
-or a string (or an object that can be cast into a string) that follows a
-valid YYYY-MM-DD format.
+Validates that a value is a valid date, meaning a string (or an object that can be cast into a string)
+that follows a valid YYYY-MM-DD format.
 
 +----------------+--------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`             |
@@ -32,6 +31,7 @@ Basic Usage
         {
             /**
              * @Assert\Date()
+             * @var string A "Y-m-d" formatted value
              */
              protected $birthday;
         }
@@ -69,6 +69,11 @@ Basic Usage
 
         class Author
         {
+           /**
+            * @var string A "Y-m-d" formatted value
+            */
+            protected $birthday;
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('birthday', new Assert\Date());
