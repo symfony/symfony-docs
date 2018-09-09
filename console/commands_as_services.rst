@@ -13,12 +13,6 @@ recommended setup.
     You can also manually register your command as a service by configuring the service
     and :doc:`tagging it </service_container/tags>` with ``console.command``.
 
-In either case, if your class extends :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`,
-you can access public services via ``$this->getContainer()->get('SERVICE_ID')``.
-
-But if your class is registered as a service, you can instead access services by
-using normal :ref:`dependency injection <services-constructor-injection>`.
-
 For example, suppose you want to log something from within your command::
 
     namespace App\Command;
