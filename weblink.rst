@@ -30,7 +30,7 @@ Alternatively, you can use the `Docker installer and runtime for
 Symfony`_ provided by Kévin Dunglas (community supported).
 
 It includes everything you need to run Symfony
-(PHP :doc:`configured properly for Symfony </performance>`_, and Composer)
+(PHP :doc:`configured properly for Symfony </performance>`, and Composer)
 as well as a development reverse proxy (Apache) supporting HTTP/2 Server Push
 and HTTPS (most clients only support HTTP/2 over TLS).
 
@@ -70,7 +70,7 @@ Symfony comes with a `nice integration with of the most popular CSS framework`_.
 .. note::
 
     In a real project, you should use Yarn or NPM with
-    :doc:`Symfony Encore </frontend/encore/bootstrap>`_
+    :doc:`Symfony Encore </frontend/encore/bootstrap>`
     to install Bootstrap.
 
 Now, it's time to create the template of our homepage:
@@ -93,7 +93,7 @@ Now, it's time to create the template of our homepage:
    </html>
 
 And finally, register our new template as the homepage using the builtin
-:doc:`TemplateController </templating/render_without_controller>`_:
+:doc:`TemplateController </templating/render_without_controller>`:
 
 .. code-block:: yaml
 
@@ -253,7 +253,7 @@ or any service:
 .. seealso::
 
     As all Symfony components, WebLink can be used :doc:`as a
-    standalone PHP library </components/weblink>`_.
+    standalone PHP library </components/weblink>`.
 
 To see how WebLink is used in the wild, take a look to the `Bolt`_
 and `Sulu`_ CMS, they both use WebLink to trigger HTTP/2 pushes.

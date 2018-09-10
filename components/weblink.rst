@@ -41,7 +41,7 @@ Basic usage::
 
 .. seealso::
 
-    Read the :doc:`WebLink documentation </weblink>`_ to learn how
+    Read the :doc:`WebLink documentation </weblink>` to learn how
     to use the features implemented by this component.
 
 .. _`Web Links`: https://tools.ietf.org/html/rfc5988
