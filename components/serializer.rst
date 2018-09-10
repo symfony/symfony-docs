@@ -481,6 +481,9 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
     $companyCopy = $serializer->deserialize($json, Company::class, 'json');
     // Same data as $company
 
+It is also possible to access to the current class name, format and context by implementing the
+:class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface` interface.
+
 .. _using-camelized-method-names-for-underscored-attributes:
 
 CamelCase to snake_case
