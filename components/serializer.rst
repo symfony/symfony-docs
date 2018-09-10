@@ -286,7 +286,7 @@ Then, create your groups definition:
             public $foo;
 
             /**
-             * @Groups({"group3"})
+             * @Groups("group3")
              */
             public function getBar() // is* methods are also supported
             {
