@@ -545,10 +545,9 @@ When serializing, you can set a callback to format a specific object property::
     $encoder = new JsonEncoder();
     $normalizer = new GetSetMethodNormalizer();
 
-    $callback = function ($dateTime) {
-        return $dateTime instanceof \DateTime
-            ? $dateTime->format(\DateTime::ISO8601)
-            : '';
+    $callback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = null) {
+        // Every parameters can be omitted if not used
+        return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : '';
     };
 
     $normalizer->setCallbacks(array('createdAt' => $callback));
@@ -562,6 +561,11 @@ When serializing, you can set a callback to format a specific object property::
 
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
+
+.. versionadded:: 4.2
+    The ``$outerObject``, ``$attributeName``, ``$format`` and ``$context``
+    parameters of the callback were introduced in Symfony 4.2.
+
 
 .. _component-serializer-normalizers:
 
@@ -964,8 +968,9 @@ having unique identifiers::
 
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
     $normalizer = new ObjectNormalizer($classMetadataFactory);
-    $normalizer->setMaxDepthHandler(function ($foo) {
-        return '/foos/'.$foo->id;
+    $normalizer->setMaxDepthHandler(function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = null) {
+        // Every parameters can be omitted if not used
+        return '/foos/'.$innerObject->id;
     });
 
     $serializer = new Serializer(array($normalizer));
@@ -983,6 +988,10 @@ having unique identifiers::
 
 .. versionadded:: 4.1
     The ``setMaxDepthHandler()`` method was introduced in Symfony 4.1.
+
+.. versionadded:: 4.2
+    The ``$outerObject``, ``$attributeName``, ``$format`` and ``$context``
+    parameters of ``setMaxDepthHandler()`` were introduced in Symfony 4.2.
 
 Handling Arrays
 ---------------
