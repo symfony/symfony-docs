@@ -455,7 +455,7 @@ with the ``property_info`` service in the Symfony Framework.
         'driver' => 'pdo_sqlite',
         // ...
     ], $config);
-    $doctrineExtractor = new DoctrineExtractor($entityManager->getMetadataFactory());
+    $doctrineExtractor = new DoctrineExtractor($entityManager);
 
     // List information.
     $doctrineExtractor->getProperties($class);
