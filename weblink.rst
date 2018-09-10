@@ -61,7 +61,7 @@ Symfony is smart enough to download Twig, to automatically register it,
 and to enable Symfony features requiring the library.
 It also generates a base HTML5 layout in the ``templates/`` directory.
 
-Now, download `Boostrap`_, extract the archive and copy the file
+Now, download `Bootstrap`_, extract the archive and copy the file
 ``dist/css/bootstrap.min.css`` in the ``public/`` directory of our
 project.
 
