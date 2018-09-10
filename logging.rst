@@ -14,6 +14,7 @@ The minimal log level can be changed by setting the ``SHELL_VERBOSITY`` environm
 ``1``                      ``NOTICE``
 ``2``                      ``INFO``
 ``3``                      ``DEBUG``
+=========================  =================
 
 The minimum log level, the default output and the log format can also be changed by
 passing the appropriate arguments to the constructor of :class:`Symfony\\Component\\HttpKernel\\Log\\Logger`.
