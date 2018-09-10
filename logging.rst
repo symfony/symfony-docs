@@ -18,7 +18,7 @@ The minimal log level can be changed by setting the ``SHELL_VERBOSITY`` environm
 
 The minimum log level, the default output and the log format can also be changed by
 passing the appropriate arguments to the constructor of :class:`Symfony\\Component\\HttpKernel\\Log\\Logger`.
-To do so, :ref:`override the ``logger`` service definition <service-psr4-loader>`.
+To do so, :ref:`override the "logger" service definition <service-psr4-loader>`.
 
 Logging a Message
 -----------------
