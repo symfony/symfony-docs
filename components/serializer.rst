@@ -1313,8 +1313,8 @@ the same.
 
 To hint the serializer that it's safe to cache the result of these methods (and then dramatically improve the
 overall performance), such normalizers (and denormalizers) should implement the
-:class:`Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface` and return ``true`` when
-:method:`Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface::hasCacheableSupportsMethod`
+:class:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface` and return ``true`` when
+:method:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface::hasCacheableSupportsMethod`
 is called.
 
 .. note::
