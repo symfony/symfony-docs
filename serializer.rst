@@ -130,8 +130,12 @@ to your class and choose which groups to use when serializing::
 
     $json = $serializer->serialize(
         $someObject,
-        'json', array('groups' => array('group1'))
+        'json', array('groups' => 'group1')
     );
+
+.. note::
+
+    The value of the ``groups`` key can be a single string, or an array of strings.
 
 In addition to the ``@Groups`` annotation, the Serializer component also
 supports YAML or XML files. These files are automatically loaded when being

@@ -337,7 +337,7 @@ You are now able to serialize only attributes in the groups you want::
     $normalizer = new ObjectNormalizer($classMetadataFactory);
     $serializer = new Serializer(array($normalizer));
 
-    $data = $serializer->normalize($obj, null, array('groups' => array('group1')));
+    $data = $serializer->normalize($obj, null, array('groups' => 'group1'));
     // $data = array('foo' => 'foo');
 
     $obj2 = $serializer->denormalize(
