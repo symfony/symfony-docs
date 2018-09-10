@@ -147,11 +147,11 @@ interface and have an event method for each event it subscribes to::
 
     class SearchIndexerSubscriber implements EventSubscriber
     {
-        public function getSubscribedEvents()
+        public static function getSubscribedEvents()
         {
             return array(
-                'postPersist',
-                'postUpdate',
+                \Doctrine\ORM\Events::postPersist => 'postPersist',
+                \Doctrine\ORM\Events::postUpdate => 'postUpdate',
             );
         }
 
