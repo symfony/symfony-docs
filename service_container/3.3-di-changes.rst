@@ -577,6 +577,13 @@ Start by updating the service ids to class names:
     account when looking up for services.
     Furthermore it is always recommended to check for definition existence
     using ``has()`` function.
+    
+.. note::
+
+    If you get rid of deprecations and extend `AbstractController` instead of `Controller` for
+    your controllers, you can skip the rest of this step as `AbstractController` won't provide 
+    a containe where you can get the services directly. All services need to be injected as 
+    explained in `Step 5 Cleanup`_
 
 But, this change will break our app! The old service ids (e.g. ``app.github_notifier``)
 no longer exist. The simplest way to fix this is to find all your old service ids
@@ -790,3 +797,5 @@ can be autowired. The final configuration looks like this:
 You can now take advantage of the new features going forward.
 
 .. _`FrameworkExtension for 3.3.0`: https://github.com/symfony/symfony/blob/7938fdeceb03cc1df277a249cf3da70f0b50eb98/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/FrameworkExtension.php#L247-L284
+
+.. _`Step 5 Cleanup`: https://github.com/symfony/symfony-docs/blob/master/service_container/3.3-di-changes.rst#step-5-cleanup
