@@ -182,6 +182,10 @@ Get all the child or parent nodes::
     $crawler->filter('body')->children();
     $crawler->filter('body > p')->parents();
 
+Get all the direct child nodes matching a CSS selector::
+
+    $crawler->filter('body')->children('p.lorem');
+
 .. note::
 
     All the traversal methods return a new :class:`Symfony\\Component\\DomCrawler\\Crawler`
