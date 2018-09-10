@@ -49,7 +49,7 @@ HTTP/2!
 .. image:: /_images/components/weblink/symfony4-http2.png
 
 Let's create a very simple homepage using
-the `Twig`_ templating engine.
+the Twig_ templating engine.
 
 The first step is to install the library itself:
 
@@ -61,7 +61,7 @@ Symfony is smart enough to download Twig, to automatically register it,
 and to enable Symfony features requiring the library.
 It also generates a base HTML5 layout in the ``templates/`` directory.
 
-Now, download `Bootstrap`_, extract the archive and copy the file
+Now, download Bootstrap_, extract the archive and copy the file
 ``dist/css/bootstrap.min.css`` in the ``public/`` directory of our
 project.
 
