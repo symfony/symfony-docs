@@ -252,7 +252,7 @@ works.
     The support of hasser methods in the ``ReflectionExtractor`` class was
     introduced in Symfony 4.1.
 
-.. _`property-info-initializable`
+.. _property-info-initializable:
 
 Property Initializable Information
 ----------------------------------
