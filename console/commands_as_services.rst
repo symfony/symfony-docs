@@ -60,6 +60,13 @@ works! You can call the ``app:sunshine`` command and start logging.
     work (e.g. making database queries), as that code will be run, even if you're using
     the console to execute a different command.
 
+.. note::
+
+    In previous Symfony versions, you could make the command class extend from
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand` to
+    get services via ``$this->getContainer()->get('SERVICE_ID')``. This is
+    deprecated in Symfony 4.2 and it won't work in future Symfony versions.
+
 .. _console-command-service-lazy-loading:
 
 Lazy Loading
