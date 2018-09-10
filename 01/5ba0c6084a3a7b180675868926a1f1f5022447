@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-10T08:30:38Z
+
+The title of this pull request is "fix condition" ... but the current condition is correct, right? Maybe this is to improve it and make it a bit easier to understand? Thanks!
+
+---------------------------------------------------------------------------
+
+by nicoweb at 2018-09-10T08:53:40Z
+
+@javiereguiluz you right, in fact, it may be to "standardize" because I see regularly in the documentation of Symfony that you use this type of condition...
