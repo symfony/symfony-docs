@@ -1,7 +1,7 @@
 Logging
 =======
 
-Symfony comes with a minimalist `PSR-3`_ logger: :class:`Symfony\Component\HttpKernel\Log\Logger`.
+Symfony comes with a minimalist `PSR-3`_ logger: :class:`Symfony\\Component\\HttpKernel\\Log\\Logger`.
 In conformance with `the twelve-factor app methodology`_, it sends messages starting from the
 ``WARNING`` level to `stderr`_.
 
@@ -16,7 +16,7 @@ The minimal log level can be changed by setting the ``SHELL_VERBOSITY`` environm
 ``3``                      ``DEBUG``
 
 The minimum log level, the default output and the log format can also be changed by
-passing the appropriate arguments to the constructor of :class:`Symfony\Component\HttpKernel\Log\Logger`.
+passing the appropriate arguments to the constructor of :class:`Symfony\\Component\\HttpKernel\\Log\\Logger`.
 To do so, :ref:`override the ``logger`` service definition <service-psr4-loader>`.
 
 Logging a Message
