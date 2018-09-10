@@ -1,14 +1,28 @@
-Logging with Monolog
-====================
+Logging
+=======
 
-Symfony comes with an outside library - called Monolog_ - that allows you to create
-logs that can be stored in a variety of different places.
+Symfony comes with a minimalist `PSR-3`_ logger: :class:`Symfony\Component\HttpKernel\Log\Logger`.
+In conformance with `the twelve-factor app methodology`_, it sends messages starting from the
+``WARNING`` level to `stderr`_.
+
+The minimal log level can be changed by setting the ``SHELL_VERBOSITY`` environment variable:
+
+=========================  =================
+``SHELL_VERBOSITY`` value  Minimum log level
+=========================  =================
+``-1``                     ``ERROR``
+``1``                      ``NOTICE``
+``2``                      ``INFO``
+``3``                      ``DEBUG``
+
+The minimum log level, the default output and the log format can also be changed by
+passing the appropriate arguments to the constructor of :class:`Symfony\Component\HttpKernel\Log\Logger`.
+To do so, :ref:`override the ``logger`` service definition <service-psr4-loader>`.
 
 Logging a Message
 -----------------
 
-To log a message, fetch the ``logger`` service from the container in
-your controller::
+To log a message, inject the default logger in your controller::
 
     use Psr\Log\LoggerInterface;
 
@@ -29,10 +43,25 @@ your controller::
     }
 
 The ``logger`` service has different methods for different logging levels/priorities.
-You can configure the logger to do different things based on the *level* of a message
-(e.g. :doc:`send an email when an error occurs </logging/monolog_email>`).
-
 See LoggerInterface_ for a list of all of the methods on the logger.
+
+Monolog
+-------
+
+Symfony integrates seamlessly with `Monolog`_, the most popular PHP logging
+library, to create and store log messages in a variety of different places
+and trigger various actions.
+
+For instance, using Monolog you can configure the logger to do different things based on the
+*level* of a message (e.g. :doc:`send an email when an error occurs </logging/monolog_email>`).
+
+Run this command to install the Monolog based logger before using it:
+
+.. code-block:: terminal
+
+    $ composer require symfony/monolog-bundle
+
+The following sections assume that Monolog is installed.
 
 Where Logs are Stored
 ---------------------
@@ -338,6 +367,9 @@ Learn more
 
     logging/*
 
+.. _`the twelve-factor app methodology`: https://12factor.net/logs
+.. _PSR-3: https://www.php-fig.org/psr/psr-3/
+.. _`stderr`: https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)
 .. _Monolog: https://github.com/Seldaek/monolog
 .. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php
 .. _`logrotate`: https://github.com/logrotate/logrotate
