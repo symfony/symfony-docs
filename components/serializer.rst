@@ -545,7 +545,7 @@ When serializing, you can set a callback to format a specific object property::
     $encoder = new JsonEncoder();
     $normalizer = new GetSetMethodNormalizer();
 
-    $callback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = null) {
+    $callback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = array()) {
         // Every parameters can be omitted if not used
         return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : '';
     };
@@ -832,13 +832,17 @@ having unique identifiers::
     $encoder = new JsonEncoder();
     $normalizer = new ObjectNormalizer();
 
-    $normalizer->setCircularReferenceHandler(function ($object) {
+    $normalizer->setCircularReferenceHandler(function ($object, string $format = null, array $context = array()) {
+        // Every parameters can be omitted if not used
         return $object->getName();
     });
 
     $serializer = new Serializer(array($normalizer), array($encoder));
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
+
+.. versionadded:: 4.2
+    The ``$format`` and ``$context`` parameters of ``setCircularReferenceHandler()`` were introduced in Symfony 4.2.
 
 Handling Serialization Depth
 ----------------------------
@@ -968,7 +972,7 @@ having unique identifiers::
 
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
     $normalizer = new ObjectNormalizer($classMetadataFactory);
-    $normalizer->setMaxDepthHandler(function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = null) {
+    $normalizer->setMaxDepthHandler(function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = array()) {
         // Every parameters can be omitted if not used
         return '/foos/'.$innerObject->id;
     });
