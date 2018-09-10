@@ -1295,6 +1295,33 @@ can use this simpler configuration:
             </class>
         </serializer>
 
+Performance
+-----------
+
+To figure which normalizer (or denormalizer) must be used to handle an object,
+the :class:`Symfony\\Component\\Serializer\\Serializer` class will call the
+:method:`Symfony\Component\Serializer\Normalizer\NormalizerInterface::supportsNormalization`
+(or :method:`Symfony\Component\Serializer\Normalizer\DenormalizerInterface::supportsDenormalization`)
+of all registered normalizers (or denormalizers) in a loop.
+
+The result of these methods can vary depending of the value of the object to serialize, of the format to
+use, and of the context. Consequently, **it is not cached** by default.
+
+Because they are called recursively, these methods are usually a huge performance bottleneck. Moreover, most
+normalizers (and denormalizers) always return the same result when the object's type, and the format are
+the same.
+
+To hint the serializer that it's safe to cache the result of these methods (and then dramatically improve the
+overall performance), such normalizers (and denormalizers) should implement the
+:class:`Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface` and return ``true`` when
+:method:`Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface::hasCacheableSupportsMethod`
+is called.
+
+.. note::
+
+    Built-in :ref:`normalizers and denormalizers <component-serializer-normalizers>`, as well the ones
+    included in `API Platform`_ natively implement this interface.
+
 Learn more
 ----------
 
@@ -1303,6 +1330,11 @@ Learn more
     :glob:
 
     /serializer
+
+.. seealso::
+
+    Normalizers for the Symfony Serializer Component supporting popular web API formats
+    (JSON-LD, GraphQL, HAL and JSONAPI) are available as part of the `API Platform`_ project.
 
 .. seealso::
 
@@ -1320,3 +1352,4 @@ Learn more
 .. _CSV: https://tools.ietf.org/html/rfc4180
 .. _`RFC 7807`: https://tools.ietf.org/html/rfc7807
 .. _`Value Objects`: https://en.wikipedia.org/wiki/Value_object
+.. _`API Platform`: https://api-platform.com
