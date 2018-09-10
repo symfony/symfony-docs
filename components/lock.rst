@@ -574,3 +574,4 @@ are still running.
 .. _`PHP semaphore functions`: http://php.net/manual/en/book.sem.php
 .. _`PDO`: https://php.net/pdo
 .. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Connection.php
+.. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
