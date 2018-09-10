@@ -8,4 +8,4 @@ preloading capabilities of modern web browsers.
 Read the the :doc:`WebLink Component documentation </components/weblink>` to learn how
 to use these features.
 
-.. _`Web Linking`_: https://tools.ietf.org/html/rfc5988
+.. _`Web Linking`: https://tools.ietf.org/html/rfc5988
