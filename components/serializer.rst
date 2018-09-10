@@ -1300,8 +1300,8 @@ Performance
 
 To figure which normalizer (or denormalizer) must be used to handle an object,
 the :class:`Symfony\\Component\\Serializer\\Serializer` class will call the
-:method:`Symfony\Component\Serializer\Normalizer\NormalizerInterface::supportsNormalization`
-(or :method:`Symfony\Component\Serializer\Normalizer\DenormalizerInterface::supportsDenormalization`)
+:method:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface::supportsNormalization`
+(or :method:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface::supportsDenormalization`)
 of all registered normalizers (or denormalizers) in a loop.
 
 The result of these methods can vary depending of the value of the object to serialize, of the format to
