@@ -147,7 +147,7 @@ interface and have an event method for each event it subscribes to::
 
     class SearchIndexerSubscriber implements EventSubscriber
     {
-        public static function getSubscribedEvents()
+        public function getSubscribedEvents()
         {
             return array(
                 \Doctrine\ORM\Events::postPersist => 'postPersist',
