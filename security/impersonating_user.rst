@@ -91,7 +91,7 @@ to show a link to exit impersonation:
 
 In some cases you may need to get the object that represents the impersonator
 user rather than the impersonated user. Use the following snippet to iterate
-over the user's roles until you find one that a ``SwitchUserRole`` object::
+over the user's roles until you find one that is a ``SwitchUserRole`` object::
 
     use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
