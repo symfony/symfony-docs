@@ -585,6 +585,13 @@ Start by updating the service ids to class names:
     account when looking up for services.
     Furthermore it is always recommended to check for definition existence
     using ``has()`` function.
+    
+.. note::
+
+    If you get rid of deprecations and extend ``AbstractController`` instead of ``Controller`` for
+    your controllers, you can skip the rest of this step as `AbstractController` won't provide a 
+    container where you can get the services directly. All services need to be injected as explained 
+    in the :ref:`step 5 of this article <step-5>`.
 
 But, this change will break our app! The old service ids (e.g. ``app.github_notifier``)
 no longer exist. The simplest way to fix this is to find all your old service ids
@@ -715,6 +722,8 @@ This guarantees that if you try to autowire an ``ApiClient`` instance, the ``app
 will be used. If you *don't* have this, the auto-registration feature will try to
 register a third ``ApiClient`` service and use that for autowiring (which will fail,
 because the class has a non-autowireable argument).
+
+.. _step-5:
 
 Step 5) Cleanup!
 ~~~~~~~~~~~~~~~~
