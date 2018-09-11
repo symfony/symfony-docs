@@ -179,7 +179,7 @@ setup:
 * Running any database migrations
 * Clearing your APC cache
 * Add/edit CRON jobs
-* ref:`Building and minifying your assets <how-do-i-deploy-my-encore-assets>` with Webpack Encore
+* :ref:`Building and minifying your assets <how-do-i-deploy-my-encore-assets>` with Webpack Encore
 * Pushing assets to a CDN
 * ...
 
