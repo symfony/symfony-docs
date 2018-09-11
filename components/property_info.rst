@@ -78,7 +78,7 @@ provide it with a set of information extractors.
 
 .. versionadded:: 4.2
     :class:`Symfony\\Component\\PropertyInfo\\PropertyInitializableExtractorInterface`
-    was added in Symfony 4.2.
+    was introduced in Symfony 4.2.
 
 Extractor Ordering
 ~~~~~~~~~~~~~~~~~~
@@ -127,7 +127,7 @@ Extractable Information
 -----------------------
 
 The :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`
-class exposes public methods to extract five types of information:
+class exposes public methods to extract several types of information:
 
 * :ref:`List of properties <property-info-list>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyListExtractorInterface::getProperties()`
 * :ref:`Property type <property-info-type>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface::getTypes()`
@@ -265,13 +265,14 @@ provide whether properties are initializable through the class's constructor as 
     $propertyInfo->isInitializable($class, $property);
     // Example Result: bool(true)
 
-:method:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor::isInitializable` returns ``true``
-if a constructor's parameter of the given class matches the given property name.
+:method:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor::isInitializable`
+returns ``true`` if a constructor's parameter of the given class matches the
+given property name.
 
 .. tip::
 
     The main :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`
-    class implements all five interfaces, delegating the extraction of property
+    class implements all interfaces, delegating the extraction of property
     information to the extractors that have been registered with it.
 
     This means that any method available on each of the extractors is also
@@ -374,9 +375,8 @@ ReflectionExtractor
 
 Using PHP reflection, the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
 provides list, type and access information from setter and accessor methods.
-It can also give the type of a property, and if it is initializable through the constructor using
-constructor's parameters.
-It supports return and scalar types for PHP 7+.
+It can also give the type of a property, and if it is initializable through the
+constructor. It supports return and scalar types for PHP 7.
 
 .. note::
 
