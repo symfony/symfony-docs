@@ -133,7 +133,7 @@ to your class and choose which groups to use when serializing::
         'json', array('groups' => 'group1')
     );
 
-.. note::
+.. tip::
 
     The value of the ``groups`` key can be a single string, or an array of strings.
 
