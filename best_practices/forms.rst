@@ -137,6 +137,27 @@ view layer:
         <input type="submit" class="btn" value="Create" />
     {{ form_end(form) }}
 
+Validation
+----------
+
+Define your validation constraints outside of the forms, for instance directly on the object
+class used as data mapper::
+
+    // src/Entity/Post.php
+
+    // ...
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Post
+    {
+       /**
+         * @Assert\NotBlank()
+         */
+         public $title;
+     }
+
+This make them reusables and independents from the validation rules.
+
 Rendering the Form
 ------------------
 
