@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by DonCallisto at 2018-09-11T09:10:36Z
+
+@javiereguiluz is it ok now?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-11T12:51:30Z
+
+Almost OK :)  The last thing is to add the `.. _step-5:` reference in the article, just above the `Step 5` title. Like this:
+
+```rst
+.. _step-5:
+
+Step 5) Cleanup!
+~~~~~~~~~~~~~~~~
+
+[...]
+```
+
+---------------------------------------------------------------------------
+
+by DonCallisto at 2018-09-11T12:53:53Z
+
+Done! :smiley:
