@@ -62,7 +62,7 @@ and to enable Symfony features requiring the library.
 It also generates a base HTML5 layout in the ``templates/`` directory.
 
 Now, download Bootstrap_, extract the archive and copy the file
-``dist/css/bootstrap.min.css`` in the ``public/`` directory of our
+``dist/css/bootstrap.min.css`` in the ``public/`` directory of our
 project.
 
 Symfony comes with a `nice integration with of the most popular CSS framework`_.
@@ -123,7 +123,7 @@ Let's do it! Install the WebLink component:
     composer req weblink
 
 As for Twig, Symfony will automatically download and register this component into our app.
-Now, update the template to use the ``preload`` Twig helper that
+Now, update the template to use the ``preload`` Twig helper that
 leverages the WebLink component:
 
 .. code:: html+twig
@@ -151,7 +151,7 @@ How does it works?
 The WebLink component tracks Link HTTP headers to add to the response.
 When using the ``preload()`` helper, a ``Link`` header
 with a `preload`_
-``rel`` attribute is added to the response:
+``rel`` attribute is added to the response:
 
 .. image:: /_images/components/weblink/response-headers.png
 
@@ -263,7 +263,7 @@ While we're speaking about interoperability, WebLink can deal with any link impl
 
 Thanks to Symfony WebLink, there is no excuses to not to switch to HTTP/2!
 
-.. _`Web Linking`_: https://tools.ietf.org/html/rfc5988
+.. _`Web Linking`: https://tools.ietf.org/html/rfc5988
 .. _`HTTP/2 Server Push`: https://tools.ietf.org/html/rfc7540#section-8.2
 .. _`Resource Hints`: https://www.w3.org/TR/resource-hints/
 .. _`Twig`: https://twig.symfony.com/
