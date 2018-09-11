@@ -715,6 +715,8 @@ will be used. If you *don't* have this, the auto-registration feature will try t
 register a third ``ApiClient`` service and use that for autowiring (which will fail,
 because the class has a non-autowireable argument).
 
+.. _step-5:
+
 Step 5) Cleanup!
 ~~~~~~~~~~~~~~~~
 
