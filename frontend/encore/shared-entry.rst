@@ -1,6 +1,11 @@
 Creating a Shared Commons Entry
 ===============================
 
+.. caution::
+
+    While this method still works, see :doc:`/frontend/encore/split-chunks` for
+    the preferred solution to sharing assets between multiple entry files.
+
 Suppose you have multiple entry files and *each* requires ``jquery``. In this
 case, *each* output file will contain jQuery, slowing down your user's experience.
 To solve this, you can *extract* the common libraries to a "shared" entry file

@@ -55,8 +55,9 @@ Adding more Features
 Optimizing
 ..........
 
-* :doc:`Versioning (and the manifest.json file) </frontend/encore/versioning>`
+* :doc:`Versioning (and the entrypoints.json/manifest.json files) </frontend/encore/versioning>`
 * :doc:`Using a CDN </frontend/encore/cdn>`
+* :doc:`/frontend/encore/split-chunks`
 * :doc:`Creating a "Shared" entry for re-used modules </frontend/encore/shared-entry>`
 * :doc:`/frontend/encore/url-loader`
 

@@ -74,20 +74,15 @@ like ``/myAppSubdir``), you just need to configure that when calling ``Encore.se
     +     .setPublicPath('/myAppSubdir/build')
 
     +     // this is now needed so that your manifest.json keys are still `build/foo.js`
-    +     // i.e. you won't need to change anything in your Symfony app
+    +     // (which is a file that's used by Symfony's asset function)
     +     .setManifestKeyPrefix('build')
     ;
 
-If you're :ref:`processing your assets through manifest.json <load-manifest-files>`,
-you're done! The ``manifest.json`` file will now include the subdirectory in the
-final paths:
-
-.. code-block:: json
-
-    {
-        "build/app.js": "/myAppSubdir/build/app.123abc.js",
-        "build/dashboard.css": "/myAppSubdir/build/dashboard.a4bf2d.css"
-    }
+If you're using the ``encore_entry_script_tags()`` and ``encore_entry_link_tags()``
+Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <load-manifest-files>`_
+in some other way) you're done! These shortcut methods read from an
+:ref:`entrypoints.json <encore-entrypointsjson-simple-description>` file that will
+now contain the subdirectory.
 
 "jQuery is not defined" or "$ is not defined"
 ---------------------------------------------
