@@ -483,9 +483,12 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
 .. note::
 
-    Since Symfony 4.2, it is also possible to access to the current class name, format and
-    context by implementing the :class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface`
-    interface.
+    You can also implement 
+    :class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface`
+    to access to the current class name, format and context.
+
+    .. versionadded:: 4.2
+        The ``AdvancedNameConverterInterface`` interface was introduced in Symfony 4.2.
 
 .. _using-camelized-method-names-for-underscored-attributes:
 
