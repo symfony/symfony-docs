@@ -18,20 +18,21 @@ be a boolean value"):
 
 .. code-block:: yaml
 
-    auto_connect: true
-    default_connection: mysql
-    connections:
-        mysql:
-            host:     localhost
-            driver:   mysql
-            username: user
-            password: pass
-        sqlite:
-            host:     localhost
-            driver:   sqlite
-            memory:   true
-            username: user
-            password: pass
+    database:
+        auto_connect: true
+        default_connection: mysql
+        connections:
+            mysql:
+                host:     localhost
+                driver:   mysql
+                username: user
+                password: pass
+            sqlite:
+                host:     localhost
+                driver:   sqlite
+                memory:   true
+                username: user
+                password: pass
 
 When loading multiple configuration files, it should be possible to merge
 and overwrite some values. Other values should not be merged and stay as
