@@ -97,9 +97,10 @@ code that you're using. See :doc:`/frontend/encore/legacy-apps` for the fix.
 Uncaught ReferenceError: webpackJsonp is not defined
 ----------------------------------------------------
 
-If you get this error, it's probably because you've just added a :doc:`shared entry </frontend/encore/shared-entry>`
-but you *forgot* to add a ``script`` tag for the new ``manifest.js`` file. See the
-information about the :ref:`script tags <encore-shared-entry-script>` in that section.
+If you get this error, it's probably because you've forgotten to add a ``script``
+tag for the ``runtime.js`` file that contains Webpack's runtime. If you're using
+the ``encore_entry_script_tags()`` Twig function, this should never happen: the
+file script tag is rendered automatically.
 
 This dependency was not found: some-module in ./path/to/file.js
 ---------------------------------------------------------------

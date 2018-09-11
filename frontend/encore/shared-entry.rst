@@ -24,33 +24,13 @@ Update your code to use ``createSharedEntry()``:
         .addEntry('blog', './assets/js/blog.js')
         .addEntry('store', './assets/js/store.js')
 
-As soon as you make this change, you need to include *one* extra JavaScript file
-in your layout, *before* ``app.js``:
-
-.. _encore-shared-entry-script:
-
-.. code-block:: twig
-
-    {# templates/base.html.twig #}
-    <!-- these two files now must be included on every page -->
-    <script src="{{ asset('build/manifest.js') }}"></script>
-    <script src="{{ asset('build/app.js') }}"></script>
-
-    <!-- you can still include page-specific JavaScript, like normal -->
-    <script src="{{ asset('build/store.js') }}"></script>
-
-    <!-- continue including app.css on every page -->
-    <link rel="stylesheet" href="{{ asset('build/app.css') }}" />
-
 Before making this change, if both ``app.js`` and ``store.js`` require ``jquery``,
 then ``jquery`` would be packaged into *both* files, which is wasteful. By making
 ``app.js`` your "shared" entry, *any* code required by ``app.js`` (like jQuery) will
 *no longer* be packaged into any other files. The same is true for any CSS.
 
 Because ``app.js`` contains all the common code that other entry files depend on,
-it's obvious that its script (and link) tag must be on every page. The other file
-(``manifest.js``) is less obvious: it's needed so that Webpack knows how to load
-these shared modules.
+it's obvious that its script (and link) tag must be on every page.
 
 .. tip::
 
