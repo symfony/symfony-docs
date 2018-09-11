@@ -462,6 +462,11 @@ with the ``property_info`` service in the Symfony Framework.
     // Type information.
     $doctrineExtractor->getTypes($class, $property);
 
+.. versionadded:: 4.2
+    The option to pass Doctrine's EntityManager to ``DoctrineExtractor`` was
+    introduced in Symfony 4.2. Previously you needed to pass the class metadata
+    factory associated to the EntityManager.
+
 .. _`components-property-information-extractors-creation`:
 
 Creating Your Own Extractors
