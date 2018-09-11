@@ -585,12 +585,13 @@ Start by updating the service ids to class names:
     account when looking up for services.
     Furthermore it is always recommended to check for definition existence
     using ``has()`` function.
-    
+
 .. note::
 
-    If you get rid of deprecations and extend ``AbstractController`` instead of ``Controller`` for
-    your controllers, you can skip the rest of this step as `AbstractController` won't provide a 
-    container where you can get the services directly. All services need to be injected as explained 
+    If you get rid of deprecations and make your controllers extend from
+    ``AbstractController`` instead of ``Controller``, you can skip the rest of
+    this step because ``AbstractController`` doesn't provide a container where
+    you can get the services from. All services need to be injected as explained
     in the :ref:`step 5 of this article <step-5>`.
 
 But, this change will break our app! The old service ids (e.g. ``app.github_notifier``)
