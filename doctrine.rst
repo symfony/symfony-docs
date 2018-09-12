@@ -246,7 +246,7 @@ again:
     > text
 
     Can this field be null in the database (nullable) (yes/no) [no]:
-    > no
+    > yes
 
     New property name (press <return> to stop adding fields):
     >
