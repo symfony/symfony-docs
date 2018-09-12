@@ -151,8 +151,10 @@ can automatically generate an empty ``test_project`` database for you:
 
     .. caution::
 
-        MySQL sets a `limit of 767 bytes for the index key prefix`_. When using
-        ``utf8mb4``, string columns with 255 character length surpass that limit.
+        There is a `limit of 767 bytes for the index key prefix`_ for InnoDB table on MySQL 5.6
+        and priort version. In MySQL version 5.7 and upwards this limit has been increased
+        to 3072 bytes. If you are using MySQL version prior to 5.7 please take this into account:
+        When using ``utf8mb4``, string columns with 255 character length surpass that limit.
         This means that any column of type ``string`` and ``unique=true`` must
         set its maximum ``length`` to ``190``. Otherwise, you'll see this error:
         *"[PDOException] SQLSTATE[42000]: Syntax error or access violation:
