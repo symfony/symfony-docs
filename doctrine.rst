@@ -283,7 +283,7 @@ This time, the SQL in the generated file will look like this:
 
 .. code-block:: sql
 
-    ALTER TABLE product ADD description LONGTEXT NOT NULL
+    ALTER TABLE product ADD description LONGTEXT DEFAULT NULL
 
 The migration system is *smart*. It compares all of your entities with the current
 state of the database and generates the SQL needed to synchronize them! Just like
