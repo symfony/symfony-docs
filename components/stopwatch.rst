@@ -51,13 +51,12 @@ Symfony Profiler tool uses categories to nicely color-code different events.
 Usage in symfony
 ----------------
 
-In a Controller, do:
+In a Controller, do::
 
     $stopwatch = $this->get('debug.stopwatch');
     $stopwatch->start('anEvent');
 
-Or inject `Symfony\Component\Stopwatch\Stopwatch` by autowiring.
-
+Or inject :class:`Symfony\\Component\\Stopwatch\\Stopwatch` by autowiring.
 Thereafter this timing can be seen in the profiler.
 
 Periods
