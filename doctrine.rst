@@ -151,12 +151,11 @@ can automatically generate an empty ``test_project`` database for you:
 
     .. caution::
 
-        There is a `limit of 767 bytes for the index key prefix`_ for InnoDB table on MySQL 5.6
-        and priort version. In MySQL version 5.7 and upwards this limit has been increased
-        to 3072 bytes. If you are using MySQL version prior to 5.7 please take this into account:
-        When using ``utf8mb4``, string columns with 255 character length surpass that limit.
-        This means that any column of type ``string`` and ``unique=true`` must
-        set its maximum ``length`` to ``190``. Otherwise, you'll see this error:
+        There is a `limit of 767 bytes for the index key prefix`_ when using
+        InnoDB tables in MySQL 5.6 and earlier versions. String columns with 255
+        character length and ``utf8mb4`` encoding surpass that limit. This means
+        that any column of type ``string`` and ``unique=true`` must set its
+        maximum ``length`` to ``190``. Otherwise, you'll see this error:
         *"[PDOException] SQLSTATE[42000]: Syntax error or access violation:
         1071 Specified key was too long; max key length is 767 bytes"*.
 
