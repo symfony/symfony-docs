@@ -160,7 +160,7 @@ See :doc:`/form/form_customization` for more information on this and how you
 can control *how* the form renders at a global level using form theming.
 
 As the whole rendering of a form can be passed to a form theme, it can be
-usefull to do something like that:
+useful to do something like that:
 
 .. code-block:: html+twig
 
@@ -170,13 +170,13 @@ usefull to do something like that:
     {{ form(someform) }}
 
 This way, the entire form rendering is passed to the theme where you can
-control all field independently.
+control all fields independently.
 
 Handling Form Submits
 ---------------------
 
 Handling the form submission can be a tricky part of your application but
-as soon as you understand how it works, your code become suddently way easier to maintain.
+as soon as you understand how it works, your code becomes suddenly way easier to maintain.
 In order to ease the process, we recommend to use FormHandler for every form, this way,
 you can dispatch the logic through multiples classes and keep your controller thin.
 
