@@ -50,7 +50,8 @@ of your project. It already holds the basic config you need:
         // ...
     ;
 
-    // ...
+    module.exports = Encore.getWebpackConfig();
+
 
 They *key* part is ``addEntry()``: this tells Encore to load the ``assets/js/app.js``
 file and follow *all* of the ``require`` statements. It will then package everything
