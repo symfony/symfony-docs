@@ -113,9 +113,9 @@ from inside a controller::
                 ->add('save', SubmitType::class, array('label' => 'Create Task'))
                 ->getForm();
 
-            return $this->render('default/new.html.twig', array(
+            return $this->render('default/new.html.twig', [
                 'form' => $form->createView(),
-            ));
+            ]);
         }
     }
 
@@ -253,9 +253,9 @@ your controller::
             return $this->redirectToRoute('task_success');
         }
 
-        return $this->render('default/new.html.twig', array(
+        return $this->render('default/new.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
 .. caution::

@@ -261,9 +261,9 @@ has one file in it::
         {
             $number = rand(0, $limit);
 
-            return $this->render('micro/random.html.twig', array(
+            return $this->render('micro/random.html.twig', [
                 'number' => $number
-            ));
+            ]);
         }
     }
 

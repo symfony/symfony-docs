@@ -178,9 +178,9 @@ In your controller, you'll create a new form from the ``TaskType``::
                 // ... maybe do some form processing, like saving the Task and Tag objects
             }
 
-            return $this->render('task/new.html.twig', array(
+            return $this->render('task/new.html.twig', [
                 'form' => $form->createView(),
-            ));
+            ]);
         }
     }
 

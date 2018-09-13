@@ -24,9 +24,9 @@ submissions::
             return $this->redirectToRoute('task_success');
         }
 
-        return $this->render('product/new.html.twig', array(
+        return $this->render('product/new.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
 .. tip::
@@ -63,9 +63,9 @@ method, pass the submitted data directly to
             }
         }
 
-        return $this->render('product/new.html.twig', array(
+        return $this->render('product/new.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
 .. tip::
