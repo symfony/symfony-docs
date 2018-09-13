@@ -140,8 +140,17 @@ view layer:
 Validation
 ----------
 
-Define your validation constraints outside of the forms, for instance directly on the object
-class used as data mapper::
+The `constraints`_ option allows you to attach `validation constraints`_ to any
+form field. However, doing that prevents the validation from being reused in
+other forms or other places where the mapped object is used.
+
+.. best-practice::
+
+    Do not define your validation constraints in the form but on the object the
+    form is mapped to.
+
+For example, to validate that the title of the post edited with a form is not
+blank, add the following in the ``Post`` object::
 
     // src/Entity/Post.php
 
@@ -150,13 +159,11 @@ class used as data mapper::
 
     class Post
     {
-       /**
+        /**
          * @Assert\NotBlank()
          */
-         public $title;
-     }
-
-This make them reusables and independents from the validation rules.
+        public $title;
+    }
 
 Rendering the Form
 ------------------
@@ -211,3 +218,6 @@ submit. Both those actions will be almost identical. So it's much simpler to let
 ``new()`` handle everything.
 
 Next: :doc:`/best_practices/i18n`
+
+.. _`constraints`: https://symfony.com/doc/current/reference/forms/types/form.html#constraints
+.. _`validation constraints`: https://symfony.com/doc/current/reference/constraints.html
