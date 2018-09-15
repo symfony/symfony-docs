@@ -372,6 +372,35 @@ document inside a template::
     echo $packages->getUrl('resume.pdf', 'doc');
     // result: /somewhere/deep/for/documents/resume.pdf?v1
 
+Local files and other protocols
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In cases of e.g. generating a pdf from html you want directly link to the local file for performance reason you can use the asset component the following way: 
+
+    use Symfony\Component\Asset\UrlPackage;
+    // ...
+
+    $localPackage = new UrlPackage(
+        'file:///path/to/images/',
+        new EmptyVersionStrategy()
+    );
+
+    echo $localPackage->getUrl('/logo.png');
+    // result: file:///path/to/images/logo.png
+
+Or link to a file on a ftp server:
+
+    use Symfony\Component\Asset\UrlPackage;
+    // ...
+
+    $ftpPackage = new UrlPackage(
+        'ftp://example.com/images/',
+        new EmptyVersionStrategy()
+    );
+
+    echo $ftpPackage->getUrl('/logo.png');
+    // result: ftp://example.com/images/logo.png
+
 Learn more
 ----------
 
