@@ -21,6 +21,7 @@ String Constraints
 * :doc:`Regex </reference/constraints/Regex>`
 * :doc:`Ip </reference/constraints/Ip>`
 * :doc:`Uuid</reference/constraints/Uuid>`
+* :doc:`Json</reference/constraints/Json>`
 
 Comparison Constraints
 ~~~~~~~~~~~~~~~~~~~~~~
