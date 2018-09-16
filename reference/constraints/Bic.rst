@@ -3,13 +3,17 @@ Bic
 
 This constraint is used to ensure that a value has the proper format of a
 `Business Identifier Code (BIC)`_. BIC is an internationally agreed means to
-uniquely identify both financial and non-financial institutions.
+uniquely identify both financial and non-financial institutions. You may also
+check that the BIC is associated with a given IBAN.
 
 +----------------+-----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`                |
 +----------------+-----------------------------------------------------------------------+
 | Options        | - `message`_                                                          |
 |                | - `payload`_                                                          |
+|                | - `iban`_                                                             |
+|                | - `ibanMessage`_                                                      |
+|                | - `ibanPropertyPath`_                                                 |
 +----------------+-----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Bic`              |
 +----------------+-----------------------------------------------------------------------+
@@ -91,5 +95,30 @@ message
 The default message supplied when the value does not pass the BIC check.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+ibanMessage
+~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.``
+
+The default message supplied when the value does not pass the combined BIC/IBAN check.
+
+iban
+~~~~
+
+**type**: ``string`` **default**: ``null``
+
+An IBAN to validate the BIC with.
+
+ibanPropertyPath
+~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+It defines the object property whose value is an IBAN used to check the BIC with.
+
+For example, if you want to compare the ``$bic`` property of some object
+with regard to the ``$iban`` property of the same object, use
+``propertyPath="iban"`` in the comparison constraint of ``$bic``.
 
 .. _`Business Identifier Code (BIC)`: https://en.wikipedia.org/wiki/Business_Identifier_Code
