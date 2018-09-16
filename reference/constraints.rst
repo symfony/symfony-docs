@@ -19,6 +19,7 @@ Validation Constraints Reference
    constraints/Regex
    constraints/Ip
    constraints/Uuid
+   constraints/Json
 
    constraints/EqualTo
    constraints/NotEqualTo
