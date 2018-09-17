@@ -162,10 +162,11 @@ Woh! You now have a new ``src/Entity/Product.php`` file::
 
 .. caution::
 
-    MySQL sets a `limit of 767 bytes for the index key prefix`_. When using
-    ``utf8mb4``, string columns with 255 character length surpass that limit.
-    This means that any column of type ``string`` and ``unique=true`` must
-    set its maximum ``length`` to ``190``. Otherwise, you'll see this error:
+    There is a `limit of 767 bytes for the index key prefix`_ when using
+    InnoDB tables in MySQL 5.6 and earlier versions. String columns with 255
+    character length and ``utf8mb4`` encoding surpass that limit. This means
+    that any column of type ``string`` and ``unique=true`` must set its
+    maximum ``length`` to ``190``. Otherwise, you'll see this error:
     *"[PDOException] SQLSTATE[42000]: Syntax error or access violation:
     1071 Specified key was too long; max key length is 767 bytes"*.
 
@@ -756,4 +757,4 @@ Learn more
 .. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`ParamConverter`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-restrictions.html
-.. _`Doctrine screencast series`: https://knpuniversity.com/screencast/symfony-doctrine
+.. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine

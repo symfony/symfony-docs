@@ -196,8 +196,8 @@ One of Symfony's *killer* features is the Web Debug Toolbar: a bar that displays
 a *huge* amount of debugging information along the bottom of your page while developing. This is all
 included out of the box using a package called ``symfony/profiler-pack``.
 
-You will see a black bar along the bottom of the page. You'll learn more about all the information it holds 
-along the way, but feel free to experiment: hover over and click 
+You will see a black bar along the bottom of the page. You'll learn more about all the information it holds
+along the way, but feel free to experiment: hover over and click
 the different icons to get information about routing, performance, logging and more.
 
 Rendering a Template
@@ -342,5 +342,5 @@ Go Deeper with HTTP & Framework Fundamentals
 
 .. _`Twig`: https://twig.symfony.com
 .. _`Composer`: https://getcomposer.org
-.. _`Stellar Development with Symfony`: https://knpuniversity.com/screencast/symfony/setup
+.. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony/setup
 .. _`Flex recipes`: https://flex.symfony.com

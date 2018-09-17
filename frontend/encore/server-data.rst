@@ -35,7 +35,7 @@ method that returns an array, you could do the following:
 
 .. code-block:: twig
 
-    <div data-user-profile="{{ app.user ? app.user.profileData|json_encode|e('html_attr') : '' }}">
+    <div data-user-profile="{{ app.user ? app.user.profileData|json_encode|e('html_attr') }}">
         <!-- ... -->
     </div>
 

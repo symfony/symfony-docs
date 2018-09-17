@@ -594,4 +594,4 @@ Doctrine's `Association Mapping Documentation`_.
 
 .. _`Association Mapping Documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html
 .. _`orphanRemoval`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/working-with-associations.html#orphan-removal
-.. _`Mastering Doctrine Relations`: https://knpuniversity.com/screencast/doctrine-relations
+.. _`Mastering Doctrine Relations`: https://symfonycasts.com/screencast/doctrine-relations
