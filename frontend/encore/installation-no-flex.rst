@@ -17,7 +17,7 @@ Install Encore into your project via Yarn:
 
 .. note::
 
-    If you prefer to use `npm`_, no problem! Run ``npm install @symfony/webpack-encore --save-dev``. 
+    If you prefer to use `npm`_, no problem! Run ``npm install @symfony/webpack-encore --save-dev``.
 
 This command creates (or modifies) a ``package.json`` file and downloads dependencies
 into a ``node_modules/`` directory. Yarn also creates/updates a ``yarn.lock``
@@ -39,7 +39,7 @@ Next, create a new ``webpack.config.js`` file at the root of your project:
 
     Encore
         // directory where compiled assets will be stored
-        .setOutputPath('web/build/')
+        .setOutputPath('public/build/')
         // public path used by the web server to access the output path
         .setPublicPath('/build')
         // only needed for CDN's or sub-directory deploy
@@ -81,9 +81,9 @@ import some JavaScript:
 .. code-block:: javascript
 
     // assets/js/app.js
-    
+
     require('../css/app.css');
-    
+
     console.log('Hello Webpack Encore');
 
 And the new ``assets/css/app.css`` file:
