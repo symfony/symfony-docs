@@ -158,8 +158,8 @@ To import values, use ``import``:
     // assets/js/app.js
     - var $ = require('jquery');
     + import $ from 'jquery';
-    
-    - require('../css/app.css');    
+
+    - require('../css/app.css');
     + import '../css/app.css';
 
 .. _multiple-javascript-entries:

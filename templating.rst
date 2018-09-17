@@ -404,9 +404,8 @@ ease the work of the template designer. In PHP, the templating system provides
 an extensible *helper* system that provides useful features in a template
 context.
 
-You've already seen a few built-in Twig tags (``{% block %}`` & ``{% extends %}``)
-as well as an example of a PHP helper (``$view['slots']``). Here you will learn a
-few more.
+You've already seen a few built-in Twig tags like ``{% block %}`` and
+``{% extends %}``. Here you will learn a few more.
 
 .. index::
    single: Templating; Including other templates

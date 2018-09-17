@@ -719,4 +719,4 @@ Learn more
 
 .. _`Symfony Form component`: https://github.com/symfony/form
 .. _`DateTime`: https://php.net/manual/en/class.datetime.php
-.. _`Symfony Forms screencast series`: https://knpuniversity.com/screencast/symfony-forms
+.. _`Symfony Forms screencast series`: https://symfonycasts.com/screencast/symfony-forms
