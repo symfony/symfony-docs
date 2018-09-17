@@ -114,4 +114,4 @@ Other Front-End Articles
 .. _`Mix`: https://laravel.com/docs/mix
 .. _`Symfony`: http://symfony.com/
 .. _`Full API`: https://github.com/symfony/webpack-encore/blob/master/index.js
-.. _`Webpack Encore screencast series`: https://knpuniversity.com/screencast/webpack-encore
+.. _`Webpack Encore screencast series`: https://symfonycasts.com/screencast/webpack-encore
