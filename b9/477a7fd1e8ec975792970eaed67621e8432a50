@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-09-12T07:34:19Z
+
+👍 I agree
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2018-09-12T12:18:49Z
+
+Hi @xabbuh, thanks for the review :)
+
+Thinking about it, is it a good place to add a note about validation groups?
+
+Something like:
+
+> If you need to apply multiple sets of rules using the same form type, use validation groups.
+
+With a minimal example attached to this note: WDYT?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-09-12T19:22:50Z
+
+I think it would probably be better to put it the other way around:
+
+> If your form requires only a subset of all the configured validation constraints, [...]
+
+And then just link this paragraph to the article about validation groups.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-13T14:08:24Z
+
+@mickaelandrieu I liked both your original proposal and the reword suggestions made by @xabbuh so I reworded this accordingly. What do you think? Thanks!
+
+---------------------------------------------------------------------------
+
+by mickaelandrieu at 2018-09-13T21:15:51Z
+
+@javiereguiluz you have improved my proposal as always!
+
+Thank you :+1:
+
+Edit: so we don't add a note about validation groups?
