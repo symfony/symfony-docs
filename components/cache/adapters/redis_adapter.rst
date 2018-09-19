@@ -92,7 +92,7 @@ array of ``key => value`` pairs representing option names and their respective v
     $client = RedisAdapter::createConnection(
 
         // provide a string dsn
-        'redis://localhost:6739',
+        'redis://localhost:6379',
 
         // associative array of configuration options
         array(
