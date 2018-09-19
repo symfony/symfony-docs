@@ -148,9 +148,10 @@ view layer:
 Validation
 ----------
 
-The `constraints`_ option allows you to attach `validation constraints`_ to any
-form field. However, doing that prevents the validation from being reused in
-other forms or other places where the mapped object is used.
+The :ref:`constraints <reference-form-option-constraints>` option allows you to
+attach :doc:`validation constraints </reference/constraints>` to any form field.
+However, doing that prevents the validation from being reused in other forms or
+other places where the mapped object is used.
 
 .. best-practice::
 
@@ -235,6 +236,3 @@ like the form is *always* processed (even on the GET request).
 ----
 
 Next: :doc:`/best_practices/i18n`
-
-.. _`constraints`: https://symfony.com/doc/current/reference/forms/types/form.html#constraints
-.. _`validation constraints`: https://symfony.com/doc/current/reference/constraints.html
