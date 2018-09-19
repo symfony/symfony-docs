@@ -6,8 +6,8 @@ group_by
 
 **type**: ``array``, ``callable`` or ``string`` **default**: ``null``
 
-You can easily group the ``<option>``s of a ``<select>`` into ``<optgroup>``s,
-simply by passing a multi-dimensional array to ``choices``. See the
+You can group the ``<option>`` elements of a ``<select>`` into ``<optgroup>``
+by passing a multi-dimensional array to ``choices``. See the
 :ref:`Grouping Options <form-choices-simple-grouping>` section about that.
 
 The ``group_by`` option is an alternative way to group choices, which gives you
