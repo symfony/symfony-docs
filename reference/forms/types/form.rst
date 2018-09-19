@@ -73,6 +73,8 @@ option on the form.
 
 .. include:: /reference/forms/types/options/compound.rst.inc
 
+.. _reference-form-option-constraints:
+
 .. include:: /reference/forms/types/options/constraints.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
