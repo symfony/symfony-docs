@@ -16,11 +16,15 @@ translation file using the ``lint:yaml`` and ``lint:xliff`` commands:
 
     # lint a single file
     $ ./bin/console lint:yaml translations/messages.en.yaml
-    $ ./bin/console lint:xliff translations/messages.en.xlf
+    $ ./bin/console lint:xliff translations/messages.en.xlf   
 
     # lint a whole directory
     $ ./bin/console lint:yaml translations
     $ ./bin/console lint:xliff translations
+    
+    # lint a multiple files or directories
+    $ ./bin/console lint:yaml translations path/to/trans
+    $ ./bin/console lint:xliff translations/messages.en.xlf translations/messages.es.xlf
 
 The linter results can be exported to JSON using the ``--format`` option:
 
