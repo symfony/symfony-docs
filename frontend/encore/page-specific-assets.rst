@@ -14,7 +14,7 @@ a new ``checkout`` entry:
 
     Encore
         // an existing entry
-        .addEntry('app', './assets/js/main.js')
+        .addEntry('app', './assets/js/app.js')
         // a global styles entry
         .addStyleEntry('global', './assets/css/global.scss')
 
