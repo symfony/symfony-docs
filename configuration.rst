@@ -21,19 +21,35 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
 
         # config/packages/framework.yaml
         framework:
-            secret: '%env(APP_SECRET)%'
-            #default_locale: en
-            #csrf_protection: ~
-            #http_method_override: true
-            #trusted_hosts: ~
-            # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-            #session:
-            #    # The native PHP session handler will be used
-            #    handler_id: ~
-            #esi: ~
-            #fragments: ~
-            php_errors:
-                log: true
+        secret: '%env(APP_SECRET)%'
+        #default_locale: en
+        #csrf_protection: true
+        #http_method_override: true
+
+        # Enables session support. Note that the session will ONLY be started if you read or write from it.
+        # Remove or comment this section to explicitly disable session support.
+        session:
+            handler_id: ~
+
+        #esi: true
+        #fragments: true
+        php_errors:
+            log: true
+
+        cache:
+            # Put the unique name of your app here: the prefix seed
+            # is used to compute stable namespaces for cache keys.
+            #prefix_seed: your_vendor_name/app_name
+
+            # The app cache caches to the filesystem by default.
+            # Other options include:
+
+            # Redis
+            #app: cache.adapter.redis
+            #default_redis_provider: redis://localhost
+
+            # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
+            #app: cache.adapter.apcu
 
     .. code-block:: xml
 
@@ -56,18 +72,31 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
         $container->loadFromExtension('framework', [
             'secret' => '%env(APP_SECRET)%',
             //'default_locale' => 'en',
-            //'csrf_protection' => null,
+            //'csrf_protection' => true,
             //'http_method_override' => true,
-            //'trusted_hosts' => null,
-            // https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-            //'session' => [
-            //    // The native PHP session handler will be used
-            //    'handler_id' => null,
-            //],
-            //'esi' => null,
-            //'fragments' => null,
+
+            // Enables session support. Note that the session will ONLY be started if you read or write from it.
+            // Remove or comment this section to explicitly disable session support.
+            'session' => [
+                'handler_id' => null,
+            ],
+            //'esi' => true,
+            //'fragments' => true,
             'php_errors' => [
                 'log' => true,
+            ],
+            'cache' => [
+                //'prefix_seed' => 'your_vendor_name/app_name',
+
+                // The app cache caches to the filesystem by default.
+                // Other options include:
+
+                // Redis
+                //'app' => 'cache.adapter.redis',
+                //'default_redis_provider: 'redis://localhost',
+
+                // APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
+                //'app' => 'cache.adapter.apcu',
             ],
         ]);
 
