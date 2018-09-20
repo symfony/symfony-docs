@@ -411,7 +411,7 @@ Then, execute the script for validating contents:
     # validates a single file
     $ php lint.php path/to/file.yaml
     
-    # or validates a multiple files
+    # or validates multiple files
     $ php lint.php path/to/file1.yaml path/to/file2.yaml 
 
     # or all the files in a directory
