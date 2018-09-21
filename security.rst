@@ -967,7 +967,7 @@ You can also use expressions inside your templates:
             '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
         ))): ?>
             <a href="...">Delete</a>
-        <?php endif; ?>
+        <?php endif ?>
 
 For more details on expressions and security, see :doc:`/security/expressions`.
 

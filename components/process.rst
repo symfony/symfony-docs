@@ -189,7 +189,7 @@ instead::
     use Symfony\Component\Process\PhpProcess;
 
     $process = new PhpProcess(<<<EOF
-        <?php echo 'Hello World'; ?>
+        <?php echo 'Hello World' ?>
     EOF
     );
     $process->run();
