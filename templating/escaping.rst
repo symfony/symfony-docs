@@ -76,7 +76,7 @@ use output escaping, use the special ``escape()`` view method:
 
 .. code-block:: html+php
 
-    Hello <?php echo $view->escape($name) ?>
+    Hello <?= $view->escape($name) ?>
 
 By default, the ``escape()`` method assumes that the variable is being rendered
 within an HTML context (and thus the variable is escaped to be safe for HTML).
@@ -85,7 +85,7 @@ in a JavaScript string, use the ``js`` context:
 
 .. code-block:: html+php
 
-    var myMsg = 'Hello <?php echo $view->escape($name, 'js') ?>';
+    var myMsg = 'Hello <?= $view->escape($name, 'js') ?>';
 
 .. _`Cross Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`Output Escaping`: https://twig.symfony.com/doc/2.x/api.html#escaper-extension

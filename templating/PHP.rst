@@ -136,7 +136,7 @@ the ``extend()`` call:
     <!-- app/Resources/views/Hello/index.html.php -->
     <?php $view->extend('AppBundle::layout.html.php') ?>
 
-    Hello <?php echo $name ?>!
+    Hello <?= $name ?>!
 
 The ``AppBundle::layout.html.php`` notation sounds familiar, doesn't it? It
 is the same notation used to reference a template. The ``::`` part simply
@@ -200,7 +200,7 @@ decorating the template. In the ``index.html.php`` template, define a
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
 
-    Hello <?php echo $name ?>!
+    Hello <?= $name ?>!
 
 The base layout already has the code to output the title in the header:
 
@@ -238,7 +238,7 @@ Create a ``hello.html.php`` template:
 .. code-block:: html+php
 
     <!-- app/Resources/views/Hello/hello.html.php -->
-    Hello <?php echo $name ?>!
+    Hello <?= $name ?>!
 
 And change the ``index.html.php`` template to include it:
 
@@ -247,7 +247,7 @@ And change the ``index.html.php`` template to include it:
     <!-- app/Resources/views/Hello/index.html.php -->
     <?php $view->extend('AppBundle::layout.html.php') ?>
 
-    <?php echo $view->render('AppBundle:Hello:hello.html.php', array('name' => $name)) ?>
+    <?= $view->render('AppBundle:Hello:hello.html.php', array('name' => $name)) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
@@ -268,7 +268,7 @@ If you create a ``fancy`` action, and want to include it into the
 .. code-block:: html+php
 
     <!-- app/Resources/views/Hello/index.html.php -->
-    <?php echo $view['actions']->render(
+    <?= $view['actions']->render(
         new \Symfony\Component\HttpKernel\Controller\ControllerReference('AppBundle:Hello:fancy', array(
             'name'  => $name,
             'color' => 'green',
@@ -320,7 +320,7 @@ updated by changing the configuration:
 
 .. code-block:: html+php
 
-    <a href="<?php echo $view['router']->path('hello', array('name' => 'Thomas')) ?>">
+    <a href="<?= $view['router']->path('hello', array('name' => 'Thomas')) ?>">
         Greet Thomas!
     </a>
 
@@ -344,9 +344,9 @@ Symfony provides the ``assets`` tag to deal with them easily:
 
 .. code-block:: html+php
 
-    <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
 
-    <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" />
+    <img src="<?= $view['assets']->getUrl('images/logo.png') ?>" />
 
 The ``assets`` helper's main purpose is to make your application more
 portable. Thanks to this helper, you can move the application root directory
@@ -374,13 +374,13 @@ Output Escaping
 When using PHP templates, escape variables whenever they are displayed to the
 user::
 
-    <?php echo $view->escape($var) ?>
+    <?= $view->escape($var) ?>
 
 By default, the ``escape()`` method assumes that the variable is outputted
 within an HTML context. The second argument lets you change the context. For
 instance, to output something in a JavaScript script, use the ``js`` context::
 
-    <?php echo $view->escape($var, 'js') ?>
+    <?= $view->escape($var, 'js') ?>
 
 Form Theming in PHP
 -------------------
@@ -396,7 +396,7 @@ file in order to customize the ``integer_widget`` fragment.
 
     <!-- app/Resources/views/form/integer_widget.html.php -->
     <div class="integer_widget">
-        <?php echo $view['form']->block(
+        <?= $view['form']->block(
             $form,
             'form_widget_simple',
             array('type' => isset($type) ? $type : "number")
@@ -567,7 +567,7 @@ original template:
     <?php if ($required) { $label_attr['class'] = trim((isset($label_attr['class']) ? $label_attr['class'] : '').' required'); } ?>
     <?php if (!$compound) { $label_attr['for'] = $id; } ?>
     <?php if (!$label) { $label = $view['form']->humanize($name); } ?>
-    <label <?php foreach ($label_attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?php echo $view->escape($view['translator']->trans($label, array(), $translation_domain)) ?></label>
+    <label <?php foreach ($label_attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?= $view->escape($view['translator']->trans($label, array(), $translation_domain)) ?></label>
 
     <!-- customization -->
     <?php if ($required) : ?>
@@ -588,14 +588,14 @@ original template:
 
     <!-- Original content -->
     <input
-        type="<?php echo isset($type) ? $view->escape($type) : 'text' ?>"
-        <?php if (!empty($value)): ?>value="<?php echo $view->escape($value) ?>"<?php endif ?>
-        <?php echo $view['form']->block($form, 'widget_attributes') ?>
+        type="<?= isset($type) ? $view->escape($type) : 'text' ?>"
+        <?php if (!empty($value)): ?>value="<?= $view->escape($value) ?>"<?php endif ?>
+        <?= $view['form']->block($form, 'widget_attributes') ?>
     />
 
     <!-- Customization -->
     <?php if (isset($help)) : ?>
-        <span class="help"><?php echo $view->escape($help) ?></span>
+        <span class="help"><?= $view->escape($help) ?></span>
     <?php endif ?>
 
 .. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view
