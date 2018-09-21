@@ -331,24 +331,25 @@ ZookeeperStore
 ~~~~~~~~~~~~~~
 
 .. versionadded:: 4.2
-    The ZookeeperStore was introduced Symfony 4.2.
+    The ZookeeperStore was introduced in Symfony 4.2.
 
-The ZookeeperStore saves locks on a Zookeeper server, it requires a Zookeeper
+The ZookeeperStore saves locks on a `ZooKeeper`_ server. It requires a ZooKeeper
 connection implementing the ``\Zookeeper`` class. This store does not
 support blocking and expiration but the lock is automatically released when the
 PHP process is terminated::
 
     use Symfony\Component\Lock\Store\ZookeeperStore;
 
-    $zookeeper_server = 'localhost:2181'; // For High Availablity Cluster you can pass 'localhost1:2181,localhost2:2181,localhost3:2181'
-    $zookeeper = new \Zookeeper($zookeeper_server);
+    $zookeeper = new \Zookeeper('localhost:2181');
+    // use the following to define a high-availability cluster:
+    // $zookeeper = new \Zookeeper('localhost1:2181,localhost2:2181,localhost3:2181');
 
     $store = new ZookeeperStore($zookeeper);
 
 .. note::
 
-    Zookeeper does not require a TTL as the nodes used for locking are ephemeral and die when the PHP process is terminated.
-
+    Zookeeper does not require a TTL as the nodes used for locking are ephemeral
+    and die when the PHP process is terminated.
 
 Reliability
 -----------
@@ -360,9 +361,10 @@ Remote Stores
 ~~~~~~~~~~~~~
 
 Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
-:ref:`PdoStore <lock-store-pdo>`, :ref:`RedisStore <lock-store-redis>`) and :ref:`ZookeeperStore <lock-store-zookeeper>`)
-use a unique token to recognize the true owner of the lock. This token is stored
-in the :class:`Symfony\\Component\\Lock\\Key` object and is used internally by
+:ref:`PdoStore <lock-store-pdo>`, :ref:`RedisStore <lock-store-redis>`) and
+:ref:`ZookeeperStore <lock-store-zookeeper>`) use a unique token to recognize
+the true owner of the lock. This token is stored in the
+:class:`Symfony\\Component\\Lock\\Key` object and is used internally by
 the ``Lock``, therefore this key must not be shared between processes (session,
 caching, fork, ...).
 
@@ -589,22 +591,26 @@ can be two running containers in parallel.
 ZookeeperStore
 ~~~~~~~~~~~~~~
 
-The way ZookeeperStore works is by maintaining locks as ephemeral nodes on the server. That means that by using
-the :ref:`ZookeeperStore <lock-store-zookeeper>` the locks will be automatically released at the end of the session
-in case the client cannot unlock for any reason.
+The way ZookeeperStore works is by maintaining locks as ephemeral nodes on the
+server. That means that by using :ref:`ZookeeperStore <lock-store-zookeeper>`
+the locks will be automatically released at the end of the session in case the
+client cannot unlock for any reason.
 
-If the Zookeeper service or the machine hosting it restarts, every lock would
+If the ZooKeeper service or the machine hosting it restarts, every lock would
 be lost without notifying the running processes.
 
 .. tip::
 
-    To use Zookeeper's High Availability feature, you can setup a cluster of multiple servers so that in case one of
-    the server goes down, the majority will still be up and serving the requests. All the available servers in the
+    To use ZooKeeper's high-availability feature, you can setup a cluster of
+    multiple servers so that in case one of the server goes down, the majority
+    will still be up and serving the requests. All the available servers in the
     cluster will see the same state.
 
 .. note::
-    As this store does not support multi-level node locks,
-    since the clean up of intermediate nodes becomes an overhead, all locks are maintained at the root level.
+
+    As this store does not support multi-level node locks, since the clean up of
+    intermediate nodes becomes an overhead, all locks are maintained at the root
+    level.
 
 Overall
 ~~~~~~~
@@ -621,3 +627,4 @@ are still running.
 .. _`PDO`: https://php.net/pdo
 .. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Connection.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
+.. _`ZooKeeper`: https://zookeeper.apache.org/
