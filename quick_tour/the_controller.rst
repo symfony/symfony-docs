@@ -152,7 +152,6 @@ To restrict the formats supported by a given action, use the ``requirements``
 option of the ``@Route()`` annotation::
 
     // src/AppBundle/Controller/DefaultController.php
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     use Symfony\Component\Routing\Annotation\Route;
 
     // ...

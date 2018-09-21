@@ -19,6 +19,25 @@ from the bundle to ``app/Resources/AcmeBlogBundle/views/Blog/index.html.twig``
 (the ``app/Resources/AcmeBlogBundle`` directory won't exist, so you'll need
 to create it). You're now free to customize the template.
 
+Instead of overriding an entire template, you may just want to override one or
+more blocks. However, since you are overriding the template you want to extend
+from, you would end up in an infinite loop error. The solution is to use the
+special ``!`` prefix in the template name to tell Symfony that you want to
+extend from the original template, not from the overridden one:
+
+.. code-block:: twig
+
+    {# app/Resources/AcmeBlogBundle/views/Blog/index.html.twig #}
+    {# the special '!' prefix avoids errors when extending from an overridden template #}
+    {% extends "@!AcmeBlogBundle/index.html.twig" %}
+
+    {% block some_block %}
+        ...
+    {% endblock %}
+
+.. versionadded:: 3.4
+    The special ``!`` template prefix was introduced in Symfony 3.4.
+
 .. caution::
 
     If you add a template in a new location, you *may* need to clear your

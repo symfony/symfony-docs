@@ -128,7 +128,7 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
     class DefaultController extends Controller
     {
         /**
-         * @Route("/tweet")
+         * @Route("/tweet", methods={"POST"})
          */
         public function tweetAction()
         {

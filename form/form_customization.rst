@@ -755,7 +755,7 @@ form, modify the ``use`` tag and add the following:
     {% block form_label %}
         {{ block('base_form_label') }}
 
-        {% if required %}
+        {% if label is not same as(false) and required %}
             <span class="required" title="This field is required">*</span>
         {% endif %}
     {% endblock %}
@@ -770,7 +770,7 @@ the following:
     {% block form_label %}
         {{ parent() }}
 
-        {% if required %}
+        {% if label is not same as(false) and required %}
             <span class="required" title="This field is required">*</span>
         {% endif %}
     {% endblock %}
@@ -857,6 +857,6 @@ more details about this concept in Twig, see :ref:`twig-reference-form-variables
 .. _`bootstrap_4_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_layout.html.twig
 .. _`bootstrap_4_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_horizontal_layout.html.twig
 .. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.3/
-.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.0/
+.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.1/
 .. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
 .. _`Foundation CSS framework`: http://foundation.zurb.com/

@@ -20,8 +20,6 @@ Validation Constraints Reference
    constraints/Ip
    constraints/Uuid
 
-   constraints/Range
-
    constraints/EqualTo
    constraints/NotEqualTo
    constraints/IdenticalTo
@@ -30,6 +28,7 @@ Validation Constraints Reference
    constraints/LessThanOrEqual
    constraints/GreaterThan
    constraints/GreaterThanOrEqual
+   constraints/Range
 
    constraints/Date
    constraints/DateTime

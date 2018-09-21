@@ -1,12 +1,14 @@
 FAQ and Common Issues
 =====================
 
+.. _how-do-i-deploy-my-encore-assets:
+
 How do I deploy my Encore Assets?
 ---------------------------------
 
 There are two important things to remember when deploying your assets.
 
-**1) Run ``encore production``**
+**1) Compile assets for production**
 
 Optimize your assets for production by running:
 

@@ -16,7 +16,7 @@ Now that ``bootstrap`` lives in your ``node_modules/`` directory, you can
 import it from any Sass or JavaScript file. For example, if you already have
 a ``global.scss`` file, import it from there:
 
-.. code-block:: css
+.. code-block:: scss
 
     // assets/css/global.scss
 
