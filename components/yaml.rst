@@ -423,6 +423,9 @@ Then, execute the script for validating contents:
     # or contents passed to STDIN
     $ cat path/to/file.yaml | php lint.php
 
+.. versionadded:: 4.2
+    The feature to lint multiple files and directories was introduced in Symfony 4.2.
+
 The result is written to STDOUT and uses a plain text format by default.
 Add the ``--format`` option to get the output in JSON format:
 
