@@ -176,6 +176,7 @@ Store                                         Scope   Blocking  Expiring
 :ref:`PdoStore <lock-store-pdo>`              remote  no        yes
 :ref:`RedisStore <lock-store-redis>`          remote  no        yes
 :ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no
+:ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no
 ============================================  ======  ========  ========
 
 .. _lock-store-flock:
@@ -324,6 +325,31 @@ the stores.
     working when a single server fails (because this strategy requires that the
     lock is acquired in more than half of the servers).
 
+.. _lock-store-zookeeper:
+
+ZookeeperStore
+~~~~~~~~~~~~~~
+
+.. versionadded:: 4.2
+    The ZookeeperStore was introduced Symfony 4.2.
+
+The ZookeeperStore saves locks on a Zookeeper server, it requires a Zookeeper
+connection implementing the ``\Zookeeper`` class. This store does not
+support blocking and expiration but the lock is automatically released when the
+PHP process is terminated::
+
+    use Symfony\Component\Lock\Store\ZookeeperStore;
+
+    $zookeeper_server = 'localhost:2181'; // For High Availablity Cluster you can pass 'localhost1:2181,localhost2:2181,localhost3:2181'
+    $zookeeper = new \Zookeeper($zookeeper_server);
+
+    $store = new ZookeeperStore($zookeeper);
+
+.. note::
+
+    Zookeeper does not require a TTL as the nodes used for locking are ephemeral and die when the PHP process is terminated.
+
+
 Reliability
 -----------
 
@@ -334,8 +360,8 @@ Remote Stores
 ~~~~~~~~~~~~~
 
 Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
-:ref:`PdoStore <lock-store-pdo>` and :ref:`RedisStore <lock-store-redis>`) use
-a unique token to recognize the true owner of the lock. This token is stored
+:ref:`PdoStore <lock-store-pdo>`, :ref:`RedisStore <lock-store-redis>`) and :ref:`ZookeeperStore <lock-store-zookeeper>`)
+use a unique token to recognize the true owner of the lock. This token is stored
 in the :class:`Symfony\\Component\\Lock\\Key` object and is used internally by
 the ``Lock``, therefore this key must not be shared between processes (session,
 caching, fork, ...).
@@ -559,6 +585,26 @@ can be two running containers in parallel.
     All concurrent processes must use the same machine. Before starting a
     concurrent process on a new machine, check that other process are stopped
     on the old one.
+
+ZookeeperStore
+~~~~~~~~~~~~~~
+
+The way ZookeeperStore works is by maintaining locks as ephemeral nodes on the server. That means that by using
+the :ref:`ZookeeperStore <lock-store-zookeeper>` the locks will be automatically released at the end of the session
+in case the client cannot unlock for any reason.
+
+If the Zookeeper service or the machine hosting it restarts, every lock would
+be lost without notifying the running processes.
+
+.. tip::
+
+    To use Zookeeper's High Availability feature, you can setup a cluster of multiple servers so that in case one of
+    the server goes down, the majority will still be up and serving the requests. All the available servers in the
+    cluster will see the same state.
+
+.. note::
+    As this store does not support multi-level node locks,
+    since the clean up of intermediate nodes becomes an overhead, all locks are maintained at the root level.
 
 Overall
 ~~~~~~~
