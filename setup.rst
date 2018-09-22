@@ -134,7 +134,7 @@ The Symfony Demo application
 recommended way to develop Symfony applications. It's a great learning tool for
 Symfony newcomers and its code contains tons of comments and helpful notes.
 
-To check out its code and install it locally, see `symfony/symfony-demo`_.
+To check out its code and install it locally, see `symfony/demo`_.
 
 Start Coding!
 -------------
@@ -161,5 +161,5 @@ Go Deeper with Setup
 
 .. _`Stellar Development with Symfony`: http://symfonycasts.com/screencast/symfony
 .. _`Composer`: https://getcomposer.org/
-.. _`The Symfony Demo application`: https://github.com/symfony/symfony-demo
-.. _`symfony/symfony-demo`: https://github.com/symfony/demo
+.. _`The Symfony Demo application`: https://github.com/symfony/demo
+.. _`symfony/demo`: https://github.com/symfony/demo
