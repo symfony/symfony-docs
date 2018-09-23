@@ -13,12 +13,6 @@ recommended setup.
     You can also manually register your command as a service by configuring the service
     and :doc:`tagging it </service_container/tags>` with ``console.command``.
 
-In either case, if your class extends :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand`,
-you can access public services via ``$this->getContainer()->get('SERVICE_ID')``.
-
-But if your class is registered as a service, you can instead access services by
-using normal :ref:`dependency injection <services-constructor-injection>`.
-
 For example, suppose you want to log something from within your command::
 
     namespace App\Command;
@@ -65,6 +59,13 @@ works! You can call the ``app:sunshine`` command and start logging.
     not :ref:`lazy <console-command-service-lazy-loading>`, try to avoid doing any
     work (e.g. making database queries), as that code will be run, even if you're using
     the console to execute a different command.
+
+.. note::
+
+    In previous Symfony versions, you could make the command class extend from
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand` to
+    get services via ``$this->getContainer()->get('SERVICE_ID')``. This is
+    deprecated in Symfony 4.2 and it won't work in future Symfony versions.
 
 .. _console-command-service-lazy-loading:
 

@@ -71,6 +71,13 @@ in the ``vendor/acme/foo-bar/templates/`` directory, you can refer to it as:
 
     {{ include('@foo_bar/sidebar.twig') }}
 
+Execute this command to verify if your template name is correct and know which
+template file will be loaded:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:twig @foo_bar/sidebar.twig
+
 Multiple Paths per Namespace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

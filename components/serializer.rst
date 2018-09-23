@@ -337,7 +337,7 @@ You are now able to serialize only attributes in the groups you want::
     $normalizer = new ObjectNormalizer($classMetadataFactory);
     $serializer = new Serializer(array($normalizer));
 
-    $data = $serializer->normalize($obj, null, array('groups' => array('group1')));
+    $data = $serializer->normalize($obj, null, array('groups' => 'group1'));
     // $data = array('foo' => 'foo');
 
     $obj2 = $serializer->denormalize(
@@ -481,6 +481,15 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
     $companyCopy = $serializer->deserialize($json, Company::class, 'json');
     // Same data as $company
 
+.. note::
+
+    You can also implement 
+    :class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface`
+    to access to the current class name, format and context.
+
+    .. versionadded:: 4.2
+        The ``AdvancedNameConverterInterface`` interface was introduced in Symfony 4.2.
+
 .. _using-camelized-method-names-for-underscored-attributes:
 
 CamelCase to snake_case
@@ -545,10 +554,9 @@ When serializing, you can set a callback to format a specific object property::
     $encoder = new JsonEncoder();
     $normalizer = new GetSetMethodNormalizer();
 
-    $callback = function ($dateTime) {
-        return $dateTime instanceof \DateTime
-            ? $dateTime->format(\DateTime::ISO8601)
-            : '';
+    // all callback parameters are optional (you can omit the ones you don't use)
+    $callback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = array()) {
+        return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : '';
     };
 
     $normalizer->setCallbacks(array('createdAt' => $callback));
@@ -562,6 +570,10 @@ When serializing, you can set a callback to format a specific object property::
 
     $serializer->serialize($person, 'json');
     // Output: {"name":"cordoval", "age": 34, "createdAt": "2014-03-22T09:43:12-0500"}
+
+.. versionadded:: 4.2
+    The ``$outerObject``, ``$attributeName``, ``$format`` and ``$context``
+    parameters of the callback were introduced in Symfony 4.2.
 
 .. _component-serializer-normalizers:
 
@@ -828,13 +840,18 @@ having unique identifiers::
     $encoder = new JsonEncoder();
     $normalizer = new ObjectNormalizer();
 
-    $normalizer->setCircularReferenceHandler(function ($object) {
+    // all callback parameters are optional (you can omit the ones you don't use)
+    $normalizer->setCircularReferenceHandler(function ($object, string $format = null, array $context = array()) {
         return $object->getName();
     });
 
     $serializer = new Serializer(array($normalizer), array($encoder));
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
+
+.. versionadded:: 4.2
+    The ``$format`` and ``$context`` parameters of ``setCircularReferenceHandler()``
+    were introduced in Symfony 4.2.
 
 Handling Serialization Depth
 ----------------------------
@@ -964,8 +981,9 @@ having unique identifiers::
 
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
     $normalizer = new ObjectNormalizer($classMetadataFactory);
-    $normalizer->setMaxDepthHandler(function ($foo) {
-        return '/foos/'.$foo->id;
+    // all callback parameters are optional (you can omit the ones you don't use)
+    $normalizer->setMaxDepthHandler(function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = array()) {
+        return '/foos/'.$innerObject->id;
     });
 
     $serializer = new Serializer(array($normalizer));
@@ -983,6 +1001,10 @@ having unique identifiers::
 
 .. versionadded:: 4.1
     The ``setMaxDepthHandler()`` method was introduced in Symfony 4.1.
+
+.. versionadded:: 4.2
+    The ``$outerObject``, ``$attributeName``, ``$format`` and ``$context``
+    parameters of ``setMaxDepthHandler()`` were introduced in Symfony 4.2.
 
 Handling Arrays
 ---------------

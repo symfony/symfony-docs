@@ -29,6 +29,7 @@ Validation Constraints Reference
    constraints/GreaterThan
    constraints/GreaterThanOrEqual
    constraints/Range
+   constraints/DivisibleBy
 
    constraints/Date
    constraints/DateTime
