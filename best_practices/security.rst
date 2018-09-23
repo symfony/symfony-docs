@@ -121,7 +121,7 @@ Using ``@Security``, this looks like:
      * Displays a form to create a new Post entity.
      *
      * @Route("/new", name="admin_post_new")
-     * @Security("is_granted('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function new()
     {

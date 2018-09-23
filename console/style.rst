@@ -13,11 +13,11 @@ Consider for example the code used to display the title of the following command
     // src/Command/GreetCommand.php
     namespace App\Command;
 
-    use Symfony\Component\Console\Command\Command;
+    use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
-    class GreetCommand extends Command
+    class GreetCommand extends ContainerAwareCommand
     {
         // ...
 
@@ -53,12 +53,12 @@ title of the command::
     // src/Command/GreetCommand.php
     namespace App\Command;
 
-    use Symfony\Component\Console\Command\Command;
+    use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
     use Symfony\Component\Console\Style\SymfonyStyle;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
-    class GreetCommand extends Command
+    class GreetCommand extends ContainerAwareCommand
     {
         // ...
 
@@ -355,11 +355,10 @@ of your commands to change their appearance::
     namespace App\Console;
 
     use App\Console\CustomStyle;
-    use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
-    class GreetCommand extends Command
+    class GreetCommand extends ContainerAwareCommand
     {
         // ...
 

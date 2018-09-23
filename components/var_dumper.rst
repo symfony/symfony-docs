@@ -64,15 +64,6 @@ current PHP SAPI:
   mechanism;
 * On other SAPIs, dumps are written as HTML in the regular output.
 
-.. tip::
-
-    You can also select the output format explicitly defining the
-    ``VAR_DUMPER_FORMAT`` environment variable and setting its value to either
-    ``html`` or ``cli``.
-
-    .. versionadded:: 4.2
-        The ``VAR_DUMPER_FORMAT`` env var was introduced in Symfony 4.2.
-
 .. note::
 
     If you want to catch the dump output as a string, please read the
@@ -131,14 +122,14 @@ the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
 Outside a Symfony application, use the ``ServerDumper`` class::
 
     require __DIR__.'/vendor/autoload.php';
-
+    
     use Symfony\Component\VarDumper\VarDumper;
     use Symfony\Component\VarDumper\Cloner\VarCloner;
     use Symfony\Component\VarDumper\Dumper\ServerDumper;
-
+    
     VarDumper::setHandler(function ($var) {
       $cloner = new VarCloner();
-      $dumper = new ServerDumper('tcp://127.0.0.1:9912');
+      $dumper = new ServerDumper('tcp://127.0.0.1:9912');     
       $dumper->dump($cloner->cloneVar($var));
     });
 
