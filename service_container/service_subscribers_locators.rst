@@ -243,8 +243,9 @@ Defining a Service Locator
 --------------------------
 
 To manually define a service locator, create a new service definition and add
-the ``container.service_locator`` tag to it. Use its ``arguments`` option to
-include as many services as needed in it.
+the ``container.service_locator`` tag to it. Use the first argument of the
+service definition to pass a collection of services to the service locator. If
+there is no id specified for the service it will inherit its external id.
 
 .. configuration-block::
 
@@ -305,6 +306,16 @@ include as many services as needed in it.
             // add the following tag to the service definition:
             // ->addTag('container.service_locator')
         ;
+
+.. versionadded:: 4.1
+    The service locator autoconfiguration was introduced in Symfony 4.1. In
+    previous Symfony versions you always needed to add the
+    ``container.service_locator`` tag explicitly.
+
+.. versionadded:: 4.2
+
+    The ability to add services without specifying an id was introduced in
+    Symfony 4.2.
 
 .. note::
 
