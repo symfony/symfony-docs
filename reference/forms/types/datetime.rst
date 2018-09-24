@@ -18,6 +18,7 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 | Options              | - `choice_translation_domain`_                                              |
 |                      | - `date_format`_                                                            |
 |                      | - `date_widget`_                                                            |
+|                      | - `date_label`_                                                             |
 |                      | - `days`_                                                                   |
 |                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
@@ -29,6 +30,7 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `months`_                                                                 |
 |                      | - `seconds`_                                                                |
 |                      | - `time_widget`_                                                            |
+|                      | - `time_label`_                                                             |
 |                      | - `view_timezone`_                                                          |
 |                      | - `widget`_                                                                 |
 |                      | - `with_minutes`_                                                           |
@@ -71,6 +73,23 @@ date_widget
 ~~~~~~~~~~~
 
 .. include:: /reference/forms/types/options/date_widget_description.rst.inc
+
+date_label
+~~~~~~~~~~
+
+**type**: ``string`` **default**: The label is "guessed" from the field name
+
+.. versionadded:: 4.2
+    The ``date_label`` option was introduced in Symfony 4.2.
+
+Sets the label that will be used when rendering the date widget separately.
+Setting to ``false`` will suppress the label::
+
+    use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
+    $builder->add('startDateTime', DateTimeType::class, array(
+        'date_label' => 'Starts On',
+    ));
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
@@ -150,6 +169,23 @@ time_widget
 **type**: ``string`` **default**: ``choice``
 
 Defines the ``widget`` option for the :doc:`TimeType </reference/forms/types/time>`.
+
+time_label
+~~~~~~~~~~
+
+**type**: ``string`` **default**: The label is "guessed" from the field name
+
+.. versionadded:: 4.2
+    The ``time_label`` option was introduced in Symfony 4.2.
+
+Sets the label that will be used when rendering the time widget separately.
+Setting to ``false`` will suppress the label::
+
+    use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
+    $builder->add('startDateTime', DateTimeType::class, array(
+        'time_label' => 'Starts On',
+    ));
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
