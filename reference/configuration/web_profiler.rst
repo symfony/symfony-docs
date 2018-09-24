@@ -4,10 +4,10 @@
 Profiler Configuration Reference (WebProfilerBundle)
 ====================================================
 
-The WebProfilerBundle provides detailed technical information about each request
-execution and displays it in both the web debug toolbar and the
-:doc:`profiler </profiler>`. All these options are configured under the
-``web_profiler`` key in your application configuration.
+The WebProfilerBundle is a **development tool** that provides detailed technical
+information about each request execution and displays it in both the web debug
+toolbar and the :doc:`profiler </profiler>`. All these options are configured
+under the ``web_profiler`` key in your application configuration.
 
 .. code-block:: terminal
 
