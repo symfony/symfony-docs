@@ -139,7 +139,7 @@ stored in one of the following locations:
 
 * The ``serialization.yaml`` or ``serialization.xml`` file in
   the ``Resources/config/`` directory of a bundle;
-* All ``*.yaml`` and ``*.xml`` files in the ``Resources/config/serialization/``
+* All ``*.yaml`` and ``*.xml`` files in the ``Resources/config/serializer/``
   directory of a bundle.
 
 .. _serializer-enabling-metadata-cache:
