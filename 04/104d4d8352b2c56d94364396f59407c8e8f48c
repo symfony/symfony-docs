@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-07-27T16:31:37Z
+
+I am not convinced that it really is a good idea to install the full ORM layer if you just want to use DBAL. What about if we explain instead how to remove the ORM related config?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-30T07:04:16Z
+
+Maybe it's time to create a recipe to install DBAL just by `composer require dbal` (or `composer require symfony/dbal-pack`) ? We can't keep complicating docs so much for basic things such as installing DBAL.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-08-10T22:41:40Z
+
+> Maybe it's time to create a recipe to install DBAL just by composer require dbal (or composer require symfony/dbal-pack) ? We can't keep complicating docs so much for basic things such as installing DBAL.
+
+Hmm. We could do that only if we created a `dbal-pack`... if we added the recipe to `dbal` itself, it would all install when we added `orm`. I don't know if that's worth it...
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-08-10T22:53:48Z
+
+Wording updated about removing ORM... without adding a bug ugly block of text :)
