@@ -161,5 +161,5 @@ Go Deeper with Setup
 
 .. _`Stellar Development with Symfony`: http://symfonycasts.com/screencast/symfony
 .. _`Composer`: https://getcomposer.org/
-.. _`The Symfony Demo application`: https://github.com/symfony/symfony-demo
+.. _`The Symfony Demo application`: https://github.com/symfony/demo
 .. _`symfony/symfony-demo`: https://github.com/symfony/demo

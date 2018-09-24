@@ -148,6 +148,9 @@ and ``redirect()`` methods::
         // redirect to a route with parameters
         return $this->redirectToRoute('app_lucky_number', array('max' => 10));
 
+        // redirects to a route and mantains the original query string parameters
+        return $this->redirectToRoute('blog_show', $request->query->all());
+
         // redirects externally
         return $this->redirect('http://symfony.com/doc');
     }

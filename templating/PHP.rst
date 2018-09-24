@@ -126,7 +126,7 @@ the ``extend()`` call:
     <!-- src/Resources/views/hello/index.html.php -->
     <?php $view->extend('layout.html.php') ?>
 
-    Hello <?php echo $name ?>!
+    Hello <?= $name ?>!
 
 Now, have a look at the ``layout.html.php`` file:
 
@@ -183,7 +183,7 @@ decorating the template. In the ``index.html.php`` template, define a
 
     <?php $view['slots']->set('title', 'Hello World Application') ?>
 
-    Hello <?php echo $name ?>!
+    Hello <?= $name ?>!
 
 The base layout already has the code to output the title in the header:
 
@@ -221,7 +221,7 @@ Create a ``hello.html.php`` template:
 .. code-block:: html+php
 
     <!-- src/Resources/views/hello/hello.html.php -->
-    Hello <?php echo $name ?>!
+    Hello <?= $name ?>!
 
 And change the ``index.html.php`` template to include it:
 
@@ -230,7 +230,7 @@ And change the ``index.html.php`` template to include it:
     <!-- src/Resources/views/hello/index.html.php -->
     <?php $view->extend('layout.html.php') ?>
 
-    <?php echo $view->render('hello/hello.html.php', array('name' => $name)) ?>
+    <?= $view->render('hello/hello.html.php', array('name' => $name)) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
@@ -251,7 +251,7 @@ If you create a ``fancy`` action, and want to include it into the
 .. code-block:: html+php
 
     <!-- src/Resources/views/hello/index.html.php -->
-    <?php echo $view['actions']->render(
+    <?= $view['actions']->render(
         new \Symfony\Component\HttpKernel\Controller\ControllerReference(
             'App\Controller\HelloController::fancy',
             array(
@@ -285,7 +285,7 @@ updated by changing the configuration:
 
 .. code-block:: html+php
 
-    <a href="<?php echo $view['router']->path('hello', array('name' => 'Thomas')) ?>">
+    <a href="<?= $view['router']->path('hello', array('name' => 'Thomas')) ?>">
         Greet Thomas!
     </a>
 
@@ -309,9 +309,9 @@ Symfony provides the ``assets`` tag to deal with them easily:
 
 .. code-block:: html+php
 
-    <link href="<?php echo $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= $view['assets']->getUrl('css/blog.css') ?>" rel="stylesheet" type="text/css" />
 
-    <img src="<?php echo $view['assets']->getUrl('images/logo.png') ?>" />
+    <img src="<?= $view['assets']->getUrl('images/logo.png') ?>" />
 
 The ``assets`` helper's main purpose is to make your application more
 portable. Thanks to this helper, you can move the application root directory
@@ -339,13 +339,13 @@ Output Escaping
 When using PHP templates, escape variables whenever they are displayed to the
 user::
 
-    <?php echo $view->escape($var) ?>
+    <?= $view->escape($var) ?>
 
 By default, the ``escape()`` method assumes that the variable is outputted
 within an HTML context. The second argument lets you change the context. For
 instance, to output something in a JavaScript script, use the ``js`` context::
 
-    <?php echo $view->escape($var, 'js') ?>
+    <?= $view->escape($var, 'js') ?>
 
 Form Theming in PHP
 -------------------
@@ -361,7 +361,7 @@ file in order to customize the ``integer_widget`` fragment.
 
     <!-- src/Resources/integer_widget.html.php -->
     <div class="integer_widget">
-        <?php echo $view['form']->block(
+        <?= $view['form']->block(
             $form,
             'form_widget_simple',
             array('type' => isset($type) ? $type : "number")
@@ -372,7 +372,7 @@ Now that you've created the customized form template, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
 tell Symfony to use the theme via the ``setTheme()`` helper method::
 
-    <?php $view['form']->setTheme($form, array(':form')); ?>
+    <?php $view['form']->setTheme($form, array(':form')) ?>
 
     <?php $view['form']->widget($form['age']) ?>
 
@@ -383,7 +383,7 @@ the ``div`` element.
 If you want to apply a theme to a specific child form, pass it to the ``setTheme()``
 method::
 
-    <?php $view['form']->setTheme($form['child'], ':form'); ?>
+    <?php $view['form']->setTheme($form['child'], ':form') ?>
 
 .. note::
 
@@ -510,7 +510,7 @@ your template file rather than adding the template as a resource:
 
 .. code-block:: html+php
 
-    <?php $view['form']->setTheme($form, array('FrameworkBundle:FormTable')); ?>
+    <?php $view['form']->setTheme($form, array('FrameworkBundle:FormTable')) ?>
 
 Note that the ``$form`` variable in the above code is the form view variable
 that you passed to your template.
@@ -532,7 +532,7 @@ original template:
     <?php if ($required) { $label_attr['class'] = trim((isset($label_attr['class']) ? $label_attr['class'] : '').' required'); } ?>
     <?php if (!$compound) { $label_attr['for'] = $id; } ?>
     <?php if (!$label) { $label = $view['form']->humanize($name); } ?>
-    <label <?php foreach ($label_attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?php echo $view->escape($view['translator']->trans($label, array(), $translation_domain)) ?></label>
+    <label <?php foreach ($label_attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?= $view->escape($view['translator']->trans($label, array(), $translation_domain)) ?></label>
 
     <!-- customization -->
     <?php if ($required) : ?>
@@ -553,14 +553,14 @@ original template:
 
     <!-- Original content -->
     <input
-        type="<?php echo isset($type) ? $view->escape($type) : 'text' ?>"
-        <?php if (!empty($value)): ?>value="<?php echo $view->escape($value) ?>"<?php endif ?>
-        <?php echo $view['form']->block($form, 'widget_attributes') ?>
+        type="<?= isset($type) ? $view->escape($type) : 'text' ?>"
+        <?php if (!empty($value)): ?>value="<?= $view->escape($value) ?>"<?php endif ?>
+        <?= $view['form']->block($form, 'widget_attributes') ?>
     />
 
     <!-- Customization -->
     <?php if (isset($help)) : ?>
-        <span class="help"><?php echo $view->escape($help) ?></span>
+        <span class="help"><?= $view->escape($help) ?></span>
     <?php endif ?>
 
 .. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view
