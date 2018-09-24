@@ -10,7 +10,7 @@ run:
 
 .. code-block:: terminal
 
-    $ composer require webpack-encore
+    $ composer require symfony/webpack-encore-pack
     $ yarn install
 
 This will create a ``webpack.config.js`` file, add the ``assets/`` directory, and
