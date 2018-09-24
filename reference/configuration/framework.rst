@@ -1955,6 +1955,58 @@ A list of cache pools to be created by the framework extension.
 
     For more information about how pools works, see :ref:`cache pools <component-cache-cache-pools>`.
 
+To configure a Redis cache pool with a default lifetime of 1 hour, do the following:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            cache:
+                pools:
+                    cache.mycache:
+                        adapter: cache.adapter.redis
+                        default_lifetime: 3600
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:cache>
+                    <framework:pools>
+                        <cache.mycache
+                            adapter="cache.adapter.redis"
+                            default_lifetime=3600
+                        />
+                    </framework:pools>
+                </framework:cache>
+                <!-- ... -->
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', array(
+            'cache' => array(
+                'pools' => array(
+                    'cache.mycache' => array(
+                        'adapter' => 'cache.adapter.redis',
+                        'default_lifetime' => 3600,
+                    ),
+                ),
+            ),
+        ));
+
 .. _reference-cache-pools-name:
 
 name
