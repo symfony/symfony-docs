@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-08-08T15:29:47Z
+
+It's true that recently we changed the docs to always use the real package name instead of the Flex shortcut ... but maybe here we want to make an exception? Let's ask @weaverryan if he opposes to this. Thanks!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-08-10T22:04:24Z
+
+I *do* disagree with this change. This install doc is all about using Symfony Flex. And so, that package name will work.
+
+But, I realize that this is the 3.4 branch, where Flex is not assumed as the default. So, I think we should re-work JUST this branch's docs to make that more obvious.
+
+@razbounak Was this the issue? You're on a Symfony 3.4 project, and so aren't using Symfony Flex? Or was there something else confusing?
+
+---------------------------------------------------------------------------
+
+by razbounak at 2018-08-12T05:34:29Z
+
+@weaverryan yes It's only for 3.4
