@@ -3,12 +3,12 @@ FAQ and Common Issues
 
 .. _how-do-i-deploy-my-encore-assets:
 
-How do I deploy my Encore assets?
+How Do I Deploy My Encore Assets?
 ---------------------------------
 
 There are two important things to remember when deploying your assets.
 
-**1) Compile assets for production**
+**1) Compile Assets for Production**
 
 Optimize your assets for production by running:
 
@@ -26,7 +26,7 @@ first (e.g. via ``git pull``) and then run this command on production
 (ideally, before traffic hits your code). In this case, you'll need to install
 Node.js on your production server.
 
-**2) Only deploy the built assets**
+**2) Only Deploy the Built Assets**
 
 The *only* files that need to be deployed to your production servers are the
 final, built assets (e.g. the ``web/build`` directory). You do *not* need to install
@@ -35,13 +35,13 @@ asset files, **unless** you plan on running ``encore production`` on your produc
 machine. Once your assets are built, these are the *only* thing that need to live
 on the production server.
 
-Do I need to install Node.js on my production server?
+Do I Need to Install Node.js on My Production Server?
 -----------------------------------------------------
 
 No, unless you plan to build your production assets on your production server,
-which is not recommended. See `How do I deploy my Encore assets?`_.
+which is not recommended. See `How Do I Deploy my Encore Assets?`_.
 
-What files should I commit to git? And which should I ignore?
+What Files Should I Commit to git? And which Should I Ignore?
 -------------------------------------------------------------
 
 You should commit all of your files to git, except for the ``node_modules/`` directory
@@ -55,7 +55,7 @@ and the built files. Your ``.gitignore`` file should include:
 
 You *should* commit all of your source asset files, ``package.json`` and ``yarn.lock``.
 
-My app lives under a subdirectory
+My App Lives under a Subdirectory
 ---------------------------------
 
 If your app does not live at the root of your web server (i.e. it lives under a subdirectory,
