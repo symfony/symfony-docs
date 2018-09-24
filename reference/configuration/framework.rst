@@ -622,11 +622,6 @@ dsn
 
 The DSN where to store the profiling information.
 
-.. seealso::
-
-    See :doc:`/profiler/storage` for more information about the
-    profiler storage.
-
 request
 ~~~~~~~
 

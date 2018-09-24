@@ -60,6 +60,6 @@ when rendering the field:
 
     .. code-block:: php
 
-        <?php echo $view['form']->widget($form['publishAt'], array(
+        <?= $view['form']->widget($form['publishAt'], array(
                   'separator' => '====='
         )) ?>

@@ -129,7 +129,8 @@ text that's shown to the user. But that can be completely customized via the
 Grouping Options
 ----------------
 
-You can easily "group" options in a select by passing a multi-dimensional choices array::
+You can group the ``<option>`` elements of a ``<select>`` into ``<optgroup>``
+by passing a multi-dimensional ``choices`` array::
 
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...

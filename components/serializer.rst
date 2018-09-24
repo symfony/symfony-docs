@@ -424,7 +424,7 @@ Converting Property Names when Serializing and Deserializing
 Sometimes serialized attributes must be named differently than properties
 or getter/setter methods of PHP classes.
 
-The Serializer Component provides a handy way to translate or map PHP field
+The Serializer component provides a handy way to translate or map PHP field
 names to serialized names: The Name Converter System.
 
 Given you have the following object::
@@ -594,7 +594,7 @@ There are several types of normalizers available:
     ``firstName``).
 
     The ``ObjectNormalizer`` is the most powerful normalizer. It is configured by
-    default when using the Symfony Standard Edition with the serializer enabled.
+    default in Symfony applications with the Serializer component enabled.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`
     This normalizer reads the content of the class by calling the "getters"
@@ -684,8 +684,8 @@ The Serializer component provides several built-in encoders:
 :class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`
     This encoder encodes and decodes data in CSV_.
 
-All these encoders are enabled by default when using the Symfony Standard Edition
-with the serializer enabled.
+All these encoders are enabled by default when using the Serializer component
+in a Symfony application.
 
 The ``JsonEncoder``
 ~~~~~~~~~~~~~~~~~~~
@@ -925,8 +925,8 @@ Here, we set it to 2 for the ``$child`` property:
         </serializer>
 
 The metadata loader corresponding to the chosen format must be configured in
-order to use this feature. It is done automatically when using the Symfony
-Standard Edition. When using the standalone component, refer to
+order to use this feature. It is done automatically when using the Serializer component
+in a Symfony application. When using the standalone component, refer to
 :ref:`the groups documentation <component-serializer-attributes-groups>` to
 learn how to do that.
 
@@ -1160,11 +1160,11 @@ context option::
 Recursive Denormalization and Type Safety
 -----------------------------------------
 
-The Serializer Component can use the :doc:`PropertyInfo Component </components/property_info>` to denormalize
+The Serializer component can use the :doc:`PropertyInfo Component </components/property_info>` to denormalize
 complex types (objects). The type of the class' property will be guessed using the provided
 extractor and used to recursively denormalize the inner data.
 
-When using the Symfony Standard Edition, all normalizers are automatically configured to use the registered extractors.
+When using this component in a Symfony application, all normalizers are automatically configured to use the registered extractors.
 When using the component standalone, an implementation of :class:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface`,
 (usually an instance of :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`) must be passed as the 4th
 parameter of the ``ObjectNormalizer``::
@@ -1239,9 +1239,14 @@ between the possible objects. In practice, when using the Serializer component,
 pass a :class:`Symfony\\Component\\Serializer\\Mapping\\ClassDiscriminatorResolverInterface`
 implementation to the :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`.
 
-Consider an application that defines an abstract ``CodeRepository`` class
-extended by ``GitHubCodeRepository`` and ``BitBucketCodeRepository`` classes.
-This example shows how to serialize and deserialize those objects::
+The Serializer component provides an implementation of ``ClassDiscriminatorResolverInterface``
+called :class:`Symfony\\Component\\Serializer\\Mapping\\ClassDiscriminatorFromClassMetadata`
+which uses the class metadata factory and a mapping configuration to serialize
+and deserialize objects of the correct class.
+
+When using this component inside a Symfony application and the class metadata factory is enabled
+as explained in the :ref:`Attributes Groups section <component-serializer-attributes-groups>`,
+this is already set up and you only need to provide the configuration. Otherwise::
 
     // ...
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -1253,25 +1258,15 @@ This example shows how to serialize and deserialize those objects::
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
     $discriminator = new ClassDiscriminatorFromClassMetadata($classMetadataFactory);
-    $discriminator->addClassMapping(CodeRepository::class, new ClassDiscriminatorMapping('type', [
-        'github' => GitHubCodeRepository::class,
-        'bitbucket' => BitBucketCodeRepository::class,
-    ]));
 
     $serializer = new Serializer(
         array(new ObjectNormalizer($classMetadataFactory, null, null, null, $discriminator)),
         array('json' => new JsonEncoder())
     );
 
-    $serialized = $serializer->serialize(new GitHubCodeRepository());
-    // {"type": "github"}
-
-    $repository = $serializer->deserialize($serialized, CodeRepository::class, 'json');
-    // instanceof GitHubCodeRepository
-
-If the class metadata factory is enabled as explained in the
-:ref:`Attributes Groups section <component-serializer-attributes-groups>`, you
-can use this simpler configuration:
+Now configure your discriminator class mapping. Consider an application that
+defines an abstract ``CodeRepository`` class extended by ``GitHubCodeRepository``
+and ``BitBucketCodeRepository`` classes:
 
 .. configuration-block::
 
@@ -1317,6 +1312,14 @@ can use this simpler configuration:
             </class>
         </serializer>
 
+Once configured, the serializer uses the mapping to pick the correct class::
+
+    $serialized = $serializer->serialize(new GitHubCodeRepository());
+    // {"type": "github"}
+
+    $repository = $serializer->deserialize($serialized, CodeRepository::class, 'json');
+    // instanceof GitHubCodeRepository
+
 Performance
 -----------
 
@@ -1339,7 +1342,7 @@ and return ``true`` when
 is called.
 
  .. note::
-    
+
     All built-in :ref:`normalizers and denormalizers <component-serializer-normalizers>`
     as well the ones included in `API Platform`_ natively implement this interface.
 
@@ -1359,7 +1362,7 @@ Learn more
 
 .. seealso::
 
-    A popular alternative to the Symfony Serializer Component is the third-party
+    A popular alternative to the Symfony Serializer component is the third-party
     library, `JMS serializer`_ (versions before ``v1.12.0`` were released under
     the Apache license, so incompatible with GPLv2 projects).
 

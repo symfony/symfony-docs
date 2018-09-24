@@ -322,7 +322,7 @@ instead::
     use Symfony\Component\Process\PhpProcess;
 
     $process = new PhpProcess(<<<EOF
-        <?php echo 'Hello World'; ?>
+        <?= 'Hello World' ?>
     EOF
     );
     $process->run();

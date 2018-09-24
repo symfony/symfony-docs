@@ -35,13 +35,13 @@ template - a text file parsed by PHP that contains a mix of text and PHP code:
             <title>Welcome to Symfony!</title>
         </head>
         <body>
-            <h1><?php echo $page_title ?></h1>
+            <h1><?= $page_title ?></h1>
 
             <ul id="navigation">
                 <?php foreach ($navigation as $item): ?>
                     <li>
-                        <a href="<?php echo $item->getHref() ?>">
-                            <?php echo $item->getCaption() ?>
+                        <a href="<?= $item->getHref() ?>">
+                            <?= $item->getCaption() ?>
                         </a>
                     </li>
                 <?php endforeach ?>
