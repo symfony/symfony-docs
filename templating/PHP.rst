@@ -407,7 +407,7 @@ Now that you've created the customized form template, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
 tell Symfony to use the theme via the ``setTheme()`` helper method::
 
-    <?php $view['form']->setTheme($form, array(':form')); ?>
+    <?php $view['form']->setTheme($form, array(':form')) ?>
 
     <?php $view['form']->widget($form['age']) ?>
 
@@ -418,7 +418,7 @@ the ``div`` element.
 If you want to apply a theme to a specific child form, pass it to the ``setTheme()``
 method::
 
-    <?php $view['form']->setTheme($form['child'], ':form'); ?>
+    <?php $view['form']->setTheme($form['child'], ':form') ?>
 
 .. note::
 
@@ -545,7 +545,7 @@ your template file rather than adding the template as a resource:
 
 .. code-block:: html+php
 
-    <?php $view['form']->setTheme($form, array('FrameworkBundle:FormTable')); ?>
+    <?php $view['form']->setTheme($form, array('FrameworkBundle:FormTable')) ?>
 
 Note that the ``$form`` variable in the above code is the form view variable
 that you passed to your template.
