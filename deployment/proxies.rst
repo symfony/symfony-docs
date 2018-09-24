@@ -137,23 +137,27 @@ these (see ":doc:`/components/http_foundation/trusting_proxies`").
 
 The code for doing this will need to live in your front controller (e.g. ``web/app.php``).
 
+My Reverse Proxy Does not Provide All the Standards Headers
+-----------------------------------------------------------
 
-My Reverse Proxy do not provide all the standards headers
----------------------------------------------------------
-For example, as AWS Elastic Load Balancing provide standard header but no X-Forwarded-Host and X-Forwarded, you should use this configuration your front controller::
-   .. code-block:: diff
+AWS Elastic Load Balancing for example does not provide the ``X-Forwarded-Host``
+and ``X-Forwarded`` HTTP headers, so you must make the following changes in the
+front controller::
+
+    .. code-block:: diff
 
         // web/app.php
 
         // ...
         $request = Request::createFromGlobals();
-        + Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR'))); //be very careful with this line, see the above chapter "But what if the IP of my Reverse Proxy Changes Constantly!"
-        + 
-        + Request::setTrustedHeaderName(Request::HEADER_CLIENT_HOST, null);// AWS ELB doesn't send X-Forwarded-Host
-        + Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);// AWS ELB doesn't use RFC 7239
-        
+        // be very careful with the next line; see "But what if the IP of my Reverse Proxy Changes Constantly!"
+        + Request::setTrustedProxies(array('127.0.0.1', $request->server->get('REMOTE_ADDR')));
+        // the next line is needed because AWS ELB doesn't send X-Forwarded-Host
+        + Request::setTrustedHeaderName(Request::HEADER_CLIENT_HOST, null);
+        // the next line is needed because AWS ELB doesn't use RFC 7239
+        + Request::setTrustedHeaderName(Request::HEADER_FORWARDED, null);
+
         // ...
-        
 
 .. _`security groups`: http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-groups.html
 .. _`RFC 7239`: http://tools.ietf.org/html/rfc7239
