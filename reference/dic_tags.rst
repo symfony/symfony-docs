@@ -1179,12 +1179,12 @@ also register it manually:
 .. _reference-dic-tags-twig-runtime:
 
 twig.runtime
---------------
+------------
 
 **Purpose**: To register a custom Lazy-Loaded Twig Extension
 
-To enable a Lazy Loaded Twig extension, add it as a regular service in one of your
-configuration and tag it with ``twig.runtime``. If you're using the
+:ref:`Lazy-Loaded Twig Extensions <lazy-loaded-twig-extensions>` are defined as
+regular services but the need to be tagged with ``twig.runtime``. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 the service is auto-registered and auto-tagged. But, you can also register it manually:
 
@@ -1220,10 +1220,6 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
             ->register(AppExtension::class)
             ->addTag('twig.runtime')
         ;
-       
-For information on how to create the actual Runtime Twig Extension class, see
-`Twig's documentation`_ on the topic or read the
-:ref:`Creating Lazy-Loaded Twig Extensions <lazy-loaded-twig-extensions>` article.
 
 validator.constraint_validator
 ------------------------------
