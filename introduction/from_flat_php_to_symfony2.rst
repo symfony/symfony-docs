@@ -593,7 +593,7 @@ database and the Templating component to render a template and return a
     <ul>
         <?php foreach ($posts as $post): ?>
         <li>
-            <a href="<?php echo $view['router']->path(
+            <a href="<?= $view['router']->path(
                 'blog_show',
                 array('id' => $post->getId())
             ) ?>">
