@@ -655,6 +655,10 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
                     # service that's defined in this file
                     Psr\Log\LoggerInterface: '@monolog.logger.request'
 
+                    # optionally you can define both the name and type of the argument to match
+                    string $adminEmail: 'manager@example.com'
+                    Psr\Log\LoggerInterface $requestLogger: '@monolog.logger.request'
+
             # ...
 
     .. code-block:: xml
@@ -677,6 +681,13 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
                         type="service"
                         id="monolog.logger.request"
                     />
+
+                    <!-- optionally you can define both the name and type of the argument to match -->
+                    <bind key="string $adminEmail">manager@example.com</bind>
+                    <bind key="Psr\Log\LoggerInterface $requestLogger"
+                        type="service"
+                        id="monolog.logger.request"
+                    />
                 </defaults>
 
                 <!-- ... -->
@@ -696,12 +707,19 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
                 '$adminEmail' => 'manager@example.com',
                 '$requestLogger' => new Reference('monolog.logger.request'),
                 LoggerInterface::class => new Reference('monolog.logger.request'),
+                // optionally you can define both the name and type of the argument to match
+                'string $adminEmail' => 'manager@example.com',
+                LoggerInterface::class.' $requestLogger' => new Reference('monolog.logger.request'),
             ))
         ;
 
 By putting the ``bind`` key under ``_defaults``, you can specify the value of *any*
 argument for *any* service defined in this file! You can bind arguments by name
-(e.g. ``$adminEmail``) or by type (e.g. ``Psr\Log\LoggerInterface``).
+(e.g. ``$adminEmail``), by type (e.g. ``Psr\Log\LoggerInterface``) or both
+(e.g. ``Psr\Log\LoggerInterface $requestLogger``).
+
+.. versionadded:: 4.2
+    The feature to bind arguments by name and type was introduced in Symfony 4.2.
 
 The ``bind`` config can also be applied to specific services or when loading many
 services at once (i.e. :ref:`service-psr4-loader`).
