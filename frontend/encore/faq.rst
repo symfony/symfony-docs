@@ -3,7 +3,7 @@ FAQ and Common Issues
 
 .. _how-do-i-deploy-my-encore-assets:
 
-How do I deploy my Encore Assets?
+How do I deploy my Encore assets?
 ---------------------------------
 
 There are two important things to remember when deploying your assets.
@@ -19,13 +19,14 @@ Optimize your assets for production by running:
 That will minify your assets and make other performance optimizations. Yay!
 
 But, what server should you run this command on? That depends on how you deploy.
-For example, you could execute this locally (or on a build server), and use rsync
-or something else to transfer the built files to your server. Or, you could put your
-files on your production server first (e.g. via a git pull) and then run this command
-on production (ideally, before traffic hits your code). In this case, you'll need
-to install Node.js on your production server.
+For example, you could execute this locally (or on a build server), and use
+[rsync](https://rsync.samba.org/) or something else to transfer the built files
+to your production server. Or, you could put your files on your production server
+first (e.g. via ``git pull``) and then run this command on production
+(ideally, before traffic hits your code). In this case, you'll need to install
+Node.js on your production server.
 
-**2) Only Deploy the Built Assets**
+**2) Only deploy the built assets**
 
 The *only* files that need to be deployed to your production servers are the
 final, built assets (e.g. the ``web/build`` directory). You do *not* need to install
@@ -34,13 +35,13 @@ asset files, **unless** you plan on running ``encore production`` on your produc
 machine. Once your assets are built, these are the *only* thing that need to live
 on the production server.
 
-Do I need to Install Node.js on my Production Server?
+Do I need to install Node.js on my production server?
 -----------------------------------------------------
 
 No, unless you plan to build your production assets on your production server,
-which is not recommended. See `How do I deploy my Encore Assets?`_.
+which is not recommended. See `How do I deploy my Encore assets?`_.
 
-What Files Should I commit to git? And which should I Ignore?
+What files should I commit to git? And which should I ignore?
 -------------------------------------------------------------
 
 You should commit all of your files to git, except for the ``node_modules/`` directory
@@ -54,7 +55,7 @@ and the built files. Your ``.gitignore`` file should include:
 
 You *should* commit all of your source asset files, ``package.json`` and ``yarn.lock``.
 
-My App Lives under a Subdirectory
+My app lives under a subdirectory
 ---------------------------------
 
 If your app does not live at the root of your web server (i.e. it lives under a subdirectory,
