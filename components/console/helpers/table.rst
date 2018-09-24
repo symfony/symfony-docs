@@ -76,7 +76,19 @@ method to set the column widths explicitly::
 
 In this example, the first column width will be ``10``, the last column width
 will be ``30`` and the second column width will be calculated automatically
-because of the ``0`` value. The output of this command will be:
+because of the ``0`` value.
+
+You can also set the width individually for each column with the
+:method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidth` method.
+Its first argument is the column index (starting from ``0``) and the second
+argument is the column width::
+
+    // ...
+    $table->setColumnWidth(0, 10);
+    $table->setColumnWidth(2, 30);
+    $table->render();
+
+The output of this command will be:
 
 .. code-block:: terminal
 
@@ -95,15 +107,29 @@ widths. If the contents don't fit, the given column width is increased up to the
 longest content length. That's why in the previous example the first column has
 a ``13`` character length although the user defined ``10`` as its width.
 
-You can also set the width individually for each column with the
-:method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidth` method.
-Its first argument is the column index (starting from ``0``) and the second
-argument is the column width::
+If you prefer to wrap long contents in multiple rows, use the
+:method:`Symfony\\Component\\Console\\Helper\\Table::setColumnMaxWidth` method::
 
     // ...
-    $table->setColumnWidth(0, 10);
-    $table->setColumnWidth(2, 30);
+    $table->setColumnMaxWidth(0, 5);
+    $table->setColumnMaxWidth(1, 10);
     $table->render();
+
+The output of this command will be:
+
+.. code-block:: terminal
+
+    +-------+------------+--------------------------------+
+    | ISBN  | Title      | Author                         |
+    +-------+------------+--------------------------------+
+    | 99921 | Divine Com | Dante Alighieri                |
+    | -58-1 | edy        |                                |
+    | 0-7   |            |                                |
+    |                (the rest of rows...)                |
+    +-------+------------+--------------------------------+
+
+.. versionadded:: 4.2
+    The ``setColumnMaxWidth()`` method was introduced in Symfony 4.2.
 
 The table style can be changed to any built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::
