@@ -77,7 +77,7 @@ date_widget
 date_label
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: The label is "guessed" from the field name
+**type**: ``string`` | ``null`` **default**: The label is "guessed" from the field name
 
 .. versionadded:: 4.2
     The ``date_label`` option was introduced in Symfony 4.2.
@@ -173,7 +173,7 @@ Defines the ``widget`` option for the :doc:`TimeType </reference/forms/types/tim
 time_label
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: The label is "guessed" from the field name
+**type**: ``string`` | ``null`` **default**: The label is "guessed" from the field name
 
 .. versionadded:: 4.2
     The ``time_label`` option was introduced in Symfony 4.2.
