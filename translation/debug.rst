@@ -113,16 +113,11 @@ To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
 
     $ php bin/console debug:translation fr AcmeDemoBundle
 
-    +----------+-------------------+----------------------+-------------------------------+
-    | State(s) | Id                | Message Preview (fr) | Fallback Message Preview (en) |
-    +----------+-------------------+----------------------+-------------------------------+
-    | o        | Symfony2 is great | J'aime Symfony2      | Symfony2 is great             |
-    +----------+-------------------+----------------------+-------------------------------+
-
-    Legend:
-      x  Missing message
-      o  Unused message
-      =  Same as the fallback message
+    ---------  ------------------  ----------------------  -------------------------------
+     State      Id                  Message Preview (fr)    Fallback Message Preview (en)
+    ---------  ------------------  ----------------------  -------------------------------
+     unused     Symfony is great    J'aime Symfony          Symfony is great
+    ---------  ------------------  ----------------------  -------------------------------
 
 It shows you a table with the result when translating the message in the ``fr``
 locale and the result when the fallback locale ``en`` would be used. On top
@@ -138,16 +133,11 @@ output:
 
     $ php app/console debug:translation fr AcmeDemoBundle
 
-    +----------+-------------------+----------------------+-------------------------------+
-    | State(s) | Id                | Message Preview (fr) | Fallback Message Preview (en) |
-    +----------+-------------------+----------------------+-------------------------------+
-    |          | Symfony2 is great | J'aime Symfony2      | Symfony2 is great             |
-    +----------+-------------------+----------------------+-------------------------------+
-
-    Legend:
-      x  Missing message
-      o  Unused message
-      =  Same as the fallback message
+    ---------  ------------------  ----------------------  -------------------------------
+     State      Id                  Message Preview (fr)    Fallback Message Preview (en)
+    ---------  ------------------  ----------------------  -------------------------------
+                Symfony is great    J'aime Symfony          Symfony is great
+    ---------  ------------------  ----------------------  -------------------------------
 
 The state is empty which means the message is translated in the ``fr`` locale
 and used in one or more templates.
@@ -159,16 +149,11 @@ for the ``fr`` locale and run the command, you will get:
 
     $ php app/console debug:translation fr AcmeDemoBundle
 
-    +----------+-------------------+----------------------+-------------------------------+
-    | State(s) | Id                | Message Preview (fr) | Fallback Message Preview (en) |
-    +----------+-------------------+----------------------+-------------------------------+
-    | x =      | Symfony2 is great | J'aime Symfony2      | Symfony2 is great             |
-    +----------+-------------------+----------------------+-------------------------------+
-
-    Legend:
-      x  Missing message
-      o  Unused message
-      =  Same as the fallback message
+    ---------  ------------------  ----------------------  -------------------------------
+     State      Id                  Message Preview (fr)    Fallback Message Preview (en)
+    ---------  ------------------  ----------------------  -------------------------------
+     missing    Symfony is great    J'aime Symfony          Symfony is great
+    ---------  ------------------  ----------------------  -------------------------------
 
 The state indicates the message is missing because it is not translated in
 the ``fr`` locale but it is still used in the template. Moreover, the message
@@ -183,16 +168,11 @@ translation file in the ``fr`` locale and run the command, you will get:
 
     $ php app/console debug:translation fr AcmeDemoBundle
 
-    +----------+-------------------+----------------------+-------------------------------+
-    | State(s) | Id                | Message Preview (fr) | Fallback Message Preview (en) |
-    +----------+-------------------+----------------------+-------------------------------+
-    | =        | Symfony2 is great | J'aime Symfony2      | Symfony2 is great             |
-    +----------+-------------------+----------------------+-------------------------------+
-
-    Legend:
-      x  Missing message
-      o  Unused message
-      =  Same as the fallback message
+    ----------  ------------------  ----------------------  -------------------------------
+     State      Id                  Message Preview (fr)    Fallback Message Preview (en)
+    ----------  ------------------  ----------------------  -------------------------------
+     fallback    Symfony is great    J'aime Symfony          Symfony is great
+    ----------  ------------------  ----------------------  -------------------------------
 
 You can see that the translations of the message are identical in the ``fr``
 and ``en`` locales which means this message was probably copied from French
