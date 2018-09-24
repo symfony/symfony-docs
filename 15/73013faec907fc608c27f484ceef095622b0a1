@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-08-28T19:06:38Z
+
+Hey @ismail1432!
+
+This is actually beautiful, nice job! However... we might now have some duplication :). We talk about this topic in [templating/twig_extension.rst](https://github.com/symfony/symfony-docs/blob/master/templating/twig_extension.rst#creating-lazy-loaded-twig-extensions) and the `twig.runtime` tag is autoconfigured. We definitely *should* add this tag to this page. But, I think we should mostly just link to that other page. If there are some improvements to that other location that you can make based on your docs, that would be even better :).
+
+Status: Needs work
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-13T15:20:11Z
+
+@weaverryan I thought there was some duplication also ... but in the templating/twig_extension.rst page we no longer display how to register this tag manually, so we could keep it in reference/dic_tags.rst as proposed by @ismail1432.
