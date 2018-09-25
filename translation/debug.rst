@@ -143,7 +143,7 @@ for the ``fr`` locale and run the command, you will get:
     ---------  ------------------  ----------------------  -------------------------------
      State      Id                  Message Preview (fr)    Fallback Message Preview (en)
     ---------  ------------------  ----------------------  -------------------------------
-     missing    Symfony is great    J'aime Symfony          Symfony is great
+     missing    Symfony is great    Symfony is great        Symfony is great
     ---------  ------------------  ----------------------  -------------------------------
 
 The state indicates the message is missing because it is not translated in
@@ -152,7 +152,7 @@ in the ``fr`` locale equals to the message in the ``en`` locale. This is a
 special case because the untranslated message id equals its translation in
 the ``en`` locale.
 
-If you copy the content of the translation file in the ``en`` locale, to the
+If you copy the content of the translation file in the ``en`` locale to the
 translation file in the ``fr`` locale and run the command, you will get:
 
 .. code-block:: terminal
@@ -162,12 +162,12 @@ translation file in the ``fr`` locale and run the command, you will get:
     ----------  ------------------  ----------------------  -------------------------------
      State      Id                  Message Preview (fr)    Fallback Message Preview (en)
     ----------  ------------------  ----------------------  -------------------------------
-     fallback    Symfony is great    J'aime Symfony          Symfony is great
+     fallback    Symfony is great    Symfony is great          Symfony is great
     ----------  ------------------  ----------------------  -------------------------------
 
 You can see that the translations of the message are identical in the ``fr``
-and ``en`` locales which means this message was probably copied from French
-to English and maybe you forgot to translate it.
+and ``en`` locales which means this message was probably copied from English
+to French and maybe you forgot to translate it.
 
 By default all domains are inspected, but it is possible to specify a single
 domain:
