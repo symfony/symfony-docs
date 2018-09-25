@@ -20,11 +20,11 @@ That will minify your assets and make other performance optimizations. Yay!
 
 But, what server should you run this command on? That depends on how you deploy.
 For example, you could execute this locally (or on a build server), and use
-[rsync](https://rsync.samba.org/) or something else to transfer the built files
-to your production server. Or, you could put your files on your production server
-first (e.g. via ``git pull``) and then run this command on production
-(ideally, before traffic hits your code). In this case, you'll need to install
-Node.js on your production server.
+`rsync`_ or something else to transfer the generated files to your production
+server. Or, you could put your files on your production server first (e.g. via
+``git pull``) and then run this command on production (ideally, before traffic
+hits your code). In this case, you'll need to install Node.js on your production
+server.
 
 **2) Only Deploy the Built Assets**
 
@@ -132,3 +132,5 @@ this via:
 
     // require a non-minified file whenever possible
     require('respond.js/dest/respond.src.js');
+
+.. _`rsync`: https://rsync.samba.org/
