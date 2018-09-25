@@ -69,11 +69,6 @@ Defines the ``format`` option that will be passed down to the date field.
 See the :ref:`DateType's format option <reference-forms-type-date-format>`
 for more details.
 
-date_widget
-~~~~~~~~~~~
-
-.. include:: /reference/forms/types/options/date_widget_description.rst.inc
-
 date_label
 ~~~~~~~~~~
 
@@ -90,6 +85,11 @@ Sets the label that will be used when rendering the date widget. Setting it to
     $builder->add('startDateTime', DateTimeType::class, array(
         'date_label' => 'Starts On',
     ));
+
+date_widget
+~~~~~~~~~~~
+
+.. include:: /reference/forms/types/options/date_widget_description.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
@@ -163,13 +163,6 @@ this format.
 
 .. include:: /reference/forms/types/options/seconds.rst.inc
 
-time_widget
-~~~~~~~~~~~
-
-**type**: ``string`` **default**: ``choice``
-
-Defines the ``widget`` option for the :doc:`TimeType </reference/forms/types/time>`.
-
 time_label
 ~~~~~~~~~~
 
@@ -186,6 +179,13 @@ Sets the label that will be used when rendering the time widget. Setting it to
     $builder->add('startDateTime', DateTimeType::class, array(
         'time_label' => 'Starts On',
     ));
+
+time_widget
+~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``choice``
+
+Defines the ``widget`` option for the :doc:`TimeType </reference/forms/types/time>`.
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
