@@ -122,7 +122,7 @@ link for details), create a ``shipping_widget`` block to handle this:
         {% spaceless %}
             {% if expanded %}
                 <ul {{ block('widget_container_attributes') }}>
-                {% for child in form %}
+                {% for child in form if not child.rendered %}
                     <li>
                         {{ form_widget(child) }}
                         {{ form_label(child) }}
@@ -135,6 +135,12 @@ link for details), create a ``shipping_widget`` block to handle this:
             {% endif %}
         {% endspaceless %}
     {% endblock %}
+
+.. note::
+
+    Symfony 4.2 deprecated calling ``FormRenderer::searchAndRenderBlock`` for
+    fields that have already been rendered. That's why the previous example
+    includes the ``... if not child.rendered`` statement.
 
 .. tip::
 
