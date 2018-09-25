@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-24T15:16:18Z
+
+Not sure about these changes 😕  We use a special title case on purpose. I know it's confusing some times (see https://writing.stackexchange.com/a/4622) but we can't change it now that all docs use it.
+
+So please, revert all changes in titles. Thanks!
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2018-09-24T15:37:55Z
+
+OK, there you go :-) BTW: Capitalization was *inconsistent* before.
