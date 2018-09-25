@@ -59,14 +59,17 @@ implements the :class:`Symfony\\Component\\Config\\Definition\\ConfigurationInte
     {
         public function getConfigTreeBuilder()
         {
-            $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('database');
+            $treeBuilder = new TreeBuilder('database');
 
             // ... add node definitions to the root of the tree
+            // $treeBuilder->getRootNode()->...
 
             return $treeBuilder;
         }
     }
+
+.. versionadded:: 4.2
+    Not passing the root node name to ``TreeBuilder`` was deprecated in Symfony 4.2.
 
 Adding Node Definitions to the Tree
 -----------------------------------
@@ -534,10 +537,9 @@ tree with ``append()``::
 
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('database');
+        $treeBuilder = new TreeBuilder('database');
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->children()
                 ->arrayNode('connection')
                     ->children()
@@ -564,10 +566,9 @@ tree with ``append()``::
 
     public function addParametersNode()
     {
-        $treeBuilder = new TreeBuilder();
-        $node = $treeBuilder->root('parameters');
+        $treeBuilder = new TreeBuilder('parameters');
 
-        $node
+        $treeBuilder->getRootNode()
             ->isRequired()
             ->requiresAtLeastOneElement()
             ->useAttributeAsKey('name')
@@ -795,10 +796,9 @@ Configuring the Node Path Separator
 
 Consider the following config builder example::
 
-    $treeBuilder = new TreeBuilder();
-    $rootNode = $treeBuilder->root('database');
+    $treeBuilder = new TreeBuilder('database');
 
-    $rootNode
+    $treeBuilder->getRootNode()
         ->children()
             ->arrayNode('connection')
                 ->children()

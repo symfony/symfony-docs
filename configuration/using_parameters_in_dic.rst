@@ -109,10 +109,9 @@ be injected with this parameter via the extension as follows::
 
         public function getConfigTreeBuilder()
         {
-            $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('my_bundle');
+            $treeBuilder = new TreeBuilder('my_bundle');
 
-            $rootNode
+            $treeBuilder->getRootNode()
                 ->children()
                     // ...
                     ->booleanNode('logging')->defaultValue($this->debug)->end()
@@ -123,6 +122,9 @@ be injected with this parameter via the extension as follows::
             return $treeBuilder;
         }
     }
+
+.. versionadded:: 4.2
+    Not passing the root node name to ``TreeBuilder`` was deprecated in Symfony 4.2.
 
 And set it in the constructor of ``Configuration`` via the ``Extension`` class::
 
