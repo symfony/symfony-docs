@@ -17,8 +17,8 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Options              | - `choice_translation_domain`_                                              |
 |                      | - `date_format`_                                                            |
-|                      | - `date_widget`_                                                            |
 |                      | - `date_label`_                                                             |
+|                      | - `date_widget`_                                                            |
 |                      | - `days`_                                                                   |
 |                      | - `placeholder`_                                                            |
 |                      | - `format`_                                                                 |
@@ -29,8 +29,8 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `model_timezone`_                                                         |
 |                      | - `months`_                                                                 |
 |                      | - `seconds`_                                                                |
-|                      | - `time_widget`_                                                            |
 |                      | - `time_label`_                                                             |
+|                      | - `time_widget`_                                                            |
 |                      | - `view_timezone`_                                                          |
 |                      | - `widget`_                                                                 |
 |                      | - `with_minutes`_                                                           |
@@ -82,8 +82,8 @@ date_label
 .. versionadded:: 4.2
     The ``date_label`` option was introduced in Symfony 4.2.
 
-Sets the label that will be used when rendering the date widget separately.
-Setting to ``false`` will suppress the label::
+Sets the label that will be used when rendering the date widget. Setting it to
+``false`` will suppress the label::
 
     use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
@@ -178,8 +178,8 @@ time_label
 .. versionadded:: 4.2
     The ``time_label`` option was introduced in Symfony 4.2.
 
-Sets the label that will be used when rendering the time widget separately.
-Setting to ``false`` will suppress the label::
+Sets the label that will be used when rendering the time widget. Setting it to
+``false`` will suppress the label::
 
     use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
