@@ -38,6 +38,12 @@ Now you can execute the global ``uglifyjs`` command anywhere on your system:
 
     $ uglifyjs --help
 
+If you get the message ``/usr/bin/env: node: No such file or directory``, you just need to symlink it like so 
+
+.. code-block:: terminal
+
+    $ ln -s /usr/bin/nodejs /usr/bin/node
+
 Local Installation
 ~~~~~~~~~~~~~~~~~~
 
