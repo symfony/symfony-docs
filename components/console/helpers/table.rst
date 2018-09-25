@@ -66,6 +66,29 @@ You can add a table separator anywhere in the output by passing an instance of
     | 80-902734-1-6 | And Then There Were None | Agatha Christie  |
     +---------------+--------------------------+------------------+
 
+You can optionally display titles at the top and the bottom of the table::
+
+    // ...
+    $table->setHeaderTitle('Books')
+    $table->setFooterTitle('Page 1/2')
+    $table->render();
+
+.. code-block:: terminal
+
+    +---------------+----------- Books --------+------------------+
+    | ISBN          | Title                    | Author           |
+    +---------------+--------------------------+------------------+
+    | 99921-58-10-7 | Divine Comedy            | Dante Alighieri  |
+    | 9971-5-0210-0 | A Tale of Two Cities     | Charles Dickens  |
+    +---------------+--------------------------+------------------+
+    | 960-425-059-0 | The Lord of the Rings    | J. R. R. Tolkien |
+    | 80-902734-1-6 | And Then There Were None | Agatha Christie  |
+    +---------------+--------- Page 1/2 -------+------------------+
+
+.. versionadded:: 4.2
+    The ``setHeaderTitle()`` and ``setFooterTitle()`` methods were introduced
+    in Symfony 4.2.
+
 By default the width of the columns is calculated automatically based on their
 contents. Use the :method:`Symfony\\Component\\Console\\Helper\\Table::setColumnWidths`
 method to set the column widths explicitly::
