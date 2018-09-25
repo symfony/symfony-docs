@@ -4,9 +4,6 @@
 How to Submit a Form with Multiple Buttons
 ==========================================
 
-.. versionadded:: 2.3
-    Support for buttons in forms was introduced in Symfony 2.3.
-
 When your form contains more than one submit button, you will want to check
 which of the buttons was clicked to adapt the program flow in your controller.
 To do this, add a second button with the caption "Save and add" to your form::

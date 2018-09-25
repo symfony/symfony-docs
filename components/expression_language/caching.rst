@@ -25,25 +25,22 @@ The ``evaluate()`` method needs to loop through the "nodes" (pieces of an
 expression saved in the ``ParsedExpression``) and evaluate them on the fly.
 
 To save time, the ``ExpressionLanguage`` caches the ``ParsedExpression`` so
-it can skip the tokenize and parse steps with duplicate expressions.
-The caching is done by a
-:class:`Symfony\\Component\\ExpressionLanguage\\ParserCache\\ParserCacheInterface`
-instance (by default, it uses an
-:class:`Symfony\\Component\\ExpressionLanguage\\ParserCache\\ArrayParserCache`).
-You can customize this by creating a custom ``ParserCache`` and injecting this
-in the object using the constructor::
+it can skip the tokenize and parse steps with duplicate expressions. The
+caching is done by a PSR-6 `CacheItemPoolInterface`_ instance (by default, it
+uses an :class:`Symfony\\Component\\Cache\\Adapter\\ArrayAdapter`). You can
+customize this by creating a custom cache pool or using one of the available
+ones and injecting this using the constructor::
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-    use Acme\ExpressionLanguage\ParserCache\MyDatabaseParserCache;
+    use Symfony\Component\Cache\Adapter\RedisAdapter;
 
-    $databaseParserCache = new MyDatabaseParserCache(...);
-    $expressionLanguage = new ExpressionLanguage($databaseParserCache);
+    $cache = new RedisAdapter(...);
+    $expressionLanguage = new ExpressionLanguage($cache);
 
-.. note::
+.. seealso::
 
-    The `DoctrineBridge`_ provides a Parser Cache implementation using the
-    `doctrine cache library`_, which gives you caching for all sorts of cache
-    strategies, like Apc, Filesystem and Memcached.
+    See the :doc:`/components/cache` documentation for more information about
+    available cache adapters.
 
 Using Parsed and Serialized Expressions
 ---------------------------------------
@@ -70,5 +67,4 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
 
     var_dump($expressionLanguage->evaluate($expression)); // prints 5
 
-.. _DoctrineBridge: https://github.com/symfony/doctrine-bridge
-.. _`doctrine cache library`: http://docs.doctrine-project.org/projects/doctrine-common/en/latest/reference/caching.html
+.. _`CacheItemPoolInterface`: https://github.com/php-fig/cache/blob/master/src/CacheItemPoolInterface.php

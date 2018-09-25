@@ -6,7 +6,7 @@ How to Work with Emails during Development
 
 When developing an application which sends email, you will often
 not want to actually send the email to the specified recipient during
-development. If you are using the SwiftmailerBundle with Symfony, you
+development. If you are using the default Symfony mailer, you
 can easily achieve this through configuration settings without having to
 make any changes to your application's code at all. There are two main
 choices when it comes to handling email during development: (a) disabling the
@@ -16,23 +16,21 @@ address (with optional exceptions).
 Disabling Sending
 -----------------
 
-You can disable sending email by setting the ``disable_delivery`` option
-to ``true``. This is the default in the ``test`` environment in the Standard
-distribution. If you do this in the ``test`` specific config then email
-will not be sent when you run tests, but will continue to be sent in the
-``prod`` and ``dev`` environments:
+You can disable sending email by setting the ``disable_delivery`` option to
+``true``, which is the default value used by Symfony in the ``test`` environment
+(email messages will continue to be sent in the other environments):
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config_test.yml
+        # config/packages/test/swiftmailer.yaml
         swiftmailer:
             disable_delivery: true
 
     .. code-block:: xml
 
-        <!-- app/config/config_test.xml -->
+        <!-- config/packages/test/swiftmailer.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -46,13 +44,10 @@ will not be sent when you run tests, but will continue to be sent in the
 
     .. code-block:: php
 
-        // app/config/config_test.php
+        // config/packages/test/swiftmailer.php
         $container->loadFromExtension('swiftmailer', array(
             'disable_delivery' => "true",
         ));
-
-If you'd also like to disable deliver in the ``dev`` environment, simply
-add this same configuration to the ``config_dev.yml`` file.
 
 .. _sending-to-a-specified-address:
 
@@ -67,13 +62,13 @@ via the ``delivery_addresses`` option:
 
     .. code-block:: yaml
 
-        # app/config/config_dev.yml
+        # config/packages/dev/swiftmailer.yaml
         swiftmailer:
             delivery_addresses: ['dev@example.com']
 
     .. code-block:: xml
 
-        <!-- app/config/config_dev.xml -->
+        <!-- config/packages/dev/swiftmailer.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -90,14 +85,14 @@ via the ``delivery_addresses`` option:
 
     .. code-block:: php
 
-        // app/config/config_dev.php
+        // config/packages/dev/swiftmailer.php
         $container->loadFromExtension('swiftmailer', array(
             'delivery_addresses' => array("dev@example.com"),
         ));
 
-Now, suppose you're sending an email to ``recipient@example.com``::
+Now, suppose you're sending an email to ``recipient@example.com`` in a controller::
 
-    public function indexAction($name)
+    public function index($name, \Swift_Mailer $mailer)
     {
         $message = (new \Swift_Message('Hello Email'))
             ->setFrom('send@example.com')
@@ -109,8 +104,7 @@ Now, suppose you're sending an email to ``recipient@example.com``::
                 )
             )
         ;
-
-        $this->get('mailer')->send($message);
+        $mailer->send($message);
 
         return $this->render(...);
     }
@@ -142,7 +136,7 @@ by adding the ``delivery_whitelist`` option:
 
     .. code-block:: yaml
 
-        # app/config/config_dev.yml
+        # config/packages/dev/swiftmailer.yaml
         swiftmailer:
             delivery_addresses: ['dev@example.com']
             delivery_whitelist:
@@ -153,7 +147,7 @@ by adding the ``delivery_whitelist`` option:
 
     .. code-block:: xml
 
-        <!-- app/config/config_dev.xml -->
+        <!-- config/packages/dev/swiftmailer.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -174,7 +168,7 @@ by adding the ``delivery_whitelist`` option:
 
     .. code-block:: php
 
-        // app/config/config_dev.php
+        // config/packages/dev/swiftmailer.php
         $container->loadFromExtension('swiftmailer', array(
             'delivery_addresses' => array("dev@example.com"),
             'delivery_whitelist' => array(
@@ -206,20 +200,20 @@ the web debug toolbar will not display an email icon or a report on the next
 page.
 
 Instead, you can set the ``intercept_redirects`` option to ``true`` in the
-``config_dev.yml`` file, which will cause the redirect to stop and allow
-you to open the report with details of the sent emails.
+``dev`` environment, which will cause the redirect to stop and allow you to open
+the report with details of the sent emails.
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config_dev.yml
+        # config/packages/dev/web_profiler.yaml
         web_profiler:
             intercept_redirects: true
 
     .. code-block:: xml
 
-        <!-- app/config/config_dev.xml -->
+        <!-- config/packages/dev/web_profiler.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -236,7 +230,7 @@ you to open the report with details of the sent emails.
 
     .. code-block:: php
 
-        // app/config/config_dev.php
+        // config/packages/dev/web_profiler.php
         $container->loadFromExtension('web_profiler', array(
             'intercept_redirects' => 'true',
         ));

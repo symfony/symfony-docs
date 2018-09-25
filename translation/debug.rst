@@ -8,13 +8,11 @@ How to Find Missing or Unused Translation Messages
 
 When maintaining an application or bundle, you may add or remove translation
 messages and forget to update the message catalogues. The ``debug:translation``
-command helps you to find these missing or unused translation messages.
+command helps you to find these missing or unused translation messages templates:
 
-Thanks to the messages extractors, the command will detect the translation
-tag or filter usages in Twig templates:
+.. code-block:: twig
 
-.. code-block:: jinja
-
+    {# messages can be found when using the trans/transchoice filters and tags #}
     {% trans %}Symfony is great{% endtrans %}
 
     {{ 'Symfony is great'|trans }}
@@ -23,35 +21,28 @@ tag or filter usages in Twig templates:
 
     {% transchoice 1 %}Symfony is great{% endtranschoice %}
 
-It will also detect the following translator usages in PHP templates::
-
-    $view['translator']->trans("Symfony is great");
-
-    $view['translator']->transChoice('Symfony is great', 1);
-
 .. caution::
 
-    The extractors are not able to inspect the messages translated outside
-    templates which means that translator usages in form labels or inside
-    your controllers won't be detected. Dynamic translations involving variables
-    or expressions are not detected in templates, which means this example
-    won't be analyzed:
+    The extractors can't find messages translated outside templates, like form
+    labels or controllers. Dynamic translations using variables or expressions
+    in templates are not detected either:
 
-    .. code-block:: jinja
+    .. code-block:: twig
 
+        {# this translation uses a Twig variable, so it won't be detected #}
         {% set message = 'Symfony is great' %}
         {{ message|trans }}
 
 Suppose your application's default_locale is ``fr`` and you have configured
 ``en`` as the fallback locale (see :ref:`translation-configuration` and
 :ref:`translation-fallback` for how to configure these). And suppose
-you've already setup some translations for the ``fr`` locale inside an AcmeDemoBundle:
+you've already setup some translations for the ``fr`` locale:
 
 .. configuration-block::
 
     .. code-block:: xml
 
-        <!-- src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.xliff -->
+        <!-- translations/messages.fr.xliff -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -66,12 +57,12 @@ you've already setup some translations for the ``fr`` locale inside an AcmeDemoB
 
     .. code-block:: yaml
 
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.yml
+        # translations/messages.fr.yaml
         Symfony is great: J'aime Symfony
 
     .. code-block:: php
 
-        // src/Acme/AcmeDemoBundle/Resources/translations/messages.fr.php
+        // translations/messages.fr.php
         return array(
             'Symfony is great' => 'J\'aime Symfony',
         );
@@ -82,7 +73,7 @@ and for the ``en`` locale:
 
     .. code-block:: xml
 
-        <!-- src/Acme/AcmeDemoBundle/Resources/translations/messages.en.xliff -->
+        <!-- translations/messages.en.xliff -->
         <?xml version="1.0"?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
@@ -97,21 +88,21 @@ and for the ``en`` locale:
 
     .. code-block:: yaml
 
-        # src/Acme/AcmeDemoBundle/Resources/translations/messages.en.yml
+        # translations/messages.en.yaml
         Symfony is great: Symfony is great
 
     .. code-block:: php
 
-        // src/Acme/AcmeDemoBundle/Resources/translations/messages.en.php
+        // translations/messages.en.php
         return array(
             'Symfony is great' => 'Symfony is great',
         );
 
-To inspect all messages in the ``fr`` locale for the AcmeDemoBundle, run:
+To inspect all messages in the ``fr`` locale for the application, run:
 
 .. code-block:: terminal
 
-    $ php app/console debug:translation fr AcmeDemoBundle
+    $ php bin/console debug:translation fr
 
     ---------  ------------------  ----------------------  -------------------------------
      State      Id                  Message Preview (fr)    Fallback Message Preview (en)
@@ -131,7 +122,7 @@ output:
 
 .. code-block:: terminal
 
-    $ php app/console debug:translation fr AcmeDemoBundle
+    $ php bin/console debug:translation fr
 
     ---------  ------------------  ----------------------  -------------------------------
      State      Id                  Message Preview (fr)    Fallback Message Preview (en)
@@ -147,12 +138,12 @@ for the ``fr`` locale and run the command, you will get:
 
 .. code-block:: terminal
 
-    $ php app/console debug:translation fr AcmeDemoBundle
+    $ php bin/console debug:translation fr
 
     ---------  ------------------  ----------------------  -------------------------------
      State      Id                  Message Preview (fr)    Fallback Message Preview (en)
     ---------  ------------------  ----------------------  -------------------------------
-     missing    Symfony is great    J'aime Symfony          Symfony is great
+     missing    Symfony is great    Symfony is great        Symfony is great
     ---------  ------------------  ----------------------  -------------------------------
 
 The state indicates the message is missing because it is not translated in
@@ -161,35 +152,35 @@ in the ``fr`` locale equals to the message in the ``en`` locale. This is a
 special case because the untranslated message id equals its translation in
 the ``en`` locale.
 
-If you copy the content of the translation file in the ``en`` locale, to the
+If you copy the content of the translation file in the ``en`` locale to the
 translation file in the ``fr`` locale and run the command, you will get:
 
 .. code-block:: terminal
 
-    $ php app/console debug:translation fr AcmeDemoBundle
+    $ php bin/console debug:translation fr
 
     ----------  ------------------  ----------------------  -------------------------------
      State      Id                  Message Preview (fr)    Fallback Message Preview (en)
     ----------  ------------------  ----------------------  -------------------------------
-     fallback    Symfony is great    J'aime Symfony          Symfony is great
+     fallback    Symfony is great    Symfony is great          Symfony is great
     ----------  ------------------  ----------------------  -------------------------------
 
 You can see that the translations of the message are identical in the ``fr``
-and ``en`` locales which means this message was probably copied from French
-to English and maybe you forgot to translate it.
+and ``en`` locales which means this message was probably copied from English
+to French and maybe you forgot to translate it.
 
 By default all domains are inspected, but it is possible to specify a single
 domain:
 
 .. code-block:: terminal
 
-    $ php app/console debug:translation en AcmeDemoBundle --domain=messages
+    $ php bin/console debug:translation en --domain=messages
 
-When bundles have a lot of messages, it is useful to display only the unused
-or only the missing messages, by using the ``--only-unused`` or ``--only-missing``
-switches:
+When the application has a lot of messages, it is useful to display only the
+unused or only the missing messages, by using the ``--only-unused`` or
+``--only-missing`` options:
 
 .. code-block:: terminal
 
-    $ php app/console debug:translation en AcmeDemoBundle --only-unused
-    $ php app/console debug:translation en AcmeDemoBundle --only-missing
+    $ php bin/console debug:translation en --only-unused
+    $ php bin/console debug:translation en --only-missing

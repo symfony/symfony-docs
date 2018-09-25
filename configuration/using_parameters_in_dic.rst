@@ -37,7 +37,7 @@ Now, examine the results to see this closely:
 
         my_bundle:
             logging: '%kernel.debug%'
-            # true/false (depends on 2nd parameter of AppKernel),
+            # true/false (depends on 2nd argument of the Kernel class),
             # as expected, because %kernel.debug% inside configuration
             # gets evaluated before being passed to the extension
 
@@ -57,7 +57,7 @@ Now, examine the results to see this closely:
             <!-- true, as expected -->
 
             <my-bundle:config logging="%kernel.debug%" />
-            <!-- true/false (depends on 2nd parameter of AppKernel),
+            <!-- true/false (depends on 2nd parameter of Kernel),
                  as expected, because %kernel.debug% inside configuration
                  gets evaluated before being passed to the extension -->
 
@@ -78,7 +78,7 @@ Now, examine the results to see this closely:
 
         $container->loadFromExtension('my_bundle', array(
                 'logging' => "%kernel.debug%",
-                // true/false (depends on 2nd parameter of AppKernel),
+                // true/false (depends on 2nd parameter of Kernel),
                 // as expected, because %kernel.debug% inside configuration
                 // gets evaluated before being passed to the extension
             )
@@ -93,7 +93,7 @@ Now, examine the results to see this closely:
 In order to support this use case, the ``Configuration`` class has to
 be injected with this parameter via the extension as follows::
 
-    namespace AppBundle\DependencyInjection;
+    namespace App\DependencyInjection;
 
     use Symfony\Component\Config\Definition\Builder\TreeBuilder;
     use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -126,7 +126,7 @@ be injected with this parameter via the extension as follows::
 
 And set it in the constructor of ``Configuration`` via the ``Extension`` class::
 
-    namespace AppBundle\DependencyInjection;
+    namespace App\DependencyInjection;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -141,16 +141,8 @@ And set it in the constructor of ``Configuration`` via the ``Extension`` class::
         }
     }
 
-.. sidebar:: Setting the Default in the Extension
+.. tip::
 
-    There are some instances of ``%kernel.debug%`` usage within a ``Configurator``
-    class in TwigBundle and AsseticBundle. However this is because the default
-    parameter value is set by the Extension class. For example in AsseticBundle,
-    you can find::
-
-        $container->setParameter('assetic.debug', $config['debug']);
-
-    The string ``%kernel.debug%`` passed here as an argument handles the
-    interpreting job to the container which in turn does the evaluation.
-    Both ways accomplish similar goals. AsseticBundle will not use
-    ``%kernel.debug%`` but rather the new ``%assetic.debug%`` parameter.
+    There are some instances of ``%kernel.debug%`` usage within a
+    ``Configurator`` class for example in TwigBundle. However this is because
+    the default parameter value is set by the Extension class.

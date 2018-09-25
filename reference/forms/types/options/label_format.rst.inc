@@ -1,9 +1,6 @@
 label_format
 ~~~~~~~~~~~~
 
-.. versionadded:: 2.6
-    The ``label_format`` option was introduced in Symfony 2.6.
-
 **type**: ``string`` **default**: ``null``
 
 Configures the string used as the label of the field, in case the ``label``
@@ -17,11 +14,11 @@ to a field. To avoid duplicated keyword messages, you can configure the label
 format to a static value, like::
 
     // ...
-    $profileFormBuilder->add('address', new AddressType(), array(
+    $profileFormBuilder->add('address', AddressType::class, array(
         'label_format' => 'form.address.%name%',
     ));
 
-    $invoiceFormBuilder->add('invoice', new AddressType(), array(
+    $invoiceFormBuilder->add('invoice', AddressType::class, array(
         'label_format' => 'form.address.%name%',
     ));
 

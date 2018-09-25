@@ -112,8 +112,11 @@ lexers['varnish4'] = CLexer()
 lexers['terminal'] = TerminalLexer()
 
 config_block = {
+    'apache': 'Apache',
     'markdown': 'Markdown',
+    'nginx': 'Nginx',
     'rst': 'reStructuredText',
+    'terminal': 'Terminal',
     'varnish3': 'Varnish 3',
     'varnish4': 'Varnish 4'
 }

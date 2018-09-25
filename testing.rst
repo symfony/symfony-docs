@@ -23,17 +23,16 @@ wraps the original PHPUnit binary to provide additional features:
     $ composer require --dev symfony/phpunit-bridge
 
 Each test - whether it's a unit test or a functional test - is a PHP class
-that should live in the ``Tests/`` subdirectory of your bundles. If you follow
+that should live in the ``tests/`` directory of your application. If you follow
 this rule, then you can run all of your application's tests with the following
 command:
 
 .. code-block:: terminal
 
-    # the -c option specifies the directory where PHPUnit config is stored
-    $ ./vendor/bin/simple-phpunit -c app/
+    $ ./bin/phpunit
 
-If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
-file.
+PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
+Symfony application.
 
 .. tip::
 
@@ -54,8 +53,8 @@ Writing Symfony unit tests is no different from writing standard PHPUnit
 unit tests. Suppose, for example, that you have an *incredibly* simple class
 called ``Calculator`` in the ``Util/`` directory of the app bundle::
 
-    // src/AppBundle/Util/Calculator.php
-    namespace AppBundle\Util;
+    // src/Util/Calculator.php
+    namespace App\Util;
 
     class Calculator
     {
@@ -65,13 +64,13 @@ called ``Calculator`` in the ``Util/`` directory of the app bundle::
         }
     }
 
-To test this, create a ``CalculatorTest`` file in the ``Tests/Util`` directory
-of your bundle::
+To test this, create a ``CalculatorTest`` file in the ``tests/Util`` directory
+of your application::
 
-    // src/AppBundle/Tests/Util/CalculatorTest.php
-    namespace AppBundle\Tests\Util;
+    // tests/Util/CalculatorTest.php
+    namespace App\Tests\Util;
 
-    use AppBundle\Util\Calculator;
+    use App\Util\Calculator;
     use PHPUnit\Framework\TestCase;
 
     class CalculatorTest extends TestCase
@@ -88,30 +87,27 @@ of your bundle::
 
 .. note::
 
-    By convention, the ``Tests/`` sub-directory should replicate the directory
-    of your bundle for unit tests. So, if you're testing a class in your
-    bundle's ``Util/`` directory, put the test in the ``Tests/Util/``
+    By convention, the ``tests/`` directory should replicate the directory
+    of your bundle for unit tests. So, if you're testing a class in the
+    ``src/Util/`` directory, put the test in the ``tests/Util/``
     directory.
 
 Just like in your real application - autoloading is automatically enabled
-via the ``autoload.php`` file (as configured by default in the
-``app/phpunit.xml.dist`` file).
+via the ``vendor/autoload.php`` file (as configured by default in the
+``phpunit.xml.dist`` file).
 
 Running tests for a given file or directory is also very easy:
 
 .. code-block:: terminal
 
     # run all tests of the application
-    $ ./vendor/bin/simple-phpunit -c app
+    $ ./bin/phpunit
 
-    # run all tests in the Util directory
-    $ ./vendor/bin/simple-phpunit -c app src/AppBundle/Tests/Util
+    # run all tests in the Util/ directory
+    $ ./bin/phpunit tests/Util
 
     # run tests for the Calculator class
-    $ ./vendor/bin/simple-phpunit -c app src/AppBundle/Tests/Util/CalculatorTest.php
-
-    # run all tests for the entire Bundle
-    $ ./vendor/bin/simple-phpunit -c app src/AppBundle/
+    $ ./bin/phpunit tests/Util/CalculatorTest.php
 
 .. index::
    single: Tests; Functional tests
@@ -130,18 +126,31 @@ tests as far as PHPUnit is concerned, but they have a very specific workflow:
 * Test the response;
 * Rinse and repeat.
 
+Before creating your first test, install these packages that provide some of the
+utilities used in the functional tests:
+
+.. code-block:: terminal
+
+    $ composer require --dev symfony/browser-kit symfony/css-selector
+
 Your First Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functional tests are simple PHP files that typically live in the ``Tests/Controller``
-directory of your bundle. If you want to test the pages handled by your
+First, install the BrowserKit component in your project:
+
+.. code-block:: terminal
+
+    $ composer require --dev symfony/browser-kit
+
+Functional tests are simple PHP files that typically live in the ``tests/Controller``
+directory for your bundle. If you want to test the pages handled by your
 ``PostController`` class, start by creating a new ``PostControllerTest.php``
 file that extends a special ``WebTestCase`` class.
 
 As an example, a test could look like this::
 
-    // src/AppBundle/Tests/Controller/PostControllerTest.php
-    namespace AppBundle\Tests\Controller;
+    // tests/Controller/PostControllerTest.php
+    namespace App\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -151,33 +160,36 @@ As an example, a test could look like this::
         {
             $client = static::createClient();
 
-            $crawler = $client->request('GET', '/post/hello-world');
+            $client->request('GET', '/post/hello-world');
 
-            $this->assertGreaterThan(
-                0,
-                $crawler->filter('html:contains("Hello World")')->count()
-            );
+            $this->assertEquals(200, $client->getResponse()->getStatusCode());
         }
     }
 
 .. tip::
 
-    To run your functional tests, the ``WebTestCase`` class bootstraps the
-    kernel of your application. In most cases, this happens automatically.
-    However, if your kernel is in a non-standard directory, you'll need
-    to modify your ``phpunit.xml.dist`` file to set the ``KERNEL_DIR``
-    environment variable to the directory of your kernel:
+    To run your functional tests, the ``WebTestCase`` class needs to know which
+    is the application kernel to bootstrap it. The kernel class is usually
+    defined in the ``KERNEL_CLASS`` environment variable (included in the
+    default ``phpunit.xml.dist`` file provided by Symfony):
 
     .. code-block:: xml
 
         <?xml version="1.0" charset="utf-8" ?>
         <phpunit>
             <php>
-                <server name="KERNEL_DIR" value="/path/to/your/app/" />
+                <!-- the value is the FQCN of the application kernel -->
+                <env name="KERNEL_CLASS" value="App\Kernel" />
             </php>
             <!-- ... -->
         </phpunit>
 
+    If your use case is more complex, you can also override the
+    ``createKernel()`` or ``getKernelClass()`` methods of your functional test,
+    which take precedence over the ``KERNEL_CLASS`` env var.
+
+In the above example, you validated that the HTTP response was successful. The
+next step is to validate that the page actually contains the expected content.
 The ``createClient()`` method returns a client, which is like a browser that
 you'll use to crawl your site::
 
@@ -193,8 +205,25 @@ be used to select elements in the response, click on links and submit forms.
     The ``Crawler`` only works when the response is an XML or an HTML document.
     To get the raw content response, call ``$client->getResponse()->getContent()``.
 
-Click on a link by first selecting it with the crawler using either an XPath
-expression or a CSS selector, then use the client to click on it. For example::
+The crawler integrates with the ``symfony/css-selector`` component to give you the
+power of CSS selectors to find content in a page. To install the CSS selector
+component, run:
+
+.. code-block:: terminal
+
+    $ composer require --dev symfony/css-selector
+
+Now you can use CSS selectors with the crawler. To assert that the phrase
+"Hello World" is on the page at least once, you can use this assertion::
+
+    $this->assertGreaterThan(
+        0,
+        $crawler->filter('html:contains("Hello World")')->count()
+    );
+
+The crawler can also be used to interact with the page. Click on a link by first
+selecting it with the crawler using either an XPath expression or a CSS selector,
+then use the client to click on it::
 
     $link = $crawler
         ->filter('a:contains("Greet")') // find all links with the text "Greet"
@@ -238,6 +267,15 @@ document::
         'Hello World',
         $client->getResponse()->getContent()
     );
+
+.. tip::
+
+    Instead of installing each testing dependency individually, you can use the
+    Symfony Test pack to install all those dependencies at once:
+
+    .. code-block:: terminal
+
+        $ composer require --dev symfony/test-pack
 
 .. index::
    single: Tests; Assertions
@@ -366,8 +404,8 @@ returns a ``Crawler`` instance.
         )
 
     The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the ``Content-Type``,
-    ``Referer`` and ``X-Requested-With`` HTTP headers, you'd pass the following (mind
+    find in the PHP `$_SERVER`_ superglobal. For example, to set the
+    ``Content-Type`` and ``Referer`` HTTP headers, you'd pass the following (mind
     the ``HTTP_`` prefix for non standard headers)::
 
         $client->request(
@@ -376,9 +414,8 @@ returns a ``Crawler`` instance.
             array(),
             array(),
             array(
-                'CONTENT_TYPE'          => 'application/json',
-                'HTTP_REFERER'          => '/foo/bar',
-                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_REFERER' => '/foo/bar',
             )
         );
 
@@ -424,7 +461,7 @@ or perform more complex requests. Some useful examples::
         '/path/to/photo.jpg',
         'photo.jpg',
         'image/jpeg',
-        123
+        null
     );
     $client->request(
         'POST',
@@ -448,6 +485,19 @@ script::
 
     $client->insulate();
 
+AJAX Requests
+~~~~~~~~~~~~~
+
+The Client provides a :method:`Symfony\\Component\\BrowserKit\\Client::xmlHttpRequest`
+method, which has the same arguments as the ``request()`` method, and it's a
+shortcut to make AJAX requests::
+
+    // the required HTTP_X_REQUESTED_WITH header is added automatically
+    $client->xmlHttpRequest('POST', '/submit', array('name' => 'Fabien'));
+
+.. versionadded:: 4.1
+    The ``xmlHttpRequest()`` method was introduced in Symfony 4.1.
+
 Browsing
 ~~~~~~~~
 
@@ -460,13 +510,13 @@ The Client supports many operations that can be done in a real browser::
     // clears all cookies and the history
     $client->restart();
 
+.. note::
+
+    The ``back()`` and ``forward()`` methods skip the redirects that may have
+    occurred when requesting a URL, as normal browsers do.
+
 Accessing Internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.3
-    The :method:`Symfony\\Component\\BrowserKit\\Client::getInternalRequest`
-    and :method:`Symfony\\Component\\BrowserKit\\Client::getInternalResponse`
-    methods were introduced in Symfony 2.3.
 
 If you use the client to test your application, you might want to access the
 client's internal objects::
@@ -493,17 +543,27 @@ You can also get the objects related to the latest request::
 Accessing the Container
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-It's highly recommended that a functional test only tests the response. But
-under certain very rare circumstances, you might want to access some internal
-objects to write assertions. In such cases, you can access the Dependency
-Injection Container::
+.. versionadded:: 4.1
+    The ``self::$container`` property was introduced in Symfony 4.1.
 
-    // will be the same container used in your test, unless you're using
+It's highly recommended that a functional test only tests the response. But
+under certain very rare circumstances, you might want to access some services
+to write assertions. Given that services are private by default, test classes
+define a property that stores a special container created by Symfony which
+allows fetching both public and all non-removed private services::
+
+    // gives access to the same services used in your test, unless you're using
     // $client->insulate() or using real HTTP requests to test your application
-    $container = $client->getContainer();
+    $container = self::$container;
 
 For a list of services available in your application, use the ``debug:container``
 command.
+
+.. tip::
+
+    The special container that gives access to private services exists only in
+    the ``test`` environment and is itself a service that you can get from the
+    real container using the ``test.service_container`` id.
 
 .. tip::
 
@@ -549,6 +609,19 @@ If you pass ``false`` to the ``followRedirects()`` method, the redirects
 will no longer be followed::
 
     $client->followRedirects(false);
+
+Reporting Exceptions
+~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.4
+    The ``catchExceptions()`` method was introduced in Symfony 3.4.
+
+Debugging exceptions in functional tests may be difficult because by default
+they are caught and you need to look at the logs to see which exception was
+thrown. Disabling catching of exceptions in the test client allows the exception
+to be reported by PHPUnit::
+
+    $client->catchExceptions(false);
 
 .. index::
    single: Tests; Crawler
@@ -744,6 +817,16 @@ their type::
     PHP format (it converts the keys with square brackets notation - e.g.
     ``my_form[subject]`` - to PHP arrays).
 
+.. tip::
+
+    The ``submit()`` method defines a third optional argument to add custom
+    HTTP headers when submitting the form::
+
+        $client->submit($form, array(), array('HTTP_ACCEPT_LANGUAGE' => 'es'));
+
+    .. versionadded:: 4.1
+        The feature to add custom HTTP headers was introduced in Symfony 4.1.
+
 Adding and Removing Forms to a Collection
 .........................................
 
@@ -796,7 +879,7 @@ Testing Configuration
 ---------------------
 
 The Client used by functional tests creates a Kernel that runs in a special
-``test`` environment. Since Symfony loads the ``app/config/config_test.yml``
+``test`` environment. Since Symfony loads the ``config/packages/test/*.yaml``
 in the ``test`` environment, you can tweak any of your application's settings
 specifically for testing.
 
@@ -808,7 +891,7 @@ configuration option:
 
     .. code-block:: yaml
 
-        # app/config/config_test.yml
+        # config/packages/test/swiftmailer.yaml
 
         # ...
         swiftmailer:
@@ -816,7 +899,7 @@ configuration option:
 
     .. code-block:: xml
 
-        <!-- app/config/config_test.xml -->
+        <!-- config/packages/test/swiftmailer.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -832,7 +915,7 @@ configuration option:
 
     .. code-block:: php
 
-        // app/config/config_test.php
+        // config/packages/test/swiftmailer.php
 
         // ...
         $container->loadFromExtension('swiftmailer', array(
@@ -877,30 +960,26 @@ PHPUnit Configuration
 ~~~~~~~~~~~~~~~~~~~~~
 
 Each application has its own PHPUnit configuration, stored in the
-``app/phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create an ``app/phpunit.xml`` file to set up a configuration for your local
-machine only.
+``phpunit.xml.dist`` file. You can edit this file to change the defaults or
+create a ``phpunit.xml`` file to set up a configuration for your local machine
+only.
 
 .. tip::
 
-    Store the ``app/phpunit.xml.dist`` file in your code repository and ignore
-    the ``app/phpunit.xml`` file.
+    Store the ``phpunit.xml.dist`` file in your code repository and ignore
+    the ``phpunit.xml`` file.
 
-By default, only the tests from your own custom bundles stored in the standard
-directories ``src/*/*Bundle/Tests``, ``src/*/Bundle/*Bundle/Tests``,
-``src/*Bundle/Tests`` are run by the ``phpunit`` command, as configured
-in the ``app/phpunit.xml.dist`` file:
+By default, only the tests stored in ``tests/`` are run via the ``phpunit`` command,
+as configured in the ``phpunit.xml.dist`` file:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <testsuites>
             <testsuite name="Project Test Suite">
-                <directory>../src/*/*Bundle/Tests</directory>
-                <directory>../src/*/Bundle/*Bundle/Tests</directory>
-                <directory>../src/*Bundle/Tests</directory>
+                <directory>tests</directory>
             </testsuite>
         </testsuites>
         <!-- ... -->
@@ -911,13 +990,13 @@ configuration adds tests from a custom ``lib/tests`` directory:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <testsuites>
             <testsuite name="Project Test Suite">
-                <!-- ... -->
-                <directory>../lib/tests</directory>
+                <!-- ... --->
+                <directory>lib/tests</directory>
             </testsuite>
         </testsuites>
         <!-- ... -->
@@ -928,16 +1007,16 @@ section:
 
 .. code-block:: xml
 
-    <!-- app/phpunit.xml.dist -->
+    <!-- phpunit.xml.dist -->
     <phpunit>
         <!-- ... -->
         <filter>
             <whitelist>
                 <!-- ... -->
-                <directory>../lib</directory>
+                <directory>lib</directory>
                 <exclude>
                     <!-- ... -->
-                    <directory>../lib/tests</directory>
+                    <directory>lib/tests</directory>
                 </exclude>
             </whitelist>
         </filter>

@@ -13,16 +13,22 @@ configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php app/console config:dump-reference doctrine
+    $ php bin/console config:dump-reference doctrine
 
     # displays the actual config values used by your application
-    $ php app/console debug:config doctrine
+    $ php bin/console debug:config doctrine
 
 .. note::
 
     When using XML, you must use the ``http://symfony.com/schema/dic/doctrine``
     namespace and the related XSD schema is available at:
     ``http://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd``
+
+.. index::
+    single: Configuration; Doctrine DBAL
+    single: Doctrine; DBAL configuration
+
+.. _`reference-dbal-configuration`:
 
 Doctrine DBAL Configuration
 ---------------------------
@@ -47,23 +53,23 @@ The following block shows all possible configuration keys:
                 # if the url option is specified, it will override the above config
                 url:                  mysql://db_user:db_password@127.0.0.1:3306/db_name
                 # the DBAL driverClass option
-                driver_class:         MyNamespace\MyDriverImpl
+                driver_class:         App\DBAL\MyDatabaseDriver
                 # the DBAL driverOptions option
                 options:
                     foo: bar
-                path:                 '%kernel.root_dir%/data/data.sqlite'
+                path:                 '%kernel.project_dir%/var/data/data.sqlite'
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
                 # the DBAL wrapperClass option
-                wrapper_class:        MyDoctrineDbalConnectionWrapper
+                wrapper_class:        App\DBAL\MyConnectionWrapper
                 charset:              UTF8
                 logging:              '%kernel.debug%'
-                platform_service:     MyOwnDatabasePlatformService
+                platform_service:     App\DBAL\MyDatabasePlatformService
                 server_version:       '5.6'
                 mapping_types:
                     enum: string
                 types:
-                    custom: Acme\HelloBundle\MyCustomType
+                    custom: App\DBAL\MyCustomType
 
     .. code-block:: xml
 
@@ -85,19 +91,19 @@ The following block shows all possible configuration keys:
                     user="user"
                     password="secret"
                     driver="pdo_mysql"
-                    driver-class="MyNamespace\MyDriverImpl"
-                    path="%kernel.root_dir%/data/data.sqlite"
+                    driver-class="App\DBAL\MyDatabaseDriver"
+                    path="%kernel.project_dir%/var/data/data.sqlite"
                     memory="true"
                     unix-socket="/tmp/mysql.sock"
-                    wrapper-class="MyDoctrineDbalConnectionWrapper"
+                    wrapper-class="App\DBAL\MyConnectionWrapper"
                     charset="UTF8"
                     logging="%kernel.debug%"
-                    platform-service="MyOwnDatabasePlatformService"
+                    platform-service="App\DBAL\MyDatabasePlatformService"
                     server-version="5.6">
 
                     <doctrine:option key="foo">bar</doctrine:option>
                     <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
-                    <doctrine:type name="custom">Acme\HelloBundle\MyCustomType</doctrine:type>
+                    <doctrine:type name="custom">App\DBAL\MyCustomType</doctrine:type>
                 </doctrine:dbal>
             </doctrine:config>
         </container>
@@ -234,7 +240,7 @@ The following example shows an overview of the caching configurations:
             # the 'service' type requires to define the 'id' option too
             query_cache_driver:
                 type: service
-                id: my_doctrine_common_cache_service
+                id: App\ORM\MyCacheService
 
 Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
@@ -246,48 +252,33 @@ you can control. The following configuration options exist for a mapping:
 type
 ....
 
-One of ``annotation``, ``xml``, ``yml``, ``php`` or ``staticphp``. This
-specifies which type of metadata type your mapping uses.
+One of ``annotation`` (the default value), ``xml``, ``yml``, ``php`` or
+``staticphp``. This specifies which type of metadata type your mapping uses.
 
 dir
 ...
 
-Path to the mapping or entity files (depending on the driver). If this path
-is relative it is assumed to be relative to the bundle root. This only works
-if the name of your mapping is a bundle name. If you want to use this option
-to specify absolute paths you should prefix the path with the kernel parameters
-that exist in the DIC (for example ``%kernel.root_dir%``).
+Absolute path to the mapping or entity files (depending on the driver).
 
 prefix
 ......
 
-A common namespace prefix that all entities of this mapping share. This
-prefix should never conflict with prefixes of other defined mappings otherwise
-some of your entities cannot be found by Doctrine. This option defaults
-to the bundle namespace + ``Entity``, for example for an application bundle
-called AcmeHelloBundle prefix would be ``Acme\HelloBundle\Entity``.
+A common namespace prefix that all entities of this mapping share. This prefix
+should never conflict with prefixes of other defined mappings otherwise some of
+your entities cannot be found by Doctrine.
 
 alias
 .....
 
 Doctrine offers a way to alias entity namespaces to simpler, shorter names
-to be used in DQL queries or for Repository access. When using a bundle
-the alias defaults to the bundle name.
+to be used in DQL queries or for Repository access.
 
 is_bundle
 .........
 
-This option is a derived value from ``dir`` and by default is set to ``true``
-if dir is relative proved by a ``file_exists()`` check that returns ``false``.
-It is ``false`` if the existence check returns ``true``. In this case an
-absolute path was specified and the metadata files are most likely in a
-directory outside of a bundle.
-
-.. index::
-    single: Configuration; Doctrine DBAL
-    single: Doctrine; DBAL configuration
-
-.. _`reference-dbal-configuration`:
+This option is ``false`` by default and it's considered a legacy option. It was
+only useful in previous Symfony versions, when it was recommended to use bundles
+to organize the application code.
 
 Custom Mapping Entities in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -353,9 +344,7 @@ directory instead:
 Mapping Entities Outside of a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also create new mappings, for example outside of the Symfony folder.
-
-For example, the following looks for entity classes in the ``App\Entity``
+For example, the following looks for entity classes in the ``Entity``
 namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 (so you can say things like ``App:Post``):
 
@@ -371,7 +360,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                         # ...
                         SomeEntityNamespace:
                             type: annotation
-                            dir: '%kernel.root_dir%/../src/Entity'
+                            dir: '%kernel.project_dir%/src/Entity'
                             is_bundle: false
                             prefix: App\Entity
                             alias: App
@@ -389,7 +378,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                 <doctrine:orm>
                     <mapping name="SomeEntityNamespace"
                         type="annotation"
-                        dir="%kernel.root_dir%/../src/Entity"
+                        dir="%kernel.project_dir%/src/Entity"
                         is-bundle="false"
                         prefix="App\Entity"
                         alias="App"
@@ -406,7 +395,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                 'mappings' => array(
                     'SomeEntityNamespace' => array(
                         'type'      => 'annotation',
-                        'dir'       => '%kernel.root_dir%/../src/Entity',
+                        'dir'       => '%kernel.project_dir%/src/Entity',
                         'is_bundle' => false,
                         'prefix'    => 'App\Entity',
                         'alias'     => 'App',
@@ -422,7 +411,7 @@ If the ``type`` on the bundle configuration isn't set, the DoctrineBundle
 will try to detect the correct mapping configuration format for the bundle.
 
 DoctrineBundle will look for files matching ``*.orm.[FORMAT]`` (e.g.
-``Post.orm.yml``) in the configured ``dir`` of your mapping (if you're mapping
+``Post.orm.yaml``) in the configured ``dir`` of your mapping (if you're mapping
 a bundle, then ``dir`` is relative to the bundle's directory).
 
 The bundle looks for (in this order) XML, YAML and PHP files.

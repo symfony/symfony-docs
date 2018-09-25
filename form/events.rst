@@ -252,23 +252,10 @@ Name                    ``FormEvents`` Constant        Event's Data
 ======================  =============================  ===============
 ``form.pre_set_data``   ``FormEvents::PRE_SET_DATA``   Model data
 ``form.post_set_data``  ``FormEvents::POST_SET_DATA``  Model data
-``form.pre_bind``       ``FormEvents::PRE_SUBMIT``     Request data
-``form.bind``           ``FormEvents::SUBMIT``         Normalized data
-``form.post_bind``      ``FormEvents::POST_SUBMIT``    View data
+``form.pre_submit``     ``FormEvents::PRE_SUBMIT``     Request data
+``form.submit``         ``FormEvents::SUBMIT``         Normalized data
+``form.post_submit``    ``FormEvents::POST_SUBMIT``    View data
 ======================  =============================  ===============
-
-.. versionadded:: 2.3
-    Before Symfony 2.3, ``FormEvents::PRE_SUBMIT``, ``FormEvents::SUBMIT``
-    and ``FormEvents::POST_SUBMIT`` were called ``FormEvents::PRE_BIND``,
-    ``FormEvents::BIND`` and ``FormEvents::POST_BIND``.
-
-.. caution::
-
-    The ``FormEvents::PRE_BIND``, ``FormEvents::BIND`` and
-    ``FormEvents::POST_BIND`` constants will be removed in version 3.0 of
-    Symfony.
-    The event names still keep their original values, so make sure you use the
-    ``FormEvents`` constants in your code for forward compatibility.
 
 Event Listeners
 ~~~~~~~~~~~~~~~
@@ -313,8 +300,8 @@ Creating and binding an event listener to the form is very easy::
 When you have created a form type class, you can use one of its methods as a
 callback for better readability::
 
-    // src/AppBundle/Form/SubscriptionType.php
-    namespace AppBundle\Form;
+    // src/Form/SubscriptionType.php
+    namespace App\Form;
 
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -353,8 +340,8 @@ Event subscribers have different uses:
 
 .. code-block:: php
 
-    // src/AppBundle/Form/EventListener/AddEmailFieldListener.php
-    namespace AppBundle\Form\EventListener;
+    // src/Form/EventListener/AddEmailFieldListener.php
+    namespace App\Form\EventListener;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Form\FormEvent;
@@ -406,7 +393,7 @@ Event subscribers have different uses:
 
 To register the event subscriber, use the ``addEventSubscriber()`` method::
 
-    use AppBundle\Form\EventListener\AddEmailFieldListener;
+    use App\Form\EventListener\AddEmailFieldListener;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 

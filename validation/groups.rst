@@ -17,8 +17,8 @@ user registers and when a user updates their contact information later:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         use Symfony\Component\Security\Core\User\UserInterface;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -44,8 +44,8 @@ user registers and when a user updates their contact information later:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\User:
+        # config/validator/validation.yaml
+        App\Entity\User:
             properties:
                 email:
                     - Email: { groups: [registration] }
@@ -58,7 +58,7 @@ user registers and when a user updates their contact information later:
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -67,7 +67,7 @@ user registers and when a user updates their contact information later:
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd
             ">
 
-            <class name="AppBundle\Entity\User">
+            <class name="App\Entity\User">
                 <property name="email">
                     <constraint name="Email">
                         <option name="groups">
@@ -100,8 +100,8 @@ user registers and when a user updates their contact information later:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/User.php
-        namespace AppBundle\Entity;
+        // src/Entity/User.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -174,11 +174,7 @@ the class name or the string ``Default``.
 To tell the validator to use a specific group, pass one or more group names
 as the third argument to the ``validate()`` method::
 
-    // If you're using the new 2.5 validation API (you probably are!)
     $errors = $validator->validate($author, null, array('registration'));
-
-    // If you're using the old 2.4 validation API, pass the group names as the second argument
-    // $errors = $validator->validate($author, array('registration'));
 
 If no groups are specified, all constraints that belong to the group ``Default``
 will be applied.

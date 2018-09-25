@@ -8,13 +8,13 @@
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/services.yaml
             imports:
-                - { resource: '%kernel.root_dir%/parameters.yml' }
+                - { resource: '%kernel.project_dir%/somefile.yaml' }
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -22,11 +22,11 @@
                     http://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <imports>
-                    <import resource="%kernel.root_dir%/parameters.yml" />
+                    <import resource="%kernel.project_dir%/somefile.yaml" />
                 </imports>
             </container>
 
         .. code-block:: php
 
-            // app/config/config.php
-            $loader->import('%kernel.root_dir%/parameters.yml');
+            // config/services.php
+            $loader->import('%kernel.project_dir%/somefile.yaml');

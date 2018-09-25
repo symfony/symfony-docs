@@ -35,10 +35,10 @@ Customizing your Form Based on the Underlying Data
 Before starting with dynamic form generation, remember what
 a bare form class looks like::
 
-    // src/AppBundle/Form/Type/ProductType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/ProductType.php
+    namespace App\Form\Type;
 
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -83,8 +83,8 @@ Adding an Event Listener to a Form Class
 So, instead of directly adding that ``name`` widget, the responsibility of
 creating that particular field is delegated to an event listener::
 
-    // src/AppBundle/Form/Type/ProductType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/ProductType.php
+    namespace App\Form\Type;
 
     // ...
     use Symfony\Component\Form\FormEvent;
@@ -141,29 +141,8 @@ For better reusability or if there is some heavy logic in your event listener,
 you can also move the logic for creating the ``name`` field to an
 :ref:`event subscriber <event_dispatcher-using-event-subscribers>`::
 
-    // src/AppBundle/Form/Type/ProductType.php
-    namespace AppBundle\Form\Type;
-
-    // ...
-    use AppBundle\Form\EventListener\AddNameFieldSubscriber;
-
-    class ProductType extends AbstractType
-    {
-        public function buildForm(FormBuilderInterface $builder, array $options)
-        {
-            $builder->add('price');
-
-            $builder->addEventSubscriber(new AddNameFieldSubscriber());
-        }
-
-        // ...
-    }
-
-Now the logic for creating the ``name`` field resides in it own subscriber
-class::
-
-    // src/AppBundle/Form/EventListener/AddNameFieldSubscriber.php
-    namespace AppBundle\Form\EventListener;
+    // src/Form/EventListener/AddNameFieldSubscriber.php
+    namespace App\Form\EventListener;
 
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
@@ -190,6 +169,26 @@ class::
         }
     }
 
+Great! Now use that in your form class::
+
+    // src/Form/Type/ProductType.php
+    namespace App\Form\Type;
+
+    // ...
+    use App\Form\EventListener\AddNameFieldSubscriber;
+
+    class ProductType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder->add('price');
+
+            $builder->addEventSubscriber(new AddNameFieldSubscriber());
+        }
+
+        // ...
+    }
+
 .. _form-events-user-data:
 
 How to dynamically Generate Forms Based on user Data
@@ -206,14 +205,13 @@ Creating the Form Type
 
 Using an event listener, your form might look like this::
 
-    // src/AppBundle/Form/Type/FriendMessageFormType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/FriendMessageFormType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\Form\FormEvents;
     use Symfony\Component\Form\FormEvent;
-    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -232,41 +230,42 @@ Using an event listener, your form might look like this::
     }
 
 The problem is now to get the current user and create a choice field that
-contains only this user's friends.
+contains only this user's friends. This can be done injecting the ``Security``
+service into the form type so you can get the current user object::
 
-Luckily it is pretty easy to inject a service inside of the form. This can be
-done in the constructor::
+    use Symfony\Component\Security\Core\Security;
+    // ...
 
-    private $tokenStorage;
+    private $security;
 
-    public function __construct(TokenStorageInterface $tokenStorage)
+    public function __construct(Security $security)
     {
-        $this->tokenStorage = $tokenStorage;
+        $this->security = $security;
     }
 
 Customizing the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that you have all the basics in place you can take advantage of the ``TokenStorageInterface``
-and fill in the listener logic::
+Now that you have all the basics in place you can use the features of the
+security helper to fill in the listener logic::
 
-    // src/AppBundle/Form/Type/FriendMessageFormType.php
+    // src/Form/Type/FriendMessageFormType.php
 
-    use AppBundle\Entity\User;
+    use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-    use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    use Symfony\Component\Security\Core\Security;
     // ...
 
     class FriendMessageFormType extends AbstractType
     {
-        private $tokenStorage;
+        private $security;
 
-        public function __construct(TokenStorageInterface $tokenStorage)
+        public function __construct(Security $security)
         {
-            $this->tokenStorage = $tokenStorage;
+            $this->security = $security;
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options)
@@ -277,7 +276,7 @@ and fill in the listener logic::
             ;
 
             // grab the user, do a quick sanity check that one exists
-            $user = $this->tokenStorage->getToken()->getUser();
+            $user = $this->security->getUser();
             if (!$user) {
                 throw new \LogicException(
                     'The FriendMessageFormType cannot be used without an authenticated user!'
@@ -323,56 +322,18 @@ and fill in the listener logic::
 Using the Form
 ~~~~~~~~~~~~~~
 
-Our form is now ready to use. But first, because it has a ``__construct()`` method,
-you need to register it as a service and tag it with :ref:`form.type <dic-tags-form-type>`:
+If you're using :ref:`autowire <services-autowire>` and
+:ref:`autoconfigure <services-autoconfigure>`, your form is ready to be used!
+Otherwise, see :doc:`/form/form_dependencies` to learn how to register your form
+type as a service.
 
-.. configuration-block::
+In a controller, create the form like normal::
 
-    .. code-block:: yaml
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-        # app/config/config.yml
-        services:
-            app.form.friend_message:
-                class: AppBundle\Form\Type\FriendMessageFormType
-                arguments: ['@security.token_storage']
-                tags:
-                    - { name: form.type }
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.form.friend_message" class="AppBundle\Form\Type\FriendMessageFormType">
-                    <argument type="service" id="security.token_storage" />
-                    <tag name="form.type" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use AppBundle\Form\Type\FriendMessageFormType;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->register('app.form.friend_message', FriendMessageFormType::class)
-            ->addArgument(new Reference('security.token_storage'))
-            ->addTag('form.type');
-
-In a controller that extends the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller`
-class, you can simply call::
-
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-    class FriendMessageController extends Controller
+    class FriendMessageController extends AbstractController
     {
-        public function newAction(Request $request)
+        public function new(Request $request)
         {
             $form = $this->createForm(FriendMessageFormType::class);
 
@@ -380,7 +341,7 @@ class, you can simply call::
         }
     }
 
-You can also easily embed the form type into another form::
+You can also  embed the form type into another form::
 
     // inside some other "form type" class
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -404,8 +365,8 @@ will need the correct options in order for validation to pass.
 The meetup is passed as an entity field to the form. So we can access each
 sport like this::
 
-    // src/AppBundle/Form/Type/SportMeetupType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/SportMeetupType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -420,7 +381,7 @@ sport like this::
         {
             $builder
                 ->add('sport', EntityType::class, array(
-                    'class'       => 'AppBundle:Sport',
+                    'class'       => 'App\Entity\Sport',
                     'placeholder' => '',
                 ))
             ;
@@ -437,10 +398,9 @@ sport like this::
                     $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                     $form->add('position', EntityType::class, array(
-                        'class' => 'AppBundle:Position',
+                        'class' => 'App\Entity\Position',
                         'placeholder' => '',
                         'choices' => $positions,
-                        'choices_as_values' => true,
                     ));
                 }
             );
@@ -464,10 +424,6 @@ On a form, we can usually listen to the following events:
 * ``SUBMIT``
 * ``POST_SUBMIT``
 
-.. versionadded:: 2.3
-    The events ``PRE_SUBMIT``, ``SUBMIT`` and ``POST_SUBMIT`` were introduced
-    in Symfony 2.3. Before, they were named ``PRE_BIND``, ``BIND`` and ``POST_BIND``.
-
 The key is to add a ``POST_SUBMIT`` listener to the field that your new field
 depends on. If you add a ``POST_SUBMIT`` listener to a form child (e.g. ``sport``),
 and add new children to the parent form, the Form component will detect the
@@ -475,13 +431,13 @@ new field automatically and map it to the submitted client data.
 
 The type would now look like::
 
-    // src/AppBundle/Form/Type/SportMeetupType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/SportMeetupType.php
+    namespace App\Form\Type;
 
-    // ...
+    use App\Entity\Sport;
     use Symfony\Component\Form\FormInterface;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-    use AppBundle\Entity\Sport;
+    // ...
 
     class SportMeetupType extends AbstractType
     {
@@ -489,7 +445,7 @@ The type would now look like::
         {
             $builder
                 ->add('sport', EntityType::class, array(
-                    'class'       => 'AppBundle:Sport',
+                    'class'       => 'App\Entity\Sport',
                     'placeholder' => '',
                 ));
             ;
@@ -498,10 +454,9 @@ The type would now look like::
                 $positions = null === $sport ? array() : $sport->getAvailablePositions();
 
                 $form->add('position', EntityType::class, array(
-                    'class' => 'AppBundle:Position',
+                    'class' => 'App\Entity\Position',
                     'placeholder' => '',
                     'choices' => $positions,
-                    'choices_as_values' => true,
                 ));
             };
 
@@ -546,18 +501,18 @@ One piece that is still missing is the client-side updating of your form after
 the sport is selected. This should be handled by making an AJAX call back to
 your application. Assume that you have a sport meetup creation controller::
 
-    // src/AppBundle/Controller/MeetupController.php
-    namespace AppBundle\Controller;
+    // src/Controller/MeetupController.php
+    namespace App\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
-    use AppBundle\Entity\SportMeetup;
-    use AppBundle\Form\Type\SportMeetupType;
+    use App\Entity\SportMeetup;
+    use App\Form\Type\SportMeetupType;
     // ...
 
-    class MeetupController extends Controller
+    class MeetupController extends AbstractController
     {
-        public function createAction(Request $request)
+        public function create(Request $request)
         {
             $meetup = new SportMeetup();
             $form = $this->createForm(SportMeetupType::class, $meetup);
@@ -580,7 +535,7 @@ field according to the current selection in the ``sport`` field:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/meetup/create.html.twig #}
+    {# templates/meetup/create.html.twig #}
     {{ form_start(form) }}
         {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
         {{ form_row(form.position) }} {# <select id="meetup_position" ... #}

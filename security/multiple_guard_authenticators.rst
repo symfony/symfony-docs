@@ -1,9 +1,6 @@
 How to Use Multiple Guard Authenticators
 ========================================
 
-.. versionadded:: 2.8
-    The ``Guard`` component was introduced in Symfony 2.8.
-
 The Guard authentication component allows you to easily use many different
 authenticators at a time.
 
@@ -25,7 +22,7 @@ This is how your security configuration can look in action:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
              # ...
             firewalls:
@@ -33,13 +30,13 @@ This is how your security configuration can look in action:
                     anonymous: ~
                     guard:
                         authenticators:
-                            - app.form_login_authenticator
-                            - app.facebook_connect_authenticator
-                        entry_point: app.form_login_authenticator
+                            - App\Security\LoginFormAuthenticator
+                            - App\Security\FacebookConnectAuthenticator
+                        entry_point: App\Security\LoginFormAuthenticator
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -51,9 +48,9 @@ This is how your security configuration can look in action:
                 <!-- ... -->
                 <firewall name="default">
                     <anonymous />
-                    <guard entry-point="app.form_login_authenticator">
-                        <authenticator>app.form_login_authenticator</authenticator>
-                        <authenticator>app.facebook_connect_authenticator</authenticator>
+                    <guard entry-point="App\Security\LoginFormAuthenticator">
+                        <authenticator>App\Security\LoginFormAuthenticator</authenticator>
+                        <authenticator>App\Security\FacebookConnectAuthenticator</authenticator>
                     </guard>
                 </firewall>
             </config>
@@ -61,17 +58,20 @@ This is how your security configuration can look in action:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
+        use App\Security\LoginFormAuthenticator;
+        use App\Security\FacebookConnectAuthenticator;
+
         $container->loadFromExtension('security', array(
             // ...
             'firewalls' => array(
                 'default' => array(
                     'anonymous' => null,
                     'guard' => array(
-                        'entry_point' => 'app.form_login_authenticator',
+                        'entry_point' => '',
                         'authenticators' => array(
-                            'app.form_login_authenticator',
-                            'app.facebook_connect_authenticator'
+                            LoginFormAuthenticator::class,
+                            FacebookConnectAuthenticator::class'
                         ),
                     ),
                 ),
@@ -93,7 +93,7 @@ the solution is to split the configuration into two separate firewalls:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             firewalls:
@@ -101,12 +101,12 @@ the solution is to split the configuration into two separate firewalls:
                     pattern: ^/api/
                     guard:
                         authenticators:
-                            - app.api_token_authenticator
+                            - App\Security\ApiTokenAuthenticator
                 default:
                     anonymous: ~
                     guard:
                         authenticators:
-                            - app.form_login_authenticator
+                            - App\Security\LoginFormAuthenticator
             access_control:
                 - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
                 - { path: ^/api, roles: ROLE_API_USER }
@@ -114,7 +114,7 @@ the solution is to split the configuration into two separate firewalls:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -126,13 +126,13 @@ the solution is to split the configuration into two separate firewalls:
                 <!-- ... -->
                 <firewall name="api" pattern="^/api/">
                     <guard>
-                        <authenticator>app.api_token_authenticator</authenticator>
+                        <authenticator>App\Security\ApiTokenAuthenticator</authenticator>
                     </guard>
                 </firewall>
                 <firewall name="default">
                     <anonymous />
                     <guard>
-                        <authenticator>app.form_login_authenticator</authenticator>
+                        <authenticator>App\Security\LoginFormAuthenticator</authenticator>
                     </guard>
                 </firewall>
                 <rule path="^/login" role="IS_AUTHENTICATED_ANONYMOUSLY" />
@@ -143,7 +143,10 @@ the solution is to split the configuration into two separate firewalls:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
+        use App\Security\ApiTokenAuthenticator;
+        use App\Security\LoginFormAuthenticator;
+
         $container->loadFromExtension('security', array(
             // ...
             'firewalls' => array(
@@ -151,7 +154,7 @@ the solution is to split the configuration into two separate firewalls:
                     'pattern' => '^/api',
                     'guard' => array(
                         'authenticators' => array(
-                            'app.api_token_authenticator',
+                            ApiTokenAuthenticator::class,
                         ),
                     ),
                 ),
@@ -159,7 +162,7 @@ the solution is to split the configuration into two separate firewalls:
                     'anonymous' => null,
                     'guard' => array(
                         'authenticators' => array(
-                            'app.form_login_authenticator',
+                            LoginFormAuthenticator::class,
                         ),
                     ),
                 ),

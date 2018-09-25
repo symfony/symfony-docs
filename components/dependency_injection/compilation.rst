@@ -121,7 +121,7 @@ are loaded::
     $containerBuilder->registerExtension(new AcmeDemoExtension);
 
     $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
-    $loader->load('config.yml');
+    $loader->load('config.yaml');
 
     // ...
     $containerBuilder->compile();
@@ -331,11 +331,6 @@ compilation::
         // ...
     }
 
-.. versionadded:: 2.8
-    Prior to Symfony 2.8, extensions implementing ``CompilerPassInterface``
-    were not automatically registered. You needed to register them as explained
-    in :ref:`the next section <components-di-separate-compiler-passes>`.
-
 As ``process()`` is called *after* all extensions are loaded, it allows you to
 edit service definitions of other extensions as well as retrieving information
 about service definitions.
@@ -426,6 +421,20 @@ been run, use::
     $containerBuilder->addCompilerPass(
         new CustomPass(),
         PassConfig::TYPE_AFTER_REMOVING
+    );
+
+You can also control the order in which compiler passes are run for each
+compilation phase. Use the optional third argument of ``addCompilerPass()`` to
+set the priority as an integer number. The default priority is ``0`` and the higher
+its value, the earlier it's executed::
+
+    // ...
+    // FirstPass is executed after SecondPass because its priority is lower
+    $container->addCompilerPass(
+        new FirstPass(), PassConfig::TYPE_AFTER_REMOVING, 10
+    );
+    $container->addCompilerPass(
+        new SecondPass(), PassConfig::TYPE_AFTER_REMOVING, 30
     );
 
 .. _components-dependency-injection-dumping:

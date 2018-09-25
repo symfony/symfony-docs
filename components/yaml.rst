@@ -93,21 +93,16 @@ other dumps a PHP array to a YAML string
 On top of these two classes, the :class:`Symfony\\Component\\Yaml\\Yaml` class
 acts as a thin wrapper that simplifies common uses.
 
-Reading YAML Files
-~~~~~~~~~~~~~~~~~~
+Reading YAML Contents
+~~~~~~~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Component\\Yaml\\Yaml::parse` method parses a YAML
 string and converts it to a PHP array::
 
     use Symfony\Component\Yaml\Yaml;
 
-    $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
-
-.. caution::
-
-    Because it is currently possible to pass a filename to this method, you
-    must validate the input first. Passing a filename is deprecated in
-    Symfony 2.2, and was removed in Symfony 3.0.
+    $value = Yaml::parse("foo: bar");
+    // $value = array('foo' => 'bar')
 
 If an error occurs during parsing, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\ParseException` exception
@@ -117,26 +112,24 @@ error occurred::
     use Symfony\Component\Yaml\Exception\ParseException;
 
     try {
-        $value = Yaml::parse(file_get_contents('/path/to/file.yml'));
+        $value = Yaml::parse('...');
     } catch (ParseException $exception) {
-        printf("Unable to parse the YAML string: %s", $exception->getMessage());
+        printf('Unable to parse the YAML string: %s', $exception->getMessage());
     }
 
+Reading YAML Files
+~~~~~~~~~~~~~~~~~~
+
+The :method:`Symfony\\Component\\Yaml\\Yaml::parseFile` method parses the YAML
+contents of the given file path and converts them to a PHP value::
+
+    use Symfony\Component\Yaml\Yaml;
+
+    $value = Yaml::parseFile('/path/to/file.yaml');
+
+If an error occurs during parsing, the parser throws a ``ParseException`` exception.
+
 .. _components-yaml-dump:
-
-Objects for Mappings
-....................
-
-.. versionadded:: 2.7
-    Support for parsing mappings as objects was introduced in Symfony 2.7.
-
-Yaml :ref:`mappings <yaml-format-collections>` are basically associative
-arrays. You can instruct the parser to return mappings as objects (i.e.
-``\stdClass`` instances) by setting the fourth argument to ``true``::
-
-    $object = Yaml::parse('{"foo": "bar"}', false, false, true);
-    echo get_class($object); // stdClass
-    echo $object->foo; // bar
 
 Writing YAML Files
 ~~~~~~~~~~~~~~~~~~
@@ -153,7 +146,7 @@ array to its YAML representation::
 
     $yaml = Yaml::dump($array);
 
-    file_put_contents('/path/to/file.yml', $yaml);
+    file_put_contents('/path/to/file.yaml', $yaml);
 
 If an error occurs during the dump, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\DumpException` exception.
@@ -210,30 +203,44 @@ changed using the third argument as follows::
             foo: bar
             bar: baz
 
-Invalid Types and Object Serialization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Numeric Literals
+................
 
-By default the YAML component will encode any "unsupported" type (i.e.
-resources and objects) as ``null``.
+Long numeric literals, being integer, float or hexadecimal, are known for their
+poor readability in code and configuration files. That's why YAML files allow to
+add underscores to improve their readability:
 
-Instead of encoding as ``null`` you can choose to throw an exception if an invalid
-type is encountered in either the dumper or parser as follows::
+.. code-block:: yaml
 
-    // throws an exception if a resource or object is encountered
-    Yaml::dump($data, 2, 4, true);
+    parameters:
+        credit_card_number: 1234_5678_9012_3456
+        long_number: 10_000_000_000
+        pi: 3.14159_26535_89793
+        hex_words: 0x_CAFE_F00D
 
-    // throws an exception if an encoded object is found in the YAML string
-    Yaml::parse($yaml, true);
+During the parsing of the YAML contents, all the ``_`` characters are removed
+from the numeric literal contents, so there is not a limit in the number of
+underscores you can include or the way you group contents.
 
-However, you can activate object support using the next argument::
+Advanced Usage: Flags
+---------------------
+
+.. _objects-for-mappings:
+
+Object Parsing and Dumping
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can dump objects by using the ``DUMP_OBJECT`` flag::
 
     $object = new \stdClass();
     $object->foo = 'bar';
 
-    $dumped = Yaml::dump($object, 2, 4, false, true);
-    // !!php/object:O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}
+    $dumped = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT);
+    // !php/object 'O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}'
 
-    $parsed = Yaml::parse($dumped, false, true);
+And parse them by using the ``PARSE_OBJECT`` flag::
+
+    $parsed = Yaml::parse($dumped, Yaml::PARSE_OBJECT);
     var_dump(is_object($parsed)); // true
     echo $parsed->foo; // bar
 
@@ -245,6 +252,183 @@ representation of the object.
     Object serialization is specific to this implementation, other PHP YAML
     parsers will likely not recognize the ``php/object`` tag and non-PHP
     implementations certainly won't - use with discretion!
+
+Parsing and Dumping Objects as Maps
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can dump objects as Yaml maps by using the ``DUMP_OBJECT_AS_MAP`` flag::
+
+    $object = new \stdClass();
+    $object->foo = 'bar';
+
+    $dumped = Yaml::dump(array('data' => $object), 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
+    // $dumped = "data:\n    foo: bar"
+
+And parse them by using the ``PARSE_OBJECT_FOR_MAP`` flag::
+
+    $parsed = Yaml::parse($dumped, Yaml::PARSE_OBJECT_FOR_MAP);
+    var_dump(is_object($parsed)); // true
+    var_dump(is_object($parsed->data)); // true
+    echo $parsed->data->foo; // bar
+
+The YAML component uses PHP's ``(array)`` casting to generate a string
+representation of the object as a map.
+
+.. _invalid-types-and-object-serialization:
+
+Handling Invalid Types
+~~~~~~~~~~~~~~~~~~~~~~
+
+By default the parser will encode invalid types as ``null``. You can make the
+parser throw exceptions by using the ``PARSE_EXCEPTION_ON_INVALID_TYPE``
+flag::
+
+    $yaml = '!php/object \'O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}\'';
+    Yaml::parse($yaml, Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE); // throws an exception
+
+Similarly you can use ``DUMP_EXCEPTION_ON_INVALID_TYPE`` when dumping::
+
+    $data = new \stdClass(); // by default objects are invalid.
+    Yaml::dump($data, 2, 4, Yaml::DUMP_EXCEPTION_ON_INVALID_TYPE); // throws an exception
+
+    echo $yaml; // { foo: bar }
+
+Date Handling
+~~~~~~~~~~~~~
+
+By default the YAML parser will convert unquoted strings which look like a
+date or a date-time into a Unix timestamp; for example ``2016-05-27`` or
+``2016-05-27T02:59:43.1Z`` (ISO-8601_)::
+
+    Yaml::parse('2016-05-27'); // 1464307200
+
+You can make it convert to a ``DateTime`` instance by using the ``PARSE_DATETIME``
+flag::
+
+    $date = Yaml::parse('2016-05-27', Yaml::PARSE_DATETIME);
+    var_dump(get_class($date)); // DateTime
+
+Dumping Multi-line Literal Blocks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In YAML multiple lines can be represented as literal blocks, by default the
+dumper will encode multiple lines as an inline string::
+
+    $string = array("string" => "Multiple\nLine\nString");
+    $yaml = Yaml::dump($string);
+    echo $yaml; // string: "Multiple\nLine\nString"
+
+You can make it use a literal block with the ``DUMP_MULTI_LINE_LITERAL_BLOCK``
+flag::
+
+    $string = array("string" => "Multiple\nLine\nString");
+    $yaml = Yaml::dump($string, 2, 4, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
+    echo $yaml;
+    //  string: |
+    //       Multiple
+    //       Line
+    //       String
+
+Parsing PHP Constants
+~~~~~~~~~~~~~~~~~~~~~
+
+By default, the YAML parser treats the PHP constants included in the contents as
+regular strings. Use the ``PARSE_CONSTANT`` flag and the special ``!php/const``
+syntax to parse them as proper PHP constants::
+
+    $yaml = '{ foo: PHP_INT_SIZE, bar: !php/const PHP_INT_SIZE }';
+    $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // $parameters = array('foo' => 'PHP_INT_SIZE', 'bar' => 8);
+
+Parsing and Dumping of Binary Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can dump binary data by using the ``DUMP_BASE64_BINARY_DATA`` flag::
+
+    $imageContents = file_get_contents(__DIR__.'/images/logo.png');
+
+    $dumped = Yaml::dump(array('logo' => $imageContents), 2, 4, Yaml::DUMP_BASE64_BINARY_DATA);
+    // logo: !!binary iVBORw0KGgoAAAANSUhEUgAAA6oAAADqCAY...
+
+Binary data is automatically parsed if they include the ``!!binary`` YAML tag
+(there's no need to pass any flag to the Yaml parser)::
+
+    $dumped = 'logo: !!binary iVBORw0KGgoAAAANSUhEUgAAA6oAAADqCAY...';
+    $parsed = Yaml::parse($dumped);
+    $imageContents = $parsed['logo'];
+
+Parsing and Dumping Custom Tags
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In addition to the built-in support of tags like ``!php/const`` and
+``!!binary``, you can define your own custom YAML tags and parse them with the
+``PARSE_CUSTOM_TAGS`` flag::
+
+    $data = "!my_tag { foo: bar }";
+    $parsed = Yaml::parse($data, Yaml::PARSE_CUSTOM_TAGS);
+    // $parsed = Symfony\Component\Yaml\Tag\TaggedValue('my_tag', array('foo' => 'bar'));
+    $tagName = $parsed->getTag();    // $tagName = 'my_tag'
+    $tagValue = $parsed->getValue(); // $tagValue = array('foo' => 'bar')
+
+If the contents to dump contain :class:`Symfony\\Component\\Yaml\\Tag\\TaggedValue`
+objects, they are automatically transformed into YAML tags::
+
+    use Symfony\Component\Yaml\Tag\TaggedValue;
+
+    $data = new TaggedValue('my_tag', array('foo' => 'bar'));
+    $dumped = Yaml::dump($data);
+    // $dumped = '!my_tag { foo: bar }'
+
+Syntax Validation
+~~~~~~~~~~~~~~~~~
+
+The syntax of YAML contents can be validated through the CLI using the
+:class:`Symfony\\Component\\Yaml\\Command\\LintCommand` command.
+
+First, install the Console component:
+
+.. code-block:: terminal
+
+    $ composer require symfony/console
+
+Create a console application with ``lint:yaml`` as its only command::
+
+    // lint.php
+
+    use Symfony\Component\Console\Application;
+    use Symfony\Component\Yaml\Command\LintCommand;
+
+    (new Application('yaml/lint'))
+        ->add(new LintCommand())
+        ->getApplication()
+        ->setDefaultCommand('lint:yaml', true)
+        ->run();
+
+Then, execute the script for validating contents:
+
+.. code-block:: terminal
+
+    # validates a single file
+    $ php lint.php path/to/file.yaml
+
+    # or all the files in a directory
+    $ php lint.php path/to/directory
+
+    # or contents passed to STDIN
+    $ cat path/to/file.yaml | php lint.php
+
+The result is written to STDOUT and uses a plain text format by default.
+Add the ``--format`` option to get the output in JSON format:
+
+.. code-block:: terminal
+
+    $ php lint.php path/to/file.yaml --format json
+
+.. tip::
+
+    The linting command will also report any deprecations in the checked
+    YAML files. This may for example be useful for recognizing deprecations of
+    contents of YAML files during automated tests.
 
 Learn More
 ----------
@@ -258,3 +442,4 @@ Learn More
 .. _YAML: http://yaml.org/
 .. _Packagist: https://packagist.org/packages/symfony/yaml
 .. _`YAML 1.2 version specification`: http://yaml.org/spec/1.2/spec.html
+.. _ISO-8601: http://www.iso.org/iso/iso8601

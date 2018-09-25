@@ -4,13 +4,9 @@
 How to Define Non Shared Services
 =================================
 
-.. versionadded:: 2.8
-    The ``shared`` option was introduced in Symfony 2.8. Prior to Symfony
-    2.8, you had to use the ``prototype`` scope.
-
 In the service container, all services are shared by default. This means that
 each time you retrieve the service, you'll get the *same* instance. This is
-often the behavior you want, but in some cases, you might want to always get a
+usually the behavior you want, but in some cases, you might want to always get a
 *new* instance.
 
 In order to always get a new instance, set the ``shared`` setting to ``false``
@@ -20,29 +16,26 @@ in your service definition:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
-            app.some_not_shared_service:
-                class: ...
+            App\SomeNonSharedService:
                 shared: false
                 # ...
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <services>
-            <service id="app.some_not_shared_service" class="..." shared="false" />
+            <service id="App\SomeNonSharedService" shared="false" />
         </services>
 
     .. code-block:: php
 
-        // app/config/services.php
-        use Symfony\Component\DependencyInjection\Definition;
+        // config/services.php
+        use App\SomeNonSharedService;
 
-        $definition = new Definition('...');
-        $definition->setShared(false);
+        $container->register(SomeNonSharedService::class)
+            ->setShared(false);
 
-        $container->setDefinition('app.some_not_shared_service', $definition);
-
-Now, whenever you call ``$container->get('app.some_not_shared_service')`` or
-inject this service, you'll receive a new instance.
+Now, whenever you request the ``App\SomeNonSharedService`` from the container,
+you will be passed a new instance.

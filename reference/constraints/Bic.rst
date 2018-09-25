@@ -1,9 +1,6 @@
 Bic
 ===
 
-.. versionadded:: 2.8
-    The Bic constraint was introduced in Symfony 2.8.
-
 This constraint is used to ensure that a value has the proper format of a
 `Business Identifier Code (BIC)`_. BIC is an internationally agreed means to
 uniquely identify both financial and non-financial institutions.
@@ -29,8 +26,8 @@ will contain a Business Identifier Code (BIC).
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Transaction.php
-        namespace AppBundle\Entity;
+        // src/Entity/Transaction.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -44,21 +41,21 @@ will contain a Business Identifier Code (BIC).
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Transaction:
+        # config/validator/validation.yaml
+        App\Entity\Transaction:
             properties:
                 businessIdentifierCode:
                     - Bic: ~
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Transaction">
+            <class name="App\Entity\Transaction">
                 <property name="businessIdentifierCode">
                     <constraint name="Bic" />
                 </property>
@@ -67,8 +64,8 @@ will contain a Business Identifier Code (BIC).
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Transaction.php
-        namespace AppBundle\Entity;
+        // src/Entity/Transaction.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;

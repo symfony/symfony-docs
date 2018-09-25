@@ -47,10 +47,7 @@ to a post record thanks to a foreign key constraint.
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 Before diving into the recipe, be sure your database connection parameters are
-correctly setup in the ``app/config/parameters.yml`` file (or wherever your
-database configuration is kept) and that you have initialized a bundle that
-will host your future entity class. In this tutorial it's assumed that an
-AcmeBlogBundle exists and is located under the ``src/Acme/BlogBundle`` folder.
+correctly setup in the ``.env`` file.
 
 The first step towards building entity classes from an existing database
 is to ask Doctrine to introspect the database and generate the corresponding
@@ -59,115 +56,43 @@ table fields.
 
 .. code-block:: terminal
 
-    $ php app/console doctrine:mapping:import --force AcmeBlogBundle xml
+    $ php bin/console doctrine:mapping:import App\\Entity annotation --path=src/Entity
 
 This command line tool asks Doctrine to introspect the database and generate
-the XML metadata files under the ``src/Acme/BlogBundle/Resources/config/doctrine``
-folder of your bundle. This generates two files: ``BlogPost.orm.xml`` and
-``BlogComment.orm.xml``.
+new PHP classes with annotation metadata into ``src/Entity``. This generates two
+files: ``BlogPost.php`` and ``BlogComment.php``.
 
 .. tip::
 
-    It's also possible to generate the metadata files in YAML format by changing
-    the last argument to ``yml``.
+    It's also possible to generate the metadata files into XML or YAML:
 
-The generated ``BlogPost.orm.xml`` metadata file looks as follows:
+    .. code-block:: terminal
 
-.. code-block:: xml
+        $ php bin/console doctrine:mapping:import App\\Entity xml --path=config/doctrine
 
-    <?xml version="1.0" encoding="utf-8"?>
-    <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-      <entity name="Acme\BlogBundle\Entity\BlogPost" table="blog_post">
-        <id name="id" type="bigint" column="id">
-          <generator strategy="IDENTITY"/>
-        </id>
-        <field name="title" type="string" column="title" length="100" nullable="false"/>
-        <field name="content" type="text" column="content" nullable="false"/>
-        <field name="createdAt" type="datetime" column="created_at" nullable="false"/>
-      </entity>
-    </doctrine-mapping>
+Generating the Getters & Setters or PHP Classes
+-----------------------------------------------
 
-Once the metadata files are generated, you can ask Doctrine to build related
-entity classes by executing the following command.
+The generated PHP classes now have properties and annotation metadata, but they
+do *not* have any getter or setter methods. If you generated XML or YAML metadata,
+you don't even have the PHP classes!
+
+To generate the missing getter/setter methods (or to *create* the classes if neceesary),
+run:
 
 .. code-block:: terminal
 
-    // generates entity classes with annotation mappings
-    $ php app/console doctrine:mapping:convert annotation ./src
-
-.. caution::
-
-    If you want to use annotations, you must remove the XML (or YAML) files
-    after running this command. This is necessary as
-    :ref:`it is not possible to mix mapping configuration formats <doctrine-adding-mapping>`
-
-For example, the newly created ``BlogComment`` entity class looks as follow::
-
-    // src/Acme/BlogBundle/Entity/BlogComment.php
-    namespace Acme\BlogBundle\Entity;
-
-    use Doctrine\ORM\Mapping as ORM;
-
-    /**
-     * Acme\BlogBundle\Entity\BlogComment
-     *
-     * @ORM\Table(name="blog_comment")
-     * @ORM\Entity
-     */
-    class BlogComment
-    {
-        /**
-         * @var integer $id
-         *
-         * @ORM\Column(name="id", type="bigint")
-         * @ORM\Id
-         * @ORM\GeneratedValue(strategy="IDENTITY")
-         */
-        private $id;
-
-        /**
-         * @var string $author
-         *
-         * @ORM\Column(name="author", type="string", length=100, nullable=false)
-         */
-        private $author;
-
-        /**
-         * @var text $content
-         *
-         * @ORM\Column(name="content", type="text", nullable=false)
-         */
-        private $content;
-
-        /**
-         * @var datetime $createdAt
-         *
-         * @ORM\Column(name="created_at", type="datetime", nullable=false)
-         */
-        private $createdAt;
-
-        /**
-         * @var BlogPost
-         *
-         * @ORM\ManyToOne(targetEntity="BlogPost")
-         * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
-         */
-        private $post;
-    }
-
-As you can see, Doctrine converts all table fields to pure private and annotated
-class properties. The most impressive thing is that it also discovered the
-relationship with the ``BlogPost`` entity class based on the foreign key constraint.
-Consequently, you can find a private ``$post`` property mapped with a ``BlogPost``
-entity in the ``BlogComment`` entity class.
+    // generates getter/setter methods
+    $ php bin/console make:entity --regenerate App
 
 .. note::
 
-    If you want to have a one-to-many relationship, you will need to add
-    it manually into the entity or to the generated XML or YAML files.
-    Add a section on the specific entities for one-to-many defining the
-    ``inversedBy`` and the ``mappedBy`` pieces.
+    If you want to have a OneToMany relationship, you will need to add
+    it manually into the entity (e.g. add a ``comments`` property to ``BlogPost``)
+    or to the generated XML or YAML files. Add a section on the specific entities
+    for one-to-many defining the ``inversedBy`` and the ``mappedBy`` pieces.
 
 The generated entities are now ready to be used. Have fun!
 
 .. _`Doctrine tools documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/tools.html#reverse-engineering
+.. _`doctrine/doctrine#729`: https://github.com/doctrine/DoctrineBundle/issues/729

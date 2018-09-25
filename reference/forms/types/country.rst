@@ -21,6 +21,8 @@ the option manually, but then you should just use the ``ChoiceType`` directly.
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)          |
 +-------------+-----------------------------------------------------------------------+
+| Options     | - `choice_translation_locale`_                                        |
++-------------+-----------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                          |
 | options     |                                                                       |
 +-------------+-----------------------------------------------------------------------+
@@ -39,17 +41,22 @@ the option manually, but then you should just use the ``ChoiceType`` directly.
 |             | - `data`_                                                             |
 |             | - `disabled`_                                                         |
 |             | - `empty_data`_                                                       |
+|             | - `help`_                                                             |
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
 |             | - `label_format`_                                                     |
 |             | - `mapped`_                                                           |
-|             | - `read_only`_ (deprecated as of 2.8)                                 |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
 | Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                     |
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CountryType` |
 +-------------+-----------------------------------------------------------------------+
+
+Field Options
+-------------
+
+.. include:: /reference/forms/types/options/choice_translation_locale.rst.inc
 
 Overridden Options
 ------------------
@@ -61,6 +68,11 @@ choices
 
 The country type defaults the ``choices`` option to the whole list of countries.
 The locale is used to translate the countries names.
+
+.. caution::
+
+    If you want to override the built-in choices of the country type, you
+    will also have to set the ``choice_loader`` option to ``null``.
 
 Inherited Options
 -----------------
@@ -99,6 +111,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
@@ -106,7 +120,5 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

@@ -4,6 +4,12 @@
 How to Embed Controllers in a Template
 ======================================
 
+.. note::
+
+    Rendering embedded controllers is "heavier" than including a template or calling
+    a custom Twig function. Unless you're planning on :doc:`caching the fragment </http_cache/esi>`,
+    avoid embedding many controllers.
+
 :ref:`Including template fragments <including-other-templates>` is useful to
 reuse the same content on several pages. However, this technique is not the best
 solution in some cases.
@@ -20,14 +26,14 @@ template that needs to display that content.
 
 First, create a controller that renders a certain number of recent articles::
 
-    // src/AppBundle/Controller/ArticleController.php
-    namespace AppBundle\Controller;
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
 
     // ...
 
-    class ArticleController extends Controller
+    class ArticleController extends AbstractController
     {
-        public function recentArticlesAction($max = 3)
+        public function recentArticles($max = 3)
         {
             // make a database call or other logic
             // to get the "$max" most recent articles
@@ -45,7 +51,7 @@ the controller:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/article/recent_list.html.twig #}
+    {# templates/article/recent_list.html.twig #}
     {% for article in articles %}
         <a href="{{ path('article_show', {slug: article.slug}) }}">
             {{ article.title }}
@@ -53,21 +59,16 @@ the controller:
     {% endfor %}
 
 Finally, call the controller from any template using the ``render()`` function
-and the common syntax for controllers (i.e. **bundle**:**controller**:**action**):
+and the standard string syntax for controllers (i.e. **controllerNamespace**::**action**):
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/base.html.twig #}
+    {# templates/base.html.twig #}
 
     {# ... #}
     <div id="sidebar">
         {{ render(controller(
-            'AppBundle:Article:recentArticles',
+            'App\\Controller\\ArticleController::recentArticles',
             { 'max': 3 }
         )) }}
     </div>
-
-Whenever you find that you need a variable or a piece of information that
-you don't have access to in a template, consider rendering a controller.
-Make sure that embedded controllers are fast to execute to not hurt performance
-and that they follow Symfony's :doc:`best practices for controllers </best_practices/controllers>`.

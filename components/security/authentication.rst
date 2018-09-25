@@ -306,7 +306,7 @@ logged into your website.  It is important to distinguish this action from
 non-interactive authentication methods, such as:
 
 * authentication based on your session.
-* authentication using a HTTP basic or HTTP digest header.
+* authentication using a HTTP basic header.
 
 You could listen on the ``security.interactive_login`` event, for example, in
 order to give your user a welcome flash message every time they log in.

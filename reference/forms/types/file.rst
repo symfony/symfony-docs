@@ -18,11 +18,11 @@ The ``FileType`` represents a file input in your form.
 | Inherited   | - `disabled`_                                                       |
 | options     | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
+|             | - `help`_                                                           |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `label_format`_                                                   |
 |             | - `mapped`_                                                         |
-|             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                       |
@@ -46,7 +46,7 @@ be used to move the ``attachment`` file to a permanent location::
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-    public function uploadAction()
+    public function upload()
     {
         // ...
 
@@ -125,6 +125,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
@@ -132,8 +134,6 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

@@ -16,19 +16,13 @@ your user submits their username and password).
 The Password Authenticator
 --------------------------
 
-.. versionadded:: 2.8
-    The ``SimpleFormAuthenticatorInterface`` interface was moved to the
-    ``Symfony\Component\Security\Http\Authentication`` namespace in Symfony
-    2.8. Prior to 2.8, it was located in the
-    ``Symfony\Component\Security\Core\Authentication`` namespace.
-
 First, create a new class that implements
 :class:`Symfony\\Component\\Security\\Http\\Authentication\\SimpleFormAuthenticatorInterface`.
 Eventually, this will allow you to create custom logic for authenticating
 the user::
 
-    // src/AppBundle/Security/TimeAuthenticator.php
-    namespace AppBundle\Security;
+    // src/Security/TimeAuthenticator.php
+    namespace App\Security;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -81,6 +75,7 @@ the user::
                     // (so don't put any un-trusted messages / error strings here)
                     throw new CustomUserMessageAuthenticationException(
                         'You can only log in between 2 and 4!',
+                        array(), // Message Data
                         412 // HTTP 412 Precondition Failed
                     );
                 }
@@ -109,11 +104,6 @@ the user::
             return new UsernamePasswordToken($username, $password, $providerKey);
         }
     }
-
-.. versionadded:: 2.8
-    The ``CustomUserMessageAuthenticationException`` class is new in Symfony 2.8
-    and helps you return custom authentication messages. In 2.7 or earlier, throw
-    an ``AuthenticationException`` or any sub-class (you can still do this in 2.8).
 
 How it Works
 ------------
@@ -156,10 +146,10 @@ inside of it.
 
 Inside this method, the password encoder is needed to check the password's validity::
 
-        $isPasswordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
+    $isPasswordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
 
 This is a service that is already available in Symfony and it uses the password algorithm
-that is configured in the security configuration (e.g. ``security.yml``) under
+that is configured in the security configuration (e.g. ``security.yaml``) under
 the ``encoders`` key. Below, you'll see how to inject that into the ``TimeAuthenticator``.
 
 .. _security-password-authenticator-config:
@@ -167,58 +157,18 @@ the ``encoders`` key. Below, you'll see how to inject that into the ``TimeAuthen
 Configuration
 -------------
 
-Now, configure your ``TimeAuthenticator`` as a service:
+Now, make sure your ``TimeAuthenticator`` is registered as as service. If you're
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+that happens automatically.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        services:
-            # ...
-
-            time_authenticator:
-                class:     AppBundle\Security\TimeAuthenticator
-                arguments: ["@security.password_encoder"]
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-            <services>
-                <!-- ... -->
-
-                <service id="time_authenticator"
-                    class="AppBundle\Security\TimeAuthenticator"
-                >
-                    <argument type="service" id="security.password_encoder" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        use AppBundle\Security\TimeAuthenticator;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        // ...
-
-        $container->register('time_authenticator', TimeAuthenticator::class)
-            ->addArgument(new Reference('security.password_encoder'));
-
-Then, activate it in the ``firewalls`` section of the security configuration
+Finally, activate the service in the ``firewalls`` section of the security configuration
 using the ``simple_form`` key:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -227,13 +177,13 @@ using the ``simple_form`` key:
                     pattern: ^/admin
                     # ...
                     simple_form:
-                        authenticator: time_authenticator
+                        authenticator: App\Security\TimeAuthenticator
                         check_path:    login_check
                         login_path:    login
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -246,7 +196,7 @@ using the ``simple_form`` key:
                 <firewall name="secured_area"
                     pattern="^/admin"
                     >
-                    <simple-form authenticator="time_authenticator"
+                    <simple-form authenticator="App\Security\TimeAuthenticator"
                         check-path="login_check"
                         login-path="login"
                     />
@@ -256,9 +206,10 @@ using the ``simple_form`` key:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
-        // ..
+        // ...
+        use App\Security\TimeAuthenticator;
 
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -266,7 +217,7 @@ using the ``simple_form`` key:
                     'pattern'     => '^/admin',
                     'simple_form' => array(
                         'provider'      => ...,
-                        'authenticator' => 'time_authenticator',
+                        'authenticator' => App\Security\TimeAuthenticator::class,
                         'check_path'    => 'login_check',
                         'login_path'    => 'login',
                     ),

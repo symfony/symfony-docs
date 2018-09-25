@@ -4,9 +4,6 @@
 RangeType Field
 ===============
 
-.. versionadded:: 2.8
-    The ``range`` type was introduced in Symfony 2.8.
-
 The ``RangeType`` field is a slider that is rendered using the HTML5
 ``<input type="range" />`` tag.
 
@@ -19,6 +16,7 @@ The ``RangeType`` field is a slider that is rendered using the HTML5
 |             | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
+|             | - `help`_                                                           |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `mapped`_                                                         |
@@ -67,6 +65,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 

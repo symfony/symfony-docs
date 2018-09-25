@@ -318,14 +318,23 @@ correctly. To validate the types of the options, call
         public function configureOptions(OptionsResolver $resolver)
         {
             // ...
+
+            // specify one allowed type
             $resolver->setAllowedTypes('host', 'string');
+
+            // specify multiple allowed types
             $resolver->setAllowedTypes('port', array('null', 'int'));
+
+            // check all items in an array recursively for a type
+            $resolver->setAllowedTypes('dates', 'DateTime[]');
+            $resolver->setAllowedTypes('ports', 'int[]');
         }
     }
 
-For each option, you can define either just one type or an array of acceptable
-types. You can pass any type for which an ``is_<type>()`` function is defined
-in PHP. Additionally, you may pass fully qualified class or interface names.
+You can pass any type for which an ``is_<type>()`` function is defined in PHP.
+You may also pass fully qualified class or interface names (which is checked
+using ``instanceof``). Additionally, you can validate all items in an array
+recursively by suffixing the type with ``[]``.
 
 If you pass an invalid option now, an
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
@@ -685,4 +694,3 @@ options in your code.
 
 .. _Packagist: https://packagist.org/packages/symfony/options-resolver
 .. _CHANGELOG: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/OptionsResolver/CHANGELOG.md#260
-.. _`read the Symfony 2.5 documentation`: https://symfony.com/doc/2.5/components/options_resolver.html

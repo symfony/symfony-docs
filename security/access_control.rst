@@ -33,7 +33,7 @@ Take the following ``access_control`` entries as an example:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:
@@ -44,7 +44,7 @@ Take the following ``access_control`` entries as an example:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -63,7 +63,7 @@ Take the following ``access_control`` entries as an example:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
             'access_control' => array(
@@ -174,7 +174,7 @@ pattern so that it is only accessible by requests from the local server itself:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:
@@ -185,7 +185,7 @@ pattern so that it is only accessible by requests from the local server itself:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -208,7 +208,7 @@ pattern so that it is only accessible by requests from the local server itself:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
             'access_control' => array(
@@ -259,7 +259,7 @@ key:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:
@@ -304,6 +304,15 @@ and functions including ``request``, which is the Symfony
 For a list of the other functions and variables, see
 :ref:`functions and variables <security-expression-variables>`.
 
+.. tip::
+
+    The ``allow_if`` expressions can also contain custom functions registered
+    with :ref:`expression providers <components-expression-language-provider>`.
+
+    .. versionadded:: 4.1
+        The feature to use custom functions inside ``allow_if`` expressions was
+        introduced in Symfony 4.1.
+
 Forcing a Channel (http, https)
 -------------------------------
 
@@ -316,7 +325,7 @@ the user will be redirected to ``https``:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             access_control:
@@ -324,7 +333,7 @@ the user will be redirected to ``https``:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -340,7 +349,7 @@ the user will be redirected to ``https``:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'access_control' => array(
                 array(

@@ -4,10 +4,8 @@
 How to Use Voters to Check User Permissions
 ===========================================
 
-In Symfony, you can check the permission to access data by using the
-:doc:`ACL module </security/acl>`, which is a bit overwhelming
-for many applications. A much easier solution is to work with custom voters,
-which are like simple conditional statements.
+Security voters are the most granular way of checking permissions (e.g. "can this
+specific user edit the given item?"). This article explains voters in detail.
 
 .. tip::
 
@@ -20,8 +18,8 @@ How Symfony Uses Voters
 
 In order to use voters, you have to understand how Symfony works with them.
 All voters are called each time you use the ``isGranted()`` method on Symfony's
-authorization checker (i.e. the ``security.authorization_checker`` service). Each
-one decides if the current user should have access to some resource.
+authorization checker or call ``denyAccessUnlessGranted()`` in a controller (which
+uses the authorization checker).
 
 Ultimately, Symfony takes the responses from all voters and makes the final
 decision (to allow or deny access to the resource) according to the strategy defined
@@ -44,10 +42,6 @@ which makes creating a voter even easier::
         abstract protected function voteOnAttribute($attribute, $subject, TokenInterface $token);
     }
 
-.. versionadded:: 2.8
-    The ``Voter`` helper class was added in Symfony 2.8. In earlier versions, an
-    ``AbstractVoter`` class with similar behavior was available.
-
 .. _how-to-use-the-voter-in-a-controller:
 
 Setup: Checking for Access in a Controller
@@ -57,15 +51,15 @@ Suppose you have a ``Post`` object and you need to decide whether or not the cur
 user can *edit* or *view* the object. In your controller, you'll check access with
 code like this::
 
-    // src/AppBundle/Controller/PostController.php
+    // src/Controller/PostController.php
     // ...
 
-    class PostController extends Controller
+    class PostController extends AbstractController
     {
         /**
          * @Route("/posts/{id}", name="post_show")
          */
-        public function showAction($id)
+        public function show($id)
         {
             // get a Post object - e.g. query for it
             $post = ...;
@@ -79,7 +73,7 @@ code like this::
         /**
          * @Route("/posts/{id}/edit", name="post_edit")
          */
-        public function editAction($id)
+        public function edit($id)
         {
             // get a Post object - e.g. query for it
             $post = ...;
@@ -91,18 +85,10 @@ code like this::
         }
     }
 
-The ``denyAccessUnlessGranted()`` method (and also, the simpler ``isGranted()`` method)
+The ``denyAccessUnlessGranted()`` method (and also the ``isGranted()`` method)
 calls out to the "voter" system. Right now, no voters will vote on whether or not
 the user can "view" or "edit" a ``Post``. But you can create your *own* voter that
 decides this using whatever logic you want.
-
-.. tip::
-
-    The ``denyAccessUnlessGranted()`` and ``isGranted()`` functions are both
-    just shortcuts of the ``Controller`` class to call ``isGranted()`` on
-    the ``security.authorization_checker`` service. The main difference is that
-    when access is not granted, ``denyAccessUnlessGranted()`` throws an
-    ``AccessDeniedException``, whereas ``isGranted()`` returns ``false``.
 
 Creating the custom Voter
 -------------------------
@@ -112,11 +98,11 @@ pretty complex. For example, a ``User`` can always edit or view a ``Post`` they 
 And if a ``Post`` is marked as "public", anyone can view it. A voter for this situation
 would look like this::
 
-    // src/AppBundle/Security/PostVoter.php
-    namespace AppBundle\Security;
+    // src/Security/PostVoter.php
+    namespace App\Security;
 
-    use AppBundle\Entity\Post;
-    use AppBundle\Entity\User;
+    use App\Entity\Post;
+    use App\Entity\User;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
@@ -210,67 +196,63 @@ Configuring the Voter
 ---------------------
 
 To inject the voter into the security layer, you must declare it as a service
-and tag it with ``security.voter``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.post_voter:
-                class:  AppBundle\Security\PostVoter
-                tags:
-                    - { name: security.voter }
-                # small performance boost
-                public: false
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.post_voter"
-                    class="AppBundle\Security\PostVoter"
-                    public="false"
-                >
-
-                    <tag name="security.voter" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Security\PostVoter;
-
-        $container->register('app.post_voter', PostVoter::class)
-            ->setPublic(false)
-            ->addTag('security.voter')
-        ;
-
-You're done! Now, when you :ref:`call isGranted() with view/edit and a Post object <how-to-use-the-voter-in-a-controller>`,
+and tag it with ``security.voter``. But if you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+that's done automatically for you! When you
+:ref:`call isGranted() with view/edit and pass a Post object <how-to-use-the-voter-in-a-controller>`,
 your voter will be executed and you can control access.
 
 Checking for Roles inside a Voter
 ---------------------------------
 
 What if you want to call ``isGranted()`` from *inside* your voter - e.g. you want
-to see if the current user has ``ROLE_SUPER_ADMIN``. The ``isGranted()`` method
-is provided by the ``security.authorization_checker`` service via the
-:class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManager`
-class. However, you can't inject that service because it causes a
-``CircularReferenceException``.
+to see if the current user has ``ROLE_SUPER_ADMIN``. That's possible by injecting
+the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManager`
+into your voter. You can use this to, for example, *always* allow access to a user
+with ``ROLE_SUPER_ADMIN``::
 
-The solution is to inject the ``service_container`` service and use it to get
-the ``security.authorization_checker`` service and call to the ``isGranted()``
-method.
+    // src/Security/PostVoter.php
+
+    // ...
+    use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+
+    class PostVoter extends Voter
+    {
+        // ...
+
+        private $decisionManager;
+
+        public function __construct(AccessDecisionManagerInterface $decisionManager)
+        {
+            $this->decisionManager = $decisionManager;
+        }
+
+        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+        {
+            // ...
+
+            // ROLE_SUPER_ADMIN can do anything! The power!
+            if ($this->decisionManager->decide($token, array('ROLE_SUPER_ADMIN'))) {
+                return true;
+            }
+
+            // ... all the normal voter logic
+        }
+    }
+
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+you're done! Symfony will automatically pass the ``security.access.decision_manager``
+service when instantiating your voter (thanks to autowiring).
+
+Calling ``decide()`` on the ``AccessDecisionManager`` is essentially the same as
+calling ``isGranted()`` from a controller or other places
+(it's just a little lower-level, which is necessary for a voter).
+
+.. note::
+
+    If you need to check access in any non-voter service, use the ``security.authorization_checker``
+    service (i.e. type-hint ``Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface``)
+    instead of the ``security.access.decision_manager`` service shown here.
 
 .. _security-voters-change-strategy:
 
@@ -307,7 +289,7 @@ security configuration:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             access_decision_manager:
                 strategy: unanimous
@@ -315,7 +297,7 @@ security configuration:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -331,7 +313,7 @@ security configuration:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'access_decision_manager' => array(
                 'strategy' => 'unanimous',

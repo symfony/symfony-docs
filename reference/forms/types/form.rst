@@ -11,7 +11,6 @@ on all types for which ``FormType`` is the parent.
 | Options   | - `action`_                                                        |
 |           | - `allow_extra_fields`_                                            |
 |           | - `by_reference`_                                                  |
-|           | - `cascade_validation`_ (deprecated as of 2.8)                     |
 |           | - `compound`_                                                      |
 |           | - `constraints`_                                                   |
 |           | - `data`_                                                          |
@@ -20,18 +19,16 @@ on all types for which ``FormType`` is the parent.
 |           | - `error_bubbling`_                                                |
 |           | - `error_mapping`_                                                 |
 |           | - `extra_fields_message`_                                          |
+|           | - `help`_                                                          |
 |           | - `inherit_data`_                                                  |
 |           | - `invalid_message`_                                               |
 |           | - `invalid_message_parameters`_                                    |
 |           | - `label_attr`_                                                    |
 |           | - `label_format`_                                                  |
 |           | - `mapped`_                                                        |
-|           | - `max_length`_ (deprecated as of 2.5)                             |
 |           | - `method`_                                                        |
-|           | - `pattern`_ (deprecated as of 2.5)                                |
 |           | - `post_max_size_message`_                                         |
 |           | - `property_path`_                                                 |
-|           | - `read_only`_ (deprecated as of 2.8)                              |
 |           | - `required`_                                                      |
 |           | - `trim`_                                                          |
 +-----------+--------------------------------------------------------------------+
@@ -69,8 +66,6 @@ option on the form.
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
-.. include:: /reference/forms/types/options/cascade_validation.rst.inc
-
 .. include:: /reference/forms/types/options/compound.rst.inc
 
 .. _reference-form-option-constraints:
@@ -106,6 +101,8 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/extra_fields_message.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
@@ -120,25 +117,15 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. _reference-form-option-max_length:
-
-.. include:: /reference/forms/types/options/max_length.rst.inc
-
 .. _form-option-method:
 
 .. include:: /reference/forms/types/options/method.rst.inc
-
-.. _reference-form-option-pattern:
-
-.. include:: /reference/forms/types/options/pattern.rst.inc
 
 .. include:: /reference/forms/types/options/post_max_size_message.rst.inc
 
 .. _reference-form-option-property-path:
 
 .. include:: /reference/forms/types/options/property_path.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. _reference-form-option-required:
 

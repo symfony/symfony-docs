@@ -14,9 +14,6 @@ component works solely with class definitions to provide information about the
 data type and visibility - including via getter or setter methods - of the properties
 within that class.
 
-.. versionadded:: 2.8
-    The PropertyInfo component was introduced in Symfony 2.8.
-
 .. _`components-property-information-installation`:
 
 Installation
@@ -239,9 +236,13 @@ provide whether properties are readable or writable as booleans.
     // Example Result: bool(false)
 
 The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor` looks
-for getter/isser/setter method in addition to whether or not a property is public
+for getter/isser/setter/hasser method in addition to whether or not a property is public
 to determine if it's accessible. This based on how the :doc:`PropertyAccess </components/property_access>`
 works.
+
+.. versionadded:: 4.1
+    The support of hasser methods in the ``ReflectionExtractor`` class was
+    introduced in Symfony 4.1.
 
 .. tip::
 
@@ -358,7 +359,7 @@ It can also provide return and scalar types for PHP 7+.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             property_info:
                 enabled: true
