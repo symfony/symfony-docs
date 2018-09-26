@@ -130,7 +130,7 @@ Finally, you need to update the code of the controller that handles the form::
                         $fileName
                     );
                 } catch (FileException $e) {
-                    // ... handle exception is something happens during file upload
+                    // ... handle exception if something happens during file upload
                 }
 
                 // updates the 'brochure' property to store the PDF file name
@@ -241,7 +241,7 @@ logic to a separate service::
             try {
                 $file->move($this->getTargetDir(), $fileName);
             } catch (FileException $e) {
-                // ... handle exception is something happens during file upload
+                // ... handle exception if something happens during file upload
             }
 
             return $fileName;
