@@ -227,8 +227,9 @@ This is referenced inside ``config/packages/doctrine.yaml``:
         dbal:
             url: '%env(DATABASE_URL)%'
 
-            # the resolve: prefix will resolve parameters *inside* the env variable
+            # The `resolve:` prefix will resolve parameters *inside* the env variable:
             # url: '%env(resolve:DATABASE_URL)%'
+            # This will not work if you have urlencoded values in your `DATABASE_URL`.
 
 For more details about environment variables, see :ref:`config-env-vars`.
 
