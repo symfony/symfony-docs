@@ -42,7 +42,7 @@ The database connection information is stored as an environment variable called
     # .env
 
     # customize this line!
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?charset=utf8mb4&serverVersion=5.7"
 
     # to use sqlite:
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
