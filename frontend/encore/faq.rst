@@ -3,12 +3,12 @@ FAQ and Common Issues
 
 .. _how-do-i-deploy-my-encore-assets:
 
-How do I deploy my Encore Assets?
+How Do I Deploy My Encore Assets?
 ---------------------------------
 
 There are two important things to remember when deploying your assets.
 
-**1) Compile assets for production**
+**1) Compile Assets for Production**
 
 Optimize your assets for production by running:
 
@@ -19,11 +19,12 @@ Optimize your assets for production by running:
 That will minify your assets and make other performance optimizations. Yay!
 
 But, what server should you run this command on? That depends on how you deploy.
-For example, you could execute this locally (or on a build server), and use rsync
-or something else to transfer the built files to your server. Or, you could put your
-files on your production server first (e.g. via a git pull) and then run this command
-on production (ideally, before traffic hits your code). In this case, you'll need
-to install Node.js on your production server.
+For example, you could execute this locally (or on a build server), and use
+`rsync`_ or something else to transfer the generated files to your production
+server. Or, you could put your files on your production server first (e.g. via
+``git pull``) and then run this command on production (ideally, before traffic
+hits your code). In this case, you'll need to install Node.js on your production
+server.
 
 **2) Only Deploy the Built Assets**
 
@@ -34,13 +35,13 @@ asset files, **unless** you plan on running ``encore production`` on your produc
 machine. Once your assets are built, these are the *only* thing that need to live
 on the production server.
 
-Do I need to Install Node.js on my Production Server?
+Do I Need to Install Node.js on My Production Server?
 -----------------------------------------------------
 
 No, unless you plan to build your production assets on your production server,
-which is not recommended. See `How do I deploy my Encore Assets?`_.
+which is not recommended. See `How Do I Deploy my Encore Assets?`_.
 
-What Files Should I commit to git? And which should I Ignore?
+What Files Should I Commit to git? And which Should I Ignore?
 -------------------------------------------------------------
 
 You should commit all of your files to git, except for the ``node_modules/`` directory
@@ -131,3 +132,5 @@ this via:
 
     // require a non-minified file whenever possible
     require('respond.js/dest/respond.src.js');
+
+.. _`rsync`: https://rsync.samba.org/
