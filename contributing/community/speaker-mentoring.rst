@@ -2,7 +2,7 @@ Speaker Mentoring
 =================
 
 The Symfony community benefits greatly when as many people as possible
-sharing their knowledge and experience with others. Every different
+share their knowledge and experience with others. Every different
 point of view adds to our collective understanding of how to best use
 and evolve the code, design patterns and architecture provided within
 the Symfony community. Because of this, we specifically want to hear
@@ -40,5 +40,5 @@ refine a proposal, to how to put together slide decks to practical
 tips for preparation and talk delivery.
 
 .. _`#speaker-mentoring`: https://symfony-devs.slack.com/messages/speaker-mentoring
-.. _`Symfony Slack`:      https://symfony.com/slack-invite
-.. _`public speaking`:    https://github.com/vmbrasseur/Public_Speaking
+.. _`Symfony Slack`: https://symfony.com/slack-invite
+.. _`public speaking`: https://github.com/vmbrasseur/Public_Speaking
