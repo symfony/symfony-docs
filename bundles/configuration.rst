@@ -47,15 +47,9 @@ as integration of other related components:
 Using the Bundle Extension
 --------------------------
 
-The basic idea is that instead of having the user override individual
-parameters, you let the user configure just a few, specifically created,
-options. As the bundle developer, you then parse through that configuration and
-load correct services and parameters inside an "Extension" class.
-
-As an example, imagine you are creating a social bundle, which provides
-integration with Twitter and such. To be able to reuse your bundle, you have to
-make the ``client_id`` and ``client_secret`` variables configurable. Your
-bundle configuration would look like:
+Imagine you are creating a new bundle - AcmeSocialBundle - which provides
+integration with Twitter, etc. To make your bundle easy to use, you want to
+allow users to configure it with some configuration that looks like this:
 
 .. configuration-block::
 
@@ -91,6 +85,17 @@ bundle configuration would look like:
             'client_id'     => 123,
             'client_secret' => 'your_secret',
         ));
+
+The basic idea is that instead of having the user override individual
+parameters, you let the user configure just a few, specifically created,
+options. As the bundle developer, you then parse through that configuration and
+load correct services and parameters inside an "Extension" class.
+
+.. note::
+
+    The root key of your bundle configuration (``acme_social`` in the previous
+    example) is automatically determined from your bundle name (it's the
+    `snake case`_ of the bundle name without the ``Bundle`` suffix ).
 
 .. seealso::
 
@@ -426,3 +431,4 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php
 .. _`XML namespace`: https://en.wikipedia.org/wiki/XML_namespace
 .. _`XML schema`: https://en.wikipedia.org/wiki/XML_schema
+.. _`snake case`: https://en.wikipedia.org/wiki/Snake_case

@@ -13,7 +13,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/dotenv
+    $ composer require --dev symfony/dotenv
 
 Alternatively, you can clone the `<https://github.com/symfony/dotenv>`_ repository.
 
