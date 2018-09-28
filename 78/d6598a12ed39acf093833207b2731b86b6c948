@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by you-ser at 2018-09-28T13:54:53Z
+
+Hi. This fix just for documentation.
+At this point [https://symfony.com/doc/current/messenger.html#transports](https://symfony.com/doc/current/messenger.html#transports)
+at first configuration block `# config/packages/messenger.yaml` (xml/php) variable name is correct,
+but at the second `# .env` it is not.
+
+MESSENGER_TRANSPORT_DSN variable is defined by Messenger Component.
+[https://github.com/symfony/recipes/blob/master/symfony/messenger/4.1/manifest.json](https://github.com/symfony/recipes/blob/master/symfony/messenger/4.1/manifest.json)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-28T13:57:40Z
+
+Great! Thanks for the explanation. I now understand it. The env var is only defined in the recipe and I was looking for in the source code of Symfony 😓
+
+Thanks a lot for fixing this issue ... and congrats on your first Symfony Docs contribution!
