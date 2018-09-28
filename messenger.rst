@@ -159,7 +159,7 @@ the messenger component, the following configuration should have been created:
 
     # .env
     ###> symfony/messenger ###
-    MESSENGER_DSN=amqp://guest:guest@localhost:5672/%2f/messages
+    MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages
     ###< symfony/messenger ###
 
 This is enough to allow you to route your message to the ``amqp`` transport.
