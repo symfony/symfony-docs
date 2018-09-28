@@ -78,6 +78,8 @@ of the day when the event starts:
             }
         }
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
 Options
 -------
 

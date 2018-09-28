@@ -150,6 +150,8 @@ The ``bioFile`` property is validated to guarantee that it is a real file.
 Its size and mime type are also validated because the appropriate options
 have been specified.
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
 Options
 -------
 

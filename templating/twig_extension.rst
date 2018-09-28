@@ -79,6 +79,8 @@ successfully registered:
 
 You can now start using your filter in any Twig template.
 
+.. _lazy-loaded-twig-extensions:
+
 Creating Lazy-Loaded Twig Extensions
 ------------------------------------
 
