@@ -101,6 +101,7 @@ Finally, you need to update the code of the controller that handles the form::
 
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\Request;
     use AppBundle\Entity\Product;
     use AppBundle\Form\ProductType;
@@ -218,6 +219,7 @@ logic to a separate service::
     // src/AppBundle/FileUploader.php
     namespace AppBundle;
 
+    use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
     class FileUploader
