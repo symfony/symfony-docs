@@ -303,7 +303,12 @@ In that case, you might want to override one or both of the ``showAction()`` and
 
     The :ref:`error page preview <testing-error-pages>` also works for
     your own controllers set up this way.
+    
+.. note::
 
+    The above only applies to websites created using symfony/website-skeleton and not symfony/skeleton. See
+    :doc:`Setup </setup>` for more details.
+    
 .. _use-kernel-exception-event:
 
 Working with the ``kernel.exception`` Event
