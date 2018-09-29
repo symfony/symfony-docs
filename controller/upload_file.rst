@@ -100,6 +100,7 @@ Finally, you need to update the code of the controller that handles the form::
     namespace AppBundle\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
     use AppBundle\Entity\Product;
@@ -123,11 +124,15 @@ Finally, you need to update the code of the controller that handles the form::
 
                 $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
 
-                // moves the file to the directory where brochures are stored
-                $file->move(
-                    $this->getParameter('brochures_directory'),
-                    $fileName
-                );
+                // Move the file to the directory where brochures are stored
+                try {
+                    $file->move(
+                        $this->getParameter('brochures_directory'),
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
 
                 // updates the 'brochure' property to store the PDF file name
                 // instead of its contents
@@ -214,6 +219,7 @@ logic to a separate service::
     // src/AppBundle/Service/FileUploader.php
     namespace AppBundle\Service;
 
+    use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
     class FileUploader
@@ -229,7 +235,11 @@ logic to a separate service::
         {
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
-            $file->move($this->getTargetDirectory(), $fileName);
+            try {
+                $file->move($this->getTargetDir(), $fileName);
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
 
             return $fileName;
         }

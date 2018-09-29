@@ -196,6 +196,12 @@ With this, the validator ``validate()`` method gets an object as its first argum
         }
     }
 
+.. tip::
+
+    The ``atPath()`` method defines the property which the validation error is
+    associated to. Use any :doc:`valid PropertyAccess syntax </components/property_access>`
+    to define that property.
+
 Note that a class constraint validator is applied to the class itself, and
 not to the property:
 
