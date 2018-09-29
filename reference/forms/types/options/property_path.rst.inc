@@ -3,13 +3,10 @@ property_path
 
 **type**: ``any`` **default**: ``the field's name``
 
-Fields display the values of the form's domain object properties. When the form
-is submitted, the submitted values are written back into the object.
-
-By default the object property matches the field name. The ``property_path``
-option lets you define the property that a field reads from and writes to.
-Use any :doc:`valid PropertyAccess syntax </components/property_access>` to
-define that property.
+By default form fields read from and write to the properties with the same names
+in the form's domain object. The ``property_path`` option lets you define which
+property a field reads from and writes to. The value of this option can be any
+:doc:`valid PropertyAccess syntax </components/property_access>`.
 
 If you wish the field to be ignored when reading or writing to the object
 you can set the ``property_path`` option to ``false``, but using
