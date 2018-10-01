@@ -531,6 +531,79 @@ processes::
     $anne = $normalizer->denormalize(array('first_name' => 'Anne'), 'Person');
     // Person object with firstName: 'Anne'
 
+Configure name conversion using metadata
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using this component inside a Symfony application and the class metadata factory is enabled
+as explained in the :ref:`Attributes Groups section <component-serializer-attributes-groups>`,
+this is already set up and you only need to provide the configuration. Otherwise::
+
+    // ...
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+
+    $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
+
+    $serializer = new Serializer(
+        array(new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter)),
+        array('json' => new JsonEncoder())
+    );
+
+Now configure your name conversion mapping. Consider an application that
+defines a ``Person`` entity with a ``firstName`` property:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        namespace App\Entity;
+
+        use Symfony\Component\Serializer\Annotation\SerializedName;
+
+        class Person
+        {
+            /**
+             * @SerializedName("firstname")
+             */
+            private $firstName;
+
+            public function __construct($firstName)
+            {
+                $this->firstName = $firstName;
+            }
+
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        App\Entity\Person:
+            attributes:
+                firstName:
+                    serialized_name: firstname
+
+    .. code-block:: xml
+
+        <?xml version="1.0" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                http://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="App\Entity\Person">
+                <attribute name="firstName" serialized-name="firstname" />
+            </class>
+        </serializer>
+
+Once configured, the serializer uses the mapping to convert pproperty names when serializing and deserializing::
+
+    $serialized = $serializer->serialize(new Person("Kévin"));
+    // {"firstname": "Kévin"}
+
 Serializing Boolean Attributes
 ------------------------------
 
