@@ -35,9 +35,9 @@ The bridge provides an interface of a factory called
 that builds objects implementing PSR-7 interfaces from HttpFoundation objects.
 It also provide a default implementation using Zend Diactoros internally.
 
-The following code snippet explain how to convert a :class:`Symfony\\Component\\HttpFoundation\\Request`
-to a ``Zend\\Diactoros\\ServerRequest`` class implementing the
-``Psr\\Http\\Message\\ServerRequestInterface`` interface::
+The following code snippet explains how to convert a :class:`Symfony\\Component\\HttpFoundation\\Request`
+to a ``Zend\Diactoros\ServerRequest`` class implementing the
+``Psr\Http\Message\ServerRequestInterface`` interface::
 
     use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
     use Symfony\Component\HttpFoundation\Request;
@@ -49,8 +49,8 @@ to a ``Zend\\Diactoros\\ServerRequest`` class implementing the
     $psrRequest = $psr7Factory->createRequest($symfonyRequest);
 
 And now from a :class:`Symfony\\Component\\HttpFoundation\\Response` to a
-``Zend\\Diactoros\\Response`` class implementing the
-``Psr\\Http\\Message\\ResponseInterface`` interface::
+``Zend\Diactoros\Response`` class implementing the
+``Psr\Http\Message\ResponseInterface`` interface::
 
     use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
     use Symfony\Component\HttpFoundation\Response;
@@ -68,7 +68,7 @@ On the other hand, the bridge provide a factory interface called
 that builds HttpFoundation objects from objects implementing PSR-7 interfaces.
 
 The next snippet explain how to convert an object implementing the
-``Psr\\Http\\Message\\ServerRequestInterface`` interface to a
+``Psr\Http\Message\ServerRequestInterface`` interface to a
 :class:`Symfony\\Component\\HttpFoundation\\Request` instance::
 
     use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
@@ -78,7 +78,7 @@ The next snippet explain how to convert an object implementing the
     $httpFoundationFactory = new HttpFoundationFactory();
     $symfonyRequest = $httpFoundationFactory->createRequest($psrRequest);
 
-From an object implementing the ``Psr\\Http\\Message\\ResponseInterface``
+From an object implementing the ``Psr\Http\Message\ResponseInterface``
 to a :class:`Symfony\\Component\\HttpFoundation\\Response` instance::
 
     use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
