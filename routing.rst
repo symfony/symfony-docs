@@ -155,7 +155,7 @@ Symfony provides a handy way to declare localized routes without duplication.
 
     .. code-block:: php-annotations
 
-        // src/Controller/BlogController.php
+        // src/Controller/CompanyController.php
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
