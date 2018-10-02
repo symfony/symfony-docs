@@ -16,13 +16,8 @@ First, make sure you have all the dependencies you need installed:
 
     $ composer require symfony/orm-pack symfony/form symfony/security-bundle symfony/validator
 
-.. tip::
-
-    The popular `FOSUserBundle`_ provides a registration form, reset password
-    form and other user management functionality.
-
 If you don't already have a ``User`` entity and a working login system,
-first start with :doc:`/security/entity_provider`.
+first start by following :doc:`/security`.
 
 Your ``User`` entity will probably at least have the following fields:
 
@@ -166,7 +161,7 @@ With some validation added, your class may look something like this::
 The :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` requires
 a few other methods and your ``security.yaml`` file needs to be configured
 properly to work with the ``User`` entity. For a more complete example, see
-the :ref:`Entity Provider <security-crete-user-entity>` article.
+the :doc:`Security Guide </security>`.
 
 .. _registration-password-max:
 
@@ -419,6 +414,12 @@ To do this, add a ``termsAccepted`` field to your form, but set its
 
 The :ref:`constraints <form-option-constraints>` option is also used, which allows
 us to add validation, even though there is no ``termsAccepted`` property on ``User``.
+
+Manually Authenticating after Success
+-------------------------------------
+
+If you're using Guard authentication, you can :ref:`automatically authenticate<guard-manual-auth>`
+after registration is successful.
 
 .. _`CVE-2013-5750`: https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle

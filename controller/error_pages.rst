@@ -122,6 +122,13 @@ store the HTTP status code and message respectively.
     for the standard HTML exception page or ``exception.json.twig`` for the JSON
     exception page.
 
+Security & 404 Pages
+--------------------
+
+Due to the order of how routing and security are loaded, security information will
+*not* be available on your 404 pages. This means that it will appear as if you're
+user is logged out on the 404 page (it will work while testing, but not on production).
+
 .. _testing-error-pages:
 
 Testing Error Pages during Development

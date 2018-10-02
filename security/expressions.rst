@@ -92,6 +92,34 @@ Additionally, you have access to a number of functions inside the expression:
     true if the user has actually logged in during this session (i.e. is
     full-fledged).
 
+TODO - moved from main security chapter
+---
+
+.. _security-template-expression:
+
+You can also use expressions inside your templates:
+
+.. configuration-block::
+
+    .. code-block:: html+jinja
+
+        {% if is_granted(expression(
+            '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
+        )) %}
+            <a href="...">Delete</a>
+        {% endif %}
+
+    .. code-block:: html+php
+
+        <?php if ($view['security']->isGranted(new Expression(
+            '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
+        ))): ?>
+            <a href="...">Delete</a>
+        <?php endif; ?>
+
+For more details on expressions and security, see :doc:`/security/expressions`.
+
+
 Learn more
 ----------
 

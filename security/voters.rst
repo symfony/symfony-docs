@@ -207,14 +207,14 @@ Checking for Roles inside a Voter
 
 What if you want to call ``isGranted()`` from *inside* your voter - e.g. you want
 to see if the current user has ``ROLE_SUPER_ADMIN``. That's possible by injecting
-the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManager`
+the :class:`Symfony\\Component\\Security\\Core\\Security`
 into your voter. You can use this to, for example, *always* allow access to a user
 with ``ROLE_SUPER_ADMIN``::
 
     // src/Security/PostVoter.php
 
     // ...
-    use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+    use Symfony\Component\Security\Core\Security;
 
     class PostVoter extends Voter
     {
@@ -222,9 +222,9 @@ with ``ROLE_SUPER_ADMIN``::
 
         private $decisionManager;
 
-        public function __construct(AccessDecisionManagerInterface $decisionManager)
+        public function __construct(Security $security)
         {
-            $this->decisionManager = $decisionManager;
+            $this->security = $security;
         }
 
         protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -232,7 +232,7 @@ with ``ROLE_SUPER_ADMIN``::
             // ...
 
             // ROLE_SUPER_ADMIN can do anything! The power!
-            if ($this->decisionManager->decide($token, array('ROLE_SUPER_ADMIN'))) {
+            if ($this->securit->isGranted('ROLE_SUPER_ADMIN')) {
                 return true;
             }
 
@@ -241,18 +241,8 @@ with ``ROLE_SUPER_ADMIN``::
     }
 
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-you're done! Symfony will automatically pass the ``security.access.decision_manager``
+you're done! Symfony will automatically pass the ``security.helper``
 service when instantiating your voter (thanks to autowiring).
-
-Calling ``decide()`` on the ``AccessDecisionManager`` is essentially the same as
-calling ``isGranted()`` from a controller or other places
-(it's just a little lower-level, which is necessary for a voter).
-
-.. note::
-
-    If you need to check access in any non-voter service, use the ``security.authorization_checker``
-    service (i.e. type-hint ``Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface``)
-    instead of the ``security.access.decision_manager`` service shown here.
 
 .. _security-voters-change-strategy:
 

@@ -1,8 +1,8 @@
 .. index::
    single: Security; Restrict Security Firewalls to a Request
 
-How to Restrict Firewalls to a Specific Request
-===============================================
+How to Restrict Firewalls by Pattern, Host or HTTP Method
+=========================================================
 
 When using the Security component, you can create firewalls that match certain request options.
 In most cases, matching against the URL is sufficient, but in special cases you can further

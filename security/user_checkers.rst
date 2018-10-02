@@ -114,8 +114,3 @@ is the service id of your user checker:
                 ),
             ),
         ));
-
-.. tip::
-
-    It's also possible to have a different user checker for each firewall. Use
-    the ``user_checker`` option under each firewall to choose the one you want.

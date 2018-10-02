@@ -1,167 +1,71 @@
 .. index::
     single: Security; Custom Authentication
 
-How to Create a Custom Authentication System with Guard
-=======================================================
+Custom Authentication System with Guard (API Token Example)
+===========================================================
 
 Whether you need to build a traditional login form, an API token authentication system
 or you need to integrate with some proprietary single-sign-on system, the Guard
 component can make it easy... and fun!
 
-In this example, you'll build an API token authentication system and learn how
-to work with Guard.
+Guard authentication can easily be used to
 
-Create a User and a User Provider
----------------------------------
+* :doc:`Build a Login Form </security/form_login_setup>`,
+* Create an API token authentication system (done on this page!)
+* `Social Authentication`_ (or use `HWIOAuthBundle`_ for a robust, but non-Guard solution)
 
-No matter how you authenticate, you need to create a User class that implements ``UserInterface``
-and configure a :doc:`user provider </security/custom_provider>`. In this
-example, users are stored in the database via Doctrine, and each user has an ``apiKey``
-property they use to access their account via the API::
+In this example, we'll build an API token authentication system so we can learn
+more about Guard in detail.
+
+Step 0) Prepare your User Class
+-------------------------------
+
+Suppose you want to build an API where your clients will send an ``X-AUTH-TOKEN`` header
+on each request with their API token. Your job is to read this and find the associated
+user (if any).
+
+First, make sure you've followed the main :doc:`Security Guide </security>` to
+create your ``User`` class. Then, to keep things simple, add an ``apiToken`` property
+directly to your ``User`` class (the ``make:entity`` command is a good way to do this):
+
+.. code-block:: diff
 
     // src/Entity/User.php
-    namespace App\Entity;
+    // ...
 
-    use Symfony\Component\Security\Core\User\UserInterface;
-    use Doctrine\ORM\Mapping as ORM;
-
-    /**
-     * @ORM\Entity
-     * @ORM\Table(name="`user`")
-     */
     class User implements UserInterface
     {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue(strategy="AUTO")
-         * @ORM\Column(type="integer")
-         */
-        private $id;
+        // ...
 
-        /**
-         * @ORM\Column(type="string", unique=true)
-         */
-        private $username;
+    +     /**
+    +      * @ORM\Column(type="string", unique=true)
+    +      */
+    +     private $apiToken;
 
-        /**
-         * @ORM\Column(type="string", unique=true)
-         */
-        private $apiKey;
-
-        public function getUsername()
-        {
-            return $this->username;
-        }
-
-        public function getRoles()
-        {
-            return array('ROLE_USER');
-        }
-
-        public function getPassword()
-        {
-        }
-        public function getSalt()
-        {
-        }
-        public function eraseCredentials()
-        {
-        }
-
-        // more getters/setters
+        // the getter and setter methods
     }
 
-.. caution::
+Don't forget to generate and execute the migration:
 
-    In the example above, the table name is ``user``. This is a reserved SQL
-    keyword and `must be quoted with backticks`_ in Doctrine to avoid errors.
-    You might also change the table name (e.g. with ``app_users``) to solve
-    this issue.
+.. code-block:: terminal
 
-.. tip::
-
-    This User doesn't have a password, but you can add a ``password`` property if
-    you also want to allow this user to login with a password (e.g. via a login form).
-
-Your ``User`` class doesn't need to be stored in Doctrine: do whatever you need.
-Next, make sure you've configured a "user provider" for the user:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            # ...
-
-            providers:
-                your_db_provider:
-                    entity:
-                        class: App\Entity\User
-                        property: apiKey
-
-            # ...
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <provider name="your_db_provider">
-                    <entity class="App\Entity\User" />
-                </provider>
-
-                <!-- ... -->
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        use App\Entity\User;
-
-        $container->loadFromExtension('security', array(
-            // ...
-
-            'providers' => array(
-                'your_db_provider' => array(
-                    'entity' => array(
-                        'class' => User::class,
-                    ),
-                ),
-            ),
-
-            // ...
-        ));
-
-That's it! Need more information about this step, see:
-
-* :doc:`/security/entity_provider`
-* :doc:`/security/custom_provider`
+    $ php bin/console make:migration
+    $ php bin/console doctrine:migrations:migrate
 
 Step 1) Create the Authenticator Class
 --------------------------------------
 
-Suppose you have an API where your clients will send an ``X-AUTH-TOKEN`` header
-on each request with their API token. Your job is to read this and find the associated
-user (if any).
-
 To create a custom authentication system, just create a class and make it implement
 :class:`Symfony\\Component\\Security\\Guard\\AuthenticatorInterface`. Or, extend
 the simpler :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`.
+
 This requires you to implement several methods::
 
     // src/Security/TokenAuthenticator.php
     namespace App\Security;
 
+    use App\Entity\User;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Response;
@@ -173,6 +77,13 @@ This requires you to implement several methods::
 
     class TokenAuthenticator extends AbstractGuardAuthenticator
     {
+        private $em;
+
+        public function __construct(EntityManagerInterface $em)
+        {
+            $this->em = $em;
+        }
+
         /**
          * Called on every request to decide if this authenticator should be
          * used for the request. Returning false will cause this authenticator
@@ -196,14 +107,15 @@ This requires you to implement several methods::
 
         public function getUser($credentials, UserProviderInterface $userProvider)
         {
-            $apiKey = $credentials['token'];
+            $apiToken = $credentials['token'];
 
-            if (null === $apiKey) {
+            if (null === $apiToken) {
                 return;
             }
 
             // if a User object, checkCredentials() is called
-            return $userProvider->loadUserByUsername($apiKey);
+            return $this->em->getRepository(User::class)
+                ->findOneBy(['apiToken' => $apiToken]);
         }
 
         public function checkCredentials($credentials, UserInterface $user)
@@ -252,6 +164,7 @@ This requires you to implement several methods::
         }
     }
 
+
 Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods<guard-auth-methods>`.
 
 Step 2) Configure the Authenticator
@@ -285,7 +198,6 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
                     # if you want, disable storing the user in the session
                     # stateless: true
 
-                    # maybe other things, like form_login, remember_me, etc
                     # ...
 
     .. code-block:: xml
@@ -476,58 +388,37 @@ egg to return a custom message if someone tries this:
     curl -H "X-AUTH-TOKEN: ILuvAPIs" http://localhost:8000/
     # {"message":"ILuvAPIs is not a real API key: it's just a silly phrase"}
 
-Building a Login Form
----------------------
+.. _guard-manual-auth:
 
-If you're building a login form, use the :class:`Symfony\\Component\\Security\\Guard\\Authenticator\\AbstractFormLoginAuthenticator`
-as your base class - it implements a few methods for you. Then, fill in the other
-methods just like with the ``TokenAuthenticator``. Outside of Guard, you are still
-responsible for creating a route, controller and template for your login form.
+Manually Authenticating a User
+------------------------------
 
-.. _guard-csrf-protection:
+Sometimes you might want to manually authenticate a user - like after the user
+completes registration. To do that, use your authenticator and a service called
+``GuardAuthenticatorHandler``::
 
-Adding CSRF Protection
-----------------------
-
-If you're using a Guard authenticator to build a login form and want to add CSRF
-protection, no problem!
-
-First, check that :ref:`the csrf_protection option <reference-framework-csrf-protection>`
-is enabled and :ref:`add the _csrf_token field to your login form <csrf-login-template>`.
-
-Then, type-hint ``CsrfTokenManagerInterface`` in your ``__construct()`` method
-(or manually configure the ``Symfony\Component\Security\Csrf\CsrfTokenManagerInterface``
-service to be passed) and add the following logic::
-
-    // src/Security/ExampleFormAuthenticator.php
+    // src/Controller/RegistrationController.php
     // ...
 
-    use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-    use Symfony\Component\Security\Csrf\CsrfToken;
-    use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
-    use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+    use App\Security\LoginFormAuthenticator;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
-    class ExampleFormAuthenticator extends AbstractFormLoginAuthenticator
+    class RegistrationController extends AbstractController
     {
-        private $csrfTokenManager;
-
-        public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+        public function register(LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler, Request $reques)
         {
-            $this->csrfTokenManager = $csrfTokenManager;
+            // ...
+            // after validating the user and saving them to the database
+
+            // authenticate the user and use onAuthenticationSuccess on the authenticator
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,          // the User object you just created
+                $request,
+                $authenticator, // authenticator whose onAuthenticationSuccess you want to use
+                'main'          // the name if your firewall in security.yaml
+            );
         }
-
-        public function getCredentials(Request $request)
-        {
-            $csrfToken = $request->request->get('_csrf_token');
-
-            if (false === $this->csrfTokenManager->isTokenValid(new CsrfToken('authenticate', $csrfToken))) {
-                throw new InvalidCsrfTokenException('Invalid CSRF token.');
-            }
-
-            // ... all your normal logic
-        }
-
-        // ...
     }
 
 Avoid Authenticating the Browser on Every Request
@@ -622,3 +513,5 @@ Frequently Asked Questions
     authenticator(s) (just like in this article).
 
 .. _`must be quoted with backticks`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words
+.. _`Social Authentication`: https://github.com/knpuniversity/oauth2-client-bundle#authenticating-with-guard
+.. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle

@@ -4,17 +4,13 @@
 How to Create a custom Authentication Provider
 ==============================================
 
-.. tip::
+.. caution::
 
-    Creating a custom authentication system is hard, and this article will walk
-    you through that process. But depending on your needs, you may be able
-    to solve your problem in a simpler manner, or via a community bundle:
-
-    * :doc:`/security/guard_authentication`
-    * :doc:`/security/custom_password_authenticator`
-    * :doc:`/security/api_key_authentication`
-    * To authenticate via OAuth using a third-party service such as Google, Facebook
-      or Twitter, try using the `HWIOAuthBundle`_ community bundle.
+    Creating a custom authentication system is hard, and almost definitely
+    **not** needed. Instead, see :doc:`/security/guard_authentication` for a
+    simple way to create an authentication system you will love. Do **not**
+    keep reading unless you want to learn the lowest level details of
+    authentication.
 
 If you have read the article on :doc:`/security`, you understand the
 distinction Symfony makes between authentication and authorization in the
@@ -286,13 +282,6 @@ the ``PasswordDigest`` header value matches with the user's password::
     method, which tells the authentication manager whether or not to use this
     provider for the given token. In the case of multiple providers, the
     authentication manager will then move to the next provider in the list.
-
-.. note::
-
-    While the :phpfunction:`hash_equals` function was introduced in PHP 5.6,
-    you are safe to use it with any PHP version in your Symfony application. In
-    PHP versions prior to 5.6, `Symfony Polyfill`_ (which is included in
-    Symfony) will define the function for you.
 
 The Factory
 -----------
@@ -646,8 +635,7 @@ set to any desirable value per firewall.
 The rest is up to you! Any relevant configuration items can be defined
 in the factory and consumed or passed to the other classes in the container.
 
-.. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
+
 .. _`WSSE`: http://www.xml.com/pub/a/2003/12/17/dive.html
 .. _`nonce`: https://en.wikipedia.org/wiki/Cryptographic_nonce
 .. _`timing attacks`: https://en.wikipedia.org/wiki/Timing_attack
-.. _`Symfony Polyfill`: https://github.com/symfony/polyfill

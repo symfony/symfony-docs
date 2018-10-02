@@ -1,23 +1,88 @@
-.. index::
-   single: Security; Pre authenticated providers
+Built-in Authentication Providers
+=================================
 
-Using pre Authenticated Security Firewalls
-==========================================
+If you need to add authentication to your app, we recommend using
+:doc:`Guard authentication </security/guard_authentication>` because it gives you
+full control over the process.
 
-A lot of authentication modules are already provided by some web servers,
-including Apache. These modules generally set some environment variables
-that can be used to determine which user is accessing your application. Out of the
-box, Symfony supports most authentication mechanisms.
-These requests are called *pre authenticated* requests because the user is already
-authenticated when reaching your application.
+But, Symfony also offers a number of built-in authentication providers: systems
+that are easier to implement, but harder to customize. If your authentication
+use-case matches one of these exactly, they're a great option:
 
-.. caution::
+.. toctree::
+    :hidden:
 
-    :doc:`User impersonation </security/impersonating_user>` is not
-    compatible with pre-authenticated firewalls. The reason is that
-    impersonation requires the authentication state to be maintained server-side,
-    but pre-authenticated information (``SSL_CLIENT_S_DN_Email``, ``REMOTE_USER``
-    or other) is sent in each request.
+    form_login
+    json_login_setup
+
+* :doc:`form_login </security/form_login>`
+* :ref:`http_basic <security-http_basic>`
+* :doc:`LDAP via HTTP Basic or Form Login </security/ldap>`
+* :doc:`json_login </security/json_login_setup>`
+* :ref:`X.509 Client Certificate Authentication (x509) <security-x509>`
+* :ref:`REMOTE_USER Based Authentication (remote_user) <security-remote_user>`
+* ``simple_form``
+* ``simple_pre_auth``
+
+.. _security-http_basic:
+
+HTTP Basic Authentication
+-------------------------
+
+To support HTTP Basic authentication, add the ``http_basic`` key to your firewall:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    http_basic:
+                        realm: Secured Area
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <http-basic realm="Secured Area" />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', array(
+            // ...
+
+            'firewalls' => array(
+                'main' => array(
+                    'http_basic'    => array(
+                        'realm' => 'Secured Area',
+                    ),
+                ),
+            ),
+        ));
+
+That's it! Symfony will now be listening for any HTTP basic authentication data.
+To load user information, it will use your configured :doc:`user provider </security/user_provider>`.
+
+.. _security-x509:
 
 X.509 Client Certificate Authentication
 ---------------------------------------
@@ -37,8 +102,8 @@ Enable the x509 authentication for a particular firewall in the security configu
             # ...
 
             firewalls:
-                secured_area:
-                    pattern: ^/
+                main:
+                    # ...
                     x509:
                         provider: your_user_provider
 
@@ -55,7 +120,7 @@ Enable the x509 authentication for a particular firewall in the security configu
             <config>
                 <!-- ... -->
 
-                <firewall name="secured_area" pattern="^/">
+                <firewall name="main">
                     <x509 provider="your_user_provider" />
                 </firewall>
             </config>
@@ -68,8 +133,7 @@ Enable the x509 authentication for a particular firewall in the security configu
             // ...
 
             'firewalls' => array(
-                'secured_area' => array(
-                    'pattern' => '^/',
+                'main' => array(
                     'x509'    => array(
                         'provider' => 'your_user_provider',
                     ),
@@ -94,8 +158,9 @@ in the x509 firewall configuration respectively.
     object of your choice. For more information on creating or configuring a user
     provider, see:
 
-    * :doc:`/security/custom_provider`
-    * :doc:`/security/entity_provider`
+    * :doc:`/security/user_provider`
+
+.. _security-remote_user:
 
 REMOTE_USER Based Authentication
 --------------------------------
@@ -114,8 +179,8 @@ corresponding firewall in your security configuration:
         # config/packages/security.yaml
         security:
             firewalls:
-                secured_area:
-                    pattern: ^/
+                main:
+                    # ...
                     remote_user:
                         provider: your_user_provider
 
@@ -127,7 +192,7 @@ corresponding firewall in your security configuration:
             xmlns:srv="http://symfony.com/schema/dic/services">
 
             <config>
-                <firewall name="secured_area" pattern="^/">
+                <firewall name="main">
                     <remote-user provider="your_user_provider"/>
                 </firewall>
             </config>
@@ -138,8 +203,7 @@ corresponding firewall in your security configuration:
         // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'secured_area' => array(
-                    'pattern'     => '^/',
+                'main' => array(
                     'remote_user' => array(
                         'provider' => 'your_user_provider',
                     ),
@@ -156,4 +220,3 @@ key in the ``remote_user`` firewall configuration.
     Just like for X509 authentication, you will need to configure a "user provider".
     See :ref:`the previous note <security-pre-authenticated-user-provider-note>`
     for more information.
-

@@ -228,6 +228,8 @@ This command executes all migration files that have not already been run against
 your database. You should run this command on production when you deploy to keep
 your production database up-to-date.
 
+.. _doctrine-add-more-fields:
+
 Migrations & Adding more Fields
 -------------------------------
 
@@ -715,12 +717,58 @@ relationships.
 
 For info, see :doc:`/doctrine/associations`.
 
+.. _doctrine-fixtures:
+
 Dummy Data Fixtures
 -------------------
 
 Doctrine provides a library that allows you to programmatically load testing
-data into your project (i.e. "fixture data"). For information, see
-the "`DoctrineFixturesBundle`_" documentation.
+data into your project (i.e. "fixture data"). Install it with:
+
+.. code-block:: terminal
+
+    $ composer require doctrine/doctrine-fixtures-bundle --dev
+
+Then, use the ``make:fixtures`` command to generate an empty fixture class:
+
+.. code-block:: terminal
+
+    $ php bin/console make:fixtures
+
+    The class name of the fixtures to create (e.g. AppFixtures):
+    > ProductFixture
+
+Customize the new class to load ``Product`` objects into Doctrine::
+
+    // src/DataFixtures/ProductFixture.php
+    namespace App\DataFixtures;
+
+    use Doctrine\Bundle\FixturesBundle\Fixture;
+    use Doctrine\Common\Persistence\ObjectManager;
+
+    class ProductFixture extends Fixture
+    {
+        public function load(ObjectManager $manager)
+        {
+            $product = new Product();
+            $product->setName('Priceless widget!');
+            $product->setPrice(14.50);
+            $product->setDescription('Ok, I guess it *does* have a price');
+            $manager->persist($product);
+
+            // add more products
+
+            $manager->flush();
+        }
+    }
+
+Empty the database and reload *all* the fixture classes with:
+
+.. code-block:: terminal
+
+    $ php bin/console doctrine:fixtures:load
+
+For information, see the "`DoctrineFixturesBundle`_" documentation.
 
 Learn more
 ----------

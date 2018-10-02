@@ -5,16 +5,14 @@ How to Impersonate a User
 =========================
 
 Sometimes, it's useful to be able to switch from one user to another without
-having to log out and log in again (for instance when you are debugging or trying
-to understand a bug a user sees that you can't reproduce).
+having to log out and log in again (for instance when you are debugging something
+a user sees that you can't reproduce).
 
 .. caution::
 
-    User impersonation is not compatible with
-    :doc:`pre authenticated firewalls </security/pre_authenticated>`. The
-    reason is that impersonation requires the authentication state to be maintained
-    server-side, but pre-authenticated information (``SSL_CLIENT_S_DN_Email``,
-    ``REMOTE_USER`` or other) is sent in each request.
+    User impersonation is not compatible with some authentication mechanisms
+    (e.g. ``REMOTE_USER``) where the authentication information is expected to be
+    sent on each request.
 
 Impersonating the user can be easily done by activating the ``switch_user``
 firewall listener:
@@ -67,7 +65,8 @@ firewall listener:
         ));
 
 To switch to another user, just add a query string with the ``_switch_user``
-parameter and the username as the value to the current URL:
+parameter and the username (or whatever field our user provider uses to load users)
+as the value to the current URL:
 
 .. code-block:: text
 
@@ -79,6 +78,13 @@ To switch back to the original user, use the special ``_exit`` username:
 
     http://example.com/somewhere?_switch_user=_exit
 
+This feature is only available to users with a special role called ``ROLE_ALLOWED_TO_SWITCH``.
+Using :ref:`role_hierarchy<security-role-hierarchy>` is a great way to give this
+role to the users that need it.
+
+Knowing When Impersonation Is Active
+------------------------------------
+
 During impersonation, the user is provided with a special role called
 ``ROLE_PREVIOUS_ADMIN``. In a template, for instance, this role can be used
 to show a link to exit impersonation:
@@ -88,6 +94,9 @@ to show a link to exit impersonation:
     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
         <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
     {% endif %}
+
+Finding the Original User
+-------------------------
 
 In some cases you may need to get the object that represents the impersonator
 user rather than the impersonated user. Use the following snippet to iterate
@@ -120,6 +129,9 @@ over the user's roles until you find one that is a ``SwitchUserRole`` object::
             }
         }
     }
+
+Controlling the Query Parameter
+-------------------------------
 
 Of course, this feature needs to be made available to a small group of users.
 By default, access is restricted to users having the ``ROLE_ALLOWED_TO_SWITCH``
