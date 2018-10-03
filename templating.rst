@@ -660,8 +660,9 @@ being used and generating the correct paths accordingly.
 
     The ``asset()`` function supports various cache busting techniques via the
     :ref:`version <reference-framework-assets-version>`,
-    :ref:`version_format <reference-assets-version-format>`, and
-    :ref:`json_manifest_path <reference-assets-json-manifest-path>` configuration options.
+    :ref:`version_format <reference-assets-version-format>`,
+    :ref:`json_manifest_path <reference-assets-json-manifest-path>` and
+    :ref:`package_json_path <reference-assets-package-json-path>` configuration options.
 
 If you need absolute URLs for assets, use the ``absolute_url()`` Twig function
 as follows:

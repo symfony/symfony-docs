@@ -40,6 +40,7 @@ Configuration
   * `base_path`_
   * `base_urls`_
   * `json_manifest_path`_
+  * `package_json_path`_
   * `packages`_
   * `version_format`_
   * `version_strategy`_
@@ -1116,6 +1117,7 @@ Each package can configure the following options:
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
 * :ref:`json_manifest_path <reference-assets-json-manifest-path>`
+* :ref:`package_json_path <reference-assets-package-json-path>`
 
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
@@ -1184,7 +1186,8 @@ option.
 
 .. note::
 
-    This parameter cannot be set at the same time as ``version_strategy`` or ``json_manifest_path``.
+    This parameter cannot be set at the same time as
+    ``version_strategy``, ``json_manifest_path`` or ``package_json_path``.
 
 .. tip::
 
@@ -1317,7 +1320,7 @@ individually for each asset package:
 
 .. note::
 
-    This parameter cannot be set at the same time as ``version`` or ``json_manifest_path``.
+    This parameter cannot be set at the same time as ``version``, ``json_manifest_path`` or ``package_json_path``.
 
 .. _reference-assets-json-manifest-path:
 .. _reference-templating-json-manifest-path:
@@ -1414,6 +1417,100 @@ package:
 
     If you request an asset that is *not found* in the ``manifest.json`` file, the original -
     *unmodified* - asset path will be returned.
+
+
+package_json_path
+..................
+
+**type**: ``string`` **default**: ``null``
+
+The file path to a ``package.json`` file containing a json with a version number
+which is increased by using ``npm version patch --git-tag-version false`` at the
+build time of the assets.
+
+This option can be set globally for all assets and individually for each asset
+package:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+       framework:
+            assets:
+                # this version is applied to every asset (including packages)
+                package_json_path: "%kernel.project_dir%/package.json"
+                packages:
+                    foo_package:
+                        # this package uses its own version (the default file is ignored)
+                        package_json_path: "%kernel.project_dir%/assets/different/package.json"
+                    bar_package:
+                        # this package uses the global version (the default file is used)
+                        base_path: '/images'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- this version is applied to every asset (including packages) -->
+                <framework:assets package-json-path="%kernel.project_dir%/package.json">
+                    <!-- this package uses its own version (the default file is ignored) -->
+                    <framework:package
+                        name="foo_package"
+                        package-json-path="%kernel.project_dir%/assets/different/package.json" />
+                    <!-- this package uses the global version (the default file is used) -->
+                    <framework:package
+                        name="bar_package"
+                        base-path="/images" />
+                </framework:assets>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', array(
+            'assets' => array(
+                // this version is applied to every asset (including packages)
+                'package_json_path' => '%kernel.project_dir%/package.json',
+                'packages' => array(
+                    'foo_package' => array(
+                        // this package uses its own version (the default file is ignored)
+                        'package_json_path' => '%kernel.project_dir%/assets/different/package.json',
+                    ),
+                    'bar_package' => array(
+                        // this package uses the global version (the default file is used)
+                        'base_path' => '/images',
+                    ),
+                ),
+            ),
+        ));
+
+Example ``package.json`` file:
+
+.. code-block:: js
+
+    {
+        "version": "1.2.3",
+        "scripts": {
+            "build": "npm run build:assets && npm run version:patch",
+            "build:assets": "...",
+            "version:patch": "npm version patch --git-tag-version false"
+        }
+    }
+
+.. note::
+
+    This parameter cannot be set at the same time as ``version`` or ``version_strategy``.
+    Additionally, this option cannot be nullified at the package scope if a global package.json
+    file is specified.
 
 templating
 ~~~~~~~~~~

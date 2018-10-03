@@ -18,8 +18,9 @@ own version strategy.
 
     Symfony provides various cache busting implementations via the
     :ref:`version <reference-framework-assets-version>`,
-    :ref:`version_format <reference-assets-version-format>`, and
-    :ref:`json_manifest_path <reference-assets-json-manifest-path>`
+    :ref:`version_format <reference-assets-version-format>`,
+    :ref:`json_manifest_path <reference-assets-json-manifest-path>` and
+    :ref:`package_json_path <reference-assets-package-json-path>`
     configuration options.
 
 Creating your Own Asset Version Strategy
