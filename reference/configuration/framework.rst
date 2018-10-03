@@ -2025,7 +2025,9 @@ adapter
 **type**: ``string`` **default**: ``cache.app``
 
 The service name of the adapter to use. You can specify one of the default
-services or use your own implementation.
+services that follow the pattern ``cache.adapter.[type]``. Alternatively you
+can specify another cache pool as base, which will make this pool inherit the
+settings from the base pool as defaults.
 
 .. note::
 
