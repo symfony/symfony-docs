@@ -1982,12 +1982,11 @@ To configure a Redis cache pool with a default lifetime of 1 hour, do the follow
 
             <framework:config>
                 <framework:cache>
-                    <framework:pools>
-                        <cache.mycache
-                            adapter="cache.adapter.redis"
-                            default_lifetime=3600
-                        />
-                    </framework:pools>
+                    <framework:pool
+                        name="cache.mycache"
+                        adapter="cache.adapter.redis"
+                        default-lifetime=3600
+                    />
                 </framework:cache>
                 <!-- ... -->
             </framework:config>
@@ -2025,7 +2024,8 @@ adapter
 
 **type**: ``string`` **default**: ``cache.app``
 
-The name of the adapter to use. You could also use your own implementation.
+The service name of the adapter to use. You can specify one of the default
+services or use your own implementation.
 
 .. note::
 
@@ -2061,7 +2061,10 @@ provider
 
 **type**: ``string``
 
-The service name to use as provider when the specified adapter needs one.
+Overwrite the default service name or DSN respectively, if you do not want to
+use what is configured as ``default_X_provider`` under ``cache``. See the
+description of the default provider setting above for the type of adapter
+you use for information on how to specify the provider.
 
 clearer
 """""""
