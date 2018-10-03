@@ -199,12 +199,14 @@ Structure
 Naming Conventions
 ~~~~~~~~~~~~~~~~~~
 
-* Use camelCase, not underscores, for variable, function and method
-  names, arguments;
+* Use `camelCase`_ for PHP variables, function and method names, arguments
+  (e.g. ``$acceptableContentTypes``, ``hasSession()``);
 
-* Use underscores for configuration options and parameters;
+* Use `snake_case`_ for configuration parameters and Twig template variables
+  (e.g. ``framework.csrf_protection``, ``http_status_code``);
 
-* Use namespaces for all classes;
+* Use namespaces for all PHP classes and `UpperCamelCase`_ for their names (e.g.
+  ``ConsoleLogger``);
 
 * Prefix all abstract classes with ``Abstract`` except PHPUnit ``*TestCase``.
   Please note some early Symfony classes do not follow this convention and
@@ -217,7 +219,9 @@ Naming Conventions
 
 * Suffix exceptions with ``Exception``;
 
-* Use alphanumeric characters and underscores for file names;
+* Use UpperCamelCase for naming PHP files (e.g. ``EnvVarProcessor.php``) and
+  snake case for naming Twig templates and web assets (``section_layout.html.twig``,
+  ``index.scss``);
 
 * For type-hinting in PHPDocs and casting, use ``bool`` (instead of ``boolean``
   or ``Boolean``), ``int`` (instead of ``integer``), ``float`` (instead of
@@ -280,3 +284,6 @@ License
 .. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
 .. _`identical comparison`: https://php.net/manual/en/language.operators.comparison.php
 .. _`Yoda conditions`: https://en.wikipedia.org/wiki/Yoda_conditions
+.. _`camelCase`: https://en.wikipedia.org/wiki/Camel_case
+.. _`UpperCamelCase`: https://en.wikipedia.org/wiki/Camel_case
+.. _`snake_case`: https://en.wikipedia.org/wiki/Snake_case

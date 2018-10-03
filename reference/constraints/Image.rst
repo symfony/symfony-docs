@@ -312,7 +312,7 @@ allowSquare
 **type**: ``Boolean`` **default**: ``true``
 
 If this option is false, the image cannot be a square. If you want to force
-a square image, then set leave this option as its default ``true`` value
+a square image, then leave this option as its default ``true`` value
 and set `allowLandscape`_ and `allowPortrait`_ both to ``false``.
 
 allowLandscape
