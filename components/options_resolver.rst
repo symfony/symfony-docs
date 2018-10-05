@@ -660,11 +660,17 @@ This closure is useful to only deprecate some of the allowed types or values of
 the option::
 
     $resolver
+        ->setDefault('encryption', null)
         ->setDefault('port', null)
         ->setAllowedTypes('port', array('null', 'int'))
-        ->setDeprecated('port', function ($value) {
+        ->setDeprecated('port', function (Options $options, $value) {
             if (null === $value) {
                 return 'Passing "null" to option "port" is deprecated, pass an integer instead.';
+            }
+
+            // deprecation may also depend on another option
+            if ('ssl' === $options['encryption'] && 456 !== $value) {
+                return 'Passing a different port than "456" when the "encryption" option is set to "ssl" is deprecated.';
             }
 
             return '';
