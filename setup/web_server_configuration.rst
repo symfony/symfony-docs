@@ -341,3 +341,27 @@ For advanced Nginx configuration options, read the official `Nginx documentation
 .. _`Apache documentation`: https://httpd.apache.org/docs/
 .. _`FastCgiExternalServer`: https://docs.oracle.com/cd/B31017_01/web.1013/q20204/mod_fastcgi.html#FastCgiExternalServer
 .. _`Nginx documentation`: https://www.nginx.com/resources/wiki/start/topics/recipes/symfony/
+
+
+ENV Variables
+-------------
+
+Required ENV variables (e.g. APP_ENV) and any custom application variables need to be setup to work in your web server
+as well as on the command line. These environments must be considered seperetly and in some cases need to be configured
+twice.
+
+Unix-like Systems
+~~~~~~~~~~~~~~~~~
+
+In many Unix-like distributions command line environmental variables can be configured for all users in an `/etc/environment`
+file. If you are in complete control of your server and it's users this is a good place to put your configuration data as it
+will then be accessible to every user.
+
+Apache
+~~~~~~
+
+When apache is run as a foreground process (such as in a docker container) it will make any system wide ENV variables
+available to PHP such as those listed in `/etc/environment`. However, on most systems Apache is started from a separate
+init script which does not have access to system wide environment configuration.  On those system it is necessary to use
+`SetEnv APP_ENV prod` as noted above in addition to any system wide configuration.
+
