@@ -57,6 +57,10 @@ are configured for you:
 #. ``SendMessageMiddleware`` (enables asynchronous processing)
 #. ``HandleMessageMiddleware`` (calls the registered handle)
 
+Also, some others middleware are available but not configured by default :
+
+#. ``EnforceNullResultMiddleware`` (enforce no result is returned by the message bus, it may be useful in the context of a command bus)
+
 Example::
 
     use App\Message\MyMessage;
