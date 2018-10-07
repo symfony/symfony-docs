@@ -272,7 +272,7 @@ If you configure the value ``null`` for the UID key, the default UID key
 filter
 ......
 
-**type**: ``string`` **default**: ````
+**type**: ``string`` **default**: ``null``
 
 This key lets you configure which LDAP query will be used. The ``{uid_key}``
 string will be replaced by the value of the ``uid_key`` configuration value
