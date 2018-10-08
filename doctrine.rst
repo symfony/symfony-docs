@@ -42,7 +42,7 @@ The database connection information is stored as an environment variable called
     # .env
 
     # customize this line!
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?charset=utf8mb4&serverVersion=5.7"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 
     # to use sqlite:
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
@@ -53,7 +53,7 @@ The database connection information is stored as an environment variable called
     special in a URI (such as ``!``, ``@``, ``$``, ``#``, ``/``), you must encode them.
     See `RFC 3986`_ for the full list of reserved characters or use the
     :phpfunction:`urlencode` function to encode them. In this case you need to remove
-    the ``resolve:`` prefix in ``config/packages/doctrine.yaml``:
+    the ``resolve:`` prefix in ``config/packages/doctrine.yaml`` to avoid errors:
     ``url: '%env(resolve:DATABASE_URL)%'``
 
 Now that your connection parameters are setup, Doctrine can create the ``db_name``
