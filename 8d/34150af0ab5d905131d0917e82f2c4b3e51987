@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-28T13:06:28Z
+
+@ThomasLandauer thanks for trying to improve this. However, this was done on purpose. As you can see in the related recipe config (https://github.com/symfony/recipes/blob/master/doctrine/doctrine-bundle/1.6/config/packages/doctrine.yaml) we don't put the `charset` property in the `DATABASE_URL` query string to not complicate it too much. Moreover, it's truly rare to use different charsets on the different hosts you run the application on, so there's no need to include it in the env var.
+
+In any case, thanks again for your help here and in all the other pull requests you create! We appreciate them.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2018-09-28T13:34:20Z
+
+@javiereguiluz This is inconsistent! According to https://github.com/symfony/recipes/issues/151 this is what everybody has in their sample `.env` after a fresh installation:
+
+> DATABASE_URL="mysql://root@127.0.0.1:3306/symfony?charset=utf8mb4&serverVersion=5.7"
+
+Besides, docs should always be *complete* and explain everything. I see your point to not make it look difficult for starters, so it certainly doesn't have to be included in the *basic* Doctrine installation steps. OK. You know the docs better than me - what would be a better place?
+
+Second point: Did you notice the other two commits in this PR? These are even more important cause it was really hard to figure it out!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-28T14:27:37Z
+
+@ThomasLandauer I think you are looking at "old" code ... the new recipe is this one: https://github.com/symfony/recipes/blob/master/doctrine/doctrine-bundle/1.6/config/packages/doctrine.yaml and we no longer include the charset in the query string.
+
+About the other changes, let's reopen this pull request. Thanks!
