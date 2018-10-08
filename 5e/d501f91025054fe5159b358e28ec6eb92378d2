@@ -1,0 +1,95 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-09-27T12:23:42Z
+
+I think there's a misunderstanding here. `serializer` is indeed the directory you can use in your application, but in a bundle the directory which is looked for is still serialization (see https://github.com/symfony/symfony/blob/60fac5cefaea25e2b56c1bad7a8a3807fff6d00f/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/FrameworkExtension.php#L1334-L1336).
+
+---------------------------------------------------------------------------
+
+by robob4him at 2018-09-30T17:14:02Z
+
+A misunderstanding to an extent, perhaps, but "can" is overstated. Symfony 4 does not look for "serialization" in the config directory. Whether that's "flex" or "bundle" or whatnot it needs to be added. Three hours of research proves that to me. I welcome whatever suggestions you have.
+
+-----Original Message-----
+From: "Christian Flothmann" <notifications@github.com>
+Sent: ‎9/‎27/‎2018 7:23 AM
+To: "symfony/symfony-docs" <symfony-docs@noreply.github.com>
+Cc: "robob4him" <robob4him@gmail.com>; "Author" <author@noreply.github.com>
+Subject: Re: [symfony/symfony-docs] Update search location of serializerconfiguration (#10396)
+
+I think there's a misunderstanding here. serializer is indeed the directory you can use in your application, but in a bundle the directory which is looked for is still serialization (see https://github.com/symfony/symfony/blob/60fac5cefaea25e2b56c1bad7a8a3807fff6d00f/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/FrameworkExtension.php#L1334-L1336).
+—
+You are receiving this because you authored the thread.
+Reply to this email directly, view it on GitHub, or mute the thread.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-10-01T09:43:03Z
+
+I think we are talking about different things. When you are talking about the `serialization` directory in the `config` directory, that's right. But in this case we are not in a bundle context.
+
+I think what will probably be the solution here is to expand this list to mention the locations where you would store the files on the application level. So the final list will look something like this:
+
+```rst
+* All ``*.yaml`` and ``*.xml`` files in the ``config/serializer/``
+  directory.
+* The ``serialization.yaml`` or ``serialization.xml`` file in
+  the ``Resources/config/`` directory of a bundle;
+* All ``*.yaml`` and ``*.xml`` files in the ``Resources/config/serialization/``
+  directory of a bundle.
+```
+
+Does that make sense?
+
+---------------------------------------------------------------------------
+
+by robob4him at 2018-10-01T12:07:48Z
+
+Much like! Very sense!
+
+Would you like this PR updated or would you like to take care of it?
+
+-----Original Message-----
+From: "Christian Flothmann" <notifications@github.com>
+Sent: ‎10/‎1/‎2018 4:43 AM
+To: "symfony/symfony-docs" <symfony-docs@noreply.github.com>
+Cc: "robob4him" <robob4him@gmail.com>; "Author" <author@noreply.github.com>
+Subject: Re: [symfony/symfony-docs] Update search location of serializerconfiguration (#10396)
+
+I think we are talking about different things. When you are talking about the serialization directory in the config directory, that's right. But in this case we are not in a bundle context.
+I think what will probably be the solution here is to expand this list to mention the locations where you would store the files on the application level. So the final list will look something like this:
+* All ``*.yaml`` and ``*.xml`` files in the ``config/serializer/``
+  directory.
+* The ``serialization.yaml`` or ``serialization.xml`` file in
+  the ``Resources/config/`` directory of a bundle;
+* All ``*.yaml`` and ``*.xml`` files in the ``Resources/config/serialization/``
+  directory of a bundle.Does that make sense?
+—
+You are receiving this because you authored the thread.
+Reply to this email directly, view it on GitHub, or mute the thread.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-10-02T09:34:53Z
+
+@robob4him If you want to update the PR, please do so. Then it's you who gets the credit for this nice fix. :)
+
+---------------------------------------------------------------------------
+
+by robob4him at 2018-10-02T20:19:35Z
+
+> @robob4him If you want to update the PR, please do so. Then it's you who gets the credit for this nice fix. :)
+
+@xabbuh Updated! I'm just glad to have this instance fixed for others. Cheers!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-08T07:30:13Z
+
+In #10447 we do the same fix ... but the place where the new doc is added is different. Which is the right location for this? Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-10-08T13:07:43Z
+
+I would merge this version. As an application developer you are more interested in which location you should place the files in your application IMO.
