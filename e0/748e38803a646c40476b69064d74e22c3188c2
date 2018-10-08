@@ -1,0 +1,71 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-03T08:38:11Z
+
+@vindby23 sorry for the late reply but some members of the Docs team were on holidays.
+
+I've just tested this in the Symfony Demo app ... both commands work, but the generated code is different.
+
+Running this:
+
+```bash
+php bin/console doctrine:mapping:import App\\Entity annotation --path=src/Entity
+```
+
+generates the correct PHP classes with this namespace:
+
+```php
+namespace App\Entity;
+```
+
+However, running this:
+
+```bash
+php bin/console doctrine:mapping:import App\Entity annotation --path=src/Entity
+```
+
+generates this wrong PHP namespace:
+
+```php
+namespace AppEntity;
+```
+
+I run this on macOs and iTerm2 console. Could you please tell us which tools did you use to run the command? Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-09-03T09:25:07Z
+
+To be one the safe side we could enclose the namespace in single quotes and use only one backslash:
+
+```
+php bin/console doctrine:mapping:import 'App\Entity' annotation --path=src/Entity
+```
+
+As far as I know this should work with all shells.
+
+---------------------------------------------------------------------------
+
+by vineetcalsoft at 2018-09-04T07:41:38Z
+
+I tried in windows env.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-09-04T08:00:24Z
+
+And did it work for you?
+
+---------------------------------------------------------------------------
+
+by vineetcalsoft at 2018-09-04T16:14:58Z
+
+under single quote i didn't try but after using App\\\Entity.
+
+It was coming like namespace App\\\Entity;
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-09-05T07:29:59Z
+
+Please try the version with single quotes too and let us know if it helps.
