@@ -276,10 +276,8 @@ console::
     {
         public function testExecute()
         {
-            $kernel = self::bootKernel();
+            $kernel = static::createKernel();
             $application = new Application($kernel);
-
-            $application->add(new CreateUserCommand());
 
             $command = $application->find('app:create-user');
             $commandTester = new CommandTester($command);
@@ -311,39 +309,6 @@ console::
     When using the Console component in a standalone project, use
     :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`
     and extend the normal ``\PHPUnit\Framework\TestCase``.
-
-To be able to use the fully set up service container for your console tests
-you can extend your test from
-:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`::
-
-    // ...
-    use Symfony\Component\Console\Tester\CommandTester;
-    use Symfony\Bundle\FrameworkBundle\Console\Application;
-    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-
-    class CreateUserCommandTest extends KernelTestCase
-    {
-        public function testExecute()
-        {
-            $kernel = static::createKernel();
-            $kernel->boot();
-
-            $application = new Application($kernel);
-            $application->add(new CreateUserCommand());
-
-            $command = $application->find('app:create-user');
-            $commandTester = new CommandTester($command);
-            $commandTester->execute(array(
-                'command'  => $command->getName(),
-                'username' => 'Wouter',
-            ));
-
-            $output = $commandTester->getDisplay();
-            $this->assertContains('Username: Wouter', $output);
-
-            // ...
-        }
-    }
 
 Learn More
 ----------
