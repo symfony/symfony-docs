@@ -136,7 +136,7 @@ to your class and choose which groups to use when serializing::
 .. tip::
 
     The value of the ``groups`` key can be a single string, or an array of strings.
-    
+
     .. versionadded:: 4.2
         The option to pass a single string to ``groups`` was introduced in Symfony 4.2.
 
@@ -148,6 +148,8 @@ stored in one of the following locations:
   the ``Resources/config/`` directory of a bundle;
 * All ``*.yaml`` and ``*.xml`` files in the ``Resources/config/serialization/``
   directory of a bundle.
+* All ``*.yaml`` and ``*xml`` files in the ``config/serializer`` directory in the
+  project directory.
 
 .. _serializer-enabling-metadata-cache:
 
