@@ -324,7 +324,7 @@ encoder in the security configuration:
             ),
         ));
 
-In this case the recommended ``bcrypt`` algorithm is used. If needed, check out
+In this case the recommended `bcrypt`_ algorithm is used. If needed, check out
 the :ref:`user password encoding <security-encoding-user-password>` article.
 
 Next, create the template:
@@ -422,3 +422,4 @@ us to add validation, even though there is no ``termsAccepted`` property on ``Us
 
 .. _`CVE-2013-5750`: https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
 .. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
+.. _`bcrypt`: https://en.wikipedia.org/wiki/Bcrypt
