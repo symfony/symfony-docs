@@ -244,8 +244,7 @@ Defining a Service Locator
 
 To manually define a service locator, create a new service definition and add
 the ``container.service_locator`` tag to it. Use the first argument of the
-service definition to pass a collection of services to the service locator. If
-there is no id specified for the service it will inherit its external id.
+service definition to pass a collection of services to the service locator:
 
 .. configuration-block::
 
@@ -259,6 +258,9 @@ there is no id specified for the service it will inherit its external id.
                     -
                         App\FooCommand: '@app.command_handler.foo'
                         App\BarCommand: '@app.command_handler.bar'
+                        # if the element has no key, the ID of the original service is used
+                        '@app.command_handler.baz'
+
                 # if you are not using the default service autoconfiguration,
                 # add the following tag to the service definition:
                 # tags: ['container.service_locator']
@@ -275,8 +277,10 @@ there is no id specified for the service it will inherit its external id.
 
                 <service id="app.command_handler_locator" class="Symfony\Component\DependencyInjection\ServiceLocator">
                     <argument type="collection">
-                        <argument key="App\FooCommand" type="service" id="app.command_handler.foo"/>
-                        <argument key="App\BarCommand" type="service" id="app.command_handler.bar"/>
+                        <argument key="App\FooCommand" type="service" id="app.command_handler.foo" />
+                        <argument key="App\BarCommand" type="service" id="app.command_handler.bar" />
+                        <!-- if the element has no key, the ID of the original service is used -->
+                        <argument type="service" id="app.command_handler.baz" />
                     </argument>
                     <!--
                         if you are not using the default service autoconfiguration,
@@ -301,7 +305,9 @@ there is no id specified for the service it will inherit its external id.
             ->setArguments([[
                 'App\FooCommand' => new Reference('app.command_handler.foo'),
                 'App\BarCommand' => new Reference('app.command_handler.bar'),
-            ]])
+                // if the element has no key, the ID of the original service is used
+                new Reference('app.command_handler.baz'),
+            )))
             // if you are not using the default service autoconfiguration,
             // add the following tag to the service definition:
             // ->addTag('container.service_locator')
@@ -314,7 +320,7 @@ there is no id specified for the service it will inherit its external id.
 
 .. versionadded:: 4.2
 
-    The ability to add services without specifying an id was introduced in
+    The ability to add services without specifying their id was introduced in
     Symfony 4.2.
 
 .. note::
