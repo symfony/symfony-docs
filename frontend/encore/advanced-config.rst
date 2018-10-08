@@ -53,7 +53,7 @@ state of the current configuration to build a new one:
     Encore
         .setOutputPath('web/build/')
         .setPublicPath('/build')
-        .addEntry('app', './assets/js/main.js')
+        .addEntry('app', './assets/js/app.js')
         .addStyleEntry('global', './assets/css/global.scss')
         .enableSassLoader()
         .autoProvidejQuery()
