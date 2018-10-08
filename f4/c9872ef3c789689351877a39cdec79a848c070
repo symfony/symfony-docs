@@ -1,0 +1,22 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-08-06T16:52:02Z
+
+But this will fail with Symfony 4 where commands are not auto-disccovered, won't it?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-08-10T22:02:04Z
+
+@xabbuh No.... right? Because, we're booting the real kernel and passing it into `Application` (from FrameworkBundle). This simply mirrors what `bin/console` does: https://github.com/symfony/recipes/blob/29e686cb133652385d442df7c178e90907e35b9c/symfony/console/3.3/bin/console#L38
+
+So, we should have the exact commands you'd have in a real app. As long is properly recognized as a command (e.g. autoconfigure or manual wiring), it should be here. Right?
+
+---------------------------------------------------------------------------
+
+by chalasr at 2018-09-09T17:58:36Z
+
+Hey. Assuming the command has been registered as a service, @weaverryan is right here, no need for adding twice to the application as it has been injected during container compilation in the kernel boot process.
+This chapter does not include the explicit service definition but includes a mention saying that the command *must* be registered as a service, so I think it's safe to assume it is.
+Same for the `kernel->boot()` call, it's indeed not necessary.
+👍 all good for me
