@@ -554,7 +554,10 @@ can ignore this. Here is an example of good and bad behavior::
     public function supports(Request $request)
     {
         // GOOD behavior: only authenticate on a specific route
-        if ($request->attributes->get('_route') !== 'login_route' || !$request->isMethod('POST')) {
+        $isLoginRoute = 'login_route' === $request->attributes->get('_route');
+        if ($isLoginRoute && $request->isMethod('POST')) {
+            return true;
+        } else {
             return false;
         }
 
