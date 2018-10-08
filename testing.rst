@@ -29,7 +29,7 @@ command:
 
 .. code-block:: terminal
 
-    $ ./bin/phpunit
+    $ ./vendor/bin/simple-phpunit
 
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
@@ -101,13 +101,13 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: terminal
 
     # run all tests of the application
-    $ ./bin/phpunit
+    $ ./vendor/bin/simple-phpunit
 
     # run all tests in the Util/ directory
-    $ ./bin/phpunit tests/Util
+    $ ./vendor/bin/simple-phpunit tests/Util
 
     # run tests for the Calculator class
-    $ ./bin/phpunit tests/Util/CalculatorTest.php
+    $ ./vendor/bin/simple-phpunit tests/Util/CalculatorTest.php
 
 .. index::
    single: Tests; Functional tests
