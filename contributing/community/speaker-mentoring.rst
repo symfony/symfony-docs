@@ -33,7 +33,7 @@ public speaker. They can even do practice runs via video chat!
 Furthermore, they can also be an ally when it comes to the day of
 giving the talk at a conference!
 
-A great resource with advice on everything related to`public speaking`_
+A great resource with advice on everything related to `public speaking`_
 is a collection of links maintained by VM (Vicky) Brasseur. It covers
 everything from finding a conference call for proposals, how to
 refine a proposal, to how to put together slide decks to practical
