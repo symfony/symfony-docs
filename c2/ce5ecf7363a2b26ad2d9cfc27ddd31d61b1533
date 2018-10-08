@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by dbu at 2018-09-24T14:17:37Z
+
+if i want a different redis dsn than the default one for my pool, would i specify that in the `provider` field of the pool? but the description of that field says "The service name to use as provider when the specified adapter needs one"
+
+---------------------------------------------------------------------------
+
+by dbu at 2018-10-02T12:30:59Z
+
+@nicolas-grekas looking at git blame i think you wrote most of the redis cache adapter... any input on how i would configure different redis dns for different pools? i'd like to improve the documentation but am a bit unsure how it works exactly.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-10-02T12:53:37Z
+
+sure: use the "provider" option of the pool:
+`provider: redis://localhost`
+
+---------------------------------------------------------------------------
+
+by dbu at 2018-10-05T17:40:31Z
+
+i removed the mention of the obscure cache.pool tag that is not intended to be used by devs.
+
+should be ready to merge, thanks for the inputs!
