@@ -122,6 +122,7 @@ Configuration
   * `resource`_
   * `strict_requirements`_
   * `type`_
+  * `utf8`_
 
 * `secret`_
 * `serializer`_
@@ -741,6 +742,14 @@ The value can be one of:
 
 ``true`` is recommended in the development environment, while ``false``
 or ``null`` might be preferred in production.
+
+utf8
+....
+
+**type**: ``boolean`` **default**: ``false``
+
+Sets the default UTF-8 encoding configuration for routes. If your app's charset
+is UTF-8 it is recommended to set the value of this option to ``true``.
 
 .. _config-framework-session:
 
