@@ -9,12 +9,13 @@ percentage data. If your percentage data is stored as a decimal (e.g. ``.95``),
 you can use this field out-of-the-box. If you store your data as a number
 (e.g. ``95``), you should set the ``type`` option to ``integer``.
 
-This field adds a percentage sign "``%``" after the input box.
+When ``symbol`` is true, the field will add a percentage sign "``%``" after the input box.
 
 +-------------+-----------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                              |
 +-------------+-----------------------------------------------------------------------+
 | Options     | - `scale`_                                                            |
+|             | - `symbol`_                                                           |
 |             | - `type`_                                                             |
 +-------------+-----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                         |
@@ -49,6 +50,15 @@ scale
 
 By default, the input numbers are rounded. To allow for more decimal places,
 use this option.
+
+symbol
+~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+By default, fields are rendered with a percentage sign "`%`" after the input
+box. Setting this value to ``false`` will disable the percentage sign from
+being displayed.
 
 type
 ~~~~
