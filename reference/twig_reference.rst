@@ -310,8 +310,8 @@ is_granted
 
 Returns ``true`` if the current user has the required role, if only one 
 is passed; if more than one is passed, with an array, the behavior depends
-on how the :ref:`authorization <access-decision-manager>` is configured; 
-by default, the user has to have at least one of the passed roles.
+on how the :ref:`Access Decision Manager <components-security-access-decision-manager>`
+is configured; by default, the user has to have at least one of the passed roles.
 
 Optionally, an object can be pasted to be used by the voter. More information
 can be found in :ref:`security-template`.
