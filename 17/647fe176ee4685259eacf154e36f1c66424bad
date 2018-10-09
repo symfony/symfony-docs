@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-09T08:32:55Z
+
+@snebes very good catch! The original location of this interface is indeed deprecated since 2.5, as we can see in https://api.symfony.com/2.8/Symfony/Component/Validator/ExecutionContextInterface.html
