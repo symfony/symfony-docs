@@ -52,7 +52,7 @@ By default, the input numbers are rounded. To allow for more decimal places,
 use this option.
 
 symbol
-~~~~~
+~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 
