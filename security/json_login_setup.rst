@@ -80,6 +80,12 @@ path:
              */
             public function loginAction(Request $request)
             {
+                $user = $this->getUser();
+
+                return $this->json(array(
+                    'username' => $user->getUsername(),
+                    'roles' => $user->getRoles(),
+                ));
             }
         }
 
