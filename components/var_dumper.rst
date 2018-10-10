@@ -164,15 +164,14 @@ Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Du
 
     $cloner = new VarCloner();
     $fallbackDumper = \in_array(\PHP_SAPI, array('cli', 'phpdbg')) ? new CliDumper() : new HtmlDumper();
-    $dumper = new ServerDumper('tcp://127.0.0.1:9912', $fallbackDumper, [
+    $dumper = new ServerDumper('tcp://127.0.0.1:9912', $fallbackDumper, array(
         'cli' => new CliContextProvider(),
         'source' => new SourceContextProvider(),
-    ]);
+    ));
 
     VarDumper::setHandler(function ($var) use ($cloner, $dumper) {
         $dumper->dump($cloner->cloneVar($var));
     });
-
 
 .. note::
 
