@@ -22,7 +22,9 @@ input.
 Defining the Form Type Extension
 --------------------------------
 
-First, create the form type extension class::
+First, create the form type extension class extending from
+:class:`Symfony\\Component\\Form\\AbstractTypeExtension` (you can implement
+:class:`Symfony\\Component\\Form\\FormTypeExtensionInterface` instead if you prefer)::
 
     // src/Form/Extension/ImageTypeExtension.php
     namespace App\Form\Extension;
@@ -33,29 +35,26 @@ First, create the form type extension class::
     class ImageTypeExtension extends AbstractTypeExtension
     {
         /**
-         * Returns the name of the type being extended.
-         *
-         * @return string The name of the type being extended
+         * Return the class of the type being extended.
          */
-        public function getExtendedType()
+        public static function getExtendedTypes(): iterable
         {
-            // use FormType::class to modify (nearly) every field in the system
-            return FileType::class;
+            // return FormType::class to modify (nearly) every field in the system
+            return array(FileType::class);
         }
     }
 
-The only method you **must** implement is the ``getExtendedType()`` function.
-This is used to configure *which* field or field types you want to modify.
+The only method you **must** implement is ``getExtendedTypes()``, which is used
+to configure *which* field types you want to modify.
 
-In addition to the ``getExtendedType()`` function, you will probably want
-to override one of the following methods:
+.. versionadded:: 4.2
+    The ``getExtendedTypes()`` method was introduced in Symfony 4.2.
+
+Depending on your use case, you may need to override some of the following methods:
 
 * ``buildForm()``
-
 * ``buildView()``
-
 * ``configureOptions()``
-
 * ``finishView()``
 
 For more information on what those methods do, see the
@@ -64,61 +63,23 @@ For more information on what those methods do, see the
 Registering your Form Type Extension as a Service
 -------------------------------------------------
 
-The next step is to make Symfony aware of your extension. Do this by registering
-your class as a service and using the  ``form.type_extension`` tag:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # ...
-
-            App\Form\Extension\ImageTypeExtension:
-                tags:
-                    - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Form\Extension\ImageTypeExtension">
-                    <tag name="form.type_extension" extended-type="Symfony\Component\Form\Extension\Core\Type\FileType" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        use App\Form\Extension\ImageTypeExtension;
-        use Symfony\Component\Form\Extension\Core\Type\FileType;
-
-        $container->autowire(ImageTypeExtension::class)
-            ->addTag('form.type_extension', array(
-                'extended_type' => FileType::class
-            ))
-        ;
-
-The ``extended_type`` key of the tag must match the class you're returning from
-the ``getExtendedType()`` method. As *soon* as you do this, any method that you've
-overridden (e.g. ``buildForm()``) will be called whenever *any* field of the given
-type (``FileType``) is built. Let's see an example next.
+Form type extensions must be registered as services and :doc:`tagged </service_container/tags>`
+with the ``form.type_extension`` tag. If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
 .. tip::
 
-    There is an optional tag attribute called ``priority``, which
-    defaults to ``0`` and controls the order in which the form
-    type extensions are loaded (the higher the priority, the earlier
-    an extension is loaded). This is useful when you need to guarantee
-    that one extension is loaded before or after another extension.
+    There is an optional tag attribute called ``priority``, which defaults to
+    ``0`` and controls the order in which the form type extensions are loaded
+    (the higher the priority, the earlier an extension is loaded). This is
+    useful when you need to guarantee that one extension is loaded before or
+    after another extension. Using this attribute requires you to add the
+    service configuration explicitly.
+
+Once the extension is registered, any method that you've overridden (e.g.
+``buildForm()``) will be called whenever *any* field of the given type
+(``FileType``) is built. Let's see an example next.
 
 Adding the extension Business Logic
 -----------------------------------
@@ -175,9 +136,10 @@ For example::
 
     class ImageTypeExtension extends AbstractTypeExtension
     {
-        public function getExtendedType()
+        public static function getExtendedTypes(): iterable
         {
-            return FileType::class;
+            // return FormType::class to modify (nearly) every field in the system
+            return array(FileType::class);
         }
 
         public function configureOptions(OptionsResolver $resolver)
@@ -278,3 +240,25 @@ would apply to all of these (notable exceptions are the ``ButtonType`` form
 types). Also keep in mind that if you created (or are using) a *custom* form type,
 it's possible that it does *not* extend ``FormType``, and so your form type extension
 may not be applied to it.
+
+Another option is to return multiple form types in the ``getExtendedTypes()``
+method to extend all of them::
+
+    // ...
+    use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    use Symfony\Component\Form\Extension\Core\Type\TimeType;
+
+    class DateTimeExtension extends AbstractTypeExtension
+    {
+        // ...
+
+        public static function getExtendedTypes(): iterable
+        {
+            return array(DateTimeType::class, DateType::class, TimeType::class);
+        }
+    }
+
+.. versionadded:: 4.2
+    The feature to extend multiple form types using a single extension class
+    was introduced in Symfony 4.2.
