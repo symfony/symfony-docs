@@ -90,4 +90,4 @@ variables that are passed into the expression:
 
 .. parameters-block:: Injecting parameters
 
-    You can inject container parameters (e.g. `%kernel.environment%`) into condition, such as `@Route(condition="'%kernel.environment' in ['dev']")` or any other you want.
+    You can inject container parameters (e.g. `%kernel.environment%`) into condition, such as `@Route(condition="'%kernel.environment%' in ['dev']")` or any other you want.
