@@ -230,6 +230,36 @@ with a locale. This can be done by defining a different prefix for each locale
                 en: '' # don't prefix URLs for English, the default locale
                 nl: '/nl'
 
+    .. code-block:: xml
+
+        <!-- config/routes/annotations.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <import resource="../src/Controller/" type="annotation">
+                <!-- don't prefix URLs for English, the default locale -->
+                <prefix locale="en"></prefix>
+                <prefix locale="nl">/nl</prefix>
+            </import>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes/annotations.php
+        use Symfony\Component\Routing\RouteCollection;
+
+        $app = $loader->import('../src/Controller/', 'annotation');
+        $app->addPrefix('/', array('_locale' => 'en'));
+        $app->addPrefix('/nl', array('_locale' => 'nl'));
+
+        $routes = new RouteCollection();
+        $routes->addCollection($app);
+
+        return $routes;
+
 .. _routing-requirements:
 
 Adding {wildcard} Requirements
