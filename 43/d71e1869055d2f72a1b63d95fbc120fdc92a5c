@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-10T06:16:13Z
+
+Although technically speaking this is not mandatory ... in 3.4 branch we kept the `Action` suffix and we removed it in 4.1 branch ... so let's merge this for consistency. Thanks ... and congrats on your first Symfony Docs contribution!
