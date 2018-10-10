@@ -272,7 +272,7 @@ Concrete callbacks receive an :class:`Symfony\\Component\\Validator\\Context\\Ex
 instance as only argument.
 
 Static or closure callbacks receive the validated object as the first argument
-and the :class:`Symfony\\Component\\Validator\\ExecutionContextInterface`
+and the :class:`Symfony\\Component\\Validator\\Context\\ExecutionContextInterface`
 instance as the second argument.
 
 .. include:: /reference/constraints/_payload-option.rst.inc

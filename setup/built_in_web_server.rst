@@ -56,16 +56,11 @@ can change the socket passing an IP address and a port as a command-line argumen
 .. note::
 
     You can use the ``server:status`` command to check if a web server is
-    listening on a certain socket:
+    listening:
 
     .. code-block:: terminal
 
         $ php bin/console server:status
-
-        $ php bin/console server:status 192.168.0.1:8080
-
-    The first command shows if your Symfony application will be served through
-    ``localhost:8000``, the second one does the same for ``192.168.0.1:8080``.
 
 .. tip::
 
@@ -120,14 +115,6 @@ command:
 .. code-block:: terminal
 
     $ php bin/console server:stop
-
-Like with the start command, if you omit the socket information, Symfony will
-stop the web server bound to ``localhost:8000``. Just pass the socket information
-when the web server listens to another IP address or to another port:
-
-.. code-block:: terminal
-
-    $ php bin/console server:stop 192.168.0.1:8080
 
 .. _`built-in web server`: https://php.net/manual/en/features.commandline.webserver.php
 .. _`php.net`: https://php.net/manual/en/features.commandline.webserver.php#example-411
