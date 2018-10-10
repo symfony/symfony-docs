@@ -88,6 +88,9 @@ variables that are passed into the expression:
     Because of this, using the ``condition`` key causes no extra overhead
     beyond the time it takes for the underlying PHP to execute.
 
-.. parameters-block:: Injecting parameters
+.. _parameters:
 
-    You can inject container parameters (e.g. `%kernel.environment%`) into condition, such as `@Route(condition="'%kernel.environment%' in ['dev']")` or any other you want.
+Injecting parameters
+---------------------
+
+    You can inject container parameters (e.g. ``%kernel.environment%``) into condition, such as ``@Route(condition="'%kernel.environment%' in ['dev']")`` or any other you want.
