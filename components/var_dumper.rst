@@ -156,6 +156,10 @@ Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Du
 
     use Symfony\Component\VarDumper\VarDumper;
     use Symfony\Component\VarDumper\Cloner\VarCloner;
+    use Symfony\Component\VarDumper\Dumper\CliDumper;
+    use Symfony\Component\VarDumper\Dumper\ContextProvider\CliContextProvider;
+    use Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider;
+    use Symfony\Component\VarDumper\Dumper\HtmlDumper;
     use Symfony\Component\VarDumper\Dumper\ServerDumper;
 
     $cloner = new VarCloner();
@@ -176,7 +180,7 @@ Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Du
     is a :class:`Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface` instance
     used as a fallback when the server is unreachable. The third argument are the
     context providers, which allow to gather some info about the context in which the
-    data was dumped. The built-in contexts providers are: ``cli``, ``request`` and ``source``.
+    data was dumped. The built-in context providers are: ``cli``, ``request`` and ``source``.
 
 Then you can use the following command to start a server out-of-the-box:
 
