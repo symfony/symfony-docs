@@ -93,6 +93,8 @@ Encoders supporting the following formats are enabled:
 
 * JSON: :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`
 * XML: :class:`Symfony\\Component\\Serializer\\Encoder\\XmlEncoder`
+* CSV: :class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder`
+* YAML: :class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder`
 
 As well as the following normalizers:
 
