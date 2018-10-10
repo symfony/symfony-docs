@@ -634,15 +634,15 @@ let you find out which options are defined::
         }
     }
 
-Nested option
+Nested Option
 ~~~~~~~~~~~~~
 
 .. versionadded:: 4.2
     This feature was introduced in Symfony 4.2.
 
 Suppose you want an option named ``spool`` which has two sub-options ``type``
-and ``path``. Instead of define it as a simple array of values, you can pass
-a closure as the default value of the ``spool`` option with an :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver`
+and ``path``. Instead of defining it as a simple array of values, you can pass
+a closure as the default value of the ``spool`` option with a :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver`
 argument. Based on this instance, you can define the options under ``spool`` and its desired default
 value::
 
@@ -706,7 +706,7 @@ adds a second ``Options`` argument to the closure::
     The arguments of the closure must be type hinted as ``OptionsResolver`` and ``Options`` respectively.
     Otherwise, the closure itself is considered as the default value of the option.
 
-In same way, parent options can access to the child option as follows::
+In same way, parent options can access the child option as follows::
 
     // ...
     class Mailer
@@ -730,8 +730,8 @@ In same way, parent options can access to the child option as follows::
 
 .. note::
 
-    The fact that an option is defined as nested, means that you must to pass
-    an array of values to resolve it on runtime.
+    The fact that an option is defined as nested means that you must pass
+    an array of values to resolve it at runtime.
 
 Deprecating the Option
 ~~~~~~~~~~~~~~~~~~~~~~
