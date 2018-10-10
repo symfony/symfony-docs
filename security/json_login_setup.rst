@@ -123,11 +123,11 @@ path:
 
         return $routes;
 
-When you submit a ``POST`` request to the ``/login`` URL with the following JSON document as the body,
-the security system intercepts the requests.
-It takes care of authenticating the user with the submitted username and password or triggers an error
-in case the authentication process fails.
-If the authentication is successful, the controller defined earlier will be executed. 
+When you submit a ``POST`` request to the ``/login`` URL with the following JSON
+document as the body, the security system intercepts the requests.
+It takes care of authenticating the user with the submitted username and password
+or triggers an error in case the authentication process fails.
+If the authentication is successful, the controller defined earlier will be executed.
 
 .. code-block:: json
 
