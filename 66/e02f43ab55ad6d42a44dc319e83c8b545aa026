@@ -1,0 +1,64 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-24T08:42:36Z
+
+@royklutman this is nice! However, we'd need to update the XML config too. If you need help with this, @xabbuh can help you (he always help me fixing XML config issues). Thanks!
+
+---------------------------------------------------------------------------
+
+by royklutman at 2018-09-24T09:18:50Z
+
+> @royklutman this is nice! However, we'd need to update the XML config too. If you need help with this, @xabbuh can help you (he always help me fixing XML config issues). Thanks!
+
+Thanks, I'd love to get some help with the XML part, I tried giving it a shot but it's just too complicated for me I guess.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-10-09T08:12:57Z
+
+Sorry for the delay. This config should work:
+
+```xml
+<!-- config/packages/framework.xml -->
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:framework="http://symfony.com/schema/dic/framework"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+        http://symfony.com/schema/dic/framework http://symfony.com/schema/dic/framework/framework-1.0.xsd"
+>
+    <framework:config secret="%env(APP_SECRET)%">
+        <!--<framework:csrf-protection enabled="true“ />-->
+        <!--<framework:esi enabled="true" />-->
+        <!--<framework:fragments enabled="true" />-->
+
+        <!-- Enables session support. Note that the session will ONLY be started if you read or write from it.
+             Remove or comment this section to explicitly disable session support. -->
+        <framework:session />
+
+        <!-- Put the unique name of your app here: the prefix seed
+             is used to compute stable namespaces for cache keys.
+             <framework:cache prefix-seed="your_vendor_name/app_name">
+             -->
+        <framework:cache>
+            <!-- The app cache caches to the filesystem by default.
+                 Other options include: -->
+
+            <!-- Redis -->
+            <!--<framework:app>cache.adapter.redis</framework:app>-->
+            <!--<framework:default-redis-provider>redis://localhost</framework:default-redis-provider>-->
+
+            <!-- APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues) -->
+            <!--<framework:app>cache.adapter.apcu</framework:app>-->
+        </framework:cache>
+
+        <framework:php-errors log="true" />
+    </framework:config>
+</container>
+```
+
+---------------------------------------------------------------------------
+
+by royklutman at 2018-10-09T08:37:07Z
+
+@xabbuh No problem Christian, thank you so much! I've added the XML configuration, should be good now.
