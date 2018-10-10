@@ -79,7 +79,7 @@ this is already done for you, thanks to :ref:`autoconfiguration <services-autoco
 
 Once the extension is registered, any method that you've overridden (e.g.
 ``buildForm()``) will be called whenever *any* field of the given type
-(``FileType``) is built. Let's see an example next.
+(``FileType``) is built.
 
 Adding the extension Business Logic
 -----------------------------------
