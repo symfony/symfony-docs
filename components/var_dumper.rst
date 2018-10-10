@@ -153,7 +153,7 @@ the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
 Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Dumper\\ServerDumper` class::
 
     require __DIR__.'/vendor/autoload.php';
-    
+
     use Symfony\Component\VarDumper\VarDumper;
     use Symfony\Component\VarDumper\Cloner\VarCloner;
     use Symfony\Component\VarDumper\Dumper\ServerDumper;
@@ -172,11 +172,11 @@ Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Du
 
 .. note::
 
-    The :class:`Symfony\\Component\\VarDumper\\Dumper\\ServerDumper` accepts as second argument
-    a :class:`Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface` instance
-    as a fallback for whenever the server is unreachable and context providers as third argument.
-    These providers allow to gather some info about the context in which was dumped the data.
-    Built-in contexts providers are: ``cli``, ``request`` and ``source``.
+    The second argument of :class:`Symfony\\Component\\VarDumper\\Dumper\\ServerDumper`
+    is a :class:`Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface` instance
+    used as a fallback when the server is unreachable. The third argument are the
+    context providers, which allow to gather some info about the context in which the
+    data was dumped. The built-in contexts providers are: ``cli``, ``request`` and ``source``.
 
 Then you can use the following command to start a server out-of-the-box:
 
