@@ -100,6 +100,8 @@ current PHP SAPI:
     .. versionadded:: 4.1
         The ``dd()`` helper method was introduced in Symfony 4.1.
 
+.. _var-dumper-dump-server:
+
 The Dump Server
 ---------------
 
@@ -126,9 +128,38 @@ server, which outputs it to its own console or to an HTML file:
 
 Inside a Symfony application, the output of the dump server is configured with
 the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
-``debug`` package.
+``debug`` package:
 
-Outside a Symfony application, use the ``ServerDumper`` class::
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/debug.yaml
+        debug:
+           dump_destination: "tcp://%env(VAR_DUMPER_SERVER)%"
+
+    .. code-block:: xml
+
+        <!-- config/packages/debug.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/debug"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:debug="http://symfony.com/schema/dic/debug"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/debug http://symfony.com/schema/dic/debug/debug-1.0.xsd">
+
+            <debug:config dump-destination="tcp://%env(VAR_DUMPER_SERVER)%" />
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/debug.php
+        $container->loadFromExtension('debug', array(
+           'dump_destination' => 'tcp://%env(VAR_DUMPER_SERVER)%',
+        ));
+
+Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Dumper\\ServerDumper` class::
 
     require __DIR__.'/vendor/autoload.php';
 
@@ -136,11 +167,31 @@ Outside a Symfony application, use the ``ServerDumper`` class::
     use Symfony\Component\VarDumper\Cloner\VarCloner;
     use Symfony\Component\VarDumper\Dumper\ServerDumper;
 
-    VarDumper::setHandler(function ($var) {
-      $cloner = new VarCloner();
-      $dumper = new ServerDumper('tcp://127.0.0.1:9912');
-      $dumper->dump($cloner->cloneVar($var));
+    $cloner = new VarCloner();
+    $fallbackDumper = \in_array(\PHP_SAPI, array('cli', 'phpdbg')) ? new CliDumper() : new HtmlDumper();
+    $dumper = new ServerDumper('tcp://127.0.0.1:9912', $fallbackDumper, [
+        'cli' => new CliContextProvider(),
+        'source' => new SourceContextProvider(),
+    ]);
+
+    VarDumper::setHandler(function ($var) use ($cloner, $dumper) {
+        $dumper->dump($cloner->cloneVar($var));
     });
+
+.. note::
+
+    The second argument of :class:`Symfony\\Component\\VarDumper\\Dumper\\ServerDumper`
+    is a :class:`Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface` instance
+    used as a fallback when the server is unreachable. The third argument are the
+    context providers, which allow to gather some info about the context in which the
+    data was dumped. The built-in contexts providers are: ``cli``, ``request`` and ``source``.
+
+Then you can use the following command to start a server out-of-the-box:
+
+.. code-block:: terminal
+
+     $ ./vendor/bin/var-dump-server
+       [OK] Server listening on tcp://127.0.0.1:9912
 
 DebugBundle and Twig Integration
 --------------------------------

@@ -23,17 +23,33 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
         framework:
             secret: '%env(APP_SECRET)%'
             #default_locale: en
-            #csrf_protection: ~
+            #csrf_protection: true
             #http_method_override: true
-            #trusted_hosts: ~
-            # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-            #session:
-            #    # The native PHP session handler will be used
-            #    handler_id: ~
-            #esi: ~
-            #fragments: ~
+
+            # Enables session support. Note that the session will ONLY be started if you read or write from it.
+            # Remove or comment this section to explicitly disable session support.
+            session:
+                handler_id: ~
+
+            #esi: true
+            #fragments: true
             php_errors:
                 log: true
+
+            cache:
+                # Put the unique name of your app here: the prefix seed
+                # is used to compute stable namespaces for cache keys.
+                #prefix_seed: your_vendor_name/app_name
+
+                # The app cache caches to the filesystem by default.
+                # Other options include:
+
+                # Redis
+                #app: cache.adapter.redis
+                #default_redis_provider: redis://localhost
+
+                # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
+                #app: cache.adapter.apcu
 
     .. code-block:: xml
 
@@ -46,6 +62,30 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
                     http://symfony.com/schema/dic/framework http://symfony.com/schema/dic/framework/framework-1.0.xsd"
             >
                 <framework:config secret="%env(APP_SECRET)%">
+                    <!--<framework:csrf-protection enabled="true“ />-->
+                    <!--<framework:esi enabled="true" />-->
+                    <!--<framework:fragments enabled="true" />-->
+
+                    <!-- Enables session support. Note that the session will ONLY be started if you read or write from it.
+                         Remove or comment this section to explicitly disable session support. -->
+                    <framework:session />
+
+                    <!-- Put the unique name of your app here: the prefix seed
+                         is used to compute stable namespaces for cache keys.
+                         <framework:cache prefix-seed="your_vendor_name/app_name">
+                         -->
+                    <framework:cache>
+                        <!-- The app cache caches to the filesystem by default.
+                             Other options include: -->
+
+                        <!-- Redis -->
+                        <!--<framework:app>cache.adapter.redis</framework:app>-->
+                        <!--<framework:default-redis-provider>redis://localhost</framework:default-redis-provider>-->
+
+                        <!-- APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues) -->
+                        <!--<framework:app>cache.adapter.apcu</framework:app>-->
+                    </framework:cache>
+
                     <framework:php-errors log="true" />
                 </framework:config>
             </container>
@@ -56,18 +96,31 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
         $container->loadFromExtension('framework', [
             'secret' => '%env(APP_SECRET)%',
             //'default_locale' => 'en',
-            //'csrf_protection' => null,
+            //'csrf_protection' => true,
             //'http_method_override' => true,
-            //'trusted_hosts' => null,
-            // https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-            //'session' => [
-            //    // The native PHP session handler will be used
-            //    'handler_id' => null,
-            //],
-            //'esi' => null,
-            //'fragments' => null,
+
+            // Enables session support. Note that the session will ONLY be started if you read or write from it.
+            // Remove or comment this section to explicitly disable session support.
+            'session' => [
+                'handler_id' => null,
+            ],
+            //'esi' => true,
+            //'fragments' => true,
             'php_errors' => [
                 'log' => true,
+            ],
+            'cache' => [
+                //'prefix_seed' => 'your_vendor_name/app_name',
+
+                // The app cache caches to the filesystem by default.
+                // Other options include:
+
+                // Redis
+                //'app' => 'cache.adapter.redis',
+                //'default_redis_provider: 'redis://localhost',
+
+                // APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
+                //'app' => 'cache.adapter.apcu',
             ],
         ]);
 
