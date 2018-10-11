@@ -29,7 +29,24 @@ command:
 
 .. code-block:: terminal
 
-    $ ./vendor/bin/simple-phpunit
+    $ ./bin/phpunit
+
+.. note::
+
+    If your project is missing the phpunit command in the ./bin directory, Symfony
+    may have not executed the required PhPUnitBridge recipes. This may occurs when
+    the bundle symfony/phpunit-bridge is part of your composer.json file and your 
+    starting project contains a symfony.lock file.
+    
+    Two options can be used to fix that problem:
+    
+        * Remove the symfony.lock file before doing the first ``composer install``
+        * Remove and require again the symfony/phpunit-bridge bundle:
+    
+.. code-block:: terminal
+
+        $ composer remove symfony/phpunit-bridge
+        $ composer require --dev symfony/phpunit-bridge
 
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
@@ -101,13 +118,13 @@ Running tests for a given file or directory is also very easy:
 .. code-block:: terminal
 
     # run all tests of the application
-    $ ./vendor/bin/simple-phpunit
+    $ ./bin/phpunit
 
     # run all tests in the Util/ directory
-    $ ./vendor/bin/simple-phpunit tests/Util
+    $ ./bin/phpunit tests/Util
 
     # run tests for the Calculator class
-    $ ./vendor/bin/simple-phpunit tests/Util/CalculatorTest.php
+    $ ./bin/phpunit tests/Util/CalculatorTest.php
 
 .. index::
    single: Tests; Functional tests
