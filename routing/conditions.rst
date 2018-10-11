@@ -88,8 +88,6 @@ variables that are passed into the expression:
     Because of this, using the ``condition`` key causes no extra overhead
     beyond the time it takes for the underlying PHP to execute.
 
-.. _parameters:
-
 Injecting parameters
 ---------------------
 
