@@ -238,8 +238,7 @@ with a locale. This can be done by defining a different prefix for each locale
             type: annotation
             prefix:
                 en: '' # don't prefix URLs for English, the default locale
-                fr: '/fr'
-                es: '/es'
+                nl: '/nl'
 
 .. _routing-requirements:
 
