@@ -101,8 +101,8 @@ Take the following ``access_control`` entries as an example:
 For each incoming request, Symfony will decide which ``access_control``
 to use based on the URI, the client's IP address, the incoming host name,
 and the request method. Remember, the first rule that matches is used, and
-if ``ip``, ``port``, ``host`` or ``method`` are not specified for an entry, that ``access_control``
-will match any ``ip``, ``port``, ``host`` or ``method``:
+if ``ip``, ``port``, ``host`` or ``method`` are not specified for an entry, that
+``access_control`` will match any ``ip``, ``port``, ``host`` or ``method``:
 
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 | URI             | IP          | PORT        | HOST        | METHOD     | ``access_control``             | Why?                                                        |
@@ -177,12 +177,6 @@ requests *except* those from a trusted, internal server.
     key means that the ``access_control`` entry will only match this IP address,
     and users accessing it from a different IP address will continue down
     the ``access_control`` list.
-
-.. tip::
-
-    You can add the option ``port`` to use only a specific port.
-    It could be useful for ``localhost:8080`` by example.
-    See :ref:`Forcing a port <forcing-a-port>`
 
 Here is an example of how you configure some example ``/internal*`` URL
 pattern so that it is only accessible by requests from the local server itself:
@@ -333,8 +327,9 @@ For a list of the other functions and variables, see
 Restrict to a port
 ------------------
 
-You can also require a user to access a URL via a specific port; just use the
-``port`` argument in any ``access_control`` entries.
+Add the ``port`` option to any ``access_control`` entries to require users to
+access those URLs via a specific port. This could be useful for example for
+``localhost:8080``.
 
 .. configuration-block::
 
