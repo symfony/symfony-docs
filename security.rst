@@ -869,7 +869,7 @@ You can easily deny access from inside a controller::
     :ref:`base controller provided by Symfony <the-base-controller-class-services>`.
     It's equivalent to the following code::
 
-        use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+        use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
         use Symfony\Component\Security\Core\Exception\AccessDeniedException;
         // ...
 
