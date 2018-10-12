@@ -308,12 +308,12 @@ is_granted
 ``field`` *(optional)*
     **type**: ``string``
 
-Returns ``true`` if the current user has the required role, if only one 
-is passed; if more than one is passed, with an array, the behavior depends
-on how the :ref:`Access Decision Manager <components-security-access-decision-manager>`
-is configured; by default, the user has to have at least one of the passed roles.
+Returns ``true`` if the current user has the given role. If several roles are
+passed in an array, returns ``true`` if the user has all of them or at least one
+of them, depending on the value of this option:
+:ref:`security.access_decision_manager.strategy <security-voters-change-strategy>`.
 
-Optionally, an object can be pasted to be used by the voter. More information
+Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.
 
 .. note::
