@@ -31,6 +31,14 @@ command:
 
     $ ./bin/phpunit
 
+.. note::
+
+    The ``./bin/phpunit`` command is created by :doc:`Symfony Flex </setup/flex>`
+    when installing the ``phpunit-bridge`` package. If the command is missing, you
+    can remove the package (``composer remove symfony/phpunit-bridge``) and install
+    it again. Another solution is to remove the project's ``symfony.lock`` file and
+    run ``composer install`` to force the execution of all Symfony Flex recipes.
+
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
 

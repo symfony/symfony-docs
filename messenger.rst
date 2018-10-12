@@ -325,7 +325,7 @@ A class of messages can also be routed to multiple senders by specifying a list:
             ),
         ));
 
-By specifying a ``null`` sender, you can also route a class of messages to a sender
+By specifying the ``send_and_handle`` option, you can also route a class of messages to a sender
 while still having them passed to their respective handler:
 
 .. configuration-block::
@@ -336,7 +336,9 @@ while still having them passed to their respective handler:
         framework:
             messenger:
                 routing:
-                    'My\Message\ThatIsGoingToBeSentAndHandledLocally': [amqp, ~]
+                    'My\Message\ThatIsGoingToBeSentAndHandledLocally':
+                         senders: [amqp]
+                         send_and_handle: true
 
     .. code-block:: xml
 
@@ -352,9 +354,8 @@ while still having them passed to their respective handler:
 
             <framework:config>
                 <framework:messenger>
-                    <framework:routing message-class="My\Message\ThatIsGoingToBeSentAndHandledLocally">
+                    <framework:routing message-class="My\Message\ThatIsGoingToBeSentAndHandledLocally" send-and-handle="true">
                         <framework:sender service="amqp" />
-                        <framework:sender service="" />
                     </framework:routing>
                 </framework:messenger>
             </framework:config>
@@ -366,7 +367,10 @@ while still having them passed to their respective handler:
         $container->loadFromExtension('framework', array(
             'messenger' => array(
                 'routing' => array(
-                    'My\Message\ThatIsGoingToBeSentAndHandledLocally' => array('amqp', null),
+                    'My\Message\ThatIsGoingToBeSentAndHandledLocally' => array(
+                        'senders' => array('amqp'),
+                        'send_and_handle' => true,
+                    ),
                 ),
             ),
         ));
