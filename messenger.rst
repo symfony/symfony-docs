@@ -48,8 +48,10 @@ message handler. It's a class with an ``__invoke`` method::
 
     // src/MessageHandler/MyMessageHandler.php
     namespace App\MessageHandler;
+    
+    use Symfony\Component\Messenger\Handler;
 
-    class MyMessageHandler
+    class MyMessageHandler implements MessageHandlerInterface
     {
         public function __invoke(MyMessage $message)
         {
@@ -57,7 +59,12 @@ message handler. It's a class with an ``__invoke`` method::
         }
     }
 
-Once you've created your handler, you need to register it:
+Message handlers must be registered as services and :doc:`tagged </service_container/tags>`
+with the ``messenger.message_handler`` tag. If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
+
+If you're not using autoconfigure functionality, then you need to register it:
 
 .. configuration-block::
 
