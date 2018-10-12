@@ -646,13 +646,12 @@ a closure as the default value of the ``spool`` option with a :class:`Symfony\\C
 argument. Based on this instance, you can define the options under ``spool`` and its desired default
 value::
 
-    // ...
     class Mailer
     {
         // ...
+
         public function configureOptions(OptionsResolver $resolver)
         {
-            // ...
             $resolver->setDefault('spool', function (OptionsResolver $spoolResolver) {
                 $spoolResolver->setDefaults(array(
                     'type' => 'file',
@@ -683,20 +682,18 @@ normalization and more.
 If the default value of a child option depend on another option defined in parent level,
 adds a second ``Options`` argument to the closure::
 
-    // ...
     class Mailer
     {
         // ...
+
         public function configureOptions(OptionsResolver $resolver)
         {
-            // ...
             $resolver->setDefault('sandbox', false);
             $resolver->setDefault('spool', function (OptionsResolver $spoolResolver, Options $parent) {
                 $spoolResolver->setDefaults(array(
                     'type' => $parent['sandbox'] ? 'memory' : 'file',
                     // ...
                 ));
-                // ...
             });
         }
     }
@@ -708,19 +705,17 @@ adds a second ``Options`` argument to the closure::
 
 In same way, parent options can access the child option as follows::
 
-    // ...
     class Mailer
     {
         // ...
+
         public function configureOptions(OptionsResolver $resolver)
         {
-            // ...
             $resolver->setDefault('spool', function (OptionsResolver $spoolResolver) {
                 $spoolResolver->setDefaults(array(
                     'type' => 'file',
                     // ...
                 ));
-                // ...
             });
             $resolver->setDefault('profiling', function (Options $options) {
                 return 'file' === $options['spool']['type'];
