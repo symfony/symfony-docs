@@ -1,0 +1,56 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-08T15:34:22Z
+
+@Lreus thanks for this contribution! In theory, in Symfony 4.1 the right command is `./bin/phpunit` (this is created by the PhpUnitBridge recipe. See https://github.com/symfony/recipes/blob/master/symfony/phpunit-bridge/4.1/bin/phpunit)  Did you have some problem with this command? Doesn't . /bin/phpunit` work for you?
+
+---------------------------------------------------------------------------
+
+by Lreus at 2018-10-08T19:11:43Z
+
+@javiereguiluz
+Hello javiereguiluz I am glad if I can be of any help and i hope i won't make you waste your time.
+
+Indeed since i use PhpUnit in my job's Symfony project the command phpunit isn't available in the project bin directory after a  `composer require --dev symfony/phpunit-bridge` as mentionned at [https://symfony.com/doc/current/testing.html](url) .
+It seems logic as `ls -al ./bin` command only mention the "console" file
+
+In fact, the TestCase class  is not even available before i launch `./vendor/bin/simple-phpunit` as it installs some composer requirements
+
+I checked my original composer.json and it contains symfony/flex:^1.0 in its require section.
+If you need i think i may be able to provide you a version cleaned from our specific project repositories
+
+The answer in those links worked and made me think the documentation was outdated (Let me apologize if it not the case)
+ [https://stackoverflow.com/questions/47902541/symfony-how-to-correctly-switch-from-phpunit-phpunit-to-phpunit-bridge?rq=1](url)
+[https://stackoverflow.com/questions/47569173/how-to-configure-phpstorm-to-use-symfony-phpunit-bridge](url)
+
+Edit:
+I used your hints to ask for some help with a senior developper i am working with.
+It appears that we require symfony/phpunit-bridge in our project's composer.json file and that would make composer to not execute the symfony recipes on the first `composer install`.
+
+It seems that two solutions were available:
+
+- Removing the symfony.lock file after the git clone command allowed to execute the recipes after the first `composer install` and the file ./bin/phpunit was created.
+
+- If the project was already started removing and requiring again the bundle symfony/phpunit-bridge allowed to execute the recipes and created the command ./bin/phpunit
+
+Could it be usefull to write that if the command is missing the recipes may have not been executed ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-09T09:21:12Z
+
+Thanks for the additional details. They are useful! Indeed it's a common error to not have some files because some recipes haven't been executed. I think we should add one short note at the beginning of the main testing article, just after we use . /bin/phpunit` for the first time. Are you willing to add that note? Thanks!
+
+---------------------------------------------------------------------------
+
+by Lreus at 2018-10-09T11:23:11Z
+
+Indeed a tip explaining why the phpunit file may be missing could be useful.
+
+As said before I would be glad if I can be of any help. Do you want me to repeat the whole procedure and send a new pull request or shall i update that one ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-10-10T10:08:54Z
+
+You can just push changes to your branch to update the PR.
