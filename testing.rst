@@ -33,20 +33,11 @@ command:
 
 .. note::
 
-    If your project is missing the phpunit command in the ./bin directory, Symfony
-    may have not executed the required PhPUnitBridge recipes. This may occurs when
-    the bundle symfony/phpunit-bridge is part of your composer.json file and your 
-    starting project contains a symfony.lock file.
-    
-    Two options can be used to fix that problem:
-    
-        * Remove the symfony.lock file before doing the first ``composer install``
-        * Remove and require again the symfony/phpunit-bridge bundle:
-    
-.. code-block:: terminal
-
-        $ composer remove symfony/phpunit-bridge
-        $ composer require --dev symfony/phpunit-bridge
+    The ``./bin/phpunit`` command is created by :doc:`Symfony Flex </setup/flex>`
+    when installing the ``phpunit-bridge`` package. If the command is missing, you
+    can remove the package (``composer remove symfony/phpunit-bridge``) and install
+    it again. Another solution is to remove the project's ``symfony.lock`` file and
+    run ``composer install`` to force the execution of all Symfony Flex recipes.
 
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
 Symfony application.
