@@ -96,6 +96,11 @@ Once you've created your handler, you need to register it:
 
     If the message cannot be guessed from the handler's type-hint, use the
     ``handles`` attribute on the tag.
+    
+If you are using default Symfony configuration with autoconfiguration enabled, 
+you can also use special interface 
+``Symfony\Component\Messenger\Handler\MessageHandlerInterface``, which will
+cause Symfony to automatically register ``messenger.message_handler`` tag for you.
 
 Transports
 ----------
