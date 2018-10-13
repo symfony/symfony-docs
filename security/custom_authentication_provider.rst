@@ -12,9 +12,11 @@ How to Create a custom Authentication Provider
     keep reading unless you want to learn the lowest level details of
     authentication.
 
-If you have read the article on :doc:`/security`, you understand the
-distinction Symfony makes between authentication and authorization in the
-implementation of security. This article discusses the core classes involved
+Symfony provides support for the most
+:doc:`common authentication mechanisms </security/auth_providers>`. However, your
+app may need to integrated with some proprietary single-sing-on system or some
+legacy authentication mechanism. In those cases you could create a custom
+authentication provider. This article discusses the core classes involved
 in the authentication process, and how to implement a custom authentication
 provider. Because authentication and authorization are separate concepts,
 this extension will be user-provider agnostic, and will function with your

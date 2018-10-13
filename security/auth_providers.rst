@@ -29,6 +29,10 @@ use-case matches one of these exactly, they're a great option:
 HTTP Basic Authentication
 -------------------------
 
+`HTTP Basic authentication`_ asks credentials (username and password) using a dialog
+in the browser. The credentials are sent without any hashing or encryption, so
+it's recommended to use it with HTTPS.
+
 To support HTTP Basic authentication, add the ``http_basic`` key to your firewall:
 
 .. configuration-block::
@@ -72,7 +76,7 @@ To support HTTP Basic authentication, add the ``http_basic`` key to your firewal
 
             'firewalls' => array(
                 'main' => array(
-                    'http_basic'    => array(
+                    'http_basic' => array(
                         'realm' => 'Secured Area',
                     ),
                 ),
@@ -82,12 +86,16 @@ To support HTTP Basic authentication, add the ``http_basic`` key to your firewal
 That's it! Symfony will now be listening for any HTTP basic authentication data.
 To load user information, it will use your configured :doc:`user provider </security/user_provider>`.
 
+Note: you cannot use the :ref:`log out <security-logging-out>` with ``http_basic``.
+Even if you log out, your browser "remembers" your credentials and will send them
+on every request.
+
 .. _security-x509:
 
 X.509 Client Certificate Authentication
 ---------------------------------------
 
-When using client certificates, your webserver is doing all the authentication
+When using client certificates, your web server is doing all the authentication
 process itself. With Apache, for example, you would use the
 ``SSLVerifyClient Require`` directive.
 
@@ -121,6 +129,7 @@ Enable the x509 authentication for a particular firewall in the security configu
                 <!-- ... -->
 
                 <firewall name="main">
+                    <!-- ... -->
                     <x509 provider="your_user_provider" />
                 </firewall>
             </config>
@@ -134,7 +143,8 @@ Enable the x509 authentication for a particular firewall in the security configu
 
             'firewalls' => array(
                 'main' => array(
-                    'x509'    => array(
+                    // ...
+                    'x509' => array(
                         'provider' => 'your_user_provider',
                     ),
                 ),
@@ -165,7 +175,7 @@ in the x509 firewall configuration respectively.
 REMOTE_USER Based Authentication
 --------------------------------
 
-A lot of authentication modules, like ``auth_kerb`` for Apache provide the username
+A lot of authentication modules, like ``auth_kerb`` for Apache, provide the username
 using the ``REMOTE_USER`` environment variable. This variable can be trusted by
 the application since the authentication happened before the request reached it.
 
@@ -220,3 +230,5 @@ key in the ``remote_user`` firewall configuration.
     Just like for X509 authentication, you will need to configure a "user provider".
     See :ref:`the previous note <security-pre-authenticated-user-provider-note>`
     for more information.
+
+.. _`HTTP Basic authentication`: https://en.wikipedia.org/wiki/Basic_access_authentication

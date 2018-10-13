@@ -11,8 +11,8 @@ How to Force HTTPS or HTTP for different URLs
 
 You can force areas of your site to use the HTTPS protocol in the security
 config. This is done through the ``access_control`` rules using the ``requires_channel``
-option. For example, suppose you want to force all URLs starting with ``/secure``
-to use HTTPS as well as the login form:
+option. To enforce HTTPS on all URLs, add the ``requires_channel`` config to every
+access control:
 
 .. configuration-block::
 
@@ -25,6 +25,8 @@ to use HTTPS as well as the login form:
                 access_control:
                     - { path: ^/secure, roles: ROLE_ADMIN, requires_channel: https }
                     - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+                    # catch all other URLs
+                    - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
         .. code-block:: xml
 
@@ -41,6 +43,10 @@ to use HTTPS as well as the login form:
 
                     <rule path="^/secure" role="ROLE_ADMIN" requires_channel="https" />
                     <rule path="^/login"
+                        role="IS_AUTHENTICATED_ANONYMOUSLY"
+                        requires_channel="https"
+                    />
+                    <rule path="^/"
                         role="IS_AUTHENTICATED_ANONYMOUSLY"
                         requires_channel="https"
                     />
@@ -64,8 +70,17 @@ to use HTTPS as well as the login form:
                         'role'             => 'IS_AUTHENTICATED_ANONYMOUSLY',
                         'requires_channel' => 'https',
                     ),
+                    array(
+                        'path'             => '^/',
+                        'role'             => 'IS_AUTHENTICATED_ANONYMOUSLY',
+                        'requires_channel' => 'https',
+                    ),
                 ),
             ));
+
+To make life easier while developing, you can also use an environment variable,
+like ``requires_channel: '%env(SECURE_SCHEME)%'``. In your ``.env`` file, set
+``SECURE_SCHEME`` to ``http`` locally, but ``https`` on production.
 
 See :doc:`/security/access_control` for more details about ``access_control``
 in general.

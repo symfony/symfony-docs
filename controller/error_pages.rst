@@ -60,7 +60,7 @@ logic to determine the template filename:
    a generic template for the given format (like ``error.json.twig`` or
    ``error.xml.twig``);
 
-#. If none of the previous template exist, fall back to the generic HTML template
+#. If none of the previous templates exist, fall back to the generic HTML template
    (``error.html.twig``).
 
 .. _overriding-or-adding-templates:
@@ -69,7 +69,7 @@ To override these templates, rely on the standard Symfony method for
 :ref:`overriding templates that live inside a bundle <override-templates>` and
 put them in the ``templates/bundles/TwigBundle/Exception/`` directory.
 
-A typical project that returns HTML and JSON pages, might look like this:
+A typical project that returns HTML and JSON pages might look like this:
 
 .. code-block:: text
 
@@ -126,7 +126,7 @@ Security & 404 Pages
 --------------------
 
 Due to the order of how routing and security are loaded, security information will
-*not* be available on your 404 pages. This means that it will appear as if you're
+*not* be available on your 404 pages. This means that it will appear as if your
 user is logged out on the 404 page (it will work while testing, but not on production).
 
 .. _testing-error-pages:

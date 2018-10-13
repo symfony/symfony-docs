@@ -79,7 +79,7 @@ To switch back to the original user, use the special ``_exit`` username:
     http://example.com/somewhere?_switch_user=_exit
 
 This feature is only available to users with a special role called ``ROLE_ALLOWED_TO_SWITCH``.
-Using :ref:`role_hierarchy<security-role-hierarchy>` is a great way to give this
+Using :ref:`role_hierarchy <security-role-hierarchy>` is a great way to give this
 role to the users that need it.
 
 Knowing When Impersonation Is Active
@@ -98,7 +98,7 @@ to show a link to exit impersonation:
 Finding the Original User
 -------------------------
 
-In some cases you may need to get the object that represents the impersonator
+In some cases, you may need to get the object that represents the impersonator
 user rather than the impersonated user. Use the following snippet to iterate
 over the user's roles until you find one that is a ``SwitchUserRole`` object::
 

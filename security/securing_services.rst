@@ -8,9 +8,9 @@ How to Secure any Service or Method in your Application
 In the security article, you learned how to
 :ref:`secure a controller <security-securing-controller>` via a shortcut method.
 
-But, you can check access *anywhere* in your code by injection the ``Security``
+But, you can check access *anywhere* in your code by injecting the ``Security``
 service. For example, suppose you have a ``SalesReportManager`` service and you
-want to include extra details onlt for users that have some ``ROLE_SALES_ADMIN`` role:
+want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` role:
 
 .. code-block:: diff
 

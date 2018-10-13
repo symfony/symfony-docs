@@ -8,16 +8,16 @@ Whether you need to build a traditional login form, an API token authentication 
 or you need to integrate with some proprietary single-sign-on system, the Guard
 component can make it easy... and fun!
 
-Guard authentication can easily be used to
+Guard authentication can be used to:
 
 * :doc:`Build a Login Form </security/form_login_setup>`,
 * Create an API token authentication system (done on this page!)
 * `Social Authentication`_ (or use `HWIOAuthBundle`_ for a robust, but non-Guard solution)
 
-In this example, we'll build an API token authentication system so we can learn
-more about Guard in detail.
+or anything else you dream up. In this example, we'll build an API token authentication
+system so we can learn more about Guard in detail.
 
-Step 0) Prepare your User Class
+Step 1) Prepare your User Class
 -------------------------------
 
 Suppose you want to build an API where your clients will send an ``X-AUTH-TOKEN`` header
@@ -52,7 +52,7 @@ Don't forget to generate and execute the migration:
     $ php bin/console make:migration
     $ php bin/console doctrine:migrations:migrate
 
-Step 1) Create the Authenticator Class
+Step 2) Create the Authenticator Class
 --------------------------------------
 
 To create a custom authentication system, just create a class and make it implement
@@ -167,7 +167,7 @@ This requires you to implement several methods::
 
 Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods<guard-auth-methods>`.
 
-Step 2) Configure the Authenticator
+Step 3) Configure the Authenticator
 -----------------------------------
 
 To finish this, make sure your authenticator is registered as a service. If you're
@@ -406,17 +406,17 @@ completes registration. To do that, use your authenticator and a service called
 
     class RegistrationController extends AbstractController
     {
-        public function register(LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler, Request $reques)
+        public function register(LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler, Request $request)
         {
             // ...
-            // after validating the user and saving them to the database
 
+            // after validating the user and saving them to the database
             // authenticate the user and use onAuthenticationSuccess on the authenticator
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,          // the User object you just created
                 $request,
                 $authenticator, // authenticator whose onAuthenticationSuccess you want to use
-                'main'          // the name if your firewall in security.yaml
+                'main'          // the name of your firewall in security.yaml
             );
         }
     }
@@ -494,7 +494,7 @@ Frequently Asked Questions
 --------------------------
 
 **Can I have Multiple Authenticators?**
-    Yes! But when you do, you'll need choose just *one* authenticator to be your
+    Yes! But when you do, you'll need to choose just *one* authenticator to be your
     "entry_point". This means you'll need to choose *which* authenticator's ``start()``
     method should be called when an anonymous user tries to access a protected resource.
     For more details, see :doc:`/security/multiple_guard_authenticators`.

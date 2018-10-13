@@ -8,7 +8,8 @@ that has two jobs:
     At the beginning of each request (unless your firewall is ``stateless``), Symfony
     loads the ``User`` object from the session. To make sure it's not out-of-date,
     the user provider "refreshes it". The Doctrine user provider, for example,
-    queries the database for fresh data.
+    queries the database for fresh data. Symfony then checks to see if the user
+    has "changed" and de-authenticates the user if they have (see :ref:`user_session_refresh`).
 
 **Load the User for some Feature**
     Some features, like ``switch_user``, ``remember_me`` and many of the built-in
@@ -36,6 +37,7 @@ User providers are configured in ``config/packages/security.yaml`` under the
 
     # config/packages/security.yaml
     security:
+        # ...
         providers:
             # this becomes the internal name of the provider
             # not usually important, but can be used to specify which
@@ -85,6 +87,8 @@ generate a nice skeleton to get you started::
          * this method.
          *
          * @return UserInterface
+         *
+         * @throws UsernameNotFoundException if the user is not found
          */
         public function loadUserByUsername($username)
         {
@@ -113,8 +117,6 @@ generate a nice skeleton to get you started::
             if (!$user instanceof User) {
                 throw new UnsupportedUserException(sprintf('Invalid user class "%s".', get_class($user)));
             }
-
-            /* @var User $user */
 
             // Return a User object after making sure its data is "fresh".
             // Or throw a UsernameNotFoundException if the user no longer exists.

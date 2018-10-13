@@ -17,6 +17,7 @@ to apply to all instances of a specific class:
             encoders:
                 App\Entity\User:
                     algorithm: bcrypt
+                    cost: 12
 
     .. code-block:: xml
 
@@ -32,6 +33,7 @@ to apply to all instances of a specific class:
                 <!-- ... -->
                 <encoder class="App\Entity\User"
                     algorithm="bcrypt"
+                    cost=12
                 />
             </config>
         </srv:container>
@@ -46,6 +48,7 @@ to apply to all instances of a specific class:
             'encoders' => array(
                 User::class => array(
                     'algorithm' => 'bcrypt',
+                    'cost' => 12,
                 ),
             ),
         ));

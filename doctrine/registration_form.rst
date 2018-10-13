@@ -23,12 +23,12 @@ Your ``User`` entity will probably at least have the following fields:
 
 ``username``
     This will be used for logging in, unless you instead want your user to
-    :ref:`login via email <registration-form-via-email>` (in that case, this
+    :ref:`log in via email <registration-form-via-email>` (in that case, this
     field is unnecessary).
 
 ``email``
     A nice piece of information to collect. You can also allow users to
-    :ref:`login via email <registration-form-via-email>`.
+    :ref:`log in via email <registration-form-via-email>`.
 
 ``password``
     The encoded password.
@@ -418,9 +418,7 @@ us to add validation, even though there is no ``termsAccepted`` property on ``Us
 Manually Authenticating after Success
 -------------------------------------
 
-If you're using Guard authentication, you can :ref:`automatically authenticate<guard-manual-auth>`
+If you're using Guard authentication, you can :ref:`automatically authenticate <guard-manual-auth>`
 after registration is successful.
 
-.. _`CVE-2013-5750`: https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
-.. _`FOSUserBundle`: https://github.com/FriendsOfSymfony/FOSUserBundle
 .. _`bcrypt`: https://en.wikipedia.org/wiki/Bcrypt

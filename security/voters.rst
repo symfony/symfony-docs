@@ -232,7 +232,7 @@ with ``ROLE_SUPER_ADMIN``::
             // ...
 
             // ROLE_SUPER_ADMIN can do anything! The power!
-            if ($this->securit->isGranted('ROLE_SUPER_ADMIN')) {
+            if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
                 return true;
             }
 
