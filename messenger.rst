@@ -451,8 +451,9 @@ that you can inject in your services.
 
 .. note::
 
-    To register a handler for only a specific bus, add a tag called ``bus`` with the
-    name of this bus as value to the handler's service definition.
+    To register a handler for only a specific bus, add a ``bus`` attribute having the
+    name of this bus as value to the ``messenger.message_handler`` tag in the handler's
+    service definition.
 
 Type-hints and Auto-wiring
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
