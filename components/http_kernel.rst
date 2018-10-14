@@ -548,7 +548,7 @@ below for more details).
 .. note::
 
     When setting a response for the ``kernel.exception`` event in order for the 
-    HttpKernel to use the Status Code of the response the :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent::allowCustomResponseCode` must be called first.
+    HttpKernel to use the Status Code of the response the :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent::allowCustomResponseCode` must be called inside your listener.
 
 .. sidebar:: ``kernel.exception`` in the Symfony Framework
 
