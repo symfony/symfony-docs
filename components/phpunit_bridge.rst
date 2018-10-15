@@ -288,6 +288,54 @@ test::
 
 And that's all!
 
+.. caution::
+
+    The ``@group time-sensitive`` annotation is equivalent to ``ClockMock::register(MyTest::class)``,
+    so if you want to get a time-based function mocked into another class you will need to
+    add it explicitly using ``ClockMock::register(MyClass::class)``. The ``ClockMock::register`` method
+    creates a mock of the time based functions into the same namespace as your class. So when using
+    ``time()`` you will use the mock instead of the default one::
+
+        namespace App;
+
+        class MyClass
+        {
+            public function getTimeInHours()
+            {
+                return time() / 3600;
+            }
+        }
+
+    .. code-block:: php
+
+        namespace App\Tests;
+
+        use App\MyClass;
+        use PHPUnit\Framework\TestCase;
+
+        /**
+         * @group time-sensitive
+         */
+        class MyTest extends TestCase
+        {
+            public function testGetTimeInHours()
+            {
+                ClockMock::register(MyClass::class);
+
+                $my = new MyClass();
+
+                $result = $my->getTimeInHours();
+
+                $this->assertEquals(time() / 3600, $result);
+            }
+        }
+
+.. caution::
+
+    Keep in mind that mocking is done by using the namespace resolutions rules
+    (http://php.net/manual/en/language.namespaces.rules.php). So time-based functions need to be used as
+    "Unqualified name", i.e. ``\time()`` cannot be mocked.
+
 .. tip::
 
     An added bonus of using the ``ClockMock`` class is that time passes
