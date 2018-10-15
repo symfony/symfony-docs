@@ -1,0 +1,140 @@
+---------------------------------------------------------------------------
+
+by ricknox at 2018-10-15T09:36:45Z
+
+I am not sure if you want to run this detached `-d`?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-15T09:39:11Z
+
+I don't even know what `-d` means. I just Googled for this because the previous command didn't work for me. The new command worked for me. But I don't understand anything.
+
+That's why we need a Docker expert to show their experience and tell us: *"you must run this other command instead. It's the right one and it will always run correctly."* Thanks!
+
+---------------------------------------------------------------------------
+
+by andrewmy at 2018-10-15T09:39:57Z
+
+`--rm` removes the container after use, I think it's a needed option.
+The real fix would be putting a space between `-p` and `80:80` in the original instruction, I guess. Have to check though.
+
+---------------------------------------------------------------------------
+
+by dkarlovi at 2018-10-15T09:54:23Z
+
+```
+docker run -d -p 80:80 --name symfony-docs symfony-docs
+```
+
+should be correct.
+
+Note, you can have collisions on both name and port (if they're taken in host's scope). I'd recommend using some other port on host since you don't care either way.
+
+```
+$ docker run --name test-nginx -d -p 1337:80 nginx:alpine
+# now available at http://127.0.0.1:1337/
+$ docker stop test-nginx
+# no longer available, container stopped
+$ docker start test-nginx
+# available again
+$ docker stop test-nginx
+$ docker rm test-nginx
+# container removed, image stays
+$ docker rmi nginx:alpine
+# image no longer available
+```
+
+---------------------------------------------------------------------------
+
+by dkarlovi at 2018-10-15T10:02:38Z
+
+BTW if the image is only meant as a build utility, you can probably provide it from Docker Hub instead of having the user build their own, that way they just start your image on their machine and start working on the docs.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-15T10:09:42Z
+
+@dkarlovi I've just run your command and it didn't work for me :(
+
+```
+docker: Error response from daemon: Conflict. The container name "/symfony-docs"
+is already in use by container
+"66a9fed92612387aa9c55e3da130966db91dbbc5024d07c5ac340ae9c21d095f". You have to
+remove (or rename) that container to be able to reuse that name.
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-15T10:10:32Z
+
+And the original command failed because of this error:
+
+```
+docker: Error response from daemon: driver failed programming external connectivity on endpoint distracted_curran
+(75420f310b5a1d112b9d0a7c2ac297c57b6676dcad4f1902d3d2bad48d06b43c): Error starting
+userland proxy: listen tcp 0.0.0.0:80: bind: address already in use.
+```
+
+---------------------------------------------------------------------------
+
+by andrewmy at 2018-10-15T10:17:47Z
+
+You already got the container running, and thus can't use the same name and port. `--rm` option would remove it after exiting.
+For now, you can do `docker stop symfony-docs`
+
+So it looks like:
+- the instruction also needs a note about choosing the port because 80 might be already taken;
+- `--rm` option is useful for this kind of temporary work;
+- `-d` (detached) option is not useful because then you need a separate command to stop it.
+
+The best approach would be creating an image on Docker hub which you could just pull and run.
+The quickest solution would be:
+- add a note about the desired port;
+- `docker run --rm -p <YOUR_PORT>:80 symfony-docs`
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-15T10:29:22Z
+
+Thank you all for your help! I appreciate a lot the explanations. Thanks!
+
+I've tested everything and it seems that the original command worked ... except that I needed to add the white space as @andrewmy suggested.
+
+---------------------------------------------------------------------------
+
+by dkarlovi at 2018-10-15T11:01:08Z
+
+@javiereguiluz consider getting hold of this account: https://hub.docker.com/r/symfony/
+
+This would allow you to do
+
+```
+# note: Docker Hub allows for this to be fully automated and the images kept up to date
+docker build . -t symfony/symfony-docs
+docker push symfony/symfony-docs
+```
+
+Now your instructions can be:
+
+```
+docker run --rm --detach -p 1337:80 symfony/symfony-docs
+```
+
+I'd even go a step further and do what I usually do: add a `Makefile` in project root to allow you to:
+
+```
+# this one does all the required steps
+make docs-server-start
+
+# do work on the docs, not worrying about the infra required
+
+# shut down & remove the server when done since it's not needed anymore
+make docs-server-stop
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-15T13:59:23Z
+
+@dkarlovi we're going to try to recover the `symfony` Docker ID. Thanks for the heads up. Regarding the other comments, I agree ... but we're in the middle of an internal project to change some important things about Symfony Docs. I don't know if we'll make it, but if we do, we'll revisit this idea to make local builds much easier. Thanks!
