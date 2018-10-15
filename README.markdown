@@ -30,5 +30,5 @@ You can build the doc locally with these commands:
 $ docker build . -t symfony-docs
 
 # ...and serve it locally on http//:127.0.0.1
-$ docker run --rm -p80:80 symfony-docs
+$ docker run -d -p 127.0.0.1:80:80 --name symfony-docs symfony-docs
 ```
