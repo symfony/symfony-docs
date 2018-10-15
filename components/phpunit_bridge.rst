@@ -352,6 +352,48 @@ test::
 
 And that's all!
 
+.. caution::
+
+    Time-based function mocking follows the `PHP namespace resolutions rules`_
+    so "fully qualified function calls" (e.g ``\time()``) cannot be mocked.
+
+The ``@group time-sensitive`` annotation is equivalent to calling
+``ClockMock::register(MyTest::class)``. If you want to mock a function used in a
+different class, do it explicitly using ``ClockMock::register(MyClass::class)``::
+
+    // the class that uses the time() function to be mocked
+    namespace App;
+
+    class MyClass
+    {
+        public function getTimeInHours()
+        {
+            return time() / 3600;
+        }
+    }
+
+    // the test that mocks the external time() function explicitly
+    namespace App\Tests;
+
+    use App\MyClass;
+    use PHPUnit\Framework\TestCase;
+
+    /**
+     * @group time-sensitive
+     */
+    class MyTest extends TestCase
+    {
+        public function testGetTimeInHours()
+        {
+            ClockMock::register(MyClass::class);
+
+            $my = new MyClass();
+            $result = $my->getTimeInHours();
+
+            $this->assertEquals(time() / 3600, $result);
+        }
+    }
+
 .. tip::
 
     An added bonus of using the ``ClockMock`` class is that time passes
@@ -631,3 +673,4 @@ not find the SUT:
 .. _`Travis CI`: https://travis-ci.org/
 .. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
 .. _`@covers`: https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.covers
+.. _`PHP namespace resolutions rules`: https://php.net/manual/en/language.namespaces.rules.php
