@@ -57,7 +57,7 @@ Now, download Bootstrap_, extract the archive and copy the file
 ``dist/css/bootstrap.min.css`` in the ``public/`` directory of our
 project.
 
-Symfony comes with a `nice integration of the most popular CSS framework`_.
+Symfony comes with `an integration of the most popular CSS framework`_.
 
 .. note::
 
@@ -262,7 +262,7 @@ Thanks to Symfony WebLink, there is no excuses to not to switch to HTTP/2!
 .. _`Twig`: https://twig.symfony.com/
 .. _`Docker installer and runtime for Symfony`: https://github.com/dunglas/symfony-docker
 .. _`Bootstrap`: https://getbootstrap.com/
-.. _`nice integration with of the most popular CSS framework`: https://symfony.com/blog/new-in-symfony-3-4-bootstrap-4-form-theme
+.. _`an integration of the most popular CSS framework`: https://symfony.com/blog/new-in-symfony-3-4-bootstrap-4-form-theme
 .. _`preload`: https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
 .. _`the Preload specification`: https://www.w3.org/TR/preload/#server-push-(http/2)
 .. _`Cloudflare`: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
