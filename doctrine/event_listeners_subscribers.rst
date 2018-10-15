@@ -272,7 +272,6 @@ to the tag like so:
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
 .. _`the Doctrine Documentation`: https://symfony.com/doc/current/bundles/DoctrineBundle/entity-listeners.html
 
-
 Priorities for Event Listeners
 ------------------------------
 
