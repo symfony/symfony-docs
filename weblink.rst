@@ -10,29 +10,21 @@ W3C's `Resource Hints`_, the WebLink component
 brings great opportunities to boost webapp's performance.
 
 Thanks to WebLink, HTTP/2 (**h2**) servers are able to push resources to clients
-before they even know that they need them (think to CSS or JavaScript
+before they even know that they need them (think about CSS or JavaScript
 files, or relations of an API resource). WebLink also enables other very
-efficient optimisations that work with HTTP 1:
+efficient optimisations that work with HTTP 1.x:
 
 -  telling the browser to fetch or to render another webpage in the
    background ;
--  init early DNS lookups, TCP handshakes or TLS negotiations
+-  initializing early DNS lookups, TCP handshakes or TLS negotiations
 
-Let's discover how easy it is to use it and the real life benefits you
-can expect.
-
-To benefit from HTTP/2 Server Pushes, a HTTP/2 server and a HTTPS connection
-are mandatory (even in local).
+To benefit from HTTP/2 Server Pushes, an HTTP/2 server and an HTTPS connection
+are required (even local ones).
 Both Apache, Nginx and Caddy support these protocols.
 Be sure they are properly configured before reading.
 
 Alternatively, you can use the `Docker installer and runtime for
 Symfony`_ provided by Kévin Dunglas (community supported).
-
-It includes everything you need to run Symfony
-(PHP :doc:`configured properly for Symfony </performance>`, and Composer)
-as well as a development reverse proxy (Apache) supporting HTTP/2 Server Push
-and HTTPS (most clients only support HTTP/2 over TLS).
 
 Unzip the downloaded archive, open a shell in the resulting directory and run
 the following command:
@@ -65,7 +57,7 @@ Now, download Bootstrap_, extract the archive and copy the file
 ``dist/css/bootstrap.min.css`` in the ``public/`` directory of our
 project.
 
-Symfony comes with a `nice integration with of the most popular CSS framework`_.
+Symfony comes with a `nice integration of the most popular CSS framework`_.
 
 .. note::
 
@@ -75,8 +67,9 @@ Symfony comes with a `nice integration with of the most popular CSS framework`_.
 
 Now, it's time to create the template of our homepage:
 
-.. code-block:: html
+.. code-block:: twig
 
+   {# templates/homepage.html.twig #}
    <!DOCTYPE html>
    <html>
    <head>
@@ -104,7 +97,7 @@ And finally, register our new template as the homepage using the builtin
          _controller: 'Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction'
          template: 'homepage.html.twig'
 
-Refresh your browser, this nice homepage should appear:
+Refresh your browser, this homepage should appear:
 
 .. image:: /_images/components/weblink/homepage-requests.png
 
@@ -142,13 +135,13 @@ responses have been sent directly by the server.
 
 .. note::
 
-    Google Chrome provides a nice interface to debug HTTP/2 connections.
+    Google Chrome provides an interface to debug HTTP/2 connections.
     Open ``chrome://net-internals/#http2`` to start the tool.
 
 How does it works?
 ~~~~~~~~~~~~~~~~~~
 
-The WebLink component tracks Link HTTP headers to add to the response.
+The WebLink component tracks ``Link`` HTTP headers to add to the response.
 When using the ``preload()`` helper, a ``Link`` header
 with a `preload`_
 ``rel`` attribute is added to the response:
@@ -156,7 +149,7 @@ with a `preload`_
 .. image:: /_images/components/weblink/response-headers.png
 
 According to `the Preload specification`_,
-when a HTTP/2 server detects that the original (HTTP 1) response
+when an HTTP/2 server detects that the original (HTTP 1.x) response
 contains this HTTP header, it will automatically trigger a push for the
 related file in the same HTTP/2 connection.
 The Apache server provided in the Docker setup supports this feature.
@@ -183,7 +176,7 @@ known issues, cache implications and the state of the support in popular
 browsers.
 
 In addition to HTTP/2 Push and preloading, the WebLink component also
-provide some helpers to send `Resource
+provides some helpers to send `Resource
 Hints <https://www.w3.org/TR/resource-hints/#resource-hints>`__ to
 clients, the following helpers are available:
 
