@@ -63,24 +63,61 @@ then some tags are automatically applied for you. That's true for the ``twig.ext
 tag: the container sees that your class extends ``AbstractExtension`` (or more accurately,
 that it implements ``ExtensionInterface``) and adds the tag for you.
 
-.. tip::
+If you want to apply tags automatically for your own services, use the
+``_instanceof`` option::
 
-    To apply a tag to all your autoconfigured services extending a class or implementing an
-    interface, call the :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration`
-    method in an :doc:`extension </bundles/extension>` or from your kernel::
+.. configuration-block::
 
-        // app/AppKernel.php
-        class AppKernel extends Kernel
+    .. code-block:: yaml
+
+        # app/config/services.yml
+        services:
+            # this config only applies to the services created by this file
+            _instanceof:
+                # services whose classes are instances of CustomInterface will be tagged automatically
+                AppBundle\Security\CustomInterface:
+                    tags: ['app.custom_tag']
+            # ...
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="utf-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+            <services>
+                <!-- this config only applies to the services created by this file -->
+                <instanceof id="AppBundle\Security\CustomInterface" autowire="true">
+                    <!-- services whose classes are instances of CustomInterface will be tagged automatically -->
+                    <tag name="app.custom_tag" />
+                </instanceof>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use AppBundle\Security\CustomInterface;
+        // ...
+
+        // services whose classes are instances of CustomInterface will be tagged automatically
+        $container->registerForAutoconfiguration(CustomInterface::class)
+            ->addTag('app.custom_tag')
+            ->setAutowired(true);
+
+For more advanced needs, you can define the automatic tags using the
+:method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration`
+method in an :doc:`extension </bundles/extension>` or from your kernel::
+
+    // app/AppKernel.php
+    class AppKernel extends Kernel
+    {
+        // ...
+
+        protected function build(ContainerBuilder $container)
         {
-            // ...
-
-            protected function build(ContainerBuilder $container)
-            {
-                $container->registerForAutoconfiguration(CustomInterface::class)
-                    ->addTag('app.custom_tag')
-                ;
-            }
+            $container->registerForAutoconfiguration(CustomInterface::class)
+                ->addTag('app.custom_tag')
+            ;
         }
+    }
 
 Creating custom Tags
 --------------------
