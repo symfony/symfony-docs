@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-07-30T14:20:33Z
+
+@marfillaster thanks for this contribution! Could you please share the requirements and exact steps one must follow to use this?
+
+I guess the requirements is only to download and install Docker community edition from https://www.docker.com/get-docker but then ... which exact commands should I execute to run this? Thanks!
+
+---------------------------------------------------------------------------
+
+by marfillaster at 2018-07-30T15:08:16Z
+
+Added the requirement and how to run
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-08-09T13:39:23Z
+
+I'm really interested in adding simple Docker support for this repository. However, I'd like to ask you about the proposal to include "watchman" too. Although is cool that you change some file and docs are built automatically ... I don't think it's that bad to run that command manually yourself. So, could we remove "watchman" in order to simplify things and easy future maintenance? Thanks!
+
+---------------------------------------------------------------------------
+
+by marfillaster at 2018-08-13T05:20:32Z
+
+Hi @javiereguiluz
+
+I removed  watchman and docker-compose to simplify.
+
+Bonus: project is [now](https://zeit.co/marfillaster/symfony-docs/cagylmsnqh) compatible
