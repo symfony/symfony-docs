@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-15T07:02:20Z
+
+We changed this several times, but the current recipe (https://github.com/symfony/recipes/blob/master/doctrine/annotations/1.0/config/routes/annotations.yaml) does the same as this PR, so let's merge it. @nicoweb thanks for fixing this!
