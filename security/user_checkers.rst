@@ -55,6 +55,9 @@ are not met, an exception should be thrown which extends the
         }
     }
 
+.. tip:: To show a custom message, extend the 
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccountStatusException` and override ``getMessageKey`` to return the custom message.
+
 Enabling the Custom User Checker
 --------------------------------
 
