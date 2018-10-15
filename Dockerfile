@@ -14,5 +14,3 @@ RUN make -C _build html
 FROM  nginx:latest
 
 COPY --from=builder /www/_build/html /usr/share/nginx/html
-
-
