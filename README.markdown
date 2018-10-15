@@ -19,3 +19,20 @@ Platform.sh
 -----------
 
 Pull requests are automatically built by [Platform.sh](https://platform.sh).
+
+Docker
+------
+
+If you have Docker 17.05+ installed, you can build an image.
+
+```
+$ docker build . -t symfony-docs
+```
+
+The built image may be served locally on [http//:127.0.0.1](http//:127.0.0.1) by running the command below.
+
+```
+$ docker run --rm -p80:80 symfony-docs
+```
+
+
