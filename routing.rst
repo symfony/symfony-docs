@@ -234,7 +234,7 @@ with a locale. This can be done by defining a different prefix for each locale
 
         # config/routes/annotations.yaml
         controllers:
-            resource: '../src/Controller/'
+            resource: '../../src/Controller/'
             type: annotation
             prefix:
                 en: '' # don't prefix URLs for English, the default locale

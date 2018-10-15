@@ -69,7 +69,7 @@ Additionally, you have access to a number of functions inside the expression:
 
 .. sidebar:: ``is_remember_me`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
 
-    The ``is_remember_me()`` and ``is_authenticated_fully()`` functions are *similar*
+    The ``is_remember_me()`` and ``is_fully_authenticated()`` functions are *similar*
     to using ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``
     with the ``isGranted()`` function - but they are **not** the same. The
     following controller snippet shows the difference::

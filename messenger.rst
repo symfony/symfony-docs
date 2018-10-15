@@ -449,6 +449,12 @@ this:
 This will generate the ``messenger.bus.commands`` and ``messenger.bus.events`` services
 that you can inject in your services.
 
+.. note::
+
+    To register a handler only for a specific bus, add a ``bus`` attribute to
+    the handler's service tag (``messenger.message_handler``) and use the bus
+    name as its value.
+
 Type-hints and Auto-wiring
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
