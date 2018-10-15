@@ -15,17 +15,17 @@ form, you can use ``setAction()`` and ``setMethod()``:
 
     .. code-block:: php-symfony
 
-        // AppBundle/Controller/DefaultController.php
-        namespace AppBundle\Controller;
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\SubmitType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
 
-        class DefaultController extends Controller
+        class DefaultController extends AbstractController
         {
-            public function newAction()
+            public function new()
             {
                 // ...
 
@@ -77,15 +77,15 @@ options:
 
     .. code-block:: php-symfony
 
-        // AppBundle/Controller/DefaultController.php
-        namespace AppBundle\Controller;
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-        use AppBundle\Form\TaskType;
+        use App\Form\TaskType;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-        class DefaultController extends Controller
+        class DefaultController extends AbstractController
         {
-            public function newAction()
+            public function new()
             {
                 // ...
 
@@ -100,8 +100,8 @@ options:
 
     .. code-block:: php-standalone
 
+        use App\Form\TaskType;
         use Symfony\Component\Form\Forms;
-        use AppBundle\Form\TaskType;
 
         $formFactoryBuilder = Forms::createFormFactoryBuilder();
 
@@ -119,7 +119,7 @@ to the ``form()`` or the ``form_start()`` helper functions:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/default/new.html.twig #}
+    {# templates/default/new.html.twig #}
     {{ form_start(form, {'action': path('target_route'), 'method': 'GET'}) }}
 
 .. note::

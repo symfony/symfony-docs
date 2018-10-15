@@ -18,11 +18,10 @@ It comes with the following features:
 
 * Displays the stack trace of a deprecation on-demand;
 
-* Provides a ``ClockMock`` helper class for time-sensitive tests.
+* Provides a ``ClockMock`` and ``DnsMock`` helper classes for time or network-sensitive tests.
 
-.. versionadded:: 2.7
-    The PHPUnit Bridge was introduced in Symfony 2.7. It is however possible to
-    install the bridge in any Symfony application (even 2.3).
+* Provides a modified version of PHPUnit that does not embed ``symfony/yaml`` nor
+  ``prophecy`` to prevent any conflicts with these dependencies.
 
 Installation
 ------------
@@ -41,6 +40,24 @@ Alternatively, you can clone the `<https://github.com/symfony/phpunit-bridge>`_ 
     Symfony components, even across different major versions of them. You should
     always use its very latest stable major version to get the most accurate
     deprecation report.
+
+If you plan to :ref:`write-assertions-about-deprecations` and use the regular
+PHPUnit script (not the modified PHPUnit script provided by Symfony), you have
+to register a new `test listener`_ called ``SymfonyTestsListener``:
+
+.. code-block:: xml
+
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        </listeners>
+    </phpunit>
 
 Usage
 -----
@@ -64,10 +81,10 @@ After running your PHPUnit tests, you will get a report similar to this one:
 
 .. code-block:: terminal
 
-    $ phpunit -c app
+    $ ./vendor/bin/simple-phpunit
       PHPUnit by Sebastian Bergmann.
 
-      Configuration read from <your-project>/app/phpunit.xml.dist
+      Configuration read from <your-project>/phpunit.xml.dist
       .................
 
       Time: 1.77 seconds, Memory: 5.75Mb
@@ -77,8 +94,8 @@ After running your PHPUnit tests, you will get a report similar to this one:
       Remaining deprecation notices (2)
 
       getEntityManager is deprecated since Symfony 2.1. Use getManager instead: 2x
-        1x in DefaultControllerTest::testPublicUrls from AppBundle\Tests\Controller
-        1x in BlogControllerTest::testIndex from AppBundle\Tests\Controller
+        1x in DefaultControllerTest::testPublicUrls from App\Tests\Controller
+        1x in BlogControllerTest::testIndex from App\Tests\Controller
 
 The summary includes:
 
@@ -154,15 +171,15 @@ message, enclosed with ``/``. For example, with:
 
 .. code-block:: xml
 
-    <!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
     <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
     >
 
         <!-- ... -->
 
         <php>
-            <server name="KERNEL_DIR" value="app/" />
+            <server name="KERNEL_CLASS" value="App\Kernel" />
             <env name="SYMFONY_DEPRECATIONS_HELPER" value="/foobar/" />
         </php>
     </phpunit>
@@ -171,15 +188,65 @@ PHPUnit_ will stop your test suite once a deprecation notice is triggered whose
 message contains the ``"foobar"`` string.
 
 Making Tests Fail
------------------
+~~~~~~~~~~~~~~~~~
 
-By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation notices will
-make tests fail. Alternatively, setting ``SYMFONY_DEPRECATIONS_HELPER`` to an
-arbitrary value (ex: ``320``) will make the tests fails only if a higher number
-of deprecation notices is reached (``0`` is the default value). You can also set
-the value ``"weak"`` which will make the bridge ignore any deprecation notices.
-This is useful to projects that must use deprecated interfaces for backward
-compatibility reasons.
+By default, any non-legacy-tagged or any non-`@-silenced`_ deprecation notices
+will make tests fail. Alternatively, setting ``SYMFONY_DEPRECATIONS_HELPER`` to
+an arbitrary value (ex: ``320``) will make the tests fails only if a higher
+number of deprecation notices is reached (``0`` is the default value). You can
+also set the value ``"weak"`` which will make the bridge ignore any deprecation
+notices. This is useful to projects that must use deprecated interfaces for
+backward compatibility reasons.
+
+When you maintain a library, having the test suite fail as soon as a dependency
+introduces a new deprecation is not desirable, because it shifts the burden of
+fixing that deprecation to any contributor that happens to submit a pull
+request shortly after a new vendor release is made with that deprecation. To
+mitigate this, you can either use tighter requirements, in the hope that
+dependencies will not introduce deprecations in a patch version, or even commit
+the Composer lock file, which would create another class of issues. Libraries
+will often use ``SYMFONY_DEPRECATIONS_HELPER=weak`` because of this. This has
+the drawback of allowing contributions that introduce deprecations but:
+
+* forget to fix the deprecated calls if there are any;
+* forget to mark appropriate tests with the ``@group legacy`` annotations.
+
+By using the ``"weak_vendors"`` value, deprecations that are triggered outside
+the ``vendors`` directory will make the test suite fail, while deprecations
+triggered from a library inside it will not, giving you the best of both
+worlds.
+
+Disabling the Deprecation Helper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled`` to
+completely disable the deprecation helper. This is useful to make use of the
+rest of features provided by this component without getting errors or messages
+related to deprecations.
+
+.. _write-assertions-about-deprecations:
+
+Write Assertions about Deprecations
+-----------------------------------
+
+When adding deprecations to your code, you might like writing tests that verify
+that they are triggered as required. To do so, the bridge provides the
+``@expectedDeprecation`` annotation that you can use on your test methods.
+It requires you to pass the expected message, given in the same format as for
+the `PHPUnit's assertStringMatchesFormat()`_ method. If you expect more than one
+deprecation message for a given test method, you can use the annotation several
+times (order matters)::
+
+    /**
+     * @group legacy
+     * @expectedDeprecation This "%s" method is deprecated.
+     * @expectedDeprecation The second argument of the "%s" method is deprecated.
+     */
+    public function testDeprecatedCode()
+    {
+        @trigger_error('This "Foo" method is deprecated.', E_USER_DEPRECATED);
+        @trigger_error('The second argument of the "Bar" method is deprecated.', E_USER_DEPRECATED);
+    }
 
 Display the Full Stack Trace
 ----------------------------
@@ -200,10 +267,7 @@ Running the following command will display the full stack trace:
     $ SYMFONY_DEPRECATIONS_HELPER='/Doctrine\\Common\\ClassLoader is deprecated\./' ./vendor/bin/simple-phpunit
 
 Time-sensitive Tests
----------------------
-
-.. versionadded:: 2.8
-    Support for clock mocking was introduced in Symfony 2.8.
+--------------------
 
 Use Case
 ~~~~~~~~
@@ -296,17 +360,98 @@ And that's all!
     advances the internal clock the given number of seconds without actually
     waiting that time, so your test will execute 10 seconds faster.
 
+DNS-sensitive Tests
+-------------------
+
+Tests that make network connections, for example to check the validity of a DNS
+record, can be slow to execute and unreliable due to the conditions of the
+network. For that reason, this component also provides mocks for these PHP
+functions:
+
+* :phpfunction:`checkdnsrr`
+* :phpfunction:`dns_check_record`
+* :phpfunction:`getmxrr`
+* :phpfunction:`dns_get_mx`
+* :phpfunction:`gethostbyaddr`
+* :phpfunction:`gethostbyname`
+* :phpfunction:`gethostbynamel`
+* :phpfunction:`dns_get_record`
+
+Use Case
+~~~~~~~~
+
+Consider the following example that uses the ``checkMX`` option of the ``Email``
+constraint to test the validity of the email domain::
+
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Component\Validator\Constraints\Email;
+
+    class MyTest extends TestCase
+    {
+        public function testEmail()
+        {
+            $validator = ...
+            $constraint = new Email(array('checkMX' => true));
+
+            $result = $validator->validate('foo@example.com', $constraint);
+
+            // ...
+    }
+
+In order to avoid making a real network connection, add the ``@dns-sensitive``
+annotation to the class and use the ``DnsMock::withMockedHosts()`` to configure
+the data you expect to get for the given hosts::
+
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Component\Validator\Constraints\Email;
+
+    /**
+     * @group dns-sensitive
+     */
+    class MyTest extends TestCase
+    {
+        public function testEmails()
+        {
+            DnsMock::withMockedHosts(array('example.com' => array(array('type' => 'MX'))));
+
+            $validator = ...
+            $constraint = new Email(array('checkMX' => true));
+
+            $result = $validator->validate('foo@example.com', $constraint);
+
+            // ...
+    }
+
+The ``withMockedHosts()`` method configuration is defined as an array. The keys
+are the mocked hosts and the values are arrays of DNS records in the same format
+returned by :phpfunction:`dns_get_record`, so you can simulate diverse network
+conditions::
+
+    DnsMock::withMockedHosts(array(
+        'example.com' => array(
+            array(
+                'type' => 'A',
+                'ip' => '1.2.3.4',
+            ),
+            array(
+                'type' => 'AAAA',
+                'ipv6' => '::12',
+            ),
+        ),
+    ));
+
 Troubleshooting
-~~~~~~~~~~~~~~~
+---------------
 
-The ``@group time-sensitive`` works "by convention" and assumes that the
-namespace of the tested class can be obtained just by removing the ``Tests\``
-part from the test namespace. I.e. that if the your test case fully-qualified
-class name (FQCN) is ``App\Tests\Watch\DummyWatchTest``, it assumes the tested
-class namespace is ``App\Watch``.
+The ``@group time-sensitive`` and ``@group dns-sensitive`` annotations work
+"by convention" and assume that the namespace of the tested class can be
+obtained just by removing the ``Tests\`` part from the test namespace. I.e.
+that if the your test case fully-qualified class name (FQCN) is
+``App\Tests\Watch\DummyWatchTest``, it assumes the tested class namespace
+is ``App\Watch``.
 
-If this convention doesn't work for your application, you can also configure
-the mocked namespaces in the ``phpunit.xml`` file, as done for example in the
+If this convention doesn't work for your application, configure the mocked
+namespaces in the ``phpunit.xml`` file, as done for example in the
 :doc:`HttpKernel Component </components/http_kernel>`:
 
 .. code-block:: xml
@@ -329,11 +474,162 @@ the mocked namespaces in the ``phpunit.xml`` file, as done for example in the
         </listeners>
     </phpunit>
 
+Modified PHPUnit script
+-----------------------
+
+This bridge provides a modified version of PHPUnit that you can call by using
+its ``bin/simple-phpunit`` command. It has the following features:
+
+* Does not embed ``symfony/yaml`` nor ``prophecy`` to prevent any conflicts with
+  these dependencies;
+* Uses PHPUnit 4.8 when run with PHP <=5.5, PHPUnit 5.7 when run with PHP >=5.6
+  and PHPUnit 6.5 when run with PHP >=7.2;
+* Collects and replays skipped tests when the ``SYMFONY_PHPUNIT_SKIPPED_TESTS``
+  env var is defined: the env var should specify a file name that will be used for
+  storing skipped tests on a first run, and replay them on the second run;
+* Parallelizes test suites execution when given a directory as argument, scanning
+  this directory for ``phpunit.xml.dist`` files up to ``SYMFONY_PHPUNIT_MAX_DEPTH``
+  levels (specified as an env var, defaults to ``3``);
+
+The script writes the modified PHPUnit it builds in a directory that can be
+configured by the ``SYMFONY_PHPUNIT_DIR`` env var, or in the same directory as
+the ``simple-phpunit`` if it is not provided.
+
+It's also possible to set this env var in the ``phpunit.xml.dist`` file.
+
+If you have installed the bridge through Composer, you can run it by calling e.g.:
+
+.. code-block:: bash
+
+    $ vendor/bin/simple-phpunit
+
+.. tip::
+
+    Set the ``SYMFONY_PHPUNIT_VERSION`` env var to e.g. ``5.5`` to change the
+    base version of PHPUnit to ``5.5`` instead of the default ``5.3``.
+
+    It's also possible to set this env var in the ``phpunit.xml.dist`` file.
+
+.. tip::
+
+    If you still need to use ``prophecy`` (but not ``symfony/yaml``),
+    then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
+
+    It's also possible to set this env var in the ``phpunit.xml.dist`` file.
+
+Code coverage listener
+----------------------
+
+By default, the code coverage is computed with the following rule: if a line of
+code is executed, then it is marked as covered. And the test which executes a
+line of code is therefore marked as "covering the line of code". This can be
+misleading.
+
+Consider the following example::
+
+    class Bar
+    {
+        public function barMethod()
+        {
+            return 'bar';
+        }
+    }
+
+    class Foo
+    {
+        private $bar;
+
+        public function __construct(Bar $bar)
+        {
+            $this->bar = $bar;
+        }
+
+        public function fooMethod()
+        {
+            $this->bar->barMethod();
+
+            return 'bar';
+        }
+    }
+
+    class FooTest extends PHPUnit\Framework\TestCase
+    {
+        public function test()
+        {
+            $bar = new Bar();
+            $foo = new Foo($bar);
+
+            $this->assertSame('bar', $foo->fooMethod());
+        }
+    }
+
+The ``FooTest::test`` method executes every single line of code of both ``Foo``
+and ``Bar`` classes, but ``Bar`` is not truly tested. The ``CoverageListener``
+aims to fix this behavior by adding the appropriate `@covers`_ annotation on
+each test class.
+
+If a test class already defines the ``@covers`` annotation, this listener does
+nothing. Otherwise, it tries to find the code related to the test by removing
+the ``Test`` part of the classname: ``My\Namespace\Tests\FooTest`` ->
+``My\Namespace\Foo``.
+
+Installation
+~~~~~~~~~~~~
+
+Add the following configuration to the ``phpunit.xml.dist`` file
+
+.. code-block:: xml
+
+    <!-- http://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <listeners>
+            <listener class="Symfony\Bridge\PhpUnit\CoverageListener" />
+        </listeners>
+    </phpunit>
+
+If the logic used to find the related code is too simple or doesn't work for
+your application, you can use your own SUT (System Under Test) solver:
+
+.. code-block:: xml
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\CoverageListener">
+            <arguments>
+                <string>My\Namespace\SutSolver::solve</string>
+            </arguments>
+        </listener>
+    </listeners>
+
+The ``My\Namespace\SutSolver::solve`` can be any PHP callable and receives the
+current test classname as its first argument.
+
+Finally, the listener can also display warning messages when the SUT solver does
+not find the SUT:
+
+.. code-block:: xml
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\CoverageListener">
+            <arguments>
+                <null/>
+                <boolean>true</boolean>
+            </arguments>
+        </listener>
+    </listeners>
+
 .. _PHPUnit: https://phpunit.de
 .. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
+.. _`PHPUnit's assertStringMatchesFormat()`: https://phpunit.de/manual/current/en/appendixes.assertions.html#appendixes.assertions.assertStringMatchesFormat
 .. _`PHP error handler`: https://php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
 .. _Packagist: https://packagist.org/packages/symfony/phpunit-bridge
 .. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: https://php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
+.. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
+.. _`@covers`: https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.covers

@@ -81,17 +81,41 @@ The value returned by the ``request()`` method is an instance of the
 :doc:`DomCrawler component </components/dom_crawler>`, which allows accessing
 and traversing HTML elements programmatically.
 
-Clicking Links
-~~~~~~~~~~~~~~
-
-The ``Crawler`` object is capable of simulating link clicks. First, pass the
-text content of the link to the ``selectLink()`` method, which returns a
-``Link`` object. Then, pass this object to the ``click()`` method, which
-performs the needed HTTP GET request to simulate the link click::
+The :method:`Symfony\\Component\\BrowserKit\\Client::xmlHttpRequest` method,
+which defines the same arguments as the ``request()`` method, is a shortcut to
+make AJAX requests::
 
     use Acme\Client;
 
     $client = new Client();
+    // the required HTTP_X_REQUESTED_WITH header is added automatically
+    $crawler = $client->xmlHttpRequest('GET', '/');
+
+.. versionadded:: 4.1
+    The ``xmlHttpRequest()`` method was introduced in Symfony 4.1.
+
+Clicking Links
+~~~~~~~~~~~~~~
+
+The ``Client`` object is capable of simulating link clicks. Pass the text
+content of the link and the client will perform the needed HTTP GET request to
+simulate the link click::
+
+    use Acme\Client;
+
+    $client = new Client();
+    $client->request('GET', '/product/123');
+
+    $crawler = $client->clickLink('Go elsewhere...');
+
+.. versionadded:: 4.2
+    The ``clickLink()`` method was introduced in Symfony 4.2.
+
+If you need the :class:`Symfony\\Component\\DomCrawler\\Link` object that
+provides access to the link properties (e.g. ``$link->getMethod()``,
+``$link->getUri()``), use this other method:
+
+    // ...
     $crawler = $client->request('GET', '/product/123');
     $link = $crawler->selectLink('Go elsewhere...')->link();
     $client->click($link);
@@ -99,26 +123,50 @@ performs the needed HTTP GET request to simulate the link click::
 Submitting Forms
 ~~~~~~~~~~~~~~~~
 
-The ``Crawler`` object is also capable of selecting forms. First, select any of
-the form's buttons with the ``selectButton()`` method. Then, use the ``form()``
-method to select the form which the button belongs to.
-
-After selecting the form, fill in its data and send it using the ``submit()``
-method (which makes the needed HTTP POST request to submit the form contents)::
+The ``Client`` object is also capable of submitting forms. First, select the
+form using any of its buttons and then override any of its properties (method,
+field values, etc.) before submitting it::
 
     use Acme\Client;
 
-    // make a real request to an external site
     $client = new Client();
     $crawler = $client->request('GET', 'https://github.com/login');
+
+    // find the form with the 'Log in' button and submit it
+    // 'Log in' can be the text content, id, value or name of a <button> or <input type="submit">
+    $client->submitForm('Log in');
+
+    // the second optional argument lets you override the default form field values
+    $client->submitForm('Log in', array(
+        'login' => 'my_user',
+        'password' => 'my_pass',
+        // to upload a file, the value must be the absolute file path
+        'file' => __FILE__,
+    ));
+
+    // you can override other form options too
+    $client->submitForm(
+        'Log in',
+        array('login' => 'my_user', 'password' => 'my_pass'),
+        // override the default form HTTP method
+        'PUT',
+        // override some $_SERVER parameters (e.g. HTTP headers)
+        array('HTTP_ACCEPT_LANGUAGE' => 'es')
+    );
+
+.. versionadded:: 4.2
+    The ``submitForm()`` method was introduced in Symfony 4.2.
+
+If you need the :class:`Symfony\\Component\\DomCrawler\\Form` object that
+provides access to the form properties (e.g. ``$form->getUri()``,
+``$form->getValues()``, ``$form->getFields()``), use this other method::
+
+    // ...
 
     // select the form and fill in some values
     $form = $crawler->selectButton('Log in')->form();
     $form['login'] = 'symfonyfan';
     $form['password'] = 'anypass';
-
-    // To upload a file, the value should be the absolute file path
-    $form['file'] = __FILE__;
 
     // submit that form
     $crawler = $client->submit($form);
@@ -155,6 +203,7 @@ retrieve any cookie while making requests with the client::
     $expires    = $cookie->getExpiresTime();
     $path       = $cookie->getPath();
     $domain     = $cookie->getDomain();
+    $sameSite   = $cookie->getSameSite();
 
 .. note::
 

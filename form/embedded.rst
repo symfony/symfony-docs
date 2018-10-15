@@ -17,8 +17,8 @@ Embedding a Single Object
 Suppose that each ``Task`` belongs to a simple ``Category`` object. Start,
 of course, by creating the ``Category`` object::
 
-    // src/AppBundle/Entity/Category.php
-    namespace AppBundle\Entity;
+    // src/Entity/Category.php
+    namespace App\Entity;
 
     use Symfony\Component\Validator\Constraints as Assert;
 
@@ -39,7 +39,7 @@ Next, add a new ``category`` property to the ``Task`` class::
         // ...
 
         /**
-         * @Assert\Type(type="AppBundle\Entity\Category")
+         * @Assert\Type(type="App\Entity\Category")
          * @Assert\Valid()
          */
         protected $category;
@@ -66,10 +66,10 @@ Next, add a new ``category`` property to the ``Task`` class::
 Now that your application has been updated to reflect the new requirements,
 create a form class so that a ``Category`` object can be modified by the user::
 
-    // src/AppBundle/Form/CategoryType.php
-    namespace AppBundle\Form;
+    // src/Form/CategoryType.php
+    namespace App\Form;
 
-    use AppBundle\Entity\Category;
+    use App\Entity\Category;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -95,7 +95,7 @@ to the ``TaskType`` object whose type is an instance of the new ``CategoryType``
 class::
 
     use Symfony\Component\Form\FormBuilderInterface;
-    use AppBundle\Form\CategoryType;
+    use App\Form\CategoryType;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

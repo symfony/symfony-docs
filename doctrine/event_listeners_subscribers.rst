@@ -33,25 +33,16 @@ managers that use this connection.
 
     .. code-block:: yaml
 
-        doctrine:
-            dbal:
-                default_connection: default
-                connections:
-                    default:
-                        driver: pdo_sqlite
-                        memory: true
-
         services:
-            my.listener:
-                class: AppBundle\EventListener\SearchIndexer
+            # ...
+
+            App\EventListener\SearchIndexer:
                 tags:
                     - { name: doctrine.event_listener, event: postPersist }
-            my.listener2:
-                class: AppBundle\EventListener\SearchIndexer2
+            App\EventListener\SearchIndexer2:
                 tags:
                     - { name: doctrine.event_listener, event: postPersist, connection: default }
-            my.subscriber:
-                class: AppBundle\EventListener\SearchIndexerSubscriber
+            App\EventListener\SearchIndexerSubscriber:
                 tags:
                     - { name: doctrine.event_subscriber, connection: default }
 
@@ -60,21 +51,16 @@ managers that use this connection.
         <?xml version="1.0" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-
-            <doctrine:config>
-                <doctrine:dbal default-connection="default">
-                    <doctrine:connection driver="pdo_sqlite" memory="true" />
-                </doctrine:dbal>
-            </doctrine:config>
-
             <services>
-                <service id="my.listener" class="AppBundle\EventListener\SearchIndexer">
+                <!-- ... -->
+
+                <service id="App\EventListener\SearchIndexer">
                     <tag name="doctrine.event_listener" event="postPersist" />
                 </service>
-                <service id="my.listener2" class="AppBundle\EventListener\SearchIndexer2">
+                <service id="App\EventListener\SearchIndexer2">
                     <tag name="doctrine.event_listener" event="postPersist" connection="default" />
                 </service>
-                <service id="my.subscriber" class="AppBundle\EventListener\SearchIndexerSubscriber">
+                <service id="App\EventListener\SearchIndexerSubscriber">
                     <tag name="doctrine.event_subscriber" connection="default" />
                 </service>
             </services>
@@ -82,51 +68,36 @@ managers that use this connection.
 
     .. code-block:: php
 
-        use AppBundle\EventListener\SearchIndexer;
-        use AppBundle\EventListener\SearchIndexer2;
-        use AppBundle\EventListener\SearchIndexerSubscriber;
+        use App\EventListener\SearchIndexer;
+        use App\EventListener\SearchIndexer2;
+        use App\EventListener\SearchIndexerSubscriber;
 
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-                'default_connection' => 'default',
-                'connections' => array(
-                    'default' => array(
-                        'driver' => 'pdo_sqlite',
-                        'memory' => true,
-                    ),
-                ),
-            ),
-        ));
-
-        $container
-            ->register('my.listener', SearchIndexer::class)
+        $container->autowire(SearchIndexer::class)
             ->addTag('doctrine.event_listener', array('event' => 'postPersist'))
         ;
-        $container
-            ->register('my.listener2', SearchIndexer2::class)
+        $container->autowire(SearchIndexer2::class)
             ->addTag('doctrine.event_listener', array(
                 'event' => 'postPersist',
                 'connection' => 'default',
             ))
         ;
-        $container
-            ->register('my.subscriber', SearchIndexerSubscriber::class)
+        $container->autowire(SearchIndexerSubscriber::class)
             ->addTag('doctrine.event_subscriber', array('connection' => 'default'))
         ;
 
 Creating the Listener Class
 ---------------------------
 
-In the previous example, a service ``my.listener`` was configured as a Doctrine
+In the previous example, a ``SearchIndexer`` service was configured as a Doctrine
 listener on the event ``postPersist``. The class behind that service must have
 a ``postPersist()`` method, which will be called when the event is dispatched::
 
-    // src/AppBundle/EventListener/SearchIndexer.php
-    namespace AppBundle\EventListener;
+    // src/EventListener/SearchIndexer.php
+    namespace App\EventListener;
 
     // for Doctrine < 2.4: use Doctrine\ORM\Event\LifecycleEventArgs;
     use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
 
     class SearchIndexer
     {
@@ -166,13 +137,13 @@ Creating the Subscriber Class
 A Doctrine event subscriber must implement the ``Doctrine\Common\EventSubscriber``
 interface and have an event method for each event it subscribes to::
 
-    // src/AppBundle/EventListener/SearchIndexerSubscriber.php
-    namespace AppBundle\EventListener;
+    // src/EventListener/SearchIndexerSubscriber.php
+    namespace App\EventListener;
 
     use Doctrine\Common\EventSubscriber;
     // for Doctrine < 2.4: use Doctrine\ORM\Event\LifecycleEventArgs;
     use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-    use AppBundle\Entity\Product;
+    use App\Entity\Product;
 
     class SearchIndexerSubscriber implements EventSubscriber
     {
@@ -216,58 +187,20 @@ interface and have an event method for each event it subscribes to::
 
 For a full reference, see chapter `The Event System`_ in the Doctrine documentation.
 
-Lazy loading for Event Listeners
---------------------------------
+Performance Considerations
+--------------------------
 
-One subtle difference between listeners and subscribers is that Symfony can load
-entity listeners lazily. This means that your listener class will only be fetched
-from the service container (and thus be instantiated) once the event it is linked
-to actually fires.
+One important difference between listeners and subscribers is that Symfony loads
+entity listeners lazily. This means that the listener classes are only fetched
+from the service container (and instantiated) if the related event is actually
+fired.
 
-Lazy loading might give you a slight performance improvement when your listener
-runs for events that rarely fire. Also, it can help you when you run into
-*circular dependency issues* that may occur when your listener service in turn
-depends on the DBAL connection.
+That's why it is preferable to use entity listeners instead of subscribers
+whenever possible.
 
-To mark a listener service as lazily loaded, just add the ``lazy`` attribute
-to the tag like so:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        services:
-            my.listener:
-                class: AppBundle\EventListener\SearchIndexer
-                tags:
-                    - { name: doctrine.event_listener, event: postPersist, lazy: true }
-
-    .. code-block:: xml
-
-        <?xml version="1.0" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-
-            <services>
-                <service id="my.listener" class="AppBundle\EventListener\SearchIndexer">
-                    <tag name="doctrine.event_listener" event="postPersist" lazy="true" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        use AppBundle\EventListener\SearchIndexer;
-
-        $container
-            ->register('my.listener', SearchIndexer::class)
-            ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'lazy' => 'true'))
-        ;
-
-.. note::
-
-    Marking an event listener as ``lazy`` has nothing to do with lazy service
-    definitions which are described :doc:`in their own article </service_container/lazy_services>`
+.. versionadded:: 4.2
+    Starting from Symfony 4.2, Doctrine entity listeners are always lazy. In
+    previous Symfony versions this behavior was configurable.
 
 .. _`The Event System`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html
 .. _`the Doctrine Documentation`: https://symfony.com/doc/current/bundles/DoctrineBundle/entity-listeners.html

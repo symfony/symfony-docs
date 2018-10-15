@@ -15,7 +15,7 @@ an array of the submitted data. This is actually really easy::
     use Symfony\Component\HttpFoundation\Request;
     // ...
 
-    public function contactAction(Request $request)
+    public function contact(Request $request)
     {
         $defaultData = array('message' => 'Type your message here');
         $form = $this->createFormBuilder($defaultData)

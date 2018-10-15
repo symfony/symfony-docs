@@ -4,16 +4,21 @@
 How To Create Symfony Applications with Multiple Kernels
 ========================================================
 
+.. caution::
+
+    Creating applications with multiple kernels is no longer recommended by
+    Symfony. Consider creating multiple small applications instead.
+
 In most Symfony applications, incoming requests are processed by the
-``web/app.php`` front controller, which instantiates the ``app/AppKernel.php``
+``public/index.php`` front controller, which instantiates the ``src/Kernel.php``
 class to create the application kernel that loads the bundles and handles the
 request to generate the response.
 
-This single kernel approach is a convenient default provided by the Symfony
-Standard edition, but Symfony applications can define any number of kernels.
-Whereas :doc:`environments </configuration/environments>` execute the same
-application with different configurations, kernels can execute different parts
-of the same application.
+This single kernel approach is a convenient default, but Symfony applications
+can define any number of kernels. Whereas
+:doc:`environments </configuration/environments>` execute the same application
+with different configurations, kernels can execute different parts of the same
+application.
 
 These are some of the common use cases for creating multiple kernels:
 
@@ -45,45 +50,46 @@ Step 1) Create a new Front Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Instead of creating the new front controller from scratch, it's easier to
-duplicate the existing ones. For example, create ``web/api_dev.php`` from
-``web/app_dev.php`` and ``web/api.php`` from ``web/app.php``.
+duplicate the existing one. For example, create ``public/api.php`` from
+``public/index.php``.
 
-Then, update the code of the new front controllers to instantiate the new kernel
-class instead of the usual ``AppKernel`` class::
+Then, update the code of the new front controller to instantiate the new kernel
+class instead of the usual ``Kernel`` class::
 
-    // web/api.php
+    // public/api.php
     // ...
-    $kernel = new ApiKernel('prod', false);
-    // ...
-
-    // web/api_dev.php
-    // ...
-    $kernel = new ApiKernel('dev', true);
+    $kernel = new ApiKernel(
+        $_SERVER['APP_ENV'] ?? 'dev',
+        $_SERVER['APP_DEBUG'] ?? ('prod' !== ($_SERVER['APP_ENV'] ?? 'dev'))
+    );
     // ...
 
 .. tip::
 
-    Another approach is to keep the existing front controller (e.g. ``app.php`` and
-    ``app_dev.php``), but add an ``if`` statement to load the different kernel based
-    on the URL (e.g. if the URL starts with ``/api``, use the ``ApiKernel``).
+    Another approach is to keep the existing ``index.php`` front controller, but
+    add an ``if`` statement to load the different kernel based on the URL (e.g.
+    if the URL starts with ``/api``, use the ``ApiKernel``).
 
 Step 2) Create the new Kernel Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now you need to define the ``ApiKernel`` class used by the new front controller.
-The easiest way to do this is by duplicating the existing  ``app/AppKernel.php``
+The easiest way to do this is by duplicating the existing  ``src/Kernel.php``
 file and make the needed changes.
 
-In this example, the ``ApiKernel`` will load less bundles than AppKernel. Be
-sure to also change the location of the cache, logs and configuration files so
-they don't collide with the files from ``AppKernel``::
+In this example, the ``ApiKernel`` will load less bundles than the default
+Kernel. Be sure to also change the location of the cache, logs and configuration
+files so they don't collide with the files from ``src/Kernel.php``::
 
-    // app/ApiKernel.php
+    // src/ApiKernel.php
     use Symfony\Component\HttpKernel\Kernel;
     use Symfony\Component\Config\Loader\LoaderInterface;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
 
     class ApiKernel extends Kernel
     {
+        // ...
+
         public function registerBundles()
         {
             // load only the bundles strictly needed for the API...
@@ -96,66 +102,48 @@ they don't collide with the files from ``AppKernel``::
 
         public function getLogDir()
         {
-            return dirname(__DIR__).'/var/logs/api';
+            return dirname(__DIR__).'/var/log/api';
         }
 
-        public function registerContainerConfiguration(LoaderInterface $loader)
+        public function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
         {
-            $loader->load($this->getRootDir().'/config/api/config_'.$this->getEnvironment().'.yml');
+            // load only the config files strictly needed for the API
+            $confDir = $this->getProjectDir().'/config';
+            $loader->load($confDir.'/api/*'.self::CONFIG_EXTS, 'glob');
+            if (is_dir($confDir.'/api/'.$this->environment)) {
+                $loader->load($confDir.'/api/'.$this->environment.'/**/*'.self::CONFIG_EXTS, 'glob');
+            }
         }
     }
-
-In order for the autoloader to find your new ``ApiKernel``, make sure you add it
-to your ``composer.json`` autoload section:
-
-.. code-block:: json
-
-    {
-        "...": "..."
-
-        "autoload": {
-            "psr-4": { "": "src/" },
-            "classmap": [ "app/AppKernel.php", "app/AppCache.php", "app/ApiKernel.php" ]
-        }
-    }
-
-Then, run ``composer install`` to dump your new autoload config.
 
 Step 3) Define the Kernel Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Finally, define the configuration files that the new ``ApiKernel`` will load.
-According to the above code, this config will live in the ``app/config/api/``
-directory.
+According to the above code, this config will live in one or multiple files
+stored in ``config/api/`` and ``config/api/ENVIRONMENT_NAME/`` directories.
 
-The new configuration can be created from scratch when you load just a few
+The new configuration files can be created from scratch when you load just a few
 bundles, because it will be very simple. Otherwise, duplicate the existing
-config files or better, import them and override the needed options:
-
-.. code-block:: yaml
-
-    # app/config/api/config_dev.yml
-    imports:
-        - { resource: ../config_dev.yml }
-
-    # override option values ...
+config files in ``config/packages/`` or better, import them and override the
+needed options.
 
 Executing Commands with a Different Kernel
 ------------------------------------------
 
-The ``app/console`` script used to run Symfony commands always uses the default
-``AppKernel`` class to build the application and load the commands. If you need
-to execute console commands using the new kernel, duplicate the ``app/console``
+The ``bin/console`` script used to run Symfony commands always uses the default
+``Kernel`` class to build the application and load the commands. If you need
+to execute console commands using the new kernel, duplicate the ``bin/console``
 script and rename it (e.g. ``bin/api``).
 
-Then, replace the ``AppKernel`` instantiation by your own kernel instantiation
+Then, replace the ``Kernel`` instantiation by your own kernel instantiation
 (e.g. ``ApiKernel``) and now you can execute commands using the new kernel
 (e.g. ``php bin/api cache:clear``) Now you can use execute commands using the
 new kernel.
 
 .. note::
 
-    The commands available for each console script (e.g. ``app/console`` and
+    The commands available for each console script (e.g. ``bin/console`` and
     ``bin/api``) can differ because they depend on the bundles enabled for each
     kernel, which could be different.
 
@@ -163,19 +151,19 @@ Rendering Templates Defined in a Different Kernel
 -------------------------------------------------
 
 If you follow the Symfony Best Practices, the templates of the default kernel
-will be stored in ``app/Resources/views/``. Trying to render those templates in
-a different kernel will result in a *There are no registered paths for
-namespace "__main__"* error.
+will be stored in ``templates/``. Trying to render those templates in a
+different kernel will result in a *There are no registered paths for namespace
+"__main__"* error.
 
 In order to solve this issue, add the following configuration to your kernel:
 
 .. code-block:: yaml
 
-    # api/config/config.yml
+    # config/api/twig.yaml
     twig:
         paths:
-            # allows to use app/Resources/views/ templates in the ApiKernel
-            "%kernel.root_dir%/../app/Resources/views": ~
+            # allows to use api/templates/ dir in the ApiKernel
+            "%kernel.project_dir%/api/templates": ~
 
 Running Tests Using a Different Kernel
 --------------------------------------
@@ -198,7 +186,7 @@ return the fully qualified class name of the kernel to use::
     {
         protected static function getKernelClass()
         {
-            return 'ApiKernel';
+            return 'App\ApiKernel';
         }
 
         // this is needed because the KernelTestCase class keeps a reference to
@@ -219,23 +207,19 @@ Adding more Kernels to the Application
 
 If your application is very complex and you create several kernels, it's better
 to store them in their own directories instead of messing with lots of files in
-the default ``app/`` directory:
+the default ``src/`` directory:
 
 .. code-block:: text
 
     project/
-    ├─ app/
+    ├─ src/
     │  ├─ ...
-    │  ├─ config/
-    │  └─ AppKernel.php
+    │  └─ Kernel.php
     ├─ api/
     │  ├─ ...
-    │  ├─ config/
     │  └─ ApiKernel.php
     ├─ ...
-    └─ web/
+    └─ public/
         ├─ ...
-        ├─ app.php
-        ├─ app_dev.php
         ├─ api.php
-        └─ api_dev.php
+        └─ index.php

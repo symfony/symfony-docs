@@ -19,10 +19,10 @@ files. This can be done with the :class:`Symfony\\Component\\Config\\FileLocator
 
     use Symfony\Component\Config\FileLocator;
 
-    $configDirectories = array(__DIR__.'/app/config');
+    $configDirectories = array(__DIR__.'/config');
 
     $fileLocator = new FileLocator($configDirectories);
-    $yamlUserFiles = $fileLocator->locate('users.yml', null, false);
+    $yamlUserFiles = $fileLocator->locate('users.yaml', null, false);
 
 The locator receives a collection of locations where it should look for
 files. The first argument of ``locate()`` is the name of the file to look
@@ -53,12 +53,12 @@ which allows for recursively importing other resources::
 
             // maybe import some other resource:
 
-            // $this->import('extra_users.yml');
+            // $this->import('extra_users.yaml');
         }
 
         public function supports($resource, $type = null)
         {
-            return is_string($resource) && 'yml' === pathinfo(
+            return is_string($resource) && 'yaml' === pathinfo(
                 $resource,
                 PATHINFO_EXTENSION
             );
@@ -87,8 +87,6 @@ the resource::
     $loaderResolver = new LoaderResolver(array(new YamlUserLoader($fileLocator)));
     $delegatingLoader = new DelegatingLoader($loaderResolver);
 
-    $delegatingLoader->load(__DIR__.'/users.yml');
-    /*
-    The YamlUserLoader will be used to load this resource,
-    since it supports files with a "yml" extension
-    */
+    // YamlUserLoader is used to load this resource because it supports
+    // files with the '.yaml' extension
+    $delegatingLoader->load(__DIR__.'/users.yaml');

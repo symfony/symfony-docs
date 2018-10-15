@@ -11,27 +11,19 @@ key in your application configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php app/console config:dump-reference security
+    $ php bin/console config:dump-reference security
 
     # displays the actual config values used by your application
-    $ php app/console debug:config security
+    $ php bin/console debug:config security
 
 .. note::
 
     When using XML, you must use the ``http://symfony.com/schema/dic/security``
     namespace and the related XSD schema is available at:
-    `` http://symfony.com/schema/dic/services/services-1.0.xsd``
+    ``http://symfony.com/schema/dic/services/services-1.0.xsd``
 
-.. versionadded:: 2.8
-    The ``secret`` option of ``anonymous`` and ``remember_me`` was introduced
-    in Symfony 2.8. Prior to 2.8, it was called ``key``.
-
-.. versionadded:: 2.8
-    The ``http_basic_ldap`` and ``form_login_ldap`` authentication providers
-    were introduced in Symfony 2.8.
-
-.. versionadded:: 2.8
-    The ``ldap`` user provider was introduced in Symfony 2.8
+.. versionadded:: 4.1
+    The ``providers`` option is optional starting from Symfony 4.1.
 
 .. _reference-security-firewall-form-login:
 
@@ -166,13 +158,31 @@ The ``invalidate_session`` option allows to redefine this behavior. Set this
 option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
 
+logout_on_user_change
+~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 3.4
+    The ``logout_on_user_change`` option was introduced in Symfony 3.4.
+
+If ``true`` this option makes Symfony to trigger a logout when the user has
+changed. Not doing that is deprecated, so this option should be set to ``true``
+to avoid getting deprecation messages.
+
+The user is considered to have changed when the user class implements
+:class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface` and the
+``isEqualTo()`` method returns ``false``. Also, when any of the properties
+required by the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
+(like the username, password or salt) changes.
+
 .. _reference-security-ldap:
 
 LDAP functionality
 ------------------
 
 There are several options for connecting against an LDAP server,
-using the ``form_login_ldap`` and ``http_basic_ldap`` authentication
+using the ``form_login_ldap``, ``http_basic_ldap`` and ``json_login_ldap`` authentication
 providers or the ``ldap`` user provider.
 
 For even more details, see :doc:`/security/ldap`.
@@ -181,9 +191,12 @@ Authentication
 ~~~~~~~~~~~~~~
 
 You can authenticate to an LDAP server using the LDAP variants of the
-``form_login`` and ``http_basic`` authentication providers. Simply use
-``form_login_ldap`` and ``http_basic_ldap``, which will attempt to
+``form_login``, ``http_basic`` and ``json_login`` authentication providers. Simply use
+``form_login_ldap``, ``http_basic_ldap`` and ``json_login_ldap``, which will attempt to
 ``bind`` against a LDAP server instead of using password comparison.
+
+.. versionadded:: 4.2
+    The ``json_login_ldap`` authentication provider was introduced in Symfony 4.2.
 
 Both authentication providers have the same arguments as their normal
 counterparts, with the addition of two configuration keys:
@@ -201,23 +214,34 @@ dn_string
 **type**: ``string`` **default**: ``{username}``
 
 This is the string which will be used as the bind DN. The ``{username}``
-placeholder will be replaced with the user-provided value (his login).
+placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you may need to override
 this value.
+
+query_string
+............
+
+**type**: ``string`` **default**: ``null``
+
+This is the string which will be used to query for the DN. The ``{username}``
+placeholder will be replaced with the user-provided value (their login).
+Depending on your LDAP server's configuration, you will need to override
+this value. This setting is only necessary if the user's DN cannot be derived
+statically using the ``dn_string`` config option.
 
 User provider
 ~~~~~~~~~~~~~
 
 Users will still be fetched from the configured user provider. If you
 wish to fetch your users from a LDAP server, you will need to use the
-``ldap`` user provider, in addition to one of the two authentication
-providers (``form_login_ldap`` or ``http_basic_ldap``).
+``ldap`` user provider, in addition to one of the three authentication
+providers (``form_login_ldap`` or ``http_basic_ldap`` or ``json-login-ldap``).
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -253,16 +277,11 @@ for the hash algorithm.
 Using the BCrypt Password Encoder
 ---------------------------------
 
-.. caution::
-
-    To use this encoder, you either need to use PHP Version 5.5 or install
-    the `ircmaxell/password-compat`_ library via Composer.
-
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -273,7 +292,7 @@ Using the BCrypt Password Encoder
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -326,10 +345,81 @@ persisting the encoded password alone is enough.
 
 .. note::
 
-    All the encoded passwords are ``60`` characters long, so make sure to
+    BCrypt encoded passwords are ``60`` characters long, so make sure to
     allocate enough space for them to be persisted.
 
-    .. _reference-security-firewall-context:
+.. tip::
+
+    A simple technique to make tests much faster when using BCrypt is to set
+    the cost to ``4``, which is the minimum value allowed, in the ``test``
+    environment configuration.
+
+.. _reference-security-argon2i:
+
+Using the Argon2i Password Encoder
+----------------------------------
+
+.. caution::
+
+    To use this encoder, you either need to use PHP version 7.2 or install
+    the `libsodium`_ extension.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            encoders:
+                Symfony\Component\Security\Core\User\User:
+                    algorithm: argon2i
+                    memory_cost:          16384 # Amount in KiB. 16 MiB
+                    time_cost:            2 # Number of iterations
+                    threads:              4 # Number of parallel threads
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <config>
+            <!-- ... -->
+            <encoder
+                class="Symfony\Component\Security\Core\User\User"
+                algorithm="argon2i"
+                memory_cost="16384"
+                time_cost="2"
+                threads="4"
+            />
+        </config>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Component\Security\Core\User\User;
+
+        $container->loadFromExtension('security', array(
+            // ...
+            'encoders' => array(
+                User::class => array(
+                    'algorithm' => 'argon2i',
+                    'memory_cost' => 16384,
+                    'time_cost' => 2,
+                    'threads' => 4,
+                ),
+            ),
+        ));
+
+A salt for each new password is generated automatically and need not be
+persisted. Since an encoded password contains the salt used to encode it,
+persisting the encoded password alone is enough.
+
+.. note::
+
+    Argon2i encoded passwords are ``96`` characters long, but due to the hashing
+    requirements saved in the resulting hash this may change in the future.
+
+.. _reference-security-firewall-context:
 
 Firewall Context
 ----------------
@@ -349,7 +439,7 @@ multiple firewalls, the "context" could actually be shared:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -363,7 +453,7 @@ multiple firewalls, the "context" could actually be shared:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" charset="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -383,7 +473,7 @@ multiple firewalls, the "context" could actually be shared:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'somename' => array(
@@ -404,57 +494,6 @@ multiple firewalls, the "context" could actually be shared:
     ignored and you won't be able to authenticate on multiple firewalls at the
     same time.
 
-HTTP-Digest Authentication
---------------------------
-
-To use HTTP-Digest authentication you need to provide a realm and a secret:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
-        security:
-            firewalls:
-                somename:
-                    http_digest:
-                        secret: '%secret%'
-                        realm: 'secure-api'
-
-    .. code-block:: xml
-
-        <!-- app/config/security.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <firewall name="somename">
-                    <http-digest secret="%secret%" realm="secure-api" />
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'somename' => array(
-                    'http_digest' => array(
-                        'secret' => '%secret%',
-                        'realm'  => 'secure-api',
-                    ),
-                ),
-            ),
-        ));
-
-.. versionadded:: 2.8
-    The ``secret`` option was introduced in Symfony 2.8. Prior to 2.8, it was
-    called ``key``.
-
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
+.. _`libsodium`: https://pecl.php.net/package/libsodium

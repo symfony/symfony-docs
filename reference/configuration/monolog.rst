@@ -11,10 +11,10 @@ in your application configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php app/console config:dump-reference monolog
+    $ php bin/console config:dump-reference monolog
 
     # displays the actual config values used by your application
-    $ php app/console debug:config monolog
+    $ php bin/console debug:config monolog
 
 .. note::
 

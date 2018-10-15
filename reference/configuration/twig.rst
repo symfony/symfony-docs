@@ -11,10 +11,10 @@ the ``twig`` key in your application configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php app/console config:dump-reference twig
+    $ php bin/console config:dump-reference twig
 
     # displays the actual config values used by your application
-    $ php app/console debug:config twig
+    $ php bin/console debug:config twig
 
 .. note::
 
@@ -137,8 +137,9 @@ charset
 
 **type**: ``string`` **default**: ``'%kernel.charset%'``
 
-The charset used by the template files. In the Symfony Standard edition this
-defaults to the ``UTF-8`` charset.
+The charset used by the template files. By default it's the same as the value of
+the ``kernel.charset`` container parameter, which is ``UTF-8`` by default in
+Symfony applications.
 
 date
 ~~~~
@@ -243,6 +244,13 @@ on. Set it to ``0`` to disable all the optimizations. You can even enable or
 disable these optimizations selectively, as explained in the Twig documentation
 about `the optimizer extension`_.
 
+default_path
+~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``'%kernel.project_dir%/templates'``
+
+The default directory where Symfony will look for Twig templates.
+
 .. _config-twig-paths:
 
 paths
@@ -251,9 +259,13 @@ paths
 **type**: ``array`` **default**: ``null``
 
 This option defines the directories where Symfony will look for Twig templates
-in addition to the default locations (``app/Resources/views/`` and the bundles'
-``Resources/views/`` directories). This is useful to integrate the templates
-included in some library or package used by your application.
+in addition to the default locations. Symfony looks for the templates in the
+following order:
+
+#. The directories defined in this option;
+#. The ``Resources/views/`` directories of the bundles used in the application;
+#. The ``src/Resources/views/`` directory of the application;
+#. The directory defined in the ``default_path`` option.
 
 The values of the ``paths`` option are defined as ``key: value`` pairs where the
 ``value`` part can be ``null``. For example:
@@ -262,15 +274,15 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             # ...
             paths:
-                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': ~
+                '%kernel.project_dir%/vendor/acme/foo-bar/templates': ~
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
@@ -280,17 +292,17 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
 
             <twig:config>
                 <!-- ... -->
-                <twig:path>%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
+                <twig:path>%kernel.project_dir%/vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             // ...
             'paths' => array(
-               '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => null,
+               '%kernel.project_dir%/vendor/acme/foo-bar/templates' => null,
             ),
         ));
 
@@ -306,15 +318,15 @@ for that directory:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             # ...
             paths:
-                '%kernel.root_dir%/../vendor/acme/foo-bar/templates': 'foo_bar'
+                '%kernel.project_dir%/vendor/acme/foo-bar/templates': 'foo_bar'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
@@ -324,17 +336,17 @@ for that directory:
 
             <twig:config>
                 <!-- ... -->
-                <twig:path namespace="foo_bar">%kernel.root_dir%/../vendor/acme/foo-bar/templates</twig:path>
+                <twig:path namespace="foo_bar">%kernel.project_dir%/vendor/acme/foo-bar/templates</twig:path>
             </twig:config>
         </container>
 
     .. code-block:: php
 
-        # app/config/config.php
+        # config/packages/twig.php
         $container->loadFromExtension('twig', array(
             // ...
             'paths' => array(
-               '%kernel.root_dir%/../vendor/acme/foo-bar/templates' => 'foo_bar',
+               '%kernel.project_dir%/vendor/acme/foo-bar/templates' => 'foo_bar',
             ),
         ));
 

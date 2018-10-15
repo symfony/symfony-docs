@@ -318,14 +318,23 @@ correctly. To validate the types of the options, call
         public function configureOptions(OptionsResolver $resolver)
         {
             // ...
+
+            // specify one allowed type
             $resolver->setAllowedTypes('host', 'string');
+
+            // specify multiple allowed types
             $resolver->setAllowedTypes('port', array('null', 'int'));
+
+            // check all items in an array recursively for a type
+            $resolver->setAllowedTypes('dates', 'DateTime[]');
+            $resolver->setAllowedTypes('ports', 'int[]');
         }
     }
 
-For each option, you can define either just one type or an array of acceptable
-types. You can pass any type for which an ``is_<type>()`` function is defined
-in PHP. Additionally, you may pass fully qualified class or interface names.
+You can pass any type for which an ``is_<type>()`` function is defined in PHP.
+You may also pass fully qualified class or interface names (which is checked
+using ``instanceof``). Additionally, you can validate all items in an array
+recursively by suffixing the type with ``[]``.
 
 If you pass an invalid option now, an
 :class:`Symfony\\Component\\OptionsResolver\\Exception\\InvalidOptionsException`
@@ -625,6 +634,52 @@ let you find out which options are defined::
         }
     }
 
+Deprecating the Option
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.2
+    The ``setDeprecated()`` method was introduced in Symfony 4.2.
+
+Once an option is outdated or you decided not to maintain it anymore, you can
+deprecate it using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDeprecated`
+method::
+
+    $resolver
+        ->setDefined(array('hostname', 'host'))
+        // this outputs the following generic deprecation message:
+        // The option "hostname" is deprecated.
+        ->setDeprecated('hostname')
+
+        // you can also pass a custom deprecation message
+        ->setDeprecated('hostname', 'The option "hostname" is deprecated, use "host" instead.')
+    ;
+
+Instead of passing the message, you may also pass a closure which returns
+a string (the deprecation message) or an empty string to ignore the deprecation.
+This closure is useful to only deprecate some of the allowed types or values of
+the option::
+
+    $resolver
+        ->setDefault('encryption', null)
+        ->setDefault('port', null)
+        ->setAllowedTypes('port', array('null', 'int'))
+        ->setDeprecated('port', function (Options $options, $value) {
+            if (null === $value) {
+                return 'Passing "null" to option "port" is deprecated, pass an integer instead.';
+            }
+
+            // deprecation may also depend on another option
+            if ('ssl' === $options['encryption'] && 456 !== $value) {
+                return 'Passing a different port than "456" when the "encryption" option is set to "ssl" is deprecated.';
+            }
+
+            return '';
+        })
+    ;
+
+This closure receives as argument the value of the option after validating it
+and before normalizing it when the option is being resolved.
+
 Performance Tweaks
 ~~~~~~~~~~~~~~~~~~
 
@@ -685,4 +740,3 @@ options in your code.
 
 .. _Packagist: https://packagist.org/packages/symfony/options-resolver
 .. _CHANGELOG: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/OptionsResolver/CHANGELOG.md#260
-.. _`read the Symfony 2.5 documentation`: https://symfony.com/doc/2.5/components/options_resolver.html

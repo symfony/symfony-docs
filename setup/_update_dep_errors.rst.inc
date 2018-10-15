@@ -6,7 +6,7 @@ other Symfony dependencies too. In that case, try the following command:
 
 .. code-block:: terminal
 
-    $ composer update symfony/symfony --with-dependencies
+    $ composer update "symfony/*" --with-all-dependencies
 
 This updates ``symfony/symfony`` and *all* packages that it depends on, which will
 include several other packages. By using tight version constraints in

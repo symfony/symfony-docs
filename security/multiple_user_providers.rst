@@ -7,17 +7,16 @@ How to Use multiple User Providers
     mechanism. Chaining user providers should be avoided in most applications
     and used only to solve edge cases.
 
-Each authentication mechanism (e.g. HTTP Authentication, form login, etc)
-uses exactly one user provider, and will use the first declared user provider
-by default. But what if you want to specify a few users via configuration
-and the rest of your users in the database? This is possible by creating
-a new provider that chains the two together:
+Each authentication mechanism (e.g. HTTP Authentication, form login, etc.) uses
+exactly one user provider. But what if you want to specify a few users via
+configuration and the rest of your users in the database? This is possible by
+creating a new provider that chains the two together:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             providers:
                 chain_provider:
@@ -28,11 +27,11 @@ a new provider that chains the two together:
                         users:
                             foo: { password: test }
                 user_db:
-                    entity: { class: AppBundle\Entity\User, property: username }
+                    entity: { class: App\Entity\User, property: username }
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -55,15 +54,15 @@ a new provider that chains the two together:
                 </provider>
 
                 <provider name="user_db">
-                    <entity class="AppBundle\Entity\User" property="username" />
+                    <entity class="App\Entity\User" property="username" />
                 </provider>
             </config>
         </srv:container>
 
     .. code-block:: php
 
-        // app/config/security.php
-        use AppBundle\Entity\User;
+        // config/packages/security.php
+        use App\Entity\User;
 
         $container->loadFromExtension('security', array(
             'providers' => array(
@@ -88,20 +87,18 @@ a new provider that chains the two together:
             ),
         ));
 
-Now, all firewalls without an explicitly configured user provider will use
-the ``chain_provider`` since it's the first specified. The ``chain_provider``
-will, in turn, try to load the user from both the ``in_memory`` and ``user_db``
+Now, all firewalls that define ``chain_provider`` as their user provider will,
+in turn, try to load the user from both the ``in_memory`` and ``user_db``
 providers.
 
 You can also configure the firewall or individual authentication mechanisms
-to use a specific provider. Again, unless a provider is specified explicitly,
-the first provider is always used:
+to use a specific provider:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             firewalls:
                 secured_area:
@@ -115,7 +112,7 @@ the first provider is always used:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -134,7 +131,7 @@ the first provider is always used:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'secured_area' => array(
@@ -151,10 +148,10 @@ the first provider is always used:
             ),
         ));
 
-In this example, if a user tries to log in via HTTP authentication, the authentication
-system will use the ``in_memory`` user provider. But if the user tries to
-log in via the form login, the ``user_db`` provider will be used (since it's
-the default for the firewall as a whole).
+In this example, if a user tries to log in via HTTP authentication, the
+authentication system will use the ``in_memory`` user provider. But if the user
+tries to log in via the form login, the ``user_db`` provider will be used (since
+it's the default for the firewall as a whole).
 
 If you need to check that the user being returned by  your provider is a allowed
 to authenticate, check the returned user object::

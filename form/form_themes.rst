@@ -26,13 +26,14 @@ do this, create a new template file that will store the new markup:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/form/fields.html.twig #}
+    {# templates/form/fields.html.twig #}
     {% block form_row %}
     {% spaceless %}
         <div class="form_row">
             {{ form_label(form) }}
             {{ form_errors(form) }}
             {{ form_widget(form) }}
+            {{ form_help(form) }}
         </div>
     {% endspaceless %}
     {% endblock form_row %}
@@ -44,7 +45,7 @@ renders the form:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/default/new.html.twig #}
+    {# templates/default/new.html.twig #}
     {% form_theme form 'form/fields.html.twig' %}
 
     {# or if you want to use multiple themes #}
@@ -112,6 +113,8 @@ are 4 possible *parts* of a form that can be rendered:
 +-------------+----------------------------+---------------------------------------------------------+
 | ``errors``  | (e.g. ``form_errors()``)   | renders the field's errors                              |
 +-------------+----------------------------+---------------------------------------------------------+
+| ``help``    | (e.g. ``form_help()``)     | renders the field's help                                |
++-------------+----------------------------+---------------------------------------------------------+
 | ``row``     | (e.g. ``form_row()``)      | renders the field's entire row (label, widget & errors) |
 +-------------+----------------------------+---------------------------------------------------------+
 
@@ -176,7 +179,7 @@ file:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             form_themes:
                 - '...'
@@ -185,7 +188,7 @@ file:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -203,7 +206,7 @@ file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 '...',
@@ -257,7 +260,7 @@ to define form output.
 PHP
 ...
 
-To automatically include the customized templates from the ``app/Resources/views/form``
+To automatically include the customized templates from the ``templates/form``
 directory created earlier in *all* templates, modify your application configuration
 file:
 
@@ -265,7 +268,7 @@ file:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             templating:
                 form:
@@ -275,7 +278,7 @@ file:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -296,7 +299,7 @@ file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'templating' => array(
                 'form' => array(
@@ -308,7 +311,7 @@ file:
             // ...
         ));
 
-Any fragments inside the ``app/Resources/views/form`` directory are now used
+Any fragments inside the ``templates/form`` directory are now used
 globally to define form output.
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig

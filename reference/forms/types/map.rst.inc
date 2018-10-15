@@ -12,6 +12,8 @@ Text Fields
 * :doc:`SearchType </reference/forms/types/search>`
 * :doc:`UrlType </reference/forms/types/url>`
 * :doc:`RangeType </reference/forms/types/range>`
+* :doc:`TelType </reference/forms/types/tel>`
+* :doc:`ColorType </reference/forms/types/color>`
 
 Choice Fields
 ~~~~~~~~~~~~~
@@ -28,6 +30,7 @@ Date and Time Fields
 ~~~~~~~~~~~~~~~~~~~~
 
 * :doc:`DateType </reference/forms/types/date>`
+* :doc:`DateIntervalType </reference/forms/types/dateinterval>`
 * :doc:`DateTimeType </reference/forms/types/datetime>`
 * :doc:`TimeType </reference/forms/types/time>`
 * :doc:`BirthdayType </reference/forms/types/birthday>`

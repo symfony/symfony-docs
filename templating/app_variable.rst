@@ -10,9 +10,6 @@ is a :class:`Symfony\\Bridge\\Twig\\AppVariable`
 instance which will give you access to some application specific variables
 automatically:
 
-``app.security`` (deprecated as of 2.6)
-    The :class:`Symfony\\Component\\Security\\Core\\SecurityContext` object or
-    ``null`` if there is none.
 ``app.user``
     The representation of the current user or ``null`` if there is none. The
     value stored in this variable can be a :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`

@@ -1,9 +1,6 @@
 group_by
 ~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``group_by`` option was introduced in Symfony 2.7.
-
 **type**: ``array``, ``callable`` or ``string`` **default**: ``null``
 
 You can group the ``<option>`` elements of a ``<select>`` into ``<optgroup>``
@@ -25,7 +22,6 @@ Take the following example::
             '1 week' => new \DateTime('+1 week'),
             '1 month' => new \DateTime('+1 month'),
         ),
-        'choices_as_values' => true,
         'group_by' => function($choiceValue, $key, $value) {
             if ($choiceValue <= new \DateTime('+3 days')) {
                 return 'Soon';

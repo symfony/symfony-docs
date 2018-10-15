@@ -15,7 +15,7 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
     use Symfony\Component\ExpressionLanguage\Expression;
     // ...
 
-    public function indexAction()
+    public function index()
     {
         $this->denyAccessUnlessGranted(new Expression(
             '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
@@ -61,26 +61,31 @@ Additionally, you have access to a number of functions inside the expression:
     Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``, see below.
 ``is_fully_authenticated``
     Similar, but not equal to ``IS_AUTHENTICATED_FULLY``, see below.
-``has_role``
-    Checks to see if the user has the given role - equivalent to an expression like
-    ``'ROLE_ADMIN' in roles``.
+``is_granted``
+    Checks if the user has the given permission. Optionally accepts a second argument
+    with the object where permission is checked on. It's equivalent to using
+    the :doc:`isGranted() method </security/securing_services>` from the authorization
+    checker service.
 
 .. sidebar:: ``is_remember_me`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
 
     The ``is_remember_me()`` and ``is_fully_authenticated()`` functions are *similar*
     to using ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``
     with the ``isGranted()`` function - but they are **not** the same. The
-    following shows the difference::
+    following controller snippet shows the difference::
 
         use Symfony\Component\ExpressionLanguage\Expression;
+        use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
         // ...
 
-        $authorizationChecker = $this->get('security.authorization_checker');
-        $access1 = $authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        public function index(AuthorizationCheckerInterface $authorizationChecker)
+        {
+            $access1 = $authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
-        $access2 = $authorizationChecker->isGranted(new Expression(
-            'is_remember_me() or is_fully_authenticated()'
-        ));
+            $access2 = $authorizationChecker->isGranted(new Expression(
+                'is_remember_me() or is_fully_authenticated()'
+            ));
+        }
 
     Here, ``$access1`` and ``$access2`` will be the same value. Unlike the
     behavior of ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``,

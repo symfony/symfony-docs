@@ -11,7 +11,7 @@ lists *all* the configured routes in your application:
 
 .. code-block:: terminal
 
-    $ php app/console debug:router
+    $ php bin/console debug:router
 
     ------------------ -------- -------- ------ ----------------------------------------------
      Name               Method   Scheme   Host   Path
@@ -29,7 +29,17 @@ the route name as the command argument:
 
 .. code-block:: terminal
 
-    $ php app/console debug:router article_show
+    $ php bin/console debug:router article_show
+
+    # or use part of the name to search for routes
+    $ php bin/console debug:router blo
+
+      Select one of the matching routes:
+      [0] blog
+      [1] blog_show
+
+.. versionadded:: 4.1
+    The feature to look for partial route names was introduced in Symfony 4.1.
 
 Likewise, if you want to test whether a URL matches a given route, use the
 ``router:match`` command. This is useful to debug routing issues and find out
@@ -37,6 +47,6 @@ which route is associated with the given URL:
 
 .. code-block:: terminal
 
-    $ php app/console router:match /blog/my-latest-post
+    $ php bin/console router:match /blog/my-latest-post
 
     Route "blog_show" matches

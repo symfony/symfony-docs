@@ -17,6 +17,9 @@ manually, but then you should just use the ``ChoiceType`` directly.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
+| Options     | - `input`_                                                             |
+|             | - `regions`_                                                           |
++-------------+------------------------------------------------------------------------+
 | Overridden  | - `choices`_                                                           |
 | options     |                                                                        |
 +-------------+------------------------------------------------------------------------+
@@ -35,17 +38,38 @@ manually, but then you should just use the ``ChoiceType`` directly.
 |             | - `empty_data`_                                                        |
 |             | - `error_bubbling`_                                                    |
 |             | - `error_mapping`_                                                     |
+|             | - `help`_                                                              |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `label_format`_                                                      |
 |             | - `mapped`_                                                            |
-|             | - `read_only`_ (deprecated as of 2.8)                                  |
 |             | - `required`_                                                          |
 +-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
 +-------------+------------------------------------------------------------------------+
+
+Field Options
+-------------
+
+input
+~~~~~
+
+**type**: ``string`` **default**: ``string``
+
+The format of the *input* data - i.e. the format that the timezone is stored
+on your underlying object. Valid values are:
+
+* ``string`` (e.g. ``America/New_York``)
+* ``datetimezone`` (a ``DateTimeZone`` object)
+
+regions
+~~~~~~~
+
+**type**: ``int`` **default**: ``\DateTimeZone::ALL``
+
+The available regions in the timezone choice list. For example: ``DateTimeZone::AMERICA | DateTimeZone::EUROPE``
 
 Overridden Options
 ------------------
@@ -57,6 +81,11 @@ choices
 
 The Timezone type defaults the choices to all timezones returned by
 :phpmethod:`DateTimeZone::listIdentifiers`, broken down by continent.
+
+.. caution::
+
+    If you want to override the built-in choices of the timezone type, you
+    will also have to set the ``choice_loader`` option to ``null``.
 
 Inherited Options
 -----------------
@@ -95,6 +124,8 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
@@ -102,7 +133,5 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

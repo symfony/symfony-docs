@@ -34,6 +34,7 @@ Comparison Constraints
 * :doc:`GreaterThan </reference/constraints/GreaterThan>`
 * :doc:`GreaterThanOrEqual </reference/constraints/GreaterThanOrEqual>`
 * :doc:`Range </reference/constraints/Range>`
+* :doc:`DivisibleBy </reference/constraints/DivisibleBy>`
 
 Date Constraints
 ~~~~~~~~~~~~~~~~

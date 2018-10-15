@@ -54,7 +54,7 @@ which uses the template reference to actually find and load the template::
 .. code-block:: html+php
 
     <!-- views/hello.php -->
-    Hello, <?php echo $firstname ?>!
+    Hello, <?= $firstname ?>!
 
 The :method:`Symfony\\Component\\Templating\\PhpEngine::render` method parses
 the ``views/hello.php`` file and returns the output text. The second argument
@@ -85,7 +85,7 @@ to render the template originally) inside the template to render another templat
 
     <?php $names = array('Fabien', ...) ?>
     <?php foreach ($names as $name) : ?>
-        <?php echo $view->render('hello.php', array('firstname' => $name)) ?>
+        <?= $view->render('hello.php', array('firstname' => $name)) ?>
     <?php endforeach ?>
 
 Global Variables
@@ -103,7 +103,7 @@ In a template:
 
 .. code-block:: html+php
 
-    <p>The google tracking code is: <?php echo $ga_tracking ?></p>
+    <p>The google tracking code is: <?= $ga_tracking ?></p>
 
 .. caution::
 
@@ -123,13 +123,13 @@ JavaScript code isn't written out to your page. This will prevent things like
 XSS attacks. To do this, use the
 :method:`Symfony\\Component\\Templating\\PhpEngine::escape` method::
 
-    <?php echo $view->escape($firstname) ?>
+    <?= $view->escape($firstname) ?>
 
 By default, the ``escape()`` method assumes that the variable is outputted
 within an HTML context. The second argument lets you change the context. For
 example, to output something inside JavaScript, use the ``js`` context::
 
-    <?php echo $view->escape($var, 'js') ?>
+    <?= $view->escape($var, 'js') ?>
 
 The component comes with an HTML and JS escaper. You can register your own
 escaper using the
@@ -146,18 +146,17 @@ Helpers
 
 The Templating component can be easily extended via helpers. Helpers are PHP objects that
 provide features useful in a template context. The component has
-2 built-in helpers:
+one built-in helper:
 
-* :doc:`/components/templating/assetshelper`
 * :doc:`/components/templating/slotshelper`
 
 Before you can use these helpers, you need to register them using
 :method:`Symfony\\Component\\Templating\\PhpEngine::set`::
 
-    use Symfony\Component\Templating\Helper\AssetsHelper;
+    use Symfony\Component\Templating\Helper\SlotsHelper;
     // ...
 
-    $templating->set(new AssetsHelper());
+    $templating->set(new SlotsHelper());
 
 Custom Helpers
 ~~~~~~~~~~~~~~

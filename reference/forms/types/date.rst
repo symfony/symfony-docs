@@ -35,11 +35,11 @@ and can understand a number of different input formats via the `input`_ option.
 | Inherited            | - `data`_                                                                   |
 | options              | - `disabled`_                                                               |
 |                      | - `error_mapping`_                                                          |
+|                      | - `help`_                                                                   |
 |                      | - `inherit_data`_                                                           |
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
 |                      | - `mapped`_                                                                 |
-|                      | - `read_only`_ (deprecated as of 2.8)                                       |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | :doc:`FormType </reference/forms/types/form>`                               |
 +----------------------+-----------------------------------------------------------------------------+
@@ -131,7 +131,7 @@ that Symfony should expect via the `format`_ option.
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/datetime_choice_translation_domain.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
@@ -207,6 +207,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
@@ -214,8 +216,6 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 Field Variables
 ---------------

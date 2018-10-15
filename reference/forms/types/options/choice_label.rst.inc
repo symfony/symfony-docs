@@ -1,9 +1,6 @@
 choice_label
 ~~~~~~~~~~~~
 
-.. versionadded:: 2.7
-    The ``choice_label`` option was introduced in Symfony 2.7.
-
 **type**: ``string``, ``callable`` or ``false`` **default**: ``null``
 
 Normally, the array key of each item in the ``choices`` option is used as the
@@ -19,9 +16,8 @@ more control::
             'no' => false,
             'maybe' => null,
         ),
-        'choices_as_values' => true,
         'choice_label' => function ($choiceValue, $key, $value) {
-            if (true === $choiceValue) {
+            if ($value == $choiceValue) {
                 return 'Definitely!';
             }
 
@@ -52,7 +48,6 @@ If your choice values are objects, then ``choice_label`` can also be a
             new Status(Status::NO),
             new Status(Status::MAYBE),
         ),
-        'choices_as_values' => true,
         'choice_label' => 'displayName',
     ));
 

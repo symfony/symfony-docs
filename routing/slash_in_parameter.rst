@@ -26,14 +26,14 @@ a more permissive regular expression for it:
 
     .. code-block:: php-annotations
 
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class DefaultController
         {
             /**
              * @Route("/share/{token}", name="share", requirements={"token"=".+"})
              */
-            public function shareAction($token)
+            public function share($token)
             {
                 // ...
             }
@@ -41,14 +41,16 @@ a more permissive regular expression for it:
 
     .. code-block:: yaml
 
+        # config/routes.yaml
         share:
-            path:     /share/{token}
-            defaults: { _controller: AppBundle:Default:share }
+            path:       /share/{token}
+            controller: App\Controller\DefaultController::share
             requirements:
                 token: .+
 
     .. code-block:: xml
 
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -56,19 +58,20 @@ a more permissive regular expression for it:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="share" path="/share/{token}">
-                <default key="_controller">AppBundle:Default:share</default>
+                <default key="_controller">App\Controller\DefaultController::share</default>
                 <requirement key="token">.+</requirement>
             </route>
         </routes>
 
     .. code-block:: php
 
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
         $routes->add('share', new Route('/share/{token}', array(
-            '_controller' => 'AppBundle:Default:share',
+            '_controller' => 'App\Controller\DefaultController::share',
         ), array(
             'token' => '.+',
         )));

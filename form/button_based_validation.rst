@@ -4,9 +4,6 @@
 How to Choose Validation Groups Based on the Clicked Button
 ===========================================================
 
-.. versionadded:: 2.3
-    Support for buttons in forms was introduced in Symfony 2.3.
-
 When your form contains multiple submit buttons, you can change the validation
 group depending on which button is used to submit the form. For example,
 consider a form in a wizard that lets you advance to the next step or go back

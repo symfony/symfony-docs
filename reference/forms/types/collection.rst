@@ -24,10 +24,10 @@ photos).
 |             | - `prototype_name`_                                                         |
 +-------------+-----------------------------------------------------------------------------+
 | Inherited   | - `by_reference`_                                                           |
-| options     | - `cascade_validation`_                                                     |
-|             | - `empty_data`_                                                             |
+| options     | - `empty_data`_                                                             |
 |             | - `error_bubbling`_                                                         |
 |             | - `error_mapping`_                                                          |
+|             | - `help`_                                                                   |
 |             | - `label`_                                                                  |
 |             | - `label_attr`_                                                             |
 |             | - `label_format`_                                                           |
@@ -257,10 +257,10 @@ For more information, see :ref:`form-collections-remove`.
 delete_empty
 ~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``false``
+**type**: ``Boolean`` or ``callable`` **default**: ``false``
 
 If you want to explicitly remove entirely empty collection entries from your
-form you have to set this option to true. However, existing collection entries
+form you have to set this option to ``true``. However, existing collection entries
 will only be deleted if you have the allow_delete_ option enabled. Otherwise
 the empty values will be kept.
 
@@ -273,12 +273,26 @@ the empty values will be kept.
     Read about the :ref:`form's empty_data option <reference-form-option-empty-data>`
     to learn why this is necessary.
 
+A value is deleted from the collection only if the normalized value is ``null``.
+However, you can also set the option value to a callable, which will be executed
+for each value in the submitted collection. If the callable returns ``true``,
+the value is removed from the collection. For example::
+
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    // ...
+
+    $builder->add('users', CollectionType::class, array(
+        // ...
+        'delete_empty' => function (User $user = null) {
+            return null === $user || empty($user->getFirstName());
+        },
+    ));
+
+Using a callable is particularly useful in case of compound form types, which
+may define complex conditions for considering them empty.
+
 entry_options
 ~~~~~~~~~~~~~
-
-.. versionadded:: 2.8
-    The ``entry_options`` option was introduced in Symfony 2.8 in favor of
-    ``options``, which is available prior to 2.8.
 
 **type**: ``array`` **default**: ``array()``
 
@@ -301,16 +315,11 @@ type::
                 'Berlin'    => 'berlin',
                 'London'    => 'london',
             ),
-            'choices_as_values' => true,
         ),
     ));
 
 entry_type
 ~~~~~~~~~~
-
-.. versionadded:: 2.8
-    The ``entry_type`` option was introduced in Symfony 2.8 and replaces
-    ``type``, which is available prior to 2.8.
 
 **type**: ``string`` **default**: ``Symfony\\Component\\Form\\Extension\\Core\\Type\\TextType``
 
@@ -356,9 +365,6 @@ well as :ref:`form-collections-new-prototype`.
 prototype_data
 ~~~~~~~~~~~~~~
 
-.. versionadded:: 2.8
-    The ``prototype_data`` option was introduced in Symfony 2.8.
-
 **type**: ``mixed`` **default**: ``null``
 
 Allows you to define specific data for the prototype. Each new row added will
@@ -397,8 +403,6 @@ Not all options are listed here - only the most applicable to this type:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
-.. include:: /reference/forms/types/options/cascade_validation.rst.inc
-
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER
 
@@ -415,6 +419,8 @@ error_bubbling
 .. include:: /reference/forms/types/options/_error_bubbling_body.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 

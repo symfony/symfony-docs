@@ -15,9 +15,9 @@ that a session is *always* started:
 
 .. code-block:: html+twig
 
-    {% for flashMessage in app.session.flashBag.get('notice') %}
+    {% for message in app.flashes('notice') %}
         <div class="flash-notice">
-            {{ flashMessage }}
+            {{ message }}
         </div>
     {% endfor %}
 
@@ -29,10 +29,10 @@ access the flash messages:
 
 .. code-block:: html+twig
 
-    {% if app.request.hasPreviousSession %}
-        {% for flashMessage in app.session.flashBag.get('notice') %}
+    {% if app.request.method == 'POST' %}
+        {% for message in app.flashes('notice') %}
             <div class="flash-notice">
-                {{ flashMessage }}
+                {{ message }}
             </div>
         {% endfor %}
     {% endif %}

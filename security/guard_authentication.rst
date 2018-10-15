@@ -19,8 +19,8 @@ and configure a :doc:`user provider </security/custom_provider>`. In this
 example, users are stored in the database via Doctrine, and each user has an ``apiKey``
 property they use to access their account via the API::
 
-    // src/AppBundle/Entity/User.php
-    namespace AppBundle\Entity;
+    // src/Entity/User.php
+    namespace App\Entity;
 
     use Symfony\Component\Security\Core\User\UserInterface;
     use Doctrine\ORM\Mapping as ORM;
@@ -90,21 +90,21 @@ Next, make sure you've configured a "user provider" for the user:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
             providers:
                 your_db_provider:
                     entity:
-                        class: AppBundle:User
+                        class: App\Entity\User
                         property: apiKey
 
             # ...
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -116,7 +116,7 @@ Next, make sure you've configured a "user provider" for the user:
                 <!-- ... -->
 
                 <provider name="your_db_provider">
-                    <entity class="AppBundle:User" />
+                    <entity class="App\Entity\User" />
                 </provider>
 
                 <!-- ... -->
@@ -125,14 +125,16 @@ Next, make sure you've configured a "user provider" for the user:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
+        use App\Entity\User;
+
         $container->loadFromExtension('security', array(
             // ...
 
             'providers' => array(
                 'your_db_provider' => array(
                     'entity' => array(
-                        'class' => 'AppBundle:User',
+                        'class' => User::class,
                     ),
                 ),
             ),
@@ -153,12 +155,12 @@ on each request with their API token. Your job is to read this and find the asso
 user (if any).
 
 To create a custom authentication system, just create a class and make it implement
-:class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`. Or, extend
+:class:`Symfony\\Component\\Security\\Guard\\AuthenticatorInterface`. Or, extend
 the simpler :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`.
-This requires you to implement seven methods::
+This requires you to implement several methods::
 
-    // src/AppBundle/Security/TokenAuthenticator.php
-    namespace AppBundle\Security;
+    // src/Security/TokenAuthenticator.php
+    namespace App\Security;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\JsonResponse;
@@ -172,20 +174,23 @@ This requires you to implement seven methods::
     class TokenAuthenticator extends AbstractGuardAuthenticator
     {
         /**
-         * Called on every request. Return whatever credentials you want to
-         * be passed to getUser(). Returning null will cause this authenticator
+         * Called on every request to decide if this authenticator should be
+         * used for the request. Returning false will cause this authenticator
          * to be skipped.
+         */
+        public function supports(Request $request)
+        {
+            return $request->headers->has('X-AUTH-TOKEN');
+        }
+
+        /**
+         * Called on every request. Return whatever credentials you want to
+         * be passed to getUser() as $credentials.
          */
         public function getCredentials(Request $request)
         {
-            if (!$token = $request->headers->get('X-AUTH-TOKEN')) {
-                // No token?
-                $token = null;
-            }
-
-            // What you return here will be passed to getUser() as $credentials
             return array(
-                'token' => $token,
+                'token' => $request->headers->get('X-AUTH-TOKEN'),
             );
         }
 
@@ -252,40 +257,17 @@ Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods
 Step 2) Configure the Authenticator
 -----------------------------------
 
-To finish this, register the class as a service:
+To finish this, make sure your authenticator is registered as a service. If you're
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+that happens automatically.
+
+Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authenticator:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/services.yml
-        services:
-            app.token_authenticator:
-                class: AppBundle\Security\TokenAuthenticator
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <services>
-            <service id="app.token_authenticator" class="AppBundle\Security\TokenAuthenticator" />
-        </services>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Security\TokenAuthenticator;
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->register('app.token_authenticator', TokenAuthenticator::class);
-
-Finally, configure your ``firewalls`` key in ``security.yml`` to use this authenticator:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -298,7 +280,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
 
                     guard:
                         authenticators:
-                            - app.token_authenticator
+                            - App\Security\TokenAuthenticator
 
                     # if you want, disable storing the user in the session
                     # stateless: true
@@ -308,7 +290,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -325,7 +307,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
                     <logout />
 
                     <guard>
-                        <authenticator>app.token_authenticator</authenticator>
+                        <authenticator>App\Security\TokenAuthenticator</authenticator>
                     </guard>
 
                     <!-- ... -->
@@ -335,9 +317,10 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ..
+        use App\Security\TokenAuthenticator;
 
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -347,7 +330,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
                     'logout'         => true,
                     'guard'          => array(
                         'authenticators'  => array(
-                            'app.token_authenticator'
+                            TokenAuthenticator::class
                         ),
                     ),
                     // ...
@@ -381,19 +364,22 @@ The Guard Authenticator Methods
 
 Each authenticator needs the following methods:
 
+**supports(Request $request)**
+    This will be called on *every* request and your job is to decide if the
+    authenticator should be used for this request (return ``true``) or if it
+    should be skipped (return ``false``).
+
 **getCredentials(Request $request)**
     This will be called on *every* request and your job is to read the token (or
     whatever your "authentication" information is) from the request and return it.
-    If you return ``null``, the rest of the authentication process is skipped. Otherwise,
-    ``getUser()`` will be called and the return value is passed as the first argument.
+    These credentials are later passed as the first argument of ``getUser()``.
 
 **getUser($credentials, UserProviderInterface $userProvider)**
-    If ``getCredentials()`` returns a non-null value, then this method is called
-    and its return value is passed here as the ``$credentials`` argument. Your job
-    is to return an object that implements ``UserInterface``. If you do, then
-    ``checkCredentials()`` will be called. If you return ``null`` (or throw an
-    :ref:`AuthenticationException <guard-customize-error>`)
-    authentication will fail.
+    The ``$credentials`` argument is the value returned by ``getCredentials()``.
+    Your job is to return an object that implements ``UserInterface``. If you do,
+    then ``checkCredentials()`` will be called. If you return ``null`` (or throw
+    an :ref:`AuthenticationException <guard-customize-error>`) authentication
+    will fail.
 
 **checkCredentials($credentials, UserInterface $user)**
     If ``getUser()`` returns a User object, this method is called. Your job is to
@@ -419,8 +405,7 @@ Each authenticator needs the following methods:
 
 **start(Request $request, AuthenticationException $authException = null)**
     This is called if the client accesses a URI/resource that requires authentication,
-    but no authentication details were sent (i.e. you returned ``null`` from
-    ``getCredentials()``). Your job is to return a
+    but no authentication details were sent. Your job is to return a
     :class:`Symfony\\Component\\HttpFoundation\\Response` object that helps
     the user authenticate (e.g. a 401 response that says "token is missing!").
 
@@ -431,7 +416,7 @@ Each authenticator needs the following methods:
     functionality in this example.
 
 **createAuthenticatedToken(UserInterface $user, string $providerKey)**
-    If you are implementing the :class:`Symfony\\Component\\Security\\Guard\\GuardAuthenticatorInterface`
+    If you are implementing the :class:`Symfony\\Component\\Security\\Guard\\AuthenticatorInterface`
     instead of extending the :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`
     class, you have to implement this method. It will be called
     after a successful authentication to create and return the token
@@ -458,7 +443,7 @@ But, you can easily return a custom message by throwing a
 You can throw this from ``getCredentials()``, ``getUser()`` or ``checkCredentials()``
 to cause a failure::
 
-    // src/AppBundle/Security/TokenAuthenticator.php
+    // src/Security/TokenAuthenticator.php
     // ...
 
     use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -491,6 +476,60 @@ egg to return a custom message if someone tries this:
     curl -H "X-AUTH-TOKEN: ILuvAPIs" http://localhost:8000/
     # {"message":"ILuvAPIs is not a real API key: it's just a silly phrase"}
 
+Building a Login Form
+---------------------
+
+If you're building a login form, use the :class:`Symfony\\Component\\Security\\Guard\\Authenticator\\AbstractFormLoginAuthenticator`
+as your base class - it implements a few methods for you. Then, fill in the other
+methods just like with the ``TokenAuthenticator``. Outside of Guard, you are still
+responsible for creating a route, controller and template for your login form.
+
+.. _guard-csrf-protection:
+
+Adding CSRF Protection
+----------------------
+
+If you're using a Guard authenticator to build a login form and want to add CSRF
+protection, no problem!
+
+First, check that :ref:`the csrf_protection option <reference-framework-csrf-protection>`
+is enabled and :ref:`add the _csrf_token field to your login form <csrf-login-template>`.
+
+Then, type-hint ``CsrfTokenManagerInterface`` in your ``__construct()`` method
+(or manually configure the ``Symfony\Component\Security\Csrf\CsrfTokenManagerInterface``
+service to be passed) and add the following logic::
+
+    // src/Security/ExampleFormAuthenticator.php
+    // ...
+
+    use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+    use Symfony\Component\Security\Csrf\CsrfToken;
+    use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
+    use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
+
+    class ExampleFormAuthenticator extends AbstractFormLoginAuthenticator
+    {
+        private $csrfTokenManager;
+
+        public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+        {
+            $this->csrfTokenManager = $csrfTokenManager;
+        }
+
+        public function getCredentials(Request $request)
+        {
+            $csrfToken = $request->request->get('_csrf_token');
+
+            if (false === $this->csrfTokenManager->isTokenValid(new CsrfToken('authenticate', $csrfToken))) {
+                throw new InvalidCsrfTokenException('Invalid CSRF token.');
+            }
+
+            // ... all your normal logic
+        }
+
+        // ...
+    }
+
 Avoid Authenticating the Browser on Every Request
 -------------------------------------------------
 
@@ -498,25 +537,25 @@ If you create a Guard login system that's used by a browser and you're experienc
 problems with your session or CSRF tokens, the cause could be bad behavior by your
 authenticator. When a Guard authenticator is meant to be used by a browser, you
 should *not* authenticate the user on *every* request. In other words, you need to
-make sure the ``getCredentials()`` method *only* returns a non-null value when
-you actually *need* to authenticate the user. Why? Because, when ``getCredentials()``
-returns a non-null value, for security purposes, the user's session is "migrated"
-to a new session id.
+make sure the ``supports()`` method *only* returns ``true`` when
+you actually *need* to authenticate the user. Why? Because, when ``supports()``
+returns true (and authentication is ultimately successful), for security purposes,
+the user's session is "migrated" to a new session id.
 
 This is an edge-case, and unless you're having session or CSRF token issues, you
 can ignore this. Here is an example of good and bad behavior::
 
-    public function getCredentials(Request $request)
+    public function supports(Request $request)
     {
         // GOOD behavior: only authenticate on a specific route
         if ($request->attributes->get('_route') !== 'login_route' || !$request->isMethod('POST')) {
-            return null;
+            return true;
         }
 
         // e.g. your login system authenticates by the user's IP address
-        // BAD behavior: authentication will now execute on every request
-        // even if the user is already authenticated (due to the session)
-        return array('ip' => $request->getClientIp());
+        // BAD behavior: So, you decide to *always* return true so that
+        // you can check the user's IP address on every request
+        return true;
     }
 
 The problem occurs when your browser-based authenticator tries to authenticate
@@ -533,60 +572,32 @@ are two possible fixes:
     // src/Security/MyIpAuthenticator.php
     // ...
 
-    + use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+    + use Symfony\Component\Security\Core\Security;
 
     class MyIpAuthenticator
     {
-    +     private $tokenStorage;
+    +     private $security;
 
-    +     public function __construct(TokenStorageInterface $tokenStorage)
+    +     public function __construct(Security $security)
     +     {
-    +         $this->tokenStorage = $tokenStorage;
+    +         $this->security = $security;
     +     }
 
-        public function getCredentials(Request $request)
+        public function supports(Request $request)
         {
     +         // if there is already an authenticated user (likely due to the session)
     +         // then return null and skip authentication: there is no need.
-    +         $user = $this->tokenStorage->getToken() ? $this->tokenStorage->getToken()->getUser() : null;
-    +         if (is_object($user)) {
-    +             return null;
+    +         if ($this->security->getUser()) {
+    +             return false;
     +         }
 
-            return array('ip' => $request->getClientIp());
+    +         // the user is not logged in, so the authenticator should continue
+    +         return true;
         }
     }
 
-You'll also need to update your service configuration to pass the token storage:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.token_authenticator:
-                class: AppBundle\Security\TokenAuthenticator
-                arguments: ['@security.token_storage']
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <services>
-            <service id="app.token_authenticator" class="AppBundle\Security\TokenAuthenticator">
-                <argument type="service" id="security.token_storage" />
-            </service>
-        </services>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Security\TokenAuthenticator;
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->register('app.token_authenticator', TokenAuthenticator::class)
-            ->addArgument(new Reference('security.token_storage'));
+If you use autowiring, the ``Security``  service will automatically be passed to
+your authenticator.
 
 Frequently Asked Questions
 --------------------------
@@ -595,89 +606,7 @@ Frequently Asked Questions
     Yes! But when you do, you'll need choose just *one* authenticator to be your
     "entry_point". This means you'll need to choose *which* authenticator's ``start()``
     method should be called when an anonymous user tries to access a protected resource.
-    For example, suppose you have an ``app.form_login_authenticator`` that handles
-    a traditional form login. When a user accesses a protected page anonymously, you
-    want to use the ``start()`` method from the form authenticator and redirect them
-    to the login page (instead of returning a JSON response):
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # app/config/security.yml
-            security:
-                # ...
-
-                firewalls:
-                    # ...
-
-                    main:
-                        anonymous: ~
-                        logout: ~
-
-                        guard:
-                            entry_point: app.form_login_authenticator
-                            authenticators:
-                                - app.token_authenticator
-                                - app.form_login_authenticator
-
-                        # if you want, disable storing the user in the session
-                        # stateless: true
-
-                        # maybe other things, like form_login, remember_me, etc
-                        # ...
-
-        .. code-block:: xml
-
-            <!-- app/config/security.xml -->
-            <?xml version="1.0" encoding="UTF-8"?>
-            <srv:container xmlns="http://symfony.com/schema/dic/security"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:srv="http://symfony.com/schema/dic/services"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    http://symfony.com/schema/dic/services/services-1.0.xsd">
-                <config>
-                    <!-- ... -->
-
-                    <firewall name="main"
-                        pattern="^/"
-                        anonymous="true"
-                    >
-                        <logout />
-
-                        <guard entry-point="app.form_login_authenticator">
-                            <authenticator>app.token_authenticator</authenticator>
-                            <authenticator>app.form_login_authenticator</authenticator>
-                        </guard>
-
-                        <!-- ... -->
-                    </firewall>
-                </config>
-            </srv:container>
-
-        .. code-block:: php
-
-            // app/config/security.php
-
-            // ..
-
-            $container->loadFromExtension('security', array(
-                'firewalls' => array(
-                    'main'       => array(
-                        'pattern'        => '^/',
-                        'anonymous'      => true,
-                        'logout'         => true,
-                        'guard'          => array(
-                            'entry_point'     => 'app.form_login_authenticator',
-                            'authenticators'  => array(
-                                'app.token_authenticator',
-                                'app.form_login_authenticator',
-                            ),
-                        ),
-                        // ...
-                    ),
-                ),
-            ));
+    For more details, see :doc:`/security/multiple_guard_authenticators`.
 
 **Can I use this with form_login?**
     Yes! ``form_login`` is *one* way to authenticate a user, so you could use

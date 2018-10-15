@@ -25,13 +25,13 @@ This field adds a percentage sign "``%``" after the input box.
 |             | - `empty_data`_                                                       |
 |             | - `error_bubbling`_                                                   |
 |             | - `error_mapping`_                                                    |
+|             | - `help`_                                                             |
 |             | - `invalid_message`_                                                  |
 |             | - `invalid_message_parameters`_                                       |
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
 |             | - `label_format`_                                                     |
 |             | - `mapped`_                                                           |
-|             | - `read_only`_ (deprecated as of 2.8)                                 |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                         |
@@ -44,10 +44,6 @@ Field Options
 
 scale
 ~~~~~
-
-.. versionadded:: 2.7
-    The ``scale`` option was introduced in Symfony 2.7. Prior to Symfony 2.7,
-    it was known as ``precision``.
 
 **type**: ``integer`` **default**: ``0``
 
@@ -100,6 +96,8 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
@@ -111,7 +109,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc

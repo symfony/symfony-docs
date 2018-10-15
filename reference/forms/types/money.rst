@@ -17,6 +17,7 @@ how the input and output of the data is handled.
 | Options     | - `currency`_                                                       |
 |             | - `divisor`_                                                        |
 |             | - `grouping`_                                                       |
+|             | - `rounding_mode`_                                                  |
 |             | - `scale`_                                                          |
 +-------------+---------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                       |
@@ -27,13 +28,13 @@ how the input and output of the data is handled.
 |             | - `empty_data`_                                                     |
 |             | - `error_bubbling`_                                                 |
 |             | - `error_mapping`_                                                  |
+|             | - `help`_                                                           |
 |             | - `invalid_message`_                                                |
 |             | - `invalid_message_parameters`_                                     |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
 |             | - `label_format`_                                                   |
 |             | - `mapped`_                                                         |
-|             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                       |
@@ -80,12 +81,10 @@ be set back on your object.
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
+.. include:: /reference/forms/types/options/rounding_mode.rst.inc
+
 scale
 ~~~~~
-
-.. versionadded:: 2.7
-    The ``scale`` option was introduced in Symfony 2.7. Prior to Symfony 2.7,
-    it was known as ``precision``.
 
 **type**: ``integer`` **default**: ``2``
 
@@ -120,6 +119,8 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
@@ -131,8 +132,6 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 

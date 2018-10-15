@@ -36,11 +36,11 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 | Inherited            | - `data`_                                                                   |
 | Options              | - `disabled`_                                                               |
 |                      | - `error_mapping`_                                                          |
+|                      | - `help`_                                                                   |
 |                      | - `inherit_data`_                                                           |
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
 |                      | - `mapped`_                                                                 |
-|                      | - `read_only`_ (deprecated as of 2.8)                                       |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | FormType                                                                    |
 +----------------------+-----------------------------------------------------------------------------+
@@ -83,14 +83,10 @@ values.
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/datetime_choice_translation_domain.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_domain.rst.inc
 
 placeholder
 ~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``placeholder`` option was introduced in Symfony 2.6 and replaces
-    ``empty_value``, which is available prior to 2.6.
 
 **type**: ``string`` | ``array``
 
@@ -125,6 +121,7 @@ on your underlying object. Valid values are:
 
 * ``string`` (e.g. ``12:17:26``)
 * ``datetime`` (a ``DateTime`` object)
+* ``datetime_immutable`` (a ``DateTimeImmutable`` object)
 * ``array`` (e.g. ``array('hour' => 12, 'minute' => 17, 'second' => 26)``)
 * ``timestamp`` (e.g. ``1307232000``)
 
@@ -197,6 +194,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
+.. include:: /reference/forms/types/options/help.rst.inc
+
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
@@ -204,8 +203,6 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
-
-.. include:: /reference/forms/types/options/read_only.rst.inc
 
 Form Variables
 --------------

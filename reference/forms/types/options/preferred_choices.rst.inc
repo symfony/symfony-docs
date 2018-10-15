@@ -17,12 +17,8 @@ you can list the most popular on top, like Bork Bork and Pirate::
             'Bork'   => 'muppets',
             'Pirate' => 'arr',
         ),
-        'choices_as_values' => true,
         'preferred_choices' => array('muppets', 'arr'),
     ));
-
-.. versionadded:: 2.7
-    Setting a callable or propery path was introduced in Symfony 2.7.
 
 This options can also be a callback function to give you more flexibility. This might
 be especially useful if your values are objects::
@@ -37,7 +33,6 @@ be especially useful if your values are objects::
             '1 week' => new \DateTime('+1 week'),
             '1 month' => new \DateTime('+1 month'),
         ),
-        'choices_as_values' => true,
         'preferred_choices' => function ($value, $key) {
             // prefer options within 3 days
             return $value <= new \DateTime('+3 days');
@@ -65,6 +60,6 @@ when rendering the field:
 
     .. code-block:: php
 
-        <?php echo $view['form']->widget($form['publishAt'], array(
+        <?= $view['form']->widget($form['publishAt'], array(
                   'separator' => '====='
         )) ?>

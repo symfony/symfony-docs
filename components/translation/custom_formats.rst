@@ -104,12 +104,10 @@ will save a few lines::
 
 .. sidebar:: Format a message catalogue
 
-    .. versionadded:: 2.8
-        The ability to format a message catalogue without dumping it was introduced in Symfony 2.8.
-
-    In some cases, you want to send the dump contents as a response instead of writing them in files.
-    To do this, you can use the ``formatCatalogue`` method. In this case, you must pass the domain argument,
-    which determines the list of messages that should be dumped.
+    In some cases, you want to send the dump contents as a response instead of
+    writing them in files.  To do this, you can use the ``formatCatalogue``
+    method. In this case, you must pass the domain argument, which determines
+    the list of messages that should be dumped.
 
 The :method:`Symfony\\Component\\Translation\\Dumper\\FileDumper::formatCatalogue`
 method creates the output string, that will be used by the
@@ -121,7 +119,7 @@ YAML file are dumped into a text file with the custom format::
     use Symfony\Component\Translation\Loader\YamlFileLoader;
 
     $loader = new YamlFileLoader();
-    $translations = $loader->load(__DIR__ . '/translations/messages.fr_FR.yml' , 'fr_FR');
+    $translations = $loader->load(__DIR__ . '/translations/messages.fr_FR.yaml' , 'fr_FR');
 
     $dumper = new MyFormatDumper();
     $dumper->dump($translations, array('path' => __DIR__.'/dumps'));

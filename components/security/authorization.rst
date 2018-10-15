@@ -85,24 +85,11 @@ of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterf
 which means they have to implement a few methods which allows the decision
 manager to use them:
 
-``supportsAttribute($attribute)`` (deprecated as of 2.8)
-    will be used to check if the voter knows how to handle the given attribute;
-
-``supportsClass($class)`` (deprecated as of 2.8)
-    will be used to check if the voter is able to grant or deny access for
-    an object of the given class;
-
 ``vote(TokenInterface $token, $object, array $attributes)``
     this method will do the actual voting and return a value equal to one
     of the class constants of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
     i.e. ``VoterInterface::ACCESS_GRANTED``, ``VoterInterface::ACCESS_DENIED``
     or ``VoterInterface::ACCESS_ABSTAIN``;
-
-.. note::
-
-    The ``supportsAttribute()`` and ``supportsClass()`` methods are deprecated
-    as of Symfony 2.8 and no longer required in 3.0. These methods should not
-    be called outside the voter class.
 
 The Security component contains some standard voters which cover many use
 cases:
@@ -180,12 +167,11 @@ role::
 Roles
 -----
 
-Roles are objects that give expression to a certain right the user has.
-The only requirement is that they implement :class:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface`,
-which means they should also have a :method:`Symfony\\Component\\Security\\Core\\Role\\RoleInterface::getRole`
-method that returns a string representation of the role itself. The default
-:class:`Symfony\\Component\\Security\\Core\\Role\\Role` simply returns its
-first constructor argument::
+Roles are objects that give expression to a certain right the user has. The only
+requirement is that they must define a ``getRole()`` method that returns a
+string representation of the role itself. To do so, you can optionally extend
+from the default :class:`Symfony\\Component\\Security\\Core\\Role\\Role` class,
+which returns its first constructor argument in this method::
 
     use Symfony\Component\Security\Core\Role\Role;
 

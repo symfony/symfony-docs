@@ -6,7 +6,7 @@ user to remember the order of execution, you can call it directly yourself.
 This is also useful if you want to create a "meta" command that just runs a
 bunch of other commands (for instance, all commands that need to be run when
 the project's code has changed on the production servers: clearing the cache,
-generating Doctrine2 proxies, dumping Assetic assets, ...).
+generating Doctrine2 proxies, dumping web assets, ...).
 
 Calling a command from another one is straightforward::
 
