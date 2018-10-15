@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by moroine at 2018-06-27T11:40:57Z
+
+@ndench @OskarStark @Jean85 any update ?
+
+---------------------------------------------------------------------------
+
+by Jean85 at 2018-06-27T13:07:22Z
+
+Build is broken, maybe we should re-trigger it to see if now is ok?
+
+---------------------------------------------------------------------------
+
+by moroine at 2018-06-28T09:22:43Z
+
+Thanks for reviewing, just updated according to your feedbacks
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-07-01T08:59:03Z
+
+@moroine it could be great to add a note to fix #9620 also btw, could you have a look? This seems very related to me.
+
+---------------------------------------------------------------------------
+
+by moroine at 2018-07-02T02:44:35Z
+
+Done
+
+---------------------------------------------------------------------------
+
+by moroine at 2018-07-13T10:20:04Z
+
+@nicolas-grekas  @Jean85 I think it's ready to be merged :angel:
