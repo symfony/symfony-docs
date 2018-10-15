@@ -290,51 +290,45 @@ And that's all!
 
 .. caution::
 
-    The ``@group time-sensitive`` annotation is equivalent to ``ClockMock::register(MyTest::class)``,
-    so if you want to get a time-based function mocked into another class you will need to
-    add it explicitly using ``ClockMock::register(MyClass::class)``. The ``ClockMock::register`` method
-    creates a mock of the time based functions into the same namespace as your class. So when using
-    ``time()`` you will use the mock instead of the default one::
+    Time-based function mocking follows the `PHP namespace resolutions rules`_
+    so "fully qualified function calls" (e.g ``\time()``) cannot be mocked.
 
-        namespace App;
+The ``@group time-sensitive`` annotation is equivalent to calling
+``ClockMock::register(MyTest::class)``. If you want to mock a function used in a
+different class, do it explicitly using ``ClockMock::register(MyClass::class)``::
 
-        class MyClass
+    // the class that uses the time() function to be mocked
+    namespace App;
+
+    class MyClass
+    {
+        public function getTimeInHours()
         {
-            public function getTimeInHours()
-            {
-                return time() / 3600;
-            }
+            return time() / 3600;
         }
+    }
 
-    .. code-block:: php
+    // the test that mocks the external time() function explicitly
+    namespace App\Tests;
 
-        namespace App\Tests;
+    use App\MyClass;
+    use PHPUnit\Framework\TestCase;
 
-        use App\MyClass;
-        use PHPUnit\Framework\TestCase;
-
-        /**
-         * @group time-sensitive
-         */
-        class MyTest extends TestCase
+    /**
+     * @group time-sensitive
+     */
+    class MyTest extends TestCase
+    {
+        public function testGetTimeInHours()
         {
-            public function testGetTimeInHours()
-            {
-                ClockMock::register(MyClass::class);
+            ClockMock::register(MyClass::class);
 
-                $my = new MyClass();
+            $my = new MyClass();
+            $result = $my->getTimeInHours();
 
-                $result = $my->getTimeInHours();
-
-                $this->assertEquals(time() / 3600, $result);
-            }
+            $this->assertEquals(time() / 3600, $result);
         }
-
-.. caution::
-
-    Keep in mind that mocking is done by using the namespace resolutions rules
-    (http://php.net/manual/en/language.namespaces.rules.php). So time-based functions need to be used as
-    "Unqualified name", i.e. ``\time()`` cannot be mocked.
+    }
 
 .. tip::
 
@@ -385,3 +379,4 @@ the mocked namespaces in the ``phpunit.xml`` file, as done for example in the
 .. _`@-silencing operator`: https://php.net/manual/en/language.operators.errorcontrol.php
 .. _`@-silenced`: https://php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
+.. _`PHP namespace resolutions rules`: https://php.net/manual/en/language.namespaces.rules.php
