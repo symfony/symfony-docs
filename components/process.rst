@@ -233,6 +233,21 @@ in the output and its type::
         }
     });
 
+You may want to wait for a specific output of the process you started
+asynchronously, for this use case you may use the method
+:method:`Symfony\\Component\\Process\\Process::waitUntil`:
+
+    $process = new Process(array('/usr/bin/php', 'slow-starting-server.php'));
+    $process->start();
+
+    // ... do other things
+
+    $process->waitUntil(function ($type, $output) {
+        return $output === 'Ready. Waiting for commands...';
+    });
+
+    // ... do things after the process is ready
+
 Streaming to the Standard Input of a Process
 --------------------------------------------
 
