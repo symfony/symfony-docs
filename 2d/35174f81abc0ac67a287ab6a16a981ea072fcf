@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-12T16:24:58Z
+
+@Steveb-p thanks for this contribution! The kind of message that you added is so common in Symfony Docs, that we have a standardized message for it. Please adapt the following message accordingly for the Messenger component. Thanks!
+
+```
+Form type extensions must be registered as services and :doc:`tagged </service_container/tags>`
+with the ``form.type_extension`` tag. If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
+```
+
+---------------------------------------------------------------------------
+
+by Steveb-p at 2018-10-14T22:44:57Z
+
+@javiereguiluz updated according to your suggestion. Added `MessageHandlerInterface` since it's used for autoconfiguration and if I see correctly it has had it's `@experimental` annotation removed?
+
+You need me to squash & rebase the branch?
