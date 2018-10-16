@@ -233,20 +233,25 @@ in the output and its type::
         }
     });
 
-You may want to wait for a specific output of the process you started
-asynchronously, for this use case you may use the method
-:method:`Symfony\\Component\\Process\\Process::waitUntil`:
+Instead of waiting until the process has finished, you can use the
+:method:`Symfony\\Component\\Process\\Process::waitUntil` method to keep or stop
+waiting based on some PHP logic. The following example starts a long running
+process and checks its output to wait until its fully initialized::
 
     $process = new Process(array('/usr/bin/php', 'slow-starting-server.php'));
     $process->start();
 
     // ... do other things
 
+    // waits until the given anonymous function returns true
     $process->waitUntil(function ($type, $output) {
         return $output === 'Ready. Waiting for commands...';
     });
 
     // ... do things after the process is ready
+
+.. versionadded:: 4.2
+    The ``waitUntil()`` method was introduced in Symfony 4.2.
 
 Streaming to the Standard Input of a Process
 --------------------------------------------
