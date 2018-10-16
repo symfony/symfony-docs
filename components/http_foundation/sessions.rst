@@ -207,6 +207,8 @@ Example::
     // ...
     $session->clear();
 
+.. _namespaced-attributes:
+
 Namespaced Attributes
 .....................
 

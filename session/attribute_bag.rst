@@ -8,7 +8,7 @@ Symfony uses attribute bags to represent values stored in the session. It ships
 with the default :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`, 
 which stores key-value pairs, and the 
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`, 
-which allows you to :ref:`set and fetch values using character-separated paths <attribute-bag-interface>`.
+which allows you to :ref:`set and fetch values using character-separated paths <namespaced-attributes>`.
 
 This is fully documented :doc:`in the component documentation </components/http_foundation/sessions>`.
 
