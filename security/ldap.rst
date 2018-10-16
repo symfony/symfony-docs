@@ -257,19 +257,22 @@ and will not be considered as authenticated fully.
 uid_key
 .......
 
-**type**: ``string`` **default**: ``sAMAccountName``
+**type**: ``string`` **default**: ``null``
 
 This is the entry's key to use as its UID. Depends on your LDAP server
 implementation. Commonly used values are:
 
-* ``sAMAccountName``
+* ``sAMAccountName`` (default)
 * ``userPrincipalName``
 * ``uid``
+
+If you configure the value ``null`` for the UID key, the default UID key
+``sAMAccountName`` is used.
 
 filter
 ......
 
-**type**: ``string`` **default**: ``({uid_key}={username})``
+**type**: ``string`` **default**: ``null``
 
 This key lets you configure which LDAP query will be used. The ``{uid_key}``
 string will be replaced by the value of the ``uid_key`` configuration value
@@ -278,6 +281,9 @@ replaced by the username you are trying to load.
 
 For example, with a ``uid_key`` of ``uid``, and if you are trying to
 load the user ``fabpot``, the final string will be: ``(uid=fabpot)``.
+
+If you configure this key with the value ``null``, the default filter
+``({uid_key}={username})`` is used.
 
 Of course, the username will be escaped, in order to prevent `LDAP injection`_.
 
