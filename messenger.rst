@@ -48,7 +48,7 @@ message handler. It's a class with an ``__invoke`` method::
 
     // src/MessageHandler/MyMessageHandler.php
     namespace App\MessageHandler;
-    
+
     use Symfony\Component\Messenger\Handler;
 
     class MyMessageHandler implements MessageHandlerInterface
@@ -64,7 +64,7 @@ with the ``messenger.message_handler`` tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
-If you're not using autoconfigure functionality, then you need to register it:
+If you're not using service autoconfiguration, then you need to add this config:
 
 .. configuration-block::
 
