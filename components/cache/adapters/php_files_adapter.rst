@@ -32,7 +32,12 @@ file similar to the following::
     As cache items are included and parsed as native PHP code and due to the way `OPcache`_
     handles file includes, this adapter has the potential to be much faster than other
     filesystem-based caches.
-
+    
+.. caution::
+   If you have configured Opcache to not check the files timestamps 
+   (see https://symfony.com/doc/current/performance.html#performance-dont-check-timestamps),
+   the cached items will not not be invalidated unless you clear the opcache.
+   
 The PhpFilesAdapter can optionally be provided a namespace, default cache lifetime, and cache
 directory path as constructor arguments::
 
