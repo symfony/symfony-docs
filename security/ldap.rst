@@ -266,8 +266,8 @@ implementation. Commonly used values are:
 * ``userPrincipalName``
 * ``uid``
 
-If you configure the value ``null`` for the UID key, the default UID key
-``sAMAccountName`` is used.
+If you pass ``null`` as the value of this option, the default UID key is used
+``sAMAccountName``.
 
 filter
 ......
@@ -282,8 +282,8 @@ replaced by the username you are trying to load.
 For example, with a ``uid_key`` of ``uid``, and if you are trying to
 load the user ``fabpot``, the final string will be: ``(uid=fabpot)``.
 
-If you configure this key with the value ``null``, the default filter
-``({uid_key}={username})`` is used.
+If you pass ``null`` as the value of this option, the default filter is used
+``({uid_key}={username})``.
 
 Of course, the username will be escaped, in order to prevent `LDAP injection`_.
 
