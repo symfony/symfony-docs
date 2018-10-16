@@ -5,50 +5,51 @@ How to Define Controllers as Services
 =====================================
 
 In Symfony, a controller does *not* need to be registered as a service. But if you're
-using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 your controllers *are* already registered as services. This means you can use dependency
 injection like any other normal service.
 
 Referencing your Service from Routing
 -------------------------------------
 
-Registering your controller as a service is great, but you also need to make sure
-that your routing references the service properly, so that Symfony knows to use it.
+Registering your controller as a service is the first step, but you also need to
+update your routing config to reference the service properly, so that Symfony
+knows to use it.
 
-If the service id is the fully-qualified class name (FQCN) of your controller, you're
-done! You can use the normal ``AppBundle:Hello:index`` syntax in your routing and
-it will find your service.
-
-But, if your service has a different id, you can use a special ``SERVICEID:METHOD``
-syntax:
+Use the ``service_id::method_name`` syntax to refer to the controller method.
+If the service id is the fully-qualified class name (FQCN) of your controller,
+as Symfony recommends, then the syntax is the same as if the controller was not
+a service like: ``App\Controller\HelloController::index``:
 
 .. configuration-block::
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/HelloController.php
+        // src/Controller/HelloController.php
 
-        // You need to use Sensio's annotation to specify a service id
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
-        /**
-         * @Route(service="app.hello_controller")
-         */
         class HelloController
         {
-            // ...
+            /**
+             * @Route("/hello", name="hello")
+             */
+            public function index()
+            {
+                // ...
+            }
         }
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         hello:
             path:     /hello
-            defaults: { _controller: app.hello_controller:indexAction }
+            defaults: { _controller: App\Controller\HelloController::index }
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -56,22 +57,17 @@ syntax:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" path="/hello">
-                <default key="_controller">app.hello_controller:indexAction</default>
+                <default key="_controller">App\Controller\HelloController::index</default>
             </route>
 
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         $collection->add('hello', new Route('/hello', array(
-            '_controller' => 'app.hello_controller:indexAction',
+            '_controller' => 'App\Controller\HelloController::index',
         )));
-
-.. note::
-
-    You cannot drop the ``Action`` part of the method name when using the
-    single colon notation.
 
 .. _controller-service-invoke:
 
@@ -80,25 +76,25 @@ Invokable Controllers
 
 If your controller implements the ``__invoke()`` method - popular with the
 Action-Domain-Response (ADR) pattern, you can simply refer to the service id
-(``AppBundle\Controller\HelloController`` or ``app.hello_controller`` for example).
+without the method (``App\Controller\HelloController`` for example).
 
 Alternatives to base Controller Methods
 ---------------------------------------
 
-When using a controller defined as a service, you can still extend any of the
-:ref:`normal base controller <the-base-controller-class-services>` classes and
-use their shortcuts. But, you don't need to! You can choose to extend *nothing*,
+When using a controller defined as a service, you can still extend the
+:ref:`AbstractController base controller <the-base-controller-class-services>`
+and use its shortcuts. But, you don't need to! You can choose to extend *nothing*,
 and use dependency injection to access different services.
 
 The base `Controller class source code`_ is a great way to see how to accomplish
 common tasks. For example, ``$this->render()`` is usually used to render a Twig
 template and return a Response. But, you can also do this directly:
 
-In a controller that's defined as a service, you can instead inject the ``templating``
+In a controller that's defined as a service, you can instead inject the ``twig``
 service and use it directly::
 
-    // src/AppBundle/Controller/HelloController.php
-    namespace AppBundle\Controller;
+    // src/Controller/HelloController.php
+    namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
     use Twig\Environment;
@@ -112,7 +108,7 @@ service and use it directly::
             $this->twig = $twig;
         }
 
-        public function indexAction($name)
+        public function index($name)
         {
             $content = $this->twig->render(
                 'hello/index.html.twig',

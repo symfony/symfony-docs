@@ -41,7 +41,7 @@ of your project. It already holds the basic config you need:
 
     Encore
         // directory where compiled assets will be stored
-        .setOutputPath('web/build/')
+        .setOutputPath('public/build/')
         // public path used by the web server to access the output path
         .setPublicPath('/build')
 
@@ -55,7 +55,7 @@ of your project. It already holds the basic config you need:
 They *key* part is ``addEntry()``: this tells Encore to load the ``assets/js/app.js``
 file and follow *all* of the ``require`` statements. It will then package everything
 together and - thanks to the first ``app`` argument - output final ``app.js`` and
-``app.css`` files into the ``web/build`` directory.
+``app.css`` files into the ``public/build`` directory.
 
 .. _encore-build-assets:
 

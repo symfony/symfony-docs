@@ -17,6 +17,7 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Options              | - `choice_translation_domain`_                                              |
 |                      | - `date_format`_                                                            |
+|                      | - `date_label`_                                                             |
 |                      | - `date_widget`_                                                            |
 |                      | - `days`_                                                                   |
 |                      | - `placeholder`_                                                            |
@@ -28,6 +29,7 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `model_timezone`_                                                         |
 |                      | - `months`_                                                                 |
 |                      | - `seconds`_                                                                |
+|                      | - `time_label`_                                                             |
 |                      | - `time_widget`_                                                            |
 |                      | - `view_timezone`_                                                          |
 |                      | - `widget`_                                                                 |
@@ -42,6 +44,7 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 +----------------------+-----------------------------------------------------------------------------+
 | Inherited            | - `data`_                                                                   |
 | options              | - `disabled`_                                                               |
+|                      | - `help`_                                                                   |
 |                      | - `inherit_data`_                                                           |
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
@@ -65,6 +68,23 @@ date_format
 Defines the ``format`` option that will be passed down to the date field.
 See the :ref:`DateType's format option <reference-forms-type-date-format>`
 for more details.
+
+date_label
+~~~~~~~~~~
+
+**type**: ``string`` | ``null`` **default**: The label is "guessed" from the field name
+
+.. versionadded:: 4.2
+    The ``date_label`` option was introduced in Symfony 4.2.
+
+Sets the label that will be used when rendering the date widget. Setting it to
+``false`` will suppress the label::
+
+    use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
+    $builder->add('startDateTime', DateTimeType::class, array(
+        'date_label' => 'Starts On',
+    ));
 
 date_widget
 ~~~~~~~~~~~
@@ -126,6 +146,7 @@ on your underlying object. Valid values are:
 
 * ``string`` (e.g. ``2011-06-05 12:15:00``)
 * ``datetime`` (a ``DateTime`` object)
+* ``datetime_immutable`` (a ``DateTimeImmutable`` object)
 * ``array`` (e.g. ``array(2011, 06, 05, 12, 15, 0)``)
 * ``timestamp`` (e.g. ``1307276100``)
 
@@ -141,6 +162,23 @@ this format.
 .. include:: /reference/forms/types/options/months.rst.inc
 
 .. include:: /reference/forms/types/options/seconds.rst.inc
+
+time_label
+~~~~~~~~~~
+
+**type**: ``string`` | ``null`` **default**: The label is "guessed" from the field name
+
+.. versionadded:: 4.2
+    The ``time_label`` option was introduced in Symfony 4.2.
+
+Sets the label that will be used when rendering the time widget. Setting it to
+``false`` will suppress the label::
+
+    use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+
+    $builder->add('startDateTime', DateTimeType::class, array(
+        'time_label' => 'Starts On',
+    ));
 
 time_widget
 ~~~~~~~~~~~
@@ -193,6 +231,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 

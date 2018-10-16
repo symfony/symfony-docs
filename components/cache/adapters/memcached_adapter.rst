@@ -7,10 +7,6 @@
 Memcached Cache Adapter
 =======================
 
-.. versionadded:: 3.3
-
-    The Memcached adapter was introduced in Symfony 3.3.
-
 This adapter stores the values in-memory using one (or more) `Memcached server`_
 instances. Unlike the :ref:`APCu adapter <apcu-adapter>`, and similarly to the
 :ref:`Redis adapter <redis-adapter>`, it is not limited to the current server's
@@ -67,10 +63,6 @@ helper method allows creating and configuring a `Memcached`_ class instance usin
         'memcached://10.0.0.102',
         // etc...
     ));
-
-.. versionadded:: 3.4
-    The feature to pass configuration options in the memcached DSN was
-    introduced in Symfony 3.4.
 
 The `Data Source Name (DSN)`_ for this adapter must use the following format:
 

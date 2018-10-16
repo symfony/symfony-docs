@@ -8,9 +8,6 @@ The Lock Component
     The Lock Component creates and manages `locks`_, a mechanism to provide
     exclusive access to a shared resource.
 
-.. versionadded:: 3.4
-    The Lock component was introduced in Symfony 3.4.
-
 Installation
 ------------
 
@@ -147,6 +144,23 @@ to reset the TTL to its original value::
         $lock->release();
     }
 
+.. tip::
+
+    Another useful technique for long-running tasks is to pass a custom TTL as
+    an argument of the ``refresh()`` method to change the default lock TTL::
+
+        $lock = $factory->createLock('charts-generation', 30);
+        // ...
+        // refresh the lock for 30 seconds
+        $lock->refresh();
+        // ...
+        // refresh the lock for 600 seconds (next refresh() call will be 30 seconds again)
+        $lock->refresh(600);
+
+    .. versionadded:: 4.1
+        The feature to pass a custom TTL as an argument of the ``refresh()``
+        method was introduced in Symfony 4.1.
+
 Available Stores
 ----------------
 
@@ -159,8 +173,10 @@ Store                                         Scope   Blocking  Expiring
 ============================================  ======  ========  ========
 :ref:`FlockStore <lock-store-flock>`          local   yes       no
 :ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes
+:ref:`PdoStore <lock-store-pdo>`              remote  no        yes
 :ref:`RedisStore <lock-store-redis>`          remote  no        yes
 :ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no
+:ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no
 ============================================  ======  ========  ========
 
 .. _lock-store-flock:
@@ -181,7 +197,7 @@ PHP process is terminated::
 
     Beware that some file systems (such as some types of NFS) do not support
     locking. In those cases, it's better to use a directory on a local disk
-    drive or a remote store based on Redis or Memcached.
+    drive or a remote store based on PDO, Redis or Memcached.
 
 .. _lock-store-memcached:
 
@@ -202,6 +218,48 @@ support blocking, and expects a TTL to avoid stalled locks::
 .. note::
 
     Memcached does not support TTL lower than 1 second.
+
+.. _lock-store-pdo:
+
+PdoStore
+~~~~~~~~
+
+.. versionadded:: 4.2
+    The PdoStore was introduced Symfony 4.2.
+
+The PdoStore saves locks in an SQL database. It requires a `PDO`_ connection, a
+`Doctrine DBAL Connection`_, or a `Data Source Name (DSN)`_. This store does not
+support blocking, and expects a TTL to avoid stalled locks::
+
+    use Symfony\Component\Lock\Store\PdoStore;
+
+    // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
+    $databaseConnectionOrDSN = 'mysql:host=127.0.0.1;dbname=lock';
+    $store = new PdoStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
+
+.. note::
+
+    This store does not support TTL lower than 1 second.
+
+Before storing locks in the database, you must create the table that stores
+the information. The store provides a method called
+:method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable`
+to set up this table for you according to the database engine used::
+
+    try {
+        $store->createTable();
+    } catch (\PDOException $exception) {
+        // the table could not be created for some reason
+    }
+
+A great way to set up the table in production is to call the ``createTable()``
+method in your local computer and then generate a
+:ref:`database migration <doctrine-creating-the-database-tables-schema>`:
+
+.. code-block:: terminal
+
+    $ php bin/console doctrine:migrations:diff
+    $ php bin/console doctrine:migrations:migrate
 
 .. _lock-store-redis:
 
@@ -267,6 +325,32 @@ the stores.
     working when a single server fails (because this strategy requires that the
     lock is acquired in more than half of the servers).
 
+.. _lock-store-zookeeper:
+
+ZookeeperStore
+~~~~~~~~~~~~~~
+
+.. versionadded:: 4.2
+    The ZookeeperStore was introduced in Symfony 4.2.
+
+The ZookeeperStore saves locks on a `ZooKeeper`_ server. It requires a ZooKeeper
+connection implementing the ``\Zookeeper`` class. This store does not
+support blocking and expiration but the lock is automatically released when the
+PHP process is terminated::
+
+    use Symfony\Component\Lock\Store\ZookeeperStore;
+
+    $zookeeper = new \Zookeeper('localhost:2181');
+    // use the following to define a high-availability cluster:
+    // $zookeeper = new \Zookeeper('localhost1:2181,localhost2:2181,localhost3:2181');
+
+    $store = new ZookeeperStore($zookeeper);
+
+.. note::
+
+    Zookeeper does not require a TTL as the nodes used for locking are ephemeral
+    and die when the PHP process is terminated.
+
 Reliability
 -----------
 
@@ -276,11 +360,12 @@ the component is used in the following way.
 Remote Stores
 ~~~~~~~~~~~~~
 
-Remote stores (:ref:`MemcachedStore <lock-store-memcached>` and
-:ref:`RedisStore <lock-store-redis>`) use an unique token to recognize the true
-owner of the lock. This token is stored in the
-:class:`Symfony\\Component\\Lock\\Key` object and is used internally by the
-``Lock``, therefore this key must not be shared between processes (session,
+Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
+:ref:`PdoStore <lock-store-pdo>`, :ref:`RedisStore <lock-store-redis>`, and
+:ref:`ZookeeperStore <lock-store-zookeeper>`) use a unique token to recognize
+the true owner of the lock. This token is stored in the
+:class:`Symfony\\Component\\Lock\\Key` object and is used internally by
+the ``Lock``, therefore this key must not be shared between processes (session,
 caching, fork, ...).
 
 .. caution::
@@ -299,11 +384,11 @@ different machines may allow two different processes to acquire the same ``Lock`
 Expiring Stores
 ~~~~~~~~~~~~~~~
 
-Expiring stores (:ref:`MemcachedStore <lock-store-memcached>` and
-:ref:`RedisStore <lock-store-redis>`) guarantee that the lock is acquired
-only for the defined duration of time. If the task takes longer to be
-accomplished, then the lock can be released by the store and acquired by
-someone else.
+Expiring stores (:ref:`MemcachedStore <lock-store-memcached>`,
+:ref:`PdoStore <lock-store-pdo>` and :ref:`RedisStore <lock-store-redis>`)
+guarantee that the lock is acquired only for the defined duration of time. If
+the task takes longer to be accomplished, then the lock can be released by the
+store and acquired by someone else.
 
 The ``Lock`` provides several methods to check its health. The ``isExpired()``
 method checks whether or not it lifetime is over and the ``getRemainingLifetime()``
@@ -417,6 +502,30 @@ method uses the Memcached's ``flush()`` method which purges and removes everythi
     The method ``flush()`` must not be called, or locks should be stored in a
     dedicated Memcached service away from Cache.
 
+PdoStore
+~~~~~~~~~~
+
+The PdoStore relies on the `ACID`_ properties of the SQL engine.
+
+.. caution::
+
+    In a cluster configured with multiple primaries, ensure writes are
+    synchronously propagated to every nodes, or always use the same node.
+
+.. caution::
+
+    Some SQL engines like MySQL allow to disable the unique constraint check.
+    Ensure that this is not the case ``SET unique_checks=1;``.
+
+In order to purge old locks, this store uses a current datetime to define an
+expiration date reference. This mechanism relies on all server nodes to
+have synchronized clocks.
+
+.. caution::
+
+    To ensure locks don't expire prematurely; the TTLs should be set with
+    enough extra time to account for any clock drift between nodes.
+
 RedisStore
 ~~~~~~~~~~
 
@@ -479,6 +588,30 @@ can be two running containers in parallel.
     concurrent process on a new machine, check that other process are stopped
     on the old one.
 
+ZookeeperStore
+~~~~~~~~~~~~~~
+
+The way ZookeeperStore works is by maintaining locks as ephemeral nodes on the
+server. That means that by using :ref:`ZookeeperStore <lock-store-zookeeper>`
+the locks will be automatically released at the end of the session in case the
+client cannot unlock for any reason.
+
+If the ZooKeeper service or the machine hosting it restarts, every lock would
+be lost without notifying the running processes.
+
+.. tip::
+
+    To use ZooKeeper's high-availability feature, you can setup a cluster of
+    multiple servers so that in case one of the server goes down, the majority
+    will still be up and serving the requests. All the available servers in the
+    cluster will see the same state.
+
+.. note::
+
+    As this store does not support multi-level node locks, since the clean up of
+    intermediate nodes becomes an overhead, all locks are maintained at the root
+    level.
+
 Overall
 ~~~~~~~
 
@@ -487,6 +620,11 @@ instance, during the deployment of a new version. Processes with new
 configuration must not be started while old processes with old configuration
 are still running.
 
+.. _`ACID`: https://en.wikipedia.org/wiki/ACID
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
 .. _Packagist: https://packagist.org/packages/symfony/lock
 .. _`PHP semaphore functions`: http://php.net/manual/en/book.sem.php
+.. _`PDO`: https://php.net/pdo
+.. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/lib/Doctrine/DBAL/Connection.php
+.. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
+.. _`ZooKeeper`: https://zookeeper.apache.org/

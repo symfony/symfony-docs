@@ -59,9 +59,6 @@ you can configure these limits:
     items. Specifying ``-1`` removes the limit.
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMinDepth`
-    .. versionadded:: 3.4
-        The ``setMinDepth()`` method was introduced in Symfony 3.4.
-
     Configures the minimum tree depth where we are guaranteed to clone
     all the items. After this depth is reached, only ``setMaxItems``
     items will be cloned. The default value is ``1``, which is consistent
@@ -84,9 +81,6 @@ Before dumping it, you can further limit the resulting
     Removes internal objects' handles for sparser output (useful for tests).
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::seek`
-    .. versionadded:: 3.2
-        The ``seek()`` method was introduced in Symfony 3.2.
-
     Selects only subparts of already cloned arrays, objects or resources.
 
 Unlike the previous limits on cloners that remove data on purpose, these can
@@ -177,9 +171,6 @@ Another option for doing the same could be::
 
         $output = $dumper->dump($cloner->cloneVar($variable), true);
 
-    .. versionadded:: 3.2
-        The ability to return a string was introduced in Symfony 3.2.
-
 Dumpers implement the :class:`Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface`
 interface that specifies the
 :method:`dump(Data $data) <Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface::dump>`
@@ -205,10 +196,6 @@ method::
         'maxStringLength' => 160
     ));
 
-.. versionadded:: 3.2
-    Support for passing display options to the ``dump()`` method was introduced
-    in Symfony 3.2.
-
 The output format of a dumper can be fine tuned by the two flags
 ``DUMP_STRING_LENGTH`` and ``DUMP_LIGHT_ARRAY`` which are passed as a bitmap
 in the third constructor argument. They can also be set via environment
@@ -219,14 +206,6 @@ during unit testing.
 The ``$filter`` argument of ``assertDumpEquals()`` can be used to pass a
 bit field of ``Caster::EXCLUDE_*`` constants and influences the expected
 output produced by the different casters.
-
-.. versionadded:: 3.4
-    The ``$filter`` argument of ``assertDumpEquals()`` was introduced in
-    Symfony 3.4.
-
-.. versionadded:: 3.1
-    The ``DUMP_STRING_LENGTH`` and ``DUMP_LIGHT_ARRAY`` flags were introduced
-    in Symfony 3.1.
 
 If ``DUMP_STRING_LENGTH`` is set, then the length of a string is displayed
 next to its content:
@@ -377,11 +356,6 @@ properties not in the class declaration).
 
 Adding Semantics with Metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.2
-    As of Symfony 3.2, casters can attach metadata attributes to
-    :class:`Symfony\\Component\\VarDumper\\Cloner\\Stub` objects to inform
-    dumpers about the precise type of the dumped values.
 
 Since casters are hooked on specific classes or interfaces, they know about the
 objects they manipulate. By altering the ``$stub`` object (the third argument of

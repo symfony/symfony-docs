@@ -91,9 +91,6 @@ further than allowed.
 Firewall Config
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 3.2
-    The ``FirewallConfig`` class was introduced in Symfony 3.2.
-
 The information about a given firewall, such as its name, provider, context,
 entry point and access denied URL, is provided by instances of the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security\\FirewallConfig` class.

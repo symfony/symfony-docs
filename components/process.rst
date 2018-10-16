@@ -21,8 +21,11 @@ Alternatively, you can clone the `<https://github.com/symfony/process>`_ reposit
 Usage
 -----
 
-The :class:`Symfony\\Component\\Process\\Process` class allows you to execute
-a command in a sub-process::
+The :class:`Symfony\\Component\\Process\\Process` class executes a command in a
+sub-process, taking care of the differences between operating system and
+escaping arguments to prevent security issues. It replaces PHP functions like
+:phpfunction:`exec`, :phpfunction:`passthru`, :phpfunction:`shell_exec` and
+:phpfunction:`system`::
 
     use Symfony\Component\Process\Process;
     use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -37,8 +40,18 @@ a command in a sub-process::
 
     echo $process->getOutput();
 
-The component takes care of the subtle differences between the different platforms
-when executing the command.
+.. tip::
+
+    In addition to passing the command binary and its arguments as a string, you
+    can also pass them as an array, which is useful when building a complex
+    command programmatically::
+
+        // traditional string based commands
+        $builder = new Process('ls -lsa');
+        // same example but using an array
+        $builder = new Process(array('ls', '-lsa'));
+        // the array can contain any number of arguments and options
+        $builder = new Process(array('ls', '-l', '-s', '-a'));
 
 The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
@@ -78,9 +91,6 @@ for new output before going to the next iteration::
         foreach ($iterator as $data) {
             echo $data."\n";
         }
-
-    .. versionadded:: 3.2
-        The ``getIterator()`` method was introduced in Symfony 3.2.
 
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
 a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
@@ -222,6 +232,26 @@ in the output and its type::
             echo 'OUT > '.$buffer;
         }
     });
+
+Instead of waiting until the process has finished, you can use the
+:method:`Symfony\\Component\\Process\\Process::waitUntil` method to keep or stop
+waiting based on some PHP logic. The following example starts a long running
+process and checks its output to wait until its fully initialized::
+
+    $process = new Process(array('/usr/bin/php', 'slow-starting-server.php'));
+    $process->start();
+
+    // ... do other things
+
+    // waits until the given anonymous function returns true
+    $process->waitUntil(function ($type, $output) {
+        return $output === 'Ready. Waiting for commands...';
+    });
+
+    // ... do things after the process is ready
+
+.. versionadded:: 4.2
+    The ``waitUntil()`` method was introduced in Symfony 4.2.
 
 Streaming to the Standard Input of a Process
 --------------------------------------------
@@ -417,10 +447,6 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
     However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
     methods to handle process output in a streaming fashion.
 
-    .. versionadded:: 3.1
-        The ability to pass a callback to these methods when output is disabled
-        was added in Symfony 3.1.
-
 Finding the Executable PHP Binary
 ---------------------------------
 
@@ -434,7 +460,25 @@ absolute path of the executable PHP binary available on your server::
     $phpBinaryPath = $phpBinaryFinder->find();
     // $phpBinaryPath = '/usr/local/bin/php' (the result will be different on your computer)
 
+Checking for TTY Support
+------------------------
+
+Another utility provided by this component is a method called
+:method:`Symfony\\Component\\Process\\Process::isTtySupported` which returns
+whether `TTY`_ is supported on the current operating system::
+
+    use Symfony\Component\Process\Process;
+
+    $process = (new Process())->setTty(Process::isTtySupported());
+
+.. versionadded:: 4.1
+    The ``isTtySupported()`` method was introduced in Symfony 4.1.
+
+.. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
+.. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
+.. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
 .. _`PHP Documentation`: https://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process
 .. _`PHP streams`: http://www.php.net/manual/en/book.stream.php
+.. _`TTY`: https://en.wikipedia.org/wiki/Tty_(unix)

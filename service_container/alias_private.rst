@@ -23,7 +23,7 @@ And in this case, those services do *not* need to be public.
 
 So unless you *specifically* need to access a service directly from the container
 via ``$container->get()``, the best-practice is to make your services *private*.
-In fact, the :ref:`default services.yml configuration <container-public>` configures
+In fact, the :ref:`default services.yaml configuration <container-public>` configures
 all services to be private by default.
 
 You can also control the ``public`` option on a service-by-service basis:
@@ -32,27 +32,30 @@ You can also control the ``public`` option on a service-by-service basis:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
 
-            AppBundle\Service\Foo:
+            App\Service\Foo:
                 public: false
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Service\Foo" public="false" />
+                <service id="App\Service\Foo" public="false" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Service\Foo;
+        // config/services.php
+        use App\Service\Foo;
 
         $container->register(Foo::class)
             ->setPublic(false);
@@ -68,7 +71,7 @@ not have run on that page.
 Now that the service is private, you *must not* fetch the service directly
 from the container::
 
-    use AppBundle\Service\Foo;
+    use App\Service\Foo;
 
     $container->get(Foo::class);
 
@@ -77,11 +80,6 @@ it directly from your code.
 
 However, if a service has been marked as private, you can still alias it
 (see below) to access this service (via the alias).
-
-.. note::
-
-    Services are by default public, but it's considered a good practice to mark
-    as many services private as possible.
 
 .. _services-alias:
 
@@ -96,17 +94,19 @@ services.
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
-            AppBundle\Mail\PhpMailer:
+            App\Mail\PhpMailer:
                 public: false
 
             app.mailer:
-                alias: AppBundle\Mail\PhpMailer
+                alias: App\Mail\PhpMailer
                 public: true
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -114,15 +114,16 @@ services.
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Mail\PhpMailer" public="false" />
+                <service id="App\Mail\PhpMailer" public="false" />
 
-                <service id="app.mailer" alias="AppBundle\Mail\PhpMailer" />
+                <service id="app.mailer" alias="App\Mail\PhpMailer" />
             </services>
         </container>
 
     .. code-block:: php
 
-        use AppBundle\Mail\PhpMailer;
+        // config/services.php
+        use App\Mail\PhpMailer;
 
         $container->register(PhpMailer::class)
             ->setPublic(false);
@@ -140,9 +141,10 @@ This means that when using the container directly, you can access the
 
     .. code-block:: yaml
 
+        # config/services.yaml
         services:
             # ...
-            app.mailer: '@AppBundle\Mail\PhpMailer'
+            app.mailer: '@App\Mail\PhpMailer'
 
 Anonymous Services
 ------------------
@@ -165,15 +167,12 @@ The following example shows how to inject an anonymous service into another serv
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
-            _defaults:
-                autowire: true
-
-            AppBundle\Foo:
+            App\Foo:
                 arguments:
                     - !service
-                        class: AppBundle\AnonymousBar
+                        class: App\AnonymousBar
 
     .. code-block:: xml
 
@@ -185,11 +184,9 @@ The following example shows how to inject an anonymous service into another serv
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <defaults autowire="true" />
-
-                <service id="foo" class="AppBundle\Foo">
+                <service id="foo" class="App\Foo">
                     <argument type="service">
-                        <service class="AppBundle\AnonymousBar" />
+                        <service class="App\AnonymousBar" />
                     </argument>
                 </service>
             </services>
@@ -201,13 +198,10 @@ Using an anonymous service as a factory looks like this:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # app/config/services.yaml
         services:
-            _defaults:
-                autowire: true
-
-            AppBundle\Foo:
-                factory: [ !service { class: AppBundle\FooFactory }, 'constructFoo' ]
+            App\Foo:
+                factory: [ !service { class: App\FooFactory }, 'constructFoo' ]
 
     .. code-block:: xml
 
@@ -219,9 +213,7 @@ Using an anonymous service as a factory looks like this:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <defaults autowire="true" />
-
-                <service id="foo" class="AppBundle\Foo">
+                <service id="foo" class="App\Foo">
                     <factory method="constructFoo">
                         <service class="App\FooFactory"/>
                     </factory>
@@ -239,18 +231,20 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
     .. code-block:: yaml
 
-        AppBundle\Service\OldService:
+        # config/services.yaml
+        App\Service\OldService:
             deprecated: The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Service\OldService">
+                <service id="App\Service\OldService">
                     <deprecated>The "%service_id%" service is deprecated since 2.8 and will be removed in 3.0.</deprecated>
                 </service>
             </services>
@@ -258,7 +252,8 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
     .. code-block:: php
 
-        use AppBundle\Service\OldService;
+        // config/services.php
+        use App\Service\OldService;
 
         $container
             ->register(OldService::class)

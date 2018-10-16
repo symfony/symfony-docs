@@ -4,79 +4,38 @@
 How to Use the Serializer
 =========================
 
-Serializing and deserializing to and from objects and different formats (e.g.
-JSON or XML) is a very complex topic. Symfony comes with a
-:doc:`Serializer Component </components/serializer>`, which gives you some
-tools that you can leverage for your solution.
+Symfony provides a serializer to serialize/deserialize to and from objects and
+different formats (e.g. JSON or XML). Before using it, read the
+:doc:`Serializer component docs </components/serializer>` to get familiar with
+its philosophy and the normalizers and encoders terminology.
 
-In fact, before you start, get familiar with the serializer, normalizers
-and encoders by reading the :doc:`Serializer Component </components/serializer>`.
+.. _activating_the_serializer:
 
-Activating the Serializer
--------------------------
+Installation
+------------
 
-The ``serializer`` service is not available by default. To turn it on, activate
-it in your configuration:
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the serializer before using it:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            serializer: { enable_annotations: true }
-            # Alternatively, if you don't want to use annotations
-            #serializer: { enabled: true }
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-            <framework:config>
-                <!-- ... -->
-                <framework:serializer enable-annotations="true" />
-                <!--
-                Alternatively, if you don't want to use annotations
-                <framework:serializer enabled="true" />
-                -->
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'serializer' => array(
-                'enable_annotations' => true,
-                // Alternatively, if you don't want to use annotations
-                //'enabled' => true,
-            ),
-        ));
+    $ composer require symfony/serializer
 
 Using the Serializer Service
 ----------------------------
 
-Once enabled, the ``serializer`` service can be injected in any service where
+Once enabled, the serializer service can be injected in any service where
 you need it or it can be used in a controller::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Serializer\SerializerInterface;
 
-    class DefaultController extends Controller
+    class DefaultController extends AbstractController
     {
-        public function indexAction(SerializerInterface $serializer)
+        public function index(SerializerInterface $serializer)
         {
             // keep reading for usage examples
         }
@@ -124,7 +83,7 @@ properties and setters (``setXxx()``) to change properties:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             get_set_method_normalizer:
                 class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
@@ -133,7 +92,7 @@ properties and setters (``setXxx()``) to change properties:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -149,7 +108,7 @@ properties and setters (``setXxx()``) to change properties:
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
         $container->register('get_set_method_normalizer', GetSetMethodNormalizer::class)
@@ -157,82 +116,51 @@ properties and setters (``setXxx()``) to change properties:
             ->addTag('serializer.normalizer')
         ;
 
-.. versionadded:: 3.4
-    Support for hasser methods (``hasXxx()``) in ``GetSetMethodNormalizer`` was
-    introduced in Symfony 3.4. In previous Symfony versions only getters (``getXxx()``)
-    and issers (``isXxx()``) were supported.
-
 .. _serializer-using-serialization-groups-annotations:
 
 Using Serialization Groups Annotations
 --------------------------------------
 
-Enable :ref:`serialization groups annotation <component-serializer-attributes-groups>`
-with the following configuration:
+To use annotations, first add support for them via the SensioFrameworkExtraBundle:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: yaml
-
-        # app/config/config.yml
-        framework:
-            # ...
-            serializer:
-                enable_annotations: true
-
-    .. code-block:: xml
-
-        <!-- app/config/config.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- ... -->
-                <framework:serializer enable-annotations="true" />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            // ...
-            'serializer' => array(
-                'enable_annotations' => true,
-            ),
-        ));
+    $ composer require sensio/framework-extra-bundle
 
 Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
 to your class and choose which groups to use when serializing::
 
     $json = $serializer->serialize(
         $someObject,
-        'json', array('groups' => array('group1'))
+        'json', array('groups' => 'group1')
     );
 
+.. tip::
+
+    The value of the ``groups`` key can be a single string, or an array of strings.
+    
+    .. versionadded:: 4.2
+        The option to pass a single string to ``groups`` was introduced in Symfony 4.2.
+
 In addition to the ``@Groups`` annotation, the Serializer component also
-supports Yaml or XML files. These files are automatically loaded when being
+supports YAML or XML files. These files are automatically loaded when being
 stored in one of the following locations:
 
-* The ``serialization.yml`` or ``serialization.xml`` file in
+* All ``*.yaml`` and ``*.xml`` files in the ``config/serializer/``
+  directory.
+* The ``serialization.yaml`` or ``serialization.xml`` file in
   the ``Resources/config/`` directory of a bundle;
-* All ``*.yml`` and ``*.xml`` files in the ``Resources/config/serialization/``
+* All ``*.yaml`` and ``*.xml`` files in the ``Resources/config/serialization/``
   directory of a bundle.
 
 .. _serializer-enabling-metadata-cache:
 
-Enabling the Metadata Cache
----------------------------
+Configuring the Metadata Cache
+------------------------------
 
-Metadata used by the Serializer component such as groups can be cached to
-enhance application performance. By default, the serializer uses the ``cache.system``
-cache pool which is configured using the :ref:`cache.system <reference-cache-systen>`
+The metadata for the serializer is automatically cached to enhance application
+performance. By default, the serializer uses the ``cache.system`` cache pool
+which is configured using the :ref:`cache.system <reference-cache-systen>`
 option.
 
 Enabling a Name Converter
@@ -250,7 +178,7 @@ value:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             # ...
             serializer:
@@ -258,7 +186,7 @@ value:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <framework:config>
             <!-- ... -->
             <framework:serializer name-converter="serializer.name_converter.camel_case_to_snake_case" />
@@ -266,7 +194,7 @@ value:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             // ...
             'serializer' => array(
@@ -287,9 +215,8 @@ take a look at how this bundle works.
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
-    serializer/*
+    serializer/custom_encoders
 
 .. _`APCu`: https://github.com/krakjoe/apcu
 .. _`ApiPlatform`: https://github.com/api-platform/core

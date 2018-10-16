@@ -22,34 +22,12 @@ and enable the server bundle.
 Installing the Web Server Bundle
 --------------------------------
 
-First, execute this command:
+Move into your project directory and run this command:
 
 .. code-block:: terminal
 
     $ cd your-project/
-    $ composer require --dev symfony/web-server-bundle
-
-Then, enable the bundle in the kernel of the application::
-
-    // app/AppKernel.php
-    class AppKernel extends Kernel
-    {
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-            );
-
-            if ('dev' === $this->getEnvironment()) {
-                // ...
-                $bundles[] = new Symfony\Bundle\WebServerBundle\WebServerBundle();
-            }
-
-            // ...
-        }
-
-        // ...
-    }
+    $ composer require symfony/web-server-bundle --dev
 
 Starting the Web Server
 -----------------------
@@ -74,9 +52,6 @@ can change the socket passing an IP address and a port as a command-line argumen
 
     # passing '*' as the IP means to use 0.0.0.0 (i.e. any local IP address)
     $ php bin/console server:start *:8080
-
-.. versionadded:: 3.4
-    The support of ``*`` as a valid IP address was introduced in Symfony 3.4.
 
 .. note::
 
@@ -122,7 +97,7 @@ Use the ``--router`` option to use your own router script:
 
 .. code-block:: terminal
 
-    $ php bin/console server:start --router=app/config/my_router.php
+    $ php bin/console server:start --router=config/my_router.php
 
 If your application's document root differs from the standard directory layout,
 you have to pass the correct location using the ``--docroot`` option:

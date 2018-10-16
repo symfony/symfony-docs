@@ -1,8 +1,21 @@
 .. index::
     single: Workflow; Usage
 
-How to Use the Workflow
-=======================
+How to Create and Use Workflows
+===============================
+
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the workflow feature before using it:
+
+.. code-block:: terminal
+
+    $ composer require symfony/workflow
+
+Creating a Workflow
+-------------------
 
 A workflow is a process or a lifecycle that your objects go through. Each
 step or stage in the process is called a *place*. You do also define *transitions*
@@ -14,15 +27,15 @@ A set of places and transitions creates a **definition**. A workflow needs
 a ``Definition`` and a way to write the states to the objects (i.e. an
 instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`.)
 
-Consider the following example for a blog post. A post can have places:
-'draft', 'review', 'rejected', 'published'. You can define the workflow
+Consider the following example for a blog post that can have these places:
+``draft``, ``review``, ``rejected``, ``published``. You can define the workflow
 like this:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/workflow.yaml
         framework:
             workflows:
                 blog_publishing:
@@ -34,7 +47,7 @@ like this:
                         arguments:
                             - 'currentPlace'
                     supports:
-                        - AppBundle\Entity\BlogPost
+                        - App\Entity\BlogPost
                     initial_place: draft
                     places:
                         - draft
@@ -54,7 +67,7 @@ like this:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/workflow.xml -->
         <?xml version="1.0" encoding="utf-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -71,7 +84,7 @@ like this:
                       <framework:argument>currentPlace</framework:argument>
                     </framework:marking-store>
 
-                    <framework:support>AppBundle\Entity\BlogPost</framework:support>
+                    <framework:support>App\Entity\BlogPost</framework:support>
 
                     <framework:place>draft</framework:place>
                     <framework:place>review</framework:place>
@@ -103,7 +116,7 @@ like this:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/workflow.php
 
         $container->loadFromExtension('framework', array(
             // ...
@@ -117,7 +130,7 @@ like this:
                         'type' => 'multiple_state', // or 'single_state'
                         'arguments' => array('currentPlace')
                     ),
-                    'supports' => array('AppBundle\Entity\BlogPost'),
+                    'supports' => array('App\Entity\BlogPost'),
                     'places' => array(
                         'draft',
                         'review',
@@ -160,36 +173,66 @@ like this:
 
 .. tip::
 
-    The ``type`` (default value ``single_state``) and ``arguments`` (default value ``marking``)
-    attributes of the ``marking_store`` option are optional. If omitted, their default values
-    will be used.
+    The ``type`` (default value ``single_state``) and ``arguments`` (default
+    value ``marking``) attributes of the ``marking_store`` option are optional.
+    If omitted, their default values will be used.
 
 .. tip::
 
     Setting the ``audit_trail.enabled`` option to ``true`` makes the application
     generate detailed log messages for the workflow activity.
 
-    .. versionadded:: 3.3
-        The ``audit_trail`` option was introduced in Symfony 3.3.
+Using a Workflow
+----------------
 
-With this workflow named ``blog_publishing``, you can get help to decide
-what actions are allowed on a blog post::
+Once the ``blog_publishing`` workflow has been created, you can now use it to
+decide what actions are allowed on a blog post. For example, inside a controller
+of an application using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+you can get the workflow by injecting the Workflow registry service::
 
-    $post = new \AppBundle\Entity\BlogPost();
+    // ...
+    use Symfony\Component\Workflow\Registry;
+    use App\Entity\BlogPost;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Workflow\Exception\TransitionException;
 
-    $workflow = $this->container->get('workflow.blog_publishing');
-    $workflow->can($post, 'publish'); // False
-    $workflow->can($post, 'to_review'); // True
+    class BlogController extends AbstractController
+    {
+        public function edit(Registry $workflows)
+        {
+            $post = new BlogPost();
+            $workflow = $workflows->get($post);
 
-    // Update the currentState on the post
-    try {
-        $workflow->apply($post, 'to_review');
-    } catch (LogicException $exception) {
-        // ...
+            // if there are multiple workflows for the same class,
+            // pass the workflow name as the second argument
+            // $workflow = $workflows->get($post, 'blog_publishing');
+
+            // you can also get all workflows associated with an object, which is useful
+            // for example to show the status of all those workflows in a backend
+            $postWorkflows = $workflows->all($post);
+
+            $workflow->can($post, 'publish'); // False
+            $workflow->can($post, 'to_review'); // True
+
+            // Update the currentState on the post
+            try {
+                $workflow->apply($post, 'to_review');
+            } catch (TransitionException $exception) {
+                // ... if the transition is not allowed
+            }
+
+            // See all the available transitions for the post in the current state
+            $transitions = $workflow->getEnabledTransitions($post);
+        }
     }
 
-    // See all the available transitions for the post in the current state
-    $transitions = $workflow->getEnabledTransitions($post);
+.. versionadded:: 4.1
+    The :class:`Symfony\\Component\\Workflow\\Exception\\TransitionException`
+    class was introduced in Symfony 4.1.
+
+.. versionadded:: 4.1
+    The :method:`Symfony\\Component\\Workflow\\Registry::all` method was
+    introduced in Symfony 4.1.
 
 Using Events
 ------------
@@ -281,7 +324,7 @@ order:
     The leaving and entering events are triggered even for transitions that stay
     in same place.
 
-Here is an example of how to enable logging for every time a "blog_publishing"
+Here is an example of how to enable logging for every time the ``blog_publishing``
 workflow leaves a place::
 
     use Psr\Log\LoggerInterface;
@@ -338,7 +381,7 @@ See example to make sure no blog post without title is moved to "review"::
     {
         public function guardReview(GuardEvent $event)
         {
-            /** @var \AppBundle\Entity\BlogPost $post */
+            /** @var \App\Entity\BlogPost $post */
             $post = $event->getSubject();
             $title = $post->title;
 
@@ -374,9 +417,6 @@ This means that each event has access to the following information:
 :method:`Symfony\\Component\\Workflow\\Event\\Event::getWorkflowName`
     Returns a string with the name of the workflow that triggered the event.
 
-    .. versionadded:: 3.3
-        The ``getWorkflowName()`` method was introduced in Symfony 3.3.
-
 For Guard Events, there is an extended class :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent`.
 This class has two more methods:
 
@@ -403,10 +443,6 @@ of domain logic in your templates:
 
 ``workflow_has_marked_place()``
     Returns ``true`` if the marking of the given object has the given state.
-
-.. versionadded:: 3.3
-    The ``workflow_marked_places()`` and ``workflow_has_marked_place()``
-    functions were introduced in Symfony 3.3.
 
 The following example shows these functions in action:
 

@@ -8,9 +8,18 @@ Validation is a very common task in web applications. Data entered in forms
 needs to be validated. Data also needs to be validated before it is written
 into a database or passed to a web service.
 
-Symfony ships with a `Validator`_ component that makes this task easy and
-transparent. This component is based on the
-`JSR303 Bean Validation specification`_.
+Symfony provides a `Validator`_ component that makes this task easy and
+transparent. This component is based on the `JSR303 Bean Validation specification`_.
+
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the validator before using it:
+
+.. code-block:: terminal
+
+    $ composer require symfony/validator doctrine/annotations
 
 .. index::
    single: Validation; The basics
@@ -22,8 +31,8 @@ The best way to understand validation is to see it in action. To start, suppose
 you've created a plain-old-PHP object that you need to use somewhere in
 your application::
 
-    // src/AppBundle/Entity/Author.php
-    namespace AppBundle\Entity;
+    // src/Entity/Author.php
+    namespace App\Entity;
 
     class Author
     {
@@ -34,8 +43,9 @@ So far, this is just an ordinary class that serves some purpose inside your
 application. The goal of validation is to tell you if the data
 of an object is valid. For this to work, you'll configure a list of rules
 (called :ref:`constraints <validation-constraints>`) that the object must
-follow in order to be valid. These rules can be specified via a number of
-different formats (YAML, XML, annotations, or PHP).
+follow in order to be valid. These rules are usually defined using PHP code or
+annotations but they can also be defined as a ``validation.yaml`` or
+``validation.xml`` file inside the ``config/validator/`` directory:
 
 For example, to guarantee that the ``$name`` property is not empty, add the
 following:
@@ -44,7 +54,7 @@ following:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
@@ -59,22 +69,22 @@ following:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 name:
                     - NotBlank: ~
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="name">
                     <constraint name="NotBlank" />
                 </property>
@@ -83,7 +93,7 @@ following:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -120,16 +130,16 @@ returned. Take this simple example from inside a controller::
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
-    use AppBundle\Entity\Author;
+    use Symfony\Component\Validator\Validator\ValidatorInterface;
+    use App\Entity\Author;
 
     // ...
-    public function authorAction()
+    public function author(ValidatorInterface $validator)
     {
         $author = new Author();
 
         // ... do something to the $author object
 
-        $validator = $this->get('validator');
         $errors = $validator->validate($author);
 
         if (count($errors) > 0) {
@@ -151,7 +161,7 @@ message:
 
 .. code-block:: text
 
-    AppBundle\Entity\Author.name:
+    App\Entity\Author.name:
         This value should not be blank
 
 If you insert a value into the ``name`` property, the happy success message
@@ -176,7 +186,7 @@ Inside the template, you can output the list of errors exactly as needed:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/author/validation.html.twig #}
+    {# templates/author/validation.html.twig #}
     <h3>The author has the following errors</h3>
     <ul>
     {% for error in errors %}
@@ -202,13 +212,13 @@ file:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             validation: { enabled: true }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -224,7 +234,7 @@ file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'validation' => array(
                 'enabled' => true,
@@ -238,13 +248,13 @@ previous configuration by the following:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             validation: { enable_annotations: true }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -260,7 +270,7 @@ previous configuration by the following:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         $container->loadFromExtension('framework', array(
             'validation' => array(
                 'enable_annotations' => true,
@@ -314,7 +324,7 @@ literature genre mostly associated with the author, which can be set to either
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
@@ -334,8 +344,8 @@ literature genre mostly associated with the author, which can be set to either
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 genre:
                     - Choice: { choices: [fiction, non-fiction], message: Choose a valid genre. }
@@ -343,14 +353,14 @@ literature genre mostly associated with the author, which can be set to either
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="genre">
                     <constraint name="Choice">
                         <option name="choices">
@@ -367,7 +377,7 @@ literature genre mostly associated with the author, which can be set to either
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -401,7 +411,7 @@ options can be specified in this way.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
@@ -418,8 +428,8 @@ options can be specified in this way.
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 genre:
                     - Choice: [fiction, non-fiction]
@@ -427,14 +437,14 @@ options can be specified in this way.
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="genre">
                     <constraint name="Choice">
                         <value>fiction</value>
@@ -448,7 +458,7 @@ options can be specified in this way.
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -523,7 +533,7 @@ class to have at least 3 characters.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
@@ -539,8 +549,8 @@ class to have at least 3 characters.
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 firstName:
                     - NotBlank: ~
@@ -549,14 +559,14 @@ class to have at least 3 characters.
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="firstName">
                     <constraint name="NotBlank" />
                     <constraint name="Length">
@@ -568,7 +578,7 @@ class to have at least 3 characters.
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -609,7 +619,7 @@ this method must return ``true``:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Constraints as Assert;
@@ -627,22 +637,22 @@ this method must return ``true``:
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             getters:
                 passwordSafe:
                     - 'IsTrue': { message: 'The password cannot match your first name' }
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <getter property="passwordSafe">
                     <constraint name="IsTrue">
                         <option name="message">The password cannot match your first name</option>
@@ -653,7 +663,7 @@ this method must return ``true``:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
+        // src/Entity/Author.php
 
         // ...
         use Symfony\Component\Validator\Mapping\ClassMetadata;

@@ -20,7 +20,7 @@ method:
 
     {{ form_row(form.age) }}
 
-You can also render each of the three parts of the field individually:
+You can also render each of the four parts of the field individually:
 
 .. code-block:: html+twig
 
@@ -28,6 +28,7 @@ You can also render each of the three parts of the field individually:
         {{ form_label(form.age) }}
         {{ form_errors(form.age) }}
         {{ form_widget(form.age) }}
+        {{ form_help(form.age) }}
     </div>
 
 In both cases, the form label, errors and HTML widget are rendered by using
@@ -94,9 +95,6 @@ fragment needed to render every part of a form:
 * `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>`` element
   with the appropriate CSS classes to apply the default `Foundation CSS framework`_
   styles.
-
-.. versionadded:: 3.4
-    The Bootstrap 4 form themes were introduced in Symfony 3.4.
 
 .. caution::
 
@@ -260,7 +258,7 @@ can now re-use the form customization across many templates:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/form/fields.html.twig #}
+    {# templates/form/fields.html.twig #}
     {% block integer_widget %}
         <div class="integer_widget">
             {% set type = type|default('number') %}
@@ -323,7 +321,7 @@ You can do this by including the ``only`` keyword after the list form themes:
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/common.html.twig #}
+        {# templates/form/common.html.twig #}
         {% use "form_div_layout.html.twig" %}
 
         {# ... #}
@@ -390,7 +388,7 @@ the base block by using the ``parent()`` Twig function:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/form/fields.html.twig #}
+    {# templates/form/fields.html.twig #}
     {% extends 'form_div_layout.html.twig' %}
 
     {% block integer_widget %}
@@ -422,7 +420,7 @@ rendered.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             form_themes:
                 - 'form/fields.html.twig'
@@ -430,7 +428,7 @@ rendered.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -448,7 +446,7 @@ rendered.
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 'form/fields.html.twig',
@@ -465,7 +463,7 @@ resource to use such a layout:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             form_themes:
                 - 'form_table_layout.html.twig'
@@ -473,7 +471,7 @@ resource to use such a layout:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -491,7 +489,7 @@ resource to use such a layout:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             'form_themes' => array(
                 'form_table_layout.html.twig',
@@ -572,6 +570,7 @@ You can also override the markup for an entire field row using the same method:
             {{ form_label(form) }}
             {{ form_errors(form) }}
             {{ form_widget(form) }}
+            {{ form_help(form) }}
         </div>
     {% endblock %}
 
@@ -732,6 +731,7 @@ class to the ``div`` element around each row:
             {{ form_label(form) }}
             {{ form_errors(form) }}
             {{ form_widget(form) }}
+            {{ form_help(form) }}
         </div>
     {% endblock form_row %}
 

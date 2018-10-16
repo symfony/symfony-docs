@@ -26,7 +26,7 @@ and what headers your reverse proxy uses to send information:
 
 .. code-block:: php
 
-    // web/app.php
+    // public/index.php
 
     // ...
     $request = Request::createFromGlobals();
@@ -65,7 +65,7 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 
    .. code-block:: php
 
-       // web/app.php
+       // public/index.php
 
        // ...
        Request::setTrustedProxies(

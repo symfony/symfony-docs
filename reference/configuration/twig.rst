@@ -137,8 +137,9 @@ charset
 
 **type**: ``string`` **default**: ``'%kernel.charset%'``
 
-The charset used by the template files. In the Symfony Standard edition this
-defaults to the ``UTF-8`` charset.
+The charset used by the template files. By default it's the same as the value of
+the ``kernel.charset`` container parameter, which is ``UTF-8`` by default in
+Symfony applications.
 
 date
 ~~~~
@@ -248,9 +249,6 @@ default_path
 
 **type**: ``string`` **default**: ``'%kernel.project_dir%/templates'``
 
-.. versionadded:: 3.4
-    The ``default_path`` option was introduced in Symfony 3.4.
-
 The default directory where Symfony will look for Twig templates.
 
 .. _config-twig-paths:
@@ -276,7 +274,7 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             # ...
             paths:
@@ -284,7 +282,7 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
@@ -300,7 +298,7 @@ The values of the ``paths`` option are defined as ``key: value`` pairs where the
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
             // ...
             'paths' => array(
@@ -320,7 +318,7 @@ for that directory:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             # ...
             paths:
@@ -328,7 +326,7 @@ for that directory:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
@@ -344,7 +342,7 @@ for that directory:
 
     .. code-block:: php
 
-        # app/config/config.php
+        # config/packages/twig.php
         $container->loadFromExtension('twig', array(
             // ...
             'paths' => array(

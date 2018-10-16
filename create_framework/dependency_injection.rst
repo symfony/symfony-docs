@@ -121,7 +121,7 @@ Create a new file to host the dependency injection container configuration::
         ->setArguments(array('UTF-8'))
     ;
     $containerBuilder->register('listener.exception', HttpKernel\EventListener\ExceptionListener::class)
-        ->setArguments(array('Calendar\Controller\ErrorController::exceptionAction'))
+        ->setArguments(array('Calendar\Controller\ErrorController::exception'))
     ;
     $containerBuilder->register('dispatcher', EventDispatcher\EventDispatcher::class)
         ->addMethodCall('addSubscriber', array(new Reference('listener.router')))

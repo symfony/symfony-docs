@@ -41,10 +41,14 @@ By defining a workflow like this, there is an overview how the process looks lik
 logic is not mixed with the controllers, models or view. The order of the steps can be changed
 by changing the configuration only.
 
+Learn more
+----------
+
 .. toctree::
    :maxdepth: 1
-   :glob:
 
-   workflow/*
+   workflow/usage
+   workflow/state-machines
+   workflow/dumping-workflows
 
 .. _Petri nets: https://en.wikipedia.org/wiki/Petri_net

@@ -19,8 +19,8 @@ and configure a :doc:`user provider </security/custom_provider>`. In this
 example, users are stored in the database via Doctrine, and each user has an ``apiKey``
 property they use to access their account via the API::
 
-    // src/AppBundle/Entity/User.php
-    namespace AppBundle\Entity;
+    // src/Entity/User.php
+    namespace App\Entity;
 
     use Symfony\Component\Security\Core\User\UserInterface;
     use Doctrine\ORM\Mapping as ORM;
@@ -90,21 +90,21 @@ Next, make sure you've configured a "user provider" for the user:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
             providers:
                 your_db_provider:
                     entity:
-                        class: AppBundle:User
+                        class: App\Entity\User
                         property: apiKey
 
             # ...
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -116,7 +116,7 @@ Next, make sure you've configured a "user provider" for the user:
                 <!-- ... -->
 
                 <provider name="your_db_provider">
-                    <entity class="AppBundle:User" />
+                    <entity class="App\Entity\User" />
                 </provider>
 
                 <!-- ... -->
@@ -125,14 +125,16 @@ Next, make sure you've configured a "user provider" for the user:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
+        use App\Entity\User;
+
         $container->loadFromExtension('security', array(
             // ...
 
             'providers' => array(
                 'your_db_provider' => array(
                     'entity' => array(
-                        'class' => 'AppBundle:User',
+                        'class' => User::class,
                     ),
                 ),
             ),
@@ -157,8 +159,8 @@ To create a custom authentication system, just create a class and make it implem
 the simpler :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`.
 This requires you to implement several methods::
 
-    // src/AppBundle/Security/TokenAuthenticator.php
-    namespace AppBundle\Security;
+    // src/Security/TokenAuthenticator.php
+    namespace App\Security;
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\JsonResponse;
@@ -250,26 +252,22 @@ This requires you to implement several methods::
         }
     }
 
-.. versionadded:: 3.4
-    ``AuthenticatorInterface`` was introduced in Symfony 3.4. In previous Symfony
-    versions, authenticators needed to implement ``GuardAuthenticatorInterface``.
-
 Nice work! Each method is explained below: :ref:`The Guard Authenticator Methods<guard-auth-methods>`.
 
 Step 2) Configure the Authenticator
 -----------------------------------
 
 To finish this, make sure your authenticator is registered as a service. If you're
-using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that happens automatically.
 
-Finally, configure your ``firewalls`` key in ``security.yml`` to use this authenticator:
+Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authenticator:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -282,7 +280,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
 
                     guard:
                         authenticators:
-                            - AppBundle\Security\TokenAuthenticator
+                            - App\Security\TokenAuthenticator
 
                     # if you want, disable storing the user in the session
                     # stateless: true
@@ -292,7 +290,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -309,7 +307,7 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
                     <logout />
 
                     <guard>
-                        <authenticator>AppBundle\Security\TokenAuthenticator</authenticator>
+                        <authenticator>App\Security\TokenAuthenticator</authenticator>
                     </guard>
 
                     <!-- ... -->
@@ -319,10 +317,10 @@ Finally, configure your ``firewalls`` key in ``security.yml`` to use this authen
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ..
-        use AppBundle\Security\TokenAuthenticator;
+        use App\Security\TokenAuthenticator;
 
         $container->loadFromExtension('security', array(
             'firewalls' => array(
@@ -370,11 +368,6 @@ Each authenticator needs the following methods:
     This will be called on *every* request and your job is to decide if the
     authenticator should be used for this request (return ``true``) or if it
     should be skipped (return ``false``).
-
-    .. versionadded:: 3.4
-        The ``supports()`` method was introduced in Symfony 3.4. In previous Symfony
-        versions, the authenticator could be skipped returning ``null`` in the
-        ``getCredentials()`` method.
 
 **getCredentials(Request $request)**
     This will be called on *every* request and your job is to read the token (or
@@ -450,7 +443,7 @@ But, you can easily return a custom message by throwing a
 You can throw this from ``getCredentials()``, ``getUser()`` or ``checkCredentials()``
 to cause a failure::
 
-    // src/AppBundle/Security/TokenAuthenticator.php
+    // src/Security/TokenAuthenticator.php
     // ...
 
     use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -499,13 +492,14 @@ Adding CSRF Protection
 If you're using a Guard authenticator to build a login form and want to add CSRF
 protection, no problem!
 
-First, :ref:`add the _csrf_token to your login template <csrf-login-template>`.
+First, check that :ref:`the csrf_protection option <reference-framework-csrf-protection>`
+is enabled and :ref:`add the _csrf_token field to your login form <csrf-login-template>`.
 
 Then, type-hint ``CsrfTokenManagerInterface`` in your ``__construct()`` method
-(or manually configure the ``security.csrf.token_manager`` service to be passed)
-and add the following logic::
+(or manually configure the ``Symfony\Component\Security\Csrf\CsrfTokenManagerInterface``
+service to be passed) and add the following logic::
 
-    // src/AppBundle/Security/ExampleFormAuthenticator.php
+    // src/Security/ExampleFormAuthenticator.php
     // ...
 
     use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;

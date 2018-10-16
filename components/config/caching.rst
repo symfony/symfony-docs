@@ -32,7 +32,7 @@ should be regenerated::
     $userMatcherCache = new ConfigCache($cachePath, true);
 
     if (!$userMatcherCache->isFresh()) {
-        // fill this with an array of 'users.yml' file paths
+        // fill this with an array of 'users.yaml' file paths
         $yamlUserFiles = ...;
 
         $resources = array();

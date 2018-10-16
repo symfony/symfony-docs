@@ -34,6 +34,16 @@ This means that the following scenarios will work:
 * Loading user information from an LDAP server, while using another
   authentication strategy (token-based pre-authentication, for example).
 
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the Ldap component before using it:
+
+.. code-block:: terminal
+
+    $ composer require symfony/ldap
+
 Ldap Configuration Reference
 ----------------------------
 
@@ -56,7 +66,7 @@ An LDAP client can be simply configured using the built-in
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
             Symfony\Component\Ldap\Ldap:
                 arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
@@ -71,7 +81,7 @@ An LDAP client can be simply configured using the built-in
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -97,7 +107,7 @@ An LDAP client can be simply configured using the built-in
 
     .. code-block:: php
 
-        // app/config/services.php
+        // config/services.php
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Component\Ldap\Adapter\ExtLdap\Adapter;
         use Symfony\Component\DependencyInjection\Definition;
@@ -127,7 +137,7 @@ use the ``ldap`` user provider.
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -143,7 +153,7 @@ use the ``ldap`` user provider.
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -167,6 +177,7 @@ use the ``ldap`` user provider.
 
     .. code-block:: php
 
+        // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
         $container->loadFromExtension('security', array(
@@ -335,7 +346,7 @@ Configuration example for form login
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -349,7 +360,7 @@ Configuration example for form login
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -368,6 +379,7 @@ Configuration example for form login
 
     .. code-block:: php
 
+        // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
         $container->loadFromExtension('security', array(
@@ -389,7 +401,7 @@ Configuration example for HTTP Basic
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -403,7 +415,7 @@ Configuration example for HTTP Basic
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -420,6 +432,7 @@ Configuration example for HTTP Basic
 
     .. code-block:: php
 
+        // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
         $container->loadFromExtension('security', array(
@@ -442,7 +455,7 @@ Configuration example for form login and query_string
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -457,7 +470,7 @@ Configuration example for form login and query_string
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -477,7 +490,7 @@ Configuration example for form login and query_string
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
 
         $container->loadFromExtension('security', array(

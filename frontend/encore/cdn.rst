@@ -11,7 +11,7 @@ it in Encore:
     // ...
 
     Encore
-        .setOutputPath('web/build/')
+        .setOutputPath('public/build/')
         // in dev mode, don't use the CDN
         .setPublicPath('/build');
         // ...

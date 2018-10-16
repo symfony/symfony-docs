@@ -11,7 +11,7 @@ First, enable the JSON login under your firewall:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -23,7 +23,7 @@ First, enable the JSON login under your firewall:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -41,7 +41,7 @@ First, enable the JSON login under your firewall:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array(
@@ -66,19 +66,19 @@ path:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/SecurityController.php
+        // src/Controller/SecurityController.php
 
         // ...
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class SecurityController extends Controller
+        class SecurityController extends AbstractController
         {
             /**
              * @Route("/login", name="login")
              */
-            public function loginAction(Request $request)
+            public function login(Request $request)
             {
                 $user = $this->getUser();
 
@@ -91,14 +91,14 @@ path:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         login:
-            path:     /login
-            defaults: { _controller: AppBundle:Security:login }
+            path:       /login
+            controller: App\Controller\SecurityController::login
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -106,19 +106,19 @@ path:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="login" path="/login">
-                <default key="_controller">AppBundle:Security:login</default>
+                <default key="_controller">App\Controller\SecurityController::login</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
         $routes->add('login', new Route('/login', array(
-            '_controller' => 'AppBundle:Security:login',
+            '_controller' => 'App\Controller\SecurityController::login',
         )));
 
         return $routes;
@@ -158,7 +158,7 @@ The security configuration should be:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -172,7 +172,7 @@ The security configuration should be:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -192,7 +192,7 @@ The security configuration should be:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 'main' => array(

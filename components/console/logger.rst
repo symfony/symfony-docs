@@ -106,9 +106,6 @@ constructor::
 Errors
 ------
 
-.. versionadded:: 3.2
-    The ``hasErrored()`` method was introduced in Symfony 3.2.
-
 The Console logger includes a ``hasErrored()`` method which returns ``true`` as
 soon as any error message has been logged during the execution of the command.
 This is useful to decide which status code to return as the result of executing

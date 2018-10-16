@@ -271,21 +271,6 @@ The second argument (``10`` in this example) is the *number* of objects being
 described and is used to determine which translation to use and also to populate
 the ``%count%`` placeholder.
 
-.. versionadded:: 3.2
-
-    Before Symfony 3.2, the placeholder used to select the plural (``%count%``
-    in this example) must be included in the third optional argument of the
-    ``transChoice()`` method::
-
-        $translator->transChoice(
-            'There is one apple|There are %count% apples',
-            10,
-            array('%count%' => 10)
-        );
-
-    Starting from Symfony 3.2, when the only placeholder is ``%count%``, you
-    don't have to pass this third argument.
-
 Based on the given number, the translator chooses the right plural form.
 In English, most words have a singular form when there is exactly one object
 and a plural form for all other numbers (0, 2, 3...). So, if ``count`` is
@@ -436,9 +421,6 @@ The ``$messages`` variable will have the following structure::
 Adding Notes to Translation Contents
 ------------------------------------
 
-.. versionadded:: 3.4
-    The feature to load and dump translation notes was introduced in Symfony 3.4.
-
 Sometimes translators need additional context to better decide how to translate
 some content. This context can be provided with notes, which are a collection of
 comments used to store end user readable information. The only format that
@@ -453,7 +435,7 @@ loaded/dumped when using this component inside a Symfony application:
     <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
            srcLang="fr-FR" trgLang="en-US">
       <file id="messages.en_US">
-        <unit id="LCa0a2j">
+        <unit id="LCa0a2j" name="original-content">
           <notes>
             <note category="state">new</note>
             <note category="approved">true</note>

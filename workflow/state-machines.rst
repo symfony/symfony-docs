@@ -28,13 +28,13 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/workflow.yaml
         framework:
             workflows:
                 pull_request:
                     type: 'state_machine'
                     supports:
-                        - AppBundle\Entity\PullRequest
+                        - App\Entity\PullRequest
                     initial_place: start
                     places:
                         - start
@@ -68,7 +68,7 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/workflow.xml -->
         <?xml version="1.0" encoding="utf-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -81,7 +81,7 @@ Below is the configuration for the pull request state machine.
                 <framework:workflow name="pull_request" type="state_machine">
                     <framework:marking-store type="single_state"/>
 
-                    <framework:support>AppBundle\Entity\PullRequest</framework:support>
+                    <framework:support>App\Entity\PullRequest</framework:support>
 
                     <framework:place>start</framework:place>
                     <framework:place>coding</framework:place>
@@ -141,14 +141,13 @@ Below is the configuration for the pull request state machine.
 
     .. code-block:: php
 
-        // app/config/config.php
-
+        // # config/packages/workflow.php
         $container->loadFromExtension('framework', array(
             // ...
             'workflows' => array(
                 'pull_request' => array(
                   'type' => 'state_machine',
-                  'supports' => array('AppBundle\Entity\PullRequest'),
+                  'supports' => array('App\Entity\PullRequest'),
                   'places' => array(
                     'start',
                     'coding',
@@ -191,8 +190,29 @@ Below is the configuration for the pull request state machine.
             ),
         ));
 
-You can now use this state machine by getting the ``state_machine.pull_request`` service::
+In a Symfony application using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+you can get this state machine by injecting the Workflow registry service::
 
-    $stateMachine = $this->container->get('state_machine.pull_request');
+    // ...
+    use Symfony\Component\Workflow\Registry;
+
+    class SomeService
+    {
+        private $workflows;
+
+        public function __construct(Registry $workflows)
+        {
+            $this->workflows = $workflows;
+        }
+
+        public function someMethod($subject)
+        {
+            $stateMachine = $this->workflows->get($subject, 'pull_request');
+            // ...
+        }
+
+        // ...
+    }
 
 .. _Petri net: https://en.wikipedia.org/wiki/Petri_net

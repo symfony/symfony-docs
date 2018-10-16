@@ -27,6 +27,7 @@ photos).
 | options     | - `empty_data`_                                                             |
 |             | - `error_bubbling`_                                                         |
 |             | - `error_mapping`_                                                          |
+|             | - `help`_                                                                   |
 |             | - `label`_                                                                  |
 |             | - `label_attr`_                                                             |
 |             | - `label_format`_                                                           |
@@ -290,10 +291,6 @@ the value is removed from the collection. For example::
 Using a callable is particularly useful in case of compound form types, which
 may define complex conditions for considering them empty.
 
-.. versionadded:: 3.4
-    Support for using a callable for the ``delete_empty`` option was introduced
-    in Symfony 3.4.
-
 entry_options
 ~~~~~~~~~~~~~
 
@@ -422,6 +419,8 @@ error_bubbling
 .. include:: /reference/forms/types/options/_error_bubbling_body.rst.inc
 
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 

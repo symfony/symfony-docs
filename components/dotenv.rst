@@ -8,9 +8,6 @@ The Dotenv Component
     The Dotenv Component parses ``.env`` files to make environment variables
     stored in them accessible via ``getenv()``, ``$_ENV`` or ``$_SERVER``.
 
-.. versionadded:: 3.3
-    The Dotenv component was introduced in Symfony 3.3.
-
 Installation
 ------------
 
@@ -61,9 +58,14 @@ Access the value with ``getenv()`` in your code::
     $dbUser = getenv('DB_USER');
     // you can also use ``$_ENV`` or ``$_SERVER``
 
-.. note::
+The ``load()`` method never overwrites existing environment variables. Use the
+``overload()`` method if you need to overwrite them::
 
-    Symfony Dotenv never overwrites existing environment variables.
+    // ...
+    $dotenv->overload(__DIR__.'/.env');
+
+.. versionadded:: 4.2
+    The ``Dotenv::overload()`` method was introduced in Symfony 4.2.
 
 You should never store a ``.env`` file in your code repository as it might
 contain sensitive information; create a ``.env.dist`` file with sensible

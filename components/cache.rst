@@ -14,9 +14,6 @@ The Cache Component
     adapters for the most common caching backends, including proxies for adapting
     from/to `Doctrine Cache`_.
 
-.. versionadded:: 3.3
-    The PSR-16 "Simple Cache" implementation was introduced in Symfony 3.3.
-
 Installation
 ------------
 

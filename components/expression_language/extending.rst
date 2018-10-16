@@ -100,9 +100,6 @@ register::
 
         ExpressionFunction::fromPhp('My\strtoupper', 'my_strtoupper');
 
-    .. versionadded:: 3.3
-        The ``ExpressionFunction::fromPhp()`` method was introduced in Symfony 3.3.
-
 You can register providers using
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::registerProvider`
 or by using the second argument of the constructor::
@@ -123,12 +120,12 @@ or by using the second argument of the constructor::
     It is recommended to create your own ``ExpressionLanguage`` class in your
     library. Now you can add the extension by overriding the constructor::
 
+        use Psr\Cache\CacheItemPoolInterface;
         use Symfony\Component\ExpressionLanguage\ExpressionLanguage as BaseExpressionLanguage;
-        use Symfony\Component\ExpressionLanguage\ParserCache\ParserCacheInterface;
 
         class ExpressionLanguage extends BaseExpressionLanguage
         {
-            public function __construct(ParserCacheInterface $parser = null, array $providers = array())
+            public function __construct(CacheItemPoolInterface $parser = null, array $providers = array())
             {
                 // prepends the default provider to let users override it easily
                 array_unshift($providers, new StringExpressionLanguageProvider());

@@ -229,9 +229,6 @@ convenient for passwords::
             // ...
         }
 
-    .. versionadded:: 3.3
-        The ``QuestionHelper::disableStty()`` method was introduced in Symfony 3.3.
-
 Normalizing the Answer
 ----------------------
 
@@ -250,7 +247,7 @@ method::
         // ...
         $helper = $this->getHelper('question');
 
-        $question = new Question('Please enter the name of the bundle', 'AppBundle');
+        $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
         $question->setNormalizer(function ($value) {
             // $value can be null here
             return $value ? trim($value) : '';
@@ -367,9 +364,6 @@ from the command line, you need to set the inputs that the command expects::
 
         // $this->assertRegExp('/.../', $commandTester->getDisplay());
     }
-
-.. versionadded:: 3.2
-    The ``CommandTester::setInputs()`` method was introduced in Symfony 3.2.
 
 By calling :method:`Symfony\\Component\\Console\\Tester\\CommandTester::setInputs`,
 you imitate what the console would do internally with all user input through the CLI.

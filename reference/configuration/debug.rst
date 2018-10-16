@@ -50,9 +50,6 @@ be cloned. After this depth is reached, only ``max_items`` items will be
 cloned. The default value is ``1``, which is consistent with older Symfony
 versions.
 
-.. versionadded:: 3.4
-    The ``min_depth`` option was introduced in Symfony 3.4.
-
 max_string_length
 ~~~~~~~~~~~~~~~~~
 
@@ -60,6 +57,8 @@ max_string_length
 
 This option configures the maximum string length before truncating the
 string. The default value (``-1``) means that strings are never truncated.
+
+.. _configuration-debug-dump_destination:
 
 dump_destination
 ~~~~~~~~~~~~~~~~
@@ -76,13 +75,13 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/debug.yaml
         debug:
            dump_destination: php://stderr
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/debug.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/debug"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -96,7 +95,9 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/debug.php
         $container->loadFromExtension('debug', array(
            'dump_destination' => 'php://stderr',
         ));
+
+Configure it to ``"tcp://%env(VAR_DUMPER_SERVER)%"`` in order to use the :ref:`ServerDumper feature <var-dumper-dump-server>`.

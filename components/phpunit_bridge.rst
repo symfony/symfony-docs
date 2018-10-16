@@ -81,10 +81,10 @@ After running your PHPUnit tests, you will get a report similar to this one:
 
 .. code-block:: terminal
 
-    $ phpunit -c app
+    $ ./vendor/bin/simple-phpunit
       PHPUnit by Sebastian Bergmann.
 
-      Configuration read from <your-project>/app/phpunit.xml.dist
+      Configuration read from <your-project>/phpunit.xml.dist
       .................
 
       Time: 1.77 seconds, Memory: 5.75Mb
@@ -94,8 +94,8 @@ After running your PHPUnit tests, you will get a report similar to this one:
       Remaining deprecation notices (2)
 
       getEntityManager is deprecated since Symfony 2.1. Use getManager instead: 2x
-        1x in DefaultControllerTest::testPublicUrls from AppBundle\Tests\Controller
-        1x in BlogControllerTest::testIndex from AppBundle\Tests\Controller
+        1x in DefaultControllerTest::testPublicUrls from App\Tests\Controller
+        1x in BlogControllerTest::testIndex from App\Tests\Controller
 
 The summary includes:
 
@@ -179,7 +179,7 @@ message, enclosed with ``/``. For example, with:
         <!-- ... -->
 
         <php>
-            <server name="KERNEL_DIR" value="app/" />
+            <server name="KERNEL_CLASS" value="App\Kernel" />
             <env name="SYMFONY_DEPRECATIONS_HELPER" value="/foobar/" />
         </php>
     </phpunit>
@@ -519,10 +519,6 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
 Modified PHPUnit script
 -----------------------
 
-.. versionadded:: 3.2
-    This modified PHPUnit script was introduced in the 3.2 version of
-    this component.
-
 This bridge provides a modified version of PHPUnit that you can call by using
 its ``bin/simple-phpunit`` command. It has the following features:
 
@@ -541,6 +537,8 @@ The script writes the modified PHPUnit it builds in a directory that can be
 configured by the ``SYMFONY_PHPUNIT_DIR`` env var, or in the same directory as
 the ``simple-phpunit`` if it is not provided.
 
+It's also possible to set this env var in the ``phpunit.xml.dist`` file.
+
 If you have installed the bridge through Composer, you can run it by calling e.g.:
 
 .. code-block:: bash
@@ -552,10 +550,14 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     Set the ``SYMFONY_PHPUNIT_VERSION`` env var to e.g. ``5.5`` to change the
     base version of PHPUnit to ``5.5`` instead of the default ``5.3``.
 
+    It's also possible to set this env var in the ``phpunit.xml.dist`` file.
+
 .. tip::
 
     If you still need to use ``prophecy`` (but not ``symfony/yaml``),
     then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
+
+    It's also possible to set this env var in the ``phpunit.xml.dist`` file.
 
 Code coverage listener
 ----------------------

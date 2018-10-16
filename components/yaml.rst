@@ -125,10 +125,7 @@ contents of the given file path and converts them to a PHP value::
 
     use Symfony\Component\Yaml\Yaml;
 
-    $value = Yaml::parseFile('/path/to/file.yml');
-
-.. versionadded:: 3.4
-    The ``parseFile()`` method was introduced in Symfony 3.4.
+    $value = Yaml::parseFile('/path/to/file.yaml');
 
 If an error occurs during parsing, the parser throws a ``ParseException`` exception.
 
@@ -149,7 +146,7 @@ array to its YAML representation::
 
     $yaml = Yaml::dump($array);
 
-    file_put_contents('/path/to/file.yml', $yaml);
+    file_put_contents('/path/to/file.yaml', $yaml);
 
 If an error occurs during the dump, the parser throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\DumpException` exception.
@@ -209,10 +206,6 @@ changed using the third argument as follows::
 Numeric Literals
 ................
 
-.. versionadded:: 3.2
-    Support for parsing integers grouped by underscores was introduced in
-    Symfony 3.2.
-
 Long numeric literals, being integer, float or hexadecimal, are known for their
 poor readability in code and configuration files. That's why YAML files allow to
 add underscores to improve their readability:
@@ -262,9 +255,6 @@ representation of the object.
 
 Parsing and Dumping Objects as Maps
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.2
-    Support for parsing and dumping objects as maps was introduced in Symfony 3.2.
 
 You can dump objects as Yaml maps by using the ``DUMP_OBJECT_AS_MAP`` flag::
 
@@ -353,9 +343,6 @@ syntax to parse them as proper PHP constants::
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 3.2
-    Support for parsing and dumping binary data was introduced in Symfony 3.2.
-
 You can dump binary data by using the ``DUMP_BASE64_BINARY_DATA`` flag::
 
     $imageContents = file_get_contents(__DIR__.'/images/logo.png');
@@ -372,9 +359,6 @@ Binary data is automatically parsed if they include the ``!!binary`` YAML tag
 
 Parsing and Dumping Custom Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.3
-    Support for parsing and dumping custom tags was introduced in Symfony 3.3.
 
 In addition to the built-in support of tags like ``!php/const`` and
 ``!!binary``, you can define your own custom YAML tags and parse them with the
@@ -425,20 +409,29 @@ Then, execute the script for validating contents:
 .. code-block:: terminal
 
     # validates a single file
-    $ php lint.php path/to/file.yml
+    $ php lint.php path/to/file.yaml
+    
+    # or validates multiple files
+    $ php lint.php path/to/file1.yaml path/to/file2.yaml 
 
     # or all the files in a directory
     $ php lint.php path/to/directory
+    
+    # or all the files in multiple directories
+    $ php lint.php path/to/directory1 path/to/directory2
 
     # or contents passed to STDIN
-    $ cat path/to/file.yml | php lint.php
+    $ cat path/to/file.yaml | php lint.php
+
+.. versionadded:: 4.2
+    The feature to lint multiple files and directories was introduced in Symfony 4.2.
 
 The result is written to STDOUT and uses a plain text format by default.
 Add the ``--format`` option to get the output in JSON format:
 
 .. code-block:: terminal
 
-    $ php lint.php path/to/file.yml --format json
+    $ php lint.php path/to/file.yaml --format json
 
 .. tip::
 

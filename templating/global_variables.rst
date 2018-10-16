@@ -5,13 +5,13 @@ How to Inject Variables into all Templates (i.e. global Variables)
 ==================================================================
 
 Sometimes you want a variable to be accessible to all the templates you use.
-This is possible inside your ``app/config/config.yml`` file:
+This is possible inside your ``config/packages/twig.yaml`` file:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             # ...
             globals:
@@ -19,7 +19,7 @@ This is possible inside your ``app/config/config.yml`` file:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -37,7 +37,7 @@ This is possible inside your ``app/config/config.yml`` file:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
              // ...
              'globals' => array(
@@ -61,7 +61,7 @@ system, which lets you isolate or reuse the value:
 
 .. code-block:: yaml
 
-    # app/config/parameters.yml
+    # config/services.yaml
     parameters:
         ga_tracking: UA-xxxxx-x
 
@@ -69,14 +69,14 @@ system, which lets you isolate or reuse the value:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             globals:
                 ga_tracking: '%ga_tracking%'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -93,7 +93,7 @@ system, which lets you isolate or reuse the value:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
              'globals' => array(
                  'ga_tracking' => '%ga_tracking%',
@@ -122,16 +122,16 @@ This should feel familiar, as it's the same syntax you use in service configurat
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/twig.yaml
         twig:
             # ...
             globals:
                 # the value is the service's id
-                user_management: '@AppBundle\Service\UserManagement'
+                user_management: '@App\Service\UserManagement'
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -143,16 +143,16 @@ This should feel familiar, as it's the same syntax you use in service configurat
 
             <twig:config>
                 <!-- ... -->
-                <twig:global key="user_management">@AppBundle\Service\UserManagement</twig:global>
+                <twig:global key="user_management">@App\Service\UserManagement</twig:global>
             </twig:config>
         </container>
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/twig.php
         $container->loadFromExtension('twig', array(
              // ...
              'globals' => array(
-                 'user_management' => '@AppBundle\Service\UserManagement',
+                 'user_management' => '@App\Service\UserManagement',
              ),
         ));

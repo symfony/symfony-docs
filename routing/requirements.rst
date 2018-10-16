@@ -12,18 +12,18 @@ a routing ``{wildcard}`` to only match some regular expression:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogController.php
-        namespace AppBundle\Controller;
+        // src/Controller/BlogController.php
+        namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController extends Controller
+        class BlogController extends AbstractController
         {
             /**
              * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
              */
-            public function listAction($page)
+            public function list($page)
             {
                 // ...
             }
@@ -31,16 +31,16 @@ a routing ``{wildcard}`` to only match some regular expression:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         blog_list:
             path:      /blog/{page}
-            defaults:  { _controller: AppBundle:Blog:list }
+            controller: App\Controller\BlogController::list
             requirements:
                 page: '\d+'
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -48,7 +48,7 @@ a routing ``{wildcard}`` to only match some regular expression:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="blog_list" path="/blog/{page}">
-                <default key="_controller">AppBundle:Blog:list</default>
+                <default key="_controller">App\Controller\BlogController::list</default>
                 <requirement key="page">\d+</requirement>
             </route>
 
@@ -57,13 +57,13 @@ a routing ``{wildcard}`` to only match some regular expression:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
         $routes->add('blog_list', new Route('/blog/{page}', array(
-            '_controller' => 'AppBundle:Blog:list',
+            '_controller' => 'App\Controller\BlogController::list',
         ), array(
             'page' => '\d+',
         )));
@@ -91,33 +91,34 @@ URL:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/MainController.php
+        // src/Controller/MainController.php
 
         // ...
-        class MainController extends Controller
+        class MainController extends AbstractController
         {
             /**
              * @Route("/{_locale}", defaults={"_locale"="en"}, requirements={
              *     "_locale"="en|fr"
              * })
              */
-            public function homepageAction($_locale)
+            public function homepage($_locale)
             {
             }
         }
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         homepage:
-            path:      /{_locale}
-            defaults:  { _controller: AppBundle:Main:homepage, _locale: en }
+            path:       /{_locale}
+            controller: App\Controller\MainController::homepage
+            defaults:   { _locale: en }
             requirements:
                 _locale:  en|fr
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -125,7 +126,7 @@ URL:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="homepage" path="/{_locale}">
-                <default key="_controller">AppBundle:Main:homepage</default>
+                <default key="_controller">App\Controller\MainController::homepage</default>
                 <default key="_locale">en</default>
                 <requirement key="_locale">en|fr</requirement>
             </route>
@@ -133,13 +134,13 @@ URL:
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
         $routes->add('homepage', new Route('/{_locale}', array(
-            '_controller' => 'AppBundle:Main:homepage',
+            '_controller' => 'App\Controller\MainController::homepage',
             '_locale'     => 'en',
         ), array(
             '_locale' => 'en|fr',
@@ -161,14 +162,9 @@ Path     Parameters
 
 .. note::
 
-    Since Symfony 3.2, you can enable UTF-8 route matching by setting the ``utf8``
-    option when declaring or importing routes. This will make e.g. a ``.`` in
-    requirements match any UTF-8 characters instead of just a single byte.
-    The option is automatically enabled whenever a route or a requirement uses any
-    non-ASCII UTF-8 characters or a `PCRE Unicode property`_ (``\p{xx}``,
-    ``\P{xx}`` or ``\X``). Note that this behavior is deprecated and a
-    ``LogicException`` will be thrown instead in 4.0 unless you explicitly turn
-    on the ``utf8`` option.
+    You can enable UTF-8 route matching by setting the ``utf8`` option when
+    declaring or importing routes. This will make e.g. a ``.`` in requirements
+    match any UTF-8 characters instead of just a single byte.
 
 .. tip::
 
@@ -195,17 +191,17 @@ accomplished with the following route configuration:
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Controller/BlogApiController.php
-        namespace AppBundle\Controller;
+        // src/Controller/BlogApiController.php
+        namespace App\Controller;
 
         // ...
 
-        class BlogApiController extends Controller
+        class BlogApiController extends AbstractController
         {
             /**
              * @Route("/api/posts/{id}", methods={"GET","HEAD"})
              */
-            public function showAction($id)
+            public function show($id)
             {
                 // ... return a JSON response with the post
             }
@@ -213,7 +209,7 @@ accomplished with the following route configuration:
             /**
              * @Route("/api/posts/{id}", methods={"PUT"})
              */
-            public function editAction($id)
+            public function edit($id)
             {
                 // ... edit a post
             }
@@ -221,20 +217,20 @@ accomplished with the following route configuration:
 
     .. code-block:: yaml
 
-        # app/config/routing.yml
+        # config/routes.yaml
         api_post_show:
-            path:     /api/posts/{id}
-            defaults: { _controller: AppBundle:BlogApi:show }
-            methods:  [GET, HEAD]
+            path:       /api/posts/{id}
+            controller: App\Controller\BlogApiController::show
+            methods:    [GET, HEAD]
 
         api_post_edit:
-            path:     /api/posts/{id}
-            defaults: { _controller: AppBundle:BlogApi:edit }
-            methods:  [PUT]
+            path:       /api/posts/{id}
+            controller: App\Controller\BlogApiController::edit
+            methods:    [PUT]
 
     .. code-block:: xml
 
-        <!-- app/config/routing.xml -->
+        <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -242,27 +238,27 @@ accomplished with the following route configuration:
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="api_post_show" path="/api/posts/{id}" methods="GET|HEAD">
-                <default key="_controller">AppBundle:BlogApi:show</default>
+                <default key="_controller">App\Controller\BlogApiController::show</default>
             </route>
 
             <route id="api_post_edit" path="/api/posts/{id}" methods="PUT">
-                <default key="_controller">AppBundle:BlogApi:edit</default>
+                <default key="_controller">App\Controller\BlogApiController::edit</default>
             </route>
         </routes>
 
     .. code-block:: php
 
-        // app/config/routing.php
+        // config/routes.php
         use Symfony\Component\Routing\RouteCollection;
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
         $routes->add('api_post_show', new Route('/api/posts/{id}', array(
-            '_controller' => 'AppBundle:BlogApi:show',
+            '_controller' => 'App\Controller\BlogApiController::show',
         ), array(), array(), '', array(), array('GET', 'HEAD')));
 
         $routes->add('api_post_edit', new Route('/api/posts/{id}', array(
-            '_controller' => 'AppBundle:BlogApi:edit',
+            '_controller' => 'App\Controller\BlogApiController::edit',
         ), array(), array(), '', array(), array('PUT')));
 
         return $routes;

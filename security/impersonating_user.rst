@@ -23,7 +23,7 @@ firewall listener:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -34,7 +34,7 @@ firewall listener:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -54,7 +54,7 @@ firewall listener:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -65,11 +65,6 @@ firewall listener:
                 ),
             ),
         ));
-
-.. tip::
-
-    For using the ``switch_user`` listener in a ``stateless`` firewall, set the
-    ``switch_user.stateless`` option to ``true``.
 
 To switch to another user, just add a query string with the ``_switch_user``
 parameter and the username as the value to the current URL:
@@ -136,7 +131,7 @@ setting:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -147,7 +142,7 @@ setting:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -166,7 +161,7 @@ setting:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -192,8 +187,8 @@ The :doc:`/session/locale_sticky_session` article does not update the locale
 when you impersonate a user. If you *do* want to be sure to update the locale when
 you switch users, add an event subscriber on this event::
 
-    // src/AppBundle/EventListener/SwitchUserSubscriber.php
-    namespace AppBundle\EventListener;
+    // src/EventListener/SwitchUserSubscriber.php
+    namespace App\EventListener;
 
     use Symfony\Component\Security\Http\Event\SwitchUserEvent;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -203,11 +198,15 @@ you switch users, add an event subscriber on this event::
     {
         public function onSwitchUser(SwitchUserEvent $event)
         {
-            $event->getRequest()->getSession()->set(
-                '_locale',
-                // assuming your User has some getLocale() method
-                $event->getTargetUser()->getLocale()
-            );
+            $request = $event->getRequest();
+
+            if ($request->hasSession() && ($session = $request->getSession)) {
+                $session->set(
+                    '_locale',
+                    // assuming your User has some getLocale() method
+                    $event->getTargetUser()->getLocale()
+                );
+            }
         }
 
         public static function getSubscribedEvents()
@@ -219,7 +218,7 @@ you switch users, add an event subscriber on this event::
         }
     }
 
-That's it! If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+That's it! If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically discover your service and call ``onSwitchUser`` whenever
 a switch user occurs.
 

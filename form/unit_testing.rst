@@ -31,11 +31,11 @@ The Basics
 
 The simplest ``TypeTestCase`` implementation looks like the following::
 
-    // tests/AppBundle/Form/Type/TestedTypeTest.php
-    namespace Tests\AppBundle\Form\Type;
+    // tests/Form/Type/TestedTypeTest.php
+    namespace App\Tests\Form\Type;
 
-    use AppBundle\Form\Type\TestedType;
-    use AppBundle\Model\TestObject;
+    use App\Form\Type\TestedType;
+    use App\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
 
     class TestedTypeTest extends TypeTestCase
@@ -124,10 +124,10 @@ To solve this, you have to mock the injected dependencies, instantiate your own
 form type and use the :class:`Symfony\\Component\\Form\\PreloadedExtension` to
 make sure the ``FormRegistry`` uses the created instance::
 
-    // tests/AppBundle/Form/Type/TestedTypeTest.php
-    namespace Tests\AppBundle\Form\Type;
+    // tests/Form/Type/TestedTypeTest.php
+    namespace App\Tests\Form\Type;
 
-    use AppBundle\Form\Type\TestedType;
+    use App\Form\Type\TestedType;
     use Doctrine\Common\Persistence\ObjectManager;
     use Symfony\Component\Form\PreloadedExtension;
     use Symfony\Component\Form\Test\TypeTestCase;
@@ -178,11 +178,11 @@ will be raised if you try to test a class that depends on other extensions.
 The :method:`Symfony\\Component\\Form\\Test\\TypeTestCase::getExtensions` method
 allows you to return a list of extensions to register::
 
-    // tests/AppBundle/Form/Type/TestedTypeTest.php
-    namespace Tests\AppBundle\Form\Type;
+    // tests/Form/Type/TestedTypeTest.php
+    namespace App\Tests\Form\Type;
 
     // ...
-    use AppBundle\Form\Type\TestedType;
+    use App\Form\Type\TestedType;
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
     use Symfony\Component\Form\Form;
     use Symfony\Component\Validator\ConstraintViolationList;
@@ -218,7 +218,3 @@ guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestC
 :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeExtensions`
 and :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeGuessers`
 methods.
-
-.. versionadded:: 3.3
-    The ``getTypes()``, ``getTypeExtensions()`` and ``getTypeGuessers()``
-    methods were introduced in Symfony 3.3.

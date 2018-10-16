@@ -8,9 +8,6 @@ The Workflow Component
     The Workflow component provides tools for managing a workflow or finite
     state machine.
 
-.. versionadded:: 3.2
-    The Workflow component was introduced in Symfony 3.2.
-
 Installation
 ------------
 
@@ -57,11 +54,6 @@ these statuses are called **places**. You can define the workflow like this::
     $marking = new SingleStateMarkingStore('currentState');
     $workflow = new Workflow($definition, $marking);
 
-.. versionadded:: 3.3
-    The fluent interface for the ``DefinitionBuilder`` class was introduced in
-    Symfony 3.3. Before you had to call the ``addPlaces()``, ``addTransition()``
-    and ``build()`` methods separately.
-
 The ``Workflow`` can now help you to decide what actions are allowed
 on a blog post depending on what *place* it is in. This will keep your domain
 logic in one place and not spread all over your application.
@@ -72,6 +64,7 @@ A registry will also help you to decide if a workflow supports the object you
 are trying to use it with::
 
     use Symfony\Component\Workflow\Registry;
+    use Symfony\Component\Workflow\WorkflowInterface\InstanceOfSupportStrategy;
     use Acme\Entity\BlogPost;
     use Acme\Entity\Newsletter;
 
@@ -79,8 +72,12 @@ are trying to use it with::
     $newsletterWorkflow = ...
 
     $registry = new Registry();
-    $registry->add($blogWorkflow, BlogPost::class);
-    $registry->add($newsletterWorkflow, Newsletter::class);
+    $registry->addWorkflow($blogWorkflow, new InstanceOfSupportStrategy(BlogPost::class));
+    $registry->addWorkflow($newsletterWorkflow, new InstanceOfSupportStrategy(Newsletter::class));
+    
+.. versionadded:: 4.1
+    The ``addWorkflow()`` method was introduced in Symfony 4.1. In previous
+    Symfony versions it was called ``add()``.
 
 Usage
 -----

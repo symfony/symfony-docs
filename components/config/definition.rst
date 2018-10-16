@@ -59,14 +59,17 @@ implements the :class:`Symfony\\Component\\Config\\Definition\\ConfigurationInte
     {
         public function getConfigTreeBuilder()
         {
-            $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('database');
+            $treeBuilder = new TreeBuilder('database');
 
             // ... add node definitions to the root of the tree
+            // $treeBuilder->getRootNode()->...
 
             return $treeBuilder;
         }
     }
+
+.. versionadded:: 4.2
+    Not passing the root node name to ``TreeBuilder`` was deprecated in Symfony 4.2.
 
 Adding Node Definitions to the Tree
 -----------------------------------
@@ -187,19 +190,10 @@ Or you may define a prototype for each node inside an array node::
         ->end()
     ;
 
-.. versionadded:: 3.3
-    The ``arrayPrototype()`` method (and the related ``booleanPrototype()``
-    ``integerPrototype()``, ``floatPrototype()``, ``scalarPrototype()`` and
-    ``enumPrototype()``) was introduced in Symfony 3.3. In previous versions,
-    you needed to use ``prototype('array')``, ``prototype('boolean')``, etc.
-
 A prototype can be used to add a definition which may be repeated many times
 inside the current node. According to the prototype definition in the example
 above, it is possible to have multiple connection arrays (containing a ``driver``,
 ``host``, etc.).
-
-.. versionadded:: 3.3
-    The ``castToArray()`` helper was added in Symfony 3.3.
 
 Sometimes, to improve the user experience of your application or bundle, you may
 allow to use a simple string or numeric value where an array value is required.
@@ -543,10 +537,9 @@ tree with ``append()``::
 
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('database');
+        $treeBuilder = new TreeBuilder('database');
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->children()
                 ->arrayNode('connection')
                     ->children()
@@ -573,10 +566,9 @@ tree with ``append()``::
 
     public function addParametersNode()
     {
-        $treeBuilder = new TreeBuilder();
-        $node = $treeBuilder->root('parameters');
+        $treeBuilder = new TreeBuilder('parameters');
 
-        $node
+        $treeBuilder->getRootNode()
             ->isRequired()
             ->requiresAtLeastOneElement()
             ->useAttributeAsKey('name')
@@ -796,6 +788,47 @@ A validation rule also requires a "then" part:
 Usually, "then" is a closure. Its return value will be used as a new value
 for the node, instead of the node's original value.
 
+Configuring the Node Path Separator
+-----------------------------------
+
+.. versionadded:: 4.1
+    The option to configure the node path separator was introduced in Symfony 4.1.
+
+Consider the following config builder example::
+
+    $treeBuilder = new TreeBuilder('database');
+
+    $treeBuilder->getRootNode()
+        ->children()
+            ->arrayNode('connection')
+                ->children()
+                    ->scalarNode('driver')->end()
+                ->end()
+            ->end()
+        ->end()
+    ;
+
+By default, the hierarchy of nodes in a config path is defined with a dot
+character (``.``)::
+
+    // ...
+
+    $node = $treeBuilder->buildTree();
+    $children = $node->getChildren();
+    $path = $children['driver']->getPath();
+    // $path = 'database.connection.driver'
+
+Use the ``setPathSeparator()`` method on the config builder to change the path
+separator::
+
+    // ...
+
+    $treeBuilder->setPathSeparator('/');
+    $node = $treeBuilder->buildTree();
+    $children = $node->getChildren();
+    $path = $children['driver']->getPath();
+    // $path = 'database/connection/driver'
+
 Processing Configuration Values
 -------------------------------
 
@@ -812,10 +845,10 @@ Otherwise the result is a clean array of configuration values::
     use Acme\DatabaseConfiguration;
 
     $config = Yaml::parse(
-        file_get_contents(__DIR__.'/src/Matthias/config/config.yml')
+        file_get_contents(__DIR__.'/src/Matthias/config/config.yaml')
     );
     $extraConfig = Yaml::parse(
-        file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yml')
+        file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yaml')
     );
 
     $configs = array($config, $extraConfig);

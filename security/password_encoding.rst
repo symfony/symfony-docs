@@ -17,10 +17,10 @@ in the following way from a controller::
 
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-    public function registerAction(UserPasswordEncoderInterface $encoder)
+    public function register(UserPasswordEncoderInterface $encoder)
     {
         // whatever *your* User object is
-        $user = new AppBundle\Entity\User();
+        $user = new App\Entity\User();
         $plainPassword = 'ryanpass';
         $encoded = $encoder->encodePassword($user, $plainPassword);
 
@@ -28,8 +28,8 @@ in the following way from a controller::
     }
 
 In order for this to work, just make sure that you have the encoder for your
-user class (e.g. ``AppBundle\Entity\User``) configured under the ``encoders``
-key in ``app/config/security.yml``.
+user class (e.g. ``App\Entity\User``) configured under the ``encoders``
+key in ``config/packages/security.yaml``.
 
 The ``$encoder`` object also has an ``isPasswordValid()`` method, which takes
 the ``User`` object as the first argument and the plain password to check

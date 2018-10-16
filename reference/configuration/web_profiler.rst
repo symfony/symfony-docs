@@ -4,10 +4,10 @@
 Profiler Configuration Reference (WebProfilerBundle)
 ====================================================
 
-The WebProfilerBundle provides detailed technical information about each request
-execution and displays it in both the web debug toolbar and the
-:doc:`profiler </profiler>`. All these options are configured under the
-``web_profiler`` key in your application configuration.
+The WebProfilerBundle is a **development tool** that provides detailed technical
+information about each request execution and displays it in both the web debug
+toolbar and the :doc:`profiler </profiler>`. All these options are configured
+under the ``web_profiler`` key in your application configuration.
 
 .. code-block:: terminal
 
@@ -34,9 +34,7 @@ Configuration
 
 * `excluded_ajax_paths`_
 * `intercept_redirects`_
-* `position`_
 * `toolbar`_
-* `verbose`_
 
 toolbar
 ~~~~~~~
@@ -46,18 +44,6 @@ toolbar
 It enables and disables the toolbar entirely. Usually you set this to ``true``
 in the ``dev`` and ``test`` environments and to ``false`` in the ``prod``
 environment.
-
-position
-~~~~~~~~
-
-.. versionadded:: 3.4
-    The ``position`` option was deprecated in Symfony 3.4 and it will be removed
-    in Symfony 4.0, where the toolbar is always displayed in the ``bottom`` position.
-
-**type**: ``string`` **default**: ``bottom``
-
-It defines the location of the browser window where the toolbar is displayed.
-the only allowed values are ``bottom`` and ``top``.
 
 intercept_redirects
 ~~~~~~~~~~~~~~~~~~~
@@ -76,17 +62,9 @@ on the given link to perform the redirect.
 excluded_ajax_paths
 ~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'^/(app(_[\\w]+)?\\.php/)?_wdt'``
+**type**: ``string`` **default**: ``'^/((index|app(_[\w]+)?)\.php/)?_wdt'``
 
 When the toolbar logs Ajax requests, it matches their URLs against this regular
 expression. If the URL matches, the request is not displayed in the toolbar. This
 is useful when the application makes lots of Ajax requests or they are heavy and
 you want to exclude some of them.
-
-verbose
-~~~~~~~
-
-**type**: ``boolean`` **default**: ``true``
-
-This option is **deprecated** and has no effect on the toolbar or the profiler,
-so you can safely remove it from your configuration.

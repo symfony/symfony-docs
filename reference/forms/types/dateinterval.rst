@@ -4,9 +4,6 @@
 DateIntervalType Field
 ======================
 
-.. versionadded:: 3.2
-   The DateIntervalType field type was introduced in Symfony 3.2.
-
 This field allows the user to select an *interval* of time. For example, if you want to
 allow the user to choose *how often* they receive a status email, they could use this
 field to choose intervals like every "10 minutes" or "3 days".
@@ -42,6 +39,7 @@ or an array (see `input`_).
 +----------------------+----------------------------------------------------------------------------------+
 | Inherited            | - `data`_                                                                        |
 | options              | - `disabled`_                                                                    |
+|                      | - `help`_                                                                        |
 |                      | - `inherit_data`_                                                                |
 |                      | - `invalid_message`_                                                             |
 |                      | - `invalid_message_parameters`_                                                  |
@@ -131,9 +129,6 @@ this format.
 
 labels
 ~~~~~~
-
-.. versionadded:: 3.3
-    The ``labels`` option was introduced in Symfony 3.3.
 
 **type**: ``array`` **default**: (see below)
 
@@ -312,6 +307,8 @@ These options inherit from the :doc:`form </reference/forms/types/form>` type:
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 

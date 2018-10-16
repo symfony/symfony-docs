@@ -11,7 +11,7 @@ to apply to all instances of a specific class:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             encoders:
@@ -19,7 +19,7 @@ to apply to all instances of a specific class:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -37,7 +37,7 @@ to apply to all instances of a specific class:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         use Symfony\Component\Security\Core\User\User;
 
         $container->loadFromExtension('security', array(
@@ -61,7 +61,7 @@ named encoders:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             encoders:
@@ -71,7 +71,7 @@ named encoders:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -90,7 +90,7 @@ named encoders:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
             'encoders' => array(
@@ -139,16 +139,16 @@ you must register a service for it in order to use it as a named encoder:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
             encoders:
                 app_encoder:
-                    id: 'app.password_encoder_service'
+                    id: 'App\Security\Encoder\MyCustomPasswordEncoder'
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -160,23 +160,26 @@ you must register a service for it in order to use it as a named encoder:
             <config>
                 <!-- ... -->
                 <encoder class="app_encoder"
-                    id="app.password_encoder_service" />
+                    id="App\Security\Encoder\MyCustomPasswordEncoder" />
             </config>
         </srv:container>
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
+        // ...
+        use App\Security\Encoder\MyCustomPasswordEncoder;
+
         $container->loadFromExtension('security', array(
             // ...
             'encoders' => array(
                 'app_encoder' => array(
-                    'id' => 'app.password_encoder_service',
+                    'id' => MyCustomPasswordEncoder::class,
                 ),
             ),
         ));
 
-This creates an encoder named ``app_encoder`` from a service named
-``app.password_encoder_service``.
+This creates an encoder named ``app_encoder`` from a service with the ID
+``App\Security\Encoder\MyCustomPasswordEncoder``.
 
 .. _`libsodium`: https://pecl.php.net/package/libsodium

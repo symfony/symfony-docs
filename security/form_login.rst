@@ -35,7 +35,7 @@ a relative/absolute URL or a Symfony route name:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -47,7 +47,7 @@ a relative/absolute URL or a Symfony route name:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -66,7 +66,7 @@ a relative/absolute URL or a Symfony route name:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -92,7 +92,7 @@ previously requested URL and always redirect to the default page:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -104,7 +104,7 @@ previously requested URL and always redirect to the default page:
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -124,7 +124,7 @@ previously requested URL and always redirect to the default page:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -159,7 +159,7 @@ Defining the redirect URL via POST using a hidden form field:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/security/login.html.twig #}
+    {# templates/security/login.html.twig #}
     <form action="{{ path('login') }}" method="post">
         {# ... #}
 
@@ -179,7 +179,7 @@ parameter is included in the request, you may use the value of the
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -192,7 +192,7 @@ parameter is included in the request, you may use the value of the
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -212,7 +212,7 @@ parameter is included in the request, you may use the value of the
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -245,7 +245,7 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -258,7 +258,7 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -278,7 +278,7 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -301,7 +301,7 @@ This option can also be set via the ``_failure_path`` request parameter:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/security/login.html.twig #}
+    {# templates/security/login.html.twig #}
     <form action="{{ path('login') }}" method="post">
         {# ... #}
 
@@ -320,7 +320,7 @@ redirects can be customized using the  ``target_path_parameter`` and
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
         security:
             # ...
 
@@ -333,7 +333,7 @@ redirects can be customized using the  ``target_path_parameter`` and
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -354,7 +354,7 @@ redirects can be customized using the  ``target_path_parameter`` and
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
         $container->loadFromExtension('security', array(
             // ...
 
@@ -378,7 +378,7 @@ are now fully customized:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/security/login.html.twig #}
+    {# templates/security/login.html.twig #}
     <form action="{{ path('login') }}" method="post">
         {# ... #}
 
@@ -404,6 +404,3 @@ remove this variable, it's better to use the
 
     // equivalent to:
     // $targetPath = $request->getSession()->get('_security.'.$providerKey.'.target_path');
-
-.. versionadded:: 3.1
-    The ``TargetPathTrait`` was introduced in Symfony 3.1.

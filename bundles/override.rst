@@ -4,29 +4,68 @@
 How to Override any Part of a Bundle
 ====================================
 
-This document is a quick reference for how to override different parts of
-third-party bundles without using :doc:`/bundles/inheritance`, which is
-deprecated since Symfony 3.4.
+When using a third-party bundle, you might want to customize or override some of
+its features. This document describes ways of overriding the most common
+features of a bundle.
 
 .. tip::
 
     The bundle overriding mechanism means that you cannot use physical paths to
     refer to bundle's resources (e.g. ``__DIR__/config/services.xml``). Always
-    use logical paths in your bundles (e.g. ``@AppBundle/Resources/config/services.xml``)
+    use logical paths in your bundles (e.g. ``@FooBundle/Resources/config/services.xml``)
     and call the :ref:`locateResource() method <http-kernel-resource-locator>`
     to turn them into physical paths when needed.
+
+.. _override-templates:
 
 Templates
 ---------
 
-See :doc:`/templating/overriding`.
+Third-party bundle templates can be overridden in the
+``<your-project>/templates/bundles/<bundle-name>/`` directory. The new templates
+must use the same name and path (relative to ``<bundle>/Resources/views/``) as
+the original templates.
+
+For example, to override the ``Resources/views/Registration/confirmed.html.twig``
+template from the FOSUserBundle, create this template:
+``<your-project>/templates/bundles/FOSUserBundle/Registration/confirmed.html.twig``
+
+.. caution::
+
+    If you add a template in a new location, you *may* need to clear your
+    cache (``php bin/console cache:clear``), even if you are in debug mode.
+
+Instead of overriding an entire template, you may just want to override one or
+more blocks. However, since you are overriding the template you want to extend
+from, you would end up in an infinite loop error. The solution is to use the
+special ``!`` prefix in the template name to tell Symfony that you want to
+extend from the original template, not from the overridden one:
+
+.. code-block:: twig
+
+    {# templates/bundles/FOSUserBundle/Registration/confirmed.html.twig #}
+    {# the special '!' prefix avoids errors when extending from an overridden template #}
+    {% extends "@!FOSUserBundle/Registration/confirmed.html.twig" %}
+
+    {% block some_block %}
+        ...
+    {% endblock %}
+
+.. _templating-overriding-core-templates:
+
+.. tip::
+
+    Symfony internals use some bundles too, so you can apply the same technique
+    to override the core Symfony templates. For example, you can
+    :doc:`customize error pages </controller/error_pages>` overriding TwigBundle
+    templates.
 
 Routing
 -------
 
 Routing is never automatically imported in Symfony. If you want to include
 the routes from any bundle, then they must be manually imported from somewhere
-in your application (e.g. ``app/config/routing.yml``).
+in your application (e.g. ``config/routes.yaml``).
 
 The easiest way to "override" a bundle's routing is to never import it at
 all. Instead of importing a third-party bundle's routing, simply copy
@@ -86,7 +125,7 @@ to a new validation group:
 
     .. code-block:: yaml
 
-        # src/Acme/UserBundle/Resources/config/validation.yml
+        # config/validator/validation.yaml
         FOS\UserBundle\Model\User:
             properties:
                 plainPassword:
@@ -99,7 +138,7 @@ to a new validation group:
 
     .. code-block:: xml
 
-        <!-- src/Acme/UserBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -133,8 +172,12 @@ instead of the original ones.
 Translations
 ------------
 
-Translations are not related to bundles, but to domains. That means that you
-can override the translations from any translation file, as long as it is in
-:ref:`the correct domain <using-message-domains>`.
+Translations are not related to bundles, but to :ref:`translation domains <using-message-domains>`.
+For this reason, you can override any bundle translation file from the main
+``translations/`` directory, as long as the new file uses the same domain.
+
+For example, to override the translations defined in the
+``Resources/translations/FOSUserBundle.es.yml`` file of the FOSUserBundle,
+create a``<your-project>/translations/FOSUserBundle.es.yml`` file.
 
 .. _`the Doctrine documentation`: http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html#overrides

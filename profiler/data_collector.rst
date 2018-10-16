@@ -21,8 +21,8 @@ property to store the collected information.
 The following example shows a custom collector that stores information about the
 request::
 
-    // src/AppBundle/DataCollector/RequestCollector.php
-    namespace AppBundle\DataCollector;
+    // src/DataCollector/RequestCollector.php
+    namespace App\DataCollector;
 
     use Symfony\Component\HttpKernel\DataCollector\DataCollector;
     use Symfony\Component\HttpFoundation\Request;
@@ -84,7 +84,7 @@ request::
 Enabling Custom Data Collectors
 -------------------------------
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
 with ``autoconfigure``, then Symfony will automatically see your new data collector!
 Your ``collect()`` method should be called next time your refresh.
 
@@ -101,8 +101,8 @@ template that includes some specific blocks.
 However, first you must add some getters in the data collector class to give the
 template access to the collected information::
 
-    // src/AppBundle/DataCollector/RequestCollector.php
-    namespace AppBundle\DataCollector;
+    // src/DataCollector/RequestCollector.php
+    namespace App\DataCollector;
 
     use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
@@ -132,8 +132,8 @@ block and set the value of two variables called ``icon`` and ``text``:
     {% block toolbar %}
         {% set icon %}
             {# this is the content displayed as a panel in the toolbar #}
-            <span class="icon"><img src="..." alt=""/></span>
-            <span class="sf-toolbar-status">Request</span>
+            <svg xmlns="http://www.w3.org/2000/svg"> ... </svg>
+            <span class="sf-toolbar-value">Request</span>
         {% endset %}
 
         {% set text %}
@@ -157,23 +157,15 @@ block and set the value of two variables called ``icon`` and ``text``:
 
 .. tip::
 
-    Built-in collector templates define all their images as embedded base64-encoded
-    images. This makes them work everywhere without having to mess with web assets
-    links:
-
-    .. code-block:: html
-
-        <img src="data:image/png;base64,..." />
-
-    Another solution is to define the images as SVG files. In addition to being
-    resolution-independent, these images can be easily embedded in the Twig
-    template or included from an external file to reuse them in several templates:
+    Built-in collector templates define all their images as embedded SVG files.
+    This makes them work everywhere without having to mess with web assets links:
 
     .. code-block:: twig
 
-        {{ include('data_collector/icon.svg') }}
-
-    You are encouraged to use the latter technique for your own toolbar panels.
+        {% set icon %}
+            {{ include('data_collector/icon.svg') }}
+            {# ... #}
+        {% endset %}
 
 If the toolbar panel includes extended web profiler information, the Twig template
 must also define additional blocks:
@@ -184,8 +176,7 @@ must also define additional blocks:
 
     {% block toolbar %}
         {% set icon %}
-            <span class="icon"><img src="..." alt=""/></span>
-            <span class="sf-toolbar-status">Request</span>
+            {# ... #}
         {% endset %}
 
         {% set text %}
@@ -237,9 +228,9 @@ to specify a tag that contains the template:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
-            AppBundle\DataCollector\RequestCollector:
+            App\DataCollector\RequestCollector:
                 tags:
                     -
                         name:     data_collector
@@ -252,7 +243,7 @@ to specify a tag that contains the template:
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -260,7 +251,7 @@ to specify a tag that contains the template:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\DataCollector\RequestCollector" public="false">
+                <service id="App\DataCollector\RequestCollector" public="false">
                     <!-- priority="300" -->
                     <tag name="data_collector"
                         template="data_collector/template.html.twig"
@@ -272,8 +263,8 @@ to specify a tag that contains the template:
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\DataCollector\RequestCollector;
+        // config/services.php
+        use App\DataCollector\RequestCollector;
 
         $container
             ->autowire(RequestCollector::class)
@@ -285,6 +276,5 @@ to specify a tag that contains the template:
             ))
         ;
 
-The position of each panel in the toolbar is determined by the priority defined
-by each collector. Most built-in collectors use ``255`` as their priority. If you
-want your collector to be displayed before them, use a higher value (like 300).
+The position of each panel in the toolbar is determined by the collector priority
+(the higher the priority, the earlier the panel is displayed in the toolbar).

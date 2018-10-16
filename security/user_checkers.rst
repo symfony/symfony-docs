@@ -20,10 +20,10 @@ are not met, an exception should be thrown which extends the
 
 .. code-block:: php
 
-    namespace AppBundle\Security;
+    namespace App\Security;
 
-    use AppBundle\Exception\AccountDeletedException;
-    use AppBundle\Security\User as AppUser;
+    use App\Exception\AccountDeletedException;
+    use App\Security\User as AppUser;
     use Symfony\Component\Security\Core\Exception\AccountExpiredException;
     use Symfony\Component\Security\Core\User\UserCheckerInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
@@ -59,7 +59,7 @@ Enabling the Custom User Checker
 --------------------------------
 
 Next, make sure your user checker is registered as a service. If you're using the
-:ref:`default services.yml configuration <service-container-services-load-example>`,
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
 the service is registered automatically.
 
 All that's left to do is add the checker to the desired firewall where the value
@@ -69,19 +69,19 @@ is the service id of your user checker:
 
     .. code-block:: yaml
 
-        # app/config/security.yml
+        # config/packages/security.yaml
 
         # ...
         security:
             firewalls:
                 main:
                     pattern: ^/
-                    user_checker: AppBundle\Security\UserChecker
+                    user_checker: App\Security\UserChecker
                     # ...
 
     .. code-block:: xml
 
-        <!-- app/config/security.xml -->
+        <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -92,7 +92,7 @@ is the service id of your user checker:
             <config>
                 <!-- ... -->
                 <firewall name="main" pattern="^/">
-                    <user-checker>AppBundle\Security\UserChecker</user-checker>
+                    <user-checker>App\Security\UserChecker</user-checker>
                     <!-- ... -->
                 </firewall>
             </config>
@@ -100,10 +100,10 @@ is the service id of your user checker:
 
     .. code-block:: php
 
-        // app/config/security.php
+        // config/packages/security.php
 
         // ...
-        use AppBundle\Security\UserChecker;
+        use App\Security\UserChecker;
 
         $container->loadFromExtension('security', array(
             'firewalls' => array(

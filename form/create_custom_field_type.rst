@@ -16,11 +16,11 @@ Defining the Field Type
 In order to create the custom field type, first you have to create the class
 representing the field. In this situation the class holding the field type
 will be called ``ShippingType`` and the file will be stored in the default location
-for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extends
+for form fields, which is ``App\Form\Type``. Make sure the field extends
 :class:`Symfony\\Component\\Form\\AbstractType`::
 
-    // src/AppBundle/Form/Type/ShippingType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/ShippingType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -36,7 +36,6 @@ for form fields, which is ``<BundleName>\Form\Type``. Make sure the field extend
                     'Expedited Shipping' => 'expedited',
                     'Priority Shipping' => 'priority',
                 ),
-                'choices_as_values' => true,
             ));
         }
 
@@ -104,7 +103,7 @@ the class name of your type. For more information, see :ref:`form-customization-
 
     When the name of your form class matches any of the built-in field types,
     your form might not be rendered correctly. A form type named
-    ``AppBundle\Form\PasswordType`` will have the same block name as the
+    ``App\Form\PasswordType`` will have the same block name as the
     built-in ``PasswordType`` and won't be rendered correctly. Override the
     ``getBlockPrefix()`` method to return a unique block prefix (e.g.
     ``app_password``) to avoid collisions.
@@ -118,12 +117,12 @@ link for details), create a ``shipping_widget`` block to handle this:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/form/fields.html.twig #}
+    {# templates/form/fields.html.twig #}
     {% block shipping_widget %}
         {% spaceless %}
             {% if expanded %}
                 <ul {{ block('widget_container_attributes') }}>
-                {% for child in form %}
+                {% for child in form if not child.rendered %}
                     <li>
                         {{ form_widget(child) }}
                         {{ form_label(child) }}
@@ -136,6 +135,12 @@ link for details), create a ``shipping_widget`` block to handle this:
             {% endif %}
         {% endspaceless %}
     {% endblock %}
+
+.. note::
+
+    Symfony 4.2 deprecated calling ``FormRenderer::searchAndRenderBlock`` for
+    fields that have already been rendered. That's why the previous example
+    includes the ``... if not child.rendered`` statement.
 
 .. tip::
 
@@ -158,14 +163,14 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/packages/twig.yaml
             twig:
                 form_themes:
                     - 'form/fields.html.twig'
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- config/packages/twig.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -182,7 +187,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: php
 
-            // app/config/config.php
+            // config/packages/twig.php
             $container->loadFromExtension('twig', array(
                 'form_themes' => array(
                     'form/fields.html.twig',
@@ -195,7 +200,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: yaml
 
-            # app/config/config.yml
+            # config/packages/framework.yaml
             framework:
                 templating:
                     form:
@@ -204,7 +209,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: xml
 
-            <!-- app/config/config.xml -->
+            <!-- config/packages/framework.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -223,7 +228,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 
         .. code-block:: php
 
-            // app/config/config.php
+            // config/packages/framework.php
             $container->loadFromExtension('framework', array(
                 'templating' => array(
                     'form' => array(
@@ -240,12 +245,12 @@ Using the Field Type
 You can now use your custom field type immediately, simply by creating a
 new instance of the type in one of your forms::
 
-    // src/AppBundle/Form/Type/OrderType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/OrderType.php
+    namespace App\Form\Type;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
-    use AppBundle\Form\Type\ShippingType;
+    use App\Form\Type\ShippingType;
 
     class OrderType extends AbstractType
     {
@@ -270,8 +275,8 @@ Accessing Services and Config
 If you need to access :doc:`services </service_container>` from your form class,
 add a ``__construct()`` method like normal::
 
-    // src/AppBundle/Form/Type/ShippingType.php
-    namespace AppBundle\Form\Type;
+    // src/Form/Type/ShippingType.php
+    namespace App\Form\Type;
 
     // ...
     use Doctrine\ORM\EntityManagerInterface;
@@ -288,7 +293,7 @@ add a ``__construct()`` method like normal::
         // use $this->entityManager down anywhere you want ...
     }
 
-If you're using the default ``services.yml`` configuration (i.e. services from the
+If you're using the default ``services.yaml`` configuration (i.e. services from the
 ``Form/`` are loaded and ``autoconfigure`` is enabled), this will already work!
 See :ref:`service-container-creating-service` for more details.
 

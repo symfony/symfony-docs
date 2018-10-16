@@ -17,11 +17,13 @@ Use the ``parameters`` section of a config file to set parameters:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
             mailer.transport: sendmail
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -35,6 +37,7 @@ Use the ``parameters`` section of a config file to set parameters:
 
     .. code-block:: php
 
+        // config/services.php
         $container->setParameter('mailer.transport', 'sendmail');
 
 You can refer to parameters elsewhere in any config file by surrounding them
@@ -50,15 +53,17 @@ and hidden with the service definition:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
             mailer.transport: sendmail
 
         services:
-            AppBundle\Service\Mailer:
+            App\Service\Mailer:
                 arguments: ['%mailer.transport%']
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -70,7 +75,7 @@ and hidden with the service definition:
             </parameters>
 
             <services>
-                <service id="AppBundle\Service\Mailer">
+                <service id="App\Service\Mailer">
                     <argument>%mailer.transport%</argument>
                 </service>
             </services>
@@ -78,7 +83,8 @@ and hidden with the service definition:
 
     .. code-block:: php
 
-        use AppBundle\Mailer;
+        // config/services.php
+        use App\Mailer;
 
         $container->setParameter('mailer.transport', 'sendmail');
 
@@ -116,7 +122,7 @@ and hidden with the service definition:
 
         .. code-block:: yaml
 
-            # app/config/parameters.yml
+            # config/services.yaml
             parameters:
                 # This will be parsed as string '@securepass'
                 mailer_password: '@@securepass'
@@ -126,6 +132,7 @@ and hidden with the service definition:
 
         .. code-block:: xml
 
+            <!-- config/services.xml -->
             <parameters>
                 <!-- the @ symbol does NOT need to be escaped in XML -->
                 <parameter key="mailer_password">@securepass</parameter>
@@ -136,6 +143,7 @@ and hidden with the service definition:
 
         .. code-block:: php
 
+            // config/services.php
             // the @ symbol does NOT need to be escaped in XML
             $container->setParameter('mailer_password', '@securepass');
 
@@ -148,7 +156,7 @@ Getting and Setting Container Parameters in PHP
 Working with container parameters is straightforward using the container's
 accessor methods for parameters::
 
-    // checks if a parameter is defined
+    // checks if a parameter is defined (parameter names are case-sensitive)
     $container->hasParameter('mailer.transport');
 
     // gets value of a parameter
@@ -170,11 +178,6 @@ accessor methods for parameters::
     To learn more about compiling the container see
     :doc:`/components/dependency_injection/compilation`.
 
-.. versionadded:: 3.4
-    Container parameters are case sensitive starting from Symfony 3.4. In
-    previous Symfony versions, parameters were case insensitive, meaning that
-    ``mailer.transport`` and ``Mailer.Transport`` were considered the same parameter.
-
 .. _component-di-parameters-array:
 
 Array Parameters
@@ -188,6 +191,7 @@ for all parameters that are arrays.
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
             my_mailer.gateways: [mail1, mail2, mail3]
 
@@ -201,6 +205,7 @@ for all parameters that are arrays.
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -230,6 +235,7 @@ for all parameters that are arrays.
 
     .. code-block:: php
 
+        // config/services.php
         $container->setParameter('my_mailer.gateways', array('mail1', 'mail2', 'mail3'));
         $container->setParameter('my_multilang.language_fallback', array(
             'en' => array('en', 'fr'),
@@ -252,12 +258,14 @@ Setting PHP constants as parameters is also supported:
 
     .. code-block:: yaml
 
+        # config/services.yaml
         parameters:
             global.constant.value: !php/const GLOBAL_CONSTANT
             my_class.constant.value: !php/const My_Class::CONSTANT_NAME
 
     .. code-block:: xml
 
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -272,8 +280,46 @@ Setting PHP constants as parameters is also supported:
 
     .. code-block:: php
 
+        // config/services.php
         $container->setParameter('global.constant.value', GLOBAL_CONSTANT);
         $container->setParameter('my_class.constant.value', My_Class::CONSTANT_NAME);
+
+Binary Values as Parameters
+---------------------------
+
+.. versionadded:: 4.1
+    The support for binary values in container parameters was introduced in
+    Symfony 4.1
+
+If the value of a container parameter is a binary value, set it as a base64
+encoded value in YAML and XML configs and use the escape sequences in PHP:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        parameters:
+            some_parameter: !!binary VGhpcyBpcyBhIEJlbGwgY2hhciAH
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="some_parameter" type="binary">VGhpcyBpcyBhIEJlbGwgY2hhciAH</parameter>
+            </parameters>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        $container->setParameter('some_parameter', 'This is a Bell char \x07');
 
 PHP Keywords in XML
 -------------------

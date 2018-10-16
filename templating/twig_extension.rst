@@ -8,6 +8,17 @@ If you need to create custom Twig functions, filters, tests or more, you'll need
 to create a Twig extension. You can read more about `Twig Extensions`_ in the Twig
 documentation.
 
+.. tip::
+
+    Before writing your own Twig extension, check if the filter/function that
+    you need is already implemented in the :doc:`Symfony Twig extensions </reference/twig_reference>`.
+    Check also the `official Twig extensions`_, which can be installed in your
+    application as follows:
+
+    .. code-block:: terminal
+
+        $ composer require twig/extensions
+
 Create the Extension Class
 --------------------------
 
@@ -23,8 +34,8 @@ money:
 
 Create a class that extends ``AbstractExtension`` and fill in the logic::
 
-    // src/AppBundle/Twig/AppExtension.php
-    namespace AppBundle\Twig;
+    // src/Twig/AppExtension.php
+    namespace App\Twig;
 
     use Twig\Extension\AbstractExtension;
     use Twig\TwigFilter;
@@ -47,14 +58,6 @@ Create a class that extends ``AbstractExtension`` and fill in the logic::
         }
     }
 
-.. note::
-
-    Prior to Twig 1.26, your extension had to define an additional ``getName()``
-    method that returned a string with the extension's internal name (e.g.
-    ``app.my_extension``). When your extension needs to be compatible with Twig
-    versions before 1.26, include this method which is omitted in the example
-    above.
-
 .. tip::
 
     Along with custom filters, you can also add custom `functions`_ and register
@@ -64,10 +67,19 @@ Register an Extension as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, register your class as a service and tag it with ``twig.extension``. If you're
-using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you're done! Symfony will automatically know about your new service and add the tag.
 
+Optionally, execute this command to confirm that your new filter was
+successfully registered:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:twig --filter=price
+
 You can now start using your filter in any Twig template.
+
+.. _lazy-loaded-twig-extensions:
 
 Creating Lazy-Loaded Twig Extensions
 ------------------------------------
@@ -90,10 +102,10 @@ implementation. Following the same example as before, the first change would be
 to remove the ``priceFilter()`` method from the extension and update the PHP
 callable defined in ``getFilters()``::
 
-    // src/AppBundle/Twig/AppExtension.php
-    namespace AppBundle\Twig;
+    // src/Twig/AppExtension.php
+    namespace App\Twig;
 
-    use AppBundle\Twig\AppRuntime;
+    use App\Twig\AppRuntime;
     use Twig\Extension\AbstractExtension;
     use Twig\TwigFilter;
 
@@ -112,8 +124,8 @@ Then, create the new ``AppRuntime`` class (it's not required but these classes
 are suffixed with ``Runtime`` by convention) and include the logic of the
 previous ``priceFilter()`` method::
 
-    // src/AppBundle/Twig/AppRuntime.php
-    namespace AppBundle\Twig;
+    // src/Twig/AppRuntime.php
+    namespace App\Twig;
 
     use Twig\Extension\RuntimeExtensionInterface;
 
@@ -134,13 +146,11 @@ previous ``priceFilter()`` method::
         }
     }
 
-.. versionadded:: 3.4
-    The ``RuntimeExtensionInterface`` was introduced in Symfony 3.4.
-
 If you're using the default ``services.yaml`` configuration, this will already
 work! Otherwise, :ref:`create a service <service-container-creating-service>`
 for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
 
+.. _`official Twig extensions`: https://github.com/twigphp/Twig-extensions
 .. _`global variables`: https://twig.symfony.com/doc/2.x/advanced.html#id1
 .. _`functions`: https://twig.symfony.com/doc/2.x/advanced.html#id2
 .. _`Twig Extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension

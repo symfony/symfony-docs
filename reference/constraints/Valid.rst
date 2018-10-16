@@ -23,8 +23,8 @@ In the following example, create two classes ``Author`` and ``Address``
 that both have constraints on their properties. Furthermore, ``Author``
 stores an ``Address`` instance in the ``$address`` property::
 
-    // src/AppBundle/Entity/Address.php
-    namespace AppBundle\Entity;
+    // src/Entity/Address.php
+    namespace App\Entity;
 
     class Address
     {
@@ -34,8 +34,8 @@ stores an ``Address`` instance in the ``$address`` property::
 
 .. code-block:: php
 
-    // src/AppBundle/Entity/Author.php
-    namespace AppBundle\Entity;
+    // src/Entity/Author.php
+    namespace App\Entity;
 
     class Author
     {
@@ -48,8 +48,8 @@ stores an ``Address`` instance in the ``$address`` property::
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Address.php
-        namespace AppBundle\Entity;
+        // src/Entity/Address.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -67,8 +67,8 @@ stores an ``Address`` instance in the ``$address`` property::
             protected $zipCode;
         }
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -90,8 +90,8 @@ stores an ``Address`` instance in the ``$address`` property::
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Address:
+        # config/validator/validation.yaml
+        App\Entity\Address:
             properties:
                 street:
                     - NotBlank: ~
@@ -100,7 +100,7 @@ stores an ``Address`` instance in the ``$address`` property::
                     - Length:
                         max: 5
 
-        AppBundle\Entity\Author:
+        App\Entity\Author:
             properties:
                 firstName:
                     - NotBlank: ~
@@ -111,13 +111,13 @@ stores an ``Address`` instance in the ``$address`` property::
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Address">
+            <class name="App\Entity\Address">
                 <property name="street">
                     <constraint name="NotBlank" />
                 </property>
@@ -129,7 +129,7 @@ stores an ``Address`` instance in the ``$address`` property::
                 </property>
             </class>
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="firstName">
                     <constraint name="NotBlank" />
                     <constraint name="Length">
@@ -144,8 +144,8 @@ stores an ``Address`` instance in the ``$address`` property::
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Address.php
-        namespace AppBundle\Entity;
+        // src/Entity/Address.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -163,8 +163,8 @@ stores an ``Address`` instance in the ``$address`` property::
             }
         }
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -191,8 +191,8 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -206,21 +206,21 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author:
+        # config/validator/validation.yaml
+        App\Entity\Author:
             properties:
                 address:
                     - Valid: ~
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Author">
+            <class name="App\Entity\Author">
                 <property name="address">
                     <constraint name="Valid" />
                 </property>
@@ -229,8 +229,8 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Author.php
-        namespace AppBundle\Entity;
+        // src/Entity/Author.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -250,7 +250,7 @@ the validation of the ``Address`` fields failed.
 
 .. code-block:: text
 
-    AppBundle\\Author.address.zipCode:
+    App\Entity\Author.address.zipCode:
         This value is too long. It should have 5 characters or less.
 
 Options

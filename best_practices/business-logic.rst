@@ -10,92 +10,55 @@ your app that's not specific to the framework (e.g. routing and controllers).
 Domain classes, Doctrine entities and regular PHP classes that are used as
 services are good examples of business logic.
 
-For most projects, you should store everything inside the AppBundle.
+For most projects, you should store all your code inside the ``src/`` directory.
 Inside here, you can create whatever directories you want to organize things:
 
 .. code-block:: text
 
     symfony-project/
-    ├─ app/
+    ├─ config/
+    ├─ public/
     ├─ src/
-    │  └─ AppBundle/
-    │     └─ Utils/
-    │        └─ MyClass.php
+    │  └─ Utils/
+    │     └─ MyClass.php
     ├─ tests/
     ├─ var/
-    ├─ vendor/
-    └─ web/
+    └─ vendor/
 
-Storing Classes Outside of the Bundle?
---------------------------------------
+.. _services-naming-and-format:
 
-But there's no technical reason for putting business logic inside of a bundle.
-If you like, you can create your own namespace inside the ``src/`` directory
-and put things there:
+Services: Naming and Configuration
+----------------------------------
 
-.. code-block:: text
+.. best-practice::
 
-    symfony-project/
-    ├─ app/
-    ├─ src/
-    │  ├─ Acme/
-    │  │   └─ Utils/
-    │  │      └─ MyClass.php
-    │  └─ AppBundle/
-    ├─ tests/
-    ├─ var/
-    ├─ vendor/
-    └─ web/
+    Use autowiring to automate the configuration of application services.
 
-.. tip::
-
-    The recommended approach of using the ``AppBundle/`` directory is for
-    simplicity. If you're advanced enough to know what needs to live in
-    a bundle and what can live outside of one, then feel free to do that.
-
-Services: Naming and Format
----------------------------
+:doc:`Service autowiring </service_container/autowiring>` is a feature provided
+by Symfony's Service Container to manage services with minimal configuration. It
+reads the type-hints on your constructor (or other methods) and automatically
+passes the correct services to each method. It can also add
+:doc:`service tags </service_container/tags>` to the services needing them, such
+as Twig extensions, event subscribers, etc.
 
 The blog application needs a utility that can transform a post title (e.g.
-"Hello World") into a slug (e.g. "hello-world"). The slug will be used as
-part of the post URL.
+"Hello World") into a slug (e.g. "hello-world") to include it as part of the
+post URL. Let's create a new ``Slugger`` class inside ``src/Utils/``::
 
-Let's create a new ``Slugger`` class inside ``src/AppBundle/Utils/`` and
-add the following ``slugify()`` method::
-
-    // src/AppBundle/Utils/Slugger.php
-    namespace AppBundle\Utils;
+    // src/Utils/Slugger.php
+    namespace App\Utils;
 
     class Slugger
     {
-        public function slugify($string)
+        public function slugify(string $value): string
         {
-            return preg_replace(
-                '/[^a-z0-9]/', '-', strtolower(trim(strip_tags($string)))
-            );
+            // ...
         }
     }
 
-Next, define a new service for that class.
-
-.. code-block:: yaml
-
-    # app/config/services.yml
-    services:
-        # ...
-
-        # use the fully-qualified class name as the service id
-        AppBundle\Utils\Slugger:
-            public: false
-
-.. note::
-
-    If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
-    the class is auto-registered as a service.
-
-Traditionally, the naming convention for a service was a short, but unique
-snake case key - e.g. ``app.utils.slugger``. But for most services, you should now
-use the class name.
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+this class is auto-registered as a service whose ID is ``App\Utils\Slugger`` (or
+simply ``Slugger::class`` if the class is already imported in your code).
 
 .. best-practice::
 
@@ -103,18 +66,14 @@ use the class name.
     except when you have multiple services configured for the same class (in that
     case, use a snake case id).
 
-Now you can use the custom slugger in any controller class, such as the
-``AdminController``::
+Now you can use the custom slugger in any other service or controller class,
+such as the ``AdminController``::
 
-    use AppBundle\Utils\Slugger;
+    use App\Utils\Slugger;
 
-    public function createAction(Request $request, Slugger $slugger)
+    public function create(Request $request, Slugger $slugger)
     {
         // ...
-
-        // you can also fetch a public service like this
-        // but fetching services in this way is not considered a best practice
-        // $slugger = $this->get('app.slugger');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugger->slugify($post->getTitle());
@@ -125,7 +84,7 @@ Now you can use the custom slugger in any controller class, such as the
     }
 
 Services can also be :ref:`public or private <container-public>`. If you use the
-:ref:`default services.yml configuration <service-container-services-load-example>`,
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
 all services are private by default.
 
 .. best-practice::
@@ -137,11 +96,13 @@ all services are private by default.
 Service Format: YAML
 --------------------
 
-In the previous section, YAML was used to define the service.
+If you use the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+most services will be configured automatically. However, in some edge cases
+you'll need to configure services (or parts of them) manually.
 
 .. best-practice::
 
-    Use the YAML format to define your own services.
+    Use the YAML format to configure your own services.
 
 This is controversial, and in our experience, YAML and XML usage is evenly
 distributed among developers, with a slight preference towards YAML.
@@ -150,36 +111,6 @@ personal taste.
 
 We recommend YAML because it's friendly to newcomers and concise. You can
 of course use whatever format you like.
-
-Service: No Class Parameter
----------------------------
-
-You may have noticed that the previous service definition doesn't configure
-the class namespace as a parameter:
-
-.. code-block:: yaml
-
-    # app/config/services.yml
-
-    # service definition with class namespace as parameter
-    parameters:
-        slugger.class: AppBundle\Utils\Slugger
-
-    services:
-        app.slugger:
-            class: '%slugger.class%'
-
-This practice is cumbersome and completely unnecessary for your own services.
-
-.. best-practice::
-
-    Don't define parameters for the classes of your services.
-
-This practice was wrongly adopted from third-party bundles. When Symfony
-introduced its service container, some developers used this technique to easily
-allow overriding services. However, overriding a service by just changing its
-class name is a very rare use case because, frequently, the new service has
-different constructor arguments.
 
 Using a Persistence Layer
 -------------------------
@@ -192,7 +123,7 @@ library or strategy you want for this.
 In practice, many Symfony applications rely on the independent
 `Doctrine project`_ to define their model using entities and repositories.
 Just like with business logic, we recommend storing Doctrine entities in the
-AppBundle.
+``src/Entity/`` directory.
 
 The three entities defined by our sample blog application are a good example:
 
@@ -201,16 +132,10 @@ The three entities defined by our sample blog application are a good example:
     symfony-project/
     ├─ ...
     └─ src/
-       └─ AppBundle/
-          └─ Entity/
-             ├─ Comment.php
-             ├─ Post.php
-             └─ User.php
-
-.. tip::
-
-    If you're more advanced, you can of course store them under your own
-    namespace in ``src/``.
+       └─ Entity/
+          ├─ Comment.php
+          ├─ Post.php
+          └─ User.php
 
 Doctrine Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -227,7 +152,7 @@ PHP and annotations.
 Annotations are by far the most convenient and agile way of setting up and
 looking for mapping information::
 
-    namespace AppBundle\Entity;
+    namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
     use Doctrine\Common\Collections\ArrayCollection;
@@ -303,29 +228,15 @@ the following command to install the Doctrine fixtures bundle:
 
     $ composer require "doctrine/doctrine-fixtures-bundle"
 
-Then, enable the bundle in ``AppKernel.php``, but only for the ``dev`` and
+Then, this bundle is enabled automatically, but only for the ``dev`` and
 ``test`` environments::
 
-    use Symfony\Component\HttpKernel\Kernel;
+    // config/bundles.php
 
-    class AppKernel extends Kernel
-    {
-        public function registerBundles()
-        {
-            $bundles = array(
-                // ...
-            );
-
-            if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-                // ...
-                $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
-            }
-
-            return $bundles;
-        }
-
+    return [
         // ...
-    }
+        Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+    ];
 
 We recommend creating just *one* `fixture class`_ for simplicity, though
 you're welcome to have more if that class gets quite large.
@@ -340,7 +251,7 @@ command:
 
     Careful, database will be purged. Do you want to continue Y/N ? Y
       > purging database
-      > loading AppBundle\DataFixtures\ORM\LoadFixtures
+      > loading App\DataFixtures\ORM\LoadFixtures
 
 Coding Standards
 ----------------

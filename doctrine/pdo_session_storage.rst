@@ -17,19 +17,24 @@ To use it, first register a new handler service:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/services.yaml
         services:
             # ...
 
             Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
-                public:    false
                 arguments:
                     - 'mysql:dbname=mydatabase, host=myhost'
                     - { db_username: myuser, db_password: mypassword }
 
+                    # If you're using Doctrine & want to re-use that connection, then:
+                    # comment-out the above 2 lines and uncomment the line below
+                    # - !service { class: PDO, factory: 'database_connection:getWrappedConnection' }
+                    # If you get transaction issues (e.g. after login) uncomment the line below
+                    # - { lock_mode: 1 }
+
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -51,10 +56,10 @@ To use it, first register a new handler service:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/services.php
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-        $storageDefinition = $container->register(PdoSessionHandler::class)
+        $storageDefinition = $container->autowire(PdoSessionHandler::class)
             ->setArguments(array(
                 'mysql:dbname=mydatabase, host=myhost',
                 array('db_username' => 'myuser', 'db_password' => 'mypassword'),
@@ -73,7 +78,7 @@ Next, tell Symfony to use your service as the session handler:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/packages/framework.yaml
         framework:
             session:
                 # ...
@@ -81,7 +86,7 @@ Next, tell Symfony to use your service as the session handler:
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/packages/framework.xml -->
         <framework:config>
             <!-- ... -->
             <framework:session handler-id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" cookie-lifetime="3600" auto-start="true"/>
@@ -89,7 +94,7 @@ Next, tell Symfony to use your service as the session handler:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/packages/framework.php
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
         // ...
@@ -112,19 +117,18 @@ a second array argument to ``PdoSessionHandler``:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # config/services.yaml
         services:
             # ...
 
             Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
-                public:    false
                 arguments:
                     - 'mysql:dbname=mydatabase, host=myhost'
                     - { db_table: 'sessions', db_username: 'myuser', db_password: 'mypassword' }
 
     .. code-block:: xml
 
-        <!-- app/config/config.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -145,12 +149,12 @@ a second array argument to ``PdoSessionHandler``:
 
     .. code-block:: php
 
-        // app/config/config.php
+        // config/services.php
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
         // ...
 
-        $container->register(PdoSessionHandler::class)
+        $container->autowire(PdoSessionHandler::class)
             ->setArguments(array(
                 'mysql:dbname=mydatabase, host=myhost',
                 array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword')
@@ -174,59 +178,6 @@ These are parameters that you can configure:
 ``db_lifetime_col`` (default ``sess_lifetime``):
     The name of the lifetime column in your session table (INTEGER).
 
-Sharing your Database Connection Information
---------------------------------------------
-
-With the given configuration, the database connection settings are defined for
-the session storage connection only. This is OK when you use a separate
-database for the session data.
-
-But if you'd like to store the session data in the same database as the rest
-of your project's data, you can use the connection settings from the
-``parameters.yml`` file by referencing the database-related parameters defined there:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        services:
-            # ...
-
-            Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
-                public:    false
-                arguments:
-                    - 'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%'
-                    - { db_username: '%database_user%', db_password: '%database_password%' }
-
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
-                    <argument>mysql:host=%database_host%;port=%database_port%;dbname=%database_name%</argument>
-                    <argument type="collection">
-                        <argument key="db_username">%database_user%</argument>
-                        <argument key="db_password">%database_password%</argument>
-                    </argument>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // ...
-        $container->register(PdoSessionHandler::class)
-            ->setArguments(array(
-                'mysql:host=%database_host%;port=%database_port%;dbname=%database_name%',
-                array('db_username' => '%database_user%', 'db_password' => '%database_password%')
-            ))
-        ;
-
 .. _example-sql-statements:
 
 Preparing the Database to Store Sessions
@@ -245,6 +196,19 @@ to set up this table for you according to the database engine used::
 
 If you prefer to set up the table yourself, these are some examples of the SQL
 statements you may use according to your specific database engine.
+
+A great way to run this on production is to generate an empty migration, and then
+add this SQL inside:
+
+.. code-block:: terminal
+
+    $ php bin/console doctrine:migrations:generate
+
+Find the correct SQL below and put it inside that file. Then execute it with:
+
+.. code-block:: terminal
+
+    $ php bin/console doctrine:migrations:migrate
 
 MySQL
 ~~~~~

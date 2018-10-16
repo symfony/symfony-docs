@@ -14,6 +14,16 @@ a web developer. Symfony integrates a Form component that makes dealing with
 forms easy. In this article, you'll build a complex form from the ground up,
 learning the most important features of the form library along the way.
 
+Installation
+------------
+
+In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
+install the form feature before using it:
+
+.. code-block:: terminal
+
+    $ composer require symfony/form
+
 .. note::
 
     The Symfony Form component is a standalone library that can be used outside
@@ -31,8 +41,8 @@ display "tasks". Because your users will need to edit and create tasks, you're
 going to need to build a form. But before you begin, first focus on the generic
 ``Task`` class that represents and stores the data for a single task::
 
-    // src/AppBundle/Entity/Task.php
-    namespace AppBundle\Entity;
+    // src/Entity/Task.php
+    namespace App\Entity;
 
     class Task
     {
@@ -78,19 +88,19 @@ render the actual HTML form. In Symfony, this is done by building a form
 object and then rendering it in a template. For now, this can all be done
 from inside a controller::
 
-    // src/AppBundle/Controller/DefaultController.php
-    namespace AppBundle\Controller;
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
 
-    use AppBundle\Entity\Task;
-    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+    use App\Entity\Task;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\Extension\Core\Type\DateType;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-    class DefaultController extends Controller
+    class DefaultController extends AbstractController
     {
-        public function newAction(Request $request)
+        public function new(Request $request)
         {
             // creates a task and gives it some dummy data for this example
             $task = new Task();
@@ -146,7 +156,7 @@ helper functions:
 
 .. code-block:: html+twig
 
-    {# app/Resources/views/default/new.html.twig #}
+    {# templates/default/new.html.twig #}
     {{ form_start(form) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
@@ -174,7 +184,7 @@ That's it! Just three lines are needed to render the complete form:
     Renders the end tag of the form and any fields that have not
     yet been rendered, in case you rendered each field yourself. This is useful
     for rendering hidden fields and taking advantage of the automatic
-    :doc:`CSRF Protection </form/csrf_protection>`.
+    :doc:`CSRF Protection </security/csrf>`.
 
 .. seealso::
 
@@ -216,7 +226,7 @@ your controller::
     // ...
     use Symfony\Component\HttpFoundation\Request;
 
-    public function newAction(Request $request)
+    public function new(Request $request)
     {
         // just setup a fresh $task object (remove the dummy data)
         $task = new Task();
@@ -303,6 +313,12 @@ valid, but whether or not the ``$task`` object is valid after the form has
 applied the submitted data to it. Calling ``$form->isValid()`` is a shortcut
 that asks the ``$task`` object whether or not it has valid data.
 
+Before using validation, add support for it in your application:
+
+.. code-block:: terminal
+
+    $ composer require symfony/validator
+
 Validation is done by adding a set of rules (called constraints) to a class. To
 see this in action, add validation constraints so that the ``task`` field cannot
 be empty and the ``dueDate`` field cannot be empty and must be a valid \DateTime
@@ -312,8 +328,8 @@ object.
 
     .. code-block:: php-annotations
 
-        // src/AppBundle/Entity/Task.php
-        namespace AppBundle\Entity;
+        // src/Entity/Task.php
+        namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -333,8 +349,8 @@ object.
 
     .. code-block:: yaml
 
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Task:
+        # config/validation.yaml
+        App\Entity\Task:
             properties:
                 task:
                     - NotBlank: ~
@@ -344,14 +360,14 @@ object.
 
     .. code-block:: xml
 
-        <!-- src/AppBundle/Resources/config/validation.xml -->
+        <!-- config/validation.xml -->
         <?xml version="1.0" encoding="UTF-8"?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
                 http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="AppBundle\Entity\Task">
+            <class name="App\Entity\Task">
                 <property name="task">
                     <constraint name="NotBlank" />
                 </property>
@@ -364,7 +380,7 @@ object.
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/Task.php
+        // src/Entity/Task.php
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
@@ -409,12 +425,12 @@ Validation is a very powerful feature of Symfony and has its own
     but are being prevented by your browser from, for example, submitting
     blank fields.
 
-.. code-block:: html+twig
+    .. code-block:: html+twig
 
-    {# app/Resources/views/default/new.html.twig #}
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+        {# templates/default/new.html.twig #}
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
 
 .. index::
    single: Forms; Built-in field types
@@ -504,7 +520,7 @@ the type of your field and set it up for you. In this example, Symfony can
 guess from the validation rules that both the ``task`` field is a normal
 ``TextType`` field and the ``dueDate`` field is a ``DateType`` field::
 
-    public function newAction()
+    public function new()
     {
         $task = new Task();
 
@@ -578,8 +594,8 @@ However, a better practice is to build the form in a separate, standalone PHP
 class, which can then be reused anywhere in your application. Create a new class
 that will house the logic for building the task form::
 
-    // src/AppBundle/Form/TaskType.php
-    namespace AppBundle\Form;
+    // src/Form/TaskType.php
+    namespace App\Form;
 
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -600,10 +616,10 @@ that will house the logic for building the task form::
 This new class contains all the directions needed to create the task form. It can
 be used to quickly build a form object in the controller::
 
-    // src/AppBundle/Controller/DefaultController.php
-    use AppBundle\Form\TaskType;
+    // src/Controller/DefaultController.php
+    use App\Form\TaskType;
 
-    public function newAction()
+    public function new()
     {
         $task = ...;
         $form = $this->createForm(TaskType::class, $task);
@@ -620,15 +636,15 @@ the choice is ultimately up to you.
 .. sidebar:: Setting the ``data_class``
 
     Every form needs to know the name of the class that holds the underlying
-    data (e.g. ``AppBundle\Entity\Task``). Usually, this is just guessed
+    data (e.g. ``App\Entity\Task``). Usually, this is just guessed
     based off of the object passed to the second argument to ``createForm()``
     (i.e. ``$task``). Later, when you begin embedding forms, this will no
     longer be sufficient. So, while not always necessary, it's generally a
     good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
-        // src/AppBundle/Form/TaskType.php
-        use AppBundle\Entity\Task;
+        // src/Form/TaskType.php
+        use App\Entity\Task;
         use Symfony\Component\OptionsResolver\OptionsResolver;
 
         // ...
@@ -703,5 +719,4 @@ Learn more
 
 .. _`Symfony Form component`: https://github.com/symfony/form
 .. _`DateTime`: https://php.net/manual/en/class.datetime.php
-.. _`2.8 UPGRADE Log`: https://github.com/symfony/symfony/blob/2.8/UPGRADE-2.8.md#form
-.. _`Symfony Forms screencast series`: https://symfonycasts.com/screencast/symfony3-forms
+.. _`Symfony Forms screencast series`: https://symfonycasts.com/screencast/symfony-forms

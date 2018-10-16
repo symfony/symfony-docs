@@ -80,9 +80,6 @@ There are lots of ways to filter and sort your results. You can also use the
 :method:`Symfony\\Component\\Finder\\Finder::hasResults` method to check if
 there's any file or directory matching the search criteria.
 
-.. versionadded:: 3.4
-    The ``hasResults()`` method was introduced in Symfony 3.4.
-
 Location
 ~~~~~~~~
 
@@ -171,6 +168,16 @@ Sort the result by name or by type (directories first, then files)::
 
     $finder->sortByType();
 
+.. tip::
+
+    By default, the ``sortByName()`` method uses the :phpfunction:`strcmp` PHP
+    function (e.g. ``file1.txt``, ``file10.txt``, ``file2.txt``). Pass ``true``
+    as its argument to use PHP's `natural sort order`_ algorithm instead (e.g.
+    ``file1.txt``, ``file2.txt``, ``file10.txt``).
+
+    .. versionadded:: 4.2
+        The option to use the natural sort order was introduced in Symfony 4.2.
+
 Sort the files and directories by the last accessed, changed or modified time::
 
     $finder->sortByAccessedTime();
@@ -179,16 +186,16 @@ Sort the files and directories by the last accessed, changed or modified time::
 
     $finder->sortByModifiedTime();
 
-.. note::
-
-    Notice that the ``sort*`` methods need to get all matching elements to do
-    their jobs. For large iterators, it is slow.
-
 You can also define your own sorting algorithm with ``sort()`` method::
 
     $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
         return strcmp($a->getRealPath(), $b->getRealPath());
     });
+
+.. note::
+
+    Notice that the ``sort*`` methods need to get all matching elements to do
+    their jobs. For large iterators, it is slow.
 
 File Name
 ~~~~~~~~~
@@ -198,13 +205,32 @@ Restrict files by name with the
 
     $finder->files()->name('*.php');
 
-The ``name()`` method accepts globs, strings, or regexes::
+The ``name()`` method accepts globs, strings, regexes or an array of globs,
+strings or regexes::
 
     $finder->files()->name('/\.php$/');
+
+Multiple filenames can be defined by chaining calls or passing an array::
+
+    $finder->files()->name('*.php')->name('*.twig');
+
+    // same as above
+    $finder->files()->name(array('*.php', '*.twig'));
 
 The ``notName()`` method excludes files matching a pattern::
 
     $finder->files()->notName('*.rb');
+
+Multiple filenames can be excluded by chaining calls or passing an array::
+
+    $finder->files()->notName('*.rb')->notName('*.py');
+
+    // same as above
+    $finder->files()->notName(array('*.rb', '*.py'));
+
+.. versionadded:: 4.2
+    Support for passing arrays to ``name()`` and ``notName()`` was introduced
+    in Symfony 4.2
 
 File Contents
 ~~~~~~~~~~~~~
@@ -235,10 +261,21 @@ Restrict files and directories by path with the
 
 On all platforms slash (i.e. ``/``) should be used as the directory separator.
 
-The ``path()`` method accepts a string or a regular expression::
+The ``path()`` method accepts a string, a regular expression or an array of
+strings or regulars expressions::
 
     $finder->path('foo/bar');
     $finder->path('/^foo\/bar/');
+
+Multiple paths can be defined by chaining calls or passing an array::
+
+    $finder->path('data')->path('foo/bar');
+
+    // same as above
+    $finder->path(array('data', 'foo/bar'));
+
+.. versionadded:: 4.2
+    Support for passing arrays to ``path()`` was introduced in Symfony 4.2
 
 Internally, strings are converted into regular expressions by escaping slashes
 and adding delimiters:
@@ -252,6 +289,17 @@ The :method:`Symfony\\Component\\Finder\\Finder::notPath` method excludes files 
 
     $finder->notPath('other/dir');
 
+Multiple paths can be excluded by chaining calls or passing an array::
+
+    $finder->notPath('first/dir')->notPath('other/dir');
+
+    // same as above
+    $finder->notPath(array('first/dir', 'other/dir'));
+
+.. versionadded:: 4.2
+    Support for passing arrays to ``notPath()`` was introduced in Symfony
+    4.2
+
 File Size
 ~~~~~~~~~
 
@@ -260,9 +308,15 @@ Restrict files by size with the
 
     $finder->files()->size('< 1.5K');
 
-Restrict by a size range by chaining calls::
+Restrict by a size range by chaining calls or passing an array::
 
     $finder->files()->size('>= 1K')->size('<= 2K');
+
+    // same as above
+    $finder->files()->size(array('>= 1K', '<= 2K'));
+
+.. versionadded:: 4.2
+    Support for passing arrays to ``size()`` was introduced in Symfony 4.2
 
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
 ``==``, ``!=``.
@@ -279,6 +333,16 @@ Restrict files by last modified dates with the
 
     $finder->date('since yesterday');
 
+Restrict by a date range by chaining calls or passing an array::
+
+    $finder->date('>= 2018-01-01')->size('<= 2018-12-31');
+
+    // same as above
+    $finder->date(array('>= 2018-01-01', '<= 2018-12-31'));
+
+.. versionadded:: 4.2
+    Support for passing arrays to ``date()`` was introduced in Symfony 4.2
+
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
 ``==``. You can also use ``since`` or ``after`` as an alias for ``>``, and
 ``until`` or ``before`` as an alias for ``<``.
@@ -293,6 +357,16 @@ traversing with :method:`Symfony\\Component\\Finder\\Finder::depth`::
 
     $finder->depth('== 0');
     $finder->depth('< 3');
+
+Restrict by a depth range by chaining calls or passing an array::
+
+    $finder->depth('> 2')->depth('< 5');
+
+    // same as above
+    $finder->depth(array('> 2', '< 5'));
+
+.. versionadded:: 4.2
+    Support for passing arrays to ``depth()`` was introduced in Symfony 4.2
 
 Custom Filtering
 ~~~~~~~~~~~~~~~~
@@ -331,8 +405,9 @@ The contents of returned files can be read with
         // ...
     }
 
-.. _strtotime:    https://php.net/manual/en/datetime.formats.php
-.. _protocol:     https://php.net/manual/en/wrappers.php
-.. _Streams:      https://php.net/streams
-.. _IEC standard: https://physics.nist.gov/cuu/Units/binary.html
-.. _Packagist:    https://packagist.org/packages/symfony/finder
+.. _strtotime:          https://php.net/manual/en/datetime.formats.php
+.. _protocol:           https://php.net/manual/en/wrappers.php
+.. _Streams:            https://php.net/streams
+.. _IEC standard:       https://physics.nist.gov/cuu/Units/binary.html
+.. _Packagist:          https://packagist.org/packages/symfony/finder
+.. _`natural sort order`: https://en.wikipedia.org/wiki/Natural_sort_order

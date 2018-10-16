@@ -30,7 +30,7 @@ A deployment may also include other tasks, such as:
   repository;
 * Creating a temporary staging area to build your updated setup "offline";
 * Running any tests available to ensure code and/or server stability;
-* Removal of any unnecessary files from the ``web/`` directory to keep your
+* Removal of any unnecessary files from the ``public/`` directory to keep your
   production environment clean;
 * Clearing of external cache systems (like `Memcached`_ or `Redis`_).
 
@@ -63,14 +63,13 @@ manually taking other steps (see `Common Post-Deployment Tasks`_).
 Using Platforms as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The specific deployment steps vary greatly from one service provider to another,
-so check out the dedicated article for the service of your choose:
+Using a Platform as a Service (PaaS) can be a great way to deploy your Symfony app
+quickly and easily. There are many PaaS - below are a few that work well with Symfony:
 
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    deployment/*
+* `Heroku`_
+* `Platform.sh`_
+* `Azure`_
+* `fortrabbit`_
 
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -117,31 +116,25 @@ you'll need to do:
 A) Check Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
-Check if your server meets the requirements by running:
-
-.. code-block:: terminal
-
-    $ php bin/symfony_requirements
+Use the :doc:`Symfony Requirements Checker </reference/requirements>` to check
+if your server meets the technical requirements to run Symfony applications.
 
 .. _b-configure-your-app-config-parameters-yml-file:
 
-B) Configure your Parameters File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+B) Configure your Environment Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Most Symfony applications define configuration parameters in a file called
-``app/config/parameters.yml``. This file should *not* be deployed, because
-Symfony generates it automatically using the ``app/config/parameters.yml.dist``
-file as a template (that's why ``parameters.yml.dist`` must be committed and
-deployed).
+Most Symfony applications read their configuration from environment variables.
+While developing locally, you'll usually store these in a ``.env`` file. But on
+production, instead of creating this file, you should set *real* environment variables.
 
-If your application uses environment variables instead of these parameters, you
-must define those env vars in your production server using the tools provided by
-your hosting service.
+How you set environment variables, depends on your setup: they can be set at the
+command line, in your Nginx configuration, or via other methods provided by your
+hosting service.
 
-At the very least you need to define the ``SYMFONY_ENV=prod`` (or
-``APP_ENV=prod`` if you're using :doc:`Symfony Flex </setup/flex>`) to run the
-application in ``prod`` mode, but depending on your application you may need to
-define other env vars too.
+At the very least you need to define the ``APP_ENV=prod`` environment variable
+to run the application in ``prod`` mode, but depending on your application you
+may need to define other env vars too.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -164,7 +157,7 @@ as you normally do:
 .. caution::
 
     If you get a "class not found" error during this step, you may need to
-    run ``export SYMFONY_ENV=prod`` (or ``export APP_ENV=prod`` if you're
+    run ``export APP_ENV=prod`` (or ``export SYMFONY_ENV=prod`` if you're not
     using :doc:`Symfony Flex </setup/flex>`) before running this command so
     that the ``post-install-cmd`` scripts run in the ``prod`` environment.
 
@@ -175,7 +168,7 @@ Make sure you clear and warm-up your Symfony cache:
 
 .. code-block:: terminal
 
-    $ php bin/console cache:clear --env=prod --no-debug
+    $ APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
 
 E) Other Things!
 ~~~~~~~~~~~~~~~~
@@ -223,9 +216,9 @@ If your deployment method doesn't use Composer, you may have removed the
 The solution is to override the ``getProjectDir()`` method in the application
 kernel and return your project's root directory::
 
-    // app/AppKernel.php
+    // src/Kernel.php
     // ...
-    class AppKernel extends Kernel
+    class Kernel extends BaseKernel
     {
         // ...
 
@@ -234,6 +227,14 @@ kernel and return your project's root directory::
             return __DIR__.'/..';
         }
     }
+
+Learn More
+----------
+
+.. toctree::
+    :maxdepth: 1
+
+    deployment/proxies
 
 .. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: http://capistranorb.com/
@@ -247,4 +248,8 @@ kernel and return your project's root directory::
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: http://deployer.org/
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
+.. _`Heroku`: https://devcenter.heroku.com/articles/getting-started-with-symfony
+.. _`platform.sh`: https://docs.platform.sh/frameworks/symfony.html
+.. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
+.. _`fortrabbit`: https://help.fortrabbit.com/install-symfony
 .. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle

@@ -12,9 +12,9 @@ To do this, first add a file that executes your bootstrap work::
     if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {
         // executes the "php bin/console cache:clear" command
         passthru(sprintf(
-            'php "%s/../bin/console" cache:clear --env=%s --no-warmup',
-            __DIR__,
-            $_ENV['BOOTSTRAP_CLEAR_CACHE_ENV']
+            'APP_ENV=%s php "%s/../bin/console" cache:clear --no-warmup',
+            $_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'],
+            __DIR__
         ));
     }
 

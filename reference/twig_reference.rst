@@ -65,7 +65,7 @@ It's commonly used to :doc:`embed controllers in templates </templating/embeddin
 
     {# if you don't want to expose the controller with a public URL, use
        the controller() function to define the controller to be executed #}
-    {{ render(controller('AppBundle:Default:latestArticles', {num: 5})) }}
+    {{ render(controller('App\\Controller\\DefaultController::latestArticles', {num: 5})) }}
 
 The render strategy can be specified in the ``strategy`` key of the options.
 
@@ -235,6 +235,18 @@ form_label
 Renders the label for the given field, more information in
 :ref:`the Twig Form reference <reference-forms-twig-label>`.
 
+form_help
+~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ form_help(view) }}
+
+``view``
+    **type**: ``FormView``
+
+Renders the help text for the given field.
+
 form_row
 ~~~~~~~~
 
@@ -299,11 +311,6 @@ of them, depending on the value of this option:
 
 Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.
-
-.. note::
-
-    You can also pass in the field to use ACE for a specific field. Read
-    more about this in :ref:`security-acl-field_scope`.
 
 logout_path
 ~~~~~~~~~~~
@@ -633,6 +640,30 @@ file_link
 
 Generates a link to the provided file and line number using
 a preconfigured scheme.
+
+file_relative
+~~~~~~~~~~~~~
+
+.. versionadded:: 4.2
+    The ``file_relative`` filter was introduced in Symfony 4.2.
+
+.. code-block:: twig
+
+    {{ file|file_relative }}
+
+``file``
+    **type**: ``string``
+
+It transforms the given absolute file path into a new file path relative to
+project's root directory:
+
+.. code-block:: twig
+
+    {{ '/var/www/blog/templates/admin/index.html.twig'|file_relative }}
+    {# if project root dir is '/var/www/blog/', it returns 'templates/admin/index.html.twig' #}
+
+If the given file path is out of the project directory, a ``null`` value
+will be returned.
 
 .. _reference-twig-tags:
 

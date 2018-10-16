@@ -17,8 +17,8 @@ Create and a :ref:`new event subscriber <events-subscriber>`. Typically, ``_loca
 is used as a routing parameter to signify the locale, though you can determine the
 correct locale however you want::
 
-    // src/AppBundle/EventSubscriber/LocaleSubscriber.php
-    namespace AppBundle\EventSubscriber;
+    // src/EventSubscriber/LocaleSubscriber.php
+    namespace App\EventSubscriber;
 
     use Symfony\Component\HttpKernel\Event\GetResponseEvent;
     use Symfony\Component\HttpKernel\KernelEvents;
@@ -58,7 +58,7 @@ correct locale however you want::
         }
     }
 
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 you're done! Symfony will automatically know about the event subscriber and call
 the ``onKernelRequest`` method on each request.
 
@@ -73,16 +73,18 @@ via some "Change Locale" route & controller), or create a route with a the :ref:
 
         .. code-block:: yaml
 
+            # config/services.yaml
             services:
                 # ...
 
-                AppBundle\EventSubscriber\LocaleSubscriber:
+                App\EventSubscriber\LocaleSubscriber:
                     arguments: ['%kernel.default_locale%']
-                    # redundant if you're using autoconfigure
-                    tags: [kernel.event_subscriber]
+                    # uncomment the next line if you are not using autoconfigure
+                    # tags: [kernel.event_subscriber]
 
         .. code-block:: xml
 
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -90,21 +92,24 @@ via some "Change Locale" route & controller), or create a route with a the :ref:
                     http://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <services>
-                    <service id="AppBundle\EventSubscriber\LocaleSubscriber">
+                    <service id="App\EventSubscriber\LocaleSubscriber">
                         <argument>%kernel.default_locale%</argument>
 
-                        <tag name="kernel.event_subscriber" />
+                        <!-- uncomment the next line if you are not using autoconfigure -->
+                        <!-- <tag name="kernel.event_subscriber" /> -->
                     </service>
                 </services>
             </container>
 
         .. code-block:: php
 
-            use AppBundle\EventSubscriber\LocaleSubscriber;
+            // config/services.php
+            use App\EventSubscriber\LocaleSubscriber;
 
             $container->register(LocaleSubscriber::class)
                 ->addArgument('%kernel.default_locale%')
-                ->addTag('kernel.event_subscriber');
+                // uncomment the next line if you are not using autoconfigure
+                // ->addTag('kernel.event_subscriber');
 
 That's it! Now celebrate by changing the user's locale and seeing that it's
 sticky throughout the request.
@@ -115,7 +120,7 @@ method::
     // from a controller...
     use Symfony\Component\HttpFoundation\Request;
 
-    public function indexAction(Request $request)
+    public function index(Request $request)
     {
         $locale = $request->getLocale();
     }
@@ -137,8 +142,8 @@ locale value before they are redirected to their first page.
 To do this, you need an event subscriber on the ``security.interactive_login``
 event::
 
-    // src/AppBundle/EventSubscriber/UserLocaleSubscriber.php
-    namespace AppBundle\EventSubscriber;
+    // src/EventSubscriber/UserLocaleSubscriber.php
+    namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -158,9 +163,6 @@ event::
             $this->session = $session;
         }
 
-        /**
-         * @param InteractiveLoginEvent $event
-         */
         public function onInteractiveLogin(InteractiveLoginEvent $event)
         {
             $user = $event->getAuthenticationToken()->getUser();

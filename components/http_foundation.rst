@@ -242,6 +242,45 @@ the
 method tells you if the request contains a session which was started in one of
 the previous requests.
 
+.. versionadded:: 4.1
+    Using :method:`Symfony\\Component\\HttpFoundation\\Request::getSession()`
+    when no session has been set was deprecated in Symfony 4.1. It will throw
+    an exception in Symfony 5.0 when the session is ``null``. Check for an existing session
+    first by calling :method:`Symfony\\Component\\HttpFoundation\\Request::hasSession()`.
+
+Processing HTTP Headers
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.1
+    The ``HeaderUtils`` class was introduced in Symfony 4.1.
+
+Processing HTTP headers is not a trivial task because of the escaping and white
+space handling of their contents. Symfony provides a
+:class:`Symfony\\Component\\HttpFoundation\\HeaderUtils` class that abstracts
+this complexity and defines some methods for the most common tasks::
+
+    use Symfony\Component\HttpFoundation\HeaderUtils;
+
+    // Splits an HTTP header by one or more separators
+    HeaderUtils::split('da, en-gb;q=0.8', ',;');
+    // => array(array('da'), array('en-gb','q=0.8'))
+
+    // Combines an array of arrays into one associative array
+    HeaderUtils::combine(array(array('foo', 'abc'), array('bar')));
+    // => array('foo' => 'abc', 'bar' => true)
+
+    // Joins an associative array into a string for use in an HTTP header
+    HeaderUtils::toString(array('foo' => 'abc', 'bar' => true, 'baz' => 'a b c'), ',');
+    // => 'foo=abc, bar, baz="a b c"'
+
+    // Encodes a string as a quoted string, if necessary
+    HeaderUtils::quote('foo "bar"');
+    // => '"foo \"bar\""'
+
+    // Decodes a quoted string
+    HeaderUtils::unquote('"foo \"bar\""');
+    // => 'foo "bar"'
+
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -250,6 +289,21 @@ by using the following methods:
 
 :method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`
     Returns the list of accepted content types ordered by descending quality.
+
+:method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableFormats`
+    Returns the list of accepted client formats associated with the request.
+
+Note that
+:method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableFormats`
+will use the data from
+:method:`Symfony\\Component\\HttpFoundation\\Request::getAcceptableContentTypes`
+and return the client acceptable formats::
+
+    $request->getAcceptableContentTypes();
+    // returns ['text/html', 'application/xhtml+xml', 'application/xml', '*/*']
+
+    $request->getAcceptableFormats();
+    // returns ['html', 'xml']
 
 :method:`Symfony\\Component\\HttpFoundation\\Request::getLanguages`
     Returns the list of accepted languages ordered by descending quality.
@@ -277,6 +331,19 @@ If you need to get full access to parsed data from ``Accept``, ``Accept-Language
     $acceptHeaders = AcceptHeader::fromString($request->headers->get('Accept'))
         ->all();
 
+The default values that can be optionally included in the ``Accept-*`` headers
+are also supported::
+
+    $acceptHeader = 'text/plain;q=0.5, text/html, text/*;q=0.8, */*;q=0.3';
+    $accept = AcceptHeader::fromString($acceptHeader);
+
+    $quality = $accept->get('text/xml')->getQuality(); // $quality = 0.8
+    $quality = $accept->get('application/xml')->getQuality(); // $quality = 0.3
+
+.. versionadded:: 4.1
+    The support of default values in the ``Accept-*`` headers was introduced in
+    Symfony 4.1.
+
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -293,7 +360,7 @@ represents an HTTP message. But when moving from a legacy system, adding
 methods or changing some default behavior might help. In that case, register a
 PHP callable that is able to create an instance of your ``Request`` class::
 
-    use AppBundle\Http\SpecialRequest;
+    use App\Http\SpecialRequest;
     use Symfony\Component\HttpFoundation\Request;
 
     Request::setFactory(function (
@@ -390,9 +457,6 @@ Note you can create a
 :class:`Symfony\\Component\\HttpFoundation\\Cookie` object from a raw header
 value using :method:`Symfony\\Component\\HttpFoundation\\Cookie::fromString`.
 
-.. versionadded:: 3.3
-    The ``Cookie::fromString()`` method was introduced in Symfony 3.3.
-
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -410,6 +474,13 @@ of methods to manipulate the HTTP headers related to the cache:
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`;
+
+.. note::
+
+    The methods :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`,
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified` and
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setDate` accept any
+    object that implements ``\DateTimeInterface``, including immutable date objects.
 
 The :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method
 can be used to set the most commonly used cache information in one method
@@ -538,9 +609,6 @@ It is possible to delete the file after the request is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
 
-.. versionadded:: 3.3
-    The ``Stream`` class was introduced in Symfony 3.3.
-
 If the size of the served file is unknown (e.g. because it's being generated on the fly,
 or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``
 instance to ``BinaryFileResponse``. This will disable ``Range`` and ``Content-Length``
@@ -591,10 +659,6 @@ class, which can make this even easier::
 
     // if the data to send is already encoded in JSON
     $response = JsonResponse::fromJsonString('{ "data": 123 }');
-
-.. versionadded:: 3.2
-    The :method:`Symfony\\Component\\HttpFoundation\\JsonResponse::fromJsonString`
-    method was added in Symfony 3.2.
 
 The ``JsonResponse`` class sets the ``Content-Type`` header to
 ``application/json`` and encodes your data to JSON when needed.

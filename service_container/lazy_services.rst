@@ -26,21 +26,12 @@ until you interact with the proxy in some way.
 Installation
 ------------
 
-In order to use the lazy service instantiation, you will first need to install
-the ``ocramius/proxy-manager`` package:
+In order to use the lazy service instantiation, you will need to install the
+``symfony/proxy-manager-bridge`` package:
 
 .. code-block:: terminal
 
-    $ composer require ocramius/proxy-manager
-
-.. note::
-
-    If you're not using the full-stack framework, you also have to install the
-    `ProxyManager bridge`_
-
-    .. code-block:: terminal
-
-        $ composer require symfony/proxy-manager-bridge
+    $ composer require symfony/proxy-manager-bridge
 
 Configuration
 -------------
@@ -51,14 +42,14 @@ You can mark the service as ``lazy`` by manipulating its definition:
 
     .. code-block:: yaml
 
-        # app/config/services.yml
+        # config/services.yaml
         services:
-            AppBundle\Twig\AppExtension:
+            App\Twig\AppExtension:
                 lazy:  true
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -66,14 +57,14 @@ You can mark the service as ``lazy`` by manipulating its definition:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="AppBundle\Twig\AppExtension" lazy="true" />
+                <service id="App\Twig\AppExtension" lazy="true" />
             </services>
         </container>
 
     .. code-block:: php
 
-        // app/config/services.php
-        use AppBundle\Twig\AppExtension;
+        // config/services.php
+        use App\Twig\AppExtension;
 
         $container->register(AppExtension::class)
             ->setLazy(true);

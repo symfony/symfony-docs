@@ -11,8 +11,8 @@ executed through scheduled tasks, etc.
 In those cases, you can define the command as **hidden** by setting the
 ``setHidden()`` method to ``true`` in the command configuration::
 
-    // src/AppBundle/Command/LegacyCommand.php
-    namespace AppBundle\Command;
+    // src/Command/LegacyCommand.php
+    namespace App\Command;
 
     use Symfony\Component\Console\Command\Command;
 

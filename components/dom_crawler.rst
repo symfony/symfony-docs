@@ -182,6 +182,13 @@ Get all the child or parent nodes::
     $crawler->filter('body')->children();
     $crawler->filter('body > p')->parents();
 
+Get all the direct child nodes matching a CSS selector::
+
+    $crawler->filter('body')->children('p.lorem');
+
+.. versionadded:: 4.2
+    The optional selector in ``children($selector)`` method was introduced in Symfony 4.2.
+
 .. note::
 
     All the traversal methods return a new :class:`Symfony\\Component\\DomCrawler\\Crawler`
@@ -253,11 +260,6 @@ The crawler supports multiple ways of adding the content::
     guesses the best charset according to the given contents and defaults to
     ``ISO-8859-1`` in case no charset can be guessed.
 
-    .. versionadded:: 3.4
-        The charset guessing mechanism of the ``addContent()`` method was
-        introduced in Symfony 3.4. In previous Symfony versions, the ``ISO-8859-1``
-        charset was always used.
-
 As the Crawler's implementation is based on the DOM extension, it is also able
 to interact with native :phpclass:`DOMDocument`, :phpclass:`DOMNodeList`
 and :phpclass:`DOMNode` objects::
@@ -298,10 +300,6 @@ and :phpclass:`DOMNode` objects::
 
 Expression Evaluation
 ~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 3.2
-    The :method:`Symfony\\Component\\DomCrawler\\Crawler::evaluate` method was
-    introduced in Symfony 3.2.
 
 The ``evaluate()`` method evaluates the given XPath expression. The return
 value depends on the XPath expression. If the expression evaluates to a scalar
@@ -442,11 +440,12 @@ than just return the ``action`` attribute of the form. If the form method
 is GET, then it mimics the browser's behavior and returns the ``action``
 attribute followed by a query string of all of the form's values.
 
-.. versionadded:: 3.3
-    Starting from Symfony 3.3, the optional ``formaction`` and ``formmethod``
-    button attributes are supported. The ``getUri()`` and ``getMethod()``
-    methods take into account those attributes to always return the right action
-    and method depending on the button used to get the form.
+.. note::
+
+    The optional ``formaction`` and ``formmethod`` button attributes are
+    supported. The ``getUri()`` and ``getMethod()`` methods take into account
+    those attributes to always return the right action and method depending on
+    the button used to get the form.
 
 You can virtually set and get values on the form::
 

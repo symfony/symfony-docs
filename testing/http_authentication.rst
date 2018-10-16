@@ -27,7 +27,7 @@ firewall, but only in the configuration file used by tests:
 
     .. code-block:: yaml
 
-        # app/config/config_test.yml
+        # config/packages/test/security.yaml
         security:
             firewalls:
                 # replace 'main' by the name of your own firewall
@@ -36,7 +36,7 @@ firewall, but only in the configuration file used by tests:
 
     .. code-block:: xml
 
-        <!-- app/config/config_test.xml -->
+        <!-- config/packages/test/security.xml -->
         <security:config>
             <!-- replace 'main' by the name of your own firewall -->
             <security:firewall name="main">
@@ -46,7 +46,7 @@ firewall, but only in the configuration file used by tests:
 
     .. code-block:: php
 
-        // app/config/config_test.php
+        // config/packages/test/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
                 // replace 'main' by the name of your own firewall
@@ -83,8 +83,8 @@ This technique requires some knowledge of the Security component internals,
 but the following example shows a complete example that you can adapt to your
 needs::
 
-    // tests/AppBundle/Controller/DefaultControllerTest.php
-    namespace Tests\AppBundle\Controller;
+    // tests/Controller/DefaultControllerTest.php
+    namespace App\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     use Symfony\Component\BrowserKit\Cookie;

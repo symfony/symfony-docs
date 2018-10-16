@@ -156,8 +156,3 @@ can run it with:
 If you enter a short command that's ambiguous (i.e. there are more than one
 command that match), then no command will be run and some suggestions of
 the possible commands to choose from will be output.
-
-.. versionadded:: 3.4
-    Case-insensitivity of command shortcuts was introduced in Symfony 3.4. In
-    previous Symfony versions, shortcuts had to match the case of the original
-    command name (e.g. ``d:g`` was not the same shortcut as ``D:G``).

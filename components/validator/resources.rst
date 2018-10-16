@@ -71,7 +71,7 @@ configure the locations of these files::
     use Symfony\Component\Validator\Validation;
 
     $validator = Validation::createValidatorBuilder()
-        ->addYamlMapping('config/validation.yml')
+        ->addYamlMapping('config/validation.yaml')
         ->getValidator();
 
 .. note::
