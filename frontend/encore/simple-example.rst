@@ -98,7 +98,7 @@ your layout. In Symfony, use the ``asset()`` helper:
 Requiring JavaScript Modules
 ----------------------------
 
-Webpack is a module bundler... which means that you can ``require`` other JavaScript
+Webpack is a module bundler, which means that you can ``require`` other JavaScript
 files. First, create a file that exports a function:
 
 .. code-block:: javascript
@@ -139,9 +139,9 @@ The import and export Statements
 
 Instead of using ``require`` and ``module.exports`` like shown above, JavaScript
 has an alternate syntax, which is a more accepted standard. Choose whichever you
-want: they function identically:
+want, they function identically.
 
-To export values, use ``exports``:
+To export values using the alternate syntax, use ``exports``:
 
 .. code-block:: diff
 
@@ -168,7 +168,7 @@ Page-Specific JavaScript or CSS (Multiple Entries)
 --------------------------------------------------
 
 So far, you only have one final JavaScript file: ``app.js``. For simple apps or
-SPA's (Single Page Applications), that might be fine! However, as your app grows,
+SPAs (Single Page Applications), that might be fine! However, as your app grows,
 you may want to have page-specific JavaScript or CSS (e.g. homepage, blog, store,
 etc.). To handle this, add a new "entry" for each page that needs custom JavaScript
 or CSS:
