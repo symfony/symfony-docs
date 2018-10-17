@@ -193,11 +193,11 @@ hold the kernel. Now it looks like this::
         }
     }
 
-Before you continue, run this command to add support for the new dependencies:
+Before continuing, run this command to add support for the new dependencies:
 
 .. code-block:: terminal
 
-    composer require symfony/yaml symfony/twig-bundle symfony/web-profiler-bundle doctrine/annotations
+    $ composer require symfony/yaml symfony/twig-bundle symfony/web-profiler-bundle doctrine/annotations
 
 Unlike the previous kernel, this loads an external ``config/framework.yaml`` file,
 because the configuration started to get bigger:
