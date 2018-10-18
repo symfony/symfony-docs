@@ -150,21 +150,14 @@ this:
 .. code-block:: html+twig
 
     {# templates/security/login.html.twig #}
-    {% if error %}
-        <div>{{ error.message }}</div>
-    {% endif %}
 
-    <form action="{{ path('login') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password" />
+    <form method="post">
+        {# ... your form fields #}
 
         <input type="checkbox" id="remember_me" name="_remember_me" checked />
         <label for="remember_me">Keep me logged in</label>
 
-        <input type="submit" name="login" />
+        {# ... #}
     </form>
 
 The user will then automatically be logged in on subsequent visits while
@@ -180,90 +173,26 @@ visiting the site.
 
 In some cases, however, you may want to force the user to actually re-authenticate
 before accessing certain resources. For example, you might allow "remember me"
-users to see basic account information, but then require them to actually
-re-authenticate before modifying that information.
+users to change their password. You can do this by leveraing a few special "roles"::
 
-The Security component provides an easy way to do this. In addition to roles
-explicitly assigned to them, users are automatically given one of the following
-roles depending on how they are authenticated:
-
-``IS_AUTHENTICATED_ANONYMOUSLY``
-    Automatically assigned to a user who is in a firewall protected part of the
-    site but who has not actually logged in. This is only possible if anonymous
-    access has been allowed.
-
-``IS_AUTHENTICATED_REMEMBERED``
-    Automatically assigned to a user who was authenticated via a remember me
-    cookie.
-
-``IS_AUTHENTICATED_FULLY``
-    Automatically assigned to a user that has provided their login details
-    during the current session.
-
-You can use these to control access beyond the explicitly assigned roles.
-
-.. note::
-
-    If you have the ``IS_AUTHENTICATED_REMEMBERED`` role, then you also
-    have the ``IS_AUTHENTICATED_ANONYMOUSLY`` role. If you have the ``IS_AUTHENTICATED_FULLY``
-    role, then you also have the other two roles. In other words, these roles
-    represent three levels of increasing "strength" of authentication.
-
-You can use these additional roles for finer grained control over access to
-parts of a site. For example, you may want your user to be able to view their
-account at ``/account`` when authenticated by cookie but to have to provide
-their login details to be able to edit the account details. You can do this
-by securing specific controller actions using these roles. The edit action
-in the controller could be secured using the service context.
-
-In the following example, the action is only allowed if the user has the
-``IS_AUTHENTICATED_FULLY`` role::
-
+    // src/Controller/AccountController.php
     // ...
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
-    // ...
-    public function edit()
+    
+    public function accountInfo()
     {
+        // allow any authenticated user - we don't care if they just
+        // logged in, or are logged in via a remember me cookie
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+
+        // ...
+    }
+
+    public function resetPassword()
+    {
+        // require the user to log in during *this* session
+        // if they were only logged in via a remember me cookie, they
+        // will be redirected to the login page
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // ...
     }
-
-If you have installed `SensioFrameworkExtraBundle`_ in your application, you can also secure
-your controller using annotations::
-
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
-    /**
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     */
-    public function edit($name)
-    {
-        // ...
-    }
-
-.. tip::
-
-    If you also had an access control in your security configuration that
-    required the user to have a ``ROLE_USER`` role in order to access any
-    of the account area, then you'd have the following situation:
-
-    * If a non-authenticated (or anonymously authenticated user) tries to
-      access the account area, the user will be asked to authenticate.
-
-    * Once the user has entered their username and password, assuming the
-      user receives the ``ROLE_USER`` role per your configuration, the user
-      will have the ``IS_AUTHENTICATED_FULLY`` role and be able to access
-      any page in the account section, including the ``edit()`` controller.
-
-    * If the user's session ends, when the user returns to the site, they will
-      be able to access every account page - except for the edit page - without
-      being forced to re-authenticate. However, when they try to access the
-      ``edit()`` controller, they will be forced to re-authenticate, since
-      they are not, yet, fully authenticated.
-
-For more information on securing services or methods in this way,
-see :doc:`/security/securing_services`.
-
-.. _`SensioFrameworkExtraBundle`: http://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html

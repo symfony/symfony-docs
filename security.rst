@@ -10,28 +10,22 @@ Security
     Do you prefer video tutorials? Check out the `Symfony Security screencast series`_.
 
 Symfony's security system is incredibly powerful, but it can also be confusing
-to set up. In this article you'll learn how to set up your application's security
-step-by-step, from configuring your firewall and how you load users, to denying
-access and fetching the User object. Depending on what you need, sometimes
-the initial setup can be tough. But once it's done, Symfony's security system
-is both flexible and (hopefully) fun to work with.
+to set up. Don't worry! In this article, you'll learn how to set up your app's
+security system step-by-step:
 
-Since there's a lot to talk about, this article is organized into a few big
-sections:
+#. :ref:`Installing security support <security-installation>`;
 
-#. Installing security support;
+#. :ref:`Create your User Class <create-user-class>`;
 
-#. Initial ``security.yaml`` setup (*authentication*);
+#. :ref:`*Authentication* & Firewalls <security-yaml-firewalls>`;
 
-#. Denying access to your app (*authorization*);
+#. :ref:`Denying access to your app (*authorization*) <security-authorization>`;
 
-#. Fetching the current User object.
+#. :ref:`Fetching the current User object <retrieving-the-user-object>`.
 
-These are followed by a number of small (but still captivating) sections,
-like :ref:`logging out <security-logging-out>` and
-:doc:`encoding user passwords </security/password_encoding>`.
+A few other important topics are discussed after.
 
-.. _installation:
+.. _security-installation:
 
 1) Installation
 ---------------
@@ -43,16 +37,81 @@ install the security feature before using it:
 
     $ composer require symfony/security-bundle
 
-.. _security-firewalls:
-.. _firewalls-authentication:
 .. _initial-security-yml-setup-authentication:
 .. _initial-security-yaml-setup-authentication:
+.. _create-user-class:
 
-2) Initial security.yaml Setup (Authentication)
------------------------------------------------
+2a) Create your User Class
+--------------------------
 
-The security system is configured in ``config/packages/security.yaml``. The
-default configuration looks like this:
+No matter *how* you will authenticate (e.g. login form or API tokens) or *where*
+your user data will be stored (database, single sign-on), the next step is always the same:
+create a "User" class. The easiest way is to use the `MakerBundle`_.
+
+Let's assume that you want to store your user data in the database with Doctrine:
+
+.. code-block:: terminal
+
+    $ php bin/console make:user
+
+    The name of the security user class (e.g. User) [User]:
+    > User
+
+    Do you want to store user data in the database (via Doctrine)? (yes/no) [yes]:
+    > yes
+
+    Enter a property name that will be the unique "display" name for the user (e.g.
+    email, username, uuid [email]
+    > email
+
+    Does this app need to hash/check user passwords? (yes/no) [yes]:
+    > yes
+
+    created: src/Entity/User.php
+    created: src/Repository/UserRepository.php
+    updated: src/Entity/User.php
+    updated: config/packages/security.yaml
+
+That's it! The command asks several questions so that it can generate exactly what
+you need. The most important is the ``User.php`` file itself. The *only* rule about
+your ``User`` class is that it *must* implement :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
+Feel free to add *any* other fields or logic you need. If your ``User`` class is
+an entity (like in this example), you can use the :ref:`make:entity command <doctrine-add-more-fields>`
+to add more fields. Also, make sure to make and run a migration for the new entity:
+
+.. code-block:: terminal
+
+    $ php bin/console make:migration
+    $ php bin/console doctrine:migrations:migrate
+
+.. _security-user-providers:
+.. _where-do-users-come-from-user-providers:
+
+2b) The "User Provider"
+-----------------------
+
+In addition to your ``User`` class, you also need a "User provider": a class that
+helps with a few things, like reloading the User data from the session and some
+optional features, like :doc:`remember me </security/remember_me>` and
+:doc:`impersonation </security/impersonating_user>`.
+
+Fortunately, the ``make:user`` command already configured one for you in your
+``security.yaml`` file under the ``providers`` key.
+
+If your ``User`` class is an entity, you don't need to do anything else. But if
+your class is *not* an entity, then ``make:user`` will also have generated a
+``UserProvider`` class that you need to finish. Learn more about user providers
+here: :doc:`User Providers </security/user_provider>`.
+
+.. _security-encoding-user-password:
+.. _encoding-the-user-s-password:
+
+2c) Encoding Passwords
+----------------------
+
+Not all apps have "users" that need passwords. *If* your users have passwords,
+you can control how those passwords are encoded in ``security.yaml``. The ``make:user``
+command will pre-configure this for you:
 
 .. configuration-block::
 
@@ -60,8 +119,120 @@ default configuration looks like this:
 
         # config/packages/security.yaml
         security:
-            providers:
-                in_memory: { memory: ~ }
+            # ...
+
+            encoders:
+                # use your user class name here
+                App\Entity\User:
+                    # bcrypt or argon21 are recommended
+                    # argon21 is more secure, but requires PHP 7.2 or the Sodium extension
+                    algorithm: bcrypt
+                    cost: 12
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <encoder class="App\Entity\User"
+                    algorithm="bcrypt"
+                    cost="12" />
+
+                <!-- ... -->
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', array(
+            // ...
+
+            'encoders' => array(
+                'App\Entity\User' => array(
+                    'algorithm' => 'bcrypt',
+                    'cost' => 12,
+                )
+            ),
+            // ...
+        ));
+
+Now that Symfony knows *how* you want to encode the passwords, you can use the
+``UserPasswordEncoderInterface`` service to do this before saving your users to
+the database.
+
+For example, by using :ref:`DoctrineFixturesBundle <doctrine-fixtures>`, you can
+create dummy database users:
+
+.. code-block:: terminal
+
+    $ php bin/console make:fixtures
+    
+    The class name of the fixtures to create (e.g. AppFixtures):
+    > UserFixture
+
+Use this service to encode the passwords:
+
+.. code-block:: diff
+
+    // src/DataFixtures/UserFixture.php
+
+    + use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+    // ...
+
+    class UserFixture extends Fixture
+    {
+    +     private $passwordEncoder;
+
+    +     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    +     {
+    +         $this->passwordEncoder = $passwordEncoder;
+    +     }
+
+        public function load(ObjectManager $manager)
+        {
+            $user = new User();
+            // ...
+
+    +         $user->setPassword($this->passwordEncoder->encodePassword(
+    +             $user,
+    +             'the_new_password'
+    +         ));
+
+            // ...
+        }
+    }
+
+You can manually encode a password by running:
+
+.. code-block:: terminal
+
+    $ php bin/console security:encode-password
+
+.. _security-yaml-firewalls:
+.. _security-firewalls:
+.. _firewalls-authentication:
+
+3a) Authentication & Firewalls
+------------------------------
+
+The security system is configured in ``config/packages/security.yaml``. The *most*
+important section is ``firewalls``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
             firewalls:
                 dev:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -80,10 +251,6 @@ default configuration looks like this:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <config>
-                <provider name="in_memory">
-                    <memory />
-                </provider>
-
                 <firewall name="dev"
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
                     security="false" />
@@ -98,11 +265,6 @@ default configuration looks like this:
 
         // config/packages/security.php
         $container->loadFromExtension('security', array(
-            'providers' => array(
-                'in_memory' => array(
-                    'memory' => null,
-                ),
-            ),
             'firewalls' => array(
                 'dev' => array(
                     'pattern'   => '^/(_(profiler|wdt)|css|images|js)/',
@@ -114,23 +276,23 @@ default configuration looks like this:
             ),
         ));
 
-The ``firewalls`` key is the *heart* of your security configuration. The
-``dev`` firewall isn't important, it just makes sure that Symfony's development
-tools - which live under URLs like ``/_profiler`` and ``/_wdt`` aren't blocked
-by your security.
+A "firewall" is your authentication system: the configuration below it defines
+*how* your users will be able to authenticate (e.g. login form, API token, etc).
 
-.. tip::
+Only one firewall is active on each request: Symfony uses the ``pattern`` key
+to find the first match (you can also :doc:`match by host or other things </security/firewall_restriction>`).
+The ``dev`` firewall is really a fake firewall: it just makes sure that you don't
+accidentally block Symfony's dev tools - which live under URLs like ``/_profiler``
+and ``/_wdt``.
 
-    You can also match a request against other details of the request (e.g. host). For more
-    information and examples read :doc:`/security/firewall_restriction`.
+All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
+it matches *all* URLs). But this does *not* mean that every URL requires authentication.
+Nope, thanks to the ``anonymous`` key, this firewall *is* accessible anonymously.
 
-All other URLs will be handled by the ``main`` firewall (no ``pattern``
-key means it matches *all* URLs). You can think of the firewall like your
-security system, and so it usually makes sense to have just one main firewall.
-But this does *not* mean that every URL requires authentication - the ``anonymous``
-key takes care of this. In fact, if you go to the homepage right now, you'll
-have access and you'll see that you're "authenticated" as ``anon.``. Don't
-be fooled by the "Yes" next to Authenticated, you're just an anonymous user:
+In fact, if you go to the homepage right now, you *will* have access and you'll see
+that you're "authenticated" as ``anon.``. Don't be fooled by the "Yes" next to
+Authenticated. The firewall verified that it does not know your identity, and so,
+you are anonymous:
 
 .. image:: /_images/security/anonymous_wdt.png
    :align: center
@@ -139,521 +301,59 @@ You'll learn later how to deny access to certain URLs or controllers.
 
 .. note::
 
-    If you do not see toolbar, make sure you installed the :doc:`profiler </profiler>`
-    using this command:
+    If you do not see the toolbar, install the :doc:`profiler </profiler>` with:
 
     .. code-block:: terminal
 
         $ composer require --dev symfony/profiler-pack
 
-.. tip::
-
-    Security is *highly* configurable and there's a
-    :doc:`Security Configuration Reference </reference/configuration/security>`
-    that shows all of the options with some extra explanation.
-
-A) Configuring how your Users will Authenticate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The main job of a firewall is to configure *how* your users will authenticate.
-Will they use a login form? HTTP basic authentication? An API token? All of the above?
-
-Let's start with HTTP basic authentication (the old-school prompt) and work up from there.
-To activate this, add the ``http_basic`` key under your firewall:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            # ...
-
-            firewalls:
-                # ...
-                main:
-                    anonymous: ~
-                    http_basic: ~
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <anonymous />
-                    <http-basic />
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-            'firewalls' => array(
-                // ...
-                'main' => array(
-                    'anonymous'  => null,
-                    'http_basic' => null,
-                ),
-            ),
-        ));
-
-Simple! To try this, you need to require the user to be logged in to see
-a page. To make things interesting, create a new page at ``/admin``. For
-example, if you use annotations, create something like this::
-
-    // src/Controller/DefaultController.php
-    // ...
-
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
-
-    class DefaultController extends AbstractController
-    {
-        /**
-         * @Route("/admin")
-         */
-        public function admin()
-        {
-            return new Response('<html><body>Admin page!</body></html>');
-        }
-    }
-
-Next, add an ``access_control`` entry to ``security.yaml`` that requires the
-user to be logged in to access this URL:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            # ...
-            firewalls:
-                # ...
-                main:
-                    # ...
-
-            access_control:
-                # require ROLE_ADMIN for /admin*
-                - { path: ^/admin, roles: ROLE_ADMIN }
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-                </firewall>
-
-                <!-- require ROLE_ADMIN for /admin* -->
-                <rule path="^/admin" role="ROLE_ADMIN" />
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-            'firewalls' => array(
-                // ...
-                'main' => array(
-                    // ...
-                ),
-            ),
-           'access_control' => array(
-               // require ROLE_ADMIN for /admin*
-                array('path' => '^/admin', 'roles' => 'ROLE_ADMIN'),
-            ),
-        ));
-
-.. note::
-
-    You'll learn more about this ``ROLE_ADMIN`` thing and denying access
-    later in the :ref:`security-authorization` section.
-
-Great! Now, if you go to ``/admin``, you'll see the HTTP basic auth prompt:
-
-.. image:: /_images/security/http_basic_popup.png
-   :align: center
-
-But who can you login as? Where do users come from?
+Now that we understand our firewall, the next step is to create a way for your
+users to authenticate!
 
 .. _security-form-login:
 
-.. tip::
+3b) Authenticating your Users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Want to use a traditional login form? Great! See :doc:`/security/form_login_setup`.
-    What other methods are supported? See the :doc:`Configuration Reference </reference/configuration/security>`
-    or :doc:`build your own </security/custom_authentication_provider>`.
+Authentication in Symfony can feel a bit "magic" at first. That's because, instead
+of building a route & controller to handle login, you'll activate an
+*authentication provider*: some code that runs automatically *before* your controller
+is called.
+
+Symfony has several :doc:`built-in authentication providers </security/auth_providers>`.
+If your use-case matches one of these *exactly*, great! But, in most cases - including
+a login form - *we recommend building a Guard Authenticator*: a class that allows
+you to control *every* part of the authentication process (see the next section).
 
 .. tip::
 
     If your application logs users in via a third-party service such as Google,
-    Facebook or Twitter, check out the `HWIOAuthBundle`_ community bundle.
+    Facebook or Twitter (social login), check out the `HWIOAuthBundle`_ community
+    bundle.
 
-.. _security-user-providers:
-.. _where-do-users-come-from-user-providers:
+Guard Authenticators
+....................
 
-B) Configuring how Users are Loaded
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A Guard authenticator is a class that gives you *complete* control over your
+authentication process. There are *many* different ways to build an authenticator,
+so here are a few common use-cases:
 
-When you type in your username, Symfony needs to load that user's information
-from somewhere. This is called a "user provider", and you're in charge of
-configuring it. Symfony has a built-in way to
-:doc:`load users from the database </security/entity_provider>`,
-or you can :doc:`create your own user provider </security/custom_provider>`.
+* :doc:`/security/form_login_setup`
+* :doc:`/security/guard_authentication`
 
-The easiest (but most limited) way, is to configure Symfony to load hardcoded
-users directly from the ``security.yaml`` file itself. This is called an "in memory"
-provider, but it's better to think of it as an "in configuration" provider:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            providers:
-                in_memory:
-                    memory:
-                        users:
-                            ryan:
-                                password: ryanpass
-                                roles: 'ROLE_USER'
-                            admin:
-                                password: kitten
-                                roles: 'ROLE_ADMIN'
-            # ...
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <provider name="in_memory">
-                    <memory>
-                        <user name="ryan" password="ryanpass" roles="ROLE_USER" />
-                        <user name="admin" password="kitten" roles="ROLE_ADMIN" />
-                    </memory>
-                </provider>
-                <!-- ... -->
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        $container->loadFromExtension('security', array(
-            'providers' => array(
-                'in_memory' => array(
-                    'memory' => array(
-                        'users' => array(
-                            'ryan' => array(
-                                'password' => 'ryanpass',
-                                'roles' => 'ROLE_USER',
-                            ),
-                            'admin' => array(
-                                'password' => 'kitten',
-                                'roles' => 'ROLE_ADMIN',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            // ...
-        ));
-
-Like with ``firewalls``, you can have multiple ``providers``, but you'll
-probably only need one. If you *do* have multiple, you can configure which
-*one* provider to use for your firewall under its ``provider`` key (e.g.
-``provider: in_memory``).
-
-.. seealso::
-
-    See :doc:`/security/multiple_user_providers` for
-    all the details about multiple providers setup.
-
-Try to login using username ``admin`` and password ``kitten``. You should
-see an error!
-
-    No encoder has been configured for account "Symfony\\Component\\Security\\Core\\User\\User"
-
-To fix this, add an ``encoders`` key:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            # ...
-
-            encoders:
-                Symfony\Component\Security\Core\User\User: plaintext
-            # ...
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <encoder class="Symfony\Component\Security\Core\User\User"
-                    algorithm="plaintext" />
-                <!-- ... -->
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-
-            'encoders' => array(
-                'Symfony\Component\Security\Core\User\User' => 'plaintext',
-            ),
-            // ...
-        ));
-
-User providers load user information and put it into a ``User`` object. If
-you :doc:`load users from the database </security/entity_provider>`
-or :doc:`some other source </security/custom_provider>`, you'll
-use your own custom User class. But when you use the "in memory" provider,
-it gives you a ``Symfony\Component\Security\Core\User\User`` object.
-
-Whatever your User class is, you need to tell Symfony what algorithm was
-used to encode the passwords. In this case, the passwords are just plaintext,
-but in a second, you'll change this to use ``bcrypt``.
-
-If you refresh now, you'll be logged in! The web debug toolbar even tells
-you who you are and what roles you have:
-
-.. image:: /_images/security/symfony_loggedin_wdt.png
-   :align: center
-
-Because this URL requires ``ROLE_ADMIN``, if you had logged in as ``ryan``,
-this would deny you access. More on that later (:ref:`security-authorization-access-control`).
-
-Loading Users from the Database
-...............................
-
-If you'd like to load your users via the Doctrine ORM, that's easy! See
-:doc:`/security/entity_provider` for all the details.
-
-.. _security-encoding-user-password:
-.. _encoding-the-user-s-password:
-
-C) Encoding the User's Password
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Whether your users are stored in ``security.yaml``, in a database or somewhere
-else, you'll want to encode their passwords. The most suitable algorithm to use
-is ``bcrypt``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            # ...
-
-            encoders:
-                Symfony\Component\Security\Core\User\User:
-                    algorithm: bcrypt
-                    cost: 12
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <encoder class="Symfony\Component\Security\Core\User\User"
-                    algorithm="bcrypt"
-                    cost="12" />
-
-                <!-- ... -->
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-
-            'encoders' => array(
-                'Symfony\Component\Security\Core\User\User' => array(
-                    'algorithm' => 'bcrypt',
-                    'cost' => 12,
-                )
-            ),
-            // ...
-        ));
-
-Of course, your users' passwords now need to be encoded with this exact algorithm.
-For hardcoded users, you can use the built-in command:
-
-.. code-block:: terminal
-
-    $ php bin/console security:encode-password
-
-It will give you something like this:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            # ...
-
-            providers:
-                in_memory:
-                    memory:
-                        users:
-                            ryan:
-                                password: $2a$12$LCY0MefVIEc3TYPHV9SNnuzOfyr2p/AXIGoQJEDs4am4JwhNz/jli
-                                roles: 'ROLE_USER'
-                            admin:
-                                password: $2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G
-                                roles: 'ROLE_ADMIN'
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <provider name="in_memory">
-                    <memory>
-                        <user name="ryan" password="$2a$12$LCY0MefVIEc3TYPHV9SNnuzOfyr2p/AXIGoQJEDs4am4JwhNz/jli" roles="ROLE_USER" />
-                        <user name="admin" password="$2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G" roles="ROLE_ADMIN" />
-                    </memory>
-                </provider>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        $container->loadFromExtension('security', array(
-            // ...
-
-            'providers' => array(
-                'in_memory' => array(
-                    'memory' => array(
-                        'users' => array(
-                            'ryan' => array(
-                                'password' => '$2a$12$LCY0MefVIEc3TYPHV9SNnuzOfyr2p/AXIGoQJEDs4am4JwhNz/jli',
-                                'roles' => 'ROLE_USER',
-                            ),
-                            'admin' => array(
-                                'password' => '$2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G',
-                                'roles' => 'ROLE_ADMIN',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-            // ...
-        ));
-
-Everything will now work exactly like before. But if you have dynamic users
-(e.g. from a database), how can you programmatically encode the password
-before inserting them into the database? Don't worry, see
-:doc:`/security/password_encoding` for details.
-
-.. tip::
-
-    Supported algorithms for this method depend on your PHP version, but
-    include the algorithms returned by the PHP function :phpfunction:`hash_algos`
-    as well as a few others (e.g. bcrypt and argon2i). See the ``encoders`` key
-    in the :doc:`Security Reference Section </reference/configuration/security>`
-    for examples.
-
-    It's also possible to use different hashing algorithms on a user-by-user
-    basis. See :doc:`/security/named_encoders` for more details.
-
-D) Configuration Done!
-~~~~~~~~~~~~~~~~~~~~~~
-
-Congratulations! You now have a working authentication system that uses HTTP
-basic auth and loads users right from the ``security.yaml`` file.
-
-Your next steps depend on your setup:
-
-* Configure a different way for your users to login, like a :ref:`login form <security-form-login>`
-  or :doc:`something completely custom </security/custom_authentication_provider>`;
-
-* Load users from a different source, like the :doc:`database </security/entity_provider>`
-  or :doc:`some other source </security/custom_provider>`;
-
-* Learn how to deny access, load the User object and deal with roles in the
-  :ref:`Authorization <security-authorization>` section.
+For the most detailed description of authenticators and how they work, see
+:doc:`/security/guard_authentication`.
 
 .. _`security-authorization`:
 .. _denying-access-roles-and-other-authorization:
 
-3) Denying Access, Roles and other Authorization
+4) Denying Access, Roles and other Authorization
 ------------------------------------------------
 
-Users can now login to your app using ``http_basic`` or some other method.
-Great! Now, you need to learn how to deny access and work with the User object.
-This is called **authorization**, and its job is to decide if a user can
-access some resource (a URL, a model object, a method call, ...).
+Users can now log in to your app using your login form. Great! Now, you need to learn
+how to deny access and work with the User object. This is called **authorization**,
+and its job is to decide if a user can access some resource (a URL, a model object,
+a method call, ...).
 
 The process of authorization has two different sides:
 
@@ -662,43 +362,42 @@ The process of authorization has two different sides:
    "attribute" (most commonly a role like ``ROLE_ADMIN``) in order to be
    accessed.
 
-.. tip::
-
-    In addition to roles (e.g. ``ROLE_ADMIN``), you can protect a resource
-    using other attributes/strings (e.g. ``EDIT``) and use voters to give these
-    meaning. This might come in handy if you need to check if user A can "EDIT"
-    some object B (e.g. a Product with id 5). See :ref:`security-secure-objects`.
-
 Roles
 ~~~~~
 
-When a user logs in, they receive a set of roles (e.g. ``ROLE_ADMIN``). In
-the example above, these are hardcoded into ``security.yaml``. If you're
-loading users from the database, these are probably stored on a column
-in your table.
+When a user logs in, Symfony calls the ``getRoles()`` method on your ``User``
+object to determine which roles this user has. In the ``User`` class that we
+generated earlier, the roles are an array that's stored in the database, and
+every user is *always* given at least one role: ``ROLE_USER``::
 
-.. caution::
+    // src/Entity/User.php
+    // ...
 
-    All roles you assign to a user **must** begin with the ``ROLE_`` prefix.
-    Otherwise, they won't be handled by Symfony's security system in the
-    normal way (i.e. unless you're doing something advanced, assigning a
-    role like ``FOO`` to a user and then checking for ``FOO`` as described
-    :ref:`below <security-role-authorization>` will not work).
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
-Roles are simple, and are basically strings that you invent and use as needed.
-For example, if you need to start limiting access to the blog admin section
-of your website, you could protect that section using a ``ROLE_BLOG_ADMIN``
-role. This role doesn't need to be defined anywhere - you can just start using
-it.
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
 
-.. tip::
+        return array_unique($roles);
+    }
 
-    Make sure every user has at least *one* role, or your user will look
-    like they're not authenticated. A common convention is to give *every*
-    user ``ROLE_USER``.
+This is a nice default, but you can do *whatever* you want to determine which roles
+a user should have. Here are a few guidelines:
 
-You can also specify a :ref:`role hierarchy <security-role-hierarchy>` where
-some roles automatically mean that you also have other roles.
+* Every role **must start with** ``ROLE_`` (otherwise, things won't work as expected)
+
+* Other than the above rule, a role is just a string and you can invent what you
+  need (e.g. ``ROLE_PRODUCT_ADMIN``).
+
+You'll use these roles next to grant access to specific sections of your site.
+You can also use a :ref:`role hierarchy <security-role-hierarchy>` where having
+some roles automatically give you other roles.
 
 .. _security-role-authorization:
 
@@ -711,16 +410,16 @@ There are **two** ways to deny access to something:
    allows you to protect URL patterns (e.g. ``/admin/*``). This is easy,
    but less flexible;
 
-#. :ref:`in your code via the security.authorization_checker service <security-securing-controller>`.
+#. :ref:`in your controller (or other code) <security-securing-controller>`.
 
 .. _security-authorization-access-control:
 
 Securing URL patterns (access_control)
 ......................................
 
-The most basic way to secure part of your application is to secure an entire
-URL pattern. You saw this earlier, where anything matching the regular expression
-``^/admin`` requires the ``ROLE_ADMIN`` role:
+The most basic way to secure part of your app is to secure an entire URL pattern
+in ``security.yaml``. For example, to require ``ROLE_ADMIN`` for all URLs that
+start with ``/admin``, you can:
 
 .. configuration-block::
 
@@ -779,14 +478,9 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
             ),
         ));
 
-This is great for securing entire sections, but you'll also probably want
-to :ref:`secure your individual controllers <security-securing-controller>`
-as well.
-
 You can define as many URL patterns as you need - each is a regular expression.
-**BUT**, only **one** will be matched. Symfony will look at each starting
-at the top, and stop as soon as it finds one ``access_control`` entry that
-matches the URL.
+**BUT**, only **one** will be matched per request: Symfony starts at the top of
+the list and stops when it finds the first match:
 
 .. configuration-block::
 
@@ -797,7 +491,10 @@ matches the URL.
             # ...
 
             access_control:
+                # matches /admin/users/*
                 - { path: ^/admin/users, roles: ROLE_SUPER_ADMIN }
+
+                # matches /admin/* except for anything matching the above rule
                 - { path: ^/admin, roles: ROLE_ADMIN }
 
     .. code-block:: xml
@@ -834,17 +531,9 @@ Prepending the path with ``^`` means that only URLs *beginning* with the
 pattern are matched. For example, a path of simply ``/admin`` (without
 the ``^``) would match ``/admin/foo`` but would also match URLs like ``/foo/admin``.
 
-.. _security-access-control-explanation:
-
-.. sidebar:: Understanding how ``access_control`` Works
-
-    The ``access_control`` section is very powerful, but it can also be dangerous
-    (because it involves security) if you don't understand *how* it works.
-    In addition to the URL, the ``access_control`` can match on IP address,
-    host name and HTTP methods. It can also be used to redirect a user to
-    the ``https`` version of a URL pattern.
-
-    To learn about all of this, see :doc:`/security/access_control`.
+Each ``access_control`` can also match on IP address, hostname and HTTP methods.
+It can also be used to redirect a user to the ``https`` version of a URL pattern.
+See :doc:`/security/access_control`.
 
 .. _security-securing-controller:
 
@@ -853,59 +542,57 @@ Securing Controllers and other Code
 
 You can easily deny access from inside a controller::
 
+    // src/Controller/AdminController.php
     // ...
 
-    public function hello($name)
+    public function adminDashboard()
     {
-        // The second parameter is used to specify on what object the role is tested.
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        // ...
+        // or add an optional message - seen by developers
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
     }
 
-.. tip::
-
-    The ``denyAccessUnlessGranted()`` is a shortcut provided by the optional
-    :ref:`base controller provided by Symfony <the-base-controller-class-services>`.
-    It's equivalent to the following code::
-
-        use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-        use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-        // ...
-
-        public function hello($name, AuthorizationCheckerInterface $authChecker)
-        {
-            if (false === $authChecker->isGranted('ROLE_ADMIN')) {
-                throw new AccessDeniedException('Unable to access this page!');
-            }
-
-            // ...
-        }
-
-If access is not granted, a special
+That's it! If access is not granted, a special
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-is thrown, which ultimately triggers a 403 HTTP response inside Symfony.
+is thrown and no more code in your controller is executed. Then, one of two things
+will happen:
 
-That's it! If the user isn't logged in yet, they will be asked to login (e.g.
-redirected to the login page). If they *are* logged in, but do *not* have the
-``ROLE_ADMIN`` role, they'll be shown the 403 access denied page (which you can
-:ref:`customize <controller-error-pages-by-status-code>`). If they are logged in
-and have the correct roles, the code will be executed.
+1) If the user isn't logged in yet, they will be asked to log in (e.g. redirected
+   to the login page).
+
+2) If the user *is* logged in, but does *not* have the ``ROLE_ADMIN`` role, they'll
+   be shown the 403 access denied page (which you can
+   :ref:`customize <controller-error-pages-by-status-code>`).
 
 .. _security-securing-controller-annotations:
 
 Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
-using annotations::
+using annotations:
 
+.. code-block:: diff
+
+    // src/Controller/AdminController.php
     // ...
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-    /**
-     * @Security("is_granted('ROLE_ADMIN')")
-     */
-    public function hello($name)
+    + use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+    + /**
+    +  * Require ROLE_ADMIN for *every* controller method in this class.
+    +  *
+    +  * @IsGranted("ROLE_ADMIN")
+    +  */
+    class AdminController extends AbstractController
     {
-        // ...
+    +     /**
+    +      * Require ROLE_ADMIN for only this controller method.
+    +      *
+    +      * @IsGranted("ROLE_ADMIN")
+    +      */
+        public function adminDashboard()
+        {
+            // ...
+        }
     }
 
 For more information, see the `FrameworkExtraBundle documentation`_.
@@ -915,7 +602,7 @@ For more information, see the `FrameworkExtraBundle documentation`_.
 Access Control in Templates
 ...........................
 
-If you want to check if the current user has a role inside a template, use
+If you want to check if the current access inside a template, use
 the built-in ``is_granted()`` helper function:
 
 .. code-block:: html+twig
@@ -927,37 +614,31 @@ the built-in ``is_granted()`` helper function:
 Securing other Services
 .......................
 
-Anything in Symfony can be protected by doing something similar to the code
-used to secure a controller. For example, suppose you have a service (i.e. a
-PHP class) whose job is to send emails. You can restrict use of this class - no
-matter where it's being used from - to only certain users.
-
-For more information see :doc:`/security/securing_services`.
+See :doc:`/security/securing_services`.
 
 Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So far, you've checked access based on roles - those strings that start with
-``ROLE_`` and are assigned to users. But if you *only* want to check if a
-user is logged in (you don't care about roles), then you can use
-``IS_AUTHENTICATED_FULLY``::
+If you *only* want to check if a user is simply logged in (you don't care about roles),
+you have two options. First, if you've given *every* user ``ROLE_USER``, you can
+just check for that role. Otherwise, you can use a special "attribute" in place
+of a role::
 
     // ...
 
-    public function hello($name)
+    public function adminDashboard()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // ...
     }
 
-.. tip::
-
-    You can of course also use this in ``access_control``.
+You can use ``IS_AUTHENTICATED_FULLY`` anywhere roles are used: like ``access_control``
+or in Twig.
 
 ``IS_AUTHENTICATED_FULLY`` isn't a role, but it kind of acts like one, and every
-user that has successfully logged in will have this. In fact, there are three
-special attributes like this:
+user that has logged in will have this. Actually, there are 3 special attributes
+like this:
 
 * ``IS_AUTHENTICATED_REMEMBERED``: *All* logged in users have this, even
   if they are logged in because of a "remember me cookie". Even if you don't
@@ -972,30 +653,6 @@ special attributes like this:
   this - this is useful when *whitelisting* URLs to guarantee access - some
   details are in :doc:`/security/access_control`.
 
-.. _security-template-expression:
-
-You can also use expressions inside your templates:
-
-.. configuration-block::
-
-    .. code-block:: html+jinja
-
-        {% if is_granted(expression(
-            '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
-        )) %}
-            <a href="...">Delete</a>
-        {% endif %}
-
-    .. code-block:: html+php
-
-        <?php if ($view['security']->isGranted(new Expression(
-            '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
-        ))): ?>
-            <a href="...">Delete</a>
-        <?php endif ?>
-
-For more details on expressions and security, see :doc:`/security/expressions`.
-
 .. _security-secure-objects:
 
 Access Control Lists (ACLs): Securing individual Database Objects
@@ -1003,102 +660,77 @@ Access Control Lists (ACLs): Securing individual Database Objects
 
 Imagine you are designing a blog where users can comment on your posts. You
 also want a user to be able to edit their own comments, but not those of
-other users. Also, as the admin user, you yourself want to be able to edit
-*all* comments.
+other users. Also, as the admin user, you want to be able to edit *all* comments.
 
-:doc:`Voters </security/voters>` allow you to write own business logic (e.g. the
-user can edit this post because they were the creator) to determine access.
-That's why voters are officially recommended by Symfony to create ACL-like
+:doc:`Voters </security/voters>` allow you to write *whatever* business logic you
+need (e.g. the user can edit this post because they are the creator) to determine
+access. That's why voters are officially recommended by Symfony to create ACL-like
 security systems.
 
 If you still prefer to use traditional ACLs, refer to the `Symfony ACL bundle`_.
 
 .. _retrieving-the-user-object:
 
-4) Retrieving the User Object
------------------------------
+5a) Fetching the User Object
+----------------------------
 
 After authentication, the ``User`` object of the current user can be accessed
-via the ``getUser()`` shortcut (which uses the ``security.token_storage``
-service). From inside a controller, this will look like::
+via the ``getUser()`` shortcut::
 
     public function index()
     {
+        // usually you'll want to make sure the user is authenticated first
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
+        // returns your User object, or null if the user is not authenticated
+        // use inline documentation to tell your editor your exact User class
+        /** @var \App\Entity\User $user */
         $user = $this->getUser();
-    }
 
-.. tip::
-
-    The user will be an object and the class of that object will depend on
-    your :ref:`user provider <security-user-providers>`.
-
-Now you can call whatever methods are on *your* User object. For example,
-if your User object has a ``getFirstName()`` method, you could use that::
-
-    use Symfony\Component\HttpFoundation\Response;
-    // ...
-
-    public function index()
-    {
-        // ...
-
+        // Call whatever methods you've added to your User class
+        // For example, if you added a getFirstName() method, you can use that.
         return new Response('Well hi there '.$user->getFirstName());
     }
 
-Always Check if the User is Logged In
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+5b) Fetching the User from a Service
+------------------------------------
 
-It's important to check if the user is authenticated first. If they're not,
-``$user`` will either be ``null`` or the string ``anon.``. Wait, what? Yes,
-this is a quirk. If you're not logged in, the user is technically the string
-``anon.``, though the ``getUser()`` controller shortcut converts this to
-``null`` for convenience.
+If you need to get the logged in user from a service, use the
+:class:`Symfony\\Component\\Security\\Core\\Security` service::
 
-The point is this: always check to see if the user is logged in before using
-the User object, and use the ``isGranted()`` method (or
-:ref:`access_control <security-authorization-access-control>`) to do this::
+    // src/Service/ExampleService.php
+    // ...
 
-    // yay! Use this to see if the user is logged in
-    $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+    use Symfony\\Component\\Security\\Core\\Security;
+    
+    class ExampleService
+    {
+        private $security;
 
-    // boo :(. Never check for the User object to see if they're logged in
-    if ($this->getUser()) {
-        // ...
-    }
-
-.. note::
-
-    An alternative way to get the current user in a controller is to type-hint
-    the controller argument with
-    :class:`Symfony\\Component\\Security\\Core\\Security`::
-
-        use Symfony\Component\Security\Core\Security;
-
-        public function indexAction(Security $security)
+        public function __construct(Security $security)
         {
-            $user = $security->getUser();
+            // Avoid calling getUser() in the constructor: auth may not
+            // be complete yet. Instead, store the entire Security object.
+            $this->security = $security;
         }
 
-    .. versionadded:: 3.4
-        The ``Security`` utility class was introduced in Symfony 3.4.
+        public function someMethod()
+        {
+            // returns User object or null if not authenticated
+            $user = $this->security->getUser();
+        }
+    }
 
-    This is only recommended for experienced developers who don't extend from the
-    :ref:`Symfony base controller <the-base-controller-class-services>` and
-    don't use the :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerTrait`
-    either. Otherwise, it's recommended to keep using the ``getUser()`` shortcut.
+Fetch the User in a Template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Retrieving the User in a Template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In a Twig Template this object can be accessed via the :ref:`app.user <reference-twig-global-app>`
+In a Twig Template the user object can be accessed via the :ref:`app.user <reference-twig-global-app>`
 key:
 
 .. code-block:: html+twig
 
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <p>Username: {{ app.user.username }}</p>
+        <p>Email: {{ app.user.email }}</p>
     {% endif %}
 
 .. _security-logging-out:
@@ -1106,17 +738,7 @@ key:
 Logging Out
 -----------
 
-.. caution::
-
-    Notice that when using http-basic authenticated firewalls, there is no
-    real  way to log out : the only way to *log out* is to have the browser
-    stop sending your name and password  on every request. Clearing your
-    browser cache or restarting your browser usually helps. Some web developer
-    tools might be helpful here too.
-
-Usually, you'll also want your users to be able to log out. Fortunately,
-the firewall can handle this automatically for you when you activate the
-``logout`` config parameter:
+To enable logging out, activate the  ``logout`` config parameter under your firewall:
 
 .. configuration-block::
 
@@ -1127,11 +749,13 @@ the firewall can handle this automatically for you when you activate the
             # ...
 
             firewalls:
-                secured_area:
+                main:
                     # ...
                     logout:
-                        path:   /logout
-                        target: /
+                        path:   app_logout
+
+                        # where to redirect after logout
+                        # target: app_any_route
 
     .. code-block:: xml
 
@@ -1148,7 +772,7 @@ the firewall can handle this automatically for you when you activate the
 
                 <firewall name="secured_area">
                     <!-- ... -->
-                    <logout path="/logout" target="/" />
+                    <logout path="app_logout" />
                 </firewall>
             </config>
         </srv:container>
@@ -1162,7 +786,7 @@ the firewall can handle this automatically for you when you activate the
             'firewalls' => array(
                 'secured_area' => array(
                     // ...
-                    'logout' => array('path' => '/logout', 'target' => '/'),
+                    'logout' => array('path' => 'app_logout'),
                 ),
             ),
         ));
@@ -1174,8 +798,28 @@ Next, you'll need to create a route for this URL (but not a controller):
     .. code-block:: yaml
 
         # config/routes.yaml
-        logout:
+        app_logout:
             path: /logout
+
+    .. code-block:: php-annotations
+
+        // src/Controller/SecurityController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class SecurityController extends AbstractController
+        {
+            /**
+             * @Route("/logout", name="app_logout")
+             */
+            public function logout()
+            {
+                // controller can be blank: it will never be executed!
+                throw new \Exception('Don\'t forget to activate logout in security.yaml');
+            }
+        }
 
     .. code-block:: xml
 
@@ -1186,7 +830,7 @@ Next, you'll need to create a route for this URL (but not a controller):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 http://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="logout" path="/logout" />
+            <route id="app_logout" path="/logout" />
         </routes>
 
     ..  code-block:: php
@@ -1196,30 +840,25 @@ Next, you'll need to create a route for this URL (but not a controller):
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('logout', new Route('/logout'));
+        $routes->add('app_logout', new Route('/logout'));
 
         return $routes;
 
-And that's it! By sending a user to ``/logout`` (or whatever you configure
-the ``path`` to be), Symfony will un-authenticate the current user.
-
-Once the user has been logged out, they will be redirected to whatever path
-is defined by the ``target`` parameter above (e.g. the ``homepage``).
+And that's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
+Symfony will un-authenticate the current user and redirect them.
 
 .. tip::
 
-    If you need to do something more interesting after logging out, you can
-    specify a logout success handler by adding a ``success_handler`` key
-    and pointing it to a service id of a class that implements
+    Need more control of what happens after logout? Add a ``success_handler`` key
+    under ``logout`` and point it to a service id of a class that implements
     :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
-    See :doc:`Security Configuration Reference </reference/configuration/security>`.
 
 .. _security-role-hierarchy:
 
 Hierarchical Roles
 ------------------
 
-Instead of associating many roles to users, you can define role inheritance
+Instead of giving many roles to each user, you can define role inheritance
 rules by creating a role hierarchy:
 
 .. configuration-block::
@@ -1267,31 +906,67 @@ rules by creating a role hierarchy:
             ),
         ));
 
-In the above configuration, users with ``ROLE_ADMIN`` role will also have the
-``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``
-and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
+Users with the ``ROLE_ADMIN`` role will also have the
+``ROLE_USER`` role. And users with ``ROLE_SUPER_ADMIN``, will automatically have
+``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH`` and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
+
+For role hierarchy to work, do not try to call ``$user->getRoles()`` manually::
+
+    // BAD - $user->getRoles() will not know about the role hierarchy
+    $hasAccess = in_array('ROLE_ADMIN', $user->getRoles());
+
+    // GOOD - use of the normal security methods
+    $hasAccess = $this->isGranted('ROLE_ADMIN');
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
 .. note::
 
-    The value of the ``role_hierarchy`` option is defined statically, so you
-    can't for example store the role hierarchy in a database. If you need that,
-    create a custom :doc:`security voter </security/voters>` that looks for the
-    user roles in the database.
+    The ``role_hierarchy`` values are static - you can't, for example, store the
+    role hierarchy in a database. If you need that, create a custom
+    :doc:`security voter </security/voters>` that looks for the user roles
+    in the database.
 
-Final Words
------------
+Checking for Security Vulnerabilities in your Dependences
+---------------------------------------------------------
 
-Woh! Nice work! You now know more than the basics of security. The hardest
-parts are when you have custom requirements: like a custom authentication
-strategy (e.g. API tokens), complex authorization logic and many other things
-(because security is complex!).
+See :doc:`/security/security_checker`.
 
-Fortunately, there are a lot of articles aimed at describing many of these
-situations. Also, see the :doc:`Security Reference Section </reference/configuration/security>`.
-Many of the options don't have specific details, but seeing the full possible
-configuration tree may be useful.
+Frequently Asked Questions
+--------------------------
 
-Good luck!
+**Can I have Multiple Firewalls?**
+    Yes! But it's usually not necessary. Each firewall is like a separate security
+    system. And so, unless you have *very* different authentication needs, one
+    firewall usually works well. With :doc:`Guard authentication </security/guard_authentication>`,
+    you can create various, diverse ways of allowing authentication (e.g. form login,
+    API key authentication and LDAP) all under the same firewall.
+
+**Can I Share Authentication Between Firewalls?**
+    Yes, but only with some configuration. If you're using multiple firewalls and
+    you authenticate against one firewall, you will *not* be authenticated against
+    any other firewalls automatically. Different firewalls are like different security
+    systems. To do this you have to explicitly specify the same
+    :ref:`reference-security-firewall-context` for different firewalls. But usually
+    for most applications, having one main firewall is enough.
+
+**Security doesn't seem to work on my Error Pages**
+    As routing is done *before* security, 404 error pages are not covered by
+    any firewall. This means you can't check for security or even access the
+    user object on these pages. See :doc:`/controller/error_pages`
+    for more details.
+
+**My Authentication Doesn't Seem to Work: No Errors, but I'm Never Logged In**
+    Sometimes authentication may be successful, but after redirecting, you're
+    logged out immediately due to a problem loading the ``User`` from the session.
+    To see if this is an issue, check your log file (``var/log/dev.log``) for
+    the log message:
+
+    > Cannot refresh token because user has changed.
+
+    If you see this, there are two possible causes. First, there may be a problem
+    loading your User from the session. See :ref:`user_session_refresh`. Second,
+    if certain user information was changed in the database since the last page
+    refresh, Symfony will purposely log out the user for security reasons.
 
 Learn More
 ----------
@@ -1303,24 +978,18 @@ Authentication (Identifying/Logging in the User)
     :maxdepth: 1
 
     security/form_login_setup
-    security/ldap
-    security/entity_provider
     security/guard_authentication
+    security/auth_providers
+    security/user_provider
+    security/ldap
     security/remember_me
     security/impersonating_user
-    security/form_login
-    security/custom_provider
-    security/custom_password_authenticator
-    security/api_key_authentication
-    security/custom_authentication_provider
-    security/pre_authenticated
-    security/csrf
+    security/user_checkers
     security/named_encoders
-    security/multiple_user_providers
     security/multiple_guard_authenticators
     security/firewall_restriction
-    security/host_restriction
-    security/user_checkers
+    security/csrf
+    security/custom_authentication_provider
 
 Authorization (Denying Access)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1329,23 +998,15 @@ Authorization (Denying Access)
     :maxdepth: 1
 
     security/voters
-    security/acl
-    security/acl_advanced
-    security/force_https
     security/securing_services
     security/access_control
     security/access_denied_handler
-
-Other Security Related Topics
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. toctree::
-    :maxdepth: 1
-
-    security/password_encoding
+    security/acl    
+    security/force_https
     security/security_checker
 
 .. _`frameworkextrabundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`Symfony ACL bundle`: https://github.com/symfony/acl-bundle
 .. _`Symfony Security screencast series`: https://symfonycasts.com/screencast/symfony-security
+.. _`MakerBundle`: https://github.com/symfony/maker-bundle

@@ -55,13 +55,13 @@ Next, create an ``index.php`` file that defines the kernel class and executes it
         {
             // kernel is a service that points to this class
             // optional 3rd argument is the route name
-            $routes->add('/random/{limit}', 'kernel:randomNumber');
+            $routes->add('/random/{limit}', 'Kernel::randomNumber');
         }
 
         public function randomNumber($limit)
         {
             return new JsonResponse(array(
-                'number' => rand(0, $limit)
+                'number' => random_int(0, $limit),
             ));
         }
     }
@@ -136,11 +136,6 @@ hold the kernel. Now it looks like this::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
     use Symfony\Component\Routing\RouteCollectionBuilder;
-    use Doctrine\Common\Annotations\AnnotationRegistry;
-
-    $loader = require __DIR__.'/../vendor/autoload.php';
-    // auto-load annotations
-    AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
     class Kernel extends BaseKernel
     {
@@ -149,8 +144,8 @@ hold the kernel. Now it looks like this::
         public function registerBundles()
         {
             $bundles = array(
-                new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-                new Symfony\Bundle\TwigBundle\TwigBundle(),
+                new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+                new \Symfony\Bundle\TwigBundle\TwigBundle(),
             );
 
             if ($this->getEnvironment() == 'dev') {
@@ -162,7 +157,7 @@ hold the kernel. Now it looks like this::
 
         protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
         {
-            $loader->load(__DIR__.'/config/framework.yaml');
+            $loader->load(__DIR__.'/../config/framework.yaml');
 
             // configure WebProfilerBundle only if the bundle is enabled
             if (isset($this->bundles['WebProfilerBundle'])) {
@@ -198,6 +193,12 @@ hold the kernel. Now it looks like this::
         }
     }
 
+Before continuing, run this command to add support for the new dependencies:
+
+.. code-block:: terminal
+
+    $ composer require symfony/yaml symfony/twig-bundle symfony/web-profiler-bundle doctrine/annotations
+
 Unlike the previous kernel, this loads an external ``config/framework.yaml`` file,
 because the configuration started to get bigger:
 
@@ -208,8 +209,6 @@ because the configuration started to get bigger:
         # config/framework.yaml
         framework:
             secret: S0ME_SECRET
-            templating:
-                engines: ['twig']
             profiler: { only_exceptions: false }
 
     .. code-block:: xml
@@ -223,9 +222,6 @@ because the configuration started to get bigger:
                 http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config secret="S0ME_SECRET">
-                <framework:templating>
-                    <framework:engine>twig</framework:engine>
-                </framework:templating>
                 <framework:profiler only-exceptions="false" />
             </framework:config>
         </container>
@@ -235,9 +231,6 @@ because the configuration started to get bigger:
         // config/framework.php
         $container->loadFromExtension('framework', array(
             'secret' => 'S0ME_SECRET',
-            'templating' => array(
-                'engines' => array('twig'),
-            ),
             'profiler' => array(
                 'only_exceptions' => false,
             ),
@@ -259,21 +252,20 @@ has one file in it::
          */
         public function randomNumber($limit)
         {
-            $number = rand(0, $limit);
+            $number = random_int(0, $limit);
 
             return $this->render('micro/random.html.twig', array(
-                'number' => $number
+                'number' => $number,
             ));
         }
     }
 
-Template files should live in the ``Resources/views/`` directory of whatever directory
-your *kernel* lives in. Since ``Kernel`` lives in ``src/``, this template lives
-at ``src/Resources/views/micro/random.html.twig``:
+Template files should live in the ``templates/`` directory at the root of your project.
+This template lives at ``templates/micro/random.html.twig``:
 
 .. code-block:: html+twig
 
-    <!-- src/Resources/views/micro/random.html.twig -->
+    <!-- templates/micro/random.html.twig -->
     <!DOCTYPE html>
     <html>
         <head>
@@ -289,9 +281,13 @@ Finally, you need a front controller to boot and run the application. Create a
 
     // public/index.php
 
+    use App\Kernel;
+    use Doctrine\Common\Annotations\AnnotationRegistry;
     use Symfony\Component\HttpFoundation\Request;
 
-    require __DIR__.'/../src/Kernel.php';
+    $loader = require __DIR__.'/../vendor/autoload.php';
+    // auto-load annotations
+    AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
     $kernel = new Kernel('dev', true);
     $request = Request::createFromGlobals();
@@ -311,13 +307,12 @@ this:
     ├─ public/
     |  └─ index.php
     ├─ src/
-    |  ├─ Kernel.php
     |  ├─ Controller
     |  |  └─ MicroController.php
-    │  └─ Resources
-    |     └─ views
-    |        └─ micro
-    |           └─ random.html.twig
+    |  └─ Kernel.php
+    ├─ templates/
+    |  └─ micro/
+    |     └─ random.html.twig
     ├─ var/
     |  ├─ cache/
     │  └─ log/
@@ -331,7 +326,7 @@ As before you can use PHP built-in server:
 .. code-block:: terminal
 
     cd public/
-    $ php -S localhost:8000
+    $ php -S localhost:8000 -t public/
 
 Then see webpage in browser:
 

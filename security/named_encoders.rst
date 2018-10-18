@@ -1,8 +1,8 @@
 .. index::
     single: Security; Named Encoders
 
-How to Choose the Password Encoder Algorithm Dynamically
-========================================================
+How to Use A Different Password Encoder Algorithm Per User
+==========================================================
 
 Usually, the same password encoder is used for all users by configuring it
 to apply to all instances of a specific class:
@@ -15,7 +15,9 @@ to apply to all instances of a specific class:
         security:
             # ...
             encoders:
-                Symfony\Component\Security\Core\User\User: sha512
+                App\Entity\User:
+                    algorithm: bcrypt
+                    cost: 12
 
     .. code-block:: xml
 
@@ -29,8 +31,9 @@ to apply to all instances of a specific class:
         >
             <config>
                 <!-- ... -->
-                <encoder class="Symfony\Component\Security\Core\User\User"
-                    algorithm="sha512"
+                <encoder class="App\Entity\User"
+                    algorithm="bcrypt"
+                    cost=12
                 />
             </config>
         </srv:container>
@@ -38,13 +41,14 @@ to apply to all instances of a specific class:
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Component\Security\Core\User\User;
+        use App\Entity\User;
 
         $container->loadFromExtension('security', array(
             // ...
             'encoders' => array(
                 User::class => array(
-                    'algorithm' => 'sha512',
+                    'algorithm' => 'bcrypt',
+                    'cost' => 12,
                 ),
             ),
         ));
@@ -52,10 +56,10 @@ to apply to all instances of a specific class:
 Another option is to use a "named" encoder and then select which encoder
 you want to use dynamically.
 
-In the previous example, you've set the ``sha512`` algorithm for ``Acme\UserBundle\Entity\User``.
+In the previous example, you've set the ``bcrypt`` algorithm for ``App\Entity\User``.
 This may be secure enough for a regular user, but what if you want your admins
-to have a stronger algorithm, for example ``bcrypt``. This can be done with
-named encoders:
+to have a stronger algorithm, for example ``bcrypt`` with a higher cost. This can
+be done with named encoders:
 
 .. configuration-block::
 

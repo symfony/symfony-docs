@@ -376,26 +376,6 @@ via the even easier shortcut in a controller::
         // ...
     }
 
-Learn More
-----------
-
-The `FOSUserBundle`_, developed by the Symfony community, adds support for a
-database-backed user system in Symfony. It also handles common tasks like
-user registration and forgotten password functionality.
-
-Enable the :doc:`Remember Me feature </security/remember_me>` to
-allow your users to stay logged in for a long period of time.
-
-When providing customer support, sometimes it's necessary to access the application
-as some *other* user so that you can reproduce the problem. Symfony provides
-the ability to :doc:`impersonate users </security/impersonating_user>`.
-
-If your company uses a user login method not supported by Symfony, you can
-develop :doc:`your own user provider </security/custom_provider>` and
-:doc:`your own authentication provider </security/custom_authentication_provider>`.
-
-----
-
 Next: :doc:`/best_practices/web-assets`
 
 .. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html

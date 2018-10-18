@@ -45,6 +45,8 @@ It enables and disables the toolbar entirely. Usually you set this to ``true``
 in the ``dev`` and ``test`` environments and to ``false`` in the ``prod``
 environment.
 
+.. _intercept_redirects:
+
 intercept_redirects
 ~~~~~~~~~~~~~~~~~~~
 

@@ -48,8 +48,7 @@ is set to ``true``) when they try to access a protected resource but isn't
 fully authenticated.
 
 This path **must** be accessible by a normal, un-authenticated user, else
-you may create a redirect loop. For details, see
-":ref:`Avoid Common Pitfalls <security-common-pitfalls>`".
+you may create a redirect loop.
 
 check_path
 ..........
