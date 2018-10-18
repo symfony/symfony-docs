@@ -267,8 +267,8 @@ logic to a separate service::
     :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\NoTmpDirFileException`,
     and :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\PartialFileException`.
 
-    .. versionadded:: 4.2
-        The detailed exception classes were introduced in Symfony 4.2.
+    .. versionadded:: 4.1
+        The detailed exception classes were introduced in Symfony 4.1.
 
 Then, define a service for this class:
 
