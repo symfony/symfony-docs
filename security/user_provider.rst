@@ -49,8 +49,8 @@ User providers are configured in ``config/packages/security.yaml`` under the
                 memory:
                     # custom options for that provider
                     users:
-                        user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                        admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                        user:  { password: '%env(USER_PASSWORD)%', roles: [ 'ROLE_USER' ] }
+                        admin: { password: '%env(ADMIN_PASSWORD)%', roles: [ 'ROLE_ADMIN' ] }
 
             a_chain_provider:
                 chain:
