@@ -34,6 +34,7 @@ on all types for which ``FormType`` is the parent.
 |           | - `read_only`_ (deprecated as of 2.8)                              |
 |           | - `required`_                                                      |
 |           | - `trim`_                                                          |
+|           | - `validation_groups`_                                             |
 +-----------+--------------------------------------------------------------------+
 | Inherited | - `attr`_                                                          |
 | options   | - `auto_initialize`_                                               |
@@ -145,6 +146,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
+
+.. include:: /reference/forms/types/options/validation_groups.rst.inc
 
 Inherited Options
 -----------------
