@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-08T08:38:52Z
+
+If possible, the `security/custom_password_authenticator.rst` article should be part of this refactorization too. See https://github.com/symfony/symfony-docs/pull/10146#issuecomment-412223488 for details.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-10-13T20:53:17Z
+
+Wow! Thanks to several of you for such thorough and thoughtful feedback! I know that is very difficult with a big PR, and I'm very very thankful for it. I agreed with so many comments and ideas that I didn't add an "I love this idea!" each time to avoid spamming.
+
+There are a few last conversations (mostly/entirely with @iltar) and then I think this is ready. I just tagged MakerBundle 1.8, so there are no more blockers for this PR.
+
+> If possible, the security/custom_password_authenticator.rst article should be part of this refactorization too. See #10146 (comment) for details.
+
+I'm happy to say that this article is gone. I didn't rewrite it to Guard because it turned out it was fairly redundant with existing guard info.
+
+---------------------------------------------------------------------------
+
+by iltar at 2018-10-14T12:51:50Z
+
+Happy to help!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-16T06:30:20Z
+
+It's great to see that this PR is close to be ready. In case you want to consider as part of this refactorization, we received a PR to explain how to display a custom error message in "user checkers": https://github.com/symfony/symfony-docs/pull/10489
