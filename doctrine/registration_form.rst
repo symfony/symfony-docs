@@ -421,4 +421,5 @@ Manually Authenticating after Success
 If you're using Guard authentication, you can :ref:`automatically authenticate <guard-manual-auth>`
 after registration is successful.
 
+.. _`CVE-2013-5750`: https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
 .. _`bcrypt`: https://en.wikipedia.org/wiki/Bcrypt
