@@ -255,6 +255,21 @@ logic to a separate service::
         }
     }
 
+.. tip::
+
+    In addition to the generic :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\FileException`
+    class there are other exception classes to handle failed file uploads:
+    :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\CannotWriteFileException`,
+    :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\ExtensionFileException`,
+    :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\FormSizeFileException`,
+    :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\IniSizeFileException`,
+    :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\NoFileException`,
+    :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\NoTmpDirFileException`,
+    and :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\PartialFileException`.
+
+    .. versionadded:: 4.2
+        The detailed exception classes were introduced in Symfony 4.2.
+
 Then, define a service for this class:
 
 .. configuration-block::
