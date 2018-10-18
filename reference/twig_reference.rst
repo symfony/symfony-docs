@@ -430,7 +430,7 @@ expression
 ~~~~~~~~~~
 
 Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` in
-Twig. See ":ref:`Template Expressions <security-template-expression>`".
+Twig.
 
 .. _reference-twig-filters:
 
