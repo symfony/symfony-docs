@@ -3,23 +3,15 @@ help_attr
 
 **type**: ``array`` **default**: ``array()``
 
-    Sets the HTML attributes for the help element, which will be used
-        when rendering the help part for the field. It's an associative array with HTML
-        attribute as a key. This attributes can also be directly set inside the
-        template:
+.. versionadded:: 4.2
+    The ``help_attr`` option was introduced in Symfony 4.2.
 
-        .. configuration-block::
+Sets the HTML attributes for the element used to display the help message of the
+form field. Its value is an associative array with HTML attribute names as keys.
+These attributes can also be set in the template:
 
-        .. code-block:: twig
+.. code-block:: twig
 
-        {{ form_help(form.name, 'Your name', {
+    {{ form_help(form.name, 'Your name', {
         'label_attr': {'class': 'CUSTOM_LABEL_CLASS'}
-        }) }}
-
-        .. code-block:: php
-
-        echo $view['form']->help(
-        $form['name'],
-        'Your name',
-        array('label_attr' => array('class' => 'CUSTOM_LABEL_CLASS'))
-        );
+    }) }}
