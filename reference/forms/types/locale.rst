@@ -45,6 +45,7 @@ manually, but then you should just use the ``ChoiceType`` directly.
 |             | - `disabled`_                                                          |
 |             | - `empty_data`_                                                        |
 |             | - `help`_                                                              |
+|             | - `help_attr`_                                                         |
 |             | - `label`_                                                             |
 |             | - `label_attr`_                                                        |
 |             | - `label_format`_                                                      |
@@ -115,6 +116,8 @@ The actual default value of this option depends on other field options:
     :start-after: DEFAULT_PLACEHOLDER
 
 .. include:: /reference/forms/types/options/help.rst.inc
+
+.. include:: /reference/forms/types/options/help_attr.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
