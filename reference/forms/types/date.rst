@@ -36,6 +36,7 @@ and can understand a number of different input formats via the `input`_ option.
 | options              | - `disabled`_                                                               |
 |                      | - `error_mapping`_                                                          |
 |                      | - `help`_                                                                   |
+|                      | - `help_attr`_                                                              |
 |                      | - `inherit_data`_                                                           |
 |                      | - `invalid_message`_                                                        |
 |                      | - `invalid_message_parameters`_                                             |
@@ -208,6 +209,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/help.rst.inc
+
+.. include:: /reference/forms/types/options/help_attr.rst.inc
 
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
