@@ -1,5 +1,5 @@
 help_attr
-~~~~
+~~~~~~~~~
 
 **type**: ``array`` **default**: ``array()``
 
