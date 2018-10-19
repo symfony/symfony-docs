@@ -1,0 +1,42 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2018-10-19T08:54:12Z
+
+travis is failing due to:
+
+```
+Warning, treated as error:
+/home/travis/build/symfony/symfony-docs/security/multiple_guard_authenticators.rst:81: WARNING: unknown document: /security/multiple_user_providers
+```
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-19T09:10:38Z
+
+Yes, the problem is exactly this phrase in `multiple_guard_authenticators.rst`:
+
+```rst
+If your authenticators need separate providers, you will need to create a
+:doc:`chain of user providers </security/multiple_user_providers>`.
+```
+
+The solution is to reword as this:
+
+```rst
+If your authenticators need separate providers, you will need to create a
+:doc:`user provider of type "chain" </security/user_provider>`.
+```
+
+Or maybe even remove the phrase ... because the next section in that article is: "Multiple Authenticators with Separate Entry Points"  Maybe that's the same or related somehow?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-19T10:21:36Z
+
+Let's try to fix this as soon as possible because it's making all PRs fail :)  @xabbuh which solution do you prefer? Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-10-19T10:48:11Z
+
+We do not have any explicit documentation of the chain user provider (we only mention it briefly in some places). So for now I would just remove this paragraph.
