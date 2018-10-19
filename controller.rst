@@ -383,24 +383,12 @@ Managing the Session
 --------------------
 
 Symfony provides a session service that you can use to store information
-about the user between requests. Session storage and other configuration can
-be controlled under the :ref:`framework.session configuration <config-framework-session>`.
+about the user between requests. Session is enabled by default, but will only be
+started if you read or write from it.
 
-First, activate the session by uncommenting the ``session`` key in ``config/packages/framework.yaml``:
-
-.. code-block:: diff
-
-    # config/packages/framework.yaml
-    framework:
-        # ...
-
-    -     #session:
-    -     #    # The native PHP session handler will be used
-    -     #    handler_id: ~
-    +     session:
-    +         # The native PHP session handler will be used
-    +         handler_id: ~
-        # ...
+Session storage and other configuration can be controlled under the
+:ref:`framework.session configuration <config-framework-session>` in
+``config/packages/framework.yaml``.
 
 To get the session, add an argument and type-hint it with
 :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`::
