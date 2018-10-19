@@ -554,7 +554,7 @@ can ignore this. Here is an example of good and bad behavior::
     public function supports(Request $request)
     {
         // GOOD behavior: only authenticate (i.e. return true) on a specific route
-        return ($request->attributes->get('_route') === 'login_route' && $request->isMethod('POST'));
+        return 'login_route' === $request->attributes->get('_route') && $request->isMethod('POST');
 
         // e.g. your login system authenticates by the user's IP address
         // BAD behavior: So, you decide to *always* return true so that
