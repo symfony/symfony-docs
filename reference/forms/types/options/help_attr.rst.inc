@@ -13,5 +13,5 @@ These attributes can also be set in the template:
 .. code-block:: twig
 
     {{ form_help(form.name, 'Your name', {
-        'label_attr': {'class': 'CUSTOM_LABEL_CLASS'}
+        'help_attr': {'class': 'CUSTOM_LABEL_CLASS'}
     }) }}
