@@ -158,8 +158,12 @@ like this:
     
 .. note::
 
-    Please note that if you decide to store $currentPlace using Doctrine, 
-    the attribute must be mapped to an array.
+    If a ``multiple_state`` is used, the persisted state type should be an ``array``, 
+    using Doctrine, you can use ``json`` or ``json_array``. 
+
+    If a ``single_state`` is used, the persisted state type could be a string
+
+    If something else is used, you're in charge of choosing the best storage format.
     
 With this workflow named ``blog_publishing``, you can get help to decide
 what actions are allowed on a blog post::
