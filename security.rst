@@ -17,9 +17,9 @@ security system step-by-step:
 
 #. :ref:`Create your User Class <create-user-class>`;
 
-#. :ref:`*Authentication* & Firewalls <security-yaml-firewalls>`;
+#. :ref:`Authentication & Firewalls <security-yaml-firewalls>`;
 
-#. :ref:`Denying access to your app (*authorization*) <security-authorization>`;
+#. :ref:`Denying access to your app (authorization) <security-authorization>`;
 
 #. :ref:`Fetching the current User object <retrieving-the-user-object>`.
 
@@ -175,7 +175,7 @@ create dummy database users:
 .. code-block:: terminal
 
     $ php bin/console make:fixtures
-    
+
     The class name of the fixtures to create (e.g. AppFixtures):
     > UserFixture
 
@@ -702,7 +702,7 @@ If you need to get the logged in user from a service, use the
     // ...
 
     use Symfony\\Component\\Security\\Core\\Security;
-    
+
     class ExampleService
     {
         private $security;
@@ -1001,7 +1001,7 @@ Authorization (Denying Access)
     security/securing_services
     security/access_control
     security/access_denied_handler
-    security/acl    
+    security/acl
     security/force_https
     security/security_checker
 
