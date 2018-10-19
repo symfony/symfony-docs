@@ -82,7 +82,7 @@ your layout. In Symfony, use the ``asset()`` helper:
 
 .. code-block:: twig
 
-    {# templates/base.html.twig #}
+    {# app/Resources/views/base.html.twig #}
     <!DOCTYPE html>
     <html>
         <head>
