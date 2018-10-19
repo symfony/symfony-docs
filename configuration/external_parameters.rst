@@ -199,7 +199,7 @@ Symfony provides the following env var processors:
             parameters:
                 env(SECRET): 'some_secret'
             framework:
-               secret: '%env(string:SECRET)%'
+                secret: '%env(string:SECRET)%'
 
         .. code-block:: xml
 
@@ -239,7 +239,7 @@ Symfony provides the following env var processors:
             parameters:
                 env(HTTP_METHOD_OVERRIDE): 'true'
             framework:
-               http_method_override: '%env(bool:HTTP_METHOD_OVERRIDE)%'
+                http_method_override: '%env(bool:HTTP_METHOD_OVERRIDE)%'
 
         .. code-block:: xml
 
@@ -285,8 +285,8 @@ Symfony provides the following env var processors:
             parameters:
                 env(HEALTH_CHECK_METHOD): 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD'
             security:
-               access_control:
-                 - { path: '^/health-check$', methods: '%env(const:HEALTH_CHECK_METHOD)%' }
+                access_control:
+                    - { path: '^/health-check$', methods: '%env(const:HEALTH_CHECK_METHOD)%' }
 
         .. code-block:: xml
 
@@ -335,7 +335,7 @@ Symfony provides the following env var processors:
             parameters:
                 env(TRUSTED_HOSTS): '["10.0.0.1", "10.0.0.2"]'
             framework:
-               trusted_hosts: '%env(json:TRUSTED_HOSTS)%'
+                trusted_hosts: '%env(json:TRUSTED_HOSTS)%'
 
         .. code-block:: xml
 
