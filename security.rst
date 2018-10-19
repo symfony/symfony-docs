@@ -701,7 +701,7 @@ If you need to get the logged in user from a service, use the
     // src/Service/ExampleService.php
     // ...
 
-    use Symfony\\Component\\Security\\Core\\Security;
+    use Symfony\Component\Security\Core\Security;
 
     class ExampleService
     {
