@@ -78,9 +78,6 @@ This is how your security configuration can look in action:
             ),
         ));
 
-If your authenticators need separate providers, you will need to create a 
-:doc:`chain of user providers </security/multiple_user_providers>`.
-
 There is one limitation with this approach - you have to use exactly one entry point.
 
 Multiple Authenticators with Separate Entry Points
