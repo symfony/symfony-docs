@@ -13,7 +13,7 @@ class.
 Generating the Login Form
 -------------------------
 
-Creating a pwoerful login form is easy thanks to the ``make:auth`` command from
+Creating a powerful login form is easy thanks to the ``make:auth`` command from
 `MakerBundle`_. Depending on your setup, you may be asked different questions
 and your generated code may be slightly different:
 
@@ -223,7 +223,7 @@ When you submit the form, the ``LoginFormAuthenticator`` will intercept the requ
 read the email (or whatever field you're using) & password from the form, find the
 ``User`` object, validate the CSRF token and check the password.
 
-But, wepending on your setup, you'll need to finish one or more TODOs before the
+But, depending on your setup, you'll need to finish one or more TODOs before the
 whole process works. You will *at least* need to fill in *where* you want your user to
 be redirected after success:
 
