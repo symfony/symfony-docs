@@ -95,6 +95,11 @@ your layout. In Symfony, use the ``asset()`` helper:
         </body>
     </html>
 
+.. note::
+
+    Make sure to configure asset versioning for these `asset()` paths to work with Encore's `dev` and `production` outputs:
+    :doc:`Asset versioning </frontend/encore/versioning>`
+
 Requiring JavaScript Modules
 ----------------------------
 
