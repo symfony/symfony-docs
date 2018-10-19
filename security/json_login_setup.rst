@@ -123,7 +123,7 @@ path:
 
         return $routes;
 
-When you submit a ``POST`` request to the ``/login`` URL with the following JSON
+When you submit a ``POST`` request, with the header ``Content-Type: application/json``, to the ``/login`` URL with the following JSON
 document as the body, the security system intercepts the requests.
 It takes care of authenticating the user with the submitted username and password
 or triggers an error in case the authentication process fails.
