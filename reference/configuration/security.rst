@@ -490,6 +490,15 @@ multiple firewalls, the "context" could actually be shared:
     ignored and you won't be able to authenticate on multiple firewalls at the
     same time.
 
+User Checkers
+-------------
+
+During the authentication of a user, additional checks might be required to
+verify if the identified user is allowed to log in. Each firewall can include
+a ``user_checker`` option to define the service used to perform those checks.
+
+Learn more about user checkers in :doc:`/security/user_checkers`.
+
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`ircmaxell/password-compat`: https://packagist.org/packages/ircmaxell/password-compat
 .. _`libsodium`: https://pecl.php.net/package/libsodium
