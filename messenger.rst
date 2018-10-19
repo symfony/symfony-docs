@@ -437,50 +437,44 @@ while still having them passed to their respective handler:
             ],
         ]);
 
-Asynchronous emails
--------------------
+.. tip::
 
-A lot of modern apps need to send emails using a message broker (RabbitMQ for example), 
-for now, you know how to dispatch a message and handle it, before sending any email message, 
-time for a quick reminder, in a normal "web" application, 
-Symfony handle the spool during the ``kernel.terminate`` event, problem is, 
-during a message handling, this event isn't dispatched.
+    If you need to send asynchronous emails, it could be usefull to deactivate
+    the spool as it's only called during the ``kernel.terminate`` event (which
+    is not dispatched during command call).
 
-The first thing to change is the SwiftMailer configuration:
+    The first thing to change is the SwiftMailer configuration:
 
-.. configuration-block::
+    .. configuration-block::
 
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        # config/packages/swiftmailer.yaml
-        swiftmailer:
-            # spool: { type: 'memory' }
-           
-    .. code-block:: xml
-    
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/swiftmailer
-                http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
+            # config/packages/swiftmailer.yaml
+            swiftmailer:
+                # spool: { type: 'memory' }
 
-            <swiftmailer:config>
-                <!-- Other keys expect the spool one --> 
-            </swiftmailer:config>
-        </container>
+        .. code-block:: xml
 
-    .. code-block:: php
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/swiftmailer
+                    http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd">
 
-        // config/packages/messenger.php
-        $container->loadFromExtension('swiftmailer', array(
-              // ... Other keys expect the spool one.
-        ));
+                <swiftmailer:config>
+                    <!-- Other keys expect the spool one --> 
+                </swiftmailer:config>
+            </container>
 
-The key here is to tell Switmailer to not use the spool (as explained earlier),
-this way, the message can be consumed directly by the handler and sent.
+        .. code-block:: php
+
+            // config/packages/messenger.php
+            $container->loadFromExtension('swiftmailer', array(
+                  // ... Other keys expect the spool one.
+            ));
 
 Consuming Messages
 ------------------
