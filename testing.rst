@@ -789,6 +789,25 @@ You can remove an existing field, e.g. a tag::
     // the tag has been removed
     $this->assertEquals(0, $crawler->filter('ul.tags > li')->count());
 
+You can also manipulate the DOM before obtaining the form - this can be useful for simulating collections. For example,
+if you had a form which could include dynamic upload fields, you can add the extra fields to the DOM before obtaining
+the form::
+
+    // create dynamic file input element in same document
+    $input = $crawler->getNode(0)->ownerDocument->createElement('input');
+    $input->setAttribute('type', 'file');
+    $input->setAttribute('name', 'my_entity[images][0][newImage]');
+    
+    // get the form node by name and add our new element to it
+    $crawler->filter('form[name="form_name"]')->getNode(0)->appendChild($input);
+    
+    // get the form as normal
+    $form = $crawler->selectButton('Update')->form();
+    
+    // now we can do things like this...
+    $form['my_entity[images][0][newImage]']->upload($filename);
+
+
 .. index::
    pair: Tests; Configuration
 
