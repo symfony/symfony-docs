@@ -475,6 +475,13 @@ while still having them passed to their respective handler:
             $container->loadFromExtension('swiftmailer', array(
                   // ... Other keys expect the spool one.
             ));
+            
+        Then time to send your message which contain the email content:
+        
+        .. code-block:: php
+        
+        $this->messageBus->dispatch(new EmailMessage('...');
+        
 
 Consuming Messages
 ------------------
