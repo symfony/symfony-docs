@@ -480,7 +480,7 @@ while still having them passed to their respective handler:
         
         .. code-block:: php
         
-        $this->messageBus->dispatch(new EmailMessage('...');
+            $this->messageBus->dispatch(new EmailMessage('...');
         
 
 Consuming Messages
