@@ -409,6 +409,17 @@ constructor. It supports return and scalar types for PHP 7.
     // Initializable information
     $reflectionExtractor->isInitializable($class, $property);
 
+.. tip::
+
+    By default, the static properties are also extracted. To excluded them,
+    you can use the ``exclude_static_properties`` context option.
+
+    .. code-block:: php
+
+        $reflectionExtractor->getProperties($class, [
+            ReflectionExtractor::EXCLUDE_STATIC_PROPERTIES => true,
+        ]);
+
 PhpDocExtractor
 ~~~~~~~~~~~~~~~
 
