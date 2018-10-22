@@ -51,7 +51,7 @@ You can choose the front controller that's used by adding it in the URL, like:
      http://localhost/index.php/some/path/...
 
 As you can see, this URL contains the PHP script to be used as the front
-controller. You can use that to easily switch to a custom made front controller
+controller. You can use that to switch to a custom made front controller
 that is located in the ``public/`` directory.
 
 .. seealso::
@@ -123,7 +123,7 @@ controller to make use of the new kernel.
 The Environments
 ----------------
 
-As just mentioned, the ``Kernel`` has to implement another method -
+As mentioned above, the ``Kernel`` has to implement another method -
 :method:`Symfony\\Bundle\\FrameworkBundle\\Kernel\\MicroKernelTrait::configureContainer`.
 This method is responsible for loading the application's configuration from the
 right *environment*.

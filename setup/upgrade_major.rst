@@ -44,7 +44,7 @@ in your browser, these notices are shown in the web dev toolbar:
    :align: center
    :class: with-browser
 
-Of course ultimately, you want to stop using the deprecated functionality.
+Ultimately, you should aim to stop using the deprecated functionality.
 Sometimes, this is easy: the warning might tell you exactly what to change.
 
 But other times, the warning might be unclear: a setting somewhere might

@@ -6,8 +6,8 @@
 How to Implement a Simple Registration Form
 ===========================================
 
-Creating a registration form is pretty easy - it *really* means just creating
-a form that will update some ``User`` model object (a Doctrine entity in this
+Creating a registration form works the same as creating any form. You configure
+the form to update some ``User`` model object (a Doctrine entity in this
 example) and then save it.
 
 First, make sure you have all the dependencies you need installed:
@@ -376,7 +376,7 @@ return the ``email`` property::
         // ...
     }
 
-Next, just update the ``providers`` section of your ``security.yaml`` file
+Next, update the ``providers`` section of your ``security.yaml`` file
 so that Symfony knows how to load your users via the ``email`` property on
 login. See :ref:`authenticating-someone-with-a-custom-entity-provider`.
 

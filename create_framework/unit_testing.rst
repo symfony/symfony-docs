@@ -121,8 +121,7 @@ This test simulates a request that does not match any route. As such, the
 ``match()`` method returns a ``ResourceNotFoundException`` exception and we
 are testing that our framework converts this exception to a 404 response.
 
-Executing this test is as simple as running ``phpunit`` from the
-``example.com`` directory:
+Execute this test by running ``phpunit`` in the ``example.com`` directory:
 
 .. code-block:: terminal
 
@@ -136,7 +135,8 @@ Executing this test is as simple as running ``phpunit`` from the
 After the test ran, you should see a green bar. If not, you have a bug
 either in the test or in the framework code!
 
-Adding a unit test for any exception thrown in a controller is just as easy::
+Adding a unit test for any exception thrown in a controller means expecting a
+response code of 500::
 
     public function testErrorHandling()
     {
@@ -209,7 +209,7 @@ Alternatively you can output the result directly to the console:
 
     $ phpunit --coverage-text
 
-Thanks to the simple object-oriented code that we have written so far, we have
+Thanks to the clean object-oriented code that we have written so far, we have
 been able to write unit-tests to cover all possible use cases of our
 framework; test doubles ensured that we were actually testing our code and not
 Symfony code.

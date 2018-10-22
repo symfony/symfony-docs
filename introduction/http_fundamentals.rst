@@ -24,7 +24,7 @@ to communicate with each other. For example, when checking for the latest
    :align: center
 
 And while the actual language used is a bit more formal, it's still dead-simple.
-HTTP is the term used to describe this simple text-based language. The goal of
+HTTP is the term used to describe this text-based language. The goal of
 your server is *always* to understand text requests and return text responses.
 
 Symfony is built from the ground up around that reality. Whether you realize
@@ -57,7 +57,7 @@ In HTTP-speak, this HTTP request would actually look something like this:
     Accept: text/html
     User-Agent: Mozilla/5.0 (Macintosh)
 
-This simple message communicates *everything* necessary about exactly which
+These few lines communicate *everything* necessary about exactly which
 resource the client is requesting. The first line of an HTTP request is the
 most important, because it contains two important things: the HTTP method (GET)
 and the URI (``/``).
@@ -245,7 +245,7 @@ Symfony Response Object
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony also provides a :class:`Symfony\\Component\\HttpFoundation\\Response`
-class: a simple PHP representation of an HTTP response message. This allows your
+class: a PHP representation of an HTTP response message. This allows your
 application to use an object-oriented interface to construct the response that
 needs to be returned to the client::
 
@@ -275,7 +275,7 @@ and more.
     that you can use in *any* PHP project. This also contains classes for handling
     sessions, file uploads and more.
 
-If Symfony offered nothing else, you would already have a toolkit for easily
+If Symfony offered nothing else, you would already have a toolkit for conveniently
 accessing request information and an object-oriented interface for creating
 the response. Even as you learn the many powerful features in Symfony, keep
 in mind that the goal of your application is always *to interpret a request
@@ -285,7 +285,7 @@ The Journey from the Request to the Response
 --------------------------------------------
 
 Like HTTP itself, using the ``Request`` and ``Response`` objects is pretty
-simple. The hard part of building an application is writing what comes in
+straightforward. The hard part of building an application is writing what comes in
 between. In other words, the real work comes in writing the code that
 interprets the request information and creates the response.
 

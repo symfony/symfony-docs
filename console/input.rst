@@ -71,7 +71,7 @@ to greet all your friends). Only the last argument can be a list::
             'Who do you want to greet (separate multiple names with a space)?'
         );
 
-To use this, just specify as many names as you want:
+To use this, specify as many names as you want:
 
 .. code-block:: terminal
 

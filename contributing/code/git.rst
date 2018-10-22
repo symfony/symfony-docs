@@ -10,7 +10,7 @@ Pull Requests
 Whenever a pull request is merged, all the information contained in the pull
 request (including comments) is saved in the repository.
 
-You can easily spot pull request merges as the commit message always follows
+You can identify pull request merges as the commit message always follows
 this pattern:
 
 .. code-block:: text

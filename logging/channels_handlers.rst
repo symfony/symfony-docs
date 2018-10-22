@@ -24,7 +24,7 @@ Switching a Channel to a different Handler
 ------------------------------------------
 
 Now, suppose you want to log the ``security`` channel to a different file.
-To do this, just create a new handler and configure it to log only messages
+To do this, create a new handler and configure it to log only messages
 from the ``security`` channel:
 
 .. configuration-block::

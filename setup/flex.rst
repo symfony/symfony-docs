@@ -198,10 +198,10 @@ manual steps:
          logger mailer form security translation validator
        $ composer require --dev dotenv maker-bundle orm-fixtures profiler
 
-#. If the project's ``composer.json`` file doesn't contain ``symfony/symfony``
+#. If the project's ``composer.json`` file doesn't contain the ``symfony/symfony``
    dependency, it already defines its dependencies explicitly, as required by
-   Flex. You just need to reinstall all dependencies to force Flex generate the
-   config files in ``config/``, which is the most tedious part of the upgrade
+   Flex. Reinstall all dependencies to force Flex to generate the
+   configuration files in ``config/``, which is the most tedious part of the upgrade
    process:
 
    .. code-block:: terminal

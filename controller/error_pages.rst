@@ -11,7 +11,7 @@ exception in your code.
 
 In the :doc:`development environment </configuration/environments>`,
 Symfony catches all the exceptions and displays a special **exception page**
-with lots of debug information to help you quickly discover the root problem:
+with lots of debug information to help you discover the root problem:
 
 .. image:: /_images/controller/error_pages/exceptions-in-dev-environment.png
    :alt: A typical exception page in the development environment
@@ -198,7 +198,7 @@ If you need a little more flexibility beyond just overriding the template,
 then you can change the controller that renders the error page. For example,
 you might need to pass some additional variables into your template.
 
-To do this, simply create a new controller anywhere in your application and set
+To do this, create a new controller anywhere in your application and set
 the :ref:`twig.exception_controller <config-twig-exception-controller>`
 configuration option to point to it:
 
@@ -249,8 +249,8 @@ will be passed two parameters:
     A :class:`\\Symfony\\Component\\HttpKernel\\Log\\DebugLoggerInterface`
     instance which may be ``null`` in some circumstances.
 
-Instead of creating a new exception controller from scratch you can, of course,
-also extend the default :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`.
+Instead of creating a new exception controller from scratch you can also extend
+the default :class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`.
 In that case, you might want to override one or both of the ``showAction()`` and
 ``findTemplate()`` methods. The latter one locates the template to be used.
 

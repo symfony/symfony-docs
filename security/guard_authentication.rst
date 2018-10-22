@@ -55,7 +55,7 @@ Don't forget to generate and execute the migration:
 Step 2) Create the Authenticator Class
 --------------------------------------
 
-To create a custom authentication system, just create a class and make it implement
+To create a custom authentication system, create a class and make it implement
 :class:`Symfony\\Component\\Security\\Guard\\AuthenticatorInterface`. Or, extend
 the simpler :class:`Symfony\\Component\\Security\\Guard\\AbstractGuardAuthenticator`.
 
@@ -350,7 +350,7 @@ that describes *how* authentication failed via its ``$exception->getMessageKey()
 ``$exception->getMessageData()``) method. The message will be different based on *where*
 authentication fails (i.e. ``getUser()`` versus ``checkCredentials()``).
 
-But, you can easily return a custom message by throwing a
+But, you can also return a custom message by throwing a
 :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAuthenticationException`.
 You can throw this from ``getCredentials()``, ``getUser()`` or ``checkCredentials()``
 to cause a failure::

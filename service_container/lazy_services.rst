@@ -76,7 +76,7 @@ same happens when calling ``Container::get()`` directly.
 The actual class will be instantiated as soon as you try to interact with the
 service (e.g. call one of its methods).
 
-To check if your proxy works you can simply check the interface of the
+To check if your proxy works you can check the interface of the
 received object::
 
     dump(class_implements($service));
@@ -85,8 +85,8 @@ received object::
 .. note::
 
     If you don't install the `ProxyManager bridge`_ and the
-    `ocramius/proxy-manager`_, the container will just skip over the ``lazy``
-    flag and simply instantiate the service as it would normally do.
+    `ocramius/proxy-manager`_, the container will skip over the ``lazy``
+    flag and directly instantiate the service as it would normally do.
 
 Additional Resources
 --------------------

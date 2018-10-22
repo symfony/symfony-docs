@@ -27,9 +27,9 @@ Most third-party bundles define their Symfony dependencies using the ``~2.N`` or
     }
 
 These constraints prevent the bundle from using Symfony 3 components, so it makes
-it impossible to install it in a Symfony 3 based application. This issue is very
-easy to solve thanks to the flexibility of Composer dependencies constraints.
-Just replace ``~2.N`` by ``~2.N|~3.0`` (or ``^2.N`` by ``^2.N|~3.0``).
+it impossible to install it in a Symfony 3 based application. Thanks to the
+flexibility of Composer dependencies constraints, you can specify more than one
+major version by replacing ``~2.N`` by ``~2.N|~3.0`` (or ``^2.N`` by ``^2.N|~3.0``).
 
 The above example can be updated to work with Symfony 3 as follows:
 
@@ -113,7 +113,7 @@ in a Symfony 3 application. Assuming that you already have a Symfony 3 applicati
 you can test the updated bundle locally without having to install it through
 Composer.
 
-If your operating system supports symbolic links, just point the appropriate
+If your operating system supports symbolic links, instead point the appropriate
 vendor directory to your local bundle root directory:
 
 .. code-block:: terminal

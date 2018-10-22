@@ -42,7 +42,7 @@ Built-in Command Loaders
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Console\\CommandLoader\\FactoryCommandLoader`
-class provides a simple way of getting commands lazily loaded as it takes an
+class provides a way of getting commands lazily loaded as it takes an
 array of ``Command`` factories as its only constructor argument::
 
     use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;

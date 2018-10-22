@@ -13,7 +13,7 @@ class.
 Generating the Login Form
 -------------------------
 
-Creating a powerful login form is easy thanks to the ``make:auth`` command from
+Creating a powerful login form can be bootstrapped with the ``make:auth`` command from
 `MakerBundle`_. Depending on your setup, you may be asked different questions
 and your generated code may be slightly different:
 

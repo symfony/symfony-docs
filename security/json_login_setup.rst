@@ -1,7 +1,7 @@
 How to Build a JSON Authentication Endpoint
 ===========================================
 
-In this entry, you'll build a JSON endpoint to log in your users. Of course, when the
+In this entry, you'll build a JSON endpoint to log in your users. When the
 user logs in, you can load your users from anywhere - like the database.
 See :ref:`security-user-providers` for details.
 
