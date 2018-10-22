@@ -148,8 +148,8 @@ Twig Template Caching
 Twig is fast because each template is compiled to a native PHP class and cached.
 But don't worry: this happens automatically and doesn't require *you* to do anything.
 And while you're developing, Twig is smart enough to re-compile your templates after
-you make any changes. That means Twig is fast in production, but easy to use while
-developing.
+you make any changes. That means Twig is fast in production, but convenient to use
+while developing.
 
 .. index::
    single: Templating; Inheritance
@@ -200,12 +200,12 @@ First, build a base layout file:
     Though the discussion about template inheritance will be in terms of Twig,
     the philosophy is the same between Twig and PHP templates.
 
-This template defines the base HTML skeleton document of a simple two-column
+This template defines the base HTML skeleton document of a two-column
 page. In this example, three ``{% block %}`` areas are defined (``title``,
 ``sidebar`` and ``body``). Each block may be overridden by a child template
 or left with its default implementation. This template could also be rendered
 directly. In that case the ``title``, ``sidebar`` and ``body`` blocks would
-simply retain the default values used in this template.
+retain the default values used in this template.
 
 A child template might look like this:
 
@@ -226,7 +226,7 @@ A child template might look like this:
 .. note::
 
     The parent template is stored in ``templates/``, so its path is
-    simply ``base.html.twig``. The template naming conventions are explained
+    ``base.html.twig``. The template naming conventions are explained
     fully in :ref:`template-naming-locations`.
 
 The key to template inheritance is the ``{% extends %}`` tag. This tells
@@ -437,7 +437,8 @@ template. First, create the template that you'll need to reuse.
         {{ article.body }}
     </p>
 
-Including this template from any other template is simple:
+Including this template from any other template is achieved with the
+``{{ include() }}`` function:
 
 .. code-block:: html+twig
 
@@ -452,12 +453,11 @@ Including this template from any other template is simple:
         {% endfor %}
     {% endblock %}
 
-The template is included using the ``{{ include() }}`` function. Notice that the
-template name follows the same typical convention. The ``article_details.html.twig``
-template uses an ``article`` variable, which we pass to it. In this case,
-you could avoid doing this entirely, as all of the variables available in
-``list.html.twig`` are also available in ``article_details.html.twig`` (unless
-you set `with_context`_ to false).
+Notice that the template name follows the same typical convention. The
+``article_details.html.twig`` template uses an ``article`` variable, which we
+pass to it. In this case, you could avoid doing this entirely, as all of the
+variables available in ``list.html.twig`` are also available in
+``article_details.html.twig`` (unless you set `with_context`_ to false).
 
 .. tip::
 
@@ -537,7 +537,7 @@ configuration:
 
         return $routes;
 
-To link to the page, just use the ``path()`` Twig function and refer to the route:
+To link to the page, use the ``path()`` Twig function and refer to the route:
 
 .. code-block:: html+twig
 
@@ -631,7 +631,7 @@ Linking to Assets
 ~~~~~~~~~~~~~~~~~
 
 Templates also commonly refer to images, JavaScript, stylesheets and other
-assets. Of course you could hard-code the path to these assets (e.g. ``/images/logo.png``),
+assets. You could hard-code the web path to these assets (e.g. ``/images/logo.png``),
 but Symfony provides a more dynamic option via the ``asset()`` Twig function.
 
 To use this function, install the *asset* package:
@@ -715,8 +715,9 @@ stylesheets and JavaScripts that you'll need throughout your site:
         </body>
     </html>
 
-That's easy enough! But what if you need to include an extra stylesheet or
-JavaScript from a child template? For example, suppose you have a contact
+This looks almost like regular HTML, but with the addition of the
+``{% block %}``. Those are useful when you need to include an extra stylesheet
+or JavaScript from a child template. For example, suppose you have a contact
 page and you need to include a ``contact.css`` stylesheet *just* on that
 page. From inside that contact page's template, do the following:
 
@@ -733,11 +734,11 @@ page. From inside that contact page's template, do the following:
 
     {# ... #}
 
-In the child template, you simply override the ``stylesheets`` block and
-put your new stylesheet tag inside of that block. Of course, since you want
-to add to the parent block's content (and not actually *replace* it), you
-should use the ``parent()`` Twig function to include everything from the ``stylesheets``
-block of the base template.
+In the child template, you override the ``stylesheets`` block and put your new
+stylesheet tag inside of that block. Since you want to add to the parent
+block's content (and not actually *replace* it), you also use the ``parent()``
+Twig function to include everything from the ``stylesheets`` block of the base
+template.
 
 You can also include assets located in your bundles' ``Resources/public/`` folder.
 You will need to run the ``php bin/console assets:install target [--symlink]``
