@@ -55,12 +55,10 @@ First, enable the JSON login under your firewall:
 
 .. tip::
 
-    The ``check_path`` can also be a route name (but cannot have mandatory wildcards - e.g.
-    ``/login/{foo}`` where ``foo`` has no default value).
+    The ``check_path`` can also be a route name (but cannot have mandatory
+    wildcards - e.g. ``/login/{foo}`` where ``foo`` has no default value).
 
-Now, when a request is made to the ``/login`` URL, the security system initiates
-the authentication process. You just need to configure a route matching this
-path:
+The next step is to configure a route in your app matching this path:
 
 .. configuration-block::
 
@@ -123,11 +121,9 @@ path:
 
         return $routes;
 
-When you submit a ``POST`` request to the ``/login`` URL with the following JSON
-document as the body, the security system intercepts the requests.
-It takes care of authenticating the user with the submitted username and password
-or triggers an error in case the authentication process fails.
-If the authentication is successful, the controller defined earlier will be executed.
+Now, when you make a ``POST`` request, with the header ``Content-Type: application/json``,
+to the ``/login`` URL with the following JSON document as the body, the security
+system intercepts the request and initiates the authentication process:
 
 .. code-block:: json
 
@@ -135,6 +131,10 @@ If the authentication is successful, the controller defined earlier will be exec
         "username": "dunglas",
         "password": "MyPassword"
     }
+
+Symfony takes care of authenticating the user with the submitted username and
+password or triggers an error in case the authentication process fails. If the
+authentication is successful, the controller defined earlier will be executed.
 
 If the JSON document has a different structure, you can specify the path to
 access the ``username`` and ``password`` properties using the ``username_path``
