@@ -1001,9 +1001,8 @@ key. For example, the default Symfony configuration contains this:
         // $this is a reference to the current loader
         $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
 
-
 .. tip::
-    While later versions of Symfony promote a bundle-less approach to application development, it is a good idea to use the     service.yml file to  define services that are contained in the same bundle that the services.yml file is in, as this 
+    While later versions of Symfony promote a bundle-less approach to application development, it is a good idea to use the     service.yml file to  define services that are contained in the same bundle that the services.yml file is in, as this
     will help make the bundle portable and re-usable in the long term. 
 
 .. tip::
