@@ -70,7 +70,7 @@ Example::
         ])),
     ]);
 
-    $result = $bus->dispatch(new MyMessage(/* ... */));
+    $bus->dispatch(new MyMessage(/* ... */));
 
 .. note::
 
