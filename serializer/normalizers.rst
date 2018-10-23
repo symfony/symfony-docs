@@ -4,14 +4,13 @@
 Normalizers
 ===========
 
-Normalizer basically turn **objects** into **array** and vice versa.
-They implement
+Normalizers turn **objects** into **arrays** and vice versa. They implement
 :class:`Symfony\\Component\\Serializer\\Normalizers\\NormalizerInterface` for
 normalizing (object to array) and
 :class:`Symfony\\Component\\Serializer\\Normalizers\\DenormalizerInterface` for
-denormalizing (object to array).
+denormalizing (array to object).
 
-You can add new normalizers to a Serializer instance by using its first constructor argument::
+Normalizers are enabled in the serializer passing them as its first argument::
 
     use Symfony\Component\Serializer\Serializer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -22,7 +21,17 @@ You can add new normalizers to a Serializer instance by using its first construc
 Built-in Normalizers
 --------------------
 
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` to normalizer PHP object using the PropertyAccessor component;
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer` to normalizer PHP object using object that implements ``:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface``;
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer` to normalizer PHP object using getter and setter of the object;
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer` to normalizer PHP object using PHP reflection.
+Symfony includes the following normalizers but you can also
+:doc:`create your own normalizer </serializer/custom_normalizer>`:
+
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` to
+  normalize PHP object using the :doc:`PropertyAccessor component </components/property_access>`;
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer` to
+  normalize PHP object using an object that implements
+  ``:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface``;
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer` to
+  normalize PHP object using the getter and setter methods of the object;
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer` to
+  normalize PHP object using `PHP reflection`_.
+
+.. _`PHP reflection`: https://php.net/manual/en/book.reflection.php
