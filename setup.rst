@@ -43,7 +43,7 @@ Running your Symfony Application
 
 On production, you should use a web server like Nginx or Apache
 (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
-But for development, it's even easier to use the :doc:`Symfony PHP web server <setup/built_in_web_server>`.
+But for development, it's convenient to use the :doc:`Symfony PHP web server <setup/built_in_web_server>`.
 
 Move into your new project and start the server:
 
@@ -76,8 +76,9 @@ by pressing ``Ctrl+C`` from your terminal.
 Storing your Project in git
 ---------------------------
 
-Storing your project in services like GitHub, GitLab and Bitbucket is easy! Init
-a new repository with ``Git`` and you are ready to push to your remote:
+Storing your project in services like GitHub, GitLab and Bitbucket works like with
+any other code project! Init a new repository with ``Git`` and you are ready to push
+to your remote:
 
 .. code-block:: terminal
 
@@ -94,9 +95,9 @@ that file when needed.
 Setting up an Existing Symfony Project
 --------------------------------------
 
-If you're working on an existing Symfony application, you'll just need to do a few
-things to get your project setup. Assuming your team uses Git, you can setup your
-project with the following commands:
+If you're working on an existing Symfony application, you only need to get the
+project code and install the dependencies with composer. Assuming your team uses Git,
+setup your project with the following commands:
 
 .. code-block:: terminal
 
