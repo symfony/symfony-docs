@@ -145,7 +145,6 @@ event::
     // src/EventSubscriber/UserLocaleSubscriber.php
     namespace App\EventSubscriber;
 
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
     use Symfony\Component\Security\Http\SecurityEvents;
@@ -154,7 +153,7 @@ event::
      * Stores the locale of the user in the session after the
      * login. This can be used by the LocaleSubscriber afterwards.
      */
-    class UserLocaleSubscriber implements EventSubscriberInterface
+    class UserLocaleSubscriber
     {
         private $session;
 
