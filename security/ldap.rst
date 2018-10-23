@@ -59,7 +59,7 @@ The providers are configured to use a default service named ``ldap``,
 but you can override this setting in the security component's
 configuration.
 
-An LDAP client can be simply configured using the built-in
+An LDAP client can be configured using the built-in
 `LDAP PHP extension`_ with the following service definition:
 
 .. configuration-block::
@@ -279,7 +279,7 @@ replaced by the username you are trying to load.
 For example, with a ``uid_key`` of ``uid``, and if you are trying to
 load the user ``fabpot``, the final string will be: ``(uid=fabpot)``.
 
-Of course, the username will be escaped, in order to prevent `LDAP injection`_.
+The username will be escaped, in order to prevent `LDAP injection`_.
 
 The syntax for the ``filter`` key is defined by `RFC4515`_.
 

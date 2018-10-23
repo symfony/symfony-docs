@@ -69,7 +69,7 @@ the ``_controller`` route attribute::
         $response = new Response('An error occurred', 500);
     }
 
-A route can now be associated with any controller and of course, within a
+A route can now be associated with any controller and within a
 controller, you can still use the ``render_template()`` to render a template::
 
     $routes->add('hello', new Routing\Route('/hello/{name}', array(
@@ -138,7 +138,7 @@ application that needs some simple logic. Our application has one page that
 says whether a given year is a leap year or not. When calling
 ``/is_leap_year``, you get the answer for the current year, but you can
 also specify a year like in ``/is_leap_year/2009``. Being generic, the
-framework does not need to be modified in any way, just create a new
+framework does not need to be modified in any way, create a new
 ``app.php`` file::
 
     // example.com/src/app.php
@@ -169,7 +169,7 @@ framework does not need to be modified in any way, just create a new
 
 The ``is_leap_year()`` function returns ``true`` when the given year is a leap
 year, ``false`` otherwise. If the year is ``null``, the current year is
-tested. The controller is simple: it gets the year from the request
+tested. The controller does little: it gets the year from the request
 attributes, pass it to the ``is_leap_year()`` function, and according to the
 return value it creates a new Response object.
 

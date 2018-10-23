@@ -26,7 +26,7 @@ constructive, respectful and helpful reviews and replies.
     your ideas and opinions but helping you to better communicate,
     prevent possible confusion, and keeping the Symfony community a
     welcoming place for everyone. **You are free to disagree with
-    someone's opinions, just don't be disrespectful.**
+    someone's opinions, but don't be disrespectful.**
 
 First of, accept that many programming decisions are opinions.
 Discuss trade offs, which you prefer, and reach a resolution quickly.

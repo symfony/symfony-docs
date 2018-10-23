@@ -5,7 +5,7 @@ How to Organize Configuration Files
 ===================================
 
 The Symfony skeleton defines three :doc:`execution environments </configuration/environments>`
-called ``dev``, ``prod`` and ``test``. An environment simply represents a way
+called ``dev``, ``prod`` and ``test``. An environment represents a way
 to execute the same codebase with different configurations.
 
 In order to select the configuration file to load for each environment, Symfony
@@ -129,9 +129,9 @@ Global Configuration Files
 
 Some system administrators may prefer to store sensitive parameters in files
 outside the project directory. Imagine that the database credentials for your
-website are stored in the ``/etc/sites/mysite.com/parameters.yaml`` file. Loading
-this file is as simple as indicating the full file path when importing it from
-any other configuration file:
+website are stored in the ``/etc/sites/mysite.com/parameters.yaml`` file. You
+can load files from outside the project folder by indicating the full file path
+when importing it from any other configuration file:
 
 .. configuration-block::
 

@@ -165,7 +165,7 @@ that accepts the dependency::
 This time the advantages are:
 
 * Setter injection works well with optional dependencies. If you do not
-  need the dependency, then just do not call the setter.
+  need the dependency, then do not call the setter.
 
 * You can call the setter multiple times. This is particularly useful if
   the method adds the dependency to a collection. You can then have a variable
@@ -184,7 +184,7 @@ The disadvantages of setter injection are:
 Property Injection
 ------------------
 
-Another possibility is just setting public fields of the class directly::
+Another possibility is setting public fields of the class directly::
 
     // ...
     class NewsletterManager

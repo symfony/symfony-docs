@@ -6,7 +6,7 @@ Session Proxy Examples
 
 The session proxy mechanism has a variety of uses and this article demonstrates
 two common uses. Rather than using the regular session handler, you can create
-a custom save handler just by defining a class that extends the
+a custom save handler by defining a class that extends the
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Proxy\\SessionHandlerProxy`
 class.
 

@@ -402,7 +402,7 @@ it implements ``EventSubscriberInterface``.
 In this case, you've created a class that implements ``EventSubscriberInterface``
 and registered it as a service. This is more than enough for the container to know
 that you want this to be used as an event subscriber: more configuration is not needed.
-And the tags system is its own, Symfony-specific mechanism. And of course, you can
+And the tags system is its own, Symfony-specific mechanism. And you can
 always set ``autoconfigure`` to ``false`` in ``services.yaml``, or disable it for a specific
 service.
 
@@ -418,7 +418,7 @@ see what it autoconfigures.
     What if I need to add a priority to my tag?
 
 Many autoconfigured tags have an optional priority. If you need to specify a priority
-(or any other optional tag attribute), no problem! Just :ref:`manually configure your service <services-manually-wire-args>`
+(or any other optional tag attribute), no problem! :ref:`Manually configure your service <services-manually-wire-args>`
 and add the tag. Your tag will take precedence over the one added by auto-configuration.
 
 5) Auto-configure with _instanceof
@@ -523,7 +523,7 @@ Start by adding a ``_defaults`` section with ``autowire`` and ``autoconfigure``.
 
         # ...
 
-This step is easy: you're already *explicitly* configuring all of your services.
+This step does not yet change anything yet: you're already *explicitly* configuring all of your services.
 So, ``autowire`` does nothing. You're also already tagging your services, so
 ``autoconfigure`` also doesn't change any existing services.
 

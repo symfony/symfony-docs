@@ -39,7 +39,7 @@ created in your ``outputPath`` directory:
     }
 
 In your app, you need to read this file to dynamically render the correct paths
-in your ``script`` and ``link`` tags. If you're using Symfony, just activate the
+in your ``script`` and ``link`` tags. If you're using Symfony, activate the
 ``json_manifest_file`` versioning strategy:
 
 .. code-block:: yaml
@@ -50,7 +50,7 @@ in your ``script`` and ``link`` tags. If you're using Symfony, just activate the
         assets:
             json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
 
-That's it! Just be sure to wrap each path in the Twig ``asset()`` function
+That's it! Be sure to wrap each path in the Twig ``asset()`` function
 like normal:
 
 .. code-block:: twig
