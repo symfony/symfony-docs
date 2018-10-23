@@ -17,9 +17,9 @@ process. For that you'll have to create your own normalizer. But it's usually
 preferable to let Symfony normalize the object, then hook into the normalization
 to customize the normalized data. To do that, leverage the ``ObjectNormalizer``::
 
-    namespace AppBundle\Serializer;
+    namespace App\Serializer;
 
-    use AppBundle\Entity\Topic;
+    use App\Entity\Topic;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -53,45 +53,15 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
         }
     }
 
-Registering it in Your Application
+
+Registering it in your Application
 ----------------------------------
 
-In order to enable the normalizer in an application based on the entire Symfony
-framework, you must register it as a service and :doc:`tag it </service_container/tags>`
-with ``serializer.normalizer``.
+If you use the Symfony Framework. then you probably want to register this normalizer
+as a service in your app. If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+that's done automatically!
 
-.. configuration-block::
+.. tip::
 
-    .. code-block:: yaml
-
-        # app/config/services.yml
-        services:
-            app.yaml_encoder:
-                class: AppBundle\Serializer\TopicNormalizer
-                tags:
-                    - { name: serializer.normalizer }
-
-    .. code-block:: xml
-
-        <!-- app/config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="app.yaml_encoder" class="AppBundle\Serializer\TopicNormalizer">
-                    <tag name="serializer.normalizer" />
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // app/config/services.php
-        use AppBundle\Serializer\TopicNormalizer;
-
-        $container
-            ->register('app.yaml_encoder', TopicNormalizer::class)
-            ->addTag('serializer.normalizer')
-        ;
+    If you're not using autoconfigure, make sure to register your class as a service
+    and tag it with ``serializer.normalizer``.
