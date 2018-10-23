@@ -49,8 +49,8 @@ It's also a moving target that will continue to improve.
 
 Keep in mind that these are **optional recommendations** that you and your
 team may or may not follow to develop Symfony applications. If you want to
-continue using your own best practices and methodologies, you can of course
-do it. Symfony is flexible enough to adapt to your needs. That will never
+continue using your own best practices and methodologies, you can still do
+that. Symfony is flexible enough to adapt to your needs. That will never
 change.
 
 Who this Book Is for (Hint: It's not a Tutorial)

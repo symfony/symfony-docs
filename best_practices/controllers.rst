@@ -181,7 +181,7 @@ When Things Get More Advanced
 
 The above example works without any configuration because the wildcard name
 ``{id}`` matches the name of the property on the entity. If this isn't true, or
-if you have even more complex logic, the easiest thing to do is just query for
+if you have even more complex logic, your best choice is to query for
 the entity manually. In our application, we have this situation in
 ``CommentController``::
 
