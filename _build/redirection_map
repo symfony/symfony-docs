@@ -393,7 +393,7 @@
 /security/custom_provider /security/user_provider
 /security/multiple_user_providers /security/user_provider
 /security/custom_password_authenticator /security/guard_authentication
-/security/api_key_authentication /security/api_key_authentication
+/security/api_key_authentication /security/guard_authentication
 /security/pre_authenticated /security/auth_providers
 /security/host_restriction /security/firewall_restriction
 /security/acl_advanced /security/acl
