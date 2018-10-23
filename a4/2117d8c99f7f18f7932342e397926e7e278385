@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-23T07:28:47Z
+
+David, thanks for this and the other related contributions. In order to make them mergeable, please change their base to `4.1` instead of `master`. Thanks!
+
+---------------------------------------------------------------------------
+
+by dbu at 2018-10-23T07:55:59Z
+
+thats why i asked about that in symfony/diversity#9 ;-)
+luckily there were only few and easy to solve conflicts. changed the branch for all 3 PRs and will continue from the 4.1 branch now.
