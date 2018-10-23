@@ -63,7 +63,7 @@ to a route definition. Then, after creating your project:
 #. Don't edit any of the default Symfony configuration options.
 #. Don't copy your original application code and don't use the same structure
    of controllers, actions, etc. as in your original application.
-#. Create a simple controller and add your routing definition that shows the bug.
+#. Create a small controller and add your routing definition that shows the bug.
 #. Don't create or modify any other file.
 #. Execute ``composer require symfony/web-server-bundle`` and use the ``server:run``
    command to browse to the new route and see if the bug appears or not.

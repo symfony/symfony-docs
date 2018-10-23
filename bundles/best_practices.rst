@@ -23,7 +23,7 @@ vendor segment, followed by zero or more category segments, and it ends with the
 namespace short name, which must end with ``Bundle``.
 
 A namespace becomes a bundle as soon as you add a bundle class to it. The
-bundle class name must follow these simple rules:
+bundle class name must follow these rules:
 
 * Use only alphanumeric characters and underscores;
 * Use a StudlyCaps name (i.e. camelCase with the first letter uppercased);
@@ -467,8 +467,9 @@ Retrieve the configuration parameters in your code from the container::
 
     $container->getParameter('acme_blog.author.email');
 
-Even if this mechanism is simple enough, you should consider using the more
-advanced :doc:`semantic bundle configuration </bundles/configuration>`.
+While this mechanism requires the least effort, you should consider using the
+more advanced :doc:`semantic bundle configuration </bundles/configuration>` to
+make your configuration more robust.
 
 Versioning
 ----------

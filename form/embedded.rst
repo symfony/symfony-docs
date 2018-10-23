@@ -14,8 +14,8 @@ is easy and natural with the Form component.
 Embedding a Single Object
 -------------------------
 
-Suppose that each ``Task`` belongs to a simple ``Category`` object. Start,
-of course, by creating the ``Category`` object::
+Suppose that each ``Task`` belongs to a simple ``Category`` object. Start by
+creating the ``Category`` object::
 
     // src/Entity/Category.php
     namespace App\Entity;

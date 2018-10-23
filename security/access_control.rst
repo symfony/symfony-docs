@@ -375,7 +375,7 @@ access those URLs via a specific port. This could be useful for example for
 Forcing a Channel (http, https)
 -------------------------------
 
-You can also require a user to access a URL via SSL; just use the
+You can also require a user to access a URL via SSL; use the
 ``requires_channel`` argument in any ``access_control`` entries. If this
 ``access_control`` is matched and the request is using the ``http`` channel,
 the user will be redirected to ``https``:

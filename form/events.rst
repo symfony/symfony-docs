@@ -11,11 +11,8 @@ Using form events, you may modify information or fields at different steps
 of the workflow: from the population of the form to the submission of the
 data from the request.
 
-Registering an event listener is very easy using the Form component.
-
-For example, if you wish to register a function to the
-``FormEvents::PRE_SUBMIT`` event, the following code lets you add a field,
-depending on the request values::
+For example, if you need to add a field depending on request values, you can
+register an event listener to the ``FormEvents::PRE_SUBMIT`` event as follows::
 
     // ...
 
@@ -166,7 +163,7 @@ View data        Same as in ``FormEvents::POST_SET_DATA``
 B) The ``FormEvents::SUBMIT`` Event
 ...................................
 
-The ``FormEvents::SUBMIT`` event is dispatched just before the
+The ``FormEvents::SUBMIT`` event is dispatched right before the
 :method:`Form::submit() <Symfony\\Component\\Form\\Form::submit>` method
 transforms back the normalized data to the model and view data.
 
@@ -260,9 +257,9 @@ Name                    ``FormEvents`` Constant        Event's Data
 Event Listeners
 ~~~~~~~~~~~~~~~
 
-An event listener may be any type of valid callable.
-
-Creating and binding an event listener to the form is very easy::
+An event listener may be any type of valid callable. For example, you can
+define an event listener function inline right in the ``addEventListener``
+method of the ``FormFactory``::
 
     // ...
 

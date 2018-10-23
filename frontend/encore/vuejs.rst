@@ -38,7 +38,7 @@ Hot Module Replacement (HMR)
 ----------------------------
 
 The ``vue-loader`` supports hot module replacement: just update your code and watch
-your Vue.js app update *without* a browser refresh! To activate it, just use the
+your Vue.js app update *without* a browser refresh! To activate it, use the
 ``dev-server`` with the ``--hot`` option:
 
 .. code-block:: terminal

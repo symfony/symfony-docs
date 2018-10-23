@@ -110,7 +110,7 @@ Both formats have the same performance, so this is ultimately a matter of
 personal taste.
 
 We recommend YAML because it's friendly to newcomers and concise. You can
-of course use whatever format you like.
+use any of the other formats if you prefer another format.
 
 Using a Persistence Layer
 -------------------------

@@ -201,7 +201,7 @@ You can also simulate a request::
 
     $request = Request::create('/index.php?name=Fabien');
 
-With the ``Response`` class, you can easily tweak the response::
+With the ``Response`` class, you can tweak the response::
 
     $response = new Response();
 

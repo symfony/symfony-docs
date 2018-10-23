@@ -155,14 +155,14 @@ All attributes on the parent service are shared with the child **except** for
 
     In the examples shown, the classes sharing the same configuration also
     extend from the same parent class in PHP. This isn't necessary at all.
-    You can just extract common parts of similar service definitions into
+    You can also extract common parts of similar service definitions into
     a parent service without also extending a parent class in PHP.
 
 Overriding Parent Dependencies
 ------------------------------
 
 There may be times where you want to override what service is injected for
-one child service only. You can override most settings by simply specifying it
+one child service only. You can override most settings by specifying it
 in the child class:
 
 .. configuration-block::

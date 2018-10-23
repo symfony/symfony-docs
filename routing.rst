@@ -137,8 +137,9 @@ use them later to :ref:`generate URLs <routing-generate>`.
 .. sidebar:: Routing in Other Formats
 
     The ``@Route`` above each method is called an *annotation*. If you'd rather
-    configure your routes in YAML, XML or PHP, that's no problem! Just create a
-    new routing file (e.g. ``routes.xml``) and Symfony will automatically use it.
+    configure your routes in YAML, XML or PHP, that's no problem! Create a new
+    routing file (e.g. ``routes.xml``) in the ``config/`` directory and Symfony
+    will automatically use it.
 
 .. _i18n-routing:
 
@@ -769,7 +770,7 @@ Route path  If the requested URL is ``/foo``          If the requested URL is ``
 Controller Naming Pattern
 -------------------------
 
-The ``controller`` value in your routes has a very simple format ``CONTROLLER_CLASS::METHOD``.
+The ``controller`` value in your routes has the format ``CONTROLLER_CLASS::METHOD``.
 
 .. tip::
 
@@ -790,7 +791,7 @@ system: mapping the URL to a controller and also a route back to a URL.
 
 To generate a URL, you need to specify the name of the route (e.g. ``blog_show``)
 and any wildcards (e.g. ``slug = my-blog-post``) used in the path for that
-route. With this information, any URL can easily be generated::
+route. With this information, an URL can be generated in a controller::
 
     class MainController extends AbstractController
     {

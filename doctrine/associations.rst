@@ -13,7 +13,7 @@ How to Work with Doctrine Associations / Relations
 There are **two** main relationship/association types:
 
 ``ManyToOne`` / ``OneToMany``
-    The most common relationship, mapped in the database with a simple foreign
+    The most common relationship, mapped in the database with a foreign
     key column (e.g. a ``category_id`` column on the ``product`` table). This is
     actually just *one* association type, but seen from the two different *sides*
     of the relation.
@@ -462,7 +462,7 @@ objects).
     Remember that you can see all of the queries made during a request via
     the web debug toolbar.
 
-Of course, if you know up front that you'll need to access both objects, you
+If you know up front that you'll need to access both objects, you
 can avoid the second query by issuing a join in the original query. Add the
 following method to the ``ProductRepository`` class::
 

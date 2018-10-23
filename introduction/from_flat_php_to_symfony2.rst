@@ -128,7 +128,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
 
 By convention, the file that contains all the application logic - ``index.php`` -
 is known as a "controller". The term controller is a word you'll hear a lot,
-regardless of the language or framework you use. It refers simply to the area
+regardless of the language or framework you use. It refers to the area
 of *your* code that processes user input and prepares the response.
 
 In this case, the controller prepares data from the database and then includes
@@ -181,7 +181,7 @@ of the application are isolated in a new file called ``model.php``::
     in this example, only a portion (or none) of the model is actually concerned
     with accessing a database.
 
-The controller (``index.php``) is now very simple::
+The controller (``index.php``) is now is just a few lines of code::
 
     // index.php
     require_once 'model.php';
@@ -192,7 +192,7 @@ The controller (``index.php``) is now very simple::
 
 Now, the sole task of the controller is to get data from the model layer of
 the application (the model) and to call a template to render that data.
-This is a very simple example of the model-view-controller pattern.
+This is a very concise example of the model-view-controller pattern.
 
 Isolating the Layout
 ~~~~~~~~~~~~~~~~~~~~
@@ -303,7 +303,7 @@ the individual blog post:
 
     <?php include 'layout.php' ?>
 
-Creating the second page is now very easy and no code is duplicated. Still,
+Creating the second page now requires very little work and no code is duplicated. Still,
 this page introduces even more lingering problems that a framework can solve
 for you. For example, a missing or invalid ``id`` query parameter will cause
 the page to crash. It would be better if this caused a 404 page to be rendered,
@@ -641,7 +641,7 @@ in a readable format:
         controller: App\Controller\BlogController::show
 
 Now that Symfony is handling all the mundane tasks, the front controller
-``public/index.php`` is dead simple. And since it does so little, you'll never
+``public/index.php`` is reduced to bootstrapping. And since it does so little, you'll never
 have to touch it::
 
     // public/index.php

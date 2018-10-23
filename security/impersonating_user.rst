@@ -14,7 +14,7 @@ a user sees that you can't reproduce).
     (e.g. ``REMOTE_USER``) where the authentication information is expected to be
     sent on each request.
 
-Impersonating the user can be easily done by activating the ``switch_user``
+Impersonating the user can be done by activating the ``switch_user``
 firewall listener:
 
 .. configuration-block::
@@ -64,7 +64,7 @@ firewall listener:
             ),
         ));
 
-To switch to another user, just add a query string with the ``_switch_user``
+To switch to another user, add a query string with the ``_switch_user``
 parameter and the username (or whatever field our user provider uses to load users)
 as the value to the current URL:
 
@@ -133,11 +133,10 @@ over the user's roles until you find one that is a ``SwitchUserRole`` object::
 Controlling the Query Parameter
 -------------------------------
 
-Of course, this feature needs to be made available to a small group of users.
+This feature needs to be available only to a restricted group of users.
 By default, access is restricted to users having the ``ROLE_ALLOWED_TO_SWITCH``
-role. The name of this role can be modified via the ``role`` setting. For
-extra security, you can also change the query parameter name via the ``parameter``
-setting:
+role. The name of this role can be modified via the ``role`` setting. You can
+also adjust the query parameter name via the ``parameter`` setting:
 
 .. configuration-block::
 

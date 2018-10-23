@@ -14,10 +14,10 @@ Symfony uses templates to render each and every part of a form, such as
 ``label`` tags, ``input`` tags, error messages and everything else.
 
 In Twig, each form "fragment" is represented by a Twig block. To customize
-any part of how a form renders, you just need to override the appropriate block.
+any part of how a form renders, you need to override the appropriate block.
 
 In PHP, each form "fragment" is rendered via an individual template file.
-To customize any part of how a form renders, you just need to override the
+To customize any part of how a form renders, override the
 existing template by creating a new one.
 
 To understand how this works, customize the ``form_row`` fragment and
@@ -66,7 +66,7 @@ to the global theme (defined at the bundle level).
 If several custom themes are provided they will be searched in the listed order
 before falling back to the global theme.
 
-To customize any portion of a form, you just need to override the appropriate
+To customize any portion of a form, override the appropriate
 fragment. Knowing exactly which block or file to override is the subject of
 the next section.
 

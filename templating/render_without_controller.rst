@@ -57,7 +57,7 @@ can do this without creating a controller:
 The ``TemplateController`` will simply render whatever template you've passed as
 the ``template`` default value.
 
-You can of course also use this trick when rendering embedded controllers
+You can also use this trick when rendering embedded controllers
 from within a template. But since the purpose of rendering a controller from
 within a template is typically to prepare some data in a custom controller,
 this is probably only useful if you'd like to cache this page partial (see
@@ -73,8 +73,8 @@ Caching the static Template
 ---------------------------
 
 Since templates that are rendered in this way are typically static, it might
-make sense to cache them. Fortunately, this is easy! By configuring a few
-other variables in your route, you can control exactly how your page is cached:
+make sense to cache them. Fortunately, you can configure your route to control
+exactly how your page is cached:
 
 .. configuration-block::
 

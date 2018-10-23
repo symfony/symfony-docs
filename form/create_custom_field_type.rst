@@ -130,7 +130,7 @@ link for details), create a ``shipping_widget`` block to handle this:
                 {% endfor %}
                 </ul>
             {% else %}
-                {# just let the choice widget render the select tag #}
+                {# let the choice widget render the select tag #}
                 {{ block('choice_widget') }}
             {% endif %}
         {% endspaceless %}
@@ -242,7 +242,7 @@ link for details), create a ``shipping_widget`` block to handle this:
 Using the Field Type
 --------------------
 
-You can now use your custom field type immediately, simply by creating a
+You can now use your custom field type immediately, by creating a
 new instance of the type in one of your forms::
 
     // src/Form/Type/OrderType.php

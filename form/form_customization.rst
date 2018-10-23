@@ -12,7 +12,7 @@ templating engine.
 Form Rendering Basics
 ---------------------
 
-Recall that the label, error and HTML widget of a form field can easily
+Recall that the label, error and HTML widget of a form field can
 be rendered by using the ``form_row()`` Twig function or the ``row`` PHP helper
 method:
 
@@ -153,7 +153,7 @@ As you can see, this fragment itself renders another fragment - ``form_widget_si
     {% endblock form_widget_simple %}
 
 The point is, the fragments dictate the HTML output of each part of a form. To
-customize the form output, you just need to identify and override the correct
+customize the form output, you need to identify and override the correct
 fragment. A set of these form fragment customizations is known as a form "theme".
 When rendering a form, you can choose which form theme(s) you want to apply.
 
@@ -176,8 +176,8 @@ this folder.
 
     As you can see, the fragment name is a combination of the field type and
     which part of the field is being rendered (e.g. ``widget``, ``label``,
-    ``errors``, ``row``). As such, to customize how errors are rendered for
-    just input ``text`` fields, you should customize the ``text_errors`` fragment.
+    ``errors``, ``row``). For example, to change how errors are rendered specifically
+    for input fields of type ``text``, you would customize the ``text_errors`` fragment.
 
     More commonly, however, you'll want to customize how errors are displayed
     across *all* fields. You can do this by customizing the ``form_errors``
@@ -336,7 +336,7 @@ You can also apply a form theme to a specific child of your form:
     {% form_theme form.a_child_form 'form/fields.html.twig' %}
 
 This is useful when you want to have a custom theme for a nested form that's
-different than the one of your main form. Just specify both your themes:
+different than the one of your main form. Specify both your themes:
 
 .. code-block:: html+twig
 
@@ -354,7 +354,7 @@ the default block from `form_div_layout.html.twig`_, paste it into a different t
 and then customize it. In many cases, you can avoid doing this by referencing
 the base block when customizing it.
 
-This is easy to do, but varies slightly depending on if your form block customizations
+This is not a lot of work, but varies slightly depending on if your form block customizations
 are in the same template as the form or a separate template.
 
 Referencing Blocks from inside the same Template as the Form
@@ -539,7 +539,7 @@ field whose *id* is ``product_name`` (and name is ``product[name]``).
     The ``product`` portion of the field is the form name, which may be set
     manually or generated automatically based on your form type name (e.g.
     ``ProductType`` equates to ``product``). If you're not sure what your
-    form name is, just view the source of your generated form.
+    form name is, look at the HTML code rendered for your form.
 
     If you want to change the ``product`` or ``name`` portion of the block
     name ``_product_name_widget`` you can set the ``block_name`` option in your
@@ -647,7 +647,7 @@ By default, the errors are rendered inside an unordered list:
         <li>This field is required</li>
     </ul>
 
-To override how errors are rendered for *all* fields, simply copy, paste
+To override how errors are rendered for *all* fields, copy, paste
 and customize the ``form_errors`` fragment.
 
 .. code-block:: html+twig

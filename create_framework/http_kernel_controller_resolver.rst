@@ -109,7 +109,7 @@ correctly::
     public function index($request)
 
 More interesting, ``getArguments()`` is also able to inject any Request
-attribute; the argument just needs to have the same name as the corresponding
+attribute; if the argument has the same name as the corresponding
 attribute::
 
     public function index($year)
@@ -127,7 +127,7 @@ optional attribute of the Request::
 
     public function index($year = 2012)
 
-Let's just inject the ``$year`` request attribute for our controller::
+Let's inject the ``$year`` request attribute for our controller::
 
     class LeapYearController
     {

@@ -307,8 +307,7 @@ On the rendered page, the result will look something like this:
 
 The goal of this section will be to use JavaScript to read this attribute
 and dynamically add new tag forms when the user clicks a "Add a tag" link.
-To make things simple, this example uses jQuery and assumes you have it included
-somewhere on your page.
+This example uses jQuery and assumes you have it included somewhere on your page.
 
 Add a ``script`` tag somewhere on your page so you can start writing some JavaScript.
 
@@ -511,7 +510,7 @@ you will learn about next!).
     of the relationship is modified.
 
     The trick is to make sure that the single "Task" is set on each "Tag".
-    One easy way to do this is to add some extra logic to ``addTag()``,
+    One way to do this is to add some extra logic to ``addTag()``,
     which is called by the form type since ``by_reference`` is set to
     ``false``::
 
@@ -528,7 +527,7 @@ you will learn about next!).
             $this->tags->add($tag);
         }
 
-    If you're going for ``addTask()``, just make sure you have an appropriate method
+    If you're going for ``addTask()``, make sure you have an appropriate method
     that looks something like this::
 
         // src/Entity/Tag.php

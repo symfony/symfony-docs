@@ -6,8 +6,8 @@ How to Validate Raw Values (Scalar Values and Arrays)
 
 Usually you will be validating entire objects. But sometimes, you just want
 to validate a simple value - like to verify that a string is a valid email
-address. This is actually pretty easy to do. From inside a controller, it
-looks like this::
+address. To achieve this, you can instantiate the validator directly. From inside a
+controller, it looks like this::
 
     // ...
     use Symfony\Component\Validator\Constraints as Assert;

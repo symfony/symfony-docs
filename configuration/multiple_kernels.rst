@@ -124,7 +124,7 @@ According to the above code, this config will live in one or multiple files
 stored in ``config/api/`` and ``config/api/ENVIRONMENT_NAME/`` directories.
 
 The new configuration files can be created from scratch when you load just a few
-bundles, because it will be very simple. Otherwise, duplicate the existing
+bundles, because it will be small. Otherwise, duplicate the existing
 config files in ``config/packages/`` or better, import them and override the
 needed options.
 

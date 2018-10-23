@@ -36,7 +36,7 @@ small, simple and *fast*. And you're in total control of what you add.
 Flex Recipes and Aliases
 ------------------------
 
-So how can we install and configure Twig? Just run one command:
+So how can we install and configure Twig? By running one single command:
 
 .. code-block:: terminal
 
@@ -144,7 +144,7 @@ and performance data!
 Oh, and as you install more libraries, you'll get more tools (like a web debug toolbar
 icon that shows database queries).
 
-Using the profiler is easy because it configured *itself* thanks to the recipe.
+You can now directly use the profiler because it configured *itself* thanks to the recipe.
 What else can we install this easily?
 
 Rich API Support

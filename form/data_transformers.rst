@@ -50,7 +50,7 @@ Suppose you have a Task form with a tags ``text`` type::
     }
 
 Internally the ``tags`` are stored as an array, but displayed to the user as a
-simple comma separated string to make them easier to edit.
+comma separated string to make them easier to edit.
 
 This is a *perfect* time to attach a custom data transformer to the ``tags``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
@@ -115,7 +115,7 @@ Harder Example: Transforming an Issue Number into an Issue Entity
 Say you have a many-to-one relation from the Task entity to an Issue entity (i.e. each
 Task has an optional foreign key to its related Issue). Adding a listbox with all
 possible issues could eventually get *really* long and take a long time to load.
-Instead, you decide you want to add a textbox, where the user can simply enter the
+Instead, you decide you want to add a textbox, where the user can enter the
 issue number.
 
 Start by setting up the text field like normal::
@@ -247,7 +247,7 @@ Using the Transformer
 ~~~~~~~~~~~~~~~~~~~~~
 
 Next, you need to use the ``IssueToNumberTransformer`` object inside if ``TaskType``
-and add it to the ``issue`` field. No problem! Just add a ``__construct()`` method
+and add it to the ``issue`` field. No problem! Add a ``__construct()`` method
 and type-hint the new class::
 
     // src/Form/Type/TaskType.php
@@ -294,7 +294,7 @@ know to pass your ``TaskType`` an instance of the ``IssueToNumberTransformer``.
     For more information about defining form types as services, read
     :doc:`register your form type as a service </form/form_dependencies>`.
 
-Now, you can easily use your ``TaskType``::
+Now, you can use your ``TaskType``::
 
     // e.g. in a controller somewhere
     $form = $this->createForm(TaskType::class, $task);

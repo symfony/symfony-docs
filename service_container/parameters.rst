@@ -167,9 +167,9 @@ accessor methods for parameters::
 
 .. caution::
 
-    The used ``.`` notation is just a
+    The used ``.`` notation is a
     :ref:`Symfony convention <service-naming-conventions>` to make parameters
-    easier to read. Parameters are just flat key-value elements, they can't
+    easier to read. Parameters are flat key-value elements, they can't
     be organized into a nested array
 
 .. note::
