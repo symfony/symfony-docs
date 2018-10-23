@@ -1002,7 +1002,7 @@ key. For example, the default Symfony configuration contains this:
         $this->registerClasses($definition, 'AppBundle\\Controller\\', '../../src/AppBundle/Controller/*');
 
 .. tip::
-    While later versions of Symfony promote a bundle-less approach to application development, it is a good idea to use the     services.yml file to  define services that are contained in the same bundle that the services.yml file is in, as this will help make the bundle portable and re-usable in the long term. 
+    While later versions of Symfony promote a bundle-less approach to application development, it is a good idea to use the services.yml file to  define services that are contained in the same bundle that the services.yml file is in, as this will help make the bundle portable and re-usable in the long term. 
 
 .. tip::
 
