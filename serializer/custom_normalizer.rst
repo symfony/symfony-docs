@@ -53,15 +53,10 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
         }
     }
 
-
 Registering it in your Application
 ----------------------------------
 
-If you use the Symfony Framework. then you probably want to register this normalizer
-as a service in your app. If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
-that's done automatically!
-
-.. tip::
-
-    If you're not using autoconfigure, make sure to register your class as a service
-    and tag it with ``serializer.normalizer``.
+Before using this normalizer in a Symfony application it must be registered as
+a service and :doc:`tagged </service_container/tags>` with ``serializer.normalizer``.
+If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+this is done automatically!
