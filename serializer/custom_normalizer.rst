@@ -58,5 +58,5 @@ Registering it in your Application
 
 Before using this normalizer in a Symfony application it must be registered as
 a service and :doc:`tagged </service_container/tags>` with ``serializer.normalizer``.
-If you're using the :ref:`default services.yml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is done automatically!
