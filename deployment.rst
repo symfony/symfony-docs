@@ -145,7 +145,7 @@ most natural in your hosting environment.
     .. code-block:: terminal
 
         $ composer remove symfony/dotenv
-        $ composer reuire symfony/dotenv
+        $ composer require symfony/dotenv
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
