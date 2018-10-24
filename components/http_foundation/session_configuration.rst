@@ -69,7 +69,7 @@ handlers by providing six callback functions which PHP calls internally at
 various points in the session workflow.
 
 The Symfony HttpFoundation component provides some by default and these can
-easily serve as examples if you wish to write your own.
+serve as examples if you wish to write your own.
 
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler`
 * :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`

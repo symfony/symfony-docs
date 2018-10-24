@@ -6,10 +6,10 @@ Session Management
 ==================
 
 The Symfony HttpFoundation component has a very powerful and flexible session
-subsystem which is designed to provide session management through a simple
+subsystem which is designed to provide session management through a clear
 object-oriented interface using a variety of session storage drivers.
 
-Sessions are used via the simple :class:`Symfony\\Component\\HttpFoundation\\Session\\Session`
+Sessions are used via the :class:`Symfony\\Component\\HttpFoundation\\Session\\Session`
 implementation of :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface` interface.
 
 .. caution::
@@ -62,8 +62,8 @@ Session API
 The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` class implements
 :class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`.
 
-The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` has a simple API
-as follows divided into a couple of groups.
+The :class:`Symfony\\Component\\HttpFoundation\\Session\\Session` has the
+following API, divided into a couple of groups.
 
 Session Workflow
 ................
@@ -167,7 +167,7 @@ and "Remember Me" login settings or other user based state information.
     This implementation allows for attributes to be stored in a structured namespace.
 
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface`
-has a simple API
+has the API
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface::set`
     Sets an attribute by name (``set('name', 'value')``).
@@ -265,7 +265,7 @@ This is however just one application for flash messages.
     caching.
 
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface`
-has a simple API
+has the API
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::add`
     Adds a flash message to the stack of specified type.
@@ -321,7 +321,7 @@ Examples of setting multiple flashes::
 
 Displaying the flash messages might look as follows.
 
-Simple, display one type of message::
+Display one type of message::
 
     // display warnings
     foreach ($session->getFlashBag()->get('warning', array()) as $message) {

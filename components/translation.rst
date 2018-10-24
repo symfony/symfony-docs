@@ -138,7 +138,7 @@ file as the second argument, instead of an array::
 The Translation Process
 -----------------------
 
-To actually translate the message, the Translator uses a simple process:
+To actually translate the message, the Translator uses the following process:
 
 * A catalog of translated messages is loaded from translation resources defined
   for the ``locale`` (e.g. ``fr_FR``). Messages from the

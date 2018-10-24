@@ -75,7 +75,7 @@ tree.
 Node Filtering
 ~~~~~~~~~~~~~~
 
-Using XPath expressions is really easy::
+Using XPath expressions, you can select specific nodes within the document::
 
     $crawler = $crawler->filterXPath('descendant-or-self::body/p');
 
@@ -83,8 +83,8 @@ Using XPath expressions is really easy::
 
     ``DOMXPath::query`` is used internally to actually perform an XPath query.
 
-Filtering is even easier if you have the CssSelector component installed.
-This allows you to use jQuery-like selectors to traverse::
+If you prefer CSS selectors over XPath, install the CssSelector component.
+It allows you to use jQuery-like selectors to traverse::
 
     $crawler = $crawler->filter('body > p');
 

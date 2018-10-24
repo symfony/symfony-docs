@@ -16,8 +16,8 @@ box, because it follows the standard observer pattern where the event object
 encapsulates an event 'subject', but has the addition of optional extra
 arguments.
 
-:class:`Symfony\\Component\\EventDispatcher\\GenericEvent` has a simple
-API in addition to the base class
+:class:`Symfony\\Component\\EventDispatcher\\GenericEvent` adds some more
+methods in addition to the base class
 :class:`Symfony\\Component\\EventDispatcher\\Event`
 
 * :method:`Symfony\\Component\\EventDispatcher\\GenericEvent::__construct`:
@@ -48,7 +48,7 @@ the event subject.
 The following examples show use-cases to give a general idea of the flexibility.
 The examples assume event listeners have been added to the dispatcher.
 
-Simply passing a subject::
+Passing a subject::
 
     use Symfony\Component\EventDispatcher\GenericEvent;
 

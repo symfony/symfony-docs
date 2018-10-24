@@ -5,7 +5,7 @@ Adding Custom Format Support
 ============================
 
 Sometimes, you need to deal with custom formats for translation files. The
-Translation component is flexible enough to support this. Just create a
+Translation component is flexible enough to support this. Create a
 loader (to load translations) and, optionally, a dumper (to dump translations).
 
 Imagine that you have a custom format where translation messages are defined
