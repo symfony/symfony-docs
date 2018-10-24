@@ -614,6 +614,11 @@ Generates the file path inside an ``<a>`` element. If the path is inside
 the kernel root directory, the kernel root directory path is replaced by
 ``kernel.root_dir`` (showing the full path in a tooltip on hover).
 
+.. versionadded:: 4.2
+    The ``kernel.root_dir`` parameter, which stores the directory where the
+    Symfony kernel class is located. was deprecated in Symfony 4.2 and replaced
+    by ``kernel.project_dir``, which stores the main directory of the project.
+
 format_file_from_text
 ~~~~~~~~~~~~~~~~~~~~~
 
