@@ -155,7 +155,7 @@ the CSRF generator and validated when binding the form.
         // ...
         
 .. tip::
-    If you want to disable CSRF on your form, you can give specific options to your form builder through the createBuilder() function.:
+    If you want to disable CSRF on your form, you can give specific options to your form builder through the createBuilder() function:
         
         use Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType
     
