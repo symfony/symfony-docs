@@ -263,7 +263,7 @@ environment through your browser:
 
     You can achieve this by using a special ``imports`` key:
 
-    .. configuration-block:
+    .. configuration-block::
 
         .. code-block:: yaml
 
