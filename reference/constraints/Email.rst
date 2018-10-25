@@ -134,6 +134,9 @@ checkMX
 
 **type**: ``boolean`` **default**: ``false``
 
+.. versionadded:: 4.2
+    This option was deprecated in Symfony 4.2.
+
 If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
 check the validity of the MX record of the host of the given email.
 
@@ -146,6 +149,9 @@ checkHost
 ~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 4.2
+    This option was deprecated in Symfony 4.2.
 
 If true, then the :phpfunction:`checkdnsrr` PHP function will be used to
 check the validity of the MX *or* the A *or* the AAAA record of the host
