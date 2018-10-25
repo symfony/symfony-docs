@@ -612,7 +612,7 @@ format_file
 
 Generates the file path inside an ``<a>`` element. If the path is inside
 the kernel root directory, the kernel root directory path is replaced by
-``kernel.root_dir`` (showing the full path in a tooltip on hover).
+``kernel.project_dir`` (showing the full path in a tooltip on hover).
 
 format_file_from_text
 ~~~~~~~~~~~~~~~~~~~~~
