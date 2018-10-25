@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by ro0NL at 2018-10-24T10:50:01Z
+
+I think that's forgotten in https://github.com/symfony/symfony/pull/28890, where only the `CodeHelper` was patched, but not `CodeExtension`.
+
+So should be fixed yes. cc @nicolas-grekas
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-10-24T10:51:14Z
+
+PR welcome :)
