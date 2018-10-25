@@ -217,6 +217,7 @@ take a look at how this bundle works.
     :maxdepth: 1
 
     serializer/custom_encoders
+    serializer/custom_normalizer
 
 .. _`APCu`: https://github.com/krakjoe/apcu
 .. _`ApiPlatform`: https://github.com/api-platform/core
