@@ -209,6 +209,7 @@ take a look at how this bundle works.
 .. toctree::
     :maxdepth: 1
 
+    serializer/normalizers
     serializer/custom_encoders
     serializer/custom_normalizer
 
