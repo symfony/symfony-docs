@@ -562,21 +562,25 @@ Serving Files
 When sending a file, you must add a ``Content-Disposition`` header to your
 response. While creating this header for basic file downloads is easy, using
 non-ASCII filenames is more involving. The
-:method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::makeDisposition`
+:method:`Symfony\\Component\\HttpFoundation\\HeaderUtils::makeDisposition`
 abstracts the hard work behind a simple API::
 
+    use Symfony\Component\HttpFoundation\HeaderUtils;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
     $fileContent = ...; // the generated file content
     $response = new Response($fileContent);
 
-    $disposition = $response->headers->makeDisposition(
-        ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+    $disposition = HeaderUtils::makeDisposition(
+        HeaderUtils::DISPOSITION_ATTACHMENT,
         'foo.pdf'
     );
 
     $response->headers->set('Content-Disposition', $disposition);
+
+.. versionadded:: 4.2
+    The static ``HeaderUtils::makeDisposition()`` method was introduced in Symfony 4.2.
 
 Alternatively, if you are serving a static file, you can use a
 :class:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse`::
