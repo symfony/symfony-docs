@@ -251,13 +251,10 @@ with a locale. This can be done by defining a different prefix for each locale
         // config/routes/annotations.php
         use Symfony\Component\Routing\RouteCollection;
 
-        $app = $loader->import('../src/Controller/', 'annotation');
+        $routes = $loader->import('../src/Controller/', 'annotation');
         // don't prefix URLs for English, the default locale
         $app->addPrefix('/', array('_locale' => 'en'));
         $app->addPrefix('/nl', array('_locale' => 'nl'));
-
-        $routes = new RouteCollection();
-        $routes->addCollection($app);
 
         return $routes;
 
