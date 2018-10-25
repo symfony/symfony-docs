@@ -483,7 +483,7 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
 .. note::
 
-    You can also implement 
+    You can also implement
     :class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface`
     to access to the current class name, format and context.
 
@@ -534,8 +534,8 @@ processes::
 Configure name conversion using metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When using this component inside a Symfony application and the class metadata factory is enabled
-as explained in the :ref:`Attributes Groups section <component-serializer-attributes-groups>`,
+When using this component inside a Symfony application and the class metadata
+factory is enabled as explained in the :ref:`Attributes Groups section <component-serializer-attributes-groups>`,
 this is already set up and you only need to provide the configuration. Otherwise::
 
     // ...
@@ -567,7 +567,7 @@ defines a ``Person`` entity with a ``firstName`` property:
         class Person
         {
             /**
-             * @SerializedName("firstname")
+             * @SerializedName("customer_name")
              */
             private $firstName;
 
@@ -584,7 +584,7 @@ defines a ``Person`` entity with a ``firstName`` property:
         App\Entity\Person:
             attributes:
                 firstName:
-                    serialized_name: firstname
+                    serialized_name: customer_name
 
     .. code-block:: xml
 
@@ -595,14 +595,15 @@ defines a ``Person`` entity with a ``firstName`` property:
                 http://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
         >
             <class name="App\Entity\Person">
-                <attribute name="firstName" serialized-name="firstname" />
+                <attribute name="firstName" serialized-name="customer_name" />
             </class>
         </serializer>
 
-Once configured, the serializer uses the mapping to convert pproperty names when serializing and deserializing::
+This custom mapping is used to convert property names when serializing and
+deserializing objects::
 
     $serialized = $serializer->serialize(new Person("Kévin"));
-    // {"firstname": "Kévin"}
+    // {"customer_name": "Kévin"}
 
 Serializing Boolean Attributes
 ------------------------------
