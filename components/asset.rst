@@ -155,7 +155,7 @@ corresponding output file:
         "...": "..."
     }
 
-In those cases, use the 
+In those cases, use the
 :class:`Symfony\\Component\\Asset\\VersionStrategy\\JsonManifestVersionStrategy`::
 
     use Symfony\Component\Asset\Package;
@@ -372,10 +372,15 @@ document inside a template::
     echo $packages->getUrl('resume.pdf', 'doc');
     // result: /somewhere/deep/for/documents/resume.pdf?v1
 
-Local files and other protocols
+Local Files and Other Protocols
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In cases of e.g. generating a pdf from html you want directly link to the local file for performance reason you can use the asset component the following way: 
+.. versionadded:: 4.2
+    The support for other protocols was introduced in Symfony 4.2.
+
+In addition to HTTP this component supports other protocols (such as ``file://``
+and ``ftp://``). This allows for example to serve local files in order to
+improve performance::
 
     use Symfony\Component\Asset\UrlPackage;
     // ...
@@ -385,18 +390,13 @@ In cases of e.g. generating a pdf from html you want directly link to the local 
         new EmptyVersionStrategy()
     );
 
-    echo $localPackage->getUrl('/logo.png');
-    // result: file:///path/to/images/logo.png
-
-Or link to a file on a ftp server:
-
-    use Symfony\Component\Asset\UrlPackage;
-    // ...
-
     $ftpPackage = new UrlPackage(
         'ftp://example.com/images/',
         new EmptyVersionStrategy()
     );
+
+    echo $localPackage->getUrl('/logo.png');
+    // result: file:///path/to/images/logo.png
 
     echo $ftpPackage->getUrl('/logo.png');
     // result: ftp://example.com/images/logo.png
