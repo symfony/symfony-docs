@@ -230,22 +230,32 @@ configuration arrays together.
 Now, you can use the ``$config`` variable to modify a service provided by your bundle.
 For example, imagine your bundle has the following example config:
 
-.. code-block:: xml
+.. configuration-block::
 
-    <!-- src/Acme/SocialBundle/Resources/config/services.xml -->
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services
-            http://symfony.com/schema/dic/services/services-1.0.xsd">
+    .. code-block:: yaml
 
-        <services>
-            <service id="acme.social.twitter_client" class="Acme\SocialBundle\TwitterClient">
-                <argument></argument> <!-- will be filled in with client_id dynamically -->
-                <argument></argument> <!-- will be filled in with client_secret dynamically -->
-            </service>
-        </services>
-    </container>
+        # src/Acme/SocialBundle/Resources/config/services.yaml
+        Acme\SocialBundle\Service\TwitterService:
+            arguments:
+                $clientId: ~
+                $clientSecret: ~
+
+    .. code-block:: xml
+
+        <!-- src/Acme/SocialBundle/Resources/config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="acme.social.twitter_client" class="Acme\SocialBundle\TwitterClient">
+                    <argument></argument> <!-- will be filled in with client_id dynamically -->
+                    <argument></argument> <!-- will be filled in with client_secret dynamically -->
+                </service>
+            </services>
+        </container>
 
 In your extension, you can load this and dynamically set its arguments::
 
@@ -264,8 +274,8 @@ In your extension, you can load this and dynamically set its arguments::
         $config = $this->processConfiguration($configuration, $configs);
 
         $definition = $container->getDefinition('acme.social.twitter_client');
-        $definition->replaceArgument(0, $config['twitter']['client_id']);
-        $definition->replaceArgument(1, $config['twitter']['client_secret']);
+        $definition->replaceArgument('$clientId', $config['twitter']['client_id']);
+        $definition->replaceArgument('$clientSecret', $config['twitter']['client_secret']);
     }
 
 .. tip::
