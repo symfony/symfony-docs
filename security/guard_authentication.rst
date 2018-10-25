@@ -475,7 +475,7 @@ are two possible fixes:
         public function supports(Request $request)
         {
     +         // if there is already an authenticated user (likely due to the session)
-    +         // then return null and skip authentication: there is no need.
+    +         // then return false and skip authentication: there is no need.
     +         if ($this->security->getUser()) {
     +             return false;
     +         }
