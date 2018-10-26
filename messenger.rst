@@ -49,7 +49,7 @@ message handler. It's a class with an ``__invoke`` method::
     // src/MessageHandler/MyMessageHandler.php
     namespace App\MessageHandler;
 
-    use Symfony\Component\Messenger\Handler;
+    use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
     class MyMessageHandler implements MessageHandlerInterface
     {
