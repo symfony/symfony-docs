@@ -175,8 +175,8 @@ First, create your sender::
 
     class ImportantActionToEmailSender implements SenderInterface
     {
-       private $toEmail;
        private $mailer;
+       private $toEmail;
 
        public function __construct(\Swift_Mailer $mailer, string $toEmail)
        {
