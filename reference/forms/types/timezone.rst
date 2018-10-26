@@ -72,6 +72,9 @@ regions
 
 The available regions in the timezone choice list. For example: ``DateTimeZone::AMERICA | DateTimeZone::EUROPE``
 
+.. versionadded:: 4.2
+    This option was deprecated in Symfony 4.2.
+
 Overridden Options
 ------------------
 
