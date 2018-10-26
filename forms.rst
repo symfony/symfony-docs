@@ -695,6 +695,14 @@ the choice is ultimately up to you.
     to modify it, use the :method:`Symfony\\Component\\Form\\FormFactoryInterface::createNamed` method.
     You can even suppress the name completely by setting it to an empty string.
 
+Using data transfer objects
+---------------------------
+
+There are some problems when using entities as directly mapped data classes for forms.
+These problems can be circumvented by using data transfer objects.
+See
+:doc:`/form/data_transfer_objects` for info.
+
 Final Thoughts
 --------------
 
