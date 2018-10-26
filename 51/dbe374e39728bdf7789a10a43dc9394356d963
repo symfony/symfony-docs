@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-10-25T14:57:20Z
+
+The access decision manager strategy defines how the decision should be made when multiple voters voted on an attribute. It does not affect the behaviour of the `RoleVoter` (and in fact I don't see that its behaviour can be changed, see https://github.com/symfony/symfony/blob/9c8d0999b349960ff34a072343143655d1b35a40/src/Symfony/Component/Security/Core/Authorization/Voter/RoleVoter.php#L39-L54).
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-10-25T14:58:37Z
+
+I think we should also change the documentation here to not talk about roles. `is_granted()` actually allows to get a decision for any attribute for which there are voters and is not limited to roles.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-26T06:52:34Z
+
+Thanks for fixing this bug. I wasn't sure about this, so I should have checked the source code before merging. I'm sorry. I also agree with replacing "role" by "permission" or something like that here and in the rest of the docs where appropriate.
