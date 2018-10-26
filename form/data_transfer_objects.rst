@@ -36,8 +36,8 @@ example:
     $ composer require form validator twig-bundle orm-pack security-csrf annotations
 
 Use the example ``Task`` entity from :doc:`the main forms tutorial </forms>`,
-make it a doctrine entity (this requires adding a primary key) and add a
-validation by adding annotations.
+make it a doctrine entity (this requires adding a primary key ``id``), make the
+setters fluent and add a validation by adding annotations.
 
 .. code-block:: diff
 
@@ -52,24 +52,30 @@ validation by adding annotations.
     + */
     class Task
     {
-    +    /**
-    +     * @ORM\Id()
-    +     * @ORM\GeneratedValue()
-    +     * @ORM\Column(type="integer")
-    +     */
-    +    protected $id;
+    +   /**
+    +    * @ORM\Id()
+    +    * @ORM\GeneratedValue()
+    +    * @ORM\Column(type="integer")
+    +    */
+    +   protected $id;
 
-    +    /**
-    +     * @ORM\Column(type="string", length=255)
-    +     * @Assert\NotBlank()
-    +     */
+    +   /**
+    +    * @ORM\Column(type="string", length=255)
+    +    * @Assert\NotBlank()
+    +    */
         protected $task;
 
-    +    /**
-    +    * @ORM\Column(type="datetime", nullable=true)
-    +    */
+    +   /**
+    +   * @ORM\Column(type="datetime", nullable=true)
+    +   * @Assert\DateTime()
+    +   */
         protected $dueDate;
 
+    +   public function getId()
+    +   {
+    +       return $this->id;
+    +   }
+    +
         public function getTask()
         {
             return $this->task;
@@ -78,6 +84,8 @@ validation by adding annotations.
         public function setTask($task)
         {
             $this->task = $task;
+    +
+    +       return $this;
         }
 
         public function getDueDate()
@@ -88,6 +96,8 @@ validation by adding annotations.
         public function setDueDate(\DateTime $dueDate = null)
         {
             $this->dueDate = $dueDate;
+    +
+    +       return $this;
         }
     }
 
@@ -101,7 +111,19 @@ Now, create a data transfer object for the ``Task`` entity using the maker:
 
 .. code-block:: terminal
 
-    $ php bin/console make:dto Task Task
+    $ php bin/console make:dto TaskData
+
+    The name of Entity that the DTO will be bound to:
+    > Task
+
+    Add helper extract/fill methods? (yes/no) [yes]:
+    >
+
+    Omit generation of getters/setters? (yes/no) [yes]:
+    >
+
+    Omit Id field in DTO? (yes/no) [yes]:
+    >
 
 .. tip::
 
@@ -130,6 +152,9 @@ following ``TaskData`` class:
         */
         public $task;
 
+        /**
+        * @Assert\DateTime(format="Y-m-d H:i:s", message="This value is not a valid datetime.", payload=null)
+        */
         public $dueDate;
 
         /**
@@ -152,8 +177,8 @@ following ``TaskData`` class:
         public function fill(Task $task): Task
         {
             $task
-                ->setTask($this->getTask())
-                ->setDueDate($this->getDueDate())
+                ->setTask($this->task)
+                ->setDueDate($this->dueDate)
             ;
 
             return $task;
@@ -166,14 +191,14 @@ following ``TaskData`` class:
         */
         public function extract(Task $task): self
         {
-            $this->setTask($task->getTask());
-            $this->setDueDate($task->getDueDate());
+            $this->task = $task->getTask();
+            $this->dueDate = $task->getDueDate();
 
             return $this;
         }
     }
 
-Notice the assert annotation? This was copied from the Task entity.
+Notice the assert annotations? These were copied from the Task entity.
 The ``extract`` and ``fill`` methods can be used to populate the DTO with data
 from the entity and vice versa.
 
@@ -191,7 +216,7 @@ from the entity and vice versa.
    single: Using the DTO in the Form
 
 Using the DTO in the Form
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use the maker to create a simple CRUD application.
 
@@ -214,16 +239,31 @@ Replace this with ``TaskData`` to prevent the aforementioned problems with an in
 
     - use App\Entity\Task;
     + use App\Form\Data\TaskData;
-
+    + use Symfony\Component\Form\Extension\Core\Type\DateType;
     ...
 
-    public function configureOptions(OptionsResolver $resolver)
+    class TaskType extends AbstractType
     {
-        $resolver->setDefaults([
-    -       'data_class' => Task::class,
-    +       'data_class' => TaskData::class,
-        ]);
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                ->add('task')
+    -           ->add('dueDate')
+    +           ->add('dueDate', DateType::class)
+            ;
+        }
+
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefaults([
+    -           'data_class' => Task::class,
+    +           'data_class' => TaskData::class,
+            ]);
+        }
     }
+
+For this specific example, we also need to explicitly set the ``DateType`` for
+the ``dueDate`` field, as the form component can not guess it from the entity.
 
 .. index::
    single: Using the DTO in the Controller
@@ -276,7 +316,8 @@ Replace the ``Task`` entity with ``TaskData`` in the ``new()`` and ``edit()`` me
           }
 
           return $this->render('task/new.html.twig', [
-              'task' => $task,
+    -         'task' => $task,
+    +         'task' => $taskData,
               'form' => $form->createView(),
           ]);
       }
