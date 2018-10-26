@@ -22,7 +22,7 @@ Usage
 -----
 
 The Debug component provides several tools to help you debug PHP code.
-Enabling them all is as easy as it can get::
+Enabling them all can be done by calling the static method ``Debug::enable()``::
 
     use Symfony\Component\Debug\Debug;
 
@@ -80,7 +80,7 @@ throw more helpful exceptions when a class isn't found by the registered
 autoloaders. All autoloaders that implement a ``findFile()`` method are replaced
 with a ``DebugClassLoader`` wrapper.
 
-Using the ``DebugClassLoader`` is as easy as calling its static
+To activate the ``DebugClassLoader``, call its static
 :method:`Symfony\\Component\\Debug\\DebugClassLoader::enable` method::
 
     use Symfony\Component\Debug\DebugClassLoader;

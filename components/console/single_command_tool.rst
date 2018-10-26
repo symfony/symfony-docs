@@ -33,7 +33,7 @@ The method :method:`Symfony\\Component\\Console\\Application::setDefaultCommand`
 accepts a boolean as second parameter. If true, the command ``echo`` will then
 always be used, without having to pass its name.
 
-Of course, you can still register a command as usual::
+You can still register a command as usual::
 
   #!/usr/bin/env php
   <?php

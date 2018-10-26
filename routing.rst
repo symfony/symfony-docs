@@ -804,7 +804,7 @@ The ``controller`` value in your routes has the format ``CONTROLLER_CLASS::METHO
 .. tip::
 
     To refer to an action that is implemented as the ``__invoke()`` method of a controller class,
-    you do not have to pass the method name, but can just use the fully qualified class name (e.g.
+    you do not have to pass the method name, you can also use the fully qualified class name (e.g.
     ``App\Controller\BlogController``).
 
 .. index::
