@@ -104,7 +104,7 @@ Just like in your real application - autoloading is automatically enabled
 via the ``vendor/autoload.php`` file (as configured by default in the
 ``phpunit.xml.dist`` file).
 
-Running tests for a given file or directory is also very easy:
+You can also limit a test run to a directory or only a specific test file:
 
 .. code-block:: terminal
 
@@ -150,7 +150,7 @@ First, install the BrowserKit component in your project:
 
     $ composer require --dev symfony/browser-kit
 
-Functional tests are simple PHP files that typically live in the ``tests/Controller``
+Functional tests are PHP files that typically live in the ``tests/Controller``
 directory for your bundle. If you want to test the pages handled by your
 ``PostController`` class, start by creating a new ``PostControllerTest.php``
 file that extends a special ``WebTestCase`` class.
@@ -993,7 +993,7 @@ as configured in the ``phpunit.xml.dist`` file:
         <!-- ... -->
     </phpunit>
 
-But you can easily add more directories. For instance, the following
+But you can add more directories. For instance, the following
 configuration adds tests from a custom ``lib/tests`` directory:
 
 .. code-block:: xml

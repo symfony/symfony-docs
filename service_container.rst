@@ -803,7 +803,7 @@ As a best practice, you should only create *private* services, which will happen
 automatically. And also, you should *not* use the ``$container->get()`` method to
 fetch public services.
 
-But, if you *do* need to make a service public, just override the ``public`` setting:
+But, if you *do* need to make a service public, override the ``public`` setting:
 
 .. configuration-block::
 

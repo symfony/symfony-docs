@@ -53,7 +53,7 @@ Using Source Control
 
 If you're using source control (e.g. Git or SVN), you can simplify by having
 your live installation also be a copy of your repository. When you're ready to
-upgrade it is as simple as fetching the latest updates from your source control
+upgrade, fetch the latest updates from your source control
 system. When using Git, a common approach is to create a tag for each release
 and check out the appropriate tag on deployment (see `Git Tagging`_).
 
@@ -78,7 +78,7 @@ There are also tools to help ease the pain of deployment. Some of them have been
 specifically tailored to the requirements of Symfony.
 
 `EasyDeployBundle`_
-    A Symfony bundle that adds easy deploy tools to your application.
+    A Symfony bundle that adds deploy tools to your application.
 
 `Deployer`_
     This is another native PHP rewrite of Capistrano, with some ready recipes for
@@ -104,7 +104,7 @@ specifically tailored to the requirements of Symfony.
     Helps you build a native Debian package for your Symfony project.
 
 Basic scripting
-    You can of course use shell, `Ant`_ or any other build tool to script
+    You can use a shell script, `Ant`_ or any other build tool to script
     the deploying of your project.
 
 Common Post-Deployment Tasks
@@ -152,7 +152,7 @@ C) Install/Update your Vendors
 
 Your vendors can be updated before transferring your source code (i.e.
 update the ``vendor/`` directory, then transfer that with your source
-code) or afterwards on the server. Either way, just update your vendors
+code) or afterwards on the server. Either way, update your vendors
 as you normally do:
 
 .. code-block:: terminal

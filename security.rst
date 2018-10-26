@@ -540,7 +540,7 @@ See :doc:`/security/access_control`.
 Securing Controllers and other Code
 ...................................
 
-You can easily deny access from inside a controller::
+You can deny access from inside a controller::
 
     // src/Controller/AdminController.php
     // ...
