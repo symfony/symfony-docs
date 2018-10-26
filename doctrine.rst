@@ -550,7 +550,7 @@ with any PHP model::
         ]);
     }
 
-Using doctrine to edit an existing product consists of three steps:
+Using Doctrine to edit an existing product consists of three steps:
 
 #. fetching the object from Doctrine;
 #. modifying the object;

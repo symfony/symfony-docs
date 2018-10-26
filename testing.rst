@@ -104,7 +104,7 @@ Just like in your real application - autoloading is automatically enabled
 via the ``vendor/autoload.php`` file (as configured by default in the
 ``phpunit.xml.dist`` file).
 
-You can also limit a test run to a directory or only a specific test file:
+You can also limit a test run to a directory or a specific test file:
 
 .. code-block:: terminal
 
