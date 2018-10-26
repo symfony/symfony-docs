@@ -90,8 +90,8 @@ authentication providers, each supporting a different type of token.
 
 .. note::
 
-    You may of course write your own authentication manager, it only has
-    to implement :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationManagerInterface`.
+    You may write your own authentication manager, the only requirement is that
+    it implements :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationManagerInterface`.
 
 .. _authentication_providers:
 
@@ -196,7 +196,7 @@ Creating a custom Password Encoder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are many built-in password encoders. But if you need to create your
-own, it just needs to follow these rules:
+own, it needs to follow these rules:
 
 #. The class must implement :class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`;
 

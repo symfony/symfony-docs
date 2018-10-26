@@ -260,7 +260,7 @@ when the route doesn't exist::
 Load Routes from a File
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-You've already seen how you can easily add routes to a collection right inside
+You've already seen how you can add routes to a collection right inside
 PHP. But you can also load routes from a number of different files.
 
 The Routing component comes with a number of loader classes, each giving
@@ -347,7 +347,7 @@ The all-in-one Router
 ~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Routing\\Router` class is an all-in-one package
-to quickly use the Routing component. The constructor expects a loader instance,
+to use the Routing component. The constructor expects a loader instance,
 a path to the main route definition and some other settings::
 
     public function __construct(

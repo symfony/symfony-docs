@@ -449,7 +449,7 @@ need to be parsed and the PHP configuration built from them. The compilation
 process makes the container more efficient but it takes time to run. You
 can have the best of both worlds though by using configuration files and
 then dumping and caching the resulting configuration. The ``PhpDumper``
-makes dumping the compiled container easy::
+serves at dumping the compiled container::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
@@ -534,7 +534,7 @@ You do not need to work out which files to cache as the container builder
 keeps track of all the resources used to configure it, not just the
 configuration files but the extension classes and compiler passes as well.
 This means that any changes to any of these files will invalidate the cache
-and trigger the container being rebuilt. You just need to ask the container
+and trigger the container being rebuilt. You need to ask the container
 for these resources and use them as metadata for the cache::
 
     // ...

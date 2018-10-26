@@ -5,7 +5,7 @@
 The Form Component
 ==================
 
-    The Form component allows you to easily create, process and reuse forms.
+    The Form component allows you to create, process and reuse forms.
 
 The Form component is a tool to help you solve the problem of allowing end-users
 to interact with the data and modify the data in your application. And though
@@ -34,7 +34,8 @@ Configuration
     about how to use it in Symfony applications.
 
 In Symfony, forms are represented by objects and these objects are built
-by using a *form factory*. Building a form factory is simple::
+by using a *form factory*. Building a form factory is done with the factory
+method ``Forms::createFormFactory``::
 
     use Symfony\Component\Form\Forms;
 
@@ -158,7 +159,7 @@ Twig Templating
 ~~~~~~~~~~~~~~~
 
 If you're using the Form component to process HTML forms, you'll need a way
-to easily render your form as HTML form fields (complete with field values,
+to render your form as HTML form fields (complete with field values,
 errors, and labels). If you use `Twig`_ as your template engine, the Form
 component offers a rich integration.
 
@@ -290,7 +291,7 @@ Validation
 
 The Form component comes with tight (but optional) integration with Symfony's
 Validator component. If you're using a different solution for validation,
-no problem! Simply take the submitted/bound data of your form (which is an
+no problem! Take the submitted/bound data of your form (which is an
 array or object) and pass it through your own validation system.
 
 To use the integration with Symfony's Validator component, first make sure
@@ -362,7 +363,7 @@ you need to. If your application uses global or static variables (not usually a
 good idea), then you can store the object on some static class or do something
 similar.
 
-Regardless of how you architect your application, just remember that you
+Regardless of how you architect your application, remember that you
 should only have one form factory and that you'll need to be able to access
 it throughout your application.
 
@@ -441,8 +442,7 @@ Setting default Values
 ~~~~~~~~~~~~~~~~~~~~~~
 
 If you need your form to load with some default values (or you're building
-an "edit" form), simply pass in the default data when creating your form
-builder:
+an "edit" form), pass in the default data when creating your form builder:
 
 .. configuration-block::
 
@@ -517,8 +517,8 @@ helper functions:
     :align: center
 
 That's it! By printing ``form_widget(form)``, each field in the form is
-rendered, along with a label and error message (if there is one). As easy
-as this is, it's not very flexible (yet). Usually, you'll want to render each
+rendered, along with a label and error message (if there is one). While this is
+convenient, it's not very flexible (yet). Usually, you'll want to render each
 form field individually so you can control how the form looks. You'll learn how
 to do that in the ":doc:`/form/rendering`" section.
 
@@ -651,7 +651,7 @@ Then:
 3) if the form is valid, perform some action and redirect.
 
 Luckily, you don't need to decide whether or not a form has been submitted.
-Just pass the current request to the ``handleRequest()`` method. Then, the Form
+Pass the current request to the ``handleRequest()`` method. Then, the Form
 component will do all the necessary work for you.
 
 .. _component-form-intro-validation:

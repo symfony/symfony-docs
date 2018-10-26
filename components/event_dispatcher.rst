@@ -29,7 +29,7 @@ The Symfony EventDispatcher component implements the `Mediator`_ and `Observer`_
 design patterns to make all these things possible and to make your projects
 truly extensible.
 
-Take a simple example from :doc:`the HttpKernel component </components/http_kernel>`.
+Take an example from :doc:`the HttpKernel component </components/http_kernel>`.
 Once a ``Response`` object has been created, it may be useful to allow other
 elements in the system to modify it (e.g. add some cache headers) before
 it's actually used. To make this possible, the Symfony kernel throws an
@@ -84,7 +84,7 @@ object itself often contains data about the event being dispatched.
 Naming Conventions
 ..................
 
-The unique event name can be any string, but optionally follows a few simple
+The unique event name can be any string, but optionally follows a few
 naming conventions:
 
 * Use only lowercase letters, numbers, dots (``.``) and underscores (``_``);
@@ -99,8 +99,7 @@ Event Names and Event Objects
 .............................
 
 When the dispatcher notifies listeners, it passes an actual ``Event`` object
-to those listeners. The base ``Event`` class is very simple: it
-contains a method for stopping
+to those listeners. The base ``Event`` class contains a method for stopping
 :ref:`event propagation <event_dispatcher-event-propagation>`, but not much
 else.
 
@@ -451,7 +450,7 @@ listeners, chaining events or even lazy loading listeners into the dispatcher ob
 Dispatcher Shortcuts
 ~~~~~~~~~~~~~~~~~~~~
 
-If you do not need a custom event object, you can simply rely on a plain
+If you do not need a custom event object, you can rely on a plain
 :class:`Symfony\\Component\\EventDispatcher\\Event` object. You do not even
 need to pass this to the dispatcher as it will create one by default unless you
 specifically pass one::

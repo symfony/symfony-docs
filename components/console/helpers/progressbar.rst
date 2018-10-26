@@ -67,7 +67,7 @@ value and then call the ``setMaxSteps()`` method to update it as needed::
 .. versionadded:: 4.1
     The ``setMaxSteps()`` method was introduced in Symfony 4.1.
 
-Another solution is to just omit the steps argument when creating the
+Another solution is to omit the steps argument when creating the
 :class:`Symfony\\Component\\Console\\Helper\\ProgressBar` instance::
 
     $progressBar = new ProgressBar($output);

@@ -6,7 +6,7 @@ Testing with Sessions
 =====================
 
 Symfony is designed from the ground up with code-testability in mind. In order
-to make your code which utilizes session easily testable we provide two separate
+to make your code which utilizes session easily testable, we provide two separate
 mock storage mechanisms for both unit testing and functional testing.
 
 Testing code using real sessions is tricky because PHP's workflow state is global
@@ -37,7 +37,7 @@ Unit Testing
 ------------
 
 For unit testing where it is not necessary to persist the session, you should
-simply swap out the default storage engine with
+swap out the default storage engine with
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockArraySessionStorage`::
 
     use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
@@ -49,7 +49,7 @@ Functional Testing
 ------------------
 
 For functional testing where you may need to persist session data across
-separate PHP processes, simply change the storage engine to
+separate PHP processes, change the storage engine to
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockFileSessionStorage`::
 
     use Symfony\Component\HttpFoundation\Session\Session;
