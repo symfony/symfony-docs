@@ -194,10 +194,11 @@ You can also define your own sorting algorithm with ``sort()`` method::
 
 You can reverse any sorting by using the ``reverseSorting()`` method::
 
+    // results will be sorted "Z to A" instead of the default "A to Z"
     $finder->sortByName()->reverseSorting();
 
 .. versionadded:: 4.2
-    The ``reverseSorting()`` method to reverse the sort order was introduced in Symfony 4.2.
+    The ``reverseSorting()`` method was introduced in Symfony 4.2.
 
 .. note::
 
