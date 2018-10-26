@@ -515,15 +515,10 @@ create a class that implements
 :class:`Symfony\\Component\\DependencyInjection\\EnvVarProcessorInterface` and
 then, define a service for that class::
 
+    use Symfony\Component\DependencyInjection\EnvVarProcessorInterface;
+
     class LowercasingEnvVarProcessor implements EnvVarProcessorInterface
     {
-        private $container;
-
-        public function __construct(ContainerInterface $container)
-        {
-            $this->container = $container;
-        }
-
         public function getEnv($prefix, $name, \Closure $getEnv)
         {
             $env = $getEnv($name);
