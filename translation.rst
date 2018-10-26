@@ -177,7 +177,7 @@ the message inside your :ref:`templates <translation-tags>`.
 The Translation Process
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-To actually translate the message, Symfony uses a simple process:
+To actually translate the message, Symfony uses the following process:
 
 * The ``locale`` of the current user, which is stored on the request is determined;
 
@@ -525,8 +525,7 @@ Summary
 -------
 
 With the Symfony Translation component, creating an internationalized application
-no longer needs to be a painful process and boils down to just a few basic
-steps:
+no longer needs to be a painful process and boils down to these steps:
 
 * Abstract messages in your application by wrapping each in either the
   :method:`Symfony\\Component\\Translation\\Translator::trans` or

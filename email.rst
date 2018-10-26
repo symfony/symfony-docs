@@ -138,8 +138,8 @@ Using Cloud Services to Send Emails
 -----------------------------------
 
 Cloud mailing services are a popular option for companies that don't want to set
-up and maintain their own reliable mail servers. In Symfony apps, using these
-services is as simple as updating the value of ``MAILER_URL`` in the ``.env``
+up and maintain their own reliable mail servers. To use these services in a
+Symfony app, update the value of ``MAILER_URL`` in the ``.env``
 file. For example, for `Amazon SES`_ (Simple Email Service):
 
 .. code-block:: bash

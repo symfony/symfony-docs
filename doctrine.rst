@@ -203,8 +203,9 @@ Migrations: Creating the Database Tables/Schema
 -----------------------------------------------
 
 The ``Product`` class is fully-configured and ready to save to a ``product`` table.
-Of course, your database doesn't actually have the ``product`` table yet. To add
-it, you can leverage the `DoctrineMigrationsBundle`_, which is already installed:
+If you just defined this class, your database doesn't actually have the ``product``
+table yet. To add it, you can leverage the `DoctrineMigrationsBundle`_, which is
+already installed:
 
 .. code-block:: terminal
 
@@ -234,7 +235,7 @@ Migrations & Adding more Fields
 -------------------------------
 
 But what if you need to add a new field property to ``Product``, like a ``description``?
-It's easy to add the new property by hand. But, you can also use ``make:entity``
+You can edit the class to add the new property. But, you can also use ``make:entity``
 again:
 
 .. code-block:: terminal
@@ -278,7 +279,7 @@ methods:
     }
 
 The new property is mapped, but it doesn't exist yet in the ``product`` table. No
-problem! Just generate a new migration:
+problem! Generate a new migration:
 
 .. code-block:: terminal
 
@@ -291,7 +292,7 @@ This time, the SQL in the generated file will look like this:
     ALTER TABLE product ADD description LONGTEXT NOT NULL
 
 The migration system is *smart*. It compares all of your entities with the current
-state of the database and generates the SQL needed to synchronize them! Just like
+state of the database and generates the SQL needed to synchronize them! Like
 before, execute your migrations:
 
 .. code-block:: terminal
@@ -524,7 +525,8 @@ There are many more options you can use. Read more about the `ParamConverter`_.
 Updating an Object
 ------------------
 
-Once you've fetched an object from Doctrine, updating it is easy::
+Once you've fetched an object from Doctrine, you interact with it the same as
+with any PHP model::
 
     /**
      * @Route("/product/edit/{id}")
@@ -548,7 +550,7 @@ Once you've fetched an object from Doctrine, updating it is easy::
         ]);
     }
 
-Updating an object involves just three steps:
+Using doctrine to edit an existing product consists of three steps:
 
 #. fetching the object from Doctrine;
 #. modifying the object;

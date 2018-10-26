@@ -44,7 +44,7 @@ file::
 Creating a Bundle
 -----------------
 
-This section creates and enables a new bundle to show how simple it is to do it.
+This section creates and enables a new bundle to show there are only a few steps required.
 The new bundle is called AcmeTestBundle, where the ``Acme`` portion is just a
 dummy name that should be replaced by some "vendor" name that represents you or
 your organization (e.g. ABCTestBundle for some company named ``ABC``).
@@ -83,9 +83,9 @@ And while it doesn't do anything yet, AcmeTestBundle is now ready to be used.
 Bundle Directory Structure
 --------------------------
 
-The directory structure of a bundle is simple and flexible. By default, the
-bundle system follows a set of conventions that help to keep code consistent
-between all Symfony bundles. Take a look at AcmeDemoBundle, as it contains some
+The directory structure of a bundle is meant to help to keep code consistent
+between all Symfony bundles. It follows a set of conventions, but is flexible
+to be adjusted if needed. Take a look at AcmeDemoBundle, as it contains some
 of the most common elements of a bundle:
 
 ``Controller/``

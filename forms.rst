@@ -71,9 +71,9 @@ going to need to build a form. But before you begin, first focus on the generic
     }
 
 This class is a "plain-old-PHP-object" because, so far, it has nothing
-to do with Symfony or any other library. It's quite simply a normal PHP object
+to do with Symfony or any other library. It's a normal PHP object
 that directly solves a problem inside *your* application (i.e. the need to
-represent a task in your application). Of course, by the end of this article,
+represent a task in your application). By the end of this article,
 you'll be able to submit data to a ``Task`` instance (via an HTML form), validate
 its data and persist it to the database.
 
@@ -614,7 +614,7 @@ that will house the logic for building the task form::
     }
 
 This new class contains all the directions needed to create the task form. It can
-be used to quickly build a form object in the controller::
+be used to build a form object in the controller::
 
     // src/Controller/DefaultController.php
     use App\Form\TaskType;
@@ -627,7 +627,7 @@ be used to quickly build a form object in the controller::
         // ...
     }
 
-Placing the form logic into its own class means that the form can be easily
+Placing the form logic into its own class means that the form can be
 reused elsewhere in your project. This is the best way to create forms, but
 the choice is ultimately up to you.
 
