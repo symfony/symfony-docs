@@ -192,6 +192,13 @@ You can also define your own sorting algorithm with ``sort()`` method::
         return strcmp($a->getRealPath(), $b->getRealPath());
     });
 
+You can reverse any sorting by using the ``reverseSorting()`` method::
+
+    $finder->sortByName()->reverseSorting();
+
+.. versionadded:: 4.2
+    The ``reverseSorting()`` method to reverse the sort order was introduced in Symfony 4.2.
+
 .. note::
 
     Notice that the ``sort*`` methods need to get all matching elements to do
