@@ -1,10 +1,10 @@
 .. index::
    single: Form; Data Transfer Objects
 
-How to use Data Transfer Objects (DTO)
+How to use Data Transfer Objects (DTOs)
 ======================================
 
-Data transfer objects can be used by forms to separate entitites from the
+Data Transfer Objects can be used by forms to separate entities from the
 validation logic of forms.
 Entities should always have a valid state.
 When entities are used as data classes for a form, the data is injected into
@@ -22,13 +22,13 @@ Installation
 ~~~~~~~~~~~~
 
 In applications using :doc:`Symfony Flex </setup/flex>`, run this command to
-install the maker bundle before using it:
+install the Maker bundle before using it:
 
 .. code-block:: terminal
 
     $ composer require maker --dev
 
-You will also need these packages in order to proceed with creating a crud
+You will also need these packages in order to proceed with creating a CRUD
 example:
 
 .. code-block:: terminal
@@ -102,12 +102,12 @@ setters fluent and add a validation by adding annotations.
     }
 
 .. index::
-   single: Creating a data transfer object
+   single: Creating a Data Transfer Object
 
-Creating a data transfer object
+Creating a Data Transfer Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now, create a data transfer object for the ``Task`` entity using the maker:
+Now, create a Data Transfer Object for the ``Task`` entity using the maker:
 
 .. code-block:: terminal
 
@@ -240,7 +240,7 @@ Replace this with ``TaskData`` to prevent the aforementioned problems with an in
     - use App\Entity\Task;
     + use App\Form\Data\TaskData;
     + use Symfony\Component\Form\Extension\Core\Type\DateType;
-    ...
+    // ...
 
     class TaskType extends AbstractType
     {
@@ -285,7 +285,7 @@ Replace the ``Task`` entity with ``TaskData`` in the ``new()`` and ``edit()`` me
     use App\Entity\Task;
     + use App\Form\Data\TaskData;
 
-    ...
+    // ...
 
     /**
     * @Route("/task")
@@ -293,7 +293,7 @@ Replace the ``Task`` entity with ``TaskData`` in the ``new()`` and ``edit()`` me
     class TaskController extends AbstractController
     {
 
-    ...
+    // ...
 
       /**
       * @Route("/new", name="task_new", methods="GET|POST")
