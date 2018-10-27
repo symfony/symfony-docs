@@ -629,7 +629,7 @@ When serializing, you can set a callback to format a specific object property::
 
     // all callback parameters are optional (you can omit the ones you don't use)
     $callback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = array()) {
-        return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : '';
+        return $innerObject instanceof \DateTime ? $innerObject->format(\DateTime::ISO8601) : '';
     };
 
     $normalizer->setCallbacks(array('createdAt' => $callback));
