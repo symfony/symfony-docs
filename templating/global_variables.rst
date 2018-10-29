@@ -156,3 +156,53 @@ This should feel familiar, as it's the same syntax you use in service configurat
                  'user_management' => '@App\Service\UserManagement',
              ),
         ));
+
+
+Inject values based on complex expressions
+------------------------------------------
+
+By taking advantage of the expression language syntax,
+see :doc:`/components/expression_language/syntax`,
+it's possible to inject a result of a service method as global variable into twig.
+
+As previously described in "Referencing Services", it's the same syntax you use in service configuration for arguments.
+Prefix the string with ``@=`` to define a expression as a global Twig variable:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/twig.yaml
+        twig:
+            # ...
+            globals:
+                # the value is the service's id
+                config_value: '@=service("App\Config").get("myvalue")'
+
+    .. code-block:: xml
+
+        <!-- config/packages/twig.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                http://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <!-- ... -->
+                <twig:global key="config_value">@=service("App\Config").get("myvalue")</twig:global>
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/twig.php
+        $container->loadFromExtension('twig', array(
+             // ...
+             'globals' => array(
+                 'config_value' => '@=service("App\Config").get("myvalue")',
+             ),
+        ));
