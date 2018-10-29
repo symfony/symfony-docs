@@ -41,11 +41,11 @@ As an example you'll create a price filter to format a given number into price::
         public function getFilters()
         {
             return array(
-                new TwigFilter('price', array($this, 'priceFilter')),
+                new TwigFilter('price', array($this, 'formatPrice')),
             );
         }
 
-        public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;
@@ -75,11 +75,11 @@ Here's how to create a custom **function**::
         public function getFunctions()
         {
             return array(
-                new TwigFunction('total', array($this, 'totalFunction')),
+                new TwigFunction('total', array($this, 'calculateTotal')),
             );
         }
 
-        public function totalFunction(float $price, int $quantity)
+        public function calculateTotal(float $price, int $quantity)
         {
             return $price * $quantity;
         }
