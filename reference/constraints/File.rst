@@ -29,6 +29,11 @@ form field.
 |                | - `notReadableMessage`_                                             |
 |                | - `uploadIniSizeErrorMessage`_                                      |
 |                | - `uploadFormSizeErrorMessage`_                                     |
+|                | - `uploadPartialErrorMessage`_                                      |
+|                | - `uploadNoFileErrorMessage`_                                       |
+|                | - `uploadNoTmpDirErrorMessage`_                                     |
+|                | - `uploadCantWriteErrorMessage`_                                    |
+|                | - `uploadExtensionErrorMessage`_                                    |
 |                | - `uploadErrorMessage`_                                             |
 |                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
