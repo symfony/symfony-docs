@@ -122,9 +122,6 @@ Now, create a Data Transfer Object for the ``Task`` entity using the maker:
     Omit generation of getters/setters? (yes/no) [yes]:
     >
 
-    Omit Id field in DTO? (yes/no) [yes]:
-    >
-
 .. tip::
 
     Ignore the next steps suggested by the command for now, you will generate a
