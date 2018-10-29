@@ -250,8 +250,8 @@ You can use the following parameters in this message:
 +-----------------+----------------------------------------+
 | ``{{ file }}``  | Absolute file path                     |
 +-----------------+----------------------------------------+
-| ``{{ name }}``   | Base file name                        |
-+------------------+---------------------------------------+
+| ``{{ name }}``  | Base file name                         |
++-----------------+----------------------------------------+
 
 .. versionadded:: 4.2
     The ``{{ name }}`` parameter was introduced in Symfony 4.2.
@@ -271,8 +271,8 @@ You can use the following parameters in this message:
 +================+====================+
 | ``{{ file }}`` | Absolute file path |
 +----------------+--------------------+
-| ``{{ name }}``   | Base file name   |
-+------------------+------------------+
+| ``{{ name }}`` | Base file name     |
++----------------+--------------------+
 
 .. versionadded:: 4.2
     The ``{{ name }}`` parameter was introduced in Symfony 4.2.
