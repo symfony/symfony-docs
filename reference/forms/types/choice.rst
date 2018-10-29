@@ -173,6 +173,11 @@ is the item's label and the array value is the item's value::
         'choices' => array('In Stock' => true, 'Out of Stock' => false),
     ));
 
+If there are choice values that are not scalar or the stringified
+representation is not unique Symfony will use incrementing integers
+as values. When the form gets submitted the correct values with the
+correct types will be assigned to the model.
+
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
 .. _reference-form-choice-label:
