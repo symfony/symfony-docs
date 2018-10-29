@@ -226,24 +226,30 @@ related to deprecations.
 
 .. _write-assertions-about-deprecations:
 
-Deprecation notices at autoloading time
+Deprecation Notices at Autoloading Time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, the PHPUnit Bridge uses ``DebugClassLoader`` from Debug component to
-throw deprecation notices at autoloading time. It attempts to throw more helpful
-exceptions when a class isn't found by the registered autoloaders.
-All autoloaders that implement a findFile() method are replaced with a ``DebugClassLoader`` wrapper.
-This can be disabled by setting ``debug-class-loader`` option to ``0`` in  ``phpunit.xml.dist``.
+By default, the PHPUnit Bridge uses ``DebugClassLoader`` from the
+:doc:`Debug component </components/debug>` to throw deprecation notices at
+class autoloading time. This can be disabled with the ``debug-class-loader`` option.
 
 .. code-block:: xml
 
-        <listeners>
-            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
-                <arguments>
-                    <array>
-                        <element key="debug-class-loader"><integer>0</integer></element>
-        ...
+    <!-- phpunit.xml.dist -->
+    <!-- ... -->
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
+            <arguments>
+                <array>
+                    <!-- set this option to 0 to disable the DebugClassLoader integration -->
+                    <element key="debug-class-loader"><integer>0</integer></element>
+                </array>
+            </arguments>
+        </listener>
+    </listeners>
 
+.. versionadded:: 4.2
+    The ``DebugClassLoader`` integration was introduced in Symfony 4.2.
 
 Write Assertions about Deprecations
 -----------------------------------
