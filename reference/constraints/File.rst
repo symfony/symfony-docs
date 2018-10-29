@@ -213,18 +213,17 @@ maxSizeMessage
 The message displayed if the file is larger than the `maxSize`_ option.
 
 You can use the following parameters in this message:
+
 +------------------+------------------------------------------------+
 | Parameter        | Description                                    |
 +==================+================================================+
-| ``{{ size }}``   | File size of the file                          |
+| ``{{ size }}``   | File size of the given file                    |
 +------------------+------------------------------------------------+
 | ``{{ limit }}``  | Maximum file size allowed                      |
 +------------------+------------------------------------------------+
 | ``{{ suffix }}`` | Suffix for the used file size unit (see above) |
 +------------------+------------------------------------------------+
-| ``{{ file }}``   | Full file path                                 |
-+------------------+------------------------------------------------+
-| ``{{ name }}``   | Base file name                                 |
+| ``{{ file }}``   | Absolute file path                             |
 +------------------+------------------------------------------------+
 
 mimeTypesMessage
@@ -236,16 +235,15 @@ The message displayed if the mime type of the file is not a valid mime type
 per the `mimeTypes`_ option.
 
 You can use the following parameters in this message:
+
 +-----------------+----------------------------------------+
 | Parameter       | Description                            |
 +=================+========================================+
-| ``{{ type }}``  | The (disallowed) mime type of the file |
+| ``{{ type }}``  | The MIME type of the given file        |
 +-----------------+----------------------------------------+
-| ``{{ types }}`` | The list of allowed mime types         |
+| ``{{ types }}`` | The list of allowed MIME types         |
 +-----------------+----------------------------------------+
-| ``{{ file }}``  | Full file path                         |
-+-----------------+----------------------------------------+
-| ``{{ name }}``  | Base file name                         |
+| ``{{ file }}``  | Absolute file path                     |
 +-----------------+----------------------------------------+
 
 disallowEmptyMessage
@@ -257,13 +255,12 @@ This constraint checks if the uploaded file is empty (i.e. 0 bytes). If it is,
 this message is displayed.
 
 You can use the following parameters in this message:
-+----------------+----------------+
-| Parameter      | Description    |
-+================+================+
-| ``{{ file }}`` | Full file path |
-+----------------+----------------+
-| ``{{ name }}`` | Base file name |
-+----------------+----------------+
+
++----------------+--------------------+
+| Parameter      | Description        |
++================+====================+
+| ``{{ file }}`` | Absolute file path |
++----------------+--------------------+
 
 notFoundMessage
 ~~~~~~~~~~~~~~~
@@ -275,11 +272,12 @@ is only likely if the underlying value is a string path, as a ``File`` object
 cannot be constructed with an invalid file path.
 
 You can use the following parameters in this message:
-+----------------+----------------+
-| Parameter      | Description    |
-+================+================+
-| ``{{ file }}`` | Full file path |
-+----------------+----------------+
+
++----------------+--------------------+
+| Parameter      | Description        |
++================+====================+
+| ``{{ file }}`` | Absolute file path |
++----------------+--------------------+
 
 notReadableMessage
 ~~~~~~~~~~~~~~~~~~
@@ -290,11 +288,12 @@ The message displayed if the file exists, but the PHP ``is_readable()`` function
 fails when passed the path to the file.
 
 You can use the following parameters in this message:
-+----------------+----------------+
-| Parameter      | Description    |
-+================+================+
-| ``{{ file }}`` | Full file path |
-+----------------+----------------+
+
++----------------+--------------------+
+| Parameter      | Description        |
++================+====================+
+| ``{{ file }}`` | Absolute file path |
++----------------+--------------------+
 
 uploadIniSizeErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -305,6 +304,7 @@ The message that is displayed if the uploaded file is larger than the ``upload_m
 ``php.ini`` setting.
 
 You can use the following parameters in this message:
+
 +------------------+------------------------------------------------+
 | Parameter        | Description                                    |
 +==================+================================================+
@@ -325,6 +325,7 @@ This message has no parameters.
 
 uploadPartialErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
 **type**: ``string`` **default**: ``The file was only partially uploaded.``
 
 The message that is displayed if the uploaded file is only partially uploaded.
@@ -333,6 +334,7 @@ This message has no parameters.
 
 uploadNoFileErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
 **type**: ``string`` **default**: ``No file was uploaded.``
 
 The message that is displayed if no file was uploaded.
@@ -341,6 +343,7 @@ This message has no parameters.
 
 uploadNoTmpDirErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 **type**: ``string`` **default**: ``No temporary folder was configured in php.ini.``
 
 The message that is displayed if the php.ini setting ``upload_tmp_dir`` is
@@ -350,6 +353,7 @@ This message has no parameters.
 
 uploadCantWriteErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 **type**: ``string`` **default**: ``Cannot write temporary file to disk.``
 
 The message that is displayed if the uploaded file can't be stored in the
@@ -359,6 +363,7 @@ This message has no parameters.
 
 uploadExtensionErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 **type**: ``string`` **default**: ``A PHP extension caused the upload to fail.``
 
 The message that is displayed if a PHP extension caused the file upload to
