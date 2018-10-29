@@ -375,11 +375,6 @@ with these tasks:
 Translation Resource/File Names and Locations
 ---------------------------------------------
 
-.. versionadded:: 4.2
-    The translations directory ``src/Resources/<bundle name>/translations/`` was
-    deprecated in Symfony 4.2, use the directory defined in the ``default_path``
-    option (``translations/`` by default).
-
 Symfony looks for message files (i.e. translations) in the following default locations:
 
 * the ``translations/`` directory (at the root of the project);
@@ -387,6 +382,11 @@ Symfony looks for message files (i.e. translations) in the following default loc
 * the ``src/Resources/<bundle name>/translations/`` directory;
 
 * the ``Resources/translations/`` directory inside of any bundle.
+
+.. versionadded:: 4.2
+    Using the ``src/Resources/<bundle name>/translations/`` directory to store
+    translations was deprecated in Symfony 4.2. Use instead the directory
+    defined in the ``default_path`` option (which is ``translations/`` by default).
 
 The locations are listed here with the highest priority first. That is, you can
 override the translation messages of a bundle in any of the top two directories.
