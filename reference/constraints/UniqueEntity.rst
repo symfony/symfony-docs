@@ -141,6 +141,14 @@ message
 
 The message that's displayed when this constraint fails.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+
 em
 ~~
 
