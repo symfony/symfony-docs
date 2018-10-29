@@ -351,5 +351,5 @@ Replace the ``$task`` argument with ``$taskData`` in the ``createForm()`` call, 
         ]);
     }
 
-Now, when the user submits data, it is first validated using ``TaskData`` and only after successfull validation passed onto the ``Task`` entity.
-``Task`` entites will always be valid.
+Now, when the user submits data, it is first validated using ``TaskData`` and only after successful validation passed onto the ``Task`` entity.
+``Task`` entities will always be valid.
