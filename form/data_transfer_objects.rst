@@ -36,8 +36,8 @@ example:
     $ composer require form validator twig-bundle orm-pack security-csrf annotations
 
 Use the example ``Task`` entity from :doc:`the main forms tutorial </forms>`,
-make it a doctrine entity (this requires adding a primary key ``id``), make the
-setters fluent and add a validation by adding annotations.
+make it a doctrine entity (this requires adding a primary key ``id``) and make
+the setters fluent.
 
 .. code-block:: diff
 
@@ -59,16 +59,17 @@ setters fluent and add a validation by adding annotations.
     +    */
     +   protected $id;
 
-    +   /**
+        /**
     +    * @ORM\Column(type="string", length=255)
-    +    * @Assert\NotBlank()
-    +    */
+         * @Assert\NotBlank()
+         */
         protected $task;
 
-    +   /**
+        /**
     +   * @ORM\Column(type="datetime", nullable=true)
-    +   * @Assert\DateTime()
-    +   */
+        * @Assert\NotBlank()
+        * @Assert\Type("\DateTime")
+        */
         protected $dueDate;
 
     +   public function getId()
@@ -150,7 +151,8 @@ following ``TaskData`` class:
         public $task;
 
         /**
-        * @Assert\DateTime(format="Y-m-d H:i:s", message="This value is not a valid datetime.", payload=null)
+        * @Assert\NotBlank(message="This value should not be blank.", payload=null)
+        * @Assert\Type(message="This value should be of type {{ type }}.", type="\DateTime", payload=null)
         */
         public $dueDate;
 
