@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by dunglas at 2018-09-10T22:44:11Z
+
+Do you know how to fix this (cryptic) RST error? https://travis-ci.org/symfony/symfony-docs/builds/426930279
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-09-11T08:49:56Z
+
+About the RST issue, you must use this alternative format for the link of the line 64:
+
+```rst
+`Bootstrap`_
+```
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-09-11T11:10:24Z
+
+looks like the failure was related to some whitespace issues (see 38fda884205e441463aa424e9927a6fabf621b05)
+
+---------------------------------------------------------------------------
+
+by dunglas at 2018-09-11T11:33:35Z
+
+Thanks a lot @xabbuh!
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2018-10-08T06:37:40Z
+
+Hey @dunglas,
+
+you mention some twig helpers in your blog post, but they are not included in the component itself, is a bridge or anything else available? Or am I missing sth?
+
+---------------------------------------------------------------------------
+
+by dunglas at 2018-10-08T08:02:03Z
+
+Yes, they belong in the TwigBridge.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2018-10-15T08:11:30Z
+
+Than you very much @nicolas-grekas, changes applied.
