@@ -75,13 +75,13 @@ Here's how to create a custom **function**::
         public function getFunctions()
         {
             return array(
-                new TwigFunction('total', array($this, 'calculateTotal')),
+                new TwigFunction('total', array($this, 'calculateArea')),
             );
         }
 
-        public function calculateTotal(float $price, int $quantity)
+        public function calculateArea(int $width, int $length)
         {
-            return $price * $quantity;
+            return $width * $length;
         }
     }
 
