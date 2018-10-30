@@ -5,11 +5,8 @@
 The WebLink Component
 ======================
 
-   The WebLink component provides tools to create `Web Links`_.
-   It allows to easily leverage `HTTP/2 Server Push`_ as well as `Resource Hints`_.
-
-.. versionadded:: 3.3
-    The WebLink component was introduced in Symfony 3.3.
+   The WebLink component provides tools to manage the ``Link`` HTTP header needed
+   for `Web Linking`_ when using `HTTP/2 Server Push`_ as well as `Resource Hints`_.
 
 Installation
 ------------
@@ -25,7 +22,7 @@ Alternatively, you can clone the `<https://github.com/symfony/weblink>`_ reposit
 Usage
 -----
 
-Basic usage::
+The following example shows the component in action::
 
    use Fig\Link\GenericLinkProvider;
    use Fig\Link\Link;
@@ -38,12 +35,9 @@ Basic usage::
 
    echo 'Hello';
 
+Read the full :doc:`WebLink documentation </weblink>` to learn about all the
+features of the component and its integration with the Symfony framework.
 
-.. seealso::
-
-    Read the :doc:`WebLink documentation </weblink>` to learn how
-    to use the features implemented by this component.
-
-.. _`Web Links`: https://tools.ietf.org/html/rfc5988
+.. _`Web Linking`: https://tools.ietf.org/html/rfc5988
 .. _`HTTP/2 Server Push`: https://tools.ietf.org/html/rfc7540#section-8.2
 .. _`Resource Hints`: https://www.w3.org/TR/resource-hints/
