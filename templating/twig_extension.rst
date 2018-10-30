@@ -75,7 +75,7 @@ Here's how to create a custom **function**::
         public function getFunctions()
         {
             return array(
-                new TwigFunction('total', array($this, 'calculateArea')),
+                new TwigFunction('area', array($this, 'calculateArea')),
             );
         }
 
@@ -142,15 +142,14 @@ Using your newly created Twig Extension is no different than any other:
 
 .. code-block:: twig
 
-    {# outputs $5,500.00 #}
+    {# Using the filter without arguments. Outputs $5,500.00 #}
     {{ '5500'|price }}
 
-Passing other arguments to your filter:
-
-.. code-block:: twig
-
-    {# outputs $5500,2516 #}
+    {# Passing arguments to the filter. Outputs $5500,2516 #}
     {{ '5500.25155'|price(4, ',', '') }}
+
+    {# Passing arguments to the function. Outputs 140 #}
+    Total area: {{ area(20, 7) }}
 
 Learning further
 ----------------
