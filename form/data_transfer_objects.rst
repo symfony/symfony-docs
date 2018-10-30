@@ -243,14 +243,7 @@ Replace this with ``TaskData`` to prevent the aforementioned problems with an in
 
     class TaskType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
-        {
-            $builder
-                ->add('task')
-    -           ->add('dueDate')
-    +           ->add('dueDate', DateType::class)
-            ;
-        }
+        // ...
 
         public function configureOptions(OptionsResolver $resolver)
         {
@@ -260,9 +253,6 @@ Replace this with ``TaskData`` to prevent the aforementioned problems with an in
             ]);
         }
     }
-
-For this specific example, we also need to explicitly set the ``DateType`` for
-the ``dueDate`` field, as the form component can not guess it from the entity.
 
 .. index::
    single: Using the DTO in the Controller
