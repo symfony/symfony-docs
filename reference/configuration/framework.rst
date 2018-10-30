@@ -749,8 +749,14 @@ utf8
 
 **type**: ``boolean`` **default**: ``false``
 
-Sets the default UTF-8 encoding configuration for routes. If your app's charset
-is UTF-8 it is recommended to set the value of this option to ``true``.
+.. versionadded:: 4.2
+  The ``framework.router.utf8`` option was introduced in Symfony 4.2.
+
+When this option is set to ``true``, route patterns can include UTF-8 characters.
+If the charset of your application is UTF-8 (as defined in the
+:ref:`getCharset() method <configuration-kernel-charset>` of your kernel) it's
+recommended to set it to ``true``. This will make non-UTF8 URLs to generate 404
+errors.
 
 .. _config-framework-session:
 

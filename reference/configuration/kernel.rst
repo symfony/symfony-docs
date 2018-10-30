@@ -17,6 +17,8 @@ Configuration
 * `Cache Directory`_
 * `Log Directory`_
 
+.. _configuration-kernel-charset:
+
 Charset
 ~~~~~~~
 
