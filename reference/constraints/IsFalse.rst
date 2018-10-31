@@ -112,4 +112,12 @@ message
 
 This message is shown if the underlying data is not false.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+
 .. include:: /reference/constraints/_payload-option.rst.inc

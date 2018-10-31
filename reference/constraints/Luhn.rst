@@ -97,6 +97,14 @@ message
 
 The default message supplied when the value does not pass the Luhn check.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Luhn algorithm`: https://en.wikipedia.org/wiki/Luhn_algorithm

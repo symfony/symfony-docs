@@ -299,6 +299,18 @@ message
 This is the message that will be shown if the value is not less than the
 comparison value.
 
+You can use the following parameters in this message:
+
++-------------------------------+-----------------------------+
+| Parameter                     | Description                 |
++===============================+=============================+
+| ``{{ value }}``               | The current (invalid) value |
++-------------------------------+-----------------------------+
+| ``{{ compared_value }}``      | The upper limit             |
++-------------------------------+-----------------------------+
+| ``{{ compared_value_type }}`` | The expected value type     |
++-------------------------------+-----------------------------+
+
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. include:: /reference/constraints/_comparison-propertypath-option.rst.inc

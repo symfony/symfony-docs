@@ -18,6 +18,7 @@ Validates that a given string length is *between* some minimum and maximum value
 |                | - `minMessage`_                                                      |
 |                | - `maxMessage`_                                                      |
 |                | - `exactMessage`_                                                    |
+|                | - `charsetMessage`_                                                  |
 |                | - `payload`_                                                         |
 +----------------+----------------------------------------------------------------------+
 | Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Length`          |
@@ -153,6 +154,16 @@ minMessage
 The message that will be shown if the underlying value's length is less
 than the `min`_ option.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+| ``{{ limit }}`` | The expected minimum length |
++-----------------+-----------------------------+
+
 maxMessage
 ~~~~~~~~~~
 
@@ -161,6 +172,16 @@ maxMessage
 The message that will be shown if the underlying value's length is more
 than the `max`_ option.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+| ``{{ limit }}`` | The expected maximum length |
++-----------------+-----------------------------+
+
 exactMessage
 ~~~~~~~~~~~~
 
@@ -168,5 +189,32 @@ exactMessage
 
 The message that will be shown if min and max values are equal and the underlying
 value's length is not exactly this value.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+| ``{{ limit }}`` | The exact expected length   |
++-----------------+-----------------------------+
+
+charsetMessage
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This value does not match the expected {{ charset }} charset.``
+
+The message that will be shown if the value is not using the given `charset`_.
+
+You can use the following parameters in this message:
+
++-------------------+-----------------------------+
+| Parameter         | Description                 |
++===================+=============================+
+| ``{{ value }}``   | The current (invalid) value |
++-------------------+-----------------------------+
+| ``{{ charset }}`` | The expected charset        |
++-------------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

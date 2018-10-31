@@ -92,6 +92,14 @@ message
 
 The default message supplied when the value does not pass the BIC check.
 
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ value }}``  | The current (invalid) BIC value                |
++------------------+------------------------------------------------+
+
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Business Identifier Code (BIC)`: https://en.wikipedia.org/wiki/Business_Identifier_Code

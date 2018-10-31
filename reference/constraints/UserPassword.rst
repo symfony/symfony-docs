@@ -108,4 +108,6 @@ message
 This is the message that's displayed when the underlying string does *not*
 match the current user's password.
 
+This message has no parameters.
+
 .. include:: /reference/constraints/_payload-option.rst.inc
