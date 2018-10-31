@@ -58,8 +58,8 @@ Create a class that extends ``AbstractExtension`` and fill in the logic::
         }
     }
 
-If you want to create a function instead of a filter, define the ``getFunctions()``
-method:
+If you want to create a function instead of a filter, define the
+``getFunctions()`` method::
 
     // src/Twig/AppExtension.php
     namespace App\Twig;
