@@ -19,6 +19,27 @@ install messenger before using it:
 
     $ composer require messenger
 
+Message
+-------
+
+Before you can send a message, you must create it first. There is no specific
+requirement for a message::
+
+    // src/Message/SendNotification.php
+    namespace App\Message;
+
+    class SendNotification
+    {
+        private $message;
+
+        public function __construct(string $message)
+        {
+            $this->message = $message;
+        }
+
+        // ...getters
+    }
+
 Using the Messenger Service
 ---------------------------
 
