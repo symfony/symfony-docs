@@ -90,6 +90,14 @@ message
 
 This message is shown if the string is not a valid UUID.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+
 strict
 ~~~~~~
 

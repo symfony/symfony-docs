@@ -335,6 +335,14 @@ This is the message that you will receive if the ``multiple`` option is
 set to ``false`` and the underlying value is not in the valid array of
 choices.
 
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ value }}``  | The current (invalid) value                    |
++------------------+------------------------------------------------+
+
 multipleMessage
 ~~~~~~~~~~~~~~~
 
@@ -344,6 +352,14 @@ This is the message that you will receive if the ``multiple`` option is
 set to ``true`` and one of the values on the underlying array being checked
 is not in the array of valid choices.
 
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ value }}``  | The current (invalid) value                    |
++------------------+------------------------------------------------+
+
 minMessage
 ~~~~~~~~~~
 
@@ -352,6 +368,14 @@ minMessage
 This is the validation error message that's displayed when the user chooses
 too few choices per the `min`_ option.
 
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ limit }}``  | The lower limit of choices                     |
++------------------+------------------------------------------------+
+
 maxMessage
 ~~~~~~~~~~
 
@@ -359,6 +383,14 @@ maxMessage
 
 This is the validation error message that's displayed when the user chooses
 too many options per the `max`_ option.
+
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ limit }}``  | The upper limit of choices                     |
++------------------+------------------------------------------------+
 
 strict
 ~~~~~~
