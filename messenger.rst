@@ -49,6 +49,7 @@ message handler. It's a class with an ``__invoke`` method::
     // src/MessageHandler/SendNotificationHandler.php
     namespace App\MessageHandler;
 
+    use App\Message\SendNotification;
     use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
     class SendNotificationHandler implements MessageHandlerInterface
