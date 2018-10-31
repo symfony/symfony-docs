@@ -50,7 +50,7 @@ To do that, first install the WebLink component:
 
 .. code-block:: terminal
 
-    $ composer req weblink
+    $ composer req web-link
 
 Now, update the template to use the ``preload()`` Twig function provided by
 WebLink:
@@ -99,7 +99,7 @@ issuing an early separate HTTP request, use the ``nopush`` option:
 Resource Hints
 --------------
 
-Resource Hints are used by applications to help browsers when deciding which
+`Resource Hints`_ are used by applications to help browsers when deciding which
 resources should be downloaded, preprocessed or connected to first.
 
 The WebLink component provides the following Twig functions to send those hints:
