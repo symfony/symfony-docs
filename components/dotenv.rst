@@ -67,6 +67,29 @@ The ``load()`` method never overwrites existing environment variables. Use the
 .. versionadded:: 4.2
     The ``Dotenv::overload()`` method was introduced in Symfony 4.2.
 
+If you define different ``.env`` files per environment (local, production, test,
+etc.) use the ``loadForEnv()`` method to load the right file according to the
+following overriding mechanism::
+
+    // ...
+    $dotenv->loadForEnv('dev', __DIR__.'/.env');
+    // Looks for env vars in these files (and in this order):
+    //   .env.dev.local
+    //   .env.local
+    //   .env.dev
+    //   .env
+
+    // ...
+    $dotenv->loadForEnv('test', __DIR__.'/.env');
+    // In the 'test' environment, the '.env.local' file is ignored. This example
+    // looks for env vars in these files (and in this order):
+    //   .env.test.local
+    //   .env.test
+    //   .env
+
+.. versionadded:: 4.2
+    The ``Dotenv::loadForEnv()`` method was introduced in Symfony 4.2.
+
 You should never store a ``.env`` file in your code repository as it might
 contain sensitive information; create a ``.env.dist`` file with sensible
 defaults instead.
