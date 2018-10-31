@@ -13,7 +13,7 @@ Installation
 
 .. code-block:: terminal
 
-    $ composer require symfony/weblink
+    $ composer require symfony/web-link
 
 Alternatively, you can clone the `<https://github.com/symfony/weblink>`_ repository.
 
