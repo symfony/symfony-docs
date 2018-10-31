@@ -341,6 +341,16 @@ minMessage
 The message that will be shown if the underlying value is less than the
 `min`_ option.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+| ``{{ limit }}`` | The lower limit             |
++-----------------+-----------------------------+
+
 maxMessage
 ~~~~~~~~~~
 
@@ -349,6 +359,16 @@ maxMessage
 The message that will be shown if the underlying value is more than the
 `max`_ option.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+| ``{{ limit }}`` | The upper limit             |
++-----------------+-----------------------------+
+
 invalidMessage
 ~~~~~~~~~~~~~~
 
@@ -356,6 +376,14 @@ invalidMessage
 
 The message that will be shown if the underlying value is not a number (per
 the `is_numeric`_ PHP function).
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
