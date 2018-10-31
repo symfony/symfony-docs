@@ -353,6 +353,8 @@ If the system is unable to determine the size of the image, this error will
 be displayed. This will only occur when at least one of the size constraint
 options has been set.
 
+This message has no parameters.
+
 maxWidthMessage
 ~~~~~~~~~~~~~~~
 
@@ -436,6 +438,20 @@ Maximum amount expected is {{ max_pixels }} pixels.``
 
 The error message if the amount of pixels of the image exceeds `maxPixels`_.
 
+You can use the following parameters in this message:
+
++----------------------+---------------------------------------+
+| Parameter            | Description                           |
++======================+=======================================+
+| ``{{ pixels }}``     | The current amount of pixels          |
++----------------------+---------------------------------------+
+| ``{{ max_pixels }}`` | The maximum allowed amount of pixels  |
++----------------------+---------------------------------------+
+| ``{{ height }}``     | The current image height              |
++----------------------+---------------------------------------+
+| ``{{ width }}``      | The current image width               |
++----------------------+---------------------------------------+
+
 minPixelsMessage
 ~~~~~~~~~~~~~~~~
 
@@ -446,6 +462,20 @@ minPixelsMessage
 Minimum amount expected is {{ min_pixels }} pixels.``
 
 The error message if the amount of pixels of the image is less than `minPixels`_.
+
+You can use the following parameters in this message:
+
++----------------------+---------------------------------------+
+| Parameter            | Description                           |
++======================+=======================================+
+| ``{{ pixels }}``     | The current amount of pixels          |
++----------------------+---------------------------------------+
+| ``{{ min_pixels }}`` | The minimum required amount of pixels |
++----------------------+---------------------------------------+
+| ``{{ height }}``     | The current image height              |
++----------------------+---------------------------------------+
+| ``{{ width }}``      | The current image width               |
++----------------------+---------------------------------------+
 
 maxRatioMessage
 ~~~~~~~~~~~~~~~
@@ -544,6 +574,8 @@ corruptedMessage
 
 The error message when the `detectCorrupted`_ option is enabled and the image
 is corrupted.
+
+This message has no parameters.
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html
 .. _`PHP GD extension`: http://php.net/manual/en/book.image.php
