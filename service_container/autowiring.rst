@@ -341,6 +341,15 @@ Thanks to the ``App\Util\TransformerInterface`` alias, the autowiring subsystem
 knows that the ``App\Util\Rot13Transformer`` service should be injected when
 dealing with the ``TransformerInterface``.
 
+.. tip::
+
+    As long as you have only one concrete implementation of an interface under same 
+    namespace, alias is not mandatory and autowire will work injecting the concrete 
+    implementation even without alias definition.
+    Neverthless is recommended to provide an alias in order to preserve application logic
+    when a second concrete implementation kicks in, otherwise compiler compilation would 
+    throw an exception.
+
 Dealing with Multiple Implementations of the Same Type
 ------------------------------------------------------
 
