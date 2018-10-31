@@ -5,10 +5,10 @@ Symfony provides native support (via the :doc:`WebLink component </components/we
 for managing ``Link`` HTTP headers, which are the key to improve the application
 performance when using HTTP/2 and preloading capabilities of modern web browsers.
 
-``Link`` headers are used in `HTTP/2 Server Push`_ and W3C's `Resource Hints`_
-to push resources (e.g. CSS and JavaScript files) to clients before they even
-know that they need them. WebLink also enables other optimizations that work
-with HTTP 1.x:
+``Link`` headers are used in `HTTP/2 Server Push`_ and W3C's `Resource Hints
+<https://www.w3.org/TR/resource-hints/>`_ to push resources (e.g. CSS and
+JavaScript files) to clients before they even know that they need them.
+WebLink also enables other optimizations that work with HTTP 1.x:
 
 * Asking the browser to fetch or to render another web page in the background;
 * Making early DNS lookups, TCP handshakes or TLS negotiations.
@@ -50,7 +50,7 @@ To do that, first install the WebLink component:
 
 .. code-block:: terminal
 
-    $ composer req weblink
+    $ composer req web-link
 
 Now, update the template to use the ``preload()`` Twig function provided by
 WebLink:
@@ -160,7 +160,6 @@ You can also add links to the HTTP response directly from controllers and servic
     without requiring the entire Symfony framework.
 
 .. _`HTTP/2 Server Push`: https://tools.ietf.org/html/rfc7540#section-8.2
-.. _`Resource Hints`: https://www.w3.org/TR/resource-hints/
 .. _`Docker installer and runtime for Symfony`: https://github.com/dunglas/symfony-docker
 .. _`preload`: https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
 .. _`the Preload specification`: https://www.w3.org/TR/preload/#server-push-(http/2)
