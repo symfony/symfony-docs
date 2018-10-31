@@ -127,6 +127,16 @@ minMessage
 The message that will be shown if the underlying collection elements count
 is less than the `min`_ option.
 
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ count }}``  | The current collection size                    |
++------------------+------------------------------------------------+
+| ``{{ limit }}``  | The lower limit                                |
++------------------+------------------------------------------------+
+
 maxMessage
 ~~~~~~~~~~
 
@@ -135,6 +145,16 @@ maxMessage
 The message that will be shown if the underlying collection elements count
 is more than the `max`_ option.
 
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ count }}``  | The current collection size                    |
++------------------+------------------------------------------------+
+| ``{{ limit }}``  | The upper limit                                |
++------------------+------------------------------------------------+
+
 exactMessage
 ~~~~~~~~~~~~
 
@@ -142,5 +162,15 @@ exactMessage
 
 The message that will be shown if min and max values are equal and the underlying
 collection elements count is not exactly this value.
+
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ count }}``  | The current collection size                    |
++------------------+------------------------------------------------+
+| ``{{ limit }}``  | The exact expected collection size             |
++------------------+------------------------------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

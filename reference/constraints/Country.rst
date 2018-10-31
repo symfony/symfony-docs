@@ -85,6 +85,14 @@ message
 
 This message is shown if the string is not a valid country code.
 
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ value }}``  | The current (invalid) country code             |
++------------------+------------------------------------------------+
+
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes

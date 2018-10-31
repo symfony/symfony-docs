@@ -148,6 +148,14 @@ representation of the invalid entity. If the entity doesn't define the
 ``__toString()`` method, the following generic value will be used: *"Object of
 class __CLASS__ identified by <comma separated IDs>"*
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+
 em
 ~~
 
