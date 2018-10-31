@@ -99,9 +99,8 @@ issuing an early separate HTTP request, use the ``nopush`` option:
 Resource Hints
 --------------
 
-`Resource Hints <https://www.w3.org/TR/resource-hints/#resource-hints>`_ are
-used by applications to help browsers when deciding which resources should be
-downloaded, preprocessed or connected to first.
+Resource Hints are used by applications to help browsers when deciding which
+resources should be downloaded, preprocessed or connected to first.
 
 The WebLink component provides the following Twig functions to send those hints:
 
