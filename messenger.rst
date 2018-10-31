@@ -46,14 +46,14 @@ Registering Handlers
 In order to do something when your message is dispatched, you need to create a
 message handler. It's a class with an ``__invoke`` method::
 
-    // src/MessageHandler/MyMessageHandler.php
+    // src/MessageHandler/SendNotificationHandler.php
     namespace App\MessageHandler;
 
     use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-    class MyMessageHandler implements MessageHandlerInterface
+    class SendNotificationHandler implements MessageHandlerInterface
     {
-        public function __invoke(MyMessage $message)
+        public function __invoke(SendNotification $message)
         {
             // do something with it.
         }
@@ -72,7 +72,7 @@ If you're not using service autoconfiguration, then you need to add this config:
 
         # config/services.yaml
         services:
-            App\MessageHandler\MyMessageHandler:
+            App\MessageHandler\SendNotificationHandler:
                 tags: [messenger.message_handler]
 
     .. code-block:: xml
@@ -85,7 +85,7 @@ If you're not using service autoconfiguration, then you need to add this config:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\MessageHandler\MyMessageHandler">
+                <service id="App\MessageHandler\SendNotificationHandler">
                    <tag name="messenger.message_handler" />
                 </service>
             </services>
@@ -94,9 +94,9 @@ If you're not using service autoconfiguration, then you need to add this config:
     .. code-block:: php
 
         // config/services.php
-        use App\MessageHandler\MyMessageHandler;
+        use App\MessageHandler\SendNotificationHandler;
 
-        $container->register(MyMessageHandler::class)
+        $container->register(SendNotificationHandler::class)
             ->addTag('messenger.message_handler');
 
 .. note::
