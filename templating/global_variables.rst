@@ -166,7 +166,7 @@ see :doc:`/components/expression_language/syntax`,
 it's possible to inject a result of a service method as global variable into twig.
 
 As previously described in "Referencing Services", it's the same syntax you use in service configuration for arguments.
-Prefix the string with ``@=`` to define a expression as a global Twig variable:
+Prefix the string with ``@=`` to define an expression as a global Twig variable:
 
 .. configuration-block::
 
