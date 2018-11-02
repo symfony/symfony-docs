@@ -2,8 +2,8 @@ Configuring Babel
 =================
 
 `Babel`_ is automatically configured for all ``.js`` and ``.jsx`` files via the
-``babel-loader`` with sensible defaults (e.g. with the ``env`` preset and
-``react`` if requested).
+``babel-loader`` with sensible defaults (e.g. with the ``@babel/preset-env`` and
+``@babel/preset-react`` if requested).
 
 Need to extend the Babel configuration further? The easiest way is via
 ``configureBabel()``:
@@ -16,16 +16,36 @@ Need to extend the Babel configuration further? The easiest way is via
     Encore
         // ...
 
-        // first, install any presets you want to use (e.g. yarn add babel-preset-es2017)
-        // then, modify the default Babel configuration
         .configureBabel(function(babelConfig) {
             // add additional presets
-            babelConfig.presets.push('es2017');
+            // babelConfig.presets.push('@babel/preset-flow');
 
             // no plugins are added by default, but you can add some
             // babelConfig.plugins.push('styled-jsx/babel');
+        }, {
+            // node_modules is not processed through Babel by default
+            // but you can whitelist specific modules to process
+            // include_node_modules: ['foundation-sites']
+
+            // or completely control the exclude
+            // exclude: /bower_components/
         })
     ;
+
+Configuring Browser Targets
+---------------------------
+
+The ``@babel/preset-env`` preset rewrites your JavaScript so that the final syntax
+will work in whatever browsers you want. To configure the browsers that you need
+to support, see :ref:`browserslist_package_config`.
+
+After change our "browerslist" config, you will need to manually remove the babel
+cache directory:
+
+.. code-block:: terminal
+
+    $ On Unix run this command. On Windows, clear this directory manually
+    $ rm -rf node_modules/.cache/babel-loader/
 
 Creating a .babelrc File
 ------------------------
@@ -37,21 +57,7 @@ Babel, but it has a downside: as soon as a ``.babelrc`` file is present,
 if you call ``Encore.enableReactPreset()``, the ``react`` preset will *not*
 automatically be added to Babel: you must add it yourself in ``.babelrc``.
 
-An example ``.babelrc`` file might look like this:
-
-.. code-block:: json
-
-    {
-        presets: [
-            ['env', {
-                modules: false,
-                targets: {
-                    browsers: '> 1%',
-                    uglify: true
-                },
-                useBuiltIns: true
-            }]
-        ]
-    }
+As soon as a ``.babelrc`` file is present, it will take priority over the Babel
+configuration added by Encore.
 
 .. _`Babel`: http://babeljs.io/
