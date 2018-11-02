@@ -13,7 +13,7 @@ not actually write any files to disk). This means your ``script`` and ``link`` t
 need to change to point to this.
 
 If you're using the ``encore_entry_script_tags()`` and ``encore_entry_link_tags()``
-Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <load-manifest-files>`_
+Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <load-manifest-files>`
 in some other way), you're done: the paths in your templates will automatically point
 to the dev server.
 

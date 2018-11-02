@@ -43,3 +43,4 @@ See :doc:`/frontend/encore/dev-server` for more details.
 .. _`babel-preset-react`: https://babeljs.io/docs/plugins/preset-react/
 .. _`Vue.js`: https://vuejs.org/
 .. _`vue-loader options`: https://vue-loader.vuejs.org/options.html
+.. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
