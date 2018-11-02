@@ -63,7 +63,4 @@ this plugin with the ``configureSplitChunks()`` function:
     +         splitChunks.minSize = 0;
     +     }
 
-- talk about SplitChunksPlugin & how you talk to it in Encore
-- also look at the runtime chunk stuff
-
 .. _`SplitChunksPlugin from Webpack`: https://webpack.js.org/plugins/split-chunks-plugin/

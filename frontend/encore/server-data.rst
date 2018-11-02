@@ -19,6 +19,9 @@ Fetch this in JavaScript:
     document.addEventListener('DOMContentLoaded', function() {
         var userRating = document.querySelector('.js-user-rating');
         var isAuthenticated = userRating.dataset.isAuthenticated;
+
+        // or with jQuery
+        //var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
     });
 
 .. note::

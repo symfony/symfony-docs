@@ -23,5 +23,5 @@ page-specific JavaScript and CSS file from a page-specific entry (e.g. ``checkou
 
 .. tip::
 
-    Be sure to use split chunks :doc:`shared entry </frontend/encore/split-chunks>`
+    Be sure to use :doc:`split chunks </frontend/encore/split-chunks>`
     to avoid duplicating and shared code between your entry files.

@@ -1,12 +1,12 @@
 Using webpack-dev-server and HMR
 ================================
 
-While developing, instead of using ``encore dev --watch``, you can use the
+While developing, instead of using ``yarn encore dev --watch``, you can use the
 `webpack-dev-server`_:
 
 .. code-block:: terminal
 
-    $ ./node_modules/.bin/encore dev-server
+    $ yarn encore dev-server
 
 This serves the built assets from a new server at ``http://localhost:8080`` (it does
 not actually write any files to disk). This means your ``script`` and ``link`` tags
@@ -22,7 +22,7 @@ by the normal `webpack-dev-server`_. For example:
 
 .. code-block:: terminal
 
-    $ ./node_modules/.bin/encore dev-server --https --port 9000
+    $ yarn encore dev-server --https --port 9000
 
 This will start a server at ``https://localhost:9000``.
 
