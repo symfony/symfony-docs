@@ -129,4 +129,11 @@ this via:
     // require a non-minified file whenever possible
     require('respond.js/dest/respond.src.js');
 
+I need to execute Babel on a third-party Module
+-----------------------------------------------
+
+For performance, Encore does not process libraries inside ``node_modules/`` through
+Babel. But, you can change that via the ``configureBabel()`` method. See
+:doc:`/frontend/encore/babel` for details.
+
 .. _`rsync`: https://rsync.samba.org/

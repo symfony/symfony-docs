@@ -48,6 +48,7 @@ Adding more Features
 * :doc:`PostCSS and autoprefixing </frontend/encore/postcss>`
 * :doc:`Enabling React.js </frontend/encore/reactjs>`
 * :doc:`Enabling Vue.js (vue-loader) </frontend/encore/vuejs>`
+* :doc:`/frontend/encore/copy-files`
 * :doc:`Configuring Babel </frontend/encore/babel>`
 * :doc:`Source maps </frontend/encore/sourcemaps>`
 * :doc:`Enabling TypeScript (ts-loader) </frontend/encore/typescript>`

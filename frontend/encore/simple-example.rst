@@ -316,7 +316,32 @@ you need a feature, Encore will tell you what you need to install. Run:
 Your app now supports Sass. Encore also supports LESS and Stylus. See
 :doc:`/frontend/encore/css-preprocessors`.
 
+Compiling Only a CSS File
+-------------------------
+
+.. caution::
+
+    Using ``addStyleEntry()`` is supported, but not recommended. A better option
+    is to use follow the pattern above: use ``addEntry()`` to point to a JavaScript
+    file, then require the CSS needed from inside of that.
+
+If you want to only compile a CSS file, that's possible via ``addStyleEntry()``:
+
+.. code-block:: javascript
+
+    // webpack/config.js
+    Encore
+        // ...
+
+        .addStyleEntry('some_page', './assets/css/some_page.css')
+    ;
+
+This will output a new ``some_page.css``.
+
 Keep Going!
 -----------
 
-Go back to the :ref:`List of Encore Articles <encore-toc>` to learn more and add new features.
+Encore support many more features! For a full list of what you can do, see
+`Encore's index.js file`_. Or, go back to :ref:`list of Encore articles <encore-toc>`.
+
+.. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
