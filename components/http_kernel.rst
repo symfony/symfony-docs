@@ -342,8 +342,7 @@ of arguments that should be passed when executing that callable.
 
     b) If the argument in the controller is type-hinted with Symfony's
        :class:`Symfony\\Component\\HttpFoundation\\Request` object, the
-       ``Request`` is passed in as the value. If you have a custom ``Request``
-       class, it will be injected as long as you extend the Symfony ``Request``.
+       ``Request`` is passed in as the value.
 
     c) If the function or method argument is `variadic`_ and the ``Request``
        ``attributes`` bag contains an array for that argument, they will all be
