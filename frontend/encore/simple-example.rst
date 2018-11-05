@@ -76,9 +76,9 @@ To build the assets, run:
 
 Congrats! You now have three new files:
 
-* ``web/build/app.js`` (holds all the JavaScript for your "app" entry)
-* ``web/build/app.css`` (holds all the CSS for your "app" entry)
-* ``web/build/runtime.js`` (a file that helps Webpack do its job)
+* ``public/build/app.js`` (holds all the JavaScript for your "app" entry)
+* ``public/build/app.css`` (holds all the CSS for your "app" entry)
+* ``public/build/runtime.js`` (a file that helps Webpack do its job)
 
 Next, include these in your base layout file. Two Twig helpers from WebpackEncoreBundle
 can do most of the work for you:

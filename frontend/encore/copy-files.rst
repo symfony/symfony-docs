@@ -36,7 +36,7 @@ files into your final output directory.
 
     Encore
         // ...
-        .setOutputPath('web/build/')
+        .setOutputPath('public/build/')
 
     +     .copyFiles({
     +         from: './assets/images',
@@ -48,16 +48,16 @@ files into your final output directory.
     +         //pattern: /\.(png|jpg|jpeg)$/
     +     })
 
-This will copy all files from ``assets/images`` into ``web/build`` (the output
+This will copy all files from ``assets/images`` into ``public/build`` (the output
 path). If you have :doc:`versioning enabled <versioning>`, the copied files will
 include a hash based on their content.
 
 To render inside Twig, use the ``asset()`` function:
 
-    {# assets/images/logo.png was copied to web/build/logo.png #}
+    {# assets/images/logo.png was copied to public/build/logo.png #}
     <img src="{{ asset('build/logo.png') }}"
 
-    {# assets/images/subdir/logo.png was copied to web/build/subdir/logo.png #}
+    {# assets/images/subdir/logo.png was copied to public/build/subdir/logo.png #}
     <img src="{{ asset('build/subdir/logo.png') }}"
 
 Make sure you've enabled the :ref:`json_manifest_path <load-manifest-files>` option,
