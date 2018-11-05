@@ -35,6 +35,8 @@ Then, Enable the loader in Encore!
     +     .enablePostCssLoader()
     ;
 
+Because you just modified ``webpack.config.js``, stop and restart Encore.
+
 That's it! The ``postcss-loader`` will now be used for all CSS, Sass, etc files.
 You can also pass options to the `postcss-loader`_ by passing a callback:
 
@@ -51,6 +53,8 @@ You can also pass options to the `postcss-loader`_ by passing a callback:
     +     })
     ;
 
+.. _browserslist_package_config:
+
 Adding browserslist to package.json
 -----------------------------------
 
@@ -61,16 +65,15 @@ support. The best-practice is to configure this directly in your ``package.json`
 .. code-block:: diff
 
     {
-    +     "browserslist": [ "last 2 versions", "ios >= 8" ]
+    +  "browserslist": [
+    +    "> 0.5%",
+    +    "last 2 versions",
+    +    "Firefox ESR",
+    +    "not dead"
+    +  ]
     }
 
 See `browserslist`_ for more details on the syntax.
-
-.. note::
-
-    Encore uses `babel-preset-env`_, which *also* needs to know which browsers you
-    want to support. But this does *not* read the ``browserslist`` config key. You
-    must configure the browsers separately via :doc:`configureBabel() </frontend/encore/babel>`.
 
 .. _`PostCSS`: http://postcss.org/
 .. _`autoprefixing`: https://github.com/postcss/autoprefixer

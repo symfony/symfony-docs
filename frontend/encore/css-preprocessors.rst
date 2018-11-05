@@ -1,16 +1,7 @@
-CSS Preprocessors: Sass, LESS, etc.
-===================================
+CSS Preprocessors: Sass, LESS, Stylus, etc.
+===========================================
 
-Using Sass
-----------
-
-To use the Sass pre-processor, install the dependencies:
-
-.. code-block:: terminal
-
-    $ yarn add --dev sass-loader node-sass
-
-And enable it in ``webpack.config.js``:
+To use the Sass, LESS or Stylus pre-processors, enable the one you want in ``webpack.config.js``:
 
 .. code-block:: javascript
 
@@ -19,59 +10,24 @@ And enable it in ``webpack.config.js``:
 
     Encore
         // ...
+
+        // enable just the one you want
+
+        // processes files ending in .scss or .sass
         .enableSassLoader()
-    ;
 
-That's it! All files ending in ``.sass`` or ``.scss`` will be pre-processed. You
-can also pass options to ``sass-loader``:
-
-.. code-block:: javascript
-
-    // webpack.config.js
-    // ...
-
-    Encore
-        // ...
-        .enableSassLoader(function(options) {
-            // https://github.com/sass/node-sass#options
-            // options.includePaths = [...]
-        });
-    ;
-
-Using LESS
-----------
-
-To use the LESS pre-processor, install the dependencies:
-
-.. code-block:: terminal
-
-    $ yarn add --dev less-loader less
-
-And enable it in ``webpack.config.js``:
-
-.. code-block:: javascript
-
-    // webpack.config.js
-    // ...
-
-    Encore
-        // ...
+        // processes files ending in .less
         .enableLessLoader()
+
+        // processes files ending in .styl
+        .enableStylusLoader()
     ;
 
-That's it! All files ending in ``.less`` will be pre-processed. You can also pass
-options to ``less-loader``:
+Then restart Encore. When you do, it will give you a command you can run to
+install any missing dependencies. After running that command and restarting
+Encore, you're done!
 
-.. code-block:: javascript
+You can also pass configuration options to each of the loaders. See the
+`Encore's index.js file`_ for detailed documentation.
 
-    // webpack.config.js
-    // ...
-
-    Encore
-        // ...
-        .enableLessLoader(function(options) {
-            // https://github.com/webpack-contrib/less-loader#examples
-            // http://lesscss.org/usage/#command-line-usage-options
-            // options.relativeUrls = false;
-        });
-    ;
+.. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
