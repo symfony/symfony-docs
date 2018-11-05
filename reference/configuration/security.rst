@@ -167,7 +167,7 @@ option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
 
 success_handler
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``'security.logout.success_handler'``
 
