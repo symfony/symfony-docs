@@ -1,13 +1,7 @@
 Enabling Vue.js (vue-loader)
 ============================
 
-Want to use `Vue.js`_? No problem! First, install Vue and some dependencies:
-
-.. code-block:: terminal
-
-    $ yarn add --dev vue vue-loader@^14 vue-template-compiler
-
-Then, activate the ``vue-loader`` in ``webpack.config.js``:
+Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 
 .. code-block:: diff
 
@@ -21,18 +15,13 @@ Then, activate the ``vue-loader`` in ``webpack.config.js``:
     +     .enableVueLoader()
     ;
 
-That's it! Any ``.vue`` files that you require will be processed correctly. You can
-also configure the `vue-loader options`_ via a callback:
+Then restart Encore. When you do, it will give you a command you can run to
+install any missing dependencies. After running that command and restarting
+Encore, you're done!
 
-.. code-block:: javascript
-
-    .enableVueLoader(function(options) {
-        // https://vue-loader.vuejs.org/options.html
-
-        options.preLoaders = {
-            js: '/path/to/custom/loader'
-        };
-    });
+Any ``.vue`` files that you require will be processed correctly. You can also
+configure the `vue-loader options`_ by passing an options callback to
+``enableVueLoader()``. See the `Encore's index.js file`_ for detailed documentation.
 
 Hot Module Replacement (HMR)
 ----------------------------
@@ -43,7 +32,7 @@ your Vue.js app update *without* a browser refresh! To activate it, just use the
 
 .. code-block:: terminal
 
-    $ ./node_modules/.bin/encore dev-server --hot
+    $ yarn encore dev-server --hot
 
 That's it! Change one of your ``.vue`` files and watch your browser update. But
 note: this does *not* currently work for *style* changes in a ``.vue`` file. Seeing
@@ -54,3 +43,4 @@ See :doc:`/frontend/encore/dev-server` for more details.
 .. _`babel-preset-react`: https://babeljs.io/docs/plugins/preset-react/
 .. _`Vue.js`: https://vuejs.org/
 .. _`vue-loader options`: https://vue-loader.vuejs.org/options.html
+.. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js

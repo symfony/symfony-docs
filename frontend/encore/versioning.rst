@@ -20,26 +20,37 @@ ignoring any existing cache:
         // ...
     +     .enableVersioning()
 
-To link to these assets, Encore creates a ``manifest.json`` file with a map to
-the new filenames.
+To link to these assets, Encore creates two files ``entrypoints.json`` and
+``manifest.json``.
 
 .. _load-manifest-files:
 
-Loading Assets from the manifest.json File
-------------------------------------------
+Loading Assets from entrypoints.json & manifest.json
+----------------------------------------------------
 
-Whenever you run Encore, a ``manifest.json`` file is automatically
-created in your ``outputPath`` directory:
+Whenever you run Encore, two configuration files are generated: ``entrypoints.json``
+and ``manifest.json``. Each file is similar, and contains a map to the final, versioned
+filename.
+
+The first file - ``entrypoints.json`` - is used by the ``encore_entry_script_tags()``
+and ``encore_entry_link_tags()`` Twig helpers. If you're using these, then your
+CSS and JavaScript files will render with the new, versioned filename. If you're
+not using Symfony, your app will need to read this file in a similar way.
+
+The ``manifest.json`` file is only needed to get the versioned filename of *other*
+files, like font files or image files (though it also contains information about
+the CSS and JavaScript files):
 
 .. code-block:: json
 
     {
         "build/app.js": "/build/app.123abc.js",
-        "build/dashboard.css": "/build/dashboard.a4bf2d.css"
+        "build/dashboard.css": "/build/dashboard.a4bf2d.css",
+        "build/images/logo.png": "/build/images/logo.3eed42.png"
     }
 
-In your app, you need to read this file to dynamically render the correct paths
-in your ``script`` and ``link`` tags. If you're using Symfony, just activate the
+In your app, you need to read this file if you want to be able to link (e.g. via
+an ``img`` tag) to certain assets. If you're using Symfony, just activate the
 ``json_manifest_file`` versioning strategy in ``config.yml``:
 
 .. code-block:: yaml
@@ -56,9 +67,7 @@ like normal:
 
 .. code-block:: twig
 
-    <script src="{{ asset('build/app.js') }}"></script>
-
-    <link href="{{ asset('build/dashboard.css') }}" rel="stylesheet" />
+    <img src="{{ asset('build/images/logo.png') }}">
 
 Learn more
 ----------
