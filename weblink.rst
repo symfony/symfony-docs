@@ -112,8 +112,8 @@ The WebLink component provides the following Twig functions to send those hints:
   which includes the DNS lookup, TCP handshake, and optional TLS negotiation, allows
   the user agent to mask the high latency costs of establishing a connection".
 * ``prefetch()``: "identifies a resource that might be required by the next
-   navigation, and that the user agent *should* fetch, such that the user agent
-   can deliver a faster response once the resource is requested in the future".
+  navigation, and that the user agent *should* fetch, such that the user agent
+  can deliver a faster response once the resource is requested in the future".
 * ``prerender()``: "identifies a resource that might be required by the next
   navigation, and that the user agent *should* fetch and execute, such that the
   user agent can deliver a faster response once the resource is requested later".
