@@ -67,9 +67,15 @@ The ``load()`` method never overwrites existing environment variables. Use the
 .. versionadded:: 4.2
     The ``Dotenv::overload()`` method was introduced in Symfony 4.2.
 
-If you define different ``.env`` files per environment (local, production, test,
-etc.) use the ``loadForEnv()`` method to load the right file according to the
-following overriding mechanism::
+Symfony follows and promotes the `app config recommendations`_ made by the
+Twelve-Factor App methodology. Among other things, it's recommended to not group
+env vars into environments (``dev``, ``prod``, ``test``, etc.)
+
+When deploying apps you should follow that recommendation strictly. However,
+when developing apps on your local machine, testing multiple apps in different
+environments with regular env vars is cumbersome. That's why Symfony provides a
+feature to define env vars per environment using the ``loadForEnv()`` method
+(but you should only use it on your local machine, not in production servers)::
 
     // ...
     $dotenv->loadForEnv('dev', __DIR__.'/.env');
@@ -86,6 +92,13 @@ following overriding mechanism::
     //   .env.test.local
     //   .env.test
     //   .env
+
+The ``.env`` file should be committed to the shared repository and contains the
+default env var values for the app. The optional ``.env.local`` file shouldn't
+be committed to the repository and overrides the values of some env vars to run
+the app on your local machine. The other two optional files (``.env`` +
+"environment name" + ``.local`` and ``.env`` + "environment name") work
+similarly, but they are specific to some environment.
 
 .. versionadded:: 4.2
     The ``Dotenv::loadForEnv()`` method was introduced in Symfony 4.2.
@@ -135,3 +148,4 @@ Embed commands via ``$()`` (not supported on Windows):
 
 .. _Packagist: https://packagist.org/packages/symfony/dotenv
 .. _twelve-factor applications: http://www.12factor.net/
+.. _`app config recommendations`: https://12factor.net/config
