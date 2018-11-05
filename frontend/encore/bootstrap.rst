@@ -41,29 +41,17 @@ Bootstrap JavaScript requires jQuery and Popper.js, so make sure you have this i
 
 .. code-block:: terminal
 
-    $ yarn add jquery --dev
-    $ yarn add popper.js --dev
+    $ yarn add jquery popper.js --dev
 
-Next, make sure to call ``.autoProvidejQuery()`` in your ``webpack.config.js`` file:
-
-.. code-block:: diff
-
-    // webpack.config.js
-    Encore
-        // ...
-    +     .autoProvidejQuery()
-    ;
-
-This is needed because Bootstrap expects jQuery to be available as a global
-variable. Now, require bootstrap from any of your JavaScript files:
+Now, require bootstrap from any of your JavaScript files:
 
 .. code-block:: javascript
 
     // app.js
 
     const $ = require('jquery');
-    // JS is equivalent to the normal "bootstrap" package
-    // no need to set this to a variable, just require it
+    // this "modifies" the jquery module: adding behavior to it
+    // the bootstrap module doesn't export/return anything
     require('bootstrap');
 
     // or you can include specific pieces
@@ -74,8 +62,13 @@ variable. Now, require bootstrap from any of your JavaScript files:
         $('[data-toggle="popover"]').popover();
     });
 
-Thanks to ``autoProvidejQuery()``, you can require any other jQuery
-plugins in a similar way:
+Using other Bootstrap / jQuery Plugins
+--------------------------------------
+
+If you need to use jQuery plugins that work well with jQuery, you may need to use
+Encore's :ref:`autoProvidejQuery() <encore-autoprovide-jquery>` method so that
+these plugins know where to find jQuery. Then, you can include the needed JavaScript
+and CSS like normal:
 
 .. code-block:: javascript
 

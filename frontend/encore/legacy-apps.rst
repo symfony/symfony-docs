@@ -1,5 +1,5 @@
-jQuery and Legacy Applications
-==============================
+jQuery Plugins and Legacy Applications
+======================================
 
 Inside Webpack, when you require a module, it does *not* (usually) set a global variable.
 Instead, it just returns a value:
@@ -10,30 +10,25 @@ Instead, it just returns a value:
     const $ = require('jquery');
 
 In practice, this will cause problems with some outside libraries that *rely* on
-jQuery to be global. It will be a problem if some of *your* JavaScript isn't being
-processed through Webpack (e.g. you have some JavaScript in your templates).
-
-Using Libraries that Expect jQuery to be Global
------------------------------------------------
-
-Some legacy JavaScript applications use programming practices that don't play
-well with the new practices promoted by Webpack. The most common of these
-problems is using code (e.g. jQuery plugins) that assume that jQuery is already
-available via the ``$`` or ``jQuery`` global variables. If those variables
-are not defined, you'll get these errors:
+jQuery to be global *or* if *your* JavaScript isn't being processed through Webpack
+(e.g. you have some JavaScript in your templates) and you need jQuery. Both will
+cause similar errors:
 
 .. code-block:: text
 
     Uncaught ReferenceError: $ is not defined at [...]
     Uncaught ReferenceError: jQuery is not defined at [...]
 
-Instead of rewriting everything, Encore allows for a different solution. Thanks
-to the ``autoProvidejQuery()`` method, whenever a JavaScript file uses the ``$``
-or ``jQuery`` variables, Webpack automatically requires ``jquery`` and creates
-those variables for you.
+The fix depends on what code is causing the problem.
 
-So, when working with legacy applications, you may need to add the following to
-``webpack.config.js``:
+.. _encore-autoprovide-jquery:
+
+Fixing jQuery Plugins that Expect jQuery to be Global
+-----------------------------------------------------
+
+jQuery plugins often expect that jQuery is already available via the ``$`` or
+``jQuery`` global variables. To fix this, call ``autoProvidejQuery()`` from your
+``webpack.config.js`` file:
 
 .. code-block:: diff
 
@@ -41,6 +36,10 @@ So, when working with legacy applications, you may need to add the following to
         // ...
     +     .autoProvidejQuery()
     ;
+
+After restarting Encore, Webpack will look for all uninitialized ``$`` and ``jQuery``
+variables and automatically require ``jquery`` and set those variables for you.
+It "rewrites" the "bad" code to be correct.
 
 Internally, this ``autoProvidejQuery()`` method calls the ``autoProvideVariables()``
 method from Encore. In practice, it's equivalent to doing:
@@ -61,25 +60,27 @@ method from Encore. In practice, it's equivalent to doing:
 Accessing jQuery from outside of Webpack JavaScript Files
 ---------------------------------------------------------
 
-If you also need to provide access to ``$`` and ``jQuery`` variables outside of
+If *your* code needs access to ``$`` or ``jQuery`` and you are inside of a file
+that's processed by Webpack/Encore, you should remove any "$ is not defined" errors
+by requiring jQuery: ``var $ = require('jquery')``.
+
+But if you also need to provide access to ``$`` and ``jQuery`` variables outside of
 JavaScript files processed by Webpack (e.g. JavaScript that still lives in your
 templates), you need to manually set these as global variables in some JavaScript
 file that is loaded before your legacy code.
 
-For example, you could define a ``common.js`` file that's processed by Webpack and
-loaded on every page with the following content:
+For example, in your ``app.js`` file that's processed by Webpack and loaded on every
+page, add:
 
-.. code-block:: javascript
+.. code-block:: diff
 
     // require jQuery normally
     const $ = require('jquery');
 
-    // create global $ and jQuery variables
-    global.$ = global.jQuery = $;
+    + // create global $ and jQuery variables
+    + global.$ = global.jQuery = $;
 
-.. tip::
-
-    The ``global`` variable is a special way of setting things in the ``window``
-    variable. In a web context, using ``global`` and ``window`` are equivalent,
-    except that ``window.jQuery`` won't work when using ``autoProvidejQuery()``.
-    In other words, use ``global``.
+The ``global`` variable is a special way of setting things in the ``window``
+variable. In a web context, using ``global`` and ``window`` are equivalent,
+except that ``window.jQuery`` won't work when using ``autoProvidejQuery()``.
+In other words, use ``global``.

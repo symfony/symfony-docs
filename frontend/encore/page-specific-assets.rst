@@ -5,41 +5,23 @@ If you're creating a single page app (SPA), then you probably only need to defin
 *one* entry in ``webpack.config.js``. But if you have multiple pages, you might
 want page-specific CSS and JavaScript.
 
-For example, suppose you have a checkout page that has its own JavaScript. Create
-a new ``checkout`` entry:
-
-.. code-block:: diff
-
-    // webpack.config.js
-
-    Encore
-        // an existing entry
-        .addEntry('app', './assets/js/app.js')
-        // a global styles entry
-        .addStyleEntry('global', './assets/css/global.scss')
-
-    +     .addEntry('checkout', './assets/js/checkout.js')
-    ;
-
-Inside ``checkout.js``, add or require the JavaScript and CSS you need. Then,
-include a ``script`` tag for ``checkout.js`` on the checkout page (and a ``link``
-tag for ``checkout.css`` if you import any CSS).
+To learn how to set this up, see the :ref:`multiple-javascript-entries` example.
 
 Multiple Entries Per Page?
 --------------------------
 
-Typically, you should include only *one* JavaScript entry per page. This means
-the checkout page will include ``checkout.js``, but will *not* include the
-``app.js`` that's used on the other pages. Think of the checkout page as its
-own "app", where ``checkout.js`` includes all the functionality you need.
+Typically, you should include only *one* JavaScript entry per page. Think of the
+checkout page as its own "app", where ``checkout.js`` includes all the functionality
+you need.
 
-However, if there is some global JavaScript that you want included on *every*
-page, you *can* create an entry that contains that code and include both that
-entry *and* your page-specific entry. For example, suppose that the ``app``
-entry above contains JavaScript you want on every page. In that case, include
-both ``app.js`` and ``checkout.js`` on the checkout page.
+However, it's pretty common to need to include some global JavaScript and CSS on
+every page. For that reason, it usually makes sense to have one entry (e.g. ``app``)
+that contains this global code (both JavaScript & CSS) and is included on every
+page (i.e. it's included in the *layout* of your app). This means that you will
+always have one, global entry on every page (e.g. ``app``) and you *may* have one
+page-specific JavaScript and CSS file from a page-specific entry (e.g. ``checkout``).
 
 .. tip::
 
-    Be sure to create a :doc:`shared entry </frontend/encore/shared-entry>` to avoid duplicating
-    the Webpack bootstrap logic and any shared modules.
+    Be sure to use :doc:`split chunks </frontend/encore/split-chunks>`
+    to avoid duplicating and shared code between your entry files.
