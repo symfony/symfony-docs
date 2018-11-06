@@ -166,6 +166,14 @@ The ``invalidate_session`` option allows to redefine this behavior. Set this
 option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
 
+success_handler
+~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``'security.logout.success_handler'``
+
+The service ID used for handling a successful logout. The service must implement
+:class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
+
 .. _reference-security-ldap:
 
 LDAP functionality
