@@ -398,3 +398,5 @@
 /security/host_restriction /security/firewall_restriction
 /security/acl_advanced /security/acl
 /security/password_encoding /security
+/weblink /web_link
+/components/weblink /components/web_link

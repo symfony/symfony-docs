@@ -13,9 +13,9 @@ Also see :doc:`IsFalse <IsFalse>`.
 | Options        | - `message`_                                                        |
 |                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\True`           |
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IsTrue`         |
 +----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\TrueValidator`  |
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\IsTrueValidator`|
 +----------------+---------------------------------------------------------------------+
 
 Basic Usage
