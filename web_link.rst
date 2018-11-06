@@ -1,7 +1,7 @@
 Asset Preloading and Resource Hints with HTTP/2 and WebLink
 ===========================================================
 
-Symfony provides native support (via the :doc:`WebLink component </components/weblink>`)
+Symfony provides native support (via the :doc:`WebLink component </components/web_link>`)
 for managing ``Link`` HTTP headers, which are the key to improve the application
 performance when using HTTP/2 and preloading capabilities of modern web browsers.
 
@@ -163,7 +163,7 @@ You can also add links to the HTTP response directly from controllers and servic
 
 .. seealso::
 
-    WebLink can be used :doc:`as a standalone PHP library </components/weblink>`
+    WebLink can be used :doc:`as a standalone PHP library </components/web_link>`
     without requiring the entire Symfony framework.
 
 .. _`HTTP/2 Server Push`: https://tools.ietf.org/html/rfc7540#section-8.2
