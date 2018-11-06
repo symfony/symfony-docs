@@ -54,7 +54,7 @@ Topics
     testing
     translation
     validation
-    weblink
+    web_link
     workflow
 
 Best Practices
