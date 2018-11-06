@@ -142,10 +142,9 @@ their priorities:
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
 
-This event is dispatched after a :ref:`sub request <http-kernel-sub-requests>`
-has finished. It's useful to reset the global state of the application (for
-example, the translator listener resets the translator's locale to the one of
-the parent request)::
+This event is dispatched after the ``kernel.response`` event. It's useful to reset
+the global state of the application (for example, the translator listener resets
+the translator's locale to the one of the parent request)::
 
     public function onKernelFinishRequest(FinishRequestEvent $event)
     {
