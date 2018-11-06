@@ -356,5 +356,5 @@
 /validation/group_service_resolver /form/validation_group_service_resolver
 /request/load_balancer_reverse_proxy /deployment/proxies
 /service_container/service_locators /service_container/service_subscribers_locators
-/weblink.rst /web_link.rst
-/components/weblink.rst /components/web_link.rst
+/weblink /web_link
+/components/weblink /components/web_link
