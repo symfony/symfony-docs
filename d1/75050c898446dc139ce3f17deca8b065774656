@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-11-05T10:29:33Z
+
+@zanbaldwin I think according to https://www.oxfordlearnersdictionaries.com/definition/english/independent_1 "independent of" is correct here.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-11-05T10:32:01Z
+
+This proposed change is really tricky. As someone posted on Symfony's Slack, books use "independently from" more than "independently of" (see https://books.google.com/ngrams/graph?content=independently+of%2Cindependently+from&year_start=1800&year_end=2008&corpus=0&smoothing=3&share=&direct_url=t1%3B%2Cindependently%20of%3B%2Cc0%3B.t1%3B%2Cindependently%20from%3B%2Cc0).
+
+But also, we have different opinions about this from native English speakers. Zan here leans towards "independently from" and Neal on Slack defends the use of "independently of". Both of them are native in English! So I don't know what to do :|
+
+---------------------------------------------------------------------------
+
+by zanbaldwin at 2018-11-05T10:45:13Z
+
+Both [Google Trends](https://trends.google.com/trends/explore?geo=GB&q=independently%20of,independently%20from) and [Google Books](https://books.google.com/ngrams/graph?content=independently+of%2Cindependently+from&year_start=1800&year_end=2008&corpus=0&smoothing=3&share=&direct_url=t1%3B%2Cindependently%20of%3B%2Cc0%3B.t1%3B%2Cindependently%20from%3B%2Cc0) seem to favour "*independently of*".
+
+My suggestion of "*independently from*" is probably just a regional thing, so I would suggest sticking to what is most widely used ("*independently of*").
+
+---------------------------------------------------------------------------
+
+by ocrampete16 at 2018-11-05T16:36:50Z
+
+I suppose it's a regional thing. Personally, both feel right to me (native English speaker) but I would probably lean a tad more towards _independent of_ as well.
