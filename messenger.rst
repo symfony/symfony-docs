@@ -30,11 +30,11 @@ requirement for a message::
 
     class SendNotification
     {
-        private $message;
+        private $content;
 
-        public function __construct(string $message)
+        public function __construct(string $content)
         {
-            $this->message = $message;
+            $this->content = $content;
         }
 
         // ...getters
