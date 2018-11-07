@@ -1,4 +1,4 @@
-Symfony Documentation
+Symfony Documentation [![Build Status](https://travis-ci.org/symfony/symfony-docs.svg?branch=master)](https://travis-ci.org/symfony/symfony-docs)
 =====================
 
 This documentation is rendered online at https://symfony.com/doc/current/
