@@ -59,6 +59,7 @@ method. Then you can optionally define a help message and the
     // ...
     protected function configure()
     {
+        $this
             // the short description shown while running "php bin/console list"
             ->setDescription('Creates a new user.')
 
