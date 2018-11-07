@@ -38,8 +38,8 @@ Concepts
    something can be a message broker or a third party API for example.
 
 **Receiver**:
-   Responsible for deserializing and forwarding messages to handler(s). This
-   can be a message queue puller or an API endpoint for example.
+   Responsible for retrieving, deserializing and forwarding messages to handler(s).
+   This can be a message queue puller or an API endpoint for example.
 
 **Handler**:
    Responsible for handling messages using the business logic applicable to the messages.
@@ -55,7 +55,7 @@ are configured for you:
 
 #. ``LoggingMiddleware`` (logs the processing of your messages)
 #. ``SendMessageMiddleware`` (enables asynchronous processing)
-#. ``HandleMessageMiddleware`` (calls the registered handle)
+#. ``HandleMessageMiddleware`` (calls the registered handler)
 
 Example::
 
@@ -99,57 +99,54 @@ Adding Metadata to Messages (Envelopes)
 ---------------------------------------
 
 If you need to add metadata or some configuration to a message, wrap it with the
-:class:`Symfony\\Component\\Messenger\\Envelope` class. For example, to set the
-serialization groups used when the message goes through the transport layer, use
-the ``SerializerConfiguration`` envelope::
+:class:`Symfony\\Component\\Messenger\\Envelope` class and add stamps.
+For example, to set the serialization groups used when the message goes
+through the transport layer, use the ``SerializerStamp`` stamp::
 
     use Symfony\Component\Messenger\Envelope;
-    use Symfony\Component\Messenger\Transport\Serialization\SerializerConfiguration;
+    use Symfony\Component\Messenger\Stamp\SerializerStamp;
 
     $bus->dispatch(
-        (new Envelope($message))->with(new SerializerConfiguration([
+        (new Envelope($message))->with(new SerializerStamp([
             'groups' => ['my_serialization_groups'],
         ]))
     );
 
-At the moment, the Symfony Messenger has the following built-in envelopes:
+At the moment, the Symfony Messenger has the following built-in envelope stamps:
 
-#. :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\SerializerConfiguration`,
+#. :class:`Symfony\\Component\\Messenger\\Stamp\\SerializerStamp`,
    to configure the serialization groups used by the transport.
-#. :class:`Symfony\\Component\\Messenger\\Middleware\\Configuration\\ValidationConfiguration`,
+#. :class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp`,
    to configure the validation groups used when the validation middleware is enabled.
-#. :class:`Symfony\\Component\\Messenger\\Asynchronous\\Transport\\ReceivedMessage`,
+#. :class:`Symfony\\Component\\Messenger\\Stamp\\ReceivedStamp`,
    an internal item that marks the message as received from a transport.
 
-Instead of dealing directly with the messages in the middleware you can receive the
-envelope by implementing the :class:`Symfony\\Component\\Messenger\\EnvelopeAwareInterface`
-marker, like this::
+Instead of dealing directly with the messages in the middleware you receive the envelope.
+Hence you can inspect the envelope content and its stamps, or add any::
 
-    use Symfony\Component\Messenger\Asynchronous\Transport\ReceivedMessage;
+    use App\Message\Stamp\AnotherStamp;
+    use Symfony\Component\Messenger\Stamp\ReceivedStamp;
     use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
-    use Symfony\Component\Messenger\EnvelopeAwareInterface;
+    use Symfony\Component\Messenger\Middleware\StackInterface;
 
-    class MyOwnMiddleware implements MiddlewareInterface, EnvelopeAwareInterface
+    class MyOwnMiddleware implements MiddlewareInterface
     {
-        public function handle($envelope, callable $next)
+        public function handle(Envelope $envelope, StackInterface $stack): Envelope
         {
-            // $envelope here is an `Envelope` object, because this middleware
-            // implements the EnvelopeAwareInterface interface.
-
-            if (null !== $envelope->get(ReceivedMessage::class)) {
+            if (null !== $envelope->get(ReceivedStamp::class)) {
                 // Message just has been received...
 
                 // You could for example add another item.
-                $envelope = $envelope->with(new AnotherEnvelopeItem(/* ... */));
+                $envelope = $envelope->with(new AnotherStamp(/* ... */));
             }
 
-            return $next($envelope);
+            return $stack->next()->handle($envelope, $stack);
         }
     }
 
 The above example will forward the message to the next middleware with an additional
-envelope item *if* the message has just been received (i.e. has the `ReceivedMessage` item).
-You can create your own items by implementing :class:`Symfony\\Component\\Messenger\\EnvelopeAwareInterface`.
+stamp *if* the message has just been received (i.e. has the `ReceivedStamp` stamp).
+You can create your own items by implementing :class:`Symfony\\Component\\Messenger\\Stamp\\StampInterface`.
 
 Transports
 ----------
@@ -170,7 +167,7 @@ First, create your sender::
     namespace App\MessageSender;
 
     use App\Message\ImportantAction;
-    use Symfony\Component\Messenger\Transport\SenderInterface;
+    use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
     use Symfony\Component\Messenger\Envelope;
 
     class ImportantActionToEmailSender implements SenderInterface
@@ -184,7 +181,7 @@ First, create your sender::
            $this->toEmail = $toEmail;
        }
 
-       public function send(Envelope $envelope)
+       public function send(Envelope $envelope): Envelope
        {
            $message = $envelope->getMessage();
 
@@ -200,13 +197,15 @@ First, create your sender::
                        'text/html'
                    )
            );
+
+           return $envelope;
        }
     }
 
 Your own Receiver
 ~~~~~~~~~~~~~~~~~
 
-A receiver is responsible for receiving messages from a source and dispatching
+A receiver is responsible for getting messages from a source and dispatching
 them to the application.
 
 Imagine you already processed some "orders" in your application using a
@@ -222,11 +221,11 @@ First, create your receiver::
     namespace App\MessageReceiver;
 
     use App\Message\NewOrder;
-    use Symfony\Component\Messenger\Transport\ReceiverInterface;
+    use Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface;
     use Symfony\Component\Serializer\SerializerInterface;
     use Symfony\Component\Messenger\Envelope;
 
-    class NewOrdersFromCsvFile implements ReceiverInterface
+    class NewOrdersFromCsvFileReceiver implements ReceiverInterface
     {
        private $serializer;
        private $filePath;
@@ -258,8 +257,8 @@ Receiver and Sender on the same Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To allow sending and receiving messages on the same bus and prevent an infinite
-loop, the message bus will add a :class:`Symfony\\Component\\Messenger\\Asynchronous\\Transport\\ReceivedMessage`
-envelope item to the message envelopes and the :class:`Symfony\\Component\\Messenger\\Asynchronous\\Middleware\\SendMessageMiddleware`
+loop, the message bus will add a :class:`Symfony\\Component\\Messenger\\Stamp\\ReceivedStamp`
+stamp to the message envelopes and the :class:`Symfony\\Component\\Messenger\\Middleware\\SendMessageMiddleware`
 middleware will know it should not route these messages again to a transport.
 
 .. _blog posts about command buses: https://matthiasnoback.nl/tags/command%20bus/
