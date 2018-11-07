@@ -14,7 +14,7 @@ How to Create a custom Authentication Provider
 
 Symfony provides support for the most
 :doc:`common authentication mechanisms </security/auth_providers>`. However, your
-app may need to integrated with some proprietary single-sing-on system or some
+app may need to integrated with some proprietary single-sign-on system or some
 legacy authentication mechanism. In those cases you could create a custom
 authentication provider. This article discusses the core classes involved
 in the authentication process, and how to implement a custom authentication
