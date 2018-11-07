@@ -146,22 +146,20 @@ following ``TaskData`` class:
     class TaskData
     {
         /**
-        * @Assert\NotBlank(message="This value should not be blank.", payload=null)
+        * @Assert\NotBlank()
         */
         public $task;
 
         /**
-        * @Assert\NotBlank(message="This value should not be blank.", payload=null)
-        * @Assert\Type(message="This value should be of type {{ type }}.", type="\DateTime", payload=null)
+        * @Assert\NotBlank()
+        * @Assert\Type()
         */
         public $dueDate;
 
         /**
         * Create DTO, optionally extracting data from a model.
-        *
-        * @param Task|null $task
         */
-        public function __construct(? Task $task = null)
+        public function __construct(?Task $task = null)
         {
             if ($task instanceof Task) {
                 $this->extract($task);
@@ -170,8 +168,6 @@ following ``TaskData`` class:
 
         /**
         * Fill entity with data from the DTO.
-        *
-        * @param Task $task
         */
         public function fill(Task $task): Task
         {
@@ -185,8 +181,6 @@ following ``TaskData`` class:
 
         /**
         * Extract data from entity into the DTO.
-        *
-        * @param Task $task
         */
         public function extract(Task $task): self
         {
