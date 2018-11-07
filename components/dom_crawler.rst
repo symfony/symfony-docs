@@ -219,7 +219,7 @@ Extract attribute and/or node values from the list of nodes::
 
 .. note::
 
-    Special attribute `_text` represents a node value, while `_name` represents element name.
+    Special attribute ``_text`` represents a node value, while ``_name`` represents element name.
 
 Call an anonymous function on each node of the list::
 
