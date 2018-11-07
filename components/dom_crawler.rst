@@ -214,12 +214,12 @@ Extract attribute and/or node values from the list of nodes::
 
     $attributes = $crawler
         ->filterXpath('//body/p')
-        ->extract(array('_text', 'class'))
+        ->extract(array('_name', '_text', 'class'))
     ;
 
 .. note::
 
-    Special attribute ``_text`` represents a node value and `_name`. for a element name.
+    Special attribute `_text` represents a node value, while `_name` represents element name.
 
 Call an anonymous function on each node of the list::
 
