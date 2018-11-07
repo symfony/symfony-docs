@@ -343,7 +343,7 @@ dealing with the ``TransformerInterface``.
 
 .. tip::
 
-    As long as you have only one concrete implementation of an interface under same 
+    As long as you have only one concrete implementation of an interface under the same 
     namespace, alias is not mandatory and autowire will work injecting the concrete 
     implementation even without alias definition.
     Neverthless is recommended to provide an alias in order to preserve application 
