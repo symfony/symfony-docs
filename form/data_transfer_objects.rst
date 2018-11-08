@@ -57,20 +57,20 @@ the setters fluent.
     +    * @ORM\GeneratedValue()
     +    * @ORM\Column(type="integer")
     +    */
-    +   protected $id;
+    +   private $id;
 
         /**
     +    * @ORM\Column(type="string", length=255)
          * @Assert\NotBlank()
          */
-        protected $task;
+        private $task;
 
         /**
     +   * @ORM\Column(type="datetime", nullable=true)
         * @Assert\NotBlank()
         * @Assert\Type("\DateTime")
         */
-        protected $dueDate;
+        private $dueDate;
 
     +   public function getId()
     +   {
