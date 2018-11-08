@@ -35,9 +35,8 @@ example:
 
     $ composer require form validator twig-bundle orm-pack security-csrf annotations
 
-Use the example ``Task`` entity from :doc:`the main forms tutorial </forms>`,
-make it a doctrine entity (this requires adding a primary key ``id``) and make
-the setters fluent.
+Use the example ``Task`` entity from :doc:`the main forms tutorial </forms>`
+and make it a doctrine entity (this requires adding a primary key ``id``).
 
 .. code-block:: diff
 
@@ -76,30 +75,8 @@ the setters fluent.
     +   {
     +       return $this->id;
     +   }
-    +
-        public function getTask()
-        {
-            return $this->task;
-        }
 
-        public function setTask($task)
-        {
-            $this->task = $task;
-    +
-    +       return $this;
-        }
-
-        public function getDueDate()
-        {
-            return $this->dueDate;
-        }
-
-        public function setDueDate(\DateTime $dueDate = null)
-        {
-            $this->dueDate = $dueDate;
-    +
-    +       return $this;
-        }
+        // ...
     }
 
 .. index::
@@ -171,10 +148,8 @@ following ``TaskData`` class:
         */
         public function fill(Task $task): Task
         {
-            $task
-                ->setTask($this->task)
-                ->setDueDate($this->dueDate)
-            ;
+            $task->setTask($this->task);
+            $task->setDueDate($this->dueDate)
 
             return $task;
         }
