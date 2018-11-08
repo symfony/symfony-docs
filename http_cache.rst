@@ -77,25 +77,15 @@ but is a great way to start.
 
     For details on setting up Varnish, see :doc:`/http_cache/varnish`.
 
-To enable the proxy, first create a caching kernel::
-
-    // src/CacheKernel.php
-    namespace App;
-
-    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
-
-    class CacheKernel extends HttpCache
-    {
-    }
 
 Modify the code of your front controller to wrap the default kernel into the
-caching kernel:
+http caching kernel:
 
 .. code-block:: diff
 
     // public/index.php
 
-    + use App\CacheKernel;
+    + use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
     use App\Kernel;
 
     // ...
@@ -106,7 +96,7 @@ caching kernel:
 
     + // Wrap the default Kernel with the CacheKernel one in 'prod' environment
     + if ('prod' === $env) {
-    +     $kernel = new CacheKernel($kernel);
+    +     $kernel = new HttpCache($kernel);
     + }
 
     $request = Request::createFromGlobals();
