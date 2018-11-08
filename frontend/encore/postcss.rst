@@ -31,11 +31,11 @@ Alternatively, you can add the following lines to your ``package.json`` file to 
 
     {
         // ...
-        "postcss": {
-            "plugins": {
-                "autoprefixer": {}
-            }
-        }
+    +    "postcss": {
+    +        "plugins": {
+    +            "autoprefixer": {}
+    +        }
+    +    }
     }
 
 Then, Enable the loader in Encore!
