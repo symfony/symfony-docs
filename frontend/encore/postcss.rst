@@ -24,6 +24,20 @@ Next, create a ``postcss.config.js`` file at the root of your project:
         }
     }
 
+Alternatively, you can add the following lines to your ``package.json`` file to avoid creating a ``postcss.config.js`` file:
+
+.. code-block:: diff
+    // package.json
+
+    {
+        // ...
+    +     "postcss": {
+    +         "plugins": {
+    +             "autoprefixer": {}
+    +         }
+    +     }
+    }
+
 Then, Enable the loader in Encore!
 
 .. code-block:: diff
