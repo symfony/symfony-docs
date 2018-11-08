@@ -343,12 +343,9 @@ dealing with the ``TransformerInterface``.
 
 .. tip::
 
-    As long as you have only one concrete implementation of an interface under the same 
-    namespace, alias is not mandatory and autowire will work injecting the concrete 
-    implementation even without alias definition.
-    Nevertheless it is recommended to provide an alias in order to preserve application 
-    logic when a second concrete implementation kicks in, otherwise compiler compilation 
-    would throw an exception.
+    As long as there is only one class implementing the interface and that class
+    is part of the same namespace configuring the alias is not mandatory and Symfony
+    will automatically create one.
 
 Dealing with Multiple Implementations of the Same Type
 ------------------------------------------------------
