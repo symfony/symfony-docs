@@ -129,7 +129,7 @@ following ``TaskData`` class:
 
         /**
         * @Assert\NotBlank()
-        * @Assert\Type()
+        * @Assert\Type(type="\DateTime")
         */
         public $dueDate;
 
