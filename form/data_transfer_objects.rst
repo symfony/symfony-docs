@@ -10,7 +10,7 @@ Entities should always have a valid state.
 When entities are used as data classes for a form, the data is injected into
 the entity and validated.
 When the validation fails, the invalid data is still left in the entity.
-This can lead to invalid data being saved in the database.
+This can lead to invalid data being saved in the database or unexpected exceptions.
 
 You will use the Maker bundle to highlight the differences between using DTOs
 and entities.
