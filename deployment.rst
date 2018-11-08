@@ -238,7 +238,7 @@ kernel and return your project's root directory::
 Out of memory when accessing /web/app.php
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some UNIX systems make use of SELinux, specially Red Hat distributions, like CentOS. By default SELinux is set to enforcing as it should be. If you deploy with app_dev.php you will see some weird permission errors even if you set 777 to `var` directory inside your project's folder. To resolve this, either set SELinux configuration correctly or disable it.
+Some UNIX systems make use of SELinux, specially Red Hat distributions, like CentOS. By default SELinux is set to enforcing as it should be. If you deploy with app_dev.php you will see some weird permission errors even if you set 777 to `var` directory inside your project's folder. To resolve this set SELinux configuration correctly.
 
 .. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: http://capistranorb.com/
