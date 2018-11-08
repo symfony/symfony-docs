@@ -291,9 +291,9 @@ Replace the ``Task`` entity with ``TaskData`` in the ``new()`` and ``edit()`` me
 
           if ($form->isSubmitted() && $form->isValid()) {
     +         $task = $taskData->fill(new Task());
-              $em = $this->getDoctrine()->getManager();
-              $em->persist($task);
-              $em->flush();
+              $entityManager = $this->getDoctrine()->getManager();
+              $entityManager->persist($task);
+              $entityManager->flush();
 
               return $this->redirectToRoute('task_index');
           }
