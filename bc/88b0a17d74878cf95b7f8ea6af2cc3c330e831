@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-10-15T06:52:16Z
+
+Thanks Maxime! I'm linking to the new PR so we can merge this after that has been merged: https://github.com/Seldaek/monolog/pull/1204
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2018-11-04T16:49:16Z
+
+Seldaek/monolog#1204 has been merged :)
+
+---------------------------------------------------------------------------
+
+by Seldaek at 2018-11-05T09:04:03Z
+
+https://github.com/Seldaek/monolog/releases/tag/1.24.0 is out /cc @nicolas-grekas
