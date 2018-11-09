@@ -4,8 +4,7 @@
 How to Decorate Services
 ========================
 
-When overriding an existing definition (e.g. when applying the `Decorator pattern`_),
-the original service is lost:
+When overriding an existing definition, the original service is lost:
 
 .. configuration-block::
 
@@ -18,7 +17,7 @@ the original service is lost:
             # this replaces the old app.mailer definition with the new one, the
             # old definition is lost
             app.mailer:
-                class: AppBundle\DecoratingMailer
+                class: AppBundle\NewMailer
 
     .. code-block:: xml
 
@@ -32,26 +31,26 @@ the original service is lost:
 
                 <!-- this replaces the old app.mailer definition with the new
                      one, the old definition is lost -->
-                <service id="app.mailer" class="AppBundle\DecoratingMailer" />
+                <service id="app.mailer" class="AppBundle\NewMailer" />
             </services>
         </container>
 
     .. code-block:: php
 
         use AppBundle\Mailer;
-        use AppBundle\DecoratingMailer;
+        use AppBundle\NewMailer;
 
         $container->register('app.mailer', Mailer::class);
 
         // this replaces the old app.mailer definition with the new one, the
         // old definition is lost
-        $container->register('app.mailer', DecoratingMailer::class);
+        $container->register('app.mailer', NewMailer::class);
 
 Most of the time, that's exactly what you want to do. But sometimes,
-you might want to decorate the old one instead. In this case, the
-old service should be kept around to be able to reference it in the
-new one. This configuration replaces ``app.mailer`` with a new one, but keeps
-a reference of the old one  as ``app.decorating_mailer.inner``:
+you might want to decorate the old one instead (i.e. apply the `Decorator pattern`_).
+In this case, the old service should be kept around to be able to reference
+it in the new one. This configuration replaces ``app.mailer`` with a new one,
+but keeps a reference of the old one as ``app.decorating_mailer.inner``:
 
 .. configuration-block::
 
