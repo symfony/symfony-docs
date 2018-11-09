@@ -50,8 +50,6 @@ The logic for *when* and *how* to split the files is controlled by the
 `SplitChunksPlugin from Webpack`_. You can control the configuration passed to
 this plugin with the ``configureSplitChunks()`` function:
 
-.. code-block:: js
-
 .. code-block:: diff
 
     Encore
