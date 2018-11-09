@@ -264,7 +264,7 @@ explicitly trust your reverse proxies by calling ``setTrustedProxies()``::
 
 So, the ``getClientIp()`` method works securely in all circumstances. You can
 use it in all your projects, whatever the configuration is, it will behave
-correctly and safely. That's one of the goal of using a framework. If you were
+correctly and safely. That's one of the goals of using a framework. If you were
 to write a framework from scratch, you would have to think about all these
 cases by yourself. Why not using a technology that already works?
 
