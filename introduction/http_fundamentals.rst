@@ -231,7 +231,7 @@ have all the request information at your fingertips::
 
     // retrieves an HTTP request header, with normalized, lowercase keys
     $request->headers->get('host');
-    $request->headers->get('content_type');
+    $request->headers->get('content-type');
 
     $request->getMethod();    // e.g. GET, POST, PUT, DELETE or HEAD
     $request->getLanguages(); // an array of languages the client accepts
