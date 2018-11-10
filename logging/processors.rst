@@ -161,8 +161,8 @@ handler level or at the channel level instead of registering it globally
 
 .. tip::
 
-    .. versionadded:: 4.2
-        The autoconfiguration of Monolog processors was introduced in Symfony 4.2.
+    .. versionadded:: 2.4
+        The autoconfiguration of Monolog processors was introduced in Monolog bundle 2.4.
 
     If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
     processors implementing :class:`Monolog\\Processor\\ProcessorInterface`
