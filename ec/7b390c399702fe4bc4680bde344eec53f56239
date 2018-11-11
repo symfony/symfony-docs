@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-11-08T18:36:54Z
+
+Some of these changes (especially the clarifications in some paragraphs) should go into the `4.1` branch, right?
+
+---------------------------------------------------------------------------
+
+by ogizanagi at 2018-11-08T18:48:07Z
+
+Sure. As I’ve got more, I’ll do another PR anyway.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-11-09T08:12:33Z
+
+So, can this be merged in `master` "as is" and later we'll merge another one in `4.1` ?
