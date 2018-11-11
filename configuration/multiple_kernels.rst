@@ -119,7 +119,7 @@ to your ``composer.json`` autoload section:
         }
     }
 
-Then, run ``composer dumpautoload`` to dump your new autoload config.
+Then, run ``composer dump-autoload`` to dump your new autoload config.
 
 Step 3) Define the Kernel Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
