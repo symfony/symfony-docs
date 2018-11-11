@@ -482,7 +482,8 @@ tests are constructed, this might be too late. In this case, you will need to de
 the namespaces of the tested classes in your phpunit.xml.dist
 
 ````
-<listeners>
+<phpunit>
+    <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
             <arguments>
                 <array>
