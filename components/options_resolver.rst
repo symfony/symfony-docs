@@ -654,6 +654,12 @@ method::
         ->setDeprecated('hostname', 'The option "hostname" is deprecated, use "host" instead.')
     ;
 
+.. note::
+
+    The deprecation message will be triggered only if the option is being used
+    somewhere, either its value is provided by the user or the option is evaluated
+    within closures of lazy options and normalizers.
+
 Instead of passing the message, you may also pass a closure which returns
 a string (the deprecation message) or an empty string to ignore the deprecation.
 This closure is useful to only deprecate some of the allowed types or values of
@@ -676,6 +682,11 @@ the option::
             return '';
         })
     ;
+
+.. note::
+
+    Deprecation based on the value is triggered only when the option is provided
+    by the user.
 
 This closure receives as argument the value of the option after validating it
 and before normalizing it when the option is being resolved.
