@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by arkste at 2018-10-31T11:42:04Z
+
+i've added a message example since the workflow is basically `message => dispatch => handler`.
+this should help with the understanding of how to create, dispatch and handle a message within the component.
+
+---------------------------------------------------------------------------
+
+by arkste at 2018-11-08T17:41:31Z
+
+is there anything else i can do to get this merged? ping @javiereguiluz
