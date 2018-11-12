@@ -38,8 +38,8 @@ Concepts
    something can be a message broker or a third party API for example.
 
 **Receiver**:
-   Responsible for deserializing and forwarding messages to handler(s). This
-   can be a message queue puller or an API endpoint for example.
+   Responsible for retrieving, deserializing and forwarding messages to handler(s).
+   This can be a message queue puller or an API endpoint for example.
 
 **Handler**:
    Responsible for handling messages using the business logic applicable to the messages.
@@ -55,7 +55,7 @@ are configured for you:
 
 #. ``LoggingMiddleware`` (logs the processing of your messages)
 #. ``SendMessageMiddleware`` (enables asynchronous processing)
-#. ``HandleMessageMiddleware`` (calls the registered handle)
+#. ``HandleMessageMiddleware`` (calls the registered handler)
 
 Example::
 
@@ -206,7 +206,7 @@ First, create your sender::
 Your own Receiver
 ~~~~~~~~~~~~~~~~~
 
-A receiver is responsible for receiving messages from a source and dispatching
+A receiver is responsible for getting messages from a source and dispatching
 them to the application.
 
 Imagine you already processed some "orders" in your application using a
@@ -226,7 +226,7 @@ First, create your receiver::
     use Symfony\Component\Serializer\SerializerInterface;
     use Symfony\Component\Messenger\Envelope;
 
-    class NewOrdersFromCsvFile implements ReceiverInterface
+    class NewOrdersFromCsvFileReceiver implements ReceiverInterface
     {
        private $serializer;
        private $filePath;

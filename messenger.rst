@@ -84,7 +84,9 @@ message handler. It's a class with an ``__invoke`` method::
 
 Message handlers must be registered as services and :doc:`tagged </service_container/tags>`
 with the ``messenger.message_handler`` tag. If you're using the
-:ref:`default services.yaml configuration <service-container-services-load-example>`,
+:ref:`default services.yaml configuration <service-container-services-load-example>` and implement
+:class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
+or :class:`Symfony\\Component\\Messenger\\Handler\\MessageSubscriberInterface`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
 If you're not using service autoconfiguration, then you need to add this config:
@@ -543,6 +545,60 @@ for each bus looks like this:
 #. ``call_message_handler`` middleware. Will call the message handler(s) for the
    given message.
 
+.. note::
+
+    These middleware names are actually shortcuts working by convention.
+    The real service ids are prefixed with the ``messenger.middleware.`` namespace.
+
+Disabling default Middleware
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you don't want the default collection of middleware to be present on your bus,
+you can disable them like this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                buses:
+                    messenger.bus.default:
+                        default_middleware: false
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:bus name="messenger.bus.default" default-middleware="false" />
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', array(
+            'messenger' => array(
+                'buses' => array(
+                    'messenger.bus.default' => array(
+                        'default_middleware' => false,
+                    ),
+                ),
+            ),
+        ));
+
 Adding your own Middleware
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -603,55 +659,6 @@ within the buses to add some extra capabilities like this:
 Note that if the service is abstract, a different instance of service will be
 created per bus.
 
-Disabling default Middleware
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you don't want the default collection of middleware to be present on your bus,
-you can disable them like this:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/messenger.yaml
-        framework:
-            messenger:
-                buses:
-                    messenger.bus.default:
-                        default_middleware: false
-
-    .. code-block:: xml
-
-        <!-- config/packages/messenger.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:messenger>
-                    <framework:bus name="messenger.bus.default" default-middleware="false" />
-                </framework:messenger>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
-                'buses' => array(
-                    'messenger.bus.default' => array(
-                        'default_middleware' => false,
-                    ),
-                ),
-            ),
-        ));
-
 Using Middleware Factories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -674,13 +681,13 @@ factories. Defining such requires a two-step configuration based on Symfony's
 
             # Step 2: an abstract definition that will call the factory with default
             # arguments or the ones provided in the middleware config
-            messenger.middleware.doctrine_transaction_middleware:
+            messenger.middleware.doctrine_transaction:
                 class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddleware
                 factory: 'doctrine.orm.messenger.middleware_factory.transaction:createMiddleware'
                 abstract: true
                 # the default arguments to use when none provided from config. Example:
                 # middleware:
-                #     - doctrine_transaction_middleware: ~
+                #     - doctrine_transaction: ~
                 arguments: ['default']
 
     .. code-block:: xml
@@ -703,7 +710,7 @@ factories. Defining such requires a two-step configuration based on Symfony's
 
                 <!-- Step 2: an abstract definition that will call the factory with default
                      arguments or the ones provided in the middleware config -->
-                <service id="messenger.middleware.doctrine_transaction_middleware"
+                <service id="messenger.middleware.doctrine_transaction"
                     class="Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddleware"
                     abstract="true">
 
@@ -729,7 +736,7 @@ factories. Defining such requires a two-step configuration based on Symfony's
 
         // Step 2: an abstract definition that will call the factory with default
         // arguments or the ones provided in the middleware config
-        $container->register('messenger.middleware.doctrine_transaction_middleware', DoctrineTransactionMiddleware::class)
+        $container->register('messenger.middleware.doctrine_transaction', DoctrineTransactionMiddleware::class)
             ->setFactory(array(
                 new Reference('doctrine.orm.messenger.middleware_factory.transaction'),
                 'createMiddleware'
@@ -742,7 +749,7 @@ which is the argument expected by the
 ``Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddlewareFactory::createMiddleware`` method.
 
 Then you can reference and configure the
-``messenger.middleware.doctrine_transaction_middleware`` service as a middleware:
+``messenger.middleware.doctrine_transaction`` service as a middleware:
 
 .. configuration-block::
 
@@ -755,9 +762,9 @@ Then you can reference and configure the
                     command_bus:
                         middleware:
                             # Using defaults
-                            - doctrine_transaction_middleware
+                            - doctrine_transaction
                             # Using another entity manager
-                            - doctrine_transaction_middleware: ['custom']
+                            - doctrine_transaction: ['custom']
 
     .. code-block:: xml
 
@@ -775,9 +782,9 @@ Then you can reference and configure the
                 <framework:messenger>
                     <framework:bus name="command_bus">
                         <!-- Using defaults -->
-                        <framework:middleware id="doctrine_transaction_middleware" />
+                        <framework:middleware id="doctrine_transaction" />
                         <!-- Using another entity manager -->
-                        <framework:middleware id="doctrine_transaction_middleware">
+                        <framework:middleware id="doctrine_transaction">
                             <framework:argument>custom</framework:argument>
                         </framework:middleware>
                     </framework:bus>
@@ -794,19 +801,14 @@ Then you can reference and configure the
                     'command_bus' => array(
                         'middleware' => array(
                             // Using defaults
-                            'doctrine_transaction_middleware',
+                            'doctrine_transaction',
                             // Using another entity manager
-                            array('id' => 'doctrine_transaction_middleware', 'arguments' => array('custom')),
+                            array('id' => 'doctrine_transaction', 'arguments' => array('custom')),
                         ),
                     ),
                 ),
             ),
         ));
-
-.. note::
-
-    The ``doctrine_transaction_middleware`` shortcut is a convention. The real
-    service id is prefixed with the ``messenger.middleware.`` namespace.
 
 .. note::
 
@@ -816,9 +818,9 @@ Then you can reference and configure the
 
 .. tip::
 
-    The ``doctrine_transaction_middleware`` is a built-in middleware wired
-    automatically when the DoctrineBundle and the Messenger component are
-    installed and enabled.
+    The ``messenger.middleware.doctrine_transaction`` middleware is a built-in
+    middleware wired automatically when the DoctrineBundle and the Messenger
+    component are installed and enabled.
 
 Your own Transport
 ------------------
