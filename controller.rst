@@ -602,7 +602,7 @@ the ``Request`` class::
 
         // retrieves an HTTP request header, with normalized, lowercase keys
         $request->headers->get('host');
-        $request->headers->get('content_type');
+        $request->headers->get('content-type');
     }
 
 The ``Request`` class has several public properties and methods that return any
