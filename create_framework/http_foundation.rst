@@ -192,7 +192,7 @@ fingertips thanks to a nice and simple API::
 
     // retrieve an HTTP request header, with normalized, lowercase keys
     $request->headers->get('host');
-    $request->headers->get('content_type');
+    $request->headers->get('content-type');
 
     $request->getMethod();    // GET, POST, PUT, DELETE, HEAD
     $request->getLanguages(); // an array of languages the client accepts

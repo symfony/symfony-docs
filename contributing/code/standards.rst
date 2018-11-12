@@ -194,7 +194,10 @@ Structure
 
 * Do not use spaces around ``[`` offset accessor and before ``]`` offset accessor;
 
-* Add a ``use`` statement for every class that is not part of the global namespace.
+* Add a ``use`` statement for every class that is not part of the global namespace;
+
+* When PHPDoc tags like ``@param`` or ``@return`` include ``null`` and other
+  types, always place ``null`` at the end of the list of types.
 
 Naming Conventions
 ~~~~~~~~~~~~~~~~~~
