@@ -656,8 +656,8 @@ within the buses to add some extra capabilities like this:
             ),
         ));
 
-Note that if the service is abstract, a different instance of service will be
-created per bus.
+Note that if the service is abstract, a different instance of the service will
+be created per bus.
 
 Using Middleware Factories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
