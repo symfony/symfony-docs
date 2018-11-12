@@ -147,12 +147,10 @@ The ``addListener()`` method takes up to three arguments:
 
 #. The event name (string) that this listener wants to listen to;
 #. A PHP callable that will be executed when the specified event is dispatched;
-#. An optional priority integer that determines when a listener is triggered
-   versus other listeners (defaults to ``0``). A higher priority integer means
-   the listener will be triggered earlier. So, priority 3 executes before
-   priority 2. Priority 2 executes before priority 1. Priority 1 executes before
-   priority 0, and so on. If two listeners have the same priority, they are
-   executed in the order that they were added to the dispatcher.
+#. An optional priority, defined as a positive or negative integer (defaults to
+   ``0``). The higher the priority, the earlier the listener is called. If two 
+   listeners have the same priority, they are executed in the order that they
+   were added to the dispatcher.
 
 .. note::
 
