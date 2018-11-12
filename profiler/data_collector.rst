@@ -315,8 +315,9 @@ the ``data_collector`` tag in your service configuration:
     The ``id`` attribute must match the value returned by the ``getName()`` method.
 
 The position of each panel in the toolbar is determined by the priority defined
-by each collector. Most built-in collectors use ``255`` as their priority. If you
-want your collector to be displayed before them, use a higher value:
+by each collector. Priorities are defined as positive or negative integers and
+they default to ``0``. Most built-in collectors use ``255`` as their priority.
+If you want your collector to be displayed before them, use a higher value:
 
 .. configuration-block::
 
