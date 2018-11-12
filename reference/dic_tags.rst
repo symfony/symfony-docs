@@ -568,8 +568,9 @@ tag:
 
 .. note::
 
-    The ``priority`` value is optional and defaults to 0. The higher the
-    priority, the sooner it gets executed.
+    The ``priority`` is optional and its value is a positive or negative integer
+    that defaults to ``0``. The higher the number, the earlier that warmers are
+    executed.
 
 .. caution::
 
@@ -1422,8 +1423,8 @@ the new loader and tag it with ``twig.loader``:
 
 .. note::
 
-    The ``priority`` value is optional and defaults to ``0``.
-    The higher priority loaders are tried first.
+    The ``priority`` is optional and its value is a positive or negative integer
+    that defaults to ``0``. Loaders with higher numbers are tried first.
 
 validator.constraint_validator
 ------------------------------
