@@ -196,8 +196,8 @@ Structure
 
 * Add a ``use`` statement for every class that is not part of the global namespace;
 
-* When PHPDoc blocks like `@param` or `@return` include ``null`` and declare multiple
-  types, place ``null`` always on the last position.
+* When PHPDoc tags like ``@param`` or ``@return`` include ``null`` and other
+  types, always place ``null`` at the end of the list of types.
 
 Naming Conventions
 ~~~~~~~~~~~~~~~~~~
