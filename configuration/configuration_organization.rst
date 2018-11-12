@@ -49,18 +49,18 @@ this structure:
 
     your-project/
     ├─ config/
-    │  └─ packages/
-    │     ├─ dev/
-    |     │  ├─ framework.yaml
-    │     │  └─ ...
-    │     ├─ prod/
-    │     │  └─ ...
-    │     ├─ test/
-    │     │  └─ ...
-    |     ├─ framework.yaml
-    │     └─ ...
-    │     ├─ services.yaml
-    │     └─ services_dev.yaml
+    │  ├─ packages/
+    │  │  ├─ dev/
+    │  │  │  ├─ framework.yaml
+    │  │  │  └─ ...
+    │  │  ├─ prod/
+    │  │  │  └─ ...
+    │  │  ├─ test/
+    │  │  │  └─ ...
+    │  │  ├─ framework.yaml
+    │  │  └─ ...
+    │  ├─ services.yaml
+    │  └─ services_dev.yaml
     ├─ ...
 
 This default structure was chosen for its simplicity — one file per package and

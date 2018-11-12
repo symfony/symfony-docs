@@ -19,6 +19,28 @@ install messenger before using it:
 
     $ composer require messenger
 
+Message
+-------
+
+Before you can send a message, you must create it first. There is no specific
+requirement for a message, except it should be serializable and unserializable
+by a Symfony Serializer instance::
+
+    // src/Message/SmsNotification.php
+    namespace App\Message;
+
+    class SmsNotification
+    {
+        private $content;
+
+        public function __construct(string $content)
+        {
+            $this->content = $content;
+        }
+
+        // ...getters
+    }
+
 Using the Messenger Service
 ---------------------------
 
@@ -28,7 +50,7 @@ you need it, like in a controller::
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
-    use App\Message\SendNotification;
+    use App\Message\SmsNotification;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -36,7 +58,7 @@ you need it, like in a controller::
     {
         public function index(MessageBusInterface $bus)
         {
-            $bus->dispatch(new SendNotification('A string to be sent...'));
+            $bus->dispatch(new SmsNotification('A string to be sent...'));
         }
     }
 
@@ -46,14 +68,15 @@ Registering Handlers
 In order to do something when your message is dispatched, you need to create a
 message handler. It's a class with an ``__invoke`` method::
 
-    // src/MessageHandler/MyMessageHandler.php
+    // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
 
+    use App\Message\SmsNotification;
     use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-    class MyMessageHandler implements MessageHandlerInterface
+    class SmsNotificationHandler implements MessageHandlerInterface
     {
-        public function __invoke(MyMessage $message)
+        public function __invoke(SmsNotification $message)
         {
             // do something with it.
         }
@@ -74,7 +97,7 @@ If you're not using service autoconfiguration, then you need to add this config:
 
         # config/services.yaml
         services:
-            App\MessageHandler\MyMessageHandler:
+            App\MessageHandler\SmsNotificationHandler:
                 tags: [messenger.message_handler]
 
     .. code-block:: xml
@@ -87,7 +110,7 @@ If you're not using service autoconfiguration, then you need to add this config:
                 http://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\MessageHandler\MyMessageHandler">
+                <service id="App\MessageHandler\SmsNotificationHandler">
                    <tag name="messenger.message_handler" />
                 </service>
             </services>
@@ -96,9 +119,9 @@ If you're not using service autoconfiguration, then you need to add this config:
     .. code-block:: php
 
         // config/services.php
-        use App\MessageHandler\MyMessageHandler;
+        use App\MessageHandler\SmsNotificationHandler;
 
-        $container->register(MyMessageHandler::class)
+        $container->register(SmsNotificationHandler::class)
             ->addTag('messenger.message_handler');
 
 .. note::
