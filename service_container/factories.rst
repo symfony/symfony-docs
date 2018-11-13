@@ -104,7 +104,7 @@ Configuration of the service container then looks like this:
 
             App\Email\NewsletterManager:
                 # call a method on the specified factory service
-                factory: 'App\Email\NewsletterManagerFactory:createNewsletterManager'
+                factory: 'App\Email\NewsletterManagerFactory::createNewsletterManager'
 
     .. code-block:: xml
 
@@ -153,7 +153,7 @@ Configuration of the service container then looks like this:
         # config/services.yaml
         App\Email\NewsletterManager:
             # new syntax
-            factory: 'App\Email\NewsletterManagerFactory:createNewsletterManager'
+            factory: 'App\Email\NewsletterManagerFactory::createNewsletterManager'
             # old syntax
             factory: ['@App\Email\NewsletterManagerFactory', createNewsletterManager]
 
@@ -180,7 +180,7 @@ example takes the ``templating`` service as an argument:
             # ...
 
             App\Email\NewsletterManager:
-                factory:   'App\Email\NewsletterManagerFactory:createNewsletterManager'
+                factory:   'App\Email\NewsletterManagerFactory::createNewsletterManager'
                 arguments: ['@templating']
 
     .. code-block:: xml
