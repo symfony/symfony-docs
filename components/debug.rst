@@ -37,8 +37,9 @@ tools.
 
 .. caution::
 
-    You should never enable the debug tools in a production environment as
-    they might disclose sensitive information to the user.
+    Apart from the error handler, you should never enable the debug
+    tools in a production environment as they might disclose sensitive
+    information to the user.
 
 Enabling the Error Handler
 --------------------------
@@ -51,6 +52,12 @@ fatal errors)::
     use Symfony\Component\Debug\ErrorHandler;
 
     ErrorHandler::register();
+
+.. note::
+
+    This one is fine to use in a production environment and will be
+    enabled if you use the framework bundle, so that you get better
+    logging.
 
 Enabling the Exception Handler
 ------------------------------
