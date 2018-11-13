@@ -148,7 +148,7 @@ The ``addListener()`` method takes up to three arguments:
 #. The event name (string) that this listener wants to listen to;
 #. A PHP callable that will be executed when the specified event is dispatched;
 #. An optional priority, defined as a positive or negative integer (defaults to
-   ``0``). The higher the priority, the earlier the listener is called. If two 
+   ``0``). The higher the number, the earlier the listener is called. If two
    listeners have the same priority, they are executed in the order that they
    were added to the dispatcher.
 
@@ -384,10 +384,12 @@ method::
 The dispatcher will automatically register the subscriber for each event
 returned by the ``getSubscribedEvents()`` method. This method returns an array
 indexed by event names and whose values are either the method name to call
-or an array composed of the method name to call and a priority. The example
-above shows how to register several listener methods for the same event
-in subscriber and also shows how to pass the priority of each listener method.
-The higher the priority, the earlier the method is called. In the above
+or an array composed of the method name to call and a priority (a positive or
+negative integer that defaults to ``0``).
+
+The example above shows how to register several listener methods for the same
+event in subscriber and also shows how to pass the priority of each listener
+method. The higher the number, the earlier the method is called. In the above
 example, when the ``kernel.response`` event is triggered, the methods
 ``onKernelResponsePre()`` and ``onKernelResponsePost()`` are called in that
 order.

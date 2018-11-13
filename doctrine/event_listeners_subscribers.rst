@@ -247,8 +247,9 @@ Priorities for Event Listeners
 ------------------------------
 
 In case you have multiple listeners for the same event you can control the order
-in which they are invoked using the ``priority`` attribute on the tag.
-Listeners with a higher priority are invoked first.
+in which they are invoked using the ``priority`` attribute on the tag. Priorities
+are defined with positive or negative integers (they default to ``0``). Higher
+numbers mean that listeners are invoked earlier.
 
 .. configuration-block::
 

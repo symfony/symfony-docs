@@ -116,7 +116,7 @@ using a special "tag":
 
     The other optional tag attribute is called  ``priority``, which defaults to
     ``0`` and it controls the order in which listeners are executed (the higher
-    the priority the earlier a listener is executed). This is useful when you
+    the number the earlier a listener is executed). This is useful when you
     need to guarantee that one listener is executed before another. The priorities
     of the internal Symfony listeners usually range from ``-255`` to ``255`` but
     your own listeners can use any positive or negative integer.
@@ -133,7 +133,7 @@ they are listening to.
 
 In a given subscriber, different methods can listen to the same event. The order
 in which methods are executed is defined by the ``priority`` parameter of each
-method (the higher the priority the earlier the method is called). To learn more
+method (the higher the number the earlier the method is called). To learn more
 about event subscribers, read :doc:`/components/event_dispatcher`.
 
 The following example shows an event subscriber that defines several methods which
