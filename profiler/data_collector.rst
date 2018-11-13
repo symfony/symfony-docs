@@ -276,5 +276,7 @@ to specify a tag that contains the template:
             ))
         ;
 
-The position of each panel in the toolbar is determined by the collector priority
-(the higher the priority, the earlier the panel is displayed in the toolbar).
+The position of each panel in the toolbar is determined by the collector priority.
+Priorities are defined as positive or negative integers and they default to ``0``.
+Most built-in collectors use ``255`` as their priority. If you want your collector
+to be displayed before them, use a higher value (like 300).

@@ -389,8 +389,9 @@ can also register it manually:
 
 .. note::
 
-    The ``priority`` value is optional and defaults to 0. The higher the
-    priority, the sooner it gets executed.
+    The ``priority`` is optional and its value is a positive or negative integer
+    that defaults to ``0``. The higher the number, the earlier that warmers are
+    executed.
 
 .. caution::
 
@@ -1173,8 +1174,8 @@ also register it manually:
 
 .. note::
 
-    The ``priority`` value is optional and defaults to ``0``.
-    The higher priority loaders are tried first.
+    The ``priority`` is optional and its value is a positive or negative integer
+    that defaults to ``0``. Loaders with higher numbers are tried first.
 
 .. _reference-dic-tags-twig-runtime:
 
