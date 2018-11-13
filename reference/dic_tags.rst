@@ -1424,7 +1424,7 @@ the new loader and tag it with ``twig.loader``:
 .. note::
 
     The ``priority`` is optional and its value is a positive or negative integer
-    that defaults to ``0``. Higher numbers mean that loaders are tried first.
+    that defaults to ``0``. Loaders with higher numbers are tried first.
 
 validator.constraint_validator
 ------------------------------
