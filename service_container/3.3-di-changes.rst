@@ -503,7 +503,7 @@ Ready to upgrade your existing project? Great! Suppose you have the following co
         app.api_client_sl_connect:
             class: App\Service\ApiClient
             arguments:
-                - 'https://connect.sensiolabs.com/api'
+                - 'https://connect.symfony.com/api'
 
 It's optional, but let's upgrade this to the new Symfony 3.3 configuration step-by-step,
 *without* breaking our application.
@@ -795,7 +795,7 @@ can be autowired. The final configuration looks like this:
         app.api_client_sl_connect:
             class: App\Service\ApiClient
             arguments:
-                - 'https://connect.sensiolabs.com/api'
+                - 'https://connect.symfony.com/api'
 
 You can now take advantage of the new features going forward.
 

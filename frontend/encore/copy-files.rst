@@ -40,7 +40,7 @@ files into your final output directory.
 
     +     .copyFiles({
     +         from: './assets/images',
-    + 
+    +
     +         // optional target path, relative to the output dir
     +         //to: 'images/[path][name].[ext]',
     +
@@ -53,6 +53,8 @@ path). If you have :doc:`versioning enabled <versioning>`, the copied files will
 include a hash based on their content.
 
 To render inside Twig, use the ``asset()`` function:
+
+.. code-block:: html+twig
 
     {# assets/images/logo.png was copied to public/build/logo.png #}
     <img src="{{ asset('build/logo.png') }}"
