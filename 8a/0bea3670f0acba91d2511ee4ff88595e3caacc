@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------
+
+by andrecadete at 2018-11-14T09:18:53Z
+
+Just a small addition to help review this quickly:
+The package name is correct in the Babel configuration doc page: https://symfony.com/doc/current/frontend/encore/babel.html
+
+Seems the one I changed is just a leftover? :)
