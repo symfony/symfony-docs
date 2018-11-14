@@ -97,7 +97,7 @@ with a non-zero code)::
         echo $exception->getMessage();
     }
 
-Using features from the OS shell
+Using Features From the OS Shell
 --------------------------------
 
 .. versionadded:: 4.2
@@ -105,7 +105,7 @@ Using features from the OS shell
 
 Using array of arguments is the recommended way to define commands. This
 saves you from any escaping and allows sending signals seamlessly
-(e.g. to stop processes before completion.)::
+(e.g. to stop processes before completion)::
 
     $process = new Process(array('/path/command', '--flag', 'arg 1', 'etc.'));
 
@@ -115,10 +115,10 @@ commands as strings using the
 :method:`Symfony\\Component\\Process\\Process::fromShellCommandline` static
 factory.
 
-Please note that each OS provides a different syntax for their command-lines
-so that it becomes your responsibility to deal with escaping and portability.
+Each operating system provides a different syntax for their command-lines,
+so it becomes your responsibility to deal with escaping and portability.
 
-To provide any variable arguments to command-line string, pass them as
+When using strings to define commands, variable arguments are passed as
 environment variables using the second argument of the ``run()``,
 ``mustRun()`` or ``start()`` methods. Referencing them is also OS-dependent::
 
