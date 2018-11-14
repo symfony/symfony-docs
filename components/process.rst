@@ -40,19 +40,6 @@ escaping arguments to prevent security issues. It replaces PHP functions like
 
     echo $process->getOutput();
 
-.. tip::
-
-    In addition to passing the command binary and its arguments as a string, you
-    can also pass them as an array, which is useful when building a complex
-    command programmatically::
-
-        // traditional string based commands
-        $builder = new Process('ls -lsa');
-        // same example but using an array
-        $builder = new Process(array('ls', '-lsa'));
-        // the array can contain any number of arguments and options
-        $builder = new Process(array('ls', '-l', '-s', '-a'));
-
 The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
 output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
@@ -110,37 +97,39 @@ with a non-zero code)::
         echo $exception->getMessage();
     }
 
-.. tip::
+Using features from the OS shell
+--------------------------------
 
-    .. versionadded:: 3.3
-        The ability to define commands as arrays of arguments was introduced in
-        Symfony 3.3.
+.. versionadded:: 4.2
+    The ``fromShellCommandline()`` static method was introduced in Symfony 4.2.
 
-    Using array of arguments is the recommended way to define commands. This
-    saves you from any escaping and allows sending signals seamlessly
-    (e.g. to stop processes before completion.)::
+Using array of arguments is the recommended way to define commands. This
+saves you from any escaping and allows sending signals seamlessly
+(e.g. to stop processes before completion.)::
 
-        $process = new Process(array('/path/command', '--flag', 'arg 1', 'etc.'));
+    $process = new Process(array('/path/command', '--flag', 'arg 1', 'etc.'));
 
-    If you need to use stream redirections, conditional execution, or any other
-    feature provided by the shell of your operating system, you can also define
-    commands as strings.
+If you need to use stream redirections, conditional execution, or any other
+feature provided by the shell of your operating system, you can also define
+commands as strings using the
+:method:`Symfony\\Component\\Process\\Process::fromShellCommandline` static
+factory.
 
-    Please note that each OS provides a different syntax for their command-lines
-    so that it becomes your responsibility to deal with escaping and portability.
+Please note that each OS provides a different syntax for their command-lines
+so that it becomes your responsibility to deal with escaping and portability.
 
-    To provide any variable arguments to command-line string, pass them as
-    environment variables using the second argument of the ``run()``,
-    ``mustRun()`` or ``start()`` methods. Referencing them is also OS-dependent::
+To provide any variable arguments to command-line string, pass them as
+environment variables using the second argument of the ``run()``,
+``mustRun()`` or ``start()`` methods. Referencing them is also OS-dependent::
 
-        // On Unix-like OSes (Linux, macOS)
-        $process = new Process('echo "$MESSAGE"');
+    // On Unix-like OSes (Linux, macOS)
+    $process = Process::fromShellCommandline('echo "$MESSAGE"');
 
-        // On Windows
-        $process = new Process('echo "!MESSAGE!"');
+    // On Windows
+    $process = Process::fromShellCommandline('echo "!MESSAGE!"');
 
-        // On both Unix-like and Windows
-        $process->run(null, array('MESSAGE' => 'Something to output'));
+    // On both Unix-like and Windows
+    $process->run(null, array('MESSAGE' => 'Something to output'));
 
 Getting real-time Process Output
 --------------------------------
@@ -261,7 +250,7 @@ Before a process is started, you can specify its standard input using either the
 of the constructor. The provided input can be a string, a stream resource or a
 Traversable object::
 
-    $process = new Process('cat');
+    $process = new Process(array('cat'));
     $process->setInput('foobar');
     $process->run();
 
