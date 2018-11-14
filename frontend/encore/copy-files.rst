@@ -54,6 +54,8 @@ include a hash based on their content.
 
 To render inside Twig, use the ``asset()`` function:
 
+.. code-block:: twig
+
     {# assets/images/logo.png was copied to public/build/logo.png #}
     <img src="{{ asset('build/logo.png') }}"
 
