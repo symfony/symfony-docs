@@ -746,9 +746,13 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     you'll need to do extra work to make sure that the relationship is properly
     updated (whether you're adding new tags or removing existing tags) on
     each Tag object itself.
-    
-    You can optionnally reduce the code in your controller and make it reusable to handle other embedded form.
-    First create a helper :
+
+
+Optional helper
+~~~~~~~~~~~~~~~~~~~~~~
+You can optionnally reduce the code in your controller and make it reusable to handle other embedded form.
+
+    First create a helper ::
     
         // App\Helper
         use Doctrine\Common\Collections\ArrayCollection;
@@ -790,9 +794,9 @@ the relationship between the removed ``Tag`` and ``Task`` object.
             }
         }
         
-    Second edit your TaskController
+    Second edit your TaskController::
    
-    // src/Controller/TaskController.php
+        // src/Controller/TaskController.php
 
         use App\Entity\Task;
         
