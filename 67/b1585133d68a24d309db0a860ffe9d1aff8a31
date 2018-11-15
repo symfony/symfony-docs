@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-11-12T07:51:43Z
+
+@dompie thanks for this contribution! However, `3.2` branch is not maintained anymore. Here you have the list of maintained branches: https://symfony.com/roadmap#maintained-symfony-branches  You probably want to target 3.4 branch.
+
+@lyrixx could you please review if updating this image is OK? Thanks!
