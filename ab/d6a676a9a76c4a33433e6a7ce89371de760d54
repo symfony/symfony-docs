@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-11-15T15:45:10Z
+
+I always write it as `-fr` (because it's alphabetically sorted and feels right to me) ... but I did a quick poll on Symfony's Slack and everybody seems to disagree with me, so let's change it:
+
+![command-option](https://user-images.githubusercontent.com/73419/48563971-c8e6ca80-e8f5-11e8-9996-f15cac298525.png)
