@@ -127,7 +127,7 @@ your ``composer.json`` file to load from there:
     }
 
 Before going any further, you need to regenerate the autoload files! Your changes in the "autoload"
-section of the composer.json file will not be in effect until you run the following command:
+section of the ``composer.json`` file will not be in effect until you run the following command:
 
 .. code-block:: bash
 
