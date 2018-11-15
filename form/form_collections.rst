@@ -752,7 +752,7 @@ Optionnal helper to handle tag removal
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 You can optionnally reduce the code in your controller and make a reusable service to handle all your embedded form.
 
-First create a helper
+First create a helper::
 
     // src\Helper
     use Doctrine\Common\Collections\ArrayCollection;
