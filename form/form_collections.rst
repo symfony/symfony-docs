@@ -750,7 +750,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     You can optionnally reduce the code in your controller and make it reusable to handle other embedded form.
     First create a helper :
     
-    // App\Helper
+        // App\Helper
         use Doctrine\Common\Collections\ArrayCollection;
         use Doctrine\ORM\EntityManagerInterface;
         
