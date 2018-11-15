@@ -481,19 +481,18 @@ annotation are found and the corresponding tests are run. Depending on how your
 tests are constructed, this might be too late. In this case, you will need to declare
 the namespaces of the tested classes in your phpunit.xml.dist
 
-````
-<phpunit>
+.. code-block:: xml
+    <!-- phpunit.xml.dist -->
+    <!-- ... -->
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
-            <arguments>
-                <array>
-                    <element key="time-sensitive"><string>Acme\MyClassTest</string></element>
-                </array>
-            </arguments>
-        </listener>
+                <arguments>
+                    <array>
+                        <element key="time-sensitive"><string>Acme\MyClassTest</string></element>
+                    </array>
+                </arguments>
+            </listener>
     </listeners>
-</phpunit>
-````
 
 Modified PHPUnit script
 -----------------------
