@@ -482,6 +482,7 @@ tests are constructed, this might be too late. In this case, you will need to de
 the namespaces of the tested classes in your phpunit.xml.dist
 
 .. code-block:: xml
+
     <!-- phpunit.xml.dist -->
     <!-- ... -->
     <listeners>
