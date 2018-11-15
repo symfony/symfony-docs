@@ -752,80 +752,80 @@ Optional helper
 ~~~~~~~~~~~~~~~~~~~~~~
 You can optionnally reduce the code in your controller and make it reusable to handle other embedded form.
 
-    First create a helper ::
+First create a helper :
+
+    // App\Helper
+    use Doctrine\Common\Collections\ArrayCollection;
+    use Doctrine\ORM\EntityManagerInterface;
     
-        // App\Helper
-        use Doctrine\Common\Collections\ArrayCollection;
-        use Doctrine\ORM\EntityManagerInterface;
-        
-        class Helper
+    class Helper
+    {
+        private $em;
+
+        public function __construct(EntityManagerInterface $em)
         {
-            private $em;
+            $this->em = $em;
+        }
+        
+        public function backupOriginalEntities($entities)
+        {
+            $original_entities = new ArrayCollection();
 
-            public function __construct(EntityManagerInterface $em)
-            {
-                $this->em = $em;
+            // Create an ArrayCollection of the current objects in the database
+            foreach ($entities as $entity) {
+                $original_entities->add($entity);
             }
-            
-            public function backupOriginalEntities($entities)
-            {
-                $original_entities = new ArrayCollection();
 
-                // Create an ArrayCollection of the current objects in the database
-                foreach ($entities as $entity) {
-                    $original_entities->add($entity);
-                }
+            return $original_entities;
+         }
 
-                return $original_entities;
-             }
+        // this function removes only the relationship, removes the entity if $remove set to true
+        public function removeRelation($original_entities, $main_entity,$current_entities, $function_name, $remove=false)
+        {		 
+            foreach ($original_entities as $entity) {
+                if (false === $current_entities->contains($entity)) {
+                    $main_entity->$function_name($entity);
 
-            // this function removes only the relationship, removes the entity if $remove set to true
-            public function removeRelation($original_entities, $main_entity,$current_entities, $function_name, $remove=false)
-            {		 
-                foreach ($original_entities as $entity) {
-                    if (false === $current_entities->contains($entity)) {
-                        $main_entity->$function_name($entity);
-
-                        if($remove){
-                            $this->em->remove($entity);
-                        }
+                    if($remove){
+                        $this->em->remove($entity);
                     }
                 }
             }
         }
-        
-    Second edit your TaskController::
-   
-        // src/Controller/TaskController.php
+    }
+    
+Second edit your TaskController:
 
-        use App\Entity\Task;
-        
-        // ...
-        public function edit($id, Request $request)
-        {
-            $entityManager = $this->getDoctrine()->getManager();
-            $task = $entityManager->getRepository(Task::class)->find($id);
+    // src/Controller/TaskController.php
 
-            if (!$task) {
-                throw $this->createNotFoundException('No task found for id '.$id);
-            }
-            
-            $original_entities = $helper->backupOriginalEntities($event->getOrganizationTypes());           
-            $editForm = $this->createForm(TaskType::class, $task);
-            $editForm->handleRequest($request);
+    use App\Entity\Task;
+    
+    // ...
+    public function edit($id, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $task = $entityManager->getRepository(Task::class)->find($id);
 
-            if ($editForm->isValid()) {
-                // remove the relationship between the tag and the Task. depending on your needs : add the parameter true to remove the entity or let blank if you want to keep an orphan
-                $helper->removeRelation($original_entities,$event,$task->getTags(),'removeTag',true); //                
-                $entityManager->persist($task);
-                $entityManager->flush();
-
-                // redirect back to some edit page
-                return $this->redirectToRoute('task_edit', array('id' => $id));
-            }
-
-            // render some form template
+        if (!$task) {
+            throw $this->createNotFoundException('No task found for id '.$id);
         }
+        
+        $original_entities = $helper->backupOriginalEntities($event->getOrganizationTypes());           
+        $editForm = $this->createForm(TaskType::class, $task);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            // remove the relationship between the tag and the Task. depending on your needs : add the parameter true to remove the entity or let blank if you want to keep an orphan
+            $helper->removeRelation($original_entities,$event,$task->getTags(),'removeTag',true); //                
+            $entityManager->persist($task);
+            $entityManager->flush();
+
+            // redirect back to some edit page
+            return $this->redirectToRoute('task_edit', array('id' => $id));
+        }
+
+        // render some form template
+    }
         
 
 .. sidebar:: Form collection jQuery plugin
