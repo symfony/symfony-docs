@@ -179,8 +179,8 @@ interface and have an event method for each event it subscribes to::
         public function getSubscribedEvents()
         {
             return array(
-                'postPersist',
-                'postUpdate',
+                \Doctrine\ORM\Events::postPersist => 'postPersist',
+                \Doctrine\ORM\Events::postUpdate => 'postUpdate',
             );
         }
 
