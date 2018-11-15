@@ -545,10 +545,10 @@ below for more details).
     When setting a response for the ``kernel.exception`` event, the propagation
     is stopped. This means listeners with lower priority won't be executed.
 
-.. note::
+.. tip::
 
     When setting a response for the ``kernel.exception`` event in order for the 
-    HttpKernel to use the Status Code of the response the :class:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent::allowCustomResponseCode` must be called inside your listener.
+    HttpKernel to use the Status Code of the response the :method:`Symfony\\Component\\HttpKernel\\Event\\GetResponseForExceptionEvent::allowCustomResponseCode` must be called inside your listener.
 
 .. sidebar:: ``kernel.exception`` in the Symfony Framework
 
