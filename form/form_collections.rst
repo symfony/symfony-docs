@@ -748,13 +748,13 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     each Tag object itself.
 
 
-Optional helper
-~~~~~~~~~~~~~~~~~~~~~~
-You can optionnally reduce the code in your controller and make it reusable to handle other embedded form.
+Optionnal helper to handle tag removal
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+You can optionnally reduce the code in your controller and make a reusable service to handle all your embedded form.
 
-First create a helper :
+First create a helper
 
-    // App\Helper
+    // src\Helper
     use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\ORM\EntityManagerInterface;
     
