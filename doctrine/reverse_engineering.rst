@@ -47,7 +47,7 @@ to a post record thanks to a foreign key constraint.
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 Before diving into the recipe, be sure your database connection parameters are
-correctly setup in the ``.env`` file.
+correctly setup in the ``.env`` file (or ``.env.local`` override file).
 
 The first step towards building entity classes from an existing database
 is to ask Doctrine to introspect the database and generate the corresponding

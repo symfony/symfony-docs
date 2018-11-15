@@ -19,7 +19,8 @@ application behavior.
 
     Define the infrastructure-related configuration options as
     :doc:`environment variables </configuration/external_parameters>`. During
-    development, use the ``.env`` file at the root of your project to set these.
+    development, use the ``.env`` and ``.env.local`` files at the root of your project
+    to set these.
 
 By default, Symfony adds these types of options to the ``.env`` file when
 installing new dependencies in the app:
@@ -42,6 +43,9 @@ they have nothing to do with the application's behavior. In other words, your
 application doesn't care about the location of your database or the credentials
 to access to it, as long as the database is correctly configured.
 
+To override these variables with machine-specific or sensitive values, create a
+``env.local`` file. This file should not be added to version control.
+
 .. caution::
 
     Beware that dumping the contents of the ``$_SERVER`` and ``$_ENV`` variables
@@ -56,14 +60,18 @@ Canonical Parameters
 
 .. best-practice::
 
-    Define all your application's env vars in the ``.env.dist`` file.
+    Define all your application's env vars in the ``.env`` file.
 
-Symfony includes a configuration file called ``.env.dist`` at the project root,
-which stores the canonical list of environment variables for the application.
+Symfony includes a configuration file called ``.env`` at the project root, which
+stores the canonical list of environment variables for the application. This
+file should be stored in version control and so should only contain non-sensitive
+default values.
 
-Whenever a new env var is defined for the application, you should also add it to
-this file and submit the changes to your version control system so your
-workmates can update their ``.env`` files.
+.. caution::
+
+    Applications created before November 2018 had a slightly different system,
+    involving a ``.env.dist`` file. For information about upgrading, see:
+    :doc:`/configuration/dot-env-changes`.
 
 Application-Related Configuration
 ---------------------------------
