@@ -8,8 +8,8 @@ groups will be used by the validator.
 
 For ``null`` the validator will just use the ``Default`` group.
 
-If you specify the groups as array or string they will used by the validator
-as they are::
+If you specify the groups as an array or string they will be used by the
+validator as they are::
 
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -22,7 +22,7 @@ This is equivalent to passing the group as array::
 
     'validation_groups' => array('Registration'),
 
-The form's data will be :doc:`validated agains all groups </form/validation_groups>`.
+The form's data will be :doc:`validated against all given groups </form/validation_groups>`.
 
 If the validation groups depend on the form's data a callable may be passed to
 the option. Symfony will then pass the form when calling it::
@@ -36,19 +36,10 @@ the option. Symfony will then pass the form when calling it::
         $resolver->setDefaults(array(
             'validation_groups' => function (FormInterface $form) {
                 $entity = $form->getData();
-                return $entity->getValidationGroups();
+
+                return $entity->isUser() ? array('User') : array('Company');
             },
         ));
-    }
-
-The class that the form is used for may look like this::
-
-    class Account
-    {
-        public function getValidationGroups()
-        {
-            return $this->isUser() ? array('User') : array('Company');
-        }
     }
 
 .. seealso::
@@ -64,7 +55,7 @@ The class that the form is used for may look like this::
     If you need advanced logic to determine the validation groups have
     a look at :doc:`/form/validation_group_service_resolver`.
 
-In some cases, you want to validate your groups by steps. To do this, you
+In some cases, you want to validate your groups step by step. To do this, you
 can pass a :class:`Symfony\\Component\\Validator\\Constraints\\GroupSequence`
 to this option. This enables you to validate against multiple groups,
 like when you pass multiple groups in an array, but with the difference that
