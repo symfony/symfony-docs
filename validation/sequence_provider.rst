@@ -178,7 +178,7 @@ entity and a new constraint group called ``Premium``:
         class User
         {
             /**
-             * @Assert\NotBlank()
+             * @Assert\NotBlank
              */
             private $name;
 

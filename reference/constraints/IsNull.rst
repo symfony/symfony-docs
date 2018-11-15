@@ -36,7 +36,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
         class Author
         {
             /**
-             * @Assert\IsNull()
+             * @Assert\IsNull
              */
             protected $firstName;
         }

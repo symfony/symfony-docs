@@ -40,7 +40,7 @@ class were not blank, you could do the following:
         class Author
         {
             /**
-             * @Assert\NotBlank()
+             * @Assert\NotBlank
              */
             protected $firstName;
         }
