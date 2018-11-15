@@ -131,7 +131,7 @@ section of the composer.json file will not be in effect until you run the follow
 
 .. code-block:: bash
 
-    $ composer dumpautoload
+    $ composer dump-autoload
     
     
 Now, suppose you want to use Twig and load routes via annotations. Instead of
