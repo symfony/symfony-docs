@@ -747,9 +747,21 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     updated (whether you're adding new tags or removing existing tags) on
     each Tag object itself.
 
+.. sidebar:: Form collection jQuery plugin
 
-Optionnal helper to handle tag removal
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The jQuery plugin  `symfony-collection`_ helps with ``collection`` form elements,
+    by providing the JavaScript functionality needed to add, edit and delete
+    elements of the collection. More advanced functionality like moving or duplicating
+    an element in the collection and customizing the buttons is also possible.
+
+.. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
+.. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
+.. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
+
+
+
+Optionnal helper to handle tags removals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 You can optionnally reduce the code in your controller and make a reusable service to handle all your embedded form.
 
 First create a helper::
@@ -794,10 +806,9 @@ First create a helper::
         }
     }
     
-Second edit your TaskController:
+Second edit your TaskController::
 
     // src/Controller/TaskController.php
-
     use App\Entity\Task;
     
     // ...
@@ -826,15 +837,3 @@ Second edit your TaskController:
 
         // render some form template
     }
-        
-
-.. sidebar:: Form collection jQuery plugin
-
-    The jQuery plugin  `symfony-collection`_ helps with ``collection`` form elements,
-    by providing the JavaScript functionality needed to add, edit and delete
-    elements of the collection. More advanced functionality like moving or duplicating
-    an element in the collection and customizing the buttons is also possible.
-
-.. _`Owning Side and Inverse Side`: http://docs.doctrine-project.org/en/latest/reference/unitofwork-associations.html
-.. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
-.. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
