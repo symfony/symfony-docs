@@ -56,7 +56,7 @@ stores an ``Address`` instance in the ``$address`` property::
         class Address
         {
             /**
-             * @Assert\NotBlank()
+             * @Assert\NotBlank
              */
             protected $street;
 

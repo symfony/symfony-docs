@@ -29,7 +29,7 @@ Basic Usage
         class User
         {
             /**
-             * @Assert\Country()
+             * @Assert\Country
              */
              protected $country;
         }

@@ -31,7 +31,7 @@ Basic Usage
         class Author
         {
             /**
-             * @Assert\Date()
+             * @Assert\Date
              */
              protected $birthday;
         }

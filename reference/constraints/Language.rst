@@ -30,7 +30,7 @@ Basic Usage
         class User
         {
             /**
-             * @Assert\Language()
+             * @Assert\Language
              */
              protected $preferredLanguage;
         }
