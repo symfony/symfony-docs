@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-11-15T17:50:49Z
+
+Why not 3.4 ? The updated recipe is also for it.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-11-15T18:40:23Z
+
+We don’t talk about .env at all (except for the component) in 3.4, because we assume 3.4 projects don’t use Flex.
