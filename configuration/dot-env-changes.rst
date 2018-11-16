@@ -81,8 +81,8 @@ changes can be made to any Symfony 3.4 or higher app:
    and update your `phpunit.xml.dist file`_ so it loads the ``src/.bootstrap.php``
    file.
 
-.. _`src/.bootstrap.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/src/.bootstrap.php
-.. _`public/index.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/public/index.php
+.. _`src/.bootstrap.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.2/src/.bootstrap.php
+.. _`public/index.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.2/public/index.php
 .. _`index.php diff`: https://github.com/symfony/recipes/compare/8a4e5555e30d5dff64275e2788a901f31a214e79...86e2b6795c455f026e5ab0cba2aff2c7a18511f7#diff-473fca613b5bda15d87731036cb31586
 .. _`bin/console`: https://github.com/symfony/recipes/blob/master/symfony/console/3.3/bin/console
 .. _`bin/console diff`: https://github.com/symfony/recipes/compare/8a4e5555e30d5dff64275e2788a901f31a214e79...86e2b6795c455f026e5ab0cba2aff2c7a18511f7#diff-2af50efd729ff8e61dcbd936cf2b114b
