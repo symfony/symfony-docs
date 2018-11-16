@@ -34,6 +34,8 @@ environment variable in the ``.env`` file:
 
 .. code-block:: bash
 
+    # .env (or override MAILER_URL in .env.local to avoid committing your changes)
+
     # use this to disable email delivery
     MAILER_URL=null://localhost
 

@@ -263,10 +263,12 @@ a controller - see :ref:`service-container-parameters`.
 The .env File & Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There is also a ``.env`` file which is loaded. Its contents become environment
-variables in the dev environment, making it easier to reference environment
-variables in your code. When you install packages, more environment variables are
-added to this file. But you can also add your own variables.
+There is also a ``.env`` file which is loaded and its contents become environment
+variables. This is useful during development, or if setting environment variables
+is difficult for your deployment.
+
+When you install packages, more environment variables are added to this file. But
+you can also add your own.
 
 Environment variables can be referenced in any other configuration files by using
 a special syntax. For example, if you install the ``doctrine`` package, then you
@@ -285,18 +287,34 @@ This is referenced inside ``config/packages/doctrine.yaml``:
 
 For more details about environment variables, see :ref:`config-env-vars`.
 
+.. caution::
+
+    Applications created before November 2018 had a slightly different system,
+    involving a ``.env.dist`` file. For information about upgrading, see:
+    :doc:`configuration/dot-env-changes`.
+
 The ``.env`` file is special, because it defines the values that usually change
 on each server. For example, the database credentials on your local development
-machine might be different from your workmates. That's why this file is **not
-committed to the shared repository** and is only stored on your machine. In
-fact, the ``.gitignore`` file that comes with Symfony prevents it from being
-committed.
+machine might be different from your workmates. The ``.env`` file should contain
+sensible, non-secret *default* values for all of your environment variables and
+*should* be commited to your repository.
 
-However, a ``.env.dist`` file *is* committed (with dummy values). This file
-isn't read by Symfony: it's just a reference so that Symfony knows which
-variables need to be defined in the ``.env`` file. If you add or remove keys to
-``.env``, add or remove them from ``.env.dist`` too, so both files are always
-in sync.
+To override these variables with machine-specific or sensitive values, create a
+``env.local`` file. This file is **not committed to the shared repository** and
+is only stored on your machine. In fact, the ``.gitignore`` file that comes with
+Symfony prevents it from being committed.
+
+You can also create a few other ``.env`` files that will be loaded:
+
+* ``.env.{environment}``: e.g. ``.env.test`` will be loaded in the ``test`` environment
+  and committed to your repository.
+
+* ``.env.{environment}.local``: e.g. ``.env.prod.local`` will be loaded in the
+  ``prod`` environment but will *not* be committed to your repository.
+
+If you decide to set real environment variables on production, the ``.env`` files
+will *not* be loaded if Symfony detects that a real ``APP_ENV`` environment variable
+exists and is set to ``prod``.
 
 Environments & the Other Config Files
 -------------------------------------

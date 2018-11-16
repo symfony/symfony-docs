@@ -31,7 +31,7 @@ Then configure the ``DATABASE_URL`` environment variable in ``.env``:
 
 .. code-block:: text
 
-    # .env
+    # .env (or override DATABASE_URL in .env.local to avoid committing your changes)
 
     # customize this line!
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
