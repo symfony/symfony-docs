@@ -29,7 +29,6 @@ Symfony application:
 
     quick_tour/
     ├─ .env
-    ├─ .env.dist
     ├─ bin/console
     ├─ composer.json
     ├─ composer.lock

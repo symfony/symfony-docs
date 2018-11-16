@@ -80,11 +80,11 @@ Executing an Application in different Environments
 --------------------------------------------------
 
 To execute the application in each environment, change the ``APP_ENV``
-environment variable. During development, this is done in ``.env``:
+environment variable. During development, this is done in ``.env`` or in ``.env.local``:
 
 .. code-block:: bash
 
-    # .env
+    # .env or .env.local
     APP_ENV=dev
 
     # or for test:
@@ -95,7 +95,7 @@ your application in the configured environment.
 
 .. tip::
 
-    In production, it is recommended to configure the environment variables in
+    In production, you can use real environment variables via
     your :ref:`web server configuration <configuration-env-var-in-prod>`.
 
 .. note::
@@ -109,13 +109,9 @@ the environment variable is passed to the kernel::
     // public/index.php
 
     // ...
-    $kernel = new Kernel($_SERVER['APP_ENV'] ?? 'dev', $_SERVER['APP_DEBUG'] ?? false);
+    $kernel = new Kernel($_SERVER['APP_ENV'], $_SERVER['APP_DEBUG']);
 
     // ...
-
-You can also replace ``$_SERVER['APP_ENV'] ?? 'dev'`` by just ``'dev'`` to
-always run the application in the dev environment, independent of the
-``APP_ENV`` variable.
 
 .. note::
 
@@ -255,7 +251,7 @@ environment through your browser:
 
 .. code-block:: bash
 
-    # .env
+    # .env or .env.local
     APP_ENV=benchmark
 
 .. sidebar:: Importing configuration
