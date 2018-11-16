@@ -100,7 +100,7 @@ prefixed classes included in doc block comments (``/** ... */``). For example::
     class User
     {
         /**
-        * @Assert\NotBlank()
+        * @Assert\NotBlank
         */
         protected $name;
     }

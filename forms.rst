@@ -320,12 +320,12 @@ object.
         class Task
         {
             /**
-             * @Assert\NotBlank()
+             * @Assert\NotBlank
              */
             public $task;
 
             /**
-             * @Assert\NotBlank()
+             * @Assert\NotBlank
              * @Assert\Type("\DateTime")
              */
             protected $dueDate;

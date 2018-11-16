@@ -34,7 +34,7 @@ of the day when the event starts:
         class Event
         {
             /**
-             * @Assert\Time()
+             * @Assert\Time
              */
              protected $startsAt;
         }

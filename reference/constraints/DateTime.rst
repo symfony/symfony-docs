@@ -32,7 +32,7 @@ Basic Usage
         class Author
         {
             /**
-             * @Assert\DateTime()
+             * @Assert\DateTime
              */
              protected $createdAt;
         }

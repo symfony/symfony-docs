@@ -34,7 +34,7 @@ class were not strictly equal to ``null``, you would:
         class Author
         {
             /**
-             * @Assert\NotNull()
+             * @Assert\NotNull
              */
             protected $firstName;
         }
