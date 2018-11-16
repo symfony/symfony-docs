@@ -34,7 +34,7 @@ Basic Usage
         class User
         {
             /**
-             * @Assert\Locale()
+             * @Assert\Locale
              */
              protected $locale;
         }

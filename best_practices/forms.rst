@@ -169,7 +169,7 @@ blank, add the following in the ``Post`` object::
     class Post
     {
         /**
-         * @Assert\NotBlank()
+         * @Assert\NotBlank
          */
         public $title;
     }

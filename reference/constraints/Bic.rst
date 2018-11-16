@@ -37,7 +37,7 @@ will contain a Business Identifier Code (BIC).
         class Transaction
         {
             /**
-             * @Assert\Bic()
+             * @Assert\Bic
              */
             protected $businessIdentifierCode;
         }

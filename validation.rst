@@ -52,7 +52,7 @@ following:
         class Author
         {
             /**
-             * @Assert\NotBlank()
+             * @Assert\NotBlank
              */
             public $name;
         }
@@ -536,7 +536,7 @@ class to have at least 3 characters.
         class Author
         {
             /**
-             * @Assert\NotBlank()
+             * @Assert\NotBlank
              * @Assert\Length(min=3)
              */
             private $firstName;
