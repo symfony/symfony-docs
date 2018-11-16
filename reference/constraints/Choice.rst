@@ -206,7 +206,7 @@ constraint.
             }
         }
 
-If the callback is stored in a different class and is static, for example ``Util``,
+If the callback is stored in a different class and is static, for example ``App\Entity\Genre``,
 you can pass the class name and the method as an array.
 
 .. configuration-block::
@@ -221,7 +221,7 @@ you can pass the class name and the method as an array.
         class Author
         {
             /**
-             * @Assert\Choice(callback={"Util", "getGenres"})
+             * @Assert\Choice(callback={"App\Entity\Genre", "getGenres"})
              */
             protected $genre;
         }
@@ -232,7 +232,7 @@ you can pass the class name and the method as an array.
         App\Entity\Author:
             properties:
                 genre:
-                    - Choice: { callback: [Util, getGenres] }
+                    - Choice: { callback: [App\Entity\Genre, getGenres] }
 
     .. code-block:: xml
 
@@ -246,7 +246,7 @@ you can pass the class name and the method as an array.
                 <property name="genre">
                     <constraint name="Choice">
                         <option name="callback">
-                            <value>Util</value>
+                            <value>App\Entity\Genre</value>
                             <value>getGenres</value>
                         </option>
                     </constraint>
@@ -259,6 +259,7 @@ you can pass the class name and the method as an array.
         // src/Entity/Author.php
         namespace App\Entity;
 
+        use App\Entity\Genre;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -269,7 +270,7 @@ you can pass the class name and the method as an array.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('genre', new Assert\Choice(array(
-                    'callback' => array('Util', 'getGenres'),
+                    'callback' => array(Genre::class, 'getGenres'),
                 )));
             }
         }
