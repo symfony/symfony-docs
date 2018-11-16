@@ -30,7 +30,7 @@ Basic Usage
         class Author
         {
             /**
-             * @Assert\Date()
+             * @Assert\Date
              * @var string A "Y-m-d" formatted value
              */
              protected $birthday;

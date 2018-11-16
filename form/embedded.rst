@@ -25,7 +25,7 @@ creating the ``Category`` object::
     class Category
     {
         /**
-         * @Assert\NotBlank()
+         * @Assert\NotBlank
          */
         public $name;
     }
@@ -40,7 +40,7 @@ Next, add a new ``category`` property to the ``Task`` class::
 
         /**
          * @Assert\Type(type="App\Entity\Category")
-         * @Assert\Valid()
+         * @Assert\Valid
          */
         protected $category;
 

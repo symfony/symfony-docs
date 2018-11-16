@@ -52,7 +52,7 @@ between all of the constraints in your user table:
              * @var string $email
              *
              * @ORM\Column(name="email", type="string", length=255, unique=true)
-             * @Assert\Email()
+             * @Assert\Email
              */
             protected $email;
 

@@ -31,7 +31,7 @@ Basic Usage
         class Author
         {
             /**
-             * @Assert\DateTime()
+             * @Assert\DateTime
              * @var string A "Y-m-d H:i:s" formatted value
              */
              protected $createdAt;
