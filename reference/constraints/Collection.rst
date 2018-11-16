@@ -69,7 +69,7 @@ following:
              *     fields = {
              *         "personal_email" = @Assert\Email,
              *         "short_bio" = {
-             *             @Assert\NotBlank(),
+             *             @Assert\NotBlank,
              *             @Assert\Length(
              *                 max = 100,
              *                 maxMessage = "Your short bio is too long!"
