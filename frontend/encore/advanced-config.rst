@@ -95,7 +95,7 @@ prefer to build configs separately, pass the ``--config-name`` option:
 
     $ yarn encore dev --config-name firstConfig
 
-Generating a Webpack configuration object without using the command-line interface
+Generating a Webpack Configuration Object without using the Command-Line Interface
 ----------------------------------------------------------------------------------
 
 Ordinarily you would use your ``webpack.config.js`` file by calling Encore
