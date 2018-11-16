@@ -95,6 +95,53 @@ prefer to build configs separately, pass the ``--config-name`` option:
 
     $ yarn encore dev --config-name firstConfig
 
+Generating a Webpack Configuration Object without using the Command-Line Interface
+----------------------------------------------------------------------------------
+
+Ordinarily you would use your ``webpack.config.js`` file by calling Encore
+from the command-line interface. But sometimes, having access to the generated
+Webpack configuration can be required by tools that don't use Encore (for
+instance a test-runner such as `Karma`_).
+
+The problem is that if you try generating that Webpack configuration object
+without using the ``encore`` command you will encounter the following error:
+
+.. code-block:: text
+
+    Error: Encore.setOutputPath() cannot be called yet because the runtime environment doesn't appear to be configured. Make sure you're using the encore executable or call Encore.configureRuntimeEnvironment() first if you're purposely not calling Encore directly.
+
+The reason behind that message is that Encore needs to know a few thing before
+being able to create a configuration object, the most important one being what
+the target environment is.
+
+To solve this issue you can use ``configureRuntimeEnvironment``. This method
+must be called from a JavaScript file **before** requiring ``webpack.config.js``.
+
+For instance:
+
+.. code-block:: javascript
+
+    const Encore = require('@symfony/webpack-encore');
+
+    // Set the runtime environment
+    Encore.configureRuntimeEnvironment('dev');
+
+    // Retrieve the Webpack configuration object
+    const webpackConfig = require('./webpack.config');
+
+If needed, you can also pass to that method all the options that you would
+normally use from the command-line interface:
+
+.. code-block:: javascript
+
+    Encore.configureRuntimeEnvironment('dev-server', {
+        // Same options you would use with the
+        // CLI utility, with their name in camelCase.
+        https: true,
+        keepPublicPath: true,
+    });
+
 .. _`configuration options`: https://webpack.js.org/configuration/
 .. _`Webpack's watchOptions`: https://webpack.js.org/configuration/watch/#watchoptions
 .. _`array of configurations`: https://github.com/webpack/docs/wiki/configuration#multiple-configurations
+.. _`Karma`: https://karma-runner.github.io
