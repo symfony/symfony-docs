@@ -8,11 +8,12 @@
 The Cache Component
 ===================
 
-    The Cache component provides an extended `PSR-6`_ implementation as well as
-    a `PSR-16`_ "Simple Cache" implementation for adding cache to your applications.
-    It is designed for performance and resiliency, and ships with ready to use
-    adapters for the most common caching backends, including proxies for adapting
-    from/to `Doctrine Cache`_.
+    The Cache component provides features covering simple to advanced caching needs.
+    It natively implements `PSR-6`_ and the `Cache Contract`_ for greatest
+    interoperability. It is designed for performance and resiliency, ships with
+    ready to use adapters for the most common caching backends, including proxies for
+    adapting from/to `Doctrine Cache`_ and `PSR-16`_. It enables tag-based invalidation
+    and cache stampede protection.
 
 Installation
 ------------
@@ -25,112 +26,58 @@ Alternatively, you can clone the `<https://github.com/symfony/cache>`_ repositor
 
 .. include:: /components/require_autoload.rst.inc
 
-Cache (PSR-6) Versus Simple Cache (PSR-16)
-------------------------------------------
+Cache Contracts versus PSR-6
+----------------------------
 
 This component includes *two* different approaches to caching:
 
 :ref:`PSR-6 Caching <cache-component-psr6-caching>`:
-     A fully-featured cache system, which includes cache "pools", more advanced
-     cache "items", and :ref:`cache tagging for invalidation <cache-component-tags>`.
+     A generic cache system, which involves cache "pools" and cache "items".
 
-:ref:`PSR-16 Simple Caching <cache-component-psr16-caching>`:
-    A simple way to store, fetch and remove items from a cache.
-
-Both methods support the *same* cache adapters and will give you very similar performance.
+:ref:`Cache Contracts <cache-component-contracts>`:
+    A simple yet powerful way to store, fetch and remove values from a cache.
 
 .. tip::
 
-    The component also contains adapters to convert between PSR-6 and PSR-16 caches.
-    See :doc:`/components/cache/psr6_psr16_adapters`.
+    Using the Cache Contracts approach is recommended: using it requires less
+    code boilerplate and provides cache stampede protection by default.
 
-.. _cache-component-psr16-caching:
+.. tip::
 
-Simple Caching (PSR-16)
------------------------
+    The component also contains adapters to convert between PSR-6, PSR-16 and
+    Doctrine caches. See :doc:`/components/cache/psr6_psr16_adapters` and
+    :doc:`/components/cache/adapters/doctrine_adapter`.
 
-This part of the component is an implementation of `PSR-16`_, which means that its
-basic API is the same as defined in the standard. First, create a cache object from
-one of the built-in cache classes. For example, to create a filesystem-based cache,
-instantiate :class:`Symfony\\Component\\Cache\\Simple\\FilesystemCache`::
-
-    use Symfony\Component\Cache\Simple\FilesystemCache;
-
-    $cache = new FilesystemCache();
-
-Now you can create, retrieve, update and delete items using this object::
-
-    // save a new item in the cache
-    $cache->set('stats.products_count', 4711);
-
-    // or set it with a custom ttl
-    // $cache->set('stats.products_count', 4711, 3600);
-
-    // retrieve the cache item
-    if (!$cache->has('stats.products_count')) {
-        // ... item does not exists in the cache
-    }
-
-    // retrieve the value stored by the item
-    $productsCount = $cache->get('stats.products_count');
-
-    // or specify a default value, if the key doesn't exist
-    // $productsCount = $cache->get('stats.products_count', 100);
-
-    // remove the cache key
-    $cache->delete('stats.products_count');
-
-    // clear *all* cache keys
-    $cache->clear();
-
-You can also work with multiple items at once::
-
-    $cache->setMultiple(array(
-        'stats.products_count' => 4711,
-        'stats.users_count' => 1356,
-    ));
-
-    $stats = $cache->getMultiple(array(
-        'stats.products_count',
-        'stats.users_count',
-    ));
-
-    $cache->deleteMultiple(array(
-        'stats.products_count',
-        'stats.users_count',
-    ));
-
-Available Simple Cache (PSR-16) Classes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Available Cache Adapters
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following cache adapters are available:
 
 .. tip::
 
     To find out more about each of these classes, you can read the
-    :doc:`PSR-6 Cache Pool </components/cache/cache_pools>` page. These "Simple"
-    (PSR-16) cache classes aren't identical to the PSR-6 Adapters on that page, but
-    each share constructor arguments and use-cases.
+    :doc:`PSR-6 Cache Pool </components/cache/cache_pools>` page.
 
-* :class:`Symfony\\Component\\Cache\\Simple\\ApcuCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\ArrayCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\ChainCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\DoctrineCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\FilesystemCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\MemcachedCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\NullCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\PdoCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\PhpArrayCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\PhpFilesCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\RedisCache`
-* :class:`Symfony\\Component\\Cache\\Simple\\TraceableCache`
+* :class:`Symfony\\Component\\Cache\\Adapter\\ApcuAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\ArrayAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\ChainAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\DoctrineAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\FilesystemAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\MemcachedAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\NullAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\PdoAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\PhpArrayAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\PhpFilesAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\RedisAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\SimpleCacheAdapter`
+* :class:`Symfony\\Component\\Cache\\Adapter\\TraceableAdapter`
 
 .. _cache-component-psr6-caching:
 
-More Advanced Caching (PSR-6)
------------------------------
+More Generic Caching (PSR-6)
+----------------------------
 
-To use the more-advanced, PSR-6 Caching abilities, you'll need to learn its key
+To use the more-generic, PSR-6 Caching abilities, you'll need to learn its key
 concepts:
 
 **Item**
@@ -179,8 +126,8 @@ Now you can create, retrieve, update and delete items using this cache pool::
 
 For a list of all of the supported adapters, see :doc:`/components/cache/cache_pools`.
 
-Advanced Usage (PSR-6)
-----------------------
+Advanced Usage
+--------------
 
 .. toctree::
     :glob:
