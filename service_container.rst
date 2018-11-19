@@ -248,8 +248,10 @@ type-hint in your ``__construct()`` method and the ``autowire: true`` config in
 find the matching service. If it can't, you'll see a clear exception with a helpful
 suggestion.
 
-By the way, this method of adding dependencies to your ``__construct()`` method is
-called *dependency injection*. It's a scary term for a simple concept.
+.. tip::
+    This method of adding dependencies to your ``__construct()`` method is
+    called *dependency injection*. It's a scary term for a simple concept, and 
+    is now easier than ever before to implement thanks to :ref:`Autowiring <services-autowire>`.
 
 .. _services-debug-container-types:
 
