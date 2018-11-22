@@ -122,5 +122,148 @@ Now, log messages will be shown on the console based on the log levels and verbo
 By default (normal verbosity level), warnings and higher will be shown. But in
 :doc:`full verbosity mode </console/verbosity>`, all messages will be shown.
 
+.. _monolog-console-testing-commands:
+
+Testing Monolog in Commands
+----------------
+
+Symfony provides the tool :class:`Monolog\\Handler\\Testhandler`
+class to test Monolog logging in Commands. First, add a method to get your logger property from your command::
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
+    // ...
+
+    class YourCommand extends Command
+    {
+        private $logger;
+
+        //...
+        /**
+         * @return LoggerInterface
+         */
+        public function getLogger()
+        {
+            return $this->logger;
+        }
+    }
+
+Second, add the :class:`Monolog\\Handler\\Testhandler` inside monolog config::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/test/monolog.yaml
+        monolog:
+            handlers:
+                # ...
+                console:
+                    type:   console
+                    process_psr_3_messages: false
+                    channels: ['!event', '!doctrine', '!console']
+                test:
+                    type:   test
+                    level:  debug
+
+                    # optionally configure the mapping between verbosity levels and log levels
+                    # verbosity_levels:
+                    #     VERBOSITY_NORMAL: NOTICE
+
+    .. code-block:: xml
+
+        <!-- config/packages/test/monolog.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:monolog="http://symfony.com/schema/dic/monolog"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <monolog:config>
+                <!-- ... -->
+
+                <monolog:handler name="console" type="console" process-psr-3-messages="false">
+                    <monolog:channels>
+                        <monolog:channel>!event</monolog:channel>
+                        <monolog:channel>!doctrine</monolog:channel>
+                        <monolog:channel>!console</monolog:channel>
+                    </monolog:channels>
+                </monolog:handler>
+                
+                <monolog:handler name="test" type="test" level="debug" />
+            </monolog:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/test/monolog.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'console' => array(
+                   'type' => 'console',
+                   'process_psr_3_messages' => false,
+                   'channels' => array('!event', '!doctrine', '!console'),
+                ),
+                'test' => array(
+                   'type' => 'test',
+                   'level' => 'debug'
+                ),
+            ),
+        ));
+
+Finally, access the :class:`Monolog\\Handler\\Testhandler` and validate the log output::
+
+    // tests/Command/CreateUserCommandTest.php
+    namespace App\Tests\Command;
+
+    use App\Command\CreateUserCommand;
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
+    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+    use Symfony\Component\Console\Tester\CommandTester;
+    use Monolog\Handler\TestHandler;
+
+    class CreateUserCommandTest extends KernelTestCase
+    {
+        public function testExecute()
+        {
+            $kernel = static::createKernel();
+            $application = new Application($kernel);
+
+            $command = $application->find('app:create-user');
+            $commandTester = new CommandTester($command);
+            $commandTester->execute(array(
+                'command'  => $command->getName(),
+
+                // pass arguments to the helper
+                'username' => 'Wouter',
+
+                // prefix the key with two dashes when passing options,
+                // e.g: '--some-option' => 'option_value',
+            ));
+            
+            $logger = $command->getLogger();
+            $handlers = $logger->getHandlers();
+            
+            $logs = null;
+            foreach ($handlers as $handler) {
+                if ($handler instanceof TestHandler) {
+                    $logs = $handler;
+                }
+            }
+            
+            if ($logs instanceof TestHandler) {
+                $this->assertTrue($logs->hasRecordThatContains('Some info', Logger::DEBUG), 'ASSERT_ERROR_MESSAGE_1');
+                $this->assertTrue($logs->hasRecordThatContains('Some more info', Logger::NOTICE), 'ASSERT_ERROR_MESSAGE_2');
+                $this->assertFalse($logs->hasRecordThatContains('Command Success', Logger::INFO), 'ASSERT_ERROR_MESSAGE_3');
+            }
+            
+            // ...
+        }
+    }
+
+
 .. _ConsoleHandler: https://github.com/symfony/MonologBridge/blob/master/Handler/ConsoleHandler.php
 .. _MonologBridge: https://github.com/symfony/MonologBridge
