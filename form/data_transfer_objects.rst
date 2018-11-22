@@ -6,14 +6,14 @@ How to use Data Transfer Objects (DTOs)
 
 Data Transfer Objects can be used by forms to separate entities from the
 validation logic of forms.
-Entities should always have a valid state.
-When entities are used as data classes for a form, the data is injected into
-the entity and validated.
-When the validation fails, the invalid data is still left in the entity.
-This can lead to invalid data being saved in the database or unexpected exceptions.
+When entities are used as data classes for a form, validation happens after the
+form data has been injected into the entities.
+When the validation fails, the invalid data is still left in the entities.
+This can lead to invalid data being saved in the database or unexpected
+exceptions.
 
-You will use the Maker bundle to highlight the differences between using DTOs
-and entities.
+Let's use the Maker bundle to highlight the differences between using DTOs and
+entities.
 
 .. index::
    single: Installation
@@ -36,15 +36,15 @@ example:
     $ composer require form validator twig-bundle orm-pack security-csrf annotations
 
 Use the example ``Task`` entity from :doc:`the main forms tutorial </forms>`
-and make it a doctrine entity (this requires adding a primary key ``id``).
+and make it a Doctrine entity (this requires adding a primary key ``id``).
 
 .. code-block:: diff
 
     // src/Entity/Task.php
     namespace App\Entity;
 
-    + use Symfony\Component\Validator\Constraints as Assert;
     + use Doctrine\ORM\Mapping as ORM;
+    + use Symfony\Component\Validator\Constraints as Assert;
 
     + /**
     + * @ORM\Entity
