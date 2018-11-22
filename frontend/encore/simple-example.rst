@@ -180,8 +180,10 @@ The import and export Statements
 --------------------------------
 
 Instead of using ``require`` and ``module.exports`` like shown above, JavaScript
-has an alternate syntax, which is a more accepted standard. Choose whichever you
-want: they do the same thing.
+has an alternate syntax, which is the new finalized ECMAScript standard for using modules in the browser, including
+the ability to use dynamic imports
+
+.. 
 
 To export values, use ``exports``:
 
@@ -333,8 +335,7 @@ If you want to only compile a CSS file, that's possible via ``addStyleEntry()``:
     Encore
         // ...
 
-        .addStyleEntry('some_page', './assets/css/some_page.css')
-    ;
+        .addStyleEntry('some_page', './assets/css/some_page.css');
 
 This will output a new ``some_page.css``.
 
