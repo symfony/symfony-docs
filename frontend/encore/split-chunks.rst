@@ -59,6 +59,6 @@ this plugin with the ``configureSplitChunks()`` function:
     +     .configureSplitChunks(function(splitChunks) {
     +         // change the configuration
     +         splitChunks.minSize = 0;
-    +     }
+    +     })
 
 .. _`SplitChunksPlugin from Webpack`: https://webpack.js.org/plugins/split-chunks-plugin/
