@@ -204,6 +204,7 @@ Consider this example:
         // src/Entity/Service.php
         namespace App\Entity;
 
+        use App\Entity\Host;
         use Doctrine\ORM\Mapping as ORM;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -218,7 +219,7 @@ Consider this example:
         class Service
         {
             /**
-             * @ORM\ManyToOne(targetEntity="Host")
+             * @ORM\ManyToOne(targetEntity="Host::class")
              */
             public $host;
 

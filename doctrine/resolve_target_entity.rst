@@ -75,7 +75,7 @@ An Invoice entity::
     class Invoice
     {
         /**
-         * @ORM\ManyToOne(targetEntity="Acme\InvoiceBundle\Model\InvoiceSubjectInterface")
+         * @ORM\ManyToOne(targetEntity="InvoiceSubjectInterface::class")
          * @var InvoiceSubjectInterface
          */
         protected $subject;

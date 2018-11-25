@@ -145,13 +145,15 @@ the ``Product`` entity (and getter & setter methods):
 
         // src/Entity/Product.php
 
+        use App\Entity\Category;
+
         // ...
         class Product
         {
             // ...
 
             /**
-             * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
+             * @ORM\ManyToOne(targetEntity="Category::class", inversedBy="products")
              */
             private $category;
 
@@ -216,6 +218,7 @@ class that will hold these objects:
         // src/Entity/Category.php
 
         // ...
+        use App\Entity\Product;
         use Doctrine\Common\Collections\ArrayCollection;
         use Doctrine\Common\Collections\Collection;
 
@@ -224,7 +227,7 @@ class that will hold these objects:
             // ...
 
             /**
-             * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category")
+             * @ORM\OneToMany(targetEntity="Product::class", mappedBy="category")
              */
             private $products;
 
@@ -568,10 +571,11 @@ that behavior, use the `orphanRemoval`_ option inside ``Category``::
 
     // src/Entity/Category.php
 
+    use App\Entity\Product;
     // ...
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Product::class", mappedBy="category", orphanRemoval=true)
      */
     private $products;
 

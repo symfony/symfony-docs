@@ -154,6 +154,7 @@ looking for mapping information::
 
     namespace App\Entity;
 
+    use App\Entity\Comment;
     use Doctrine\ORM\Mapping as ORM;
     use Doctrine\Common\Collections\ArrayCollection;
 
@@ -198,7 +199,7 @@ looking for mapping information::
 
         /**
          * @ORM\OneToMany(
-         *      targetEntity="Comment",
+         *      targetEntity="Comment::class",
          *      mappedBy="post",
          *      orphanRemoval=true
          * )

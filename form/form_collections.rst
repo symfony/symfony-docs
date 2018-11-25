@@ -465,10 +465,11 @@ you will learn about next!).
 
             // src/Entity/Task.php
 
+            use App\Entity\Tag;
             // ...
 
             /**
-             * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
+             * @ORM\ManyToMany(targetEntity="Tag::class", cascade={"persist"})
              */
             protected $tags;
 
