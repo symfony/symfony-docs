@@ -116,17 +116,7 @@ Checking for Security Vulnerabilities
 -------------------------------------
 
 Symfony provides a utility called the "Security Checker" to check whether your
-project's dependencies contain any known security vulnerability. Run this
-command to install it in your application:
-
-.. code-block:: terminal
-
-    $ cd my-project/
-    $ composer require sensiolabs/security-checker --dev
-
-From now on, this utility will be run automatically whenever you install or
-update any dependency in the application. If a dependency contains a vulnerability,
-you'll see a clear message.
+project's dependencies contain any known security vulnerability. Check out the integration instructions for `the Security Checker`_ to set it up.
 
 The Symfony Demo application
 ----------------------------
@@ -162,5 +152,6 @@ Go Deeper with Setup
 
 .. _`Stellar Development with Symfony`: http://symfonycasts.com/screencast/symfony
 .. _`Composer`: https://getcomposer.org/
+.. _`the Security Checker`: https://github.com/sensiolabs/security-checker#integration
 .. _`The Symfony Demo application`: https://github.com/symfony/demo
 .. _`symfony/symfony-demo`: https://github.com/symfony/demo
