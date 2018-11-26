@@ -40,14 +40,15 @@ If you created your application after November 15th 2018, you don't need to make
 any changes! Otherwise, here is the list of changes you'll need to make - these
 changes can be made to any Symfony 3.4 or higher app:
 
-#. Create a new `src/.bootstrap.php`_ file in your project. This file loads Composer's
-   autoloader and loads all the ``.env`` files as needed.
+#. Create a new `config/bootstrap.php`_ file in your project. This file loads Composer's
+   autoloader and loads all the ``.env`` files as needed (note: in an earlier recipe,
+   this file was called ``src/.bootstrap.php``).
 
-#. Update your `public/index.php`_ (`index.php diff`_) file to load the new ``src/.bootstrap.php``
+#. Update your `public/index.php`_ (`index.php diff`_) file to load the new ``config/bootstrap.php``
    file. If you've customized this file, make sure to keep those changes (but use
    the rest of the changes).
 
-#. Update your `bin/console`_ (`bin/console diff`_) file to load the new ``src/.bootstrap.php`` file.
+#. Update your `bin/console`_ (`bin/console diff`_) file to load the new ``config/bootstrap.php`` file.
 
 #. Update ``.gitignore``:
 
@@ -78,10 +79,10 @@ changes can be made to any Symfony 3.4 or higher app:
     You can also update the `comment on the top of .env`_ to reflect the new changes.
 
 #. If you're using PHPUnit, you will also need to `create a new .env.test`_ file
-   and update your `phpunit.xml.dist file`_ so it loads the ``src/.bootstrap.php``
+   and update your `phpunit.xml.dist file`_ so it loads the ``config/bootstrap.php``
    file.
 
-.. _`src/.bootstrap.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.2/src/.bootstrap.php
+.. _`config/bootstrap.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.2/config/bootstrap.php
 .. _`public/index.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.2/public/index.php
 .. _`index.php diff`: https://github.com/symfony/recipes/compare/8a4e5555e30d5dff64275e2788a901f31a214e79...86e2b6795c455f026e5ab0cba2aff2c7a18511f7#diff-473fca613b5bda15d87731036cb31586
 .. _`bin/console`: https://github.com/symfony/recipes/blob/master/symfony/console/3.3/bin/console
