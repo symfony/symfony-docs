@@ -38,11 +38,33 @@ Concepts
    something can be a message broker or a third party API for example.
 
 **Receiver**:
-   Responsible for deserializing and forwarding messages to handler(s). This
-   can be a message queue puller or an API endpoint for example.
+   Responsible for retrieving, deserializing and forwarding messages to handler(s).
+   This can be a message queue puller or an API endpoint for example.
 
 **Handler**:
    Responsible for handling messages using the business logic applicable to the messages.
+   Handlers are called by the ``HandleMessageMiddleware`` middleware.
+
+**Middleware**:
+   Middleware can access the message and its wrapper (the envelope) while it is
+   dispatched through the bus.
+   Literally *"the software in the middle"*, those are not about core concerns
+   (business logic) of an application. Instead, they are cross cutting concerns
+   applicable throughout the application and affecting the entire message bus.
+   For instance: logging, validating a message, starting a transaction, ...
+   They are also responsible for calling the next middleware in the chain,
+   which means they can tweak the envelope, by adding items to it or even
+   replacing it, as well as interrupt the middleware chain.
+
+**Envelope**
+   Messenger specific concept, it gives full flexibility inside the message bus,
+   by wrapping the messages into it, allowing to add useful information inside
+   through *envelope items*.
+
+**Envelope Items**
+   Piece of information you need to attach to your message: serializer context
+   to use for transport, markers identifying a received message or any sort of
+   metadata your middleware or transport layer may use.
 
 Bus
 ---
@@ -53,9 +75,9 @@ middleware stack. The component comes with a set of middleware that you can use.
 When using the message bus with Symfony's FrameworkBundle, the following middleware
 are configured for you:
 
-#. ``LoggingMiddleware`` (logs the processing of your messages)
-#. ``SendMessageMiddleware`` (enables asynchronous processing)
-#. ``HandleMessageMiddleware`` (calls the registered handle)
+#. :class:`Symfony\\Component\\Messenger\\Middleware\\LoggingMiddleware` (logs the processing of your messages)
+#. :class:`Symfony\\Component\\Messenger\\Asynchronous\\Middleware\\SendMessageMiddleware` (enables asynchronous processing)
+#. :class:`Symfony\\Component\\Messenger\\Middleware\\HandleMessageMiddleware` (calls the registered handler(s))
 
 Example::
 
@@ -74,7 +96,7 @@ Example::
 
 .. note::
 
-    Every middleware needs to implement the ``MiddlewareInterface``.
+    Every middleware needs to implement the :class:`Symfony\\Component\\Messenger\\Middleware\\MiddlewareInterface`.
 
 Handlers
 --------
@@ -112,7 +134,7 @@ the ``SerializerConfiguration`` envelope::
         ]))
     );
 
-At the moment, the Symfony Messenger has the following built-in envelopes:
+At the moment, the Symfony Messenger has the following built-in envelope items:
 
 #. :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\SerializerConfiguration`,
    to configure the serialization groups used by the transport.
@@ -151,6 +173,12 @@ The above example will forward the message to the next middleware with an additi
 envelope item *if* the message has just been received (i.e. has the `ReceivedMessage` item).
 You can create your own items by implementing :class:`Symfony\\Component\\Messenger\\EnvelopeAwareInterface`.
 
+.. note::
+
+    Any envelope item must be php serializable if going through transport using
+    the :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\Serializer`
+    base serializer.
+
 Transports
 ----------
 
@@ -160,7 +188,8 @@ transport will be responsible for communicating with your message broker or 3rd 
 Your own Sender
 ~~~~~~~~~~~~~~~
 
-Using the ``SenderInterface``, you can create your own message sender.
+Using the :class:`Symfony\\Component\\Messenger\\Transport\\SenderInterface`,
+you can create your own message sender.
 Imagine that you already have an ``ImportantAction`` message going through the
 message bus and being handled by a handler. Now, you also want to send this
 message as an email.
@@ -206,7 +235,7 @@ First, create your sender::
 Your own Receiver
 ~~~~~~~~~~~~~~~~~
 
-A receiver is responsible for receiving messages from a source and dispatching
+A receiver is responsible for getting messages from a source and dispatching
 them to the application.
 
 Imagine you already processed some "orders" in your application using a
@@ -226,7 +255,7 @@ First, create your receiver::
     use Symfony\Component\Serializer\SerializerInterface;
     use Symfony\Component\Messenger\Envelope;
 
-    class NewOrdersFromCsvFile implements ReceiverInterface
+    class NewOrdersFromCsvFileReceiver implements ReceiverInterface
     {
        private $serializer;
        private $filePath;
