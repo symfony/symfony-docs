@@ -297,7 +297,7 @@ callback
 
 **type**: ``string|array|Closure``
 
-This is a callback method that can be used instead of the `choices`_ option
+This is a callback function that can be used instead of the `choices`_ option
 to return the choices array. See
 `Supplying the Choices with a Callback Function`_ for details on its usage.
 

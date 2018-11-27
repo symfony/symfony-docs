@@ -152,7 +152,7 @@ form_row(view, variables)
 -------------------------
 
 Renders the "row" of a given field, which is the combination of the field's
-label, errors and widget.
+label, errors, widget and help.
 
 .. code-block:: twig
 
@@ -339,7 +339,7 @@ done by using a public ``vars`` property on the
 | ``full_name``          | The ``name`` HTML attribute to be rendered.                                         |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``errors``             | An array of any errors attached to *this* specific field                            |
-|                        | (e.g. ``form.title.errors``).                                                       |
+|                        | (e.g. ``form.title.vars.errors``).                                                  |
 |                        | Note that you can't use ``form.errors`` to determine if a form is valid,            |
 |                        | since this only returns "global" errors: some individual fields may have errors.    |
 |                        | Instead, use the ``valid`` option.                                                  |

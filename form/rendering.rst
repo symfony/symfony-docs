@@ -39,7 +39,7 @@ output can be customized on many different levels.
 
 .. code-block:: twig
 
-    {{ form.vars.value.task }}
+    {{ form.task.vars.value }}
 
 .. index::
    single: Forms; Rendering each field by hand

@@ -7,26 +7,26 @@ on your object. If you're using validation with forms, this means that you
 can make these custom errors display next to a specific field, instead of
 simply at the top of your form.
 
-This process works by specifying one or more *callback* methods, each of
-which will be called during the validation process. Each of those methods
+This process works by specifying one or more *callback* functions, each of
+which will be called during the validation process. Each of those functions
 can do anything, including creating and assigning validation errors.
 
 .. note::
 
-    A callback method itself doesn't *fail* or return any value. Instead,
-    as you'll see in the example, a callback method has the ability to directly
+    A callback function itself doesn't *fail* or return any value. Instead,
+    as you'll see in the example, a callback function has the ability to directly
     add validator "violations".
 
-+----------------+------------------------------------------------------------------------+
-| Applies to     | :ref:`class <validation-class-target>`                                 |
-+----------------+------------------------------------------------------------------------+
-| Options        | - :ref:`callback <callback-option>`                                    |
-|                | - `payload`_                                                           |
-+----------------+------------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Callback`          |
-+----------------+------------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\CallbackValidator` |
-+----------------+------------------------------------------------------------------------+
++----------------+-----------------------------------------------------------------------------------------------+
+| Applies to     | :ref:`class <validation-class-target>` or :ref:`property/method <validation-property-target>` |
++----------------+-----------------------------------------------------------------------------------------------+
+| Options        | - :ref:`callback <callback-option>`                                                           |
+|                | - `payload`_                                                                                  |
++----------------+-----------------------------------------------------------------------------------------------+
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\Callback`                                 |
++----------------+-----------------------------------------------------------------------------------------------+
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\CallbackValidator`                        |
++----------------+-----------------------------------------------------------------------------------------------+
 
 Configuration
 -------------
@@ -88,10 +88,10 @@ Configuration
             }
         }
 
-The Callback Method
--------------------
+The Callback Function
+---------------------
 
-The callback method is passed a special ``ExecutionContextInterface`` object.
+The callback function is passed a special ``ExecutionContextInterface`` object.
 You can set "violations" directly on this object and determine to which
 field those errors should be attributed::
 
@@ -260,7 +260,7 @@ callback
 **type**: ``string``, ``array`` or ``Closure`` [:ref:`default option <validation-default-option>`]
 
 The callback option accepts three different formats for specifying the
-callback method:
+callback function:
 
 * A **string** containing the name of a concrete or static method;
 

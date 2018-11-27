@@ -941,7 +941,7 @@ You can also use expressions inside your templates:
 
 .. configuration-block::
 
-    .. code-block:: html+jinja
+    .. code-block:: html+twig
 
         {% if is_granted(expression(
             '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'

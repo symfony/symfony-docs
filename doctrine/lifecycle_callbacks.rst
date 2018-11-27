@@ -6,7 +6,7 @@ How to Work with Lifecycle Callbacks
 
 Sometimes, you need to perform an action right before or after an entity
 is inserted, updated, or deleted. These types of actions are known as "lifecycle"
-callbacks, as they're callback methods that you need to execute during different
+callbacks, as they're callback functions that you need to execute during different
 stages of the lifecycle of an entity (e.g. the entity is inserted, updated,
 deleted, etc).
 

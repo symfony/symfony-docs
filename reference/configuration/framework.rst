@@ -1936,7 +1936,7 @@ ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``
     given the adapter they are based on. Internally, a pool wraps the definition
     of an adapter.
 
-.. _reference-cache-systen:
+.. _reference-cache-system:
 
 system
 ......

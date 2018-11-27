@@ -233,7 +233,7 @@ Enabling the Metadata Cache
 
 Metadata used by the Serializer component such as groups can be cached to
 enhance application performance. By default, the serializer uses the ``cache.system``
-cache pool which is configured using the :ref:`cache.system <reference-cache-systen>`
+cache pool which is configured using the :ref:`cache.system <reference-cache-system>`
 option.
 
 Enabling a Name Converter

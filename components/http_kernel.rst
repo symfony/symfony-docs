@@ -143,7 +143,6 @@ For general information on adding listeners to the events below, see
     As of 3.1 the :class:`Symfony\\Component\\HttpKernel\\HttpKernel` accepts a
     fourth argument, which must be an instance of
     :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolverInterface`.
-    In 4.0 this argument will become mandatory.
 
 .. seealso::
 

@@ -142,7 +142,7 @@ With this configuration, there are three validation groups:
 ``registration``
     Contains the constraints on the ``email`` and ``password`` fields only.
 
-Constraints in the ``Default`` group of a class are the constraints that have
+Constraints in the ``User`` group of a class are the constraints that have
 either no explicit group configured or that are configured to a group equal to
 the class name or the string ``Default``.
 

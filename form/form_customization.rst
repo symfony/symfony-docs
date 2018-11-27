@@ -42,6 +42,7 @@ above templates would render:
             <li>This field is required</li>
         </ul>
         <input type="number" id="form_age" name="form[age]" />
+        <p id="form_age_help" class="help-text">One help note.</p>
     </div>
 
 To quickly prototype and test a form, you can render the entire form with
@@ -720,7 +721,7 @@ Customizing the "Form Row"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you can manage it, the easiest way to render a form field is via the
-``form_row()`` function, which renders the label, errors and HTML widget of
+``form_row()`` function, which renders the label, errors, help and HTML widget of
 a field. To customize the markup used for rendering *all* form field rows,
 override the ``form_row`` fragment. For example, suppose you want to add a
 class to the ``div`` element around each row:
