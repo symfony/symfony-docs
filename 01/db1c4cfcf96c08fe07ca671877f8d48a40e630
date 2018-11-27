@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by osavchenko at 2018-11-25T16:07:44Z
+
+Alright, thank uppity for explanation. So, this issue is resolved?
+
+нд, 25 лист. 2018, 18:01 Marko Kunic користувач notifications@github.com
+пише:
+
+> *@kunicmarko20* commented on this pull request.
+> ------------------------------
+>
+> In best_practices/business-logic.rst
+> <https://github.com/symfony/symfony-docs/pull/10696#discussion_r236079092>
+> :
+>
+> > @@ -198,7 +198,7 @@ looking for mapping information::
+>
+>          /**
+>           * @ORM\OneToMany(
+> -         *      targetEntity="Comment",
+> +         *      targetEntity="App\Entity\Comment",
+>
+> ye, clicking on the name of the var in your IDE (phpstorm in my case).
+>
+> —
+> You are receiving this because you authored the thread.
+> Reply to this email directly, view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/10696#discussion_r236079092>,
+> or mute the thread
+> <https://github.com/notifications/unsubscribe-auth/AAlqKnj8rdxXzw2qtSzcYAUu34ISXc59ks5uyr7tgaJpZM4Yv8bL>
+> .
+>
