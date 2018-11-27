@@ -53,15 +53,15 @@ Concepts
    applicable throughout the application and affecting the entire message bus.
    For instance: logging, validating a message, starting a transaction, ...
    They are also responsible for calling the next middleware in the chain,
-   which means they can tweak the envelope, by adding items to it or even
+   which means they can tweak the envelope, by adding stamps to it or even
    replacing it, as well as interrupt the middleware chain.
 
 **Envelope**
    Messenger specific concept, it gives full flexibility inside the message bus,
    by wrapping the messages into it, allowing to add useful information inside
-   through *envelope items*.
+   through *envelope stamps*.
 
-**Envelope Items**
+**Envelope Stamps**
    Piece of information you need to attach to your message: serializer context
    to use for transport, markers identifying a received message or any sort of
    metadata your middleware or transport layer may use.
@@ -76,7 +76,7 @@ When using the message bus with Symfony's FrameworkBundle, the following middlew
 are configured for you:
 
 #. :class:`Symfony\\Component\\Messenger\\Middleware\\LoggingMiddleware` (logs the processing of your messages)
-#. :class:`Symfony\\Component\\Messenger\\Asynchronous\\Middleware\\SendMessageMiddleware` (enables asynchronous processing)
+#. :class:`Symfony\\Component\\Messenger\\Middleware\\SendMessageMiddleware` (enables asynchronous processing)
 #. :class:`Symfony\\Component\\Messenger\\Middleware\\HandleMessageMiddleware` (calls the registered handler(s))
 
 Example::
@@ -166,7 +166,7 @@ Hence you can inspect the envelope content and its stamps, or add any::
             if (null !== $envelope->get(ReceivedStamp::class)) {
                 // Message just has been received...
 
-                // You could for example add another item.
+                // You could for example add another stamp.
                 $envelope = $envelope->with(new AnotherStamp(/* ... */));
             }
 
@@ -176,12 +176,12 @@ Hence you can inspect the envelope content and its stamps, or add any::
 
 The above example will forward the message to the next middleware with an additional
 stamp *if* the message has just been received (i.e. has the `ReceivedStamp` stamp).
-You can create your own items by implementing :class:`Symfony\\Component\\Messenger\\Stamp\\StampInterface`.
+You can create your own stamps by implementing :class:`Symfony\\Component\\Messenger\\Stamp\\StampInterface`.
 
 .. note::
 
-    Any envelope item must be php serializable if going through transport using
-    the :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\Serializer`
+    Any stamp must be serializable using the Symfony Serializer component
+    if going through transport using the :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\Serializer`
     base serializer.
 
 Transports
