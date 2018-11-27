@@ -703,7 +703,7 @@ This middleware can be configured to define the entity manager to use:
                 <framework:messenger>
                     <framework:bus name="command_bus">
                         <!-- Using the default configured entity manager name -->
-                        <framework:middleware id="doctrine_transaction_middleware" />
+                        <framework:middleware id="doctrine_transaction" />
                         <!-- Using another entity manager -->
                         <framework:middleware id="doctrine_transaction">
                             <framework:argument>custom</framework:argument>

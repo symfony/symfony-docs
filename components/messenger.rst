@@ -193,7 +193,7 @@ transport will be responsible for communicating with your message broker or 3rd 
 Your own Sender
 ~~~~~~~~~~~~~~~
 
-Using the :class:`Symfony\\Component\\Messenger\\Transport\\SenderInterface`,
+Using the :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SenderInterface`,
 you can create your own message sender.
 Imagine that you already have an ``ImportantAction`` message going through the
 message bus and being handled by a handler. Now, you also want to send this
