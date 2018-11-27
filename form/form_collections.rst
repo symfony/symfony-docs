@@ -469,7 +469,7 @@ you will learn about next!).
             // ...
 
             /**
-             * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
+             * @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"})
              */
             protected $tags;
 
@@ -481,7 +481,7 @@ you will learn about next!).
                 # ...
                 oneToMany:
                     tags:
-                        targetEntity: Tag
+                        targetEntity: App\Entity\Tag
                         cascade:      [persist]
 
         .. code-block:: xml

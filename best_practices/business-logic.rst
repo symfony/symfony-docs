@@ -247,7 +247,7 @@ looking for mapping information::
 
         /**
          * @ORM\OneToMany(
-         *      targetEntity="Comment",
+         *      targetEntity="App\Entity\Comment",
          *      mappedBy="post",
          *      orphanRemoval=true
          * )
