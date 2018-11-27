@@ -375,11 +375,7 @@ following method to the ``ProductRepository`` class::
                 WHERE p.id = :id'
             )->setParameter('id', $productId);
 
-        try {
-            return $query->getSingleResult();
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            return null;
-        }
+        return $query->getOneOrNullResult();
     }
 
 Now, you can use this method in your controller to query for a ``Product``
