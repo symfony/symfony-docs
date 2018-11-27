@@ -43,7 +43,9 @@ Running your Symfony Application
 
 On production, you should use a web server like Nginx or Apache
 (see :doc:`configuring a web server to run Symfony </setup/web_server_configuration>`).
-But for development, it's convenient to use the :doc:`Symfony PHP web server <setup/built_in_web_server>`.
+But for development, it's convenient to use the :doc:`Symfony PHP web server <setup/built_in_web_server>`. 
+Instructions of how to install the development web server are also shown via the command line when first 
+creating the new project. 
 
 Move into your new project and start the server:
 
