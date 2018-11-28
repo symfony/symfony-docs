@@ -143,13 +143,6 @@ utilities used in the functional tests:
 
 Your First Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-First, install the BrowserKit component in your project:
-
-.. code-block:: terminal
-
-    $ composer require --dev symfony/browser-kit
-
 Functional tests are PHP files that typically live in the ``tests/Controller``
 directory for your bundle. If you want to test the pages handled by your
 ``PostController`` class, start by creating a new ``PostControllerTest.php``
