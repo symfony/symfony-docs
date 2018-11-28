@@ -146,10 +146,8 @@ you need is this JavaScript code:
     jQuery(document).ready(function () {
         jQuery('.add-another-collection-widget').click(function (e) {
             var list = jQuery(jQuery(this).attr('data-list'));
-            // Try to find the counter of the list
+            // Try to find the counter of the list or use the length of the list
             var counter = list.data('widget-counter') | list.children().length;
-            // If the counter does not exist, use the length of the list
-            if (!counter) { counter = list.children().length; }
 
             // grab the prototype template
             var newWidget = list.attr('data-prototype');
