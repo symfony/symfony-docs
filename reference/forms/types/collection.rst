@@ -173,7 +173,7 @@ or without jQuery:
 .. code-block:: javascript
 
     // add-collection-widget.js
-    document.getElementById("email-fields-list-add-button").addEventListener("click", function(e) {
+    document.getElementById("add-another-collection-widget").addEventListener("click", function(e) {
         // get list element
         var list = document.getElementById(e.target.getAttribute("data-list"));
         // Try to find the counter of the list
@@ -216,7 +216,7 @@ And update the template as follows:
         </ul>
 
         <button type="button"
-            id="email-fields-list-add-button"
+            id="add-another-collection-widget"
             data-list="#email-fields-list">Add another email</button>
         {# if you choose not to use JQuery then remove "#" from "data-list" attribute. #}
 
