@@ -52,18 +52,33 @@ number of files and directories generated automatically:
 
 .. code-block:: text
 
-    blog/
-    ├─ bin/
-    │  └─ console
-    ├─ config/
-    └─ public/
-    │  └─ index.php
-    ├─ src/
-    │  └─ Kernel.php
-    ├─ var/
-    │  ├─ cache/
-    │  └─ log/
-    └─ vendor/
+├── bin
+│   └── console
+├── config
+│   ├── bootstrap.php
+│   ├── bundles.php
+│   ├── packages
+│   │   ├── dev
+│   │   │   └── routing.yaml
+│   │   ├── framework.yaml
+│   │   ├── routing.yaml
+│   │   └── test
+│   │       ├── framework.yaml
+│   │       └── routing.yaml
+│   ├── routes.yaml
+│   └── services.yaml
+├── public
+│   └── index.php
+├── src
+│   ├── Controller
+│   └── Kernel.php
+├── symfony.lock
+├── var
+│   ├── cache
+│   └── log
+├── composer.json
+├── composer.lock
+└── vendor
 
 This file and directory hierarchy is the convention proposed by Symfony to
 structure your applications. It's recommended to keep this structure because it's
