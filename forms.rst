@@ -695,7 +695,7 @@ Learn more
     :maxdepth: 1
     :glob:
 
-    form/*
+    /form/*
     /controller/upload_file
     /reference/forms/types
     /http_cache/form_csrf_caching
