@@ -222,7 +222,7 @@ Consider this example:
         class Service
         {
             /**
-             * @ORM\ManyToOne(targetEntity="Host")
+             * @ORM\ManyToOne(targetEntity="App\Entity\Host")
              */
             public $host;
 
