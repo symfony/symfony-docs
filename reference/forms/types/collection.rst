@@ -144,7 +144,7 @@ you need is this JavaScript code:
 
     // add-collection-widget.js
     jQuery(document).ready(function () {
-        jQuery('.add-another-collection-widget').click(function (e) {
+        jQuery('#add-another-collection-widget').click(function (e) {
             var list = jQuery(jQuery(this).attr('data-list'));
             // Try to find the counter of the list
             var counter = list.data('widget-counter') | list.children().length;
@@ -168,6 +168,34 @@ you need is this JavaScript code:
         });
     });
 
+or without jQuery:
+
+.. code-block:: javascript
+
+    // add-collection-widget.js
+    document.getElementById("email-fields-list-add-button").addEventListener("click", function(e) {
+        // get list element
+        var list = document.getElementById(e.target.getAttribute("data-list"));
+        // Try to find the counter of the list
+        var counter = list.getAttribute('data-widget-counter') | list.childElementCount;
+
+        // grab the prototype template
+        var newWidget = list.getAttribute('data-prototype');
+        // replace the "__name__" used in the id and name of the prototype
+        // with a number that's unique to your emails
+        // end name attribute looks like name="contact[emails][2]"
+        newWidget = newWidget.replace(/__name__/g, counter);
+        // Increase the counter
+        counter++;
+        // And store it, the length cannot be used if deleting widgets is allowed
+        list.setAttribute('data-widget-counter', counter);
+
+        // create a new list element and add it to the list
+        var li = document.createElement("li");
+        li.insertAdjacentHTML('beforeend', newWidget);
+        list.appendChild(li);
+    });
+
 And update the template as follows:
 
 .. code-block:: html+twig
@@ -188,8 +216,9 @@ And update the template as follows:
         </ul>
 
         <button type="button"
-            class="add-another-collection-widget"
+            id="email-fields-list-add-button"
             data-list="#email-fields-list">Add another email</button>
+        {# if you choose not to use JQuery then remove "#" from "data-list" attribute. #}
 
         {# ... #}
     {{ form_end(form) }}
