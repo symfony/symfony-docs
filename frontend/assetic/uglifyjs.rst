@@ -24,8 +24,8 @@ and then, decide the installation method: global or local.
 .. caution::
 
     Some Linux distributions rename the Node.js binary from ``node`` to ``nodejs``.
-    This may result in errors like *"/usr/bin/env: node: No such file or 
-    directory"*``. You can solve this problem with a symlink:
+    This may result in errors like *"/usr/bin/env: node: No such file or
+    directory"*. You can solve this problem with a symlink:
 
     .. code-block:: terminal
 
