@@ -29,8 +29,10 @@ To force that a value is *not* identical, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is equal to
-``20`` and an integer, you could do the following:
+The following constraints ensure that:
+
+* ``firstName`` of ``Person`` class is equal to ``Mary`` *and* is a string
+* ``age`` is equal to``20`` *and* is of type integer
 
 .. configuration-block::
 
@@ -43,6 +45,11 @@ If you want to ensure that the ``age`` of a ``Person`` class is equal to
 
         class Person
         {
+            /**
+             * @Assert\IdenticalTo("Mary")
+             */
+            protected $firstName;
+
             /**
              * @Assert\IdenticalTo(
              *     value = 20
@@ -106,5 +113,17 @@ message
 **type**: ``string`` **default**: ``This value should be identical to {{ compared_value_type }} {{ compared_value }}.``
 
 This is the message that will be shown if the value is not identical.
+
+You can use the following parameters in this message:
+
++-------------------------------+-----------------------------+
+| Parameter                     | Description                 |
++===============================+=============================+
+| ``{{ value }}``               | The current (invalid) value |
++-------------------------------+-----------------------------+
+| ``{{ compared_value }}``      | The expected value          |
++-------------------------------+-----------------------------+
+| ``{{ compared_value_type }}`` | The expected value type     |
++-------------------------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

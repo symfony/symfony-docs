@@ -30,22 +30,20 @@ Template Locations
     Store all your application's templates in ``app/Resources/views/`` directory.
 
 Traditionally, Symfony developers stored the application templates in the
-``Resources/views/`` directory of each bundle. Then they used the logical name
-to refer to them (e.g. ``AcmeDemoBundle:Default:index.html.twig``).
+``Resources/views/`` directory of each bundle. Then they used the Twig namespaced
+path to refer to them (e.g. ``@AcmeDemo/Default/index.html.twig``).
 
 But for the templates used in your application, it's much more convenient
 to store them in the ``app/Resources/views/`` directory. For starters, this
 drastically simplifies their logical names:
 
-=================================================  ==================================
-Templates Stored inside Bundles                    Templates Stored in ``app/``
-=================================================  ==================================
-``AcmeDemoBundle:Default:index.html.twig``         ``default/index.html.twig``
-``::layout.html.twig``                             ``layout.html.twig``
-``AcmeDemoBundle::index.html.twig``                ``index.html.twig``
-``AcmeDemoBundle:Default:subdir/index.html.twig``  ``default/subdir/index.html.twig``
-``AcmeDemoBundle:Default/subdir:index.html.twig``  ``default/subdir/index.html.twig``
-=================================================  ==================================
+============================================  ==================================
+Templates Stored inside Bundles               Templates Stored in ``app/``
+============================================  ==================================
+``@AcmeDemo/index.html.twig``                 ``index.html.twig``
+``@AcmeDemo/Default/index.html.twig``         ``default/index.html.twig``
+``@AcmeDemo/Default/subdir/index.html.twig``  ``default/subdir/index.html.twig``
+============================================  ==================================
 
 Another advantage is that centralizing your templates simplifies the work
 of your designers. They don't need to look for templates in lots of directories
@@ -54,6 +52,15 @@ scattered through lots of bundles.
 .. best-practice::
 
     Use lowercased snake_case for directory and template names.
+
+.. best-practice::
+
+    Use a prefixed underscore for partial templates in template names.
+
+You often want to reuse template code using the ``include`` function to avoid
+redundant code. To determine those partials easily in the filesystem you should
+prefix partials and any other template without HTML body or ``extends`` tag
+with a single underscore.
 
 Twig Extensions
 ---------------
@@ -69,7 +76,7 @@ the Markdown contents of each post into HTML.
 To do this, first, install the excellent `Parsedown`_ Markdown parser as
 a new dependency of the project:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require erusev/parsedown
 
@@ -81,7 +88,7 @@ extension. The service definition only requires the path to the class:
     # app/config/services.yml
     services:
         # ...
-        markdown:
+        app.markdown:
             class: AppBundle\Utils\Markdown
 
 And the ``Markdown`` class just needs to define one single method to transform
@@ -100,23 +107,21 @@ Markdown content into HTML::
 
         public function toHtml($text)
         {
-            $html = $this->parser->text($text);
-
-            return $html;
+            return $this->parser->text($text);
         }
     }
 
 Next, create a new Twig extension and define a new filter called ``md2html``
-using the ``Twig_SimpleFilter`` class. Inject the newly defined ``markdown``
-service in the constructor of the Twig extension:
-
-.. code-block:: php
+using the ``Twig\TwigFilter`` class. Inject the newly defined ``markdown``
+service in the constructor of the Twig extension::
 
     namespace AppBundle\Twig;
 
     use AppBundle\Utils\Markdown;
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
 
-    class AppExtension extends \Twig_Extension
+    class AppExtension extends AbstractExtension
     {
         private $parser;
 
@@ -128,10 +133,10 @@ service in the constructor of the Twig extension:
         public function getFilters()
         {
             return array(
-                new \Twig_SimpleFilter(
+                new TwigFilter(
                     'md2html',
                     array($this, 'markdownToHtml'),
-                    array('is_safe' => array('html'))
+                    array('is_safe' => array('html'), 'pre_escape' => 'html')
                 ),
             );
         }
@@ -156,10 +161,14 @@ name is irrelevant because you never use it in your own code):
     services:
         app.twig.app_extension:
             class:     AppBundle\Twig\AppExtension
-            arguments: ['@markdown']
+            arguments: ['@app.markdown']
             public:    false
             tags:
                 - { name: twig.extension }
 
-.. _`Twig`: http://twig.sensiolabs.org/
+----
+
+Next: :doc:`/best_practices/forms`
+
+.. _`Twig`: https://twig.symfony.com/
 .. _`Parsedown`: http://parsedown.org/

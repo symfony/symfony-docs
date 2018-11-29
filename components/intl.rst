@@ -17,13 +17,22 @@ The Intl Component
     The replacement layer is limited to the locale "en". If you want to use
     other locales, you should `install the intl extension`_ instead.
 
+.. seealso::
+
+    This article explains how to use the Intl features as an independent component
+    in any PHP application. Read the :doc:`/translation` article to learn about
+    how to internationalize and manage the user locale in Symfony applications.
+
 Installation
 ------------
 
-You can install the component in two different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer</components/using_components>` (``symfony/intl`` on `Packagist`_);
-* Using the official Git repository (https://github.com/symfony/intl).
+    $ composer require symfony/intl
+
+Alternatively, you can clone the `<https://github.com/symfony/intl>`_ repository.
+
+.. include:: /components/require_autoload.rst.inc
 
 If you install the component via Composer, the following classes and functions
 of the intl extension will be automatically provided if the intl extension is
@@ -50,7 +59,7 @@ replace the intl classes:
 Composer automatically exposes these classes in the global namespace.
 
 If you don't use Composer but the
-:doc:`Symfony ClassLoader component </components/class_loader/introduction>`,
+:doc:`Symfony ClassLoader component </components/class_loader>`,
 you need to expose them manually by adding the following lines to your autoload
 code::
 
@@ -192,10 +201,10 @@ returned::
 
     $data = $reader->read('/path/to/bundle', 'en');
 
-    // Produces an error if the key "Data" does not exist
+    // produces an error if the key "Data" does not exist
     var_dump($data['Data']['entry1']);
 
-    // Returns null if the key "Data" does not exist
+    // returns null if the key "Data" does not exist
     var_dump($reader->readEntry('/path/to/bundle', 'en', array('Data', 'entry1')));
 
 Additionally, the
@@ -337,8 +346,20 @@ to the current default locale::
 
 That's all you need to know for now. Have fun coding!
 
+Learn more
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /reference/forms/types/country
+    /reference/forms/types/currency
+    /reference/forms/types/language
+    /reference/forms/types/locale
+
 .. _Packagist: https://packagist.org/packages/symfony/intl
 .. _Icu component: https://packagist.org/packages/symfony/icu
-.. _intl extension: http://www.php.net/manual/en/book.intl.php
-.. _install the intl extension: http://www.php.net/manual/en/intl.setup.php
+.. _intl extension: https://php.net/manual/en/book.intl.php
+.. _install the intl extension: https://php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/

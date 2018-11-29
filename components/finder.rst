@@ -5,16 +5,17 @@
 The Finder Component
 ====================
 
-   The Finder component finds files and directories via an intuitive fluent
-   interface.
+    The Finder component finds files and directories via an intuitive fluent
+    interface.
 
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/finder`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/finder).
+    $ composer require symfony/finder
+
+Alternatively, you can clone the `<https://github.com/symfony/finder>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -30,18 +31,18 @@ directories::
     $finder->files()->in(__DIR__);
 
     foreach ($finder as $file) {
-        // Dump the absolute path
-        var_dump($file->getRealpath());
+        // dumps the absolute path
+        var_dump($file->getRealPath());
 
-        // Dump the relative path to the file, omitting the filename
+        // dumps the relative path to the file, omitting the filename
         var_dump($file->getRelativePath());
 
-        // Dump the relative path to the file
+        // dumps the relative path to the file
         var_dump($file->getRelativePathname());
     }
 
 The ``$file`` is an instance of :class:`Symfony\\Component\\Finder\\SplFileInfo`
-which extends :phpclass:`SplFileInfo` to provide methods to work with relative
+which extends PHP's own :phpclass:`SplFileInfo` to provide methods to work with relative
 paths.
 
 The above code prints the names of all the files in the current directory
@@ -50,10 +51,16 @@ the Finder instance.
 
 .. tip::
 
-    A Finder instance is a PHP :phpclass:`Iterator`. So, instead of iterating over the
+    A Finder instance is a PHP :phpclass:`IteratorAggregate`. So, in addition to iterating over the
     Finder with ``foreach``, you can also convert it to an array with the
-    :phpfunction:`iterator_to_array` method, or get the number of items with
+    :phpfunction:`iterator_to_array` function, or get the number of items with
     :phpfunction:`iterator_count`.
+
+.. caution::
+
+    The ``Finder`` object doesn't reset its internal state automatically.
+    This means that you need to create a new instance if you do not want
+    get mixed results.
 
 .. caution::
 
@@ -82,7 +89,11 @@ directory to use for the search::
 Search in several locations by chaining calls to
 :method:`Symfony\\Component\\Finder\\Finder::in`::
 
-    $finder->files()->in(__DIR__)->in('/elsewhere');
+    // search inside *both* directories
+    $finder->in(array(__DIR__, '/elsewhere'));
+
+    // same as above
+    $finder->in(__DIR__)->in('/elsewhere');
 
 Use wildcard characters to search in the directories matching a pattern::
 
@@ -93,6 +104,7 @@ Each pattern has to resolve to at least one directory path.
 Exclude directories from matching with the
 :method:`Symfony\\Component\\Finder\\Finder::exclude` method::
 
+    // directories passed as argument must be relative to the ones defined with the in() method
     $finder->in(__DIR__)->exclude('ruby');
 
 .. versionadded:: 2.3
@@ -106,6 +118,10 @@ It's also possible to ignore directories that you don't have permission to read:
 As the Finder uses PHP iterators, you can pass any URL with a supported
 `protocol`_::
 
+    // always add a trailing slash when looking for in the FTP root dir
+    $finder->in('ftp://example.com/');
+
+    // you can also look for in a FTP directory
     $finder->in('ftp://example.com/pub/');
 
 And it also works with user-defined streams::
@@ -154,6 +170,14 @@ Sort the result by name or by type (directories first, then files)::
 
     $finder->sortByType();
 
+Sort the files and directories by the last accessed, changed or modified time::
+
+    $finder->sortByAccessedTime();
+
+    $finder->sortByChangedTime();
+
+    $finder->sortByModifiedTime();
+
 .. note::
 
     Notice that the ``sort*`` methods need to get all matching elements to do
@@ -161,12 +185,9 @@ Sort the result by name or by type (directories first, then files)::
 
 You can also define your own sorting algorithm with ``sort()`` method::
 
-    $sort = function (\SplFileInfo $a, \SplFileInfo $b)
-    {
-        return strcmp($a->getRealpath(), $b->getRealpath());
-    };
-
-    $finder->sort($sort);
+    $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
+        return strcmp($a->getRealPath(), $b->getRealPath());
+    });
 
 File Name
 ~~~~~~~~~
@@ -206,7 +227,10 @@ Path
 Restrict files and directories by path with the
 :method:`Symfony\\Component\\Finder\\Finder::path` method::
 
-    $finder->path('some/special/dir');
+    // matches files that contain "data" anywhere in their paths (files or directories)
+    $finder->path('data');
+    // for example this will match data/*.xml and data.xml if they exist
+    $finder->path('data')->name('*.xml');
 
 On all platforms slash (i.e. ``/``) should be used as the directory separator.
 
@@ -306,8 +330,8 @@ The contents of returned files can be read with
         // ...
     }
 
-.. _strtotime:    http://www.php.net/manual/en/datetime.formats.php
-.. _protocol:     http://www.php.net/manual/en/wrappers.php
-.. _Streams:      http://www.php.net/streams
-.. _IEC standard: http://physics.nist.gov/cuu/Units/binary.html
+.. _strtotime:    https://php.net/manual/en/datetime.formats.php
+.. _protocol:     https://php.net/manual/en/wrappers.php
+.. _Streams:      https://php.net/streams
+.. _IEC standard: https://physics.nist.gov/cuu/Units/binary.html
 .. _Packagist:    https://packagist.org/packages/symfony/finder

@@ -7,15 +7,18 @@ This option allows you to move certain choices to the top of your list with a vi
 separator between them and the rest of the options. If you have a form of languages,
 you can list the most popular on top, like Bork Bork and Pirate::
 
-    $builder->add('language', 'choice', array(
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('language', ChoiceType::class, array(
         'choices' => array(
             'English' => 'en',
             'Spanish' => 'es',
             'Bork'   => 'muppets',
-            'Pirate' => 'arr'
+            'Pirate' => 'arr',
         ),
         'choices_as_values' => true,
-        'preferred_choices' => array('muppets', 'arr')
+        'preferred_choices' => array('muppets', 'arr'),
     ));
 
 .. versionadded:: 2.7
@@ -24,26 +27,29 @@ you can list the most popular on top, like Bork Bork and Pirate::
 This options can also be a callback function to give you more flexibility. This might
 be especially useful if your values are objects::
 
-    $builder->add('publishAt', 'choice', array(
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    // ...
+
+    $builder->add('publishAt', ChoiceType::class, array(
         'choices' => array(
             'now' => new \DateTime('now'),
             'tomorrow' => new \DateTime('+1 day'),
             '1 week' => new \DateTime('+1 week'),
-            '1 month' => new \DateTime('+1 month')
+            '1 month' => new \DateTime('+1 month'),
         ),
         'choices_as_values' => true,
-        'preferred_choices' => function ($val, $key) {
+        'preferred_choices' => function ($value, $key) {
             // prefer options within 3 days
-            return $val <= new \DateTime('+3 days');
+            return $value <= new \DateTime('+3 days');
         },
     ));
 
 This will "prefer" the "now" and "tomorrow" choices only:
 
-.. image:: /images/reference/form/choice-example3.png
+.. image:: /_images/reference/form/choice-example3.png
    :align: center
 
-Finally, if your values are objects, you can also specific a property path string
+Finally, if your values are objects, you can also specify a property path string
 on the object that will return true or false.
 
 The preferred choices are only meaningful when rendering a ``select`` element

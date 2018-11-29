@@ -22,7 +22,7 @@ Using the Finder Component
 
 **2.** Open a terminal and use Composer to grab the library.
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/finder
 
@@ -31,7 +31,7 @@ whatever component you want.
 
 .. tip::
 
-    `Install composer`_ if you don't have it already present on your system.
+    `Install Composer`_ if you don't have it already present on your system.
     Depending on how you install, you may end up with a ``composer.phar``
     file in your directory. In that case, no worries! Just run
     ``php composer.phar require symfony/finder``.
@@ -62,7 +62,7 @@ Using all of the Components
 If you want to use all of the Symfony Components, then instead of adding
 them one by one, you can include the ``symfony/symfony`` package:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/symfony
 
@@ -78,4 +78,4 @@ documentation to find out more about how to use it.
 And have fun!
 
 .. _Composer: https://getcomposer.org
-.. _Install composer: https://getcomposer.org/download/
+.. _Install Composer: https://getcomposer.org/download/

@@ -161,6 +161,8 @@ it a custom message:
             }
         }
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
 Options
 -------
 
@@ -276,5 +278,13 @@ message
 **type**: ``string`` **default**: ``This value is not valid.``
 
 This is the message that will be shown if this validator fails.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

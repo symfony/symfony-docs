@@ -34,7 +34,7 @@ class were not strictly equal to ``null``, you would:
         class Author
         {
             /**
-             * @Assert\NotNull()
+             * @Assert\NotNull
              */
             protected $firstName;
         }
@@ -87,5 +87,13 @@ message
 **type**: ``string`` **default**: ``This value should not be null.``
 
 This is the message that will be shown if the value is ``null``.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

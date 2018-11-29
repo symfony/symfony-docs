@@ -3,11 +3,6 @@
 Symfony Documentation
 =====================
 
-.. toctree::
-    :hidden:
-
-    changelog
-
 Quick Tour
 ----------
 
@@ -18,32 +13,47 @@ Get started fast with the Symfony :doc:`Quick Tour <quick_tour/index>`:
 
     quick_tour/index
 
-* :doc:`quick_tour/the_big_picture` >
-* :doc:`quick_tour/the_view` >
-* :doc:`quick_tour/the_controller` >
+* :doc:`quick_tour/the_big_picture`
+* :doc:`quick_tour/the_view`
+* :doc:`quick_tour/the_controller`
 * :doc:`quick_tour/the_architecture`
 
-Book
-----
-
-Dive into Symfony with the topical guides:
+Getting Started
+---------------
 
 .. toctree::
-    :hidden:
+    :maxdepth: 2
 
-    book/index
+    getting_started/index
 
-.. include:: /book/map.rst.inc
-
-Cookbook
---------
+Topics
+------
 
 .. toctree::
-    :hidden:
+    :maxdepth: 1
 
-    cookbook/index
-
-Read the :doc:`Cookbook </cookbook/index>`.
+    bundles
+    console
+    doctrine
+    debug
+    deployment
+    email
+    event_dispatcher
+    forms
+    frontend
+    http_cache
+    logging
+    performance
+    profiler
+    routing
+    security
+    session
+    setup
+    serializer
+    service_container
+    testing
+    translation
+    validation
 
 Best Practices
 --------------

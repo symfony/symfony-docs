@@ -8,7 +8,7 @@ The service container can be compiled for various reasons. These reasons
 include checking for any potential issues such as circular references and
 making the container more efficient by resolving parameters and removing
 unused services. Also, certain features - like using
-:doc:`parent services </components/dependency_injection/parentservices>`
+:doc:`parent services </service_container/parent_services>`
 - require the container to be compiled.
 
 It is compiled by running::
@@ -31,7 +31,7 @@ Managing Configuration with Extensions
 --------------------------------------
 
 As well as loading configuration directly into the container as shown in
-:doc:`/components/dependency_injection/introduction`, you can manage it
+:doc:`/components/dependency_injection`, you can manage it
 by registering extensions with the container. The first step in the compilation
 process is to load configuration from any extension classes registered with
 the container. Unlike the configuration loaded directly, they are only processed
@@ -44,16 +44,16 @@ and can be registered with the container with::
 
     $container->registerExtension($extension);
 
-The main work of the extension is done in the ``load`` method. In the ``load``
+The main work of the extension is done in the ``load()`` method. In the ``load()``
 method you can load configuration from one or more configuration files as
 well as manipulate the container definitions using the methods shown in
-:doc:`/components/dependency_injection/definitions`.
+:doc:`/service_container/definitions`.
 
-The ``load`` method is passed a fresh container to set up, which is then
+The ``load()`` method is passed a fresh container to set up, which is then
 merged afterwards into the container it is registered with. This allows
 you to have several extensions managing container definitions independently.
 The extensions do not add to the containers configuration when they are
-added but are processed when the container's ``compile`` method is called.
+added but are processed when the container's ``compile()`` method is called.
 
 A very simple extension may just load configuration files into the container::
 
@@ -85,7 +85,7 @@ sections of config files loaded directly into the container as being for
 a particular extension. These sections on the config will not be processed
 directly by the container but by the relevant Extension.
 
-The Extension must specify a ``getAlias`` method to implement the interface::
+The Extension must specify a ``getAlias()`` method to implement the interface::
 
     // ...
 
@@ -100,7 +100,7 @@ The Extension must specify a ``getAlias`` method to implement the interface::
     }
 
 For YAML configuration files specifying the alias for the extension as a
-key will mean that those values are passed to the Extension's ``load`` method:
+key will mean that those values are passed to the Extension's ``load()`` method:
 
 .. code-block:: yaml
 
@@ -117,14 +117,14 @@ are loaded::
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-    $container = new ContainerBuilder();
-    $container->registerExtension(new AcmeDemoExtension);
+    $containerBuilder = new ContainerBuilder();
+    $containerBuilder->registerExtension(new AcmeDemoExtension);
 
-    $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
+    $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
     $loader->load('config.yml');
 
     // ...
-    $container->compile();
+    $containerBuilder->compile();
 
 .. note::
 
@@ -133,7 +133,7 @@ are loaded::
     or an exception will be thrown.
 
 The values from those sections of the config files are passed into the first
-argument of the ``load`` method of the extension::
+argument of the ``load()`` method of the extension::
 
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -154,7 +154,7 @@ will look like this::
     )
 
 Whilst you can manually manage merging the different files, it is much better
-to use :doc:`the Config component </components/config/introduction>` to
+to use :doc:`the Config component </components/config>` to
 merge and validate the config values. Using the configuration processing
 you could access the config value this way::
 
@@ -190,7 +190,7 @@ the XML configuration::
 
 .. note::
 
-    XSD validation is optional, returning ``false`` from the ``getXsdValidationBasePath``
+    XSD validation is optional, returning ``false`` from the ``getXsdValidationBasePath()``
     method will disable it.
 
 The XML version of the config would then look like this:
@@ -204,7 +204,7 @@ The XML version of the config would then look like this:
         xsi:schemaLocation="http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd">
 
         <acme_demo:config>
-            <acme_demo:foo>fooValue</acme_hello:foo>
+            <acme_demo:foo>fooValue</acme_demo:foo>
             <acme_demo:bar>barValue</acme_demo:bar>
         </acme_demo:config>
     </container>
@@ -213,7 +213,7 @@ The XML version of the config would then look like this:
 
     In the Symfony full-stack Framework there is a base Extension class
     which implements these methods as well as a shortcut method for processing
-    the configuration. See :doc:`/cookbook/bundles/extension` for more details.
+    the configuration. See :doc:`/bundles/extension` for more details.
 
 The processed config value can now be added as container parameters as if
 it were listed in a ``parameters`` section of the config file but with the
@@ -263,11 +263,11 @@ file but also load a secondary one only if a certain parameter is set::
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-        $container = new ContainerBuilder();
+        $containerBuilder = new ContainerBuilder();
         $extension = new AcmeDemoExtension();
-        $container->registerExtension($extension);
-        $container->loadFromExtension($extension->getAlias());
-        $container->compile();
+        $containerBuilder->registerExtension($extension);
+        $containerBuilder->loadFromExtension($extension->getAlias());
+        $containerBuilder->compile();
 
 .. note::
 
@@ -292,7 +292,7 @@ method is called by implementing
     {
         // ...
 
-        public function prepend()
+        public function prepend(ContainerBuilder $container)
         {
             // ...
 
@@ -302,69 +302,116 @@ method is called by implementing
         }
     }
 
-For more details, see :doc:`/cookbook/bundles/prepend_extension`, which
+For more details, see :doc:`/bundles/prepend_extension`, which
 is specific to the Symfony Framework, but contains more details about this
 feature.
 
-Creating a Compiler Pass
-------------------------
+.. _creating-a-compiler-pass:
+.. _components-di-compiler-pass:
 
-You can also create and register your own compiler passes with the container.
-To create a compiler pass it needs to implement the
+Execute Code During Compilation
+-------------------------------
+
+You can also execute custom code during compilation by writing your own
+compiler pass. By implementing
 :class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
-interface. The compiler pass gives you an opportunity to manipulate the
-service definitions that have been compiled. This can be very powerful,
-but is not something needed in everyday use.
+in your extension, the added ``process()`` method will be called during
+compilation::
 
-The compiler pass must have the ``process`` method which is passed the container
-being compiled::
+    // ...
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+
+    class AcmeDemoExtension implements ExtensionInterface, CompilerPassInterface
+    {
+        public function process(ContainerBuilder $container)
+        {
+           // ... do something during the compilation
+        }
+
+        // ...
+    }
+
+.. versionadded:: 2.8
+    Prior to Symfony 2.8, extensions implementing ``CompilerPassInterface``
+    were not automatically registered. You needed to register them as explained
+    in :ref:`the next section <components-di-separate-compiler-passes>`.
+
+As ``process()`` is called *after* all extensions are loaded, it allows you to
+edit service definitions of other extensions as well as retrieving information
+about service definitions.
+
+The container's parameters and definitions can be manipulated using the
+methods described in :doc:`/service_container/definitions`.
+
+.. note::
+
+    Please note that the ``process()`` method in the extension class is
+    called during the optimization step. You can read
+    :ref:`the next section <components-di-separate-compiler-passes>` if you
+    need to edit the container during another step.
+
+.. note::
+
+    As a rule, only work with services definition in a compiler pass and do not
+    create service instances. In practice, this means using the methods
+    ``has()``, ``findDefinition()``, ``getDefinition()``, ``setDefinition()``,
+    etc. instead of ``get()``, ``set()``, etc.
+
+.. tip::
+
+    Make sure your compiler pass does not require services to exist. Abort the
+    method call if some required service is not available.
+
+A common use-case of compiler passes is to search for all service definitions
+that have a certain tag in order to process dynamically plug each into some
+other service. See the section on :ref:`service tags <service-container-compiler-pass-tags>`
+for an example.
+
+.. _components-di-separate-compiler-passes:
+
+Creating Separate Compiler Passes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes, you need to do more than one thing during compilation, want to use
+compiler passes without an extension or you need to execute some code at
+another step in the compilation process. In these cases, you can create a new
+class implementing the ``CompilerPassInterface``::
 
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    class CustomCompilerPass implements CompilerPassInterface
+    class CustomPass implements CompilerPassInterface
     {
         public function process(ContainerBuilder $container)
         {
-           // ...
+           // ... do something during the compilation
         }
     }
 
-The container's parameters and definitions can be manipulated using the
-methods described in the :doc:`/components/dependency_injection/definitions`.
-One common thing to do in a compiler pass is to search for all services
-that have a certain tag in order to process them in some way or dynamically
-plug each into some other service.
-
-Registering a Compiler Pass
----------------------------
-
-You need to register your custom pass with the container. Its process method
-will then be called when the container is compiled::
+You then need to register your custom pass with the container::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    $container = new ContainerBuilder();
-    $container->addCompilerPass(new CustomCompilerPass);
+    $containerBuilder = new ContainerBuilder();
+    $containerBuilder->addCompilerPass(new CustomPass());
 
 .. note::
 
     Compiler passes are registered differently if you are using the full-stack
-    framework, see :doc:`/cookbook/service_container/compiler_passes` for
+    framework, see :doc:`/service_container/compiler_passes` for
     more details.
 
 Controlling the Pass Ordering
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.............................
 
 The default compiler passes are grouped into optimization passes and removal
 passes. The optimization passes run first and include tasks such as resolving
 references within the definitions. The removal passes perform tasks such
-as removing private aliases and unused services. You can choose where in
-the order any custom passes you add are run. By default they will be run
-before the optimization passes.
+as removing private aliases and unused services. When registering compiler
+passes using ``addCompilerPass()``, you can configure when your compiler pass
+is run. By default, they are run before the optimization passes.
 
-You can use the following constants as the second argument when registering
-a pass with the container to control where it goes in the order:
+You can use the following constants to determine when your pass is executed:
 
 * ``PassConfig::TYPE_BEFORE_OPTIMIZATION``
 * ``PassConfig::TYPE_OPTIMIZE``
@@ -373,14 +420,11 @@ a pass with the container to control where it goes in the order:
 * ``PassConfig::TYPE_AFTER_REMOVING``
 
 For example, to run your custom pass after the default removal passes have
-been run::
+been run, use::
 
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Compiler\PassConfig;
-
-    $container = new ContainerBuilder();
-    $container->addCompilerPass(
-        new CustomCompilerPass,
+    // ...
+    $containerBuilder->addCompilerPass(
+        new CustomPass(),
         PassConfig::TYPE_AFTER_REMOVING
     );
 
@@ -407,16 +451,16 @@ makes dumping the compiled container easy::
         require_once $file;
         $container = new ProjectServiceContainer();
     } else {
-        $container = new ContainerBuilder();
+        $containerBuilder = new ContainerBuilder();
         // ...
-        $container->compile();
+        $containerBuilder->compile();
 
-        $dumper = new PhpDumper($container);
+        $dumper = new PhpDumper($containerBuilder);
         file_put_contents($file, $dumper->dump());
     }
 
 ``ProjectServiceContainer`` is the default name given to the dumped container
-class, you can change this though this with the ``class`` option when you
+class. However you can change this with the ``class`` option when you
 dump it::
 
     // ...
@@ -426,11 +470,11 @@ dump it::
         require_once $file;
         $container = new MyCachedContainer();
     } else {
-        $container = new ContainerBuilder();
+        $containerBuilder = new ContainerBuilder();
         // ...
-        $container->compile();
+        $containerBuilder->compile();
 
-        $dumper = new PhpDumper($container);
+        $dumper = new PhpDumper($containerBuilder);
         file_put_contents(
             $file,
             $dumper->dump(array('class' => 'MyCachedContainer'))
@@ -458,12 +502,12 @@ application::
         require_once $file;
         $container = new MyCachedContainer();
     } else {
-        $container = new ContainerBuilder();
+        $containerBuilder = new ContainerBuilder();
         // ...
-        $container->compile();
+        $containerBuilder->compile();
 
         if (!$isDebug) {
-            $dumper = new PhpDumper($container);
+            $dumper = new PhpDumper($containerBuilder);
             file_put_contents(
                 $file,
                 $dumper->dump(array('class' => 'MyCachedContainer'))
@@ -519,4 +563,3 @@ have the cache will be considered stale.
 
     In the full-stack framework the compilation and caching of the container
     is taken care of for you.
-

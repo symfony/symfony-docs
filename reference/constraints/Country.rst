@@ -29,7 +29,7 @@ Basic Usage
         class User
         {
             /**
-             * @Assert\Country()
+             * @Assert\Country
              */
              protected $country;
         }
@@ -73,6 +73,8 @@ Basic Usage
             }
         }
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
 Options
 -------
 
@@ -82,6 +84,14 @@ message
 **type**: ``string`` **default**: ``This value is not a valid country.``
 
 This message is shown if the string is not a valid country code.
+
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ value }}``  | The current (invalid) country code             |
++------------------+------------------------------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

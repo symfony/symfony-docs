@@ -1,19 +1,33 @@
 Coding Standards
 ================
 
-When contributing code to Symfony, you must follow its coding standards. To
-make a long story short, here is the golden rule: **Imitate the existing
-Symfony code**. Most open-source Bundles and libraries used by Symfony also
-follow the same guidelines, and you should too.
+Symfony code is contributed by thousands of developers around the world. To make
+every piece of code look and feel familiar, Symfony defines some coding standards
+that all contributions must follow.
 
-Remember that the main advantage of standards is that every piece of code
-looks and feels familiar, it's not about this or that being more readable.
+These Symfony coding standards are based on the `PSR-1`_, `PSR-2`_ and `PSR-4`_
+standards, so you may already know most of them.
 
-Symfony follows the standards defined in the `PSR-0`_, `PSR-1`_, `PSR-2`_ and `PSR-4`_
-documents.
+Making your Code Follow the Coding Standards
+--------------------------------------------
 
-Since a picture - or some code - is worth a thousand words, here's a short
-example containing most features described below:
+Instead of reviewing your code manually, Symfony makes it simple to ensure that
+your contributed code matches the expected code syntax. First, install the
+`PHP CS Fixer tool`_ and then, run this command to fix any problem:
+
+.. code-block:: terminal
+
+    $ cd your-project/
+    $ php php-cs-fixer.phar fix -v
+
+If you forget to run this command and make a pull request with any syntax issue,
+our automated tools will warn you about that and will provide the solution.
+
+Symfony Coding Standards in Detail
+----------------------------------
+
+If you want to learn about the Symfony coding standards in detail, here's a
+short example containing most features described below:
 
 .. code-block:: html+php
 
@@ -51,6 +65,18 @@ example containing most features described below:
         }
 
         /**
+         * @return string
+         *
+         * @deprecated
+         */
+        public function someDeprecatedMethod()
+        {
+            @trigger_error(sprintf('The %s() method is deprecated since version 2.8 and will be removed in 3.0. Use Acme\Baz::someMethod() instead.', __METHOD__), E_USER_DEPRECATED);
+
+            return Baz::someMethod();
+        }
+
+        /**
          * Transforms the input given as first argument.
          *
          * @param bool|string $dummy   Some argument description
@@ -79,7 +105,7 @@ example containing most features described below:
             );
 
             if (true === $dummy) {
-                return;
+                return null;
             }
 
             if ('string' === $dummy) {
@@ -97,7 +123,7 @@ example containing most features described below:
          * @param mixed $value     Some value to check against
          * @param bool  $theSwitch Some switch to control the method's flow
          *
-         * @return bool|null The resultant check if $theSwitch isn't false, null otherwise
+         * @return bool|void The resultant check if $theSwitch isn't false, void otherwise
          */
         private function reverseBoolean($value = null, $theSwitch = false)
         {
@@ -110,7 +136,7 @@ example containing most features described below:
     }
 
 Structure
----------
+~~~~~~~~~
 
 * Add a single space after each comma delimiter;
 
@@ -131,8 +157,8 @@ Structure
 * Add a blank line before ``return`` statements, unless the return is alone
   inside a statement-group (like an ``if`` statement);
 
-* Use just ``return;`` instead of ``return null;`` when a function must return
-  void early;
+* Use ``return null;`` when a function explicitly returns ``null`` values and
+  use ``return;`` when the function returns ``void`` values;
 
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
@@ -141,31 +167,54 @@ Structure
   that are not intended to be instantiated from the outside and thus are not
   concerned by the `PSR-0`_ and `PSR-4`_ autoload standards;
 
+* Declare the class inheritance and all the implemented interfaces on the same
+  line as the class name;
+
 * Declare class properties before methods;
 
 * Declare public methods first, then protected ones and finally private ones.
-  The exceptions to this rule are the class constructor and the ``setUp`` and
-  ``tearDown`` methods of PHPUnit tests, which should always be the first methods
+  The exceptions to this rule are the class constructor and the ``setUp()`` and
+  ``tearDown()`` methods of PHPUnit tests, which must always be the first methods
   to increase readability;
+
+* Declare all the arguments on the same line as the method/function name, no
+  matter how many arguments there are;
 
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
 
-* Exception message strings should be concatenated using :phpfunction:`sprintf`.
+* Exception and error message strings must be concatenated using :phpfunction:`sprintf`;
+
+* Calls to :phpfunction:`trigger_error` with type ``E_USER_DEPRECATED`` must be
+  switched to opt-in via ``@`` operator.
+  Read more at :ref:`contributing-code-conventions-deprecations`;
+
+* Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
+  which return or throw something;
+
+* Do not use spaces around ``[`` offset accessor and before ``]`` offset accessor;
+
+* Add a ``use`` statement for every class that is not part of the global namespace;
+
+* When PHPDoc tags like ``@param`` or ``@return`` include ``null`` and other
+  types, always place ``null`` at the end of the list of types.
 
 Naming Conventions
-------------------
+~~~~~~~~~~~~~~~~~~
 
-* Use camelCase, not underscores, for variable, function and method
-  names, arguments;
+* Use `camelCase`_ for PHP variables, function and method names, arguments
+  (e.g. ``$acceptableContentTypes``, ``hasSession()``);
 
-* Use underscores for option names and parameter names;
+* Use `snake_case`_ for configuration parameters and Twig template variables
+  (e.g. ``framework.csrf_protection``, ``http_status_code``);
 
-* Use namespaces for all classes;
+* Use namespaces for all PHP classes and `UpperCamelCase`_ for their names (e.g.
+  ``ConsoleLogger``);
 
-* Prefix abstract classes with ``Abstract``. Please note some early Symfony classes
-  do not follow this convention and have not been renamed for backward compatibility
-  reasons. However all new abstract classes must follow this naming convention;
+* Prefix all abstract classes with ``Abstract`` except PHPUnit ``*TestCase``.
+  Please note some early Symfony classes do not follow this convention and
+  have not been renamed for backward compatibility reasons. However all new
+  abstract classes must follow this naming convention;
 
 * Suffix interfaces with ``Interface``;
 
@@ -173,7 +222,9 @@ Naming Conventions
 
 * Suffix exceptions with ``Exception``;
 
-* Use alphanumeric characters and underscores for file names;
+* Use UpperCamelCase for naming PHP files (e.g. ``EnvVarProcessor.php``) and
+  snake case for naming Twig templates and web assets (``section_layout.html.twig``,
+  ``index.scss``);
 
 * For type-hinting in PHPDocs and casting, use ``bool`` (instead of ``boolean``
   or ``Boolean``), ``int`` (instead of ``integer``), ``float`` (instead of
@@ -196,23 +247,40 @@ Service Naming Conventions
 * A group name uses the underscore notation.
 
 Documentation
--------------
+~~~~~~~~~~~~~
 
-* Add PHPDoc blocks for all classes, methods, and functions;
+* Add PHPDoc blocks for all classes, methods, and functions (though you may
+  be asked to remove PHPDoc that do not add value);
+
+* Group annotations together so that annotations of the same type immediately
+  follow each other, and annotations of a different type are separated by a
+  single blank line;
 
 * Omit the ``@return`` tag if the method does not return anything;
 
-* The ``@package`` and ``@subpackage`` annotations are not used.
+* The ``@package`` and ``@subpackage`` annotations are not used;
+
+* Don't inline PHPDoc blocks, even when they contain just one tag (e.g. don't
+  put ``/** {@inheritdoc} */`` in a single line);
+
+* When adding a new class or when making significant changes to an existing class,
+  an ``@author`` tag with personal contact information may be added, or expanded.
+  Please note it is possible to have the personal contact information updated or
+  removed per request to the doc:`core team </contributing/code/core_team>`.
 
 License
--------
+~~~~~~~
 
 * Symfony is released under the MIT license, and the license block has to be
   present at the top of every PHP file, before the namespace.
 
-.. _`PSR-0`: http://www.php-fig.org/psr/psr-0/
-.. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
-.. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
-.. _`PSR-4`: http://www.php-fig.org/psr/psr-4/
-.. _`identical comparison`: http://php.net/manual/en/language.operators.comparison.php
+.. _`PHP CS Fixer tool`: http://cs.sensiolabs.org/
+.. _`PSR-0`: https://www.php-fig.org/psr/psr-0/
+.. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
+.. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
+.. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
+.. _`identical comparison`: https://php.net/manual/en/language.operators.comparison.php
 .. _`Yoda conditions`: https://en.wikipedia.org/wiki/Yoda_conditions
+.. _`camelCase`: https://en.wikipedia.org/wiki/Camel_case
+.. _`UpperCamelCase`: https://en.wikipedia.org/wiki/Camel_case
+.. _`snake_case`: https://en.wikipedia.org/wiki/Snake_case

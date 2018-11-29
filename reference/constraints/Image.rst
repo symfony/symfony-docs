@@ -46,7 +46,7 @@ Basic Usage
 -----------
 
 This constraint is most commonly used on a property that will be rendered
-in a form as a :doc:`file </reference/forms/types/file>` form type. For
+in a form as a :doc:`FileType </reference/forms/types/file>` field. For
 example, suppose you're creating an author form where you can upload a
 "headshot" image for the author. In your form, the ``headshot`` property
 would be a ``file`` type. The ``Author`` class might look as follows::
@@ -99,7 +99,7 @@ that it is between a certain size, add the following:
     .. code-block:: yaml
 
         # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author
+        AppBundle\Entity\Author:
             properties:
                 headshot:
                     - Image:
@@ -179,7 +179,7 @@ following code:
     .. code-block:: yaml
 
         # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author
+        AppBundle\Entity\Author:
             properties:
                 headshot:
                     - Image:
@@ -294,7 +294,7 @@ allowSquare
 **type**: ``Boolean`` **default**: ``true``
 
 If this option is false, the image cannot be a square. If you want to force
-a square image, then set leave this option as its default ``true`` value
+a square image, then leave this option as its default ``true`` value
 and set `allowLandscape`_ and `allowPortrait`_ both to ``false``.
 
 allowLandscape
@@ -328,6 +328,16 @@ Allowed maximum width is {{ max_width }}px.``
 
 The error message if the width of the image exceeds `maxWidth`_.
 
+You can use the following parameters in this message:
+
++---------------------+-----------------------------+
+| Parameter           | Description                 |
++=====================+=============================+
+| ``{{ width }}``     | The current (invalid) width |
++---------------------+-----------------------------+
+| ``{{ max_width }}`` | The maximum allowed width   |
++---------------------+-----------------------------+
+
 minWidthMessage
 ~~~~~~~~~~~~~~~
 
@@ -335,6 +345,16 @@ minWidthMessage
 Minimum width expected is {{ min_width }}px.``
 
 The error message if the width of the image is less than `minWidth`_.
+
+You can use the following parameters in this message:
+
++---------------------+-----------------------------+
+| Parameter           | Description                 |
++=====================+=============================+
+| ``{{ width }}``     | The current (invalid) width |
++---------------------+-----------------------------+
+| ``{{ min_width }}`` | The minimum required width  |
++---------------------+-----------------------------+
 
 maxHeightMessage
 ~~~~~~~~~~~~~~~~
@@ -344,6 +364,16 @@ Allowed maximum height is {{ max_height }}px.``
 
 The error message if the height of the image exceeds `maxHeight`_.
 
+You can use the following parameters in this message:
+
++----------------------+------------------------------+
+| Parameter            | Description                  |
++======================+==============================+
+| ``{{ height }}``     | The current (invalid) height |
++----------------------+------------------------------+
+| ``{{ max_height }}`` | The maximum allowed height   |
++----------------------+------------------------------+
+
 minHeightMessage
 ~~~~~~~~~~~~~~~~
 
@@ -351,6 +381,16 @@ minHeightMessage
 Minimum height expected is {{ min_height }}px.``
 
 The error message if the height of the image is less than `minHeight`_.
+
+You can use the following parameters in this message:
+
++----------------------+------------------------------+
+| Parameter            | Description                  |
++======================+==============================+
+| ``{{ height }}``     | The current (invalid) height |
++----------------------+------------------------------+
+| ``{{ min_height }}`` | The minimum required height  |
++----------------------+------------------------------+
 
 maxRatioMessage
 ~~~~~~~~~~~~~~~
@@ -360,6 +400,16 @@ Allowed maximum ratio is {{ max_ratio }}``
 
 The error message if the aspect ratio of the image exceeds `maxRatio`_.
 
+You can use the following parameters in this message:
+
++---------------------+-----------------------------+
+| Parameter           | Description                 |
++=====================+=============================+
+| ``{{ ratio }}``     | The current (invalid) ratio |
++---------------------+-----------------------------+
+| ``{{ max_ratio }}`` | The maximum allowed ratio   |
++---------------------+-----------------------------+
+
 minRatioMessage
 ~~~~~~~~~~~~~~~
 
@@ -367,6 +417,16 @@ minRatioMessage
 Minimum ratio expected is {{ min_ratio }}``
 
 The error message if the aspect ratio of the image is less than `minRatio`_.
+
+You can use the following parameters in this message:
+
++---------------------+-----------------------------+
+| Parameter           | Description                 |
++=====================+=============================+
+| ``{{ ratio }}``     | The current (invalid) ratio |
++---------------------+-----------------------------+
+| ``{{ min_ratio }}`` | The minimum required ratio  |
++---------------------+-----------------------------+
 
 allowSquareMessage
 ~~~~~~~~~~~~~~~~~~
@@ -376,6 +436,16 @@ Square images are not allowed``
 
 The error message if the image is square and you set `allowSquare`_ to ``false``.
 
+You can use the following parameters in this message:
+
++------------------+--------------------+
+| Parameter        | Description        |
++==================+====================+
+| ``{{ width }}``  | The current width  |
++------------------+--------------------+
+| ``{{ height }}`` | The current height |
++------------------+--------------------+
+
 allowLandscapeMessage
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -384,6 +454,16 @@ Landscape oriented images are not allowed``
 
 The error message if the image is landscape oriented and you set `allowLandscape`_ to ``false``.
 
+You can use the following parameters in this message:
+
++------------------+--------------------+
+| Parameter        | Description        |
++==================+====================+
+| ``{{ width }}``  | The current width  |
++------------------+--------------------+
+| ``{{ height }}`` | The current height |
++------------------+--------------------+
+
 allowPortraitMessage
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -391,5 +471,15 @@ allowPortraitMessage
 Portrait oriented images are not allowed``
 
 The error message if the image is portrait oriented and you set `allowPortrait`_ to ``false``.
+
+You can use the following parameters in this message:
+
++------------------+--------------------+
+| Parameter        | Description        |
++==================+====================+
+| ``{{ width }}``  | The current width  |
++------------------+--------------------+
+| ``{{ height }}`` | The current height |
++------------------+--------------------+
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html

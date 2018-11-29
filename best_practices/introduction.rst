@@ -74,7 +74,7 @@ best practices in mind. This project, called the Symfony Demo application, can
 be obtained through the Symfony Installer. First, `download and install`_ the
 installer and then execute this command to download the demo application:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # Linux and Mac OS X
     $ symfony demo
@@ -102,5 +102,9 @@ practices**. The reasons for not doing it are various:
 * The amount of work spent on this could be better dedicated to improving
   your tests or adding features that provide real value to the end users.
 
-.. _`Fabien Potencier`: https://connect.sensiolabs.com/profile/fabpot
+----
+
+Next: :doc:`/best_practices/creating-the-project`
+
+.. _`Fabien Potencier`: https://connect.symfony.com/profile/fabpot
 .. _`download and install`: https://symfony.com/download

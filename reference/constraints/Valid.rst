@@ -22,9 +22,7 @@ Basic Usage
 
 In the following example, create two classes ``Author`` and ``Address``
 that both have constraints on their properties. Furthermore, ``Author``
-stores an ``Address`` instance in the ``$address`` property.
-
-.. code-block:: php
+stores an ``Address`` instance in the ``$address`` property::
 
     // src/AppBundle/Entity/Address.php
     namespace AppBundle\Entity;
@@ -59,13 +57,13 @@ stores an ``Address`` instance in the ``$address`` property.
         class Address
         {
             /**
-             * @Assert\NotBlank()
+             * @Assert\NotBlank
              */
             protected $street;
 
             /**
              * @Assert\NotBlank
-             * @Assert\Length(max = 5)
+             * @Assert\Length(max=5)
              */
             protected $zipCode;
         }
@@ -79,7 +77,7 @@ stores an ``Address`` instance in the ``$address`` property.
         {
             /**
              * @Assert\NotBlank
-             * @Assert\Length(min = 4)
+             * @Assert\Length(min=4)
              */
             protected $firstName;
 

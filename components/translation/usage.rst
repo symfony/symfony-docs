@@ -12,7 +12,7 @@ Imagine you want to translate the string *"Symfony is great"* into French::
     $translator = new Translator('fr_FR');
     $translator->addLoader('array', new ArrayLoader());
     $translator->addResource('array', array(
-        'Symfony is great!' => 'J\'aime Symfony!',
+        'Symfony is great!' => 'Symfony est super !',
     ), 'fr_FR');
 
     var_dump($translator->trans('Symfony is great!'));
@@ -115,11 +115,11 @@ recommended format. These files are parsed by one of the loader classes.
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
-                    <trans-unit id="1">
+                    <trans-unit id="symfony_is_great">
                         <source>Symfony is great</source>
                         <target>J'aime Symfony</target>
                     </trans-unit>
-                    <trans-unit id="2">
+                    <trans-unit id="symfony.great">
                         <source>symfony.great</source>
                         <target>J'aime Symfony</target>
                     </trans-unit>
@@ -138,6 +138,8 @@ recommended format. These files are parsed by one of the loader classes.
             'Symfony is great' => 'J\'aime Symfony',
             'symfony.great'    => 'J\'aime Symfony',
         );
+
+.. _translation-real-vs-keyword-messages:
 
 .. sidebar:: Using Real or Keyword Messages
 
@@ -326,8 +328,8 @@ effect after removing the explicit rules:
     '{0} There are no apples|[20,Inf[ There are many apples|There is one apple|a_few: There are %count% apples'
 
 For example, for ``1`` apple, the standard rule ``There is one apple`` will
-be used. For ``2-19`` apples, the second standard rule ``There are %count%
-apples`` will be selected.
+be used. For ``2-19`` apples, the second standard rule 
+``There are %count% apples`` will be selected.
 
 An :class:`Symfony\\Component\\Translation\\Interval` can represent a finite set
 of numbers:
@@ -376,7 +378,11 @@ In case you want to use the same translation catalogue outside your application
 (e.g. use translation on the client side), it's possible to fetch raw translation
 messages. Just specify the required locale::
 
-    $messages = $translator->getMessages('fr_FR');
+    $catalogue = $translator->getCatalogue('fr_FR');
+    $messages = $catalogue->all();
+    while ($catalogue = $catalogue->getFallbackCatalogue()) {
+        $messages = array_replace_recursive($catalogue->all(), $messages);
+    }
 
 The ``$messages`` variable will have the following structure::
 

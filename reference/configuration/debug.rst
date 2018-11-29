@@ -1,29 +1,35 @@
 .. index::
     single: Configuration reference; Framework
 
-DebugBundle Configuration ("debug")
-===================================
+Debug Configuration Reference (DebugBundle)
+===========================================
 
-The DebugBundle allows greater integration of the
-:doc:`VarDumper component </components/var_dumper/introduction>` in the
-Symfony full-stack framework and can be configured under the ``debug`` key
-in your application configuration. When using XML, you must use the
-``http://symfony.com/schema/dic/debug`` namespace.
+The DebugBundle integrates the :doc:`VarDumper component </components/var_dumper>`
+in Symfony applications. All these options are configured under the ``debug``
+key in your application configuration.
 
-.. versionadded::
-    The DebugBundle was introduced in Symfony 2.6.
+.. code-block:: terminal
 
-.. tip::
+    # displays the default config values defined by Symfony
+    $ php app/console config:dump-reference debug
 
-   The XSD schema is available at
-   ``http://symfony.com/schema/dic/debug/debug-1.0.xsd``.
+    # displays the actual config values used by your application
+    $ php app/console debug:config debug
+
+.. note::
+
+    When using XML, you must use the ``http://symfony.com/schema/dic/debug``
+    namespace and the related XSD schema is available at:
+    ``http://symfony.com/schema/dic/debug/debug-1.0.xsd``
 
 Configuration
 -------------
 
+.. class:: list-config-options
+
+* `dump_destination`_
 * `max_items`_
 * `max_string_length`_
-* `dump_destination`_
 
 max_items
 ~~~~~~~~~
@@ -56,16 +62,19 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
 
     .. code-block:: yaml
 
+        # app/config/config.yml
         debug:
            dump_destination: php://stderr
 
     .. code-block:: xml
 
+        <!-- app/config/config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/debug"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:debug="http://symfony.com/schema/dic/debug"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                http://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/debug http://symfony.com/schema/dic/debug/debug-1.0.xsd">
 
             <debug:config dump-destination="php://stderr" />
@@ -73,6 +82,7 @@ destination for dumps. Typically, you would set this to ``php://stderr``:
 
     .. code-block:: php
 
+        // app/config/config.php
         $container->loadFromExtension('debug', array(
            'dump_destination' => 'php://stderr',
         ));

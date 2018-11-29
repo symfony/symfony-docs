@@ -48,8 +48,8 @@ on an object that will contain an ISBN.
         {
             /**
              * @Assert\Isbn(
-             *     type = isbn10,
-             *     message: This value is not  valid.
+             *     type = "isbn10",
+             *     message = "This value is not  valid."
              * )
              */
             protected $isbn;
@@ -64,7 +64,6 @@ on an object that will contain an ISBN.
                     - Isbn:
                         type: isbn10
                         message: This value is not  valid.
-
 
     .. code-block:: xml
 
@@ -99,11 +98,13 @@ on an object that will contain an ISBN.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('isbn', new Assert\Isbn(array(
-                    'type'    => isbn10,
-                    'message' => 'This value is not valid.'
+                    'type'    => 'isbn10',
+                    'message' => 'This value is not valid.',
                 )));
             }
         }
+
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
 
 Available Options
 -----------------
@@ -124,6 +125,14 @@ message
 The message that will be shown if the value is not valid. If not ``null``,
 this message has priority over all the other messages.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+
 isbn10Message
 ~~~~~~~~~~~~~
 
@@ -131,6 +140,14 @@ isbn10Message
 
 The message that will be shown if the `type`_ option is ``isbn10`` and the given
 value does not pass the ISBN-10 check.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 isbn13Message
 ~~~~~~~~~~~~~
@@ -140,6 +157,14 @@ isbn13Message
 The message that will be shown if the `type`_ option is ``isbn13`` and the given
 value does not pass the ISBN-13 check.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+
 bothIsbnMessage
 ~~~~~~~~~~~~~~~
 
@@ -147,6 +172,14 @@ bothIsbnMessage
 
 The message that will be shown if the `type`_ option is ``null`` and the given
 value does not pass any of the ISBN checks.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

@@ -60,15 +60,6 @@ One way to accomplish this is with the Expression constraint:
 
 .. configuration-block::
 
-    .. code-block:: yaml
-
-        # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Model\BlogPost:
-            constraints:
-                - Expression:
-                    expression: "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()"
-                    message: "If this is a tech post, the category should be either php or symfony!"
-
     .. code-block:: php-annotations
 
         // src/AppBundle/Model/BlogPost.php
@@ -86,6 +77,15 @@ One way to accomplish this is with the Expression constraint:
         {
             // ...
         }
+
+    .. code-block:: yaml
+
+        # src/AppBundle/Resources/config/validation.yml
+        AppBundle\Model\BlogPost:
+            constraints:
+                - Expression:
+                    expression: "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()"
+                    message: "If this is a tech post, the category should be either php or symfony!"
 
     .. code-block:: xml
 
@@ -141,16 +141,6 @@ more about the expression language syntax, see
 
     .. configuration-block::
 
-        .. code-block:: yaml
-
-            # src/AppBundle/Resources/config/validation.yml
-            AppBundle\Model\BlogPost:
-                properties:
-                    isTechnicalPost:
-                        - Expression:
-                            expression: "this.getCategory() in ['php', 'symfony'] or value == false"
-                            message: "If this is a tech post, the category should be either php or symfony!"
-
         .. code-block:: php-annotations
 
             // src/AppBundle/Model/BlogPost.php
@@ -172,6 +162,16 @@ more about the expression language syntax, see
 
                 // ...
             }
+
+        .. code-block:: yaml
+
+            # src/AppBundle/Resources/config/validation.yml
+            AppBundle\Model\BlogPost:
+                properties:
+                    isTechnicalPost:
+                        - Expression:
+                            expression: "this.getCategory() in ['php', 'symfony'] or value == false"
+                            message: "If this is a tech post, the category should be either php or symfony!"
 
         .. code-block:: xml
 
@@ -216,12 +216,6 @@ more about the expression language syntax, see
                 // ...
             }
 
-    .. versionadded:: 2.6
-        In Symfony 2.6, the Expression constraint *is* executed if the value
-        is ``null``. Before 2.6, if the value was ``null``, the expression
-        was never executed and the value was considered valid (unless you
-        also had a constraint like ``NotBlank`` on the property).
-
 For more information about the expression and what variables are available
 to you, see the :ref:`expression <reference-constraint-expression-option>`
 option details below.
@@ -257,5 +251,13 @@ message
 **type**: ``string`` **default**: ``This value is not valid.``
 
 The default message supplied when the expression evaluates to false.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

@@ -76,6 +76,8 @@ Basic Usage
             }
         }
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
 Options
 -------
 
@@ -129,5 +131,13 @@ message
 **type**: ``string`` **default**: ``This is not a valid IP address.``
 
 This message is shown if the string is not a valid IP address.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

@@ -10,7 +10,7 @@ Introduction
 The :class:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatcher`
 is a special ``EventDispatcher`` implementation which is coupled to the
 service container that is part of
-:doc:`the DependencyInjection component </components/dependency_injection/introduction>`.
+:doc:`the DependencyInjection component </components/dependency_injection>`.
 It allows services to be specified as event listeners making the ``EventDispatcher``
 extremely powerful.
 
@@ -26,8 +26,8 @@ into the :class:`Symfony\\Component\\EventDispatcher\\ContainerAwareEventDispatc
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 
-    $container = new ContainerBuilder();
-    $dispatcher = new ContainerAwareEventDispatcher($container);
+    $containerBuilder = new ContainerBuilder();
+    $dispatcher = new ContainerAwareEventDispatcher($containerBuilder);
 
 Adding Listeners
 ----------------
@@ -68,6 +68,7 @@ and the second argument is the service's class name (which must implement
 The ``EventSubscriberInterface`` is exactly as you would expect::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\KernelEvents;
     // ...
 
     class StoreSubscriber implements EventSubscriberInterface
@@ -75,7 +76,7 @@ The ``EventSubscriberInterface`` is exactly as you would expect::
         public static function getSubscribedEvents()
         {
             return array(
-                'kernel.response' => array(
+                KernelEvents::RESPONSE => array(
                     array('onKernelResponsePre', 10),
                     array('onKernelResponsePost', 0),
                 ),

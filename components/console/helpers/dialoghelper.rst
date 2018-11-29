@@ -52,7 +52,7 @@ You can also ask question with more than a simple yes/no answer. For instance,
 if you want to know a bundle name, you can add this to your command::
 
     // ...
-    $bundle = $dialog->ask(
+    $bundleName = $dialog->ask(
         $output,
         'Please enter the name of the bundle',
         'AcmeDemoBundle'
@@ -71,7 +71,7 @@ will be autocompleted as the user types::
 
     $dialog = $this->getHelper('dialog');
     $bundleNames = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
-    $name = $dialog->ask(
+    $bundleName = $dialog->ask(
         $output,
         'Please enter the name of a bundle',
         'FooBundle',
@@ -109,7 +109,7 @@ be suffixed with ``Bundle``. You can validate that by using the
 method::
 
     // ...
-    $bundle = $dialog->askAndValidate(
+    $bundleName = $dialog->askAndValidate(
         $output,
         'Please enter the name of the bundle',
         function ($answer) {
@@ -125,7 +125,7 @@ method::
         'AcmeDemoBundle'
     );
 
-This methods has 2 new arguments, the full signature is::
+This method has 2 new arguments, the full signature is::
 
     askAndValidate(
         OutputInterface $output,
@@ -142,10 +142,14 @@ in the console, so it is a good practice to put some useful information in it. T
 function should also return the value of the user's input if the validation was successful.
 
 You can set the max number of times to ask in the ``$attempts`` argument.
-If you reach this max number it will use the default value.
 Using ``false`` means the amount of attempts is infinite.
 The user will be asked as long as they provide an invalid answer and will only
 be able to proceed if their input is valid.
+
+Each time the user is asked the question, the default one is used if no answer
+is supplied (and validated with the ``$validator`` callback). If the last
+attempt is reached, the application will throw an exception and ends its
+execution.
 
 Validating a Hidden Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -156,7 +160,7 @@ You can also ask and validate a hidden response::
 
     $validator = function ($value) {
         if ('' === trim($value)) {
-            throw new \Exception('The password can not be empty');
+            throw new \Exception('The password cannot be empty');
         }
 
         return $value;
@@ -177,8 +181,8 @@ Let the User Choose from a List of Answers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you have a predefined set of answers the user can choose from, you
-could use the ``ask`` method described above or, to make sure the user
-provided a correct answer, the ``askAndValidate`` method. Both have
+could use the ``ask()`` method described above or, to make sure the user
+provided a correct answer, the ``askAndValidate()`` method. Both have
 the disadvantage that you need to handle incorrect values yourself.
 
 Instead, you can use the
@@ -288,4 +292,4 @@ input stream.
 .. seealso::
 
     You find more information about testing commands in the console component
-    docs about :ref:`testing console commands <component-console-testing-commands>`.
+    docs about :ref:`testing console commands <console-testing-commands>`.

@@ -35,7 +35,7 @@ you want to guarantee that some ``state`` property is *not* in a dynamic
         return in_array($this->state, $this->invalidStates);
     }
 
-In this case, the underlying object is only valid if the ``isStateInvalid``
+In this case, the underlying object is only valid if the ``isStateInvalid()``
 method returns **false**:
 
 .. configuration-block::
@@ -63,7 +63,7 @@ method returns **false**:
     .. code-block:: yaml
 
         # src/AppBundle/Resources/config/validation.yml
-        AppBundle\Entity\Author
+        AppBundle\Entity\Author:
             getters:
                 stateInvalid:
                     - 'IsFalse':
@@ -111,5 +111,13 @@ message
 **type**: ``string`` **default**: ``This value should be false.``
 
 This message is shown if the underlying data is not false.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

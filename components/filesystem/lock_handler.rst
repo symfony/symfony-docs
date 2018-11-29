@@ -1,9 +1,6 @@
 LockHandler
 ===========
 
-.. versionadded:: 2.6
-    The lock handler feature was introduced in Symfony 2.6
-
 What is a Lock?
 ---------------
 
@@ -22,9 +19,7 @@ Usage
     The lock handler only works if you're using just one server. If you have
     several hosts, you must not use this helper.
 
-A lock can be used, for example, to allow only one instance of a command to run.
-
-.. code-block:: php
+A lock can be used, for example, to allow only one instance of a command to run::
 
     use Symfony\Component\Filesystem\LockHandler;
 
@@ -48,13 +43,23 @@ the file, so you can pass any value for this argument.
     to avoid name collisions, ``LockHandler`` also appends a hash to the name of
     the lock file.
 
-By default, the lock will be created in the temporary directory, but you can
-optionally select the directory where locks are created by passing it as the
-second argument of the constructor.
+By default, the lock will be created in the system's temporary directory, but
+you can optionally select the directory where locks are created by passing it as
+the second argument of the constructor.
+
+.. tip::
+
+    Another way to configure the directory where the locks are created is to
+    define a special environment variable, because PHP will use that value to
+    override the default temporary directory. On Unix-based systems, define the
+    ``TMPDIR`` variable. On Windows systems, define any of these variables:
+    ``TMP``, ``TEMP`` or ``USERPROFILE`` (they are checked in this order). This
+    technique is useful for example when deploying a third-party Symfony
+    application whose code can't be modified.
 
 The :method:`Symfony\\Component\\Filesystem\\LockHandler::lock` method tries to
 acquire the lock. If the lock is acquired, the method returns ``true``,
-``false`` otherwise. If the ``lock`` method is called several times on the same
+``false`` otherwise. If the ``lock()`` method is called several times on the same
 instance it will always return ``true`` if the lock was acquired on the first
 call.
 

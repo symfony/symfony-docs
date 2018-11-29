@@ -36,7 +36,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
         class Author
         {
             /**
-             * @Assert\IsNull()
+             * @Assert\IsNull
              */
             protected $firstName;
         }
@@ -89,5 +89,13 @@ message
 **type**: ``string`` **default**: ``This value should be null.``
 
 This is the message that will be shown if the value is not ``null``.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

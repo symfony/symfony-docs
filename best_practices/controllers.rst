@@ -73,7 +73,7 @@ Template Configuration
 
 .. best-practice::
 
-    Don't use the ``@Template()`` annotation to configure the template used by
+    Don't use the ``@Template`` annotation to configure the template used by
     the controller.
 
 The ``@Template`` annotation is useful, but also involves some magic. We
@@ -85,16 +85,15 @@ it more difficult to know which template is being rendered. It also makes
 it less obvious to beginners that a controller should always return a Response
 object (unless you're using a view layer).
 
-How the Controller Looks
-------------------------
+What does the Controller look like
+----------------------------------
 
-Considering all this, here is an example of how the controller should look
-for the homepage of our app:
-
-.. code-block:: php
+Considering all this, here is an example of what the controller should look like
+for the homepage of our app::
 
     namespace AppBundle\Controller;
 
+    use AppBundle\Entity\Post;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -106,11 +105,11 @@ for the homepage of our app:
         public function indexAction()
         {
             $posts = $this->getDoctrine()
-                ->getRepository('AppBundle:Post')
+                ->getRepository(Post::class)
                 ->findLatest();
 
             return $this->render('default/index.html.twig', array(
-                'posts' => $posts
+                'posts' => $posts,
             ));
         }
     }
@@ -128,9 +127,7 @@ to automatically query for an entity and pass it as an argument to your controll
     Use the ParamConverter trick to automatically query for Doctrine entities
     when it's simple and convenient.
 
-For example:
-
-.. code-block:: php
+For example::
 
     use AppBundle\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -148,7 +145,7 @@ For example:
         ));
     }
 
-Normally, you'd expect a ``$id`` argument to ``showAction``. Instead, by
+Normally, you'd expect a ``$id`` argument to ``showAction()``. Instead, by
 creating a new argument (``$post``) and type-hinting it with the ``Post``
 class (which is a Doctrine entity), the ParamConverter automatically queries
 for an object whose ``$id`` property matches the ``{id}`` value. It will
@@ -157,20 +154,18 @@ also show a 404 page if no ``Post`` can be found.
 When Things Get More Advanced
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This works without any configuration because the wildcard name ``{id}`` matches
+The above example works without any configuration because the wildcard name ``{id}`` matches
 the name of the property on the entity. If this isn't true, or if you have
 even more complex logic, the easiest thing to do is just query for the entity
-manually. In our application, we have this situation in ``CommentController``:
-
-.. code-block:: php
+manually. In our application, we have this situation in ``CommentController``::
 
     /**
-     * @Route("/comment/{postSlug}/new", name = "comment_new")
+     * @Route("/comment/{postSlug}/new", name="comment_new")
      */
     public function newAction(Request $request, $postSlug)
     {
         $post = $this->getDoctrine()
-            ->getRepository('AppBundle:Post')
+            ->getRepository(Post::class)
             ->findOneBy(array('slug' => $postSlug));
 
         if (!$post) {
@@ -181,9 +176,7 @@ manually. In our application, we have this situation in ``CommentController``:
     }
 
 You can also use the ``@ParamConverter`` configuration, which is infinitely
-flexible:
-
-.. code-block:: php
+flexible::
 
     use AppBundle\Entity\Post;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -191,8 +184,8 @@ flexible:
     use Symfony\Component\HttpFoundation\Request;
 
     /**
-     * @Route("/comment/{postSlug}/new", name = "comment_new")
-     * @ParamConverter("post", options={"mapping": {"postSlug": "slug"}})
+     * @Route("/comment/{postSlug}/new", name="comment_new")
+     * @ParamConverter("post", options={"mapping"={"postSlug"="slug"}})
      */
     public function newAction(Request $request, Post $post)
     {
@@ -208,6 +201,10 @@ Pre and Post Hooks
 
 If you need to execute some code before or after the execution of your controllers,
 you can use the EventDispatcher component to
-:doc:`set up before and after filters </cookbook/event_dispatcher/before_after_filters>`.
+:doc:`set up before and after filters </event_dispatcher/before_after_filters>`.
+
+----
+
+Next: :doc:`/best_practices/templates`
 
 .. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html

@@ -35,7 +35,7 @@ entry in that array:
             /**
              * @Assert\All({
              *     @Assert\NotBlank,
-             *     @Assert\Length(min = 5)
+             *     @Assert\Length(min=5)
              * })
              */
              protected $favoriteColors = array();

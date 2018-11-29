@@ -22,7 +22,7 @@ status:
 * **Pull Requests**: Pull requests contain code that fixes a bug or implements
   new functionality. Reviews of pull requests ensure that they are implemented
   properly, are covered by test cases, don't introduce new bugs and maintain
-  backwards compatibility.
+  backward compatibility.
 
 Note that **anyone who has some basic familiarity with Symfony and PHP can
 review bug reports and pull requests**. You don't need to be an expert to help.
@@ -140,12 +140,12 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
    * Does the PR contain automated tests? Do those tests cover all relevant
      edge cases?
    * Does the PR contain sufficient comments to easily understand its code?
-   * Does the code break backwards compatibility? If yes, does the PR header say
+   * Does the code break backward compatibility? If yes, does the PR header say
      so?
    * Does the PR contain deprecations? If yes, does the PR header say so? Does
      the code contain ``trigger_error()`` statements for all deprecated
      features?
-   * Are all deprecations and backwards compatibility breaks documented in the
+   * Are all deprecations and backward compatibility breaks documented in the
      latest UPGRADE-X.X.md file? Do those explanations contain "Before"/"After"
      examples with clear upgrade instructions?
 
@@ -210,7 +210,7 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 .. _bug reports in need of review: https://github.com/symfony/symfony/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3A%22Bug%22+label%3A%22Status%3A+Needs+Review%22+
 .. _PRs in need of review: https://github.com/symfony/symfony/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Apr+label%3A%22Status%3A+Needs+Review%22+
 .. _Contribution Guidelines: https://github.com/symfony/symfony/blob/master/CONTRIBUTING.md
-.. _Symfony's Release Schedule: http://symfony.com/doc/current/contributing/community/releases.html#schedule
+.. _Symfony's Release Schedule: https://symfony.com/doc/current/contributing/community/releases.html#schedule
 .. _Symfony Roadmap: https://symfony.com/roadmap
 .. _Carson Bot: https://github.com/carsonbot/carsonbot
 .. _`Needs Review`: https://github.com/symfony/symfony/labels/Status%3A%20Needs%20Review

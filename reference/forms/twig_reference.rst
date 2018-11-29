@@ -136,7 +136,7 @@ form or collection of fields, each underlying form row will be rendered.
     {# render a widget, but add a "foo" class to it #}
     {{ form_widget(form.name, {'attr': {'class': 'foo'}}) }}
 
-The second argument to ``form_widget`` is an array of variables. The most
+The second argument to ``form_widget()`` is an array of variables. The most
 common variable is ``attr``, which is an array of HTML attributes to apply
 to the HTML widget. In some cases, certain types also have other template-related
 options that can be passed. These are discussed on a type-by-type basis.
@@ -159,7 +159,7 @@ label, errors and widget.
     {# render a field row, but display a label with text "foo" #}
     {{ form_row(form.name, {'label': 'foo'}) }}
 
-The second argument to ``form_row`` is an array of variables. The templates
+The second argument to ``form_row()`` is an array of variables. The templates
 provided in Symfony only allow to override the label as shown in the example
 above.
 
@@ -217,6 +217,28 @@ array).
 
     <option {% if choice is selectedchoice(value) %} selected="selected"{% endif %} ...>
 
+.. _form-twig-rootform:
+
+rootform
+~~~~~~~~
+
+This test will check if the current ``form`` does not have a parent form view.
+
+.. code-block:: twig
+
+    {# DON'T DO THIS: this simple check can't differentiate between a form having
+       a parent form view and a form defining a nested form field called 'parent' #}
+
+    {% if form.parent is null %}
+        {{ form_errors(form) }}
+    {% endif %}
+
+   {# DO THIS: this check is always reliable, even if the form defines a field called 'parent' #}
+
+    {% if form is rootform %}
+        {{ form_errors(form) }}
+    {% endif %}
+
 .. _`twig-reference-form-variables`:
 
 More about Form Variables
@@ -272,7 +294,7 @@ Look at the ``form_label`` as an example:
 This block makes use of several variables: ``compound``, ``label_attr``,
 ``required``, ``label``, ``name`` and ``translation_domain``. These variables
 are made available by the form rendering system. But more importantly, these
-are the variables that you can override when calling ``form_label`` (since
+are the variables that you can override when calling ``form_label()`` (since
 in this example, you're rendering the label).
 
 The exact variables available to override depends on which part of the form
@@ -284,8 +306,8 @@ be able to see what options you have available.
 .. tip::
 
     Behind the scenes, these variables are made available to the ``FormView``
-    object of your form when the Form component calls ``buildView`` and
-    ``finishView`` on each "node" of your form tree. To see what "view"
+    object of your form when the Form component calls ``buildView()`` and
+    ``finishView()`` on each "node" of your form tree. To see what "view"
     variables a particular field has, find the source code for the form
     field (and its parent fields) and look at the above two functions.
 
@@ -315,21 +337,12 @@ reference the variables on the ``name`` field, accessing the variables is
 done by using a public ``vars`` property on the
 :class:`Symfony\\Component\\Form\\FormView` object:
 
-.. configuration-block::
+.. code-block:: html+twig
 
-    .. code-block:: html+twig
-
-        <label for="{{ form.name.vars.id }}"
-            class="{{ form.name.vars.required ? 'required' : '' }}">
-            {{ form.name.vars.label }}
-        </label>
-
-    .. code-block:: html+php
-
-        <label for="<?php echo $view['form']->get('name')->vars['id'] ?>"
-            class="<?php echo $view['form']->get('name')->vars['required'] ? 'required' : '' ?>">
-            <?php echo $view['form']->get('name')->vars['label'] ?>
-        </label>
+    <label for="{{ form.name.vars.id }}"
+        class="{{ form.name.vars.required ? 'required' }}">
+        {{ form.name.vars.label }}
+    </label>
 
 .. versionadded:: 2.3
     The ``method`` and ``action`` variables were introduced in Symfony 2.3.
@@ -357,8 +370,6 @@ done by using a public ``vars`` property on the
 | ``valid``              | Returns ``true`` or ``false`` depending on whether the whole form is valid.         |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``value``              | The value that will be used when rendering (commonly the ``value`` HTML attribute). |
-+------------------------+-------------------------------------------------------------------------------------+
-| ``read_only``          | If ``true``, ``readonly="readonly"`` is added to the field.                         |
 +------------------------+-------------------------------------------------------------------------------------+
 | ``disabled``           | If ``true``, ``disabled="disabled"`` is added to the field.                         |
 +------------------------+-------------------------------------------------------------------------------------+
@@ -397,4 +408,4 @@ done by using a public ``vars`` property on the
 +------------------------+-------------------------------------------------------------------------------------+
 
 .. _`form_div_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig
-.. _`the Twig documentation`: http://twig.sensiolabs.org/doc/templates.html#test-operator
+.. _`the Twig documentation`: https://twig.symfony.com/doc/2.x/templates.html#test-operator

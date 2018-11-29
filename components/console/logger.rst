@@ -9,7 +9,7 @@ The Console component comes with a standalone logger complying with the
 be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance passed as a parameter to the constructor.
 
-The logger does not have any external dependency except ``php-fig/log``.
+The logger does not have any external dependency except ``psr/log``.
 This is useful for console applications and commands needing a lightweight
 PSR-3 compliant logger::
 
@@ -75,9 +75,9 @@ may not be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterf
 instance.
 
 By default, the console logger behaves like the
-:doc:`Monolog's Console Handler </cookbook/logging/monolog_console>`.
+:doc:`Monolog's Console Handler </logging/monolog_console>`.
 The association between the log level and the verbosity can be configured
-through the second parameter of the :class:`Symfony\\Component\\Console\\ConsoleLogger`
+through the second parameter of the :class:`Symfony\\Component\\Console\\Logger\\ConsoleLogger`
 constructor::
 
     use Psr\Log\LogLevel;
@@ -98,9 +98,9 @@ constructor::
 
     // ...
     $formatLevelMap = array(
-        LogLevel::CRITICAL => ConsoleLogger::INFO,
-        LogLevel::DEBUG    => ConsoleLogger::ERROR,
+        LogLevel::CRITICAL => ConsoleLogger::ERROR,
+        LogLevel::DEBUG    => ConsoleLogger::INFO,
     );
     $logger = new ConsoleLogger($output, array(), $formatLevelMap);
 
-.. _PSR-3: http://www.php-fig.org/psr/psr-3/
+.. _PSR-3: https://www.php-fig.org/psr/psr-3/

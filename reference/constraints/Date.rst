@@ -31,7 +31,7 @@ Basic Usage
         class Author
         {
             /**
-             * @Assert\Date()
+             * @Assert\Date
              */
              protected $birthday;
         }
@@ -75,6 +75,8 @@ Basic Usage
             }
         }
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
 Options
 -------
 
@@ -84,5 +86,13 @@ message
 **type**: ``string`` **default**: ``This value is not a valid date.``
 
 This message is shown if the underlying data is not a valid date.
+
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ value }}``  | The current (invalid) value                    |
++------------------+------------------------------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

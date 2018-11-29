@@ -10,8 +10,8 @@ into the architecture now.
 Understanding the Directory Structure
 -------------------------------------
 
-The directory structure of a Symfony :term:`application` is rather flexible,
-but the recommended structure is as follows:
+The directory structure of a Symfony application is rather flexible, but the
+recommended structure is as follows:
 
 ``app/``
     The application configuration, templates and translations.
@@ -26,8 +26,9 @@ The ``web/`` Directory
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The web root directory is the home of all public and static files like images,
-stylesheets and JavaScript files. It is also where each :term:`front controller`
-lives, such as the production controller shown here::
+stylesheets and JavaScript files. It is also where each front controller (the
+file that handles all requests to your application) lives, such as the
+production controller shown here::
 
     // web/app.php
     require_once __DIR__.'/../app/bootstrap.php.cache';
@@ -72,7 +73,7 @@ Understanding the Bundle System
 -------------------------------
 
 This section introduces one of the greatest and most powerful features of
-Symfony, the :term:`bundle` system.
+Symfony: The bundle system.
 
 A bundle is kind of like a plugin in other software. So why is it
 called a *bundle* and not a *plugin*? This is because *everything* is a
@@ -179,8 +180,8 @@ defines the configuration for a specific bundle. For example, ``framework``
 configures the FrameworkBundle while ``swiftmailer`` configures the
 SwiftmailerBundle.
 
-Each :term:`environment` can override the default configuration by providing
-a specific configuration file. For example, the ``dev`` environment loads
+Each environment can override the default configuration by providing a
+specific configuration file. For example, the ``dev`` environment loads
 the ``config_dev.yml`` file, which loads the main configuration (i.e.
 ``config.yml``) and then modifies it to add some debugging tools:
 
@@ -223,14 +224,14 @@ Logical Controller Names
 
 For controllers, you need to reference actions using the format
 ``BUNDLE_NAME:CONTROLLER_NAME:ACTION_NAME``. For instance,
-``AppBundle:Default:index`` maps to the ``indexAction`` method from the
+``AppBundle:Default:index`` maps to the ``indexAction()`` method from the
 ``AppBundle\Controller\DefaultController`` class.
 
 Extending Bundles
 .................
 
 If you follow these conventions, then you can use
-:doc:`bundle inheritance </cookbook/bundles/inheritance>` to override files,
+:doc:`bundle inheritance </bundles/inheritance>` to override files,
 controllers or templates. For example, you can create a bundle - NewBundle
 - and specify that it overrides AppBundle. When Symfony loads the
 ``AppBundle:Default:index`` controller, it will first look for the
@@ -257,7 +258,7 @@ Understanding the Cache and Logs
 --------------------------------
 
 Symfony applications can contain several configuration files defined in
-several formats (YAML, XML, PHP, etc.) Instead of parsing and combining
+several formats (YAML, XML, PHP, etc.). Instead of parsing and combining
 all those files for each request, Symfony uses its own cache system. In
 fact, the application configuration is only parsed for the very first request
 and then compiled down to plain PHP code stored in the ``app/cache/``
@@ -269,7 +270,7 @@ up, it is your responsibility to clear the cache when you update your code
 or change its configuration. Execute this command to clear the cache in
 the ``prod`` environment:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console cache:clear --env=prod
 
@@ -286,13 +287,13 @@ your productivity by automating tedious and repetitive tasks.
 
 Run it without any arguments to learn more about its capabilities:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console
 
 The ``--help`` option helps you discover the usage of a command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console debug:router --help
 
@@ -306,7 +307,7 @@ around as you see fit.
 
 And that's all for the quick tour. From testing to sending emails, you still
 need to learn a lot to become a Symfony master. Ready to dig into these
-topics now? Look no further - go to the official :doc:`/book/index` and
+topics now? Look no further - go to the official :doc:`/index` and
 pick any topic you want.
 
-.. _Composer:   https://getcomposer.org
+.. _`Composer`:   https://getcomposer.org

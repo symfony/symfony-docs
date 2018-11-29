@@ -83,7 +83,7 @@ if you want to know a bundle name, you can add this to your command::
         // ...
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
 
-        $bundle = $helper->ask($input, $output, $question);
+        $bundleName = $helper->ask($input, $output, $question);
     }
 
 The user will be asked "Please enter the name of the bundle". They can type
@@ -173,11 +173,13 @@ will be autocompleted as the user types::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
+        $helper = $this->getHelper('question');
+
         $bundles = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
         $question = new Question('Please enter the name of a bundle', 'FooBundle');
         $question->setAutocompleterValues($bundles);
 
-        $name = $helper->ask($input, $output, $question);
+        $bundleName = $helper->ask($input, $output, $question);
     }
 
 Hiding the User's Response
@@ -192,6 +194,8 @@ convenient for passwords::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
+        $helper = $this->getHelper('question');
+
         $question = new Question('What is the database password?');
         $question->setHidden(true);
         $question->setHiddenFallback(false);
@@ -209,6 +213,39 @@ convenient for passwords::
     like in the example above. In this case, a ``RuntimeException``
     would be thrown.
 
+Normalizing the Answer
+----------------------
+
+Before validating the answer, you can "normalize" it to fix minor errors or
+tweak it as needed. For instance, in a previous example you asked for the bundle
+name. In case the user adds white spaces around the name by mistake, you can
+trim the name before validating it. To do so, configure a normalizer using the
+:method:`Symfony\\Component\\Console\\Question\\Question::setNormalizer`
+method::
+
+    use Symfony\Component\Console\Question\Question;
+
+    // ...
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        // ...
+        $helper = $this->getHelper('question');
+
+        $question = new Question('Please enter the name of the bundle', 'AppBundle');
+        $question->setNormalizer(function ($value) {
+            // $value can be null here
+            return $value ? trim($value) : '';
+        });
+
+        $bundleName = $helper->ask($input, $output, $question);
+    }
+
+.. caution::
+
+    The normalizer is called first and the returned value is used as the input
+    of the validator. If the answer is invalid, don't throw exceptions in the
+    normalizer and let the validator handle those errors.
+
 Validating the Answer
 ---------------------
 
@@ -224,18 +261,21 @@ method::
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // ...
+        $helper = $this->getHelper('question');
+
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
         $question->setValidator(function ($answer) {
-            if ('Bundle' !== substr($answer, -6)) {
+            if (!is_string($answer) || 'Bundle' !== substr($answer, -6)) {
                 throw new \RuntimeException(
                     'The name of the bundle should be suffixed with \'Bundle\''
                 );
             }
+
             return $answer;
         });
         $question->setMaxAttempts(2);
 
-        $name = $helper->ask($input, $output, $question);
+        $bundleName = $helper->ask($input, $output, $question);
     }
 
 The ``$validator`` is a callback which handles the validation. It should
@@ -266,7 +306,7 @@ You can also use a validator with a hidden question::
         $question = new Question('Please enter your password');
         $question->setValidator(function ($value) {
             if (trim($value) == '') {
-                throw new \Exception('The password can not be empty');
+                throw new \Exception('The password cannot be empty');
             }
 
             return $value;
@@ -294,7 +334,7 @@ from the command line, you need to set the helper input stream::
         $commandTester = new CommandTester($command);
 
         $helper = $command->getHelper('question');
-        $helper->setInputStream($this->getInputStream('Test\\n'));
+        $helper->setInputStream($this->getInputStream("Test\n"));
         // Equals to a user inputting "Test" and hitting ENTER
         // If you need to enter a confirmation, "yes\n" will work
 
@@ -316,3 +356,9 @@ By setting the input stream of the ``QuestionHelper``, you imitate what the
 console would do internally with all user input through the CLI. This way
 you can test any user interaction (even complex ones) by passing an appropriate
 input stream.
+
+.. caution::
+
+    On Windows systems Symfony uses a special binary to implement hidden
+    questions. This means that those questions don't use the default ``Input``
+    console object and therefore you can't test them on Windows.

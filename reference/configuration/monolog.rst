@@ -1,114 +1,36 @@
 .. index::
     pair: Monolog; Configuration reference
 
-MonologBundle Configuration ("monolog")
-=======================================
+Logging Configuration Reference (MonologBundle)
+===============================================
 
-Full Default Configuration
---------------------------
+The MonologBundle integrates the Monolog :doc:`logging </logging>` library in
+Symfony applications. All these options are configured under the ``monolog`` key
+in your application configuration.
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: yaml
+    # displays the default config values defined by Symfony
+    $ php app/console config:dump-reference monolog
 
-        monolog:
-            handlers:
+    # displays the actual config values used by your application
+    $ php app/console debug:config monolog
 
-                # Examples:
-                syslog:
-                    type:                stream
-                    path:                /var/log/symfony.log
-                    level:               ERROR
-                    bubble:              false
-                    formatter:           my_formatter
-                main:
-                    type:                fingers_crossed
-                    action_level:        WARNING
-                    buffer_size:         30
-                    handler:             custom
-                console:
-                    type:                console
-                    verbosity_levels:
-                        VERBOSITY_NORMAL:       WARNING
-                        VERBOSITY_VERBOSE:      NOTICE
-                        VERBOSITY_VERY_VERBOSE: INFO
-                        VERBOSITY_DEBUG:        DEBUG
-                custom:
-                    type:                service
-                    id:                  my_handler
+.. note::
 
-                # Default options and values for some "my_custom_handler"
-                # Note: many of these options are specific to the "type".
-                # For example, the 'service' type doesn't use any options
-                # except id and channels
-                my_custom_handler:
-                    type:                 ~ # Required
-                    id:                   ~
-                    priority:             0
-                    level:                DEBUG
-                    bubble:               true
-                    path:                 '%kernel.logs_dir%/%kernel.environment%.log'
-                    ident:                false
-                    facility:             user
-                    max_files:            0
-                    action_level:         WARNING
-                    activation_strategy:  ~
-                    stop_buffering:       true
-                    buffer_size:          0
-                    handler:              ~
-                    members:              []
-                    channels:
-                        type:     ~
-                        elements: ~
-                    from_email:           ~
-                    to_email:             ~
-                    subject:              ~
-                    mailer:               ~
-                    email_prototype:
-                        id:                   ~ # Required (when the email_prototype is used)
-                        method:               ~
-                    formatter:            ~
+    When using XML, you must use the ``http://symfony.com/schema/dic/monolog``
+    namespace and the related XSD schema is available at:
+    ``http://symfony.com/schema/dic/monolog/monolog-1.0.xsd``
 
-    .. code-block:: xml
+.. tip::
 
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                http://symfony.com/schema/dic/monolog/monolog-1.0.xsd"
-        >
-
-            <monolog:config>
-                <monolog:handler
-                    name="syslog"
-                    type="stream"
-                    path="/var/log/symfony.log"
-                    level="error"
-                    bubble="false"
-                    formatter="my_formatter"
-                />
-                <monolog:handler
-                    name="main"
-                    type="fingers_crossed"
-                    action-level="warning"
-                    handler="custom"
-                />
-                <monolog:handler
-                    name="console"
-                    type="console"
-                />
-                <monolog:handler
-                    name="custom"
-                    type="service"
-                    id="my_handler"
-                />
-            </monolog:config>
-        </container>
+    For a full list of handler types and related configuration options, see
+    `Monolog Configuration`_.
 
 .. note::
 
     When the profiler is enabled, a handler is added to store the logs'
     messages in the profiler. The profiler uses the name "debug" so it
     is reserved and cannot be used in the configuration.
+
+.. _`Monolog Configuration`: https://github.com/symfony/monolog-bundle/blob/master/DependencyInjection/Configuration.php

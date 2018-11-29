@@ -1,10 +1,10 @@
 .. index::
-   single: Forms; Fields; file
+   single: Forms; Fields; FileType
 
-file Field Type
-===============
+FileType Field
+==============
 
-The ``file`` type represents a file input in your form.
+The ``FileType`` represents a file input in your form.
 
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``file`` field                                            |
@@ -20,11 +20,12 @@ The ``file`` type represents a file input in your form.
 |             | - `error_mapping`_                                                  |
 |             | - `label`_                                                          |
 |             | - `label_attr`_                                                     |
+|             | - `label_format`_                                                   |
 |             | - `mapped`_                                                         |
-|             | - `read_only`_                                                      |
+|             | - `read_only`_ (deprecated as of 2.8)                               |
 |             | - `required`_                                                       |
 +-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                           |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                       |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |
 +-------------+---------------------------------------------------------------------+
@@ -34,7 +35,10 @@ Basic Usage
 
 Say you have this form definition::
 
-    $builder->add('attachment', 'file');
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
+    // ...
+
+    $builder->add('attachment', FileType::class);
 
 When the form is submitted, the ``attachment`` field will be an instance
 of :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`. It can
@@ -46,10 +50,11 @@ be used to move the ``attachment`` file to a permanent location::
     {
         // ...
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $someNewFilename = ...
 
-            $form['attachment']->getData()->move($dir, $someNewFilename);
+            $file = $form['attachment']->getData();
+            $file->move($directory, $someNewFilename);
 
             // ...
         }
@@ -61,7 +66,7 @@ The ``move()`` method takes a directory and a file name as its arguments.
 You might calculate the filename in one of the following ways::
 
     // use the original file name
-    $file->move($dir, $file->getClientOriginalName());
+    $file->move($directory, $file->getClientOriginalName());
 
     // compute a random name and try to guess the extension (more secure)
     $extension = $file->guessExtension();
@@ -69,15 +74,15 @@ You might calculate the filename in one of the following ways::
         // extension cannot be guessed
         $extension = 'bin';
     }
-    $file->move($dir, rand(1, 99999).'.'.$extension);
+    $file->move($directory, rand(1, 99999).'.'.$extension);
 
 Using the original name via ``getClientOriginalName()`` is not safe as it
 could have been manipulated by the end-user. Moreover, it can contain
 characters that are not allowed in file names. You should sanitize the name
 before using it directly.
 
-Read the :doc:`cookbook </cookbook/doctrine/file_uploads>` for an example
-of how to manage a file upload associated with a Doctrine entity.
+Read :doc:`/controller/upload_file` for an example of how to manage a file
+upload associated with a Doctrine entity.
 
 Field Options
 -------------
@@ -112,8 +117,7 @@ value is empty.
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
@@ -124,6 +128,8 @@ type:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

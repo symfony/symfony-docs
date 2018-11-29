@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; integer
+   single: Forms; Fields; IntegerType
 
-integer Field Type
-==================
+IntegerType Field
+=================
 
 Renders an input "number" field. Basically, this is a text field that's
 good at handling data that's in an integer form. The input ``number`` field
@@ -17,11 +17,10 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 | Rendered as | ``input`` ``number`` field                                            |
 +-------------+-----------------------------------------------------------------------+
 | Options     | - `grouping`_                                                         |
-|             | - `scale`_                                                            |
 |             | - `rounding_mode`_                                                    |
 +-------------+-----------------------------------------------------------------------+
 | Overridden  | - `compound`_                                                         |
-| options     |                                                                       |
+| options     | - `scale`_                                                            |
 +-------------+-----------------------------------------------------------------------+
 | Inherited   | - `data`_                                                             |
 | options     | - `disabled`_                                                         |
@@ -32,11 +31,12 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 |             | - `invalid_message_parameters`_                                       |
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
+|             | - `label_format`_                                                     |
 |             | - `mapped`_                                                           |
-|             | - `read_only`_                                                        |
+|             | - `read_only`_ (deprecated as of 2.8)                                 |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                             |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                         |
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\IntegerType` |
 +-------------+-----------------------------------------------------------------------+
@@ -45,8 +45,6 @@ Field Options
 -------------
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
-
-.. include:: /reference/forms/types/options/scale.rst.inc
 
 rounding_mode
 ~~~~~~~~~~~~~
@@ -82,11 +80,20 @@ Overridden Options
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
 
+scale
+~~~~~
+
+**type**: ``integer`` **default**: ``0``
+
+This specifies how many decimals will be allowed until the field rounds the
+submitted value (via ``rounding_mode``). This option inherits from
+:doc:`number </reference/forms/types/number>` type and is overriden to ``0`` for
+``IntegerType``.
+
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -111,6 +118,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

@@ -52,7 +52,7 @@ your user table:
              * @var string $email
              *
              * @ORM\Column(name="email", type="string", length=255, unique=true)
-             * @Assert\Email()
+             * @Assert\Email
              */
             protected $email;
 
@@ -89,7 +89,7 @@ your user table:
 
     .. code-block:: php
 
-        // src/AppBundle/Entity/User.php
+        // src/AppBundle/Entity/Author.php
         namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
@@ -108,6 +108,13 @@ your user table:
                 $metadata->addPropertyConstraint('email', new Assert\Email());
             }
         }
+
+.. caution::
+
+    This constraint doesn't provide any protection against `race conditions`_.
+    They may occur when another entity is persisted by an external process after
+    this validation has passed and before this entity is actually persisted in
+    the database.
 
 Options
 -------
@@ -134,6 +141,14 @@ message
 
 The message that's displayed when this constraint fails.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+
 em
 ~~
 
@@ -147,10 +162,10 @@ not need to be used.
 repositoryMethod
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``findBy``
+**type**: ``string`` **default**: ``findBy()``
 
 The name of the repository method to use for making the query to determine
-the uniqueness. If it's left blank, the ``findBy`` method will be used.
+the uniqueness. If it's left blank, the ``findBy()`` method will be used.
 This method should return a countable result.
 
 errorPath
@@ -185,7 +200,7 @@ Consider this example:
         class Service
         {
             /**
-             * @ORM\ManyToOne(targetEntity="Host")
+             * @ORM\ManyToOne(targetEntity="App\Entity\Host")
              */
             public $host;
 
@@ -262,3 +277,5 @@ If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _`race conditions`: https://en.wikipedia.org/wiki/Race_condition

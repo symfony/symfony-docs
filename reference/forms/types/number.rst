@@ -1,8 +1,8 @@
 .. index::
-   single: Forms; Fields; number
+   single: Forms; Fields; NumberType
 
-number Field Type
-=================
+NumberType Field
+================
 
 Renders an input text field and specializes in handling number input. This
 type offers different options for the scale, rounding and grouping
@@ -27,11 +27,12 @@ that you want to use for your number.
 |             | - `invalid_message_parameters`_                                      |
 |             | - `label`_                                                           |
 |             | - `label_attr`_                                                      |
+|             | - `label_format`_                                                    |
 |             | - `mapped`_                                                          |
-|             | - `read_only`_                                                       |
+|             | - `read_only`_ (deprecated as of 2.8)                                |
 |             | - `required`_                                                        |
 +-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                            |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                        |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType` |
 +-------------+----------------------------------------------------------------------+
@@ -41,17 +42,29 @@ Field Options
 
 .. include:: /reference/forms/types/options/grouping.rst.inc
 
-.. include:: /reference/forms/types/options/scale.rst.inc
+scale
+~~~~~
+
+.. versionadded:: 2.7
+    The ``scale`` option was introduced in Symfony 2.7. Prior to Symfony 2.7,
+    it was known as ``precision``.
+
+**type**: ``integer`` **default**: Locale-specific (usually around ``3``)
+
+This specifies how many decimals will be allowed until the field rounds
+the submitted value (via ``rounding_mode``). For example, if ``scale`` is set
+to ``2``, a submitted value of ``20.123`` will be rounded to, for example,
+``20.12`` (depending on your `rounding_mode`_).
 
 rounding_mode
 ~~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: ``NumberToLocalizedStringTransformer::ROUND_HALFUP``
+**type**: ``integer`` **default**: ``NumberToLocalizedStringTransformer::ROUND_HALF_UP``
 
 If a submitted number needs to be rounded (based on the `scale`_
 option), you have several configurable options for that rounding. Each
 option is a constant on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`:
-    
+
 * ``NumberToLocalizedStringTransformer::ROUND_DOWN`` Round towards zero.
 
 * ``NumberToLocalizedStringTransformer::ROUND_FLOOR`` Round towards negative
@@ -80,8 +93,7 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -106,6 +118,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

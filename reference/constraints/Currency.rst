@@ -79,6 +79,8 @@ a valid currency, you could do the following:
             }
         }
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
 Options
 -------
 
@@ -88,6 +90,14 @@ message
 **type**: ``string`` **default**: ``This value is not a valid currency.``
 
 This is the message that will be shown if the value is not a valid currency.
+
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ value }}``  | The current (invalid) value                    |
++------------------+------------------------------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

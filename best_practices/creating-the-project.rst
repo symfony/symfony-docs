@@ -12,8 +12,8 @@ Installer**, which has to be installed before creating your first project.
 
     Use the Symfony Installer to create new Symfony-based projects.
 
-Read the :doc:`installation chapter </book/installation>` of the Symfony Book to
-learn how to install and use the Symfony Installer.
+Read the :doc:`/setup` article learn how to install and use the Symfony
+Installer.
 
 .. _linux-and-mac-os-x-systems:
 .. _windows-systems:
@@ -25,7 +25,7 @@ Now that everything is correctly set up, you can create a new project based on
 Symfony. In your command console, browse to a directory where you have permission
 to create files and execute the following commands:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     # Linux, Mac OS X
     $ cd projects/
@@ -33,7 +33,12 @@ to create files and execute the following commands:
 
     # Windows
     c:\> cd projects/
-    c:\projects\> php symfony.phar new blog
+    c:\projects\> php symfony new blog
+
+.. note::
+
+    If the installer doesn't work for you or doesn't output anything, make sure
+    that the `Phar extension`_ is installed and enabled on your computer.
 
 This command creates a new directory called ``blog`` that contains a fresh new
 project based on the most recent stable Symfony version available. In addition,
@@ -99,7 +104,7 @@ ProductBundle, then there's no advantage to having two separate bundles.
 
 .. best-practice::
 
-    Create only one bundle called AppBundle for your application logic
+    Create only one bundle called AppBundle for your application logic.
 
 Implementing a single AppBundle bundle in your projects will make your code
 more concise and easier to understand. Starting in Symfony 2.6, the official
@@ -110,11 +115,11 @@ Symfony documentation uses the AppBundle name.
     There is no need to prefix the AppBundle with your own vendor (e.g.
     AcmeAppBundle), because this application bundle is never going to be
     shared.
-    
+
 .. note::
-    
-    Another reason to create a new bundle is when you're overriding something 
-    in a vendor's bundle (e.g. a controller). See :doc:`/cookbook/bundles/inheritance`.
+
+    Another reason to create a new bundle is when you're overriding something
+    in a vendor's bundle (e.g. a controller). See :doc:`/bundles/inheritance`.
 
 All in all, this is the typical directory structure of a Symfony application
 that follows these best practices:
@@ -140,7 +145,7 @@ that follows these best practices:
     If your Symfony installation doesn't come with a pre-generated AppBundle,
     you can generate it by hand executing this command:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php app/console generate:bundle --namespace=AppBundle --dir=src --format=annotation --no-interaction
 
@@ -149,11 +154,10 @@ Extending the Directory Structure
 
 If your project or infrastructure requires some changes to the default directory
 structure of Symfony, you can
-:doc:`override the location of the main directories </cookbook/configuration/override_dir_structure>`:
+:doc:`override the location of the main directories </configuration/override_dir_structure>`:
 ``cache/``, ``logs/`` and ``web/``.
 
-In addition, Symfony3 will use a slightly different directory structure when
-it's released:
+In addition, Symfony3 uses a slightly different directory structure:
 
 .. code-block:: text
 
@@ -173,8 +177,11 @@ it's released:
 The changes are pretty superficial, but for now, we recommend that you use
 the Symfony directory structure.
 
+----
+
+Next: :doc:`/best_practices/configuration`
+
 .. _`Composer`: https://getcomposer.org/
-.. _`Get Started`: https://getcomposer.org/doc/00-intro.md
-.. _`Composer download page`: https://getcomposer.org/download/
+.. _`Phar extension`: https://php.net/manual/en/intro.phar.php
 .. _`public checksums repository`: https://github.com/sensiolabs/checksums
 .. _`these steps`: http://fabien.potencier.org/signing-project-releases.html

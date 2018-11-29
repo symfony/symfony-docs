@@ -23,8 +23,10 @@ the options. To force that a value is greater than another value, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is greater than
-or equal to ``18``, you could do the following:
+The following constraints ensure that:
+
+* the number of ``siblings`` of a ``Person`` is greater than or equal to ``5``
+* the ``age`` of a ``Person`` class is greater than or equal to ``18``
 
 .. configuration-block::
 
@@ -38,6 +40,11 @@ or equal to ``18``, you could do the following:
         class Person
         {
             /**
+             * @Assert\GreaterThanOrEqual(5)
+             */
+            protected $siblings;
+
+            /**
              * @Assert\GreaterThanOrEqual(
              *     value = 18
              * )
@@ -50,6 +57,8 @@ or equal to ``18``, you could do the following:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Person:
             properties:
+                siblings:
+                    - GreaterThanOrEqual: 5
                 age:
                     - GreaterThanOrEqual:
                         value: 18
@@ -63,6 +72,11 @@ or equal to ``18``, you could do the following:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Person">
+                <property name="siblings">
+                    <constraint name="GreaterThanOrEqual">
+                        <value>5</value>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="GreaterThanOrEqual">
                         <option name="value">18</option>
@@ -83,6 +97,8 @@ or equal to ``18``, you could do the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('siblings', new Assert\GreaterThanOrEqual(5));
+
                 $metadata->addPropertyConstraint('age', new Assert\GreaterThanOrEqual(array(
                     'value' => 18,
                 )));
@@ -91,9 +107,6 @@ or equal to ``18``, you could do the following:
 
 Comparing Dates
 ---------------
-
-.. versionadded:: 2.6
-    The feature to compare dates was introduced in Symfony 2.6.
 
 This constraint can be used to compare ``DateTime`` objects against any date
 string `accepted by the DateTime constructor`_. For example, you could check
@@ -287,6 +300,18 @@ message
 This is the message that will be shown if the value is not greater than or equal
 to the comparison value.
 
+You can use the following parameters in this message:
+
++-------------------------------+-----------------------------+
+| Parameter                     | Description                 |
++===============================+=============================+
+| ``{{ value }}``               | The current (invalid) value |
++-------------------------------+-----------------------------+
+| ``{{ compared_value }}``      | The lower limit             |
++-------------------------------+-----------------------------+
+| ``{{ compared_value_type }}`` | The expected value type     |
++-------------------------------+-----------------------------+
+
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`accepted by the DateTime constructor`: http://www.php.net/manual/en/datetime.formats.php
+.. _`accepted by the DateTime constructor`: https://php.net/manual/en/datetime.formats.php

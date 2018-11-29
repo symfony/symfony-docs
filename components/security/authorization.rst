@@ -29,11 +29,6 @@ An authorization decision will always be based on a few things:
     Any object for which access control needs to be checked, like
     an article or a comment object.
 
-.. versionadded:: 2.6
-    The ``TokenStorageInterface`` was introduced in Symfony 2.6. Prior, you
-    had to use the ``setToken()`` method of the
-    :class:`Symfony\\Component\\Security\\Core\\SecurityContextInterface`.
-
 .. _components-security-access-decision-manager:
 
 Access Decision Manager
@@ -90,10 +85,10 @@ of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterf
 which means they have to implement a few methods which allows the decision
 manager to use them:
 
-``supportsAttribute($attribute)``
+``supportsAttribute($attribute)`` (deprecated as of 2.8)
     will be used to check if the voter knows how to handle the given attribute;
 
-``supportsClass($class)``
+``supportsClass($class)`` (deprecated as of 2.8)
     will be used to check if the voter is able to grant or deny access for
     an object of the given class;
 
@@ -102,6 +97,12 @@ manager to use them:
     of the class constants of :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
     i.e. ``VoterInterface::ACCESS_GRANTED``, ``VoterInterface::ACCESS_DENIED``
     or ``VoterInterface::ACCESS_ABSTAIN``;
+
+.. note::
+
+    The ``supportsAttribute()`` and ``supportsClass()`` methods are deprecated
+    as of Symfony 2.8 and no longer required in 3.0. These methods should not
+    be called outside the voter class.
 
 The Security component contains some standard voters which cover many use
 cases:
@@ -118,11 +119,10 @@ on a "remember-me" cookie, or even authenticated anonymously?
 .. code-block:: php
 
     use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
+    use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+    use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 
-    $anonymousClass = 'Symfony\Component\Security\Core\Authentication\Token\AnonymousToken';
-    $rememberMeClass = 'Symfony\Component\Security\Core\Authentication\Token\RememberMeToken';
-
-    $trustResolver = new AuthenticationTrustResolver($anonymousClass, $rememberMeClass);
+    $trustResolver = new AuthenticationTrustResolver(AnonymousToken::class, RememberMeToken::class);
 
     $authenticatedVoter = new AuthenticatedVoter($trustResolver);
 
@@ -132,7 +132,7 @@ on a "remember-me" cookie, or even authenticated anonymously?
     // any object
     $object = ...;
 
-    $vote = $authenticatedVoter->vote($token, $object, array('IS_AUTHENTICATED_FULLY');
+    $vote = $authenticatedVoter->vote($token, $object, array('IS_AUTHENTICATED_FULLY'));
 
 RoleVoter
 ~~~~~~~~~
@@ -191,7 +191,7 @@ first constructor argument::
 
     $role = new Role('ROLE_ADMIN');
 
-    // will show 'ROLE_ADMIN'
+    // shows 'ROLE_ADMIN'
     var_dump($role->getRole());
 
 .. note::

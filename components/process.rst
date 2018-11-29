@@ -10,10 +10,11 @@ The Process Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/process`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/process).
+    $ composer require symfony/process
+
+Alternatively, you can clone the `<https://github.com/symfony/process>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
@@ -43,7 +44,7 @@ The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error
 output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
-methods returns the new outputs since the last call.
+methods return the new output since the last call.
 
 The :method:`Symfony\\Component\\Process\\Process::clearOutput` method clears
 the contents of the output and
@@ -64,8 +65,8 @@ with a non-zero code)::
         $process->mustRun();
 
         echo $process->getOutput();
-    } catch (ProcessFailedException $e) {
-        echo $e->getMessage();
+    } catch (ProcessFailedException $exception) {
+        echo $exception->getMessage();
     }
 
 Getting real-time Process Output
@@ -114,6 +115,43 @@ are done doing other stuff::
 
     // ... do other things
 
+    $process->wait();
+
+    // ... do things after the process has finished
+
+.. note::
+
+    The :method:`Symfony\\Component\\Process\\Process::wait` method is blocking,
+    which means that your code will halt at this line until the external
+    process is completed.
+
+.. note::
+
+    If a ``Response`` is sent **before** a child process had a chance to complete,
+    the server process will be killed (depending on your OS). It means that
+    your task will be stopped right away. Running an asynchronous process
+    is not the same as running a process that survives its parent process.
+
+    If you want your process to survive the request/response cycle, you can
+    take advantage of the ``kernel.terminate`` event, and run your command
+    **synchronously** inside this event. Be aware that ``kernel.terminate``
+    is called only if you use PHP-FPM.
+
+.. caution::
+
+    Beware also that if you do that, the said PHP-FPM process will not be
+    available to serve any new request until the subprocess is finished. This
+    means you can quickly block your FPM pool if you're not careful enough.
+    That is why it's generally way better not to do any fancy things even
+    after the request is sent, but to use a job queue instead.
+
+:method:`Symfony\\Component\\Process\\Process::wait` takes one optional argument:
+a callback that is called repeatedly whilst the process is still running, passing
+in the output and its type::
+
+    $process = new Process('ls -lsa');
+    $process->start();
+
     $process->wait(function ($type, $buffer) {
         if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
@@ -122,17 +160,11 @@ are done doing other stuff::
         }
     });
 
-.. note::
-
-    The :method:`Symfony\\Component\\Process\\Process::wait` method is blocking,
-    which means that your code will halt at this line until the external
-    process is completed.
-
 Stopping a Process
 ------------------
 
 .. versionadded:: 2.3
-    The ``signal`` parameter of the ``stop`` method was introduced in Symfony 2.3.
+    The ``signal`` parameter of the ``stop()`` method was introduced in Symfony 2.3.
 
 Any asynchronous process can be stopped at any time with the
 :method:`Symfony\\Component\\Process\\Process::stop` method. This method takes
@@ -157,7 +189,7 @@ instead::
     use Symfony\Component\Process\PhpProcess;
 
     $process = new PhpProcess(<<<EOF
-        <?php echo 'Hello World'; ?>
+        <?php echo 'Hello World' ?>
     EOF
     );
     $process->run();
@@ -167,8 +199,8 @@ To make your code work better on all platforms, you might want to use the
 
     use Symfony\Component\Process\ProcessBuilder;
 
-    $builder = new ProcessBuilder(array('ls', '-lsa'));
-    $builder->getProcess()->run();
+    $processBuilder = new ProcessBuilder(array('ls', '-lsa'));
+    $processBuilder->getProcess()->run();
 
 .. versionadded:: 2.3
     The :method:`ProcessBuilder::setPrefix<Symfony\\Component\\Process\\ProcessBuilder::setPrefix>`
@@ -183,17 +215,17 @@ adapter::
 
     use Symfony\Component\Process\ProcessBuilder;
 
-    $builder = new ProcessBuilder();
-    $builder->setPrefix('/usr/bin/tar');
+    $processBuilder = new ProcessBuilder();
+    $processBuilder->setPrefix('/usr/bin/tar');
 
     // '/usr/bin/tar' '--list' '--file=archive.tar.gz'
-    echo $builder
+    echo $processBuilder
         ->setArguments(array('--list', '--file=archive.tar.gz'))
         ->getProcess()
         ->getCommandLine();
 
     // '/usr/bin/tar' '-xzf' 'archive.tar.gz'
-    echo $builder
+    echo $processBuilder
         ->setArguments(array('-xzf', 'archive.tar.gz'))
         ->getProcess()
         ->getCommandLine();
@@ -201,8 +233,8 @@ adapter::
 Process Timeout
 ---------------
 
-You can limit the amount of time a process takes to complete by setting a
-timeout (in seconds)::
+By default processes have a timeout of 60 seconds, but you can change it passing
+a different timeout (in seconds) to the ``setTimeout()`` method::
 
     use Symfony\Component\Process\Process;
 
@@ -236,12 +268,12 @@ Process Idle Timeout
 In contrast to the timeout of the previous paragraph, the idle timeout only
 considers the time since the last output was produced by the process::
 
-   use Symfony\Component\Process\Process;
+    use Symfony\Component\Process\Process;
 
-   $process = new Process('something-with-variable-runtime');
-   $process->setTimeout(3600);
-   $process->setIdleTimeout(60);
-   $process->run();
+    $process = new Process('something-with-variable-runtime');
+    $process->setTimeout(3600);
+    $process->setIdleTimeout(60);
+    $process->run();
 
 In the case above, a process is considered timed out, when either the total runtime
 exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
@@ -250,7 +282,7 @@ Process Signals
 ---------------
 
 .. versionadded:: 2.3
-    The ``signal`` method was introduced in Symfony 2.3.
+    The ``signal()`` method was introduced in Symfony 2.3.
 
 When running a program asynchronously, you can send it POSIX signals with the
 :method:`Symfony\\Component\\Process\\Process::signal` method::
@@ -276,12 +308,10 @@ Process Pid
 -----------
 
 .. versionadded:: 2.3
-    The ``getPid`` method was introduced in Symfony 2.3.
+    The ``getPid()`` method was introduced in Symfony 2.3.
 
 You can access the `pid`_ of a running process with the
-:method:`Symfony\\Component\\Process\\Process::getPid` method.
-
-.. code-block:: php
+:method:`Symfony\\Component\\Process\\Process::getPid` method::
 
     use Symfony\Component\Process\Process;
 
@@ -312,16 +342,29 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
 
 .. caution::
 
-    You can not enable or disable the output while the process is running.
+    You cannot enable or disable the output while the process is running.
 
-    If you disable the output, you cannot access ``getOutput``,
-    ``getIncrementalOutput``, ``getErrorOutput`` or ``getIncrementalErrorOutput``.
-    Moreover, you could not pass a callback to the ``start``, ``run`` or ``mustRun``
-    methods or use ``setIdleTimeout``.
+    If you disable the output, you cannot access ``getOutput()``,
+    ``getIncrementalOutput()``, ``getErrorOutput()`` or ``getIncrementalErrorOutput()``.
+    Moreover, you could not pass a callback to the ``start()``, ``run()`` or ``mustRun()``
+    methods or use ``setIdleTimeout()``.
+
+Finding the Executable PHP Binary
+---------------------------------
+
+This component also provides a utility class called
+:class:`Symfony\\Component\\Process\\PhpExecutableFinder` which returns the
+absolute path of the executable PHP binary available on your server::
+
+    use Symfony\Component\Process\PhpExecutableFinder;
+
+    $phpBinaryFinder = new PhpExecutableFinder();
+    $phpBinaryPath = $phpBinaryFinder->find();
+    // $phpBinaryPath = '/usr/local/bin/php' (the result will be different on your computer)
 
 .. _`Symfony Issue#5759`: https://github.com/symfony/symfony/issues/5759
 .. _`PHP Bug#39992`: https://bugs.php.net/bug.php?id=39992
 .. _`exec`: https://en.wikipedia.org/wiki/Exec_(operating_system)
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
-.. _`PHP Documentation`: http://php.net/manual/en/pcntl.constants.php
+.. _`PHP Documentation`: https://php.net/manual/en/pcntl.constants.php
 .. _Packagist: https://packagist.org/packages/symfony/process

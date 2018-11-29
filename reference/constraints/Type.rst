@@ -20,6 +20,9 @@ option to validate this.
 Basic Usage
 -----------
 
+This will check if ``firstName`` is of type ``string`` and that ``age`` is an
+``integer``.
+
 .. configuration-block::
 
     .. code-block:: php-annotations
@@ -31,6 +34,11 @@ Basic Usage
 
         class Author
         {
+            /**
+             * @Assert\Type("string")
+             */
+            protected $firstName;
+
             /**
              * @Assert\Type(
              *     type="integer",
@@ -45,6 +53,9 @@ Basic Usage
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             properties:
+                firstName:
+                    - Type: string
+
                 age:
                     - Type:
                         type: integer
@@ -59,6 +70,11 @@ Basic Usage
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Author">
+                <property name="firstName">
+                    <constraint name="Type">
+                        <option name="type">string</option>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="Type">
                         <option name="type">integer</option>
@@ -80,6 +96,8 @@ Basic Usage
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('firstName', new Assert\Type('string'));
+
                 $metadata->addPropertyConstraint('age', new Assert\Type(array(
                     'type'    => 'integer',
                     'message' => 'The value {{ value }} is not a valid {{ type }}.',
@@ -98,7 +116,7 @@ type
 **type**: ``string`` [:ref:`default option <validation-default-option>`]
 
 This required option is the fully qualified class name or one of the PHP
-datatypes as determined by PHP's ``is_`` functions.
+datatypes as determined by PHP's ``is_()`` functions.
 
 * :phpfunction:`array <is_array>`
 * :phpfunction:`bool <is_bool>`
@@ -107,6 +125,7 @@ datatypes as determined by PHP's ``is_`` functions.
 * :phpfunction:`double <is_double>`
 * :phpfunction:`int <is_int>`
 * :phpfunction:`integer <is_integer>`
+* :phpfunction:`iterable <is_iterable>`
 * :phpfunction:`long <is_long>`
 * :phpfunction:`null <is_null>`
 * :phpfunction:`numeric <is_numeric>`
@@ -116,9 +135,8 @@ datatypes as determined by PHP's ``is_`` functions.
 * :phpfunction:`scalar <is_scalar>`
 * :phpfunction:`string <is_string>`
 
-Also, you can use ``ctype_`` functions from corresponding
-`built-in PHP extension <http://php.net/book.ctype.php>`_. Consider
-`a list of ctype functions <http://php.net/ref.ctype.php>`_:
+Also, you can use ``ctype_()`` functions from corresponding
+`built-in PHP extension`_. Consider `a list of ctype functions`_:
 
 * :phpfunction:`alnum <ctype_alnum>`
 * :phpfunction:`alpha <ctype_alpha>`
@@ -142,4 +160,17 @@ message
 
 The message if the underlying data is not of the given type.
 
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
+| ``{{ type }}``  | The expected type           |
++-----------------+-----------------------------+
+
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _built-in PHP extension: https://php.net/book.ctype.php
+.. _a list of ctype functions: https://php.net/ref.ctype.php

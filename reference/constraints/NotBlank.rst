@@ -1,9 +1,14 @@
 NotBlank
 ========
 
-Validates that a value is not blank, defined as not strictly ``false``,
-not equal to a blank string and also not equal to ``null``. To force that
-a value is simply not equal to ``null``, see the
+Validates that a value is not blank - meaning not equal to a blank string,
+a blank array, ``null`` or ``false``::
+
+    if (false === $value || (empty($value) && '0' != $value)) {
+        // validation will fail
+    }
+
+To force that a value is simply not equal to ``null``, see the
 :doc:`/reference/constraints/NotNull` constraint.
 
 +----------------+------------------------------------------------------------------------+
@@ -35,7 +40,7 @@ class were not blank, you could do the following:
         class Author
         {
             /**
-             * @Assert\NotBlank()
+             * @Assert\NotBlank
              */
             protected $firstName;
         }
@@ -88,5 +93,13 @@ message
 **type**: ``string`` **default**: ``This value should not be blank.``
 
 This is the message that will be shown if the value is blank.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

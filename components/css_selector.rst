@@ -10,15 +10,22 @@ The CssSelector Component
 Installation
 ------------
 
-You can install the component in 2 different ways:
+.. code-block:: terminal
 
-* :doc:`Install it via Composer </components/using_components>` (``symfony/css-selector`` on `Packagist`_);
-* Use the official Git repository (https://github.com/symfony/css-selector).
+    $ composer require symfony/css-selector
+
+Alternatively, you can clone the `<https://github.com/symfony/css-selector>`_ repository.
 
 .. include:: /components/require_autoload.rst.inc
 
 Usage
 -----
+
+.. seealso::
+
+    This article explains how to use the CssSelector features as an independent
+    component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
+    article to learn about how to use it when creating Symfony tests.
 
 Why to Use CSS selectors?
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,7 +41,7 @@ long and unwieldy expressions.
 
 Many developers -- particularly web developers -- are more comfortable
 using CSS selectors to find elements. As well as working in stylesheets,
-CSS selectors are used in JavaScript with the ``querySelectorAll`` function
+CSS selectors are used in JavaScript with the ``querySelectorAll()`` function
 and in popular JavaScript libraries such as jQuery, Prototype and MooTools.
 
 CSS selectors are less powerful than XPath, but far easier to write, read
@@ -46,12 +53,17 @@ document.
 The CssSelector Component
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.8
+    The ``CssSelectorConverter`` class was introduced in Symfony 2.8. Previously,
+    the ``CssSelector`` class was used and ``toXPath`` was a static method.
+
 The component's only goal is to convert CSS selectors to their XPath
-equivalents::
+equivalents, using :method:`Symfony\\Component\\CssSelector\\CssSelectorConverter::toXPath`::
 
-    use Symfony\Component\CssSelector\CssSelector;
+    use Symfony\Component\CssSelector\CssSelectorConverter;
 
-    var_dump(CssSelector::toXPath('div.item > h4 > a'));
+    $converter = new CssSelectorConverter();
+    var_dump($converter->toXPath('div.item > h4 > a'));
 
 This gives the following output:
 
@@ -92,3 +104,9 @@ Several pseudo-classes are not yet supported:
   name (e.g. ``li:first-of-type``) but not with ``*``.
 
 .. _Packagist: https://packagist.org/packages/symfony/css-selector
+
+Learn more
+----------
+
+* :doc:`/testing`
+* :doc:`/components/dom_crawler`

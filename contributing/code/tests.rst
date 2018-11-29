@@ -18,9 +18,9 @@ Before Running the Tests
 
 To run the Symfony test suite, install the external dependencies used during the
 tests, such as Doctrine, Twig and Monolog. To do so,
-:doc:`install Composer </cookbook/composer>` and execute the following:
+:doc:`install Composer </setup/composer>` and execute the following:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer update
 
@@ -32,7 +32,7 @@ Running the Tests
 Then, run the test suite from the Symfony root directory with the following
 command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php ./phpunit symfony
 
@@ -45,15 +45,16 @@ what's going on and if the tests are broken because of the new code.
     want to test a single component, type its path after the ``phpunit`` command,
     e.g.:
 
-    .. code-block:: bash
+    .. code-block:: terminal
 
         $ php ./phpunit src/Symfony/Component/Finder/
 
 .. tip::
 
-    On Windows, install the `ConEmu`_, `ANSICON`_ or `Mintty`_ free applications
+    On Windows, install the `Cmder`_, `ConEmu`_, `ANSICON`_ or `Mintty`_ free applications
     to see colored test results.
 
-.. _ConEmu: https://code.google.com/p/conemu-maximus5/
+.. _Cmder: http://cmder.net/
+.. _ConEmu: https://conemu.github.io/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
 .. _Mintty: https://mintty.github.io/

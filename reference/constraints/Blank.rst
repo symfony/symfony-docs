@@ -1,10 +1,17 @@
 Blank
 =====
 
-Validates that a value is blank, defined as equal to a blank string or equal
-to ``null``. To force that a value strictly be equal to ``null``, see the
-:doc:`/reference/constraints/IsNull` constraint. To force that a value is
-*not* blank, see :doc:`/reference/constraints/NotBlank`.
+Validates that a value is blank - meaning equal to an empty string or ``null``::
+
+    if ('' !== $value && null !== $value) {
+        // validation will fail
+    }
+
+To force that a value strictly be equal to ``null``, see the
+:doc:`/reference/constraints/IsNull` constraint.
+
+To force that a value is *not* blank, see :doc:`/reference/constraints/NotBlank`.
+But be careful as ``NotBlank`` is *not* strictly the opposite of ``Blank``.
 
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
@@ -35,7 +42,7 @@ of an ``Author`` class were blank, you could do the following:
         class Author
         {
             /**
-             * @Assert\Blank()
+             * @Assert\Blank
              */
             protected $firstName;
         }
@@ -88,5 +95,13 @@ message
 **type**: ``string`` **default**: ``This value should be blank.``
 
 This is the message that will be shown if the value is not blank.
+
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ value }}``  | The current (invalid) value                    |
++------------------+------------------------------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

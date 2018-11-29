@@ -40,27 +40,24 @@ dispatched. Listeners receive a
     use Symfony\Component\Console\ConsoleEvents;
 
     $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event) {
-        // get the input instance
+        // gets the input instance
         $input = $event->getInput();
 
-        // get the output instance
+        // gets the output instance
         $output = $event->getOutput();
 
-        // get the command to be executed
+        // gets the command to be executed
         $command = $event->getCommand();
 
-        // write something about the command
+        // writes something about the command
         $output->writeln(sprintf('Before running command <info>%s</info>', $command->getName()));
 
-        // get the application
+        // gets the application
         $application = $command->getApplication();
     });
 
 Disable Commands inside Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    Disabling commands inside listeners was introduced in Symfony 2.6.
 
 Using the
 :method:`Symfony\\Component\\Console\\Event\\ConsoleCommandEvent::disableCommand`
@@ -74,12 +71,12 @@ C/C++ standard.::
     use Symfony\Component\Console\ConsoleEvents;
 
     $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event) {
-        // get the command to be executed
+        // gets the command to be executed
         $command = $event->getCommand();
 
         // ... check if the command can be executed
 
-        // disable the command, this will result in the command being skipped
+        // disables the command, this will result in the command being skipped
         // and code 113 being returned from the Application
         $event->disableCommand();
 
@@ -88,44 +85,6 @@ C/C++ standard.::
             $event->enableCommand();
         }
     });
-
-The ``ConsoleEvents::TERMINATE`` Event
---------------------------------------
-
-**Typical Purposes**: To perform some cleanup actions after the command has
-been executed.
-
-After the command has been executed, the ``ConsoleEvents::TERMINATE`` event is
-dispatched. It can be used to do any actions that need to be executed for all
-commands or to cleanup what you initiated in a ``ConsoleEvents::COMMAND``
-listener (like sending logs, closing a database connection, sending emails,
-...). A listener might also change the exit code.
-
-Listeners receive a
-:class:`Symfony\\Component\\Console\\Event\\ConsoleTerminateEvent` event::
-
-    use Symfony\Component\Console\Event\ConsoleTerminateEvent;
-    use Symfony\Component\Console\ConsoleEvents;
-
-    $dispatcher->addListener(ConsoleEvents::TERMINATE, function (ConsoleTerminateEvent $event) {
-        // get the output
-        $output = $event->getOutput();
-
-        // get the command that has been executed
-        $command = $event->getCommand();
-
-        // display something
-        $output->writeln(sprintf('After running command <info>%s</info>', $command->getName()));
-
-        // change the exit code
-        $event->setExitCode(128);
-    });
-
-.. tip::
-
-    This event is also dispatched when an exception is thrown by the command.
-    It is then dispatched just before the ``ConsoleEvents::EXCEPTION`` event.
-    The exit code received in this case is the exception code.
 
 The ``ConsoleEvents::EXCEPTION`` Event
 --------------------------------------
@@ -150,11 +109,49 @@ Listeners receive a
 
         $output->writeln(sprintf('Oops, exception thrown while running command <info>%s</info>', $command->getName()));
 
-        // get the current exit code (the exception code or the exit code set by a ConsoleEvents::TERMINATE event)
+        // gets the current exit code (the exception code or the exit code set by a ConsoleEvents::TERMINATE event)
         $exitCode = $event->getExitCode();
 
-        // change the exception to another one
+        // changes the exception to another one
         $event->setException(new \LogicException('Caught exception', $exitCode, $event->getException()));
     });
+
+The ``ConsoleEvents::TERMINATE`` Event
+--------------------------------------
+
+**Typical Purposes**: To perform some cleanup actions after the command has
+been executed.
+
+After the command has been executed, the ``ConsoleEvents::TERMINATE`` event is
+dispatched. It can be used to do any actions that need to be executed for all
+commands or to cleanup what you initiated in a ``ConsoleEvents::COMMAND``
+listener (like sending logs, closing a database connection, sending emails,
+...). A listener might also change the exit code.
+
+Listeners receive a
+:class:`Symfony\\Component\\Console\\Event\\ConsoleTerminateEvent` event::
+
+    use Symfony\Component\Console\Event\ConsoleTerminateEvent;
+    use Symfony\Component\Console\ConsoleEvents;
+
+    $dispatcher->addListener(ConsoleEvents::TERMINATE, function (ConsoleTerminateEvent $event) {
+        // gets the output
+        $output = $event->getOutput();
+
+        // gets the command that has been executed
+        $command = $event->getCommand();
+
+        // displays the given content
+        $output->writeln(sprintf('After running command <info>%s</info>', $command->getName()));
+
+        // changes the exit code
+        $event->setExitCode(128);
+    });
+
+.. tip::
+
+    This event is also dispatched when an exception is thrown by the command.
+    It is then dispatched just after the ``ConsoleEvents::EXCEPTION`` event.
+    The exit code received in this case is the exception code.
 
 .. _`reserved exit codes`: http://www.tldp.org/LDP/abs/html/exitcodes.html

@@ -38,8 +38,8 @@ of a collection individually. Take the following example::
     class Author
     {
         protected $profileData = array(
-            'personal_email',
-            'short_bio',
+            'personal_email' => '...',
+            'short_bio' => '...',
         );
 
         public function setProfileData($key, $value)
@@ -80,8 +80,8 @@ following:
              * )
              */
              protected $profileData = array(
-                 'personal_email',
-                 'short_bio',
+                 'personal_email' => '...',
+                 'short_bio' => '...',
              );
         }
 
@@ -95,7 +95,7 @@ following:
                         fields:
                             personal_email: Email
                             short_bio:
-                                - NotBlank
+                                - NotBlank: ~
                                 - Length:
                                     max:   100
                                     maxMessage: Your short bio is too long!
@@ -223,7 +223,7 @@ you can do the following:
                     - Collection:
                         fields:
                             personal_email:
-                                - Required
+                                - Required:
                                     - NotBlank: ~
                                     - Email: ~
                             alternate_email:
@@ -314,10 +314,18 @@ error will be returned. If set to ``true``, extra fields are ok.
 extraFieldsMessage
 ~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``The fields {{ fields }} were not expected.``
+**type**: ``string`` **default**: ``This field was not expected.``
 
 The message shown if `allowExtraFields`_ is false and an extra field is
 detected.
+
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ field }}``  | The key of the extra field detected            |
++------------------+------------------------------------------------+
 
 allowMissingFields
 ~~~~~~~~~~~~~~~~~~
@@ -332,9 +340,17 @@ option are not present in the underlying collection.
 missingFieldsMessage
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``The fields {{ fields }} are missing.``
+**type**: ``string`` **default**: ``This field is missing.``
 
 The message shown if `allowMissingFields`_ is false and one or more fields
 are missing from the underlying collection.
+
+You can use the following parameters in this message:
+
++------------------+----------------------------------------------------+
+| Parameter        | Description                                        |
++==================+====================================================+
+| ``{{ field }}``  | The key of the missing field defined in ``fields`` |
++------------------+----------------------------------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

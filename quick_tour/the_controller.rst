@@ -15,8 +15,9 @@ result of executing any action of any controller is the creation of a
 to the user.
 
 So far, all the actions shown in this tutorial used the ``$this->render()``
-shortcut to return a rendered response as result. In case you need it, you
-can also create a raw ``Response`` object to return any text content::
+controller shortcut method to return a rendered template as result. In case
+you need it, you can also create a raw ``Response`` object to return any
+text content::
 
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
@@ -51,7 +52,7 @@ each value.
 
 Let's create a new action with route variables to show this feature in action.
 Open the ``src/AppBundle/Controller/DefaultController.php`` file and add
-a new method called ``helloAction`` with the following content::
+a new method called ``helloAction()`` with the following content::
 
     // src/AppBundle/Controller/DefaultController.php
     namespace AppBundle\Controller;
@@ -69,7 +70,7 @@ a new method called ``helloAction`` with the following content::
         public function helloAction($name)
         {
             return $this->render('default/hello.html.twig', array(
-                'name' => $name
+                'name' => $name,
             ));
         }
     }
@@ -114,7 +115,6 @@ as its default value::
 
     // src/AppBundle/Controller/DefaultController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
     // ...
 
@@ -124,7 +124,7 @@ as its default value::
     public function helloAction($name, $_format)
     {
         return $this->render('default/hello.'.$_format.'.twig', array(
-            'name' => $name
+            'name' => $name,
         ));
     }
 
@@ -153,7 +153,6 @@ option of the ``@Route()`` annotation::
 
     // src/AppBundle/Controller/DefaultController.php
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
     // ...
 
@@ -167,7 +166,7 @@ option of the ``@Route()`` annotation::
     public function helloAction($name, $_format)
     {
         return $this->render('default/hello.'.$_format.'.twig', array(
-            'name' => $name
+            'name' => $name,
         ));
     }
 
@@ -304,13 +303,13 @@ from any controller::
     {
         $session = $request->getSession();
 
-        // store an attribute for reuse during a later user request
+        // stores an attribute for reuse during a later user request
         $session->set('foo', 'bar');
 
-        // get the value of a session attribute
+        // gets the value of a session attribute
         $foo = $session->get('foo');
 
-        // use a default value if the attribute doesn't exist
+        // uses a default value if the attribute doesn't exist
         $foo = $session->get('foo', 'default_value');
     }
 
@@ -330,7 +329,7 @@ And you can display the flash message in the template like this:
 
 .. code-block:: html+twig
 
-    {% for flashMessage in app.session.flashbag.get('notice') %}
+    {% for flashMessage in app.session.flashBag.get('notice') %}
         <div class="flash-notice">
             {{ flashMessage }}
         </div>
@@ -339,7 +338,7 @@ And you can display the flash message in the template like this:
 Final Thoughts
 --------------
 
-That's all there is to it and I'm not even sure you'll have spent the full
+That's all there is to it and I'm not even sure you have spent the full
 10 minutes. You were briefly introduced to bundles in the first part and
 all the features you've learned about so far are part of the core FrameworkBundle.
 But thanks to bundles, everything in Symfony can be extended or replaced.

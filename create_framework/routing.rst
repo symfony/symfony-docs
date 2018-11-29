@@ -5,7 +5,6 @@ Before we start diving into the Routing component, let's refactor our current
 framework just a little to make templates even more readable::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -34,8 +33,7 @@ As we now extract the request query parameters, simplify the ``hello.php``
 template as follows::
 
     <!-- example.com/src/pages/hello.php -->
-
-    Hello <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
+    Hello <?php echo htmlspecialchars(isset($name) ? $name : 'World', ENT_QUOTES, 'UTF-8') ?>
 
 Now, we are in good shape to add new features.
 
@@ -43,17 +41,11 @@ One very important aspect of any website is the form of its URLs. Thanks to
 the URL map, we have decoupled the URL from the code that generates the
 associated response, but it is not yet flexible enough. For instance, we might
 want to support dynamic paths to allow embedding data directly into the URL
-instead of relying on a query string:
-
-    # Before
-    /hello?name=Fabien
-
-    # After
-    /hello/Fabien
+(e.g. ``/hello/Fabien``) instead of relying on a query string (e.g. ``/hello?name=Fabien``).
 
 To support this feature, add the Symfony Routing component as a dependency:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require symfony/routing
 
@@ -64,7 +56,7 @@ Instead of an array for the URL map, the Routing component relies on a
 
     $routes = new RouteCollection();
 
-Let's add a route that describe the ``/hello/SOMETHING`` URL and add another
+Let's add a route that describes the ``/hello/SOMETHING`` URL and add another
 one for the simple ``/bye`` one::
 
     use Symfony\Component\Routing\Route;
@@ -79,7 +71,7 @@ of default values for route attributes (``array('name' => 'World')``).
 .. note::
 
     Read the
-    :doc:`Routing component documentation </components/routing/introduction>` to
+    :doc:`Routing component documentation </components/routing>` to
     learn more about its many features like URL generation, attribute
     requirements, HTTP method enforcements, loaders for YAML or XML files,
     dumpers to PHP or Apache rewrite rules for enhanced performance and much
@@ -102,21 +94,27 @@ The ``match()`` method takes a request path and returns an array of attributes
 ``_route`` attribute)::
 
     print_r($matcher->match('/bye'));
+    /* Gives:
     array (
       '_route' => 'bye',
     );
+    */
 
     print_r($matcher->match('/hello/Fabien'));
+    /* Gives:
     array (
       'name' => 'Fabien',
       '_route' => 'hello',
     );
+    */
 
     print_r($matcher->match('/hello'));
+    /* Gives:
     array (
       'name' => 'World',
       '_route' => 'hello',
     );
+    */
 
 .. note::
 
@@ -132,7 +130,6 @@ The URL matcher throws an exception when none of the routes match::
 With this knowledge in mind, let's write the new version of our framework::
 
     // example.com/web/front.php
-
     require_once __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\HttpFoundation\Request;
@@ -152,9 +149,9 @@ With this knowledge in mind, let's write the new version of our framework::
         include sprintf(__DIR__.'/../src/pages/%s.php', $_route);
 
         $response = new Response(ob_get_clean());
-    } catch (Routing\Exception\ResourceNotFoundException $e) {
+    } catch (Routing\Exception\ResourceNotFoundException $exception) {
         $response = new Response('Not Found', 404);
-    } catch (Exception $e) {
+    } catch (Exception $exception) {
         $response = new Response('An error occurred', 500);
     }
 
@@ -169,15 +166,11 @@ There are a few new things in the code:
 * Request attributes are extracted to keep our templates simple::
 
       <!-- example.com/src/pages/hello.php -->
-
       Hello <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>
 
-* Route configuration has been moved to its own file:
-
-  .. code-block:: php
+* Route configuration has been moved to its own file::
 
       // example.com/src/app.php
-
       use Symfony\Component\Routing;
 
       $routes = new Routing\RouteCollection();

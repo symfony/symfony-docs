@@ -6,7 +6,7 @@ Table
 
 When building a console application it may be useful to display tabular data:
 
-.. code-block:: text
+.. code-block:: terminal
 
     +---------------+--------------------------+------------------+
     | ISBN          | Title                    | Author           |
@@ -54,7 +54,7 @@ You can add a table separator anywhere in the output by passing an instance of
         array('80-902734-1-6', 'And Then There Were None', 'Agatha Christie'),
     ));
 
-.. code-block:: text
+.. code-block:: terminal
 
     +---------------+--------------------------+------------------+
     | ISBN          | Title                    | Author           |
@@ -78,7 +78,7 @@ The table style can be changed to any built-in styles via
 
 This code results in:
 
-.. code-block:: text
+.. code-block:: terminal
 
      ISBN          Title                    Author
      99921-58-10-7 Divine Comedy            Dante Alighieri
@@ -93,7 +93,7 @@ You can also set the style to ``borderless``::
 
 which outputs:
 
-.. code-block:: text
+.. code-block:: terminal
 
      =============== ========================== ==================
       ISBN            Title                      Author
@@ -109,17 +109,17 @@ If the built-in styles do not fit your need, define your own::
     use Symfony\Component\Console\Helper\TableStyle;
 
     // by default, this is based on the default style
-    $style = new TableStyle();
+    $tableStyle = new TableStyle();
 
-    // customize the style
-    $style
+    // customizes the style
+    $tableStyle
         ->setHorizontalBorderChar('<fg=magenta>|</>')
         ->setVerticalBorderChar('<fg=magenta>-</>')
         ->setCrossingChar(' ')
     ;
 
-    // use the style for this table
-    $table->setStyle($style);
+    // uses the custom style for this table
+    $table->setStyle($tableStyle);
 
 Here is a full list of things you can customize:
 
@@ -136,10 +136,10 @@ Here is a full list of things you can customize:
 
     You can also register a style globally::
 
-        // register the style under the colorful name
-        Table::setStyleDefinition('colorful', $style);
+        // registers the style under the colorful name
+        Table::setStyleDefinition('colorful', $tableStyle);
 
-        // use it for a table
+        // applies the custom style for the given table
         $table->setStyle('colorful');
 
     This method can also be used to override a built-in style.
@@ -169,7 +169,7 @@ To make a table cell that spans multiple columns you can use a :class:`Symfony\\
 
 This results in:
 
-.. code-block:: text
+.. code-block:: terminal
 
     +---------------+---------------+-----------------+
     | ISBN          | Title         | Author          |
@@ -182,7 +182,7 @@ This results in:
 .. tip::
 
     You can create a multiple-line page title using a header cell that spans
-    the enire table width::
+    the entire table width::
 
         $table->setHeaders(array(
             array(new TableCell('Main table title', array('colspan' => 3))),
@@ -192,7 +192,7 @@ This results in:
 
     This generates:
 
-    .. code-block:: text
+    .. code-block:: terminal
 
         +-------+-------+--------+
         | Main table title       |
@@ -223,7 +223,7 @@ In a similar way you can span multiple rows::
 
 This outputs:
 
-.. code-block:: text
+.. code-block:: terminal
 
     +----------------+---------------+---------------------+
     | ISBN           | Title         | Author              |

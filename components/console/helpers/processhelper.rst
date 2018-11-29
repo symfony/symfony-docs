@@ -4,9 +4,6 @@
 Process Helper
 ==============
 
-.. versionadded:: 2.6
-    The Process Helper was introduced in Symfony 2.6.
-
 The Process Helper shows processes as they're running and reports
 useful information about process status.
 
@@ -23,15 +20,15 @@ a very verbose verbosity (e.g. -vv)::
 
 will result in this output:
 
-.. image:: /images/components/console/process-helper-verbose.png
+.. image:: /_images/components/console/process-helper-verbose.png
 
 It will result in more detailed output with debug verbosity (e.g. ``-vvv``):
 
-.. image:: /images/components/console/process-helper-debug.png
+.. image:: /_images/components/console/process-helper-debug.png
 
 In case the process fails, debugging is easier:
 
-.. image:: /images/components/console/process-helper-error-debug.png
+.. image:: /_images/components/console/process-helper-error-debug.png
 
 Arguments
 ---------

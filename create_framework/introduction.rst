@@ -41,13 +41,6 @@ a fully-featured full-stack web framework.
 And of course, each step will be the occasion to learn more about some of the
 Symfony Components.
 
-.. tip::
-
-    If you don't have time to read the whole book, or if you want to get
-    started fast, you can also have a look at `Silex`_, a micro-framework
-    based on the Symfony Components. The code is rather slim and it leverages
-    many aspects of the Symfony Components.
-
 Many modern web frameworks advertize themselves as being MVC frameworks. This
 tutorial won't talk about the MVC pattern, as the Symfony Components are able to
 create any type of frameworks, not just the ones that follow the MVC
@@ -84,7 +77,7 @@ classes, how you will reference external dependencies, etc.
 
 To store your new framework, create a directory somewhere on your machine:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ mkdir framework
     $ cd framework
@@ -94,7 +87,7 @@ Dependency Management
 
 To install the Symfony Components that you need for your framework, you are going
 to use `Composer`_, a project dependency manager for PHP. If you don't have it
-yet, :doc:`download and install Composer </cookbook/composer>` now.
+yet, :doc:`download and install Composer </setup/composer>` now.
 
 Our Project
 -----------
@@ -104,22 +97,21 @@ Instead of creating our framework from scratch, we are going to write the same
 start with the simplest web application we can think of in PHP::
 
     // framework/index.php
+    $name = $_GET['name'];
 
-    $input = $_GET['name'];
-
-    printf('Hello %s', $input);
+    printf('Hello %s', $name);
 
 If you have PHP 5.4, you can use the PHP built-in server to test this great
-application in a browser (``http://localhost:4321/index.php?name=Fabien``).
-Otherwise, use your own server (Apache, Nginx, etc.):
+application in a browser (``http://localhost:4321/index.php?name=Fabien``):
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php -S 127.0.0.1:4321
 
-In the next chapter, we are going to introduce the HttpFoundation Component
-and see what it brings us.
+Otherwise, you can always use your own server (Apache, Nginx, etc.).
 
-.. _`Symfony`: http://symfony.com/
-.. _`Silex`: http://silex.sensiolabs.org/
+In the :doc:`next chapter </create_framework/http_foundation>`, we are going to
+introduce the HttpFoundation Component and see what it brings us.
+
+.. _`Symfony`: https://symfony.com/
 .. _`Composer`: http://packagist.org/about-composer

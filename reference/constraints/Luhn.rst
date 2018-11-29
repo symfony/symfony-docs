@@ -34,7 +34,7 @@ will contain a credit card number.
         class Transaction
         {
             /**
-             * @Assert\Luhn(message = "Please check your credit card number.")
+             * @Assert\Luhn(message="Please check your credit card number.")
              */
             protected $cardNumber;
         }
@@ -85,6 +85,8 @@ will contain a credit card number.
             }
         }
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
 Available Options
 -----------------
 
@@ -94,6 +96,14 @@ message
 **type**: ``string`` **default**: ``Invalid card number.``
 
 The default message supplied when the value does not pass the Luhn check.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

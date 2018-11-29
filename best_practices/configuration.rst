@@ -78,7 +78,7 @@ add an extra layer of configuration that's not needed because you don't need
 or want these configuration values to change on each server.
 
 The configuration options defined in the ``config.yml`` file usually vary from
-one :doc:`environment </cookbook/configuration/environments>` to another. That's
+one :doc:`environment </configuration/environments>` to another. That's
 why Symfony already includes ``app/config/config_dev.yml`` and ``app/config/config_prod.yml``
 files so that you can override specific values for each environment.
 
@@ -101,22 +101,20 @@ to control the number of posts to display on the blog homepage:
 
     # app/config/config.yml
     parameters:
-        homepage.num_items: 10
+        homepage.number_of_items: 10
 
 If you've done something like this in the past, it's likely that you've in fact
 *never* actually needed to change that value. Creating a configuration
 option for a value that you are never going to configure just isn't necessary.
 Our recommendation is to define these values as constants in your application.
-You could, for example, define a ``NUM_ITEMS`` constant in the ``Post`` entity:
-
-.. code-block:: php
+You could, for example, define a ``NUMBER_OF_ITEMS`` constant in the ``Post`` entity::
 
     // src/AppBundle/Entity/Post.php
     namespace AppBundle\Entity;
 
     class Post
     {
-        const NUM_ITEMS = 10;
+        const NUMBER_OF_ITEMS = 10;
 
         // ...
     }
@@ -131,13 +129,11 @@ Constants can be used for example in your Twig templates thanks to the
 .. code-block:: html+twig
 
     <p>
-        Displaying the {{ constant('NUM_ITEMS', post) }} most recent results.
+        Displaying the {{ constant('NUMBER_OF_ITEMS', post) }} most recent results.
     </p>
 
 And Doctrine entities and repositories can now easily access these values,
-whereas they cannot access the container parameters:
-
-.. code-block:: php
+whereas they cannot access the container parameters::
 
     namespace AppBundle\Repository;
 
@@ -146,7 +142,7 @@ whereas they cannot access the container parameters:
 
     class PostRepository extends EntityRepository
     {
-        public function findLatest($limit = Post::NUM_ITEMS)
+        public function findLatest($limit = Post::NUMBER_OF_ITEMS)
         {
             // ...
         }
@@ -155,6 +151,31 @@ whereas they cannot access the container parameters:
 The only notable disadvantage of using constants for this kind of configuration
 values is that you cannot redefine them easily in your tests.
 
+Parameter Naming
+----------------
+
+.. best-practice::
+
+    The name of your configuration parameters should be as short as possible and
+    should include a common prefix for the entire application.
+
+Using ``app.`` as the prefix of your parameters is a common practice to avoid
+collisions with Symfony and third-party bundles/libraries parameters. Then, use
+just one or two words to describe the purpose of the parameter:
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    parameters:
+        # don't do this: 'dir' is too generic and it doesn't convey any meaning
+        app.dir: '...'
+        # do this: short but easy to understand names
+        app.contents_dir: '...'
+        # it's OK to use dots, underscores, dashes or nothing, but always
+        # be consistent and use the same format for all the parameters
+        app.dir.contents: '...'
+        app.contents-dir: '...'
+
 Semantic Configuration: Don't Do It
 -----------------------------------
 
@@ -162,7 +183,7 @@ Semantic Configuration: Don't Do It
 
     Don't define a semantic dependency injection configuration for your bundles.
 
-As explained in :doc:`/cookbook/bundles/extension` article, Symfony bundles
+As explained in :doc:`/bundles/extension` article, Symfony bundles
 have two choices on how to handle configuration: normal service configuration
 through the ``services.yml`` file and semantic configuration through a special
 ``*Extension`` class.
@@ -178,7 +199,11 @@ Moving Sensitive Options Outside of Symfony Entirely
 When dealing with sensitive options, like database credentials, we also recommend
 that you store them outside the Symfony project and make them available
 through environment variables. Learn how to do it in the following article:
-:doc:`/cookbook/configuration/external_parameters`
+:doc:`/configuration/external_parameters`.
+
+----
+
+Next: :doc:`/best_practices/business-logic`
 
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
-.. _`constant() function`: http://twig.sensiolabs.org/doc/functions/constant.html
+.. _`constant() function`: https://twig.symfony.com/doc/2.x/functions/constant.html

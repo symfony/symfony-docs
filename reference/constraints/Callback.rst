@@ -59,7 +59,7 @@ Configuration
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             constraints:
-                - Callback: [validate]
+                - Callback: validate
 
     .. code-block:: xml
 
@@ -165,9 +165,9 @@ External Callbacks and Closures
 If you want to execute a static callback method that is not located in the
 class of the validated object, you can configure the constraint to invoke
 an array callable as supported by PHP's :phpfunction:`call_user_func` function.
-Suppose your validation function is ``Vendor\Package\Validator::validate()``::
+Suppose your validation function is ``Acme\Validator::validate()``::
 
-    namespace Vendor\Package;
+    namespace Acme;
 
     use Symfony\Component\Validator\Context\ExecutionContextInterface;
     // if you're using the older 2.4 validation API, you'll need this instead
@@ -193,7 +193,7 @@ You can then use the following configuration to invoke this validator:
         use Symfony\Component\Validator\Constraints as Assert;
 
         /**
-         * @Assert\Callback({"Vendor\Package\Validator", "validate"})
+         * @Assert\Callback({"Acme\Validator", "validate"})
          */
         class Author
         {
@@ -204,7 +204,7 @@ You can then use the following configuration to invoke this validator:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Author:
             constraints:
-                - Callback: [Vendor\Package\Validator, validate]
+                - Callback: [Acme\Validator, validate]
 
     .. code-block:: xml
 
@@ -216,7 +216,7 @@ You can then use the following configuration to invoke this validator:
 
             <class name="AppBundle\Entity\Author">
                 <constraint name="Callback">
-                    <value>Vendor\Package\Validator</value>
+                    <value>Acme\Validator</value>
                     <value>validate</value>
                 </constraint>
             </class>
@@ -227,6 +227,7 @@ You can then use the following configuration to invoke this validator:
         // src/AppBundle/Entity/Author.php
         namespace AppBundle\Entity;
 
+        use Acme\Validator;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -235,7 +236,7 @@ You can then use the following configuration to invoke this validator:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addConstraint(new Assert\Callback(array(
-                    'Vendor\Package\Validator',
+                    Validator::class,
                     'validate',
                 )));
             }
@@ -244,9 +245,9 @@ You can then use the following configuration to invoke this validator:
 .. note::
 
     The Callback constraint does *not* support global callback functions
-    nor is it possible to specify a global function or a :term:`service` method
+    nor is it possible to specify a global function or a service method
     as callback. To validate using a service, you should
-    :doc:`create a custom validation constraint </cookbook/validation/custom_constraint>`
+    :doc:`create a custom validation constraint </validation/custom_constraint>`
     and add that new constraint to your class.
 
 When configuring the constraint via PHP, you can also pass a closure to the
@@ -297,7 +298,7 @@ Concrete callbacks receive an :class:`Symfony\\Component\\Validator\\Context\\Ex
 instance as only argument.
 
 Static or closure callbacks receive the validated object as the first argument
-and the :class:`Symfony\\Component\\Validator\\ExecutionContextInterface`
+and the :class:`Symfony\\Component\\Validator\\Context\\ExecutionContextInterface`
 instance as the second argument.
 
 .. include:: /reference/constraints/_payload-option.rst.inc

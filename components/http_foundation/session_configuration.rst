@@ -5,7 +5,7 @@
 Configuring Sessions and Save Handlers
 ======================================
 
-This section deals with how to configure session management and fine tune it
+This article deals with how to configure session management and fine tune it
 to your specific needs. This documentation covers save handlers, which
 store and retrieve session data, and configuring session behavior.
 
@@ -45,8 +45,8 @@ Example usage::
     use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler;
 
-    $storage = new NativeSessionStorage(array(), new NativeFileSessionHandler());
-    $session = new Session($storage);
+    $sessionStorage = new NativeSessionStorage(array(), new NativeFileSessionHandler());
+    $session = new Session($sessionStorage);
 
 .. note::
 
@@ -84,8 +84,8 @@ Example usage::
     use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
     $pdo = new \PDO(...);
-    $storage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
-    $session = new Session($storage);
+    $sessionStorage = new NativeSessionStorage(array(), new PdoSessionHandler($pdo));
+    $session = new Session($sessionStorage);
 
 Configuring PHP Sessions
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -138,6 +138,20 @@ If the garbage collection handler is invoked, PHP will pass the value stored in
 the ``php.ini`` directive ``session.gc_maxlifetime``. The meaning in this context is
 that any stored session that was saved more than ``gc_maxlifetime`` ago should be
 deleted. This allows one to expire records based on idle time.
+
+However, some operating systems (e.g. Debian) do their own session handling and set
+the ``session.gc_probability`` variable to ``0`` to stop PHP doing garbage
+collection. That's why Symfony now overwrites this value to ``1``.
+
+If you wish to use the original value set in your ``php.ini``, add the following
+configuration:
+
+.. code-block:: yaml
+
+    # config.yml
+    framework:
+        session:
+            gc_probability: null
 
 You can configure these settings by passing ``gc_probability``, ``gc_divisor``
 and ``gc_maxlifetime`` in an array to the constructor of
@@ -217,7 +231,7 @@ response headers.
         use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
         $options['cache_limiter'] = session_cache_limiter();
-        $storage = new NativeSessionStorage($options);
+        $sessionStorage = new NativeSessionStorage($options);
 
 Session Metadata
 ~~~~~~~~~~~~~~~~
@@ -300,6 +314,6 @@ without knowledge of the specific save handler.
     Before PHP 5.4, you can only proxy user-land save handlers but not
     native PHP save handlers.
 
-.. _`php.net/session.customhandler`: http://php.net/session.customhandler
-.. _`php.net/session.configuration`: http://php.net/session.configuration
-.. _`php.net/memcached.setoption`: http://php.net/memcached.setoption
+.. _`php.net/session.customhandler`: https://php.net/session.customhandler
+.. _`php.net/session.configuration`: https://php.net/session.configuration
+.. _`php.net/memcached.setoption`: https://php.net/memcached.setoption

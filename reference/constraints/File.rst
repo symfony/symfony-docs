@@ -8,8 +8,8 @@ Validates that a value is a valid "file", which can be one of the following:
 * A valid :class:`Symfony\\Component\\HttpFoundation\\File\\File` object
   (including objects of class :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile`).
 
-This constraint is commonly used in forms with the :doc:`file </reference/forms/types/file>`
-form type.
+This constraint is commonly used in forms with the :doc:`FileType </reference/forms/types/file>`
+form field.
 
 .. tip::
 
@@ -29,6 +29,11 @@ form type.
 |                | - `notReadableMessage`_                                             |
 |                | - `uploadIniSizeErrorMessage`_                                      |
 |                | - `uploadFormSizeErrorMessage`_                                     |
+|                | - `uploadPartialErrorMessage`_                                      |
+|                | - `uploadNoFileErrorMessage`_                                       |
+|                | - `uploadNoTmpDirErrorMessage`_                                     |
+|                | - `uploadCantWriteErrorMessage`_                                    |
+|                | - `uploadExtensionErrorMessage`_                                    |
 |                | - `uploadErrorMessage`_                                             |
 |                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
@@ -41,7 +46,7 @@ Basic Usage
 -----------
 
 This constraint is most commonly used on a property that will be rendered
-in a form as a :doc:`file </reference/forms/types/file>` form type. For
+in a form as a :doc:`FileType </reference/forms/types/file>` field. For
 example, suppose you're creating an author form where you can upload a "bio"
 PDF for the author. In your form, the ``bioFile`` property would be a ``file``
 type. The ``Author`` class might look as follows::
@@ -150,14 +155,13 @@ The ``bioFile`` property is validated to guarantee that it is a real file.
 Its size and mime type are also validated because the appropriate options
 have been specified.
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
 Options
 -------
 
 maxSize
 ~~~~~~~
-
-.. versionadded:: 2.6
-    The suffixes ``Ki`` and ``Mi`` were introduced in Symfony 2.6.
 
 **type**: ``mixed``
 
@@ -184,9 +188,6 @@ see `Wikipedia: Binary prefix`_.
 
 binaryFormat
 ~~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``binaryFormat`` option was introduced in Symfony 2.6.
 
 **type**: ``boolean`` **default**: ``null``
 
@@ -216,6 +217,20 @@ maxSizeMessage
 
 The message displayed if the file is larger than the `maxSize`_ option.
 
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ size }}``   | File size of the given file                    |
++------------------+------------------------------------------------+
+| ``{{ limit }}``  | Maximum file size allowed                      |
++------------------+------------------------------------------------+
+| ``{{ suffix }}`` | Suffix for the used file size unit (see above) |
++------------------+------------------------------------------------+
+| ``{{ file }}``   | Absolute file path                             |
++------------------+------------------------------------------------+
+
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
 
@@ -224,17 +239,33 @@ mimeTypesMessage
 The message displayed if the mime type of the file is not a valid mime type
 per the `mimeTypes`_ option.
 
+You can use the following parameters in this message:
+
++-----------------+----------------------------------------+
+| Parameter       | Description                            |
++=================+========================================+
+| ``{{ type }}``  | The MIME type of the given file        |
++-----------------+----------------------------------------+
+| ``{{ types }}`` | The list of allowed MIME types         |
++-----------------+----------------------------------------+
+| ``{{ file }}``  | Absolute file path                     |
++-----------------+----------------------------------------+
+
 disallowEmptyMessage
 ~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``disallowEmptyMessage`` option was introduced in Symfony 2.6. Prior to 2.6,
-    if the user uploaded an empty file, no validation error occurred.
 
 **type**: ``string`` **default**: ``An empty file is not allowed.``
 
 This constraint checks if the uploaded file is empty (i.e. 0 bytes). If it is,
 this message is displayed.
+
+You can use the following parameters in this message:
+
++----------------+--------------------+
+| Parameter      | Description        |
++================+====================+
+| ``{{ file }}`` | Absolute file path |
++----------------+--------------------+
 
 notFoundMessage
 ~~~~~~~~~~~~~~~
@@ -245,13 +276,29 @@ The message displayed if no file can be found at the given path. This error
 is only likely if the underlying value is a string path, as a ``File`` object
 cannot be constructed with an invalid file path.
 
+You can use the following parameters in this message:
+
++----------------+--------------------+
+| Parameter      | Description        |
++================+====================+
+| ``{{ file }}`` | Absolute file path |
++----------------+--------------------+
+
 notReadableMessage
 ~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file is not readable.``
 
-The message displayed if the file exists, but the PHP ``is_readable`` function
+The message displayed if the file exists, but the PHP ``is_readable()`` function
 fails when passed the path to the file.
+
+You can use the following parameters in this message:
+
++----------------+--------------------+
+| Parameter      | Description        |
++================+====================+
+| ``{{ file }}`` | Absolute file path |
++----------------+--------------------+
 
 uploadIniSizeErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -261,6 +308,16 @@ uploadIniSizeErrorMessage
 The message that is displayed if the uploaded file is larger than the ``upload_max_filesize``
 ``php.ini`` setting.
 
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ limit }}``  | Maximum file size allowed                      |
++------------------+------------------------------------------------+
+| ``{{ suffix }}`` | Suffix for the used file size unit (see above) |
++------------------+------------------------------------------------+
+
 uploadFormSizeErrorMessage
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -269,14 +326,65 @@ uploadFormSizeErrorMessage
 The message that is displayed if the uploaded file is larger than allowed
 by the HTML file input field.
 
+This message has no parameters.
+
+uploadPartialErrorMessage
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The file was only partially uploaded.``
+
+The message that is displayed if the uploaded file is only partially uploaded.
+
+This message has no parameters.
+
+uploadNoFileErrorMessage
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``No file was uploaded.``
+
+The message that is displayed if no file was uploaded.
+
+This message has no parameters.
+
+uploadNoTmpDirErrorMessage
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``No temporary folder was configured in php.ini.``
+
+The message that is displayed if the php.ini setting ``upload_tmp_dir`` is
+missing.
+
+This message has no parameters.
+
+uploadCantWriteErrorMessage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``Cannot write temporary file to disk.``
+
+The message that is displayed if the uploaded file can't be stored in the
+temporary folder.
+
+This message has no parameters.
+
+uploadExtensionErrorMessage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``A PHP extension caused the upload to fail.``
+
+The message that is displayed if a PHP extension caused the file upload to
+fail.
+
+This message has no parameters.
+
 uploadErrorMessage
 ~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The file could not be uploaded.``
 
 The message that is displayed if the uploaded file could not be uploaded
-for some unknown reason, such as the file upload failed or it couldn't be
-written to disk.
+for some unknown reason.
+
+This message has no parameters.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

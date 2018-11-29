@@ -1,17 +1,17 @@
 .. index::
-   single: Forms; Fields; form
+   single: Forms; Fields; FormType
 
-form Field Type
-===============
+FormType Field
+==============
 
-The ``form`` type predefines a couple of options that are then available
-on all types for which ``form`` is the parent type.
+The ``FormType`` predefines a couple of options that are then available
+on all types for which ``FormType`` is the parent.
 
 +-----------+--------------------------------------------------------------------+
 | Options   | - `action`_                                                        |
 |           | - `allow_extra_fields`_                                            |
 |           | - `by_reference`_                                                  |
-|           | - `cascade_validation`_                                            |
+|           | - `cascade_validation`_ (deprecated as of 2.8)                     |
 |           | - `compound`_                                                      |
 |           | - `constraints`_                                                   |
 |           | - `data`_                                                          |
@@ -24,13 +24,14 @@ on all types for which ``form`` is the parent type.
 |           | - `invalid_message`_                                               |
 |           | - `invalid_message_parameters`_                                    |
 |           | - `label_attr`_                                                    |
+|           | - `label_format`_                                                  |
 |           | - `mapped`_                                                        |
 |           | - `max_length`_ (deprecated as of 2.5)                             |
 |           | - `method`_                                                        |
 |           | - `pattern`_ (deprecated as of 2.5)                                |
 |           | - `post_max_size_message`_                                         |
 |           | - `property_path`_                                                 |
-|           | - `read_only`_                                                     |
+|           | - `read_only`_ (deprecated as of 2.8)                              |
 |           | - `required`_                                                      |
 |           | - `trim`_                                                          |
 +-----------+--------------------------------------------------------------------+
@@ -53,11 +54,10 @@ Field Options
 
 .. include:: /reference/forms/types/options/action.rst.inc
 
+.. _form-option-allow-extra-fields:
+
 allow_extra_fields
 ~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 2.6
-    The ``allow_extra_fields`` option was introduced in Symfony 2.6.
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -73,11 +73,15 @@ option on the form.
 
 .. include:: /reference/forms/types/options/compound.rst.inc
 
+.. _reference-form-option-constraints:
+
 .. include:: /reference/forms/types/options/constraints.rst.inc
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/data_class.rst.inc
+
+.. _reference-form-option-empty-data:
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER
@@ -109,6 +113,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. _reference-form-option-mapped:
 
@@ -146,8 +152,8 @@ Inherited Options
 The following options are defined in the
 :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BaseType` class.
 The ``BaseType`` class is the parent class for both the ``form`` type and
-the :doc:`button type </reference/forms/types/button>`, but it is not part
-of the form type tree (i.e. it can not be used as a form type on its own).
+the :doc:`ButtonType </reference/forms/types/button>`, but it is not part
+of the form type tree (i.e. it cannot be used as a form type on its own).
 
 .. include:: /reference/forms/types/options/attr.rst.inc
 

@@ -13,9 +13,9 @@ Also see :doc:`IsFalse <IsFalse>`.
 | Options        | - `message`_                                                        |
 |                | - `payload`_                                                        |
 +----------------+---------------------------------------------------------------------+
-| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\True`           |
+| Class          | :class:`Symfony\\Component\\Validator\\Constraints\\IsTrue`         |
 +----------------+---------------------------------------------------------------------+
-| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\TrueValidator`  |
+| Validator      | :class:`Symfony\\Component\\Validator\\Constraints\\IsTrueValidator`|
 +----------------+---------------------------------------------------------------------+
 
 Basic Usage
@@ -55,7 +55,7 @@ Then you can constrain this method with ``IsTrue``.
             protected $token;
 
             /**
-             * @Assert\IsTrue(message = "The token is invalid")
+             * @Assert\IsTrue(message="The token is invalid")
              */
             public function isTokenValid()
             {
@@ -125,5 +125,13 @@ message
 **type**: ``string`` **default**: ``This value should be true.``
 
 This message is shown if the underlying data is not true.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

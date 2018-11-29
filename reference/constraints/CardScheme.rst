@@ -28,7 +28,7 @@ on an object that will contain a credit card number.
     .. code-block:: php-annotations
 
         // src/AppBundle/Entity/Transaction.php
-        namespace AppBundle\Entity\Transaction;
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -76,7 +76,7 @@ on an object that will contain a credit card number.
     .. code-block:: php
 
         // src/AppBundle/Entity/Transaction.php
-        namespace AppBundle\Entity\Transaction;
+        namespace AppBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -89,12 +89,14 @@ on an object that will contain a credit card number.
             {
                 $metadata->addPropertyConstraint('cardNumber', new Assert\CardScheme(array(
                     'schemes' => array(
-                        'VISA'
+                        'VISA',
                     ),
                     'message' => 'Your credit card number is invalid.',
                 )));
             }
         }
+
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
 
 Available Options
 -----------------
@@ -128,6 +130,14 @@ message
 **type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
 
 The message shown when the value does not pass the ``CardScheme`` check.
+
+You can use the following parameters in this message:
+
++------------------+------------------------------------------------+
+| Parameter        | Description                                    |
++==================+================================================+
+| ``{{ value }}``  | The current (invalid) value                    |
++------------------+------------------------------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

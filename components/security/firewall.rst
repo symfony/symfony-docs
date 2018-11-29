@@ -34,14 +34,9 @@ certain action or resource of the application::
         throw new AccessDeniedException();
     }
 
-.. versionadded:: 2.6
-    As of Symfony 2.6, the :class:`Symfony\\Component\\Security\\Core\\SecurityContext` class was split
-    in the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationChecker` and
-    :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorage` classes.
-
 .. note::
 
-    Read the dedicated sections to learn more about :doc:`/components/security/authentication`
+    Read the dedicated articles to learn more about :doc:`/components/security/authentication`
     and :doc:`/components/security/authorization`.
 
 .. _firewall:
@@ -61,7 +56,7 @@ the user::
     use Symfony\Component\HttpFoundation\RequestMatcher;
     use Symfony\Component\Security\Http\Firewall\ExceptionListener;
 
-    $map = new FirewallMap();
+    $firewallMap = new FirewallMap();
 
     $requestMatcher = new RequestMatcher('^/secured-area/');
 
@@ -70,7 +65,7 @@ the user::
 
     $exceptionListener = new ExceptionListener(...);
 
-    $map->add($requestMatcher, $listeners, $exceptionListener);
+    $firewallMap->add($requestMatcher, $listeners, $exceptionListener);
 
 The firewall map will be given to the firewall as its first argument, together
 with the event dispatcher that is used by the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`::
@@ -81,7 +76,7 @@ with the event dispatcher that is used by the :class:`Symfony\\Component\\HttpKe
     // the EventDispatcher used by the HttpKernel
     $dispatcher = ...;
 
-    $firewall = new Firewall($map, $dispatcher);
+    $firewall = new Firewall($firewallMap, $dispatcher);
 
     $dispatcher->addListener(
         KernelEvents::REQUEST,
@@ -153,5 +148,5 @@ context works:
 #. Once a user is authenticated, you'll use :doc:`/components/security/authorization`
    to deny access to certain resources.
 
-Read the next sections to find out more about :doc:`/components/security/authentication`
+Read the next articles to find out more about :doc:`/components/security/authentication`
 and :doc:`/components/security/authorization`.

@@ -1,12 +1,11 @@
 .. index::
-   single: Forms; Fields; percent
+   single: Forms; Fields; PercentType
 
-percent Field Type
-==================
+PercentType Field
+=================
 
-
-The ``percent`` type renders an input text field and specializes in handling
-percentage data. If your percentage data is stored as a decimal (e.g. ``.95``),
+The ``PercentType`` renders an input text field and specializes in handling
+percentage data. If your percentage data is stored as a decimal (e.g. ``0.95``),
 you can use this field out-of-the-box. If you store your data as a number
 (e.g. ``95``), you should set the ``type`` option to ``integer``.
 
@@ -30,11 +29,12 @@ This field adds a percentage sign "``%``" after the input box.
 |             | - `invalid_message_parameters`_                                       |
 |             | - `label`_                                                            |
 |             | - `label_attr`_                                                       |
+|             | - `label_format`_                                                     |
 |             | - `mapped`_                                                           |
-|             | - `read_only`_                                                        |
+|             | - `read_only`_ (deprecated as of 2.8)                                 |
 |             | - `required`_                                                         |
 +-------------+-----------------------------------------------------------------------+
-| Parent type | :doc:`form </reference/forms/types/form>`                             |
+| Parent type | :doc:`FormType </reference/forms/types/form>`                         |
 +-------------+-----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType` |
 +-------------+-----------------------------------------------------------------------+
@@ -60,14 +60,14 @@ type
 **type**: ``string`` **default**: ``fractional``
 
 This controls how your data is stored on your object. For example, a percentage
-corresponding to "55%", might be stored as ``.55`` or ``55`` on your
+corresponding to "55%", might be stored as ``0.55`` or ``55`` on your
 object. The two "types" handle these two cases:
 
 *   ``fractional``
-    If your data is stored as a decimal (e.g. ``.55``), use this type.
+    If your data is stored as a decimal (e.g. ``0.55``), use this type.
     The data will be multiplied by ``100`` before being shown to the
     user (e.g. ``55``). The submitted data will be divided by ``100``
-    on form submit so that the decimal value is stored (``.55``);
+    on form submit so that the decimal value is stored (``0.55``);
 
 *   ``integer``
     If your data is stored as an integer (e.g. 55), then use this option.
@@ -82,8 +82,7 @@ Overridden Options
 Inherited Options
 -----------------
 
-These options inherit from the :doc:`form </reference/forms/types/form>`
-type:
+These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
@@ -108,6 +107,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

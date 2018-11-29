@@ -35,4 +35,4 @@ Now, inject that into an ``ImmutableEventDispatcher``::
 You'll need to use this new dispatcher in your project.
 
 If you are trying to execute one of the methods which modifies the dispatcher
-(e.g. ``addListener``), a ``BadMethodCallException`` is thrown.
+(e.g. ``addListener()``), a ``BadMethodCallException`` is thrown.

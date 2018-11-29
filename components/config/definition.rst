@@ -18,20 +18,21 @@ be a boolean value"):
 
 .. code-block:: yaml
 
-    auto_connect: true
-    default_connection: mysql
-    connections:
-        mysql:
-            host:     localhost
-            driver:   mysql
-            username: user
-            password: pass
-        sqlite:
-            host:     localhost
-            driver:   sqlite
-            memory:   true
-            username: user
-            password: pass
+    database:
+        auto_connect: true
+        default_connection: mysql
+        connections:
+            mysql:
+                host:     localhost
+                driver:   mysql
+                username: user
+                password: pass
+            sqlite:
+                host:     localhost
+                driver:   sqlite
+                memory:   true
+                username: user
+                password: pass
 
 When loading multiple configuration files, it should be possible to merge
 and overwrite some values. Other values should not be merged and stay as
@@ -141,13 +142,14 @@ values::
 
     $rootNode
         ->children()
-            ->enumNode('gender')
-                ->values(array('male', 'female'))
+            ->enumNode('delivery')
+                ->values(array('standard', 'expedited', 'priority'))
             ->end()
         ->end()
     ;
 
-This will restrict the ``gender`` option to be either ``male`` or ``female``.
+This will restrict the ``delivery`` options to be either ``standard``,
+``expedited``  or ``priority``.
 
 Array Nodes
 ~~~~~~~~~~~
@@ -209,6 +211,9 @@ Before defining the children of an array node, you can provide options like:
     If called (with ``false``), keys with dashes are *not* normalized to underscores.
     It is recommended to use this with prototype nodes where the user will define
     a key-value map, to avoid an unnecessary transformation.
+``ignoreExtraKeys()``
+    Allows extra config keys to be specified under an array without
+    throwing an exception.
 
 A basic prototyped array configuration can be defined as follows::
 
@@ -231,7 +236,7 @@ Or the following XML configuration:
 
 .. code-block:: xml
 
-    <driver>msyql</driver>
+    <driver>mysql</driver>
     <driver>sqlite</driver>
 
 The processed configuration is::
@@ -334,7 +339,7 @@ In order to maintain the array keys use the ``useAttributeAsKey()`` method::
 
 The argument of this method (``name`` in the example above) defines the name of
 the attribute added to each XML node to differentiate them. Now you can use the
-same YAML configuration showed before or the following XML configuration:
+same YAML configuration shown before or the following XML configuration:
 
 .. code-block:: xml
 
@@ -416,10 +421,33 @@ Documenting the Option
 
 All options can be documented using the
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::info`
-method.
+method::
+
+    $rootNode
+        ->children()
+            ->integerNode('entries_per_page')
+                ->info('This value is only used for the search results page.')
+                ->defaultValue(25)
+            ->end()
+        ->end()
+    ;
 
 The info will be printed as a comment when dumping the configuration tree
 with the ``config:dump-reference`` command.
+
+In YAML you may have:
+
+.. code-block:: yaml
+
+    # This value is only used for the search results page.
+    entries_per_page:     25
+
+and in XML:
+
+.. code-block:: xml
+
+    <!-- entries-per-page: This value is only used for the search results page. -->
+    <config entries-per-page="25" />
 
 .. versionadded:: 2.6
     Since Symfony 2.6, the info will also be added to the exception message
@@ -450,7 +478,7 @@ methods::
                 ->defaultFalse()
     ;
 
-The ``canBeDisabled`` method looks about the same except that the section
+The ``canBeDisabled()`` method looks about the same except that the section
 would be enabled by default.
 
 Merging Options
@@ -508,8 +536,8 @@ tree with ``append()``::
 
     public function addParametersNode()
     {
-        $builder = new TreeBuilder();
-        $node = $builder->root('parameters');
+        $treeBuilder = new TreeBuilder();
+        $node = $treeBuilder->root('parameters');
 
         $node
             ->isRequired()
@@ -630,7 +658,7 @@ a second argument::
         ->end()
     ;
 
-As well as fixing this, ``fixXmlConfig`` ensures that single XML elements
+As well as fixing this, ``fixXmlConfig()`` ensures that single XML elements
 are still turned into an array. So you may have:
 
 .. code-block:: xml
@@ -646,7 +674,7 @@ and sometimes only:
 
 By default ``connection`` would be an array in the first case and a string
 in the second making it difficult to validate. You can ensure it is always
-an array with ``fixXmlConfig``.
+an array with ``fixXmlConfig()``.
 
 You can further control the normalization process if you need to. For example,
 you may want to allow a string to be set and used as a particular key or
@@ -700,8 +728,8 @@ The builder is used for adding advanced validation rules to node definitions, li
                     ->scalarNode('driver')
                         ->isRequired()
                         ->validate()
-                        ->ifNotInArray(array('mysql', 'sqlite', 'mssql'))
-                            ->thenInvalid('Invalid database driver "%s"')
+                            ->ifNotInArray(array('mysql', 'sqlite', 'mssql'))
+                            ->thenInvalid('Invalid database driver %s')
                         ->end()
                     ->end()
                 ->end()
@@ -746,18 +774,18 @@ Otherwise the result is a clean array of configuration values::
     use Symfony\Component\Config\Definition\Processor;
     use Acme\DatabaseConfiguration;
 
-    $config1 = Yaml::parse(
+    $config = Yaml::parse(
         file_get_contents(__DIR__.'/src/Matthias/config/config.yml')
     );
-    $config2 = Yaml::parse(
+    $extraConfig = Yaml::parse(
         file_get_contents(__DIR__.'/src/Matthias/config/config_extra.yml')
     );
 
-    $configs = array($config1, $config2);
+    $configs = array($config, $extraConfig);
 
     $processor = new Processor();
-    $configuration = new DatabaseConfiguration();
+    $databaseConfiguration = new DatabaseConfiguration();
     $processedConfiguration = $processor->processConfiguration(
-        $configuration,
+        $databaseConfiguration,
         $configs
     );

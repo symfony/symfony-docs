@@ -33,8 +33,8 @@ This method has 3 arguments:
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-    $language = new ExpressionLanguage();
-    $language->register('lowercase', function ($str) {
+    $expressionLanguage = new ExpressionLanguage();
+    $expressionLanguage->register('lowercase', function ($str) {
         return sprintf('(is_string(%1$s) ? strtolower(%1$s) : %1$s)', $str);
     }, function ($arguments, $str) {
         if (!is_string($str)) {
@@ -44,33 +44,28 @@ This method has 3 arguments:
         return strtolower($str);
     });
 
-    var_dump($language->evaluate('lowercase("HELLO")'));
+    var_dump($expressionLanguage->evaluate('lowercase("HELLO")'));
+    // this will print: hello
 
-This will print ``hello``. Both the **compiler** and **evaluator** are passed
-an ``arguments`` variable as their first argument, which is equal to the
-second argument to ``evaluate()`` or ``compile()`` (e.g. the "values" when
-evaluating or the "names" if compiling).
+In addition to the custom function arguments, the **evaluator** is passed an
+``arguments`` variable as its first argument, which is equal to the second
+argument of ``compile()`` (e.g. the "values" when evaluating an expression).
 
 .. _components-expression-language-provider:
 
 Using Expression Providers
 --------------------------
 
-.. versionadded:: 2.6
-    Expression providers were introduced in Symfony 2.6.
-
 When you use the ``ExpressionLanguage`` class in your library, you often want
 to add custom functions. To do so, you can create a new expression provider by
 creating a class that implements
 :class:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunctionProviderInterface`.
 
-This interface requires one method: 
+This interface requires one method:
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunctionProviderInterface::getFunctions`,
 which returns an array of expression functions (instances of
 :class:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction`) to
-register.
-
-.. code-block:: php
+register::
 
     use Symfony\Component\ExpressionLanguage\ExpressionFunction;
     use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
@@ -100,13 +95,13 @@ or by using the second argument of the constructor::
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
     // using the constructor
-    $language = new ExpressionLanguage(null, array(
+    $expressionLanguage = new ExpressionLanguage(null, array(
         new StringExpressionLanguageProvider(),
         // ...
     ));
 
     // using registerProvider()
-    $language->registerProvider(new StringExpressionLanguageProvider());
+    $expressionLanguage->registerProvider(new StringExpressionLanguageProvider());
 
 .. tip::
 
@@ -120,7 +115,7 @@ or by using the second argument of the constructor::
         {
             public function __construct(ParserCacheInterface $parser = null, array $providers = array())
             {
-                // prepend the default provider to let users override it easily
+                // prepends the default provider to let users override it easily
                 array_unshift($providers, new StringExpressionLanguageProvider());
 
                 parent::__construct($parser, $providers);

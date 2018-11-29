@@ -34,7 +34,7 @@ of the day when the event starts:
         class Event
         {
             /**
-             * @Assert\Time()
+             * @Assert\Time
              */
              protected $startsAt;
         }
@@ -78,6 +78,8 @@ of the day when the event starts:
             }
         }
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
 Options
 -------
 
@@ -87,5 +89,13 @@ message
 **type**: ``string`` **default**: ``This value is not a valid time.``
 
 This message is shown if the underlying data is not a valid time.
+
+You can use the following parameters in this message:
+
++-----------------+-----------------------------+
+| Parameter       | Description                 |
++=================+=============================+
+| ``{{ value }}`` | The current (invalid) value |
++-----------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

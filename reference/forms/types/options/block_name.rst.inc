@@ -2,7 +2,7 @@ block_name
 ~~~~~~~~~~
 
 **type**: ``string`` **default**: the form's name (see :ref:`Knowing which
-block to customize <cookbook-form-customization-sidebar>`)
+block to customize <form-customization-sidebar>`)
 
 Allows you to override the block name used to render the form type.
 Useful for example if you have multiple instances of the same form and you

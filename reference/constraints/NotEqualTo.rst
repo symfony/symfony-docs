@@ -29,8 +29,9 @@ options. To force that a value is equal, see
 Basic Usage
 -----------
 
-If you want to ensure that the ``age`` of a ``Person`` class is not equal
-to ``15``, you could do the following:
+If you want to ensure that the ``firstName`` of a ``Person`` is not equal to
+``Mary`` and that the ``age`` of a ``Person`` class is not ``15``, you could do
+the following:
 
 .. configuration-block::
 
@@ -44,6 +45,11 @@ to ``15``, you could do the following:
         class Person
         {
             /**
+             * @Assert\NotEqualTo("Mary")
+             */
+            protected $firstName;
+
+            /**
              * @Assert\NotEqualTo(
              *     value = 15
              * )
@@ -56,6 +62,8 @@ to ``15``, you could do the following:
         # src/AppBundle/Resources/config/validation.yml
         AppBundle\Entity\Person:
             properties:
+                firstName:
+                    - NotEqualTo: Mary
                 age:
                     - NotEqualTo:
                         value: 15
@@ -69,6 +77,11 @@ to ``15``, you could do the following:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="AppBundle\Entity\Person">
+                <property name="firstName">
+                    <constraint name="NotEqualTo">
+                        <value>Mary</value>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="NotEqualTo">
                         <option name="value">15</option>
@@ -89,6 +102,8 @@ to ``15``, you could do the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('firstName', new Assert\NotEqualTo('Mary'));
+
                 $metadata->addPropertyConstraint('age', new Assert\NotEqualTo(array(
                     'value' => 15,
                 )));
@@ -106,5 +121,17 @@ message
 **type**: ``string`` **default**: ``This value should not be equal to {{ compared_value }}.``
 
 This is the message that will be shown if the value is equal.
+
+You can use the following parameters in this message:
+
++-------------------------------+-----------------------------+
+| Parameter                     | Description                 |
++===============================+=============================+
+| ``{{ value }}``               | The current (invalid) value |
++-------------------------------+-----------------------------+
+| ``{{ compared_value }}``      | The expected value          |
++-------------------------------+-----------------------------+
+| ``{{ compared_value_type }}`` | The expected value type     |
++-------------------------------+-----------------------------+
 
 .. include:: /reference/constraints/_payload-option.rst.inc

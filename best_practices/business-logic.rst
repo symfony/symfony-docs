@@ -15,7 +15,7 @@ Inside here, you can create whatever directories you want to organize things:
 
 .. code-block:: text
 
-    symfony2-project/
+    symfony-project/
     ├─ app/
     ├─ src/
     │  └─ AppBundle/
@@ -33,7 +33,7 @@ and put things there:
 
 .. code-block:: text
 
-    symfony2-project/
+    symfony-project/
     ├─ app/
     ├─ src/
     │  ├─ Acme/
@@ -57,9 +57,7 @@ The blog application needs a utility that can transform a post title (e.g.
 part of the post URL.
 
 Let's create a new ``Slugger`` class inside ``src/AppBundle/Utils/`` and
-add the following ``slugify()`` method:
-
-.. code-block:: php
+add the following ``slugify()`` method::
 
     // src/AppBundle/Utils/Slugger.php
     namespace AppBundle\Utils;
@@ -96,9 +94,7 @@ your code will be easier to read and use.
     you ever need to.
 
 Now you can use the custom slugger in any controller class, such as the
-``AdminController``:
-
-.. code-block:: php
+``AdminController``::
 
     public function createAction(Request $request)
     {
@@ -147,7 +143,7 @@ the class namespace as a parameter:
         app.slugger:
             class: '%slugger.class%'
 
-This practice is cumbersome and completely unnecessary for your own services:
+This practice is cumbersome and completely unnecessary for your own services.
 
 .. best-practice::
 
@@ -176,7 +172,7 @@ The three entities defined by our sample blog application are a good example:
 
 .. code-block:: text
 
-    symfony2-project/
+    symfony-project/
     ├─ ...
     └─ src/
        └─ AppBundle/
@@ -193,7 +189,7 @@ The three entities defined by our sample blog application are a good example:
 Doctrine Mapping Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Doctrine Entities are plain PHP objects that you store in some "database".
+Doctrine entities are plain PHP objects that you store in some "database".
 Doctrine only knows about your entities through the mapping metadata configured
 for your model classes. Doctrine supports four metadata formats: YAML, XML,
 PHP and annotations.
@@ -203,9 +199,7 @@ PHP and annotations.
     Use annotations to define the mapping information of the Doctrine entities.
 
 Annotations are by far the most convenient and agile way of setting up and
-looking for mapping information:
-
-.. code-block:: php
+looking for mapping information::
 
     namespace AppBundle\Entity;
 
@@ -217,7 +211,7 @@ looking for mapping information:
      */
     class Post
     {
-        const NUM_ITEMS = 10;
+        const NUMBER_OF_ITEMS = 10;
 
         /**
          * @ORM\Id
@@ -253,11 +247,11 @@ looking for mapping information:
 
         /**
          * @ORM\OneToMany(
-         *      targetEntity="Comment",
+         *      targetEntity="App\Entity\Comment",
          *      mappedBy="post",
          *      orphanRemoval=true
          * )
-         * @ORM\OrderBy({"publishedAt" = "ASC"})
+         * @ORM\OrderBy({"publishedAt"="ASC"})
          */
         private $comments;
 
@@ -279,14 +273,12 @@ Data Fixtures
 As fixtures support is not enabled by default in Symfony, you should execute
 the following command to install the Doctrine fixtures bundle:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ composer require "doctrine/doctrine-fixtures-bundle"
 
 Then, enable the bundle in ``AppKernel.php``, but only for the ``dev`` and
-``test`` environments:
-
-.. code-block:: php
+``test`` environments::
 
     use Symfony\Component\HttpKernel\Kernel;
 
@@ -316,7 +308,7 @@ Assuming you have at least one fixtures class and that the database access
 is configured properly, you can load your fixtures by executing the following
 command:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php app/console doctrine:fixtures:load
 
@@ -333,9 +325,13 @@ were defined by the PHP community. You can learn more about
 use the `PHP-CS-Fixer`_, which is a command-line utility that can fix the
 coding standards of an entire codebase in a matter of seconds.
 
+----
+
+Next: :doc:`/best_practices/controllers`
+
 .. _`full definition`: https://en.wikipedia.org/wiki/Business_logic
 .. _`Doctrine project`: http://www.doctrine-project.org/
 .. _`fixture class`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html#writing-simple-fixtures
-.. _`PSR-1`: http://www.php-fig.org/psr/psr-1/
-.. _`PSR-2`: http://www.php-fig.org/psr/psr-2/
+.. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
+.. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
 .. _`PHP-CS-Fixer`: https://github.com/FriendsOfPHP/PHP-CS-Fixer
