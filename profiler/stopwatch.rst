@@ -14,4 +14,4 @@ short example::
     $stopwatch->lapse('anEvent');
     $stopwatch->stop('anEvent');
 
-:doc:`/component/stopwatch` explains the methods in more details.
+:doc:`/components/stopwatch` explains the methods in more details.
