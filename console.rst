@@ -27,6 +27,9 @@ For example, you may want a command to create a user::
 
     class CreateUserCommand extends Command
     {
+        // the name of the command (the part after "bin/console")
+        protected static $defaultName = 'app:create-user';
+        
         protected function configure()
         {
             // ...
@@ -49,9 +52,6 @@ method. Then you can optionally define a help message and the
     protected function configure()
     {
         $this
-            // the name of the command (the part after "bin/console")
-            ->setName('app:create-user')
-
             // the short description shown while running "php bin/console list"
             ->setDescription('Creates a new user.')
 
