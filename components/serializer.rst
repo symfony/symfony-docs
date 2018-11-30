@@ -777,6 +777,9 @@ always as a collection.
 .. versionadded:: 4.1
     The ``as_collection`` option was introduced in Symfony 4.1.
 
+.. versionadded:: 4.2
+    Relying on the default value ``false`` is deprecated since Symfony 4.2.
+
 The ``XmlEncoder``
 ~~~~~~~~~~~~~~~~~~
 
