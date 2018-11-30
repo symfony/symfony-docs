@@ -62,8 +62,8 @@ Symfony Profiler tool uses categories to nicely color-code different events.
 
 .. tip::
 
-    When you want to show events in the symfony profiler, autowire
-    `Symfony\Component\Stopwatch\Stopwatch` into your service. Each category
+    When you want to show events in the Symfony profiler, autowire
+    ``Symfony\Component\Stopwatch\Stopwatch`` into your service. Each category
     is shown on a separate line.
 
 Periods
