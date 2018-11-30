@@ -30,6 +30,10 @@ important changes:
   other environments. You can also create a ``.env.test`` file for test-environment
   overrides.
 
+* E) If you pass the ``--env=`` flag when running ``bin/console``, this value will
+  override your ``APP_ENV`` environment variable (if set). And so, if you pass
+  ``--env=prod``, the DotEnv component *will* try to load your ``.env*`` files.
+
 There are a few other improvements, but these are the most important. To take advantage
 of these, you *will* need to modify a few files in your existing app.
 
