@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by ogizanagi at 2018-10-13T17:00:22Z
+
+> after a 'composer install' the parameters.yml file is regenerated, and your own parameters stored there are gone
+
+That's weird, though. If you're using incenteev-parameters, only new parameters are added, never updated. Unless [using env vars](https://github.com/Incenteev/ParameterHandler#using-environment-variables-to-set-the-parameters) to set the parameters.
+
+---------------------------------------------------------------------------
+
+by Alienpruts at 2018-10-13T23:40:18Z
+
+Hello @ogizanagi .
+
+I honestly have no idea why this happened, all I can tell you is I have a standard 3.4.17 install of Symfony, and I'm checking out the docs to get up to speed with the framework.
+
+I did however check something : I am using the incenteev-parameters (I think), and am NOT using env vars (not to my knowledge at least :) ).
+
+But perhaps this is an issue to be filed somewhere else? Since this is the docs repo, I mean?
+
+Tnx,
+
+---------------------------------------------------------------------------
+
+by Alienpruts at 2018-11-11T12:39:19Z
+
+Ouch, this one slipped under the radar, sorry :)
