@@ -540,6 +540,27 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
             </listener>
         </listeners>
     </phpunit>
+    
+Under the hood, a PHPUnit listener injects the mocked functions in the tested
+classes' namespace. In order to work as expected, the listener has to run before
+the tested class ever runs. By default, the mocked functions are created when the
+annotation are found and the corresponding tests are run. Depending on how your
+tests are constructed, this might be too late. In this case, you will need to declare
+the namespaces of the tested classes in your phpunit.xml.dist
+
+.. code-block:: xml
+
+    <!-- phpunit.xml.dist -->
+    <!-- ... -->
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
+                <arguments>
+                    <array>
+                        <element key="time-sensitive"><string>Acme\MyClassTest</string></element>
+                    </array>
+                </arguments>
+            </listener>
+    </listeners>
 
 Modified PHPUnit script
 -----------------------
