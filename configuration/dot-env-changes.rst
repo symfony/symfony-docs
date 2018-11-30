@@ -56,29 +56,29 @@ changes can be made to any Symfony 3.4 or higher app:
 
 #. Update ``.gitignore``:
 
-    .. code-block:: diff
+   .. code-block:: diff
 
-        # .gitignore
-        # ...
+       # .gitignore
+       # ...
 
-        ###> symfony/framework-bundle ###
-        - /.env
-        + /.env.local
-        + /.env.*.local
+       ###> symfony/framework-bundle ###
+       - /.env
+       + /.env.local
+       + /.env.*.local
     
-        # ...
+       # ...
 
 #. Rename ``.env`` to ``.env.local`` and ``.env.dist`` to ``.env``:
 
-    .. code-block:: terminal
+   .. code-block:: terminal
 
-        # Unix
-        $ mv .env .env.local
-        $ git mv .env.dist .env
+       # Unix
+       $ mv .env .env.local
+       $ git mv .env.dist .env
 
-        # Windows
-        $ mv .env .env.local
-        $ git mv .env.dist .env
+       # Windows
+       $ mv .env .env.local
+       $ git mv .env.dist .env
 
     You can also update the `comment on the top of .env`_ to reflect the new changes.
 
