@@ -29,7 +29,7 @@ the option. Symfony will then pass the form when calling it::
 
     use Symfony\Component\Form\FormInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
-    
+
     // ...
     public function configureOptions(OptionsResolver $resolver)
     {
