@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by SimonHeimberg at 2018-10-09T12:17:27Z
+
+about lazy loading a command: https://symfony.com/doc/current/console/commands_as_services.html#lazy-loading
+
+---------------------------------------------------------------------------
+
+by ndench at 2018-10-29T21:58:17Z
+
+Are lazy loaded commands better in every situation? Should this contain a link to the `commands_as_services` docs?
+
+---------------------------------------------------------------------------
+
+by SimonHeimberg at 2018-11-07T09:53:44Z
+
+A link to https://symfony.com/doc/current/console/commands_as_services.html#lazy-loading sounds good, @ndench. Where should its place be?
+
+I do not know if lazy loading is a good idea in all situations. As mentioned in `commands_as_services`, `->addAlias()` must be handled. Any suggestions of situations?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2018-11-07T19:34:44Z
+
+I think I would not add the link. This is just working and adding a cross-reference to another article may be more confusing.
+
+---------------------------------------------------------------------------
+
+by ndench at 2018-11-07T21:57:53Z
+
+I'm not fussed either way. As long as there is somewhere in the docs that explain that lazy loading isn't the only way to write commands.
+
+---------------------------------------------------------------------------
+
+by kunicmarko20 at 2018-11-07T22:01:13Z
+
+Maybe instead of replacing the non lazy way, add another example under it where the lazy load is mentioned with a static property?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-11-10T17:44:33Z
+
+This should really be the way to go 99% of the time
