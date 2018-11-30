@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-11-10T20:23:49Z
+
+Thanks for the PR. I don't think we should blame PHP at all here, so let's forget about mentioning any bug report. What about:
+
+Under the hood, a PHPUnit listener injects the mocked functions in the tested
+classes' namespace. In order to work as expected, the listener has to run before
+the tested class ever runs. By default, the mocked functions are created when the
+annotation are found and the corresponding tests are run. Depending on how your
+tests are constructed, this might be too late. In this case, you will need to declare
+the namespaces of the tested classes in your `phpunit.xml.dist`:
+
++ provide an inline example doing so (no link to the source)
+
+---------------------------------------------------------------------------
+
+by sylfabre at 2018-11-11T18:06:31Z
+
+@nicolas-grekas done
