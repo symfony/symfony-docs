@@ -116,7 +116,8 @@ Checking for Security Vulnerabilities
 -------------------------------------
 
 Symfony provides a utility called the "Security Checker" to check whether your
-project's dependencies contain any known security vulnerability. Check out the integration instructions for `the Security Checker`_ to set it up.
+project's dependencies contain any known security vulnerability. Check out
+the integration instructions for `the Security Checker`_ to set it up.
 
 The Symfony Demo application
 ----------------------------
