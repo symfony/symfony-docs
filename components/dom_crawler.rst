@@ -219,8 +219,11 @@ Extract attribute and/or node values from the list of nodes::
 
 .. note::
 
-    Special attribute ``_text`` represents a node value, while ``_name`` represents element name.
-    Attribute ``_name`` will be added in version 4.3.
+    Special attribute ``_text`` represents a node value, while ``_name``
+    represents the element name (the HTML tag name).
+
+    .. versionadded:: 4.3
+        The special attribute ``_name`` was introduced in Symfony 4.3.
 
 Call an anonymous function on each node of the list::
 
