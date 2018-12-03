@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by andrey-helldar at 2018-11-07T19:44:50Z
+
+Key renaming was discussed [here](https://github.com/symfony/symfony/pull/29127#issuecomment-436750455).
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-11-10T16:49:50Z
+
+Worth adding a `.. versionadded:: 4.2` entry?
+
+---------------------------------------------------------------------------
+
+by andrey-helldar at 2018-11-11T11:36:14Z
+
+@nicolas-grekas.
+At the very beginning, I thought that this key would be added in 4.2. [But I was told](https://github.com/symfony/symfony/pull/29127/files/e3ed486a475ba06797dcf6b3e833d4c33f2b8863#diff-da309dac8ded261128ca4810ebcbbefeR11) that version 4.2 is in the pre-release stage and cannot be added.
+![2018-11-11_14-36-03](https://user-images.githubusercontent.com/10347617/48312418-2231bf80-e5bf-11e8-8cfc-42d0c8fe9e52.png)
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2018-11-11T13:48:17Z
+
+Right, so should mention 4.3 then.
+
+---------------------------------------------------------------------------
+
+by andrey-helldar at 2018-11-11T15:18:15Z
+
+Ahhh, I get it.
+
+---------------------------------------------------------------------------
+
+by andrey-helldar at 2018-11-11T15:21:05Z
+
+My English is bad. The text is translated into Google Translator.
+Tell me, [did I write correctly](https://github.com/symfony/symfony-docs/pull/10646/commits/e39d425bb0763be4f566a5e36357611ddcc0e636)?
