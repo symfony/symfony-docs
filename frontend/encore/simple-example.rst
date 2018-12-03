@@ -180,10 +180,8 @@ The import and export Statements
 --------------------------------
 
 Instead of using ``require`` and ``module.exports`` like shown above, JavaScript
-has an alternate syntax, which is the new finalized ECMAScript standard for using modules in the browser, including
-the ability to use dynamic imports
-
-.. 
+provides an alternate syntax based on the `ECMAScript 6 modules`_ that includes
+the ability to use dynamic imports.
 
 To export values using the alternate syntax, use ``exports``:
 
@@ -335,7 +333,8 @@ If you want to only compile a CSS file, that's possible via ``addStyleEntry()``:
     Encore
         // ...
 
-        .addStyleEntry('some_page', './assets/css/some_page.css');
+        .addStyleEntry('some_page', './assets/css/some_page.css')
+    ;
 
 This will output a new ``some_page.css``.
 
@@ -346,3 +345,4 @@ Encore support many more features! For a full list of what you can do, see
 `Encore's index.js file`_. Or, go back to :ref:`list of Encore articles <encore-toc>`.
 
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
+.. _`ECMAScript 6 modules`: https://hacks.mozilla.org/2015/08/es6-in-depth-modules/
