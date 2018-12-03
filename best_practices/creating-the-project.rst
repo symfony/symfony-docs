@@ -48,7 +48,8 @@ Structuring the Application
 ---------------------------
 
 After creating the application, enter the ``blog/`` directory and you'll see a
-number of files and directories generated automatically:
+number of files and directories generated automatically. These are the most
+important ones:
 
 .. code-block:: text
 
