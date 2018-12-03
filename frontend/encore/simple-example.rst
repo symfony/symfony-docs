@@ -180,8 +180,8 @@ The import and export Statements
 --------------------------------
 
 Instead of using ``require`` and ``module.exports`` like shown above, JavaScript
-has an alternate syntax, which is a more accepted standard. Choose whichever you
-want: they do the same thing.
+provides an alternate syntax based on the `ECMAScript 6 modules`_ that includes
+the ability to use dynamic imports.
 
 To export values, use ``exports``:
 
@@ -345,3 +345,4 @@ Encore support many more features! For a full list of what you can do, see
 `Encore's index.js file`_. Or, go back to :ref:`list of Encore articles <encore-toc>`.
 
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
+.. _`ECMAScript 6 modules`: https://hacks.mozilla.org/2015/08/es6-in-depth-modules/
