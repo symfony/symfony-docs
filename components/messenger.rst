@@ -163,7 +163,7 @@ Hence you can inspect the envelope content and its stamps, or add any::
     {
         public function handle(Envelope $envelope, StackInterface $stack): Envelope
         {
-            if (null !== $envelope->get(ReceivedStamp::class)) {
+            if (null !== $envelope->last(ReceivedStamp::class)) {
                 // Message just has been received...
 
                 // You could for example add another stamp.
