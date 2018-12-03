@@ -111,7 +111,7 @@ Listeners receive a
         $exitCode = $event->getExitCode();
 
         // changes the exception to another one
-        $event->setException(new \LogicException('Caught exception', $exitCode, $event->getError()));
+        $event->setError(new \LogicException('Caught exception', $exitCode, $event->getError()));
     });
 
 The ``ConsoleEvents::TERMINATE`` Event
