@@ -98,6 +98,12 @@ to creating a page?
     .. code-block:: terminal
 
         $ php bin/console make:controller
+    
+    Note: You will need to have maker-bundle package installed, which you can do by running:
+    
+    .. code-block:: terminal
+    
+       $ composer require symfony/maker-bundle --dev
 
 .. _annotation-routes:
 
