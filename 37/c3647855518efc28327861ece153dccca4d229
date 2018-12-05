@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-12-05T07:59:00Z
+
+@shreypuranik thanks a lot for your contribution! After re-reading the chapter, I realized that there's another problem: we're mentioning the MakerBundle too soon. We've just explained what a controller is, we've just shown the first simple controller ... and we try to mention how to optimize the creation of controllers, etc. It's better to leave that to the chapter about controllers, where the MakerBundle is mentioned and used (including an explicit mention telling you to install it).
+
+Thanks!
