@@ -83,12 +83,12 @@ Example::
 
     use App\Message\MyMessage;
     use Symfony\Component\Messenger\MessageBus;
-    use Symfony\Component\Messenger\Handler\Locator\HandlerLocator;
+    use Symfony\Component\Messenger\Handler\HandlersLocator;
     use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
 
     $bus = new MessageBus([
-        new HandleMessageMiddleware(new HandlerLocator([
-            MyMessage::class => $handler,
+        new HandleMessageMiddleware(new HandlersLocator([
+            MyMessage::class => ['dummy' => $handler],
         ])),
     ]);
 
