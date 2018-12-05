@@ -91,20 +91,6 @@ to creating a page?
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
    in their own section, including how to return JSON responses.
 
-.. tip::
-
-    To create controllers faster, let Symfony generate it for you:
-
-    .. code-block:: terminal
-
-        $ php bin/console make:controller
-    
-    Note: You will need to have maker-bundle package installed, which you can do by running:
-    
-    .. code-block:: terminal
-    
-       $ composer require symfony/maker-bundle --dev
-
 .. _annotation-routes:
 
 Annotation Routes
