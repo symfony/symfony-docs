@@ -10,7 +10,7 @@ output (e.g. important messages, titles, comments, etc.).
     Console component disables output coloring for Windows systems, but if your
     commands invoke other scripts which emit color sequences, they will be
     wrongly displayed as raw escape characters. Install the `Cmder`_, `ConEmu`_, `ANSICON`_
-    or `Mintty`_ (used by default in GitBash and Cygwin) free applications
+    ,`Mintty`_  (used by default in GitBash and Cygwin) or `Hyper`_ free applications
     to add coloring support to your Windows command console.
 
 Using Color Styles
@@ -78,3 +78,4 @@ You can also set these colors and options directly inside the tag name::
 .. _ConEmu: https://conemu.github.io/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
 .. _Mintty: https://mintty.github.io/
+.. _Hyper: https://hyper.is/
