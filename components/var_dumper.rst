@@ -415,7 +415,7 @@ then its dump representation::
 Changing the output color of HtmlDumper
 ----------------------------------------
 
-Since version 4.2, the HtmlDumper added a new :method:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper::setTheme` method. Now you can use both ``'dark'`` and ``'light'`` options.
+The :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper` class added a new :method:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper::setTheme` method. Now you can use both ``'dark'`` and ``'light'`` options.
 
 Example::
 
@@ -442,7 +442,7 @@ Example::
         'this',
         'should be',
         'lighter!',
-        ];
+    ];
 
     dump($data);
 
