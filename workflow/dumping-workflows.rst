@@ -12,8 +12,6 @@ Use the ``GraphvizDumper`` or ``StateMachineGraphvizDumper`` to create DOT
 files, or use ``PlantUmlDumper`` for PlantUML files. Both types can be converted
 to PNG or SVG images.
 
-Images of the workflow defined above:
-
 .. code-block:: php
 
     // dump-graph-dot.php
@@ -34,13 +32,6 @@ Images of the workflow defined above:
     # run this command if you prefer SVG images:
     # $ php dump-graph-dot.php | dot -Tsvg -o dot_graph.svg
 
-The DOT result will look like this:
-
-.. image:: /_images/components/workflow/blogpost.png
-
-The PUML result:
-
-.. image:: /_images/components/workflow/blogpost_puml.png
 
 Inside a Symfony application, you can dump the files with those commands using
 ``workflow:dump`` command:
@@ -49,6 +40,16 @@ Inside a Symfony application, you can dump the files with those commands using
 
     $ php bin/console workflow:dump name | dot -Tsvg -o graph.svg
     $ php bin/console workflow:dump name --dump-format=puml | java -jar plantuml.jar -p  > workflow.png
+
+The DOT result will look like this:
+
+.. image:: /_images/components/workflow/blogpost.png
+
+The PUML result:
+
+.. image:: /_images/components/workflow/blogpost_puml.png
+
+
 
 .. note::
 
