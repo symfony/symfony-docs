@@ -3,22 +3,14 @@ compound
 
 **type**: ``boolean`` **default**: ``true``
 
-If ``true`` this option creates the form as "compound", meaning that it
-can contain children and be a parent of other forms.
+A compound form can be either an entire ``<form>`` element or a group of form fields (rendered
+for example inside a ``<div>`` or ``<tr>`` container elements). Compound forms use the
+DataMapperInterface to initialize their children or to write back their submitted data.
 
-Most of the time you won't need to override this option.
-You might want to control for it when creating a custom form type
-with advanced rendering logic.
-
-In a view a compound form is rendered as a ``<div>`` container or
-a ``<form>`` element (the whole form is obviously a compound form).
-
-Non-compound forms are always leaves in a form tree, they cannot have children.
-
-A non-compound form is rendered as one of the html form elements: ``<input>``
+A simple (non-compound) form is rendered as any of these HTML elements: ``<input>``
 (``TextType``, ``FileType``, ``HiddenType``), ``<textarea>`` (``TextareaType``)
 or ``<select>`` (``ChoiceType``).
 
-An interesting case is the ``ChoiceType``. With ``expanded=false`` it is a non-compound form
-and is rendered as a ``<select>`` tag. With ``expanded=true`` the ``ChoiceType`` becomes a
-compound form and is rendered as a set of radios or checkboxes.
+Some core types like date related types or the ``ChoiceType`` are simple or compound depending
+on other options (such as ``expanded`` or ``widget``). They will either behave as a simple text
+field or as a group of text or choice fields.
