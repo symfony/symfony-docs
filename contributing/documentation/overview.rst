@@ -229,22 +229,22 @@ this hard work, it's **time to celebrate again!**
 Review your changes
 -------------------
 
-Every GitHub Pull Request is automatically built and deployed by `Platform.sh`_
-on a single environment that you can access on your browser to review your
-changes.
+Every GitHub Pull Request is automatically built and deployed by
+`SymfonyCloud`_ on a single environment that you can access on your browser to
+review your changes.
 
-.. image:: /_images/contributing/docs-pull-request-platformsh.png
+.. image:: /_images/contributing/docs-pull-request-symfonycloud.png
    :align: center
-   :alt:   Platform.sh Pull Request Deployment
+   :alt:   SymfonyCloud Pull Request Deployment
 
-To access the `Platform.sh`_ environment URL, go to your Pull Request page on
-GitHub, click on the **Show all checks** link and finally, click on the ``Details``
-link displayed for Platform.sh service.
+To access the `SymfonyCloud`_ environment URL, go to your Pull Request page on
+GitHub, click on the **Show all checks** link and finally, click on the
+``Details`` link displayed for SymfonyCloud service.
 
 .. note::
 
     Only Pull Requests to maintained branches are automatically built by
-    Platform.sh. Check the `roadmap`_ for maintained branches.
+    SymfonyCloud. Check the `roadmap`_ for maintained branches.
 
 Build the Documentation Locally
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -326,7 +326,7 @@ definitely don't want you to waste your time!
 .. _`SymfonyConnect`: https://connect.symfony.com/
 .. _`Symfony Documentation Badge`: https://connect.symfony.com/badge/36/symfony-documentation-contributor
 .. _`sync your fork`: https://help.github.com/articles/syncing-a-fork
-.. _`Platform.sh`: https://platform.sh
+.. _`SymfonyCloud`: https://symfony.com/cloud
 .. _`roadmap`: https://symfony.com/roadmap
 .. _`pip`: https://pip.pypa.io/en/stable/
 .. _`pip installation`: https://pip.pypa.io/en/stable/installing/
