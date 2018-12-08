@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-12-08T09:45:57Z
+
+@azjezz thanks for adding this missing mention to Hyper terminal. This was added in 2.8 branch (https://github.com/symfony/symfony/pull/27831) so we're going to merge this pull request in 3.4, the oldest maintained branch. Congrats on your first Symfony Docs contribution too 🎉
+
+This is the first #SymfonyConHackDay docs merge too :)
