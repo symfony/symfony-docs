@@ -11,4 +11,6 @@ A simple (non-compound) form is rendered as any of these HTML elements: ``<input
 (``TextType``, ``FileType``, ``HiddenType``), ``<textarea>`` (``TextareaType``)
 or ``<select>`` (``ChoiceType``).
 
-Some core types like date related types or the ``ChoiceType`` are simple or compound depending on other options (such as ``expanded`` or ``widget``). They will either behave as a simple text field or as a group of text or choice fields.
+Some core types like date related types or the ``ChoiceType`` are simple or compound depending
+on other options (such as ``expanded`` or ``widget``). They will either behave as a simple text
+field or as a group of text or choice fields.
