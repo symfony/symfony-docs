@@ -209,6 +209,33 @@ you can get this state machine by injecting the Workflow registry service::
         public function someMethod($subject)
         {
             $stateMachine = $this->workflows->get($subject, 'pull_request');
+            $stateMachine->apply($subject, 'wait_for_review');
+            // ...
+        }
+
+        // ...
+    }
+
+Symfony also creates automatically for you a service for each workflow (:class:`Symfony\\Component\\Workflow\\Workflow`) or state machine (:class:`Symfony\\Component\\Workflow\\StateMachine`) you have defined in your configuration.
+This means that you can use respectively ``workflow.pull_request`` or ``state_machine.pull_request`` in your service definition to have directly the proper service::
+
+    // ...
+    use Symfony\Component\Workflow\StateMachine;
+
+    class SomeService
+    {
+        private $stateMachine;
+
+        public function __construct(StateMachine $stateMachine)
+        {
+            $this->stateMachine = $stateMachine;
+        }
+
+        public function someMethod($subject)
+        {
+            $this->stateMachine->apply($subject, 'wait_for_review', [
+                'log_comment' => 'My logging comment for the wait for review transition.',
+            ]);
             // ...
         }
 

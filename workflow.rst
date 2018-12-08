@@ -8,8 +8,9 @@ best kept away from your models and should be defined in configuration.
 
 A **definition** of a workflow consist of places and actions to get from one
 place to another. The actions are called **transitions**. A workflow does also
-need to know each object's position in the workflow. That **marking store** writes
-to a property of the object to remember the current place.
+need to know each position an object can be in the workflow. This is the goal of the
+**marking store** that reads from and writes to a property of the object, or somewhere else, the current **place(s)**
+to remember.
 
 .. note::
 

@@ -284,6 +284,10 @@ If you don't use Docker, follow these steps to build the docs locally:
 
 The generated documentation is available in the ``_build/html`` directory.
 
+.. tip::
+
+    You can also use `Docker`_ that wraps all this for you!
+
 Frequently Asked Questions
 --------------------------
 
@@ -346,3 +350,4 @@ definitely don't want you to waste your time!
 .. _`pip installation`: https://pip.pypa.io/en/stable/installing/
 .. _`Sphinx`: http://sphinx-doc.org/
 .. _`Sphinx Extensions for PHP and Symfony`: https://github.com/fabpot/sphinx-php
+.. _`Docker`: https://github.com/symfony/symfony-docs#docker
