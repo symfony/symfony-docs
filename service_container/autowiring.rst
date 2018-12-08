@@ -62,8 +62,7 @@ If you're using the :ref:`default services.yml configuration <service-container-
 This means you can use them immediately without *any* configuration.
 
 However, to understand autowiring better, the following examples explicitly configure
-both services. Also, to keep things simple, configure ``TwitterClient`` to be a
-:ref:`public <container-public>` service:
+both services:
 
 .. configuration-block::
 
@@ -79,8 +78,6 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
             AppBundle\Service\TwitterClient:
                 # redundant thanks to _defaults, but value is overridable on each service
                 autowire: true
-                # not required, will help in our example
-                public: true
 
             AppBundle\Util\Rot13Transformer:
                 autowire: true
@@ -96,7 +93,7 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
                 <defaults autowire="true" autoconfigure="true" public="false" />
                 <!-- ... -->
 
-                <service id="AppBundle\Service\TwitterClient" autowire="true" public="true" />
+                <service id="AppBundle\Service\TwitterClient" autowire="true" />
 
                 <service id="AppBundle\Util\Rot13Transformer" autowire="true" />
             </services>
@@ -111,8 +108,7 @@ both services. Also, to keep things simple, configure ``TwitterClient`` to be a
 
         // the autowire method is new in Symfony 3.3
         // in earlier versions, use register() and then call setAutowired(true)
-        $container->autowire(TwitterClient::class)
-            ->setPublic(true);
+        $container->autowire(TwitterClient::class);
 
         $container->autowire(Rot13Transformer::class)
             ->setPublic(false);
@@ -130,11 +126,10 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
         /**
          * @Route("/tweet", methods={"POST"})
          */
-        public function tweetAction()
+        public function tweetAction(TwitterClient $twitterClient)
         {
             // fetch $user, $key, $status from the POST'ed data
 
-            $twitterClient = $this->container->get(TwitterClient::class);
             $twitterClient->tweet($user, $key, $status);
 
             // ...
