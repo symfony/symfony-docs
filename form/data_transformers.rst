@@ -13,8 +13,8 @@ to render the form, and then back into a ``DateTime`` object on submit.
 
 .. caution::
 
-    When a form field has the ``inherit_data`` option set, data transformers
-    won't be applied to that field.
+    When a form field has the ``inherit_data`` option set to ``true``, data transformers
+    are not applied to that field.
 
 .. seealso::
 
