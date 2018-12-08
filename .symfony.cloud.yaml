@@ -5,10 +5,7 @@
 name: symfonydocs
 
 # The toolstack used to build the application.
-type: "php"
-
-build:
-    flavor: "composer"
+type: "python:3.7"
 
 # The configuration of app when it is exposed to the web.
 web:
@@ -53,7 +50,7 @@ hooks:
     build: |
       virtualenv .virtualenv
       . .virtualenv/bin/activate
-      # Platform.sh currently sets PIP_USER=1.
+      # SymfonyCloud currently sets PIP_USER=1.
       export PIP_USER=
       pip install pip==9.0.1 wheel==0.29.0
       pip install -r _build/.requirements.txt
