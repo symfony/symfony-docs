@@ -146,7 +146,7 @@ At the moment, the Symfony Messenger has the following built-in envelope stamps:
    a stamp that marks the message as sent by a specific sender.
    Allows accessing the sender FQCN and the alias if available from the
    :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SendersLocator`.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\ReceivedStamp`,
+#. :class:`Symfony\\Component\\Messenger\\Stamp\\HandledStamp`,
    a stamp that marks the message as handled by a specific handler.
    Allows accessing the handler returned value, the handler callable name
    and its alias if available from the :class:`Symfony\\Component\\Messenger\\Handler\\HandlersLocator`.
