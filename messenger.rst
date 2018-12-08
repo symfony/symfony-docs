@@ -138,6 +138,14 @@ transports communicate with your application via queuing systems or third partie
 The built-in AMQP transport allows you to communicate with most of the AMQP
 brokers such as RabbitMQ.
 
+For AMQP support, AMQP bundle needs to be installed. If using
+:doc:`Symfony Flex </setup/flex>`, run this command to install it (it will require
+the AMQP PHP extension to be installed):
+
+.. code-block:: terminal
+
+    $ composer require amqp
+
 .. note::
 
     If you need more message brokers, you should have a look at `Enqueue's transport`_
