@@ -412,6 +412,49 @@ then its dump representation::
 
 .. image:: /_images/components/var_dumper/09-cut.png
 
+Changing the output color of HtmlDumper
+----------------------------------------
+
+Since version 4.2, the HtmlDumper added a new :method:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper::setTheme` method. Now you can use both ``'dark'`` and ``'light'`` options.
+
+Example::
+
+    require __DIR__.'/vendor/autoload.php';
+
+    use Symfony\Component\VarDumper\VarDumper;
+    use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+    use Symfony\Component\VarDumper\Cloner\VarCloner;
+
+    $varDumper = new VarDumper();
+    $varDumper::setHandler();
+
+    $cloner = new VarCloner();
+
+    $htmlDumper = new HtmlDumper();
+    $htmlDumper->setTheme('light');
+
+    VarDumper::setHandler(function ($var) use ($cloner, $htmlDumper) {
+        $htmlDumper->dump($cloner->cloneVar($var));
+    });
+
+    $data = [
+        'Now',
+        'this',
+        'should be',
+        'lighter!',
+        ];
+
+    dump($data);
+
+.. image:: /_images/components/var_dumper/10-light-theme.png
+
+.. versionadded:: 4.2
+    The :method:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper::setTheme` method was introduced in Symfony 4.2.
+
+.. note::
+    The :method:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper::setTheme` method only works with the :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper` class.
+
+
 Learn More
 ----------
 
