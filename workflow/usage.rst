@@ -43,7 +43,7 @@ like this:
                     audit_trail:
                         enabled: true
                     marking_store:
-                        type: 'multiple_state' # or 'single_state'
+                        type: 'multiple_state' # or 'single_state', 'method' ('method' was added in 4.3)
                         arguments:
                             - 'currentPlace'
                     supports:
@@ -127,7 +127,7 @@ like this:
                         'enabled' => true
                     ],
                     'marking_store' => [
-                        'type' => 'multiple_state', // or 'single_state'
+                        'type' => 'multiple_state', // or 'single_state', 'method' ('method' was added in 4.3)
                         'arguments' => ['currentPlace'],
                     ],
                     'supports' => ['App\Entity\BlogPost'],
@@ -167,7 +167,7 @@ As configured, the following property is used by the marking store::
 
 .. note::
 
-    The marking store type could be "multiple_state" or "single_state".
+    The marking store type could be "multiple_state", "single_state" or "method".
     A single state marking store does not support a model being on multiple places
     at the same time.
 
@@ -221,10 +221,86 @@ you can get the workflow by injecting the Workflow registry service::
                 // ... if the transition is not allowed
             }
 
+            // Update the currentState on the post passing some contextual data
+            // to the whole workflow process
+            try {
+                $workflow->apply($post, 'publish', [
+                    'log_comment' => 'My logging comment for the publish transition.',
+                ]);
+            } catch (TransitionException $exception) {
+                // ... if the transition is not allowed
+            }
+
             // See all the available transitions for the post in the current state
             $transitions = $workflow->getEnabledTransitions($post);
         }
     }
+
+.. versionadded:: 4.1
+
+    The :class:`Symfony\\Component\\Workflow\\Exception\\TransitionException`
+    class was introduced in Symfony 4.1.
+
+.. versionadded:: 4.1
+
+    The :method:`Symfony\\Component\\Workflow\\Registry::all` method was
+    introduced in Symfony 4.1.
+
+.. versionadded:: 4.3
+
+    The :method:`Symfony\\Component\\Workflow\\Workflow::apply` has now a new parameter ``$context``
+    that is passed to the :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`
+    :method:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface::setMarking` method.
+
+An example of usage with the ``$context`` parameter can be when you need,
+in addition of marking your object in its new place, to contextualize this change.
+
+.. tip::
+
+    Configure the ``type`` as ``method`` of the ``marking_store`` option to use this feature
+    without implementing your own marking store.
+
+You can also use this ``$context`` in your own marking store implementation.
+A simple implementation example is when you want to store the place as integer instead of string in your object.
+
+Lets say your object has a status property, stored as an integer in your storage, and you want to log an optional
+comment any time the status changes::
+
+    // your own implementation class, to define in the configuration "marking_store"
+
+    class ObjectMarkingStore implements MarkingStoreInterface
+    {
+        public function getMarking($subject)
+        {
+            $subject->getStatus();
+            // ...
+            // return a marking
+        }
+
+        public function setMarking($subject, Marking $marking, array $context);
+        {
+            // ...
+            $subject->setStatus($newStatus, $context['log_comment'] ?? null);
+        }
+    }
+
+    // and in your Object class
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status, ?string $comment = null)
+    {
+        $this->status = $status;
+        $this->addStatusLogRecord(new StatusLog($this, $comment));
+
+        return $this;
+    }
+
+    // the StatusLog class can have a createdAt, a username,
+    // the new status, and finally your optional comment retrieved from the workflow context.
 
 Using Events
 ------------
