@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-12-08T10:29:11Z
+
+@tentacode well spotted! I've merged this in 4.1, the oldest maintained branch that contains that error (https://github.com/symfony/symfony/blob/4.1/src/Symfony/Component/Workflow/SupportStrategy/InstanceOfSupportStrategy.php).
+
+Congrats on your first Symfony Docs contribution 🎉
+
+#SymfonyConHackDay
