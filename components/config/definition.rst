@@ -568,7 +568,7 @@ tree with ``append()``::
     {
         $treeBuilder = new TreeBuilder('parameters');
 
-        $treeBuilder->getRootNode()
+        $node = $treeBuilder->getRootNode()
             ->isRequired()
             ->requiresAtLeastOneElement()
             ->useAttributeAsKey('name')
