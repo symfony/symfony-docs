@@ -36,14 +36,15 @@ Configuration
 * `intercept_redirects`_
 * `toolbar`_
 
-toolbar
-~~~~~~~
+excluded_ajax_paths
+~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``string`` **default**: ``'^/((index|app(_[\w]+)?)\.php/)?_wdt'``
 
-It enables and disables the toolbar entirely. Usually you set this to ``true``
-in the ``dev`` and ``test`` environments and to ``false`` in the ``prod``
-environment.
+When the toolbar logs Ajax requests, it matches their URLs against this regular
+expression. If the URL matches, the request is not displayed in the toolbar. This
+is useful when the application makes lots of Ajax requests or they are heavy and
+you want to exclude some of them.
 
 .. _intercept_redirects:
 
@@ -61,12 +62,11 @@ redirection and shows you the URL which is going to redirect to, its toolbar,
 and its profiler. Once you've inspected the toolbar/profiler data, you can click
 on the given link to perform the redirect.
 
-excluded_ajax_paths
-~~~~~~~~~~~~~~~~~~~
+toolbar
+~~~~~~~
 
-**type**: ``string`` **default**: ``'^/((index|app(_[\w]+)?)\.php/)?_wdt'``
+**type**: ``boolean`` **default**: ``false``
 
-When the toolbar logs Ajax requests, it matches their URLs against this regular
-expression. If the URL matches, the request is not displayed in the toolbar. This
-is useful when the application makes lots of Ajax requests or they are heavy and
-you want to exclude some of them.
+It enables and disables the toolbar entirely. Usually you set this to ``true``
+in the ``dev`` and ``test`` environments and to ``false`` in the ``prod``
+environment.
