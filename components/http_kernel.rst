@@ -315,6 +315,13 @@ on the event object that's passed to listeners on this event.
 4) Getting the Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Once the controller has been resolved, the ``HttpKernel::handle()`` dispatches
+the ``kernel.controller_arguments`` event. It subclasses 
+:class:`Symfony\\Component\\HttpKernel\\Event\\FilterControllerEvent`
+and provides the :method:`FilterControllerArgumentsEvent::getArguments <Symfony\\Component\\HttpKernel\\Event\\FilterControllerArgumentsEvent::getArguments>`
+method. This is a useful point to access the controller arguments and make decisions
+based upon them.
+
 Next, ``HttpKernel::handle()`` calls
 :method:`ArgumentResolverInterface::getArguments() <Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolverInterface::getArguments>`.
 Remember that the controller returned in ``getController()`` is a callable.
