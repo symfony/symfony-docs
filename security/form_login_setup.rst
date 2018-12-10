@@ -31,6 +31,9 @@ and your generated code may be slightly different:
 
     Choose a name for the controller class (e.g. SecurityController) [SecurityController]:
     > SecurityController
+    
+     Enter the User class that you want to authenticate (e.g. App\Entity\User) [App\Entity\User]:
+    > App\Entity\User
 
      created: src/Security/LoginFormAuthenticator.php
      updated: config/packages/security.yaml
@@ -42,7 +45,19 @@ and your generated code may be slightly different:
 
 This generates three things: (1) a login route & controller, (2) a template that
 renders the login form and (3) a :doc:`Guard authenticator </security/guard_authentication>`
-class that processes the login submit.
+class that processes the login submit. 
+
+Security configuration is updated with definition of authenticator:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+        main:
+                anonymous: true
+        +        guard:
+        +            authenticators:
+        +                - App\Security\LoginFormAuthenticator
+
 
 The ``/login`` route & controller::
 
