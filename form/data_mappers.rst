@@ -10,7 +10,7 @@ own input value. On submission, children values need to be written back into the
 Data mappers are responsible for reading and writing data from and into parent forms.
 
 The main built-in data mapper uses the :doc:`PropertyAccess component </components/property_access>`
-and will fit most cases. However, you can create your implementation that
+and will fit most cases. However, you can create your own implementation that
 could, for example, pass submitted data to immutable objects via their constructor.
 
 The Difference between Data Transformers and Mappers
@@ -19,12 +19,13 @@ The Difference between Data Transformers and Mappers
 It is important to know the difference between
 :doc:`data transformers </form/data_transformers>` and mappers.
 
-* **Data transformers** change the representation of a value. E.g. from
-  ``"2016-08-12"`` to a ``DateTime`` instance;
+* **Data transformers** change the representation of a value (e.g. from
+  ``"2016-08-12"`` to a ``DateTime`` instance);
 * **Data mappers** map data (e.g. an object or array) to form fields, and vice versa.
 
 Changing a ``YYYY-mm-dd`` string value to a ``DateTime`` instance is done by a
-data transformer. Populating inner fields (e.g year, hour, etc) of a compound date type using a ``DateTime`` instance is done by the data mapper.
+data transformer. Populating inner fields (e.g year, hour, etc) of a compound date type using
+a ``DateTime`` instance is done by the data mapper.
 
 Creating a Data Mapper
 ----------------------
@@ -71,7 +72,7 @@ one of the values is changed.
 .. tip::
 
     If you're using a mutable object with constructor arguments, instead of
-    using a data mapper, you should configure the ``empty_data`` with a closure
+    using a data mapper, you should configure the ``empty_data`` option with a closure
     as described in
     :ref:`How to Configure empty Data for a Form Class <forms-empty-data-closure>`.
 
@@ -92,8 +93,6 @@ form fields. Recognize a familiar pattern? It's time for a data mapper!
     final class ColorMapper implements DataMapperInterface
     {
         /**
-         * {@inheritdoc}
-         *
          * @param Color|null $data
          */
         public function mapDataToForms($data, $forms)
@@ -117,9 +116,6 @@ form fields. Recognize a familiar pattern? It's time for a data mapper!
             $forms['blue']->setData($data->getBlue());
         }
 
-        /**
-         * {@inheritdoc}
-         */
         public function mapFormsToData($forms, &$data)
         {
             /** @var FormInterface[] $forms */
@@ -157,9 +153,6 @@ method to configure the data mapper::
 
     final class ColorType extends AbstractType
     {
-        /**
-         * {@inheritdoc}
-         */
         public function buildForm(FormBuilderInterface $builder, array $options)
         {
             $builder
@@ -178,17 +171,10 @@ method to configure the data mapper::
             ;
         }
 
-        /**
-         * {@inheritdoc}
-         */
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver
-                ->setDefaults(array(
-                    // when creating a new color, the initial data should be null
-                    'empty_data' => null,
-                ))
-            ;
+            // when creating a new color, the initial data should be null
+            $resolver->setDefault('empty_data', null);
         }
     }
 
@@ -197,12 +183,12 @@ a new ``Color`` object now.
 
 .. caution::
 
-    When a form has ``inherit_data`` option set to ``true``, it does not use the data mapper and
+    When a form has the ``inherit_data`` option set to ``true``, it does not use the data mapper and
     lets its parent map inner values.
 
 .. tip::
 
-    You can also implement ``DataMapperInterface`` in the ``ColorType`` and add
+    You can also implement the ``DataMapperInterface`` in the ``ColorType`` and add
     the ``mapDataToForms()`` and ``mapFormsToData()`` in the form type directly
     to avoid creating a new class. You'll then have to call
     ``$builder->setDataMapper($this)``.
