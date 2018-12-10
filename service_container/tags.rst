@@ -273,7 +273,7 @@ container for any services with the ``app.mail_transport`` tag::
             $taggedServices = $container->findTaggedServiceIds('app.mail_transport');
 
             foreach ($taggedServices as $id => $tags) {
-                // add the transport service to the ChainTransport service
+                // add the transport service to the TransportChain service
                 $definition->addMethodCall('addTransport', array(new Reference($id)));
             }
         }
