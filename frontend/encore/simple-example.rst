@@ -96,7 +96,7 @@ can do most of the work for you:
                 {{ encore_entry_link_tags('app') }}
 
                 <!-- Renders a link tag (if your module requires any CSS)
-                     <link rel="stylesheet" src="/build/app.css"> -->
+                     <link rel="stylesheet" href="/build/app.css"> -->
             {% endblock %}
         </head>
         <body>
