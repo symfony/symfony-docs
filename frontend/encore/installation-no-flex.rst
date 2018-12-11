@@ -94,7 +94,7 @@ And the new ``assets/css/app.css`` file:
 
 .. code-block:: css
 
-    // assets/css/app.css
+    /* assets/css/app.css */
     body {
         background-color: lightgray;
     }
