@@ -675,7 +675,7 @@ In addition to the query builder, you can also query with `Doctrine Query Langua
             FROM App\Entity\Product p
             WHERE p.price > :price
             ORDER BY p.price ASC'
-        )->setParameter('price', 1000);
+        )->setParameter('price', $price);
 
         // returns an array of Product objects
         return $query->execute();
@@ -696,7 +696,7 @@ Or directly with SQL if you need to::
             ORDER BY p.price ASC
             ';
         $stmt = $conn->prepare($sql);
-        $stmt->execute(['price' => 1000]);
+        $stmt->execute(['price' => $price]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetchAll();
