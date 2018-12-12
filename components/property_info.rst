@@ -59,13 +59,11 @@ provide it with a set of information extractors.
     // list of PropertyDescriptionExtractorInterface (any iterable)
     $descriptionExtractors = array($phpDocExtractor);
 
-    // array of PropertyAccessExtractorInterface
+    // list of PropertyAccessExtractorInterface (any iterable)
     $accessExtractors = array($reflectionExtractor);
 
     // list of PropertyInitializableExtractorInterface (any iterable)
     $propertyInitializableExtractors = array($reflectionExtractor);
-
-
 
     $propertyInfo = new PropertyInfoExtractor(
         $listExtractors,
