@@ -14,7 +14,7 @@ that has two jobs:
 **Load the User for some Feature**
     Some features, like ``switch_user``, ``remember_me`` and many of the built-in
     :doc:`authentication providers </security/auth_providers>`, use the user provider
-    to load a User object via is "username" (or email, or whatever field you want).
+    to load a User object via its "username" (or email, or whatever field you want).
 
 Symfony comes with several built-in user providers:
 
