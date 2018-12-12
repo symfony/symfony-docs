@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-12-12T07:33:35Z
+
+@MichaelDemeyer thanks for contributing to Symfony Docs. Before merging I'd like to get more details about this change: does this fix some issue? Is this better for some reason? Thanks!
+
+---------------------------------------------------------------------------
+
+by MichaelDemeyer at 2018-12-12T09:34:33Z
+
+> @MichaelDemeyer thanks for contributing to Symfony Docs. Before merging I'd like to get more details about this change: does this fix some issue? Is this better for some reason? Thanks!
+
+Hi, currently this part of documentation tell users to re-run the same command if it failed the first time (screenshot attached).
+
+As far as I know it's safer to run composer update without "--with-all-dependencies" first, and if it failed review the needed dependencies update and make the decision to run (or not run) composer with the "--with-all-dependencies" flag.
+
+Documentation for 3.*  seems to follow this pattern.
+
+Thx.
+
+![image](https://user-images.githubusercontent.com/18002435/49860122-7071f280-fdf9-11e8-92d0-2454e7b0e6be.png)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-12-12T15:04:40Z
+
+@MichaelDemeyer thanks for providing these details. You are absolutely right! I was confused because of the `.. include`. This change is coherent with what we do in this other article: https://symfony.com/doc/current/setup/upgrade_major.html so let's merge it.
+
+Thanks ... and congrats on your first Symfony Docs contribution! 🎉
