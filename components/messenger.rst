@@ -175,8 +175,13 @@ Hence you can inspect the envelope content and its stamps, or add any::
     }
 
 The above example will forward the message to the next middleware with an additional
-stamp *if* the message has just been received (i.e. has the `ReceivedStamp` stamp).
+stamp *if* the message has just been received (i.e. has at least 1 `ReceivedStamp` stamp).
 You can create your own stamps by implementing :class:`Symfony\\Component\\Messenger\\Stamp\\StampInterface`.
+
+If you want to examine all stamps on an envelope, you can call ``$envelope->all()``.
+This will return all stamps, grouped by type (FQCN). Alternatively, you can
+iterate through all stamps of a specific type by using the FQCN as first parameter
+of this method, for example ``$envelope->all(ReceivedStamp::class)``.
 
 .. note::
 
