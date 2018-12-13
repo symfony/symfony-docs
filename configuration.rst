@@ -36,21 +36,6 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
             php_errors:
                 log: true
 
-            cache:
-                # Put the unique name of your app here: the prefix seed
-                # is used to compute stable namespaces for cache keys.
-                #prefix_seed: your_vendor_name/app_name
-
-                # The app cache caches to the filesystem by default.
-                # Other options include:
-
-                # Redis
-                #app: cache.adapter.redis
-                #default_redis_provider: redis://localhost
-
-                # APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
-                #app: cache.adapter.apcu
-
     .. code-block:: xml
 
             <!-- config/packages/framework.xml -->
@@ -69,22 +54,6 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
                     <!-- Enables session support. Note that the session will ONLY be started if you read or write from it.
                          Remove or comment this section to explicitly disable session support. -->
                     <framework:session />
-
-                    <!-- Put the unique name of your app here: the prefix seed
-                         is used to compute stable namespaces for cache keys.
-                         <framework:cache prefix-seed="your_vendor_name/app_name">
-                         -->
-                    <framework:cache>
-                        <!-- The app cache caches to the filesystem by default.
-                             Other options include: -->
-
-                        <!-- Redis -->
-                        <!--<framework:app>cache.adapter.redis</framework:app>-->
-                        <!--<framework:default-redis-provider>redis://localhost</framework:default-redis-provider>-->
-
-                        <!-- APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues) -->
-                        <!--<framework:app>cache.adapter.apcu</framework:app>-->
-                    </framework:cache>
 
                     <framework:php-errors log="true" />
                 </framework:config>
@@ -108,19 +77,6 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
             //'fragments' => true,
             'php_errors' => [
                 'log' => true,
-            ],
-            'cache' => [
-                //'prefix_seed' => 'your_vendor_name/app_name',
-
-                // The app cache caches to the filesystem by default.
-                // Other options include:
-
-                // Redis
-                //'app' => 'cache.adapter.redis',
-                //'default_redis_provider: 'redis://localhost',
-
-                // APCu (not recommended with heavy random-write workloads as memory fragmentation can cause perf issues)
-                //'app' => 'cache.adapter.apcu',
             ],
         ]);
 
