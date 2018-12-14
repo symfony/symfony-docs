@@ -81,19 +81,19 @@ Validation of arrays is possible using the ``Collection`` constraint::
         'password' => new Assert\Length(array('min' => 60)),
         'tags' => new Assert\Required(array(
             new Assert\Type('array'),
-            new Assert\Count(['min' => 1]),
+            new Assert\Count(array('min' => 1)),
             new Assert\All(array(
                 new Assert\Collection(array(
                     'slug' => new Assert\Required(array(
                         new Assert\NotBlank(),
-                        new Assert\Type(['type' => 'string'])
+                        new Assert\Type(array('type' => 'string'))
                     )),
                     'label' => new Assert\Required(array(
                         new Assert\NotBlank(),
                     )),
                 )),
             )),
-            new CustomUniqueTagValidator(['groups' => 'custom'])
+            new CustomUniqueTagValidator(array('groups' => 'custom'))
         )),
     ));
 
