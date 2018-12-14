@@ -634,17 +634,18 @@ let you find out which options are defined::
         }
     }
 
-Nested Option
-~~~~~~~~~~~~~
+Nested Options
+~~~~~~~~~~~~~~
 
 .. versionadded:: 4.2
-    This feature was introduced in Symfony 4.2.
+    The support of nested options was introduced in Symfony 4.2.
 
 Suppose you have an option named ``spool`` which has two sub-options ``type``
-and ``path``. Instead of defining it as a simple array of values, you can pass
-a closure as the default value of the ``spool`` option with a :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver`
-argument. Based on this instance, you can define the options under ``spool`` and its desired default
-value::
+and ``path``. Instead of defining it as a simple array of values, you can pass a
+closure as the default value of the ``spool`` option with a
+:class:`Symfony\\Component\\OptionsResolver\\OptionsResolver` argument. Based on
+this instance, you can define the options under ``spool`` and its desired
+default value::
 
     class Mailer
     {
@@ -676,11 +677,10 @@ value::
         ),
     ));
 
-Also you can define required options, validation (type, value) and normalization of these
-nested options.
-
-If the default value of a child option depend on another option defined in parent level,
-adds a second ``Options`` argument to the closure for access to them::
+Nested options also support required options, validation (type, value) and
+normalization of their values. If the default value of a nested option depends
+on another option defined in the parent level, add a second ``Options`` argument
+to the closure to access to them::
 
     class Mailer
     {
@@ -700,10 +700,11 @@ adds a second ``Options`` argument to the closure for access to them::
 
 .. caution::
 
-    The arguments of the closure must be type hinted as ``OptionsResolver`` and ``Options`` respectively.
-    Otherwise, the closure itself is considered as the default value of the option.
+    The arguments of the closure must be type hinted as ``OptionsResolver`` and
+    ``Options`` respectively. Otherwise, the closure itself is considered as the
+    default value of the option.
 
-In same way, parent options can access to the child option as normal array::
+In same way, parent options can access to the nested options as normal arrays::
 
     class Mailer
     {
