@@ -149,7 +149,10 @@ method to configure the data mapper::
     namespace App\Form\Type;
 
     use App\Form\DataMapper\ColorMapper;
+    use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     final class ColorType extends AbstractType
     {
