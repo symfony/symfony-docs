@@ -341,6 +341,10 @@ So how can you make ``blog_list`` once again match when the user visits
 Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 ``$page`` will default to a value of ``1``.
 
+When you generate URL for path ``blog_list`` without adding ``page`` parameter Router
+will generate ``/blog/``. Note that it doesn't use default value ``1``. To generate
+``/blog/1`` mark variable as important adding ``!`` before the name: ``/blog/{!page}``.
+
 .. index::
    single: Routing; Advanced example
    single: Routing; _format parameter
