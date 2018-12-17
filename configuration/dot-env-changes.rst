@@ -65,7 +65,7 @@ changes can be made to any Symfony 3.4 or higher app:
        - /.env
        + /.env.local
        + /.env.*.local
-    
+
        # ...
 
 #. Rename ``.env`` to ``.env.local`` and ``.env.dist`` to ``.env``:
@@ -88,9 +88,9 @@ changes can be made to any Symfony 3.4 or higher app:
 
 .. _`config/bootstrap.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.2/config/bootstrap.php
 .. _`public/index.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.2/public/index.php
-.. _`index.php diff`: https://github.com/symfony/recipes/compare/8a4e5555e30d5dff64275e2788a901f31a214e79...86e2b6795c455f026e5ab0cba2aff2c7a18511f7#diff-473fca613b5bda15d87731036cb31586
+.. _`index.php diff`: https://github.com/symfony/recipes/compare/8a4e5555e30d5dff64275e2788a901f31a214e79...f54d6a468405d0d8d27b0e790dc09a01e337777a#diff-473fca613b5bda15d87731036cb31586
 .. _`bin/console`: https://github.com/symfony/recipes/blob/master/symfony/console/3.3/bin/console
-.. _`bin/console diff`: https://github.com/symfony/recipes/compare/8a4e5555e30d5dff64275e2788a901f31a214e79...86e2b6795c455f026e5ab0cba2aff2c7a18511f7#diff-2af50efd729ff8e61dcbd936cf2b114b
+.. _`bin/console diff`: https://github.com/symfony/recipes/compare/8a4e5555e30d5dff64275e2788a901f31a214e79...f54d6a468405d0d8d27b0e790dc09a01e337777a#diff-2af50efd729ff8e61dcbd936cf2b114b
 .. _`comment on the top of .env`: https://github.com/symfony/recipes/blob/master/symfony/flex/1.0/.env
 .. _`create a new .env.test`: https://github.com/symfony/recipes/blob/master/symfony/phpunit-bridge/3.3/.env.test
 .. _`phpunit.xml.dist file`: https://github.com/symfony/recipes/blob/master/symfony/phpunit-bridge/3.3/phpunit.xml.dist
