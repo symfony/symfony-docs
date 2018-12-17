@@ -193,6 +193,10 @@ To actually translate the message, Symfony uses the following process:
 When using the ``trans()`` method, Symfony looks for the exact string inside
 the appropriate message catalog and returns it (if it exists).
 
+.. tip::
+    You can find example how to use ``_locale`` inside controller routing annotations
+    on page :doc:`/routing` under "Advanced Routing Example" section.
+
 Message Placeholders
 --------------------
 
