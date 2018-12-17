@@ -76,7 +76,11 @@ The validator class is also simple, and only has one required method ``validate(
             }
 
             if (!is_string($value)) {
-                throw new UnexpectedTypeException($value, 'string');
+                // throw this exception if your validator cannot handle the passed type so that it can be marked as invalid
+                throw new UnexpectedValueException($value, 'string');
+
+                // separate multiple types using pipes
+                // throw new UnexpectedValueException($value, 'string|int');
             }
 
             if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
@@ -93,6 +97,9 @@ if it causes no violations. The ``buildViolation()`` method takes the error
 message as its argument and returns an instance of
 :class:`Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilderInterface`.
 The ``addViolation()`` method call finally adds the violation to the context.
+
+.. versionadded:: 4.2
+    The ``UnexpectedValueException`` was introduced in Symfony 4.2.
 
 Using the new Validator
 -----------------------
