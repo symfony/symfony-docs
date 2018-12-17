@@ -92,7 +92,7 @@ available in the ``configure()`` method::
         {
             $this
                 // ...
-                ->addArgument('password', $this->requirePassword ? InputArgument::OPTIONAL : InputArgument::REQUIRED, 'User password')
+                ->addArgument('password', $this->requirePassword ? InputArgument::REQUIRED : InputArgument::OPTIONAL, 'User password')
             ;
         }
     }
