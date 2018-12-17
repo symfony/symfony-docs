@@ -343,7 +343,7 @@ Restrict files by last modified dates with the
 
 Restrict by a date range by chaining calls or passing an array::
 
-    $finder->date('>= 2018-01-01')->size('<= 2018-12-31');
+    $finder->date('>= 2018-01-01')->date('<= 2018-12-31');
 
     // same as above
     $finder->date(array('>= 2018-01-01', '<= 2018-12-31'));
