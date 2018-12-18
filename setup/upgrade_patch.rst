@@ -20,3 +20,5 @@ always safe to upgrade to the latest "minor" version.
     releases.
 
 .. include:: /setup/_update_all_packages.rst.inc
+
+.. include:: /setup/_update_flex_recipes.rst.inc

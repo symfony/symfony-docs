@@ -313,8 +313,7 @@ You can also create a few other ``.env`` files that will be loaded:
   ``prod`` environment but will *not* be committed to your repository.
 
 If you decide to set real environment variables on production, the ``.env`` files
-will *not* be loaded if Symfony detects that a real ``APP_ENV`` environment variable
-exists and is set to ``prod``.
+*are* still loaded, but your real environment variables will override those values.
 
 Environments & the Other Config Files
 -------------------------------------

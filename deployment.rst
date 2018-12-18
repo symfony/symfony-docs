@@ -172,7 +172,18 @@ as you normally do:
     using :doc:`Symfony Flex </setup/flex>`) before running this command so
     that the ``post-install-cmd`` scripts run in the ``prod`` environment.
 
-D) Clear your Symfony Cache
+D) Dumping Optimized Environment Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using Symfony Flex, you can get a small performance boost by running
+a command that reads your ``.env`` files and dumps an optimized ``.env.local.php``
+file that's read by your application:
+
+.. code-block:: terminal
+
+    $ composer dump-env prod
+
+E) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Make sure you clear and warm-up your Symfony cache:
@@ -181,7 +192,7 @@ Make sure you clear and warm-up your Symfony cache:
 
     $ php bin/console cache:clear --env=prod --no-debug
 
-E) Other Things!
+F) Other Things!
 ~~~~~~~~~~~~~~~~
 
 There may be lots of other things that you need to do, depending on your

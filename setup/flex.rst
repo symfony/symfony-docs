@@ -51,6 +51,34 @@ SwiftmailerBundle and returns the "recipe" for it.
 Flex keeps tracks of the recipes it installed in a ``symfony.lock`` file, which
 must be committed to your code repository.
 
+.. _updating-recipes:
+
+Updating Recipes
+~~~~~~~~~~~~~~~~
+
+Over time, recipes for packages you've already installed might be updated. Your app
+doesn't need these updated recipes to function, but you may want to apply the updates
+to take advantage of the latest features and conventions.
+
+To do this, you can tell Flex to "sync" the recipes. This means it will apply the
+latest recipe version for each package and **overwrite** any existing files. Make
+sure you've committed all your files to git, and then run:
+
+.. code-block:: terminal
+
+    $ composer sync-recipes --force
+
+.. versionadded:: 1.2
+    The ``sync-recipes --force`` command was introduced in symfony/flex 1.2.0.
+
+The command will ask you before overwriting any files with uncommitted changes.
+
+The tricky part about updating recipes is that you may not want or need many of
+the changes. Often a recipe will add a new file to help get you started, which
+you may not need. Feel free to delete any "extra" files you don't need, or revert
+any changes you don't want. Recipes are generally a great "starting" point - and
+your app will naturally evolve how it needs to.
+
 Symfony Flex Recipes
 ~~~~~~~~~~~~~~~~~~~~
 

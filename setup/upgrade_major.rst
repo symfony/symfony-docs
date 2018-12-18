@@ -160,4 +160,6 @@ When upgrading to Symfony 4, you will probably also want to upgrade to the new
 Symfony 4 directory structure so that you can take advantage of Symfony Flex.
 This takes some work, but is optional. For details, see :ref:`upgrade-to-flex`.
 
+.. include:: /setup/_update_flex_recipes.rst.inc
+
 .. _`Symfony-Upgrade-Fixer`: https://github.com/umpirsky/Symfony-Upgrade-Fixer

@@ -30,9 +30,10 @@ important changes:
   other environments. You can also create a ``.env.test`` file for test-environment
   overrides.
 
-* E) If you pass the ``--env=`` flag when running ``bin/console``, this value will
-  override your ``APP_ENV`` environment variable (if set). And so, if you pass
-  ``--env=prod``, the DotEnv component *will* try to load your ``.env*`` files.
+* E) `One further change to the recipe in December 2019`_ means that your ``.env``
+  files are *always* loaded, even if you set an ``APP_ENV=prod`` environment
+  variable. The purpose is for the ``.env`` files to define default values that
+  you can override if you want to with real environment values.
 
 There are a few other improvements, but these are the most important. To take advantage
 of these, you *will* need to modify a few files in your existing app.
@@ -40,9 +41,48 @@ of these, you *will* need to modify a few files in your existing app.
 Updating My Application
 -----------------------
 
-If you created your application after November 15th 2018, you don't need to make
-any changes! Otherwise, here is the list of changes you'll need to make - these
-changes can be made to any Symfony 3.4 or higher app:
+First, make sure you're using ``symfony/flex`` version 1.2 or later:
+
+.. code-block:: terminal
+
+    composer update symfony/flex
+
+The easiest way to update your application is to update all of your recipes using
+the :ref:`sync-recipes <updating-recipes>` command. This command will update *all*
+your recipes, so it will probably include other changes beyond the ones needed for
+the new environment handling.
+
+First, rename ``.env`` to ``.env.local`` and ``.env.dist`` to ``.env``:
+
+   .. code-block:: terminal
+
+       # Unix
+       $ mv .env .env.local
+       $ git mv .env.dist .env
+
+       # Windows
+       $ mv .env .env.local
+       $ git mv .env.dist .env
+
+Now run:
+
+.. code-block:: terminal
+
+    $ composer sync-recipes --force
+
+If this asks you to overwrite uncommited changes in ``.env``, choose "no" - you
+should keep the values from your ``.env`` file.
+
+When the command finishes, review the changes - there may be extra files or changes
+from other recipes that you don't want. If you made custom changes to files, you'll
+need to use re-add those (hint using ``git diff`` is a great way to see the changes
+made by the recipes).
+
+Summary of the Changes
+~~~~~~~~~~~~~~~~~~~~~~
+
+IF you want to manually update your application, here the details: these changes
+can be made to any Symfony 3.4 or higher app:
 
 #. Create a new `config/bootstrap.php`_ file in your project. This file loads Composer's
    autoloader and loads all the ``.env`` files as needed (note: in an earlier recipe,
@@ -94,3 +134,4 @@ changes can be made to any Symfony 3.4 or higher app:
 .. _`comment on the top of .env`: https://github.com/symfony/recipes/blob/master/symfony/flex/1.0/.env
 .. _`create a new .env.test`: https://github.com/symfony/recipes/blob/master/symfony/phpunit-bridge/3.3/.env.test
 .. _`phpunit.xml.dist file`: https://github.com/symfony/recipes/blob/master/symfony/phpunit-bridge/3.3/phpunit.xml.dist
+.. _`One further change to the recipe in December 2019`: https://github.com/symfony/recipes/pull/501

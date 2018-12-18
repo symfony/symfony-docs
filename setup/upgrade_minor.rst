@@ -69,5 +69,7 @@ safe to update in the future.
 
 These documents can also be found in the `Symfony Repository`_.
 
+.. include:: /setup/_update_flex_recipes.rst.inc
+
 .. _`Symfony Repository`: https://github.com/symfony/symfony
 .. _`UPGRADE-4.1.md`: https://github.com/symfony/symfony/blob/4.1/UPGRADE-4.1.md
