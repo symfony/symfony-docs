@@ -136,7 +136,7 @@ not sure of the answer, don't worry! You can always change the settings later:
     >
     (press enter again to finish)
 
-This made changes to *two* changes. First, added a new ``category`` property to
+This made changes to *two* entities. First, it added a new ``category`` property to
 the ``Product`` entity (and getter & setter methods):
 
 .. configuration-block::
