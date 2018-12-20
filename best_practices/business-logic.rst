@@ -122,6 +122,15 @@ library or strategy you want for this.
 
 In practice, many Symfony applications rely on the independent
 `Doctrine project`_ to define their model using entities and repositories.
+
+Doctrine support is not enabled by default in Symfony. So to use Doctrine
+as shown in the examples below you will need to install `Doctrine ORM support`_
+by executing the following command:
+
+.. code-block:: terminal
+
+    $ composer require "symfony/orm-pack"
+
 Just like with business logic, we recommend storing Doctrine entities in the
 ``src/Entity/`` directory.
 
@@ -268,6 +277,7 @@ Next: :doc:`/best_practices/controllers`
 
 .. _`full definition`: https://en.wikipedia.org/wiki/Business_logic
 .. _`Doctrine project`: http://www.doctrine-project.org/
+.. _`Doctrine ORM support`: https://symfony.com/doc/current/doctrine.html
 .. _`fixture class`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html#writing-simple-fixtures
 .. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
