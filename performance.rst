@@ -179,6 +179,8 @@ such as Symfony projects, should use at least these values:
     ; save the results for 10 minutes (600 seconds)
     realpath_cache_ttl=600
 
+Note: using ``open_basedir`` will disable the realpath Cache.
+
 .. _performance-optimize-composer-autoloader:
 
 Optimize Composer Autoloader
