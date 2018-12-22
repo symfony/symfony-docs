@@ -246,5 +246,3 @@ the ``monolog.processor`` tag:
         $container
             ->register(SessionRequestProcessor::class)
             ->addTag('monolog.processor', array('channel' => 'main'));
-
-.. _ProcessorInterface: https://github.com/Seldaek/monolog/blob/master/src/Monolog/Processor/ProcessorInterface.php
