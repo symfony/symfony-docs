@@ -6,9 +6,9 @@
 How to Implement a Registration Form
 ====================================
 
-Creating a registration form works the same as creating any form: you create a
-form to update some ``User`` model object (a Doctrine entity in this
-example) and then save it.
+The basics of creating a registration form are the same as any normal form. After
+all, you are creating an object with it (a user). However, since this is related
+to security, there are some additional aspects. This article explains it all.
 
 Before you get Started
 ----------------------
@@ -151,13 +151,11 @@ saves the user::
          */
         public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
         {
+            $user = new User();
             $form = $this->createForm(RegistrationFormType::class);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                /** @var User */
-                $user = $form->getData();
-
                 // encode the plain password
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
