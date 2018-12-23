@@ -1,7 +1,7 @@
 Range
 =====
 
-Validates that a given number is *between* some minimum and maximum number.
+Validates that a given number or ``DateTime`` object is *between* some minimum and maximum.
 
 +----------------+---------------------------------------------------------------------+
 | Applies to     | :ref:`property or method <validation-property-target>`              |
@@ -320,7 +320,7 @@ Options
 min
 ~~~
 
-**type**: ``integer``
+**type**: ``mixed``
 
 This required option is the "min" value. Validation will fail if the given
 value is **less** than this min value.
@@ -328,7 +328,7 @@ value is **less** than this min value.
 max
 ~~~
 
-**type**: ``integer``
+**type**: ``mixed``
 
 This required option is the "max" value. Validation will fail if the given
 value is **greater** than this max value.
