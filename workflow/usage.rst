@@ -161,7 +161,10 @@ like this:
     If a ``multiple_state`` is used, the persisted state type should be an ``array``, 
     using Doctrine, you can use ``json`` or ``json_array``. 
 
-    If a ``single_state`` is used, the persisted state type could be a string
+    If a ``single_state`` is used, the persisted state type could be a string, 
+    if you need to store an int (due to DB limitations and/or project constraints),
+    be aware that you need to implement :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`
+    in order to transform the int back to something understandable by Workflow.
 
     If something else is used, you're in charge of choosing the best storage format.
     
