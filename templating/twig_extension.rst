@@ -99,7 +99,7 @@ successfully registered:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:twig --filter=price
+    $ php bin/console debug:twig price
 
 You can now start using your filter in any Twig template.
 
