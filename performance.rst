@@ -179,7 +179,10 @@ such as Symfony projects, should use at least these values:
     ; save the results for 10 minutes (600 seconds)
     realpath_cache_ttl=600
 
-Note: using ``open_basedir`` will disable the realpath Cache.
+.. note::
+
+    PHP disables the ``realpath`` cache when the `open_basedir`_ config option
+    is enabled.
 
 .. _performance-optimize-composer-autoloader:
 
@@ -221,3 +224,4 @@ Learn more
 .. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu
 .. _`APCu PHP functions`: https://php.net/manual/en/ref.apcu.php
 .. _`cachetool`: https://github.com/gordalina/cachetool
+.. _`open_basedir`: https://php.net/manual/ini.core.php#ini.open-basedir
