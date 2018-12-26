@@ -1,11 +1,11 @@
 https://{default}/:
   cache:
     cookies:
-    - '*'
+      - '*'
     default_ttl: 0
     enabled: true
     headers:
-    - Accept
-    - Accept-Language
+      - Accept
+      - Accept-Language
   type: upstream
   upstream: symfonydocs:http
