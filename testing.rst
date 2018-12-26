@@ -751,7 +751,7 @@ their type::
 
     // In the case of a multiple file upload
     $form['my_form[field][O]']->upload('/path/to/lucas.jpg');
-    $form['my_form[field][1]']->upload('/path/to/lucas.jpg');
+    $form['my_form[field][1]']->upload('/path/to/lisa.jpg');
 
 .. tip::
 
