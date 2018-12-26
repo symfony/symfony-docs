@@ -793,6 +793,10 @@ their type::
     // uploads a file
     $form['photo']->upload('/path/to/lucas.jpg');
 
+    // In the case of a multiple file upload
+    $form['my_form[field][O]']->upload('/path/to/lucas.jpg');
+    $form['my_form[field][1]']->upload('/path/to/lisa.jpg');
+
 .. tip::
 
     If you purposefully want to select "invalid" select/radio values, see
