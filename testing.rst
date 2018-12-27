@@ -876,7 +876,9 @@ In order to test that multiple files can be uploaded, here's one of the availabl
     $files = array(
          'some_type' => array(
              'files' => array(
-                 0 => new UploadedFile('/path/to/file.extension', 'file.extension')
+                 0 => array(
+                     'file' => new UploadedFile('/path/to/file.extension', 'file.extension')
+                 ),
               ),
           ),
      );
