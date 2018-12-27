@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by kunicmarko20 at 2018-12-03T11:25:53Z
+
+The type hint and the use statement should also change since the name is different:
+
+https://github.com/symfony/console/blob/master/Event/ConsoleErrorEvent.php
+
+it is `ConsoleErrorEvent` and not `ConsoleExceptionEvent`.
+
+---------------------------------------------------------------------------
+
+by Landerstraeten at 2018-12-03T14:21:53Z
+
+Thank you @kunicmarko20. After validating my own pr I saw:
+
+- The code example for `ConsoleExceptionEvent` is correct in 3.4
+- The is no code example for `ConsoleErrorEvent` since it's an improved version of the `ConsoleEvents::EXCEPTION` event
+- The class `ConsoleExceptionEvent` does not exist anymore in 4.1
+- The code example for `ConsoleErrorEvent` is wrong for 4.1. Fixed **in this PR**
+- The code example for `ConsoleErrorEvent` is wrong for 4.2. But should be fixed if 4.1 is merged into 4.2
+- The code example for `ConsoleErrorEvent` is wrong for 4.3. But should be fixed if 4.1 is merged into 4.3
+
+---------------------------------------------------------------------------
+
+by kunicmarko20 at 2018-12-03T15:27:17Z
+
+This (method name, import, and typehint) should probably be changed for 3.4 and up since the `ConsoleExceptionEvent` is deprecated on 3.4. Let's wait for the docs team and see what they say.
+
+---------------------------------------------------------------------------
+
+by Landerstraeten at 2018-12-05T21:13:39Z
+
+@javiereguiluz what do you suggest?
+
+---------------------------------------------------------------------------
+
+by stof at 2018-12-08T12:58:35Z
+
+The 3.4 doc should indeed be updated to showcase the non-deprecated version of it.
