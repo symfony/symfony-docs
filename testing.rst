@@ -867,7 +867,7 @@ Let's imagine a simple form which define a collection of FileType::
 Testing this type can be hard as explained earlier, trying to use UploadedFile isn't possible 
 due to PHP limitations when it comes to stream serialization.
 
-In order to test that multiple files can be uploaded, here's one of the available solutions:
+In order to test that multiple files can be uploaded, here's one of the available solutions::
 
     // get the values if you need to define new ones
     $values = $form->getPhpValues();
@@ -887,7 +887,7 @@ In order to test that multiple files can be uploaded, here's one of the availabl
      $crawler = $client->request('POST', '/uri', $values, $files);
 
 If you use a dedicated Type in the `entry_type` option, just add the name of the Type along
-with the field name:
+with the field name::
 
     $files = array(
         'some_type' => array(
