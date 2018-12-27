@@ -829,7 +829,6 @@ Let's imagine a simple form which define a collection of FileType::
     namespace App\Form;
 
     use App\Entity\Entity;
-    use App\Form\MultipleFileType;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
