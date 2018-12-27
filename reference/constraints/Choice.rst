@@ -210,7 +210,7 @@ constraint.
             }
         }
 
-If the callback is stored in a different class and is static, for example ``AppBundle\Entity\Genre``,
+If the callback is defined in a different class and is static, for example ``AppBundle\Entity\Genre``,
 you can pass the class name and the method as an array.
 
 .. configuration-block::
@@ -278,6 +278,35 @@ you can pass the class name and the method as an array.
                 )));
             }
         }
+
+Supplying the Choices from an Array Constant
+--------------------------------------------
+
+You can also directly provide a constant containing an array to the ``choices`` option in the annotation::
+
+    // src/AppBundle/Entity/Author.php
+    namespace AppBundle\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Author
+    {
+        const GENRES = ['action', 'comedy'];
+
+        /**
+         * @Assert\Choice(choices=Author::GENRES)
+         */
+        protected $genre;
+    }
+
+.. warning::
+
+  The constant in the option is used without quotes.
+
+.. note::
+
+  If the constant is defined in a different class, you can pass the fully qualified class name.
+
 
 Available Options
 -----------------
