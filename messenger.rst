@@ -421,112 +421,6 @@ like this:
 The first argument is the receiver's service name. It might have been created by
 your ``transports`` configuration or it can be your own receiver.
 
-Multiple Buses
---------------
-
-If you are interested in architectures like CQRS, you might want to have multiple
-buses within your application.
-
-You can create multiple buses (in this example, a command bus and an event bus) like
-this:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/messenger.yaml
-        framework:
-            messenger:
-                # The bus that is going to be injected when injecting MessageBusInterface:
-                default_bus: messenger.bus.commands
-
-                # Create buses
-                buses:
-                    messenger.bus.commands: ~
-                    messenger.bus.events: ~
-
-    .. code-block:: xml
-
-        <!-- config/packages/messenger.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:messenger default-bus="messenger.bus.commands">
-                    <framework:bus name="messenger.bus.commands" />
-                    <framework:bus name="messenger.bus.events" />
-                </framework:messenger>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
-                'default_bus' => 'messenger.bus.commands',
-                'buses' => array(
-                    'messenger.bus.commands' => null,
-                    'messenger.bus.events' => null,
-                ),
-            ),
-        ));
-
-This will generate the ``messenger.bus.commands`` and ``messenger.bus.events`` services
-that you can inject in your services.
-
-.. note::
-
-    To register a handler only for a specific bus, add a ``bus`` attribute to
-    the handler's service tag (``messenger.message_handler``) and use the bus
-    name as its value.
-
-Type-hints and Auto-wiring
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Auto-wiring is a great feature that allows you to reduce the amount of configuration
-required for your service container to be created. When using multiple buses, by default,
-the auto-wiring will not work as it won't know which bus to inject in your own services.
-
-In order to clarify this, you can use the DependencyInjection's binding capabilities
-to clarify which bus will be injected based on the argument's name:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            _defaults:
-                # ...
-
-                bind:
-                    $commandBus: '@messenger.bus.commands'
-                    $eventBus: '@messenger.bus.events'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <defaults>
-                   <bind key="$commandBus" type="service" id="messenger.bus.commands" />
-                   <bind key="$commandBus" type="service" id="messenger.bus.events" />
-                </defaults>
-            </services>
-        </container>
-
 Middleware
 ----------
 
@@ -960,5 +854,13 @@ will give you access to the following services:
 
 #. ``messenger.sender.yours``: the sender;
 #. ``messenger.receiver.yours``: the receiver.
+
+Learn more
+----------
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /messenger/*
 
 .. _`enqueue's transport`: https://github.com/php-enqueue/messenger-adapter
