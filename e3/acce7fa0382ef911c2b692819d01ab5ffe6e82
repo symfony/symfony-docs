@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-12-27T16:45:51Z
+
+The generated docs (https://pr-10812-y3zswka-nq3xa5jtywvyc.eu.s5y.io/console/coloring.html) show the link as expected, so the problem was indeed that comma.
