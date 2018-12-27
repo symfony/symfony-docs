@@ -74,8 +74,22 @@ You can also set these colors and options directly inside the tag name::
     or use the :method:`Symfony\\Component\\Console\\Formatter\\OutputFormatter::escape`
     method to escape all the tags included in the given string.
 
+Using links
+~~~~~~~~~~~
+
+You can use links in the output using the ``href`` tag, for example: ``<href=https://www.symfony.com/>Symfony</>``.
+
+.. versionadded:: 4.3
+    The ``href`` tag was introduced in Symfony 4.3.
+
+.. note::
+
+    The ``href`` tag currently does not work in all terminals, see `Hyperlinks in Terminal Emulators`_
+    for more information.
+
 .. _Cmder: http://cmder.net/
 .. _ConEmu: https://conemu.github.io/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
 .. _Mintty: https://mintty.github.io/
 .. _Hyper: https://hyper.is/
+.. _Hyperlinks in Terminal Emulators: https://gist.github.com/egmontkob/eb114294efbcd5adb1944c9f3cb5feda
