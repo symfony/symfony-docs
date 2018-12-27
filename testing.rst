@@ -815,6 +815,91 @@ You can remove an existing field, e.g. a tag::
 .. index::
    pair: Tests; Configuration
 
+Testing file upload using CollectionType
+........................................
+
+By default, a CollectionType isn't available in the form during functional tests 
+if no data are passed by default, sometimes, you need to upload multiple files (using this CollectionType), 
+keeping in mind this logic, it can be hard to handle the upload.
+
+Let's imagine a simple form which define a collection of FileType::
+
+    <?php
+
+    namespace App\Form;
+
+    use App\Entity\Entity;
+    use App\Form\MultipleFileType;
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
+
+    class DefaultUploadType extends AbstractType
+    {
+        /**
+         * {@inheritdoc}
+         */
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                ->add('files', CollectionType::class, [
+                    'entry_type' => FileType::class,
+                )
+            ;
+        }
+
+        /**
+         * {@inheritdoc}
+         */
+        public function configureOptions(OptionsResolver $resolver)
+        {
+            $resolver->setDefault('data_class', Entity::class);
+        }
+        
+        public function getBlockPrefix()
+        {
+            return 'some_type';
+        }
+    }
+
+Testing this type can be hard as explained earlier, trying to use UploadedFile isn't possible 
+due to PHP limitations when it comes to stream serialization.
+
+In order to test that multiple files can be uploaded, here's one of the available solutions:
+
+    // get the values if you need to define new ones
+    $values = $form->getPhpValues();
+    
+    // We build a default array which gonna contain the file to upload using the form structure.
+    $files = array(
+         'some_type' => array(
+             'files' => array(
+                 0 => new UploadedFile('/path/to/file.extension', 'file.extension')
+              ),
+          ),
+     );
+     
+     // Then we force to upload the file using $_FILES variable during a request
+     $crawler = $client->request('POST', '/uri', $values, $files);
+
+If you use a dedicated Type in the `entry_type` option, just add the name of the Type along
+with the field name:
+
+    $files = array(
+        'some_type' => array(
+            'files' => array(
+                0 => array(
+                    'type_name' => array(
+                        'field_name' => new UploadedFile('/path/to/file.extension', 'file.extension')
+                    ),
+                ),
+            ),
+         ),
+     );
+
+
 Testing Configuration
 ---------------------
 
