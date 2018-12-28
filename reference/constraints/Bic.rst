@@ -106,6 +106,13 @@ You can use the following parameters in this message:
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
+iban
+~~~~
+
+**type**: ``string`` **default**: ``null``
+
+An IBAN value to validate that the BIC is associated with it.
+
 ibanMessage
 ~~~~~~~~~~~
 
@@ -113,19 +120,12 @@ ibanMessage
 
 The default message supplied when the value does not pass the combined BIC/IBAN check.
 
-iban
-~~~~
-
-**type**: ``string`` **default**: ``null``
-
-An IBAN to validate the BIC with.
-
 ibanPropertyPath
 ~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
-It defines the object property whose value is an IBAN used to check the BIC with.
+It defines the object property whose value stores the IBAN used to check the BIC with.
 
 For example, if you want to compare the ``$bic`` property of some object
 with regard to the ``$iban`` property of the same object, use
