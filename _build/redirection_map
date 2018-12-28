@@ -358,3 +358,4 @@
 /service_container/service_locators /service_container/service_subscribers_locators
 /weblink /web_link
 /components/weblink /components/web_link
+/frontend/encore/installation-no-flex /frontend/encore/installation
