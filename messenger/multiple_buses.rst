@@ -34,8 +34,8 @@ an **event bus**. The event bus could have zero or more subscribers.
                         middleware:
                             - validation
                     messenger.bus.events:
+                        default_middleware: allow_no_handlers
                         middleware:
-                            - allow_no_handler
                             - validation
 
     .. code-block:: xml
@@ -60,9 +60,8 @@ an **event bus**. The event bus could have zero or more subscribers.
                     <framework:bus name="messenger.bus.queries">
                         <framework:middleware id="validation" />
                     <framework:bus>
-                    <framework:bus name="messenger.bus.events">
+                    <framework:bus name="messenger.bus.events" default-middleware="allow_no_handlers">
                         <framework:middleware id="validation" />
-                        <framework:middleware id="allow_no_handler" />
                     <framework:bus>
                 </framework:messenger>
             </framework:config>
@@ -88,9 +87,9 @@ an **event bus**. The event bus could have zero or more subscribers.
                         ),
                     ),
                     'messenger.bus.events' => array(
+                        'default_middleware' => 'allow_no_handlers',
                         'middleware' => array(
                             'validation',
-                            'allow_no_handler',
                         ),
                     ),
                 ),
