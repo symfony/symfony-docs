@@ -14,6 +14,7 @@ or required. For example, to add an optional ``last_name`` argument to the comma
 and make the ``name`` argument required::
 
     // ...
+    use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputArgument;
 
     class GreetCommand extends Command
@@ -33,6 +34,10 @@ and make the ``name`` argument required::
 You now have access to a ``last_name`` argument in your command::
 
     // ...
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
+
     class GreetCommand extends Command
     {
         // ...

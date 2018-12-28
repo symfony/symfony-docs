@@ -11,6 +11,9 @@ For instance, the ``kernel`` service in Symfony is injected into the container
 from within the ``Kernel`` class::
 
     // ...
+    use Symfony\Component\HttpKernel\KernelInterface;
+    use Symfony\Component\HttpKernel\TerminableInterface;
+
     abstract class Kernel implements KernelInterface, TerminableInterface
     {
         // ...

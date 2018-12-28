@@ -15,6 +15,8 @@ spent in the framework, etc. But before writing assertions, enable the profiler
 and check that the profiler is indeed available (it is enabled by default in
 the ``test`` environment)::
 
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
     class LuckyControllerTest extends WebTestCase
     {
         public function testNumberAction()
