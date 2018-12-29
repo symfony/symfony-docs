@@ -13,6 +13,7 @@ Install Encore into your project via Yarn:
 
 .. code-block:: terminal
 
+    $ composer require symfony/webpack-encore-bundle
     $ yarn add @symfony/webpack-encore --dev
 
 .. note::
@@ -22,6 +23,23 @@ Install Encore into your project via Yarn:
 This command creates (or modifies) a ``package.json`` file and downloads dependencies
 into a ``node_modules/`` directory. Yarn also creates/updates a ``yarn.lock``
 (called ``package-lock.json`` if you use npm version 5+).
+
+Now add the next line to your ``AppKernel.php``:
+
+.. code-block:: php
+
+    $bundles = [
+        #...
+        new \Symfony\WebpackEncoreBundle\WebpackEncoreBundle(),
+    ];
+
+Finally add bundle configuration to your configuration file
+
+.. code-block:: yaml
+
+    # app/config/config.yml
+    webpack_encore:
+        output_path: "%kernel.root_dir%/../web/build/"
 
 .. tip::
 
