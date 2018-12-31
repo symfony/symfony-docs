@@ -11,7 +11,8 @@ listener for the console.
 Starting from Symfony 3.3, the Console component provides automatic error and
 exception logging.
 
-When an exception occurs during the execution of a command, you'll see a message like the following in your log file:
+When an exception occurs during the execution of a command, you'll see a message
+like the following in your log file:
 
 .. code-block:: terminal
 
