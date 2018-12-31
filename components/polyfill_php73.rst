@@ -30,3 +30,6 @@ Provided Functions
 ~~~~~~~~~~~~~~~~~~
 
 * :phpfunction:`is_countable`
+* :phpfunction:`hrtime`
+* :phpfunction:`array_key_first`
+* :phpfunction:`array_key_last`
