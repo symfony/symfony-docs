@@ -400,3 +400,4 @@
 /security/password_encoding /security
 /weblink /web_link
 /components/weblink /components/web_link
+/frontend/encore/installation-no-flex /frontend/encore/installation
