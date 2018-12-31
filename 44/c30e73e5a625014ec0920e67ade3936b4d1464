@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-12-29T19:40:59Z
+
+I’m fine with this. I split it originally to try to avoid confusion - I made the “Flex” install path the default one - and you would need to dig further to see the non-Flex instructions. With this, the non-Flex instructions are now right in front, and (in theory) Flex users may just keep reading and try run those commands as well. Both seem equally perfect/imperfect to me.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2018-12-29T19:52:04Z
+
+I see. Also, as reported in #10818 there aren't two installation guides but three:
+
+* Encore + Symfony + Flex
+* Encore + Symfony - Flex
+* Encore - Symfony - Flex
+
+I wanted to create just a single resource to encourage the usage of Encore outside of Symfony/PHP (I used it in a Go app and it worked like a charm). I don't want to bury/hide/discourage the installation and usage of Encore outside Symfony apps. Encore is amazing and everybody should know about it.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2018-12-29T19:56:02Z
+
+Hmm, there should be only 2, because if you’re using Symfony, we must assume you’re using Flex. So Flex+Symfony and then “not Symfony”. I can see how it’s currently unclear for the minority of Symfony, non-Flex users. So let’s go with your way
