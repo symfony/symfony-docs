@@ -22,7 +22,9 @@ like the following in your log file:
    src/Symfony/Bundle/FrameworkBundle/Command/CacheClearCommand.php:61)",
    "command":"cache:clear -vvv","message":"An error occured!"} []
 
-In addition to logging exceptions, the new subscriber also listens to the console.terminate event to add a log message whenever a command doesn't finish with the 0 exit status.
+In addition to logging exceptions, the new subscriber also listens to the
+`console.terminate` event to add a log message whenever a command
+doesn't finish with the 0 exit status.
 
 
 
