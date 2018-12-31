@@ -151,6 +151,7 @@ Prefixing the Names of Imported Routes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
+
     The feature to prefix route names was introduced in Symfony 3.4.
 
 You also have the possibility to prefix all route names defined in a controller

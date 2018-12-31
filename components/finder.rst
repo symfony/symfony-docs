@@ -81,6 +81,7 @@ There are lots of ways to filter and sort your results. You can also use the
 there's any file or directory matching the search criteria.
 
 .. versionadded:: 3.4
+
     The ``hasResults()`` method was introduced in Symfony 3.4.
 
 Location

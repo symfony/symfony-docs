@@ -166,6 +166,7 @@ needs three parameters:
 #. The encoder used to convert that information into an array
 
 .. versionadded:: 3.3
+
     Support for the ``allow_extra_attributes`` key in the context was introduced
     in Symfony 3.3.
 
@@ -601,6 +602,7 @@ There are several types of normalizers available:
     Objects are normalized to a map of property names to property values.
 
     .. versionadded:: 3.4
+
         The ability to handle parent classes for ``PropertyNormalizer`` was
         introduced in Symfony 3.4.
 
@@ -623,6 +625,7 @@ There are several types of normalizers available:
     By default it uses the RFC3339_ format.
 
     .. versionadded:: 3.2
+
         Support for specifying datetime format during denormalization was
         introduced in the ``DateTimeNormalizer`` in Symfony 3.2.
 
@@ -635,6 +638,7 @@ There are several types of normalizers available:
     By default it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
 
     .. versionadded:: 3.4
+
         The ``DateIntervalNormalizer`` normalizer was added in Symfony 3.4.
 
 .. _component-serializer-encoders:
@@ -661,6 +665,7 @@ All these encoders are enabled by default when using the Symfony Standard Editio
 with the serializer enabled.
 
 .. versionadded:: 3.2
+
     The ``YamlEncoder`` and ``CsvEncoder`` encoders were introduced in Symfony 3.2
 
 .. _component-serializer-handling-circular-references:

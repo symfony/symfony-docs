@@ -171,6 +171,7 @@ accessor methods for parameters::
     :doc:`/components/dependency_injection/compilation`.
 
 .. versionadded:: 3.4
+
     Container parameters are case sensitive starting from Symfony 3.4. In
     previous Symfony versions, parameters were case insensitive, meaning that
     ``mailer.transport`` and ``Mailer.Transport`` were considered the same parameter.

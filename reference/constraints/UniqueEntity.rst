@@ -180,6 +180,7 @@ entityClass
 ~~~~~~~~~~~
 
 .. versionadded:: 3.2
+
     The ``entityClass`` option was introduced in Symfony 3.2.
 
 **type**: ``string``

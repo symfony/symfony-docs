@@ -5,6 +5,7 @@ DateIntervalType Field
 ======================
 
 .. versionadded:: 3.2
+
    The DateIntervalType field type was introduced in Symfony 3.2.
 
 This field allows the user to select an *interval* of time. For example, if you want to
@@ -133,6 +134,7 @@ labels
 ~~~~~~
 
 .. versionadded:: 3.3
+
     The ``labels`` option was introduced in Symfony 3.3.
 
 **type**: ``array`` **default**: (see below)

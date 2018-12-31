@@ -541,6 +541,7 @@ Modified PHPUnit script
 -----------------------
 
 .. versionadded:: 3.2
+
     This modified PHPUnit script was introduced in the 3.2 version of
     this component.
 

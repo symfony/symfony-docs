@@ -9,6 +9,7 @@ The Lock Component
     exclusive access to a shared resource.
 
 .. versionadded:: 3.4
+
     The Lock component was introduced in Symfony 3.4.
 
 Installation

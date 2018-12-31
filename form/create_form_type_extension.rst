@@ -110,6 +110,7 @@ overridden (e.g. ``buildForm()``) will be called whenever *any* field of the giv
 type (``FileType``) is built. Let's see an example next.
 
 .. versionadded:: 3.3
+
     Prior to Symfony 3.3, you needed to define type extension services as ``public``.
     Starting from Symfony 3.3, you can also define them as ``private``.
 
@@ -122,6 +123,7 @@ type (``FileType``) is built. Let's see an example next.
     that one extension is loaded before or after another extension.
 
     .. versionadded:: 3.2
+
         The ``priority`` attribute was introduced in Symfony 3.2.
 
 Adding the extension Business Logic

@@ -213,6 +213,7 @@ readlink
 ~~~~~~~~
 
 .. versionadded:: 3.2
+
     The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method was introduced in Symfony 3.2.
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` read links targets.
@@ -299,6 +300,7 @@ appendToFile
 ~~~~~~~~~~~~
 
 .. versionadded:: 3.3
+
     The :method:`Symfony\\Component\\Filesystem\\Filesystem::appendToFile`
     method was introduced in Symfony 3.3.
 

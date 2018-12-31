@@ -188,6 +188,7 @@ Or you may define a prototype for each node inside an array node::
     ;
 
 .. versionadded:: 3.3
+
     The ``arrayPrototype()`` method (and the related ``booleanPrototype()``
     ``integerPrototype()``, ``floatPrototype()``, ``scalarPrototype()`` and
     ``enumPrototype()``) was introduced in Symfony 3.3. In previous versions,
@@ -199,6 +200,7 @@ above, it is possible to have multiple connection arrays (containing a ``driver`
 ``host``, etc.).
 
 .. versionadded:: 3.3
+
     The ``castToArray()`` helper was added in Symfony 3.3.
 
 Sometimes, to improve the user experience of your application or bundle, you may

@@ -437,6 +437,7 @@ Adding Notes to Translation Contents
 ------------------------------------
 
 .. versionadded:: 3.4
+
     The feature to load and dump translation notes was introduced in Symfony 3.4.
 
 Sometimes translators need additional context to better decide how to translate

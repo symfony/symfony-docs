@@ -254,6 +254,7 @@ The crawler supports multiple ways of adding the content::
     ``ISO-8859-1`` in case no charset can be guessed.
 
     .. versionadded:: 3.4
+
         The charset guessing mechanism of the ``addContent()`` method was
         introduced in Symfony 3.4. In previous Symfony versions, the ``ISO-8859-1``
         charset was always used.
@@ -300,6 +301,7 @@ Expression Evaluation
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.2
+
     The :method:`Symfony\\Component\\DomCrawler\\Crawler::evaluate` method was
     introduced in Symfony 3.2.
 
@@ -443,6 +445,7 @@ is GET, then it mimics the browser's behavior and returns the ``action``
 attribute followed by a query string of all of the form's values.
 
 .. versionadded:: 3.3
+
     Starting from Symfony 3.3, the optional ``formaction`` and ``formmethod``
     button attributes are supported. The ``getUri()`` and ``getMethod()``
     methods take into account those attributes to always return the right action

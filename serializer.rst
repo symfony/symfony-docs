@@ -158,6 +158,7 @@ properties and setters (``setXxx()``) to change properties:
         ;
 
 .. versionadded:: 3.4
+
     Support for hasser methods (``hasXxx()``) in ``GetSetMethodNormalizer`` was
     introduced in Symfony 3.4. In previous Symfony versions only getters (``getXxx()``)
     and issers (``isXxx()``) were supported.

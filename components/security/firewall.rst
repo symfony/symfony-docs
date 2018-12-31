@@ -92,6 +92,7 @@ Firewall Config
 ~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.2
+
     The ``FirewallConfig`` class was introduced in Symfony 3.2.
 
 The information about a given firewall, such as its name, provider, context,

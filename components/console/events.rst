@@ -87,6 +87,7 @@ The ``ConsoleEvents::EXCEPTION`` Event
 --------------------------------------
 
 .. versionadded:: 3.3
+
     The ``ConsoleEvents::EXCEPTION`` event was deprecated in Symfony 3.3. Use
     the ``ConsoleEvents::ERROR`` event instead.
 

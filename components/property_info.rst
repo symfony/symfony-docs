@@ -274,6 +274,7 @@ and plural property names::
     $propertyInfo->isWritable(SomeClass::class, 'feet');     // returns true
 
 .. versionadded:: 3.2
+
     The support of adder/remover methods was introduced in Symfony 3.2.
 
 .. tip::
