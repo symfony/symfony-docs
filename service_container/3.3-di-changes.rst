@@ -81,8 +81,31 @@ what the file looks like in Symfony 4):
             </services>
         </container>
 
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $configurator) {
+            $container = $configurator->services()
+                ->defaults()
+                ->autowire()
+                ->autoconfigure()
+                ->private();
+
+            $container->load('App\\', '../src/*')
+                ->exclude('../src/{Entity,Migrations,Tests}');
+
+            $container->load('App\\Controller\\', '../src/Controller')
+                ->tag('controller.service_arguments');
+        };
+
 This small bit of configuration contains a paradigm shift of how services
 are configured in Symfony.
+
+.. versionadded:: 3.4
+
+    PHP Fluent DI was introduced in Symfony 3.4.
 
 .. _`service-33-changes-automatic-registration`:
 
@@ -125,6 +148,18 @@ thanks to the following config:
                 <prototype namespace="App\" resource="../src/*" exclude="../src/{Entity,Migrations,Tests}"/>
             </services>
         </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $configurator) {
+            // ...
+
+            $container->load('App\\', '../src/*')
+                ->exclude('../src/{Entity,Migrations,Tests}');
+        };
 
 This means that every class in ``src/`` is *available* to be used as a
 service. And thanks to the ``_defaults`` section at the top of the file, all of
@@ -319,11 +354,15 @@ The third big change is that, in a new Symfony 3.3 project, your controllers are
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
+        return function(ContainerConfigurator $configurator) {
+            // ...
 
-        $definition->addTag('controller.service_arguments');
-        $this->registerClasses($definition, 'App\\Controller\\', '../src/Controller/*');
+            $container->load('App\\Controller\\', '../src/Controller')
+                ->tag('controller.service_arguments');
+        };
+
 
 But, you might not even notice this. First, your controllers *can* still extend
 the same base controller class (``AbstractController``).
@@ -463,6 +502,21 @@ inherited from an abstract definition:
                 </instanceof>
             </services>
         </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Domain\LoaderInterface;
+
+        return function(ContainerConfigurator $configurator) {
+            // ...
+
+            $container->instanceof(LoaderInterface::class
+                ->public()
+                ->tag('app.domain_loader');
+        };
 
 What about Performance
 ----------------------

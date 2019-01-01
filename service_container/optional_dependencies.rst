@@ -34,17 +34,16 @@ if the service does not exist:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Newsletter\NewsletterManager;
-        use Symfony\Component\DependencyInjection\ContainerInterface;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        // ...
+        return function(ContainerConfigurator $configurator) {
+            $container = $configurator->services();
+            $container->set(NewsletterManager::class)
+                ->args([ref('logger')->nullOnInvalid()]);
+        };
 
-        $container->register(NewsletterManager::class)
-            ->addArgument(new Reference(
-                'logger',
-                ContainerInterface::NULL_ON_INVALID_REFERENCE
-            ));
 
 .. note::
 
@@ -91,19 +90,16 @@ call if the service exists and remove the method call if it does not:
     .. code-block:: php
 
         // config/services.php
-        use App\Newsletter\NewsletterManager;
-        use Symfony\Component\DependencyInjection\ContainerInterface;
-        use Symfony\Component\DependencyInjection\Reference;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container
-            ->register(NewsletterManager::class)
-            ->addMethodCall('setLogger', [
-                new Reference(
-                    'logger',
-                    ContainerInterface::IGNORE_ON_INVALID_REFERENCE
-                ),
-            ])
-        ;
+        use App\Newsletter\NewsletterManager;
+
+        return function(ContainerConfigurator $configurator) {
+            $container = $configurator->services();
+            $container->set(NewsletterManager::class)
+                ->call('setLogger', [ref('logger')->ignoreOnInvalid()])
+            ;
+        };
 
 .. note::
 

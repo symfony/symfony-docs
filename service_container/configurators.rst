@@ -166,23 +166,22 @@ all the classes are already loaded as services. All you need to do is specify th
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Mail\EmailConfigurator;
         use App\Mail\GreetingCardManager;
         use App\Mail\NewsletterManager;
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        // Same as before
-        $definition = new Definition();
+        return function(ContainerConfigurator $configurator) {
+            $container = $configurator->services();
 
-        $definition->setAutowired(true);
+            $container->load('App\', '../src/*');
+            $container->set(NewsletterManager::class)
+                ->configurator(ref(EmailConfigurator::class), 'configure');
 
-        $this->registerClasses($definition, 'App\\', '../src/*');
-
-        $container->getDefinition(NewsletterManager::class)
-            ->setConfigurator([new Reference(EmailConfigurator::class), 'configure']);
-
-        $container->getDefinition(GreetingCardManager::class)
-            ->setConfigurator([new Reference(EmailConfigurator::class), 'configure']);
+            $container->set(GreetingCardManager::class)
+                ->configurator(ref(EmailConfigurator::class), 'configure');
+        };
 
 .. _configurators-invokable:
 
