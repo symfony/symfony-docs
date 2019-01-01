@@ -348,6 +348,7 @@ For more information about services, see the :doc:`/service_container` article.
 .. _controller-service-arguments-tag:
 
 .. note::
+
     If this isn't working, make sure your controller is registered as a service,
     is :ref:`autoconfigured <services-autoconfigure>` and extends either
     :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller` or

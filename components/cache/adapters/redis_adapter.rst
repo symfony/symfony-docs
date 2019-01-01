@@ -139,6 +139,7 @@ Available Options
     connection attempt times out.
 
 .. note::
+
     When using the `Predis`_ library some additional Predis-specific options are available.
     Reference the `Predis Connection Parameters`_ documentation for more information.
 

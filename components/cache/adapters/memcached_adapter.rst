@@ -286,6 +286,7 @@ Available Options
     are valid and fit within the design of the protocol being used.
 
 .. tip::
+
     Reference the `Memcached`_ extension's `predefined constants`_ documentation
     for additional information about the available options.
 
