@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2018-12-31T20:13:50Z
+
+> I wondered about this some time ago, but it seems that the versionadded directive now behaves the same as other directives in more recent Sphinx versions.
+
+yes, I talked to Ryan before and we double checked if they get rendered correctly, and thats the case...
