@@ -311,6 +311,7 @@ The YAML specification defines some tags to set the type of any data explicitly:
             56enmleECcgggoBADs=
 
 .. versionadded:: 3.4
+
     Support for the ``!!str`` tag was introduced in Symfony 3.4.
 
 .. _YAML: http://yaml.org/

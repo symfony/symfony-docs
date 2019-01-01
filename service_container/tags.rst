@@ -402,6 +402,7 @@ To answer this, change the service declaration:
                     - { name: 'app.mail_transport' }
 
     .. versionadded:: 3.3
+
         Support for the compact tag notation in the YAML format was introduced
         in Symfony 3.3.
 
@@ -440,6 +441,7 @@ Reference Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
+
     Support for the tagged service notation in YAML, XML and PHP was introduced
     in Symfony 3.4.
 

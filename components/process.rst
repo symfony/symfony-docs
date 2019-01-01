@@ -80,6 +80,7 @@ for new output before going to the next iteration::
         }
 
     .. versionadded:: 3.2
+
         The ``getIterator()`` method was introduced in Symfony 3.2.
 
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
@@ -103,6 +104,7 @@ with a non-zero code)::
 .. tip::
 
     .. versionadded:: 3.3
+
         The ability to define commands as arrays of arguments was introduced in
         Symfony 3.3.
 
@@ -418,6 +420,7 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
     methods to handle process output in a streaming fashion.
 
     .. versionadded:: 3.1
+
         The ability to pass a callback to these methods when output is disabled
         was added in Symfony 3.1.
 

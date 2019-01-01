@@ -384,6 +384,7 @@ Unicode Routing Support
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.2
+
     UTF-8 support for route paths and requirements was introduced in
     Symfony 3.2.
 

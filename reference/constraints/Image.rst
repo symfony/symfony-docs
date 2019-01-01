@@ -278,6 +278,7 @@ minPixels
 ~~~~~~~~~
 
 .. versionadded:: 3.4
+
     The ``minPixels`` option has been introduced in Symfony 3.4.
 
 **type**: ``integer``
@@ -289,6 +290,7 @@ maxPixels
 ~~~~~~~~~
 
 .. versionadded:: 3.4
+
     The ``maxPixels`` option has been introduced in Symfony 3.4.
 
 **type**: ``integer``
@@ -431,6 +433,7 @@ maxPixelsMessage
 ~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
+
     The ``maxPixelsMessage`` option has been introduced in Symfony 3.4.
 
 **type**: ``string`` **default**: ``The image has to many pixels ({{ pixels }} pixels).
@@ -456,6 +459,7 @@ minPixelsMessage
 ~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
+
     The ``minPixelsMessage`` option has been introduced in Symfony 3.4.
 
 **type**: ``string`` **default**: ``The image has too few pixels ({{ pixels }} pixels).

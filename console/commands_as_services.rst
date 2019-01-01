@@ -77,6 +77,7 @@ Lazy Loading
 ------------
 
 .. versionadded:: 3.4
+
     Support for command lazy loading was introduced in Symfony 3.4.
 
 To make your command lazily loaded, either define its ``$defaultName`` static property::

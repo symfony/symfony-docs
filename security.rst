@@ -965,6 +965,7 @@ Access Control Lists (ACLs): Securing individual Database Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
+
     ACL support was deprecated in Symfony 3.4 and will be removed in 4.0. Install
     the `Symfony ACL bundle`_ if you want to keep using ACL.
 
@@ -1059,6 +1060,7 @@ the User object, and use the ``isGranted()`` method (or
         }
 
     .. versionadded:: 3.4
+
         The ``Security`` utility class was introduced in Symfony 3.4.
 
     This is only recommended for experienced developers who don't extend from the

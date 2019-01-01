@@ -9,6 +9,7 @@ The Workflow Component
     state machine.
 
 .. versionadded:: 3.2
+
     The Workflow component was introduced in Symfony 3.2.
 
 Installation
@@ -58,6 +59,7 @@ these statuses are called **places**. You can define the workflow like this::
     $workflow = new Workflow($definition, $marking);
 
 .. versionadded:: 3.3
+
     The fluent interface for the ``DefinitionBuilder`` class was introduced in
     Symfony 3.3. Before you had to call the ``addPlaces()``, ``addTransition()``
     and ``build()`` methods separately.

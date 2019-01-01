@@ -21,6 +21,7 @@ Using Cache Tags
 ----------------
 
 .. versionadded:: 3.2
+
     Tags-based invalidation was introduced in Symfony 3.2.
 
 To benefit from tags-based invalidation, you need to attach the proper tags to

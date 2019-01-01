@@ -251,6 +251,7 @@ This requires you to implement several methods::
     }
 
 .. versionadded:: 3.4
+
     ``AuthenticatorInterface`` was introduced in Symfony 3.4. In previous Symfony
     versions, authenticators needed to implement ``GuardAuthenticatorInterface``.
 
@@ -372,6 +373,7 @@ Each authenticator needs the following methods:
     should be skipped (return ``false``).
 
     .. versionadded:: 3.4
+
         The ``supports()`` method was introduced in Symfony 3.4. In previous Symfony
         versions, the authenticator could be skipped returning ``null`` in the
         ``getCredentials()`` method.

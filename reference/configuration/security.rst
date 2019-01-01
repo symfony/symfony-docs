@@ -161,6 +161,7 @@ logout_on_user_change
 **type**: ``boolean`` **default**: ``false``
 
 .. versionadded:: 3.4
+
     The ``logout_on_user_change`` option was introduced in Symfony 3.4.
 
 If ``true`` this option makes Symfony to trigger a logout when the user has
@@ -500,6 +501,7 @@ HTTP-Digest Authentication
 --------------------------
 
 .. versionadded:: 3.4
+
     HTTP-Digest Authentication was deprecated in Symfony 3.4 and it will be
     removed in Symfony 4.0.
 

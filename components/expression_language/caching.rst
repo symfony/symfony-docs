@@ -38,6 +38,7 @@ ones and injecting this using the constructor::
     $expressionLanguage = new ExpressionLanguage($cache);
 
 .. versionadded:: 3.2
+
     PSR-6 caching support was introduced in Symfony 3.2. Prior to version 3.2,
     a
     :class:`Symfony\\Component\\ExpressionLanguage\\ParserCache\\ParserCacheInterface`

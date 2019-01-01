@@ -60,6 +60,7 @@ you can configure these limits:
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMinDepth`
     .. versionadded:: 3.4
+
         The ``setMinDepth()`` method was introduced in Symfony 3.4.
 
     Configures the minimum tree depth where we are guaranteed to clone
@@ -85,6 +86,7 @@ Before dumping it, you can further limit the resulting
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\Data::seek`
     .. versionadded:: 3.2
+
         The ``seek()`` method was introduced in Symfony 3.2.
 
     Selects only subparts of already cloned arrays, objects or resources.
@@ -178,6 +180,7 @@ Another option for doing the same could be::
         $output = $dumper->dump($cloner->cloneVar($variable), true);
 
     .. versionadded:: 3.2
+
         The ability to return a string was introduced in Symfony 3.2.
 
 Dumpers implement the :class:`Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface`
@@ -206,6 +209,7 @@ method::
     ));
 
 .. versionadded:: 3.2
+
     Support for passing display options to the ``dump()`` method was introduced
     in Symfony 3.2.
 
@@ -221,10 +225,12 @@ bit field of ``Caster::EXCLUDE_*`` constants and influences the expected
 output produced by the different casters.
 
 .. versionadded:: 3.4
+
     The ``$filter`` argument of ``assertDumpEquals()`` was introduced in
     Symfony 3.4.
 
 .. versionadded:: 3.1
+
     The ``DUMP_STRING_LENGTH`` and ``DUMP_LIGHT_ARRAY`` flags were introduced
     in Symfony 3.1.
 
@@ -379,6 +385,7 @@ Adding Semantics with Metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.2
+
     As of Symfony 3.2, casters can attach metadata attributes to
     :class:`Symfony\\Component\\VarDumper\\Cloner\\Stub` objects to inform
     dumpers about the precise type of the dumped values.

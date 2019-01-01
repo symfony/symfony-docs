@@ -76,6 +76,7 @@ can change the socket passing an IP address and a port as a command-line argumen
     $ php bin/console server:start *:8080
 
 .. versionadded:: 3.4
+
     The support of ``*`` as a valid IP address was introduced in Symfony 3.4.
 
 .. note::

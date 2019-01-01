@@ -96,6 +96,7 @@ fragment needed to render every part of a form:
   styles.
 
 .. versionadded:: 3.4
+
     The Bootstrap 4 form themes were introduced in Symfony 3.4.
 
 .. caution::

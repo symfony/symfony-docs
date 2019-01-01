@@ -485,6 +485,7 @@ that are special: each adds a unique piece of functionality inside your applicat
     starts with a ``#`` character and is used to identify a portion of a document.
 
     .. versionadded:: 3.2
+
         The ``_fragment`` parameter was introduced in Symfony 3.2.
 
 ``_locale``

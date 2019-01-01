@@ -49,6 +49,7 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
     }
 
 .. versionadded:: 3.3
+
     The ability to type-hint a service in order to receive it was added in Symfony 3.3.
     See the :ref:`controller chapter <controller-service-arguments-tag>` for more
     details.
@@ -247,6 +248,7 @@ each time you ask for it.
     :ref:`services-explicitly-configure-wire-services`.
 
     .. versionadded:: 3.3
+
         The ``_defaults`` key *and* ability to load services from a directory were added
         in Symfony 3.3.
 
@@ -509,6 +511,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
             ->setArgument('$adminEmail', 'manager@example.com');
 
 .. versionadded:: 3.3
+
     The ability to configure an argument by its name (``$adminEmail``) was added
     in Symfony 3.3. Previously, you could configure it only by its index (``2`` in
     this case) or by using empty quotes for the other arguments.
@@ -790,6 +793,7 @@ The autoconfigure Option
 ------------------------
 
 .. versionadded:: 3.3
+
     The ``autoconfigure`` option was added in Symfony 3.3.
 
 Above, the ``services.yml`` file has ``autoconfigure: true`` in the ``_defaults``
@@ -1032,6 +1036,7 @@ Multiple Service Definitions Using the Same Namespace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
+
     The ``namespace`` option in the YAML configuration was introduced in Symfony 3.4.
 
 If you define services using the YAML config format, the PHP namespace is used

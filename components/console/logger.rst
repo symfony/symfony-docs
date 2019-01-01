@@ -107,6 +107,7 @@ Errors
 ------
 
 .. versionadded:: 3.2
+
     The ``hasErrored()`` method was introduced in Symfony 3.2.
 
 The Console logger includes a ``hasErrored()`` method which returns ``true`` as

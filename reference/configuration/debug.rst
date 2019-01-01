@@ -51,6 +51,7 @@ cloned. The default value is ``1``, which is consistent with older Symfony
 versions.
 
 .. versionadded:: 3.4
+
     The ``min_depth`` option was introduced in Symfony 3.4.
 
 max_string_length

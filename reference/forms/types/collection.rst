@@ -289,6 +289,7 @@ Using a callable is particularly useful in case of compound form types, which
 may define complex conditions for considering them empty.
 
 .. versionadded:: 3.4
+
     Support for using a callable for the ``delete_empty`` option was introduced
     in Symfony 3.4.
 

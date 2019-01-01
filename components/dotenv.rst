@@ -9,6 +9,7 @@ The Dotenv Component
     stored in them accessible via ``getenv()``, ``$_ENV`` or ``$_SERVER``.
 
 .. versionadded:: 3.3
+
     The Dotenv component was introduced in Symfony 3.3.
 
 Installation

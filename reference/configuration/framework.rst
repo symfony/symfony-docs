@@ -335,6 +335,7 @@ need to escape the percent signs (``%``) by doubling them.
         'myide://%f:%l&/path/to/guest/>/path/to/host/&/foo/>/bar/&...'
 
     .. versionadded:: 3.2
+
         Guest to host mappings were introduced in Symfony 3.2.
 
 .. _reference-framework-test:
@@ -1650,6 +1651,7 @@ default_path
 ............
 
 .. versionadded:: 3.4
+
     The ``default_path`` option was introduced in Symfony 3.4.
 
 **type**: ``string`` **default**: ``%kernel.project_dir%/translations``
@@ -1891,6 +1893,7 @@ log
 ...
 
 .. versionadded:: 3.2
+
     The ``log`` option was introduced in Symfony 3.2.
 
 **type**: ``boolean`` **default**: ``%kernel.debug%``
@@ -1901,6 +1904,7 @@ throw
 .....
 
 .. versionadded:: 3.2
+
     The ``throw`` option was introduced in Symfony 3.2.
 
 **type**: ``boolean`` **default**: ``%kernel.debug%``
@@ -1978,6 +1982,7 @@ default_memcached_provider
 ..........................
 
 .. versionadded:: 3.3
+
     The ``default_memcached_provider`` option was introduced in Symfony 3.3.
 
 **type**: ``string`` **default**: ``memcached://localhost``
@@ -2113,6 +2118,7 @@ prefix_seed
 ...........
 
 .. versionadded:: 3.2
+
     The ``prefix_seed`` option was introduced in Symfony 3.2.
 
 **type**: ``string`` **default**: ``null``

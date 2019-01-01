@@ -36,6 +36,7 @@ extend from the original template, not from the overridden one:
     {% endblock %}
 
 .. versionadded:: 3.4
+
     The special ``!`` template prefix was introduced in Symfony 3.4.
 
 .. caution::

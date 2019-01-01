@@ -57,6 +57,7 @@ Root Directory
 ~~~~~~~~~~~~~~
 
 .. versionadded:: 3.3
+
     The ``getRootDir()`` method is deprecated since Symfony 3.3. Use the new
     ``getProjectDir()`` method instead.
 
@@ -85,6 +86,7 @@ Project Directory
 ~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.3
+
     The ``getProjectDir()`` method was introduced in Symfony 3.3.
 
 **type**: ``string`` **default**: the directory of the project ``composer.json``

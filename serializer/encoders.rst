@@ -31,6 +31,7 @@ The Serializer component provides built-in encoders:
 * :class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder` to encode/decode Yaml
 
 .. versionadded:: 3.2
+
     The :class:`Symfony\\Component\\Serializer\\Encoder\\CsvEncoder` and the
     :class:`Symfony\\Component\\Serializer\\Encoder\\YamlEncoder` were introduced in
     Symfony 3.2.

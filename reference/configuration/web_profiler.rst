@@ -51,6 +51,7 @@ position
 ~~~~~~~~
 
 .. versionadded:: 3.4
+
     The ``position`` option was deprecated in Symfony 3.4 and it will be removed
     in Symfony 4.0, where the toolbar is always displayed in the ``bottom`` position.
 
