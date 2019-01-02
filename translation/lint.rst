@@ -15,16 +15,16 @@ translation file using the ``lint:yaml`` and ``lint:xliff`` commands:
 .. code-block:: terminal
 
     # lint a single file
-    $ ./bin/console lint:yaml app/Resources/translations/messages.en.yml
-    $ ./bin/console lint:xliff app/Resources/translations/messages.en.xlf
+    $ php bin/console lint:yaml app/Resources/translations/messages.en.yml
+    $ php bin/console lint:xliff app/Resources/translations/messages.en.xlf
 
     # lint a whole directory
-    $ ./bin/console lint:yaml app/Resources/translations
-    $ ./bin/console lint:xliff app/Resources/translations
+    $ php bin/console lint:yaml app/Resources/translations
+    $ php bin/console lint:xliff app/Resources/translations
 
     # lint a specific bundle
-    $ ./bin/console lint:yaml @AppBundle
-    $ ./bin/console lint:xliff @AppBundle
+    $ php bin/console lint:yaml @AppBundle
+    $ php bin/console lint:xliff @AppBundle
 
 .. versionadded:: 3.3
 
@@ -35,5 +35,5 @@ The linter results can be exported to JSON using the ``--format`` option:
 .. code-block:: terminal
 
     # lint a single file
-    $ ./bin/console lint:yaml app/Resources/translations --format=json
-    $ ./bin/console lint:xliff app/Resources/translations --format=json
+    $ php bin/console lint:yaml app/Resources/translations --format=json
+    $ php bin/console lint:xliff app/Resources/translations --format=json
