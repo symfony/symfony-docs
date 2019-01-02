@@ -68,30 +68,32 @@ The basic directory structure of an AcmeBlogBundle must read as follows:
 .. code-block:: text
 
     <your-bundle>/
-    ├─ AcmeBlogBundle.php
-    ├─ Controller/
+    ├─ config/
+    ├─ src/
+    |   ├─ AcmeBlogBundle.php
+    |   ├─ Controller/
+    |   ├─ Resources/
+    |   |   ├─ config/
+    |   |   ├─ doc/
+    │   |   |   └─ index.rst
+    │   |   ├─ translations/
+    │   |   ├─ views/
+    │   |   └─ public/
+    ├─ tests/
     ├─ README.md
-    ├─ LICENSE
-    ├─ Resources/
-    │   ├─ config/
-    │   ├─ doc/
-    │   │  └─ index.rst
-    │   ├─ translations/
-    │   ├─ views/
-    │   └─ public/
-    └─ Tests/
+    └─ LICENSE
 
 **The following files are mandatory**, because they ensure a structure convention
 that automated tools can rely on:
 
-* ``AcmeBlogBundle.php``: This is the class that transforms a plain directory
+* ``src/AcmeBlogBundle.php``: This is the class that transforms a plain directory
   into a Symfony bundle (change this to your bundle's name);
 * ``README.md``: This file contains the basic description of the bundle and it
   usually shows some basic examples and links to its full documentation (it
   can use any of the markup formats supported by GitHub, such as ``README.rst``);
 * ``LICENSE``: The full contents of the license used by the code. Most third-party
   bundles are published under the MIT license, but you can `choose any license`_;
-* ``Resources/doc/index.rst``: The root file for the Bundle documentation.
+* ``src/Resources/doc/index.rst``: The root file for the Bundle documentation.
 
 The depth of subdirectories should be kept to a minimum for the most used
 classes and files. Two levels is the maximum.
@@ -107,19 +109,19 @@ and others are just conventions followed by most developers):
 ===================================================  ========================================
 Type                                                 Directory
 ===================================================  ========================================
-Commands                                             ``Command/``
-Controllers                                          ``Controller/``
-Service Container Extensions                         ``DependencyInjection/``
-Doctrine ORM entities (when not using annotations)   ``Entity/``
-Doctrine ODM documents (when not using annotations)  ``Document/``
-Event Listeners                                      ``EventListener/``
-Configuration (routes, services, etc.)               ``Resources/config/``
+Commands                                             ``src/Command/``
+Controllers                                          ``src/Controller/``
+Service Container Extensions                         ``src/DependencyInjection/``
+Doctrine ORM entities (when not using annotations)   ``src/Entity/``
+Doctrine ODM documents (when not using annotations)  ``src/Document/``
+Event Listeners                                      ``src/EventListener/``
+Configuration (routes, services, etc.)               ``config/``
 Web Assets (CSS, JS, images)                         ``Resources/public/``
 Translation files                                    ``Resources/translations/``
 Validation (when not using annotations)              ``Resources/config/validation/``
 Serialization (when not using annotations)           ``Resources/config/serialization/``
 Templates                                            ``Resources/views/``
-Unit and Functional Tests                            ``Tests/``
+Unit and Functional Tests                            ``tests/``
 ===================================================  ========================================
 
 Classes
