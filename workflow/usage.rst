@@ -138,7 +138,7 @@ like this:
 
     class BlogPost
     {
-        // This property is used by the marking store, by default, Symfony set the marking store as an array.
+        // This property is used by the marking store, by default, Symfony set the marking as an array.
         public $currentPlace;
         public $title;
         public $content;
