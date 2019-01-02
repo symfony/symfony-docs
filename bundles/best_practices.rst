@@ -116,11 +116,11 @@ Doctrine ORM entities (when not using annotations)   ``src/Entity/``
 Doctrine ODM documents (when not using annotations)  ``src/Document/``
 Event Listeners                                      ``src/EventListener/``
 Configuration (routes, services, etc.)               ``config/``
-Web Assets (CSS, JS, images)                         ``Resources/public/``
-Translation files                                    ``Resources/translations/``
-Validation (when not using annotations)              ``Resources/config/validation/``
-Serialization (when not using annotations)           ``Resources/config/serialization/``
-Templates                                            ``Resources/views/``
+Web Assets (CSS, JS, images)                         ``src/Resources/public/``
+Translation files                                    ``src/Resources/translations/``
+Validation (when not using annotations)              ``src/Resources/config/validation/``
+Serialization (when not using annotations)           ``src/Resources/config/serialization/``
+Templates                                            ``src/Resources/views/``
 Unit and Functional Tests                            ``tests/``
 ===================================================  ========================================
 
