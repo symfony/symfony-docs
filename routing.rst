@@ -533,15 +533,11 @@ Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 
 If you want to always include some default value in the generated URL (for
 example to force the generation of ``/blog/1`` instead of ``/blog`` in the
-previous example) add the ``!`` character before the placeholder: ``/blog/{!page}``
+previous example) add the ``!`` character before the placeholder name: ``/blog/{!page}``
 
 .. versionadded:: 4.3
     The feature to force the inclusion of default values in generated URLs was
     introduced in Symfony 4.3.
-
-When you generate URL for path ``blog_list`` without adding ``page`` parameter Router
-will generate ``/blog/``. Note that it doesn't use default value ``1``. To generate
-``/blog/1`` mark variable as important adding ``!`` before the name: ``/blog/{!page}``.
 
 As it happens with requirements, default values can also be inlined in each
 placeholder using the syntax ``{placeholder_name?default_value}``. This feature
