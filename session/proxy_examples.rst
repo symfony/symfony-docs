@@ -108,7 +108,6 @@ can intercept the session before it is written::
     // src/AppBundle/Session/ReadOnlySessionProxy.php
     namespace AppBundle\Session;
 
-    use AppBundle\Entity\User;
     use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;
     use Symfony\Component\Security\Core\Security;
 

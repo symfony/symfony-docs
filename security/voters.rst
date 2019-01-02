@@ -36,6 +36,9 @@ A custom voter needs to implement
 or extend :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\Voter`,
 which makes creating a voter even easier::
 
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+
     abstract class Voter implements VoterInterface
     {
         abstract protected function supports($attribute, $subject);

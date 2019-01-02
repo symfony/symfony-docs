@@ -11,6 +11,8 @@ generating Doctrine2 proxies, dumping Assetic assets, ...).
 Calling a command from another one is straightforward::
 
     use Symfony\Component\Console\Input\ArrayInput;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
     // ...
 
     protected function execute(InputInterface $input, OutputInterface $output)

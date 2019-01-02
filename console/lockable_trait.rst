@@ -15,7 +15,10 @@ In addition, the Console component provides a PHP trait called ``LockableTrait``
 that adds two convenient methods to lock and release commands::
 
     // ...
+    use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Command\LockableTrait;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Output\OutputInterface;
 
     class UpdateContentsCommand extends Command
     {
