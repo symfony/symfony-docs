@@ -68,7 +68,6 @@ The basic directory structure of an AcmeBlogBundle must read as follows:
 .. code-block:: text
 
     <your-bundle>/
-    ├─ config/
     ├─ src/
     |   ├─ AcmeBlogBundle.php
     |   ├─ Controller/
@@ -115,7 +114,7 @@ Service Container Extensions                         ``src/DependencyInjection/`
 Doctrine ORM entities (when not using annotations)   ``src/Entity/``
 Doctrine ODM documents (when not using annotations)  ``src/Document/``
 Event Listeners                                      ``src/EventListener/``
-Configuration (routes, services, etc.)               ``config/``
+Configuration (routes, services, etc.)               ``src/Resources/config/``
 Web Assets (CSS, JS, images)                         ``src/Resources/public/``
 Translation files                                    ``src/Resources/translations/``
 Validation (when not using annotations)              ``src/Resources/config/validation/``
