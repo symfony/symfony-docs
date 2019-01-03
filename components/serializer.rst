@@ -804,7 +804,7 @@ Be aware that this encoder will consider keys beginning with ``@`` as attributes
 the key  ``#comment`` for encoding XML comments::
 
     $encoder = new XmlEncoder();
-    $encoder->encode(array('foo' => array('@bar' => 'value'), 'qux' => array('#comment' => 'A comment));
+    $encoder->encode(array('foo' => array('@bar' => 'value'), 'qux' => array('#comment' => 'A comment')), 'xml');
     // will return:
     // <?xml version="1.0"?>
     // <response>
