@@ -87,6 +87,12 @@ The goal of this field was to extend the choice type to enable selection of the
 shipping type. This is achieved by fixing the ``choices`` to a list of available
 shipping options.
 
+.. tip::
+
+    If the purpose of this new form type was to customize the rendering of some
+    fields only, skip this step and use ``block_name`` or ``block_prefix`` option
+    instead. For more information, see :ref:`form-customization-form-themes`.
+
 Creating a Template for the Field
 ---------------------------------
 
