@@ -44,6 +44,9 @@ files into your final output directory.
     +         // optional target path, relative to the output dir
     +         //to: 'images/[path][name].[ext]',
     +
+    +         // if versioning is enabled, add the file hash too
+    +         //to: 'images/[path][name].[hash:8].[ext]',
+    +
     +         // only copy files matching this pattern
     +         //pattern: /\.(png|jpg|jpeg)$/
     +     })
@@ -51,11 +54,6 @@ files into your final output directory.
 This will copy all files from ``assets/images`` into ``web/build`` (the output
 path). If you have :doc:`versioning enabled <versioning>`, the copied files will
 include a hash based on their content.
-
-.. note::
-
-    If order to use versioning with with custom target path (``to``), you need to
-    update to path to include the file hash: ``images/[path][name].[hash:8].[ext]``.
 
 To render inside Twig, use the ``asset()`` function:
 
