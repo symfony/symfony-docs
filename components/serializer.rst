@@ -714,7 +714,7 @@ The ``XmlEncoder`` will encode this object like that::
 Be aware that this encoder will consider keys beginning with ``@`` as attributes::
 
     $encoder = new XmlEncoder();
-    $encoder->encode(array('foo' => array('@bar' => 'value')));
+    $encoder->encode(array('foo' => array('@bar' => 'value')), 'xml');
     // will return:
     // <?xml version="1.0"?>
     // <response>
