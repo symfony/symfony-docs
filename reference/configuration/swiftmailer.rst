@@ -133,6 +133,7 @@ local_domain
 **type**: ``string``
 
 .. versionadded:: 2.4.0
+
     The ``local_domain`` option was introduced in SwiftMailerBundle 2.4.0.
 
 The domain name to use in ``HELO`` command.
