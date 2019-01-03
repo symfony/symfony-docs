@@ -375,7 +375,7 @@ You can use the following parameters in this message:
 +====================+=======================================================+
 | ``{{ value }}``    | The current (invalid) value                           |
 +--------------------+-------------------------------------------------------+
-| ``{{ choices }}``  | String list of available choices, separated by comas  |
+| ``{{ choices }}``  | A comma-separated list of available choices           |
 +--------------------+-------------------------------------------------------+
 
 .. versionadded:: 4.3
@@ -397,7 +397,7 @@ You can use the following parameters in this message:
 +====================+=======================================================+
 | ``{{ value }}``    | The current (invalid) value                           |
 +--------------------+-------------------------------------------------------+
-| ``{{ choices }}``  | String list of available choices, separated by comas  |
+| ``{{ choices }}``  | A comma-separated list of available choices           |
 +--------------------+-------------------------------------------------------+
 
 .. versionadded:: 4.3
