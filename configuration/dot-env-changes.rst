@@ -30,9 +30,10 @@ important changes:
   other environments. You can also create a ``.env.test`` file for test-environment
   overrides.
 
-* E) If you pass the ``--env=`` flag when running ``bin/console``, this value will
-  override your ``APP_ENV`` environment variable (if set). And so, if you pass
-  ``--env=prod``, the DotEnv component *will* try to load your ``.env*`` files.
+* E) `One further change to the recipe in January 2019`_ means that your ``.env``
+  files are *always* loaded, even if you set an ``APP_ENV=prod`` environment
+  variable. The purpose is for the ``.env`` files to define default values that
+  you can override if you want to with real environment values.
 
 There are a few other improvements, but these are the most important. To take advantage
 of these, you *will* need to modify a few files in your existing app.
@@ -52,7 +53,7 @@ changes can be made to any Symfony 3.4 or higher app:
    file. If you've customized this file, make sure to keep those changes (but use
    the rest of the changes).
 
-#. Update your `bin/console`_ (`bin/console diff`_) file to load the new ``config/bootstrap.php`` file.
+#. Update your `bin/console`_ file to load the new ``config/bootstrap.php`` file.
 
 #. Update ``.gitignore``:
 
@@ -64,6 +65,7 @@ changes can be made to any Symfony 3.4 or higher app:
        ###> symfony/framework-bundle ###
        - /.env
        + /.env.local
+       + /.env.local.php
        + /.env.*.local
     
        # ...
@@ -90,7 +92,7 @@ changes can be made to any Symfony 3.4 or higher app:
 .. _`public/index.php`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/3.3/public/index.php
 .. _`index.php diff`: https://github.com/symfony/recipes/compare/8a4e5555e30d5dff64275e2788a901f31a214e79...f54d6a468405d0d8d27b0e790dc09a01e337777a#diff-473fca613b5bda15d87731036cb31586
 .. _`bin/console`: https://github.com/symfony/recipes/blob/master/symfony/console/3.3/bin/console
-.. _`bin/console diff`: https://github.com/symfony/recipes/compare/8a4e5555e30d5dff64275e2788a901f31a214e79...f54d6a468405d0d8d27b0e790dc09a01e337777a#diff-2af50efd729ff8e61dcbd936cf2b114b
 .. _`comment on the top of .env`: https://github.com/symfony/recipes/blob/master/symfony/flex/1.0/.env
 .. _`create a new .env.test`: https://github.com/symfony/recipes/blob/master/symfony/phpunit-bridge/3.3/.env.test
 .. _`phpunit.xml.dist file`: https://github.com/symfony/recipes/blob/master/symfony/phpunit-bridge/3.3/phpunit.xml.dist
+.. _`One further change to the recipe in January 2019`: https://github.com/symfony/recipes/pull/501

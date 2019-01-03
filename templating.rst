@@ -125,7 +125,7 @@ Throughout this article, template examples will be shown in both Twig and PHP.
     Twig can also do things that PHP can't, such as whitespace control,
     sandboxing, automatic HTML escaping, manual contextual output escaping,
     and the inclusion of custom functions and filters that only affect templates.
-    Twig contains little features that make writing templates easier and more concise.
+    Twig contains a lot of features that make writing templates easier and more concise.
     Take the following example, which combines a loop with a logical ``if``
     statement:
 

@@ -10,7 +10,9 @@ The Serializer Component
 
 In order to do so, the Serializer component follows the following schema.
 
-.. image:: /_images/components/serializer/serializer_workflow.png
+.. raw:: html
+
+    <object data="../_images/components/serializer/serializer_workflow.svg" type="image/svg+xml"></object>
 
 As you can see in the picture above, an array is used as an intermediary between
 objects and serialized contents. This way, encoders will only deal with turning
@@ -714,7 +716,7 @@ The ``XmlEncoder`` will encode this object like that::
 Be aware that this encoder will consider keys beginning with ``@`` as attributes::
 
     $encoder = new XmlEncoder();
-    $encoder->encode(array('foo' => array('@bar' => 'value')));
+    $encoder->encode(array('foo' => array('@bar' => 'value')), 'xml');
     // will return:
     // <?xml version="1.0"?>
     // <response>
