@@ -752,6 +752,7 @@ class to the ``div`` element around each row:
         }
 
     .. versionadded:: 4.3
+
         The ``block_prefix`` option was introduced in Symfony 4.3.
 
     Then the block name will be ``wrapped_text_row``.

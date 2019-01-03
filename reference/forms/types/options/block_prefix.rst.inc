@@ -5,6 +5,7 @@ block_prefix
 block to customize <form-customization-sidebar>`)
 
 .. versionadded:: 4.3
+
     The ``block_prefix`` option was introduced in Symfony 4.3.
 
 Allows you to add a custom block prefix and override the block name
