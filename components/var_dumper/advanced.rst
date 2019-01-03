@@ -179,6 +179,13 @@ method. They also typically implement the
 them from re-implementing the logic required to walk through a
 :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object's internal structure.
 
+The :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper` uses a dark
+theme by default. Use the :method:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper::setTheme`
+method to use a light theme::
+
+    // ...
+    $htmlDumper->setTheme('light');
+
 The :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper` limits string
 length and nesting depth of the output to make it more readable. These options
 can be overriden by the third optional parameter of the

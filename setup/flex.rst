@@ -77,7 +77,7 @@ The ``aliases`` option allows Flex to install packages using short and easy to
 remember names (``composer require mailer`` vs
 ``composer require symfony/swiftmailer-bundle``). The ``bundles`` option tells
 Flex in which environments this bundle should be enabled automatically (``all``
-in this case). The ``env`` option makes Flex to add new environment variables to
+in this case). The ``env`` option makes Flex add new environment variables to
 the application. Finally, the ``copy-from-recipe`` option allows the recipe to
 copy files and directories into your application.
 

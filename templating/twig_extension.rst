@@ -109,6 +109,7 @@ Creating Lazy-Loaded Twig Extensions
 ------------------------------------
 
 .. versionadded:: 1.26
+
     Support for lazy-loaded extensions was introduced in Twig 1.26.
 
 Including the code of the custom filters/functions in the Twig extension class

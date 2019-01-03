@@ -101,6 +101,7 @@ Using Features From the OS Shell
 --------------------------------
 
 .. versionadded:: 4.2
+
     The ``fromShellCommandline()`` static method was introduced in Symfony 4.2.
 
 Using array of arguments is the recommended way to define commands. This

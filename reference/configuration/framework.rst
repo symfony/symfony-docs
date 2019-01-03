@@ -1648,6 +1648,7 @@ default_path
 ............
 
 .. versionadded:: 3.4
+
     The ``default_path`` option was introduced in Symfony 3.4.
 
 **type**: ``string`` **default**: ``%kernel.project_dir%/translations``
