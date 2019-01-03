@@ -154,7 +154,7 @@ Tests
 -----
 
 A bundle should come with a test suite written with PHPUnit and stored under
-the ``Tests/`` directory. Tests should follow the following principles:
+the ``tests/`` directory. Tests should follow the following principles:
 
 * The test suite must be executable with a simple ``phpunit`` command run from
   a sample application;
@@ -258,10 +258,10 @@ Documentation
 
 All classes and functions must come with full PHPDoc.
 
-Extensive documentation should also be provided in the ``Resources/doc/``
+Extensive documentation should also be provided in the ``src/Resources/doc/``
 directory.
-The index file (for example ``Resources/doc/index.rst`` or
-``Resources/doc/index.md``) is the only mandatory file and must be the entry
+The index file (for example ``src/Resources/doc/index.rst`` or
+``src/Resources/doc/index.md``) is the only mandatory file and must be the entry
 point for the documentation. The
 :doc:`reStructuredText (rST) </contributing/documentation/format>` is the format
 used to render the documentation on symfony.com.
@@ -539,7 +539,7 @@ lets you override any resource/file of any bundle. See :ref:`http-kernel-resourc
 for more details about transforming physical paths into logical paths.
 
 Beware that templates use a simplified version of the logical path shown above.
-For example, an ``index.html.twig`` template located in the ``Resources/views/Default/``
+For example, an ``index.html.twig`` template located in the ``src/Resources/views/Default/``
 directory of the FooBundle, is referenced as ``@Foo/Default/index.html.twig``.
 
 Learn more
