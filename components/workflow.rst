@@ -74,7 +74,7 @@ are trying to use it with::
     $registry = new Registry();
     $registry->addWorkflow($blogWorkflow, new InstanceOfSupportStrategy(BlogPost::class));
     $registry->addWorkflow($newsletterWorkflow, new InstanceOfSupportStrategy(Newsletter::class));
-    
+
 .. versionadded:: 4.1
     The ``addWorkflow()`` method was introduced in Symfony 4.1. In previous
     Symfony versions it was called ``add()``.

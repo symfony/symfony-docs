@@ -165,6 +165,7 @@ needs three parameters:
 #. The encoder used to convert that information into an array
 
 .. versionadded:: 3.3
+
     Support for the ``allow_extra_attributes`` key in the context was introduced
     in Symfony 3.3.
 
@@ -717,6 +718,7 @@ There are several types of normalizers available:
     into a list of errors according to the `RFC 7807`_ standard.
 
     .. versionadded:: 4.1
+
         The ``ConstraintViolationListNormalizer`` was introduced in Symfony 4.1.
 
 .. _component-serializer-encoders:
@@ -835,7 +837,6 @@ The ``YamlEncoder``
 This encoder requires the :doc:`Yaml Component </components/yaml>` and
 transforms from and to Yaml.
 
-
 Skipping ``null`` Values
 ------------------------
 
@@ -853,6 +854,7 @@ to ``true``::
     // ['bar' => 'notNull']
 
 .. versionadded:: 4.2
+
     The ``skip_null_values`` option was introduced in Symfony 4.2.
 
 .. _component-serializer-handling-circular-references:

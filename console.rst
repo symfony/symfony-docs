@@ -74,6 +74,10 @@ constructor. If your command defines its own constructor, set the properties
 first and then call to the parent constructor, to make those properties
 available in the ``configure()`` method::
 
+    // ...
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\InputArgument;
+
     class CreateUserCommand extends Command
     {
         // ...
