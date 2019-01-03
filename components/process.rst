@@ -113,6 +113,7 @@ with a non-zero code)::
 .. tip::
 
     .. versionadded:: 3.3
+
         The ability to define commands as arrays of arguments was introduced in
         Symfony 3.3.
 

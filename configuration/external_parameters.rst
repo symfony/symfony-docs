@@ -138,6 +138,7 @@ Environment Variable Processors
 -------------------------------
 
 .. versionadded:: 3.4
+
     Environment variable processors were introduced in Symfony 3.4.
 
 The values of environment variables are considered strings by default.

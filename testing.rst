@@ -604,6 +604,7 @@ Reporting Exceptions
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 3.4
+
     The ``catchExceptions()`` method was introduced in Symfony 3.4.
 
 Debugging exceptions in functional tests may be difficult because by default

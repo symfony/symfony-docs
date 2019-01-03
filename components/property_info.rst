@@ -241,6 +241,7 @@ to determine if it's accessible. This based on how the :doc:`PropertyAccess </co
 works.
 
 .. versionadded:: 4.1
+
     The support of hasser methods in the ``ReflectionExtractor`` class was
     introduced in Symfony 4.1.
 

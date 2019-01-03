@@ -62,6 +62,7 @@ To see a simple implementation, generate the ETag as the md5 of the content::
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
 
     class DefaultController extends AbstractController
