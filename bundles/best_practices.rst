@@ -68,16 +68,16 @@ The basic directory structure of an AcmeBlogBundle must read as follows:
 .. code-block:: text
 
     <your-bundle>/
+    ├─ docs/
+    │   └─ index.rst
     ├─ src/
-    |   ├─ AcmeBlogBundle.php
     |   ├─ Controller/
     |   ├─ Resources/
     |   |   ├─ config/
-    |   |   ├─ doc/
-    │   |   |   └─ index.rst
     │   |   ├─ translations/
     │   |   ├─ views/
     │   |   └─ public/
+    |   └─ AcmeBlogBundle.php
     ├─ tests/
     ├─ README.md
     └─ LICENSE
