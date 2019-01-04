@@ -92,7 +92,7 @@ that automated tools can rely on:
   can use any of the markup formats supported by GitHub, such as ``README.rst``);
 * ``LICENSE``: The full contents of the license used by the code. Most third-party
   bundles are published under the MIT license, but you can `choose any license`_;
-* ``src/Resources/doc/index.rst``: The root file for the Bundle documentation.
+* ``docs/index.rst``: The root file for the Bundle documentation.
 
 The depth of subdirectories should be kept to a minimum for the most used
 classes and files. Two levels is the maximum.
@@ -258,10 +258,10 @@ Documentation
 
 All classes and functions must come with full PHPDoc.
 
-Extensive documentation should also be provided in the ``src/Resources/doc/``
+Extensive documentation should also be provided in the ``docs/``
 directory.
-The index file (for example ``src/Resources/doc/index.rst`` or
-``src/Resources/doc/index.md``) is the only mandatory file and must be the entry
+The index file (for example ``docs/index.rst`` or
+``docs/index.md``) is the only mandatory file and must be the entry
 point for the documentation. The
 :doc:`reStructuredText (rST) </contributing/documentation/format>` is the format
 used to render the documentation on symfony.com.
