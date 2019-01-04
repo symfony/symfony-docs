@@ -62,7 +62,10 @@ Validation of arrays is possible using the ``Collection`` constraint::
         'file' => null,
         'password' => 'test',
         'tags' => array(
-            array('slug' => 'symfony_doc', 'label' => 'symfony doc'),
+            array(
+                'slug' => 'symfony_doc',
+                'label' => 'symfony doc',
+            ),
         ),
     );
 
@@ -79,21 +82,21 @@ Validation of arrays is possible using the ``Collection`` constraint::
         'gender' => new Assert\Choice(array(3, 4)),
         'file' => new Assert\File(),
         'password' => new Assert\Length(array('min' => 60)),
-        'tags' => new Assert\Required(array(
+        'tags' => new Assert\Optional(array(
             new Assert\Type('array'),
             new Assert\Count(array('min' => 1)),
             new Assert\All(array(
                 new Assert\Collection(array(
-                    'slug' => new Assert\Required(array(
+                    'slug' => array(
                         new Assert\NotBlank(),
                         new Assert\Type(array('type' => 'string'))
-                    )),
-                    'label' => new Assert\Required(array(
+                    ),
+                    'label' => array(
                         new Assert\NotBlank(),
-                    )),
+                    ),
                 )),
+                new CustomUniqueTagValidator(array('groups' => 'custom')),
             )),
-            new CustomUniqueTagValidator(array('groups' => 'custom'))
         )),
     ));
 
