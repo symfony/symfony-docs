@@ -21,6 +21,10 @@ Ideally this header should only be set during development and not for
 production. This can be accomplished by setting the header in a
 :ref:`kernel.response <component-http-kernel-kernel-response>` event listener::
 
+    use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+
+    // ...
+
     public function onKernelResponse(FilterResponseEvent $event)
     {
         $response = $event->getResponse();
