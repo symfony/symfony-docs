@@ -38,9 +38,6 @@ the route name as the command argument:
       [0] blog
       [1] blog_show
 
-.. versionadded:: 4.1
-    The feature to look for partial route names was introduced in Symfony 4.1.
-
 Likewise, if you want to test whether a URL matches a given route, use the
 ``router:match`` command. This is useful to debug routing issues and find out
 which route is associated with the given URL:

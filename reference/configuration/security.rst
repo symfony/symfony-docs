@@ -22,9 +22,6 @@ key in your application configuration.
     namespace and the related XSD schema is available at:
     ``http://symfony.com/schema/dic/services/services-1.0.xsd``
 
-.. versionadded:: 4.1
-    The ``providers`` option is optional starting from Symfony 4.1.
-
 .. _reference-security-firewall-form-login:
 
 Form Login Configuration

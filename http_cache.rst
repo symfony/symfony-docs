@@ -380,9 +380,6 @@ Symfony won't modify it::
 
     $response->headers->set(AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER, 'true');
 
-.. versionadded:: 4.1
-    The ``NO_AUTO_CACHE_CONTROL_HEADER`` header was introduced in Symfony 4.1.
-
 Summary
 -------
 

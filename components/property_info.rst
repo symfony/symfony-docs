@@ -249,11 +249,6 @@ for getter/isser/setter/hasser method in addition to whether or not a property i
 to determine if it's accessible. This based on how the :doc:`PropertyAccess </components/property_access>`
 works.
 
-.. versionadded:: 4.1
-
-    The support of hasser methods in the ``ReflectionExtractor`` class was
-    introduced in Symfony 4.1.
-
 .. _property-info-initializable:
 
 Property Initializable Information

@@ -268,9 +268,6 @@ values
 
 **type**: ``array`` **default**: ``[]``
 
-.. versionadded:: 4.1
-    The ``values`` option was introduced in Symfony 4.1.
-
 The values of the custom variables used in the expression. Values can be of any
 type (numeric, boolean, strings, null, etc.)
 

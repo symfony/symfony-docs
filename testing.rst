@@ -481,9 +481,6 @@ shortcut to make AJAX requests::
     // the required HTTP_X_REQUESTED_WITH header is added automatically
     $client->xmlHttpRequest('POST', '/submit', array('name' => 'Fabien'));
 
-.. versionadded:: 4.1
-    The ``xmlHttpRequest()`` method was introduced in Symfony 4.1.
-
 Browsing
 ~~~~~~~~
 
@@ -528,9 +525,6 @@ You can also get the objects related to the latest request::
 
 Accessing the Container
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 4.1
-    The ``self::$container`` property was introduced in Symfony 4.1.
 
 It's highly recommended that a functional test only tests the response. But
 under certain very rare circumstances, you might want to access some services
@@ -818,9 +812,6 @@ their type::
 
         $client->submit($form, array(), array('HTTP_ACCEPT_LANGUAGE' => 'es'));
         $client->submitForm($button, array(), 'POST', array('HTTP_ACCEPT_LANGUAGE' => 'es'));
-
-    .. versionadded:: 4.1
-        The feature to add custom HTTP headers was introduced in Symfony 4.1.
 
 Adding and Removing Forms to a Collection
 .........................................

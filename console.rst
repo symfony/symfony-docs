@@ -37,7 +37,7 @@ want a command to create a user::
     {
         // the name of the command (the part after "bin/console")
         protected static $defaultName = 'app:create-user';
-        
+
         protected function configure()
         {
             // ...
@@ -149,10 +149,6 @@ the console::
         $output->write('create a user.');
     }
 
-.. versionadded:: 4.1
-    The support of PHP iterators in the ``write()`` and ``writeln()`` methods
-    was introduced in Symfony 4.1.
-
 Now, try executing the command:
 
 .. code-block:: terminal
@@ -168,9 +164,6 @@ Now, try executing the command:
 
 Output Sections
 ~~~~~~~~~~~~~~~
-
-.. versionadded:: 4.1
-    Output sections were introduced in Symfony 4.1.
 
 The regular console output can be divided into multiple independent regions
 called "output sections". Create one or more of these sections when you need to

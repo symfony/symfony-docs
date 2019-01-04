@@ -97,16 +97,10 @@ current PHP SAPI:
     function. This function dumps the variables using ``dump()`` and
     immediately ends the execution of the script (using :phpfunction:`exit`).
 
-    .. versionadded:: 4.1
-        The ``dd()`` helper method was introduced in Symfony 4.1.
-
 .. _var-dumper-dump-server:
 
 The Dump Server
 ---------------
-
-.. versionadded:: 4.1
-    The dump server was introduced in Symfony 4.1.
 
 The ``dump()`` function outputs its contents in the same browser window or
 console terminal as your own application. Sometimes mixing the real output
@@ -279,10 +273,6 @@ Example::
             $this->assertDumpEquals($testedVar, $testedVar);
         }
     }
-
-.. versionadded:: 4.1
-    The possibility of passing non-string variables as the first argument of
-    ``assertDumpEquals()`` was introduced in Symfony 4.1.
 
 Dump Examples and Output
 ------------------------

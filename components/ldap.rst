@@ -168,9 +168,5 @@ operation type.
 
 .. versionadded:: 4.2
     The ``applyOperations()`` method was introduced in Symfony 4.2.
-    
-.. versionadded:: 4.1
-    The ``addAttributeValues()`` and ``removeAttributeValues()`` methods
-    were introduced in Symfony 4.1.
 
 .. _Packagist: https://packagist.org/packages/symfony/ldap

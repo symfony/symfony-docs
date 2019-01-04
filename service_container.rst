@@ -727,9 +727,6 @@ services at once (i.e. :ref:`service-psr4-loader`).
 Getting Container Parameters as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.1
-    The feature to get container parameters as a service was introduced in Symfony 4.1.
-
 If some service or controller needs lots of container parameters, there's an
 easier alternative to binding all of them with the ``services._defaults.bind``
 option. Type-hint any of its constructor arguments with the

@@ -717,10 +717,6 @@ There are several types of normalizers available:
     :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface`
     into a list of errors according to the `RFC 7807`_ standard.
 
-    .. versionadded:: 4.1
-
-        The ``ConstraintViolationListNormalizer`` was introduced in Symfony 4.1.
-
 .. _component-serializer-encoders:
 
 Encoders
@@ -776,10 +772,8 @@ The ``CsvEncoder`` encodes to and decodes from CSV.
 You can pass the context key ``as_collection`` in order to have the results
 always as a collection.
 
-.. versionadded:: 4.1
-    The ``as_collection`` option was introduced in Symfony 4.1.
-
 .. versionadded:: 4.2
+
     Relying on the default value ``false`` is deprecated since Symfony 4.2.
 
 The ``XmlEncoder``
@@ -818,9 +812,6 @@ the key  ``#comment`` for encoding XML comments::
 You can pass the context key ``as_collection`` in order to have the results
 always as a collection.
 
-.. versionadded:: 4.1
-    The ``as_collection`` option was introduced in Symfony 4.1.
-
 .. tip::
 
     XML comments are ignored by default when decoding contents, but this
@@ -830,9 +821,6 @@ always as a collection.
     Data with ``#comment`` keys are encoded to XML comments by default. This can be
     changed with the optional ``$encoderIgnoredNodeTypes`` argument of the
     ``XmlEncoder`` class constructor.
-
-    .. versionadded:: 4.1
-        XML comments are ignored by default starting from Symfony 4.1.
 
 The ``YamlEncoder``
 ~~~~~~~~~~~~~~~~~~~
@@ -1105,10 +1093,8 @@ having unique identifiers::
     );
     */
 
-.. versionadded:: 4.1
-    The ``setMaxDepthHandler()`` method was introduced in Symfony 4.1.
-
 .. versionadded:: 4.2
+
     The ``$outerObject``, ``$attributeName``, ``$format`` and ``$context``
     parameters of ``setMaxDepthHandler()`` were introduced in Symfony 4.2.
 
@@ -1227,9 +1213,6 @@ These are the options available:
 
 Handling Constructor Arguments
 ------------------------------
-
-.. versionadded:: 4.1
-    The ``default_constructor_arguments`` option was introduced in Symfony 4.1.
 
 If the class constructor defines arguments, as usually happens with
 `Value Objects`_, the serializer won't be able to create the object if some
