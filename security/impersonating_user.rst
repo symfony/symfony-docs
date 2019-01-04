@@ -190,13 +190,14 @@ also adjust the query parameter name via the ``parameter`` setting:
 Limiting User Switching
 -----------------------
 
-If you need more control over user switching, but don't require the complexity 
-of a full ACL implementation, you can use a security voter. For example, you 
-may want to allow employees to be able to impersonate a user with the 
-``ROLE_CUSTOMER`` role without giving them the ability to impersonate a more 
+If you need more control over user switching, but don't require the complexity
+of a full ACL implementation, you can use a security voter. For example, you
+may want to allow employees to be able to impersonate a user with the
+``ROLE_CUSTOMER`` role without giving them the ability to impersonate a more
 elevated user such as an administrator.
 
 .. versionadded:: 4.1
+
     The target user was added as the voter subject parameter in Symfony 4.1.
 
 Create the voter class::
@@ -223,7 +224,7 @@ Create the voter class::
                 return false;
             }
 
-            if (in_array('ROLE_CUSTOMER', $subject->getRoles()) 
+            if (in_array('ROLE_CUSTOMER', $subject->getRoles())
                 && $this->hasSwitchToCustomerRole($token)) {
                 return true;
             }
@@ -238,16 +239,19 @@ Create the voter class::
                     return true;
                 }
             }
-            
+
             return false;
         }
     }
 
-Thanks to service autoconfiguration and autowiring, this new voter is automatically 
-registered as a service and tagged as a security voter.
+To enable the new voter in the app, register it as a service and
+:doc:`tag it </service_container/tags>` with the ``security.voter``
+tag. If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
-Now a user who has the ``ROLE_SWITCH_TO_CUSTOMER`` role can switch to a user who explicitly has the 
-``ROLE_CUSTOMER`` role, but not other users.
+Now a user who has the ``ROLE_SWITCH_TO_CUSTOMER`` role can switch to a user who
+has the ``ROLE_CUSTOMER`` role, but not other users.
 
 Events
 ------
