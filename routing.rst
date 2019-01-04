@@ -219,9 +219,6 @@ caused by definition inconsistency.
     This prevents having to define multiple paths when you want to use the same
     route path for locales that share the same language.
 
-.. versionadded:: 4.2
-    The feature to fall back on the language part only was introduced in Symfony 4.2.
-
 A common requirement for internationalized applications is to prefix all routes
 with a locale. This can be done by defining a different prefix for each locale
 (and setting an empty prefix for your default locale if you prefer it):

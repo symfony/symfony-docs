@@ -26,10 +26,6 @@ translation file using the ``lint:yaml`` and ``lint:xliff`` commands:
     $ php bin/console lint:yaml translations path/to/trans
     $ php bin/console lint:xliff translations/messages.en.xlf translations/messages.es.xlf
 
-.. versionadded:: 4.2
-
-    The feature to lint multiple files and directories was introduced in Symfony 4.2.
-
 The linter results can be exported to JSON using the ``--format`` option:
 
 .. code-block:: terminal

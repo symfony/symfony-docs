@@ -105,9 +105,6 @@ simulate the link click::
 
     $crawler = $client->clickLink('Go elsewhere...');
 
-.. versionadded:: 4.2
-    The ``clickLink()`` method was introduced in Symfony 4.2.
-
 If you need the :class:`Symfony\\Component\\DomCrawler\\Link` object that
 provides access to the link properties (e.g. ``$link->getMethod()``,
 ``$link->getUri()``), use this other method:
@@ -150,9 +147,6 @@ field values, etc.) before submitting it::
         // override some $_SERVER parameters (e.g. HTTP headers)
         array('HTTP_ACCEPT_LANGUAGE' => 'es')
     );
-
-.. versionadded:: 4.2
-    The ``submitForm()`` method was introduced in Symfony 4.2.
 
 If you need the :class:`Symfony\\Component\\DomCrawler\\Form` object that
 provides access to the form properties (e.g. ``$form->getUri()``,

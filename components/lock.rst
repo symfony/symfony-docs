@@ -220,9 +220,6 @@ support blocking, and expects a TTL to avoid stalled locks::
 PdoStore
 ~~~~~~~~
 
-.. versionadded:: 4.2
-    The PdoStore was introduced Symfony 4.2.
-
 The PdoStore saves locks in an SQL database. It requires a `PDO`_ connection, a
 `Doctrine DBAL Connection`_, or a `Data Source Name (DSN)`_. This store does not
 support blocking, and expects a TTL to avoid stalled locks::
@@ -325,9 +322,6 @@ the stores.
 
 ZookeeperStore
 ~~~~~~~~~~~~~~
-
-.. versionadded:: 4.2
-    The ZookeeperStore was introduced in Symfony 4.2.
 
 The ZookeeperStore saves locks on a `ZooKeeper`_ server. It requires a ZooKeeper
 connection implementing the ``\Zookeeper`` class. This store does not

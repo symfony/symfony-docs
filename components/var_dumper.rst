@@ -70,9 +70,6 @@ current PHP SAPI:
     ``VAR_DUMPER_FORMAT`` environment variable and setting its value to either
     ``html`` or ``cli``.
 
-    .. versionadded:: 4.2
-        The ``VAR_DUMPER_FORMAT`` env var was introduced in Symfony 4.2.
-
 .. note::
 
     If you want to catch the dump output as a string, please read the

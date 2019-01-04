@@ -166,7 +166,4 @@ Possible operation types are ``LDAP_MODIFY_BATCH_ADD``, ``LDAP_MODIFY_BATCH_REMO
 ``$values`` must be ``NULL`` when using ``LDAP_MODIFY_BATCH_REMOVE_ALL``
 operation type.
 
-.. versionadded:: 4.2
-    The ``applyOperations()`` method was introduced in Symfony 4.2.
-
 .. _Packagist: https://packagist.org/packages/symfony/ldap

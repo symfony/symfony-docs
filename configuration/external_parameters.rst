@@ -489,9 +489,6 @@ Symfony provides the following env var processors:
             $container->setParameter('env(SECRETS_FILE)', '/opt/application/.secrets.json');
             $container->setParameter('database_password', '%env(key:database_password:json:file:SECRETS_FILE)%');
 
-    .. versionadded:: 4.2
-        The ``key`` processor was introduced in Symfony 4.2.
-
 It is also possible to combine any number of processors:
 
 .. code-block:: yaml

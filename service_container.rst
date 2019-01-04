@@ -198,10 +198,6 @@ each time you ask for it.
         `glob pattern`_. The value of the ``exclude`` option can also be an
         array of glob patterns.
 
-        .. versionadded:: 4.2
-            The feature to pass arrays of glob patterns to the ``exclude``
-            option was introduced in Symfony 4.2.
-
     Thanks to this configuration, you can automatically use any classes from the
     ``src/`` directory as a service, without needing to manually configure
     it. Later, you'll learn more about this in :ref:`service-psr4-loader`.
@@ -717,9 +713,6 @@ By putting the ``bind`` key under ``_defaults``, you can specify the value of *a
 argument for *any* service defined in this file! You can bind arguments by name
 (e.g. ``$adminEmail``), by type (e.g. ``Psr\Log\LoggerInterface``) or both
 (e.g. ``Psr\Log\LoggerInterface $requestLogger``).
-
-.. versionadded:: 4.2
-    The feature to bind arguments by name and type was introduced in Symfony 4.2.
 
 The ``bind`` config can also be applied to specific services or when loading many
 services at once (i.e. :ref:`service-psr4-loader`).

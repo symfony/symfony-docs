@@ -637,9 +637,6 @@ let you find out which options are defined::
 Nested Options
 ~~~~~~~~~~~~~~
 
-.. versionadded:: 4.2
-    The support of nested options was introduced in Symfony 4.2.
-
 Suppose you have an option named ``spool`` which has two sub-options ``type``
 and ``path``. Instead of defining it as a simple array of values, you can pass a
 closure as the default value of the ``spool`` option with a
@@ -731,9 +728,6 @@ In same way, parent options can access to the nested options as normal arrays::
 
 Deprecating the Option
 ~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 4.2
-    The ``setDeprecated()`` method was introduced in Symfony 4.2.
 
 Once an option is outdated or you decided not to maintain it anymore, you can
 deprecate it using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDeprecated`

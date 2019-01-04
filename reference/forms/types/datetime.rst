@@ -75,9 +75,6 @@ date_label
 
 **type**: ``string`` | ``null`` **default**: The label is "guessed" from the field name
 
-.. versionadded:: 4.2
-    The ``date_label`` option was introduced in Symfony 4.2.
-
 Sets the label that will be used when rendering the date widget. Setting it to
 ``false`` will suppress the label::
 
@@ -168,9 +165,6 @@ time_label
 ~~~~~~~~~~
 
 **type**: ``string`` | ``null`` **default**: The label is "guessed" from the field name
-
-.. versionadded:: 4.2
-    The ``time_label`` option was introduced in Symfony 4.2.
 
 Sets the label that will be used when rendering the time widget. Setting it to
 ``false`` will suppress the label::

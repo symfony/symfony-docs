@@ -379,10 +379,6 @@ will share identical locators amongst all the services referencing them::
 Service Subscriber Trait
 ------------------------
 
-.. versionadded:: 4.2
-    The :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberTrait`
-    was introduced in Symfony 4.2.
-
 The :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberTrait`
 provides an implementation for
 :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`

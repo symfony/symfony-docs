@@ -69,7 +69,7 @@ The validator class is also simple, and only has one required method ``validate(
             if (!$constraint instanceof ContainsAlphanumeric) {
                 throw new UnexpectedTypeException($constraint, ContainsAlphanumeric::class);
             }
-            
+
             // custom constraints should ignore null and empty values to allow
             // other constraints (NotBlank, NotNull, etc.) take care of that
             if (null === $value || '' === $value) {
@@ -98,9 +98,6 @@ if it causes no violations. The ``buildViolation()`` method takes the error
 message as its argument and returns an instance of
 :class:`Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilderInterface`.
 The ``addViolation()`` method call finally adds the violation to the context.
-
-.. versionadded:: 4.2
-    The ``UnexpectedValueException`` was introduced in Symfony 4.2.
 
 Using the new Validator
 -----------------------

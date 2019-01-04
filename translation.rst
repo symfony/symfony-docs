@@ -382,6 +382,7 @@ Symfony looks for message files (i.e. translations) in the following default loc
 * the ``Resources/translations/`` directory inside of any bundle.
 
 .. versionadded:: 4.2
+
     Using the ``src/Resources/<bundle name>/translations/`` directory to store
     translations was deprecated in Symfony 4.2. Use instead the directory
     defined in the ``default_path`` option (which is ``translations/`` by default).
