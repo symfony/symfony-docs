@@ -23,7 +23,7 @@ To use it, first register a new handler service:
 
             Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
                 arguments:
-                    - 'mysql:dbname=mydatabase, host=myhost'
+                    - 'mysql:dbname=mydatabase; host=myhost; port=myport'
                     - { db_username: myuser, db_password: mypassword }
 
                     # If you're using Doctrine & want to re-use that connection, then:
@@ -61,7 +61,7 @@ To use it, first register a new handler service:
 
         $storageDefinition = $container->autowire(PdoSessionHandler::class)
             ->setArguments(array(
-                'mysql:dbname=mydatabase, host=myhost',
+                'mysql:dbname=mydatabase; host=myhost; port=myport',
                 array('db_username' => 'myuser', 'db_password' => 'mypassword'),
             ))
         ;
@@ -123,7 +123,7 @@ a second array argument to ``PdoSessionHandler``:
 
             Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler:
                 arguments:
-                    - 'mysql:dbname=mydatabase, host=myhost'
+                    - 'mysql:dbname=mydatabase; host=myhost; port=myport'
                     - { db_table: 'sessions', db_username: 'myuser', db_password: 'mypassword' }
 
     .. code-block:: xml
@@ -156,7 +156,7 @@ a second array argument to ``PdoSessionHandler``:
 
         $container->autowire(PdoSessionHandler::class)
             ->setArguments(array(
-                'mysql:dbname=mydatabase, host=myhost',
+                'mysql:dbname=mydatabase; host=myhost; port=myport',
                 array('db_table' => 'sessions', 'db_username' => 'myuser', 'db_password' => 'mypassword')
             ))
         ;

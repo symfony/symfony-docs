@@ -30,7 +30,7 @@ Basic Usage
 The following constraints ensure that:
 
 * ``firstName`` of ``Person`` class is equal to ``Mary`` *and* is a string
-* ``age`` is equal to``20`` *and* is of type integer
+* ``age`` is equal to ``20`` *and* is of type integer
 
 .. configuration-block::
 
@@ -61,6 +61,8 @@ The following constraints ensure that:
         # config/validator/validation.yaml
         App\Entity\Person:
             properties:
+                firstName:
+                    - IdenticalTo: Mary
                 age:
                     - IdenticalTo:
                         value: 20
@@ -74,6 +76,11 @@ The following constraints ensure that:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="App\Entity\Person">
+                <property name="firstName">
+                    <constraint name="IdenticalTo">
+                        <value>Mary</value>
+                    </constraint>
+                </property>
                 <property name="age">
                     <constraint name="IdenticalTo">
                         <option name="value">20</option>
@@ -94,6 +101,8 @@ The following constraints ensure that:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
+                $metadata->addPropertyConstraint('firstName', new Assert\IdenticalTo('Mary'));
+
                 $metadata->addPropertyConstraint('age', new Assert\IdenticalTo(array(
                     'value' => 20,
                 )));
