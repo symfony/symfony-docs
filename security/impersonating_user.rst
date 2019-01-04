@@ -187,6 +187,72 @@ also adjust the query parameter name via the ``parameter`` setting:
             ),
         ));
 
+Limiting User Switching
+-----------------------
+
+If you need more control over user switching, but don't require the complexity
+of a full ACL implementation, you can use a security voter. For example, you
+may want to allow employees to be able to impersonate a user with the
+``ROLE_CUSTOMER`` role without giving them the ability to impersonate a more
+elevated user such as an administrator.
+
+.. versionadded:: 4.1
+
+    The target user was added as the voter subject parameter in Symfony 4.1.
+
+Create the voter class::
+
+    namespace App\Security\Voter;
+
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+    use Symfony\Component\Security\Core\User\UserInterface;
+
+    class SwitchToCustomerVoter extends Voter
+    {
+        protected function supports($attribute, $subject)
+        {
+            return in_array($attribute, ['ROLE_ALLOWED_TO_SWITCH'])
+                && $subject instanceof UserInterface;
+        }
+
+        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+        {
+            $user = $token->getUser();
+            // if the user is anonymous or if the subject is not a user, do not grant access
+            if (!$user instanceof UserInterface || !$subject instanceof UserInterface) {
+                return false;
+            }
+
+            if (in_array('ROLE_CUSTOMER', $subject->getRoles())
+                && $this->hasSwitchToCustomerRole($token)) {
+                return true;
+            }
+
+            return false;
+        }
+
+        private function hasSwitchToCustomerRole(TokenInterface $token)
+        {
+            foreach ($token->getRoles() as $role) {
+                if ($role->getRole() === 'ROLE_SWITCH_TO_CUSTOMER') {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
+To enable the new voter in the app, register it as a service and
+:doc:`tag it </service_container/tags>` with the ``security.voter``
+tag. If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
+
+Now a user who has the ``ROLE_SWITCH_TO_CUSTOMER`` role can switch to a user who
+has the ``ROLE_CUSTOMER`` role, but not other users.
+
 Events
 ------
 

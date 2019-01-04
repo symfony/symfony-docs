@@ -119,7 +119,6 @@ of text (called a *message*), use the
 for example, that you're translating a simple message from inside a controller::
 
     // ...
-    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Translation\TranslatorInterface;
 
     public function index(TranslatorInterface $translator)
@@ -198,7 +197,6 @@ Message Placeholders
 
 Sometimes, a message containing a variable needs to be translated::
 
-    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Translation\TranslatorInterface;
 
     public function index(TranslatorInterface $translator, $name)
