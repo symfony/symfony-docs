@@ -343,6 +343,13 @@ Thanks to the ``AppBundle\Util\TransformerInterface`` alias, the autowiring subs
 knows that the ``AppBundle\Util\Rot13Transformer`` service should be injected when
 dealing with the ``TransformerInterface``.
 
+.. tip::
+
+    When using a `service definition prototype`_, if only one service is
+    discovered that implements an interface, and that interface is also
+    discovered at the same time, configuring the alias is not mandatory
+    and Symfony will automatically create one.
+
 Dealing with Multiple Implementations of the Same Type
 ------------------------------------------------------
 
@@ -503,3 +510,4 @@ Public bundles should explicitly configure their services and not rely on autowi
 
 .. _Rapid Application Development: https://en.wikipedia.org/wiki/Rapid_application_development
 .. _ROT13: https://en.wikipedia.org/wiki/ROT13
+.. _service definition prototype: https://symfony.com/blog/new-in-symfony-3-3-psr-4-based-service-discovery
