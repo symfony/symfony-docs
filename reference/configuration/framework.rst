@@ -1737,6 +1737,7 @@ strict_email
 **type**: ``Boolean`` **default**: ``false``
 
 .. versionadded:: 4.1
+
     The ``strict_email`` option was deprecated in Symfony 4.1. Use the new
     ``email_validation_mode`` option instead.
 
@@ -1748,9 +1749,6 @@ email_validation_mode
 .....................
 
 **type**: ``string`` **default**: ``loose``
-
-.. versionadded:: 4.1
-    The ``email_validation_mode`` option was introduced in Symfony 4.1.
 
 It controls the way email addresses are validated by the
 :doc:`/reference/constraints/Email` validator. The possible values are:
@@ -1904,9 +1902,6 @@ Use the application logger instead of the PHP logger for logging PHP errors.
 When an integer value is used, it also sets the log level. Those integer
 values must be the same used in the `error_reporting PHP option`_.
 
-.. versionadded:: 4.1
-    The support for integers in the ``log`` option was introduced in Symfony 4.1.
-
 throw
 .....
 
@@ -1935,9 +1930,6 @@ ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``
 There's also a special adapter called ``cache.adapter.array`` which stores
 contents in memory using a PHP array and it's used to disable caching (mostly on
 the ``dev`` environment).
-
-.. versionadded:: 4.1
-    The ``cache.adapter.array`` adapter was introduced in Symfony 4.1.
 
 .. tip::
 

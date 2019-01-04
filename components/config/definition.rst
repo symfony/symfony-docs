@@ -791,9 +791,6 @@ for the node, instead of the node's original value.
 Configuring the Node Path Separator
 -----------------------------------
 
-.. versionadded:: 4.1
-    The option to configure the node path separator was introduced in Symfony 4.1.
-
 Consider the following config builder example::
 
     $treeBuilder = new TreeBuilder('database');

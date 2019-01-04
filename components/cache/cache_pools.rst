@@ -151,10 +151,6 @@ when all items are successfully deleted)::
         # clears the "cache.validation" and "cache.app" pool
         $ php bin/console cache:pool:clear cache.validation cache.app
 
-.. versionadded:: 4.1
-
-    The ``cache:pool:delete`` command was introduced in Symfony 4.1.
-
 .. _component-cache-cache-pool-prune:
 
 Pruning Cache Items

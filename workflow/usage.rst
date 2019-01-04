@@ -226,14 +226,6 @@ you can get the workflow by injecting the Workflow registry service::
         }
     }
 
-.. versionadded:: 4.1
-    The :class:`Symfony\\Component\\Workflow\\Exception\\TransitionException`
-    class was introduced in Symfony 4.1.
-
-.. versionadded:: 4.1
-    The :method:`Symfony\\Component\\Workflow\\Registry::all` method was
-    introduced in Symfony 4.1.
-
 Using Events
 ------------
 

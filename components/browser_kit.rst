@@ -91,9 +91,6 @@ make AJAX requests::
     // the required HTTP_X_REQUESTED_WITH header is added automatically
     $crawler = $client->xmlHttpRequest('GET', '/');
 
-.. versionadded:: 4.1
-    The ``xmlHttpRequest()`` method was introduced in Symfony 4.1.
-
 Clicking Links
 ~~~~~~~~~~~~~~
 

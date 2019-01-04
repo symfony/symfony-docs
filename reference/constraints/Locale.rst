@@ -112,8 +112,9 @@ canonicalize
 **type**: ``boolean`` **default**: ``false``
 
 .. versionadded:: 4.1
+
     Using this option with value ``false`` was deprecated in Symfony 4.1 and it
-    will throw an exception in Symfony 5.0. Use ``true`` instead.
+    will throw an exception in Symfony 5.0. Use ``true`` instead.
 
 If ``true``, the :phpmethod:`Locale::canonicalize` method will be applied before checking
 the validity of the given locale (e.g. ``FR-fr.utf8`` is transformed into ``fr_FR``).

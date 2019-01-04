@@ -287,10 +287,6 @@ Setting PHP constants as parameters is also supported:
 Binary Values as Parameters
 ---------------------------
 
-.. versionadded:: 4.1
-    The support for binary values in container parameters was introduced in
-    Symfony 4.1
-
 If the value of a container parameter is a binary value, set it as a base64
 encoded value in YAML and XML configs and use the escape sequences in PHP:
 

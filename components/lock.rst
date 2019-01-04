@@ -157,10 +157,6 @@ to reset the TTL to its original value::
         // refresh the lock for 600 seconds (next refresh() call will be 30 seconds again)
         $lock->refresh(600);
 
-    .. versionadded:: 4.1
-        The feature to pass a custom TTL as an argument of the ``refresh()``
-        method was introduced in Symfony 4.1.
-
 Available Stores
 ----------------
 

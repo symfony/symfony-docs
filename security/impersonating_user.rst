@@ -196,10 +196,6 @@ may want to allow employees to be able to impersonate a user with the
 ``ROLE_CUSTOMER`` role without giving them the ability to impersonate a more
 elevated user such as an administrator.
 
-.. versionadded:: 4.1
-
-    The target user was added as the voter subject parameter in Symfony 4.1.
-
 Create the voter class::
 
     namespace App\Security\Voter;

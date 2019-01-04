@@ -1081,10 +1081,6 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
             ->addTag('twig.extension', array('priority' => -100))
         ;
 
-.. versionadded:: 4.1
-    The ``priority`` attribute of the ``twig.extension`` tag was introduced in
-    Symfony 4.1.
-
 For information on how to create the actual Twig Extension class, see
 `Twig's documentation`_ on the topic or read the
 :doc:`/templating/twig_extension` article.

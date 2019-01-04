@@ -213,9 +213,6 @@ which outputs:
     │ 80-902734-1-6 │ And Then There Were None │ Agatha Christie  │
     └───────────────┴──────────────────────────┴──────────────────┘
 
-.. versionadded:: 4.1
-    The ``box`` style was introduced in Symfony 4.1.
-
 You can also set the style to ``box-double``::
 
     $table->setStyle('box-double');
@@ -233,9 +230,6 @@ which outputs:
     ║ 960-425-059-0 │ The Lord of the Rings    │ J. R. R. Tolkien ║
     ║ 80-902734-1-6 │ And Then There Were None │ Agatha Christie  ║
     ╚═══════════════╧══════════════════════════╧══════════════════╝
-
-.. versionadded:: 4.1
-    The ``box-double`` style was introduced in Symfony 4.1.
 
 If the built-in styles do not fit your need, define your own::
 
@@ -265,17 +259,6 @@ Here is a full list of things you can customize:
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCellRowFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setBorderFormat`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setPadType`
-
-.. versionadded:: 4.1
-    The ``setDefaultCrossingChars`` method was introduced in Symfony 4.1.
-    It replaces the deprecated ``setHorizontalBorderChar`` method.
-
-    Also, the ``setVerticalBorderChars`` method was introduced. Use this instead
-    of the deprecated ``setVerticalBorderChar`` method.
-
-    The ``setCrossingChars()`` and ``setDefaultCrossingChar()`` methods are also
-    new. Previously you could only use the now deprecated ``setCrossingChar()``
-    method.
 
 .. tip::
 
@@ -381,9 +364,6 @@ you to create any table layout you may wish.
 
 Modifying Rendered Tables
 -------------------------
-
-.. versionadded:: 4.1
-    The feature to modify rendered tables was introduced in Symfony 4.1.
 
 The ``render()`` method requires passing the entire table contents. However,
 sometimes that information is not available beforehand because it's generated

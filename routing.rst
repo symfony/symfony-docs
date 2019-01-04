@@ -146,9 +146,6 @@ use them later to :ref:`generate URLs <routing-generate>`.
 Localized Routing (i18n)
 ------------------------
 
-.. versionadded:: 4.1
-    The feature to localize routes was introduced in Symfony 4.1.
-
 Routes can be localized to provide unique paths per :doc:`locale </translation/locale>`.
 Symfony provides a handy way to declare localized routes without duplication.
 
@@ -435,9 +432,6 @@ concise, but it can decrease route readability when requirements are complex:
 
         return $routes;
 
-.. versionadded:: 4.1
-    The feature to inline requirements was introduced in Symfony 4.1.
-
 To learn about other route requirements - like HTTP method, hostname and dynamic
 expressions - see :doc:`/routing/requirements`.
 
@@ -599,9 +593,6 @@ placeholder:
 
     To give a ``null`` default value to any placeholder, add nothing after the
     ``?`` character (e.g. ``/blog/{page?}``).
-
-.. versionadded:: 4.1
-    The feature to inline default values was introduced in Symfony 4.1.
 
 Listing all of your Routes
 --------------------------
@@ -785,10 +776,6 @@ Route path  If the requested URL is ``/foo``          If the requested URL is ``
     If your application defines different routes for each path (``/foo`` and
     ``/foo/``) this automatic redirection doesn't take place and the right
     route is always matched.
-
-.. versionadded:: 4.1
-    The automatic ``301`` redirection from ``/foo/`` to ``/foo`` was introduced
-    in Symfony 4.1. In previous Symfony versions this results in a ``404`` response.
 
 .. index::
    single: Routing; Controllers

@@ -310,11 +310,6 @@ include as many services as needed in it.
             // ->addTag('container.service_locator')
         ;
 
-.. versionadded:: 4.1
-    The service locator autoconfiguration was introduced in Symfony 4.1. In
-    previous Symfony versions you always needed to add the
-    ``container.service_locator`` tag explicitly.
-
 .. note::
 
     The services defined in the service locator argument must include keys,
