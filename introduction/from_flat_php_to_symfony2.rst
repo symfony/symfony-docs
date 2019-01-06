@@ -181,7 +181,7 @@ of the application are isolated in a new file called ``model.php``::
     in this example, only a portion (or none) of the model is actually concerned
     with accessing a database.
 
-The controller (``index.php``) is now is just a few lines of code::
+The controller (``index.php``) is now just a few lines of code::
 
     // index.php
     require_once 'model.php';
@@ -262,7 +262,7 @@ an individual blog result based on a given id::
     {
         $connection = open_database_connection();
 
-        $query = 'SELECT created_at, title, body FROM post WHERE  id=:id';
+        $query = 'SELECT created_at, title, body FROM post WHERE id=:id';
         $statement = $connection->prepare($query);
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
@@ -533,7 +533,7 @@ a simple application. Along the way, you've made a simple routing
 system and a method using ``ob_start()`` and ``ob_get_clean()`` to render
 templates. If, for some reason, you needed to continue building this "framework"
 from scratch, you could at least use Symfony's standalone
-:doc:`Routing </components/routing>` and component and :doc:`Twig </templating>`,
+:doc:`Routing </components/routing>` component and :doc:`Twig </templating>`,
 which already solve these problems.
 
 Instead of re-solving common problems, you can let Symfony take care of
