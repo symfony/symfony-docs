@@ -51,7 +51,7 @@ template - a text file parsed by PHP that contains a mix of text and PHP code:
 
 .. index:: Twig; Introduction
 
-But Symfony packages have even more powerful templating language called `Twig`_.
+But Symfony packages an even more powerful templating language called `Twig`_.
 Twig allows you to write concise, readable templates that are more friendly
 to web designers and, in several ways, more powerful than PHP templates:
 
