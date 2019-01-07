@@ -451,6 +451,14 @@ Symfony provides the following env var processors:
                 'auth' => '%env(file:AUTH_FILE)%',
             ));
 
+``env(trim:FOO)``
+    Trims the content of ``FOO`` env var, removing whitespaces from the beginning
+    and end of the string. This is especially useful in combination with the
+    ``file`` processor, as it'll remove newlines at the end of a file.
+
+    .. versionadded:: 4.3
+        The ``trim`` processor was introduced in Symfony 4.3.
+
 ``env(key:FOO:BAR)``
     Retrieves the value associated with the key ``FOO`` from the array whose
     contents are stored in the ``BAR`` env var:
