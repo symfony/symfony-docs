@@ -70,6 +70,7 @@ quickly and easily. There are many PaaS - below are a few that work well with Sy
 * `Platform.sh`_
 * `Azure`_
 * `fortrabbit`_
+* `Clever Cloud`_
 
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -264,3 +265,4 @@ Learn More
 .. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
 .. _`fortrabbit`: https://help.fortrabbit.com/install-symfony
 .. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle
+.. _`Clever Cloud`: https://www.clever-cloud.com/doc/php/tutorial-symfony/
