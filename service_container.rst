@@ -145,7 +145,7 @@ each time you ask for it.
                 # default configuration for services in *this* file
                 _defaults:
                     autowire: true      # Automatically injects dependencies in your services.
-                    autoconfigure: true # Automatically tag your services as commands, event subscribers, etc.
+                    autoconfigure: true # Automatically adds corresponding tags to your services depending on interfaces they implement.
                     public: false       # Allows optimizing the container by removing unused services; this also means
                                         # fetching services directly from the container via $container->get() won't work.
                                         # The best practice is to be explicit about your dependencies anyway.
