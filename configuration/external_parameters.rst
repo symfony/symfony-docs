@@ -457,6 +457,7 @@ Symfony provides the following env var processors:
     ``file`` processor, as it'll remove newlines at the end of a file.
 
     .. versionadded:: 4.3
+
         The ``trim`` processor was introduced in Symfony 4.3.
 
 ``env(key:FOO:BAR)``
@@ -498,7 +499,8 @@ Symfony provides the following env var processors:
             $container->setParameter('database_password', '%env(key:database_password:json:file:SECRETS_FILE)%');
 
 ``env(default:fallback_param:BAR)``
-    Retrieves the value of the parameter ``fallback_param`` when the of the ``BAR`` env var is not available:
+    Retrieves the value of the parameter ``fallback_param`` when the ``BAR`` env
+    var is not available:
 
     .. configuration-block::
 
@@ -506,9 +508,9 @@ Symfony provides the following env var processors:
 
             # config/services.yaml
             parameters:
+                # if PRIVATE_KEY is not a valid file path, the content of raw_key is returned
                 private_key: '%env(default:raw_key:file:PRIVATE_KEY)%'
                 raw_key: '%env(PRIVATE_KEY)%'
-                # if PRIVATE_KEY is not a valid file path, the content of raw_key is returned.
 
         .. code-block:: xml
 
@@ -523,6 +525,7 @@ Symfony provides the following env var processors:
                     http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <parameters>
+                    <!-- if PRIVATE_KEY is not a valid file path, the content of raw_key is returned -->
                     <parameter key="private_key">%env(default:raw_key:file:PRIVATE_KEY)%</parameter>
                     <parameter key="raw_key">%env(PRIVATE_KEY)%</parameter>
                 </parameters>
@@ -531,10 +534,13 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/services.php
+
+            // if PRIVATE_KEY is not a valid file path, the content of raw_key is returned
             $container->setParameter('private_key', '%env(default:raw_key:file:PRIVATE_KEY)%');
             $container->setParameter('raw_key', '%env(PRIVATE_KEY)%');
 
     .. versionadded:: 4.3
+
         The ``default`` processor was introduced in Symfony 4.3.
 
 It is also possible to combine any number of processors:
