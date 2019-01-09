@@ -107,10 +107,10 @@ vulnerability*
 * 2 - 3 Complex: attacker must follow non-intuitive steps with a high level  
   of dependencies
 * 1 - 2 High: A successful attack depends on conditions beyond the attacker's  
-   control. That is, a successful attack cannot be accomplished at will, but  
-   requires the attacker to invest in some measurable amount of effort in  
-   preparation or execution against the vulnerable component before a successful  
-   attack can be expected.
+  control. That is, a successful attack cannot be accomplished at will, but  
+  requires the attacker to invest in some measurable amount of effort in  
+  preparation or execution against the vulnerable component before a successful  
+  attack can be expected.
 
 **Impact**
 
@@ -151,13 +151,13 @@ Affected Projects: 1 - 4
 
 Total Score: 1 - 15
 
-| Severity    	| Total score	|
-|-------------	|-----------------	|
+| Severity    | Total score	|
+|-------------|-----------------|
 | Low         	| 1 - 5       	|
 | Medium      	| 6 - 10       	|
 | High        	| 11 - 12       	|
 | Critical    	| 13 - 14       	|
-| Exceptional &nbsp;&nbsp;&nbsp;&nbsp; 	| 15      	|
+| Exceptional &nbsp;&nbsp;&nbsp;&nbsp; 	| 15     |
 
 
 Security Advisories
