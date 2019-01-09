@@ -145,19 +145,17 @@ score for Affected Projects is capped at 4.*
 
 **Score Totals**
 
-Attack Complexity: 1 - 4
-Impact: 1 - 6
-Affected Projects: 1 - 4
+* Attack Complexity: 1 - 4
+* Impact: 1 - 6
+* Affected Projects: 1 - 4
 
-Total Score: 1 - 15
+**Severity levels**
 
-| Severity    | Total score	|
-|-------------|-----------------|
-| Low         	| 1 - 5       	|
-| Medium      	| 6 - 10       	|
-| High        	| 11 - 12       	|
-| Critical    	| 13 - 14       	|
-| Exceptional &nbsp;&nbsp;&nbsp;&nbsp; 	| 15     |
+* Low: 1 - 5
+* Medium: 6 - 10
+* High: 11 - 12
+* Critical: 13 - 14
+* Exceptional: 15
 
 
 Security Advisories
