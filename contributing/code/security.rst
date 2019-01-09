@@ -93,70 +93,75 @@ of the downstream projects included in this process:
 
 Issue Severity
 --------------
+
 In order to determine the severity of a security issue we take into account
 the complexity of any potential attack, the impact of the vulnerability and
 also how many projects it is likely to affect. This score out of 15 is then
 converted into a level of: Low, Medium, High, Critical, or Exceptional.
 
-**Attack Complexity**
+Attack Complexity
+~~~~~~~~~~~~~~~~~
 
 *Score of between 1 and 5 depending on how complex it is to exploit the
 vulnerability*
 
 * 4 - 5 Basic: attacker must follow a set of simple steps
-* 2 - 3 Complex: attacker must follow non-intuitive steps with a high level  
+* 2 - 3 Complex: attacker must follow non-intuitive steps with a high level
   of dependencies
-* 1 - 2 High: A successful attack depends on conditions beyond the attacker's  
-  control. That is, a successful attack cannot be accomplished at will, but  
-  requires the attacker to invest in some measurable amount of effort in  
-  preparation or execution against the vulnerable component before a successful  
+* 1 - 2 High: A successful attack depends on conditions beyond the attacker's
+  control. That is, a successful attack cannot be accomplished at will, but
+  requires the attacker to invest in some measurable amount of effort in
+  preparation or execution against the vulnerable component before a successful
   attack can be expected.
 
-**Impact**
+Impact
+~~~~~~
 
 *Scores from the following areas are added together to produce a score. The
 score for Impact is capped at 6. Each area is scored between 0 and 4.*
 
-* Integrity: Does this vulnerability cause non-public data to be accessible?  
+* Integrity: Does this vulnerability cause non-public data to be accessible?
   If so, does the attacker have control over the data disclosed? (0-4)
-* Disclosure: Can this exploit allow system data (or data handled by the  
-  system) to be compromised? If so, does the attacker have control over  
+* Disclosure: Can this exploit allow system data (or data handled by the
+  system) to be compromised? If so, does the attacker have control over
   modification? (0-4)
 * Code Execution: Does the vulnerability allow arbitrary code to be executed
   on an end-users system, or the server that it runs on? (0-4)
-* Availability: Is the availability of a service or application affected? Is  
-  it reduced availability or total loss of availability of a service /  
-  application? Availability includes networked services (e.g., databases) or  
-  resources such as consumption of network bandwidth, processor cycles, or  
+* Availability: Is the availability of a service or application affected? Is
+  it reduced availability or total loss of availability of a service /
+  application? Availability includes networked services (e.g., databases) or
+  resources such as consumption of network bandwidth, processor cycles, or
   disk space. (0-4)
 
-**Affected Projects**
+Affected Projects
+~~~~~~~~~~~~~~~~~
 
 *Scores from the following areas are added together to produce a score. The
 score for Affected Projects is capped at 4.*
 
 * Will it affect some or all using a component? (1-2)
-* Is the usage of the component that would cause such a thing already  
+* Is the usage of the component that would cause such a thing already
   considered bad practice? (0-1)
-* How common/popular is the component (e.g. Console vs HttpFoundation vs  
+* How common/popular is the component (e.g. Console vs HttpFoundation vs
   Lock)? (0-2)
 * Are a number of well-known open source projects using Symfony affected
   that requires coordinated releases? (0-1)
 
-**Score Totals**
+Score Totals
+~~~~~~~~~~~~
 
 * Attack Complexity: 1 - 4
 * Impact: 1 - 6
 * Affected Projects: 1 - 4
 
-**Severity levels**
+Severity levels
+~~~~~~~~~~~~~~~
 
 * Low: 1 - 5
 * Medium: 6 - 10
 * High: 11 - 12
 * Critical: 13 - 14
 * Exceptional: 15
-
 
 Security Advisories
 -------------------
