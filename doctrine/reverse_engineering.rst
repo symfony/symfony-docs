@@ -90,11 +90,10 @@ file like this (the example is for YAML):
 
 .. code-block:: yaml
 
-
     doctrine:
-        ...
+        # ...
         orm:
-            ...
+            # ...
             mappings:
                 App:
                     is_bundle: false
