@@ -99,12 +99,13 @@ also how many projects it is likely to affect. This score out of 15 is then
 converted into a level of: Low, Medium, High, Critical, or Exceptional.
 
 **Attack Complexity**
+
 *Score of between 1 and 5 depending on how complex it is to exploit the
 vulnerability*
 
 * 4 - 5 Basic: attacker must follow a set of simple steps
 * 2 - 3 Complex: attacker must follow non-intuitive steps with a high level  
-   of dependencies
+  of dependencies
 * 1 - 2 High: A successful attack depends on conditions beyond the attacker's  
    control. That is, a successful attack cannot be accomplished at will, but  
    requires the attacker to invest in some measurable amount of effort in  
@@ -112,6 +113,7 @@ vulnerability*
    attack can be expected.
 
 **Impact**
+
 *Scores from the following areas are added together to produce a score. The
 score for Impact is capped at 6. Each area is scored between 0 and 4.*
 
@@ -129,6 +131,7 @@ score for Impact is capped at 6. Each area is scored between 0 and 4.*
   disk space. (0-4)
 
 **Affected Projects**
+
 *Scores from the following areas are added together to produce a score. The
 score for Affected Projects is capped at 4.*
 
