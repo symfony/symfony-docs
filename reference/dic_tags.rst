@@ -590,9 +590,23 @@ Core Cache Warmers
 +===========================================================================================+===========+
 | :class:`Symfony\\Bundle\\FrameworkBundle\\CacheWarmer\\TemplatePathsCacheWarmer`          | 20        |
 +-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerAggregate`                | 0         |
++-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Bundle\\FrameworkBundle\\CacheWarmer\\RouterCacheWarmer`                 | 0         |
 +-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\FrameworkBundle\\CacheWarmer\\ValidatorCacheWarmer`              | 0         |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\FrameworkBundle\\CacheWarmer\\SerializerCacheWarmer`             | 0         |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\FrameworkBundle\\CacheWarmer\\TranslationsCacheWarmer`           | 0         |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\FrameworkBundle\\CacheWarmer\\AnnotationsCacheWarmer`            | 0         |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\SecurityBundle\\CacheWarmer\\ExpressionCacheWarmer`              | 0         |
++-------------------------------------------------------------------------------------------+-----------+
 | :class:`Symfony\\Bundle\\TwigBundle\\CacheWarmer\\TemplateCacheCacheWarmer`               | 0         |
++-------------------------------------------------------------------------------------------+-----------+
+| :class:`Symfony\\Bundle\\TwigBundle\\CacheWarmer\\TemplateCacheWarmer`                    | 0         |
 +-------------------------------------------------------------------------------------------+-----------+
 
 .. _dic-tags-kernel-event-listener:
