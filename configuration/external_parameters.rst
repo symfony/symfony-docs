@@ -497,6 +497,46 @@ Symfony provides the following env var processors:
             $container->setParameter('env(SECRETS_FILE)', '/opt/application/.secrets.json');
             $container->setParameter('database_password', '%env(key:database_password:json:file:SECRETS_FILE)%');
 
+``env(default:fallback_param:BAR)``
+    Retrieves the value of the parameter ``fallback_param`` when the of the ``BAR`` env var is not available:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                private_key: '%env(default:raw_key:file:PRIVATE_KEY)%'
+                raw_key: '%env(PRIVATE_KEY)%'
+                # if PRIVATE_KEY is not a valid file path, the content of raw_key is returned.
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    http://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    http://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="private_key">%env(default:raw_key:file:PRIVATE_KEY)%</parameter>
+                    <parameter key="raw_key">%env(PRIVATE_KEY)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('private_key', '%env(default:raw_key:file:PRIVATE_KEY)%');
+            $container->setParameter('raw_key', '%env(PRIVATE_KEY)%');
+
+    .. versionadded:: 4.3
+        The ``default`` processor was introduced in Symfony 4.3.
+
 It is also possible to combine any number of processors:
 
 .. code-block:: yaml
