@@ -315,4 +315,4 @@ deal with this low level session variable. However, the
 :class:`Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait` utility
 can be used to read (like in the example above) or set this value manually.
 
-.. _`MakerBundle`: https://github.com/symfony/maker-bundle
+.. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
