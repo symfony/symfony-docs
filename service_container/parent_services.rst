@@ -70,12 +70,12 @@ duplicated service definitions:
             AppBundle\Repository\BaseDoctrineRepository:
                 abstract:  true
                 arguments: ['@doctrine.orm.entity_manager']
-                calls:
-                    - [setLogger, ['@logger']]
 
             AppBundle\Repository\DoctrineUserRepository:
                 # extend the AppBundle\Repository\BaseDoctrineRepository service
                 parent: AppBundle\Repository\BaseDoctrineRepository
+                calls:
+                    - [setLogger, ['@logger']]
 
             AppBundle\Repository\DoctrinePostRepository:
                 parent: AppBundle\Repository\BaseDoctrineRepository
@@ -93,16 +93,16 @@ duplicated service definitions:
             <services>
                 <service id="AppBundle\Repository\BaseDoctrineRepository" abstract="true">
                     <argument type="service" id="doctrine.orm.entity_manager" />
+                </service>
+
+                <!-- extends the AppBundle\Repository\BaseDoctrineRepository service -->
+                <service id="AppBundle\Repository\DoctrineUserRepository"
+                    parent="AppBundle\Repository\BaseDoctrineRepository">
 
                     <call method="setLogger">
                         <argument type="service" id="logger" />
                     </call>
                 </service>
-
-                <!-- extends the AppBundle\Repository\BaseDoctrineRepository service -->
-                <service id="AppBundle\Repository\DoctrineUserRepository"
-                    parent="AppBundle\Repository\BaseDoctrineRepository"
-                />
 
                 <service id="AppBundle\Repository\DoctrinePostRepository"
                     parent="AppBundle\Repository\BaseDoctrineRepository"
@@ -123,12 +123,12 @@ duplicated service definitions:
         $container->register(BaseDoctrineRepository::class)
             ->setAbstract(true)
             ->addArgument(new Reference('doctrine.orm.entity_manager'))
-            ->addMethodCall('setLogger', array(new Reference('logger')))
         ;
 
         // extend the AppBundle\Repository\BaseDoctrineRepository service
         $definition = new ChildDefinition(BaseDoctrineRepository::class);
         $definition->setClass(DoctrineUserRepository::class);
+        $definition->addMethodCall('setLogger', array(new Reference('logger')))
         $container->setDefinition(DoctrineUserRepository::class, $definition);
 
         $definition = new ChildDefinition(BaseDoctrineRepository::class);
