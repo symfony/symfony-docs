@@ -664,9 +664,9 @@ object are sent back to the client.
 
 It's a beautiful thing.
 
-.. figure:: /_images/http/request-flow.png
-   :align: center
-   :alt: Symfony request flow
+.. raw:: html
+
+    <object data="../_images/http/request-flow.svg" type="image/svg+xml"></object>
 
 Where Symfony Delivers
 ----------------------
