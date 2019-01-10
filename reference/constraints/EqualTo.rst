@@ -75,7 +75,7 @@ and that the ``age`` is ``20``, you could do the following:
             <class name="App\Entity\Person">
                 <property name="firstName">
                     <constraint name="EqualTo">
-                        <value>Mary</value>
+                        Mary
                     </constraint>
                 </property>
                 <property name="age">

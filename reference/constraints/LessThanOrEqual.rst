@@ -72,7 +72,7 @@ The following constraints ensure that:
             <class name="App\Entity\Person">
                 <property name="siblings">
                     <constraint name="LessThanOrEqual">
-                        <value>5</value>
+                        5
                     </constraint>
                 </property>
                 <property name="age">
