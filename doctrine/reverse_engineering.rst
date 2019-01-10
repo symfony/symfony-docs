@@ -70,6 +70,22 @@ files: ``BlogPost.php`` and ``BlogComment.php``.
 
         $ php bin/console doctrine:mapping:import 'App\Entity' xml --path=config/doctrine
 
+    In this case, make sure to adapt your mapping configuration accordingly:
+
+    .. code-block:: yaml
+
+        doctrine:
+            # ...
+            orm:
+                # ...
+                mappings:
+                    App:
+                        is_bundle: false
+                        type: yml # Set to xml in case of XML mapping
+                        dir: '%kernel.project_dir%/config/doctrine'
+                        prefix: 'App\Entity'
+                        alias: App
+
 Generating the Getters & Setters or PHP Classes
 -----------------------------------------------
 
@@ -84,23 +100,6 @@ run:
 
     // generates getter/setter methods
     $ php bin/console make:entity --regenerate App
-
-If you generated XML or YAML metadata you have also to change the ``config/packages/doctrine.yaml``
-file like this (the example is for YAML):
-
-.. code-block:: yaml
-
-    doctrine:
-        # ...
-        orm:
-            # ...
-            mappings:
-                App:
-                    is_bundle: false
-                    type: yml # Previously was 'annotation'
-                    dir: '%kernel.project_dir%/config/doctrine' # Previously was '%kernel.project_dir%/src/Entity'
-                    prefix: 'App\Entity'
-                    alias: App
 
 .. note::
 
