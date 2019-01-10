@@ -361,12 +361,12 @@ to do:
 
 .. _request-flow-figure:
 
-.. figure:: /_images/http/request-flow.png
-   :align: center
-   :alt: Symfony request flow
+.. raw:: html
 
-   Incoming requests are interpreted by the :doc:`Routing component </routing>` and
-   passed to PHP functions that return ``Response`` objects.
+    <object data="../_images/http/request-flow.svg" type="image/svg+xml"></object>
+
+Incoming requests are interpreted by the :doc:`Routing component </routing>` and
+passed to PHP functions that return ``Response`` objects.
 
 This may not make sense yet, but as you keep reading, you'll learn about :doc:`routes </routing>`
 and :doc:`controllers </controller>`: the two fundamental parts to creating a page.
