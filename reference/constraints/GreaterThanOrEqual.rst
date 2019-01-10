@@ -72,7 +72,7 @@ The following constraints ensure that:
             <class name="AppBundle\Entity\Person">
                 <property name="siblings">
                     <constraint name="GreaterThanOrEqual">
-                        <value>5</value>
+                        5
                     </constraint>
                 </property>
                 <property name="age">

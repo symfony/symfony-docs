@@ -77,7 +77,7 @@ the following:
             <class name="AppBundle\Entity\Person">
                 <property name="firstName">
                     <constraint name="NotEqualTo">
-                        <value>Mary</value>
+                        Mary
                     </constraint>
                 </property>
                 <property name="age">
