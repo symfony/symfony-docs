@@ -70,6 +70,23 @@ files: ``BlogPost.php`` and ``BlogComment.php``.
 
         $ php bin/console doctrine:mapping:import 'App\Entity' xml --path=config/doctrine
 
+    In this case, make sure to adapt your mapping configuration accordingly:
+
+    .. code-block:: yaml
+
+        # config/packages/doctrine.yaml
+        doctrine:
+            # ...
+            orm:
+                # ...
+                mappings:
+                    App:
+                        is_bundle: false
+                        type: yml # Set to xml in case of XML mapping
+                        dir: '%kernel.project_dir%/config/doctrine'
+                        prefix: 'App\Entity'
+                        alias: App
+
 Generating the Getters & Setters or PHP Classes
 -----------------------------------------------
 
