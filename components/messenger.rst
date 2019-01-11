@@ -31,7 +31,9 @@ Alternatively, you can clone the `<https://github.com/symfony/messenger>`_ repos
 Concepts
 --------
 
-.. image:: /_images/components/messenger/overview.png
+.. raw:: html
+
+    <object data="../_images/components/messenger/overview.svg" type="image/svg+xml"></object>
 
 **Sender**:
    Responsible for serializing and sending messages to *something*. This
