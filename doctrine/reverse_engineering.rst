@@ -74,6 +74,7 @@ files: ``BlogPost.php`` and ``BlogComment.php``.
 
     .. code-block:: yaml
 
+        # config/packages/doctrine.yaml
         doctrine:
             # ...
             orm:
