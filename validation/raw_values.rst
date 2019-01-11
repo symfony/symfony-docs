@@ -51,6 +51,26 @@ Validation of arrays is possible using the ``Collection`` constraint::
 
     $validator = Validation::createValidator();
 
+    $input = array(
+        'name' => array(
+          'first_name' => 'Fabien',
+          'last_name' => 'Potencier',
+        ),
+        'email' => 'test@email.tld',
+        'simple' => 'hello',
+        'gender' => 3,
+        'file' => null,
+        'password' => 'test',
+        'tags' => array(
+            array(
+                'slug' => 'symfony_doc',
+                'label' => 'symfony doc',
+            ),
+        ),
+    );
+
+    $groups = new Assert\GroupSequence(array('Default', 'custom'));
+
     $constraint = new Assert\Collection(array(
         // the keys correspond to the keys in the input array
         'name' => new Assert\Collection(array(
@@ -62,9 +82,25 @@ Validation of arrays is possible using the ``Collection`` constraint::
         'gender' => new Assert\Choice(array(3, 4)),
         'file' => new Assert\File(),
         'password' => new Assert\Length(array('min' => 60)),
+        'tags' => new Assert\Optional(array(
+            new Assert\Type('array'),
+            new Assert\Count(array('min' => 1)),
+            new Assert\All(array(
+                new Assert\Collection(array(
+                    'slug' => array(
+                        new Assert\NotBlank(),
+                        new Assert\Type(array('type' => 'string'))
+                    ),
+                    'label' => array(
+                        new Assert\NotBlank(),
+                    ),
+                )),
+                new CustomUniqueTagValidator(array('groups' => 'custom')),
+            )),
+        )),
     ));
 
-    $violations = $validator->validate($input, $constraint);
+    $violations = $validator->validate($input, $constraint, $groups);
 
 The ``validate()`` method returns a :class:`Symfony\\Component\\Validator\\ConstraintViolationList`
 object, which acts just like an array of errors. Each error in the collection
