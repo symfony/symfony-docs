@@ -56,7 +56,9 @@ You can use the ``security.csrf.token_manager`` service to generate a token for 
             $csrfToken
         ));
         
-        // Make sure the response is not cached
+        // In some cases you have a response listener maybe which will set cache headers
+        // automatically most kind of this listener will not set it if cache headers exist
+        // so add the following if you want to be sure the response is not cached:
         $response->setPrivate();
         $response->setSharedMaxAge(0);
         $response->setMaxAge(0);
