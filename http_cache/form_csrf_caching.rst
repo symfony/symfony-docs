@@ -30,7 +30,32 @@ How to Cache Most of the Page and still be able to Use CSRF Protection
 
 To cache a page that contains a CSRF token, you can use more advanced caching
 techniques like :doc:`ESI fragments </http_cache/esi>`, where you cache the full
-page and embedding the form inside an ESI tag with no cache at all.
+page and embedding the form inside an ESI tag with no cache at all. When you
+have your custom form theme you can do this by create a new token_widget block
+and call render_esi there:
+
+.. code-block:: twig
+
+    {%- block token_widget %}
+       {{ render_esi(controller('App\\Controller\\FormController::token', { 'form': form.parent.vars.name })) }}
+    {%- endblock token_widget -%}
+    
+You can use the ``security.csrf.token_manager`` service to generate a token for your given form:
+
+.. code-block:: php
+
+    public function token(Request $request, TokenGeneratorInterface $generator)
+    {
+        $formName = $request->attributes->get('form');
+        $csrfToken = $csrfTokenManager->getToken($formName)->getValue();
+
+        return new Response(sprintf(
+            '<input type="hidden" id="%s__token" name="%s[_token]" value="%s" />',
+            $formName,
+            $formName,
+            $csrfToken
+        ));
+    }
 
 Another option would be to load the form via an uncached AJAX request, but
 cache the rest of the HTML response.
@@ -38,6 +63,8 @@ cache the rest of the HTML response.
 Or you can even load just the CSRF token with an AJAX request and replace the
 form field value with it. Take a look at :doc:`hinclude.js </templating/hinclude>`
 for a nice solution.
+
+
 
 .. _`Cross-site request forgery`: http://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`Security CSRF Component`: https://github.com/symfony/security-csrf
