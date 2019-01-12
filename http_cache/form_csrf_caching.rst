@@ -49,12 +49,22 @@ You can use the ``security.csrf.token_manager`` service to generate a token for 
         $formName = $request->attributes->get('form');
         $csrfToken = $csrfTokenManager->getToken($formName)->getValue();
 
-        return new Response(sprintf(
+        $response = new Response(sprintf(
             '<input type="hidden" id="%s__token" name="%s[_token]" value="%s" />',
             $formName,
             $formName,
             $csrfToken
         ));
+        
+        // Make sure the response is not cached
+        $response->setPrivate();
+        $response->setSharedMaxAge(0);
+        $response->setMaxAge(0);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->headers->addCacheControlDirective('no-cache', true);
+        $response->headers->addCacheControlDirective('no-store', true);
+        
+        return $response;
     }
 
 Another option would be to load the form via an uncached AJAX request, but
