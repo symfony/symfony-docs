@@ -30,9 +30,9 @@ How to Cache Most of the Page and still be able to Use CSRF Protection
 
 To cache a page that contains a CSRF token, you can use more advanced caching
 techniques like :doc:`ESI fragments </http_cache/esi>`, where you cache the full
-page and embedding the form inside an ESI tag with no cache at all. When you
-have your custom form theme you can do this by create a new token_widget block
-and call render_esi there:
+page and embedding the form or just the CSRF token inside an ESI tag with no
+cache at all. When you have your custom form theme you can do this by create a
+new token_widget block and call render_esi there:
 
 .. code-block:: twig
 
