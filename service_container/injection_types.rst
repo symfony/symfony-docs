@@ -60,7 +60,7 @@ service container configuration:
             <services>
                 <!-- ... -->
 
-                <service id="app.newsletter_manager" class="App\Mail\NewsletterManager">
+                <service id="App\Mail\NewsletterManager">
                     <argument type="service" id="mailer"/>
                 </service>
             </services>
@@ -73,7 +73,7 @@ service container configuration:
         use Symfony\Component\DependencyInjection\Reference;
 
         // ...
-        $container->register('app.newsletter_manager', NewsletterManager::class)
+        $container->register(NewsletterManager::class)
             ->addArgument(new Reference('mailer'));
 
 .. tip::
