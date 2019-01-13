@@ -212,7 +212,7 @@ loaded like this::
 When translating strings that are not in the default domain (``messages``),
 you must specify the domain as the third argument of ``trans()``::
 
-    $translator->trans('Symfony is great', array(), 'admin');
+    $translator->trans('Symfony is great', [], 'admin');
 
 Symfony will now look for the message in the ``admin`` domain of the
 specified locale.

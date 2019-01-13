@@ -40,7 +40,7 @@ request::
 
         public function reset()
         {
-            $this->data = array();
+            $this->data = [];
         }
 
         public function getName()

@@ -246,7 +246,7 @@ into the client constructor::
     $cookieJar->set($cookie);
 
     // create a client and set the cookies
-    $client = new Client(array(), null, $cookieJar);
+    $client = new Client([], null, $cookieJar);
     // ...
 
 History

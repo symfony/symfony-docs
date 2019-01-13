@@ -307,7 +307,7 @@ In your extension, you can load this and dynamically set its arguments::
 
         public function load(array $configs, ContainerBuilder $container)
         {
-            $config = array();
+            $config = [];
             // let resources override the previous set value
             foreach ($configs as $subConfig) {
                 $config = array_merge($config, $subConfig);

@@ -110,7 +110,7 @@ option names and their respective values::
 
     $client = MemcachedAdapter::createConnection(
         // a DSN string or an array of DSN strings
-        array(),
+        [],
 
         // associative array of configuration options
         array(

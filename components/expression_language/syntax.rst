@@ -73,7 +73,7 @@ JavaScript::
     {
         public function sayHi($times)
         {
-            $greetings = array();
+            $greetings = [];
             for ($i = 0; $i < $times; $i++) {
                 $greetings[] = 'Hi';
             }

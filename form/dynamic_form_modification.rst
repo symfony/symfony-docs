@@ -395,7 +395,7 @@ sport like this::
                     $data = $event->getData();
 
                     $sport = $data->getSport();
-                    $positions = null === $sport ? array() : $sport->getAvailablePositions();
+                    $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
                     $form->add('position', EntityType::class, array(
                         'class' => 'App\Entity\Position',
@@ -451,7 +451,7 @@ The type would now look like::
             ;
 
             $formModifier = function (FormInterface $form, Sport $sport = null) {
-                $positions = null === $sport ? array() : $sport->getAvailablePositions();
+                $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
                 $form->add('position', EntityType::class, array(
                     'class' => 'App\Entity\Position',

@@ -178,7 +178,7 @@ using the Templating component. To do that, create a new class which
 implements the :class:`Symfony\\Component\\Templating\\EngineInterface`. This
 requires 3 method:
 
-* :method:`render($name, array $parameters = array()) <Symfony\\Component\\Templating\\EngineInterface::render>`
+* :method:`render($name, array $parameters = []) <Symfony\\Component\\Templating\\EngineInterface::render>`
   - Renders a template
 * :method:`exists($name) <Symfony\\Component\\Templating\\EngineInterface::exists>`
   - Checks if the template exists

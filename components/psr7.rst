@@ -42,7 +42,7 @@ to a ``Zend\Diactoros\ServerRequest`` class implementing the
     use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
     use Symfony\Component\HttpFoundation\Request;
 
-    $symfonyRequest = new Request(array(), array(), array(), array(), array(), array('HTTP_HOST' => 'dunglas.fr'), 'Content');
+    $symfonyRequest = new Request([], [], [], [], [], array('HTTP_HOST' => 'dunglas.fr'), 'Content');
     // The HTTP_HOST server key must be set to avoid an unexpected error
 
     $psr7Factory = new DiactorosFactory();

@@ -60,7 +60,7 @@ the URI scheme via schemes:
         $routes = new RouteCollection();
         $routes->add('secure', new Route('/secure', array(
             '_controller' => 'App\Controller\MainController::secure',
-        ), array(), array(), '', array('https')));
+        ), [], [], '', array('https')));
 
         return $routes;
 

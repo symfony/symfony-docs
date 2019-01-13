@@ -144,7 +144,7 @@ getters, this means that you can do something like this::
     class Person
     {
         private $author = true;
-        private $children = array();
+        private $children = [];
 
         public function isAuthor()
         {
@@ -243,7 +243,7 @@ also write to an array. This can be achieved using the
 method::
 
     // ...
-    $person = array();
+    $person = [];
 
     $propertyAccessor->setValue($person, '[first_name]', 'Wouter');
 
@@ -262,7 +262,7 @@ can use setters, the magic ``__set()`` method or properties to set values::
     {
         public $firstName;
         private $lastName;
-        private $children = array();
+        private $children = [];
 
         public function setLastName($name)
         {
@@ -303,7 +303,7 @@ see `Enable other Features`_.
     // ...
     class Person
     {
-        private $children = array();
+        private $children = [];
 
         public function __call($name, $args)
         {
@@ -345,7 +345,7 @@ properties through *adder* and *remover* methods.
         /**
          * @var string[]
          */
-        private $children = array();
+        private $children = [];
 
         public function getChildren(): array
         {
@@ -411,7 +411,7 @@ You can also mix objects and arrays::
     class Person
     {
         public $firstName;
-        private $children = array();
+        private $children = [];
 
         public function setChildren($children)
         {

@@ -28,7 +28,7 @@ third, and forth parameters::
         $defaultLifetime = 0,
 
         // an array of options for configuring the database table and connection
-        $options = array()
+        $options = []
     );
 
 The table where values are stored is created automatically on the first call to

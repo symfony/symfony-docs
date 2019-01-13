@@ -366,7 +366,7 @@ use for translation::
 
     $translator->trans(
         'Symfony is great',
-        array(),
+        [],
         'messages',
         'fr_FR'
     );
@@ -374,7 +374,7 @@ use for translation::
     $translator->transChoice(
         '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
-        array(),
+        [],
         'messages',
         'fr_FR'
     );

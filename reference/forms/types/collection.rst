@@ -293,7 +293,7 @@ may define complex conditions for considering them empty.
 entry_options
 ~~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 This is the array that's passed to the form type specified in the `entry_type`_
 option. For example, if you used the :doc:`ChoiceType </reference/forms/types/choice>`
@@ -405,7 +405,7 @@ Not all options are listed here - only the most applicable to this type:
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER
 
-The default value is ``array()`` (empty array).
+The default value is ``[]`` (empty array).
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER

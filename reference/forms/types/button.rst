@@ -31,7 +31,7 @@ of the form type tree (i.e. it cannot be used as a form type on its own).
 attr
 ~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 If you want to add extra attributes to the HTML representation of the button,
 you can use ``attr`` option. It's an associative array with HTML attribute

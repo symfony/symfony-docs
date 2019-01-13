@@ -143,7 +143,7 @@ and ``redirect()`` methods::
         // return new RedirectResponse($this->generateUrl('homepage'));
 
         // does a permanent - 301 redirect
-        return $this->redirectToRoute('homepage', array(), 301);
+        return $this->redirectToRoute('homepage', [], 301);
 
         // redirect to a route with parameters
         return $this->redirectToRoute('app_lucky_number', array('max' => 10));
@@ -400,7 +400,7 @@ To get the session, add an argument and type-hint it with
         $foobar = $session->get('foobar');
 
         // uses a default value if the attribute doesn't exist
-        $filters = $session->get('filters', array());
+        $filters = $session->get('filters', []);
     }
 
 Stored attributes remain in the session for the remainder of that user's session.
@@ -558,7 +558,7 @@ special ``JsonResponse`` object that encodes the data automatically::
         return $this->json(array('username' => 'jane.doe'));
 
         // the shortcut defines three optional arguments
-        // return $this->json($data, $status = 200, $headers = array(), $context = array());
+        // return $this->json($data, $status = 200, $headers = [], $context = []);
     }
 
 If the :doc:`serializer service </serializer>` is enabled in your

@@ -1,7 +1,7 @@
 label_attr
 ~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 Sets the HTML attributes for the ``<label>`` element, which will be used
 when rendering the label for the field. It's an associative array with HTML

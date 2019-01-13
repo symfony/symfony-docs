@@ -101,7 +101,7 @@ constructor::
         LogLevel::CRITICAL => ConsoleLogger::ERROR,
         LogLevel::DEBUG    => ConsoleLogger::INFO,
     );
-    $logger = new ConsoleLogger($output, array(), $formatLevelMap);
+    $logger = new ConsoleLogger($output, [], $formatLevelMap);
 
 Errors
 ------

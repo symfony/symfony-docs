@@ -386,9 +386,9 @@ returns a ``Crawler`` instance.
         request(
             $method,
             $uri,
-            array $parameters = array(),
-            array $files = array(),
-            array $server = array(),
+            array $parameters = [],
+            array $files = [],
+            array $server = [],
             $content = null,
             $changeHistory = true
         )
@@ -401,8 +401,8 @@ returns a ``Crawler`` instance.
         $client->request(
             'GET',
             '/post/hello-world',
-            array(),
-            array(),
+            [],
+            [],
             array(
                 'CONTENT_TYPE' => 'application/json',
                 'HTTP_REFERER' => '/foo/bar',
@@ -431,8 +431,8 @@ or perform more complex requests. Some useful examples::
     $client->request(
         'POST',
         '/submit',
-        array(),
-        array(),
+        [],
+        [],
         array('CONTENT_TYPE' => 'application/json'),
         '{"name":"Fabien"}'
     );
@@ -457,8 +457,8 @@ or perform more complex requests. Some useful examples::
     $client->request(
         'DELETE',
         '/post/12',
-        array(),
-        array(),
+        [],
+        [],
         array('PHP_AUTH_USER' => 'username', 'PHP_AUTH_PW' => 'pa$$word')
     );
 
@@ -752,7 +752,7 @@ that provides helpful methods specific to forms (such as ``getUri()``,
     ));
 
     // you can pass a second argument to override the form HTTP method
-    $form = $buttonCrawlerNode->form(array(), 'DELETE');
+    $form = $buttonCrawlerNode->form([], 'DELETE');
 
     // submit the Form object
     $client->submit($form);
@@ -807,8 +807,8 @@ their type::
     The ``submit()`` and ``submitForm()`` methods define optional arguments to
     add custom server parameters and HTTP headers when submitting the form::
 
-        $client->submit($form, array(), array('HTTP_ACCEPT_LANGUAGE' => 'es'));
-        $client->submitForm($button, array(), 'POST', array('HTTP_ACCEPT_LANGUAGE' => 'es'));
+        $client->submit($form, [], array('HTTP_ACCEPT_LANGUAGE' => 'es'));
+        $client->submitForm($button, [], 'POST', array('HTTP_ACCEPT_LANGUAGE' => 'es'));
 
 Adding and Removing Forms to a Collection
 .........................................
@@ -944,14 +944,14 @@ Sending Custom Headers
 If your application behaves according to some HTTP headers, pass them as the
 second argument of ``createClient()``::
 
-    $client = static::createClient(array(), array(
+    $client = static::createClient([], array(
         'HTTP_HOST'       => 'en.example.com',
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ));
 
 You can also override HTTP headers on a per request basis::
 
-    $client->request('GET', '/', array(), array(), array(
+    $client->request('GET', '/', [], [], array(
         'HTTP_HOST'       => 'en.example.com',
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ));

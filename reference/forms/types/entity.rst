@@ -277,7 +277,7 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 preferred_choices
 ~~~~~~~~~~~~~~~~~
 
-**type**: ``array`` or ``callable`` **default**: ``array()``
+**type**: ``array`` or ``callable`` **default**: ``[]``
 
 This option allows you to move certain choices to the top of your list with a visual
 separator between them and the rest of the options. This option expects an array
@@ -320,7 +320,7 @@ The actual default value of this option depends on other field options:
 
 * If ``multiple`` is ``false`` and ``expanded`` is ``false``, then ``''``
   (empty string);
-* Otherwise ``array()`` (empty array).
+* Otherwise ``[]`` (empty array).
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER

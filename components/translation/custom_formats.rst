@@ -37,7 +37,7 @@ create the catalog that will be returned::
     {
         public function load($resource, $locale, $domain = 'messages')
         {
-            $messages = array();
+            $messages = [];
             $lines = file($resource);
 
             foreach ($lines as $line) {
@@ -85,7 +85,7 @@ will save a few lines::
 
     class MyFormatDumper extends FileDumper
     {
-        public function formatCatalogue(MessageCatalogue $messages, $domain, array $options = array())
+        public function formatCatalogue(MessageCatalogue $messages, $domain, array $options = [])
         {
             $output = '';
 

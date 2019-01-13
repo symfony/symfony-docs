@@ -117,7 +117,7 @@ name is used to "guess" the label for you.
 first_options
 ~~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 Additional options (will be merged into `options`_ below) that should be
 passed *only* to the first field. This is especially useful for customizing
@@ -134,7 +134,7 @@ the label::
 options
 ~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 This options array will be passed to each of the two underlying fields.
 In other words, these are the options that customize the individual field
@@ -152,7 +152,7 @@ The same as ``first_name``, but for the second field.
 second_options
 ~~~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 Additional options (will be merged into `options`_ above) that should be
 passed *only* to the second field. This is especially useful for customizing

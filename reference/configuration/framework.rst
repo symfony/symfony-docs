@@ -369,7 +369,7 @@ method.
 trusted_hosts
 ~~~~~~~~~~~~~
 
-**type**: ``array`` | ``string`` **default**: ``array()``
+**type**: ``array`` | ``string`` **default**: ``[]``
 
 A lot of different attacks have been discovered relying on inconsistencies
 in handling the ``Host`` header by various software (web servers, reverse

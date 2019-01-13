@@ -35,7 +35,7 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
             $this->normalizer = $normalizer;
         }
 
-        public function normalize($topic, $format = null, array $context = array())
+        public function normalize($topic, $format = null, array $context = [])
         {
             $data = $this->normalizer->normalize($topic, $format, $context);
 

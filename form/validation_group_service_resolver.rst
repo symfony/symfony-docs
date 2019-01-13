@@ -29,7 +29,7 @@ parameter::
          */
         public function __invoke(FormInterface $form)
         {
-            $groups = array();
+            $groups = [];
 
             // ... determine which groups to apply and return an array
 

@@ -70,7 +70,7 @@ provider::
         public $digest;
         public $nonce;
 
-        public function __construct(array $roles = array())
+        public function __construct(array $roles = [])
         {
             parent::__construct($roles);
 

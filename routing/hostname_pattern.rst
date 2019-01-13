@@ -74,7 +74,7 @@ You can also match on the HTTP *host* of the incoming request.
         $routes = new RouteCollection();
         $routes->add('mobile_homepage', new Route('/', array(
             '_controller' => 'App\Controller\MainController::mobileHomepage',
-        ), array(), array(), 'm.example.com'));
+        ), [], [], 'm.example.com'));
 
         $routes->add('homepage', new Route('/', array(
             '_controller' => 'App\Controller\MainController::homepage',
@@ -159,7 +159,7 @@ you can use placeholders in your hostname:
         $routes = new RouteCollection();
         $routes->add('project_homepage', new Route('/', array(
             '_controller' => 'App\Controller\MainController::projectsHomepage',
-        ), array(), array(), '{project_name}.example.com'));
+        ), [], [], '{project_name}.example.com'));
 
         $routes->add('homepage', new Route('/', array(
             '_controller' => 'App\Controller\MainController::homepage',
@@ -254,7 +254,7 @@ instance, if you want to match both ``m.example.com`` and
             'subdomain'   => 'm',
         ), array(
             'subdomain' => 'm|mobile',
-        ), array(), '{subdomain}.example.com'));
+        ), [], '{subdomain}.example.com'));
 
         $routes->add('homepage', new Route('/', array(
             '_controller' => 'App\Controller\MainController::homepage',
@@ -350,7 +350,7 @@ instance, if you want to match both ``m.example.com`` and
                 'domain' => '%domain%',
             ), array(
                 'domain' => '%domain%',
-            ), array(), 'm.{domain}'));
+            ), [], 'm.{domain}'));
 
             $routes->add('homepage', new Route('/', array(
                 '_controller' => 'App\Controller\MainController::homepage',
@@ -428,7 +428,7 @@ past url matching in your functional tests::
     $crawler = $client->request(
         'GET',
         '/homepage',
-        array(),
-        array(),
+        [],
+        [],
         array('HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain'))
     );
