@@ -113,7 +113,7 @@ If a piece of code is in fact wrong, explain why:
 
     * I profiled this change and it hurts performance significantly (if you don't profile, it's an opinion, so we can ignore)
 
-    * Code doesn't match Symfony's CS rules
+    * Code doesn't match Symfony's CS rules (e.g. use ``[]`` instead of ``array()``)
 
     * We only provide integration with very popular projects (e.g. we integrate Bootstrap but not your own CSS framework)
 
