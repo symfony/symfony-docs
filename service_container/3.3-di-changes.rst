@@ -595,7 +595,7 @@ to the new id. Create a new ``legacy_aliases.yml`` file:
 
 .. code-block:: yaml
 
-    # app/config/legacy_aliases.yml
+    # config/legacy_aliases.yaml
     services:
         _defaults:
             public: true
