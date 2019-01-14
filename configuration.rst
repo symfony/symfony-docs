@@ -256,7 +256,7 @@ sensible, non-secret *default* values for all of your environment variables and
 *should* be commited to your repository.
 
 To override these variables with machine-specific or sensitive values, create a
-``env.local`` file. This file is **not committed to the shared repository** and
+``.env.local`` file. This file is **not committed to the shared repository** and
 is only stored on your machine. In fact, the ``.gitignore`` file that comes with
 Symfony prevents it from being committed.
 
