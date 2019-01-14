@@ -44,7 +44,7 @@ application doesn't care about the location of your database or the credentials
 to access to it, as long as the database is correctly configured.
 
 To override these variables with machine-specific or sensitive values, create a
-``env.local`` file. This file should not be added to version control.
+``.env.local`` file. This file should not be added to version control.
 
 .. caution::
 

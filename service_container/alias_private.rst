@@ -168,7 +168,7 @@ The following example shows how to inject an anonymous service into another serv
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             App\Foo:
                 arguments:
@@ -177,7 +177,7 @@ The following example shows how to inject an anonymous service into another serv
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -199,14 +199,14 @@ Using an anonymous service as a factory looks like this:
 
     .. code-block:: yaml
 
-        # app/config/services.yaml
+        # config/services.yaml
         services:
             App\Foo:
                 factory: [ !service { class: App\FooFactory }, 'constructFoo' ]
 
     .. code-block:: xml
 
-        <!-- app/config/services.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
