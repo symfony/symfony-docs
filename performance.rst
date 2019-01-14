@@ -138,7 +138,6 @@ Learn more
 ----------
 
 * :doc:`/http_cache/varnish`
-* :doc:`/http_cache/form_csrf_caching`
 
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`OPcache`: https://php.net/manual/en/book.opcache.php
