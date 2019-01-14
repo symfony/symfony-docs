@@ -228,12 +228,12 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
         $container->register(Foo:class)
 
         $container->register(Bar:class)
-            ->addArgument(new Reference(Bar:class.'inner'))
+            ->addArgument(new Reference(Bar:class.'.inner'))
             ->setPublic(false)
             ->setDecoratedService(Foo:class, null, 5);
 
         $container->register(Baz:class)
-            ->addArgument(new Reference(Baz:class.'inner'))
+            ->addArgument(new Reference(Baz:class.'.inner'))
             ->setPublic(false)
             ->setDecoratedService(Foo:class, null, 1);
 
