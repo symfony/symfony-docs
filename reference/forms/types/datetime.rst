@@ -25,6 +25,7 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `hours`_                                                                  |
 |                      | - `html5`_                                                                  |
 |                      | - `input`_                                                                  |
+|                      | - `input_format`_                                                           |
 |                      | - `minutes`_                                                                |
 |                      | - `model_timezone`_                                                         |
 |                      | - `months`_                                                                 |
@@ -152,6 +153,13 @@ The value that comes back from the form will also be normalized back into
 this format.
 
 .. include:: /reference/forms/types/options/_date_limitation.rst.inc
+
+input_format
+~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``Y-m-d H:i:s``
+
+.. include:: /reference/forms/types/options/date_input_format_description.rst.inc
 
 .. include:: /reference/forms/types/options/minutes.rst.inc
 
