@@ -33,7 +33,7 @@ Quick example::
     $session->getFlashBag()->add('notice', 'Profile updated');
 
     // retrieve messages
-    foreach ($session->getFlashBag()->get('notice', array()) as $message) {
+    foreach ($session->getFlashBag()->get('notice', []) as $message) {
         echo '<div class="flash-notice">'.$message.'</div>';
     }
 
@@ -324,12 +324,12 @@ Displaying the flash messages might look as follows.
 Simple, display one type of message::
 
     // display warnings
-    foreach ($session->getFlashBag()->get('warning', array()) as $message) {
+    foreach ($session->getFlashBag()->get('warning', []) as $message) {
         echo '<div class="flash-warning">'.$message.'</div>';
     }
 
     // display errors
-    foreach ($session->getFlashBag()->get('error', array()) as $message) {
+    foreach ($session->getFlashBag()->get('error', []) as $message) {
         echo '<div class="flash-error">'.$message.'</div>';
     }
 

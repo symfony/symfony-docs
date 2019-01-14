@@ -35,7 +35,7 @@ should be regenerated::
         // fill this with an array of 'users.yml' file paths
         $yamlUserFiles = ...;
 
-        $resources = array();
+        $resources = [];
 
         foreach ($yamlUserFiles as $yamlUserFile) {
             // see the article "Loading resources" to

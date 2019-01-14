@@ -312,11 +312,11 @@ Then, enable the bundle in ``AppKernel.php``, but only for the ``dev`` and
     {
         public function registerBundles()
         {
-            $bundles = array(
+            $bundles = [
                 // ...
-            );
+            ];
 
-            if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+            if (in_array($this->getEnvironment(), ['dev', 'test'])) {
                 // ...
                 $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
             }

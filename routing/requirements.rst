@@ -259,11 +259,11 @@ accomplished with the following route configuration:
         $routes = new RouteCollection();
         $routes->add('api_post_show', new Route('/api/posts/{id}', array(
             '_controller' => 'AppBundle:BlogApi:show',
-        ), array(), array(), '', array(), array('GET', 'HEAD')));
+        ), [], [], '', [], array('GET', 'HEAD')));
 
         $routes->add('api_post_edit', new Route('/api/posts/{id}', array(
             '_controller' => 'AppBundle:BlogApi:edit',
-        ), array(), array(), '', array(), array('PUT')));
+        ), [], [], '', [], array('PUT')));
 
         return $routes;
 

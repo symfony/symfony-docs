@@ -111,10 +111,10 @@ Take the following route, which combines several of these ideas::
         '/archive/{month}', // path
         array('_controller' => 'showArchive'), // default values
         array('month' => '[0-9]{4}-[0-9]{2}', 'subdomain' => 'www|m'), // requirements
-        array(), // options
+        [], // options
         '{subdomain}.example.com', // host
-        array(), // schemes
-        array() // methods
+        [], // schemes
+        [] // methods
     );
 
     // ...
@@ -353,7 +353,7 @@ a path to the main route definition and some other settings::
     public function __construct(
         LoaderInterface $loader,
         $resource,
-        array $options = array(),
+        array $options = [],
         RequestContext $context = null,
         LoggerInterface $logger = null
     );
@@ -447,7 +447,7 @@ routes with UTF-8 characters:
             array(
                 '_controller' => 'AppBundle:Default:category',
             ),
-            array(),
+            [],
             array(
                 'utf8' => true,
             )

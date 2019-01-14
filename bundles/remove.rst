@@ -19,11 +19,11 @@ bundle is only registered in the development environment::
     {
         public function registerBundles()
         {
-            $bundles = array(
+            $bundles = [
                 new Acme\DemoBundle\AcmeDemoBundle(),
-            );
+            ];
 
-            if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+            if (in_array($this->getEnvironment(), ['dev', 'test'])) {
                 // comment or remove this line:
                 // $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
                 // ...

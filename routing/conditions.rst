@@ -67,11 +67,11 @@ define arbitrary matching logic, use the ``conditions`` routing option:
             '/contact', array(
                 '_controller' => 'AcmeDemoBundle:Main:contact',
             ),
-            array(),
-            array(),
+            [],
+            [],
             '',
-            array(),
-            array(),
+            [],
+            [],
             'context.getMethod() in ["GET", "HEAD"] and request.headers.get("User-Agent") matches "/firefox/i"'
         ));
 

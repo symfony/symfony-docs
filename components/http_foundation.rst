@@ -53,7 +53,7 @@ which is almost equivalent to the more verbose, but also more flexible,
     $request = new Request(
         $_GET,
         $_POST,
-        array(),
+        [],
         $_COOKIE,
         $_FILES,
         $_SERVER
@@ -297,12 +297,12 @@ PHP callable that is able to create an instance of your ``Request`` class::
     use Symfony\Component\HttpFoundation\Request;
 
     Request::setFactory(function (
-        array $query = array(),
-        array $request = array(),
-        array $attributes = array(),
-        array $cookies = array(),
-        array $files = array(),
-        array $server = array(),
+        array $query = [],
+        array $request = [],
+        array $attributes = [],
+        array $cookies = [],
+        array $files = [],
+        array $server = [],
         $content = null
     ) {
         return new SpecialRequest(

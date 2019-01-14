@@ -51,7 +51,7 @@ firewall, but only in the configuration file used by tests:
             'firewalls' => array(
                 // replace 'main' by the name of your own firewall
                 'main' => array(
-                    'http_basic' => array(),
+                    'http_basic' => [],
                 ),
             ),
         ));
@@ -59,14 +59,14 @@ firewall, but only in the configuration file used by tests:
 Tests can now authenticate via HTTP passing the username and password as server
 variables using the second argument of ``createClient()``::
 
-    $client = static::createClient(array(), array(
+    $client = static::createClient([], array(
         'PHP_AUTH_USER' => 'username',
         'PHP_AUTH_PW'   => 'pa$$word',
     ));
 
 The username and password can also be passed on a per request basis::
 
-    $client->request('DELETE', '/post/12', array(), array(), array(
+    $client->request('DELETE', '/post/12', [], [], array(
         'PHP_AUTH_USER' => 'username',
         'PHP_AUTH_PW'   => 'pa$$word',
     ));

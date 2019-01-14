@@ -61,10 +61,10 @@ The only thing you need to do now is register the bundle in ``AppKernel``::
 
         public function registerBundles()
         {
-            $bundles = array(
+            $bundles = [
                 // ...
                 new FOS\UserBundle\FOSUserBundle(),
-            );
+            ];
 
             // ...
         }
@@ -85,11 +85,11 @@ and ``test`` environments, register the bundle in this way::
 
         public function registerBundles()
         {
-            $bundles = array(
+            $bundles = [
                 // ...
-            );
+            ];
 
-            if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+            if (in_array($this->getEnvironment(), ['dev', 'test'])) {
                 $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
             }
 

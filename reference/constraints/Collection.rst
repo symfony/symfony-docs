@@ -140,7 +140,7 @@ following:
 
         class Author
         {
-            private $options = array();
+            private $options = [];
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {

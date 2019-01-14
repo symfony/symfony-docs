@@ -64,7 +64,7 @@ in case a specific other bundle is not registered::
         // determine if AcmeGoodbyeBundle is registered
         if (!isset($bundles['AcmeGoodbyeBundle'])) {
             // disable AcmeGoodbyeBundle in bundles
-            $config = array('use_acme_goodbye' => false);
+            $config = ['use_acme_goodbye' => false];
             foreach ($container->getExtensions() as $name => $extension) {
                 switch ($name) {
                     case 'acme_something':
@@ -90,7 +90,7 @@ in case a specific other bundle is not registered::
         // check if entity_manager_name is set in the "acme_hello" configuration
         if (isset($config['entity_manager_name'])) {
             // prepend the acme_something settings with the entity_manager_name
-            $config = array('entity_manager_name' => $config['entity_manager_name']);
+            $config = ['entity_manager_name' => $config['entity_manager_name']];
             $container->prependExtensionConfig('acme_something', $config);
         }
     }
@@ -135,15 +135,15 @@ The above would be the equivalent of writing the following into the
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('acme_something', array(
+        $container->loadFromExtension('acme_something', [
             // ...
             'use_acme_goodbye' => false,
             'entity_manager_name' => 'non_default',
-        ));
-        $container->loadFromExtension('acme_other', array(
+        ]);
+        $container->loadFromExtension('acme_other', [
             // ...
             'use_acme_goodbye' => false,
-        ));
+        ]);
 
 More than one Bundle using PrependExtensionInterface
 ----------------------------------------------------

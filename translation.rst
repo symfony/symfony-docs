@@ -85,9 +85,9 @@ locale to lookup and return translated messages. Before using it, enable the
     .. code-block:: php
 
         // app/config/config.php
-        $container->loadFromExtension('framework', array(
-            'translator' => array('fallbacks' => array('en')),
-        ));
+        $container->loadFromExtension('framework', [
+            'translator' => ['fallbacks' => ['en']],
+        ]);
 
 See :ref:`translation-fallback` for details on the ``fallbacks`` key
 and what Symfony does when it doesn't find a translation.
@@ -149,9 +149,9 @@ different formats, XLIFF being the recommended format:
     .. code-block:: php
 
         // messages.fr.php
-        return array(
+        return [
             'Symfony is great' => 'J\'aime Symfony',
-        );
+        ];
 
 For information on where these files should be located, see
 :ref:`translation-resource-locations`.
@@ -323,7 +323,7 @@ The translator service is accessible in PHP templates through the
     <?= $view['translator']->transChoice(
         '{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples',
         10,
-        array('%count%' => 10)
+        ['%count%' => 10]
     ) ?>
 
 Extracting Translation Contents and Updating Catalogs Automatically
@@ -436,13 +436,13 @@ For more options, see :ref:`component-translator-message-catalogs`.
         .. code-block:: php
 
             // app/config/config.php
-            $container->loadFromExtension('framework', array(
-                'translator' => array(
-                    'paths' => array(
+            $container->loadFromExtension('framework', [
+                'translator' => [
+                    'paths' => [
                         '%kernel.project_dir%/translations',
-                    ),
-                ),
-            ));
+                    ],
+                ],
+            ]);
 
 .. note::
 

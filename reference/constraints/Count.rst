@@ -44,7 +44,7 @@ you might add the following:
              *      maxMessage = "You cannot specify more than {{ limit }} emails"
              * )
              */
-             protected $emails = array();
+             protected $emails = [];
         }
 
     .. code-block:: yaml

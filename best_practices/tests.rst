@@ -49,14 +49,14 @@ A functional test like this is simple to implement thanks to
 
         public function urlProvider()
         {
-            return array(
-                array('/'),
-                array('/posts'),
-                array('/post/fixture-post-1'),
-                array('/blog/category/fixture-category'),
-                array('/archives'),
+            return [
+                ['/'],
+                ['/posts'],
+                ['/post/fixture-post-1'],
+                ['/blog/category/fixture-category'],
+                ['/archives'],
                 // ...
-            );
+            ];
         }
     }
 

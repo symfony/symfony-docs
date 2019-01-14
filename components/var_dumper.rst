@@ -176,7 +176,7 @@ then its dump representation::
         'a float' => 1.0,
         'an integer' => 1,
         'a boolean' => true,
-        'an empty array' => array(),
+        'an empty array' => [],
     );
     dump($var);
 
@@ -258,7 +258,7 @@ then its dump representation::
 
 .. code-block:: php
 
-    $var = array();
+    $var = [];
     $var[0] = 1;
     $var[1] =& $var[0];
     $var[1] += 1;

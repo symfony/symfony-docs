@@ -1,7 +1,7 @@
 invalid_message_parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 When setting the ``invalid_message`` option, you may need to
 include some variables in the string. This can be done by adding placeholders

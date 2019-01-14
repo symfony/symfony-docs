@@ -84,22 +84,22 @@ configuration looks like this:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'providers' => array(
-                'in_memory' => array(
+        $container->loadFromExtension('security', [
+            'providers' => [
+                'in_memory' => [
                     'memory' => null,
-                ),
-            ),
-            'firewalls' => array(
-                'dev' => array(
+                ],
+            ],
+            'firewalls' => [
+                'dev' => [
                     'pattern'   => '^/(_(profiler|wdt)|css|images|js)/',
                     'security'  => false,
-                ),
-                'main' => array(
+                ],
+                'main' => [
                     'anonymous' => null,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 The ``firewalls`` key is the *heart* of your security configuration. The
 ``dev`` firewall isn't important, it just makes sure that Symfony's development
@@ -176,16 +176,16 @@ To activate this, add the ``http_basic`` key under your firewall:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'firewalls' => array(
+            'firewalls' => [
                 // ...
-                'main' => array(
+                'main' => [
                     'anonymous'  => null,
                     'http_basic' => null,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Simple! To try this, you need to require the user to be logged in to see
 a page. To make things interesting, create a new page at ``/admin``. For
@@ -253,19 +253,19 @@ user to be logged in to access this URL:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
-            'firewalls' => array(
+            'firewalls' => [
                 // ...
-                'main' => array(
+                'main' => [
                     // ...
-                ),
-            ),
-           'access_control' => array(
+                ],
+            ],
+           'access_control' => [
                // require ROLE_ADMIN for /admin*
-                array('path' => '^/admin', 'roles' => 'ROLE_ADMIN'),
-            ),
-        ));
+                ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
+           ],
+        ]);
 
 .. note::
 
@@ -350,25 +350,25 @@ provider, but it's better to think of it as an "in configuration" provider:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
-            'providers' => array(
-                'in_memory' => array(
-                    'memory' => array(
-                        'users' => array(
-                            'ryan' => array(
+        $container->loadFromExtension('security', [
+            'providers' => [
+                'in_memory' => [
+                    'memory' => [
+                        'users' => [
+                            'ryan' => [
                                 'password' => 'ryanpass',
                                 'roles' => 'ROLE_USER',
-                            ),
-                            'admin' => array(
+                            ],
+                            'admin' => [
                                 'password' => 'kitten',
                                 'roles' => 'ROLE_ADMIN',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             // ...
-        ));
+        ]);
 
 Like with ``firewalls``, you can have multiple ``providers``, but you'll
 probably only need one. If you *do* have multiple, you can configure which
@@ -421,14 +421,14 @@ To fix this, add an ``encoders`` key:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'encoders' => array(
+            'encoders' => [
                 'Symfony\Component\Security\Core\User\User' => 'plaintext',
-            ),
+            ],
             // ...
-        ));
+        ]);
 
 User providers load user information and put it into a ``User`` object. If
 you :doc:`load users from the database </security/entity_provider>`
@@ -502,17 +502,17 @@ is ``bcrypt``:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'encoders' => array(
-                'Symfony\Component\Security\Core\User\User' => array(
+            'encoders' => [
+                'Symfony\Component\Security\Core\User\User' => [
                     'algorithm' => 'bcrypt',
                     'cost' => 12,
-                )
-            ),
+                ]
+            ],
             // ...
-        ));
+        ]);
 
 Of course, your users' passwords now need to be encoded with this exact algorithm.
 For hardcoded users, you can use the built-in command:
@@ -567,27 +567,27 @@ It will give you something like this:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'providers' => array(
-                'in_memory' => array(
-                    'memory' => array(
-                        'users' => array(
-                            'ryan' => array(
+            'providers' => [
+                'in_memory' => [
+                    'memory' => [
+                        'users' => [
+                            'ryan' => [
                                 'password' => '$2a$12$LCY0MefVIEc3TYPHV9SNnuzOfyr2p/AXIGoQJEDs4am4JwhNz/jli',
                                 'roles' => 'ROLE_USER',
-                            ),
-                            'admin' => array(
+                            ],
+                            'admin' => [
                                 'password' => '$2a$12$cyTWeE9kpq1PjqKFiWUZFuCRPwVyAZwm4XzMZ1qPUFl7/flCM3V0G',
                                 'roles' => 'ROLE_ADMIN',
-                            ),
-                        ),
-                    ),
-                ),
-            ),
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             // ...
-        ));
+        ]);
 
 Everything will now work exactly like before. But if you have dynamic users
 (e.g. from a database), how can you programmatically encode the password
@@ -741,20 +741,20 @@ URL pattern. You saw this earlier, where anything matching the regular expressio
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
+            'firewalls' => [
                 // ...
-                'main' => array(
+                'main' => [
                     // ...
-                ),
-            ),
-           'access_control' => array(
+                ],
+            ],
+           'access_control' => [
                // require ROLE_ADMIN for /admin*
-                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
-            ),
-        ));
+               ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+           ],
+        ]);
 
 This is great for securing entire sections, but you'll also probably want
 to :ref:`secure your individual controllers <security-securing-controller>`
@@ -798,14 +798,14 @@ matches the URL.
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'access_control' => array(
-                array('path' => '^/admin/users', 'role' => 'ROLE_SUPER_ADMIN'),
-                array('path' => '^/admin', 'role' => 'ROLE_ADMIN'),
-            ),
-        ));
+            'access_control' => [
+                ['path' => '^/admin/users', 'role' => 'ROLE_SUPER_ADMIN'],
+                ['path' => '^/admin', 'role' => 'ROLE_ADMIN'],
+            ],
+        ]);
 
 Prepending the path with ``^`` means that only URLs *beginning* with the
 pattern are matched. For example, a path of simply ``/admin`` (without
@@ -1135,16 +1135,16 @@ the firewall can handle this automatically for you when you activate the
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'secured_area' => array(
+            'firewalls' => [
+                'secured_area' => [
                     // ...
-                    'logout' => array('path' => '/logout', 'target' => '/'),
-                ),
-            ),
-        ));
+                    'logout' => ['path' => '/logout', 'target' => '/'],
+                ],
+            ],
+        ]);
 
 Next, you'll need to create a route for this URL (but not a controller):
 
@@ -1234,17 +1234,17 @@ rules by creating a role hierarchy:
     .. code-block:: php
 
         // app/config/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'role_hierarchy' => array(
+            'role_hierarchy' => [
                 'ROLE_ADMIN'       => 'ROLE_USER',
-                'ROLE_SUPER_ADMIN' => array(
+                'ROLE_SUPER_ADMIN' => [
                     'ROLE_ADMIN',
                     'ROLE_ALLOWED_TO_SWITCH',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 In the above configuration, users with ``ROLE_ADMIN`` role will also have the
 ``ROLE_USER`` role. The ``ROLE_SUPER_ADMIN`` role has ``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH``

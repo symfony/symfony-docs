@@ -129,7 +129,7 @@ or by using the second argument of the constructor::
 
         class ExpressionLanguage extends BaseExpressionLanguage
         {
-            public function __construct(ParserCacheInterface $parser = null, array $providers = array())
+            public function __construct(ParserCacheInterface $parser = null, array $providers = [])
             {
                 // prepends the default provider to let users override it easily
                 array_unshift($providers, new StringExpressionLanguageProvider());

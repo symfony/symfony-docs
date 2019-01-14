@@ -98,7 +98,7 @@ contents::
     // check if the Memcache component is present
     if (isset($secrets['MEMCACHE'])) {
         $memcache = $secrets['MEMCACHE'];
-        $handlers = array();
+        $handlers = [];
 
         foreach (range(1, $memcache['COUNT']) as $num) {
             $handlers[] = $memcache['HOST'.$num].':'.$memcache['PORT'.$num];

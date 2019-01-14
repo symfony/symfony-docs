@@ -38,7 +38,7 @@ entry in that array:
              *     @Assert\Length(min=5)
              * })
              */
-             protected $favoriteColors = array();
+             protected $favoriteColors = [];
         }
 
     .. code-block:: yaml

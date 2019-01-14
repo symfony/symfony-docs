@@ -30,7 +30,7 @@ Imagine you have a ``Mailer`` class which has four options: ``host``,
     {
         protected $options;
 
-        public function __construct(array $options = array())
+        public function __construct(array $options = [])
         {
             $this->options = $options;
         }
@@ -74,7 +74,7 @@ options are buried in the business logic of your code. Use the
     {
         // ...
 
-        public function __construct(array $options = array())
+        public function __construct(array $options = [])
         {
             $this->options = array_replace(array(
                 'host'     => 'smtp.example.org',
@@ -107,7 +107,7 @@ class helps you to fix this problem::
     {
         // ...
 
-        public function __construct(array $options = array())
+        public function __construct(array $options = [])
         {
             $resolver = new OptionsResolver();
             $resolver->setDefaults(array(
@@ -158,7 +158,7 @@ It's a good practice to split the option configuration into a separate method::
     {
         // ...
 
-        public function __construct(array $options = array())
+        public function __construct(array $options = [])
         {
             $resolver = new OptionsResolver();
             $this->configureOptions($resolver);
@@ -651,11 +651,11 @@ can change your code to do the configuration only once per class::
     // ...
     class Mailer
     {
-        private static $resolversByClass = array();
+        private static $resolversByClass = [];
 
         protected $options;
 
-        public function __construct(array $options = array())
+        public function __construct(array $options = [])
         {
             // What type of Mailer is this, a Mailer, a GoogleMailer, ... ?
             $class = get_class($this);
@@ -684,11 +684,11 @@ method ``clearOptionsConfig()`` and call it periodically::
     // ...
     class Mailer
     {
-        private static $resolversByClass = array();
+        private static $resolversByClass = [];
 
         public static function clearOptionsConfig()
         {
-            self::$resolversByClass = array();
+            self::$resolversByClass = [];
         }
 
         // ...

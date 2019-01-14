@@ -144,7 +144,7 @@ To begin with, define the ``TransportChain`` class::
 
         public function __construct()
         {
-            $this->transports = array();
+            $this->transports = [];
         }
 
         public function addTransport(\Swift_Transport $transport)
@@ -314,7 +314,7 @@ To begin with, change the ``TransportChain`` class::
 
         public function __construct()
         {
-            $this->transports = array();
+            $this->transports = [];
         }
 
         public function addTransport(\Swift_Transport $transport, $alias)

@@ -152,7 +152,7 @@ make sure the ``FormRegistry`` uses the created instance::
 
             return array(
                 // register the type instances with the PreloadedExtension
-                new PreloadedExtension(array($type), array()),
+                new PreloadedExtension(array($type), []),
             );
         }
 

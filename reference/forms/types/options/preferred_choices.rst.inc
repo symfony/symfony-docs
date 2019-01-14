@@ -1,7 +1,7 @@
 preferred_choices
 ~~~~~~~~~~~~~~~~~
 
-**type**: ``array``, ``callable`` or ``string`` **default**: ``array()``
+**type**: ``array``, ``callable`` or ``string`` **default**: ``[]``
 
 This option allows you to move certain choices to the top of your list with a visual
 separator between them and the rest of the options. If you have a form of languages,

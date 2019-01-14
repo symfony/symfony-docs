@@ -18,7 +18,7 @@ You can add new encoders to a Serializer instance by using its second constructo
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
     $encoders = array(new XmlEncoder(), new JsonEncoder());
-    $serializer = new Serializer(array(), $encoders);
+    $serializer = new Serializer([], $encoders);
 
 Built-in Encoders
 -----------------

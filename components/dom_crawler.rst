@@ -207,7 +207,7 @@ Extract attribute and/or node values from the list of nodes::
 
     $attributes = $crawler
         ->filterXpath('//body/p')
-        ->extract(array('_text', 'class'))
+        ->extract(['_text', 'class'])
     ;
 
 .. note::
@@ -270,7 +270,7 @@ and :phpclass:`DOMNode` objects::
 
     $crawler->addDocument($domDocument);
     $crawler->addNodeList($nodeList);
-    $crawler->addNodes(array($node));
+    $crawler->addNodes([$node]);
     $crawler->addNode($node);
     $crawler->add($domDocument);
 
@@ -428,9 +428,9 @@ form that the button lives in::
     $crawler->filter('.form-vertical')->form();
 
     // or "fill" the form fields with data
-    $form = $crawler->selectButton('my-super-button')->form(array(
+    $form = $crawler->selectButton('my-super-button')->form([
         'name' => 'Ryan',
-    ));
+    ]);
 
 The :class:`Symfony\\Component\\DomCrawler\\Form` object has lots of very
 useful methods for working with forms::
@@ -454,10 +454,10 @@ attribute followed by a query string of all of the form's values.
 You can virtually set and get values on the form::
 
     // sets values on the form internally
-    $form->setValues(array(
+    $form->setValues([
         'registration[username]' => 'symfonyfan',
         'registration[terms]'    => 1,
-    ));
+    ]);
 
     // gets back an array of values - in the "flat" array like above
     $values = $form->getValues();
@@ -477,13 +477,13 @@ To work with multi-dimensional fields::
 Pass an array of values::
 
     // sets a single field
-    $form->setValues(array('multi' => array('value')));
+    $form->setValues(['multi' => ['value']]);
 
     // sets multiple fields at once
-    $form->setValues(array('multi' => array(
+    $form->setValues(['multi' => [
         1             => 'value',
         'dimensional' => 'an other value',
-    )));
+    ]]);
 
 This is great, but it gets better! The ``Form`` object allows you to interact
 with your form like a browser, selecting radio values, ticking checkboxes,
@@ -499,7 +499,7 @@ and uploading files::
     $form['registration[birthday][year]']->select(1984);
 
     // selects many options from a "multiple" select
-    $form['registration[interests]']->select(array('symfony', 'cookies'));
+    $form['registration[interests]']->select(['symfony', 'cookies']);
 
     // fakes a file upload
     $form['registration[photo]']->upload('/path/to/lucas.jpg');

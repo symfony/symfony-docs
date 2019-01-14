@@ -58,7 +58,7 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
     // ...
 
     // the parse() method returns a ParsedExpression
-    $expression = $expressionLanguage->parse('1 + 4', array());
+    $expression = $expressionLanguage->parse('1 + 4', []);
 
     var_dump($expressionLanguage->evaluate($expression)); // prints 5
 
@@ -69,7 +69,7 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
 
     $expression = new SerializedParsedExpression(
         '1 + 4',
-        serialize($expressionLanguage->parse('1 + 4', array())->getNodes())
+        serialize($expressionLanguage->parse('1 + 4', [])->getNodes())
     );
 
     var_dump($expressionLanguage->evaluate($expression)); // prints 5

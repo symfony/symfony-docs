@@ -91,7 +91,7 @@ the code that prepares the HTML "presentation"::
 
     $result = $connection->query('SELECT id, title FROM post');
 
-    $posts = array();
+    $posts = [];
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $posts[] = $row;
     }
@@ -163,7 +163,7 @@ of the application are isolated in a new file called ``model.php``::
 
         $result = $connection->query('SELECT id, title FROM post');
 
-        $posts = array();
+        $posts = [];
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = $row;
         }
