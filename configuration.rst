@@ -82,31 +82,6 @@ instance, the framework bundle is configured in ``config/packages/framework.yaml
 
 The top-level key (here ``framework``) references configuration for a specific
 bundle (:doc:`FrameworkBundle </reference/configuration/framework>` in this case).
-=======
-        // app/config/config.php
-        $this->import('parameters.yml');
-        $this->import('security.yml');
-        $this->import('services.yml');
-
-        $container->loadFromExtension('framework', [
-            'secret' => '%secret%',
-            'router' => [
-                'resource' => '%kernel.project_dir%/app/config/routing.php',
-            ],
-            // ...
-        ]);
-
-        // Twig Configuration
-        $container->loadFromExtension('twig', [
-            'debug'            => '%kernel.debug%',
-            'strict_variables' => '%kernel.debug%',
-        ]);
-
-        // ...
-
-Most top-level keys - like ``framework`` and ``twig`` - are configuration for a
-specific bundle (i.e. ``FrameworkBundle`` and ``TwigBundle``).
->>>>>>> 3.4
 
 .. sidebar:: Configuration Formats
 
