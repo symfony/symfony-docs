@@ -36,7 +36,7 @@ cache items, as returned by cache adapters::
     // ...
     // add one or more tags
     $item->tag('tag_1');
-    $item->tag(['tag_2', 'tag_3'[);
+    $item->tag(['tag_2', 'tag_3']);
     $cache->save($item);
 
 If ``$cache`` implements :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapterInterface`,

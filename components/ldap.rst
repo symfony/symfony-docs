@@ -65,7 +65,7 @@ Or you could directly specify a connection string::
 
     use Symfony\Component\Ldap\Ldap;
 
-    $ldap = Ldap::create('ext_ldap', ['connection_string' => 'ldaps://my-server:636'));
+    $ldap = Ldap::create('ext_ldap', ['connection_string' => 'ldaps://my-server:636']);
 
 The :method:`Symfony\\Component\\Ldap\\Ldap::bind` method
 authenticates a previously configured connection using both the

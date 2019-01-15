@@ -178,7 +178,7 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
     {
         private $children = [
             'Wouter' => [...],
-        );
+        ];
 
         public function __get($id)
         {

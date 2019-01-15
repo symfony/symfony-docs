@@ -94,7 +94,7 @@ need to change/add some parameters in the main configuration file:
                 ['mongodb://%mongodb_username%:%mongodb_password%@%mongodb_host%:27017'],
                 // if not using a username and password
                 ['mongodb://%mongodb_host%:27017'],
-            ));
+            ]);
 
         $container->register('session.handler.mongo', MongoDbSessionHandler::class)
             ->setArguments([

@@ -126,7 +126,7 @@ class in the constructor of the Twig extension::
                 new TwigFilter(
                     'md2html',
                     [$this, 'markdownToHtml'],
-                    ['is_safe' => ['html'], 'pre_escape' => 'html')
+                    ['is_safe' => ['html'], 'pre_escape' => 'html']
                 ),
             );
         }

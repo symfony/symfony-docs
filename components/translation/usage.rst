@@ -198,7 +198,7 @@ recommended format. These files are parsed by one of the loader classes.
                 'user' => [
                     'login' => 'Login',
                 ],
-            );
+            ];
 
     The multiple levels are flattened into single id/translation pairs by
     adding a dot (``.``) between every level, therefore the above examples are
@@ -431,7 +431,7 @@ The ``$messages`` variable will have the following structure::
             'Value should not be empty' => 'Valeur ne doit pas être vide',
             'Value is too long' => 'Valeur est trop long',
         ],
-    );
+    ];
 
 Adding Notes to Translation Contents
 ------------------------------------
