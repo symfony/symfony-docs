@@ -55,6 +55,22 @@ for more information):
             'csrf_protection' => null,
         ));
 
+The tokens used for CSRF protection are meant to be different for every user and
+they are stored in the session. That's why a session is started automatically as
+soon as you render a form with CSRF protection.
+
+.. _caching-pages-that-contain-csrf-protected-forms:
+
+Moreover, this means that you cannot fully cache pages that include CSRF
+protected forms. As an alternative, you can:
+
+* Embed the form inside an uncached :doc:`ESI fragment </http_cache/esi>` and
+  cache the rest of the page contents;
+* Cache the entire page and load the form via an uncached AJAX request;
+* Cache the entire page and use :doc:`hinclude.js </templating/hinclude>` to
+  load just the CSRF token with an uncached AJAX request and replace the form
+  field value with it.
+
 CSRF Protection in Symfony Forms
 --------------------------------
 
@@ -91,17 +107,6 @@ this can be customized on a form-by-form basis::
 
         // ...
     }
-
-.. caution::
-
-    Since the token is stored in the session, a session is started automatically
-    as soon as you render a form with CSRF protection.
-
-.. caution::
-
-    CSRF tokens are meant to be different for every user. Beware of that when
-    caching pages that include forms containing CSRF tokens. For more
-    information, see :doc:`/http_cache/form_csrf_caching`.
 
 CSRF Protection in Login Forms
 ------------------------------
