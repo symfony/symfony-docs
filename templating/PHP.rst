@@ -59,12 +59,12 @@ Next, enable the php engine:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'templating' => array(
-                'engines' => array('twig', 'php'),
-            ),
-        ));
+            'templating' => [
+                'engines' => ['twig', 'php'],
+            ],
+        ]);
 
 You can now render a PHP template instead of a Twig one simply by using the
 ``.php`` extension in the template name instead of ``.twig``. The controller
@@ -76,9 +76,9 @@ below renders the ``index.html.php`` template::
     public function index($name)
     {
         // template is stored in src/Resources/views/hello/index.html.php
-        return $this->render('hello/index.html.php', array(
+        return $this->render('hello/index.html.php', [
             'name' => $name
-        ));
+        ]);
     }
 
 .. caution::
@@ -230,7 +230,7 @@ And change the ``index.html.php`` template to include it:
     <!-- src/Resources/views/hello/index.html.php -->
     <?php $view->extend('layout.html.php') ?>
 
-    <?= $view->render('hello/hello.html.php', array('name' => $name)) ?>
+    <?= $view->render('hello/hello.html.php', ['name' => $name]) ?>
 
 The ``render()`` method evaluates and returns the content of another template
 (this is the exact same method as the one used in the controller).
@@ -254,10 +254,10 @@ If you create a ``fancy`` action, and want to include it into the
     <?= $view['actions']->render(
         new \Symfony\Component\HttpKernel\Controller\ControllerReference(
             'App\Controller\HelloController::fancy',
-            array(
+            [
                 'name'  => $name,
                 'color' => 'green',
-            )
+            ]
         )
     ) ?>
 
@@ -285,7 +285,7 @@ updated by changing the configuration:
 
 .. code-block:: html+php
 
-    <a href="<?= $view['router']->path('hello', array('name' => 'Thomas')) ?>">
+    <a href="<?= $view['router']->path('hello', ['name' => 'Thomas']) ?>">
         Greet Thomas!
     </a>
 
@@ -364,7 +364,7 @@ file in order to customize the ``integer_widget`` fragment.
         <?= $view['form']->block(
             $form,
             'form_widget_simple',
-            array('type' => isset($type) ? $type : "number")
+            ['type' => isset($type) ? $type : "number"]
         ) ?>
     </div>
 
@@ -372,7 +372,7 @@ Now that you've created the customized form template, you need to tell Symfony
 to use it. Inside the template where you're actually rendering your form,
 tell Symfony to use the theme via the ``setTheme()`` helper method::
 
-    <?php $view['form']->setTheme($form, array(':form')) ?>
+    <?php $view['form']->setTheme($form, [':form']) ?>
 
     <?php $view['form']->widget($form['age']) ?>
 
@@ -441,17 +441,17 @@ form is rendered.
 
         // config/packages/framework.php
         // PHP
-        $container->loadFromExtension('framework', array(
-            'templating' => array(
-                'form' => array(
-                    'resources' => array(
+        $container->loadFromExtension('framework', [
+            'templating' => [
+                'form' => [
+                    'resources' => [
                         'App:Form',
-                    ),
-                ),
-             ),
+                    ],
+                ],
+             ],
 
              // ...
-        ));
+        ]);
 
 By default, the PHP engine uses a *div* layout when rendering forms. Some people,
 however, may prefer to render forms in a *table* layout. Use the ``FrameworkBundle:FormTable``
@@ -493,24 +493,24 @@ resource to use such a layout:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
-            'templating' => array(
-                'form' => array(
-                    'resources' => array(
+        $container->loadFromExtension('framework', [
+            'templating' => [
+                'form' => [
+                    'resources' => [
                         'FrameworkBundle:FormTable',
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
 
              // ...
-        ));
+        ]);
 
 If you only want to make the change in one template, add the following line to
 your template file rather than adding the template as a resource:
 
 .. code-block:: html+php
 
-    <?php $view['form']->setTheme($form, array('FrameworkBundle:FormTable')) ?>
+    <?php $view['form']->setTheme($form, ['FrameworkBundle:FormTable']) ?>
 
 Note that the ``$form`` variable in the above code is the form view variable
 that you passed to your template.
@@ -532,7 +532,7 @@ original template:
     <?php if ($required) { $label_attr['class'] = trim((isset($label_attr['class']) ? $label_attr['class'] : '').' required'); } ?>
     <?php if (!$compound) { $label_attr['for'] = $id; } ?>
     <?php if (!$label) { $label = $view['form']->humanize($name); } ?>
-    <label <?php foreach ($label_attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?= $view->escape($view['translator']->trans($label, array(), $translation_domain)) ?></label>
+    <label <?php foreach ($label_attr as $k => $v) { printf('%s="%s" ', $view->escape($k), $view->escape($v)); } ?>><?= $view->escape($view['translator']->trans($label, [], $translation_domain)) ?></label>
 
     <!-- customization -->
     <?php if ($required) : ?>

@@ -1,9 +1,10 @@
 help_attr
 ~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 .. versionadded:: 4.2
+
     The ``help_attr`` option was introduced in Symfony 4.2.
 
 Sets the HTML attributes for the element used to display the help message of the

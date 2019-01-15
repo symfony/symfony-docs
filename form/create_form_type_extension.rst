@@ -40,7 +40,7 @@ First, create the form type extension class extending from
         public static function getExtendedTypes(): iterable
         {
             // return FormType::class to modify (nearly) every field in the system
-            return array(FileType::class);
+            return [FileType::class];
         }
     }
 
@@ -139,13 +139,13 @@ For example::
         public static function getExtendedTypes(): iterable
         {
             // return FormType::class to modify (nearly) every field in the system
-            return array(FileType::class);
+            return [FileType::class];
         }
 
         public function configureOptions(OptionsResolver $resolver)
         {
             // makes it legal for FileType fields to have an image_property option
-            $resolver->setDefined(array('image_property'));
+            $resolver->setDefined(['image_property']);
         }
 
         public function buildView(FormView $view, FormInterface $form, array $options)
@@ -218,7 +218,7 @@ next to the file field. For example::
         {
             $builder
                 ->add('name', TextType::class)
-                ->add('file', FileType::class, array('image_property' => 'webPath'));
+                ->add('file', FileType::class, ['image_property' => 'webPath']);
         }
     }
 
@@ -255,10 +255,11 @@ method to extend all of them::
 
         public static function getExtendedTypes(): iterable
         {
-            return array(DateTimeType::class, DateType::class, TimeType::class);
+            return [DateTimeType::class, DateType::class, TimeType::class];
         }
     }
 
 .. versionadded:: 4.2
+
     The feature to extend multiple form types using a single extension class
     was introduced in Symfony 4.2.

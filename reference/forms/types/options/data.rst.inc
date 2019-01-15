@@ -12,9 +12,9 @@ an individual field, you can set it in the data option::
     use Symfony\Component\Form\Extension\Core\Type\HiddenType;
     // ...
 
-    $builder->add('token', HiddenType::class, array(
+    $builder->add('token', HiddenType::class, [
         'data' => 'abcdef',
-    ));
+    ]);
 
 .. caution::
 

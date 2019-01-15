@@ -102,9 +102,9 @@ the following:
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotEqualTo('Mary'));
 
-                $metadata->addPropertyConstraint('age', new Assert\NotEqualTo(array(
+                $metadata->addPropertyConstraint('age', new Assert\NotEqualTo([
                     'value' => 15,
-                )));
+                ]));
             }
         }
 

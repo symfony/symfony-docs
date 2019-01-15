@@ -47,29 +47,29 @@ firewall, but only in the configuration file used by tests:
     .. code-block:: php
 
         // config/packages/test/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
                 // replace 'main' by the name of your own firewall
-                'main' => array(
-                    'http_basic' => array(),
-                ),
-            ),
-        ));
+                'main' => [
+                    'http_basic' => [],
+                ],
+            ],
+        ]);
 
 Tests can now authenticate via HTTP passing the username and password as server
 variables using the second argument of ``createClient()``::
 
-    $client = static::createClient(array(), array(
+    $client = static::createClient([], [
         'PHP_AUTH_USER' => 'username',
         'PHP_AUTH_PW'   => 'pa$$word',
-    ));
+    ]);
 
 The username and password can also be passed on a per request basis::
 
-    $client->request('DELETE', '/post/12', array(), array(), array(
+    $client->request('DELETE', '/post/12', [], [], [
         'PHP_AUTH_USER' => 'username',
         'PHP_AUTH_PW'   => 'pa$$word',
-    ));
+    ]);
 
 Creating the Authentication Token
 ---------------------------------
@@ -120,7 +120,7 @@ needs::
 
             // you may need to use a different token class depending on your application.
             // for example, when using Guard authentication you must instantiate PostAuthenticationGuardToken
-            $token = new UsernamePasswordToken('admin', null, $firewallName, array('ROLE_ADMIN'));
+            $token = new UsernamePasswordToken('admin', null, $firewallName, ['ROLE_ADMIN']);
             $session->set('_security_'.$firewallContext, serialize($token));
             $session->save();
 

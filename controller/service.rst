@@ -65,9 +65,9 @@ a service like: ``App\Controller\HelloController::index``:
     .. code-block:: php
 
         // config/routes.php
-        $collection->add('hello', new Route('/hello', array(
+        $collection->add('hello', new Route('/hello', [
             '_controller' => 'App\Controller\HelloController::index',
-        )));
+        ]));
 
 .. _controller-service-invoke:
 
@@ -112,7 +112,7 @@ service and use it directly::
         {
             $content = $this->twig->render(
                 'hello/index.html.twig',
-                array('name' => $name)
+                ['name' => $name]
             );
 
             return new Response($content);

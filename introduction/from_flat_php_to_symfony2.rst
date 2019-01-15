@@ -91,7 +91,7 @@ the code that prepares the HTML "presentation"::
 
     $result = $connection->query('SELECT id, title FROM post');
 
-    $posts = array();
+    $posts = [];
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         $posts[] = $row;
     }
@@ -163,7 +163,7 @@ of the application are isolated in a new file called ``model.php``::
 
         $result = $connection->query('SELECT id, title FROM post');
 
-        $posts = array();
+        $posts = [];
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $posts[] = $row;
         }
@@ -486,7 +486,7 @@ incidentally, acts quite a bit like the Symfony templating engine::
     function list_action()
     {
         $posts = get_all_posts();
-        $html = render_template('templates/list.php', array('posts' => $posts));
+        $html = render_template('templates/list.php', ['posts' => $posts]);
 
         return new Response($html);
     }
@@ -494,7 +494,7 @@ incidentally, acts quite a bit like the Symfony templating engine::
     function show_action($id)
     {
         $post = get_post_by_id($id);
-        $html = render_template('templates/show.php', array('post' => $post));
+        $html = render_template('templates/show.php', ['post' => $post]);
 
         return new Response($html);
     }

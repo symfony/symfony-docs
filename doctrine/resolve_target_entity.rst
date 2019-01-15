@@ -146,14 +146,14 @@ about the replacement:
         use Acme\InvoiceBundle\Model\InvoiceSubjectInterface;
         use App\Entity\Customer;
 
-        $container->loadFromExtension('doctrine', array(
-            'orm' => array(
+        $container->loadFromExtension('doctrine', [
+            'orm' => [
                 // ...
-                'resolve_target_entities' => array(
+                'resolve_target_entities' => [
                     InvoiceSubjectInterface::class => Customer::class,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Final Thoughts
 --------------

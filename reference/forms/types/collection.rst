@@ -59,14 +59,14 @@ address as its own input text box::
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
     // ...
 
-    $builder->add('emails', CollectionType::class, array(
+    $builder->add('emails', CollectionType::class, [
         // each entry in the array will be an "email" field
         'entry_type' => EmailType::class,
         // these options are passed to each "email" type
-        'entry_options' => array(
-            'attr' => array('class' => 'email-box'),
-        ),
-    ));
+        'entry_options' => [
+            'attr' => ['class' => 'email-box'],
+        ],
+    ]);
 
 The simplest way to render this is all at once:
 
@@ -280,12 +280,12 @@ the value is removed from the collection. For example::
     use Symfony\Component\Form\Extension\Core\Type\CollectionType;
     // ...
 
-    $builder->add('users', CollectionType::class, array(
+    $builder->add('users', CollectionType::class, [
         // ...
         'delete_empty' => function (User $user = null) {
             return null === $user || empty($user->getFirstName());
         },
-    ));
+    ]);
 
 Using a callable is particularly useful in case of compound form types, which
 may define complex conditions for considering them empty.
@@ -293,7 +293,7 @@ may define complex conditions for considering them empty.
 entry_options
 ~~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array()``
+**type**: ``array`` **default**: ``[]``
 
 This is the array that's passed to the form type specified in the `entry_type`_
 option. For example, if you used the :doc:`ChoiceType </reference/forms/types/choice>`
@@ -305,17 +305,17 @@ type::
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
 
-    $builder->add('favorite_cities', CollectionType::class, array(
+    $builder->add('favorite_cities', CollectionType::class, [
         'entry_type'   => ChoiceType::class,
-        'entry_options'  => array(
-            'choices'  => array(
+        'entry_options'  => [
+            'choices'  => [
                 'Nashville' => 'nashville',
                 'Paris'     => 'paris',
                 'Berlin'    => 'berlin',
                 'London'    => 'london',
-            ),
-        ),
-    ));
+            ],
+        ],
+    ]);
 
 entry_type
 ~~~~~~~~~~
@@ -376,12 +376,12 @@ for all entries with the `entry_options`_ option will be used.
     use Symfony\Component\Form\Extension\Core\Type\TextType;
     // ...
 
-    $builder->add('tags', CollectionType::class, array(
+    $builder->add('tags', CollectionType::class, [
         'entry_type' => TextType::class,
         'allow_add' => true,
         'prototype' => true,
         'prototype_data' => 'New Tag Placeholder',
-    ));
+    ]);
 
 prototype_name
 ~~~~~~~~~~~~~~
@@ -405,7 +405,7 @@ Not all options are listed here - only the most applicable to this type:
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER
 
-The default value is ``array()`` (empty array).
+The default value is ``[]`` (empty array).
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :start-after: DEFAULT_PLACEHOLDER

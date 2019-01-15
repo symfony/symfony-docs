@@ -87,12 +87,12 @@ on an object that will contain a credit card number.
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('cardNumber', new Assert\CardScheme(array(
-                    'schemes' => array(
+                $metadata->addPropertyConstraint('cardNumber', new Assert\CardScheme([
+                    'schemes' => [
                         'VISA',
-                    ),
+                    ],
                     'message' => 'Your credit card number is invalid.',
-                )));
+                ]));
             }
         }
 

@@ -100,14 +100,14 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         use App\Type\CustomFirst;
         use App\Type\CustomSecond;
 
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-                'types' => array(
+        $container->loadFromExtension('doctrine', [
+            'dbal' => [
+                'types' => [
                     'custom_first'  => CustomFirst::class,
                     'custom_second' => CustomSecond::class,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 Registering custom Mapping Types in the SchemaTool
 --------------------------------------------------
@@ -150,13 +150,13 @@ mapping type:
     .. code-block:: php
 
         // config/packages/doctrine.php
-        $container->loadFromExtension('doctrine', array(
-            'dbal' => array(
-               'mapping_types' => array(
+        $container->loadFromExtension('doctrine', [
+            'dbal' => [
+               'mapping_types' => [
                   'enum'  => 'string',
-               ),
-            ),
-        ));
+               ],
+            ],
+        ]);
 
 .. _`PDO`:           https://php.net/pdo
 .. _`Doctrine`:      http://www.doctrine-project.org

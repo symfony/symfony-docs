@@ -39,9 +39,9 @@ create your form::
         $entityManager = $this->getDoctrine()->getManager();
 
         $task = ...;
-        $form = $this->createForm(TaskType::class, $task, array(
+        $form = $this->createForm(TaskType::class, $task, [
             'entity_manager' => $entityManager,
-        ));
+        ]);
 
         // ...
     }

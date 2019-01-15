@@ -17,10 +17,10 @@ This means it helps you handling form submission with blank fields. For
 example, if you want the ``name`` field to be explicitly set to ``John Doe``
 when no value is selected, you can do it like this::
 
-    $builder->add('name', null, array(
+    $builder->add('name', null, [
         'required'   => false,
         'empty_data' => 'John Doe',
-    ));
+    ]);
 
 This will still render an empty text box, but upon submission the ``John Doe``
 value will be set. Use the ``data`` or ``placeholder`` options to show this

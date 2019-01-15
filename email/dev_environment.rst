@@ -45,9 +45,9 @@ You can disable sending email by setting the ``disable_delivery`` option to
     .. code-block:: php
 
         // config/packages/test/swiftmailer.php
-        $container->loadFromExtension('swiftmailer', array(
+        $container->loadFromExtension('swiftmailer', [
             'disable_delivery' => "true",
-        ));
+        ]);
 
 .. _sending-to-a-specified-address:
 
@@ -86,9 +86,9 @@ via the ``delivery_addresses`` option:
     .. code-block:: php
 
         // config/packages/dev/swiftmailer.php
-        $container->loadFromExtension('swiftmailer', array(
-            'delivery_addresses' => array("dev@example.com"),
-        ));
+        $container->loadFromExtension('swiftmailer', [
+            'delivery_addresses' => ['dev@example.com'],
+        ]);
 
 Now, suppose you're sending an email to ``recipient@example.com`` in a controller::
 
@@ -100,7 +100,7 @@ Now, suppose you're sending an email to ``recipient@example.com`` in a controlle
             ->setBody(
                 $this->renderView(
                     'HelloBundle:Hello:email.txt.twig',
-                    array('name' => $name)
+                    ['name' => $name]
                 )
             )
         ;
@@ -169,15 +169,15 @@ by adding the ``delivery_whitelist`` option:
     .. code-block:: php
 
         // config/packages/dev/swiftmailer.php
-        $container->loadFromExtension('swiftmailer', array(
-            'delivery_addresses' => array("dev@example.com"),
-            'delivery_whitelist' => array(
+        $container->loadFromExtension('swiftmailer', [
+            'delivery_addresses' => ["dev@example.com"],
+            'delivery_whitelist' => [
                 // all email addresses matching these regexes will be delivered
                 // like normal, as well as being sent to dev@example.com
                 '/@specialdomain\.com$/',
                 '/^admin@mydomain\.com$/',
-            ),
-        ));
+            ],
+        ]);
 
 In the above example all email messages will be redirected to ``dev@example.com``
 and messages sent to the ``admin@mydomain.com`` address or to any email address
@@ -231,9 +231,9 @@ the report with details of the sent emails.
     .. code-block:: php
 
         // config/packages/dev/web_profiler.php
-        $container->loadFromExtension('web_profiler', array(
+        $container->loadFromExtension('web_profiler', [
             'intercept_redirects' => 'true',
-        ));
+        ]);
 
 .. tip::
 

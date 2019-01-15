@@ -101,7 +101,7 @@ information:
 
         $container
             ->register(SessionRequestProcessor::class)
-            ->addTag('monolog.processor', array('method' => 'processRecord'));
+            ->addTag('monolog.processor', ['method' => 'processRecord']);
 
 Finally, set the formatter to be used on whatever handler you want:
 
@@ -144,16 +144,16 @@ Finally, set the formatter to be used on whatever handler you want:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'main' => array(
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'main' => [
                     'type'      => 'stream',
                     'path'      => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level'     => 'debug',
                     'formatter' => 'monolog.formatter.session_request',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 If you use several handlers, you can also register a processor at the
 handler level or at the channel level instead of registering it globally
@@ -201,7 +201,7 @@ the ``monolog.processor`` tag:
         // ...
         $container
             ->register(SessionRequestProcessor::class)
-            ->addTag('monolog.processor', array('handler' => 'main'));
+            ->addTag('monolog.processor', ['handler' => 'main']);
 
 Registering Processors per Channel
 ----------------------------------
@@ -245,4 +245,4 @@ the ``monolog.processor`` tag:
         // ...
         $container
             ->register(SessionRequestProcessor::class)
-            ->addTag('monolog.processor', array('channel' => 'main'));
+            ->addTag('monolog.processor', ['channel' => 'main']);

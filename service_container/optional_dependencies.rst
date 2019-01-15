@@ -97,12 +97,12 @@ call if the service exists and remove the method call if it does not:
 
         $container
             ->register(NewsletterManager::class)
-            ->addMethodCall('setLogger', array(
+            ->addMethodCall('setLogger', [
                 new Reference(
                     'logger',
                     ContainerInterface::IGNORE_ON_INVALID_REFERENCE
                 ),
-            ))
+            ])
         ;
 
 .. note::

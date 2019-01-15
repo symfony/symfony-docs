@@ -160,7 +160,7 @@ that accepts the dependency::
 
         // ...
         $container->register('app.newsletter_manager', NewsletterManager::class)
-            ->addMethodCall('setMailer', array(new Reference('mailer')));
+            ->addMethodCall('setMailer', [new Reference('mailer')]);
 
 This time the advantages are:
 

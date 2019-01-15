@@ -62,11 +62,11 @@ a routing ``{wildcard}`` to only match some regular expression:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('blog_list', new Route('/blog/{page}', array(
+        $routes->add('blog_list', new Route('/blog/{page}', [
             '_controller' => 'App\Controller\BlogController::list',
-        ), array(
+        ], [
             'page' => '\d+',
-        )));
+        ]));
 
         // ...
 
@@ -139,12 +139,12 @@ URL:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('homepage', new Route('/{_locale}', array(
+        $routes->add('homepage', new Route('/{_locale}', [
             '_controller' => 'App\Controller\MainController::homepage',
             '_locale'     => 'en',
-        ), array(
+        ], [
             '_locale' => 'en|fr',
-        )));
+        ]));
 
         return $routes;
 
@@ -253,13 +253,13 @@ accomplished with the following route configuration:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('api_post_show', new Route('/api/posts/{id}', array(
+        $routes->add('api_post_show', new Route('/api/posts/{id}', [
             '_controller' => 'App\Controller\BlogApiController::show',
-        ), array(), array(), '', array(), array('GET', 'HEAD')));
+        ], [], [], '', [], ['GET', 'HEAD']));
 
-        $routes->add('api_post_edit', new Route('/api/posts/{id}', array(
+        $routes->add('api_post_edit', new Route('/api/posts/{id}', [
             '_controller' => 'App\Controller\BlogApiController::edit',
-        ), array(), array(), '', array(), array('PUT')));
+        ], [], [], '', [], ['PUT']));
 
         return $routes;
 

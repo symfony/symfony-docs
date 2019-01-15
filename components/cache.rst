@@ -85,20 +85,20 @@ Now you can create, retrieve, update and delete items using this object::
 
 You can also work with multiple items at once::
 
-    $cache->setMultiple(array(
+    $cache->setMultiple([
         'stats.products_count' => 4711,
         'stats.users_count' => 1356,
-    ));
+    ]);
 
-    $stats = $cache->getMultiple(array(
+    $stats = $cache->getMultiple([
         'stats.products_count',
         'stats.users_count',
-    ));
+    ]);
 
-    $cache->deleteMultiple(array(
+    $cache->deleteMultiple([
         'stats.products_count',
         'stats.users_count',
-    ));
+    ]);
 
 Available Simple Cache (PSR-16) Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

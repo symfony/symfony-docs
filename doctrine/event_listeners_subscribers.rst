@@ -73,16 +73,16 @@ managers that use this connection.
         use App\EventListener\SearchIndexerSubscriber;
 
         $container->autowire(SearchIndexer::class)
-            ->addTag('doctrine.event_listener', array('event' => 'postPersist'))
+            ->addTag('doctrine.event_listener', ['event' => 'postPersist'])
         ;
         $container->autowire(SearchIndexer2::class)
-            ->addTag('doctrine.event_listener', array(
+            ->addTag('doctrine.event_listener', [
                 'event' => 'postPersist',
                 'connection' => 'default',
-            ))
+            ])
         ;
         $container->autowire(SearchIndexerSubscriber::class)
-            ->addTag('doctrine.event_subscriber', array('connection' => 'default'))
+            ->addTag('doctrine.event_subscriber', ['connection' => 'default'])
         ;
 
 Creating the Listener Class
@@ -150,10 +150,10 @@ interface and have an event method for each event it subscribes to::
     {
         public function getSubscribedEvents()
         {
-            return array(
+            return [
                 Events::postPersist,
                 Events::postUpdate,
-            );
+            ];
         }
 
         public function postUpdate(LifecycleEventArgs $args)
@@ -200,6 +200,7 @@ That's why it is preferable to use entity listeners instead of subscribers
 whenever possible.
 
 .. versionadded:: 4.2
+
     Starting from Symfony 4.2, Doctrine entity listeners are always lazy. In
     previous Symfony versions this behavior was configurable.
 
@@ -253,10 +254,10 @@ numbers mean that listeners are invoked earlier.
 
         $container
             ->autowire(MyHighPriorityListener::class)
-            ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'priority' => 10))
+            ->addTag('doctrine.event_listener', ['event' => 'postPersist', 'priority' => 10])
         ;
 
         $container
             ->autowire(MyLowPriorityListener::class)
-            ->addTag('doctrine.event_listener', array('event' => 'postPersist', 'priority' => 1))
+            ->addTag('doctrine.event_listener', ['event' => 'postPersist', 'priority' => 1])
         ;

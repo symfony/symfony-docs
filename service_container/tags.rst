@@ -146,7 +146,7 @@ To begin with, define the ``TransportChain`` class::
 
         public function __construct()
         {
-            $this->transports = array();
+            $this->transports = [];
         }
 
         public function addTransport(\Swift_Transport $transport)
@@ -274,7 +274,7 @@ container for any services with the ``app.mail_transport`` tag::
 
             foreach ($taggedServices as $id => $tags) {
                 // add the transport service to the TransportChain service
-                $definition->addMethodCall('addTransport', array(new Reference($id)));
+                $definition->addMethodCall('addTransport', [new Reference($id)]);
             }
         }
     }
@@ -325,7 +325,7 @@ To begin with, change the ``TransportChain`` class::
 
         public function __construct()
         {
-            $this->transports = array();
+            $this->transports = [];
         }
 
         public function addTransport(\Swift_Transport $transport, $alias)
@@ -389,10 +389,10 @@ To answer this, change the service declaration:
         // config/services.php
         $container->register(\Swift_SmtpTransport::class)
             ->addArgument('%mailer_host%')
-            ->addTag('app.mail_transport', array('alias' => 'foo'));
+            ->addTag('app.mail_transport', ['alias' => 'foo']);
 
         $container->register(\Swift_SendmailTransport::class)
-            ->addTag('app.mail_transport', array('alias' => 'bar'));
+            ->addTag('app.mail_transport', ['alias' => 'bar']);
 
 .. tip::
 
@@ -432,10 +432,10 @@ use this, update the compiler::
 
                 // a service could have the same tag twice
                 foreach ($tags as $attributes) {
-                    $definition->addMethodCall('addTransport', array(
+                    $definition->addMethodCall('addTransport', [
                         new Reference($id),
                         $attributes["alias"]
-                    ));
+                    ]);
                 }
             }
         }
@@ -561,6 +561,6 @@ application handlers.
 
             // config/services.php
             $container->register(App\Handler\One::class)
-                ->addTag('app.handler', array('priority' => 20));
+                ->addTag('app.handler', ['priority' => 20]);
 
     Note that any other custom attributes will be ignored by this feature.

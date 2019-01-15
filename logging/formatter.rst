@@ -63,12 +63,12 @@ configure your handler to use it:
         $container->register(JsonFormatter::class);
 
         // config/packages/prod/monolog.php (and/or config/packages/dev/monolog.php)
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'file' => array(
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'file' => [
                     'type'      => 'stream',
                     'level'     => 'debug',
                     'formatter' => JsonFormatter::class,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);

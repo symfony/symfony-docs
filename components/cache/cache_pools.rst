@@ -51,10 +51,10 @@ value but an empty object which implements the :class:`Symfony\\Component\\Cache
 class.
 
 If you need to fetch several cache items simultaneously, use instead the
-``getItems(array($key1, $key2, ...))`` method::
+``getItems([$key1, $key2, ...])`` method::
 
     // ...
-    $stocks = $cache->getItems(array('AAPL', 'FB', 'GOOGL', 'MSFT'));
+    $stocks = $cache->getItems(['AAPL', 'FB', 'GOOGL', 'MSFT']);
 
 Again, if any of the keys doesn't represent a valid cache item, you won't get
 a ``null`` value but an empty ``CacheItem`` object.
@@ -115,7 +115,7 @@ delete several cache items simultaneously (it returns ``true`` only if all the
 items have been deleted, even when any or some of them don't exist)::
 
     // ...
-    $areDeleted = $cache->deleteItems(array('category1', 'category2'));
+    $areDeleted = $cache->deleteItems(['category1', 'category2']);
 
 Finally, to remove all the cache items stored in the pool, use the
 ``Psr\\Cache\\CacheItemPoolInterface::clear`` method (which returns ``true``
@@ -191,13 +191,13 @@ silently ignored)::
     use Symfony\Component\Cache\Adapter\PdoAdapter;
     use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
 
-    $cache = new ChainAdapter(array(
+    $cache = new ChainAdapter([
         new ApcuAdapter(),       // does NOT implement PruneableInterface
         new FilesystemAdapter(), // DOES implement PruneableInterface
         new PdoAdapter(),        // DOES implement PruneableInterface
         new PhpFilesAdapter(),   // DOES implement PruneableInterface
         // ...
-    ));
+    ]);
 
     // prune will proxy the call to PdoAdapter, FilesystemAdapter and PhpFilesAdapter,
     // while silently skipping ApcuAdapter

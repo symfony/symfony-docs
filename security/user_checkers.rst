@@ -111,12 +111,12 @@ is the service id of your user checker:
         // ...
         use App\Security\UserChecker;
 
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'main' => [
                     'pattern' => '^/',
                     'user_checker' => UserChecker::class,
                     // ...
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);

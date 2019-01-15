@@ -41,7 +41,7 @@ First, create a controller that renders a certain number of recent articles::
 
             return $this->render(
                 'article/recent_list.html.twig',
-                array('articles' => $articles)
+                ['articles' => $articles]
             );
         }
     }

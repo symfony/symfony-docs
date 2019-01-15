@@ -14,10 +14,10 @@ that is optimized and preloaded into OPcache memory storage::
     // somehow, decide it's time to warm up the cache!
     if ($needsWarmup) {
         // some static values
-        $values = array(
+        $values = [
             'stats.products_count' => 4711,
             'stats.users_count' => 1356,
-        );
+        ];
 
         $cache = new PhpArrayAdapter(
             // single file where values are cached

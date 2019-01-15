@@ -101,9 +101,9 @@ PHP type (including objects)::
 
     var_dump($expressionLanguage->evaluate(
         'fruit.variety',
-        array(
+        [
             'fruit' => $apple,
-        )
+        ]
     ));
 
 This will print "Honeycrisp". For more information, see the :doc:`/components/expression_language/syntax`

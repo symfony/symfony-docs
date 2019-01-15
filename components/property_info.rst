@@ -51,19 +51,19 @@ provide it with a set of information extractors.
     $reflectionExtractor = new ReflectionExtractor();
 
     // list of PropertyListExtractorInterface (any iterable)
-    $listExtractors = array($reflectionExtractor);
+    $listExtractors = [$reflectionExtractor];
 
     // list of PropertyTypeExtractorInterface (any iterable)
-    $typeExtractors = array($phpDocExtractor, $reflectionExtractor);
+    $typeExtractors = [$phpDocExtractor, $reflectionExtractor];
 
     // list of PropertyDescriptionExtractorInterface (any iterable)
-    $descriptionExtractors = array($phpDocExtractor);
+    $descriptionExtractors = [$phpDocExtractor];
 
     // list of PropertyAccessExtractorInterface (any iterable)
-    $accessExtractors = array($reflectionExtractor);
+    $accessExtractors = [$reflectionExtractor];
 
     // list of PropertyInitializableExtractorInterface (any iterable)
-    $propertyInitializableExtractors = array($reflectionExtractor);
+    $propertyInitializableExtractors = [$reflectionExtractor];
 
     $propertyInfo = new PropertyInfoExtractor(
         $listExtractors,
@@ -111,15 +111,15 @@ both provide list and type information it is probably better that:
 
     $propertyInfo = new PropertyInfoExtractor(
         // List extractors
-        array(
+        [
             $reflectionExtractor,
             $doctrineExtractor
-        ),
+        ],
         // Type extractors
-        array(
+        [
             $doctrineExtractor,
             $reflectionExtractor
-        )
+        ]
     );
 
 .. _`components-property-information-extractable-information`:

@@ -55,9 +55,9 @@ the available blog posts for this imaginary blog application:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('blog', new Route('/blog', array(
+        $routes->add('blog', new Route('/blog', [
             '_controller' => 'App\Controller\BlogController::index',
-        )));
+        ]));
 
         return $routes;
 
@@ -110,9 +110,9 @@ entries? Update the route to have a new ``{page}`` placeholder:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('blog', new Route('/blog/{page}', array(
+        $routes->add('blog', new Route('/blog/{page}', [
             '_controller' => 'App\Controller\BlogController::index',
-        )));
+        ]));
 
         return $routes;
 
@@ -172,10 +172,10 @@ This is done by including it in the ``defaults`` collection:
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('blog', new Route('/blog/{page}', array(
+        $routes->add('blog', new Route('/blog/{page}', [
             '_controller' => 'App\Controller\BlogController::index',
             'page'        => 1,
-        )));
+        ]));
 
         return $routes;
 

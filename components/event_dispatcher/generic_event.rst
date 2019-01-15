@@ -72,7 +72,7 @@ access the event arguments::
 
     $event = new GenericEvent(
         $subject,
-        array('type' => 'foo', 'counter' => 0)
+        ['type' => 'foo', 'counter' => 0]
     );
     $dispatcher->dispatch('foo', $event);
 
@@ -92,7 +92,7 @@ Filtering data::
 
     use Symfony\Component\EventDispatcher\GenericEvent;
 
-    $event = new GenericEvent($subject, array('data' => 'Foo'));
+    $event = new GenericEvent($subject, ['data' => 'Foo']);
     $dispatcher->dispatch('foo', $event);
 
     class FooListener

@@ -22,9 +22,9 @@ class::
 
 Update the route definition accordingly::
 
-    $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', array(
+    $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', [
         'year' => null,
-        '_controller' => array(new LeapYearController(), 'index'),
+        '_controller' => [new LeapYearController(), 'index'],
     )));
 
 The move is pretty straightforward and makes a lot of sense as soon as you
@@ -62,10 +62,10 @@ controller associated with the Request. Besides the built-in PHP callbacks,
 ``getController()`` also supports strings composed of a class name followed by
 two colons and a method name as a valid callback, like 'class::method'::
 
-    $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', array(
+    $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', [
         'year' => null,
         '_controller' => 'LeapYearController::index',
-    )));
+    ]));
 
 To make this code work, modify the framework code to use the controller
 resolver from HttpKernel::

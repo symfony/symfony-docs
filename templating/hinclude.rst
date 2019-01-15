@@ -52,10 +52,10 @@ tags:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->loadFromExtension('framework', array(
+            $container->loadFromExtension('framework', [
                 // ...
-                'fragments' => array('path' => '/_fragment'),
-            ));
+                'fragments' => ['path' => '/_fragment'],
+            ]);
 
 Default content (while loading or if JavaScript is disabled) can be set globally
 in your application configuration:
@@ -90,14 +90,14 @@ in your application configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'templating' => array(
-                'hinclude_default_template' => array(
+            'templating' => [
+                'hinclude_default_template' => [
                     'hinclude.html.twig',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 You can define default templates per ``render()`` function (which will override
 any global default template that is defined):

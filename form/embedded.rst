@@ -83,9 +83,9 @@ create a form class so that a ``Category`` object can be modified by the user::
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'data_class' => Category::class,
-            ));
+            ]);
         }
     }
 

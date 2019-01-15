@@ -100,9 +100,9 @@ This requires you to implement several methods::
          */
         public function getCredentials(Request $request)
         {
-            return array(
+            return [
                 'token' => $request->headers->get('X-AUTH-TOKEN'),
-            );
+            ];
         }
 
         public function getUser($credentials, UserProviderInterface $userProvider)
@@ -135,12 +135,12 @@ This requires you to implement several methods::
 
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
         {
-            $data = array(
+            $data = [
                 'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
 
                 // or to translate this message
                 // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
-            );
+            ];
 
             return new JsonResponse($data, Response::HTTP_FORBIDDEN);
         }
@@ -150,10 +150,10 @@ This requires you to implement several methods::
          */
         public function start(Request $request, AuthenticationException $authException = null)
         {
-            $data = array(
+            $data = [
                 // you might translate this message
                 'message' => 'Authentication Required'
-            );
+            ];
 
             return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
         }
@@ -233,21 +233,21 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
         // ..
         use App\Security\TokenAuthenticator;
 
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main'       => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'main'       => [
                     'pattern'        => '^/',
                     'anonymous'      => true,
                     'logout'         => true,
-                    'guard'          => array(
-                        'authenticators'  => array(
+                    'guard'          => [
+                        'authenticators'  => [
                             TokenAuthenticator::class
-                        ),
-                    ),
+                        ],
+                    ],
                     // ...
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 You did it! You now have a fully-working API token authentication system. If your
 homepage required ``ROLE_USER``, then you could test it under different conditions:

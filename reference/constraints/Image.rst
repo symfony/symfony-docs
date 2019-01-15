@@ -142,12 +142,12 @@ that it is between a certain size, add the following:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('headshot', new Assert\Image(array(
+                $metadata->addPropertyConstraint('headshot', new Assert\Image([
                     'minWidth' => 200,
                     'maxWidth' => 400,
                     'minHeight' => 200,
                     'maxHeight' => 400,
-                )));
+                ]));
             }
         }
 
@@ -214,10 +214,10 @@ following code:
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('headshot', new Assert\Image(array(
+                $metadata->addPropertyConstraint('headshot', new Assert\Image([
                     'allowLandscape'    => false,
                     'allowPortrait'     => false,
-                )));
+                ]));
             }
         }
 

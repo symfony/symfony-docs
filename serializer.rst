@@ -132,13 +132,13 @@ to your class and choose which groups to use when serializing::
 
     $json = $serializer->serialize(
         $someObject,
-        'json', array('groups' => 'group1')
+        'json', ['groups' => 'group1']
     );
 
 .. tip::
 
     The value of the ``groups`` key can be a single string, or an array of strings.
-    
+
     .. versionadded:: 4.2
         The option to pass a single string to ``groups`` was introduced in Symfony 4.2.
 
@@ -195,12 +195,12 @@ value:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             // ...
-            'serializer' => array(
+            'serializer' => [
                 'name_converter' => 'serializer.name_converter.camel_case_to_snake_case',
-            ),
-        ));
+            ],
+        ]);
 
 Going Further with the Serializer
 ---------------------------------

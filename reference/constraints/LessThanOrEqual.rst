@@ -97,9 +97,9 @@ The following constraints ensure that:
             {
                 $metadata->addPropertyConstraint('siblings', new Assert\LessThanOrEqual(5));
 
-                $metadata->addPropertyConstraint('age', new Assert\LessThanOrEqual(array(
+                $metadata->addPropertyConstraint('age', new Assert\LessThanOrEqual([
                     'value' => 80,
-                )));
+                ]));
             }
         }
 

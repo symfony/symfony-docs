@@ -94,36 +94,36 @@ it is broken down.
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'main' => array(
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'main' => [
                     'type'         => 'fingers_crossed',
                     // 500 errors are logged at the critical level
                     'action_level' => 'critical',
                     // to also log 400 level errors (but not 404's):
                     // 'action_level' => 'error',
-                    // 'excluded_404s' => array(
+                    // 'excluded_404s' => [
                     //     '^/',
-                    // ),
+                    // ],
                     'handler'      => 'deduplicated',
-                ),
-                'deduplicated' => array(
+                ],
+                'deduplicated' => [
                     'type'    => 'deduplication',
                     'handler' => 'swift',
-                ),
-                'swift' => array(
+                ],
+                'swift' => [
                     'type'         => 'swift_mailer',
                     'from_email'   => 'error@example.com',
                     'to_email'     => 'error@example.com',
                     // or a list of recipients
-                    // 'to_email'   => array('dev1@example.com', 'dev2@example.com', ...),
+                    // 'to_email'   => ['dev1@example.com', 'dev2@example.com', ...],
                     'subject'      => 'An Error Occurred! %%message%%',
                     'level'        => 'debug',
                     'formatter'    => 'monolog.formatter.html',
                     'content_type' => 'text/html',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 The ``main`` handler is a ``fingers_crossed`` handler which means that
 it is only triggered when the action level, in this case ``critical`` is reached.
@@ -172,15 +172,15 @@ You can adjust the time period using the ``time`` option:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
                 // ...
-                'deduplicated' => array(
+                'deduplicated' => [
                     'type'    => 'deduplication',
                     // the time in seconds during which duplicate entries are discarded (default: 60)
                     'time' => 10,
                     'handler' => 'swift',
-                 )
+                ]
 
 The messages are then passed to the ``swift`` handler. This is the handler that
 actually deals with emailing you the error. The settings for this are
@@ -278,39 +278,39 @@ get logged on the server as well as the emails being sent:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'main' => array(
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'main' => [
                     'type'         => 'fingers_crossed',
                     'action_level' => 'critical',
                     'handler'      => 'grouped',
-                ),
-                'grouped' => array(
+                ],
+                'grouped' => [
                     'type'    => 'group',
-                    'members' => array('streamed', 'deduplicated'),
-                ),
-                'streamed'  => array(
+                    'members' => ['streamed', 'deduplicated'],
+                ],
+                'streamed'  => [
                     'type'  => 'stream',
                     'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
                     'level' => 'debug',
-                ),
-                'deduplicated' => array(
+                ],
+                'deduplicated' => [
                     'type'     => 'deduplication',
                     'handler'  => 'swift',
-                ),
-                'swift' => array(
+                ],
+                'swift' => [
                     'type'         => 'swift_mailer',
                     'from_email'   => 'error@example.com',
                     'to_email'     => 'error@example.com',
                     // or a list of recipients
-                    // 'to_email'   => array('dev1@example.com', 'dev2@example.com', ...),
+                    // 'to_email'   => ['dev1@example.com', 'dev2@example.com', ...],
                     'subject'      => 'An Error Occurred! %%message%%',
                     'level'        => 'debug',
                     'formatter'    => 'monolog.formatter.html',
                     'content_type' => 'text/html',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 This uses the ``group`` handler to send the messages to the two
 group members, the ``deduplicated`` and the ``stream`` handlers. The messages will

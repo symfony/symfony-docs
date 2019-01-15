@@ -70,19 +70,19 @@ Now, examine the results to see this closely:
 
     .. code-block:: php
 
-        $container->loadFromExtension('my_bundle', array(
+        $container->loadFromExtension('my_bundle', [
                 'logging' => true,
                 // true, as expected
             )
-        );
+        ];
 
-        $container->loadFromExtension('my_bundle', array(
+        $container->loadFromExtension('my_bundle', [
                 'logging' => "%kernel.debug%",
                 // true/false (depends on 2nd parameter of Kernel),
                 // as expected, because %kernel.debug% inside configuration
                 // gets evaluated before being passed to the extension
             )
-        );
+        ];
 
         $container->loadFromExtension('my_bundle');
         // passes the string "%kernel.debug%".

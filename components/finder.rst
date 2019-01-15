@@ -92,7 +92,7 @@ Search in several locations by chaining calls to
 :method:`Symfony\\Component\\Finder\\Finder::in`::
 
     // search inside *both* directories
-    $finder->in(array(__DIR__, '/elsewhere'));
+    $finder->in([__DIR__, '/elsewhere']);
 
     // same as above
     $finder->in(__DIR__)->in('/elsewhere');
@@ -176,6 +176,7 @@ Sort the result by name or by type (directories first, then files)::
     ``file1.txt``, ``file2.txt``, ``file10.txt``).
 
     .. versionadded:: 4.2
+
         The option to use the natural sort order was introduced in Symfony 4.2.
 
 Sort the files and directories by the last accessed, changed or modified time::
@@ -198,6 +199,7 @@ You can reverse any sorting by using the ``reverseSorting()`` method::
     $finder->sortByName()->reverseSorting();
 
 .. versionadded:: 4.2
+
     The ``reverseSorting()`` method was introduced in Symfony 4.2.
 
 .. note::
@@ -223,7 +225,7 @@ Multiple filenames can be defined by chaining calls or passing an array::
     $finder->files()->name('*.php')->name('*.twig');
 
     // same as above
-    $finder->files()->name(array('*.php', '*.twig'));
+    $finder->files()->name(['*.php', '*.twig']);
 
 The ``notName()`` method excludes files matching a pattern::
 
@@ -234,9 +236,10 @@ Multiple filenames can be excluded by chaining calls or passing an array::
     $finder->files()->notName('*.rb')->notName('*.py');
 
     // same as above
-    $finder->files()->notName(array('*.rb', '*.py'));
+    $finder->files()->notName(['*.rb', '*.py']);
 
 .. versionadded:: 4.2
+
     Support for passing arrays to ``name()`` and ``notName()`` was introduced
     in Symfony 4.2
 
@@ -280,9 +283,10 @@ Multiple paths can be defined by chaining calls or passing an array::
     $finder->path('data')->path('foo/bar');
 
     // same as above
-    $finder->path(array('data', 'foo/bar'));
+    $finder->path(['data', 'foo/bar']);
 
 .. versionadded:: 4.2
+
     Support for passing arrays to ``path()`` was introduced in Symfony 4.2
 
 Internally, strings are converted into regular expressions by escaping slashes
@@ -302,9 +306,10 @@ Multiple paths can be excluded by chaining calls or passing an array::
     $finder->notPath('first/dir')->notPath('other/dir');
 
     // same as above
-    $finder->notPath(array('first/dir', 'other/dir'));
+    $finder->notPath(['first/dir', 'other/dir']);
 
 .. versionadded:: 4.2
+
     Support for passing arrays to ``notPath()`` was introduced in Symfony
     4.2
 
@@ -321,9 +326,10 @@ Restrict by a size range by chaining calls or passing an array::
     $finder->files()->size('>= 1K')->size('<= 2K');
 
     // same as above
-    $finder->files()->size(array('>= 1K', '<= 2K'));
+    $finder->files()->size(['>= 1K', '<= 2K']);
 
 .. versionadded:: 4.2
+
     Support for passing arrays to ``size()`` was introduced in Symfony 4.2
 
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
@@ -346,9 +352,10 @@ Restrict by a date range by chaining calls or passing an array::
     $finder->date('>= 2018-01-01')->date('<= 2018-12-31');
 
     // same as above
-    $finder->date(array('>= 2018-01-01', '<= 2018-12-31'));
+    $finder->date(['>= 2018-01-01', '<= 2018-12-31']);
 
 .. versionadded:: 4.2
+
     Support for passing arrays to ``date()`` was introduced in Symfony 4.2
 
 The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
@@ -371,9 +378,10 @@ Restrict by a depth range by chaining calls or passing an array::
     $finder->depth('> 2')->depth('< 5');
 
     // same as above
-    $finder->depth(array('> 2', '< 5'));
+    $finder->depth(['> 2', '< 5']);
 
 .. versionadded:: 4.2
+
     Support for passing arrays to ``depth()`` was introduced in Symfony 4.2
 
 Custom Filtering

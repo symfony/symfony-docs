@@ -118,7 +118,7 @@ would look like this::
         protected function supports($attribute, $subject)
         {
             // if the attribute isn't one we support, return false
-            if (!in_array($attribute, array(self::VIEW, self::EDIT))) {
+            if (!in_array($attribute, [self::VIEW, self::EDIT])) {
                 return false;
             }
 
@@ -307,9 +307,9 @@ security configuration:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
-            'access_decision_manager' => array(
+        $container->loadFromExtension('security', [
+            'access_decision_manager' => [
                 'strategy' => 'unanimous',
                 'allow_if_all_abstain' => false,
-            ),
-        ));
+            ],
+        ]);

@@ -12,10 +12,10 @@ framework just a little to make templates even more readable::
 
     $request = Request::createFromGlobals();
 
-    $map = array(
+    $map = [
         '/hello' => 'hello',
         '/bye'   => 'bye',
-    );
+    ];
 
     $path = $request->getPathInfo();
     if (isset($map[$path])) {
@@ -61,12 +61,12 @@ one for the simple ``/bye`` one::
 
     use Symfony\Component\Routing\Route;
 
-    $routes->add('hello', new Route('/hello/{name}', array('name' => 'World')));
+    $routes->add('hello', new Route('/hello/{name}', ['name' => 'World']));
     $routes->add('bye', new Route('/bye'));
 
 Each entry in the collection is defined by a name (``hello``) and a ``Route``
 instance, which is defined by a route pattern (``/hello/{name}``) and an array
-of default values for route attributes (``array('name' => 'World')``).
+of default values for route attributes (``['name' => 'World']``).
 
 .. note::
 
@@ -174,7 +174,7 @@ There are a few new things in the code:
       use Symfony\Component\Routing;
 
       $routes = new Routing\RouteCollection();
-      $routes->add('hello', new Routing\Route('/hello/{name}', array('name' => 'World')));
+      $routes->add('hello', new Routing\Route('/hello/{name}', ['name' => 'World']));
       $routes->add('bye', new Routing\Route('/bye'));
 
       return $routes;
@@ -196,7 +196,7 @@ is all it takes::
 
     $generator = new Routing\Generator\UrlGenerator($routes, $context);
 
-    echo $generator->generate('hello', array('name' => 'Fabien'));
+    echo $generator->generate('hello', ['name' => 'Fabien']);
     // outputs /hello/Fabien
 
 The code should be self-explanatory; and thanks to the context, you can even
@@ -206,7 +206,7 @@ generate absolute URLs::
 
     echo $generator->generate(
         'hello',
-        array('name' => 'Fabien'),
+        ['name' => 'Fabien'],
         UrlGeneratorInterface::ABSOLUTE_URL
     );
     // outputs something like http://example.com/somewhere/hello/Fabien

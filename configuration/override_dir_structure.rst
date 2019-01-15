@@ -123,11 +123,11 @@ own templates directory (or directories):
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', array(
-            'paths' => array(
+        $container->loadFromExtension('twig', [
+            'paths' => [
                 '%kernel.project_dir%/resources/views',
-            ),
-        ));
+            ],
+        ]);
 
 Override the Translations Directory
 -----------------------------------
@@ -169,13 +169,13 @@ configuration option to define your own translations directory (or directories):
     .. code-block:: php
 
         // config/packages/translation.php
-        $container->loadFromExtension('framework', array(
-            'translator' => array(
-                'paths' => array(
+        $container->loadFromExtension('framework', [
+            'translator' => [
+                'paths' => [
                     '%kernel.project_dir%/i18n',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]);
 
 .. _override-web-dir:
 .. _override-the-web-directory:

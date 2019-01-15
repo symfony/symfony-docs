@@ -45,10 +45,10 @@ Example Usage
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
     // ...
 
-    $builder->add('public', CheckboxType::class, array(
+    $builder->add('public', CheckboxType::class, [
         'label'    => 'Show this entry publicly?',
         'required' => false,
-    ));
+    ]);
 
 Field Options
 -------------
@@ -56,7 +56,7 @@ Field Options
 false_values
 ~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array(null)``
+**type**: ``array`` **default**: ``[null]``
 
 An array of values to be interpreted as ``false``.
 
