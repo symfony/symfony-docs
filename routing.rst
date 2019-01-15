@@ -255,8 +255,8 @@ with a locale. This can be done by defining a different prefix for each locale
         $routes = $loader->import('../src/Controller/', 'annotation');
 
         // don't prefix URLs for English, the default locale
-        $app->addPrefix('/', array('_locale' => 'en'));
-        $app->addPrefix('/nl', array('_locale' => 'nl'));
+        $app->addPrefix('/', ['_locale' => 'en']);
+        $app->addPrefix('/nl', ['_locale' => 'nl']);
 
         return $routes;
 
@@ -417,9 +417,9 @@ concise, but it can decrease route readability when requirements are complex:
         use App\Controller\BlogController;
 
         $routes = new RouteCollection();
-        $routes->add('blog_list', new Route('/blog/{page<\d+>}', array(
+        $routes->add('blog_list', new Route('/blog/{page<\d+>}', [
             '_controller' => [BlogController::class, 'list'],
-        )));
+        ]));
 
         // ...
 
@@ -577,9 +577,9 @@ placeholder:
         use App\Controller\BlogController;
 
         $routes = new RouteCollection();
-        $routes->add('blog_list', new Route('/blog/{page<\d+>?1}', array(
+        $routes->add('blog_list', new Route('/blog/{page<\d+>?1}', [
             '_controller' => [BlogController::class, 'list'],
-        )));
+        ]));
 
         // ...
 
@@ -874,9 +874,9 @@ When a route is localized, Symfony uses by default the current request locale to
 generate the URL. In order to generate the URL for a different locale you must
 pass the ``_locale`` in the parameters array::
 
-    $this->router->generate('about_us', array(
+    $this->router->generate('about_us', [
         '_locale' => 'nl',
-    ));
+    ]);
     // generates: /over-ons
 
 Generating URLs from a Template

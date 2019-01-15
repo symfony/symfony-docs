@@ -49,9 +49,9 @@ escaping arguments to prevent security issues. It replaces PHP functions like
         // traditional string based commands
         $builder = new Process('ls -lsa');
         // same example but using an array
-        $builder = new Process(array('ls', '-lsa'));
+        $builder = new Process(['ls', '-lsa']);
         // the array can contain any number of arguments and options
-        $builder = new Process(array('ls', '-l', '-s', '-a'));
+        $builder = new Process(['ls', '-l', '-s', '-a']);
 
 The ``getOutput()`` method always returns the whole content of the standard
 output of the command and ``getErrorOutput()`` the content of the error

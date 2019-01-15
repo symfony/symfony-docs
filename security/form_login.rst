@@ -54,17 +54,17 @@ First, enable ``form_login`` under your firewall:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
-            'firewalls' => array(
-                'main' => array(
+        $container->loadFromExtension('security', [
+            'firewalls' => [
+                'main' => [
                     'anonymous'  => null,
-                    'form_login' => array(
+                    'form_login' => [
                         'login_path' => 'login',
                         'check_path' => 'login',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 
@@ -136,9 +136,9 @@ configuration (``login``):
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-        $routes->add('login', new Route('/login', array(
-            '_controller' => array(SecurityController::class, 'login'),
-        )));
+        $routes->add('login', new Route('/login', [
+            '_controller' => [SecurityController::class, 'login'],
+        ]));
 
         return $routes;
 
@@ -155,10 +155,10 @@ Great! Next, add the logic to ``login()`` that displays the login form::
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', array(
+        return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
-        ));
+        ]);
     }
 
 .. note::
@@ -296,19 +296,19 @@ security component:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', array(
+        $container->loadFromExtension('security', [
             // ...
 
-            'firewalls' => array(
-                'secured_area' => array(
+            'firewalls' => [
+                'secured_area' => [
                     // ...
-                    'form_login' => array(
+                    'form_login' => [
                         // ...
                         'csrf_token_generator' => 'security.csrf.token_manager',
-                    ),
-                ),
-            ),
-        ));
+                    ],
+                ],
+            ],
+        ]);
 
 .. _csrf-login-template:
 
@@ -380,20 +380,20 @@ After this, you have protected your login form against CSRF attacks.
         .. code-block:: php
 
             // config/packages/security.php
-            $container->loadFromExtension('security', array(
+            $container->loadFromExtension('security', [
                 // ...
 
-                'firewalls' => array(
-                    'secured_area' => array(
+                'firewalls' => [
+                    'secured_area' => [
                         // ...
-                        'form_login' => array(
+                        'form_login' => [
                             // ...
                             'csrf_parameter' => '_csrf_security_token',
                             'csrf_token_id'  => 'a_private_string',
-                        ),
-                    ),
-                ),
-            ));
+                        ],
+                    ],
+                ],
+            ]);
 
 Redirecting after Success
 -------------------------

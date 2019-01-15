@@ -341,10 +341,10 @@ type (numeric, boolean, strings, null, etc.)
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('metric', new Assert\Expression(array(
+                $metadata->addPropertyConstraint('metric', new Assert\Expression([
                     'expression' => 'value + error_margin < threshold',
-                    'values' => array('error_margin' => 0.25, 'threshold' => 1.5),
-                )));
+                    'values' => ['error_margin' => 0.25, 'threshold' => 1.5],
+                ]));
             }
 
             // ...

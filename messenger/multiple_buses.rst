@@ -71,31 +71,31 @@ an **event bus**. The event bus could have zero or more subscribers.
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', array(
-            'messenger' => array(
+        $container->loadFromExtension('framework', [
+            'messenger' => [
                 // The bus that is going to be injected when injecting MessageBusInterface
                 'default_bus' => 'messenger.bus.commands',
-                'buses' => array(
-                    'messenger.bus.commands' => array(
-                        'middleware' => array(
+                'buses' => [
+                    'messenger.bus.commands' => [
+                        'middleware' => [
                             'validation',
                             'doctrine_transaction',
-                        ),
-                    ),
-                    'messenger.bus.queries' => array(
-                        'middleware' => array(
+                        ],
+                    ],
+                    'messenger.bus.queries' => [
+                        'middleware' => [
                             'validation',
-                        ),
-                    ),
-                    'messenger.bus.events' => array(
-                        'middleware' => array(
+                        ],
+                    ],
+                    'messenger.bus.events' => [
+                        'middleware' => [
                             'validation',
                             'allow_no_handler',
-                        ),
-                    ),
-                ),
-            ),
-        ));
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 This will generate the ``messenger.bus.commands``, ``messenger.bus.queries``
 and ``messenger.bus.events`` services that you can inject in your services.

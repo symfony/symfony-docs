@@ -462,8 +462,8 @@ also relative URLs that contain no protocol (e.g. ``//example.com``).
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('bioUrl', new Assert\Url(array(
-                    'relativeProtocol'  => true,
-                )));
+                $metadata->addPropertyConstraint('bioUrl', new Assert\Url([
+                    'relativeProtocol' => true,
+                ]));
             }
         }

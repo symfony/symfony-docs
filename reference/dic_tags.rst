@@ -1075,7 +1075,7 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
         ;
         $container
             ->register(AnotherExtension::class)
-            ->addTag('twig.extension', array('priority' => -100))
+            ->addTag('twig.extension', ['priority' => -100])
         ;
 
 .. versionadded:: 4.1

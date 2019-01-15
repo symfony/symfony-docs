@@ -154,16 +154,16 @@ The following configuration code shows how you can configure two entity managers
                 'entity_managers' => [
                     'default' => [
                         'connection' => 'default',
-                        'mappings'   => array(
-                            'Main'  => array(
+                        'mappings'   => [
+                            'Main'  => [
                                 is_bundle => false,
                                 type => 'annotation',
                                 dir => '%kernel.project_dir%/src/Entity/Main',
                                 prefix => 'App\Entity\Main',
                                 alias => 'Main',
-                            )
-                        ),
-                    ),
+                            ]
+                        ],
+                    ],
                     'customer' => [
                         'connection' => 'customer',
                         'mappings'   => [

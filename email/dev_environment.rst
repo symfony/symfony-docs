@@ -87,7 +87,7 @@ via the ``delivery_addresses`` option:
 
         // config/packages/dev/swiftmailer.php
         $container->loadFromExtension('swiftmailer', [
-            'delivery_addresses' => array("dev@example.com"),
+            'delivery_addresses' => ['dev@example.com'],
         ]);
 
 Now, suppose you're sending an email to ``recipient@example.com`` in a controller::

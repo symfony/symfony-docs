@@ -51,9 +51,9 @@ for more information):
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', [
             'csrf_protection' => null,
-        ));
+        ]);
 
 The tokens used for CSRF protection are meant to be different for every user and
 they are stored in the session. That's why a session is started automatically as
@@ -93,7 +93,7 @@ this can be customized on a form-by-form basis::
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefaults(array(
+            $resolver->setDefaults([
                 'data_class'      => Task::class,
                 // enable/disable CSRF protection for this form
                 'csrf_protection' => true,
@@ -102,7 +102,7 @@ this can be customized on a form-by-form basis::
                 // an arbitrary string used to generate the value of the token
                 // using a different string for each form improves its security
                 'csrf_token_id'   => 'task_item',
-            ));
+            ]);
         }
 
         // ...

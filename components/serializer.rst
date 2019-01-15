@@ -654,8 +654,8 @@ You can add new encoders to a Serializer instance by using its second constructo
     use Symfony\Component\Serializer\Encoder\XmlEncoder;
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
-    $encoders = array(new XmlEncoder(), new JsonEncoder());
-    $serializer = new Serializer(array(), $encoders);
+    $encoders = [new XmlEncoder(), new JsonEncoder()];
+    $serializer = new Serializer([], $encoders);
 
 Built-in Encoders
 ~~~~~~~~~~~~~~~~~
@@ -702,7 +702,7 @@ This encoder transforms arrays into XML and vice versa.
 
 For example, take an object normalized as following::
 
-    array('foo' => array(1, 2), 'bar' => true);
+    ['foo' => [1, 2], 'bar' => true];
 
 The ``XmlEncoder`` will encode this object like that::
 
@@ -716,7 +716,7 @@ The ``XmlEncoder`` will encode this object like that::
 Be aware that this encoder will consider keys beginning with ``@`` as attributes::
 
     $encoder = new XmlEncoder();
-    $encoder->encode(array('foo' => array('@bar' => 'value')), 'xml');
+    $encoder->encode(['foo' => ['@bar' => 'value']], 'xml');
     // will return:
     // <?xml version="1.0"?>
     // <response>
@@ -970,17 +970,17 @@ having unique identifiers::
         return '/foos/'.$foo->id;
     });
 
-    $serializer = new Serializer(array($normalizer));
+    $serializer = new Serializer([$normalizer]);
 
-    $result = $serializer->normalize($level1, null, array(ObjectNormalizer::ENABLE_MAX_DEPTH => true));
+    $result = $serializer->normalize($level1, null, [ObjectNormalizer::ENABLE_MAX_DEPTH => true]);
     /*
-    $result = array(
+    $result = [
         'id' => 1,
-        'child' => array(
+        'child' => [
             'id' => 2,
             'child' => '/foos/3',
-        ),
-    );
+        ],
+    ];
     */
 
 .. versionadded:: 4.1
@@ -1126,15 +1126,15 @@ context option::
     }
 
     $normalizer = new ObjectNormalizer($classMetadataFactory);
-    $serializer = new Serializer(array($normalizer));
+    $serializer = new Serializer([$normalizer]);
 
     $data = $serializer->denormalize(
-        array('foo' => 'Hello'),
+        ['foo' => 'Hello'],
         'MyObj',
-        array('default_constructor_arguments' => array(
-            'MyObj' => array('foo' => '', 'bar' => ''),
-        )
-    ));
+        ['default_constructor_arguments' => [
+            'MyObj' => ['foo' => '', 'bar' => ''],
+        ]]
+    );
     // $data = new MyObj('Hello', '');
 
 Recursive Denormalization and Type Safety
@@ -1240,8 +1240,8 @@ this is already set up and you only need to provide the configuration. Otherwise
     $discriminator = new ClassDiscriminatorFromClassMetadata($classMetadataFactory);
 
     $serializer = new Serializer(
-        array(new ObjectNormalizer($classMetadataFactory, null, null, null, $discriminator)),
-        array('json' => new JsonEncoder())
+        [new ObjectNormalizer($classMetadataFactory, null, null, null, $discriminator)],
+        ['json' => new JsonEncoder()]
     );
 
 Now configure your discriminator class mapping. Consider an application that

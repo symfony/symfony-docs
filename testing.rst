@@ -483,7 +483,7 @@ method, which has the same arguments as the ``request()`` method, and it's a
 shortcut to make AJAX requests::
 
     // the required HTTP_X_REQUESTED_WITH header is added automatically
-    $client->xmlHttpRequest('POST', '/submit', array('name' => 'Fabien'));
+    $client->xmlHttpRequest('POST', '/submit', ['name' => 'Fabien']);
 
 .. versionadded:: 4.1
     The ``xmlHttpRequest()`` method was introduced in Symfony 4.1.
@@ -817,7 +817,7 @@ their type::
     The ``submit()`` method defines a third optional argument to add custom
     HTTP headers when submitting the form::
 
-        $client->submit($form, array(), array('HTTP_ACCEPT_LANGUAGE' => 'es'));
+        $client->submit($form, [], ['HTTP_ACCEPT_LANGUAGE' => 'es']);
 
     .. versionadded:: 4.1
         The feature to add custom HTTP headers was introduced in Symfony 4.1.

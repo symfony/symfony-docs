@@ -249,27 +249,16 @@ instance, if you want to match both ``m.example.com`` and
         use Symfony\Component\Routing\Route;
 
         $routes = new RouteCollection();
-<<<<<<< HEAD
-        $routes->add('mobile_homepage', new Route('/', array(
-            '_controller' => 'App\Controller\MainController::mobileHomepage',
-=======
         $routes->add('mobile_homepage', new Route('/', [
-            '_controller' => 'AppBundle:Main:mobileHomepage',
->>>>>>> 3.4
+            '_controller' => 'App\Controller\MainController::mobileHomepage',
             'subdomain'   => 'm',
         ], [
             'subdomain' => 'm|mobile',
         ], [], '{subdomain}.example.com'));
 
-<<<<<<< HEAD
-        $routes->add('homepage', new Route('/', array(
-            '_controller' => 'App\Controller\MainController::homepage',
-        )));
-=======
         $routes->add('homepage', new Route('/', [
-            '_controller' => 'AppBundle:Main:homepage',
+            '_controller' => 'App\Controller\MainController::homepage',
         ]));
->>>>>>> 3.4
 
         return $routes;
 

@@ -386,10 +386,10 @@ alternatives based on the :ref:`service binding <services-binding>` feature:
 
         $container->register(Service::class)
             ->setPublic(true)
-            ->setBindings(array(
+            ->setBindings([
                 // this injects the second mailer when this service type-hints constructor arguments with \Swift_Mailer
                 \Swift_Mailer => '@swiftmailer.mailer.second_mailer',
                 // this injects the second mailer when this service has a constructor argument called $specialMailer
                 '$specialMailer' => '@swiftmailer.mailer.second_mailer',
-            ))
+            ])
         ;

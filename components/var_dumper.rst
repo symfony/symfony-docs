@@ -146,9 +146,9 @@ the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
     .. code-block:: php
 
         // config/packages/debug.php
-        $container->loadFromExtension('debug', array(
+        $container->loadFromExtension('debug', [
            'dump_destination' => 'tcp://%env(VAR_DUMPER_SERVER)%',
-        ));
+        ]);
 
 Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Dumper\\ServerDumper` class::
 
@@ -163,11 +163,11 @@ Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Du
     use Symfony\Component\VarDumper\Dumper\ServerDumper;
 
     $cloner = new VarCloner();
-    $fallbackDumper = \in_array(\PHP_SAPI, array('cli', 'phpdbg')) ? new CliDumper() : new HtmlDumper();
-    $dumper = new ServerDumper('tcp://127.0.0.1:9912', $fallbackDumper, array(
+    $fallbackDumper = \in_array(\PHP_SAPI, ['cli', 'phpdbg']) ? new CliDumper() : new HtmlDumper();
+    $dumper = new ServerDumper('tcp://127.0.0.1:9912', $fallbackDumper, [
         'cli' => new CliContextProvider(),
         'source' => new SourceContextProvider(),
-    ));
+    ]);
 
     VarDumper::setHandler(function ($var) use ($cloner, $dumper) {
         $dumper->dump($cloner->cloneVar($var));

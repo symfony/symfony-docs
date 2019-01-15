@@ -53,13 +53,13 @@ logging these HTTP codes based on the MonologBundle configuration:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', array(
-            'handlers' => array(
-                'main' => array(
+        $container->loadFromExtension('monolog', [
+            'handlers' => [
+                'main' => [
                     // ...
                     'type'                => 'fingers_crossed',
                     'handler'             => ...,
-                    'excluded_http_codes' => array(403, 404),
-                ),
-            ),
-        ));
+                    'excluded_http_codes' => [403, 404],
+                ],
+            ],
+        ]);

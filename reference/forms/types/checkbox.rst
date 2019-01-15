@@ -55,7 +55,7 @@ Field Options
 false_values
 ~~~~~~~~~~~~
 
-**type**: ``array`` **default**: ``array(null)``
+**type**: ``array`` **default**: ``[null]``
 
 An array of values to be interpreted as ``false``.
 
