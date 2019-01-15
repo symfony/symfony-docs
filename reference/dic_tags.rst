@@ -25,6 +25,7 @@ Tag Name                                  Usage
 `kernel.event_listener`_                  Listen to different events/hooks in Symfony
 `kernel.event_subscriber`_                To subscribe to a set of different events/hooks in Symfony
 `kernel.fragment_renderer`_               Add new HTTP content rendering strategies
+`mime.mime_type_guesser`_                 Add a custom mime type guesser to MimeTypes
 `monolog.logger`_                         Logging with a custom logging channel
 `monolog.processor`_                      Add a custom processor for logging
 `routing.loader`_                         Register a custom service that loads routes
@@ -449,6 +450,15 @@ To add a new rendering strategy - in addition to the core strategies like
 ``EsiFragmentRenderer`` - create a class that implements
 :class:`Symfony\\Component\\HttpKernel\\Fragment\\FragmentRendererInterface`,
 register it as a service, then tag it with ``kernel.fragment_renderer``.
+
+mime.mime_type_guesser
+----------------------
+
+**Purpose**: Add a custom MIME type guesser to MimeTypes
+
+To add a custom MIME type guesser - in addition to the core guessers - create a
+class that implements :class:`Symfony\\Component\\Mime\\MimeTypes`, register it
+as a service, then tag it with ``mime.mime_type_guesser``.
 
 .. _dic_tags-monolog:
 
