@@ -109,22 +109,28 @@ CSRF Protection in Login Forms
 See :doc:`/security/form_login_setup` for a login form that is protected from
 CSRF attacks.
 
-CSRF Protection in HTML Forms
------------------------------
+.. _csrf-protection-in-html-forms:
+
+Generating and Checking CSRF Tokens Manually
+--------------------------------------------
 
 .. versionadded:: 4.1
+
     In Symfony versions prior to 4.1, CSRF support required installing the
     Symfony Form component even if you didn't use it.
 
-It's also possible to add CSRF protection to regular HTML forms not managed by
-the Symfony Form component, for example the simple forms used to delete items.
-First, use the ``csrf_token()`` function in the Twig template to generate a CSRF
-token and store it as a hidden field of the form:
+Although Symfony Forms provide automatic CSRF protection by default, you may
+need to generate and check CSRF tokens manually for example when using regular
+HTML forms not managed by the Symfony Form component.
+
+Consider a simple HTML form created to allow deleting items. First, use the
+:ref:`csrf_token() Twig function <reference-twig-function-csrf-token>` to
+generate a CSRF token in the template and store it as a hidden form field:
 
 .. code-block:: twig
 
     <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post">
-        {# the argument of csrf_token() is an arbitrary value used to generate the token #}
+        {# the argument of csrf_token() is an arbitrary string used to generate the token #}
         <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}" />
 
         <button type="submit">Delete item</button>
