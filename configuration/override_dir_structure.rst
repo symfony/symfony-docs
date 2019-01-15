@@ -211,62 +211,7 @@ You also need to change the ``extra.public-dir`` option in the
     your Symfony project work on your shared host. Another way is to deploy
     your application to a directory outside of your web root, delete your
     ``public_html`` directory, and then replace it with a symbolic link to
-<<<<<<< HEAD
     the ``public`` dir in your project.
-=======
-    the ``web`` in your project.
-
-.. note::
-
-    If you use the AsseticBundle, you need to configure the ``read_from`` option
-    to point to the correct ``web`` directory:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # app/config/config.yml
-
-            # ...
-            assetic:
-                # ...
-                read_from: '%kernel.project_dir%/../public_html'
-
-        .. code-block:: xml
-
-            <!-- app/config/config.xml -->
-            <?xml version="1.0" encoding="UTF-8"?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:assetic="http://symfony.com/schema/dic/assetic"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    http://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/assetic
-                    http://symfony.com/schema/dic/assetic/assetic-1.0.xsd">
-
-                <!-- ... -->
-                <assetic:config read-from="%kernel.project_dir%/../public_html" />
-
-            </container>
-
-        .. code-block:: php
-
-            // app/config/config.php
-
-            // ...
-            $container->loadFromExtension('assetic', [
-                // ...
-                'read_from' => '%kernel.project_dir%/../public_html',
-            ]);
-
-    Now you just need to clear the cache and dump the assets again and your
-    application should work:
-
-    .. code-block:: terminal
-
-        $ php bin/console cache:clear --env=prod
-        $ php bin/console assetic:dump --env=prod --no-debug
->>>>>>> 3.4
 
 Override the ``vendor`` Directory
 ---------------------------------
